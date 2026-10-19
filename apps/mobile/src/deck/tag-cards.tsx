@@ -1,18 +1,16 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage } from "@lymi/client/api";
-import { type DeckRow, type TagChoice, tagEdits, tagPicker } from "@lymi/client/deck-list";
-import { deckCardsQuery, tagsQuery } from "@lymi/client/queries";
-import { tagKey } from "@lymi/core";
+import { type DeckRow, tagEdits } from "@lymi/client/deck-list";
+import { deckCardsQuery } from "@lymi/client/queries";
 import { backlogOf } from "@lymi/core/analytics";
-import { type QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { ScrollView, useWindowDimensions } from "react-native";
+import { TagList, useSuggestedTags, useTagList } from "../capture/tags";
 import { useDeckCards } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
 import { captureEvent } from "../telemetry/posthog";
-import { SearchField } from "../ui/menu";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
+import { Sheet } from "../ui/sheet";
 import { toast } from "../ui/toast-host";
 
 type Edit = { cardId: string; tags: string[] };
@@ -178,7 +176,7 @@ export function useTagCards(deckId: string) {
     const ids = new Set(picking.cardIds);
     return rows?.filter((r) => ids.has(r.card.id)) ?? [];
   }, [rows, picking.cardIds]);
-  const suggestions = useQuery({ ...tagsQuery, enabled: open }).data;
+  const suggestions = useSuggestedTags(deckId, open);
 
   return {
     open: (cardIds: string[], after?: () => void) => {
@@ -191,7 +189,7 @@ export function useTagCards(deckId: string) {
         open={open}
         onOpenChange={setOpen}
         cards={chosen.map((r) => r.card.tags)}
-        suggestions={suggestions ?? []}
+        suggestions={suggestions}
         onSave={(change) => {
           setOpen(false);
           picking.after?.();
@@ -218,79 +216,24 @@ function TagCardsSheet({
 }) {
   const { t } = useLingui();
   const online = useOnline();
-  const { height } = useWindowDimensions();
-  const [created, setCreated] = useState<string[]>([]);
-  const [choices, setChoices] = useState<ReadonlyMap<string, TagChoice>>(new Map());
-  const [query, setQuery] = useState("");
-  const picker = tagPicker({ cards, created, suggestions, choices, query });
-  const { total, shown, typed, fresh, change } = picker;
+  const list = useTagList({ cards, suggestions });
+  const { total, change } = list.picker;
   const changed = change.add.length + change.remove.length;
-  const set = (name: string, choice: TagChoice) =>
-    setChoices((prev) => new Map(prev).set(tagKey(name), choice));
-  const create = () => {
-    setCreated((prev) => [typed, ...prev]);
-    set(typed, "all");
-    setQuery("");
-  };
 
   return (
     <Sheet
       title={plural(total, { one: "Tags for # card", other: "Tags for # cards" })}
-      description={
-        online
-          ? t`Tick a tag to put it on every card, or untick it to take it off.`
-          : t`Changing tags needs a connection.`
-      }
+      description={online ? undefined : t`Changing tags needs a connection.`}
       open={open}
       onOpenChange={onOpenChange}
-      save={{ label: t`Save`, onPress: () => onSave(change), disabled: changed === 0 || !online }}
+      save={{
+        label: t`Save`,
+        // Anything still typed goes on too, as Return would put it.
+        onPress: () => onSave(list.settle()),
+        disabled: (changed === 0 && !list.query.trim()) || !online,
+      }}
     >
-      <SearchField
-        label={t`Tags`}
-        placeholder={t`Find or create a tag`}
-        // The keyboard lifts the sheet to full height, where iOS makes it opaque and a plate fill vanishes.
-        fill="group"
-        query={query}
-        onChange={setQuery}
-        onSubmit={() => {
-          // Return creates a new name, or ticks the tag the letters name, or the one they found.
-          const match =
-            shown.find((name) => tagKey(name) === tagKey(typed)) ??
-            (shown.length === 1 ? shown[0] : undefined);
-          if (fresh) create();
-          else if (typed && match) {
-            set(match, picker.next(match));
-            setQuery("");
-          }
-        }}
-      />
-      <ScrollView
-        style={{ maxHeight: height * 0.5 }}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-      >
-        {shown.length > 0 || fresh ? (
-          <SheetGroup>
-            {shown.map((name) => {
-              const choice = picker.choiceOf(name);
-              const after = picker.after(name);
-              return (
-                <SheetRow
-                  key={tagKey(name)}
-                  label={name}
-                  chosen={choice === "mixed" ? "mixed" : choice === "all"}
-                  multiple
-                  value={total > 1 ? t`${after} of ${total}` : undefined}
-                  onPress={() => set(name, picker.next(name))}
-                />
-              );
-            })}
-            {fresh && <SheetRow icon="plus" label={t`Create “${typed}”`} onPress={create} />}
-          </SheetGroup>
-        ) : (
-          <SheetNote>{t`No tags yet. Type one to create it.`}</SheetNote>
-        )}
-      </ScrollView>
+      <TagList list={list} />
     </Sheet>
   );
 }

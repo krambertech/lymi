@@ -536,7 +536,7 @@ export const analyticsProducers = {
   lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
-  tag_added: ["browser"],
+  tag_added: ["browser", "phone"],
   card_field_added: ["browser"],
   deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],

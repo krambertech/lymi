@@ -181,9 +181,7 @@ function MoveToSectionSheet({
           ? t`Move “${term}” to`
           : plural(count, { one: "Move # card to", other: "Move # cards to" })
       }
-      description={
-        online ? t`Moving a card keeps its progress.` : t`Moving cards needs a connection.`
-      }
+      description={online ? t`Cards keep their progress.` : t`Moving cards needs a connection.`}
       open={open}
       onOpenChange={onOpenChange}
     >

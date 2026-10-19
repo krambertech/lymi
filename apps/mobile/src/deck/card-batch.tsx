@@ -249,7 +249,7 @@ export function useMoveToDeck(deckId: string) {
         title={plural(count, { one: "Move # card to", other: "Move # cards to" })}
         description={
           online
-            ? t`A card keeps its progress and leaves its section.`
+            ? t`Cards keep their progress but leave their section.`
             : t`Moving cards needs a connection.`
         }
         open={open}

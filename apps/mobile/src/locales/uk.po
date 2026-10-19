@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "“{deckName}” is reviewed with the other decks in its series."
-msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії."
-
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "«{label}» уже є в «{deckName}», тож копію, додану офлайн, не збережено."
 
@@ -735,9 +732,6 @@ msgstr "Файл .mochi, до 1 ГБ."
 msgid "A .zip file, up to 1 GB."
 msgstr "Файл .zip, до 1 ГБ."
 
-msgid "A card keeps its progress and leaves its section."
-msgstr "Картка зберігає прогрес і виходить зі свого розділу."
-
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
 
@@ -829,9 +823,6 @@ msgstr "Додати картку"
 msgid "Add a lesson"
 msgstr "Додати урок"
 
-msgid "Add a tag"
-msgstr "Додати тег"
-
 msgid "Add a word"
 msgstr "Додати слово"
 
@@ -919,8 +910,8 @@ msgstr "AI заповнює"
 msgid "AI fills in"
 msgstr "AI доповнить"
 
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
+msgid "AI follows these when filling cards. Only you see them."
+msgstr "ШІ дотримується їх, коли заповнює картки. Бачиш їх лише ти."
 
 msgid "AI hook"
 msgstr "Зачіпка від AI"
@@ -930,6 +921,9 @@ msgstr "Значення від AI"
 
 msgid "AI off"
 msgstr "AI вимкнено"
+
+msgid "AI only fills empty fields. It never changes your text."
+msgstr "ШІ заповнює лише порожні поля і ніколи не змінює твій текст."
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
@@ -948,6 +942,12 @@ msgstr "Усі одразу"
 
 msgid "All shelves"
 msgstr "Усі полиці"
+
+msgid "All your decks and their history, not decks shared with you."
+msgstr "Усі твої колоди з історією, без колод, якими поділилися з тобою."
+
+msgid "All your decks, with schedules and review history."
+msgstr "Усі твої колоди з розкладом та історією повторень."
 
 msgctxt "deck tag"
 msgid "Alphabet"
@@ -1006,8 +1006,8 @@ msgstr "Будь-коли"
 msgid "Anyone can add this deck from its public page."
 msgstr "Будь-хто може додати цю колоду з її публічної сторінки."
 
-msgid "Anyone studying the deck can start a later section early."
-msgstr "Будь-хто, хто вчить колоду, може почати наступний розділ раніше."
+msgid "Anyone can still start a later section early."
+msgstr "Наступний розділ усе одно можна почати раніше."
 
 msgid "Anyone who opens it can join"
 msgstr "Приєднатися може кожен, хто його відкриє"
@@ -1029,6 +1029,9 @@ msgstr "Довідник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Мова застосунку й мова, якою AI пише значення."
+
+msgid "Apply"
+msgstr "Застосувати"
 
 msgid "Apply filters"
 msgstr "Застосувати фільтри"
@@ -1246,6 +1249,12 @@ msgstr "Картки збережуть дати повторення, які м
 
 msgid "Cards keep the due dates they had in Noji."
 msgstr "Картки збережуть дати повторення, які мали в Noji."
+
+msgid "Cards keep their progress but leave their section."
+msgstr "Картки зберігають прогрес, але виходять зі свого розділу."
+
+msgid "Cards keep their progress."
+msgstr "Картки зберігають прогрес."
 
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
@@ -1727,6 +1736,9 @@ msgstr "Країни, зорі, птахи чи будь-що інше з наз
 msgid "Create “{typed}”"
 msgstr "Створити «{typed}»"
 
+msgid "Create {listed}"
+msgstr "Створити {listed}"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Спершу створи колоду, а тоді додай до неї урок."
 
@@ -1814,6 +1826,9 @@ msgstr "Колоди"
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Колоди від Lymi. Додай одну — вивчай її своєю мовою."
+
+msgid "Decks in a series are reviewed together."
+msgstr "Колоди однієї серії повторюються разом."
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -2007,12 +2022,6 @@ msgstr "Естонська"
 
 msgid "Every card"
 msgstr "Усі картки"
-
-msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
-msgstr "Кожна твоя колода, разом з архівними, з твоїм розкладом та історією повторень. Колоди, якими поділилися з тобою, сюди не входять."
-
-msgid "Every deck, archived ones included, with your schedule and review history."
-msgstr "Усі колоди, зокрема архівні, з твоїм розкладом та історією повторень."
 
 msgid "Every endpoint, with examples"
 msgstr "Усі ендпоінти, з прикладами"
@@ -2312,9 +2321,6 @@ msgstr "Як це працює"
 msgid "How it’s asked"
 msgstr "Як питати"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Скільки повторень на день зберігає лік днів поспіль. Рахується кожна оцінка, навіть «Не пам’ятаю»."
-
 msgid "How much time a day?"
 msgstr "Скільки часу на день?"
 
@@ -2420,11 +2426,8 @@ msgstr "У Noji відкрий створену тобою колоду, від�
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В іншому акаунті відкрий меню колоди й вибери «Експортувати колоду» або вибери «Експортувати бібліотеку» в розділі «Ти»."
 
-msgid "In this deck"
-msgstr "У цій колоді"
-
-msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
-msgstr "Містить твій розклад та історію повторень. Експорт не змінює колоду."
+msgid "Includes your schedule and review history."
+msgstr "З твоїм розкладом та історією повторень."
 
 msgctxt "language"
 msgid "Indonesian"
@@ -2464,9 +2467,6 @@ msgstr "Щоб запрошувати, потрібне з’єднання."
 
 msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
 msgstr "З наступного запиту він не матиме доступу до твоїх колод. Щоб користуватися ним знову, підключи його із самого застосунку."
-
-msgid "It goes at the end. Move cards into it from the deck."
-msgstr "Він з’явиться в кінці. Перемісти в нього картки з колоди."
 
 msgid "It loads as soon as you’re back online."
 msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
@@ -2845,9 +2845,6 @@ msgstr "Перенесено в іншу колоду"
 msgid "Moves from {elsewhere}"
 msgstr "Перейде із серії «{elsewhere}»"
 
-msgid "Moving a card keeps its progress."
-msgstr "Після переміщення прогрес картки зберігається."
-
 msgid "Moving cards needs a connection."
 msgstr "Щоб переміщати картки, потрібне з’єднання."
 
@@ -3087,9 +3084,6 @@ msgstr "Лише ті, кого ти запросиш"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
-
-msgid "Only you see these."
-msgstr "Їх бачиш лише ти."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Видно лише твоє ім’я, а прогрес — ні."
@@ -3382,9 +3376,6 @@ msgstr "Вилучити учасника"
 msgid "Remove photo"
 msgstr "Видалити фото"
 
-msgid "Remove the tag {tag}"
-msgstr "Прибрати тег {tag}"
-
 msgid "Remove the text"
 msgstr "Прибрати текст"
 
@@ -3421,9 +3412,6 @@ msgstr "Відновити"
 msgid "Restore {title}"
 msgstr "Відновити {title}"
 
-msgid "Restore brings a section back in its place, with the cards archived alongside it."
-msgstr "Відновлення повертає розділ на його місце разом із картками, які архівовано з ним."
-
 msgid "Restore import"
 msgstr "Відновити імпорт"
 
@@ -3432,6 +3420,9 @@ msgstr "Відновлено"
 
 msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Відновлено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
+
+msgid "Restored sections return with their archived cards."
+msgstr "Відновлений розділ повертається зі своїми архівованими картками."
 
 msgid "Restored the deck {deck}"
 msgstr "Відновлено колоду «{deck}»"
@@ -3491,6 +3482,9 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 
 msgid "Reviews"
 msgstr "Повторення"
+
+msgid "Reviews a day to keep your streak. Forgot counts too."
+msgstr "Скільки повторень на день тримає лік днів поспіль. «Не пам’ятаю» теж рахується."
 
 msgid "Revoke “{name}”?"
 msgstr "Відкликати «{name}»?"
@@ -4138,9 +4132,6 @@ msgstr "Цього тижня"
 
 msgid "Those terms are already in your decks"
 msgstr "Ці терміни вже є у твоїх колодах"
-
-msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Познач тег, щоб додати його на всі картки, або зніми позначку, щоб прибрати."
 
 msgid "Time"
 msgstr "Час"

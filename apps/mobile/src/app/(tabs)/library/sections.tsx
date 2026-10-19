@@ -16,7 +16,7 @@ import { EmptyState } from "../../../ui/empty-state";
 import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarText, Screen } from "../../../ui/screen";
-import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
@@ -232,7 +232,12 @@ export default function DeckSections() {
         }}
       />
 
-      <Sheet title={t`How sections open`} open={choosingOrder} onOpenChange={setChoosingOrder}>
+      <Sheet
+        title={t`How sections open`}
+        description={t`Anyone can still start a later section early.`}
+        open={choosingOrder}
+        onOpenChange={setChoosingOrder}
+      >
         <SheetGroup>
           {orders.map((o) => (
             <SheetRow
@@ -247,12 +252,11 @@ export default function DeckSections() {
             />
           ))}
         </SheetGroup>
-        <SheetNote>{t`Anyone studying the deck can start a later section early.`}</SheetNote>
       </Sheet>
 
       <Sheet
         title={t`Archived sections`}
-        description={t`Restore brings a section back in its place, with the cards archived alongside it.`}
+        description={t`Restored sections return with their archived cards.`}
         open={showArchived}
         onOpenChange={setShowArchived}
       >
@@ -328,7 +332,6 @@ function NameSheet({
   return (
     <Sheet
       title={renaming ? t`Rename section` : t`New section`}
-      description={renaming ? undefined : t`It goes at the end. Move cards into it from the deck.`}
       save={{
         label: renaming ? t`Save` : t`Create section`,
         onPress: submit,

@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "“{deckName}” is reviewed with the other decks in its series."
-msgstr "«{deckName}» повторяется вместе с другими колодами серии."
-
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "«{label}» уже есть в «{deckName}», поэтому копия, добавленная офлайн, не сохранена."
 
@@ -735,9 +732,6 @@ msgstr "Файл .mochi, до 1 ГБ."
 msgid "A .zip file, up to 1 GB."
 msgstr "Файл .zip, до 1 ГБ."
 
-msgid "A card keeps its progress and leaves its section."
-msgstr "Карточка сохраняет прогресс и выходит из своего раздела."
-
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не удалось сохранить изменение, сделанное офлайн. {reason}"
 
@@ -829,9 +823,6 @@ msgstr "Добавить карточку"
 msgid "Add a lesson"
 msgstr "Добавить урок"
 
-msgid "Add a tag"
-msgstr "Добавить тег"
-
 msgid "Add a word"
 msgstr "Добавить слово"
 
@@ -919,8 +910,8 @@ msgstr "AI заполняет"
 msgid "AI fills in"
 msgstr "AI дополнит"
 
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
+msgid "AI follows these when filling cards. Only you see them."
+msgstr "ИИ следует им, когда заполняет карточки. Видишь их только ты."
 
 msgid "AI hook"
 msgstr "Зацепка от AI"
@@ -930,6 +921,9 @@ msgstr "Значение от AI"
 
 msgid "AI off"
 msgstr "AI выключен"
+
+msgid "AI only fills empty fields. It never changes your text."
+msgstr "ИИ заполняет только пустые поля и никогда не меняет твой текст."
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
@@ -948,6 +942,12 @@ msgstr "Все сразу"
 
 msgid "All shelves"
 msgstr "Все полки"
+
+msgid "All your decks and their history, not decks shared with you."
+msgstr "Все твои колоды с историей, без колод, которыми поделились с тобой."
+
+msgid "All your decks, with schedules and review history."
+msgstr "Все твои колоды с расписанием и историей повторений."
 
 msgctxt "deck tag"
 msgid "Alphabet"
@@ -1006,8 +1006,8 @@ msgstr "В любое время"
 msgid "Anyone can add this deck from its public page."
 msgstr "Любой может добавить эту колоду с её публичной страницы."
 
-msgid "Anyone studying the deck can start a later section early."
-msgstr "Любой, кто учит колоду, может начать следующий раздел раньше."
+msgid "Anyone can still start a later section early."
+msgstr "Следующий раздел всё равно можно начать раньше."
 
 msgid "Anyone who opens it can join"
 msgstr "Присоединиться может любой, кто её откроет"
@@ -1029,6 +1029,9 @@ msgstr "Справочник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Язык приложения и язык, на котором AI пишет значения."
+
+msgid "Apply"
+msgstr "Применить"
 
 msgid "Apply filters"
 msgstr "Применить фильтры"
@@ -1246,6 +1249,12 @@ msgstr "Карточки сохранят даты повторения, кот�
 
 msgid "Cards keep the due dates they had in Noji."
 msgstr "Карточки сохранят даты повторения, которые были в Noji."
+
+msgid "Cards keep their progress but leave their section."
+msgstr "Карточки сохраняют прогресс, но выходят из своего раздела."
+
+msgid "Cards keep their progress."
+msgstr "Карточки сохраняют прогресс."
 
 msgid "Cards outside a section"
 msgstr "Карточки без раздела"
@@ -1727,6 +1736,9 @@ msgstr "Страны, звёзды, птицы или что угодно ещё
 msgid "Create “{typed}”"
 msgstr "Создать «{typed}»"
 
+msgid "Create {listed}"
+msgstr "Создать {listed}"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Сначала создай колоду, а потом добавь в неё урок."
 
@@ -1814,6 +1826,9 @@ msgstr "Колоды"
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Колоды от Lymi. Добавь одну — учи её на своём языке."
+
+msgid "Decks in a series are reviewed together."
+msgstr "Колоды одной серии повторяются вместе."
 
 msgid "Decks to review"
 msgstr "Колоды к повторению"
@@ -2007,12 +2022,6 @@ msgstr "Эстонский"
 
 msgid "Every card"
 msgstr "Все карточки"
-
-msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
-msgstr "Все твои колоды, включая архивные, с твоим расписанием и историей повторений. Колоды, которыми с тобой поделились, не включаются."
-
-msgid "Every deck, archived ones included, with your schedule and review history."
-msgstr "Все колоды, включая архивные, с твоим расписанием и историей повторений."
 
 msgid "Every endpoint, with examples"
 msgstr "Все эндпоинты, с примерами"
@@ -2312,9 +2321,6 @@ msgstr "Как это работает"
 msgid "How it’s asked"
 msgstr "Как спрашивать"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Сколько повторений в день сохраняет счёт дней подряд. Считается каждая оценка, даже «Не помню»."
-
 msgid "How much time a day?"
 msgstr "Сколько времени в день?"
 
@@ -2420,11 +2426,8 @@ msgstr "В Noji открой созданную тобой колоду, отк�
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В другом аккаунте открой меню колоды и выбери «Экспортировать колоду» или выбери «Экспортировать библиотеку» в разделе «Ты»."
 
-msgid "In this deck"
-msgstr "В этой колоде"
-
-msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
-msgstr "Включает твоё расписание и историю повторений. Экспорт не меняет колоду."
+msgid "Includes your schedule and review history."
+msgstr "С твоим расписанием и историей повторений."
 
 msgctxt "language"
 msgid "Indonesian"
@@ -2464,9 +2467,6 @@ msgstr "Чтобы приглашать, нужно соединение."
 
 msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
 msgstr "Со следующего запроса у него не будет доступа к твоим колодам. Чтобы пользоваться им снова, подключи его из самого приложения."
-
-msgid "It goes at the end. Move cards into it from the deck."
-msgstr "Он появится в конце. Перемести в него карточки из колоды."
 
 msgid "It loads as soon as you’re back online."
 msgstr "Она загрузится, как только ты снова будешь онлайн."
@@ -2845,9 +2845,6 @@ msgstr "Перенесено в другую колоду"
 msgid "Moves from {elsewhere}"
 msgstr "Перейдёт из серии «{elsewhere}»"
 
-msgid "Moving a card keeps its progress."
-msgstr "При перемещении прогресс карточки сохраняется."
-
 msgid "Moving cards needs a connection."
 msgstr "Чтобы перемещать карточки, нужно подключение."
 
@@ -3087,9 +3084,6 @@ msgstr "Только те, кого ты пригласишь"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
-
-msgid "Only you see these."
-msgstr "Их видишь только ты."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Видно только твоё имя, а прогресс — нет."
@@ -3382,9 +3376,6 @@ msgstr "Исключить участника"
 msgid "Remove photo"
 msgstr "Удалить фото"
 
-msgid "Remove the tag {tag}"
-msgstr "Убрать тег {tag}"
-
 msgid "Remove the text"
 msgstr "Убрать текст"
 
@@ -3421,9 +3412,6 @@ msgstr "Восстановить"
 msgid "Restore {title}"
 msgstr "Восстановить {title}"
 
-msgid "Restore brings a section back in its place, with the cards archived alongside it."
-msgstr "Восстановление возвращает раздел на его место вместе с карточками, которые архивировали с ним."
-
 msgid "Restore import"
 msgstr "Восстановить импорт"
 
@@ -3432,6 +3420,9 @@ msgstr "Восстановлено"
 
 msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Восстановлена # карточка} few {Восстановлено # карточки} many {Восстановлено # карточек} other {Восстановлено # карточки}} в колоде «{deck}»"
+
+msgid "Restored sections return with their archived cards."
+msgstr "Восстановленный раздел возвращается со своими архивными карточками."
 
 msgid "Restored the deck {deck}"
 msgstr "Восстановлена колода «{deck}»"
@@ -3491,6 +3482,9 @@ msgstr "Дни с повторениями: {lit} из последних {0, pl
 
 msgid "Reviews"
 msgstr "Повторения"
+
+msgid "Reviews a day to keep your streak. Forgot counts too."
+msgstr "Сколько повторений в день держит счёт дней подряд. «Не помню» тоже считается."
 
 msgid "Revoke “{name}”?"
 msgstr "Отозвать «{name}»?"
@@ -4138,9 +4132,6 @@ msgstr "На этой неделе"
 
 msgid "Those terms are already in your decks"
 msgstr "Эти термины уже есть в твоих колодах"
-
-msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"

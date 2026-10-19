@@ -42,12 +42,12 @@ import { OnGlass } from "./surface";
 
 /**
  * Where a sheet's own text starts: 16 pt in from a plate's edge, where a row's icon or check starts,
- * as iOS sets a grouped list's headers. One line for the title, the description, headings and notes.
+ * as iOS sets a grouped list's headers. One line for headings and notes.
  */
 const ROW_INSET = 16;
 /** Whether this group's rows keep the slot: only when one of them shows an icon or a check. */
 const GroupMarked = createContext(true);
-/** Where the sheet's own text starts: the title, the description and every note. */
+/** Where the sheet's own text starts: every heading and note. */
 const SheetInset = createContext(ROW_INSET);
 
 interface SheetProps {
@@ -55,19 +55,27 @@ interface SheetProps {
   onOpenChange: (open: boolean) => void;
   /** After the sheet has gone, so what a row chose can run without moving anything under it. */
   onDismiss?: () => void;
-  /** What the sheet is about, over its groups. */
+  /**
+   * What the sheet is about, centred at its top, between close and ✓ when it saves. A sheet without
+   * one, such as a row's commands or a peek led by its own content, has no header; what a learner
+   * needs to know before acting goes in a `SheetNote` under the rows it is about.
+   */
   title?: string;
-  /** One or two sentences under the title, on the same line as the title and the rows' labels. */
-  description?: ReactNode;
-  /** A quiet action at the title's end, such as Reset. */
-  aside?: ReactNode;
-  /** In a sheet that saves, a short line centred under the title, such as how many cards filters keep. */
+  /** A short line centred under the title, such as how many cards the drafted filters keep. */
   subtitle?: string;
-  /** A level of a sheet that saves, below its first: a back chevron takes close's place, named by `label`. */
+  /**
+   * A short line centred under the title, two lines at most in every language, only for what the rows can't say: what
+   * the choice changes, a rule behind it, or why the sheet can't act while offline. Never how to
+   * use the rows.
+   */
+  description?: string;
+  /** A level below the sheet's first: a back chevron takes close's place, named by `label`. */
   back?: { label: string; onPress: () => void };
   /**
-   * A sheet that saves: close at the start and an amber ✓ at the end, the title between them, as
-   * every form has. Close and a swipe leave without saving.
+   * Close at the header's start and an amber ✓ at its end, for a sheet that holds something to
+   * save: a form, or a list ticked several at a time. Close and a swipe leave without saving. A
+   * sheet that saves nothing, such as a list where a tap is the choice, has neither: its title alone,
+   * and a swipe or the tap closes it.
    */
   save?: { label: string; onPress: () => void; disabled?: boolean; busy?: boolean };
   /** What shows first; the sheet opens at its height. */
@@ -85,9 +93,8 @@ export function Sheet({
   onOpenChange,
   onDismiss,
   title,
-  description,
-  aside,
   subtitle,
+  description,
   back,
   save,
   children,
@@ -105,66 +112,63 @@ export function Sheet({
   const fits = useAnimatedStyle(() => ({ maxHeight: tallest + keyboard.value }));
   const [peek, setPeek] = useState<number | null>(null);
   const inset = ROW_INSET;
-  const heading = save ? (
-    <View className="flex-row items-center gap-3 pb-3">
-      {back ? (
-        <GlassButton icon="back" label={back.label} onPress={back.onPress} />
-      ) : (
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
-      )}
-      <View className="flex-1 items-center">
+  const name = (
+    <View className="flex-1 items-center">
+      <Text
+        className="text-center text-md font-medium text-text"
+        accessibilityRole="header"
+        numberOfLines={1}
+      >
+        {title}
+      </Text>
+      {subtitle && (
         <Text
-          className="text-center text-md font-medium text-text"
-          accessibilityRole="header"
+          className="text-center text-sm text-muted"
+          style={{ fontVariant: ["tabular-nums"] }}
           numberOfLines={1}
         >
-          {title}
+          {subtitle}
         </Text>
-        {subtitle && (
-          <Text
-            className="text-center text-sm text-muted"
-            style={{ fontVariant: ["tabular-nums"] }}
-            numberOfLines={1}
-          >
-            {subtitle}
-          </Text>
-        )}
-      </View>
-      <GlassButton
-        icon="check"
-        label={save.label}
-        primary
-        disabled={save.disabled}
-        busy={save.busy}
-        onPress={save.onPress}
-      />
+      )}
     </View>
-  ) : (
-    title && (
-      <View
-        className={`flex-row items-center gap-3 ${description ? "pb-1.5" : "pb-3"}`}
-        style={{ paddingStart: inset }}
-      >
-        <Text className="flex-1 text-lg font-medium text-text" accessibilityRole="header">
-          {title}
-        </Text>
-        {aside}
+  );
+  const heading =
+    title === undefined ? null : save ? (
+      <View className="flex-row items-center gap-3">
+        {back ? (
+          <GlassButton icon="back" label={back.label} onPress={back.onPress} />
+        ) : (
+          <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
+        )}
+        {name}
+        <GlassButton
+          icon="check"
+          label={save.label}
+          primary
+          disabled={save.disabled}
+          busy={save.busy}
+          onPress={save.onPress}
+        />
       </View>
-    )
+    ) : (
+      <View className="flex-row">{name}</View>
+    );
+  // Room under the header, so the first group never crowds the title.
+  const header = heading && (
+    <View className="gap-1.5 pb-5">
+      {heading}
+      {description && <Text className="px-6 text-center text-base text-muted">{description}</Text>}
+    </View>
   );
   const first = (
     <SheetInset.Provider value={inset}>
       <OnGlass>
-        {heading}
-        {description && (
-          <Text className="pb-3 text-base text-text-2" style={{ paddingStart: inset }}>
-            {description}
-          </Text>
-        )}
+        {header}
         <View className="gap-3">{children}</View>
       </OnGlass>
     </SheetInset.Provider>
   );
+  // Glass buttons sit higher than a lone title, as on every form.
   const top = save ? "pt-4" : "pt-7";
   // Only a sheet with more to scroll softens its edges, and only on the side where more is.
   const offset = useSharedValue(0);

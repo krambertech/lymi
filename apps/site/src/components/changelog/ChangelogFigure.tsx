@@ -17,6 +17,7 @@ import { FuriganaFigure } from "./FuriganaFigure";
 import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
+import { JapaneseCardFigure } from "./JapaneseCardFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
@@ -49,6 +50,7 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   furigana: FuriganaFigure,
   "sign-in-apple": SignInAppleFigure,
   "command-menu": CommandMenuFigure,
+  "japanese-card": JapaneseCardFigure,
 };
 
 interface Props {

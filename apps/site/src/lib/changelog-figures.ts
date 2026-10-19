@@ -23,6 +23,7 @@ export const CHANGELOG_FIGURES = [
   "furigana",
   "sign-in-apple",
   "command-menu",
+  "japanese-card",
 ] as const;
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

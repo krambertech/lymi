@@ -421,6 +421,13 @@
       "when": 1792329224521,
       "tag": "0059_redraft_hooks",
       "breakpoints": true
+    },
+    {
+      "idx": 60,
+      "version": "6",
+      "when": 1792408427940,
+      "tag": "0060_jazzy_wild_child",
+      "breakpoints": true
     }
   ]
 }

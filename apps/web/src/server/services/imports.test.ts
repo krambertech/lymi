@@ -1,20 +1,25 @@
 import { readFileSync } from "node:fs";
+import { crc32, deflateSync } from "node:zlib";
 import {
   encodeTextImport,
   IMPORT_PART_BYTES,
   type ImportChoicesInput,
   type ImportCounts,
   type ImportOut,
+  importProgress,
+  type LymiFileCard,
+  type LymiFileManifest,
 } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
+import { centralDirectory, ZipSegment } from "../exports/zip";
 import { bytesSource } from "../imports/files";
 import { pronunciationAudio } from "./audio";
 import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
-import { attachPictures, type ImportWork } from "./import-writer";
+import { attachPictures, type ImportWork, type PendingPicture } from "./import-writer";
 import {
   archiveImport,
   attachImportPictures,
@@ -26,11 +31,14 @@ import {
   failureOf,
   finishImport,
   getImport,
+  IMPORT_STALL_MS,
   type ImportRunParams,
+  type ImportView,
   inspectImport,
   listImports,
   NOTES_PER_CHUNK,
   nextWriteStep,
+  PICTURES_PER_STEP,
   prepareImportDecks,
   previewImportChoices,
   restoreImport,
@@ -98,22 +106,45 @@ async function runImport(
   const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
   // A retried step writes no second deck.
   expect(await prepareImportDecks(ctx, id, env.IMPORTS)).toEqual(decks);
-  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
-  const { progress } = await getImport(ctx, id);
-  for (let chunk = 0; chunk < progress.chunks; chunk++) {
-    const { pictures: pending } = await writeImportChunk(ctx, id, chunk, decks, env.IMPORTS);
-    const done = await attachImportPictures(ctx, id, pending, env.IMPORTS, {
-      bucket: env.PRIVATE_IMAGES,
-      images: env.IMAGES,
-      audio: env.AUDIO,
-    });
-    pictures.stored += done.stored;
-    pictures.skipped += done.skipped;
-    pictures.recordings.stored += done.recordings.stored;
-    pictures.recordings.skipped += done.recordings.skipped;
-  }
+  const pictures = await writeAll(ctx, id, decks);
   await finishImport(ctx, id, pictures, env.IMPORTS);
   return { id, preview, result: await getImport(ctx, id) };
+}
+
+/**
+ * Writes every chunk and stores its media in steps, as the Workflow does. `onStep` sees the
+ * import after each step.
+ */
+async function writeAll(
+  ctx: ServiceContext,
+  id: string,
+  decks: Record<string, string>,
+  storage: Parameters<typeof attachImportPictures>[4] = {
+    bucket: env.PRIVATE_IMAGES,
+    images: env.IMAGES,
+    audio: env.AUDIO,
+  },
+  onStep: (item: ImportView) => void = () => {},
+) {
+  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
+  let handled = 0;
+  const { progress } = await getImport(ctx, id);
+  for (let chunk = 0; chunk < progress.chunks; chunk++) {
+    let { pictures: pending } = await writeImportChunk(ctx, id, chunk, decks, env.IMPORTS);
+    onStep(await getImport(ctx, id));
+    while (pending.length > 0) {
+      const batch: PendingPicture[] = pending.slice(0, PICTURES_PER_STEP);
+      handled += batch.length;
+      const done = await attachImportPictures(ctx, id, batch, env.IMPORTS, storage, handled);
+      pictures.stored += done.stored;
+      pictures.skipped += done.skipped;
+      pictures.recordings.stored += done.recordings.stored;
+      pictures.recordings.skipped += done.recordings.skipped;
+      pending = pending.slice(PICTURES_PER_STEP);
+      onStep(await getImport(ctx, id));
+    }
+  }
+  return pictures;
 }
 
 async function cardsOf(ctx: ServiceContext) {
@@ -915,6 +946,7 @@ describe("counting what was written", () => {
       [...pictures, { cardId: "not-a-card-of-this-import", name: "gatto.png" }],
       env.IMPORTS,
       { bucket: env.PRIVATE_IMAGES, images: env.IMAGES, audio: env.AUDIO },
+      pictures.length + 1,
     );
     const { recordings } = totals;
     expect(totals.stored + totals.skipped + recordings.stored + recordings.skipped).toBe(
@@ -1034,7 +1066,9 @@ describe("the upload", () => {
     const analytics = {
       writeDataPoint: (point?: AnalyticsEngineDataPoint) => points.push(point ?? {}),
     };
-    expect(await expireImports(db, env.IMPORTS, new Date(), analytics)).toBeGreaterThanOrEqual(1);
+    expect(
+      (await expireImports(db, env.IMPORTS, new Date(), analytics)).expired,
+    ).toBeGreaterThanOrEqual(1);
     expect(await getImport(ctx, waiting.id)).toMatchObject({
       status: "failed",
       failure: "expired",
@@ -1045,5 +1079,299 @@ describe("the upload", () => {
         blobs: [expect.stringMatching(/:failed$/)],
       }),
     );
+  });
+});
+
+/** A solid-colour RGBA PNG, built by hand so the test needs no image library. */
+function png(width: number, height: number) {
+  const row = [0, ...Array.from({ length: width }, () => [40, 90, 200, 255]).flat()];
+  const raw = Buffer.from(Array.from({ length: height }, () => row).flat());
+  const chunk = (kind: string, data: Buffer) => {
+    const body = Buffer.concat([Buffer.from(kind, "ascii"), data]);
+    const out = Buffer.alloc(12 + data.length);
+    out.writeUInt32BE(data.length, 0);
+    body.copy(out, 4);
+    out.writeUInt32BE(crc32(body), 8 + data.length);
+    return out;
+  };
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(width, 0);
+  header.writeUInt32BE(height, 4);
+  header.set([8, 6, 0, 0, 0], 8);
+  return new Uint8Array(
+    Buffer.concat([
+      Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+      chunk("IHDR", header),
+      chunk("IDAT", deflateSync(raw)),
+      chunk("IEND", Buffer.alloc(0)),
+    ]),
+  );
+}
+
+/** A Lymi export of `count` cards, each with its own picture. */
+async function pictureDeck(count: number) {
+  const encoder = new TextEncoder();
+  const segment = new ZipSegment(0);
+  const manifest: LymiFileManifest = {
+    format: "lymi",
+    version: 1,
+    exportedAt: CREATED,
+    series: [],
+    decks: [
+      {
+        id: "d1",
+        name: "Pictures",
+        description: null,
+        defaultLanguage: "it",
+        reviewModes: ["term_to_meaning"],
+        sectionProgression: "automatic",
+        series: null,
+        sections: [],
+        archivedAt: null,
+        createdAt: CREATED,
+      },
+    ],
+    counts: { decks: 1, cards: count, reviews: 0, pictures: count, sounds: 0 },
+  };
+  const cards = Array.from(
+    { length: count },
+    (_, i): LymiFileCard => ({
+      id: `c${i}`,
+      deck: "d1",
+      section: null,
+      term: `parola ${i}`,
+      meaning: `word ${i}`,
+      pronunciation: null,
+      example: null,
+      notes: null,
+      language: "it",
+      tags: [],
+      source: null,
+      meaningSource: null,
+      exampleSource: null,
+      reviewModes: null,
+      picture: { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 },
+      archivedAt: null,
+      createdAt: CREATED,
+      states: [],
+    }),
+  );
+  await segment.add("lymi.json", encoder.encode(JSON.stringify(manifest)), true);
+  await segment.add(
+    "cards.jsonl",
+    encoder.encode(cards.map((c) => `${JSON.stringify(c)}\n`).join("")),
+    true,
+  );
+  const picture = png(24, 24);
+  for (let i = 0; i < count; i++) await segment.add(`media/c${i}.png`, picture, false);
+  const directory = centralDirectory(segment.records, segment.length);
+  return new Uint8Array(Buffer.concat([segment.bytes(), directory]));
+}
+
+describe("importing a deck of many pictures", () => {
+  it("stores every picture several at a time, with one Images call each, and progress moves", async () => {
+    const ctx = await fresh();
+    const count = 300;
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(count));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    expect((await getImport(ctx, id)).progress.media).toEqual({ done: 0, total: count });
+
+    // Counts what the Images binding and the pictures bucket are asked to do.
+    const calls = { info: 0, input: 0 };
+    let saving = 0;
+    let mostAtOnce = 0;
+    const images = new Proxy(env.IMAGES, {
+      get(target, key) {
+        if (key === "info" || key === "input") calls[key]++;
+        const value = Reflect.get(target, key);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+    const bucket = new Proxy(env.PRIVATE_IMAGES, {
+      get(target, key) {
+        const value = Reflect.get(target, key);
+        if (key !== "put") return typeof value === "function" ? value.bind(target) : value;
+        return async (...args: Parameters<R2Bucket["put"]>) => {
+          mostAtOnce = Math.max(mostAtOnce, ++saving);
+          try {
+            return await target.put(...args);
+          } finally {
+            saving--;
+          }
+        };
+      },
+    });
+
+    const seen: number[] = [];
+    const pictures = await writeAll(ctx, id, decks, { bucket, images }, (item) => {
+      seen.push(importProgress(item.progress) ?? 0);
+    });
+    await finishImport(ctx, id, pictures, env.IMPORTS);
+
+    expect(pictures).toMatchObject({ stored: count, skipped: 0 });
+    // The cards land as one step and the pictures in many, each moving the bar on.
+    expect(seen.length).toBe(1 + Math.ceil(count / PICTURES_PER_STEP));
+    expect(seen[0]).toBeLessThan(0.05);
+    for (let i = 1; i < seen.length; i++) expect(seen[i]).toBeGreaterThan(seen[i - 1] as number);
+    expect(seen.at(-1)).toBe(1);
+    expect(calls).toEqual({ info: 0, input: count });
+    expect(mostAtOnce).toBeGreaterThan(1);
+
+    const active = await db
+      .select({ cardId: schema.cardImages.cardId, description: schema.cardImages.description })
+      .from(schema.cardImages)
+      .where(and(eq(schema.cardImages.userId, ctx.userId), eq(schema.cardImages.status, "active")));
+    expect(new Set(active.map((row) => row.cardId)).size).toBe(count);
+    expect(active.every((row) => row.description === "Blue")).toBe(true);
+    expect((await getImport(ctx, id)).counts).toMatchObject({ added: count, pictures: count });
+  }, 60_000);
+
+  it("counts a retried picture step once, as stored", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(8));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { pictures } = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    const storage = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
+    const first = await attachImportPictures(ctx, id, pictures, env.IMPORTS, storage, 8);
+    const again = await attachImportPictures(ctx, id, pictures, env.IMPORTS, storage, 8);
+    expect(first).toMatchObject({ stored: 8, skipped: 0 });
+    expect(again).toMatchObject({ stored: 8, skipped: 0 });
+    expect((await getImport(ctx, id)).progress.media).toEqual({ done: 8, total: 8 });
+    const active = await db
+      .select({ id: schema.cardImages.id })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, ctx.userId));
+    expect(active).toHaveLength(8);
+  });
+
+  it("drops a description that names the answer and keeps the picture", async () => {
+    const ctx = await fresh();
+    const bytes = await pictureDeck(1);
+    const { id } = await upload(ctx, "pictures.zip", bytes);
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { pictures } = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    const revealing = pictures.map((p) => ({ ...p, description: "A picture of parola 0" }));
+    const done = await attachImportPictures(
+      ctx,
+      id,
+      revealing,
+      env.IMPORTS,
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      1,
+    );
+    expect(done).toMatchObject({ stored: 1, skipped: 0 });
+    const [image] = await db
+      .select({ description: schema.cardImages.description })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, ctx.userId));
+    expect(image?.description).toBeNull();
+  });
+});
+
+describe("a picture step that fails", () => {
+  it("records no progress, and its retry counts each picture and recording once", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { pictures: pending } = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    expect(pending.filter((item) => item.kind === "recording")).toHaveLength(1);
+
+    // The recording's save fails as storage does, with no ServiceError, while the pictures land.
+    const failing = new Proxy(env.AUDIO, {
+      get(target, key) {
+        if (key === "put") return async () => Promise.reject(new Error("R2 is unavailable"));
+        const value = Reflect.get(target, key);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+    const storage = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
+    await expect(
+      attachImportPictures(ctx, id, pending, env.IMPORTS, { ...storage, audio: failing }, 3),
+    ).rejects.toThrow("R2 is unavailable");
+    expect((await getImport(ctx, id)).progress.media.done).toBe(0);
+
+    const retried = await attachImportPictures(
+      ctx,
+      id,
+      pending,
+      env.IMPORTS,
+      { ...storage, audio: env.AUDIO },
+      3,
+    );
+    expect(retried).toEqual({ stored: 2, skipped: 0, recordings: { stored: 1, skipped: 0 } });
+    expect((await getImport(ctx, id)).progress.media.done).toBe(3);
+    const images = await db
+      .select({ id: schema.cardImages.id })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, ctx.userId));
+    expect(images).toHaveLength(2);
+  });
+
+  it("keeps the first media total when a handed-over run makes the decks again", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(4));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    // The next run's decks step meets the written cards as existing, which bring no pictures.
+    await prepareImportDecks(ctx, id, env.IMPORTS);
+    expect((await getImport(ctx, id)).progress.media.total).toBe(4);
+  });
+});
+
+describe("a stalled write", () => {
+  it("is failed and counted once no step has landed for the stall time", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const now = Date.now();
+
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(now - IMPORT_STALL_MS + 60_000) })
+      .where(eq(schema.imports.id, id));
+    await expireImports(db, env.IMPORTS, new Date(now));
+    expect((await getImport(ctx, id)).status).toBe("importing");
+
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(now - IMPORT_STALL_MS - 60_000) })
+      .where(eq(schema.imports.id, id));
+    const swept = await expireImports(db, env.IMPORTS, new Date(now));
+    expect(swept.stalled).toBeGreaterThanOrEqual(1);
+    expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "internal" });
+  });
+
+  it("keeps moving while picture steps land", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(2));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { pictures } = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(Date.now() - IMPORT_STALL_MS - 60_000) })
+      .where(eq(schema.imports.id, id));
+    await attachImportPictures(
+      ctx,
+      id,
+      pictures,
+      env.IMPORTS,
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      2,
+    );
+    await expireImports(db, env.IMPORTS);
+    expect((await getImport(ctx, id)).status).toBe("importing");
   });
 });

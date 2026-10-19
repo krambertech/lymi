@@ -65,6 +65,7 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("it")).toEqual(["meaning", "example"]);
     expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
     expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
@@ -861,6 +862,7 @@ describe("enrichment that follows the deck", () => {
         has_instructions: false,
         samples: 0,
         skipped: 1,
+        languages: ["et"],
       }),
     );
   });

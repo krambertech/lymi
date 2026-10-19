@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   drawsReadings,
   examplesCarryReadings,
+  LANGUAGE_FORMATS,
+  languageFormat,
   languageScript,
   languageSupport,
+  pronunciationGuide,
   speechInputs,
   speechLocale,
   supportedLanguage,
@@ -88,5 +91,44 @@ describe("writtenWithReading", () => {
   it("calls every other pronunciation a pronunciation", () => {
     for (const tag of ["ko", "ru", "en", "zh-yue", null])
       expect(writtenWithReading(tag)).toBe(false);
+  });
+});
+
+describe("languageFormat", () => {
+  it("finds a format from any tag of its language", () => {
+    expect(languageFormat("ja-JP")?.tag).toBe("ja");
+    expect(languageFormat("ko-KR")?.name).toBe("Korean");
+    expect(languageFormat("zh-TW")?.pronunciation.label).toBe("reading");
+  });
+  it("follows the record lookup, so Cantonese gets no pinyin format", () => {
+    expect(languageFormat("zh-yue")).toBeNull();
+    expect(languageFormat("zh-cmn-Hant-TW")?.duplicates).toBe("term-and-reading");
+  });
+  it("has none for a language Lymi writes the general way", () => {
+    for (const tag of ["it", "en", "", null, "constructor"]) expect(languageFormat(tag)).toBeNull();
+  });
+  it("calls Korean's pronounced Hangul a pronunciation, not a Reading", () => {
+    expect(languageFormat("ko")?.pronunciation).toMatchObject({
+      label: "pronunciation",
+      sample: { term: "학교", pronunciation: "학꾜" },
+    });
+    expect(writtenWithReading("ko")).toBe(false);
+  });
+  it("tells a client to leave an empty pronunciation out, which the API accepts, and the model to write null", () => {
+    expect(languageFormat("ko")?.pronunciation.format).toBe(
+      "How the term is said, in Hangul, only where that differs from its spelling. Leave it out when the term is said as written. Not romanization or IPA.",
+    );
+    expect(pronunciationGuide("ko")).toContain("Null when the term is said as written.");
+    for (const format of LANGUAGE_FORMATS)
+      expect(format.pronunciation.format).not.toMatch(/\bnull\b/i);
+  });
+  it("gives a bracket pattern only to a reading style with an inline notation", () => {
+    for (const format of LANGUAGE_FORMATS) {
+      if (!format.example) continue;
+      const pattern = new RegExp(format.example.pattern, "gu");
+      expect(format.example.sample).toMatch(pattern);
+    }
+    expect(languageFormat("ja")?.example).not.toBeNull();
+    expect(languageFormat("zh")?.example).toBeNull();
   });
 });

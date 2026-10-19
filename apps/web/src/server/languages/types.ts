@@ -1,6 +1,9 @@
 import type { EnrichedField, SupportedTag } from "@lymi/core";
 
-/** How to write each field of a card in one language, as the enrichment guide says it. */
+/**
+ * How to write each field of a card in one language, as the enrichment guide says it. A language
+ * with a format in core takes its pronunciation and example lines from there instead.
+ */
 export type FieldGuide = Partial<Record<"meaning" | "example" | "notes" | "pronunciation", string>>;
 
 /** A rule the evaluation holds this language's replies to, beside the house rules in checks.ts. */

@@ -21,6 +21,8 @@ import {
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
+  LanguageOut,
+  languageFormat,
   ResponseShape,
   ReviewMode,
   RoundsOut,
@@ -124,7 +126,7 @@ export const DECK_PREVIEW_LIMIT = 15;
 
 const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and tend cards; the learner reviews them in the app, and you never grade a review.
 
-Start with list_decks. It names the decks, their languages and the language meanings are written in.
+Start with list_decks. It names the decks, their languages and the language meanings are written in. Its languages map says how each deck language writes a card's pronunciation and example; write those fields in that format.
 
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
 
@@ -169,7 +171,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "List decks",
       description:
-        "Every active deck with its card count and how many cards are due now, plus the language meanings are written in. Call this first: card adds need a deck id. " +
+        "Every active deck with its card count and how many cards are due now, the language meanings are written in, and how each deck language writes a pronunciation and an example. Call this first: card adds need a deck id. " +
         "Set archived to true to list archived decks instead, for example to find one to restore.",
       inputSchema: z.object({
         archived: z
@@ -189,6 +191,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         return result({
           meaningLanguage: settings.meaningLanguage,
           decks: decks.map(deckSummary),
+          languages: deckLanguages(decks),
         });
       }),
   );
@@ -1337,7 +1340,22 @@ function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
 const DecksOut = z.object({
   meaningLanguage: z.string().describe("The language meanings are written in"),
   decks: z.array(DeckSummaryOut),
+  languages: z
+    .record(z.string(), LanguageOut)
+    .describe(
+      "How cards are written in each deck language that has a format of its own, keyed by the deck's defaultLanguage. A deck language missing here holds IPA or a plain respelling, with plain examples.",
+    ),
 });
+
+/** The format of each deck language that has one, keyed by the tag as the deck holds it. */
+function deckLanguages(decks: readonly { defaultLanguage: string | null }[]) {
+  return Object.fromEntries(
+    decks.flatMap(({ defaultLanguage }) => {
+      const format = languageFormat(defaultLanguage);
+      return defaultLanguage && format ? [[defaultLanguage, format]] : [];
+    }),
+  );
+}
 
 const DeckSummaryResultOut = z.object({
   deck: DeckOut,

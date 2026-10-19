@@ -31,8 +31,8 @@ export function enrichmentStalled(
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
-/** Languages whose cards list a word's forms, so notes start on. */
-const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv"]);
+/** Languages whose cards list a word's forms or roots, so notes start on. */
+const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv", "ko"]);
 
 /** Languages whose spelling does not show how a word is said or stressed, so pronunciation starts on. */
 const READING_LANGUAGES = new Set(["zh", "ja", "ko", "ru", "uk"]);

@@ -1,4 +1,4 @@
-import { languageKey } from "@lymi/core";
+import { LANGUAGE_FORMATS, languageFormat, languageKey, pronunciationGuide } from "@lymi/core";
 import { type FieldGuide, LANGUAGE_PROMPTS, languagePrompts } from "../languages";
 
 /**
@@ -82,24 +82,36 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   zh: {
     notes: "Noun: its usual measure word (*一本书*: 本 for books).",
-    pronunciation: "Pinyin with tone marks (xuéxí). Not IPA.",
   },
   ko: {
-    notes: "Verb or adjective: its polite present form (*가다 → 가요*).",
-    pronunciation: "Revised Romanization (hakgyo). Not IPA.",
+    notes:
+      "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",
   },
 };
 
 /** A deck's guide as one block of text the model reads, or undefined for a language without one. */
 export function languageGuide(tag: string | null | undefined): string | undefined {
   const enrich = languagePrompts(tag)?.enrich;
-  const guide = enrich?.guide ?? GUIDES[languageKey(tag)];
-  if (!guide) return undefined;
-  return (["meaning", "example", "notes", "pronunciation"] as const)
-    .flatMap((field) => (guide[field] ? [`${field}: ${guide[field]}`] : []))
-    .concat(enrich ? [`worked example: ${enrich.example}`] : [])
-    .join("\n");
+  const format = languageFormat(tag);
+  const guide: FieldGuide = {
+    ...(enrich?.guide ?? GUIDES[languageKey(tag)]),
+    ...(format?.example && { example: `${format.example.format} ${format.example.sample}` }),
+    ...(format && {
+      pronunciation: `${pronunciationGuide(tag)} For example: ${format.pronunciation.sample.term} → ${format.pronunciation.sample.pronunciation}.`,
+    }),
+  };
+  const lines = (["meaning", "example", "notes", "pronunciation"] as const).flatMap((field) =>
+    guide[field] ? [`${field}: ${guide[field]}`] : [],
+  );
+  if (lines.length === 0) return undefined;
+  return lines.concat(enrich ? [`worked example: ${enrich.example}`] : []).join("\n");
 }
 
 /** Every language with a guide, for the evaluation's coverage report. */
-export const GUIDED_LANGUAGES = [...Object.keys(GUIDES), ...Object.keys(LANGUAGE_PROMPTS)];
+export const GUIDED_LANGUAGES = [
+  ...new Set([
+    ...Object.keys(GUIDES),
+    ...Object.keys(LANGUAGE_PROMPTS),
+    ...LANGUAGE_FORMATS.map((format) => format.tag),
+  ]),
+];

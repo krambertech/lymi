@@ -9,12 +9,12 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "pronunciation",
     type: "string",
-    note: "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), a Chinese card in pinyin with tone marks (xuéxí for 学习).",
+    note: "How the term is said: IPA or a plain respelling, unless the Languages page gives the card's language a format of its own, such as kana for Japanese.",
   },
   {
     name: "example",
     type: "string",
-    note: "One sentence using the term. A Japanese example carries a kana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。",
+    note: "One sentence using the term. The Languages page says which languages carry readings inside it, and in what notation.",
   },
   {
     name: "notes",

@@ -1,0 +1,12 @@
+---
+import { LANGUAGE_FORMATS } from "@lymi/core";
+import DocsLanguagesPage from "../../components/islands/DocsLanguagesPage";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Read from the language records in packages/core on every build, so the page follows the code.
+const languages = LANGUAGE_FORMATS;
+---
+
+<BaseLayout title="Languages · Lymi docs" description="How a card's pronunciation and example are written in each language Lymi has a format for." canonicalPath="/docs/languages">
+  <DocsLanguagesPage client:load languages={languages} />
+</BaseLayout>

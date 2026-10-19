@@ -25,7 +25,7 @@ import {
   stripReadings,
   TEXT_MODES,
 } from "@lymi/core";
-import { TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
+import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
@@ -521,6 +521,8 @@ type CardWrite = {
   reports?: AnalyticsEvent | undefined;
   /** The AI's text from each field the write rewrites, for the deck's style. */
   corrections?: readonly Correction[] | undefined;
+  /** The card's language once the write lands. */
+  language?: string | null | undefined;
   /** Fields the write converted to how Lymi stores them. */
   normalized?: NormalizedField[] | undefined;
 };
@@ -556,14 +558,21 @@ const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
 function reportWrites(ctx: ServiceContext, writes: CardWrite[], failed: ReadonlySet<string>) {
   const archived = new Map<CardOrigin, { count: number; ai_written: number }>();
   const corrected = { count: 0, meaning: 0, example: 0, notes: 0, pronunciation: 0 };
+  const languages = [];
   for (const write of writes) {
-    if (failed.has(write.id)) continue;
-    if (write.corrections?.length) corrected.count += 1;
-    for (const { field } of write.corrections ?? []) corrected[field] += 1;
+    if (failed.has(write.id) || !write.corrections?.length) continue;
+    corrected.count += 1;
+    languages.push(write.language);
+    for (const { field } of write.corrections) corrected[field] += 1;
   }
   const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
   if (channel && corrected.count > 0) {
-    track(ctx.analytics, { name: "ai_text_corrected", channel, ...corrected });
+    track(ctx.analytics, {
+      name: "ai_text_corrected",
+      channel,
+      ...corrected,
+      languages: eventLanguages(languages),
+    });
   }
   for (const write of writes) {
     const event = write.reports;
@@ -987,6 +996,7 @@ function editWrite(
     states: modes !== undefined || patch.deckId !== undefined,
     tags: patch.tags,
     corrections: correctionsOf(ctx, current, patch, sources, now),
+    language: patch.language === undefined ? current.language : patch.language,
     normalized: text.normalized,
     reports:
       hook && !current.hook && sources.hookSource

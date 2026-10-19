@@ -18,6 +18,14 @@ export const chinese = {
   extlangs: ["cmn"],
   engine: "pinyin",
   pronunciation: "reading",
+  format: {
+    name: "Chinese",
+    pronunciation: "Pinyin with tone marks, not IPA.",
+    empty: null,
+    never: null,
+    sample: { term: "学习", pronunciation: "xuéxí" },
+    duplicates: "term-and-reading",
+  },
   // Voices read hanzi with tone sandhi and pinyin text poorly, so speech says the term.
   speech: { saysReading: false, leadIn: false, locales: { Hant: "cmn-TW" } },
 } as const satisfies LanguageSupport;

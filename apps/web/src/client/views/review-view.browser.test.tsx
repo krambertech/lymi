@@ -191,10 +191,10 @@ test("a traditional Chinese card draws pinyin over its characters", async () => 
 });
 
 test("another language's reading waits for the reveal, even on a New card", async () => {
-  const { reveal } = await reviewCue({ term: "학교", language: "ko", pronunciation: "hakgyo" }, 0);
-  expect(shown("hakgyo")).toHaveLength(0);
+  const { reveal } = await reviewCue({ term: "학교", language: "ko", pronunciation: "학꾜" }, 0);
+  expect(shown("학꾜")).toHaveLength(0);
   await reveal();
-  await expect.poll(() => shown("hakgyo")).toHaveLength(1);
+  await expect.poll(() => shown("학꾜")).toHaveLength(1);
 });
 
 test("a relearning card under review says Forgotten", async () => {

@@ -49,6 +49,18 @@ const TERMS: Record<string, string[]> = {
     "tags",
     "queue",
   ],
+  "/docs/languages": [
+    "pronunciation",
+    "reading",
+    "furigana",
+    "pinyin",
+    "hangul",
+    "ipa",
+    "japanese",
+    "chinese",
+    "korean",
+    "format",
+  ],
   "/docs/import-from-anki": [
     "anki",
     "apkg",

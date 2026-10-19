@@ -40,6 +40,19 @@ type Drawn = { text: string; vowel: boolean; restored: boolean; acute: boolean }
  * consonant draws nothing.
  */
 export function markedForm(term: string, pronunciation: string, rules: StressRules): string | null {
+  const read = readStress(term, pronunciation, rules);
+  return read && read.marks > 0 ? read.form : null;
+}
+
+/**
+ * The term as `markedForm` draws it and how many marks it carries, or null when the pronunciation
+ * is not the term with marks added, so a caller can tell marks that say nothing from wrong ones.
+ */
+export function readStress(
+  term: string,
+  pronunciation: string,
+  rules: StressRules,
+): { form: string; marks: number } | null {
   const plain = units(clean(term));
   const marked = units(clean(pronunciation));
   if (plain.length === 0 || plain.length !== marked.length) return null;
@@ -66,7 +79,7 @@ export function markedForm(term: string, pronunciation: string, rules: StressRul
       out += acute ? char.text + STRESS : char.text;
     }
   }
-  return marks > 0 ? out.normalize("NFC") : null;
+  return { form: out.normalize("NFC"), marks };
 }
 
 /** A hyphen between letters joins one word, so что́-то counts its syllables across it. */

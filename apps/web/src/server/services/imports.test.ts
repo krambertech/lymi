@@ -297,6 +297,32 @@ describe("importing a Quizlet set", () => {
     expect(stored?.enrichFields).toEqual(newDeckEnrichFields("tl"));
   });
 
+  it("moves a Russian term's stress into its pronunciation and keeps за́мок and замо́к apart", async () => {
+    const ctx = await fresh();
+    const bytes = pasted("за́мок\tcastle\nзамóк\tlock\nзамок\tlock again\nдом\thouse", {
+      deckName: "Слова",
+    });
+    const { id } = await upload(ctx, "quizlet.txt", bytes);
+    await inspectImport(ctx, id, env.IMPORTS);
+    const deck = (await getImport(ctx, id)).summary?.decks[0]?.key as string;
+    const { preview, result } = await runImport(
+      ctx,
+      "quizlet.txt",
+      { languages: { [deck]: "ru" }, roles: {} },
+      bytes,
+    );
+    // A Quizlet set keeps a term it repeats, so the unstressed замок is added too.
+    expect(preview).toMatchObject({ added: 4, duplicates: 0 });
+    const cards = (await cardsOf(ctx)).filter((c) => c.term === "замок");
+    expect(cards.map((c) => [c.meaning, c.pronunciation, c.normalizedTerm])).toEqual(
+      expect.arrayContaining([
+        ["castle", "за́мок", "замок"],
+        ["lock", "замо́к", "замок"],
+      ]),
+    );
+    expect(result.counts?.readingsConverted).toBe(2);
+  });
+
   it("reads a bare .txt with detected separators", async () => {
     const ctx = await fresh();
     const text = quizletText("02-comma-semicolon.txt");

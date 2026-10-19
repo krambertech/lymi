@@ -11,6 +11,7 @@ import { purgeCardAudio } from "./services/audio";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
+import { runStressBackfill } from "./services/stress-backfill";
 
 export type { AppEnv } from "./app";
 
@@ -66,6 +67,15 @@ export default {
             analytics: ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
           },
           { at },
+        ),
+      );
+    }
+    // Hourly until its log reports nothing written; remove it once production's has. docs/operations.md.
+    if (at.getUTCMinutes() < 15) {
+      run(
+        "stress-backfill",
+        runStressBackfill(createDb(env.DB), { dryRun: false }).then((counts) =>
+          console.log(JSON.stringify({ job: "stress-backfill", ...counts })),
         ),
       );
     }

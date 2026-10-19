@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  boldStress,
   fieldsFromRoles,
   fitFields,
   guessFieldRoles,
@@ -23,6 +24,21 @@ const mora = (kana: string, line: "high" | "low" | "drop") =>
           line === "drop" ? "border-right-width:0.1em;border-right-style:solid;" : ""
         }"></span>`
   }</span>`;
+
+describe("boldStress", () => {
+  it("writes a bold or underlined vowel inside a Cyrillic word with U+0301", () => {
+    expect(boldStress("з<b>а</b>мок")).toBe("за\u0301мок");
+    expect(boldStress("зам<u>о</u>к, м<strong>у</strong>ка")).toBe("замо\u0301к, му\u0301ка");
+    expect(htmlToText(boldStress("<div>рук<B>а</B> и з<b>а</b>мок</div>"))).toBe(
+      "рука\u0301 и за\u0301мок",
+    );
+  });
+  it("leaves a tag around anything but one vowel in a word", () => {
+    expect(boldStress("<b>а</b> не <b>о</b>")).toBe("<b>а</b> не <b>о</b>");
+    expect(boldStress("the c<b>a</b>t")).toBe("the c<b>a</b>t");
+    expect(boldStress("<b>замок</b>")).toBe("<b>замок</b>");
+  });
+});
 
 describe("htmlToText", () => {
   it("turns block tags and breaks into lines and drops the rest", () => {

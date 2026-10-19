@@ -178,7 +178,7 @@ export const cards = sqliteTable(
       .notNull()
       .references(() => decks.id, { onDelete: "cascade" }),
     term: text("term").notNull(),
-    /** `normaliseTerm(term)`. The duplicate rule compares this, per user and language. */
+    /** `termKey(language, term)`. The duplicate rule compares this, per user and language. */
     normalizedTerm: text("normalized_term").notNull().default(""),
     meaning: text("meaning"),
     pronunciation: text("pronunciation"),

@@ -3,10 +3,10 @@ import {
   dayWindow,
   LESSON_READS_PER_DAY,
   newId,
-  normaliseTerm,
   normalizeCardText,
   readingKey,
   sameReading,
+  termKey,
 } from "@lymi/core";
 import { textCallCost } from "@lymi/core/analytics";
 import { and, count, desc, eq, gt, isNull, sql } from "@lymi/core/db";
@@ -358,7 +358,7 @@ async function readInto(
     if (!parsed.success) return;
     const language = lesson.languages.get(deck ?? lesson.fallback) ?? null;
     const t = { ...parsed.data, ...normalizeCardText(language, parsed.data).fields };
-    const key = normaliseTerm(t.term);
+    const key = termKey(language, t.term);
     const reading = readingKey({ term: t.term, language, pronunciation: t.pronunciation });
     if (seen.has(`${key}\u0000${reading ?? ""}`)) return;
     seen.add(`${key}\u0000${reading ?? ""}`);

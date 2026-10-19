@@ -411,6 +411,9 @@ msgstr "{added, plural, one {До зупинки імпорту додано # �
 msgid "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
 msgstr "{added, plural, one {Додано # картку в колоду {name}} few {Додано # картки в колоду {name}} many {Додано # карток в колоду {name}} other {Додано # картки в колоду {name}}}"
 
+msgid "{after} of {total}"
+msgstr "{after} з {total}"
+
 #. placeholder {0}: chosen.length
 #. placeholder {1}: decks.length
 #. placeholder {2}: chosen.length
@@ -545,6 +548,9 @@ msgstr "{field} стає"
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {термін знайдено} few {терміни знайдено} many {термінів знайдено} other {терміна знайдено}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {На # картці} few {На # картках} many {На # картках} other {На # картках}} вже було 20 тегів, тож тег туди не додано."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
 
@@ -636,6 +642,12 @@ msgstr "{sectionCount, plural, one {# розділ} few {# розділи} many 
 msgid "{sectionName} is ready. Start it to review its cards."
 msgstr "Можна починати {sectionName}. Почни розділ, щоб повторювати його картки."
 
+msgid "{sent, plural, one {Couldn’t change the tags on {unsaved} of # card.} other {Couldn’t change the tags on {unsaved} of # cards.}}"
+msgstr "{sent, plural, one {Не вдалося змінити теги на {unsaved} з # картки.} few {Не вдалося змінити теги на {unsaved} з # карток.} many {Не вдалося змінити теги на {unsaved} з # карток.} other {Не вдалося змінити теги на {unsaved} з # картки.}}"
+
+msgid "{sent, plural, one {Couldn’t change the tags on # card.} other {Couldn’t change the tags on # cards.}}"
+msgstr "{sent, plural, one {Не вдалося змінити теги на # картці.} few {Не вдалося змінити теги на # картках.} many {Не вдалося змінити теги на # картках.} other {Не вдалося змінити теги на # картки.}}"
+
 #. placeholder {0}: s.deckIds.length
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
@@ -669,6 +681,9 @@ msgstr "{total, plural, one {Переміщено {saved} з # картки в �
 
 msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
 msgstr "{total, plural, one {Знято позначку «важлива» з {saved} із # картки} few {Знято позначку «важлива» з {saved} із # карток} many {Знято позначку «важлива» з {saved} із # карток} other {Знято позначку «важлива» з {saved} із # картки}}"
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Теги для # картки} few {Теги для # карток} many {Теги для # карток} other {Теги для # картки}}"
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {Засвоєно {knownN} з # картки} few {Засвоєно {knownN} з # карток} many {Засвоєно {knownN} з # карток} other {Засвоєно {knownN} з # картки}}"
@@ -1257,11 +1272,20 @@ msgstr "Змінити поля"
 msgid "Change languages"
 msgstr "Змінити мови"
 
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {Теги змінено на # картці} few {Теги змінено на # картках} many {Теги змінено на # картках} other {Теги змінено на # картки}}"
+
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}. {full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{count, plural, one {Теги змінено на # картці} few {Теги змінено на # картках} many {Теги змінено на # картках} other {Теги змінено на # картки}}. {full, plural, one {На # картці} few {На # картках} many {На # картках} other {На # картках}} вже було 20 тегів, тож тег туди не додано."
+
 msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
 msgstr "Тут з’являються зміни від AI-застосунків, імпорту, доповнень AI і спільних колод."
 
 msgid "Changing series needs a connection."
 msgstr "Щоб змінювати серії, потрібне з’єднання."
+
+msgid "Changing tags needs a connection."
+msgstr "Щоб змінювати теги, потрібне з’єднання."
 
 msgid "Changing the goal needs a connection."
 msgstr "Щоб змінити мету, потрібне з’єднання."
@@ -1700,6 +1724,9 @@ msgstr "Не вдалося записати файл. Спробуй ще ра�
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Країни, зорі, птахи чи будь-що інше з назвами."
 
+msgid "Create “{typed}”"
+msgstr "Створити «{typed}»"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Спершу створи колоду, а тоді додай до неї урок."
 
@@ -2091,6 +2118,9 @@ msgstr "Доповнити решту з AI"
 
 msgid "Filter"
 msgstr "Фільтр"
+
+msgid "Find or create a tag"
+msgstr "Знайди або створи тег"
 
 msgid "Find terms"
 msgstr "Знайти терміни"
@@ -2948,6 +2978,9 @@ msgstr "Розділів ще немає"
 
 msgid "No series"
 msgstr "Без серії"
+
+msgid "No tags yet. Type one to create it."
+msgstr "Тегів ще немає. Введи назву, щоб створити тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Поки колода в архіві, її ніхто не може додати."
@@ -4105,6 +4138,9 @@ msgstr "Цього тижня"
 
 msgid "Those terms are already in your decks"
 msgstr "Ці терміни вже є у твоїх колодах"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Познач тег, щоб додати його на всі картки, або зніми позначку, щоб прибрати."
 
 msgid "Time"
 msgstr "Час"

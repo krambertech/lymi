@@ -239,6 +239,10 @@
     {
       "name": "0059_redraft_hooks.sql",
       "sha256": "0ad91f4353cd60cef4243c8e60b3e8ecf730a2bcf811d0392051f52151c9439e"
+    },
+    {
+      "name": "0060_jazzy_wild_child.sql",
+      "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
     }
   ]
 }

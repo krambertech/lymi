@@ -10,12 +10,11 @@ type Scope =
   | { cardId: string; publicationId?: never; cardIds?: never }
   | { cardIds: string[]; publicationId?: never; cardId?: never };
 
-/** Stored audio the public may hear: generated speech, or a recording its publisher approved. */
-const publicAudio = sql<number>`case when ${cards.audioKey} is not null and (${cards.audioSource} is not 'recorded' or ${cards.audioApprovedKey} = ${cards.audioKey}) then 1 else 0 end`;
+const publicAudio = sql<number>`case when ${cards.audioKey} is not null then 1 else 0 end`;
 
 /**
  * A published deck's pictures and stored pronunciation, live for as long as the publication,
- * the card and the asset are, and for a recording only once its publisher approved that clip. The same predicate serves the public page and the byte route;
+ * the card and the asset are. The same predicate serves the public page and the byte route;
  * only the delivery view selects R2 keys, which never reach a public response.
  */
 export function livePublicationMedia(

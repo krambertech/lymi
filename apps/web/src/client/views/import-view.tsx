@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { splitNoteTypes } from "@lymi/client/imports";
-import { type ImportSource, MAX_IMPORT_BYTES } from "@lymi/core";
+import { type ImportSource, importProgress, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -420,8 +420,8 @@ export function ImportWorkingView({
     ? upload.total > 0
       ? upload.sent / upload.total
       : 0
-    : item.status === "importing" && item.progress.chunks > 0
-      ? item.progress.written / item.progress.chunks
+    : item.status === "importing"
+      ? importProgress(item.progress)
       : null;
   const heading =
     item.status === "importing"

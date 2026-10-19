@@ -11,6 +11,8 @@ import {
   noFilters,
   retag,
   splitForms,
+  tagEdits,
+  tagPicker,
 } from "./deck-list";
 
 const day = 86_400_000;
@@ -155,6 +157,68 @@ describe("retag", () => {
     const twenty = Array.from({ length: 20 }, (_, i) => `t${i}`);
     expect(retag(twenty, ["one more"], [])).toEqual({ tags: twenty, full: true });
     expect(retag(twenty, ["one more"], ["t0"]).tags.at(-1)).toBe("one more");
+  });
+});
+
+describe("tagPicker", () => {
+  const cards = [["food", "verbs"], ["Food"], []];
+  const pick = (choices: [string, "all" | "none" | "mixed"][] = [], query = "") =>
+    tagPicker({
+      cards,
+      created: [],
+      suggestions: [{ name: "travel" }, { name: "FOOD" }],
+      choices: new Map(choices),
+      query,
+    });
+
+  it("offers the cards' tags, most carried first, then the learner's others, each once", () => {
+    const p = pick();
+    expect(p.shown).toEqual(["food", "verbs", "travel"]);
+    expect(["food", "verbs", "travel"].map(p.choiceOf)).toEqual(["mixed", "mixed", "none"]);
+    expect(p.after("food")).toBe(2);
+  });
+
+  it("puts a tag on some cards on all first, then off all, then back as it was", () => {
+    expect(pick().next("food")).toBe("all");
+    expect(pick([["food", "all"]]).next("food")).toBe("none");
+    expect(pick([["food", "none"]]).next("food")).toBe("mixed");
+    expect(pick().next("travel")).toBe("all");
+  });
+
+  it("saves only the ticks that change something", () => {
+    expect(
+      pick([
+        ["food", "all"],
+        ["verbs", "none"],
+        ["travel", "none"],
+      ]).change,
+    ).toEqual({
+      add: ["food"],
+      remove: ["verbs"],
+    });
+  });
+
+  it("finds a tag in any case and offers to create a name no tag has", () => {
+    expect(pick([], "FO").shown).toEqual(["food"]);
+    expect(pick([], "FOOD").fresh).toBe(false);
+    expect(pick([], "  street signs ").typed).toBe("street signs");
+    expect(pick([], "street signs").fresh).toBe(true);
+  });
+});
+
+describe("tagEdits", () => {
+  it("edits only the cards a change touches, with each card's old tags to undo", () => {
+    const twenty = Array.from({ length: 20 }, (_, i) => `t${i}`);
+    const chosen = [
+      row("a", { tags: ["food"] }),
+      row("b", { tags: [] }),
+      row("c", { tags: twenty }),
+    ];
+    expect(tagEdits(chosen, { add: ["food"], remove: [] })).toEqual({
+      edits: [{ cardId: "b", tags: ["food"] }],
+      undo: [{ cardId: "b", tags: [] }],
+      full: 1,
+    });
   });
 });
 

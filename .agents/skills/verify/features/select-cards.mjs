@@ -89,7 +89,15 @@ export default async function drive({ page, step, api, expect }) {
     await expect.poll(() => total(other.id), { timeout: 60_000 }).toBe(other.total + deck.total);
     await page.getByRole("button", { name: "Undo", exact: true }).click();
     await expect.poll(() => total(deck.id), { timeout: 60_000 }).toBe(deck.total);
-    return { to: other.name, moved: deck.total, back: await total(deck.id) };
+    // Undo puts each card back in the section it left, which step 3 made Lesson 1 for all of them.
+    const { sections } = await api(`/api/decks/${deck.id}/sections`);
+    const first = sections.find((s) => s.name === "Lesson 1");
+    await expect
+      .poll(async () => (await cards()).filter((r) => r.card.sectionId === first.id).length, {
+        timeout: 60_000,
+      })
+      .toBe(deck.total);
+    return { to: other.name, moved: deck.total, back: await total(deck.id), section: first.name };
   });
 
   await step("Archive archives every chosen card, and Undo restores them", async () => {

@@ -4,7 +4,6 @@ import { errorMessage } from "@lymi/client/api";
 import {
   archiveCards,
   markCards,
-  moveCardsBack,
   moveCardsToDeck,
   NOTHING_CHANGED,
   restoreCards,
@@ -65,7 +64,8 @@ export function useCardBatch(deckId: string) {
 
   const moveToDeck = (cardIds: string[], to: { id: string; name: string }) => {
     const deckName = to.name;
-    return moveCardsToDeck(qc, deckId, cardIds, to.id).then(
+    const moving = moveCardsToDeck(qc, deckId, cardIds, to.id);
+    return moving.done.then(
       (done) => {
         const saved = done.length;
         const total = cardIds.length;
@@ -82,9 +82,9 @@ export function useCardBatch(deckId: string) {
             label: t`Undo`,
             onPress: () => {
               toast.close(id);
-              moveCardsBack(qc, deckId, done).catch((e) =>
-                toast.add({ id, error: true, title: errorMessage(e) }),
-              );
+              moving
+                .undo(done)
+                .catch((e) => toast.add({ id, error: true, title: errorMessage(e) }));
             },
           },
         });

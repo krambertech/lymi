@@ -1,14 +1,18 @@
 import { QueryClient } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { archiveCards, markCards, NOTHING_CHANGED } from "./card-batch";
+import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "./card-batch";
 import type { DeckRow } from "./deck-list";
 import { deckCardsQuery } from "./queries";
 
-const api = vi.hoisted(() => ({ archiveCards: vi.fn(), setCardsImportant: vi.fn() }));
+const api = vi.hoisted(() => ({
+  archiveCards: vi.fn(),
+  editCards: vi.fn(),
+  setCardsImportant: vi.fn(),
+}));
 vi.mock("./api", () => ({ api }));
 
-const row = (id: string, important = false) =>
-  ({ card: { id, important, tags: [] }, state: null }) as unknown as DeckRow;
+const row = (id: string, important = false, sectionId: string | null = null) =>
+  ({ card: { id, important, sectionId, tags: [] }, state: null }) as unknown as DeckRow;
 const key = deckCardsQuery("d1").queryKey;
 let qc: QueryClient;
 const ids = () => qc.getQueryData<DeckRow[]>(key)?.map((r) => r.card.id);
@@ -66,5 +70,34 @@ describe("marking chosen cards important", () => {
     await marking.done;
     await expect(marking.undo(["b"])).rejects.toThrow("offline");
     expect(marks()).toEqual([false, true, false]);
+  });
+});
+
+describe("moving chosen cards to another deck", () => {
+  it("puts each card back in the section it left on Undo, or in none when it has gone", async () => {
+    qc.setQueryData(key, [row("a", false, "s1"), row("b", false, "s2"), row("c")]);
+    api.editCards
+      .mockResolvedValueOnce({
+        results: ["a", "b", "c"].map((id) => ({ id, status: "updated" })),
+      })
+      .mockResolvedValueOnce({
+        results: [
+          { id: "a", status: "updated" },
+          { id: "b", status: "error", code: "not_found", error: "Section not found" },
+          { id: "c", status: "updated" },
+        ],
+      })
+      .mockResolvedValueOnce({ results: [{ id: "b", status: "updated" }] });
+    const moving = moveCardsToDeck(qc, "d1", ["a", "b", "c"], "d2");
+    const done = await moving.done;
+    await moving.undo(done);
+    expect(api.editCards.mock.calls.slice(1).map(([edits]) => edits)).toEqual([
+      [
+        { cardId: "a", deckId: "d1", sectionId: "s1" },
+        { cardId: "b", deckId: "d1", sectionId: "s2" },
+        { cardId: "c", deckId: "d1", sectionId: null },
+      ],
+      [{ cardId: "b", deckId: "d1", sectionId: null }],
+    ]);
   });
 });

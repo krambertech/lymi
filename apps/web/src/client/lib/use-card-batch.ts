@@ -3,7 +3,6 @@ import { useLingui } from "@lingui/react/macro";
 import {
   archiveCards,
   markCards,
-  moveCardsBack,
   moveCardsToDeck,
   NOTHING_CHANGED,
   restoreCards,
@@ -11,6 +10,10 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { errorMessage } from "./api";
+
+let batches = 0;
+/** The batch toast up now, which the next batch's replaces. */
+let shown: string | undefined;
 
 /**
  * Archive, Move to deck and the important mark for a deck's chosen cards, each saying what it did
@@ -20,20 +23,34 @@ import { errorMessage } from "./api";
 export function useCardBatch(deckId: string) {
   const { t } = useLingui();
   const qc = useQueryClient();
-  const id = `card-batch-${deckId}`;
-  const failed = (e: unknown, title: string, retry: () => void) =>
+  // Each batch gets its own toast, since Base UI merges a repeated id into the toast already up, and
+  // closes the last one's, so one shows at a time.
+  const next = () => {
+    if (shown) toast.close(shown);
+    shown = `card-batch-${deckId}-${++batches}`;
+    return shown;
+  };
+  const failed = (id: string, e: unknown, title: string, retry: () => void) =>
     toast.add({
       id,
       type: "error",
       title,
       description:
         e instanceof Error && e.message === NOTHING_CHANGED ? undefined : errorMessage(e),
-      actionProps: { children: t`Try again`, onClick: retry },
+      actionProps: {
+        children: t`Try again`,
+        onClick: () => {
+          toast.close(id);
+          retry();
+        },
+      },
     });
-  const undone = (e: unknown) => toast.add({ id, type: "error", title: errorMessage(e) });
+  const undone = (id: string) => (e: unknown) =>
+    toast.add({ id, type: "error", title: errorMessage(e) });
 
-  const archive = (cardIds: string[]) =>
-    archiveCards(qc, deckId, cardIds).then(
+  const archive = (cardIds: string[]) => {
+    const id = next();
+    return archiveCards(qc, deckId, cardIds).then(
       (done) => {
         const saved = done.length;
         const total = cardIds.length;
@@ -50,22 +67,26 @@ export function useCardBatch(deckId: string) {
             children: t`Undo`,
             onClick: () => {
               toast.close(id);
-              restoreCards(qc, done).catch(undone);
+              restoreCards(qc, done).catch(undone(id));
             },
           },
         });
       },
       (e) =>
         failed(
+          id,
           e,
           t`Couldn’t archive ${plural(cardIds.length, { one: "# card", other: "# cards" })}.`,
           () => archive(cardIds),
         ),
     );
+  };
 
   const moveToDeck = (cardIds: string[], to: { id: string; name: string }) => {
+    const id = next();
     const deckName = to.name;
-    return moveCardsToDeck(qc, deckId, cardIds, to.id).then(
+    const moving = moveCardsToDeck(qc, deckId, cardIds, to.id);
+    return moving.done.then(
       (done) => {
         const saved = done.length;
         const total = cardIds.length;
@@ -82,13 +103,14 @@ export function useCardBatch(deckId: string) {
             children: t`Undo`,
             onClick: () => {
               toast.close(id);
-              moveCardsBack(qc, deckId, done).catch(undone);
+              moving.undo(done).catch(undone(id));
             },
           },
         });
       },
       (e) =>
         failed(
+          id,
           e,
           t`Couldn’t move ${plural(cardIds.length, { one: "# card", other: "# cards" })}.`,
           () => moveToDeck(cardIds, to),
@@ -98,6 +120,7 @@ export function useCardBatch(deckId: string) {
 
   /** The learner's own mark, so a member sets it too. Undo gives each card back the mark it had. */
   const important = (cardIds: string[], mark: boolean) => {
+    const id = next();
     const marking = markCards(qc, deckId, cardIds, mark);
     return marking.done.then(
       (done) => {
@@ -129,13 +152,14 @@ export function useCardBatch(deckId: string) {
             children: t`Undo`,
             onClick: () => {
               toast.close(id);
-              marking.undo(done).catch(undone);
+              marking.undo(done).catch(undone(id));
             },
           },
         });
       },
       (e) =>
         failed(
+          id,
           e,
           mark
             ? plural(cardIds.length, {

@@ -61,15 +61,37 @@ export const archiveCards = (qc: QueryClient, deckId: string, cardIds: string[])
 export const restoreCards = (qc: QueryClient, cardIds: string[]) =>
   api.restoreCards(cardIds).finally(() => void refresh(qc));
 
-/** A card keeps its progress and leaves its section. */
-export const moveCardsToDeck = (qc: QueryClient, deckId: string, cardIds: string[], to: string) =>
-  leave(qc, deckId, cardIds, () =>
-    api.editCards(cardIds.map((cardId) => ({ cardId, deckId: to }))),
+/**
+ * A card keeps its progress and leaves its section. `undo` puts each card it moved back in this
+ * deck and the section it left, or in none when that section has gone since.
+ */
+export function moveCardsToDeck(qc: QueryClient, deckId: string, cardIds: string[], to: string) {
+  const rows = qc.getQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey) ?? [];
+  const chosen = new Set(cardIds);
+  const sections = new Map(
+    rows.flatMap((r) => (chosen.has(r.card.id) ? [[r.card.id, r.card.sectionId] as const] : [])),
   );
-
-/** Puts moved cards back in the deck they came from. */
-export const moveCardsBack = (qc: QueryClient, deckId: string, cardIds: string[]) =>
-  api.editCards(cardIds.map((cardId) => ({ cardId, deckId }))).finally(() => void refresh(qc));
+  const back = (ids: string[], section: (id: string) => string | null) =>
+    api.editCards(ids.map((cardId) => ({ cardId, deckId, sectionId: section(cardId) })));
+  return {
+    done: leave(qc, deckId, cardIds, () =>
+      api.editCards(cardIds.map((cardId) => ({ cardId, deckId: to }))),
+    ),
+    undo: async (done: string[]) => {
+      try {
+        const out = await back(done, (id) => sections.get(id) ?? null);
+        const homeless = out.results.flatMap((r) =>
+          r.status === "error" && r.code === "not_found" && r.id && sections.get(r.id)
+            ? [r.id]
+            : [],
+        );
+        if (homeless.length > 0) await back(homeless, () => null);
+      } finally {
+        void refresh(qc);
+      }
+    },
+  };
+}
 
 /** Shows each card's mark everywhere it is cached, at once, as a single mark's write does. */
 const showMarks = (qc: QueryClient, marks: ReadonlyMap<string, boolean>) => {

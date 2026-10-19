@@ -150,3 +150,19 @@ test("a card the AI cannot draft for offers no button", async () => {
   await expect.element(page.getByRole("textbox", { name: "Memory hook" })).toBeVisible();
   await expect.element(page.getByRole("button", { name: "Draft a hook" })).not.toBeInTheDocument();
 });
+
+test("pressing Draft again while it works sends no second ask", async () => {
+  let land: (value: { hook: string | null }) => void = () => undefined;
+  const draft = vi
+    .spyOn(api, "draftHook")
+    .mockReturnValue(new Promise((resolve) => (land = resolve)));
+  await render(<Editor />);
+  const button = page.getByRole("button", { name: "Draft a hook" });
+  await button.click();
+  await button.click({ force: true });
+  land({ hook: "A fire BRIGAde scrambling out" });
+  await expect
+    .element(page.getByRole("textbox", { name: "Memory hook" }))
+    .toHaveValue("A fire BRIGAde scrambling out");
+  expect(draft).toHaveBeenCalledOnce();
+});

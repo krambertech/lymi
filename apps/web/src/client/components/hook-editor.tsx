@@ -51,6 +51,8 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
     (empty || untouched || drafting);
 
   const draft = async () => {
+    // One ask at a time: each counts against the hourly cap and replaces the draft the server keeps.
+    if (drafting) return;
     const before = latest.current;
     setDrafting(true);
     setDraftNote(null);
@@ -213,9 +215,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
             loading={drafting}
             aria-disabled={drafting}
             className="@md:-order-1"
-            onClick={() => {
-              if (!drafting) void draft();
-            }}
+            onClick={() => void draft()}
           >
             <Sparkle data-icon="inline-start" aria-hidden="true" />
             {untouched ? <Trans>Another draft</Trans> : <Trans>Draft</Trans>}

@@ -1064,8 +1064,8 @@ function ReviewError({
         <Text className="text-center text-md text-text-2">{body}</Text>
       </View>
       <View className="gap-3">
-        <Button label={action} size="xl" onPress={onAction} />
-        <Button label={t`Try again`} variant="primary" size="xl" onPress={onRetry} />
+        <Button label={action} size="lg" onPress={onAction} />
+        <Button label={t`Try again`} variant="primary" size="lg" onPress={onRetry} />
       </View>
     </View>
   );
@@ -1865,7 +1865,7 @@ function Completion({
   const done$ = useRise(clock, actionsAt);
 
   const doneButton = (variant: "primary" | "secondary") => (
-    <Button label={t`Done`} variant={variant} size="xl" onPress={onClose} />
+    <Button label={t`Done`} variant={variant} size="lg" onPress={onClose} />
   );
 
   return (
@@ -1974,18 +1974,18 @@ function Completion({
                 <Button
                   label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
                   lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
-                  size="xl"
+                  size="lg"
                   onPress={() => onOffer(way)}
                 />
               ) : (
-                <Button label={t`Continue`} size="xl" onPress={() => onOffer(way)} />
+                <Button label={t`Continue`} size="lg" onPress={() => onOffer(way)} />
               )}
             </Animated.View>
           ))}
           <Animated.View style={done$} className="gap-3">
             {!counted ? (
               <>
-                <Button label={t`Add cards`} variant="primary" size="xl" onPress={onAddCards} />
+                <Button label={t`Add cards`} variant="primary" size="lg" onPress={onAddCards} />
                 {doneButton("secondary")}
               </>
             ) : screen.continueLeads && proceed ? (
@@ -1994,7 +1994,7 @@ function Completion({
                 <Button
                   label={t`Continue`}
                   variant="primary"
-                  size="xl"
+                  size="lg"
                   onPress={() => onOffer(proceed)}
                 />
               </>

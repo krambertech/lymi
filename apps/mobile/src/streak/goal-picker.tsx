@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Icon } from "../ui/icons";
 import { IconButton, Text } from "../ui/primitives";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 
 export const GOAL_NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
   10: msg({ message: "Light", context: "daily goal" }),
@@ -79,6 +79,11 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
   return (
     <Sheet
       title={t`Daily goal`}
+      description={
+        connected
+          ? t`Reviews a day to keep your streak going. Every grade counts, even Forgot.`
+          : t`Changing the goal needs a connection.`
+      }
       open={open}
       onOpenChange={onOpenChange}
       onDismiss={() => {
@@ -154,7 +159,6 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
           </View>
         </SheetGroup>
       </View>
-      {!connected && <SheetNote>{t`Changing the goal needs a connection.`}</SheetNote>}
     </Sheet>
   );
 }

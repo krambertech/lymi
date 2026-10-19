@@ -8,7 +8,7 @@ import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDecks } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { toast } from "../ui/toast-host";
 
 type Outcome = { results: { id: string | null; status: string }[] };
@@ -247,6 +247,11 @@ export function useMoveToDeck(deckId: string) {
     sheet: (
       <Sheet
         title={plural(count, { one: "Move # card to", other: "Move # cards to" })}
+        description={
+          online
+            ? t`Cards keep their progress but leave their section.`
+            : t`Moving cards needs a connection.`
+        }
         open={open}
         onOpenChange={setOpen}
       >
@@ -264,11 +269,6 @@ export function useMoveToDeck(deckId: string) {
             />
           ))}
         </SheetGroup>
-        <SheetNote>
-          {online
-            ? t`A card keeps its progress and leaves its section.`
-            : t`Moving cards needs a connection.`}
-        </SheetNote>
       </Sheet>
     ),
   };

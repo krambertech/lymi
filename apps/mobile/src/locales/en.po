@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "“{deckName}” is reviewed with the other decks in its series."
-msgstr "“{deckName}” is reviewed with the other decks in its series."
-
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "“{label}” was already in {deckName}, so the copy added offline was left out."
 
@@ -735,9 +732,6 @@ msgstr "A .mochi file, up to 1 GB."
 msgid "A .zip file, up to 1 GB."
 msgstr "A .zip file, up to 1 GB."
 
-msgid "A card keeps its progress and leaves its section."
-msgstr "A card keeps its progress and leaves its section."
-
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "A change made offline couldn’t be saved. {reason}"
 
@@ -752,6 +746,9 @@ msgstr "A connected app"
 
 msgid "A deck holds the words you learn together. Make one, or import decks from another app."
 msgstr "A deck holds the words you learn together. Make one, or import decks from another app."
+
+msgid "A deck is reviewed together with the other decks in its series."
+msgstr "A deck is reviewed together with the other decks in its series."
 
 msgid "A few minutes keeps them fresh."
 msgstr "A few minutes keeps them fresh."
@@ -915,6 +912,12 @@ msgstr "AI fills"
 
 msgid "AI fills in"
 msgstr "AI fills in"
+
+msgid "AI fills only the fields a card leaves empty. It never changes your text."
+msgstr "AI fills only the fields a card leaves empty. It never changes your text."
+
+msgid "AI follows these when it fills cards. Only you see them."
+msgstr "AI follows these when it fills cards. Only you see them."
 
 msgid "AI hook"
 msgstr "AI hook"
@@ -1243,6 +1246,12 @@ msgstr "Cards keep the due dates they had in {app}."
 
 msgid "Cards keep the due dates they had in Noji."
 msgstr "Cards keep the due dates they had in Noji."
+
+msgid "Cards keep their progress but leave their section."
+msgstr "Cards keep their progress but leave their section."
+
+msgid "Cards keep their progress."
+msgstr "Cards keep their progress."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
@@ -2005,11 +2014,11 @@ msgstr "Estonian"
 msgid "Every card"
 msgstr "Every card"
 
-msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
-msgstr "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
+msgid "Every deck you own, archived ones too, with schedules and review history. Decks shared with you aren’t included."
+msgstr "Every deck you own, archived ones too, with schedules and review history. Decks shared with you aren’t included."
 
-msgid "Every deck, archived ones included, with your schedule and review history."
-msgstr "Every deck, archived ones included, with your schedule and review history."
+msgid "Every deck, archived ones too, with schedules and review history."
+msgstr "Every deck, archived ones too, with schedules and review history."
 
 msgid "Every endpoint, with examples"
 msgstr "Every endpoint, with examples"
@@ -2414,8 +2423,8 @@ msgstr "In Noji, open a deck you made, open its Settings and choose Export deck.
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 
-msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
-msgstr "Includes your schedule and review history. Exporting doesn’t change the deck."
+msgid "Includes your schedule and review history. The deck stays as it is."
+msgstr "Includes your schedule and review history. The deck stays as it is."
 
 msgctxt "language"
 msgid "Indonesian"
@@ -3073,9 +3082,6 @@ msgstr "Only people you invite"
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
-msgid "Only you see these."
-msgstr "Only you see these."
-
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."
 
@@ -3403,9 +3409,6 @@ msgstr "Restore"
 msgid "Restore {title}"
 msgstr "Restore {title}"
 
-msgid "Restore brings a section back in its place, with the cards archived alongside it."
-msgstr "Restore brings a section back in its place, with the cards archived alongside it."
-
 msgid "Restore import"
 msgstr "Restore import"
 
@@ -3423,6 +3426,9 @@ msgstr "Restored the section {name} in {deck}"
 
 msgid "Restored the series {name}"
 msgstr "Restored the series {name}"
+
+msgid "Restoring a section puts it back in its place, with its archived cards."
+msgstr "Restoring a section puts it back in its place, with its archived cards."
 
 msgid "Review"
 msgstr "Review"
@@ -3473,6 +3479,9 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 
 msgid "Reviews"
 msgstr "Reviews"
+
+msgid "Reviews a day to keep your streak going. Every grade counts, even Forgot."
+msgstr "Reviews a day to keep your streak going. Every grade counts, even Forgot."
 
 msgid "Revoke “{name}”?"
 msgstr "Revoke “{name}”?"

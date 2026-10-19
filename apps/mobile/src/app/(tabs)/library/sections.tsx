@@ -16,7 +16,7 @@ import { EmptyState } from "../../../ui/empty-state";
 import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarText, Screen } from "../../../ui/screen";
-import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
@@ -232,7 +232,12 @@ export default function DeckSections() {
         }}
       />
 
-      <Sheet title={t`How sections open`} open={choosingOrder} onOpenChange={setChoosingOrder}>
+      <Sheet
+        title={t`How sections open`}
+        description={t`Anyone studying the deck can start a later section early.`}
+        open={choosingOrder}
+        onOpenChange={setChoosingOrder}
+      >
         <SheetGroup>
           {orders.map((o) => (
             <SheetRow
@@ -247,10 +252,14 @@ export default function DeckSections() {
             />
           ))}
         </SheetGroup>
-        <SheetNote>{t`Anyone studying the deck can start a later section early.`}</SheetNote>
       </Sheet>
 
-      <Sheet title={t`Archived sections`} open={showArchived} onOpenChange={setShowArchived}>
+      <Sheet
+        title={t`Archived sections`}
+        description={t`Restoring a section puts it back in its place, with its archived cards.`}
+        open={showArchived}
+        onOpenChange={setShowArchived}
+      >
         {/* In the sheet, since a toast would sit under it. */}
         {restore.isError && <SheetError>{errorMessage(restore.error)}</SheetError>}
         <View className="overflow-hidden rounded-xl bg-glass-plate">
@@ -280,7 +289,6 @@ export default function DeckSections() {
             </View>
           ))}
         </View>
-        <SheetNote>{t`Restore brings a section back in its place, with the cards archived alongside it.`}</SheetNote>
       </Sheet>
     </Screen>
   );

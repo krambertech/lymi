@@ -7,7 +7,7 @@ import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDeckCards, useSections } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { toast } from "../ui/toast-host";
 
 type Target = Pick<Section, "id" | "name"> | null;
@@ -181,6 +181,7 @@ function MoveToSectionSheet({
           ? t`Move “${term}” to`
           : plural(count, { one: "Move # card to", other: "Move # cards to" })
       }
+      description={online ? t`Cards keep their progress.` : t`Moving cards needs a connection.`}
       open={open}
       onOpenChange={onOpenChange}
     >
@@ -201,7 +202,6 @@ function MoveToSectionSheet({
           onPress={() => choose(null)}
         />
       </SheetGroup>
-      {!online && <SheetNote>{t`Moving cards needs a connection.`}</SheetNote>}
     </Sheet>
   );
 }

@@ -63,6 +63,12 @@ interface SheetProps {
   title?: string;
   /** A short line centred under the title, such as how many cards the drafted filters keep. */
   subtitle?: string;
+  /**
+   * One or two short sentences centred under the title, only for what the rows can't say: what
+   * the choice changes, a rule behind it, or why the sheet can't act while offline. Never how to
+   * use the rows.
+   */
+  description?: string;
   /** A level below the sheet's first: a back chevron takes close's place, named by `label`. */
   back?: { label: string; onPress: () => void };
   /**
@@ -88,6 +94,7 @@ export function Sheet({
   onDismiss,
   title,
   subtitle,
+  description,
   back,
   save,
   children,
@@ -127,7 +134,7 @@ export function Sheet({
   );
   const heading =
     title === undefined ? null : save ? (
-      <View className="flex-row items-center gap-3 pb-3">
+      <View className="flex-row items-center gap-3">
         {back ? (
           <GlassButton icon="back" label={back.label} onPress={back.onPress} />
         ) : (
@@ -144,12 +151,19 @@ export function Sheet({
         />
       </View>
     ) : (
-      <View className="flex-row pb-3">{name}</View>
+      <View className="flex-row">{name}</View>
     );
+  // Room under the header, so the first group never crowds the title.
+  const header = heading && (
+    <View className="gap-1.5 pb-5">
+      {heading}
+      {description && <Text className="px-6 text-center text-base text-muted">{description}</Text>}
+    </View>
+  );
   const first = (
     <SheetInset.Provider value={inset}>
       <OnGlass>
-        {heading}
+        {header}
         <View className="gap-3">{children}</View>
       </OnGlass>
     </SheetInset.Provider>

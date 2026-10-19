@@ -27,7 +27,7 @@ import { Select } from "../../../ui/menu";
 import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 
@@ -347,6 +347,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? t`Instructions`
                   : t`Name`
             }
+            description={
+              editing === "instructions"
+                ? t`AI follows these when it fills cards. Only you see them.`
+                : undefined
+            }
             save={{ label: t`Save`, onPress: finishEditing }}
             open={editing !== null}
             onOpenChange={(open) => !open && cancelEditing()}
@@ -358,10 +363,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? instructionsField
                   : nameField}
             </View>
-            {editing === "instructions" && <SheetNote>{t`Only you see these.`}</SheetNote>}
           </Sheet>
           <Sheet
             title={t`Fields AI can fill`}
+            description={t`AI fills only the fields a card leaves empty. It never changes your text.`}
             open={fields !== null}
             onOpenChange={(open) => !open && setFields(null)}
             save={{ label: t`Save`, onPress: saveFields }}

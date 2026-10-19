@@ -9,7 +9,7 @@ import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon } from "../../ui/icons";
 import { Select } from "../../ui/menu";
 import { Button, IconButton, Text } from "../../ui/primitives";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
 import { Toast } from "../../ui/toast";
 import { MONO, Row, Sub, Variants } from "../frame";
 
@@ -175,7 +175,7 @@ export function Sheets() {
     <>
       <Sub
         title="Sheet header"
-        note="Every sheet with a title has one header, which Sheet draws: the title centred. A sheet that holds something to save adds close at the start and an amber ✓ at the end; one that saves nothing shows its title alone. Nothing explains the sheet under its title; a consequence the learner can’t see goes in a note under the rows."
+        note="Every sheet with a title has one header, which Sheet draws: the title centred, and under it, only when the rows can’t say it, a sentence or two on what the choice changes. A sheet that holds something to save adds close at the start and an amber ✓ at the end; one that saves nothing shows its title alone."
         source="docs/design/system/phone.md"
       >
         <Variants
@@ -198,7 +198,7 @@ export function Sheets() {
             },
             {
               label: "A tap is the choice: title alone",
-              note: "The tap or a swipe closes the sheet, so it needs no buttons. A note under the rows says what the move keeps or loses.",
+              note: "The tap or a swipe closes the sheet, so it needs no buttons. The line under the title says what the move keeps or loses.",
               render: () => (
                 <Row>
                   <Button
@@ -206,7 +206,12 @@ export function Sheets() {
                     variant="secondary"
                     onPress={() => setPicking(true)}
                   />
-                  <Sheet title="Move 3 cards to" open={picking} onOpenChange={setPicking}>
+                  <Sheet
+                    title="Move 3 cards to"
+                    description="Cards keep their progress but leave their section."
+                    open={picking}
+                    onOpenChange={setPicking}
+                  >
                     <SheetGroup>
                       {["Lesson 1", "Lesson 2", "Lesson 3"].map((name) => (
                         <SheetRow
@@ -220,7 +225,6 @@ export function Sheets() {
                         />
                       ))}
                     </SheetGroup>
-                    <SheetNote>A card keeps its progress and leaves its section.</SheetNote>
                   </Sheet>
                 </Row>
               ),

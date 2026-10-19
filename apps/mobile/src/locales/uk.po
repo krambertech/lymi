@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "“{deckName}” is reviewed with the other decks in its series."
-msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії."
-
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "«{label}» уже є в «{deckName}», тож копію, додану офлайн, не збережено."
 
@@ -735,9 +732,6 @@ msgstr "Файл .mochi, до 1 ГБ."
 msgid "A .zip file, up to 1 GB."
 msgstr "Файл .zip, до 1 ГБ."
 
-msgid "A card keeps its progress and leaves its section."
-msgstr "Картка зберігає прогрес і виходить зі свого розділу."
-
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
 
@@ -752,6 +746,9 @@ msgstr "Підключений застосунок"
 
 msgid "A deck holds the words you learn together. Make one, or import decks from another app."
 msgstr "Колода збирає слова, які ти вчиш разом. Створи її або імпортуй колоди з іншого застосунку."
+
+msgid "A deck is reviewed together with the other decks in its series."
+msgstr ""
 
 msgid "A few minutes keeps them fresh."
 msgstr "Кілька хвилин освіжать їх у пам’яті."
@@ -915,6 +912,12 @@ msgstr "AI заповнює"
 
 msgid "AI fills in"
 msgstr "AI доповнить"
+
+msgid "AI fills only the fields a card leaves empty. It never changes your text."
+msgstr ""
+
+msgid "AI follows these when it fills cards. Only you see them."
+msgstr ""
 
 msgid "AI hook"
 msgstr "Зачіпка від AI"
@@ -1243,6 +1246,12 @@ msgstr "Картки збережуть дати повторення, які м
 
 msgid "Cards keep the due dates they had in Noji."
 msgstr "Картки збережуть дати повторення, які мали в Noji."
+
+msgid "Cards keep their progress but leave their section."
+msgstr ""
+
+msgid "Cards keep their progress."
+msgstr ""
 
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
@@ -2005,11 +2014,11 @@ msgstr "Естонська"
 msgid "Every card"
 msgstr "Усі картки"
 
-msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
-msgstr "Кожна твоя колода, разом з архівними, з твоїм розкладом та історією повторень. Колоди, якими поділилися з тобою, сюди не входять."
+msgid "Every deck you own, archived ones too, with schedules and review history. Decks shared with you aren’t included."
+msgstr ""
 
-msgid "Every deck, archived ones included, with your schedule and review history."
-msgstr "Усі колоди, зокрема архівні, з твоїм розкладом та історією повторень."
+msgid "Every deck, archived ones too, with schedules and review history."
+msgstr ""
 
 msgid "Every endpoint, with examples"
 msgstr "Усі ендпоінти, з прикладами"
@@ -2414,8 +2423,8 @@ msgstr "У Noji відкрий створену тобою колоду, від�
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В іншому акаунті відкрий меню колоди й вибери «Експортувати колоду» або вибери «Експортувати бібліотеку» в розділі «Ти»."
 
-msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
-msgstr "Містить твій розклад та історію повторень. Експорт не змінює колоду."
+msgid "Includes your schedule and review history. The deck stays as it is."
+msgstr ""
 
 msgctxt "language"
 msgid "Indonesian"
@@ -3073,9 +3082,6 @@ msgstr "Лише ті, кого ти запросиш"
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
-msgid "Only you see these."
-msgstr "Їх бачиш лише ти."
-
 msgid "Only your name is shared, never your progress."
 msgstr "Видно лише твоє ім’я, а прогрес — ні."
 
@@ -3403,9 +3409,6 @@ msgstr "Відновити"
 msgid "Restore {title}"
 msgstr "Відновити {title}"
 
-msgid "Restore brings a section back in its place, with the cards archived alongside it."
-msgstr "Відновлення повертає розділ на його місце разом із картками, які архівовано з ним."
-
 msgid "Restore import"
 msgstr "Відновити імпорт"
 
@@ -3423,6 +3426,9 @@ msgstr "Відновлено розділ «{name}» у колоді «{deck}»"
 
 msgid "Restored the series {name}"
 msgstr "Відновлено серію «{name}»"
+
+msgid "Restoring a section puts it back in its place, with its archived cards."
+msgstr ""
 
 msgid "Review"
 msgstr "Повторення"
@@ -3473,6 +3479,9 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 
 msgid "Reviews"
 msgstr "Повторення"
+
+msgid "Reviews a day to keep your streak going. Every grade counts, even Forgot."
+msgstr ""
 
 msgid "Revoke “{name}”?"
 msgstr "Відкликати «{name}»?"

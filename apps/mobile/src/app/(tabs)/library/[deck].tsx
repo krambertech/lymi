@@ -57,7 +57,7 @@ import { OfflineNote } from "../../../ui/offline-note";
 import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
@@ -920,6 +920,11 @@ function MoveToSeries({
   return (
     <Sheet
       title={t`Move to series`}
+      description={
+        online
+          ? t`A deck is reviewed together with the other decks in its series.`
+          : t`Changing series needs a connection.`
+      }
       open={open}
       onOpenChange={onOpenChange}
       onDismiss={() => {
@@ -969,11 +974,6 @@ function MoveToSeries({
           />
         </SheetGroup>
       )}
-      <SheetNote>
-        {online
-          ? t`“${deckName}” is reviewed with the other decks in its series.`
-          : t`Changing series needs a connection.`}
-      </SheetNote>
     </Sheet>
   );
 }

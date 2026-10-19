@@ -216,7 +216,6 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
   const sections = listedSections(deck);
   if (sections.length === 0) return null;
   const intro = deckIntro(i18n, deck);
-  const cardCount = deck.cardCount;
   return (
     <section
       id="words"
@@ -272,12 +271,6 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
             </div>
           ))}
         </div>
-        <p className="mt-10">
-          <a href="#cards" className={buttonClass("secondary", "lg")}>
-            <Plural value={cardCount} one="See the card" other="See all # cards" />
-            <ChevronRight aria-hidden="true" className="rtl:rotate-180" />
-          </a>
-        </p>
       </div>
     </section>
   );

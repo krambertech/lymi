@@ -99,6 +99,7 @@ import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
 import { registerViews, viewUri } from "./app-resource";
+import { forDirectories } from "./directory-shape";
 import { HOST_EXTENSION_CAPABILITIES, registerHostExtensions } from "./host-extensions";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
@@ -118,8 +119,8 @@ export interface McpPrincipal {
   reportError?: ((error: unknown, tool: string) => Promise<void>) | undefined;
 }
 
-/** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
-export const DECK_CARD_LIMIT = 200;
+/** How many of a deck's newest cards `get_deck` names; `search_cards` pages through the rest. */
+export const DECK_PREVIEW_LIMIT = 15;
 
 const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and tend cards; the learner reviews them in the app, and you never grade a review.
 
@@ -135,7 +136,7 @@ A card may have one picture, set with set_card_image from a public link or base6
 
 A series is an optional, ordered group of the learner's own decks that they review together. Put a deck in one with update_deck and seriesId, or set a series' whole deck list with update_series. Decks the learner joined from someone else never belong to their series.
 
-A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, list the deck's cards with get_deck, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
+A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, page through the deck's cards with search_cards and its deckId, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -149,6 +150,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     { name: "lymi", version: "0.2.0" },
     { instructions: INSTRUCTIONS, capabilities: HOST_EXTENSION_CAPABILITIES },
   );
+  forDirectories(server);
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
   const views = {
@@ -195,9 +197,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_deck",
     {
       title: "Get a deck",
-      description: `One deck: how many of its cards are due now and how many are new, learning and known, then its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
+      description: `One deck's summary: its settings, how many active cards it has, how many are due now and how many are new, learning and known, and the term and meaning of its ${DECK_PREVIEW_LIMIT} newest cards. For every card with all its fields, page through search_cards with the deckId; to find one card, search by its term. list_sections has the deck's sections and how far the learner is in each.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
-      outputSchema: DeckWithCardsOut,
+      outputSchema: DeckSummaryResultOut,
       ...withView(readTool, "deck"),
     },
     ({ deckId }) =>
@@ -208,17 +210,16 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           listDecks(ctx),
           deckStages(ctx, deckId),
         ]);
-        return result({
+        const summary = result({
           deck: deckOut(deck),
           total: rows.length,
           due: decks.find((d) => d.id === deckId)?.due ?? 0,
           stages,
-          truncated: rows.length > DECK_CARD_LIMIT,
-          cards: rows.slice(0, DECK_CARD_LIMIT).map((row) => ({
-            ...cardOut(row.card),
-            dueAt: row.state ? row.state.due.toISOString() : null,
-          })),
+          newest: rows.slice(0, DECK_PREVIEW_LIMIT).map(({ card }) => cardPreview(card)),
         });
+        if (rows.length <= DECK_PREVIEW_LIMIT) return summary;
+        const more = `These are the ${DECK_PREVIEW_LIMIT} newest of ${rows.length} cards. For the rest, page through search_cards with deckId "${deckId}".`;
+        return { ...summary, content: [...summary.content, { type: "text", text: more }] };
       }),
   );
 
@@ -1335,16 +1336,21 @@ const DecksOut = z.object({
   decks: z.array(DeckSummaryOut),
 });
 
-const DeckWithCardsOut = z.object({
+const DeckSummaryResultOut = z.object({
   deck: DeckOut,
-  total: z.number().int(),
+  total: z.number().int().describe("Active cards in the deck"),
   due: z.number().int().describe("Cards in the deck due now"),
   stages: z
     .object({ new: z.number().int(), learning: z.number().int(), known: z.number().int() })
     .describe("Active cards by stage: a card is known only once every way it is asked is"),
-  truncated: z.boolean().describe(`True when the deck has more than ${DECK_CARD_LIMIT} cards`),
-  cards: z.array(CardOut.extend({ dueAt: Timestamp.nullable() })),
+  newest: z
+    .array(z.object({ id: z.string(), term: z.string(), meaning: z.string().nullable() }))
+    .describe(`The ${DECK_PREVIEW_LIMIT} newest active cards; search_cards has the rest`),
 });
+
+function cardPreview(card: CardView) {
+  return { id: card.id, term: card.term, meaning: card.meaning };
+}
 
 const SearchOut = z.object({
   cards: z.array(CardOut.extend({ deckName: z.string(), stats: CardReviewStatsOut.optional() })),
@@ -1435,7 +1441,7 @@ const RestoreCardsOut = z.object({
 type Fits<T extends U, U> = T;
 export type _ViewContract = [
   Fits<CardOut, ViewCard>,
-  Fits<z.infer<typeof DeckWithCardsOut>, ViewDeckResult>,
+  Fits<z.infer<typeof DeckSummaryResultOut>, ViewDeckResult>,
   Fits<z.infer<typeof DueOut>, ViewDueResult>,
 ];
 

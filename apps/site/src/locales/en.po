@@ -99,6 +99,9 @@ msgstr "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 
+msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}}."
+msgstr "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}}."
+
 msgid "{count, plural, one {# free flashcard} other {# free flashcards}} in {deckCount, plural, one {# deck} other {# decks}}."
 msgstr "{count, plural, one {# free flashcard} other {# free flashcards}} in {deckCount, plural, one {# deck} other {# decks}}."
 

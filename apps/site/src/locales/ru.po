@@ -99,6 +99,9 @@ msgstr "{CLASS_LEARNERS, plural, one {Присоединился # ученик}
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{language}: {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}, язык перевода: {meaningLanguage}."
 
+msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}}."
+msgstr "{language}: {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}."
+
 msgid "{count, plural, one {# free flashcard} other {# free flashcards}} in {deckCount, plural, one {# deck} other {# decks}}."
 msgstr "{count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}} в {deckCount, plural, one {# колоде} few {# колодах} many {# колодах} other {# колоды}}."
 

@@ -2090,6 +2090,9 @@ msgstr "Експортуй колоди по одній або ще раз бе�
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Експортуй колоду ще раз з Noji у форматі OFC і вибери цей файл."
 
+msgid "Export your cards again from Pleco as a text file in UTF-8, then choose that file."
+msgstr "Експортуй картки з Pleco ще раз як текстовий файл в UTF-8 і вибери цей файл."
+
 msgid "Exported {cards, plural, one {# card} other {# cards}}"
 msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
 
@@ -2426,6 +2429,9 @@ msgstr "У Noji експортуй підколоди по одній, а не �
 
 msgid "In Noji, open a deck you made, open its Settings and choose Export deck. Its sub-decks come too."
 msgstr "У Noji відкрий створену тобою колоду, відкрий її Settings і вибери Export deck. Підколоди теж потраплять у файл."
+
+msgid "In Pleco, export one category at a time, or export again without dictionary definitions."
+msgstr "У Pleco експортуй категорії по одній або експортуй ще раз без словникових визначень."
 
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В іншому акаунті відкрий меню колоди й вибери «Експортувати колоду» або вибери «Експортувати бібліотеку» в розділі «Ти»."

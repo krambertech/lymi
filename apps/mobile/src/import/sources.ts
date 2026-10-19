@@ -114,6 +114,12 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
           body: msg`Export the deck again from Noji in OFC format, then choose that file.`,
         };
       }
+      if (source === "pleco") {
+        return {
+          title: msg`Couldn’t read this file`,
+          body: msg`Export your cards again from Pleco as a text file in UTF-8, then choose that file.`,
+        };
+      }
       return source === "mochi"
         ? {
             title: msg`Couldn’t read this file`,
@@ -138,9 +144,11 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
               ? msg`In Mochi, export one deck at a time instead of everything.`
               : source === "noji"
                 ? msg`In Noji, export one sub-deck at a time instead of the whole deck.`
-                : source === "lymi"
-                  ? msg`Export one deck at a time instead of the whole library.`
-                  : msg`Export one deck at a time, or export again without media.`,
+                : source === "pleco"
+                  ? msg`In Pleco, export one category at a time, or export again without dictionary definitions.`
+                  : source === "lymi"
+                    ? msg`Export one deck at a time instead of the whole library.`
+                    : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {

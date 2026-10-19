@@ -2090,6 +2090,9 @@ msgstr "Export one deck at a time, or export again without media."
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Export the deck again from Noji in OFC format, then choose that file."
 
+msgid "Export your cards again from Pleco as a text file in UTF-8, then choose that file."
+msgstr "Export your cards again from Pleco as a text file in UTF-8, then choose that file."
+
 msgid "Exported {cards, plural, one {# card} other {# cards}}"
 msgstr "Exported {cards, plural, one {# card} other {# cards}}"
 
@@ -2426,6 +2429,9 @@ msgstr "In Noji, export one sub-deck at a time instead of the whole deck."
 
 msgid "In Noji, open a deck you made, open its Settings and choose Export deck. Its sub-decks come too."
 msgstr "In Noji, open a deck you made, open its Settings and choose Export deck. Its sub-decks come too."
+
+msgid "In Pleco, export one category at a time, or export again without dictionary definitions."
+msgstr "In Pleco, export one category at a time, or export again without dictionary definitions."
 
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."

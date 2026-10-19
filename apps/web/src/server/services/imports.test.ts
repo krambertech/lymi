@@ -1274,6 +1274,60 @@ describe("importing a deck of many pictures", () => {
   });
 });
 
+describe("a picture step that fails", () => {
+  it("records no progress, and its retry counts each picture and recording once", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { pictures: pending } = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    expect(pending.filter((item) => item.kind === "recording")).toHaveLength(1);
+
+    // The recording's save fails as storage does, with no ServiceError, while the pictures land.
+    const failing = new Proxy(env.AUDIO, {
+      get(target, key) {
+        if (key === "put") return async () => Promise.reject(new Error("R2 is unavailable"));
+        const value = Reflect.get(target, key);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+    const storage = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
+    await expect(
+      attachImportPictures(ctx, id, pending, env.IMPORTS, { ...storage, audio: failing }, 3),
+    ).rejects.toThrow("R2 is unavailable");
+    expect((await getImport(ctx, id)).progress.media.done).toBe(0);
+
+    const retried = await attachImportPictures(
+      ctx,
+      id,
+      pending,
+      env.IMPORTS,
+      { ...storage, audio: env.AUDIO },
+      3,
+    );
+    expect(retried).toEqual({ stored: 2, skipped: 0, recordings: { stored: 1, skipped: 0 } });
+    expect((await getImport(ctx, id)).progress.media.done).toBe(3);
+    const images = await db
+      .select({ id: schema.cardImages.id })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, ctx.userId));
+    expect(images).toHaveLength(2);
+  });
+
+  it("keeps the first media total when a handed-over run makes the decks again", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(4));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    // The next run's decks step meets the written cards as existing, which bring no pictures.
+    await prepareImportDecks(ctx, id, env.IMPORTS);
+    expect((await getImport(ctx, id)).progress.media.total).toBe(4);
+  });
+});
+
 describe("a stalled write", () => {
   it("is failed and counted once no step has landed for the stall time", async () => {
     const ctx = await fresh();

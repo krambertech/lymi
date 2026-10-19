@@ -514,7 +514,9 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
     ).length;
   }
   await batchStatements(db, [
-    sql`update imports set media_total = ${media}, updated_at = ${Date.now()} where id = ${work.row.id}`,
+    // A run handed over meets this import's own cards as existing, so the first count stands.
+    sql`update imports set media_total = max(media_total, ${media}), updated_at = ${Date.now()}
+      where id = ${work.row.id}`,
     ...(created > 0
       ? [
           sql`update imports set counts = json_set(coalesce(counts, '{}'), '$.decks',

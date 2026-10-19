@@ -218,3 +218,40 @@ test("a learner whose only deck was shared is offered a deck of their own", asyn
   );
   await expect.element(page.getByRole("heading", { name: "Make your own deck" })).toBeVisible();
 });
+
+test("an email sign-up is welcomed without its address", async () => {
+  await wrap(
+    <FirstRunGuide
+      name="olena.k92"
+      email="olena.k92@example.com"
+      decks={[]}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />,
+  );
+  await expect.element(page.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
+});
+
+test("tests hold only test decks, and a search matches names, not hidden values", async () => {
+  await wrap(
+    <ReadyToStart
+      ready={[
+        ready("everyday-estonian", "Everyday Estonian", "et"),
+        { ...ready("world-capitals", "World capitals", "en"), category: "geography" },
+        { ...ready("uk-driving", "UK driving theory", "en"), category: "driving" },
+      ]}
+      initialLanguage={null}
+      play={false}
+      onAdd={undefined}
+      adding={undefined}
+    />,
+  );
+  await page.getByRole("combobox", { name: /^What the decks are about/ }).click();
+  const tests = page.getByRole("option", { name: /^For a test/ });
+  await expect.element(tests).toBeVisible();
+  expect(tests.element().textContent).toMatch(/1 deck$/);
+  await page.getByPlaceholder("Search languages").fill("al");
+  await expect.element(page.getByRole("option", { name: /^Anything/ })).not.toBeInTheDocument();
+  await expect.element(page.getByRole("option", { name: /^For a test/ })).not.toBeInTheDocument();
+});

@@ -31,6 +31,7 @@ import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
 import { appleKeyboard } from "../lib/device";
+import { isGuiding } from "../lib/first-run";
 import {
   activate,
   bootstrapLanguage,
@@ -47,7 +48,6 @@ import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
-import { isGuiding } from "../views/today-view";
 
 // Local and isolated preview builds only. Vite drops the import from production.
 const DevPanel =
@@ -123,7 +123,7 @@ function Shell() {
     select: (s) => (s.resolvedLocation ?? s.location).pathname,
   });
   // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
-  const closed = shown.startsWith("/review") || shown === "/welcome";
+  const closed = shown.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
   useEffect(() => {
     capturePageview(location.pathname);

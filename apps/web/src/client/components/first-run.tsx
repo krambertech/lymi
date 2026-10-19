@@ -103,6 +103,7 @@ function useStepAnalytics(current: number) {
 
 interface GuideProps {
   name: string | undefined;
+  email?: string | undefined;
   decks: DeckSummary[] | undefined;
   play: boolean;
   /** Opens a new card in the learner's deck. */
@@ -116,7 +117,7 @@ interface GuideProps {
  * every empty state, lit by the lantern. Each is ticked by the learner's own data, and the current
  * one holds its action.
  */
-export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: GuideProps) {
+export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd }: GuideProps) {
   const { t } = useLingui();
   const reduce = useReduceMotion();
   const [embers] = useState(() => (play && !reduce ? endEmbers(7) : []));
@@ -124,7 +125,8 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
   useStepAnalytics(current);
   const deck = startedDeck(decks);
   const empty = decks?.find((d) => d.total === 0 && d.role === "owner");
-  const first = name?.trim().split(/\s+/)[0];
+  // An email sign-up is named for the address, which is no name to greet.
+  const first = name === email?.split("@")[0] ? undefined : name?.trim().split(/\s+/)[0];
   const steps: { key: string; title: ReactNode; detail: ReactNode; action?: ReactNode }[] = [
     {
       key: "deck",
@@ -141,7 +143,18 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
       ),
       action: (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <Button variant="primary" onClick={onAddCard} aria-disabled={!onAddCard} kbd="N">
+          <Button
+            variant="primary"
+            onClick={
+              onAddCard &&
+              (() => {
+                pick("typed");
+                onAddCard();
+              })
+            }
+            aria-disabled={!onAddCard}
+            kbd="N"
+          >
             <Plus data-icon="inline-start" aria-hidden="true" />
             <Trans>Add a card</Trans>
           </Button>
@@ -287,7 +300,7 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
   );
 }
 
-function pick(option: "lesson" | "ai_mcp" | "import" | "create_deck" | "explore") {
+function pick(option: "typed" | "lesson" | "ai_mcp" | "import" | "create_deck" | "explore") {
   captureAnalytics("empty_state_option_picked", { option });
 }
 
@@ -572,7 +585,7 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
     }
     return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([l]) => l);
   }, [ready]);
-  const tests = ready.some((d) => !taughtLanguage(d));
+  const tests = useMemo(() => decksFor(ready, "test", null), [ready]);
   const [choice, setChoice] = useState(() =>
     initialLanguage && languages.includes(initialLanguage) ? initialLanguage : "all",
   );
@@ -591,15 +604,16 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
       value: l,
       label: capitalised(name(l)),
       inline: name(l),
+      language: true,
       count: ready.filter((d) => taughtLanguage(d) === l).length,
     })),
-    ...(tests
+    ...(tests.length
       ? [
           {
             value: "test",
             label: t`For a test`,
             inline: t`tests`,
-            count: ready.filter((d) => !taughtLanguage(d)).length,
+            count: tests.length,
           },
         ]
       : []),
@@ -607,11 +621,7 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
   const chosen = items.find((c) => c.value === choice);
   // A language leads with the decks a beginner starts from, as Welcome on the phone offers them.
   const decks = (
-    choice === "all"
-      ? ready
-      : choice === "test"
-        ? ready.filter((d) => !taughtLanguage(d))
-        : decksFor(ready, "language", choice)
+    choice === "all" ? ready : choice === "test" ? tests : decksFor(ready, "language", choice)
   ).slice(0, ROW_DECKS);
   return (
     <section
@@ -702,7 +712,7 @@ function DeckRow({
           <DeckTile
             deck={deck}
             adding={adding === deck.slug}
-            onAdd={onAdd && (() => onAdd(deck))}
+            onAdd={onAdd && (() => adding === undefined && onAdd(deck))}
           />
         </motion.li>
       ))}

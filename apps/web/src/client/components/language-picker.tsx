@@ -18,18 +18,25 @@ export interface LanguageChoice {
   label: string;
   /** How it reads inside a sentence, where that differs from the label: "anything", "tests". */
   inline?: string | undefined;
+  /** The value is a language code, so its own name and the code match a search too. */
+  language?: boolean | undefined;
   count: number;
 }
 
-/** Whether a language matches what the learner typed: its name here, its own name, or its code. */
-export function matchesLanguage(code: string, label: string, query: string): boolean {
+/** Whether a choice matches what the learner typed: its name here, and for a language its own name or code. */
+function matchesLanguage(choice: LanguageChoice, query: string): boolean {
   const q = query.trim().toLocaleLowerCase();
   if (!q) return true;
-  let own = "";
-  try {
-    own = new Intl.DisplayNames([code], { type: "language" }).of(code) ?? "";
-  } catch {}
-  return [label, own, code].some((s) => s.toLocaleLowerCase().includes(q));
+  const names = [choice.label];
+  if (choice.language) {
+    names.push(choice.value);
+    try {
+      names.push(
+        new Intl.DisplayNames([choice.value], { type: "language" }).of(choice.value) ?? "",
+      );
+    } catch {}
+  }
+  return names.some((s) => s.toLocaleLowerCase().includes(q));
 }
 
 interface Props {
@@ -43,7 +50,7 @@ interface Props {
 export function LanguagePicker({ choices, value, onChange }: Props) {
   const { t } = useLingui();
   const [query, setQuery] = useState("");
-  const shown = choices.filter((c) => matchesLanguage(c.value, c.label, query));
+  const shown = choices.filter((c) => matchesLanguage(c, query));
   const chosen = choices.find((c) => c.value === value) ?? null;
   return (
     <Combobox<LanguageChoice>

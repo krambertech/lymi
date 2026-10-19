@@ -118,7 +118,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Decks sit on a shelf per language they teach, then a shelf per subject, such as Science or Citizenship. Today's first-run guide offers its decks under **Or start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
-**First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), then ways to create a first deck and ready-made decks. The end of that review asks for the daily goal and a reminder. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
+**First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), then ways to create a first deck and ready-made decks. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
 
 **Welcome**: The phone's screens a new account sees once, before Today: what the learner is learning, a daily goal, and a way to start. The web retired them for the first-run guide, and `/welcome` leads to Today. _Avoid_: Tour, wizard
 

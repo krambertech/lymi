@@ -1,10 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
+import { isGuiding } from "../lib/first-run";
 import {
   decksQuery,
   exploreQuery,
@@ -17,7 +18,7 @@ import {
 import { useRestDismissal } from "../lib/rest-day";
 import { Streak } from "../lib/streak";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
-import { isGuiding, TodayView } from "../views/today-view";
+import { TodayView } from "../views/today-view";
 
 export const Route = createFileRoute("/today")({
   component: Today,
@@ -50,8 +51,7 @@ function Today() {
     refetchOnMount: (query) => (query.state.data?.onboardedAt === null ? "always" : true),
   });
   const me = useQuery(meQuery);
-  const addReady = useAddPublishedDeck({ announce: "page" });
-  const navigate = useNavigate();
+  const addReady = useAddPublishedDeck({ announce: "review" });
   // Today is where a new account starts, so its first visit counts as getting set up: the goal
   // starts at 25 and Welcome on the phone is not shown again. docs/design/onboarding.md.
   const qc = useQueryClient();
@@ -94,12 +94,10 @@ function Today() {
       restDismissed={rest.dismissed}
       onDismissRest={rest.dismiss}
       name={me.data?.name}
+      email={me.data?.email}
       learning={settings.data?.learningLanguage}
       onAddReady={(deck) =>
-        addReady.mutate(
-          { slug: deck.slug, name: deck.name, edition: deck.meaningLanguage },
-          { onSuccess: ({ deckId }) => navigate({ to: "/review", search: { deck: deckId } }) },
-        )
+        addReady.mutate({ slug: deck.slug, name: deck.name, edition: deck.meaningLanguage })
       }
       addingReady={addReady.isPending ? addReady.variables?.slug : undefined}
     />

@@ -26,6 +26,7 @@ import { RollingNumber } from "../components/rolling-number";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
 import { restedYesterday, type StreakSummary } from "../components/streak";
+import { isGuiding } from "../lib/first-run";
 import type { DeckSummary, Series } from "../lib/api";
 
 export interface TodayProps {
@@ -52,17 +53,13 @@ export interface TodayProps {
   ready?: PublicDeckSummary[] | undefined;
   /** The learner's name, for the first-run welcome. */
   name?: string | undefined;
+  email?: string | undefined;
   /** The language the learner most likely came for, chosen first among the ready-made decks. */
   learning?: string | null | undefined;
   /** Adds a ready-made deck and opens its first review. */
   onAddReady?: ((deck: PublicDeckSummary) => void) | undefined;
   /** The ready-made deck being added. */
   addingReady?: string | undefined;
-}
-
-/** Until the first review, Today is the first-run guide. False while the streak is unread. */
-export function isGuiding(streak: StreakSummary | undefined): boolean {
-  return !!streak && streak.reviewedDays === 0 && streak.today.attempts === 0;
 }
 
 /**
@@ -87,6 +84,7 @@ export function TodayView({
   restDismissed,
   onDismissRest,
   name,
+  email,
   learning,
   onAddReady,
   addingReady,
@@ -130,6 +128,7 @@ export function TodayView({
         <div className="grid gap-8 @3xl:gap-10">
           <FirstRunGuide
             name={name}
+            email={email}
             decks={decks}
             play={play}
             onAddCard={onAdd}

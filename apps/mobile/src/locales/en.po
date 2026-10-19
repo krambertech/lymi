@@ -411,6 +411,9 @@ msgstr "{added, plural, one {# card was added before the import stopped.} other 
 msgid "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
 msgstr "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
 
+msgid "{after} of {total}"
+msgstr "{after} of {total}"
+
 #. placeholder {0}: chosen.length
 #. placeholder {1}: decks.length
 #. placeholder {2}: chosen.length
@@ -545,6 +548,9 @@ msgstr "{field} becomes"
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {term found} other {terms found}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
@@ -636,6 +642,12 @@ msgstr "{sectionCount, plural, one {# section} other {# sections}}"
 msgid "{sectionName} is ready. Start it to review its cards."
 msgstr "{sectionName} is ready. Start it to review its cards."
 
+msgid "{sent, plural, one {Couldn’t change the tags on {unsaved} of # card.} other {Couldn’t change the tags on {unsaved} of # cards.}}"
+msgstr "{sent, plural, one {Couldn’t change the tags on {unsaved} of # card.} other {Couldn’t change the tags on {unsaved} of # cards.}}"
+
+msgid "{sent, plural, one {Couldn’t change the tags on # card.} other {Couldn’t change the tags on # cards.}}"
+msgstr "{sent, plural, one {Couldn’t change the tags on # card.} other {Couldn’t change the tags on # cards.}}"
+
 #. placeholder {0}: s.deckIds.length
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# deck} other {# decks}}"
@@ -669,6 +681,9 @@ msgstr "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved
 
 msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
 msgstr "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Tags for # card} other {Tags for # cards}}"
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
@@ -1257,11 +1272,20 @@ msgstr "Change fields"
 msgid "Change languages"
 msgstr "Change languages"
 
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "Changed the tags on {count, plural, one {# card} other {# cards}}"
+
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}. {full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "Changed the tags on {count, plural, one {# card} other {# cards}}. {full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+
 msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
 msgstr "Changes from AI apps, imports, AI enrichment and shared decks show up here."
 
 msgid "Changing series needs a connection."
 msgstr "Changing series needs a connection."
+
+msgid "Changing tags needs a connection."
+msgstr "Changing tags needs a connection."
 
 msgid "Changing the goal needs a connection."
 msgstr "Changing the goal needs a connection."
@@ -1700,6 +1724,9 @@ msgstr "Couldn’t write the file. Try again."
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Countries, stars, birds or anything else with names."
 
+msgid "Create “{typed}”"
+msgstr "Create “{typed}”"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Create a deck first, then add a lesson to it."
 
@@ -2091,6 +2118,9 @@ msgstr "Fill in the rest with AI"
 
 msgid "Filter"
 msgstr "Filter"
+
+msgid "Find or create a tag"
+msgstr "Find or create a tag"
 
 msgid "Find terms"
 msgstr "Find terms"
@@ -2948,6 +2978,9 @@ msgstr "No sections yet"
 
 msgid "No series"
 msgstr "No series"
+
+msgid "No tags yet. Type one to create it."
+msgstr "No tags yet. Type one to create it."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Nobody can add it while it is archived."
@@ -4105,6 +4138,9 @@ msgstr "This week"
 
 msgid "Those terms are already in your decks"
 msgstr "Those terms are already in your decks"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Tick a tag to put it on every card, or untick it to take it off."
 
 msgid "Time"
 msgstr "Time"

@@ -1,9 +1,16 @@
+import { LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
+
+/** Each supported language's page, which `/languages/[language]` renders. */
+const languagePages = Object.fromEntries(
+  Object.values(LANGUAGE_PAGES).map(({ page }) => [page, `/languages/${page}`]),
+) as { [Page in LanguagePageName]: `/languages/${Page}` };
+
 /** Public pages every locale gets: English at the path, the others under their own prefix. */
 export const localizedPages = {
   landing: "/",
   languages: "/languages",
   estonian: "/languages/estonian",
-  japanese: "/languages/japanese",
+  ...languagePages,
   assistants: "/ai-assistants",
   teachers: "/teachers",
   medicine: "/medicine",
@@ -19,7 +26,7 @@ export type LocalizedPage = keyof typeof localizedPages;
 
 /** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = [
-  "/languages/japanese",
+  "/languages/[language]",
   "/explore",
   "/explore/[slug]",
   "/explore/[kind]/[name]",
@@ -30,7 +37,11 @@ export const localizedRuntimePages = [
 
 /** A translated page rendered per request, which the deck sitemap lists rather than the build's. */
 export function isRuntimePage(page: LocalizedPage): boolean {
-  return (localizedRuntimePages as readonly string[]).includes(localizedPages[page]);
+  const path: string = localizedPages[page];
+  return (
+    Object.hasOwn(languagePages, page) ||
+    (localizedRuntimePages as readonly string[]).includes(path)
+  );
 }
 
 /** Pages built from content, one per item in every locale; `sitemap-pages.xml` lists each. */

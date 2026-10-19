@@ -27,9 +27,6 @@ import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { VoiceTiles } from "./VoiceTiles";
 
-export const JAPANESE_TITLE = msg`Learn Japanese vocabulary with flashcards · Lymi`;
-export const JAPANESE_BLURB = msg`A free flashcard app for Japanese. Start with kana, then N5 and N4 words, and add the words from your own lessons. Cards show the reading over the kanji until you know the word.`;
-
 const KANA = "read-japanese-kana";
 
 /** A section with its title and copy centred above a wide demo. */

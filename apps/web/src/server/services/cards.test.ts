@@ -561,3 +561,115 @@ describe("a create sent again with its id", () => {
     expect(CardPatch.safeParse({ id: "0replaycard00000003" }).data).toEqual({});
   });
 });
+
+describe("text stored as Lymi keeps it", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  const payloads = (id: string, action: string) =>
+    db
+      .select({ payload: schema.auditLog.payload })
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, id), eq(schema.auditLog.action, action)));
+
+  it("splits an MCP add's bracketed term before the duplicate check and the audit row", async () => {
+    const app = await learner(db, "stored-1", "Kateryna");
+    const capture = vi.fn();
+    const mcp = {
+      ...app,
+      actor: "mcp" as const,
+      analytics: { capture, writeDataPoint: vi.fn() },
+    };
+    const deck = await createDeck(app, { name: "Japanese", defaultLanguage: "ja" });
+    const [eat] = await addCards(app, [
+      { deckId: deck.id, term: "食べる", pronunciation: "たべる" },
+    ]);
+
+    const outcomes = await addCards(mcp, [
+      { deckId: deck.id, term: "食[た]べる" },
+      { deckId: deck.id, term: "上手[じょうず]" },
+      { deckId: deck.id, term: "上手", pronunciation: "うわて" },
+      // IPA is not a reading, so it never tells this card from the one before.
+      { deckId: deck.id, term: "上手", pronunciation: "dʒoːzɯ" },
+    ]);
+
+    expect(outcomes.map((o) => o.status)).toEqual(["skipped", "added", "added", "skipped"]);
+    expect(outcomes[0]).toMatchObject({ existing: { id: eat?.id } });
+    const [, skilled, upperHand] = outcomes;
+    expect(skilled).toMatchObject({
+      status: "added",
+      card: { term: "上手", normalizedTerm: "上手", pronunciation: "じょうず" },
+      normalized: ["term", "pronunciation"],
+    });
+    expect(upperHand).not.toHaveProperty("normalized");
+    const [row] = await payloads(skilled?.id ?? "", "create");
+    expect(row?.payload).toMatchObject({ term: "上手", pronunciation: "じょうず" });
+    if (!skilled) throw new Error("expected an outcome");
+    expect(terseOutcome(skilled)).toMatchObject({ normalized: ["term", "pronunciation"] });
+
+    // The same batch again adds nothing and reports nothing.
+    await addCards(mcp, [{ deckId: deck.id, term: "上手[じょうず]" }]);
+    const added = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "cards_added");
+    expect(added).toEqual([{ name: "cards_added", source: "ai_mcp", count: 2, normalized: 1 }]);
+  });
+
+  it("leaves a bracketed term as sent when it was sent another pronunciation", async () => {
+    const ctx = await learner(db, "stored-2", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [
+      { deckId: deck.id, term: "上手[じょうず]", pronunciation: "うわて" },
+    ]);
+    expect(added).toMatchObject({ card: { term: "上手[じょうず]", pronunciation: "うわて" } });
+    expect(added).not.toHaveProperty("normalized");
+  });
+
+  it("splits an edit's term against the card's Reading, and counts no correction", async () => {
+    const ctx = { ...(await learner(db, "stored-3", "Kateryna")), actor: "mcp" as const };
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const [poor, stage] = await addCards(ctx, [
+      { deckId: deck.id, term: "下手" },
+      { deckId: deck.id, term: "舞台" },
+    ]);
+    if (!poor || !stage) throw new Error("expected two outcomes");
+    await db
+      .update(schema.cards)
+      .set({ pronunciation: "へた", pronunciationSource: "ai" })
+      .where(eq(schema.cards.id, poor.id));
+
+    const [kept, filled] = await updateCards(ctx, [
+      { cardId: poor.id, term: "下手[へた]" },
+      { cardId: stage.id, term: "舞台[ぶたい]" },
+    ]);
+
+    expect(kept).toMatchObject({
+      status: "updated",
+      card: { term: "下手", pronunciation: "へた", pronunciationSource: "ai" },
+      normalized: ["term"],
+    });
+    expect(filled).toMatchObject({
+      card: { term: "舞台", pronunciation: "ぶたい", pronunciationSource: "manual" },
+      normalized: ["term", "pronunciation"],
+    });
+    const corrections = await db
+      .select()
+      .from(schema.cardCorrections)
+      .where(eq(schema.cardCorrections.cardId, poor.id));
+    expect(corrections).toEqual([]);
+    const [row] = await payloads(stage.id, "update");
+    expect(row?.payload).toMatchObject({ term: "舞台", pronunciation: "ぶたい" });
+
+    // A different Reading already on the card leaves the bracketed term as sent.
+    const edited = await updateCard(ctx, poor.id, { term: "下手[しもて]" });
+    expect(edited).toMatchObject({ term: "下手[しもて]", pronunciation: "へた" });
+  });
+});

@@ -333,6 +333,25 @@ describe("importing a Quizlet set", () => {
     expect((await cardsOf(other))[0]?.deckId).not.toBe(deck.id);
   });
 
+  it("splits a Japanese term written with its reading before the duplicate check", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    await addCards(ctx, [{ deckId: deck.id, term: "食べる", pronunciation: "たべる" }]);
+    const { preview, result } = await runImport(
+      ctx,
+      "quizlet.txt",
+      NO_CHOICES,
+      pasted("食[た]べる\tto eat\n上手[じょうず]\tskilled", { deckId: deck.id }),
+    );
+    expect(preview).toMatchObject({ added: 1, duplicates: 1 });
+    expect(result.counts).toMatchObject({ added: 1, duplicates: 1 });
+    expect(await card(ctx, "上手")).toMatchObject({
+      normalizedTerm: "上手",
+      pronunciation: "じょうず",
+      pronunciationSource: "manual",
+    });
+  });
+
   it("refuses a set over the card cap and writes nothing", async () => {
     const ctx = await fresh();
     const rows = Array.from({ length: 5001 }, (_, i) => `t${i}\tm${i}`).join("\n");

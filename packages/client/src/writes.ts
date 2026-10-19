@@ -1,5 +1,12 @@
 import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
-import { duplicateKey, newId, normaliseTerm, readingKey, sameReading } from "@lymi/core";
+import {
+  duplicateKey,
+  newId,
+  normaliseTerm,
+  normalizeCardText,
+  readingKey,
+  sameReading,
+} from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
 import { waitsToSend } from "./api/request";
@@ -443,26 +450,46 @@ function forget() {
   void client?.invalidateQueries({ queryKey: ["queue"] });
 }
 
-/** A card already on the device with the same term, which the server would skip the add for. */
+/** The add's language as the server will resolve it, or undefined when the device cannot tell. */
+function addLanguage(input: CardInput): string | null | undefined {
+  if (input.language !== undefined) return input.language;
+  const deck = client ? cacheLookup(client).deck(input.deckId) : undefined;
+  return deck ? deck.defaultLanguage : undefined;
+}
+
+/** The add as the server will store it, so the card shown offline and the duplicate check match. */
+function storedInput(input: CardInput): CardInput {
+  const language = addLanguage(input);
+  return language === undefined ? input : normalizeCardText(language, input).fields;
+}
+
+/** Whether the add brings a pronunciation the local card lacks, which a newer reading key may tell apart. */
+function newPronunciation(input: CardInput, card: Card): boolean {
+  const sent = input.pronunciation?.trim();
+  return !!sent && normaliseTerm(sent) !== normaliseTerm(card.pronunciation ?? "");
+}
+
+/**
+ * A card already on the device that the server would certainly skip the add for. An add whose
+ * pronunciation differs from the local card's queues instead, because the server's reading key may
+ * be newer than this build's.
+ */
 function localDuplicate(input: CardInput): { card: Card; deckName: string } | null {
   if (!client) return null;
   const lookup = cacheLookup(client);
-  const language =
-    input.language === undefined
-      ? (lookup.deck(input.deckId)?.defaultLanguage ?? null)
-      : input.language;
+  const language = addLanguage(input) ?? null;
   const key = duplicateKey(language, normaliseTerm(input.term));
-  const reading = readingKey({ language, pronunciation: input.pronunciation });
+  const reading = readingKey({ term: input.term, language, pronunciation: input.pronunciation });
   for (const [, rows] of client.getQueriesData<{ card: Card }[]>({ queryKey: ["decks"] })) {
     if (!Array.isArray(rows)) continue;
     for (const row of rows) {
       const card = row?.card;
-      if (
-        card &&
-        !card.archivedAt &&
-        duplicateKey(card.language, card.normalizedTerm) === key &&
-        sameReading(readingKey(card), reading)
-      ) {
+      if (!card || card.archivedAt || duplicateKey(card.language, card.normalizedTerm) !== key) {
+        continue;
+      }
+      const local = readingKey(card);
+      const sameKey = reading !== null && local === reading;
+      if (sameReading(local, reading) && (sameKey || !newPronunciation(input, card))) {
         return { card, deckName: lookup.deck(card.deckId)?.name ?? "" };
       }
     }
@@ -478,7 +505,8 @@ const offline = () => typeof navigator !== "undefined" && navigator.onLine === f
  * A refusal still throws, as the plain API would.
  */
 export const writes = {
-  async addCard(input: CardInput): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
+  async addCard(sent: CardInput): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
+    const input = storedInput(sent);
     // Offline, the cache is the best word on duplicates until the server has the final one.
     const duplicate = offline() ? localDuplicate(input) : null;
     if (duplicate) {

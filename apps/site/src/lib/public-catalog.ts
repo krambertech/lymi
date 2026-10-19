@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
+import type { SupportedTag } from "@lymi/core";
 import {
   hasShelfPage,
   type PublicDeckSummary,
@@ -16,6 +17,7 @@ import type { AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
+import { LANGUAGE_PAGES } from "./language-pages";
 import { type Locale, locales } from "./routes";
 
 export interface ExplorePage {
@@ -182,20 +184,18 @@ export async function resolveExamsPage(
 
 export interface LanguageDecksPage {
   locale: Locale;
+  language: SupportedTag;
   /** The language's decks, those a beginner starts from first, as Welcome offers them. */
   decks: PublicDeckSummary[];
 }
 
-/**
- * A language page's decks in this locale, read and cached like Explore, so the page shows only
- * decks that are published now. `page` keeps its validator apart from other pages'.
- */
-export async function resolveLanguageDecks(
+/** Decks taught in `language`, read and cached like Explore; `page` keeps the validator apart. */
+async function resolveTaughtDecks(
   astro: AstroGlobal,
   locale: Locale,
   language: string,
   page: string,
-): Promise<LanguageDecksPage | Response> {
+): Promise<PublicDeckSummary[] | Response> {
   const decks = languageDecks(await listPublicCatalog(drizzle(env.DB), locale), language);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
@@ -213,5 +213,27 @@ export async function resolveLanguageDecks(
       headers: { "cache-control": DECK_CACHE_CONTROL, etag },
     });
   }
-  return { locale, decks };
+  return decks;
+}
+
+/**
+ * A language page's decks in this locale, read and cached like Explore, so the page shows only
+ * decks that are published now.
+ */
+export async function resolveLanguageDecks(
+  astro: AstroGlobal,
+  locale: Locale,
+  language: SupportedTag,
+): Promise<LanguageDecksPage | Response> {
+  const decks = await resolveTaughtDecks(astro, locale, language, LANGUAGE_PAGES[language].page);
+  return decks instanceof Response ? decks : { locale, language, decks };
+}
+
+/** The Estonian page's decks, which keeps its own route until Estonian joins `LANGUAGE_PAGES`. */
+export async function resolveEstonianDecks(
+  astro: AstroGlobal,
+  locale: Locale,
+): Promise<{ locale: Locale; decks: PublicDeckSummary[] } | Response> {
+  const decks = await resolveTaughtDecks(astro, locale, "et", "estonian");
+  return decks instanceof Response ? decks : { locale, decks };
 }

@@ -141,6 +141,40 @@ export default async function drive({ page, base, step, api, expect }) {
     },
   );
 
+  await step("Add 食[た]べる from Add a card: it is stored as 食べる read たべる", async () => {
+    await page.goto(`/library/${deck.id}`);
+    await page.getByRole("main").getByRole("button", { name: "Add", exact: true }).click();
+    await page.getByRole("menuitem", { name: /^New card/ }).click();
+    const dialog = page.getByRole("dialog", { name: "Add a card" });
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("食[た]べる");
+    await dialog.getByRole("textbox", { name: "Meaning", exact: true }).fill("to eat");
+    await dialog.getByRole("button", { name: /^Add to / }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText("食べる");
+    const { cards } = await api(`/api/cards?term=${encodeURIComponent("食べる")}`);
+    expect(cards).toHaveLength(1);
+    expect(cards[0]).toMatchObject({ term: "食べる", pronunciation: "たべる" });
+    return { card: cards[0] };
+  });
+
+  await step(
+    "Send bracketed terms through the API: a known word is skipped, a new one names what changed",
+    async () => {
+      const { results } = await post("/api/cards/batch", {
+        cards: [
+          { deckId: deck.id, term: "食[た]べる", enrich: false },
+          { deckId: deck.id, term: "引[ひ]き出[だ]し", meaning: "drawer", enrich: false },
+        ],
+      });
+      expect(results.map((r) => r.status)).toEqual(["skipped", "added"]);
+      expect(results[1]).toMatchObject({
+        card: { term: "引き出し", pronunciation: "ひきだし" },
+        normalized: ["term", "pronunciation"],
+      });
+      return { results };
+    },
+  );
+
   await step("Review a New Chinese card: its pinyin stays on the cue", async () => {
     const chinese = await post("/api/decks", { name: "中文", defaultLanguage: "zh" });
     await post("/api/cards/batch", {

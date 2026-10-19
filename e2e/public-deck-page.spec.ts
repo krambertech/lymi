@@ -18,7 +18,10 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     expect(response.headers()["set-cookie"]).toBeUndefined();
 
     const html = await response.text();
-    expect(html).toContain("<title>Evening Estonian · Estonian vocabulary · Lymi</title>");
+    expect(html).toContain("<title>Evening Estonian · 5 free flashcards · Lymi</title>");
+    expect(html).toContain(
+      '<meta name="description" content="5 free Estonian flashcards with meanings in English. For example: tere päevast (good afternoon). Phrases for the end of the day.">',
+    );
     expect(html).toContain(`<link rel="canonical" href="https://lymi.app${pagePath}">`);
     for (const [lang, path] of [
       ["en", pagePath],
@@ -38,6 +41,8 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       name: "Evening Estonian",
       teaches: "Estonian vocabulary",
     });
+    // The fixture's Estonian shelf is too small for a page, so the breadcrumb skips the shelf;
+    // structured-data.test.ts covers the crumb a shelf with a page adds.
     expect(jsonLd[1]).toMatchObject({
       "@type": "BreadcrumbList",
       itemListElement: [

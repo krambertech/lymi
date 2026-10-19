@@ -36,15 +36,11 @@ name: Deck tools, owner
 - tapOn:
     text: "Continue"
     optional: true
-# The chip row sits over the keyboard here, so it is swiped where it is rather than with _chip.yaml.
-- repeat:
-    times: 3
-    while:
-      notVisible: "Section: ${LOCKED}"
-    commands:
-      - swipe:
-          start: 85%, 62%
-          end: 5%, 62%
+# Chips run most recently used first, so the section's may sit past either edge.
+- runFlow:
+    file: _chip.yaml
+    env:
+      CHIP: "Section: ${LOCKED}"
 - assertVisible: "Section: ${LOCKED}"
 - takeScreenshot: 04-capture-section
 - tapOn: "^Done$"

@@ -1,0 +1,30 @@
+# The daily goal, Export library and Language sheets, photographed and closed, so the same flow
+# runs before and after a change to sheets.
+appId: app.lymi
+name: Sheets on the streak and You
+---
+- runFlow: _open.yaml
+- openLink: lymi://streak
+- extendedWaitUntil:
+    visible: "Change daily goal"
+    timeout: 20000
+- tapOn: "Change daily goal"
+- waitForAnimationToEnd
+- takeScreenshot: 16-daily-goal
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Daily goal$" } }
+- openLink: lymi://you
+- extendedWaitUntil:
+    visible: "Language: .*"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Language: .*"
+- tapOn: "Language: .*"
+- waitForAnimationToEnd
+- takeScreenshot: 17-language
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Language$" } }
+- scrollUntilVisible:
+    element: "Export library"
+- tapOn: "Export library"
+- waitForAnimationToEnd
+- takeScreenshot: 18-export-library
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Export library$" } }

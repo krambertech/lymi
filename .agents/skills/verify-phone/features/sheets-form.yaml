@@ -1,0 +1,53 @@
+# Add a word's and Edit card's choice sheets, photographed one after another and closed without
+# keeping anything, so the same flow runs before and after a change to sheets.
+appId: app.lymi
+name: Sheets on the card forms
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "Add a card"
+- extendedWaitUntil:
+    visible: "Add to .*"
+    timeout: 20000
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn: "Term.*"
+- inputText: "il bancomat"
+- runFlow: { file: _chip.yaml, env: { CHIP: "How it’s asked" } }
+- tapOn: "How it’s asked"
+- waitForAnimationToEnd
+- takeScreenshot: 11-add-how-its-asked
+- runFlow: { file: _dismiss.yaml, env: { MARK: "Production.*" } }
+- tapOn:
+    text: "Continue"
+    optional: true
+- runFlow: { file: _chip.yaml, env: { CHIP: "Tags" } }
+- tapOn: "Tags"
+- waitForAnimationToEnd
+- takeScreenshot: 12-add-tags
+- runFlow: { file: _dismiss.yaml, env: { MARK: "Find or create a tag|Add a tag|In this deck" } }
+- runFlow: { file: _chip.yaml, env: { CHIP: "Picture" } }
+- tapOn: "Picture"
+- waitForAnimationToEnd
+- takeScreenshot: 13-add-picture
+- runFlow: { file: _dismiss.yaml, env: { MARK: "Choose from photos|Take a photo" } }
+- tapOn: "Deck: .*"
+- waitForAnimationToEnd
+- takeScreenshot: 14-add-deck
+- runFlow: { file: _dismiss.yaml, env: { MARK: "Verbi.*" } }
+- tapOn: "^Done$"
+# Edit card.
+- openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Tags.*"
+- tapOn: "Tags.*money.*"
+- extendedWaitUntil:
+    visible: "Find or create a tag|Add a tag|In this deck"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: 15-edit-tags
+- runFlow: { file: _dismiss.yaml, env: { MARK: "Find or create a tag|Add a tag|In this deck" } }

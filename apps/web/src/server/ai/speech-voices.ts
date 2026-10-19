@@ -15,7 +15,7 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   hi: { voice: "MF4J4IDTRo0AxOO4dpFR", name: "Devi - Encouraging and Motivating" },
   it: { voice: "HuK8QKF35exsCh2e7fLT", name: "Carmelo La Rosa - Deep and Balanced" },
   ja: { voice: "vzIXwvf41vKosKu00hYj", name: "Hiroki - Calm and Precise" },
-  ko: { voice: "PDoCXqBQFGsvfO0hNkEs", name: "Chris - Warm and Clear" },
+  ko: { voice: "s07IwTCOrCDCaETjUVjx", name: "Hyunbin - Diplomatic, Clear and Measured" },
   nl: { voice: "YUdpWWny7k5yb4QCeweX", name: "Ruth - Warm and Dynamic Narrator" },
   nb: { voice: "xF681s0UeE04gsf0mVsJ", name: "Olaf - Clear and Natural" },
   pl: { voice: "H5xTcsAIeS5RAykjz57a", name: "Alex - Warm Storyteller" },

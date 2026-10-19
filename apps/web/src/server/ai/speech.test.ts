@@ -89,6 +89,7 @@ describe("speech provider routing", () => {
       ]);
     }
     expect(createSpeechProviders(configured, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
+    expect(createSpeechProviders(configured, "ko-KR")[0]?.voice).toBe("s07IwTCOrCDCaETjUVjx");
     expect(createSpeechProviders(configured, "pt-PT")[0]?.provider).toBe("gemini-api");
     for (const language of [
       "cs",

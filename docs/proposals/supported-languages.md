@@ -46,7 +46,7 @@ Today a language's behaviour lives in three kinds of place: a literal in a helpe
 
 **When a bespoke feature is worth it.** Build one only when all five hold: the generic path is wrong, not just plainer; learners already rely on the feature; it fits an existing extension point, or a second language will use the new one; it ships with fixtures, evaluation cases and a verify feature; and it needs no setting. Tone colour fails the first test.
 
-**Instrumentation.** The question is whether each supported language keeps its learners reviewing, and whether recall holds once the reading leaves the cue. `review_graded` reports `reading`, `example_readings` and `readings_faded` whenever a reading is drawn, with `reading_language` typed as `SupportedTag`. Japanese charts filter on `reading_language=ja` once Chinese starts sending. `enrichment_finished` gains `languages`.
+**Instrumentation.** The question is whether each supported language keeps its learners reviewing, and whether recall holds once the reading leaves the cue. `review_graded` reports `reading`, `example_readings` and `readings_faded` whenever a reading is drawn, and gains a new `reading_language` property typed as `SupportedTag`. Japanese charts filter on `reading_language=ja` once Chinese starts sending. `enrichment_finished` gains an optional `languages`, left out when a run fails before its cards are read.
 
 **Roster.** Supported: Japanese (done), Chinese, Russian and Ukrainian. Configured: Korean (pronounced Hangul where it differs from the spelling, Sino-Korean roots, a default voice, TOPIK I decks), German (article and plural) and Estonian (principal forms). Platform work first: Arabic gets right-to-left layout, then harakat. Later: Cantonese, Hebrew and Thai.
 
@@ -54,7 +54,7 @@ Today a language's behaviour lives in three kinds of place: a literal in a helpe
 
 ## Delivery
 
-1. The record and index with Japanese alone, plus `TermText`, `ExampleText`, font tokens and the Grit tripwire. Behaviour does not change.
+1. The record and index with Japanese alone, plus `TermText`, `ExampleText`, font tokens and the Grit tripwire. Its first excludes are the literal sets that hold supported tags: `READING_LANGUAGES` in `packages/core/src/enrichment.ts` and the voice sets in `apps/web/src/server/ai/speech.ts` and `speech-voices.ts`. Behaviour does not change.
 2. Japanese's prompt module, its text moved verbatim with an `evaluation.json` run as evidence, then the recorded-run harness.
 3. `normalizeCardText`, the new `readingKey` and the offline queue. The stress fold and its backfill ship with Russian.
 4. a. The shared site parts. b. `LanguageOut`, `GET /api/languages`, the `list_decks` map and `/docs/languages`, in their own slice because the two Workers deploy separately (ADR 0009).

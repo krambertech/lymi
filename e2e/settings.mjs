@@ -29,7 +29,7 @@ export const e2eAccounts = [
   "word-detail",
   "deck-page",
   "explore",
-  "welcome",
+  "first-run",
   "language",
   "join-owner",
   "join-member",

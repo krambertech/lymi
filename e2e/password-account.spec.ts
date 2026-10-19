@@ -41,11 +41,10 @@ test("a new address signs up, confirms from the email and lands in the app", asy
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page.getByText("Check your inbox")).toBeVisible();
 
-  // An account with nothing in it is sent on from Today to Welcome, which it can skip.
+  // A confirmed account starts on Today's first-run guide.
   await page.goto(await linkFrom(page, email, "verify-email"));
-  await expect.poll(() => new URL(page.url()).pathname).toBe("/welcome");
-  await page.getByRole("button", { name: "Skip for now", exact: true }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/today");
+  await expect(page.getByRole("heading", { name: "Create your first deck" })).toBeVisible();
 
   // The confirmed password now opens the door on its own.
   await page.goto("/login");
@@ -61,7 +60,7 @@ test("a forgotten password is reset from the email, and the old one stops workin
   const email = address("password-reset", testInfo);
   await createAccount(page, email);
   await page.goto(await linkFrom(page, email, "verify-email"));
-  await expect.poll(() => new URL(page.url()).pathname).toBe("/welcome");
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/today");
 
   await page.goto("/login");
   await page.getByRole("button", { name: "Forgot your password?", exact: true }).click();

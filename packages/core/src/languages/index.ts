@@ -56,6 +56,11 @@ export function languageScript(language: string | null | undefined): Script | nu
   return languageSupport(language)?.script ?? null;
 }
 
+/** Whether generated speech says the card's Reading, led in by its meaning, so either changing makes a new clip. */
+export function speaksReading(language: string | null | undefined): boolean {
+  return languageSupport(language)?.speech === "reading";
+}
+
 /** Languages whose pronunciation is a reading of a script that does not show it, so the field is called Reading. */
 export function writtenWithReading(language: string | null | undefined): boolean {
   return (languageSupport(language) ?? languageConfig(language))?.pronunciation === "reading";

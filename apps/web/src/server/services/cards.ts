@@ -14,12 +14,12 @@ import {
   emptyFields,
   enrichmentStalled,
   fieldsToFill,
-  languageKey,
   needsEnrichment,
   newId,
   normaliseTerm,
   readingKey,
   sameReading,
+  speaksReading,
   stripReadings,
   TEXT_MODES,
 } from "@lymi/core";
@@ -907,7 +907,7 @@ function editWrite(
     current.audioSource === "recorded"
       ? normalizedTerm !== normaliseTerm(current.term)
       : pronunciationChanged ||
-        (languageKey(current.language) === "ja" &&
+        (speaksReading(current.language) &&
           ((patch.pronunciation !== undefined && patch.pronunciation !== current.pronunciation) ||
             (patch.meaning !== undefined && patch.meaning !== current.meaning)));
   const { reviewModes, directions: _legacy, ...fields } = patch;

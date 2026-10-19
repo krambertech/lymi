@@ -4,6 +4,7 @@ import {
   drawsReadings,
   languageScript,
   languageSupport,
+  speaksReading,
   writtenWithReading,
 } from ".";
 
@@ -31,6 +32,13 @@ describe("languageScript", () => {
     expect(languageScript("ja")).toBe("Jpan");
     expect(languageScript("zh")).toBeNull();
     expect(languageScript("ru")).toBeNull();
+  });
+});
+
+describe("speaksReading", () => {
+  it("speaks a Japanese reading and no other", () => {
+    expect(speaksReading("ja-JP")).toBe(true);
+    for (const tag of ["zh", "ko", null]) expect(speaksReading(tag)).toBe(false);
   });
 });
 

@@ -6,4 +6,5 @@ export const japanese = {
   script: "Jpan",
   engine: "furigana",
   pronunciation: "reading",
+  speech: "reading",
 } as const satisfies LanguageSupport;

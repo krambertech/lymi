@@ -14,4 +14,6 @@ export interface LanguageSupport {
   engine: ReadingEngine;
   /** The pronunciation holds a Reading, and the card form calls the field so. */
   pronunciation: "reading";
+  /** Generated speech says the Reading, led in by the meaning, so a new reading or meaning makes a new clip. */
+  speech: "reading";
 }

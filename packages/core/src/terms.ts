@@ -1,4 +1,4 @@
-import { languageKey } from "./languages";
+import { languageKey, speaksReading } from "./languages";
 import { stripReadings } from "./reading";
 
 /**
@@ -92,7 +92,7 @@ export function pronunciationInputKey(card: {
   meaning?: string | null | undefined;
   audioSource?: string | null | undefined;
 }): string {
-  const japanese = languageKey(card.language) === "ja" && card.audioSource !== "recorded";
+  const japanese = speaksReading(card.language) && card.audioSource !== "recorded";
   return JSON.stringify([
     card.id,
     card.language,

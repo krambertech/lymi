@@ -28,13 +28,15 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   uk: { voice: "9Sj8ugvpK1DmcAXyvi3a", name: "Alex Nekrasov - Confident and Clear" },
   vi: { voice: "A5w1fw5x0uXded1LDvZp", name: "Nhu - Calm and Confident" },
   cmn: { voice: "bhJUNIXWQQ94l8eI2VUf", name: "Amy - Friendly, Young and Natural" },
+  // Traditional tags speak with a Taiwan voice; chosen on 一 and 不 sandhi and 行 háng/xíng, PR #869.
+  "cmn-TW": { voice: "Z8Aisvg1z70p27kGvkZZ", name: "Ling - Steady, Calm and Grounded" },
 };
 
 const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "ar",
   "pt-BR",
-  // Mainland only, so a Taiwan locale speaks with Gemini's Taiwan voice.
   "cmn-CN",
+  "cmn-TW",
   "da",
   "nl",
   "et",

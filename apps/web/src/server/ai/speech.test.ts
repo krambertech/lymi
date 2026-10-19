@@ -40,7 +40,7 @@ describe("speech provider routing", () => {
     for (const tag of ["zh", "zh-CN", "zh-Hans", "zh-Hans-TW", "zh-SG"])
       expect(geminiLocale(tag)).toBe("cmn-CN");
     expect(nativeSpeechVoice("cmn-CN")?.name).toMatch(/Amy/);
-    expect(nativeSpeechVoice("cmn-TW")).toBeNull();
+    expect(nativeSpeechVoice("cmn-TW")?.name).toMatch(/Ling/);
   });
 
   it("recognizes OpenAI's published languages and common tag aliases", () => {

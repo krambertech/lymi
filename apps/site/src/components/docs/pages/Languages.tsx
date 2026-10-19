@@ -19,8 +19,7 @@ function Language({ language }: { language: LanguageOut }) {
     <>
       <H2 id={language.tag}>{language.name}</H2>
       <p>
-        Tag <code>{language.tag}</code>, with any region or script after it. Written in{" "}
-        <code>{language.script}</code>.
+        Tag <code>{language.tag}</code>, written in <code>{language.script}</code>.
       </p>
       <Defs
         items={[

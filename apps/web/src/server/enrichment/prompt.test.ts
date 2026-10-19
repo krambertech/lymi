@@ -1,4 +1,4 @@
-import { ENRICHED_FIELDS, LANGUAGE_FORMATS } from "@lymi/core";
+import { ENRICHED_FIELDS, LANGUAGE_FORMATS, pronunciationGuide } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { LANGUAGE_PROMPTS } from "../languages";
 import { supportedNamesIn } from "../languages/test-helpers";
@@ -78,7 +78,7 @@ describe("languageGuide", () => {
     "takes $tag's pronunciation and example lines from its format",
     (format) => {
       const guide = languageGuide(format.tag) ?? "";
-      expect(guide).toContain(`\npronunciation: ${format.pronunciation.format} For example: `);
+      expect(guide).toContain(`\npronunciation: ${pronunciationGuide(format.tag)} For example: `);
       expect(guide).toContain(format.pronunciation.sample.pronunciation);
       if (format.example) expect(guide).toMatch(/^example: /);
       expect(guide.includes(format.example?.sample ?? "\0")).toBe(format.example !== null);

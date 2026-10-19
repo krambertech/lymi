@@ -6,6 +6,7 @@ import {
   languageFormat,
   languageScript,
   languageSupport,
+  pronunciationGuide,
   speechInputs,
   writtenWithReading,
 } from ".";
@@ -84,6 +85,14 @@ describe("languageFormat", () => {
       sample: { term: "학교", pronunciation: "학꾜" },
     });
     expect(writtenWithReading("ko")).toBe(false);
+  });
+  it("tells a client to leave an empty pronunciation out, which the API accepts, and the model to write null", () => {
+    expect(languageFormat("ko")?.pronunciation.format).toBe(
+      "How the term is said, in Hangul, only where that differs from its spelling. Leave it out when the term is said as written. Not romanization or IPA.",
+    );
+    expect(pronunciationGuide("ko")).toContain("Null when the term is said as written.");
+    for (const format of LANGUAGE_FORMATS)
+      expect(format.pronunciation.format).not.toMatch(/\bnull\b/i);
   });
   it("gives a bracket pattern only to a reading style with an inline notation", () => {
     for (const format of LANGUAGE_FORMATS) {

@@ -1,4 +1,4 @@
-import { LANGUAGE_FORMATS, languageFormat, languageKey } from "@lymi/core";
+import { LANGUAGE_FORMATS, languageFormat, languageKey, pronunciationGuide } from "@lymi/core";
 import { type FieldGuide, LANGUAGE_PROMPTS, languagePrompts } from "../languages";
 
 /**
@@ -97,7 +97,7 @@ export function languageGuide(tag: string | null | undefined): string | undefine
     ...(enrich?.guide ?? GUIDES[languageKey(tag)]),
     ...(format?.example && { example: `${format.example.format} ${format.example.sample}` }),
     ...(format && {
-      pronunciation: `${format.pronunciation.format} For example: ${format.pronunciation.sample.term} → ${format.pronunciation.sample.pronunciation}.`,
+      pronunciation: `${pronunciationGuide(tag)} For example: ${format.pronunciation.sample.term} → ${format.pronunciation.sample.pronunciation}.`,
     }),
   };
   const lines = (["meaning", "example", "notes", "pronunciation"] as const).flatMap((field) =>

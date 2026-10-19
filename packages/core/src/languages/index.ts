@@ -51,6 +51,8 @@ const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     format: {
       name: "Chinese",
       pronunciation: "Pinyin with tone marks, not IPA.",
+      empty: null,
+      never: null,
       sample: { term: "学习", pronunciation: "xuéxí" },
       duplicates: "term",
     },
@@ -61,8 +63,9 @@ const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     script: "Kore",
     format: {
       name: "Korean",
-      pronunciation:
-        "How the term is said, in Hangul, only where that differs from its spelling. Null when the term is said as written. Not romanization or IPA.",
+      pronunciation: "How the term is said, in Hangul, only where that differs from its spelling.",
+      empty: "the term is said as written",
+      never: "Not romanization or IPA.",
       sample: { term: "학교", pronunciation: "학꾜" },
       duplicates: "term",
     },
@@ -123,15 +126,20 @@ export function cueKeepsReading(language: string | null | undefined, known: bool
   return !known && !!languageConfig(language)?.cueLine;
 }
 
-function formatOut(
-  tag: string,
-  row: {
-    pronunciation: LanguageOut["pronunciation"]["label"];
-    script: string;
-    format: LanguageFormat;
-  },
-  engine: ReadingEngine | null,
-): LanguageOut {
+/** What the pronunciation holds, saying its empty case as a client sends it or as the model writes it. */
+function describePronunciation(format: LanguageFormat, empty: "omit" | "null"): string {
+  const when =
+    format.empty && `${empty === "null" ? "Null" : "Leave it out"} when ${format.empty}.`;
+  return [format.pronunciation, when, format.never].filter(Boolean).join(" ");
+}
+
+type FormatRow = {
+  pronunciation: LanguageOut["pronunciation"]["label"];
+  script: string;
+  format: LanguageFormat;
+};
+
+function formatOut(tag: string, row: FormatRow, engine: ReadingEngine | null): LanguageOut {
   const notation = engine ? EXAMPLE_NOTATION[engine] : null;
   return {
     tag,
@@ -139,7 +147,7 @@ function formatOut(
     script: row.script,
     pronunciation: {
       label: row.pronunciation,
-      format: row.format.pronunciation,
+      format: describePronunciation(row.format, "omit"),
       sample: row.format.sample,
     },
     example: notation
@@ -157,8 +165,24 @@ export const LANGUAGE_FORMATS: readonly LanguageOut[] = [
   ...Object.entries(CONFIGURED).map(([tag, row]) => formatOut(tag, row, null)),
 ];
 
+/** The row a tag's format comes from, found the way every other function here finds a language. */
+function formatSource(
+  language: string | null | undefined,
+): { tag: string; row: FormatRow; engine: ReadingEngine | null } | null {
+  const record = languageSupport(language);
+  if (record) return { tag: record.tag, row: record, engine: record.engine };
+  const row = languageConfig(language);
+  return row ? { tag: languageKey(language), row, engine: null } : null;
+}
+
 /** How this language's cards are written, or null for a language with no format of its own. */
 export function languageFormat(language: string | null | undefined): LanguageOut | null {
-  const key = languageKey(language);
-  return LANGUAGE_FORMATS.find((format) => format.tag === key) ?? null;
+  const source = formatSource(language);
+  return source ? formatOut(source.tag, source.row, source.engine) : null;
+}
+
+/** The pronunciation format as the enrichment model reads it, where an empty field is null. */
+export function pronunciationGuide(language: string | null | undefined): string | null {
+  const format = formatSource(language)?.row.format;
+  return format ? describePronunciation(format, "null") : null;
 }

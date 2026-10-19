@@ -19,6 +19,10 @@ export interface LanguageFormat {
   name: string;
   /** What the pronunciation field holds, in words a client and the model both follow. */
   pronunciation: string;
+  /** When the field stays empty, as a clause after "when", or null when every term has one. */
+  empty: string | null;
+  /** A last sentence on what the field never holds, or null. */
+  never: string | null;
   /** A term and the pronunciation that goes with it. */
   sample: { term: string; pronunciation: string };
   duplicates: DuplicateRule;

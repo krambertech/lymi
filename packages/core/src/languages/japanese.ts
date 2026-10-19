@@ -8,7 +8,9 @@ export const japanese = {
   pronunciation: "reading",
   format: {
     name: "Japanese",
-    pronunciation: "The reading in hiragana. Null when the term is written only in kana.",
+    pronunciation: "The reading in hiragana.",
+    empty: "the term is written only in kana",
+    never: null,
     sample: { term: "食べる", pronunciation: "たべる" },
     duplicates: "term-and-reading",
   },

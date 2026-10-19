@@ -1,11 +1,15 @@
 import type { Card } from "@lymi/core/schema";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
+import { JapaneseContextError } from "../ai/japanese-audio-context";
 import type { Db } from "../db";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.useRealTimers();
+});
 
 function card(patch: Partial<Card> = {}): Card {
   const now = new Date();
@@ -776,7 +780,7 @@ describe("Japanese preceding context", () => {
     });
   });
 
-  it("backs off after invalid context instead of spending on each press", async () => {
+  it("keeps a refused lead-in as no context instead of buying it again", async () => {
     const { bucket } = contextBucket();
     const japaneseContext = contextGenerator();
     japaneseContext.generate.mockResolvedValue({
@@ -786,7 +790,10 @@ describe("Japanese preceding context", () => {
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    vi.useFakeTimers({ toFake: ["Date"] });
     const first = await pronunciationAudio(context(japaneseCard()), "card-1", deps);
+    vi.setSystemTime(Date.now() + 30 * 86_400_000);
     await pronunciationAudio(context({ ...japaneseCard(), audioKey: first.key }), "card-1", deps);
     expect(japaneseContext.generate).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
@@ -795,6 +802,116 @@ describe("Japanese preceding context", () => {
       language: "ja",
       usage: expect.any(Function),
     });
+  });
+
+  it("retries an outage after a day and an interrupted call after minutes", async () => {
+    const { bucket, objects } = contextBucket();
+    const japaneseContext = contextGenerator();
+    japaneseContext.generate.mockRejectedValueOnce(new JapaneseContextError("failed"));
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const row = japaneseCard();
+    await pronunciationAudio(context(row), row.id, deps);
+    vi.setSystemTime(Date.now() + 23 * 3_600_000);
+    await pronunciationAudio(context(row), row.id, deps);
+    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    vi.setSystemTime(Date.now() + 2 * 3_600_000);
+    await pronunciationAudio(context(row), row.id, deps);
+    expect(japaneseContext.generate).toHaveBeenCalledTimes(2);
+
+    // A Worker cut off mid-call leaves its pending marker and lock behind.
+    const interrupted = { ...row, id: "card-2", meaning: "a bridge" };
+    japaneseContext.generate.mockImplementationOnce(() => new Promise<never>(() => undefined));
+    void pronunciationAudio(context(interrupted), interrupted.id, deps);
+    await vi.waitFor(() => expect(japaneseContext.generate).toHaveBeenCalledTimes(3));
+    const lock = [...objects].find(
+      ([key]) => key.startsWith("cards/card-2/") && key.endsWith(".lock"),
+    );
+    expect(Number(lock?.[1].metadata?.expiresAt) - Date.now()).toBeLessThanOrEqual(45_000);
+    await expect(
+      pronunciationAudio(context(interrupted), interrupted.id, deps),
+    ).rejects.toMatchObject({ code: "unavailable" });
+    vi.setSystemTime(Date.now() + 60_000);
+    await pronunciationAudio(context(interrupted), interrupted.id, deps);
+    expect(japaneseContext.generate).toHaveBeenCalledTimes(3);
+    vi.setSystemTime(Date.now() + 5 * 60_000);
+    await pronunciationAudio(context(interrupted), interrupted.id, deps);
+    expect(japaneseContext.generate).toHaveBeenCalledTimes(4);
+  });
+
+  it("buys a broken cached context again rather than failing every play", async () => {
+    const { bucket, objects, put } = contextBucket();
+    const japaneseContext = contextGenerator();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    vi.spyOn(console, "info").mockImplementation(() => undefined);
+    const row = japaneseCard();
+    const first = await pronunciationAudio(context(row), row.id, deps);
+    const key = [...objects.keys()].find((k) => k.includes("/context/") && k.endsWith(".json"));
+    for (const broken of ["{", JSON.stringify({ status: "ready", previousText: "橋の" })]) {
+      await put(String(key), broken);
+      const replay = await pronunciationAudio(
+        context({ ...row, audioKey: first.key }),
+        row.id,
+        deps,
+      );
+      expect(replay.key).toBe(first.key);
+    }
+    expect(japaneseContext.generate).toHaveBeenCalledTimes(3);
+    expect(speech).toHaveBeenCalledOnce();
+  });
+
+  it("reports the context call's cost under its own span, a failed one included", async () => {
+    const { bucket } = contextBucket();
+    const japaneseContext = contextGenerator();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const capture = vi.fn();
+    const analytics = { writeDataPoint: vi.fn(), capture };
+    await pronunciationAudio({ ...context(japaneseCard()), analytics }, "card-1", deps);
+    japaneseContext.generate.mockRejectedValueOnce(
+      new JapaneseContextError("failed", { inputTokens: 0, outputTokens: 0, status: 403 }),
+    );
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const edited = { ...japaneseCard(), meaning: "a bridge" };
+    await pronunciationAudio({ ...context(edited), analytics }, "card-1", deps);
+    const spans = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.$ai_span_name === "pronunciation_context");
+    expect(spans).toEqual([
+      expect.objectContaining({
+        $ai_provider: "google",
+        $ai_model: "gemini-2.5-flash-lite",
+        $ai_input_tokens: 300,
+        $ai_output_tokens: 400,
+        $ai_is_error: false,
+        $ai_total_cost_usd: (300 * 0.1 + 400 * 0.4) / 1e6,
+      }),
+      expect.objectContaining({ $ai_is_error: true, $ai_http_status: 403 }),
+    ]);
+  });
+
+  it("still plays the kana-only clip from before contexts when every provider fails", async () => {
+    const { bucket } = contextBucket();
+    const row = japaneseCard();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const old = await pronunciationAudio(context(row), row.id, {
+      bucket,
+      providers: () => [provider("elevenlabs", speech)],
+    });
+    const down = vi.fn(async () => {
+      throw new Error("down");
+    });
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const audio = await pronunciationAudio(context({ ...row, audioKey: old.key }), row.id, {
+      bucket,
+      japaneseContext: contextGenerator(),
+      providers: () => [provider("elevenlabs", down)],
+    });
+    expect(audio.key).toBe(old.key);
+    expect(down).toHaveBeenCalledOnce();
   });
 
   it("serializes first plays across independent callers before either can bill twice", async () => {

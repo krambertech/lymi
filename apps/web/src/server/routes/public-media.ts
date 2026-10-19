@@ -13,6 +13,8 @@ import { publicMediaFile, publicPronunciation } from "../services/public-media";
 /** A published deck's own media. The product Worker checks the publication on every request. */
 export const publicMedia = new Hono<AppEnv>();
 
+const noop = () => {};
+
 publicMedia.get(
   "/card/:cardId/:kind",
   describe({ hide: true, open: true, errors: [404, 503] }),
@@ -26,7 +28,7 @@ publicMedia.get(
         audio: c.env.AUDIO,
       });
     } else {
-      const found = await publicPronunciation(
+      const work = publicPronunciation(
         c.get("db"),
         c.req.param("cardId"),
         {
@@ -37,6 +39,9 @@ publicMedia.get(
         },
         () => spendPublicAudio(c),
       );
+      // A visitor who leaves mid-generation still gets the clip stored, and its lease released.
+      c.executionCtx.waitUntil(work.then(noop, noop));
+      const found = await work;
       if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
       object = found.clip;
     }

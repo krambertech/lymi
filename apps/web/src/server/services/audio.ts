@@ -68,7 +68,14 @@ export async function pronunciationAudio(
       : null;
   const context =
     input && deps.japaneseContext
-      ? await japaneseAudioContext(card, input, deps.bucket, deps.japaneseContext, deps.storedOnly)
+      ? await japaneseAudioContext(
+          card,
+          input,
+          deps.bucket,
+          deps.japaneseContext,
+          deps.storedOnly,
+          ctx.analytics,
+        )
       : undefined;
   if (input && deps.storedOnly && !context)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
@@ -181,13 +188,16 @@ async function generatedPronunciation(
     return stored;
   }
 
-  if (
-    card.audioKey &&
-    (!context ||
-      (await Promise.all(providers.map((provider) => audioKey(card, provider, context)))).includes(
-        card.audioKey,
-      ))
-  ) {
+  // A clip of the same kana without a lead-in, from before contexts, still beats no sound.
+  const fallbacks = context
+    ? await Promise.all(
+        providers.flatMap((provider) => [
+          audioKey(card, provider, context),
+          audioKey(card, provider),
+        ]),
+      )
+    : [];
+  if (card.audioKey && (!context || fallbacks.includes(card.audioKey))) {
     const remembered = await deps.bucket.get(card.audioKey);
     if (remembered) return remembered;
   }

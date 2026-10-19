@@ -19,22 +19,40 @@ export interface JapaneseContextInput {
   meaning: string;
 }
 
+export interface JapaneseContextUsage {
+  inputTokens: number;
+  outputTokens: number;
+  reasoningTokens?: number | undefined;
+  status?: number | undefined;
+}
+
 export interface JapaneseContextProvider {
   model: string;
-  generate(input: JapaneseContextInput): Promise<{
-    previousText: string | null;
-    inputTokens: number;
-    outputTokens: number;
-  }>;
+  generate(
+    input: JapaneseContextInput,
+  ): Promise<{ previousText: string | null } & JapaneseContextUsage>;
 }
 
 export class JapaneseContextError extends Error {
-  constructor() {
+  constructor(
+    /** `rejected` when a reply arrived but failed its checks, so asking again buys the same answer. */
+    readonly reason: "rejected" | "failed",
+    readonly usage?: JapaneseContextUsage,
+  ) {
     super("Japanese audio context could not be generated");
     this.name = "JapaneseContextError";
   }
 }
 
+const Usage = z.object({
+  usageMetadata: z
+    .object({
+      promptTokenCount: z.number().optional(),
+      candidatesTokenCount: z.number().optional(),
+      thoughtsTokenCount: z.number().optional(),
+    })
+    .optional(),
+});
 const Payload = z.object({
   candidates: z
     .array(
@@ -48,31 +66,31 @@ const Payload = z.object({
       }),
     )
     .min(1),
-  usageMetadata: z
-    .object({
-      promptTokenCount: z.number().optional(),
-      candidatesTokenCount: z.number().optional(),
-      thoughtsTokenCount: z.number().optional(),
-    })
-    .optional(),
 });
 const Reply = z.object({ previousText: z.string().nullable() });
 
+const SINGLE_KANA = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]$/u;
+
 export function validJapaneseLeadIn(value: string | null, input: JapaneseContextInput): boolean {
   if (value === null) return true;
-  const target = input.term.replace(/が$/, "");
-  const reading = input.reading.replace(/が$/, "");
+  // One kana such as き or は also sits inside ordinary words, so only a lead-in ending in it repeats it.
+  const repeats = (word: string) =>
+    word.length > 0 && (SINGLE_KANA.test(word) ? value.endsWith(word) : value.includes(word));
   return (
     [...value].length > 0 &&
     [...value].length <= 16 &&
     /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u.test(value) &&
-    !value.includes(input.term) &&
-    !value.includes(input.reading) &&
-    !(target && value.includes(target)) &&
-    !(reading && value.includes(reading)) &&
+    ![
+      input.term,
+      input.reading,
+      input.term.replace(/が$/, ""),
+      input.reading.replace(/が$/, ""),
+    ].some(repeats) &&
     !["とても", "非常に", "新しい", "古い"].includes(value)
   );
 }
+
+const NO_USAGE = { inputTokens: 0, outputTokens: 0, reasoningTokens: 0 };
 
 export function createJapaneseContextProvider(
   env: AiGatewayBindings & { GEMINI_API_KEY?: string | undefined },
@@ -109,12 +127,14 @@ export function createJapaneseContextProvider(
               thinkingConfig: { thinkingBudget: 512 },
             },
           }),
-          signal: AbortSignal.timeout(10_000),
+          // Leaves the speech call room inside the phone's 12-second wait.
+          signal: AbortSignal.timeout(4_000),
         },
       );
+      const status = response.status;
       if (!response.ok || !response.body) {
         await response.body?.cancel();
-        throw new JapaneseContextError();
+        throw new JapaneseContextError("failed", { ...NO_USAGE, status });
       }
       const reader = response.body.getReader();
       const chunks: Uint8Array[] = [];
@@ -126,7 +146,7 @@ export function createJapaneseContextProvider(
           size += value.byteLength;
           if (size > 16_384) {
             await reader.cancel();
-            throw new JapaneseContextError();
+            throw new JapaneseContextError("failed", { ...NO_USAGE, status });
           }
           chunks.push(value);
         }
@@ -139,23 +159,32 @@ export function createJapaneseContextProvider(
         bytes.set(chunk, offset);
         offset += chunk.length;
       }
+      let body: unknown;
       try {
-        const payload = Payload.parse(JSON.parse(new TextDecoder().decode(bytes)));
+        body = JSON.parse(new TextDecoder().decode(bytes));
+      } catch {
+        throw new JapaneseContextError("failed", { ...NO_USAGE, status });
+      }
+      const metadata = Usage.safeParse(body).data?.usageMetadata;
+      const thoughts = metadata?.thoughtsTokenCount ?? 0;
+      const usage: JapaneseContextUsage = {
+        inputTokens: metadata?.promptTokenCount ?? 0,
+        // Gemini bills thinking as output.
+        outputTokens: (metadata?.candidatesTokenCount ?? 0) + thoughts,
+        reasoningTokens: thoughts,
+        status,
+      };
+      try {
+        const payload = Payload.parse(body);
         const text = payload.candidates[0]?.content.parts
           .filter((p) => !p.thought)
           .map((p) => p.text ?? "")
           .join("");
         const reply = Reply.parse(JSON.parse(text ?? ""));
-        if (!validJapaneseLeadIn(reply.previousText, input)) throw new JapaneseContextError();
-        return {
-          previousText: reply.previousText,
-          inputTokens: payload.usageMetadata?.promptTokenCount ?? 0,
-          outputTokens:
-            (payload.usageMetadata?.candidatesTokenCount ?? 0) +
-            (payload.usageMetadata?.thoughtsTokenCount ?? 0),
-        };
+        if (!validJapaneseLeadIn(reply.previousText, input)) throw new Error("Invalid lead-in");
+        return { previousText: reply.previousText, ...usage };
       } catch {
-        throw new JapaneseContextError();
+        throw new JapaneseContextError("rejected", usage);
       }
     },
   };

@@ -142,6 +142,7 @@ const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above
     output: 0.5,
     longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
   },
+  "gemini-2.5-flash-lite": { input: 0.1, cachedInput: 0.01, output: 0.4 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -390,6 +391,7 @@ export const analyticsEvents = {
       "deck_choice",
       "lesson_read",
       "pronunciation",
+      "pronunciation_context",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),

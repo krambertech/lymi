@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { createJapaneseContextProvider, validJapaneseLeadIn } from "./japanese-audio-context";
+import {
+  createJapaneseContextProvider,
+  JapaneseContextError,
+  validJapaneseLeadIn,
+} from "./japanese-audio-context";
 
 const env = {
   GEMINI_API_KEY: "test-key",
@@ -24,6 +28,8 @@ describe("cheap Japanese audio context", () => {
       previousText: "川を渡る",
       inputTokens: 300,
       outputTokens: 410,
+      reasoningTokens: 400,
+      status: 200,
     });
     const [url, init] = request.mock.calls[0] ?? [];
     expect(url).toBe(
@@ -34,6 +40,7 @@ describe("cheap Japanese audio context", () => {
       "cf-aig-collect-log-payload": "false",
       "cf-aig-skip-cache": "true",
     });
+    expect(init?.signal).toBeInstanceOf(AbortSignal);
     expect(JSON.parse(String(init?.body)).generationConfig).toMatchObject({
       maxOutputTokens: 768,
       thinkingConfig: { thinkingBudget: 512 },
@@ -46,9 +53,28 @@ describe("cheap Japanese audio context", () => {
     });
     await expect(createJapaneseContextProvider(env, request)?.generate(input)).rejects.toThrow();
     expect(request).toHaveBeenCalledOnce();
-    const rejected = vi.fn(async () => new Response("rejected", { status: 429 }));
-    await expect(createJapaneseContextProvider(env, rejected)?.generate(input)).rejects.toThrow();
-    expect(rejected).toHaveBeenCalledOnce();
+    const limited = vi.fn(async () => new Response("limited", { status: 429 }));
+    await expect(
+      createJapaneseContextProvider(env, limited)?.generate(input),
+    ).rejects.toMatchObject({
+      reason: "failed",
+      usage: { status: 429 },
+    });
+    expect(limited).toHaveBeenCalledOnce();
+  });
+
+  it("tells a refused reply, which would come back the same, from an outage, and keeps its usage", async () => {
+    const refused = createJapaneseContextProvider(env, async () =>
+      Response.json(payload("とても")),
+    );
+    const error = await refused?.generate(input).catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(JapaneseContextError);
+    expect(error).toMatchObject({
+      reason: "rejected",
+      usage: { inputTokens: 300, outputTokens: 410, reasoningTokens: 400, status: 200 },
+    });
+    const garbled = createJapaneseContextProvider(env, async () => new Response("not json"));
+    await expect(garbled?.generate(input)).rejects.toMatchObject({ reason: "failed" });
   });
 
   it("fails closed without the gateway and refuses truncated or oversized JSON", async () => {
@@ -75,5 +101,14 @@ describe("cheap Japanese audio context", () => {
     expect(validJapaneseLeadIn("川を渡る", input)).toBe(true);
     for (const prefix of ["橋の", "はし", "とても", "新しい", "川。", "[quiet]", "あ".repeat(17)])
       expect(validJapaneseLeadIn(prefix, input)).toBe(false);
+  });
+
+  it("keeps lead-ins whose ordinary words contain a one-kana reading, unless they end in it", () => {
+    const tree = { term: "木", reading: "き", meaning: "tree" };
+    const leaf = { term: "葉", reading: "は", meaning: "leaf" };
+    expect(validJapaneseLeadIn("大きな", tree)).toBe(true);
+    expect(validJapaneseLeadIn("秋には色づく", leaf)).toBe(true);
+    expect(validJapaneseLeadIn("木の", tree)).toBe(false);
+    expect(validJapaneseLeadIn("ゆき", tree)).toBe(false);
   });
 });

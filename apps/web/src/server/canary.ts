@@ -1,4 +1,5 @@
 import { createOpenAiTextProvider, createSpeechProviders, type SpeechProvider } from "./ai";
+import { createJapaneseContextProvider, JapaneseContextError } from "./ai/japanese-audio-context";
 import {
   type Dependency,
   type DependencyOutcome,
@@ -122,6 +123,21 @@ function checks(env: Bindings, hourly: boolean): Check[] {
         });
       }
     }
+    // Google limits Gemini 2.5 to keys that already used it, so the deployed key is checked here.
+    const context = createJapaneseContextProvider(env, meteredFetch(env, "gemini_text", "canary"));
+    if (context)
+      list.push({
+        dependency: "gemini_text",
+        run: async () => {
+          try {
+            await context.generate({ term: "船", reading: "ふね", meaning: "boat" });
+          } catch (error) {
+            if (!(error instanceof JapaneseContextError)) throw error;
+            // A reply that failed our checks still proves the key works.
+            if (error.reason === "failed") throw new CheckFailed("failed");
+          }
+        },
+      });
   }
   return list;
 }

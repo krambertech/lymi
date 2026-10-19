@@ -3,11 +3,20 @@ import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
 import {
   JAPANESE_CONTEXT_POLICY,
+  JapaneseContextError,
   type JapaneseContextInput,
   type JapaneseContextProvider,
+  type JapaneseContextUsage,
   validJapaneseLeadIn,
 } from "../ai/japanese-audio-context";
+import { type AnalyticsWriter, textCallReporter } from "./analytics";
 import { ServiceError } from "./context";
+
+// About as long as one context call plus one speech call, so a cut-off request blocks a card briefly.
+const LEASE_MS = 45_000;
+const FAILURE_COOLDOWN_MS = 86_400_000;
+// An interrupted call leaves its pending marker behind; that card retries after this instead of a day.
+const INTERRUPTED_COOLDOWN_MS = 300_000;
 
 export interface AudioContext {
   identity: string;
@@ -64,7 +73,7 @@ export async function withAudioLease<T>(
   const token = crypto.randomUUID();
   const lock = await bucket.put(key, token, {
     onlyIf: previous ? { etagMatches: previous.etag } : { etagDoesNotMatch: "*" },
-    customMetadata: { expiresAt: String(Date.now() + 300_000) },
+    customMetadata: { expiresAt: String(Date.now() + LEASE_MS) },
   });
   if (!lock)
     throw new ServiceError(
@@ -91,6 +100,7 @@ export async function japaneseAudioContext(
   bucket: R2Bucket,
   provider: JapaneseContextProvider,
   cachedOnly = false,
+  analytics?: AnalyticsWriter,
 ): Promise<AudioContext | undefined> {
   const identity = await audioFingerprint({
     input,
@@ -98,31 +108,48 @@ export async function japaneseAudioContext(
     policy: JAPANESE_CONTEXT_POLICY,
   });
   const key = `cards/${card.id}/context/${identity}.json`;
+  const log = (outcome: string, detail: Record<string, number> = {}) =>
+    console.info(
+      JSON.stringify({
+        event: "pronunciation_context_resolved",
+        outcome,
+        model: provider.model,
+        ...detail,
+      }),
+    );
+  const record = async (value: z.input<typeof ContextRecord>) =>
+    bucket.put(key, JSON.stringify(value), {
+      httpMetadata: { contentType: "application/json" },
+    });
   const read = async (): Promise<AudioContext | null> => {
     const object = await bucket.get(key);
     if (!object) return null;
     if (object.size > 4096) {
       await object.body.cancel();
-      throw new Error("Invalid audio context cache");
+      log("invalid_cache");
+      return null;
     }
-    const parsed = ContextRecord.parse(await object.json());
-    if (parsed.status === "failed" && (parsed.pendingUntil ?? 0) > Date.now()) {
+    const parsed = ContextRecord.safeParse(await object.json().catch(() => null));
+    // A record a later, stricter policy would refuse is bought again rather than breaking playback.
+    if (
+      !parsed.success ||
+      (parsed.data.status === "ready" && !validJapaneseLeadIn(parsed.data.previousText, input))
+    ) {
+      log("invalid_cache");
+      return null;
+    }
+    if (parsed.data.status === "failed" && (parsed.data.pendingUntil ?? 0) > Date.now()) {
       throw new ServiceError(
         "unavailable",
         "Pronunciation audio is being prepared; try again shortly",
       );
     }
-    if (parsed.status === "failed" && parsed.retryAt <= Date.now()) return null;
-    const previousText = parsed.status === "ready" ? parsed.previousText : null;
-    if (!validJapaneseLeadIn(previousText, input)) throw new Error("Invalid audio context cache");
-    console.info(
-      JSON.stringify({
-        event: "pronunciation_context_resolved",
-        outcome: parsed.status === "ready" ? "cached" : "cooldown",
-        model: provider.model,
-      }),
-    );
-    return { identity, previousText };
+    if (parsed.data.status === "failed" && parsed.data.retryAt <= Date.now()) return null;
+    log(parsed.data.status === "ready" ? "cached" : "cooldown");
+    return {
+      identity,
+      previousText: parsed.data.status === "ready" ? parsed.data.previousText : null,
+    };
   };
   const cached = await read();
   if (cached) return cached;
@@ -130,53 +157,57 @@ export async function japaneseAudioContext(
   return withAudioLease(bucket, `${key}.lock`, async () => {
     const concurrent = await read();
     if (concurrent) return concurrent;
-    // Persist the cooldown before billing, so a timeout or failed final write cannot buy it again.
-    await bucket.put(
-      key,
-      JSON.stringify({
-        status: "failed",
-        retryAt: Date.now() + 86_400_000,
-        pendingUntil: Date.now() + 300_000,
-      }),
-      {
-        httpMetadata: { contentType: "application/json" },
-      },
-    );
-    let result: Awaited<ReturnType<JapaneseContextProvider["generate"]>>;
+    // Persist a cooldown before billing, so a timeout or failed final write cannot buy it again at once.
+    await record({
+      status: "failed",
+      retryAt: Date.now() + INTERRUPTED_COOLDOWN_MS,
+      pendingUntil: Date.now() + LEASE_MS,
+    });
     const started = Date.now();
+    const report = (usage: JapaneseContextUsage | undefined, error: boolean) =>
+      textCallReporter(
+        analytics,
+        "pronunciation_context",
+      )({
+        provider: "google",
+        model: provider.model,
+        inputTokens: usage?.inputTokens ?? 0,
+        outputTokens: usage?.outputTokens ?? 0,
+        reasoningTokens: usage?.reasoningTokens,
+        latencyMs: Date.now() - started,
+        error,
+        status: usage?.status,
+      });
     try {
-      result = await provider.generate(input);
+      const result = await provider.generate(input);
       if (!validJapaneseLeadIn(result.previousText, input))
-        throw new Error("Invalid audio context");
-    } catch {
-      await bucket.put(
-        key,
-        JSON.stringify({ status: "failed", retryAt: Date.now() + 86_400_000 }),
-        { httpMetadata: { contentType: "application/json" } },
+        throw new JapaneseContextError("rejected", result);
+      report(result, false);
+      await record({ status: "ready", previousText: result.previousText });
+      log(result.previousText ? "generated" : "unneeded", {
+        inputTokens: result.inputTokens,
+        outputTokens: result.outputTokens,
+        latencyMs: Date.now() - started,
+      });
+      return { identity, previousText: result.previousText };
+    } catch (error) {
+      const failure = error instanceof JapaneseContextError ? error : undefined;
+      report(failure?.usage, failure?.reason !== "rejected");
+      // At temperature 0 a refused reply would come back the same, so it is kept as no context.
+      await record(
+        failure?.reason === "rejected"
+          ? { status: "ready", previousText: null }
+          : { status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS },
       );
       console.warn(
         JSON.stringify({
           event: "pronunciation_context_resolved",
-          outcome: "failed",
+          outcome: failure?.reason === "rejected" ? "rejected" : "failed",
           model: provider.model,
           latencyMs: Date.now() - started,
         }),
       );
       return { identity, previousText: null };
     }
-    await bucket.put(key, JSON.stringify({ status: "ready", previousText: result.previousText }), {
-      httpMetadata: { contentType: "application/json" },
-    });
-    console.info(
-      JSON.stringify({
-        event: "pronunciation_context_resolved",
-        outcome: result.previousText ? "generated" : "unneeded",
-        model: provider.model,
-        inputTokens: result.inputTokens,
-        outputTokens: result.outputTokens,
-        latencyMs: Date.now() - started,
-      }),
-    );
-    return { identity, previousText: result.previousText };
   });
 }

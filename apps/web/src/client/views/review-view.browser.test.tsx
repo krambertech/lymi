@@ -156,19 +156,21 @@ const pinyinShown = () =>
     )
     .map((rt) => rt.textContent);
 
+const pinyinLine = () => shown("xuéxí").filter((el) => !el.classList.contains("sr-only"));
+
 test("a Known Chinese card's pinyin waits over the term for the reveal", async () => {
   const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 2);
   expect(pinyinShown()).toEqual([]);
   await reveal();
   await expect.poll(pinyinShown).toEqual(["xué", "xí"]);
-  // Drawn over the term, so no line repeats it.
-  expect(shown("xuéxí")).toHaveLength(0);
+  // Drawn over the term, so only the screen reader's line repeats it.
+  expect(pinyinLine()).toHaveLength(0);
 });
 
 test("a New or Learning Chinese card draws its pinyin over each character on the cue", async () => {
   const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 1);
   expect(pinyinShown()).toEqual(["xué", "xí"]);
-  expect(shown("xuéxí")).toHaveLength(0);
+  expect(pinyinLine()).toHaveLength(0);
   await reveal();
   await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
   expect(pinyinShown()).toEqual(["xué", "xí"]);

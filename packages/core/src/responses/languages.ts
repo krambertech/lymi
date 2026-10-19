@@ -14,10 +14,10 @@ export const LanguageOut = z
     }),
     pronunciation: z
       .object({
-        label: z.enum(["reading", "pronunciation"]).meta({
+        label: z.enum(["reading", "stress", "pronunciation"]).meta({
           ...OPEN,
           description:
-            "What the app calls the field: `reading` for a script that does not show its sound",
+            "What the app calls the field: `reading` for a script that does not show its sound, `stress` where it holds the term with its stress marked",
         }),
         format: z.string().meta({ description: "What the field holds" }),
         sample: z.object({ term: z.string(), pronunciation: z.string() }),

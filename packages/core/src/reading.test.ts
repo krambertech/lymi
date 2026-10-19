@@ -7,6 +7,7 @@ import {
   hasReadings,
   kanaReading,
   knownReadings,
+  markedTerm,
   markKnownReadings,
   missingReadings,
   parseReadings,
@@ -14,7 +15,39 @@ import {
   splitTermReading,
   stripReadings,
   termReading,
+  termShowsPronunciation,
 } from "./reading";
+
+describe("markedTerm", () => {
+  it("draws a Russian term with its stress in place, and draws nothing over it", () => {
+    const card = { term: "замок", language: "ru", pronunciation: "замо́к" };
+    expect(markedTerm(card)).toBe("замо́к");
+    expect(termReading(card)).toBeNull();
+    expect(knownReadings([{ ...card, known: true }]).size).toBe(0);
+  });
+  it("marks a first form drawn alone from the pronunciation's first form", () => {
+    const card = { term: "идти", language: "ru", pronunciation: "идти́ · шёл" };
+    expect(markedTerm(card)).toBe("идти́");
+  });
+  it("marks nothing in a language that draws no stress", () => {
+    expect(markedTerm({ term: "замок", language: "bg", pronunciation: "замо́к" })).toBeNull();
+    expect(markedTerm({ term: "上手", language: "ja", pronunciation: "じょうず" })).toBeNull();
+  });
+});
+
+describe("termShowsPronunciation", () => {
+  it("holds for a reading drawn over the term or marks drawn in place", () => {
+    expect(
+      termShowsPronunciation({ term: "上手", language: "ja", pronunciation: "じょうず" }),
+    ).toBe(true);
+    expect(termShowsPronunciation({ term: "мука", language: "ru", pronunciation: "мука́" })).toBe(
+      true,
+    );
+    expect(termShowsPronunciation({ term: "мука", language: "ru", pronunciation: "[mʊˈka]" })).toBe(
+      false,
+    );
+  });
+});
 
 describe("alignReading", () => {
   it("keeps the kana the term and the reading share plain", () => {

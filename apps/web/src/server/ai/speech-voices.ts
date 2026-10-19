@@ -22,7 +22,8 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   pl: { voice: "H5xTcsAIeS5RAykjz57a", name: "Alex - Warm Storyteller" },
   "pt-BR": { voice: "Qrdut83w0Cr152Yb4Xn3", name: "Paulo - Expressive and Confident" },
   ro: { voice: "am5XuPVtut7uKJQKMja2", name: "Mike L - Soft, Clear and Charming" },
-  ru: { voice: "0BcDz9UPwL3MpsnTeUlO", name: "Denis - Pleasant, Engaging and Friendly" },
+  // Stresses the U+0301 syllable in 37 of 40 marked words and sounds native, PR #864.
+  ru: { voice: "3EuKHIEZbSzrHGNmdYsx", name: "Nikolay" },
   sr: { voice: "g8TYYIFt2Qo27yGQmTYq", name: "Jovana - Warm Serbian Narrator" },
   // Stockholm; chosen over Gemini, Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
   sv: { voice: "kPdGSxhZAqy4bmPAf9iJ", name: "Evelina - Calm, Clear and Engaging" },

@@ -4,6 +4,7 @@ import { type CardText, normalizeCardText } from "../card-text";
 import { formatPinyin, parsePinyin, stripPinyin } from "../pinyin";
 import {
   formatReadings,
+  markedTerm,
   parseReadings,
   type ReadingSegment,
   readingKey,
@@ -11,7 +12,9 @@ import {
   stripReadings,
   termReading,
 } from "../reading";
+import { stripStress } from "../stress";
 import ja from "./fixtures/ja.json";
+import ru from "./fixtures/ru.json";
 import zh from "./fixtures/zh.json";
 import {
   LANGUAGE_RECORDS,
@@ -19,12 +22,13 @@ import {
   languageSupport,
   type ReadingEngine,
   type RecordTag,
+  readingEngine,
 } from "./index";
 
 interface Fixture {
-  /** Tags that must resolve to the record, each with the script it is written in. */
-  tags: Record<string, string>;
-  /** Each term with its pronunciation, and how it is drawn in inline notation, or null for plain. */
+  /** Tags that must resolve to the record, each with the script whose face draws it, or null for Onest. */
+  tags: Record<string, string | null>;
+  /** Each term with its pronunciation, and how it is drawn in inline notation or in place, or null for plain. */
   terms: { term: string; pronunciation: string; drawn: string | null }[];
   /** Examples with inline readings, and the text with them taken out. */
   examples: { text: string; plain: string }[];
@@ -40,20 +44,35 @@ interface Fixture {
   pairs?: { term: string; pronunciation: string; pairs: string[] }[];
 }
 
-/** Each engine's inline notation. */
+type Card = { term: string; pronunciation: string; language: string };
+
+/** Each engine's inline notation, and the term as it draws it. */
 const NOTATION: Record<
   ReadingEngine,
   {
     parse: (text: string) => ReadingSegment[];
     format: (segments: readonly ReadingSegment[]) => string;
     strip: (text: string) => string;
+    draw: (card: Card) => string | null;
   }
 > = {
-  furigana: { parse: parseReadings, format: formatReadings, strip: stripReadings },
-  pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin },
+  furigana: { parse: parseReadings, format: formatReadings, strip: stripReadings, draw: overTerm },
+  pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin, draw: overTerm },
+  // Marks stay in the text, so an example parses as one run.
+  stress: {
+    parse: (text) => (text ? [{ text }] : []),
+    format: (segments) => segments.map((segment) => segment.text).join(""),
+    strip: stripStress,
+    draw: markedTerm,
+  },
 };
 
-const FIXTURES: Record<RecordTag, Fixture> = { ja, zh };
+function overTerm(card: Card): string | null {
+  const segments = termReading(card);
+  return segments && NOTATION[readingEngine(card.language) as ReadingEngine].format(segments);
+}
+
+const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru };
 
 const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
 
@@ -71,13 +90,12 @@ describe.each(Object.values(LANGUAGE_RECORDS))("$tag", (record) => {
   it("has a face token for each script, read by the web's :lang() rule and the phone", () => {
     for (const script of record.scripts)
       expect(TOKENS).toContain(`--face-${script.toLowerCase()}:`);
-    expect(TOKENS).toContain(`:lang(${record.tag})`);
+    if (record.scripts.length > 0) expect(TOKENS).toContain(`:lang(${record.tag})`);
   });
 
   it("draws each term's reading", () => {
     for (const { term, pronunciation, drawn } of fixture.terms) {
-      const segments = termReading({ term, pronunciation, language: record.tag });
-      expect(segments && notation.format(segments)).toBe(drawn);
+      expect(notation.draw({ term, pronunciation, language: record.tag })).toBe(drawn);
     }
   });
 

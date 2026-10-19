@@ -7,6 +7,7 @@ import { chinese } from "./chinese";
 import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
+import { russian } from "./russian";
 import type {
   LanguageFormat,
   LanguageSupport,
@@ -14,6 +15,7 @@ import type {
   RecordTag,
   Script,
   SpeechInput,
+  StressRules,
   SupportedTag,
 } from "./types";
 
@@ -28,6 +30,7 @@ export type {
   RecordTag,
   Script,
   SpeechInput,
+  StressRules,
   SupportedTag,
 } from "./types";
 
@@ -40,6 +43,7 @@ export const SUPPORTED_LANGUAGES = {
 export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   zh: chinese,
+  ru: russian,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -79,9 +83,19 @@ export function readingEngine(language: string | null | undefined): ReadingEngin
   return languageSupport(language)?.engine ?? null;
 }
 
-/** Whether Lymi draws readings over this language's terms and examples. */
+/** Engines that draw a reading over the script, so a term keeps a reading's room above it. */
+const OVER_SCRIPT: Record<ReadingEngine, boolean> = { furigana: true, pinyin: true, stress: false };
+
+/** Whether Lymi draws readings over this language's terms and examples, rather than marks in place. */
 export function drawsReadings(language: string | null | undefined): boolean {
-  return readingEngine(language) !== null;
+  const engine = readingEngine(language);
+  return engine !== null && OVER_SCRIPT[engine];
+}
+
+/** Where this language's stress marks may stand, or null when it draws none in place. */
+export function stressRules(language: string | null | undefined): StressRules | null {
+  const support = languageSupport(language);
+  return (support?.engine === "stress" && support.stress) || null;
 }
 
 /**
@@ -96,7 +110,7 @@ export function examplesCarryReadings(language: string | null | undefined): bool
 /** The script whose face draws this language's text, or null when Onest draws it. */
 export function languageScript(language: string | null | undefined): Script | null {
   const support = languageSupport(language);
-  return support ? (support.script?.(subtags(language)) ?? support.scripts[0]) : null;
+  return support ? (support.script?.(subtags(language)) ?? support.scripts[0] ?? null) : null;
 }
 
 /** The published voice locale this tag's script speaks with, where it differs from its language's default. */
@@ -203,4 +217,14 @@ function configuredTag(language: string | null | undefined): string | null {
 export function configuredLanguage(language: string | null | undefined): LanguageConfig | null {
   const tag = configuredTag(language);
   return tag ? (CONFIGURED[tag] ?? null) : null;
+}
+
+/**
+ * What the card form calls the pronunciation: Reading for a script that does not show its sound,
+ * Stress where it holds the term with its stress marked, else Pronunciation.
+ */
+export function pronunciationName(
+  language: string | null | undefined,
+): "reading" | "stress" | "pronunciation" {
+  return languageSupport(language)?.pronunciation ?? "pronunciation";
 }

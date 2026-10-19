@@ -164,10 +164,12 @@ const GUIDES: Record<string, FieldGuide> = {
 export function languageGuide(tag: string | null | undefined): string | undefined {
   const enrich = languagePrompts(tag)?.enrich;
   const format = languageFormat(tag);
+  const general = GUIDES[languageKey(tag)];
   const guide: FieldGuide = {
-    ...(enrich?.guide ?? GUIDES[languageKey(tag)]),
+    ...(enrich?.guide ?? general),
     ...(format?.example && { example: `${format.example.format} ${format.example.sample}` }),
-    ...(format && {
+    // A general guide keeps its own pronunciation line until its language's prompt module replaces it.
+    ...(format && !general?.pronunciation && {
       pronunciation: `${pronunciationGuide(tag)} For example: ${format.pronunciation.sample.term} → ${format.pronunciation.sample.pronunciation}.`,
     }),
   };

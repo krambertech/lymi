@@ -19,7 +19,7 @@ import {
   schedule,
   serializeState,
   stateDirection,
-  termReading,
+  termShowsPronunciation,
 } from "@lymi/core";
 import { CARD_STATES } from "@lymi/core/analytics";
 import { and, eq, gte, ne } from "@lymi/core/db";
@@ -400,7 +400,7 @@ export async function gradeCard(
     ...(input.aid ? { aid: input.aid } : {}),
     ...readingsDrawn(
       row,
-      furigana && termReading(row) ? readingShown(key, state.state) : null,
+      furigana && termShowsPronunciation(row) ? readingShown(key, state.state) : null,
       fadedReadings(row.example, input.readingsFaded),
     ),
   });

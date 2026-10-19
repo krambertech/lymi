@@ -3877,6 +3877,10 @@ msgstr "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 
+msgctxt "which syllable of a term is stressed"
+msgid "Stress"
+msgstr "Stress"
+
 msgid "Stuck? Read the guide"
 msgstr "Stuck? Read the guide"
 

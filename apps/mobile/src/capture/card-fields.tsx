@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { cardLimits, writtenWithReading } from "@lymi/core";
+import { cardLimits, pronunciationName } from "@lymi/core";
 import { PLATE_ARRIVE, PLATE_RISE } from "@lymi/design";
 import { type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
@@ -92,12 +92,16 @@ export const FORM_FIELD: Record<
   },
 };
 
-const READING = msg({ message: "Reading", context: "how a term is read" });
+const PRONUNCIATION_NAME = {
+  reading: msg({ message: "Reading", context: "how a term is read" }),
+  stress: msg({ message: "Stress", context: "which syllable of a term is stressed" }),
+} as const;
 
-/** A field's name: Japanese and Chinese call a term's pronunciation its reading. */
+/** A field's name: Japanese and Chinese call a term's pronunciation its reading, and Russian its stress. */
 export function fieldLabel(field: FormField, language: string | null | undefined) {
-  return field === "pronunciation" && writtenWithReading(language)
-    ? READING
+  const named = pronunciationName(language);
+  return field === "pronunciation" && named !== "pronunciation"
+    ? PRONUNCIATION_NAME[named]
     : FORM_FIELD[field].label;
 }
 

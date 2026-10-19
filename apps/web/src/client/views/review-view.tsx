@@ -2,11 +2,11 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
-  drawsTermReading,
   gradeAllowed,
   type KnownReadings,
   type Rating,
   type ReviewAid,
+  termShowsPronunciation,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -521,8 +521,8 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  // Furigana or pinyin over the term: on the cue until the card is Known, and always once it is the answer.
-  const reading = useMemo(() => drawsTermReading(card), [card]);
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  const reading = useMemo(() => termShowsPronunciation(card), [card]);
   const cueReading = revealed || stateKey(item.fsrsState) !== "known";
   const term = <TermText card={card} />;
   const label =
@@ -714,7 +714,7 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
-    // Under the rule: a reading under a term cue reads the term out. Where it is drawn over the
+    // Under the rule: a reading under a term cue reads the term out. Where it is drawn on the
     // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&

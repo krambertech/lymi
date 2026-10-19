@@ -186,7 +186,7 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
   expect(readings).toEqual(["cue", "answer", undefined]);
 });
 
-it("names the language whose reading was drawn, so Chinese and Japanese chart apart", async () => {
+it("names the language whose reading was drawn, so Chinese, Japanese and Russian chart apart", async () => {
   const student = await learner(db, "analytics-reading-language", "Learner");
   const { analytics, capture, settled } = writer();
   const ctx = { ...student, analytics };
@@ -194,6 +194,8 @@ it("names the language whose reading was drawn, so Chinese and Japanese chart ap
   for (const [language, term, pronunciation] of [
     ["zh-TW", "學習", "xue2 xi2"],
     ["ja", "見る", "みる"],
+    ["ru", "замок", "замо́к"],
+    ["ru-RU", "мука", "[mʊˈka]"],
     ["ko", "학교", "hakgyo"],
   ] as const) {
     const deck = await createDeck(ctx, { name: language, defaultLanguage: language });
@@ -211,6 +213,8 @@ it("names the language whose reading was drawn, so Chinese and Japanese chart ap
   expect(graded).toEqual([
     ["cue", "zh"],
     ["cue", "ja"],
+    ["cue", "ru"],
+    [undefined, undefined],
     [undefined, undefined],
   ]);
 });

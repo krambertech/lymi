@@ -2758,6 +2758,9 @@ msgstr "Читання має бути коротшим за 200 символі�
 msgid "Keep the source under 200 characters."
 msgstr "Джерело має бути коротшим за 200 символів."
 
+msgid "Keep the stress under 200 characters."
+msgstr "Наголос має бути коротшим за 200 символів."
+
 msgid "Keep the term under 500 characters."
 msgstr "Термін має бути коротшим за 500 символів."
 
@@ -4316,6 +4319,10 @@ msgstr "Дні поспіль"
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{0, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
+
+msgctxt "which syllable of a term is stressed"
+msgid "Stress"
+msgstr "Наголос"
 
 msgctxt "Password strength"
 msgid "Strong"

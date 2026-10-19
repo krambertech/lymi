@@ -18,4 +18,6 @@ export const EXAMPLE_NOTATION = {
   },
   // Null until Chinese slice 4 draws `PINYIN_BRACKET` and strips it for older phones; filling it publishes the notation.
   pinyin: null,
+  // Stress marks stay in the sentence as written, with nothing in brackets.
+  stress: null,
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

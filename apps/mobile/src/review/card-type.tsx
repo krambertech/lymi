@@ -86,7 +86,7 @@ export function CardLine({
     language?: string | null | undefined;
     pronunciation?: string | null | undefined;
   } | null;
-  /** Keeps the furigana's room but hides it, as on the cue of a Known card. */
+  /** Keeps the furigana's room but hides it, or leaves the stress off, as on the cue of a Known card. */
   hidden?: boolean;
   /** Follows Dynamic Type, as the answer does; the cue stays its size, already the card's largest. */
   grows?: boolean;
@@ -98,7 +98,7 @@ export function CardLine({
   // The cue is sized for the text size already; the answer grows, short of the cue.
   const limit = grows ? ANSWER_GROWS : 1;
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
-  const plain = (
+  const plain = (text: string) => (
     <Text
       className="text-text"
       style={[
@@ -110,7 +110,7 @@ export function CardLine({
       maxFontSizeMultiplier={limit}
       lang={lang}
     >
-      {children}
+      {text}
       {after ? (
         <>
           {WORD_JOINER}
@@ -129,7 +129,7 @@ export function CardLine({
       ) : null}
     </Text>
   );
-  if (!term) return plain;
+  if (!term) return plain(children);
   const line = Math.round(((style.lineHeight ?? style.fontSize * 1.2) * drawn) / style.fontSize);
   return (
     <TermText

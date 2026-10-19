@@ -23,12 +23,12 @@ Today's code, as of 2026-10-20:
   - What it missed: four unmirrored `ChevronRight` icons (`new-cards-row.tsx:38`, `move-cards-to-deck-dialog.tsx:39`, `word-view.tsx:766`, `deck-settings-view.tsx:312`), `→` in `command-menu.tsx:651`, `scrollBy({left})` with no sign flip in `shelf-bar.tsx:154`, the `import-sweep` keyframes in `lantern.css:39`, `x: 16` in `first-run.tsx:709`, and `marginRight` in `run-strip.tsx:58`.
   - `scripts/check-styling.mjs` checks only added lines, and skips `translate-x-`, `origin-left`, keyframes and inline `left`.
 - **Phone direction.** Nothing calls `I18nManager.forceRTL`, and `app.json` has no `supportsRTL`. Rows are `flex-row` with no physical classes, so they flip; undo swipe already reads `isRTL` (`review/undo-swipe.tsx:32`).
-  - Under an RTL layout these would break: `back`/`forward` chevrons (`ui/icons.tsx:126`), the switch's positive `translateX` (`ui/switch.tsx:43`), `welcome/questions.tsx:39`, the day ring (`insights/day-grid.tsx:200`), the streak bands (`streak/calendar.tsx:250`), and `renderRightActions` (`sections/section-path.tsx:202`).
+  - Under an RTL layout these would break: `back`/`forward` chevrons (`ui/icons.tsx:126`), the switch's positive `translateX` (`ui/switch.tsx:43`), `welcome/questions.tsx:39`, the day ring (`insights/day-grid.tsx:200`), the streak bands (`streak/calendar.tsx:250`), and `renderRightActions` (`sections/section-path.tsx:206`).
   - Neither platform has swipe to grade.
 - **Mixed-direction text.** No `<bdi>`, `unicode-bidi` or Unicode isolate exists.
   - The web's `TermText` returns a bare string (`components/term-text.tsx:34`).
   - The card form's inputs (`card-form.tsx:476,524`) and the search boxes set no `dir`.
-  - 64 strings put learner text into interface text, such as `` t`Archived “${archivedTerm}”` `` (`routes/review.tsx:1015`). The phone joins learner text with `" · "` (`library/card/[card].tsx:150`).
+  - 64 strings put learner text into interface text, such as `` t`Archived “${archivedTerm}”` `` (`routes/review.tsx:1015`). The phone joins learner text with `" · "` (`app/review.tsx:1391`) and `", "` (`app/(tabs)/library/card/[card].tsx:158`).
   - The phone's `Furigana` lays reading boxes in `flex-row` (`ui/furigana.tsx:161`), which follows the app's direction. Text with no reading stays one `Text`.
 - **Faces and keys.** `Script` is `"Jpan" | "Hans" | "Hant"` (`packages/core/src/languages/types.ts:11`).
   - `normaliseTerm` keeps marks (`packages/core/src/terms.ts:10`), so كَتَبَ and كتب are two terms, but unmarked كتب cannot tell كَتَبَ (he wrote) from كُتُب (books).
@@ -38,7 +38,8 @@ Today's code, as of 2026-10-20:
 
 **Direction comes from the tag, for any language.** The language index gains `textDirection(tag)`:
 
-- `rtl` for an RTL script subtag (Arab, Hebr, Thaa, Syrc, Nkoo, Adlm), or for a primary subtag that defaults to one (`ar`, `he`, `fa`, `ur`, `ps`, `sd`, `ug`, `ckb`, `yi`, `dv`, the Arabic dialects), unless a Latin or Cyrillic subtag overrides it. Otherwise `auto`.
+- An explicit script subtag decides: `rtl` for Arab, Hebr, Thaa, Syrc, Nkoo or Adlm, so `az-Arab` is right to left and `sd-Deva` and `ks-Deva` are not.
+- Without one, `rtl` for a primary subtag that defaults to an RTL script: `ar`, `he`, `fa`, `ur`, `ps`, `sd`, `ks`, `ug`, `ckb`, `yi`, `dv`, and the Arabic dialects `arz`, `apc`, `ajp`, `acm`, `afb`, `ary`, `aeb`, `arq`, `ayl` and `apd`. Otherwise `auto`.
 - It is a literal list in `packages/core/src/languages/`, because Firefox lacks `Intl.Locale#getTextInfo` and the phone cannot rely on Hermes for it.
 - It applies in every tier, since a Persian deck needs it as much as an Arabic one.
 
@@ -54,7 +55,7 @@ Today's code, as of 2026-10-20:
 | Learner text in a string (toast, `aria-label`, push copy) | `isolate(text)`, which adds U+2068…U+2069 at render time only and never reaches storage, export or speech |
 | Separators between learner texts | Isolate each item before joining |
 
-On the phone, `Text` sets iOS `writingDirection` from `textDirection`, strings use the same `isolate()`, and the term and example inputs follow the deck. Icons, gestures and motion do not change in case 1.
+On the phone, `Text` sets iOS `writingDirection` from `textDirection`. React Native ignores `text-start`, and `writingDirection` does nothing on Android, so a block of card-language text also takes a `textAlign` worked out from `textDirection`, as `TEXT_END` does (`theme/type.ts:115`). Strings use the same `isolate()`, and the term and example inputs follow the deck. Icons, gestures and motion do not change in case 1.
 
 **Faces.** `Script` gains `Arab` and `Hebr`, with tokens on slice 1's pattern and no web font. Leaning: `--face-arab: "Geeza Pro", "Segoe UI", "Noto Naskh Arabic"` and `--face-hebr: "Arial Hebrew", "Segoe UI", "Noto Sans Hebrew"`. Arabic text gets a taller line height so harakat clear the lines around it.
 
@@ -72,8 +73,8 @@ On the phone, `Text` sets iOS `writingDirection` from `textDirection`, strings u
 
 - **Duplicates.** For `ar` and `he`, `normalized_term` drops the mark set and tatweel, and Hebrew folds `'` and `"` to geresh and gershayim. This uses Russian's fold and its ADR 0004 paragraph.
 - **The reading key** is the folded marked pronunciation, so كَتَبَ and كُتُب stay two cards and an unmarked add matches either.
-- **Search.** `searchKey` drops both mark sets and tatweel for everyone, and folds أ إ آ ٱ to ا, ى to ي, ة to ه, and Persian ی ک to Arabic. Duplicates keep those letters distinct.
-- **Backfill.** A backfill splits marked terms with an empty pronunciation, as Russian's does.
+- **Search.** `searchKey` drops both mark sets and tatweel for everyone, and folds أ إ آ ٱ to ا, ى to ي, ة to ه, and Persian ی ک to Arabic. Duplicates keep those letters distinct. Term filters fold their needle with `normaliseTerm` and compare `normalized_term` in SQL with no language (`termConditions` in `services/card-search.ts:499`), so they drop both mark sets and tatweel too, which matches the stored `ar` and `he` keys.
+- **Backfill.** A backfill splits marked terms with an empty pronunciation, as Russian's does. Unlike Russian, many Arabic and Hebrew cards hold a Latin transliteration there, which the marks engine does not accept. The backfill moves that transliteration into a notes line, then splits the term the same way, so these cards also get the plain key instead of missing unmarked duplicates. Imports do the same.
 
 **Speech.** Vowelled Arabic resolves كتب for the voice. `saysReading` is true for Arabic only if each voice passes Russian's listening test with a fluent listener; Hebrew decides the same way.
 
@@ -108,3 +109,4 @@ The question: do learners with an RTL deck keep reviewing as others do, before a
 3. A Naskh face, matching textbooks and the mushaf, or the system sans? Lean: Naskh.
 4. Do `arz`, `apc` and `ary` resolve to the Arabic record? Lean: no, direction only, since prompts and voices are Modern Standard.
 5. Arabic first? Lean: yes, with more demand and no letter-changing spelling.
+6. Should the backfill move a transliteration into notes, which changes learner content, or leave those cards on their marked key? Lean: notes, since the transliteration stays visible and the duplicate rule then holds.

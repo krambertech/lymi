@@ -1,5 +1,5 @@
 import { exampleReadings, type KnownReadings, modeKey, readingPairs } from "@lymi/core";
-import { type QueryClient, useQueryClient } from "@tanstack/react-query";
+import { notifyManager, type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useSyncExternalStore } from "react";
 import type { DeckSummary } from "./api";
 import { type DeckRow, rowState } from "./deck-list";
@@ -123,7 +123,8 @@ export function useKnownReadings(): KnownReadings {
   const qc = useQueryClient();
   const subscribe = useCallback(
     (listener: () => void) => {
-      const cache = qc.getQueryCache().subscribe(listener);
+      // Batched as TanStack's own hooks are: a query built during another component's render notifies at once.
+      const cache = qc.getQueryCache().subscribe(notifyManager.batchCalls(listener));
       const grades = gradeStore.subscribe(listener);
       return () => {
         cache();

@@ -374,13 +374,15 @@ function ImportNames() {
 interface CreateProps {
   /** The learner already has a deck, so this offers to fill it. */
   started: boolean;
+  /** The learner's only deck with cards is one someone shared, so the guide already ticked Create a deck. */
+  joined?: boolean | undefined;
   play: boolean;
   onSmartAdd: (() => void) | undefined;
   onCreateDeck: (() => void) | undefined;
 }
 
 /** Every way to make a deck of one's own, each a card with its own press, in the order people use them. */
-export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: CreateProps) {
+export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDeck }: CreateProps) {
   const st = useStaticNav();
   // An assistant already connected turns its card from an offer into what it can do now.
   const apps = useQuery(connectedAppsQuery);
@@ -397,7 +399,13 @@ export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: Cre
         style={play ? at(T.below) : undefined}
       >
         <h2 id="create-title" className="text-lg font-medium">
-          {started ? <Trans>More ways to add cards</Trans> : <Trans>Create your first deck</Trans>}
+          {started ? (
+            <Trans>More ways to add cards</Trans>
+          ) : joined ? (
+            <Trans>Make your own deck</Trans>
+          ) : (
+            <Trans>Create your first deck</Trans>
+          )}
         </h2>
         {!started && (
           <button
@@ -568,18 +576,21 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
   const [choice, setChoice] = useState(() =>
     initialLanguage && languages.includes(initialLanguage) ? initialLanguage : "all",
   );
-  const label = (l: string) => {
+  const name = (l: string) => {
     try {
       return names.of(l) ?? l;
     } catch {
       return l;
     }
   };
+  // Ukrainian and Russian name languages in lower case, which reads right only mid-sentence.
+  const capitalised = (s: string) => s.charAt(0).toLocaleUpperCase(i18n.locale) + s.slice(1);
   const items: LanguageChoice[] = [
     { value: "all", label: t`Anything`, inline: t`anything`, count: ready.length },
     ...languages.map((l) => ({
       value: l,
-      label: label(l),
+      label: capitalised(name(l)),
+      inline: name(l),
       count: ready.filter((d) => taughtLanguage(d) === l).length,
     })),
     ...(tests

@@ -44,7 +44,11 @@ function Today() {
     staleTime: Number.POSITIVE_INFINITY,
   });
   const rest = useRestDismissal(streak.data?.today.date);
-  const settings = useQuery(settingsQuery);
+  // Read again on arrival while not set up, so a visit inside the stale window still sets up.
+  const settings = useQuery({
+    ...settingsQuery,
+    refetchOnMount: (query) => (query.state.data?.onboardedAt === null ? "always" : true),
+  });
   const me = useQuery(meQuery);
   const addReady = useAddPublishedDeck({ announce: "page" });
   const navigate = useNavigate();
@@ -64,7 +68,8 @@ function Today() {
       void qc.invalidateQueries({ queryKey: streakQuery.queryKey });
     },
   });
-  const unset = settings.data?.onboardedAt === null && settings.isFetchedAfterMount;
+  // Only before the first review: an older account that never got set up keeps its goal.
+  const unset = settings.data?.onboardedAt === null && settings.isFetchedAfterMount && guiding;
   const { mutate: finishSetUp, isIdle } = setUp;
   useEffect(() => {
     if (unset && isIdle) finishSetUp();

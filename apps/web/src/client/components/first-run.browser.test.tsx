@@ -199,3 +199,22 @@ test("an assistant already connected turns its card into what it can do", async 
   await expect.element(page.getByRole("link", { name: "Connected apps" })).toBeVisible();
   await expect.element(page.getByText("Connect your AI assistant")).not.toBeInTheDocument();
 });
+
+test("a learner whose only deck was shared is offered a deck of their own", async () => {
+  render(
+    <QueryClientProvider client={new QueryClient()}>
+      <I18nProvider i18n={i18n}>
+        <StaticNavProvider path="/today">
+          <CreateFirstDeck
+            started={false}
+            joined
+            play={false}
+            onSmartAdd={undefined}
+            onCreateDeck={undefined}
+          />
+        </StaticNavProvider>
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  await expect.element(page.getByRole("heading", { name: "Make your own deck" })).toBeVisible();
+});

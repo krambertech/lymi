@@ -138,6 +138,8 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
   const before = await getSettings(ctx);
   // Once set up, the goal changes only in the streak modal, so a second pass changes nothing.
   if (before.onboardedAt) return before;
+  // Today sets up only a new account; one already reviewing keeps its goal and stays out of the count.
+  if (input.from === "today" && !(await awaitsWelcome(ctx.db, ctx.userId))) return before;
   const dailyGoal =
     input.dailyGoal ?? (before.dailyGoalChosenAt ? before.dailyGoal : STARTING_DAILY_GOAL);
   const now = new Date();

@@ -137,6 +137,7 @@ export function TodayView({
           />
           <CreateFirstDeck
             started={decks.some((d) => d.role === "owner")}
+            joined={!!startedDeck(decks)}
             play={play}
             onSmartAdd={onSmartAdd}
             onCreateDeck={onCreateDeck}

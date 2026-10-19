@@ -2868,6 +2868,9 @@ msgstr "Main"
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
+msgid "Make your own deck"
+msgstr "Make your own deck"
+
 msgid "Make your own, or pick a ready-made one below."
 msgstr "Make your own, or pick a ready-made one below."
 

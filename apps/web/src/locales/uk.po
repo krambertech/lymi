@@ -2868,6 +2868,9 @@ msgstr "Головна навігація"
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Make your own deck"
+msgstr "Створи свою колоду"
+
 msgid "Make your own, or pick a ready-made one below."
 msgstr "Зроби власну або вибери готову нижче."
 

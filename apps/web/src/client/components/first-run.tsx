@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { ANALYTICS_READY } from "@lymi/client/analytics";
 import { decksFor } from "@lymi/client/welcome";
 import type { PublicDeckSummary } from "@lymi/core/catalog";

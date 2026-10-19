@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
-import { encodeTextImport, type ImportChoices } from "@lymi/core";
+import { encodeTextImport } from "@lymi/core";
 import { describe, expect, it } from "vitest";
+import type { ImportChoices } from "../adapter";
 import { bytesSource, ImportFileError } from "../files";
 import { quizlet } from "../quizlet";
 import { MAX_PLECO_BYTES, PLECO_BOTH, PLECO_ONE, pleco } from "./index";

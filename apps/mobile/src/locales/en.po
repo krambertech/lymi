@@ -552,6 +552,9 @@ msgstr "{field} becomes"
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {term found} other {terms found}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 

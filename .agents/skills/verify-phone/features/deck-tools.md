@@ -10,7 +10,7 @@ A deck with sections, then **Deck options** › **Select cards** for the selecti
 
 - [`deck-tools-owner.yaml`](deck-tools-owner.yaml), as `learner`, after [`deck-tools-owner.mjs`](deck-tools-owner.mjs) gives the learner's own deck three sections, the third holding only a new card: sort by Recently added, tap **Go to**, see the current heading with **You are here**, find the waiting card's **Not in review yet**, take **Add card here** on the locked heading and see capture's **Section** chip name it, then select all and take **Mark important**.
 - [`deck-tools-member.yaml`](deck-tools-member.yaml), as `learner`, after [`deck-tools-member.mjs`](deck-tools-member.mjs) has `backlog` share a deck with two sections that `learner` joins, with three of learner's cards there forgotten three days ago and two easy: **Go to**, then select all and see **Review 3 due**, **Review all 5** and **Mark important** with no Archive or Move; mark, **Undo**, then **Review 3 due** through to **Round done**.
-- [`deck-tools-tags.yaml`](deck-tools-tags.yaml), as `learner`, on Lezione 12, whose cards carry a few tags: select all, take **Tags**, see the cards' tags as rows with their counts, type a new tag, take **Create**, see it ticked on every card, then ✓ and see **Changed the tags on N cards**.
+- [`deck-tools-tags.yaml`](deck-tools-tags.yaml), as `learner`, on Lezione 12, whose cards carry a few tags: select all, take **Tags**, see the cards' tags as rows with their counts, type a new tag, take **Create**, see it ticked on every card, type **noun** and press Return to tick it rather than **pronoun**, which three cards carry and so lists above it, then ✓ and see **Changed the tags on N cards**.
 
 ## End state
 

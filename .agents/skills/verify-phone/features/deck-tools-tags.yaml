@@ -25,6 +25,12 @@ name: Deck tools, tags
 - tapOn: "Create “${TAG}”"
 - assertVisible: "${TAG}, ${COUNT} of ${COUNT}"
 - takeScreenshot: 03-tag-created
+# "pronoun" lists above "noun"; Return ticks the tag typed, not the first that contains it.
+- inputText: "noun"
+- pressKey: Enter
+- assertVisible: "noun, ${COUNT} of ${COUNT}"
+- assertVisible: "pronoun, 3 of ${COUNT}"
+- takeScreenshot: 03b-exact-match
 - tapOn: "Save"
 - extendedWaitUntil:
     visible: "Changed the tags on ${COUNT} cards"

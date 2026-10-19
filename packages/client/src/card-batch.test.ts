@@ -80,6 +80,23 @@ describe("archiving chosen cards", () => {
 describe("marking chosen cards important", () => {
   const marks = () => qc.getQueryData<DeckRow[]>(key)?.map((r) => r.card.important);
 
+  it("keeps the marks when an older read of the list lands during the write", async () => {
+    let stale = (_: DeckRow[]) => {};
+    const reading = qc
+      .fetchQuery({ queryKey: key, queryFn: () => new Promise<DeckRow[]>((r) => (stale = r)) })
+      .catch(() => {});
+    api.setCardsImportant.mockResolvedValue({
+      results: ["a", "b"].map((id) => ({ id, status: "updated" })),
+    });
+    const settled = vi.spyOn(qc, "invalidateQueries");
+    const marking = markCards(qc, "d1", ["a", "b"], true);
+    stale([row("a"), row("b"), row("c")]);
+    await reading;
+    await marking.done;
+    expect(marks()).toEqual([true, true, false]);
+    expect(settled).toHaveBeenCalledWith({ queryKey: key, exact: true });
+  });
+
   it("gives each card back the mark it had on Undo", async () => {
     qc.setQueryData(key, [row("a", true), row("b"), row("c")]);
     api.setCardsImportant.mockImplementation(async (cards: { cardId: string }[]) => ({

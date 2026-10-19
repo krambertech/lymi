@@ -175,7 +175,8 @@ const showMarks = (qc: QueryClient, marks: ReadonlyMap<string, boolean>) => {
  * changed back the mark it had before.
  */
 export function markCards(qc: QueryClient, deckId: string, cardIds: string[], mark: boolean) {
-  const rows = qc.getQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey) ?? [];
+  const key = deckCardsQuery(deckId).queryKey;
+  const rows = qc.getQueryData<DeckRow[]>(key) ?? [];
   const chosen = new Set(cardIds);
   const before = new Map(
     rows.flatMap((r) => (chosen.has(r.card.id) ? [[r.card.id, r.card.important] as const] : [])),
@@ -183,6 +184,8 @@ export function markCards(qc: QueryClient, deckId: string, cardIds: string[], ma
   const was = (id: string) => before.get(id) ?? !mark;
   /** `back` is the mark a card shows again when the server leaves it unchanged. */
   const write = (marks: ReadonlyMap<string, boolean>, back: (id: string) => boolean) => {
+    // A read of the list already on its way predates these marks and would wipe them when it lands.
+    void qc.cancelQueries({ queryKey: key, exact: true });
     showMarks(qc, marks);
     return api
       .setCardsImportant([...marks].map(([cardId, important]) => ({ cardId, important })))
@@ -198,7 +201,10 @@ export function markCards(qc: QueryClient, deckId: string, cardIds: string[], ma
         showMarks(qc, new Map([...marks.keys()].map((id) => [id, back(id)])));
         throw e;
       })
-      .finally(() => void qc.invalidateQueries({ queryKey: ["queue"] }));
+      .finally(() => {
+        void qc.invalidateQueries({ queryKey: key, exact: true });
+        void qc.invalidateQueries({ queryKey: ["queue"] });
+      });
   };
   return {
     done: write(new Map(cardIds.map((cardId) => [cardId, mark])), was),

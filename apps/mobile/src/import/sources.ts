@@ -160,8 +160,11 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
   }
 }
 
+/** The apps with a start screen of their own on the phone; Pleco imports start on the web for now. */
+export type FileSource = Exclude<ImportSource, "quizlet" | "pleco">;
+
 /** How to get the file out of each app, the web's steps ending with saving it to Files. */
-export const STEPS: Record<Exclude<ImportSource, "quizlet">, MessageDescriptor[]> = {
+export const STEPS: Record<FileSource, MessageDescriptor[]> = {
   anki: [
     msg`In Anki, open the deck’s menu and choose Export. On a computer, choose File, then Export.`,
     msg`Choose Anki Deck Package, and turn on Include Scheduling Information and Include Media.`,

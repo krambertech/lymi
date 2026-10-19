@@ -11,6 +11,7 @@ export const SOURCE_NAMES: Record<ImportSource, string> = {
   noji: "Noji",
   lymi: "Lymi",
   quizlet: "Quizlet",
+  pleco: "Pleco",
 };
 
 /** The file names each app's import page accepts, checked before anything is sent. */
@@ -20,6 +21,7 @@ export const SOURCE_FILES: Record<ImportSource, RegExp> = {
   noji: /\.ofc$/i,
   lymi: /\.zip$/i,
   quizlet: /\.(txt|tsv|csv)$/i,
+  pleco: /\.txt$/i,
 };
 
 /** Each app's guide on the public site; Quizlet has none yet. */
@@ -27,6 +29,7 @@ export function importGuidePath(source: ImportSource): string | undefined {
   if (source === "lymi") return "/docs/export";
   if (source === "quizlet") return undefined;
   if (source === "noji") return "/docs/import-from-noji";
+  if (source === "pleco") return "/docs/import-from-pleco";
   return source === "mochi" ? "/docs/import-from-mochi" : "/docs/import-from-anki";
 }
 
@@ -191,8 +194,12 @@ async function run(id: string, qc: QueryClient, from: number) {
 }
 
 /** Creates the import and starts sending the file. Resolves once the import exists. */
-export async function startUpload(file: UploadSource, qc: QueryClient): Promise<Import> {
-  const created = await api.startImport(file);
+export async function startUpload(
+  file: UploadSource,
+  qc: QueryClient,
+  source?: ImportSource,
+): Promise<Import> {
+  const created = await api.startImport(file, source);
   qc.setQueryData(importQuery(created.id).queryKey, created);
   entries.set(created.id, {
     file,

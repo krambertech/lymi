@@ -45,6 +45,7 @@ const ACCEPT: Record<ImportSource, string> = {
   noji: ".ofc",
   lymi: ".zip",
   quizlet: ".txt,.tsv,.csv",
+  pleco: ".txt",
 };
 const FILE_NAME: Record<ImportSource, RegExp> = {
   anki: /\.(apkg|colpkg)$/i,
@@ -52,6 +53,7 @@ const FILE_NAME: Record<ImportSource, RegExp> = {
   noji: /\.ofc$/i,
   lymi: /\.zip$/i,
   quizlet: /\.(txt|tsv|csv)$/i,
+  pleco: /\.txt$/i,
 };
 
 /** The frame every import screen shares. */
@@ -103,9 +105,11 @@ export function ImportStartView({
         ? t`This isn’t a .mochi file. Choose the file you exported from Mochi.`
         : source === "noji"
           ? t`This isn’t an .ofc file. Choose the file you exported from Noji.`
-          : source === "lymi"
-            ? t`This isn’t a .zip file. Choose the file you exported from Lymi.`
-            : t`This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki.`
+          : source === "pleco"
+            ? t`This isn’t a .txt file. In Pleco, export your cards as a text file.`
+            : source === "lymi"
+              ? t`This isn’t a .zip file. Choose the file you exported from Lymi.`
+              : t`This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki.`
       : file.size > MAX_IMPORT_BYTES
         ? t`This file is larger than 1 GB. Export one deck at a time.`
         : file.size === 0
@@ -128,6 +132,11 @@ export function ImportStartView({
           <Trans>
             Import your decks with their sub-decks, pictures and learning progress. Cards keep their
             due dates, and Noji is unchanged.
+          </Trans>
+        ) : source === "pleco" ? (
+          <Trans>
+            Import your flashcards with their pinyin, definitions and categories. Pleco’s text file
+            has no scores, so every card starts as new, and Pleco is unchanged.
           </Trans>
         ) : (
           <Trans>
@@ -169,6 +178,8 @@ export function ImportStartView({
               <Trans>A .mochi file, up to 1 GB. You can also drop it here.</Trans>
             ) : source === "noji" ? (
               <Trans>An .ofc file, up to 1 GB. You can also drop it here.</Trans>
+            ) : source === "pleco" ? (
+              <Trans>A .txt file. You can also drop it here.</Trans>
             ) : source === "lymi" ? (
               <Trans>A .zip file, up to 1 GB. You can also drop it here.</Trans>
             ) : (
@@ -335,10 +346,46 @@ const NOJI_STEPS = [
   },
 ];
 
+const PLECO_STEPS = [
+  {
+    id: "menu",
+    node: (
+      <Trans>
+        In Pleco’s menu, under <strong className="font-medium text-text">Flashcards</strong>, choose{" "}
+        <strong className="font-medium text-text">Import / Export</strong>, then{" "}
+        <strong className="font-medium text-text">Export Cards</strong>.
+      </Trans>
+    ),
+  },
+  {
+    id: "options",
+    node: (
+      <Trans>
+        Choose <strong className="font-medium text-text">Text File</strong>,{" "}
+        <strong className="font-medium text-text">UTF-8</strong> and the character set{" "}
+        <strong className="font-medium text-text">Both</strong>. Turn on{" "}
+        <strong className="font-medium text-text">Categories</strong>,{" "}
+        <strong className="font-medium text-text">Card definitions</strong> and{" "}
+        <strong className="font-medium text-text">Dictionary definitions</strong>.
+      </Trans>
+    ),
+  },
+  {
+    id: "save",
+    node: (
+      <Trans>
+        Press <strong className="font-medium text-text">Export now</strong>, save the file, then
+        choose it here.
+      </Trans>
+    ),
+  },
+];
+
 const STEPS: Record<ImportSource, { id: string; node: ReactNode }[]> = {
   anki: ANKI_STEPS,
   mochi: MOCHI_STEPS,
   noji: NOJI_STEPS,
+  pleco: PLECO_STEPS,
   lymi: LYMI_STEPS,
   // Quizlet has its own start screen, with the paste box; these show nowhere.
   quizlet: [],
@@ -577,6 +624,12 @@ function StepActions({
   );
 }
 
+/** The kind of Pleco card that carries both scripts, as the server names it. */
+const PLECO_BOTH = "pleco:both";
+
+/** Up to this many categories are named in full; past it, the first three as examples. */
+const SHOWN_TAGS = 5;
+
 /** What the import keeps and what it leaves, one plain line each. */
 function ImportLines({
   item,
@@ -589,7 +642,14 @@ function ImportLines({
   preview: ImportPreview;
   known: number;
 }) {
+  const { i18n } = useLingui();
   const app = SOURCE_NAMES[item.source];
+  // Pleco's categories, the only tags a summary names.
+  const tags = item.source === "pleco" ? (summary.tags ?? []) : [];
+  const categoryCount = tags.length;
+  const categories = new Intl.ListFormat(i18n.locale).format(
+    categoryCount <= SHOWN_TAGS ? tags : tags.slice(0, 3),
+  );
   // New Mochi cards with no side break; the adapter names their kind by this key.
   const oneSided = preview.addedByNoteType["content:one"] ?? 0;
   return (
@@ -637,6 +697,18 @@ function ImportLines({
               export again with Include Scheduling Information ticked.
             </Trans>
           )}
+        </Line>
+      )}
+      {categoryCount > 0 && (
+        <Line tone="good">
+          {categoryCount <= SHOWN_TAGS
+            ? plural(categoryCount, {
+                one: `Your Pleco category ${categories} becomes a tag.`,
+                other: `Your # Pleco categories become tags: ${categories}. A card in several of them comes in once, with each tag.`,
+              })
+            : plural(categoryCount, {
+                other: `Your # Pleco categories become tags, such as ${categories}. A card in several of them comes in once, with each tag.`,
+              })}
         </Line>
       )}
       {preview.pictures > 0 && (
@@ -966,12 +1038,12 @@ export function ImportPreviewView({
           <div
             className={clsx(
               "edge grid rounded-xl bg-plate",
-              item.source === "noji" ? "grid-cols-2" : "grid-cols-3",
+              item.source === "noji" || item.source === "pleco" ? "grid-cols-2" : "grid-cols-3",
             )}
           >
             <Figure value={preview?.added} label={t`cards`} loading={previewLoading} />
             <Figure value={preview?.known} label={t`known`} loading={previewLoading} />
-            {item.source !== "noji" && (
+            {item.source !== "noji" && item.source !== "pleco" && (
               <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
             )}
           </div>
@@ -1210,9 +1282,16 @@ function CardStep({
   return (
     <>
       <Question title={<Trans>Does this card look right?</Trans>}>
-        <Trans>
-          This is how it will look in Lymi. Change fields if a part is in the wrong place.
-        </Trans>
+        {type.key === PLECO_BOTH ? (
+          <Trans>
+            This is how it will look in Lymi. To learn traditional characters, change fields and
+            make Traditional the term.
+          </Trans>
+        ) : (
+          <Trans>
+            This is how it will look in Lymi. Change fields if a part is in the wrong place.
+          </Trans>
+        )}
       </Question>
       <div className="edge grid gap-4 rounded-xl bg-plate p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">

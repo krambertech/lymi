@@ -10,6 +10,7 @@ import {
   type ImportedCard,
   type ImportPreviewOut,
   isImageMode,
+  type NormalizedField,
   newId,
   normaliseTerm,
   normalizeCardText,
@@ -295,6 +296,9 @@ function tally(
       if (pictures) countRecording(counts, item.card);
       counts.soundsLeftOut += item.card.soundsLeftOut ?? 0;
       if (item.card.pitchLeftOut) counts.pitchSkipped++;
+      if (converted.get(item.card)?.includes("pronunciation")) {
+        counts.readingsConverted = (counts.readingsConverted ?? 0) + 1;
+      }
     }
   }
 }
@@ -318,15 +322,15 @@ function cardLanguage(card: ImportedCard, languages: ImportChoices["languages"])
   return card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
 }
 
-/** Cards whose text `stored` converted, for `cards_added`. */
-const converted = new WeakSet<ImportedCard>();
+/** Cards whose text `stored` converted, with the fields it changed, for `cards_added` and the counts. */
+const converted = new WeakMap<ImportedCard, NormalizedField[]>();
 
 /** The card with its text as Lymi stores it, before anything compares or counts it. */
 function stored(card: ImportedCard, languages: ImportChoices["languages"]): ImportedCard {
   const { fields, normalized } = normalizeCardText(cardLanguage(card, languages), card.fields);
   if (normalized.length === 0) return card;
   const changed = { ...card, fields };
-  converted.add(changed);
+  converted.set(changed, normalized);
   return changed;
 }
 

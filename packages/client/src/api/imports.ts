@@ -1,4 +1,4 @@
-import type { ImportChoicesInput, ImportOut, ImportPreviewOut } from "@lymi/core";
+import type { ImportChoicesInput, ImportOut, ImportPreviewOut, ImportSource } from "@lymi/core";
 import type { UploadBody } from "../imports";
 import { request } from "./request";
 
@@ -10,10 +10,11 @@ export const PREVIEW_TIMEOUT_MS = 20_000;
 
 export const importsApi = {
   import: (id: string) => request<Import>(`/api/imports/${id}`),
-  startImport: (file: { name: string; size: number }) =>
+  /** `source` names the app the learner chose the file for, so a .txt shows as Pleco while it is read. */
+  startImport: (file: { name: string; size: number }, source?: ImportSource) =>
     request<Import>("/api/imports", {
       method: "POST",
-      body: JSON.stringify({ fileName: file.name, byteSize: file.size }),
+      body: JSON.stringify({ fileName: file.name, byteSize: file.size, source }),
     }),
   /** One part of the file. A Blob or bytes carry their own length, which the route requires. */
   uploadImportPart: (id: string, part: number, body: UploadBody, signal?: AbortSignal) =>

@@ -46,6 +46,8 @@ export type SourceSummary = {
   unsupported: number;
   /** Each deck's language, when the file records it; otherwise the server reads names, then cards. */
   languages?: Record<string, string | null> | undefined;
+  /** Tags the file names apart from its cards, such as Pleco's categories, for the preview to list. */
+  tags?: string[] | undefined;
 };
 
 /** What the learner decided in the preview. */

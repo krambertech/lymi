@@ -484,6 +484,12 @@ msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
 msgid "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
 msgstr "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
 
+msgid "{categoryCount, plural, one {Your Pleco category {categories} becomes a tag.} other {Your # Pleco categories become tags: {categories}. A card in several of them comes in once, with each tag.}}"
+msgstr "{categoryCount, plural, one {Your Pleco category {categories} becomes a tag.} other {Your # Pleco categories become tags: {categories}. A card in several of them comes in once, with each tag.}}"
+
+msgid "{categoryCount, plural, other {Your # Pleco categories become tags, such as {categories}. A card in several of them comes in once, with each tag.}}"
+msgstr "{categoryCount, plural, other {Your # Pleco categories become tags, such as {categories}. A card in several of them comes in once, with each tag.}}"
+
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 
@@ -778,6 +784,9 @@ msgstr "A .mochi file from Mochi"
 msgid "A .mochi file, up to 1 GB. You can also drop it here."
 msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 
+msgid "A .txt file. You can also drop it here."
+msgstr "A .txt file. You can also drop it here."
+
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "A .zip file, up to 1 GB. You can also drop it here."
 
@@ -844,6 +853,9 @@ msgstr "A sound-alike, or something to picture"
 
 msgid "A subject or exam"
 msgstr "A subject or exam"
+
+msgid "A text file of your Pleco flashcards"
+msgstr "A text file of your Pleco flashcards"
 
 msgid "A–Z"
 msgstr "A–Z"
@@ -1105,8 +1117,8 @@ msgid "Anki package"
 msgstr "Anki package"
 
 #. Words, separated by spaces, that also find this command in the command menu
-msgid "anki quizlet"
-msgstr "anki quizlet"
+msgid "anki quizlet pleco"
+msgstr "anki quizlet pleco"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
@@ -1469,6 +1481,9 @@ msgstr "Choose <0>Lymi file</0>, then download it when it’s ready."
 msgid "Choose <0>OFC</0> and turn on learning progress, then enter your email."
 msgstr "Choose <0>OFC</0> and turn on learning progress, then enter your email."
 
+msgid "Choose <0>Text File</0>, <1>UTF-8</1> and the character set <2>Both</2>. Turn on <3>Categories</3>, <4>Card definitions</4> and <5>Dictionary definitions</5>."
+msgstr "Choose <0>Text File</0>, <1>UTF-8</1> and the character set <2>Both</2>. Turn on <3>Categories</3>, <4>Card definitions</4> and <5>Dictionary definitions</5>."
+
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
 
@@ -1532,6 +1547,9 @@ msgstr "Choose what each field becomes on the new card. One field is the term."
 
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
+
+msgid "Choose what each Pleco field becomes on a Lymi card. Make Traditional the term to learn traditional characters."
+msgstr "Choose what each Pleco field becomes on a Lymi card. Make Traditional the term to learn traditional characters."
 
 msgid "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
 msgstr "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
@@ -2244,6 +2262,9 @@ msgstr "Export one deck at a time, or export again without media."
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Export the deck again from Noji in OFC format, then choose that file."
 
+msgid "Export your cards again from Pleco as a text file in UTF-8, then choose that file."
+msgstr "Export your cards again from Pleco as a text file in UTF-8, then choose that file."
+
 msgid "Export your library before deleting your account to keep a copy of your cards."
 msgstr "Export your library before deleting your account to keep a copy of your cards."
 
@@ -2522,6 +2543,9 @@ msgstr "Import your decks with their pictures, tags and review history. Cards ke
 msgid "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
 msgstr "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
 
+msgid "Import your flashcards with their pinyin, definitions and categories. Pleco’s text file has no scores, so every card starts as new, and Pleco is unchanged."
+msgstr "Import your flashcards with their pinyin, definitions and categories. Pleco’s text file has no scores, so every card starts as new, and Pleco is unchanged."
+
 msgid "Important"
 msgstr "Important"
 
@@ -2564,6 +2588,12 @@ msgstr "In Noji, export one sub-deck at a time instead of the whole deck."
 
 msgid "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Export deck</1>. Its sub-decks come too."
 msgstr "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Export deck</1>. Its sub-decks come too."
+
+msgid "In Pleco, export one category at a time, or export again without dictionary definitions."
+msgstr "In Pleco, export one category at a time, or export again without dictionary definitions."
+
+msgid "In Pleco’s menu, under <0>Flashcards</0>, choose <1>Import / Export</1>, then <2>Export Cards</2>."
+msgstr "In Pleco’s menu, under <0>Flashcards</0>, choose <1>Import / Export</1>, then <2>Export Cards</2>."
 
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
@@ -3596,6 +3626,9 @@ msgstr "Position your photo"
 msgid "Press <0>Copy text</0>, then paste it here."
 msgstr "Press <0>Copy text</0>, then paste it here."
 
+msgid "Press <0>Export now</0>, save the file, then choose it here."
+msgstr "Press <0>Export now</0>, save the file, then choose it here."
+
 msgid "Press Export, save the file, then choose it here."
 msgstr "Press Export, save the file, then choose it here."
 
@@ -4594,8 +4627,14 @@ msgstr "This invitation was sent to {invited}. Sign in with that address to join
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 
+msgid "This is how it will look in Lymi. To learn traditional characters, change fields and make Traditional the term."
+msgstr "This is how it will look in Lymi. To learn traditional characters, change fields and make Traditional the term."
+
 msgid "This isn’t a .mochi file. Choose the file you exported from Mochi."
 msgstr "This isn’t a .mochi file. Choose the file you exported from Mochi."
+
+msgid "This isn’t a .txt file. In Pleco, export your cards as a text file."
+msgstr "This isn’t a .txt file. In Pleco, export your cards as a text file."
 
 msgid "This isn’t a .txt file. Paste the text Quizlet copies, or choose a .txt file."
 msgstr "This isn’t a .txt file. Paste the text Quizlet copies, or choose a .txt file."

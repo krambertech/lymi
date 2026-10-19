@@ -98,7 +98,7 @@ test("Draft a hook puts the AI's hook in the field to edit, and saving it as wri
   await page.getByRole("button", { name: "Draft a hook" }).click();
   const field = page.getByRole("textbox", { name: "Memory hook" });
   await expect.element(field).toHaveValue("A fire BRIGAde scrambling out");
-  await expect.element(page.getByText("AI draft")).toBeVisible();
+  await expect.element(page.getByText("AI hook")).toBeInTheDocument();
   await page.getByRole("button", { name: "Save" }).click();
   await expect.poll(() => saved.mock.calls.length).toBe(1);
   expect(update.mock.calls[0]?.[1]).toMatchObject({ hook: "A fire BRIGAde scrambling out" });

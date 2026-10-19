@@ -2,14 +2,15 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hookable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Anchor, Loader2, Sparkle } from "lucide-react";
+import { Anchor, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
 import { settingsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
-import { Button, IconButton } from "./button";
+import { Button } from "./button";
+import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
 
@@ -182,42 +183,19 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
             className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
           />
         </label>
-        {/* The field's own helper, so the foot keeps two actions: labelled while the field is empty, an icon once a draft is in. */}
-        {draftable &&
-          (untouched ? (
-            <IconButton
-              size="sm"
-              label={t`Another draft`}
-              aria-busy={drafting || undefined}
-              aria-disabled={drafting || undefined}
-              className="-my-1.5"
-              onClick={() => void draft()}
-            >
-              {drafting ? <Loader2 className="animate-spin" /> : <Sparkle />}
-            </IconButton>
-          ) : (
-            <Button
-              size="sm"
-              variant="ghost"
-              aria-label={t`Draft a hook`}
-              loading={drafting}
-              aria-disabled={drafting}
-              className="-my-1.5"
-              onClick={() => {
-                if (!drafting) void draft();
-              }}
-            >
-              <Sparkle data-icon="inline-start" aria-hidden="true" />
-              <Trans>Draft</Trans>
-            </Button>
-          ))}
+        {/* The AI's mark beside the field while it holds the draft as written. */}
+        {untouched && (
+          <span className="mt-0.5 shrink-0">
+            <SourceChip source="ai" field="hook" size="xs" />
+          </span>
+        )}
       </div>
-      {/* A narrow card puts the status on its own line, so Save never leaves the edge. */}
-      <div className="flex flex-wrap items-center justify-end gap-1 ps-6">
+      {/* Like a composer: the field's helper at the start, the answer to it at the end. */}
+      <div className="flex flex-wrap items-center gap-1">
         <p
           role="status"
-          // A note wraps rather than lose its second half beside the buttons.
-          className={`min-w-0 basis-full text-xs text-muted empty:hidden @md:flex-1 @md:basis-0 @md:empty:invisible @md:empty:block ${draftNote ? "" : "@md:truncate"}`}
+          // A narrow card puts the status on its own line above the actions; a note wraps rather than lose its end.
+          className={`order-first min-w-0 basis-full ps-6 text-xs text-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
         >
           {problem ? (
             <InlineError>{problem}</InlineError>
@@ -225,14 +203,25 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
             <Trans>Drafting a hook…</Trans>
           ) : draftNote ? (
             draftNote
-          ) : untouched ? (
-            <span className="inline-flex items-center gap-1.5">
-              <Sparkle className="size-3.5 shrink-0" aria-hidden="true" />
-              <Trans>AI draft</Trans>
-            </span>
           ) : null}
         </p>
-        <Button size="sm" variant="ghost" onClick={onCancel}>
+        {draftable && (
+          <Button
+            size="sm"
+            variant="ghost"
+            aria-label={untouched ? t`Another draft` : t`Draft a hook`}
+            loading={drafting}
+            aria-disabled={drafting}
+            className="@md:-order-1"
+            onClick={() => {
+              if (!drafting) void draft();
+            }}
+          >
+            <Sparkle data-icon="inline-start" aria-hidden="true" />
+            {untouched ? <Trans>Another draft</Trans> : <Trans>Draft</Trans>}
+          </Button>
+        )}
+        <Button size="sm" variant="ghost" className="ms-auto" onClick={onCancel}>
           <Trans>Cancel</Trans>
         </Button>
         <Button size="sm" variant="primary" type="submit" loading={pending} aria-disabled={pending}>

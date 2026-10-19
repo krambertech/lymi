@@ -12,12 +12,21 @@ export const DESCRIPTION_MAX = 155;
 export function firstThatFits(candidates: readonly string[], max: number): string {
   const tidy = candidates.map((text) => text.replace(/\s+/g, " ").trim()).filter(Boolean);
   const fits = tidy.find((text) => [...text].length <= max);
-  if (fits) return fits;
-  const last = tidy.at(-1) ?? "";
-  const chars = [...last];
+  return fits ?? cutAtWord(tidy.at(-1) ?? "", max);
+}
+
+/** The text within `max` characters, cut at a word and ended with an ellipsis when it had to be cut. */
+export function cutAtWord(text: string, max: number): string {
+  const chars = [...text];
+  if (chars.length <= max) return text;
   const cut = chars.slice(0, max - 1).join("");
   const space = cut.lastIndexOf(" ");
   return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,.;:·]+$/, "")}…`;
+}
+
+/** The text's first sentence, or the whole text when it has one sentence. */
+export function firstSentence(text: string): string {
+  return text.match(/^.+?[.!?…](?=\s+\p{Lu}|$)/u)?.[0] ?? text;
 }
 
 /** A card's text short enough to quote in a description, or null when it would crowd one out. */

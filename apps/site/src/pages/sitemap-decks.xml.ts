@@ -1,5 +1,6 @@
 import { BEGINNER_DECKS } from "@lymi/client/welcome";
 import { EXAM_DECKS, EXAMS, examPath, examsPath } from "../lib/exams";
+import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES } from "../lib/language-pages";
 import { shelfPagePaths } from "../lib/public-catalog";
 import { publishedDeckSlugs } from "../lib/public-deck";
 import { localizedPath } from "../lib/routes";
@@ -14,7 +15,10 @@ export async function GET() {
       path: (locale: string) => examPath(exam, locale),
       slugs: exam.decks,
     })),
-    { path: (locale: string) => localizedPath("japanese", locale), slugs: BEGINNER_DECKS.ja ?? [] },
+    ...LANGUAGE_PAGE_TAGS.map((tag) => ({
+      path: (locale: string) => localizedPath(LANGUAGE_PAGES[tag].page, locale),
+      slugs: BEGINNER_DECKS[tag] ?? [],
+    })),
   ];
   return new Response(runtimeSitemap(await publishedDeckSlugs(), await shelfPagePaths(), guides), {
     headers: {

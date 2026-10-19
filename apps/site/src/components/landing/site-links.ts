@@ -9,6 +9,7 @@ import {
   Presentation,
   Stethoscope,
 } from "lucide-react";
+import { LANGUAGE_PAGES } from "../../lib/language-pages";
 import type { LocalizedPage } from "../../lib/routes";
 
 export const SOURCE_CODE_URL = "https://github.com/krambertech/lymi";
@@ -34,7 +35,9 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     hue: 4,
   },
   { page: "estonian", label: msg`Estonian`, footerOnly: true },
-  { page: "japanese", label: msg`Japanese`, footerOnly: true },
+  ...Object.values(LANGUAGE_PAGES).map(
+    ({ page, label }): UseCaseLink => ({ page, label, footerOnly: true }),
+  ),
   {
     page: "assistants",
     label: msg`AI assistants`,

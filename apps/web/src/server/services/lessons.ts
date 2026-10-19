@@ -4,6 +4,7 @@ import {
   LESSON_READS_PER_DAY,
   newId,
   normaliseTerm,
+  normalizeCardText,
   readingKey,
   sameReading,
 } from "@lymi/core";
@@ -168,7 +169,7 @@ const headForm = (key: string) => key.split(" · ")[0]?.trim() ?? key;
 type OwnedRow = Omit<Owned, "reading"> & { language: string | null; pronunciation: string | null };
 
 function ownedCard({ language, pronunciation, ...card }: OwnedRow): Owned {
-  return { ...card, reading: readingKey({ language, pronunciation }) };
+  return { ...card, reading: readingKey({ term: card.term, language, pronunciation }) };
 }
 
 function ownedByKey(rows: OwnedRow[]): Map<string, Owned[]> {
@@ -355,10 +356,10 @@ async function readInto(
   const take = (raw: unknown) => {
     const parsed = ReplyTerm.safeParse(raw);
     if (!parsed.success) return;
-    const t = parsed.data;
-    const key = normaliseTerm(t.term);
     const language = lesson.languages.get(deck ?? lesson.fallback) ?? null;
-    const reading = readingKey({ language, pronunciation: t.pronunciation });
+    const t = { ...parsed.data, ...normalizeCardText(language, parsed.data).fields };
+    const key = normaliseTerm(t.term);
+    const reading = readingKey({ term: t.term, language, pronunciation: t.pronunciation });
     if (seen.has(`${key}\u0000${reading ?? ""}`)) return;
     seen.add(`${key}\u0000${reading ?? ""}`);
     const scored = keepScore(ai, lesson.deckRule, {

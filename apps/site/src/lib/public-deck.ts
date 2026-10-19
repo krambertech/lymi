@@ -2,15 +2,17 @@ import { env, waitUntil } from "cloudflare:workers";
 import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
-  listPublicCatalog,
+  listPublicDeckPlaces,
   listPublicDeckSlugs,
+  listPublicDecks,
   listRelatedDecks,
   loadPublicDeck,
+  type PublicDeckPlace,
   publicDeckRedirect,
 } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
-import { type DeckLinks, deckLinks } from "./deck-links";
+import { type DeckLinks, deckLinks, linkedSlugs, withSummaries } from "./deck-links";
 import {
   countsAsPageView,
   DECK_CACHE_CONTROL,
@@ -71,11 +73,11 @@ export async function resolveDeckPage(
     astro.response.status = status;
     return { status, locale, slug };
   }
-  const [related, catalog] = await Promise.all([
+  const [related, places] = await Promise.all([
     listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE }),
-    listPublicCatalog(db, locale),
+    listPublicDeckPlaces(db, locale).catch(linksFailed(slug, locale)),
   ]);
-  const links = deckLinks(catalog, result.deck, related);
+  const links = places ? await neighbourLinks(places, result.deck, related, locale) : NO_LINKS;
   const etag = deckEtag({
     slug: result.deck.slug,
     content: deckContentHash(result.deck, related, links),
@@ -93,6 +95,29 @@ export async function resolveDeckPage(
     });
   }
   return { status: 200, locale, deck: result.deck, related, links };
+}
+
+const NO_LINKS: DeckLinks = { shelf: null, language: [], topic: [] };
+
+/** A failure to load the page's links leaves them out rather than failing the page. */
+function linksFailed(slug: string, locale: Locale) {
+  return (error: unknown) => {
+    console.error("deck page links failed", { slug, locale, error });
+    return null;
+  };
+}
+
+async function neighbourLinks(
+  places: readonly PublicDeckPlace[],
+  deck: PublicDeckOut,
+  related: readonly PublicDeckSummary[],
+  locale: Locale,
+): Promise<DeckLinks> {
+  const picked = deckLinks(places, deck, related);
+  const rows = await listPublicDecks(catalogDb(), linkedSlugs(picked), locale).catch(
+    linksFailed(deck.slug, locale),
+  );
+  return rows ? withSummaries(picked, rows) : NO_LINKS;
 }
 
 export function publishedDeckSlugs() {

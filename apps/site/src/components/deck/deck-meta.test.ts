@@ -97,6 +97,18 @@ describe("deckTitle", () => {
     );
   });
 
+  it("finds the language in a name left in the deck's own language", () => {
+    const core = deck({
+      name: "Core Ukrainian Words",
+      category: "languages",
+      language: "uk",
+      cardCount: 64,
+    });
+    expect(deckTitle(pageI18n("uk"), core)).toBe(
+      "Core Ukrainian Words · 64 безкоштовні картки · Lymi",
+    );
+  });
+
   it("drops Lymi's name before it lets the title run past 60 characters", () => {
     const ru = roadSigns({ name: "Дорожные знаки Германии (StVO)", meaningLanguage: "ru" });
     expect(deckTitle(pageI18n("ru"), ru)).toBe(
@@ -140,10 +152,44 @@ describe("deckDescription", () => {
     expect(deckDescription(pageI18n("ru"), turkish())).not.toContain("everyday topics");
   });
 
+  it("quotes terms without their meanings when the meanings are in another language", () => {
+    expect(deckDescription(pageI18n("uk"), turkish())).toContain("Наприклад: merhaba, ben, aile.");
+    const signs = deckDescription(pageI18n("uk"), roadSigns());
+    expect(signs).not.toContain("Warning signs");
+    expect(signs).not.toContain("Danger point");
+  });
+
   it("leads a subject deck with its summary and names its sections without the asides", () => {
     expect(deckDescription(pageI18n("en"), roadSigns())).toBe(
-      "Every sign by its number and name. 162 free flashcards. Sections: Warning signs, Regulatory signs, Guidance signs.",
+      "Every sign by its number and name. 162 free flashcards. Sections: Warning signs; Regulatory signs; Guidance signs.",
     );
+  });
+
+  it("keeps a long summary, by its first sentence or cut beside the count", () => {
+    const civics = deck({
+      category: "citizenship",
+      cardCount: 128,
+      summary:
+        "US citizenship test practice: all 128 civics questions of the 2025 version, with the answers USCIS accepts and a short note on each. Study a few minutes a day.",
+      sections: [],
+    });
+    expect(deckDescription(pageI18n("en"), civics)).toBe(
+      "US citizenship test practice: all 128 civics questions of the 2025 version, with the answers USCIS accepts and a short note on each. 128 free flashcards.",
+    );
+    const state = deck({
+      category: "citizenship",
+      cardCount: 10,
+      summary: `The ten questions for Bavaria ${"and more words ".repeat(12)}without a stop`,
+      sections: [],
+    });
+    const line = deckDescription(pageI18n("en"), state);
+    expect(line).toMatch(/^The ten questions for Bavaria .*… 10 free flashcards\.$/);
+    expect([...line].length).toBeLessThanOrEqual(155);
+  });
+
+  it("does not say the meanings are in the language the deck teaches", () => {
+    const nato = deck({ name: "NATO Phonetic Alphabet", category: "languages", language: "en" });
+    expect(deckDescription(pageI18n("en"), nato)).toMatch(/^118 free English flashcards\./);
   });
 
   it("keeps every description within 155 characters", () => {

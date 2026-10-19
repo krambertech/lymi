@@ -41,6 +41,15 @@ describe("topicKey", () => {
     );
   });
 
+  it("falls back to the base language's word for a regional tag", () => {
+    expect(topicKey({ slug: "portuguese-a1-vocabulary", language: "pt-PT" })).toBe(
+      "*-a1-vocabulary",
+    );
+    expect(topicKey({ slug: "chinese-a1-vocabulary", language: "zh-Hans" })).toBe(
+      "*-a1-vocabulary",
+    );
+  });
+
   it("has no topic when the slug does not name the language", () => {
     expect(topicKey({ slug: "travel-denmark", language: "da" })).toBeNull();
     expect(topicKey({ slug: "germany-states-on-a-map", language: "de" })).toBeNull();
@@ -60,11 +69,38 @@ describe("deck links", () => {
   it("links the same topic in other languages, subject decks included", () => {
     const a1 = catalog[4] as PublicDeckSummary;
     expect(sameTopicDecks(catalog, a1).map((deck) => deck.slug)).toEqual([
-      "greek-a1-vocabulary",
       "brazilian-portuguese-a1-vocabulary",
+      "greek-a1-vocabulary",
     ]);
     const signs = catalog[6] as PublicDeckSummary;
     expect(sameTopicDecks(catalog, signs).map((deck) => deck.slug)).toEqual(["polish-road-signs"]);
+  });
+
+  it("starts after the deck and wraps, so a long language list links every deck", () => {
+    const many = Array.from({ length: 30 }, (_, at) => summary(`greek-${at}`, "el"));
+    const slugs = (deck: PublicDeckSummary) =>
+      sameLanguageDecks(many, deck).map((each) => each.slug);
+    expect(slugs(many[0] as PublicDeckSummary)[0]).toBe("greek-1");
+    expect(slugs(many[25] as PublicDeckSummary)).toEqual([
+      "greek-26",
+      "greek-27",
+      "greek-28",
+      "greek-29",
+      ...Array.from({ length: 8 }, (_, at) => `greek-${at}`),
+    ]);
+    const reached = new Set(many.flatMap(slugs));
+    expect(reached.size).toBe(30);
+  });
+
+  it("keeps a regional variant of the same language out of the other-languages row", () => {
+    const pt = [
+      summary("portuguese-a1-vocabulary", "pt-PT"),
+      summary("brazilian-portuguese-a1-vocabulary", "pt-BR"),
+      summary("greek-a1-vocabulary", "el"),
+    ];
+    expect(sameTopicDecks(pt, pt[0] as PublicDeckSummary).map((deck) => deck.slug)).toEqual([
+      "greek-a1-vocabulary",
+    ]);
   });
 
   it("gives a subject deck no language neighbours", () => {

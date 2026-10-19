@@ -112,6 +112,7 @@ describe("submitting a write", () => {
           card: {
             id: "c1",
             deckId: "deck",
+            term: "上手",
             normalizedTerm: "上手",
             language: "ja-JP",
             pronunciation: "じょうず",
@@ -141,6 +142,73 @@ describe("submitting a write", () => {
         pronunciation: "うわて",
       });
       expect(homograph.outcome.status).toBe("added");
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it("queues an offline add whose pronunciation differs from the local card's for the server", async () => {
+    const { QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["decks"], [{ id: "deck", name: "Russian", defaultLanguage: "ru" }]);
+    qc.setQueryData(
+      ["decks", "deck", "cards"],
+      [{ card: { id: "c1", deckId: "deck", normalizedTerm: "замок", language: "ru" } }],
+    );
+    w.bindWriteCache(qc);
+    vi.stubGlobal("navigator", { onLine: false });
+    try {
+      const plain = await w.writes.addCard({ deckId: "deck", term: "Замок" });
+      expect(plain.outcome.status).toBe("skipped");
+      expect(calls).toEqual([]);
+      answers.push(offline);
+      const stressed = await w.writes.addCard({
+        deckId: "deck",
+        term: "замок",
+        pronunciation: "за́мок",
+      });
+      expect(stressed).toMatchObject({ queued: true, outcome: { status: "added" } });
+      expect(w.writeStore.snapshot()).toMatchObject([
+        { write: { kind: "card.add", input: { term: "замок", pronunciation: "за́мок" } } },
+      ]);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it("stores an offline add's bracketed Japanese term as the server would, and finds its duplicate", async () => {
+    const { QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["decks"], [{ id: "deck", name: "Japanese", defaultLanguage: "ja" }]);
+    qc.setQueryData(
+      ["decks", "deck", "cards"],
+      [
+        {
+          card: {
+            id: "c1",
+            deckId: "deck",
+            term: "食べる",
+            normalizedTerm: "食べる",
+            language: "ja",
+            pronunciation: "たべる",
+          },
+        },
+      ],
+    );
+    w.bindWriteCache(qc);
+    vi.stubGlobal("navigator", { onLine: false });
+    try {
+      const same = await w.writes.addCard({ deckId: "deck", term: "食[た]べる" });
+      expect(same.outcome).toMatchObject({ status: "skipped", existing: { id: "c1" } });
+      answers.push(offline);
+      const added = await w.writes.addCard({ deckId: "deck", term: "上手[じょうず]" });
+      expect(added.outcome).toMatchObject({
+        status: "added",
+        card: { term: "上手", pronunciation: "じょうず" },
+      });
+      expect(w.writeStore.snapshot()).toMatchObject([
+        { write: { input: { term: "上手", pronunciation: "じょうず" } } },
+      ]);
     } finally {
       vi.unstubAllGlobals();
     }

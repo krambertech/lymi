@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { jsonForScript } from "../../lib/deck-page";
+import { pageI18n } from "../../lib/i18n";
+import { LANGUAGE_PAGES } from "../../lib/language-pages";
+import type { LanguageDecksPage } from "../../lib/public-catalog";
+import { localizedPath } from "../../lib/routes";
+import { marketingPage } from "../../lib/structured-data";
+import LanguageView from "../islands/LanguageView";
+import { SHARE_IMAGE_ALT } from "../landing/LandingView";
+
+interface Props {
+  page: LanguageDecksPage;
+}
+
+const { locale, language, decks } = Astro.props.page;
+const { page, title, blurb } = LANGUAGE_PAGES[language];
+const i18n = pageI18n(locale);
+const name = i18n._(title);
+const description = i18n._(blurb);
+const path = localizedPath(page, locale);
+const structuredData = marketingPage({ name, description, path, i18n });
+---
+
+<BaseLayout
+  title={name}
+  description={description}
+  canonicalPath={path}
+  localizedPage={page}
+  shareImageAlt={i18n._(SHARE_IMAGE_ALT)}
+>
+  <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
+  <LanguageView client:load language={language} locale={locale} decks={decks} />
+</BaseLayout>

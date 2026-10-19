@@ -15,6 +15,7 @@ import {
   cueKeepsReading,
   type Drawn,
   drawKey,
+  drawsTermReading,
   type FieldSource,
   gradeAllowed,
   interval,
@@ -23,7 +24,6 @@ import {
   type Rating,
   ROUNDS,
   type Round,
-  termReading,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -110,7 +110,7 @@ import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "..
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
-import { Furigana, ReadingText } from "../ui/furigana";
+import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
@@ -118,6 +118,7 @@ import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
 import { useSystemBack } from "../ui/system-back";
+import { ExampleText, TermText } from "../ui/term-text";
 import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
 
 const EASE = curve(EASE_OUT);
@@ -1292,7 +1293,7 @@ function CardPlate({
     !!card.pronunciation &&
     cueKeepsReading(card.language, stateKey(forgotten ? 3 : fsrsState) === "known");
   // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
-  const furigana = useMemo(() => termReading(card), [card]);
+  const furigana = useMemo(() => drawsTermReading(card), [card]);
   const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
@@ -1435,7 +1436,7 @@ function CardPlate({
                     <CardLine
                       style={type.cue}
                       lang={mode.cue === "term" ? card.language : null}
-                      reading={mode.cue === "term" ? furigana : null}
+                      term={mode.cue === "term" ? card : null}
                       hidden={!cueFurigana}
                       // The term can be heard as soon as it is the question.
                       after={
@@ -1471,12 +1472,15 @@ function CardPlate({
                         {picture ? (
                           <View className="flex-row items-center gap-3">
                             <View className="shrink">
-                              <Furigana
-                                segments={(mode.target === "term" && furigana) || [{ text: back }]}
-                                className="text-2xl font-medium text-text"
-                                style={back === noMeaning ? { color: p.muted } : undefined}
-                                lang={mode.target === "term" ? card.language : null}
-                              />
+                              {mode.target === "term" ? (
+                                <TermText card={card} className="text-2xl font-medium text-text" />
+                              ) : (
+                                <Furigana
+                                  segments={[{ text: back }]}
+                                  className="text-2xl font-medium text-text"
+                                  style={back === noMeaning ? { color: p.muted } : undefined}
+                                />
+                              )}
                             </View>
                             {pronounce && mode.target === "term" && (
                               <PronounceButton pronounce={pronounce} />
@@ -1487,7 +1491,7 @@ function CardPlate({
                             style={type.answer}
                             grows
                             lang={mode.target === "term" ? card.language : null}
-                            reading={mode.target === "term" ? furigana : null}
+                            term={mode.target === "term" ? card : null}
                             muted={back === noMeaning ? p.muted : undefined}
                             after={
                               pronounce && mode.target === "term" ? (
@@ -1502,15 +1506,14 @@ function CardPlate({
                       {picture && (
                         <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                           <View className="shrink">
-                            <Furigana
-                              segments={
-                                mode.target === "term"
-                                  ? [{ text: card.meaning ?? "" }]
-                                  : (furigana ?? [{ text: card.term }])
-                              }
-                              className="text-lg text-text-2"
-                              lang={mode.target === "term" ? null : card.language}
-                            />
+                            {mode.target === "term" ? (
+                              <Furigana
+                                segments={[{ text: card.meaning ?? "" }]}
+                                className="text-lg text-text-2"
+                              />
+                            ) : (
+                              <TermText card={card} className="text-lg text-text-2" />
+                            )}
                           </View>
                           {pronounce && mode.target !== "term" && (
                             <PronounceButton pronounce={pronounce} />
@@ -1533,7 +1536,7 @@ function CardPlate({
                       )}
                       {card.example && (
                         <Animated.View entering={arrive()}>
-                          <ReadingText
+                          <ExampleText
                             text={card.example}
                             known={known}
                             className="text-md text-text-2"
@@ -1587,7 +1590,7 @@ function CardPlate({
                     <CardLine
                       style={at.cue}
                       after={mode.cue === "term" ? speaker : undefined}
-                      reading={mode.cue === "term" ? furigana : null}
+                      term={mode.cue === "term" ? card : null}
                     >
                       {cue}
                     </CardLine>
@@ -1602,7 +1605,7 @@ function CardPlate({
                         style={at.answer}
                         grows
                         after={mode.target === "term" ? speaker : undefined}
-                        reading={mode.target === "term" ? furigana : null}
+                        term={mode.target === "term" ? card : null}
                       >
                         {back}
                       </CardLine>

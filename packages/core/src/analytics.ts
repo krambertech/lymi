@@ -280,6 +280,8 @@ export const analyticsEvents = {
     source,
     count,
     fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
+    /** Of `count`, the cards whose text was converted to how Lymi stores it. */
+    normalized: count.optional(),
   }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),

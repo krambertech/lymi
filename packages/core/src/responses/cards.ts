@@ -266,6 +266,14 @@ export const CardHistoryOut = z
   .meta({ id: "CardHistory" });
 export type CardHistoryOut = z.infer<typeof CardHistoryOut>;
 
+const Normalized = z
+  .array(z.enum(["term", "pronunciation"]).meta(OPEN))
+  .optional()
+  .meta({
+    description:
+      "Fields Lymi converted to how it stores them, such as a Japanese term sent as 食[た]べる, stored as 食べる with the pronunciation たべる; left out when nothing was converted",
+  });
+
 const OutcomeId = z.string().meta({
   description:
     "The card the outcome is about. For a skipped add, the existing card; for an error, the id that was sent.",
@@ -288,7 +296,12 @@ const CardWriteErrorOut = z.object({
  */
 export const AddCardOutcomeOut = z
   .discriminatedUnion("status", [
-    z.object({ id: OutcomeId, status: z.literal("added"), card: CardOut }),
+    z.object({
+      id: OutcomeId,
+      status: z.literal("added"),
+      card: CardOut,
+      normalized: Normalized,
+    }),
     z.object({
       id: OutcomeId,
       status: z.literal("skipped"),
@@ -318,7 +331,12 @@ export const AddCardsOut = z
 /** One outcome per card in a bulk edit. A card that fails says why and leaves the others alone. */
 export const EditCardOutcomeOut = z
   .discriminatedUnion("status", [
-    z.object({ id: OutcomeId, status: z.literal("updated"), card: CardOut }),
+    z.object({
+      id: OutcomeId,
+      status: z.literal("updated"),
+      card: CardOut,
+      normalized: Normalized,
+    }),
     CardWriteErrorOut,
   ])
   .meta({ id: "EditCardOutcome" });
@@ -373,6 +391,7 @@ export const TerseCardOutcomeOut = z
       .optional()
       .meta({ description: "On a skip: the deck of the card that already holds the term" }),
     deckName: z.string().optional().meta({ description: "On a skip: that deck's name" }),
+    normalized: Normalized,
     code: CardWriteErrorOut.shape.code.optional(),
     error: z.string().optional().meta({ description: "Why the card was not written" }),
   })

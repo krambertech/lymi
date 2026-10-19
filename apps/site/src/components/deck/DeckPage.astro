@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { deckPath, deckPaths, deckSharePath, jsonForScript, recallCue, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { localizedPath } from "../../lib/routes";
-import { deckBreadcrumbs, deckStructuredData } from "../../lib/structured-data";
+import { deckBreadcrumbs, deckStructuredData, faqPage } from "../../lib/structured-data";
 import { trayHue } from "../../lib/tray";
 import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
@@ -13,7 +13,8 @@ import { shelfLabel } from "../explore/explore-labels";
 import { EXPLORE_NAME } from "../explore/explore-meta";
 import { shelfPath } from "../../lib/explore";
 import { deckDescription, deckShareText, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckNeighbours, DeckRelated, editionOf } from "./DeckView";
+import { deckQuestions } from "./deck-content";
+import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckNeighbours, DeckQuestions, DeckRelated, DeckWords, editionOf } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -55,6 +56,12 @@ const shelf =
         slot="head"
         is:inline
         type="application/ld+json"
+        set:html={jsonForScript(faqPage(deckQuestions(page.deck), i18n, { name: page.deck.name, path: deckPath(slug, locale) }))}
+      />
+      <script
+        slot="head"
+        is:inline
+        type="application/ld+json"
         set:html={jsonForScript(deckBreadcrumbs(page.deck, locale, i18n._(EXPLORE_NAME), shelf))}
       />
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -77,6 +84,7 @@ const shelf =
               steps={path.steps}
             />
           )}
+          <DeckWords deck={page.deck} locale={locale} />
           <section id="how" aria-labelledby="how-title" class="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24">
             <div class="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] @4xl:gap-20">
               <DeckHowItWorks locale={locale} cue={recallCue(stack)} />
@@ -94,6 +102,7 @@ const shelf =
               )}
             </div>
           </section>
+          <DeckQuestions deck={page.deck} locale={locale} />
           <DeckRelated decks={page.related} locale={locale} />
           <DeckNeighbours deck={page.deck} links={page.links} locale={locale} />
         </main>

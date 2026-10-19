@@ -96,6 +96,12 @@ msgstr "{cards, plural, one {card} other {cards}}"
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 
+msgid "{count, plural, one {# card} other {# cards}} in {sections, plural, one {# section} other {# sections}}. Every card is listed on this page, so you can see them all before you add the deck."
+msgstr "{count, plural, one {# card} other {# cards}} in {sections, plural, one {# section} other {# sections}}. Every card is listed on this page, so you can see them all before you add the deck."
+
+msgid "{count, plural, one {# card} other {# cards}}. Every card is listed on this page, so you can see them all before you add the deck."
+msgstr "{count, plural, one {# card} other {# cards}}. Every card is listed on this page, so you can see them all before you add the deck."
+
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 
@@ -132,6 +138,9 @@ msgstr "{learners, plural, one {Reached # learner} other {Reached all # learners
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 
+msgid "{left, plural, one {And # more card} other {And # more cards}}"
+msgstr "{left, plural, one {And # more card} other {And # more cards}}"
+
 msgid "{name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
 msgstr "{name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
 
@@ -141,6 +150,12 @@ msgstr "{name} flashcards"
 msgctxt "subject shelf"
 msgid "{name} flashcards"
 msgstr "{name} flashcards"
+
+msgid "{name} has {count, plural, one {# {language} card} other {# {language} cards}}, each with its meaning in {meaningLanguage}."
+msgstr "{name} has {count, plural, one {# {language} card} other {# {language} cards}}, each with its meaning in {meaningLanguage}."
+
+msgid "{name} has {count, plural, one {# card} other {# cards}}."
+msgstr "{name} has {count, plural, one {# card} other {# cards}}."
 
 msgid "{name} on Lymi: {facts}"
 msgstr "{name} on Lymi: {facts}"
@@ -159,6 +174,9 @@ msgstr "{position} of {total}"
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {past review} other {past reviews}}"
+
+msgid "{sections, plural, =1 {All of them are in one section, “{first}”.} other {They come in # sections, from “{first}” to “{last}”.}}"
+msgstr "{sections, plural, =1 {All of them are in one section, “{first}”.} other {They come in # sections, from “{first}” to “{last}”.}}"
 
 msgid "{title} · {decks, plural, one {# free deck} other {# free decks}}"
 msgstr "{title} · {decks, plural, one {# free deck} other {# free decks}}"
@@ -796,6 +814,9 @@ msgstr "Before the test"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
+
+msgid "Below are the first cards of each section, so you can see what you would learn before you add the deck."
+msgstr "Below are the first cards of each section, so you can see what you would learn before you add the deck."
 
 msgid "Beta"
 msgstr "Beta"
@@ -1936,6 +1957,9 @@ msgstr "How many are waiting for me tonight?"
 msgid "How many autonomous communities does Spain have?"
 msgstr "How many autonomous communities does Spain have?"
 
+msgid "How many cards are in {name}?"
+msgstr "How many cards are in {name}?"
+
 msgid "How much a bond’s price moves when interest rates change"
 msgstr "How much a bond’s price moves when interest rates change"
 
@@ -2074,6 +2098,9 @@ msgstr "Is it the official question set?"
 
 msgid "Is there a ready-made deck for my certification?"
 msgstr "Is there a ready-made deck for my certification?"
+
+msgid "Is this deck free?"
+msgstr "Is this deck free?"
 
 msgid "is; have"
 msgstr "is; have"
@@ -4340,6 +4367,9 @@ msgstr "What you need to know for a class or an exam."
 
 msgid "What you send"
 msgstr "What you send"
+
+msgid "What you’ll learn"
+msgstr "What you’ll learn"
 
 msgid "What’s due tonight?"
 msgstr "What’s due tonight?"

@@ -22,7 +22,9 @@ import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
+import { Questions } from "../landing/Questions";
 import { SiteFooter } from "../landing/SiteFooter";
+import { deckIntro, deckQuestions, listedSections } from "./deck-content";
 import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
@@ -193,6 +195,108 @@ export function DeckRelated({ decks, locale }: LocaleProps & { decks: PublicDeck
           </ul>
         </div>
       </section>
+    </Localized>
+  );
+}
+
+/**
+ * The first cards of each section as plain text, with a short opening written from the deck's
+ * facts. The full list stays in its view; this is what a reader and a crawler see without opening it.
+ */
+export function DeckWords({ deck, locale }: DeckProps) {
+  return (
+    <Localized locale={locale}>
+      <DeckWordsBody deck={deck} />
+    </Localized>
+  );
+}
+
+function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
+  const { i18n } = useLingui();
+  const sections = listedSections(deck);
+  if (sections.length === 0) return null;
+  const intro = deckIntro(i18n, deck);
+  const cardCount = deck.cardCount;
+  return (
+    <section
+      id="words"
+      aria-labelledby="words-title"
+      className="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24"
+    >
+      <div className="mx-auto max-w-[1040px]">
+        <h2
+          id="words-title"
+          className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+        >
+          <Trans>What you’ll learn</Trans>
+        </h2>
+        <div className="mt-4 grid max-w-[62ch] gap-2 text-md text-pretty text-text-2">
+          {intro.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="mt-10 grid gap-x-10 gap-y-8 @2xl:grid-cols-2 @4xl:grid-cols-3">
+          {sections.map((section, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: section names can repeat; order is fixed.
+            <div key={index} className="min-w-0">
+              {section.name && (
+                <h3
+                  lang={deck.meaningLanguage}
+                  className="text-lg font-medium tracking-[-0.02em] text-balance text-text"
+                >
+                  {section.name}
+                </h3>
+              )}
+              <ul className="mt-3 grid gap-1.5 border-t border-edge pt-3">
+                {section.cards.map((card, at) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat; order is fixed.
+                  <li key={at} className="grid gap-0.5 text-md">
+                    <span
+                      lang={deck.language ?? undefined}
+                      className="font-medium break-words whitespace-pre-line text-text"
+                    >
+                      {card.term}
+                    </span>
+                    {card.meaning && (
+                      <span
+                        lang={deck.meaningLanguage}
+                        className="line-clamp-2 text-sm text-pretty text-text-2"
+                      >
+                        {card.meaning}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <MoreInSection left={section.total - section.cards.length} />
+            </div>
+          ))}
+        </div>
+        <p className="mt-10">
+          <a href="#cards" className={buttonClass("secondary", "lg")}>
+            <Plural value={cardCount} one="See the card" other="See all # cards" />
+            <ChevronRight aria-hidden="true" className="rtl:rotate-180" />
+          </a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function MoreInSection({ left }: { left: number }) {
+  if (left <= 0) return null;
+  return (
+    <p className="mt-2 text-sm text-muted">
+      <Plural value={left} one="And # more card" other="And # more cards" />
+    </p>
+  );
+}
+
+/** Plain questions about this deck, all open; the page's FAQPage repeats exactly these answers. */
+export function DeckQuestions({ deck, locale }: DeckProps) {
+  return (
+    <Localized locale={locale}>
+      <Questions title={<Trans>Questions</Trans>} items={deckQuestions(deck)} />
     </Localized>
   );
 }

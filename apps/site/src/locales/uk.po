@@ -96,6 +96,12 @@ msgstr "{cards, plural, one {картка} few {картки} many {карток
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Приєднався # учень} few {Приєдналися # учні} many {Приєдналося # учнів} other {Приєдналося # учня}}"
 
+msgid "{count, plural, one {# card} other {# cards}} in {sections, plural, one {# section} other {# sections}}. Every card is listed on this page, so you can see them all before you add the deck."
+msgstr "{count, plural, one {# картка} few {# картки} many {# карток} other {# картки}} у {sections, plural, one {# розділі} few {# розділах} many {# розділах} other {# розділу}}. Усі картки є на цій сторінці, тож їх можна переглянути до того, як додати колоду."
+
+msgid "{count, plural, one {# card} other {# cards}}. Every card is listed on this page, so you can see them all before you add the deck."
+msgstr "{count, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. Усі картки є на цій сторінці, тож їх можна переглянути до того, як додати колоду."
+
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{language}: {count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}, мова перекладу: {meaningLanguage}."
 
@@ -132,6 +138,9 @@ msgstr "{learners, plural, one {Доставлено # учню} few {Доста
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {Це вся колода. Додай її, і Lymi сама обере, коли повернути кожну картку.} one {Чекає ще одна картка. Додай колоду, і Lymi сама обере, коли повернути кожну.} few {Чекають ще # картки. Додай колоду, і Lymi сама обере, коли повернути кожну.} many {Чекають ще # карток. Додай колоду, і Lymi сама обере, коли повернути кожну.} other {Чекають ще # картки. Додай колоду, і Lymi сама обере, коли повернути кожну.}}"
 
+msgid "{left, plural, one {And # more card} other {And # more cards}}"
+msgstr "{left, plural, one {І ще # картка} few {І ще # картки} many {І ще # карток} other {І ще # картки}}"
+
 msgid "{name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
 msgstr "{name} · {count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}"
 
@@ -141,6 +150,12 @@ msgstr "{name}: флеш-картки"
 msgctxt "subject shelf"
 msgid "{name} flashcards"
 msgstr "{name}: флеш-картки"
+
+msgid "{name} has {count, plural, one {# {language} card} other {# {language} cards}}, each with its meaning in {meaningLanguage}."
+msgstr "У колоді «{name}» {count, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. Мова: {language}, переклад: {meaningLanguage}."
+
+msgid "{name} has {count, plural, one {# card} other {# cards}}."
+msgstr "У колоді «{name}» {count, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
 
 msgid "{name} on Lymi: {facts}"
 msgstr "{name} у Lymi: {facts}"
@@ -159,6 +174,9 @@ msgstr "{position} з {total}"
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {минуле повторення} few {минулі повторення} many {минулих повторень} other {минулого повторення}}"
+
+msgid "{sections, plural, =1 {All of them are in one section, “{first}”.} other {They come in # sections, from “{first}” to “{last}”.}}"
+msgstr "{sections, plural, =1 {Усі вони в одному розділі: «{first}».} one {Вони розбиті на # розділ, від «{first}» до «{last}».} few {Вони розбиті на # розділи, від «{first}» до «{last}».} many {Вони розбиті на # розділів, від «{first}» до «{last}».} other {Вони розбиті на # розділу, від «{first}» до «{last}».}}"
 
 msgid "{title} · {decks, plural, one {# free deck} other {# free decks}}"
 msgstr "{title} · {decks, plural, one {# безкоштовна колода} few {# безкоштовні колоди} many {# безкоштовних колод} other {# безкоштовної колоди}}"
@@ -796,6 +814,9 @@ msgstr "Перед тестом"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Почалася 1618 року з <0>Празької дефенестрації</0>."
+
+msgid "Below are the first cards of each section, so you can see what you would learn before you add the deck."
+msgstr "Нижче перші картки кожного розділу, щоб було видно, що ти вивчиш, ще до того, як додаси колоду."
 
 msgid "Beta"
 msgstr "Бета"
@@ -1936,6 +1957,9 @@ msgstr "Скільки карток чекає на мене сьогодні?"
 msgid "How many autonomous communities does Spain have?"
 msgstr "Скільки автономних спільнот в Іспанії?"
 
+msgid "How many cards are in {name}?"
+msgstr "Скільки карток у колоді «{name}»?"
+
 msgid "How much a bond’s price moves when interest rates change"
 msgstr "Наскільки змінюється ціна облігації, коли змінюються процентні ставки"
 
@@ -2074,6 +2098,9 @@ msgstr "Це офіційний набір питань?"
 
 msgid "Is there a ready-made deck for my certification?"
 msgstr "Чи є готова колода для моєї сертифікації?"
+
+msgid "Is this deck free?"
+msgstr "Ця колода безкоштовна?"
 
 msgid "is; have"
 msgstr "є; мати"
@@ -4340,6 +4367,9 @@ msgstr "Те, що треба знати для заняття чи іспиту
 
 msgid "What you send"
 msgstr "Що ти надсилаєш"
+
+msgid "What you’ll learn"
+msgstr "Що ти вивчиш"
 
 msgid "What’s due tonight?"
 msgstr "Що на сьогоднішній вечір?"

@@ -99,6 +99,7 @@ import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
 import { registerViews, viewUri } from "./app-resource";
+import { forDirectories } from "./directory-shape";
 import { HOST_EXTENSION_CAPABILITIES, registerHostExtensions } from "./host-extensions";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
@@ -149,6 +150,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     { name: "lymi", version: "0.2.0" },
     { instructions: INSTRUCTIONS, capabilities: HOST_EXTENSION_CAPABILITIES },
   );
+  forDirectories(server);
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
   const views = {

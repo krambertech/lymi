@@ -13,7 +13,8 @@ A reviewer can now sign in: sign-up is open to anyone, with Google or an email a
 | Client identity | CIMD preferred, DCR fallback | CIMD when the metadata advertises it | `cimd()` in `auth.ts`; no DCR |
 | Metadata gate | `client_id_metadata_document_supported: true`, `none` auth method, S256 | Same | Better Auth's `/.well-known/oauth-authorization-server/api/auth` |
 | Redirect URI | `https://chatgpt.com/connector_platform_oauth_redirect` | `https://claude.ai/api/mcp/auth_callback` | Read from the client's metadata document |
-| Tool hints | `readOnlyHint`, `destructiveHint`, `openWorldHint` required | `title` plus `readOnlyHint` or `destructiveHint` | `readTool` and `writeTool` in `mcp/server.ts`, asserted in `server.test.ts` |
+| Tool hints | `readOnlyHint`, `destructiveHint`, `openWorldHint` required | `annotations.title` plus `readOnlyHint` or `destructiveHint` | `readTool` and `writeTool` in `mcp/server.ts`; `forDirectories` in `mcp/directory-shape.ts` copies each title into `annotations.title`; asserted in `server.test.ts` |
+| Parameter types | Not checked | Every parameter has a `type`; the portal does not follow `$ref` | `forDirectories` inlines each input schema's `$defs`; asserted in `server.test.ts` |
 | Per-tool auth | `securitySchemes`, mirrored in `_meta` | Not used | Both fields, `read` or `write` per tool; `withSecuritySchemes` in `mcp/server.ts` |
 | Re-auth trigger | Tool error with `_meta["mcp/www_authenticate"]` | HTTP 401 with `resource_metadata` | Both: step-up on a read-only write, 401 after disconnect |
 | Domain proof | Token at `/.well-known/openai-apps-challenge` | None | `OPENAI_APPS_CHALLENGE` secret |

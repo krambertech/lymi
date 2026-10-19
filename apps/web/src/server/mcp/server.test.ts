@@ -217,6 +217,7 @@ describe("Lymi MCP server", () => {
     for (const tool of tools) {
       const { annotations } = tool;
       expect(tool.title, tool.name).toBeTruthy();
+      expect(annotations?.title, tool.name).toBe(tool.title);
       expect(tool.outputSchema, tool.name).toBeDefined();
       expect(typeof annotations?.readOnlyHint, tool.name).toBe("boolean");
       expect(typeof annotations?.destructiveHint, tool.name).toBe("boolean");
@@ -227,6 +228,24 @@ describe("Lymi MCP server", () => {
       const scope = annotations?.readOnlyHint ? "read" : "write";
       expect(tool._meta?.securitySchemes, tool.name).toEqual([{ type: "oauth2", scopes: [scope] }]);
     }
+  });
+
+  it("gives every parameter its schema inline, because directory portals do not follow $ref", async () => {
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+
+    for (const tool of tools) {
+      expect(JSON.stringify(tool.inputSchema), tool.name).not.toContain("$ref");
+      for (const [name, property] of Object.entries(tool.inputSchema.properties ?? {})) {
+        const shape = property as { type?: unknown; anyOf?: unknown };
+        expect(shape.type ?? shape.anyOf, `${tool.name}.${name}`).toBeDefined();
+      }
+    }
+    const createDeck = tools.find((t) => t.name === "create_deck");
+    expect(createDeck?.inputSchema.properties?.sectionProgression).toMatchObject({
+      type: "string",
+      enum: ["automatic", "manual", "open"],
+    });
   });
 
   it("never offers the daily goal as something an assistant can change", async () => {

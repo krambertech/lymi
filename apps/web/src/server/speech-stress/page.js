@@ -114,6 +114,7 @@ if (typeof document !== "undefined") {
   const rows = [];
   let active = 0;
   let advance;
+  let advanceFrom;
 
   const element = (tag, props = {}, ...children) => {
     const node = Object.assign(document.createElement(tag), props);
@@ -222,7 +223,11 @@ if (typeof document !== "undefined") {
       active = index;
       for (const other of rows) other.classList.toggle("active", other === item);
     });
-    item.addEventListener("click", () => item.focus());
+    item.addEventListener("click", () => {
+      // A click on another row cancels the pending move; this row's own pick bubbles here too.
+      if (advanceFrom !== index) clearTimeout(advance);
+      item.focus();
+    });
     item.paint = () => {
       const rating = ratings[clip.id] ?? {};
       choices.forEach((button, heard) => {
@@ -240,6 +245,7 @@ if (typeof document !== "undefined") {
       item.paint();
       clearTimeout(advance);
       // The pause lets m or r still flag this clip before the next one takes the keys.
+      advanceFrom = index;
       advance = setTimeout(() => {
         const next = rows.slice(index + 1).find((other) => !other.rated()) ?? rows[index + 1];
         next?.focus();

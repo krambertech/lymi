@@ -21,17 +21,14 @@ const refresh = (qc: QueryClient) =>
     ["decks", "series", "queue", "rounds"].map((key) => qc.invalidateQueries({ queryKey: [key] })),
   );
 
-/** The cards a bulk write changed; one that failed stays where it was. */
 const changed = (out: Outcome) =>
   out.results.flatMap((r) => (r.status !== "error" && r.id ? [r.id] : []));
 
-/** Of the cards an Undo sent, those it left as they were. */
 const missed = (sent: readonly string[], back: Iterable<string>) => {
   const came = new Set(back);
   return sent.filter((id) => !came.has(id));
 };
 
-/** Takes these cards off the deck's list. */
 const take = (qc: QueryClient, deckId: string, ids: Iterable<string>) => {
   const going = new Set(ids);
   if (going.size === 0) return;
@@ -40,10 +37,7 @@ const take = (qc: QueryClient, deckId: string, ids: Iterable<string>) => {
   );
 };
 
-/**
- * Puts these rows back on the deck's list beside every row it holds now, so a batch that fails or is
- * undone never takes back another batch's change; the list sorts itself.
- */
+// Merges rather than restoring a snapshot, so a failed or undone batch never reverts another batch's change.
 const putBack = (qc: QueryClient, deckId: string, rows: readonly DeckRow[]) => {
   if (rows.length === 0) return;
   const key = deckCardsQuery(deckId).queryKey;
@@ -56,10 +50,7 @@ const putBack = (qc: QueryClient, deckId: string, rows: readonly DeckRow[]) => {
   });
 };
 
-/**
- * Takes cards off the deck's list at once, then writes; a card the server did not change goes back.
- * Resolves with the cards that changed and the rows they had, for Undo to show again at once.
- */
+// Resolves with the rows it took as well, so Undo can show them again before the server answers.
 async function leave(
   qc: QueryClient,
   deckId: string,
@@ -89,10 +80,6 @@ async function leave(
   }
 }
 
-/**
- * Shows the cards an Undo sends back on the deck's list at once, then takes off again those the
- * server left where they were. Resolves with those cards.
- */
 async function comeBack(
   qc: QueryClient,
   deckId: string,
@@ -165,7 +152,6 @@ export function moveCardsToDeck(qc: QueryClient, deckId: string, cardIds: string
   };
 }
 
-/** Shows each card's mark everywhere it is cached, at once, as a single mark's write does. */
 const showMarks = (qc: QueryClient, marks: ReadonlyMap<string, boolean>) => {
   for (const [id, important] of marks) showWrite(qc, { kind: "card.important", id, important });
 };
@@ -182,7 +168,7 @@ export function markCards(qc: QueryClient, deckId: string, cardIds: string[], ma
     rows.flatMap((r) => (chosen.has(r.card.id) ? [[r.card.id, r.card.important] as const] : [])),
   );
   const was = (id: string) => before.get(id) ?? !mark;
-  /** `back` is the mark a card shows again when the server leaves it unchanged. */
+  // `back` is the mark a card shows again when the server leaves it unchanged.
   const write = (marks: ReadonlyMap<string, boolean>, back: (id: string) => boolean) => {
     // A read of the list already on its way predates these marks and would wipe them when it lands.
     void qc.cancelQueries({ queryKey: key, exact: true });

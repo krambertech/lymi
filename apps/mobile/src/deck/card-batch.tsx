@@ -19,7 +19,6 @@ export function useCardBatch(deckId: string) {
   const qc = useQueryClient();
   const id = `card-batch-${deckId}`;
   const cards = (count: number) => plural(count, { one: "# card", other: "# cards" });
-  /** Runs an Undo; cards it could not bring back get their own message and Try again for just those. */
   const undo = (run: (ids: string[]) => Promise<string[]>, ids: string[]) => {
     toast.close(id);
     run(ids).then(

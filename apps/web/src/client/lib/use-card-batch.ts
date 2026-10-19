@@ -32,7 +32,6 @@ export function useCardBatch(deckId: string) {
         },
       },
     });
-  /** Runs an Undo; cards it could not bring back get their own message and Try again for just those. */
   const undo = (id: string, run: (ids: string[]) => Promise<string[]>, ids: string[]) => {
     toast.close(id);
     run(ids).then(

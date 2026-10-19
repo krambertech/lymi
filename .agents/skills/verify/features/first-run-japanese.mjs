@@ -24,14 +24,16 @@ export default async function drive({ page, step, api, expect }) {
     return { japanese };
   });
 
-  await step("Choose Japanese under I'm learning", async () => {
-    await page.getByRole("combobox", { name: "I’m learning" }).click();
-    await page.getByRole("option", { name: "Japanese", exact: true }).click();
-    await expect(page.getByRole("combobox", { name: "I’m learning" })).toHaveText(/Japanese/);
+  await step("Choose Japanese in the heading", async () => {
+    await page.getByRole("combobox", { name: "What the decks are about" }).click();
+    await page.getByRole("option", { name: /^Japanese/ }).click();
+    await expect(page.getByRole("combobox", { name: "What the decks are about" })).toHaveText(
+      /Japanese/,
+    );
   });
 
   await step("The row offers kana, then N5, then N4, then Japanese Essentials", async () => {
-    const row = page.getByRole("list", { name: "Or start with a ready-made deck" });
+    const row = page.getByRole("list", { name: "Ready-made decks" });
     const decks = row.getByRole("listitem");
     for (const [i, name] of BEGINNER.entries()) await expect(decks.nth(i)).toContainText(name);
     return { offered: (await decks.allInnerTexts()).map((t) => t.split("\n")[0]) };
@@ -39,7 +41,7 @@ export default async function drive({ page, step, api, expect }) {
 
   await step("Add starts the kana deck's review", async () => {
     await page
-      .getByRole("list", { name: "Or start with a ready-made deck" })
+      .getByRole("list", { name: "Ready-made decks" })
       .getByRole("listitem")
       .filter({ hasText: "Read Japanese Kana" })
       .getByRole("button", { name: "Add" })

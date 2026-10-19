@@ -131,6 +131,7 @@ msgstr "{0, plural, one {# картка} few {# картки} many {# карто
 msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
 msgstr "{0, plural, one {# аудіофрагмент пропущено, наприклад фрагмент речення. Переноситься лише запис самого терміна.} few {# аудіофрагменти пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} many {# аудіофрагментів пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} other {# аудіофрагмента пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.}}"
 
+#. placeholder {0}: c.count
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
@@ -444,6 +445,9 @@ msgstr "Застосунок {appName} підключено"
 
 msgid "{appName} was not connected"
 msgstr "Застосунок {appName} не підключено"
+
+msgid "{assistant} is connected"
+msgstr "{assistant} підключено"
 
 msgid "{attempts, plural, one {review today} other {reviews today}}"
 msgstr "{attempts, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
@@ -1030,6 +1034,9 @@ msgstr "Усі"
 msgid "All at once"
 msgstr "Усі одразу"
 
+msgid "All decks"
+msgstr "Усі колоди"
+
 msgid "All shelves"
 msgstr "Усі полиці"
 
@@ -1108,6 +1115,9 @@ msgstr "Будь-хто з посиланням може приєднатися 
 
 msgid "Anyone with this link can join and review these cards."
 msgstr "Будь-хто з цим посиланням може приєднатися й повторювати ці картки."
+
+msgid "anything"
+msgstr "будь-які"
 
 msgid "Anything"
 msgstr "Будь-що"
@@ -1200,8 +1210,17 @@ msgstr "Упорядкувати розділи"
 msgid "Arts"
 msgstr "Мистецтво"
 
+msgid "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
+msgstr "Попроси {assistant} зробити картки з твого уроку. Вони з’являться в колоді та в Активності."
+
 msgid "Ask Claude or ChatGPT to create cards and decks for you."
 msgstr "Попроси Claude або ChatGPT створити для тебе картки й колоди."
+
+msgid "Ask Claude, ChatGPT, Gemini or Grok to make cards for you in the chat."
+msgstr "Попроси Claude, ChatGPT, Gemini чи Grok зробити для тебе картки прямо в чаті."
+
+msgid "Ask it to make cards from your lesson. You’ll find them in your deck and in Activity."
+msgstr "Попроси його зробити картки з твого уроку. Вони з’являться в колоді та в Активності."
 
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси нове посилання в того, хто ним поділився."
@@ -1260,6 +1279,9 @@ msgstr "Обидва варіанти, по одній картці за раз.
 
 msgid "Both ways"
 msgstr "Обидва способи"
+
+msgid "Bring a deck from Anki, Mochi, Noji or Quizlet, with its review history."
+msgstr "Перенеси колоду з Anki, Mochi, Noji чи Quizlet разом з історією повторень."
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Повертає кожну картку, яку додав цей імпорт, і створені ним колоди."
@@ -2153,8 +2175,8 @@ msgstr "Приклад з уроку"
 msgid "Explore"
 msgstr "Каталог"
 
-msgid "Explore all decks"
-msgstr "Усі колоди в Каталозі"
+msgid "Explore ready-made decks about <0/>"
+msgstr "Готові колоди: <0/>"
 
 msgid "Export"
 msgstr "Експортувати"
@@ -2288,17 +2310,11 @@ msgstr "Колишній власник"
 msgid "From {0}"
 msgstr "Від {0}"
 
-msgid "From Anki, Mochi, Noji or Quizlet. Its review history comes with it."
-msgstr "З Anki, Mochi, Noji чи Quizlet. Історія повторень перейде разом із нею."
-
 msgid "From the lesson"
 msgstr "З уроку"
 
 msgid "From your notes"
 msgstr "З твоїх нотаток"
-
-msgid "From your notes, your AI assistant or another app, or a ready-made one."
-msgstr "З нотаток, через AI-асистента чи з іншого застосунку або готову."
 
 msgid "Front and back"
 msgstr "Лицевий і зворотний бік"
@@ -2415,9 +2431,6 @@ msgstr "Як підключити"
 msgctxt "deck tag"
 msgid "HSK 1"
 msgstr "HSK 1"
-
-msgid "I’m learning"
-msgstr "Я вивчаю"
 
 msgid "Idea"
 msgstr "Ідея"
@@ -2860,6 +2873,9 @@ msgstr "Головна навігація"
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Make your own, or pick a ready-made one below."
+msgstr "Зроби власну або вибери готову нижче."
+
 msgid "Manage"
 msgstr "Керувати"
 
@@ -3158,6 +3174,9 @@ msgstr "Зображення ще немає, тож ця картка з’яв
 msgid "No picture yet, so this card is asked without one."
 msgstr "Зображення ще немає, тож ця картка з’являється без нього."
 
+msgid "No ready-made decks in that language yet."
+msgstr "Готових колод цією мовою ще немає."
+
 msgid "No reviews yet. Each day you review adds a block."
 msgstr "Повторень поки немає. Кожен день із повтореннями додає блок."
 
@@ -3399,9 +3418,6 @@ msgstr "Або встав це посилання в браузер:"
 msgid "Or start an empty deck"
 msgstr "Або почни з порожньої колоди"
 
-msgid "Or start with a ready-made deck"
-msgstr "Або почни з готової колоди"
-
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на <0>hello@lymi.app</0>, щоб видалити його."
 
@@ -3480,8 +3496,8 @@ msgstr "Положення фото"
 msgid "Photo removed"
 msgstr "Фото прибрано"
 
-msgid "Photograph a page, upload a PDF or paste text. Lymi picks the words worth a card."
-msgstr "Сфотографуй сторінку, завантаж PDF або встав текст. Lymi вибере слова, з яких варто зробити картки."
+msgid "Photograph a page, upload a PDF or paste text. Lymi turns it into cards."
+msgstr "Сфотографуй сторінку, завантаж PDF або встав текст. Lymi зробить з цього картки."
 
 msgid "Photos"
 msgstr "Фото"
@@ -3625,6 +3641,9 @@ msgstr "Читаємо твій файл"
 
 msgid "Ready to import"
 msgstr "Готовий до імпорту"
+
+msgid "Ready-made decks"
+msgstr "Готові колоди"
 
 msgid "Ready-made decks from Lymi. Add one to study it in your language."
 msgstr "Готові колоди від Lymi. Додай одну — вивчай її своєю мовою."
@@ -4296,6 +4315,9 @@ msgstr "Терміни, значення й дати повторення у ф�
 msgid "Test email from Lymi"
 msgstr "Тестовий лист від Lymi"
 
+msgid "tests"
+msgstr "тести"
+
 msgid "Text"
 msgstr "Текст"
 
@@ -4441,9 +4463,6 @@ msgstr "Посилання із запрошення перестане прац
 
 msgid "Theme"
 msgstr "Тема"
-
-msgid "Then ask Claude, ChatGPT, Gemini or Grok for cards right in the chat."
-msgstr "Потім проси Claude, ChatGPT, Gemini чи Grok зробити картки просто в чаті."
 
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
@@ -4820,6 +4839,13 @@ msgstr "Що таке Lymi?"
 msgid "What it’s for"
 msgstr "Для чого вона"
 
+msgid "What the decks are about"
+msgstr "Тема колод"
+
+#. placeholder {0}: chosen?.label ?? ""
+msgid "What the decks are about: {0}"
+msgstr "Тема колод: {0}"
+
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Що на зображенні, без відповіді. Без опису повторення за зображенням не почнеться."
 
@@ -4984,6 +5010,9 @@ msgstr "Сьогодні вже надіслано кілька кодів. Сп
 
 msgid "Your account data"
 msgstr "Дані твого акаунту"
+
+msgid "Your assistant is connected"
+msgstr "Асистента підключено"
 
 msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
 msgstr "Твої картки, повторення й налаштування видалено. Колоди, які вивчають інші люди, залишаються для них."

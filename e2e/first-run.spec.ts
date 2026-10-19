@@ -54,9 +54,13 @@ test("a new learner picks a ready-made deck on Today and starts reviewing it", a
       .toBe(25);
   });
 
-  await test.step("the learner says they are learning Icelandic and adds its deck", async () => {
-    await learner.getByRole("combobox", { name: "I’m learning" }).click();
-    await learner.getByRole("option", { name: "Icelandic", exact: true }).click();
+  await test.step("the learner searches for Icelandic and adds its deck", async () => {
+    await learner.getByRole("combobox", { name: "What the decks are about" }).click();
+    await learner.getByPlaceholder("Search languages").fill("Icel");
+    await learner.getByRole("option", { name: /^Icelandic/ }).click();
+    await expect(
+      learner.getByRole("heading", { name: "Explore ready-made decks about Icelandic" }),
+    ).toBeVisible();
     const tile = learner.getByRole("listitem").filter({ hasText: deck.name });
     await tile.getByRole("button", { name: /^Add/ }).click();
     await expect(learner).toHaveURL(/\/review\?deck=/);

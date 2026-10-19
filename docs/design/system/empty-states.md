@@ -21,7 +21,7 @@ What is empty?
 
 - Each step is done by the learner's own data, never by a dismissal.
 - A done step shows an amber check and a struck-through title, the current step holds its action, and a later step stays muted. No progress bars.
-- **Create your first deck** (three cards, each with its own button) and **Or start with a ready-made deck** (an **I'm learning** pill over a row of decks) follow it, and Today's own cards wait.
+- **Create your first deck** (three cards, each with its own button) and **Explore ready-made decks about** … (the choice is the heading's last words, over a row of decks) follow it, and Today's own cards wait.
 
 ## StartPanel
 

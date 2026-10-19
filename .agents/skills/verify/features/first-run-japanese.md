@@ -1,6 +1,6 @@
 # First run for a Japanese beginner
 
-A new learner who chooses Japanese under **I'm learning** on Today is offered the decks a beginner starts from, in the order to take them: Read Japanese Kana, JLPT N5, JLPT N4, then Japanese Essentials. `BEGINNER_DECKS` in `packages/client/src/welcome.ts` names them by slug, and a missing one leaves its place to the shelf's next deck in Explore's order.
+A new learner who chooses Japanese in the heading **Explore ready-made decks about …** on Today is offered the decks a beginner starts from, in the order to take them: Read Japanese Kana, JLPT N5, JLPT N4, then Japanese Essentials. `BEGINNER_DECKS` in `packages/client/src/welcome.ts` names them by slug, and a missing one leaves its place to the shelf's next deck in Explore's order.
 
 ## Reach
 
@@ -8,7 +8,7 @@ A new learner who chooses Japanese under **I'm learning** on Today is offered th
 
 ## Drive
 
-[`first-run-japanese.mjs`](first-run-japanese.mjs): seed `publisher`, sign in again as `fresh`, choose **Japanese** under **I'm learning**, read the row of decks, then press **Add** on Read Japanese Kana.
+[`first-run-japanese.mjs`](first-run-japanese.mjs): seed `publisher`, sign in again as `fresh`, choose **Japanese** in the heading **Explore ready-made decks about …**, read the row of decks, then press **Add** on Read Japanese Kana.
 
 ## End state
 

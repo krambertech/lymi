@@ -15,9 +15,9 @@ export default async function drive({ page, step, api, expect }) {
   });
 
   let deckId = "";
-  await step("A ready-made deck chosen under I'm learning opens its first review", async () => {
-    await page.getByRole("combobox", { name: "I’m learning" }).click();
-    await page.getByRole("option", { name: "Finnish", exact: true }).click();
+  await step("A ready-made deck chosen in the heading opens its first review", async () => {
+    await page.getByRole("combobox", { name: "What the decks are about" }).click();
+    await page.getByRole("option", { name: /^Finnish/ }).click();
     await page
       .getByRole("listitem")
       .filter({ hasText: "Everyday Finnish" })

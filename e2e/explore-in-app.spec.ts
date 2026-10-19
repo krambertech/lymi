@@ -59,8 +59,8 @@ test("a learner adds a published deck from Explore without leaving the app", asy
 
   await test.step("Today's first run points a new learner to the ready-made decks in Explore", async () => {
     await learner.goto("/today");
-    const ready = learner.getByRole("region", { name: "Or start with a ready-made deck" });
-    await ready.getByRole("link", { name: "Explore all decks" }).click();
+    const ready = learner.getByRole("region", { name: "Ready-made decks" });
+    await ready.getByRole("link", { name: "All decks" }).click();
     await expect(learner).toHaveURL(/\/explore$/);
     // Settled on Explore, so the next step's navigation never interrupts this one.
     await expect(learner.getByRole("heading", { name: "Explore", exact: true })).toBeVisible();

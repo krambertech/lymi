@@ -1,6 +1,6 @@
 # First run
 
-Today for an account that has never reviewed: a dashed guide with three steps (Create a deck, Add cards, Finish your first review), then ways to create a first deck and ready-made decks under **I'm learning**. The first visit sets the account up on a goal of 25, and the end of its first review offers the daily goal and an evening reminder. `/welcome` lands on Today.
+Today for an account that has never reviewed: a dashed guide with three steps (Create a deck, Add cards, Finish your first review), then ways to create a first deck and ready-made decks in the heading **Explore ready-made decks about …**. The first visit sets the account up on a goal of 25, and the end of its first review offers the daily goal and an evening reminder. `/welcome` lands on Today.
 
 ## Reach
 
@@ -8,7 +8,7 @@ Any account with no reviews, on `/today`. A published deck's add page or a join 
 
 ## Drive
 
-[`first-run.mjs`](first-run.mjs), as `fresh` from `/today`: check the guide, choose a ready-made deck's language under **I'm learning** and press **Add**, reveal and grade every card, then go back to Today.
+[`first-run.mjs`](first-run.mjs), as `fresh` from `/today`: check the guide, choose a ready-made deck's language in the heading **Explore ready-made decks about …** and press **Add**, reveal and grade every card, then go back to Today.
 
 ## End state
 

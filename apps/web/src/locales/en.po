@@ -131,6 +131,7 @@ msgstr "{0, plural, one {# card} other {# cards}} · {1}"
 msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
 msgstr "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
 
+#. placeholder {0}: c.count
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# deck} other {# decks}}"
@@ -444,6 +445,9 @@ msgstr "{appName} is connected"
 
 msgid "{appName} was not connected"
 msgstr "{appName} was not connected"
+
+msgid "{assistant} is connected"
+msgstr "{assistant} is connected"
 
 msgid "{attempts, plural, one {review today} other {reviews today}}"
 msgstr "{attempts, plural, one {review today} other {reviews today}}"
@@ -1030,6 +1034,9 @@ msgstr "All"
 msgid "All at once"
 msgstr "All at once"
 
+msgid "All decks"
+msgstr "All decks"
+
 msgid "All shelves"
 msgstr "All shelves"
 
@@ -1108,6 +1115,9 @@ msgstr "Anyone with the link can join and review your cards on their own schedul
 
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
+
+msgid "anything"
+msgstr "anything"
 
 msgid "Anything"
 msgstr "Anything"
@@ -1200,8 +1210,17 @@ msgstr "Arrange sections"
 msgid "Arts"
 msgstr "Arts"
 
+msgid "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
+msgstr "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
+
 msgid "Ask Claude or ChatGPT to create cards and decks for you."
 msgstr "Ask Claude or ChatGPT to create cards and decks for you."
+
+msgid "Ask Claude, ChatGPT, Gemini or Grok to make cards for you in the chat."
+msgstr "Ask Claude, ChatGPT, Gemini or Grok to make cards for you in the chat."
+
+msgid "Ask it to make cards from your lesson. You’ll find them in your deck and in Activity."
+msgstr "Ask it to make cards from your lesson. You’ll find them in your deck and in Activity."
 
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
@@ -1260,6 +1279,9 @@ msgstr "Both of the above, one card at a time."
 
 msgid "Both ways"
 msgstr "Both ways"
+
+msgid "Bring a deck from Anki, Mochi, Noji or Quizlet, with its review history."
+msgstr "Bring a deck from Anki, Mochi, Noji or Quizlet, with its review history."
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
@@ -2153,8 +2175,8 @@ msgstr "Example from lesson"
 msgid "Explore"
 msgstr "Explore"
 
-msgid "Explore all decks"
-msgstr "Explore all decks"
+msgid "Explore ready-made decks about <0/>"
+msgstr "Explore ready-made decks about <0/>"
 
 msgid "Export"
 msgstr "Export"
@@ -2288,17 +2310,11 @@ msgstr "Former owner"
 msgid "From {0}"
 msgstr "From {0}"
 
-msgid "From Anki, Mochi, Noji or Quizlet. Its review history comes with it."
-msgstr "From Anki, Mochi, Noji or Quizlet. Its review history comes with it."
-
 msgid "From the lesson"
 msgstr "From the lesson"
 
 msgid "From your notes"
 msgstr "From your notes"
-
-msgid "From your notes, your AI assistant or another app, or a ready-made one."
-msgstr "From your notes, your AI assistant or another app, or a ready-made one."
 
 msgid "Front and back"
 msgstr "Front and back"
@@ -2415,9 +2431,6 @@ msgstr "How to connect"
 msgctxt "deck tag"
 msgid "HSK 1"
 msgstr "HSK 1"
-
-msgid "I’m learning"
-msgstr "I’m learning"
 
 msgid "Idea"
 msgstr "Idea"
@@ -2860,6 +2873,9 @@ msgstr "Main"
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
+msgid "Make your own, or pick a ready-made one below."
+msgstr "Make your own, or pick a ready-made one below."
+
 msgid "Manage"
 msgstr "Manage"
 
@@ -3158,6 +3174,9 @@ msgstr "No picture yet, so this card is asked in its other modes."
 msgid "No picture yet, so this card is asked without one."
 msgstr "No picture yet, so this card is asked without one."
 
+msgid "No ready-made decks in that language yet."
+msgstr "No ready-made decks in that language yet."
+
 msgid "No reviews yet. Each day you review adds a block."
 msgstr "No reviews yet. Each day you review adds a block."
 
@@ -3399,9 +3418,6 @@ msgstr "Or paste this link into your browser:"
 msgid "Or start an empty deck"
 msgstr "Or start an empty deck"
 
-msgid "Or start with a ready-made deck"
-msgstr "Or start with a ready-made deck"
-
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 
@@ -3480,8 +3496,8 @@ msgstr "Photo position"
 msgid "Photo removed"
 msgstr "Photo removed"
 
-msgid "Photograph a page, upload a PDF or paste text. Lymi picks the words worth a card."
-msgstr "Photograph a page, upload a PDF or paste text. Lymi picks the words worth a card."
+msgid "Photograph a page, upload a PDF or paste text. Lymi turns it into cards."
+msgstr "Photograph a page, upload a PDF or paste text. Lymi turns it into cards."
 
 msgid "Photos"
 msgstr "Photos"
@@ -3625,6 +3641,9 @@ msgstr "Reading your file"
 
 msgid "Ready to import"
 msgstr "Ready to import"
+
+msgid "Ready-made decks"
+msgstr "Ready-made decks"
 
 msgid "Ready-made decks from Lymi. Add one to study it in your language."
 msgstr "Ready-made decks from Lymi. Add one to study it in your language."
@@ -4296,6 +4315,9 @@ msgstr "Terms, meanings and due dates in a .csv file, without review history."
 msgid "Test email from Lymi"
 msgstr "Test email from Lymi"
 
+msgid "tests"
+msgstr "tests"
+
 msgid "Text"
 msgstr "Text"
 
@@ -4441,9 +4463,6 @@ msgstr "Their invitation link stops working. You can invite them again any time.
 
 msgid "Theme"
 msgstr "Theme"
-
-msgid "Then ask Claude, ChatGPT, Gemini or Grok for cards right in the chat."
-msgstr "Then ask Claude, ChatGPT, Gemini or Grok for cards right in the chat."
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
@@ -4820,6 +4839,13 @@ msgstr "What is Lymi?"
 msgid "What it’s for"
 msgstr "What it’s for"
 
+msgid "What the decks are about"
+msgstr "What the decks are about"
+
+#. placeholder {0}: chosen?.label ?? ""
+msgid "What the decks are about: {0}"
+msgstr "What the decks are about: {0}"
+
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "What the picture shows, without the answer. Picture review needs it."
 
@@ -4984,6 +5010,9 @@ msgstr "You’ve asked for several codes today. Try again tomorrow."
 
 msgid "Your account data"
 msgstr "Your account data"
+
+msgid "Your assistant is connected"
+msgstr "Your assistant is connected"
 
 msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
 msgstr "Your cards, reviews and settings are gone. Decks other people study stay for them."

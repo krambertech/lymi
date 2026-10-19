@@ -1,14 +1,20 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { decks } from "../design/mock";
-import { FirstRunGuide, ReadyToStart } from "./first-run";
+import type { ConnectedApp } from "../lib/api";
+import { connectedAppsQuery } from "../lib/queries";
+import { captureAnalytics } from "../lib/telemetry";
+import { CreateFirstDeck, FirstRunGuide, ReadyToStart } from "./first-run";
 import { StaticNavProvider } from "./nav-link";
+
+vi.mock("../lib/telemetry", () => ({ captureAnalytics: vi.fn(() => true) }));
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -121,16 +127,75 @@ test("the decks start on the language the learner came for, and adding one says 
       adding={undefined}
     />,
   );
+  // The choice is the heading's last words.
   await expect
-    .element(page.getByRole("combobox", { name: "I’m learning" }))
-    .toHaveTextContent("Estonian");
+    .element(page.getByRole("heading", { name: /Explore ready-made decks about/ }))
+    .toHaveTextContent("Explore ready-made decks about Estonian");
   await expect.element(page.getByText("Everyday Estonian")).toBeVisible();
   await expect.element(page.getByText("Everyday Finnish")).not.toBeInTheDocument();
 
   await page.getByRole("button", { name: /Add/ }).click();
   expect(onAdd).toHaveBeenCalledWith(expect.objectContaining({ slug: "everyday-estonian" }));
 
-  await page.getByRole("combobox", { name: "I’m learning" }).click();
-  await page.getByRole("option", { name: "Anything" }).click();
+  // The list is searched by the language's name.
+  await page.getByRole("combobox", { name: /^What the decks are about/ }).click();
+  await page.getByPlaceholder("Search languages").fill("fin");
+  await expect.element(page.getByRole("option", { name: /Finnish/ })).toBeVisible();
+  await expect.element(page.getByRole("option", { name: /Estonian/ })).not.toBeInTheDocument();
+  await page.getByRole("option", { name: /Finnish/ }).click();
   await expect.element(page.getByText("Everyday Finnish")).toBeVisible();
+  await expect
+    .element(page.getByRole("heading", { name: /Explore ready-made decks about/ }))
+    .toHaveTextContent("Explore ready-made decks about Finnish");
+});
+
+test("choosing a topic says which, and whether it was searched for, never what was typed", async () => {
+  wrap(
+    <ReadyToStart
+      ready={[
+        ready("everyday-estonian", "Everyday Estonian", "et"),
+        ready("everyday-finnish", "Everyday Finnish", "fi"),
+      ]}
+      initialLanguage={null}
+      play={false}
+      onAdd={vi.fn()}
+      adding={undefined}
+    />,
+  );
+  expect(captureAnalytics).not.toHaveBeenCalledWith("ready_decks_narrowed", expect.anything());
+
+  await page.getByRole("combobox", { name: /^What the decks are about/ }).click();
+  await page.getByPlaceholder("Search languages").fill("est");
+  await page.getByRole("option", { name: /Estonian/ }).click();
+  expect(captureAnalytics).toHaveBeenCalledWith("ready_decks_narrowed", {
+    topic: "language",
+    language: "et",
+    searched: true,
+  });
+});
+
+test("an assistant already connected turns its card into what it can do", async () => {
+  const qc = new QueryClient();
+  qc.setQueryData(connectedAppsQuery.queryKey, [
+    {
+      id: "app_1",
+      clientId: "https://claude.ai/oauth/mcp-oauth-client-metadata",
+      name: "Claude",
+      scope: "write",
+      createdAt: "2026-10-19T09:00:00.000Z",
+      updatedAt: "2026-10-19T09:00:00.000Z",
+    },
+  ] satisfies ConnectedApp[]);
+  render(
+    <QueryClientProvider client={qc}>
+      <I18nProvider i18n={i18n}>
+        <StaticNavProvider path="/today">
+          <CreateFirstDeck started play={false} onSmartAdd={undefined} onCreateDeck={undefined} />
+        </StaticNavProvider>
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  await expect.element(page.getByRole("heading", { name: "Claude is connected" })).toBeVisible();
+  await expect.element(page.getByRole("link", { name: "Connected apps" })).toBeVisible();
+  await expect.element(page.getByText("Connect your AI assistant")).not.toBeInTheDocument();
 });

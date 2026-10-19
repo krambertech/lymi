@@ -3,18 +3,10 @@ import { ANALYTICS_READY } from "@lymi/client/analytics";
 import { decksFor } from "@lymi/client/welcome";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { taughtLanguage } from "@lymi/core/catalog";
-import { endEmbers } from "@lymi/design";
+import { EASE_OUT, endEmbers } from "@lymi/design";
+import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import {
-  Camera,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  ClipboardPaste,
-  FileUp,
-  Plug,
-  Plus,
-} from "lucide-react";
+import { Camera, Check, ChevronRight, ClipboardPaste, FileUp, Plug, Plus } from "lucide-react";
 import { motion } from "motion/react";
 import {
   type CSSProperties,
@@ -27,15 +19,16 @@ import {
 } from "react";
 import type { DeckSummary } from "../lib/api";
 import { publicSiteUrl } from "../lib/origins";
+import { connectedAppsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { identifyApp } from "./app-mark";
 import { Button } from "./button";
 import { DeckTile } from "./deck-tray";
+import { LanguagePicker } from "./language-picker";
 import { Lantern } from "./lantern";
 import { LanternLight } from "./lantern-light";
 import { NavLink, useStaticNav } from "./nav-link";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 // Today until the first review. docs/design/onboarding.md.
 
@@ -136,9 +129,7 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
     {
       key: "deck",
       title: <Trans>Create a deck</Trans>,
-      detail: (
-        <Trans>From your notes, your AI assistant or another app, or a ready-made one.</Trans>
-      ),
+      detail: <Trans>Make your own, or pick a ready-made one below.</Trans>,
     },
     {
       key: "cards",
@@ -187,26 +178,41 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
   return (
     <section
       aria-labelledby="first-run-title"
-      className="relative isolate grid gap-5 overflow-hidden rounded-xl border-[1.5px] border-dashed border-edge-2 p-5 @3xl:gap-6 @3xl:p-6"
+      className="relative isolate overflow-hidden rounded-xl border-[1.5px] border-dashed border-edge-2 p-5 @3xl:p-6"
     >
       {/* The panel clips the lantern's pool, so its light stays on the guide rather than the rail. */}
-      {/* The lantern stands in the numbers' column, so its middle is theirs and the heading starts where the step titles do. */}
-      <div className="flex min-h-16 items-center gap-3">
-        <div className="relative w-7 shrink-0 self-stretch">
-          <div className="absolute start-1/2 top-1/2 isolate size-16 -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2">
+      {/* One column for the lantern and the numbers, one for the words, so every line starts at one edge. */}
+      <div className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-3 @3xl:grid-cols-[4rem_minmax(0,1fr)] @3xl:gap-x-4">
+        <div className="relative flex justify-center pb-3">
+          <div className="relative isolate size-12 @3xl:size-16">
             <LanternLight poolAt={T.pool} embers={embers} embersAt={T.embers}>
               <Lantern className="size-full" from={play ? "out" : undefined} flicker glow />
             </LanternLight>
           </div>
+          {/* Just under the lantern's base (its drawing ends 7 px above the box), and every segment stops short of what it joins. */}
+          <span
+            aria-hidden="true"
+            className="absolute top-[47px] -bottom-1.5 start-1/2 @3xl:top-[61px] w-0.5 -translate-x-1/2 rounded-full bg-amber rtl:translate-x-1/2"
+          />
         </div>
-        <div className="grid min-w-0 flex-1 gap-0.5">
-          <h2
-            id="first-run-title"
-            className={clsx("text-xl font-medium text-balance @3xl:text-2xl", play && "seq")}
-            style={play ? at(T.heading) : undefined}
-          >
-            {first ? <Trans>Welcome, {first}</Trans> : <Trans>Welcome to Lymi</Trans>}
-          </h2>
+        {/* Centred on the lantern's glass rather than its box, whose handle lifts the middle. */}
+        <div className="grid content-center gap-0.5 pt-1.5 pb-3">
+          {/* The count sits in the corner on the heading's line, out of the sentence under it. */}
+          <div className="flex items-baseline justify-between gap-4">
+            <h2
+              id="first-run-title"
+              className={clsx("text-xl font-medium text-balance @3xl:text-2xl", play && "seq")}
+              style={play ? at(T.heading) : undefined}
+            >
+              {first ? <Trans>Welcome, {first}</Trans> : <Trans>Welcome to Lymi</Trans>}
+            </h2>
+            <span
+              className={clsx("shrink-0 text-sm text-muted tabular-nums", play && "seq")}
+              style={play ? at(T.lede) : undefined}
+            >
+              {t`${current} of 3 done`}
+            </span>
+          </div>
           <p
             className={clsx("text-md text-text-2 text-pretty", play && "seq")}
             style={play ? at(T.lede) : undefined}
@@ -218,50 +224,65 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
             )}
           </p>
         </div>
-        <span className="hidden self-start text-sm text-muted tabular-nums @xl:block">
-          {t`${current} of 3 done`}
-        </span>
-      </div>
-      <ol className="grid gap-5 @3xl:grid-cols-3 @3xl:gap-6">
-        {steps.map((step, i) => {
-          const done = i < current;
-          const here = i === current;
-          return (
-            <li
-              key={step.key}
-              className={clsx("flex gap-3", play && "seq")}
-              style={play ? at(T.steps + i * T.gap) : undefined}
-              aria-current={here ? "step" : undefined}
-            >
-              <span
-                className={clsx(
-                  "grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
-                  done
-                    ? "bg-amber text-amber-ink"
-                    : here
-                      ? "bg-text text-canvas"
-                      : "edge bg-plate text-muted",
-                )}
+        {/* Every step has the same box, so the rhythm holds; only the current one is filled. */}
+        <ol className="col-span-2 grid grid-cols-subgrid gap-y-2">
+          {steps.map((step, i) => {
+            const done = i < current;
+            const here = i === current;
+            const last = i === steps.length - 1;
+            return (
+              <li
+                key={step.key}
+                className={clsx("col-span-2 grid grid-cols-subgrid", play && "seq")}
+                style={play ? at(T.steps + i * T.gap) : undefined}
+                aria-current={here ? "step" : undefined}
               >
-                {done ? <Check className="size-4" aria-label={t`Done`} /> : i + 1}
-              </span>
-              <div className="grid min-w-0 content-start justify-items-start gap-0.5 pt-0.5">
-                <span
+                <div className="relative flex justify-center pt-2.5">
+                  <span
+                    className={clsx(
+                      "relative z-10 grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
+                      done
+                        ? "bg-amber text-amber-ink"
+                        : here
+                          ? "bg-text text-canvas"
+                          : "edge bg-plate text-muted",
+                    )}
+                  >
+                    {done ? <Check className="size-4" aria-label={t`Done`} /> : i + 1}
+                  </span>
+                  {!last && (
+                    <span
+                      aria-hidden="true"
+                      className={clsx(
+                        "absolute top-[42px] -bottom-[14px] start-1/2 w-0.5 -translate-x-1/2 rounded-full rtl:translate-x-1/2",
+                        done ? "bg-amber" : "bg-edge",
+                      )}
+                    />
+                  )}
+                </div>
+                <div
                   className={clsx(
-                    "text-md font-medium",
-                    here ? "text-text" : "text-text-2",
-                    done && "line-through decoration-edge-2",
+                    "-ms-3 grid min-w-0 content-start justify-items-start gap-0.5 rounded-lg p-3",
+                    here && "edge bg-plate",
                   )}
                 >
-                  {step.title}
-                </span>
-                <span className="text-sm text-muted text-pretty">{step.detail}</span>
-                {here && step.action && <div className="mt-2.5">{step.action}</div>}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+                  <span
+                    className={clsx(
+                      "text-md font-medium",
+                      here ? "text-text" : "text-text-2",
+                      done && "line-through decoration-edge-2",
+                    )}
+                  >
+                    {step.title}
+                  </span>
+                  <span className="max-w-[52ch] text-sm text-muted text-pretty">{step.detail}</span>
+                  {here && step.action && <div className="mt-3">{step.action}</div>}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </section>
   );
 }
@@ -361,6 +382,10 @@ interface CreateProps {
 /** Every way to make a deck of one's own, each a card with its own press, in the order people use them. */
 export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: CreateProps) {
   const st = useStaticNav();
+  // An assistant already connected turns its card from an offer into what it can do now.
+  const apps = useQuery(connectedAppsQuery);
+  const connected = apps.data?.[0];
+  const assistant = connected && (identifyApp(connected.clientId, connected.name).name ?? null);
   const card = clsx("edge grid content-between gap-5 rounded-xl bg-plate p-5", play && "seq");
   return (
     <section aria-labelledby="create-title" className="grid gap-2.5">
@@ -398,7 +423,7 @@ export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: Cre
               </h3>
               <p className="text-sm text-muted text-pretty">
                 <Trans>
-                  Photograph a page, upload a PDF or paste text. Lymi picks the words worth a card.
+                  Photograph a page, upload a PDF or paste text. Lymi turns it into cards.
                 </Trans>
               </p>
             </div>
@@ -419,29 +444,69 @@ export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: Cre
           <div className="grid gap-3">
             <AssistantMarks play={play} startAt={T.below + 140} />
             <div className="grid gap-1">
-              <h3 className="text-md font-medium">
-                <Trans>Connect your AI assistant</Trans>
-              </h3>
-              <p className="text-sm text-muted text-pretty">
-                <Trans>Then ask Claude, ChatGPT, Gemini or Grok for cards right in the chat.</Trans>
-              </p>
+              {connected ? (
+                <>
+                  <h3 className="flex items-center gap-1.5 text-md font-medium">
+                    <Check className="size-4 text-amber-mark" aria-hidden="true" />
+                    {assistant ? (
+                      <Trans>{assistant} is connected</Trans>
+                    ) : (
+                      <Trans>Your assistant is connected</Trans>
+                    )}
+                  </h3>
+                  <p className="text-sm text-muted text-pretty">
+                    {assistant ? (
+                      <Trans>
+                        Ask {assistant} to make cards from your lesson. You’ll find them in your
+                        deck and in Activity.
+                      </Trans>
+                    ) : (
+                      <Trans>
+                        Ask it to make cards from your lesson. You’ll find them in your deck and in
+                        Activity.
+                      </Trans>
+                    )}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-md font-medium">
+                    <Trans>Connect your AI assistant</Trans>
+                  </h3>
+                  <p className="text-sm text-muted text-pretty">
+                    <Trans>
+                      Ask Claude, ChatGPT, Gemini or Grok to make cards for you in the chat.
+                    </Trans>
+                  </p>
+                </>
+              )}
             </div>
           </div>
-          <Button
-            className="justify-self-start"
-            render={
-              <a
-                href={publicSiteUrl("/docs/mcp")}
-                onClick={(e) => {
-                  if (st) e.preventDefault();
-                  else pick("ai_mcp");
-                }}
-              />
-            }
-          >
-            <Plug data-icon="inline-start" aria-hidden="true" />
-            <Trans>Connect</Trans>
-          </Button>
+          {connected ? (
+            <Button
+              className="justify-self-start"
+              render={<NavLink to="/settings" hash="connected-apps" />}
+            >
+              <Plug data-icon="inline-start" aria-hidden="true" />
+              <Trans>Connected apps</Trans>
+            </Button>
+          ) : (
+            <Button
+              className="justify-self-start"
+              render={
+                <a
+                  href={publicSiteUrl("/docs/mcp")}
+                  onClick={(e) => {
+                    if (st) e.preventDefault();
+                    else pick("ai_mcp");
+                  }}
+                />
+              }
+            >
+              <Plug data-icon="inline-start" aria-hidden="true" />
+              <Trans>Connect</Trans>
+            </Button>
+          )}
         </article>
         <article className={card} style={play ? at(T.below + 220) : undefined}>
           <div className="grid gap-3">
@@ -451,7 +516,9 @@ export function CreateFirstDeck({ started, play, onSmartAdd, onCreateDeck }: Cre
                 <Trans>Import a deck</Trans>
               </h3>
               <p className="text-sm text-muted text-pretty">
-                <Trans>From Anki, Mochi, Noji or Quizlet. Its review history comes with it.</Trans>
+                <Trans>
+                  Bring a deck from Anki, Mochi, Noji or Quizlet, with its review history.
+                </Trans>
               </p>
             </div>
           </div>
@@ -483,8 +550,8 @@ interface ReadyProps {
 const ROW_DECKS = 12;
 
 /**
- * Ready-made decks under one sentence, "I'm learning …", whose last words are the choice. The decks
- * sit in one row that scrolls sideways, faded at its end while more follow.
+ * Ready-made decks under a heading whose last words are the choice, "Explore ready-made decks
+ * about …". The decks sit in one row that scrolls sideways, faded at its end while more follow.
  */
 export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: ReadyProps) {
   const { t, i18n } = useLingui();
@@ -509,9 +576,22 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
     }
   };
   const items = [
-    { value: "all", label: t`Anything` },
-    ...languages.map((l) => ({ value: l, label: label(l) })),
-    ...(tests ? [{ value: "test", label: t`For a test` }] : []),
+    { value: "all", label: t`Anything`, inline: t`anything`, count: ready.length },
+    ...languages.map((l) => ({
+      value: l,
+      label: label(l),
+      count: ready.filter((d) => taughtLanguage(d) === l).length,
+    })),
+    ...(tests
+      ? [
+          {
+            value: "test",
+            label: t`For a test`,
+            inline: t`tests`,
+            count: ready.filter((d) => !taughtLanguage(d)).length,
+          },
+        ]
+      : []),
   ];
   // A language leads with the decks a beginner starts from, as Welcome on the phone offers them.
   const decks = (
@@ -523,48 +603,37 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
   ).slice(0, ROW_DECKS);
   return (
     <section
-      aria-labelledby="ready-title"
+      aria-label={t`Ready-made decks`}
       className={clsx("grid gap-3", play && "seq")}
       style={play ? at(T.below + 320) : undefined}
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-1">
+        {/* The choice is the heading's last words, so the title says what the row below holds. */}
         <h2 id="ready-title" className="text-lg font-medium">
-          <Trans>Or start with a ready-made deck</Trans>
+          <Trans>
+            Explore ready-made decks about{" "}
+            <LanguagePicker
+              choices={items}
+              value={choice}
+              onChange={(next, searched) => {
+                setChoice(next);
+                captureAnalytics("ready_decks_narrowed", {
+                  topic: next === "all" ? "all" : next === "test" ? "test" : "language",
+                  language: next === "all" || next === "test" ? null : next,
+                  searched,
+                });
+              }}
+            />
+          </Trans>
         </h2>
         <NavLink
           to="/explore"
           onClick={() => pick("explore")}
-          className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
+          className="relative -mx-1.5 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
         >
-          <Trans>Explore all decks</Trans>
+          <Trans>All decks</Trans>
           <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
         </NavLink>
-      </div>
-      {/* A quiet line under the heading: the choice is a pill, so it reads as a control and never outweighs the title. */}
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-base text-text-2">
-        <span id="learning-label">
-          <Trans>I’m learning</Trans>
-        </span>
-        <Select value={choice} onValueChange={(v) => setChoice(v as string)} items={items}>
-          <SelectTrigger
-            look="chip"
-            aria-labelledby="learning-label"
-            className="group edge inline-flex h-8 cursor-pointer items-center gap-1 rounded-full bg-plate ps-3 pe-2 text-base font-medium text-text shadow-[0_1px_2px_oklch(0_0_0/0.06)] outline-none transition-[background-color,box-shadow] duration-150 hoverable:hover:veil focus-visible:ring-2 focus-visible:ring-ring data-open:edge-2"
-          >
-            <SelectValue />
-            <ChevronDown
-              className="size-4 shrink-0 text-text-2 transition-transform duration-150 group-data-open:rotate-180 motion-reduce:transition-none"
-              aria-hidden="true"
-            />
-          </SelectTrigger>
-          <SelectContent>
-            {items.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </div>
       {/* Keyed by the choice, so a new choice starts the row at its first deck. */}
       <DeckRow key={choice} decks={decks} onAdd={onAdd} adding={adding} />
@@ -582,6 +651,8 @@ function DeckRow({
   onAdd: ReadyProps["onAdd"];
   adding: string | undefined;
 }) {
+  const { t } = useLingui();
+  const reduce = useReduceMotion();
   const strip = useRef<HTMLUListElement>(null);
   const [more, setMore] = useState(false);
   useLayoutEffect(() => {
@@ -600,18 +671,24 @@ function DeckRow({
   return (
     <ul
       ref={strip}
-      aria-labelledby="ready-title"
+      aria-label={t`Ready-made decks`}
       data-fade={more || undefined}
-      className="shelf-strip -mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-1 px-1 pb-1 @3xl:gap-4"
+      className="shelf-strip -mx-1 -mt-2 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-1 px-1 pt-2 pb-1 @3xl:gap-4"
     >
-      {decks.map((deck) => (
-        <li key={deck.slug} className="w-[min(15rem,72%)] shrink-0 snap-start @3xl:w-60">
+      {decks.map((deck, i) => (
+        <motion.li
+          key={deck.slug}
+          className="w-[min(15rem,72%)] shrink-0 snap-start @3xl:w-60"
+          initial={reduce ? false : { opacity: 0, x: 16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.34, ease: EASE_OUT, delay: Math.min(i, 5) * 0.05 }}
+        >
           <DeckTile
             deck={deck}
             adding={adding === deck.slug}
             onAdd={onAdd && (() => onAdd(deck))}
           />
-        </li>
+        </motion.li>
       ))}
     </ul>
   );

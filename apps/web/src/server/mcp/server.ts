@@ -855,7 +855,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         version: CardImagePatch.shape.version,
       }),
       outputSchema: CardOut,
-      ...writeTool({ idempotent: false, overwrites: true }),
+      ...writeTool({ idempotent: false, overwrites: true, openWorld: true }),
     },
     ({ cardId, url, data, description, version }) =>
       run("set_card_image", async () => {
@@ -1060,16 +1060,18 @@ const readTool = {
 function writeTool({
   idempotent,
   overwrites = false,
+  openWorld = false,
 }: {
   idempotent: boolean;
   overwrites?: boolean;
+  openWorld?: boolean;
 }) {
   return {
     annotations: {
       readOnlyHint: false,
       destructiveHint: overwrites,
       idempotentHint: idempotent,
-      openWorldHint: false,
+      openWorldHint: openWorld,
     },
     _meta: { securitySchemes: [{ type: "oauth2", scopes: ["write"] }] },
   };

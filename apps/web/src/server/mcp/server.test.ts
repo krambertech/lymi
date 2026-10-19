@@ -221,7 +221,7 @@ describe("Lymi MCP server", () => {
       expect(tool.outputSchema, tool.name).toBeDefined();
       expect(typeof annotations?.readOnlyHint, tool.name).toBe("boolean");
       expect(typeof annotations?.destructiveHint, tool.name).toBe("boolean");
-      expect(annotations?.openWorldHint, tool.name).toBe(false);
+      expect(annotations?.openWorldHint, tool.name).toBe(tool.name === "set_card_image");
       if (!annotations?.readOnlyHint) {
         expect(typeof annotations?.idempotentHint, tool.name).toBe("boolean");
       }

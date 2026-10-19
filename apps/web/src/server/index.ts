@@ -42,7 +42,12 @@ export default {
         if (result.failed > 0) throw new Error(`${result.failed} review reminder sends failed`);
       }),
     );
-    run("expire-imports", expireImports(createDb(env.DB), env.IMPORTS, at, env.EVENTS));
+    run(
+      "expire-imports",
+      expireImports(createDb(env.DB), env.IMPORTS, at, env.EVENTS).then(({ stalled }) => {
+        if (stalled > 0) throw new Error(`${stalled} stalled imports were failed`);
+      }),
+    );
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));

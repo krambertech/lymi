@@ -151,6 +151,7 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
   await confirmImport(ctx, started.id, choices, env.IMPORTS, async () => {});
   const decks = await prepareImportDecks(ctx, started.id, env.IMPORTS);
   const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
+  let handled = 0;
   const { progress } = await getImport(ctx, started.id);
   for (let chunk = 0; chunk < progress.chunks; chunk++) {
     const { pictures: pending } = await writeImportChunk(
@@ -160,11 +161,15 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
       decks,
       env.IMPORTS,
     );
-    const done = await attachImportPictures(ctx, started.id, pending, env.IMPORTS, {
-      bucket: env.PRIVATE_IMAGES,
-      images: env.IMAGES,
-      audio: env.AUDIO,
-    });
+    handled += pending.length;
+    const done = await attachImportPictures(
+      ctx,
+      started.id,
+      pending,
+      env.IMPORTS,
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES, audio: env.AUDIO },
+      handled,
+    );
     pictures.stored += done.stored;
     pictures.skipped += done.skipped;
     pictures.recordings.stored += done.recordings.stored;

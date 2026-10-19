@@ -87,6 +87,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       };
       let chunk = params.resume?.chunk ?? 0;
       let pending = params.resume?.pending ?? [];
+      let handled = params.resume?.handled ?? 0;
       // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
       const storage = {
         bucket: this.env.PRIVATE_IMAGES,
@@ -98,7 +99,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         const next = nextWriteStep({ chunk, chunks, pending: pending.length, steps });
         if (next === "finish") break;
         if (next === "hand over") {
-          const resume = { chunk, pending, pictures };
+          const resume = { chunk, pending, pictures, handled };
           await counted("hand over", async () => {
             try {
               await this.env.IMPORT_WORKFLOW.create({
@@ -113,9 +114,11 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         }
         if (next === "pictures") {
           const batch = pending.slice(0, PICTURES_PER_STEP);
+          const after = handled + batch.length;
           const done = await counted(`pictures ${chunk} ${pending.length}`, () =>
-            attachImportPictures(ctx, id, batch, uploads, storage),
+            attachImportPictures(ctx, id, batch, uploads, storage, after),
           );
+          handled = after;
           pictures.stored += done.stored;
           pictures.skipped += done.skipped;
           pictures.recordings.stored += done.recordings.stored;

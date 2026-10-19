@@ -1,13 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
-import {
-  archiveCards,
-  markCards,
-  moveCardsToDeck,
-  NOTHING_CHANGED,
-  restoreCards,
-} from "@lymi/client/card-batch";
+import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "@lymi/client/card-batch";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDecks } from "../data/queries";
@@ -60,8 +54,9 @@ export function useCardBatch(deckId: string) {
       action: { label: t`Try again`, onPress: retry },
     });
 
-  const archive = (cardIds: string[]) =>
-    archiveCards(qc, deckId, cardIds).then(
+  const archive = (cardIds: string[]) => {
+    const archiving = archiveCards(qc, deckId, cardIds);
+    return archiving.done.then(
       (done) => {
         const saved = done.length;
         const total = cardIds.length;
@@ -76,12 +71,13 @@ export function useCardBatch(deckId: string) {
               : t`Archived ${cards(done.length)}`,
           action: {
             label: t`Undo`,
-            onPress: () => undo((ids) => restoreCards(qc, ids), done),
+            onPress: () => undo(archiving.undo, done),
           },
         });
       },
       (e) => failed(e, t`Couldn’t archive ${cards(cardIds.length)}.`, () => archive(cardIds)),
     );
+  };
 
   const moveToDeck = (cardIds: string[], to: { id: string; name: string }) => {
     const deckName = to.name;

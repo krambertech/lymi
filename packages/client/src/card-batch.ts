@@ -31,7 +31,35 @@ const missed = (sent: readonly string[], back: Iterable<string>) => {
   return sent.filter((id) => !came.has(id));
 };
 
-/** Takes cards off the deck's list at once, then writes; a card the server did not change goes back. */
+/** Takes these cards off the deck's list. */
+const take = (qc: QueryClient, deckId: string, ids: Iterable<string>) => {
+  const going = new Set(ids);
+  if (going.size === 0) return;
+  qc.setQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey, (prev) =>
+    prev?.filter((row) => !going.has(row.card.id)),
+  );
+};
+
+/**
+ * Puts these rows back on the deck's list beside every row it holds now, so a batch that fails or is
+ * undone never takes back another batch's change; the list sorts itself.
+ */
+const putBack = (qc: QueryClient, deckId: string, rows: readonly DeckRow[]) => {
+  if (rows.length === 0) return;
+  const key = deckCardsQuery(deckId).queryKey;
+  void qc.cancelQueries({ queryKey: key, exact: true });
+  qc.setQueryData<DeckRow[]>(key, (prev) => {
+    if (!prev) return prev;
+    const here = new Set(prev.map((row) => row.card.id));
+    const back = rows.filter((row) => !here.has(row.card.id));
+    return back.length > 0 ? [...prev, ...back] : prev;
+  });
+};
+
+/**
+ * Takes cards off the deck's list at once, then writes; a card the server did not change goes back.
+ * Resolves with the cards that changed and the rows they had, for Undo to show again at once.
+ */
 async function leave(
   qc: QueryClient,
   deckId: string,
@@ -40,66 +68,99 @@ async function leave(
 ) {
   const key = deckCardsQuery(deckId).queryKey;
   void qc.cancelQueries({ queryKey: key, exact: true });
-  const before = qc.getQueryData<DeckRow[]>(key);
   const going = new Set(cardIds);
-  qc.setQueryData<DeckRow[]>(key, (prev) => prev?.filter((row) => !going.has(row.card.id)));
+  const rows = (qc.getQueryData<DeckRow[]>(key) ?? []).filter((row) => going.has(row.card.id));
+  take(qc, deckId, going);
   try {
     const done = changed(await write());
-    if (done.length < cardIds.length) {
-      const gone = new Set(done);
-      qc.setQueryData<DeckRow[]>(
-        key,
-        (prev) => before?.filter((row) => !gone.has(row.card.id)) ?? prev,
-      );
-    }
+    const gone = new Set(done);
+    putBack(
+      qc,
+      deckId,
+      rows.filter((row) => !gone.has(row.card.id)),
+    );
     if (done.length === 0) throw new Error(NOTHING_CHANGED);
-    return done;
+    return { done, rows: new Map(rows.map((row) => [row.card.id, row])) };
   } catch (e) {
-    qc.setQueryData(key, before);
+    putBack(qc, deckId, rows);
     throw e;
   } finally {
     void refresh(qc);
   }
 }
 
-export const archiveCards = (qc: QueryClient, deckId: string, cardIds: string[]) =>
-  leave(qc, deckId, cardIds, () => api.archiveCards(cardIds));
+/**
+ * Shows the cards an Undo sends back on the deck's list at once, then takes off again those the
+ * server left where they were. Resolves with those cards.
+ */
+async function comeBack(
+  qc: QueryClient,
+  deckId: string,
+  rows: ReadonlyMap<string, DeckRow>,
+  ids: string[],
+  write: () => Promise<string[]>,
+) {
+  putBack(
+    qc,
+    deckId,
+    ids.flatMap((id) => rows.get(id) ?? []),
+  );
+  try {
+    const left = await write();
+    take(qc, deckId, left);
+    return left;
+  } catch (e) {
+    take(qc, deckId, ids);
+    throw e;
+  } finally {
+    void refresh(qc);
+  }
+}
 
-export const restoreCards = (qc: QueryClient, cardIds: string[]) =>
-  api
-    .restoreCards(cardIds)
-    .then((out) => missed(cardIds, changed(out)))
-    .finally(() => void refresh(qc));
+/** `undo` restores the cards it archived and shows them on the deck's list again at once. */
+export function archiveCards(qc: QueryClient, deckId: string, cardIds: string[]) {
+  const archiving = leave(qc, deckId, cardIds, () => api.archiveCards(cardIds));
+  return {
+    done: archiving.then((a) => a.done),
+    undo: async (done: string[]) => {
+      const { rows } = await archiving;
+      return comeBack(qc, deckId, rows, done, () =>
+        api.restoreCards(done).then((out) => missed(done, changed(out))),
+      );
+    },
+  };
+}
 
 /**
  * A card keeps its progress and leaves its section. `undo` puts each card it moved back in this
  * deck and the section it left, or in none when that section has gone since.
  */
 export function moveCardsToDeck(qc: QueryClient, deckId: string, cardIds: string[], to: string) {
-  const rows = qc.getQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey) ?? [];
-  const chosen = new Set(cardIds);
-  const sections = new Map(
-    rows.flatMap((r) => (chosen.has(r.card.id) ? [[r.card.id, r.card.sectionId] as const] : [])),
+  const moving = leave(qc, deckId, cardIds, () =>
+    api.editCards(cardIds.map((cardId) => ({ cardId, deckId: to }))),
   );
   const back = (ids: string[], section: (id: string) => string | null) =>
     api.editCards(ids.map((cardId) => ({ cardId, deckId, sectionId: section(cardId) })));
   return {
-    done: leave(qc, deckId, cardIds, () =>
-      api.editCards(cardIds.map((cardId) => ({ cardId, deckId: to }))),
-    ),
+    done: moving.then((m) => m.done),
     undo: async (done: string[]) => {
-      try {
-        const out = await back(done, (id) => sections.get(id) ?? null);
+      const { rows } = await moving;
+      const sectionOf = (id: string) => rows.get(id)?.card.sectionId ?? null;
+      return comeBack(qc, deckId, rows, done, async () => {
+        const out = await back(done, sectionOf);
         const homeless = out.results.flatMap((r) =>
-          r.status === "error" && r.code === "not_found" && r.id && sections.get(r.id)
-            ? [r.id]
-            : [],
+          r.status === "error" && r.code === "not_found" && r.id && sectionOf(r.id) ? [r.id] : [],
         );
-        const again = homeless.length > 0 ? changed(await back(homeless, () => null)) : [];
+        if (homeless.length === 0) return missed(done, changed(out));
+        const again = changed(await back(homeless, () => null));
+        const loose = new Set(again);
+        qc.setQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey, (prev) =>
+          prev?.map((row) =>
+            loose.has(row.card.id) ? { ...row, card: { ...row.card, sectionId: null } } : row,
+          ),
+        );
         return missed(done, [...changed(out), ...again]);
-      } finally {
-        void refresh(qc);
-      }
+      });
     },
   };
 }

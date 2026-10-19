@@ -1,12 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  archiveCards,
-  markCards,
-  moveCardsToDeck,
-  NOTHING_CHANGED,
-  restoreCards,
-} from "./card-batch";
+import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "./card-batch";
 import type { DeckRow } from "./deck-list";
 import { deckCardsQuery } from "./queries";
 
@@ -38,16 +32,48 @@ describe("archiving chosen cards", () => {
         { id: "b", status: "error", code: "unavailable", error: "offline" },
       ],
     });
-    await expect(archiveCards(qc, "d1", ["a", "b"])).resolves.toEqual(["a"]);
-    expect(ids()).toEqual(["b", "c"]);
+    await expect(archiveCards(qc, "d1", ["a", "b"]).done).resolves.toEqual(["a"]);
+    expect(ids()?.sort()).toEqual(["b", "c"]);
   });
 
   it("puts every card back and says so when none was archived", async () => {
     api.archiveCards.mockResolvedValue({
       results: [{ id: "a", status: "error", code: "forbidden", error: "no" }],
     });
-    await expect(archiveCards(qc, "d1", ["a"])).rejects.toThrow(NOTHING_CHANGED);
-    expect(ids()).toEqual(["a", "b", "c"]);
+    await expect(archiveCards(qc, "d1", ["a"]).done).rejects.toThrow(NOTHING_CHANGED);
+    expect(ids()?.sort()).toEqual(["a", "b", "c"]);
+  });
+
+  it("leaves another batch's change in place when it fails", async () => {
+    let fail = (_: Error) => {};
+    api.archiveCards
+      .mockReturnValueOnce(new Promise((_, reject) => (fail = reject)))
+      .mockResolvedValueOnce({ results: [{ id: "b", status: "archived" }] });
+    const first = archiveCards(qc, "d1", ["a"]);
+    await archiveCards(qc, "d1", ["b"]).done;
+    fail(new Error("offline"));
+    await expect(first.done).rejects.toThrow("offline");
+    expect(ids()?.sort()).toEqual(["a", "c"]);
+  });
+
+  it("shows the cards again as soon as Undo is taken", async () => {
+    api.archiveCards.mockResolvedValue({
+      results: ["a", "b"].map((id) => ({ id, status: "archived" })),
+    });
+    let restored = (_: unknown) => {};
+    api.restoreCards.mockReturnValue(new Promise((resolve) => (restored = resolve)));
+    const archiving = archiveCards(qc, "d1", ["a", "b"]);
+    const undoing = archiving.undo(await archiving.done);
+    await Promise.resolve();
+    expect(ids()?.sort()).toEqual(["a", "b", "c"]);
+    restored({
+      results: [
+        { id: "a", status: "restored" },
+        { id: "b", status: "error", code: "unavailable", error: "offline" },
+      ],
+    });
+    await expect(undoing).resolves.toEqual(["b"]);
+    expect(ids()?.sort()).toEqual(["a", "c"]);
   });
 });
 
@@ -98,6 +124,16 @@ describe("moving chosen cards to another deck", () => {
     const moving = moveCardsToDeck(qc, "d1", ["a", "b", "c"], "d2");
     const done = await moving.done;
     await expect(moving.undo(done)).resolves.toEqual([]);
+    expect(
+      qc
+        .getQueryData<DeckRow[]>(key)
+        ?.map((r) => [r.card.id, r.card.sectionId])
+        .sort(),
+    ).toEqual([
+      ["a", "s1"],
+      ["b", null],
+      ["c", null],
+    ]);
     expect(api.editCards.mock.calls.slice(1).map(([edits]) => edits)).toEqual([
       [
         { cardId: "a", deckId: "d1", sectionId: "s1" },
@@ -110,16 +146,6 @@ describe("moving chosen cards to another deck", () => {
 });
 
 describe("Undo", () => {
-  it("names the cards a restore left archived, to send again", async () => {
-    api.restoreCards.mockResolvedValue({
-      results: [
-        { id: "a", status: "restored" },
-        { id: "b", status: "error", code: "unavailable", error: "offline" },
-      ],
-    });
-    await expect(restoreCards(qc, ["a", "b"])).resolves.toEqual(["b"]);
-  });
-
   it("names the cards a move back left in the other deck", async () => {
     api.editCards
       .mockResolvedValueOnce({
@@ -136,6 +162,7 @@ describe("Undo", () => {
       });
     const moving = moveCardsToDeck(qc, "d1", ["a", "b"], "d2");
     await expect(moving.undo(await moving.done)).resolves.toEqual(["b"]);
+    expect(ids()?.sort()).toEqual(["a", "c"]);
   });
 
   it("names every card when no mark came back", async () => {

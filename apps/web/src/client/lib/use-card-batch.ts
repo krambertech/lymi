@@ -1,12 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import {
-  archiveCards,
-  markCards,
-  moveCardsToDeck,
-  NOTHING_CHANGED,
-  restoreCards,
-} from "@lymi/client/card-batch";
+import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "@lymi/client/card-batch";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { errorMessage } from "./api";
@@ -74,7 +68,8 @@ export function useCardBatch(deckId: string) {
 
   const archive = (cardIds: string[]) => {
     const id = next();
-    return archiveCards(qc, deckId, cardIds).then(
+    const archiving = archiveCards(qc, deckId, cardIds);
+    return archiving.done.then(
       (done) => {
         const saved = done.length;
         const total = cardIds.length;
@@ -89,7 +84,7 @@ export function useCardBatch(deckId: string) {
               : t`Archived ${plural(saved, { one: "# card", other: "# cards" })}`,
           actionProps: {
             children: t`Undo`,
-            onClick: () => undo(id, (ids) => restoreCards(qc, ids), done),
+            onClick: () => undo(id, archiving.undo, done),
           },
         });
       },

@@ -35,7 +35,7 @@ Read tools never write; `getSettings` returns defaults rather than creating a ro
 
 ## Tool output
 
-Tools return the learner's text and the ids a follow-up call needs. Card output omits `createdBy`, `updatedAt`, `userId`, `normalizedTerm` and `audioKey`. A read that names a whole collection returns a summary, never a dump: `get_deck` gives the deck's counts and the id, term and meaning of its 15 newest cards, and `search_cards` pages through the rest with full fields. A `ServiceError` reaches the assistant as its message. For any other error, the Worker logs only the tool name and the error's class, because a Drizzle message carries SQL and learner data. The assistant gets "Lymi could not finish this just now. Try again in a moment."
+Tools return the learner's text and the ids a follow-up call needs. Card output omits `createdBy`, `updatedAt`, `userId`, `normalizedTerm` and `audioKey`. A read that names a whole collection returns a summary, never a dump: `get_deck` and the `lymi://deck/{deckId}` resource a ChatGPT mention reads give the deck's counts and the id, term and meaning of its 15 newest cards, and `search_cards` pages through the rest with full fields. A `ServiceError` reaches the assistant as its message. For any other error, the Worker logs only the tool name and the error's class, because a Drizzle message carries SQL and learner data. The assistant gets "Lymi could not finish this just now. Try again in a moment."
 
 ## Verify the domain for OpenAI
 

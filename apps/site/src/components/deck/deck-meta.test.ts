@@ -140,6 +140,13 @@ describe("deckDescription", () => {
     expect(deckDescription(pageI18n("ru"), turkish())).not.toContain("everyday topics");
   });
 
+  it("quotes terms without their meanings when the meanings are in another language", () => {
+    expect(deckDescription(pageI18n("uk"), turkish())).toContain("Наприклад: merhaba, ben, aile.");
+    const signs = deckDescription(pageI18n("uk"), roadSigns());
+    expect(signs).not.toContain("Warning signs");
+    expect(signs).not.toContain("Danger point");
+  });
+
   it("leads a subject deck with its summary and names its sections without the asides", () => {
     expect(deckDescription(pageI18n("en"), roadSigns())).toBe(
       "Every sign by its number and name. 162 free flashcards. Sections: Warning signs, Regulatory signs, Guidance signs.",

@@ -36,8 +36,11 @@ export function deckTitle(i18n: I18n, deck: PublicDeckOut): string {
   return firstThatFits([branded(i18n, facts), facts, branded(i18n, name), name], TITLE_MAX);
 }
 
-/** A few of the deck's first cards, one from each early section, as "term (meaning)". */
-function examples(deck: PublicDeckOut, size: number): string[] {
+/**
+ * A few of the deck's first cards, one from each early section, as "term (meaning)", or the term
+ * alone when the meanings are in another language than the page.
+ */
+function examples(deck: PublicDeckOut, size: number, withMeaning: boolean): string[] {
   const picks: string[] = [];
   const firsts = deck.sections.map((section) => section.cards);
   for (let round = 0; picks.length < size && round < 3; round++) {
@@ -45,7 +48,8 @@ function examples(deck: PublicDeckOut, size: number): string[] {
       const card = cards[round];
       const term = quotable(card?.term);
       const meaning = quotable(card?.meaning);
-      if (term && meaning) picks.push(`${term} (${meaning})`);
+      if (term && !withMeaning) picks.push(term);
+      else if (term && meaning) picks.push(`${term} (${meaning})`);
       if (picks.length >= size) break;
     }
   }
@@ -68,7 +72,8 @@ export function deckDescription(i18n: I18n, deck: PublicDeckOut): string {
   const count = deck.cardCount;
   const language = languageName(taughtLanguage(deck), i18n.locale, { label: true });
   const meaningLanguage = languageName(deck.meaningLanguage, i18n.locale) ?? deck.meaningLanguage;
-  const summary = samePageLanguage(deck, i18n.locale) ? deck.summary.trim() : "";
+  const same = samePageLanguage(deck, i18n.locale);
+  const summary = same ? deck.summary.trim() : "";
   const sentence = (text: string) => (text && !/[.!?…]$/.test(text) ? `${text}.` : text);
   const join = (...parts: string[]) => parts.filter(Boolean).join(" ");
   const listed = (items: string[]) => (items.length > 0 ? items.join(", ") : "");
@@ -85,7 +90,7 @@ export function deckDescription(i18n: I18n, deck: PublicDeckOut): string {
     const facts = i18n._(
       msg`${plural(count, { one: `# free ${language} flashcard`, other: `# free ${language} flashcards` })} with meanings in ${meaningLanguage}.`,
     );
-    const shown = [3, 2, 1].map((size) => forExample(examples(deck, size)));
+    const shown = [3, 2, 1].map((size) => forExample(examples(deck, size, same)));
     return firstThatFits(
       [
         ...shown.map((line) => join(facts, line, sentence(summary))),
@@ -99,11 +104,13 @@ export function deckDescription(i18n: I18n, deck: PublicDeckOut): string {
   const facts = i18n._(
     msg`${plural(count, { one: "# free flashcard", other: "# free flashcards" })}.`,
   );
-  const names = sectionNames(deck, 3);
-  const more =
-    names.length > 1
+  // A subject deck's sections and terms are in its meaning language, so another page quotes neither.
+  const names = same ? sectionNames(deck, 3) : [];
+  const more = !same
+    ? []
+    : names.length > 1
       ? [3, 2].map((size) => inSections(names.slice(0, size)))
-      : [2, 1].map((size) => forExample(examples(deck, size)));
+      : [2, 1].map((size) => forExample(examples(deck, size, true)));
   return firstThatFits(
     [
       ...more.map((line) => join(sentence(summary), facts, line)),

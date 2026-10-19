@@ -168,6 +168,33 @@
       "plugins": ["./biome-plugins/no-sql-lower.grit"]
     },
     {
+      "includes": [
+        "packages/core/src/**",
+        "packages/client/src/**",
+        "apps/web/src/**",
+        "apps/mobile/src/**",
+        "!packages/core/src/languages/**",
+        "!apps/mobile/src/i18n/**",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!packages/core/src/enrichment.ts",
+        "!apps/web/src/server/ai/speech.ts",
+        "!apps/web/src/server/ai/speech-voices.ts"
+      ],
+      "plugins": ["./biome-plugins/language-tags.grit"]
+    },
+    {
+      "includes": [
+        "apps/web/src/client/**",
+        "apps/mobile/src/**",
+        "!apps/web/src/client/components/term-text.tsx",
+        "!apps/mobile/src/ui/term-text.tsx",
+        "!**/*.test.ts",
+        "!**/*.test.tsx"
+      ],
+      "plugins": ["./biome-plugins/term-text.grit"]
+    },
+    {
       "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {

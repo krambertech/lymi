@@ -4,6 +4,8 @@
  * a bracketed kana reading belongs to the kanji just before it. docs/card-writing.md.
  */
 
+import { drawsReadings, readingEngine } from "./languages";
+
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
 
@@ -17,9 +19,6 @@ const INLINE = /\[([\p{Script=Hiragana}\p{Script=Katakana}ー]{1,30})\]/gu;
 
 /** How far back an inline reading looks for its kanji, so a crafted example stays cheap to read. */
 const LOOK_BACK = 20;
-
-/** Languages whose terms Lymi draws a reading over. Chinese can follow once pinyin aligns. */
-const DRAWN = new Set(["ja"]);
 
 /** Past this many characters a term is a passage, and its reading goes over it whole. */
 const ALIGN_MAX = 80;
@@ -40,11 +39,6 @@ export function toHiragana(text: string): string {
   return text.replace(/[ァ-ヶ]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
 }
 
-/** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
-export function languageKey(language: string | null | undefined): string {
-  return language?.split("-")[0]?.toLowerCase() ?? "";
-}
-
 /**
  * A kana reading as one form, for duplicates, furigana and audio alike: NFC, no spaces or ・, and
  * katakana folded to hiragana, so ジョウズ, じょう ず and じょうず are one reading.
@@ -59,7 +53,7 @@ export function kanaReading(card: {
   pronunciation?: string | null | undefined;
 }): string | null {
   const reading = card.pronunciation?.normalize("NFC").trim();
-  if (languageKey(card.language) !== "ja" || !reading) return null;
+  if (readingEngine(card.language) !== "furigana" || !reading) return null;
   return KANA_TEXT.test(reading) ? reading : null;
 }
 
@@ -70,14 +64,6 @@ export function readingKey(card: {
 }): string | null {
   const reading = kanaReading(card);
   return reading ? foldReading(reading) : null;
-}
-
-/**
- * Whether a term cue shows the card's pronunciation as a line before the reveal: Chinese keeps its
- * pinyin until the card is Known; Japanese draws furigana instead, and other readings wait.
- */
-export function cueKeepsReading(language: string | null | undefined, known: boolean): boolean {
-  return languageKey(language) === "zh" && !known;
 }
 
 type Run = { kind: "base" | "kana" | "other"; text: string };
@@ -164,16 +150,6 @@ export function alignReading(term: string, reading: string): ReadingSegment[] {
   return aligned ? merged(aligned) : [{ text: term, reading: clean }];
 }
 
-/** Languages whose pronunciation is a reading of a script that does not show it, so the field is called Reading. */
-export function writtenWithReading(language: string | null | undefined): boolean {
-  return ["ja", "zh"].includes(languageKey(language));
-}
-
-/** Whether Lymi draws readings over this language's terms and examples. */
-export function drawsReadings(language: string | null | undefined): boolean {
-  return DRAWN.has(languageKey(language));
-}
-
 /**
  * The term as drawn with its reading, or null when nothing is drawn over it: the card is not in
  * a language Lymi draws readings for, it has no kana reading, or its term has no kanji. A term
@@ -196,6 +172,15 @@ export function termReading(card: {
     ]);
   } else segments = alignReading(card.term, clean);
   return segments.some((segment) => segment.reading !== undefined) ? segments : null;
+}
+
+/** Whether a reading is drawn over the card's term, for a screen that lays out around it. */
+export function drawsTermReading(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): boolean {
+  return termReading(card) !== null;
 }
 
 /**

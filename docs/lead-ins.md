@@ -70,9 +70,10 @@ On 19 October 2026 the 50 cases in `apps/web/src/server/lead-ins/evaluation.json
 
 ## Add a language
 
-1. Write `apps/web/src/server/lead-ins/<language>.ts` exporting a `LeadInPolicy` from `policy.ts`: the free rules in `screen`, the decision question, the threshold, the writer instructions and the checks in `accepts`.
-2. Add it to `POLICIES` in `apps/web/src/server/lead-ins/index.ts`.
-3. Add labelled cases under the language's key in `evaluation.json`, with readings that name another word and readings that do not.
-4. Run `eval:lead-ins --language <language>` and set the threshold where every ambiguous case is flagged.
-5. Have a native speaker listen to the voice with and without lead-ins. If another voice than ElevenLabs v4 should take them, change `takesLeadIn()` in `apps/web/src/server/services/audio.ts`.
-6. Add the policy's tests beside it, as `japanese.test.ts` does.
+1. Set `speech.leadIn` in the language's record in `packages/core/src/languages`. The record decides which fields a clip is made from, so a reading or meaning edit makes a new clip on the server and in every player.
+2. Write `apps/web/src/server/lead-ins/<language>.ts` exporting a policy that `satisfies LeadInPolicy` from `policy.ts`: the free rules in `screen`, the decision question, the threshold, the writer instructions and the checks in `accepts`.
+3. Put it under the language's tag in `POLICIES` in `apps/web/src/server/lead-ins/index.ts`, which fails typechecking until the record and the policies agree.
+4. Add labelled cases under the language's key in `evaluation.json`, with readings that name another word and readings that do not.
+5. Run `eval:lead-ins --language <language>` and set the threshold where every ambiguous case is flagged.
+6. Have a native speaker listen to the voice with and without lead-ins. If another voice than ElevenLabs v4 should take them, change `takesLeadIn()` in `apps/web/src/server/services/audio.ts`.
+7. Add the policy's tests beside it, as `japanese.test.ts` does.

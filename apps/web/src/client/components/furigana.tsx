@@ -1,11 +1,6 @@
-import {
-  type KnownReadings,
-  markKnownReadings,
-  parseReadings,
-  type ReadingSegment,
-} from "@lymi/core";
+import type { ReadingSegment } from "@lymi/core";
 import { clsx } from "clsx";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 
 interface Props {
   segments: readonly ReadingSegment[];
@@ -41,17 +36,4 @@ export function Furigana({ segments, lang, hidden }: Props) {
       </ruby>
     ),
   );
-}
-
-interface ReadingTextProps {
-  text: string;
-  lang?: string | undefined;
-  /** The learner's Known pairs, whose readings fade. */
-  known?: KnownReadings | undefined;
-}
-
-/** Text that may carry inline readings, such as an example, drawn with them. */
-export function ReadingText({ text, lang, known }: ReadingTextProps) {
-  const segments = useMemo(() => markKnownReadings(parseReadings(text), known), [text, known]);
-  return <Furigana segments={segments} lang={lang} />;
 }

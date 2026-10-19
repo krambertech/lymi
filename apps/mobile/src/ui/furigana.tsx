@@ -1,9 +1,4 @@
-import {
-  type KnownReadings,
-  markKnownReadings,
-  parseReadings,
-  type ReadingSegment,
-} from "@lymi/core";
+import type { ReadingSegment } from "@lymi/core";
 import { READING_FADE } from "@lymi/design";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -69,16 +64,6 @@ export function Furigana(props: Props) {
       {after}
     </Text>
   );
-}
-
-/** Text that may carry inline readings, such as an example, drawn with them; `known` fades the learner's Known pairs. */
-export function ReadingText({
-  text,
-  known,
-  ...props
-}: Omit<Props, "segments"> & { text: string; known?: KnownReadings | undefined }) {
-  const segments = useMemo(() => markKnownReadings(parseReadings(text), known), [text, known]);
-  return <Furigana segments={segments} {...props} />;
 }
 
 /** The readings fade as `hidden` changes, as the web's `rt` does at the reveal. */

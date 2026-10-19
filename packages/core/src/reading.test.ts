@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   addsReadingsOnly,
   alignReading,
-  cueKeepsReading,
   exampleReadings,
   formatReadings,
   hasReadings,
@@ -373,18 +372,5 @@ describe("readingKey", () => {
     expect(readingKey({ language: "ja", pronunciation: "jōzu" })).toBeNull();
     expect(readingKey({ language: "zh", pronunciation: "xuéxí" })).toBeNull();
     expect(readingKey({ language: "it", pronunciation: null })).toBeNull();
-  });
-});
-
-describe("cueKeepsReading", () => {
-  it("keeps Chinese pinyin on the cue until the card is Known", () => {
-    expect(cueKeepsReading("zh", false)).toBe(true);
-    expect(cueKeepsReading("zh-Hans", false)).toBe(true);
-    expect(cueKeepsReading("zh", true)).toBe(false);
-  });
-  it("leaves every other reading for the reveal", () => {
-    expect(cueKeepsReading("ja", false)).toBe(false);
-    expect(cueKeepsReading("ko", false)).toBe(false);
-    expect(cueKeepsReading(null, false)).toBe(false);
   });
 });

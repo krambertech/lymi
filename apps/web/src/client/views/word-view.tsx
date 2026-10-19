@@ -6,12 +6,12 @@ import {
   canPlayPronunciation,
   type DeckEnrichField,
   deserializeState,
+  drawsTermReading,
   type EnrichedField,
   type FsrsCard,
   type KnownReadings,
   needsEnrichment,
   type ReviewMode,
-  termReading,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
@@ -38,11 +38,11 @@ import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
-import { Furigana, ReadingText } from "../components/furigana";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
 import { ReviewTimeline } from "../components/review-timeline";
 import { Skeleton } from "../components/skeleton";
+import { ExampleText, TermText } from "../components/term-text";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
@@ -478,7 +478,10 @@ export function WordView({
   const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
   const [moving, setMoving] = useState(false);
   const forms = splitForms(card.term);
-  const reading = useMemo(() => termReading({ ...card, term: forms.word }), [card, forms.word]);
+  const reading = useMemo(
+    () => drawsTermReading({ ...card, term: forms.word }),
+    [card, forms.word],
+  );
   useEffect(() => {
     onBusyChange?.(moving);
     return () => onBusyChange?.(false);
@@ -592,11 +595,7 @@ export function WordView({
           className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em] outline-none"
         >
           <span className="hyphenate min-w-0 break-words" lang={card.language ?? undefined}>
-            {reading ? (
-              <Furigana segments={reading} lang={card.language ?? undefined} />
-            ) : (
-              forms.word
-            )}
+            <TermText card={{ ...card, term: forms.word }} />
             {forms.forms && (
               <span className="font-normal text-text-2">
                 {" · "}
@@ -708,7 +707,7 @@ export function WordView({
                 lang={card.language ?? undefined}
                 className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
               >
-                <ReadingText
+                <ExampleText
                   text={card.example}
                   lang={card.language ?? undefined}
                   known={knownReadings}

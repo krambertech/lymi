@@ -1,3 +1,4 @@
+import type { SupportedTag } from "@lymi/core";
 import type { Card } from "@lymi/core/schema";
 
 /** What a lead-in is written from: the written term, what is spoken, and the sense meant. */
@@ -17,8 +18,7 @@ export type LeadInSkip =
  * meant. Adding a language is adding a policy and its evaluation cases.
  */
 export interface LeadInPolicy {
-  /** The card language's primary subtag. */
-  language: string;
+  language: SupportedTag;
   /** The language's English name, as the decision model reads it. */
   name: string;
   /** Bump to decide and write every card of this language again. */

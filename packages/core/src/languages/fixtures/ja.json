@@ -1,0 +1,51 @@
+{
+  "tags": ["ja", "ja-JP", "JA", "ja-Jpan-JP"],
+  "terms": [
+    {
+      "term": "食べる",
+      "pronunciation": "たべる",
+      "drawn": "食[た]べる"
+    },
+    {
+      "term": "今日",
+      "pronunciation": "きょう",
+      "drawn": "今日[きょう]"
+    },
+    {
+      "term": "上手",
+      "pronunciation": "じょうず",
+      "drawn": "上手[じょうず]"
+    },
+    {
+      "term": "引き出し",
+      "pronunciation": "ひきだし",
+      "drawn": "引[ひ]き出[だ]し"
+    },
+    {
+      "term": "ありがとう",
+      "pronunciation": "ありがとう",
+      "drawn": null
+    },
+    {
+      "term": "上手",
+      "pronunciation": "dʒoːzɯ",
+      "drawn": null
+    }
+  ],
+  "examples": [
+    {
+      "text": "毎朝[まいあさ]パンを食[た]べます。",
+      "plain": "毎朝パンを食べます。"
+    },
+    {
+      "text": "お茶[ちゃ]をください。",
+      "plain": "お茶をください。"
+    },
+    {
+      "text": "[sound:taberu.mp3]を聞く",
+      "plain": "[sound:taberu.mp3]を聞く"
+    }
+  ],
+  "keys": [["じょうず", "ジョウズ", "じょう ず", "じょうず"]],
+  "noKey": ["dʒoːzɯ", "jōzu", "jouzu"]
+}

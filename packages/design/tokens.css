@@ -305,13 +305,17 @@
 }
 
 /*
- * Onest has no Japanese, so kana and kanji come from the system. Naming Japanese faces gives kanji
- * that Chinese shares their Japanese forms; no web font, since every platform ships one of these.
+ * Faces for the scripts Onest has none of, one per ISO 15924 code, named --face-<code>. Every
+ * platform ships one of each list, so there is no web font; the phone names the first on iOS.
+ * Naming Japanese faces gives kanji that Chinese shares their Japanese forms.
  */
+:root {
+  --face-jpan:
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", Meiryo;
+}
+
 @layer base {
   :lang(ja) {
-    font-family:
-      "Onest", "Onest Fallback", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic",
-      YuGothic, "Noto Sans JP", Meiryo, ui-sans-serif, system-ui, sans-serif;
+    font-family: "Onest", "Onest Fallback", var(--face-jpan), ui-sans-serif, system-ui, sans-serif;
   }
 }

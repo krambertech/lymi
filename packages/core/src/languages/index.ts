@@ -31,7 +31,7 @@ export function languageKey(language: string | null | undefined): string {
   return language?.split("-")[0]?.toLowerCase() ?? "";
 }
 
-/** The supported language a tag names, or null for any other language. */
+/** The supported language a tag names by its primary subtag, or null; Chinese will need the full tag, for its script and to leave Cantonese out. */
 export function languageSupport(language: string | null | undefined): LanguageSupport | null {
   const key = languageKey(language);
   return Object.hasOwn(SUPPORTED_LANGUAGES, key) ? SUPPORTED_LANGUAGES[key as SupportedTag] : null;

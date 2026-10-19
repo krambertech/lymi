@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { formatReadings, parseReadings, readingKey, stripReadings, termReading } from "../reading";
 import ja from "./fixtures/ja.json";
@@ -18,6 +19,8 @@ interface Fixture {
 
 const FIXTURES: Record<SupportedTag, Fixture> = { ja };
 
+const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
+
 describe.each(Object.values(SUPPORTED_LANGUAGES))("$tag", (record) => {
   const fixture = FIXTURES[record.tag];
 
@@ -25,8 +28,10 @@ describe.each(Object.values(SUPPORTED_LANGUAGES))("$tag", (record) => {
     for (const tag of fixture.tags) expect(languageSupport(tag)).toBe(record);
   });
 
-  it("names a face for its script", () => {
+  it("has a face token for its script, read by the web's :lang() rule and the phone", () => {
     expect(languageScript(record.tag)).toBe(record.script);
+    expect(TOKENS).toContain(`--face-${record.script.toLowerCase()}:`);
+    expect(TOKENS).toContain(`:lang(${record.tag})`);
   });
 
   it("draws each term's reading", () => {

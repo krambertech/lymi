@@ -1,3 +1,4 @@
+// The tags are SupportedTag and those the index already serves; add a language's tag when its record lands.
 or {
   JsBinaryExpression(),
   JsCaseClause(),

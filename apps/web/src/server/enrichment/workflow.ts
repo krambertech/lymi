@@ -4,8 +4,6 @@ import { createDb } from "../db";
 import type { Bindings } from "../env";
 import { productAnalytics, reportServerException } from "../posthog";
 import {
-  CARDS_PER_CALL,
-  chunked,
   type EnrichRunParams,
   enrichCards,
   enrichmentContext,
@@ -16,6 +14,7 @@ import {
 } from "../services";
 import { textCallReporter, track } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
+import { CARDS_PER_CALL, chunked } from "./prompt";
 
 const STEP = {
   retries: { limit: 3, delay: "5 seconds", backoff: "exponential" },

@@ -186,6 +186,16 @@ export function cardBrief(
   };
 }
 
+/** Cards per model call. A lesson lands in waves rather than all at once. */
+export const CARDS_PER_CALL = 10;
+
+/** Split a list into runs of `size`, keeping order, so the first cards fill before the last. */
+export function chunked<T>(items: readonly T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size));
+  return chunks;
+}
+
 /** The input for one model call. */
 export function enrichmentInput(
   meaningLanguage: string,

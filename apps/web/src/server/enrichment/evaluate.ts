@@ -18,10 +18,11 @@ import {
   fieldsToFill,
 } from "@lymi/core";
 import { createTextProvider, type TextProvider } from "../ai";
-import { CARDS_PER_CALL, chunked } from "../services/enrichment";
 import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
 import {
+  CARDS_PER_CALL,
   cardBrief,
+  chunked,
   deckBrief,
   ENRICHMENT_INSTRUCTIONS,
   ENRICHMENT_PROMPT_VERSION,

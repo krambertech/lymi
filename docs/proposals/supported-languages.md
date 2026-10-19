@@ -32,7 +32,7 @@ Today each language is a literal in a helper (`DRAWN = new Set(["ja"])` and `===
 
 **Older phones.** A reading style's notation reaches examples only once the minimum supported phone draws it; until then the Worker strips it for older clients by `x-lymi-client` (ADR 0032).
 
-**Prompts.** Each supported language has a server module with its voice and slots for enrichment (with example readings and its worked example), Smart add, hooks and `checks`. Slots reach the model as per-deck input, because one call carries several decks and Smart add may choose the deck; system prompts stay static and cacheable, and import detection composes every record's hints. Each call site has one prompt version, and a bump never rewrites stored AI text. A fluent reader reviews each module. `checks` run in production as well: a failing field is left empty and the card still saves.
+**Prompts.** Each supported language has a server module with its voice and slots for enrichment (with example readings and its worked example), Smart add, hooks and `checks`. Slots reach the model as per-deck input, because one call carries several decks and Smart add may choose the deck; system prompts stay static and cacheable, and import detection composes every record's hints. Each call site has one prompt version, and a bump never rewrites stored AI text. A fluent reader reviews each module.
 
 **Evaluation.** Each language has invented fixtures, twenty or more per slot, led by its traps (上手 じょうず and うわて, 行 háng and xíng, за́мок and замо́к). A live run saves replies with the prompt hash and model; CI rescores the saved run, fails when the hash is stale, and compares per-rule pass rates with the previous run.
 
@@ -70,4 +70,5 @@ Today each language is a literal in a helper (`DRAWN = new Set(["ja"])` and `===
 5. Should German's duplicate rule ignore the article, which means changing `normaliseTerm`, a backfill and amending ADR 0004?
 6. Do the voices read U+0301 as stress, or must speech strip it?
 7. Should Russian duplicates fold ё into е?
-8. Does Korean or Russian come third? Demand ranks Korean higher; a reviewer is at hand for Russian.
+8. Should `checks` also run in production, leaving a failing field empty while the card still saves, or stay evaluation-only?
+9. Does Korean or Russian come third? Demand ranks Korean higher; a reviewer is at hand for Russian.

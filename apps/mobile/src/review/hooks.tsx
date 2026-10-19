@@ -332,7 +332,7 @@ export function HookSheet({
               </>
             ) : null}
           </View>
-          {/* Labelled while the field is empty, an icon once a draft is in, as on the web. */}
+          {/* Labelled while the field is empty, an icon once a draft is in; the sheet's ✓ saves, so the row holds only the draft. */}
           {draftable &&
             (untouched ? (
               <IconButton

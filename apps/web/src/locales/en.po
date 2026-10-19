@@ -984,9 +984,6 @@ msgstr "Ahead"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "AI draft"
-
 msgid "AI example"
 msgstr "AI example"
 

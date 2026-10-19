@@ -984,9 +984,6 @@ msgstr "Впереди"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "Черновик AI"
-
 msgid "AI example"
 msgstr "Пример от AI"
 

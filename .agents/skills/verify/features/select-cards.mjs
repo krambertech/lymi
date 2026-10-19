@@ -60,4 +60,48 @@ export default async function drive({ page, step, api, expect }) {
       .toBe(deck.total);
     return { section: first.name, moved: deck.total };
   });
+
+  await step("Mark important marks every chosen card", async () => {
+    await selectAll();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Mark important", exact: true }).click();
+    await expect(page.getByText(`Marked ${count} cards important`)).toBeVisible({
+      timeout: 60_000,
+    });
+    await expect
+      .poll(async () => (await cards()).filter((r) => r.card.important).length, {
+        timeout: 60_000,
+      })
+      .toBe(deck.total);
+    return { marked: deck.total };
+  });
+
+  const other = (await api("/api/decks")).find((d) => d.name === "Finnish cases");
+  const total = async (id) => (await api("/api/decks")).find((d) => d.id === id).total;
+
+  await step("Move to deck… moves every chosen card, and Undo brings them back", async () => {
+    await selectAll();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Move to deck…", exact: true }).click();
+    await page.getByRole("dialog").getByRole("button", { name: other.name }).click();
+    const moved = page.getByText(`Moved ${count} cards to ${other.name}`);
+    await expect(moved).toBeVisible({ timeout: 60_000 });
+    await expect.poll(() => total(other.id), { timeout: 60_000 }).toBe(other.total + deck.total);
+    await page.getByRole("button", { name: "Undo", exact: true }).click();
+    await expect.poll(() => total(deck.id), { timeout: 60_000 }).toBe(deck.total);
+    return { to: other.name, moved: deck.total, back: await total(deck.id) };
+  });
+
+  await step("Archive archives every chosen card, and Undo restores them", async () => {
+    await expect(main.getByRole("heading", { level: 1, name: deck.name })).toBeVisible();
+    await expect.poll(async () => (await cards()).length, { timeout: 60_000 }).toBe(deck.total);
+    await selectAll();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Archive", exact: true }).click();
+    await expect(page.getByText(`Archived ${count} cards`)).toBeVisible({ timeout: 60_000 });
+    await expect.poll(() => total(deck.id), { timeout: 60_000 }).toBe(0);
+    await page.getByRole("button", { name: "Undo", exact: true }).click();
+    await expect.poll(() => total(deck.id), { timeout: 60_000 }).toBe(deck.total);
+    return { archived: deck.total, restored: await total(deck.id) };
+  });
 }

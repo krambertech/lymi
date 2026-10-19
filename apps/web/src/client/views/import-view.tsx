@@ -792,6 +792,7 @@ export function ImportPreviewView({
   preview,
   previewLoading,
   previewError,
+  onPreviewRetry,
   onChoices,
   onConfirm,
   confirming,
@@ -804,8 +805,10 @@ export function ImportPreviewView({
   summary: Summary;
   choices: Choices;
   preview: ImportPreview | undefined;
+  /** Fetching, or waiting for focus or a connection to retry: either way, not an answer yet. */
   previewLoading: boolean;
   previewError?: string | undefined;
+  onPreviewRetry: () => void;
   onChoices: (choices: Choices) => void;
   onConfirm: () => void;
   confirming?: boolean | undefined;
@@ -914,6 +917,7 @@ export function ImportPreviewView({
           samples={preview?.samples[step.type.key]}
           loading={previewLoading}
           error={previewError}
+          onRetry={onPreviewRetry}
           tail={
             step.type === asked.at(-1) && !showRest && rest.length > 0 ? (
               <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
@@ -971,11 +975,7 @@ export function ImportPreviewView({
               <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
             )}
           </div>
-          {previewError && (
-            <p className="text-sm" role="alert">
-              <InlineError>{previewError}</InlineError>
-            </p>
-          )}
+          {previewError && <PreviewError error={previewError} onRetry={onPreviewRetry} />}
           {preview && (
             <ImportLines item={item} summary={summary} preview={preview} known={preview.known} />
           )}
@@ -1186,6 +1186,7 @@ function CardStep({
   samples,
   loading,
   error,
+  onRetry,
   tail,
   onChangeFields,
   onBack,
@@ -1196,6 +1197,7 @@ function CardStep({
   samples: ImportPreview["samples"][string] | undefined;
   loading: boolean;
   error?: string | undefined;
+  onRetry: () => void;
   tail: ReactNode;
   onChangeFields: () => void;
   onBack?: (() => void) | undefined;
@@ -1230,13 +1232,9 @@ function CardStep({
             </button>
           )}
         </div>
-        <SampleCard sample={sample} loading={loading} />
+        <SampleCard sample={sample} loading={loading} error={error} onRetry={onRetry} />
       </div>
-      {error && (
-        <p className="text-sm" role="alert">
-          <InlineError>{error}</InlineError>
-        </p>
-      )}
+      {error && sample && <PreviewError error={error} onRetry={onRetry} />}
       {tail}
       <StepActions onBack={onBack}>
         <Button variant="secondary" size="lg" onClick={onChangeFields}>
@@ -1248,6 +1246,20 @@ function CardStep({
         </Button>
       </StepActions>
     </>
+  );
+}
+
+/** Why the count failed, with the way to ask again. */
+function PreviewError({ error, onRetry }: { error: string; onRetry: () => void }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+      <p role="alert">
+        <InlineError>{error}</InlineError>
+      </p>
+      <Button size="sm" variant="ghost" className="-my-1" onClick={onRetry}>
+        <Trans>Try again</Trans>
+      </Button>
+    </div>
   );
 }
 

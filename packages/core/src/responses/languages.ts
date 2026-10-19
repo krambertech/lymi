@@ -5,8 +5,9 @@ export const LanguageOut = z
   .object({
     tag: z.string().meta({ description: "The primary BCP 47 subtag, such as `ja`" }),
     name: z.string().meta({ description: "The language's English name" }),
-    script: z.string().meta({
-      description: "The ISO 15924 code of the script its terms are written in, such as `Jpan`",
+    scripts: z.array(z.string()).meta({
+      description:
+        "ISO 15924 codes of the scripts its terms are written in, such as `Jpan`; for Chinese a tag's script subtag or region picks `Hans` or `Hant`",
     }),
     pronunciation: z
       .object({

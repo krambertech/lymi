@@ -45,8 +45,12 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
 
 /** Each script's letters with the marks and full-width forms that run with them, none of which Onest has. */
+const HANZI_RUNS =
+  /([\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u;
 const SCRIPT_RUNS: Record<Script, RegExp> = {
   Jpan: /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u,
+  Hans: HANZI_RUNS,
+  Hant: HANZI_RUNS,
 };
 
 // iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".

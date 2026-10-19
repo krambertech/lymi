@@ -1,9 +1,9 @@
 import {
   addsReadingsOnly,
   deckEnrichFields,
-  drawsReadings,
   ENRICHED_FIELDS,
   type EnrichedField,
+  examplesCarryReadings,
   fieldsToFill,
   LanguageTag,
   missingReadings,
@@ -119,13 +119,13 @@ export function enrichmentWrite(
   return write;
 }
 
-/** Whether a run may add readings to the card's example: the deck lets the AI write examples, and kanji in it have none. */
+/** Whether a run may add readings to the card's example: the deck lets the AI write examples, its language's examples carry readings, and kanji in it have none. */
 export function mayAddReadings(card: Card, deck: DeckRow | undefined): boolean {
   const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
   return (
     fields.includes("example") &&
     !!card.example &&
-    drawsReadings(card.language ?? deck?.defaultLanguage) &&
+    examplesCarryReadings(card.language ?? deck?.defaultLanguage) &&
     missingReadings(card.example)
   );
 }

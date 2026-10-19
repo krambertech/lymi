@@ -20,6 +20,7 @@ import {
   ArrowUpDown,
   ChevronDown,
   Download,
+  FolderInput,
   KeyRound,
   Layers,
   ListFilter,
@@ -35,6 +36,7 @@ import {
   Signpost,
   Sparkles,
   SquareCheck,
+  Star,
   Tags,
   X,
 } from "lucide-react";
@@ -122,6 +124,8 @@ export interface DeckDetailProps {
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
   /** Mark or unmark a card as important for this learner; a member can, as the mark is their own. */
   onImportantChange?: ((card: DeckRow["card"], important: boolean) => void) | undefined;
+  /** Mark or unmark chosen cards, from the selection toolbar; a member's too. */
+  onMarkCards?: ((cardIds: string[], important: boolean) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
   /** How to connect an assistant, offered while the deck has no cards. */
@@ -160,8 +164,10 @@ export interface DeckOwnerActions {
   onArchiveDeck: () => void;
   onExport: () => void;
   onMoveToSeries: () => void;
-  /** Open the tags dialog for these cards; `after` runs once it saves. */
-  onTagCards: (cardIds: string[], after: () => void) => void;
+  onTagCards: (cardIds: string[]) => void;
+  /** Open the deck picker for these cards; absent while the learner has no other deck of their own. */
+  onMoveCardsToDeck?: ((cardIds: string[], after: () => void) => void) | undefined;
+  onArchiveCards: (cardIds: string[]) => void;
   sections: DeckSectionActions;
 }
 
@@ -172,8 +178,7 @@ export interface DeckMemberActions {
 /** What the owner does to sections from the deck page; the route holds the dialogs. */
 export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> {
   onCreate: () => void;
-  /** Open the picker for these cards; `after` runs once they have moved. */
-  onPickSection: (cardIds: string[], after: () => void) => void;
+  onPickSection: (cardIds: string[]) => void;
   onMoveCards: (cardIds: string[], section: Section | null) => void;
 }
 
@@ -640,8 +645,12 @@ function SelectionToolbar({
   onAll,
   onClear,
   onReview,
+  marked,
+  onMark,
   onTags,
   onMove,
+  onMoveToDeck,
+  onArchive,
   onDone,
 }: {
   count: number;
@@ -653,9 +662,14 @@ function SelectionToolbar({
   onAll: () => void;
   onClear: () => void;
   onReview?: ((kind: "due" | "all") => void) | undefined;
-  /** The owner's: a member reads the deck, so only Review is theirs. */
+  /** Whether every chosen card is already marked important, so the mark comes off. */
+  marked: boolean;
+  onMark?: (() => void) | undefined;
+  /** The owner's: a member reads the deck, so Review and the mark, which is their own, are theirs. */
   onTags?: (() => void) | undefined;
   onMove?: (() => void) | undefined;
+  onMoveToDeck?: (() => void) | undefined;
+  onArchive?: (() => void) | undefined;
   onDone: () => void;
 }) {
   const { t } = useLingui();
@@ -724,7 +738,17 @@ function SelectionToolbar({
               )}
             </DropdownMenuGroup>
           )}
-          {onReview && (onTags || onMove) && <DropdownMenuSeparator />}
+          {onReview && onMark && <DropdownMenuSeparator />}
+          {onMark && (
+            <DropdownMenuItem onClick={onMark}>
+              <Star className={marked ? "fill-current" : undefined} />
+              {/* Its own message, since Ukrainian and Russian say it of several cards. */}
+              {marked
+                ? t({ message: "Unmark important", context: "chosen cards" })
+                : t({ message: "Mark important", context: "chosen cards" })}
+            </DropdownMenuItem>
+          )}
+          {(onReview || onMark) && (onTags || onMove || onMoveToDeck) && <DropdownMenuSeparator />}
           {onTags && (
             <DropdownMenuItem onClick={onTags}>
               <Tags />
@@ -736,6 +760,21 @@ function SelectionToolbar({
               <Signpost />
               <Trans>Move to section…</Trans>
             </DropdownMenuItem>
+          )}
+          {onMoveToDeck && (
+            <DropdownMenuItem onClick={onMoveToDeck}>
+              <FolderInput />
+              <Trans>Move to deck…</Trans>
+            </DropdownMenuItem>
+          )}
+          {onArchive && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="danger" onClick={onArchive}>
+                <Archive />
+                <Trans>Archive</Trans>
+              </DropdownMenuItem>
+            </>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
@@ -764,6 +803,7 @@ export function DeckDetailView({
   history,
   onPlayAudio,
   onImportantChange,
+  onMarkCards,
   decks,
   sections = [],
   progress,
@@ -845,6 +885,16 @@ export function DeckDetailView({
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const orderedRef = useRef(ordered);
   orderedRef.current = ordered;
+  // A chosen card the list stops showing, such as one unmarked under the Important filter, leaves the selection.
+  useEffect(() => {
+    if (!shown) return;
+    setSelected((prev) => {
+      if (!prev) return prev;
+      const here = new Set(ordered.map((r) => r.card.id));
+      const kept = [...prev].filter((id) => here.has(id));
+      return kept.length === prev.size ? prev : new Set(kept);
+    });
+  }, [shown, ordered]);
 
   // Stable, so the memoised rows keep their props while one card's checkbox changes.
   const toggleSelected = useCallback((id: string, range: boolean) => {
@@ -865,6 +915,8 @@ export function DeckDetailView({
       return next;
     });
   }, []);
+  // Mark important marks them all unless every chosen card already has the mark.
+  const unmarked = !!selected && !!cards?.some((r) => selected.has(r.card.id) && !r.card.important);
   // What Review takes from the selection: started cards not reviewed today, as the server counts them.
   const reviewable = useMemo(
     () => (selected && cards ? chosenReview(cards, selected, Date.now()) : []),
@@ -879,8 +931,10 @@ export function DeckDetailView({
   useEffect(() => {
     if (!selected) return;
     const onKey = (e: KeyboardEvent) => {
-      // A menu or dialog open over the list takes this Escape for itself.
-      const overlay = document.querySelector("[role='menu'], [role='dialog']");
+      // A menu or dialog open over the list takes this Escape for itself; a toast is a dialog too, but never does.
+      const overlay = document.querySelector(
+        "[role='menu'], [role='dialog']:not([data-slot='toast'])",
+      );
       if (e.key === "Escape" && !e.defaultPrevented && !overlay) stopSelecting();
     };
     window.addEventListener("keydown", onKey);
@@ -982,7 +1036,7 @@ export function DeckDetailView({
             if (beside && near) requestAnimationFrame(() => cardRow(near.card.id)?.focus());
           },
           onMove: (deckId) => owner.onMoveCard(shownWord.card.id, deckId),
-          onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id], () => {}),
+          onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id]),
         }
       }
       decks={decks}
@@ -1288,8 +1342,23 @@ export function DeckDetailView({
                         .map((r) => r.id),
                     ))
                 }
-                onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}
-                onMove={owner && (() => owner.sections.onPickSection([...selected], stopSelecting))}
+                marked={!!cards?.length && !unmarked}
+                // In-place changes keep the cards chosen for the next; Move to deck and Archive end it.
+                onMark={onMarkCards && (() => onMarkCards([...selected], unmarked))}
+                onTags={owner && (() => owner.onTagCards([...selected]))}
+                onMove={owner && (() => owner.sections.onPickSection([...selected]))}
+                onMoveToDeck={
+                  owner?.onMoveCardsToDeck &&
+                  (() => owner.onMoveCardsToDeck?.([...selected], stopSelecting))
+                }
+                onArchive={
+                  owner &&
+                  (() => {
+                    const ids = [...selected];
+                    stopSelecting();
+                    owner.onArchiveCards(ids);
+                  })
+                }
                 onDone={stopSelecting}
               />
             ) : (

@@ -22,6 +22,7 @@
     "./review-end": "./src/review-end.ts",
     "./library-groups": "./src/library-groups.ts",
     "./deck-list": "./src/deck-list.ts",
+    "./card-batch": "./src/card-batch.ts",
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts",
     "./keyed": "./src/keyed.ts",

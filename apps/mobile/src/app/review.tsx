@@ -12,7 +12,6 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
-  cueKeepsReading,
   type Drawn,
   drawKey,
   drawsTermReading,
@@ -1288,11 +1287,7 @@ function CardPlate({
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const reading = card.pronunciation;
-  const readingOnCue =
-    mode.cue === "term" &&
-    !!card.pronunciation &&
-    cueKeepsReading(card.language, stateKey(forgotten ? 3 : fsrsState) === "known");
-  // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana or pinyin over the term: on the cue until the card is Known, and always once it is the answer.
   const furigana = useMemo(() => drawsTermReading(card), [card]);
   const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
   const { width: screenWidth, fontScale } = useWindowDimensions();
@@ -1376,7 +1371,7 @@ function CardPlate({
             ? undefined
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
-              : readingOnCue || (mode.cue === "term" && furigana && cueFurigana)
+              : mode.cue === "term" && furigana && cueFurigana
                 ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
                   ? t`Recognition card for ${cue}. Tap to reveal`
@@ -1448,11 +1443,6 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {readingOnCue && (
-                    <Text className="pt-2 text-md text-muted" lang={card.language}>
-                      {reading}
-                    </Text>
-                  )}
                   {/* The hook has one place, under the cue, before the reveal and after it. */}
                   {hook && hookShown ? (
                     <View className="pt-3">
@@ -1520,9 +1510,9 @@ function CardPlate({
                           )}
                         </Animated.View>
                       )}
-                      {/* After the reveal unless the cue keeps it or furigana draws it over the term, which
-                    VoiceOver reads out. Under a term cue it reads the term out. */}
-                      {card.pronunciation && !readingOnCue && !furigana && (
+                      {/* After the reveal unless a reading is drawn over the term, which VoiceOver
+                    reads out. Under a term cue it reads the term out. */}
+                      {card.pronunciation && !furigana && (
                         <Animated.View entering={arrive()}>
                           <Text className="text-md text-muted" lang={card.language}>
                             {card.pronunciation}

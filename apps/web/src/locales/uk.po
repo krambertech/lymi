@@ -269,6 +269,18 @@ msgstr "{0, plural, one {картка до повторення} few {картк
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
 
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t mark # card important.} other {Couldn’t mark # cards important.}}"
+msgstr "{0, plural, one {Не вдалося позначити # картку важливою.} few {Не вдалося позначити # картки важливими.} many {Не вдалося позначити # карток важливими.} other {Не вдалося позначити # картки важливими.}}"
+
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t remove the important mark from # card.} other {Couldn’t remove the important mark from # cards.}}"
+msgstr "{0, plural, one {Не вдалося зняти позначку «важлива» з # картки.} few {Не вдалося зняти позначку «важлива» з # карток.} many {Не вдалося зняти позначку «важлива» з # карток.} other {Не вдалося зняти позначку «важлива» з # картки.}}"
+
+#. placeholder {0}: ids.length
+msgid "{0, plural, one {Couldn’t undo {missed} of # card.} other {Couldn’t undo {missed} of # cards.}}"
+msgstr "{0, plural, one {Не вдалося скасувати зміну для {missed} з # картки.} few {Не вдалося скасувати зміну для {missed} з # карток.} many {Не вдалося скасувати зміну для {missed} з # карток.} other {Не вдалося скасувати зміну для {missed} з # картки.}}"
+
 #. placeholder {0}: summary.current
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
@@ -700,6 +712,12 @@ msgstr "{reviewable, plural, =0 {Нічого повторювати} one {По�
 msgid "{run, plural, one {day in a row} other {days in a row}}"
 msgstr "{run, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
+msgid "{saved, plural, one {Marked # card important} other {Marked # cards important}}"
+msgstr "{saved, plural, one {# картку позначено важливою} few {# картки позначено важливими} many {# карток позначено важливими} other {# картки позначено важливими}}"
+
+msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
+msgstr "{saved, plural, one {Знято позначку «важлива» з # картки} few {Знято позначку «важлива» з # карток} many {Знято позначку «важлива» з # карток} other {Знято позначку «важлива» з # картки}}"
+
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -708,6 +726,18 @@ msgstr "{total, plural, one {# картка} few {# картки} many {# кар
 
 msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. Додай колоду, щоб повторювати їх у своєму темпі."
+
+msgid "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+msgstr "{total, plural, one {Заархівовано {saved} з # картки} few {Заархівовано {saved} з # карток} many {Заархівовано {saved} з # карток} other {Заархівовано {saved} з # картки}}"
+
+msgid "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+msgstr "{total, plural, one {Позначено важливими {saved} з # картки} few {Позначено важливими {saved} з # карток} many {Позначено важливими {saved} з # карток} other {Позначено важливими {saved} з # картки}}"
+
+msgid "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+msgstr "{total, plural, one {Переміщено {saved} з # картки в «{deckName}»} few {Переміщено {saved} з # карток в «{deckName}»} many {Переміщено {saved} з # карток в «{deckName}»} other {Переміщено {saved} з # картки в «{deckName}»}}"
+
+msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+msgstr "{total, plural, one {Знято позначку «важлива» з {saved} із # картки} few {Знято позначку «важлива» з {saved} із # карток} many {Знято позначку «важлива» з {saved} із # карток} other {Знято позначку «важлива» з {saved} із # картки}}"
 
 msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
 msgstr "{total, plural, one {Теги для # картки} few {Теги для # карток} many {Теги для # карток} other {Теги для # картки}}"
@@ -750,6 +780,9 @@ msgstr "Файл .mochi, до 1 ГБ. Можна також перетягнут
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "Файл .zip до 1 ГБ. Можна також перетягнути його сюди."
+
+msgid "A card keeps its progress and leaves its section."
+msgstr "Картка зберігає прогрес і виходить зі свого розділу."
 
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
@@ -1170,6 +1203,9 @@ msgstr "«{tagName}» архівовано з {0, plural, one {# картки} f
 
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
+
+msgid "Archived {saved, plural, one {# card} other {# cards}}"
+msgstr "Заархівовано {saved, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
 
 msgid "Archived decks"
 msgstr "Архівовані колоди"
@@ -1637,6 +1673,10 @@ msgstr "Не вдалося додати колоду. Перевір з’єд�
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Не вдалося додати колоду. Її більше не опубліковано."
 
+#. placeholder {0}: cardIds.length
+msgid "Couldn’t archive {0, plural, one {# card} other {# cards}}."
+msgstr "Не вдалося архівувати {0, plural, one {# картку} few {# картки} many {# карток} other {# картки}}."
+
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не вдалося скасувати запрошення. Спробуй ще раз."
 
@@ -1726,6 +1766,10 @@ msgstr "Не вдалося завантажити дані акаунта"
 
 msgid "Couldn’t load your cards"
 msgstr "Не вдалося завантажити картки"
+
+#. placeholder {0}: cardIds.length
+msgid "Couldn’t move {0, plural, one {# card} other {# cards}}."
+msgstr "Не вдалося перемістити {0, plural, one {# картку} few {# картки} many {# карток} other {# картки}}."
 
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Не вдалося відкрити файл. Вибери зображення JPEG, PNG або WebP."
@@ -2883,6 +2927,10 @@ msgstr "Керувати підключеними застосунками"
 msgid "Mark important"
 msgstr "Позначити важливою"
 
+msgctxt "chosen cards"
+msgid "Mark important"
+msgstr "Позначити важливими"
+
 msgid "Marked important"
 msgstr "Позначено як важливу"
 
@@ -2979,6 +3027,9 @@ msgstr "Перемістити «{sectionName}» вище"
 msgid "Move down"
 msgstr "Нижче"
 
+msgid "Move to deck…"
+msgstr "Перемістити в колоду…"
+
 msgid "Move to section…"
 msgstr "Перемістити в розділ…"
 
@@ -2999,6 +3050,9 @@ msgstr "Картку «{term}» переміщено в «{sectionName}»"
 
 msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgstr "Переміщено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} в «{sectionName}»"
+
+msgid "Moved {saved, plural, one {# card} other {# cards}} to {deckName}"
+msgstr "Переміщено {saved, plural, one {# картку} few {# картки} many {# карток} other {# картки}} в «{deckName}»"
 
 msgid "Moved to {sectionName}"
 msgstr "Переміщено в «{sectionName}»"
@@ -4707,6 +4761,10 @@ msgstr "Скасувати цей імпорт"
 
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
+
+msgctxt "chosen cards"
+msgid "Unmark important"
+msgstr "Зняти позначку «важливі»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"

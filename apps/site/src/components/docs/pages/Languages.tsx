@@ -1,4 +1,5 @@
 import type { LanguageOut } from "@lymi/core";
+import { Fragment } from "react";
 import { Code } from "../Code";
 import { Defs, H2, Lead, NextLinks, Note } from "../Prose";
 
@@ -19,7 +20,14 @@ function Language({ language }: { language: LanguageOut }) {
     <>
       <H2 id={language.tag}>{language.name}</H2>
       <p>
-        Tag <code>{language.tag}</code>, written in <code>{language.script}</code>.
+        Tag <code>{language.tag}</code>, written in{" "}
+        {language.scripts.map((script, at) => (
+          <Fragment key={script}>
+            {at > 0 && " or "}
+            <code>{script}</code>
+          </Fragment>
+        ))}
+        .
       </p>
       <Defs
         items={[

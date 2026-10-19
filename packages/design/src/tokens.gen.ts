@@ -196,6 +196,8 @@ export const faces = {
     "Noto Sans JP",
     "Meiryo",
   ],
+  Hans: ["PingFang SC", "Microsoft YaHei", "Noto Sans SC"],
+  Hant: ["PingFang TC", "Microsoft JhengHei", "Noto Sans TC"],
 } as const;
 
 /** The eight deck hues per surface and room, from tray.css, indexed by core's `trayHue`. */

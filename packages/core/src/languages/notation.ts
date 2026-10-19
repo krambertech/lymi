@@ -16,4 +16,6 @@ export const EXAMPLE_NOTATION = {
     pattern: /\[([\p{Script=Hiragana}\p{Script=Katakana}ー]{1,30})\]/gu,
     sample: "毎朝[まいあさ]パンを食[た]べます。",
   },
+  // Chinese examples stay plain until the phone parses inline pinyin. docs/proposals/chinese.md.
+  pinyin: null,
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

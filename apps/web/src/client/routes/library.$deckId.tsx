@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { ExportSheet } from "../components/export-sheet";
 import { LeaveDeckDialog } from "../components/leave-deck-dialog";
+import { MoveCardsToDeckDialog } from "../components/move-cards-to-deck-dialog";
 import {
   MoveToSectionDialog,
   SectionNameDialog,
@@ -31,6 +32,7 @@ import {
 } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
+import { useCardBatch } from "../lib/use-card-batch";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
@@ -91,13 +93,21 @@ function DeckPage() {
     enabled: isOwner,
     staleTime: Number.POSITIVE_INFINITY,
   });
-  const [tagging, setTagging] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const [tagging, setTagging] = useState<{ cardIds: string[] } | null>(null);
   const tagCards = useTagCards(deckId);
+  const batch = useCardBatch(deckId);
+  const [movingCards, setMovingCards] = useState<{ cardIds: string[]; after: () => void } | null>(
+    null,
+  );
+  // The picker keeps its count while it closes, so its title never changes on the way out.
+  const lastMovingCards = useRef(movingCards);
+  if (movingCards) lastMovingCards.current = movingCards;
+  const ownDecks = (decks.data ?? []).filter((d) => d.role === "owner" && d.id !== deckId);
   const tagsInUse = useQuery({ ...tagsQuery, enabled: !!tagging }).data;
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
-  const [picking, setPicking] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const [picking, setPicking] = useState<{ cardIds: string[] } | null>(null);
   // The picker keeps its cards while it closes, so it never flashes "Move 0 cards".
   const lastPicking = useRef(picking);
   if (picking) lastPicking.current = picking;
@@ -269,6 +279,7 @@ function DeckPage() {
         streak={streak.data}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onImportantChange={(card, important) => mark.mutate({ card, important })}
+        onMarkCards={(cardIds, important) => void batch.important(cardIds, important)}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         // Every write is the owner's; a member reads the deck and leaves it. ADR 0011.
         owner={
@@ -286,7 +297,12 @@ function DeckPage() {
                 onArchiveDeck: () => archiveDeck.mutate(),
                 onExport: () => setExporting(true),
                 onMoveToSeries: () => setMovingToSeries(true),
-                onTagCards: (cardIds, after) => setTagging({ cardIds, after }),
+                onTagCards: (cardIds) => setTagging({ cardIds }),
+                onMoveCardsToDeck:
+                  ownDecks.length > 0
+                    ? (cardIds, after) => setMovingCards({ cardIds, after })
+                    : undefined,
+                onArchiveCards: (cardIds) => void batch.archive(cardIds),
                 sections: {
                   onCreate: () => setNaming({}),
                   onRename: (section) => setNaming({ section }),
@@ -297,7 +313,7 @@ function DeckPage() {
                       params: { deckId },
                       hash: "sections",
                     }),
-                  onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
+                  onPickSection: (cardIds) => setPicking({ cardIds }),
                   onMoveCards: (cardIds, section) =>
                     sectionActions.moveCards.mutate({
                       cardIds,
@@ -378,8 +394,18 @@ function DeckPage() {
                 (cards.data ?? []).filter((row) => chosen.has(row.card.id)),
                 change,
               );
-              tagging.after();
               setTagging(null);
+            }}
+          />
+          <MoveCardsToDeckDialog
+            open={!!movingCards}
+            onOpenChange={(open) => !open && setMovingCards(null)}
+            count={(movingCards ?? lastMovingCards.current)?.cardIds.length ?? 0}
+            decks={ownDecks}
+            onPick={(to) => {
+              if (!movingCards) return;
+              movingCards.after();
+              void batch.moveToDeck(movingCards.cardIds, to);
             }}
           />
           <MoveToSectionDialog
@@ -412,7 +438,6 @@ function DeckPage() {
                     ? cards.data?.find((row) => row.card.id === picking.cardIds[0])?.card.term
                     : undefined,
               });
-              picking.after();
               setPicking(null);
             }}
             pending={sectionActions.create.isPending}
@@ -431,7 +456,6 @@ function DeckPage() {
                 id: `move-cards-${deckId}`,
                 title: t`Moved to ${sectionName}`,
               });
-              picking.after();
               setPicking(null);
               sectionActions.create.reset();
             }}

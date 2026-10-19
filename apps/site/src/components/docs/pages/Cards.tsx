@@ -193,6 +193,13 @@ export function Cards() {
           and read <code>うわて</code> (a cut above) are two words, and Lymi treats them as two.
           When either card has no reading, term and language decide.
         </li>
+        <li>
+          In Chinese the pinyin counts the same way. <code>行</code> read <code>háng</code> (a row)
+          and read <code>xíng</code> (to go) are two words. Pinyin sent with tone numbers, such as{" "}
+          <code>xing2</code>, is stored with tone marks. Punctuation never counts, and neither does
+          the tone over 一 or 不, so <code>bù shì</code> and <code>bú shì</code> are one word.
+          Pinyin with no tone mark counts as no reading.
+        </li>
         <li>A card with no language only collides with other cards that have no language.</li>
         <li>Archived cards do not collide. Adding a term you archived makes a fresh card.</li>
       </ul>

@@ -146,21 +146,48 @@ async function reviewCue(card: Partial<QueueItem["card"]>, fsrsState: number) {
   return { reveal: () => screen.rerender(cue(true)) };
 }
 
-test("a Known Chinese card's pinyin waits for the reveal", async () => {
+// Pinyin drawn over the cue's characters, outside the hidden copy that sizes the card.
+const pinyinShown = () =>
+  [...document.querySelectorAll("rt")]
+    .filter(
+      (rt) =>
+        !rt.parentElement?.closest("[aria-hidden='true']") &&
+        rt.checkVisibility({ visibilityProperty: true }),
+    )
+    .map((rt) => rt.textContent);
+
+const pinyinLine = () => shown("xuéxí").filter((el) => !el.classList.contains("sr-only"));
+
+test("a Known Chinese card's pinyin waits over the term for the reveal", async () => {
   const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 2);
-  expect(shown("xuéxí")).toHaveLength(0);
+  expect(pinyinShown()).toEqual([]);
   await reveal();
-  await expect.poll(() => shown("xuéxí")).toHaveLength(1);
-  expect(shown("xuéxí")[0]?.getAttribute("lang")).toBe("zh");
+  await expect.poll(pinyinShown).toEqual(["xué", "xí"]);
+  // Drawn over the term, so only the screen reader's line repeats it.
+  expect(pinyinLine()).toHaveLength(0);
 });
 
-test("a New or Learning Chinese card keeps its pinyin on the cue", async () => {
+test("a New or Learning Chinese card draws its pinyin over each character on the cue", async () => {
   const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 1);
-  expect(shown("xuéxí")).toHaveLength(1);
+  expect(pinyinShown()).toEqual(["xué", "xí"]);
+  expect(pinyinLine()).toHaveLength(0);
   await reveal();
-  // Still one line: the cue keeps it, so the answer does not repeat it.
   await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
-  expect(shown("xuéxí")).toHaveLength(1);
+  expect(pinyinShown()).toEqual(["xué", "xí"]);
+});
+
+test("一点儿 gives 儿 to the erhua syllable before it", async () => {
+  await reviewCue({ term: "一点儿", language: "zh", pronunciation: "yì diǎnr" }, 0);
+  expect(pinyinShown()).toEqual(["yì", "diǎnr"]);
+  const ruby = [...document.querySelectorAll("ruby")].find((el) =>
+    el.textContent?.includes("diǎnr"),
+  );
+  expect(ruby?.firstChild?.textContent).toBe("点儿");
+});
+
+test("a traditional Chinese card draws pinyin over its characters", async () => {
+  await reviewCue({ term: "學習", language: "zh-TW", pronunciation: "xué xí" }, 0);
+  expect(pinyinShown()).toEqual(["xué", "xí"]);
 });
 
 test("another language's reading waits for the reveal, even on a New card", async () => {

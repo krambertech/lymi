@@ -7,7 +7,6 @@ name: Library
 - extendedWaitUntil:
     visible: "New deck"
     timeout: 20000
-- assertVisible: "Archived.*"
 - takeScreenshot: 01-library
 # Deck rows sit inside expo-router's Link.Trigger, which hides them from XCUITest; the first row is tapped by position.
 - tapOn:
@@ -18,11 +17,23 @@ name: Library
 - assertVisible: "${DECK}"
 - assertVisible: "Search this deck"
 - takeScreenshot: 02-deck
+# Centred, so the row is not under the tab bar when it is tapped.
 - scrollUntilVisible:
     element: "${TERM}, .*"
+    centerElement: true
 - tapOn: "${TERM}, .*"
 - extendedWaitUntil:
     visible: "Details"
     timeout: 20000
-- assertVisible: "Meaning, ${MEANING}"
+# A shared deck's card shows the meaning read-only, as two elements rather than one button.
+- assertVisible: "Meaning"
+- assertVisible: "${MEANING}"
 - takeScreenshot: 03-card
+# Back on Library, below the decks and series, which can push it out of view.
+- tapOn: "Library"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Archived.*"
+- takeScreenshot: 04-archived

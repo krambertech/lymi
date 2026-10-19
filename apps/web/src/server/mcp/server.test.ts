@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Db } from "../db";
 import type { CardView, getDeck } from "../services";
 import { ServiceError } from "../services/context";
-import { buildMcpServer, type McpPrincipal } from "./server";
+import { buildMcpServer, DECK_PREVIEW_LIMIT, type McpPrincipal } from "./server";
 
 vi.mock("../services", async () => {
   const context = await import("../services/context");
@@ -217,6 +217,7 @@ describe("Lymi MCP server", () => {
     for (const tool of tools) {
       const { annotations } = tool;
       expect(tool.title, tool.name).toBeTruthy();
+      expect(annotations?.title, tool.name).toBe(tool.title);
       expect(tool.outputSchema, tool.name).toBeDefined();
       expect(typeof annotations?.readOnlyHint, tool.name).toBe("boolean");
       expect(typeof annotations?.destructiveHint, tool.name).toBe("boolean");
@@ -227,6 +228,24 @@ describe("Lymi MCP server", () => {
       const scope = annotations?.readOnlyHint ? "read" : "write";
       expect(tool._meta?.securitySchemes, tool.name).toEqual([{ type: "oauth2", scopes: [scope] }]);
     }
+  });
+
+  it("gives every parameter its schema inline, because directory portals do not follow $ref", async () => {
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+
+    for (const tool of tools) {
+      expect(JSON.stringify(tool.inputSchema), tool.name).not.toContain("$ref");
+      for (const [name, property] of Object.entries(tool.inputSchema.properties ?? {})) {
+        const shape = property as { type?: unknown; anyOf?: unknown };
+        expect(shape.type ?? shape.anyOf, `${tool.name}.${name}`).toBeDefined();
+      }
+    }
+    const createDeck = tools.find((t) => t.name === "create_deck");
+    expect(createDeck?.inputSchema.properties?.sectionProgression).toMatchObject({
+      type: "string",
+      enum: ["automatic", "manual", "open"],
+    });
   });
 
   it("never offers the daily goal as something an assistant can change", async () => {
@@ -1126,7 +1145,7 @@ describe("Lymi MCP server", () => {
     });
   });
 
-  it("returns a deck with its progress, its cards and each card's due time, dates as ISO strings", async () => {
+  it("returns a deck with its progress and its newest cards' terms, dates as ISO strings", async () => {
     services.getDeck.mockResolvedValue(deck);
     services.listDecks.mockResolvedValue([{ ...deck, total: 1, due: 1 }]);
     services.deckStages.mockResolvedValue({ new: 1, learning: 0, known: 0 });
@@ -1158,8 +1177,32 @@ describe("Lymi MCP server", () => {
       total: 1,
       due: 1,
       stages: { new: 1, learning: 0, known: 0 },
-      truncated: false,
-      cards: [{ id: "card-1", term: "sbrigarsi", dueAt: now.toISOString() }],
+      newest: [{ id: "card-1", term: "sbrigarsi", meaning: card.meaning }],
+    });
+    expect(res.content).toHaveLength(1);
+  });
+
+  it("summarises a large deck in a few kilobytes and points to search_cards for the rest", async () => {
+    const rows = Array.from({ length: 365 }, (_, i) => ({
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      state: null,
+    }));
+    services.getDeck.mockResolvedValue(deck);
+    services.listDecks.mockResolvedValue([{ ...deck, total: 365, due: 40 }]);
+    services.deckStages.mockResolvedValue({ new: 200, learning: 100, known: 65 });
+    services.listDeckCards.mockResolvedValue(rows);
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_deck", arguments: { deckId: "deck-1" } });
+
+    const structured = res.structuredContent as { total: number; newest: object[] };
+    expect(structured.total).toBe(365);
+    expect(structured.newest).toHaveLength(DECK_PREVIEW_LIMIT);
+    expect(structured.newest[0]).toEqual({ id: "card-0", term: card.term, meaning: card.meaning });
+    expect(JSON.stringify(res.content).length).toBeLessThan(8_000);
+    expect(res.content).toContainEqual({
+      type: "text",
+      text: expect.stringContaining('search_cards with deckId "deck-1"'),
     });
   });
 

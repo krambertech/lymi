@@ -377,12 +377,12 @@ export function catalogSearchText(
 }
 
 /** A shelf per language, then a shelf per subject, then More decks. Each app writes the headings. */
-export interface Shelf {
+export interface Shelf<T = PublicDeckSummary> {
   /** Unique on the page, and safe in an element id. */
   key: string;
   /** The language a language shelf holds, or null for a subject shelf and More decks. */
   language: string | null;
-  decks: PublicDeckSummary[];
+  decks: T[];
 }
 
 /**
@@ -390,10 +390,12 @@ export interface Shelf {
  * `PUBLICATION_CATEGORIES` lists them, then More decks. Every deck lands on exactly one shelf, and
  * both Explores group through here so they cannot disagree. docs/design/explore.md.
  */
-export function shelvesOf(decks: readonly PublicDeckSummary[]): Shelf[] {
-  const byLanguage = new Map<string, PublicDeckSummary[]>();
-  const bySubject = new Map<string, PublicDeckSummary[]>();
-  const rest: PublicDeckSummary[] = [];
+export function shelvesOf<T extends Pick<PublicDeckSummary, "category" | "language">>(
+  decks: readonly T[],
+): Shelf<T>[] {
+  const byLanguage = new Map<string, T[]>();
+  const bySubject = new Map<string, T[]>();
+  const rest: T[] = [];
   for (const deck of decks) {
     const subject = subjectOf(deck);
     if (subject) push(bySubject, subject, deck);
@@ -449,7 +451,7 @@ export function shelfRoute(shelf: Pick<Shelf, "key" | "language">): ShelfRoute |
   return { kind: "subjects", name: shelf.key };
 }
 
-export function hasShelfPage(shelf: Shelf): boolean {
+export function hasShelfPage(shelf: Shelf<unknown>): boolean {
   return shelf.decks.length >= SHELF_PAGE_MIN_DECKS && shelfRoute(shelf) !== null;
 }
 

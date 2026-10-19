@@ -67,7 +67,8 @@ const PARTIAL =
 const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks; for a first-party publisher, only in the target deck. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
-  "A Japanese card whose kana reading differs from the existing card's is a different word, as long as both have a reading: 上手 read じょうず and うわて are two cards. " +
+  "A Japanese card whose kana reading differs from the existing card's is a different word, as long as both have a reading of the term: 上手 read じょうず and うわて are two cards. " +
+  "A Japanese term sent with its reading inline, `食[た]べる`, is stored as 食べる with the pronunciation たべる before the check, unless another pronunciation was sent, and the outcome lists the fields converted in `normalized`. " +
   "Re-running the same call is safe.";
 
 const ENRICH_RULE =

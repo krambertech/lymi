@@ -1,11 +1,23 @@
 import { hookable } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
+import { promptHash } from "../ai/prompt-hash";
 import type { Db } from "../db";
+import { LANGUAGE_PROMPTS } from "../languages";
+import { supportedNamesIn } from "../languages/test-helpers";
 import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import { ServiceError } from "./context";
 import { createDeck, updateDeck } from "./decks";
-import { acceptDraft, givesAway, type HookCard, hookDraftFor } from "./hook-draft";
+import {
+  acceptDraft,
+  givesAway,
+  HOOK_INSTRUCTIONS,
+  HOOK_PROMPT_VERSION,
+  HOOK_REPLY_SCHEMA,
+  type HookCard,
+  hookDraftFor,
+  hookInput,
+} from "./hook-draft";
 import { learner, testDb } from "./test-db";
 
 const kurb: HookCard = {
@@ -14,6 +26,29 @@ const kurb: HookCard = {
   language: "et",
   asked: ["meaning_to_term"],
 };
+
+describe("the hook prompt", () => {
+  it("changes only with a new prompt version", () => {
+    const guides = Object.values(LANGUAGE_PROMPTS).map((prompts) => prompts.hook);
+    const hash = promptHash({ HOOK_INSTRUCTIONS, HOOK_REPLY_SCHEMA, guides });
+    // Raise HOOK_PROMPT_VERSION with any change to what the model reads, then update both.
+    expect({ HOOK_PROMPT_VERSION, hash }).toEqual({
+      HOOK_PROMPT_VERSION: 2,
+      hash: "c95d70a462dd736e",
+    });
+  });
+
+  it("leaves each supported language to its module", () => {
+    expect(supportedNamesIn(HOOK_INSTRUCTIONS)).toEqual([]);
+  });
+
+  it("sends a card without a guide when its language has no hook advice", () => {
+    const input = JSON.parse(
+      hookInput({ ...kurb, language: "ja", term: "食べる", meaning: "есть" }),
+    );
+    expect(input).not.toHaveProperty("guide");
+  });
+});
 
 describe("givesAway", () => {
   it("allows the meaning and a sound-alike when the meaning is the cue, never the term", () => {

@@ -20,9 +20,9 @@ import {
   ExamQuestions,
   ExamSources,
   examQuestions,
-  examTitle,
   OtherExams,
 } from "./ExamPageView";
+import { examDescription, examTitle } from "./exam-meta";
 
 interface Props {
   page: ExamsPage;
@@ -35,8 +35,10 @@ const i18n = pageI18n(locale);
 const germany = exam.slug === "einbuergerungstest";
 const decks = page.exams.find((each) => each.exam.id === exam.id)?.decks ?? [];
 const listed = page.exams.map((each) => each.exam.id);
-const title = germany ? i18n._(EINBUERGERUNGSTEST_TITLE) : examTitle(exam, locale);
-const description = germany ? i18n._(EINBUERGERUNGSTEST_BLURB) : i18n._(exam.lede);
+const title = germany ? i18n._(EINBUERGERUNGSTEST_TITLE) : examTitle(exam, locale, decks);
+const description = germany
+  ? i18n._(EINBUERGERUNGSTEST_BLURB)
+  : examDescription(exam, locale, decks);
 const heading = i18n._(exam.heading);
 const path = examPath(exam, locale);
 const questions = germany ? EINBUERGERUNGSTEST_QUESTIONS : examQuestions(exam, locale);

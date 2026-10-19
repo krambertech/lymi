@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
+import type { SupportedTag } from "@lymi/core";
 import {
   hasShelfPage,
   type PublicDeckSummary,
@@ -16,7 +17,9 @@ import type { AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
+import { LANGUAGE_PAGES } from "./language-pages";
 import { type Locale, locales } from "./routes";
+import type { SitemapShelf } from "./sitemap";
 
 export interface ExplorePage {
   locale: Locale;
@@ -115,20 +118,23 @@ export async function resolveShelfPage(
   return { locale, shelf, route, alternates, others };
 }
 
-/** Every shelf page there is, each with its address in the locales that have it, for the sitemap. */
-export async function shelfPagePaths(): Promise<Partial<Record<Locale, string>>[]> {
+/** Every shelf page there is, with its address in the locales that have it and its decks, for the sitemap. */
+export async function shelfPagePaths(): Promise<SitemapShelf[]> {
   const db = drizzle(env.DB);
   const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
-  const byRoute = new Map<string, Partial<Record<Locale, string>>>();
+  const byRoute = new Map<string, { paths: Partial<Record<Locale, string>>; slugs: Set<string> }>();
   locales.forEach((each, at) => {
     for (const shelf of shelvesOf(catalogs[at] ?? [])) {
       const route = shelfRoute(shelf);
       if (!route || !hasShelfPage(shelf)) continue;
       const key = `${route.kind}/${route.name}`;
-      byRoute.set(key, { ...byRoute.get(key), [each]: shelfPath(route, each) });
+      const entry = byRoute.get(key) ?? { paths: {}, slugs: new Set<string>() };
+      entry.paths[each] = shelfPath(route, each);
+      for (const deck of shelf.decks) entry.slugs.add(deck.slug);
+      byRoute.set(key, entry);
     }
   });
-  return [...byRoute.values()];
+  return [...byRoute.values()].map(({ paths, slugs }) => ({ paths, slugs: [...slugs] }));
 }
 
 export interface ExamsPage {
@@ -182,19 +188,19 @@ export async function resolveExamsPage(
 
 export interface LanguageDecksPage {
   locale: Locale;
+  language: SupportedTag;
   /** The language's decks, those a beginner starts from first, as Welcome offers them. */
   decks: PublicDeckSummary[];
 }
 
 /**
  * A language page's decks in this locale, read and cached like Explore, so the page shows only
- * decks that are published now. `page` keeps its validator apart from other pages'.
+ * decks that are published now.
  */
 export async function resolveLanguageDecks(
   astro: AstroGlobal,
   locale: Locale,
-  language: string,
-  page: string,
+  language: SupportedTag,
 ): Promise<LanguageDecksPage | Response> {
   const decks = languageDecks(await listPublicCatalog(drizzle(env.DB), locale), language);
   const headers = astro.response.headers;
@@ -203,7 +209,7 @@ export async function resolveLanguageDecks(
     content: catalogContentHash(decks),
     locale,
     version: env.CF_VERSION_METADATA?.id,
-    page,
+    page: LANGUAGE_PAGES[language].page,
   });
   headers.set("cache-control", DECK_CACHE_CONTROL);
   headers.set("etag", etag);
@@ -213,5 +219,5 @@ export async function resolveLanguageDecks(
       headers: { "cache-control": DECK_CACHE_CONTROL, etag },
     });
   }
-  return { locale, decks };
+  return { locale, language, decks };
 }

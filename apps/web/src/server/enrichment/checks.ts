@@ -1,4 +1,5 @@
-import { ENRICHED_FIELDS, type EnrichedField, missingReadings, stripReadings } from "@lymi/core";
+import { ENRICHED_FIELDS, type EnrichedField, stripReadings } from "@lymi/core";
+import type { LanguageCheck } from "../languages";
 import type { Filled } from "./prompt";
 
 /**
@@ -28,8 +29,8 @@ export type CheckedCard = {
   mayFill: readonly EnrichedField[];
   /** The deck teaches a language, so a meaning is a gloss rather than an explanation. */
   language: boolean;
-  /** The card's language carries readings over kanji in its examples. */
-  readings?: boolean;
+  /** The rules the card's language module adds. */
+  rules?: readonly LanguageCheck[] | undefined;
   expect: CaseExpectations;
 };
 
@@ -149,7 +150,6 @@ function style(
   if (field === "example") {
     record(field, "no example for a sentence", !isSentence(card.term), text);
     record(field, "under twelve words", words(stripReadings(text)) < 12, text);
-    if (card.readings) record(field, "readings over kanji", !missingReadings(text), text);
   }
   if (field === "notes") {
     const lines = text.split("\n").filter((line) => line.trim());
@@ -160,6 +160,9 @@ function style(
   }
   if (field === "pronunciation") {
     record(field, "no slashes or brackets", !/^[/[]|[/\]]$/.test(text), text);
+  }
+  for (const check of card.rules ?? []) {
+    if (check.field === field) record(field, check.rule, check.pass(text), text);
   }
 }
 

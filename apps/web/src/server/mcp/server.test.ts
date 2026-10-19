@@ -437,6 +437,31 @@ describe("Lymi MCP server", () => {
     });
   });
 
+  it("names the fields an add converted, beside the card as stored", async () => {
+    const stored = { ...card, term: "上手", pronunciation: "じょうず", language: "ja" };
+    services.addCards.mockResolvedValue([
+      { id: card.id, status: "added", card: stored, normalized: ["term", "pronunciation"] },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "上手[じょうず]" }] },
+    });
+
+    expect(res.structuredContent).toMatchObject({
+      results: [
+        {
+          status: "added",
+          card: { term: "上手", pronunciation: "じょうず" },
+          normalized: ["term", "pronunciation"],
+        },
+      ],
+    });
+    const [text] = res.content as { type: "text"; text: string }[];
+    expect(JSON.parse(text?.text ?? "{}").results[0].normalized).toEqual(["term", "pronunciation"]);
+  });
+
   it("offers decks by name and cards by text for an @-mention, as links a host can read", async () => {
     services.listDecks.mockResolvedValue([
       { id: "deck-1", name: "Italian", total: 12 },

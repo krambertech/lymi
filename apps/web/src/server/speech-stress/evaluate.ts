@@ -6,14 +6,17 @@
  *
  *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,gemini,openai,chirp] [--out dir]
  *   pnpm --filter @lymi/web eval:stress --summary stress-ratings.json [--out dir]
+ *   pnpm --filter @lymi/web eval:stress --serve [--port 5243] [--out dir]
  *
  * Keys come from `.dev.vars`, and a voice without its key is skipped. `--dry` sends nothing: it writes
  * every request body and a page of silent clips. A clip already on disk is reused, so a rerun bills
- * only what failed. `--summary` prints the results table from ratings the page exported.
+ * only what failed. `--summary` prints the results table from ratings the page exported. `--serve`
+ * serves the page on localhost, since a browser that opens it as a file may not load the clips.
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createServer } from "node:http";
+import { extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import { createElevenLabsSpeechProvider } from "../ai/elevenlabs-speech";
@@ -106,6 +109,14 @@ if (summaryFile) {
   ) => string;
   console.log(summarize(clips, ratings));
   process.exit(0);
+}
+
+if (args.includes("--serve")) {
+  const port = Number(option("--port") ?? 5243);
+  serve(port);
+  console.log(`Serving ${out} at http://localhost:${port}/`);
+  // The server keeps the process alive until it is stopped.
+  await new Promise(() => {});
 }
 
 const env = dry ? placeholderEnv() : liveEnv();
@@ -217,7 +228,48 @@ if (dry) {
     console.log(`\n--- ${kind}: ${request.url} ---\n${JSON.stringify(request.body, null, 2)}`);
   }
 }
-console.log(`\n${clips.length} clips. Open ${join(out, "index.html")}`);
+console.log(
+  `\n${clips.length} clips. Run with --serve and open http://localhost:5243/, or open ${join(out, "index.html")}`,
+);
+
+/** Serves the page and its clips, with byte ranges, which some browsers need to play audio. */
+function serve(port: number) {
+  const types: Record<string, string> = {
+    ".html": "text/html; charset=utf-8",
+    ".json": "application/json",
+    ".mp3": "audio/mpeg",
+    ".wav": "audio/wav",
+  };
+  createServer((request, response) => {
+    const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
+    const path = normalize(join(out, pathname === "/" ? "index.html" : pathname));
+    if (!path.startsWith(normalize(out) + sep) || !existsSync(path) || !statSync(path).isFile()) {
+      response.writeHead(404).end();
+      return;
+    }
+    const bytes = readFileSync(path);
+    const headers = {
+      "Content-Type": types[extname(path)] ?? "application/octet-stream",
+      "Accept-Ranges": "bytes",
+      "Cache-Control": "no-store",
+    };
+    const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.range ?? "");
+    if (!range) {
+      response.writeHead(200, { ...headers, "Content-Length": bytes.length }).end(bytes);
+      return;
+    }
+    const start = range[1] ? Number(range[1]) : Math.max(0, bytes.length - Number(range[2]));
+    const end =
+      range[1] && range[2] ? Math.min(Number(range[2]), bytes.length - 1) : bytes.length - 1;
+    response
+      .writeHead(206, {
+        ...headers,
+        "Content-Length": end - start + 1,
+        "Content-Range": `bytes ${start}-${end}/${bytes.length}`,
+      })
+      .end(bytes.subarray(start, end + 1));
+  }).listen(port, "127.0.0.1");
+}
 
 function voices(env: Env, language: string): Voice[] {
   const list: Voice[] = [];

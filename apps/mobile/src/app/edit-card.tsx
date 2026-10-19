@@ -5,12 +5,12 @@ import { modeKey, type ReviewModeKey } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { Alert, ScrollView, type TextInput, View } from "react-native";
 import { AddFieldChips, CardFields, useFormFields } from "../capture/card-fields";
 import { ChipIn } from "../capture/chip-in";
-import { useChoiceSheet } from "../capture/choice-sheet";
-import { CHOICE_TITLES } from "../capture/choice-sheets";
+import { useChoiceSheet, useDraft } from "../capture/choice-sheet";
+import { CHOICE_TITLES, DRAFTED } from "../capture/choice-sheets";
 import {
   choicesPatch,
   EMPTY_FORM,
@@ -106,7 +106,7 @@ export default function EditCard() {
   const form = useReveal();
   const [saving, setSaving] = useState(false);
   const fieldRef = useRef<TextInput>(null);
-  const { held, hold, chips, open, close, sheet } = useChoiceSheet<EditChoice>(() =>
+  const { held, hold, chips, open, keep, done, sheet } = useChoiceSheet<EditChoice>(() =>
     fieldRef.current?.focus(),
   );
   // Opened from the card page's Asked or Tags, the form starts on that choice's sheet.
@@ -256,12 +256,17 @@ export default function EditCard() {
         </OnGlass>
       </KeyboardRoom>
       {/* Filled from its first frame, since iOS sizes the sheet to what it holds as it rises. */}
-      <Sheet {...sheet} title={held ? i18n._(CHOICE_TITLES[held]) : ""}>
+      <Sheet
+        {...sheet}
+        title={held ? i18n._(CHOICE_TITLES[held]) : ""}
+        save={held && DRAFTED.has(held) ? { label: t`Apply`, onPress: done } : undefined}
+      >
         {held === "picture" && (
           <PictureChoices value={shownPicture} onChange={setPicture} card={said} />
         )}
         {held === "modes" && (
-          <ModesChoices
+          <DraftedModes
+            keep={keep}
             value={shownModes}
             deckModes={(deck?.reviewModes ?? []).map(modeKey)}
             onChange={setModes}
@@ -273,9 +278,39 @@ export default function EditCard() {
           />
         )}
         {held === "tags" && (
-          <TagsChoices value={shownTags} onChange={setTags} deckId={params.deck} onDone={close} />
+          <DraftedTags
+            keep={keep}
+            value={shownTags}
+            onChange={setTags}
+            deckId={params.deck}
+            onDone={done}
+          />
         )}
       </Sheet>
     </View>
   );
+}
+
+type Keeps = { keep: (apply: () => void) => void };
+
+/** How the card is asked, ticked as a draft that the sheet's ✓ keeps. */
+function DraftedModes({
+  keep,
+  value,
+  onChange,
+  ...rest
+}: ComponentProps<typeof ModesChoices> & Keeps) {
+  const [draft, setDraft] = useDraft(value, onChange, keep);
+  return <ModesChoices {...rest} value={draft} onChange={setDraft} />;
+}
+
+/** The card's tags, ticked as a draft that the sheet's ✓ keeps. */
+function DraftedTags({
+  keep,
+  value,
+  onChange,
+  ...rest
+}: ComponentProps<typeof TagsChoices> & Keeps) {
+  const [draft, setDraft] = useDraft(value, onChange, keep);
+  return <TagsChoices {...rest} value={draft} onChange={setDraft} />;
 }

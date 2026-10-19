@@ -10,7 +10,7 @@ import { TagList, useSuggestedTags, useTagList } from "../capture/tags";
 import { useDeckCards } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
 import { captureEvent } from "../telemetry/posthog";
-import { Sheet } from "../ui/sheet";
+import { Sheet, SheetNote } from "../ui/sheet";
 import { toast } from "../ui/toast-host";
 
 type Edit = { cardId: string; tags: string[] };
@@ -223,16 +223,12 @@ function TagCardsSheet({
   return (
     <Sheet
       title={plural(total, { one: "Tags for # card", other: "Tags for # cards" })}
-      description={
-        online
-          ? t`Tick a tag to put it on every card, or untick it to take it off.`
-          : t`Changing tags needs a connection.`
-      }
       open={open}
       onOpenChange={onOpenChange}
       save={{ label: t`Save`, onPress: () => onSave(change), disabled: changed === 0 || !online }}
     >
       <TagList list={list} />
+      {!online && <SheetNote>{t`Changing tags needs a connection.`}</SheetNote>}
     </Sheet>
   );
 }

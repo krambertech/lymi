@@ -31,7 +31,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { haptics } from "../theme/haptics";
 import { clear, usePalette, useRoom } from "../theme/palette";
-import { GlassButton } from "./glass";
+import { GLASS_BUTTON_SIZE, GlassButton } from "./glass";
 import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
 import { SheetFrame } from "./sheet-frame";
@@ -42,12 +42,12 @@ import { OnGlass } from "./surface";
 
 /**
  * Where a sheet's own text starts: 16 pt in from a plate's edge, where a row's icon or check starts,
- * as iOS sets a grouped list's headers. One line for the title, the description, headings and notes.
+ * as iOS sets a grouped list's headers. One line for headings and notes.
  */
 const ROW_INSET = 16;
 /** Whether this group's rows keep the slot: only when one of them shows an icon or a check. */
 const GroupMarked = createContext(true);
-/** Where the sheet's own text starts: the title, the description and every note. */
+/** Where the sheet's own text starts: every heading and note. */
 const SheetInset = createContext(ROW_INSET);
 
 interface SheetProps {
@@ -55,19 +55,20 @@ interface SheetProps {
   onOpenChange: (open: boolean) => void;
   /** After the sheet has gone, so what a row chose can run without moving anything under it. */
   onDismiss?: () => void;
-  /** What the sheet is about, over its groups. */
+  /**
+   * What the sheet is about, centred between close and the sheet's ✓, as every sheet's header is.
+   * A sheet without one, such as a row's commands or a peek led by its own content, has no header;
+   * what a learner needs to know before acting goes in a `SheetNote` under the rows it is about.
+   */
   title?: string;
-  /** One or two sentences under the title, on the same line as the title and the rows' labels. */
-  description?: ReactNode;
-  /** A quiet action at the title's end, such as Reset. */
-  aside?: ReactNode;
-  /** In a sheet that saves, a short line centred under the title, such as how many cards filters keep. */
+  /** A short line centred under the title, such as how many cards the drafted filters keep. */
   subtitle?: string;
-  /** A level of a sheet that saves, below its first: a back chevron takes close's place, named by `label`. */
+  /** A level below the sheet's first: a back chevron takes close's place, named by `label`. */
   back?: { label: string; onPress: () => void };
   /**
-   * A sheet that saves: close at the start and an amber ✓ at the end, the title between them, as
-   * every form has. Close and a swipe leave without saving.
+   * The amber ✓ at the header's end, for a sheet that holds something to save: a form, or a list
+   * ticked several at a time. Close and a swipe leave without saving. A list where a tap is the
+   * choice has no ✓, since the tap closes it.
    */
   save?: { label: string; onPress: () => void; disabled?: boolean; busy?: boolean };
   /** What shows first; the sheet opens at its height. */
@@ -85,8 +86,6 @@ export function Sheet({
   onOpenChange,
   onDismiss,
   title,
-  description,
-  aside,
   subtitle,
   back,
   save,
@@ -105,12 +104,17 @@ export function Sheet({
   const fits = useAnimatedStyle(() => ({ maxHeight: tallest + keyboard.value }));
   const [peek, setPeek] = useState<number | null>(null);
   const inset = ROW_INSET;
-  const heading = save ? (
+  const heading = title !== undefined && (
     <View className="flex-row items-center gap-3 pb-3">
       {back ? (
         <GlassButton icon="back" label={back.label} onPress={back.onPress} />
       ) : (
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
+        <GlassButton
+          icon="close"
+          // Cancel throws away what was changed here; Close leaves nothing behind.
+          label={save ? t`Cancel` : t`Close`}
+          onPress={() => onOpenChange(false)}
+        />
       )}
       <View className="flex-1 items-center">
         <Text
@@ -130,42 +134,29 @@ export function Sheet({
           </Text>
         )}
       </View>
-      <GlassButton
-        icon="check"
-        label={save.label}
-        primary
-        disabled={save.disabled}
-        busy={save.busy}
-        onPress={save.onPress}
-      />
+      {save ? (
+        <GlassButton
+          icon="check"
+          label={save.label}
+          primary
+          disabled={save.disabled}
+          busy={save.busy}
+          onPress={save.onPress}
+        />
+      ) : (
+        <View style={{ width: GLASS_BUTTON_SIZE }} />
+      )}
     </View>
-  ) : (
-    title && (
-      <View
-        className={`flex-row items-center gap-3 ${description ? "pb-1.5" : "pb-3"}`}
-        style={{ paddingStart: inset }}
-      >
-        <Text className="flex-1 text-lg font-medium text-text" accessibilityRole="header">
-          {title}
-        </Text>
-        {aside}
-      </View>
-    )
   );
   const first = (
     <SheetInset.Provider value={inset}>
       <OnGlass>
         {heading}
-        {description && (
-          <Text className="pb-3 text-base text-text-2" style={{ paddingStart: inset }}>
-            {description}
-          </Text>
-        )}
         <View className="gap-3">{children}</View>
       </OnGlass>
     </SheetInset.Provider>
   );
-  const top = save ? "pt-4" : "pt-7";
+  const top = title !== undefined ? "pt-4" : "pt-7";
   // Only a sheet with more to scroll softens its edges, and only on the side where more is.
   const offset = useSharedValue(0);
   const shown = useSharedValue(0);

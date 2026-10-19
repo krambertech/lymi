@@ -276,17 +276,17 @@ export function ExportSheet({
         else setSlow(true);
       }}
       title={title}
-      description={
-        current
-          ? undefined
-          : scope.kind === "deck"
+    >
+      {body}
+      {!current && (
+        <SheetNote>
+          {scope.kind === "deck"
             ? t`Includes your schedule and review history. Exporting doesn’t change the deck.`
             : shared
               ? t`Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included.`
-              : t`Every deck, archived ones included, with your schedule and review history.`
-      }
-    >
-      {body}
+              : t`Every deck, archived ones included, with your schedule and review history.`}
+        </SheetNote>
+      )}
     </Sheet>
   );
 }

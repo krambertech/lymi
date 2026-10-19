@@ -9,7 +9,9 @@ import { Press, Text } from "./primitives";
 // Liquid Glass for chrome that floats over content: a sheet's corner buttons, the bar, capture.
 // Tinted amber it marks the one standing action. Before iOS 26 it is an opaque plate. phone.md "Glass".
 
-const SIZE = 44;
+/** A glass button's side; a header keeps an empty one where it has no action, so its title stays centred. */
+export const GLASS_BUTTON_SIZE = 44;
+const SIZE = GLASS_BUTTON_SIZE;
 
 /**
  * A screen presented as a sheet gets iOS's clear glass, which shows too much through; the sheet

@@ -916,9 +916,6 @@ msgstr "AI заполняет"
 msgid "AI fills in"
 msgstr "AI дополнит"
 
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
-
 msgid "AI hook"
 msgstr "Зацепка от AI"
 
@@ -1026,6 +1023,9 @@ msgstr "Справочник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Язык приложения и язык, на котором AI пишет значения."
+
+msgid "Apply"
+msgstr "Применить"
 
 msgid "Apply filters"
 msgstr "Применить фильтры"
@@ -2309,9 +2309,6 @@ msgstr "Как это работает"
 msgid "How it’s asked"
 msgstr "Как спрашивать"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Сколько повторений в день сохраняет счёт дней подряд. Считается каждая оценка, даже «Не помню»."
-
 msgid "How much time a day?"
 msgstr "Сколько времени в день?"
 
@@ -2458,9 +2455,6 @@ msgstr "Чтобы приглашать, нужно соединение."
 
 msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
 msgstr "Со следующего запроса у него не будет доступа к твоим колодам. Чтобы пользоваться им снова, подключи его из самого приложения."
-
-msgid "It goes at the end. Move cards into it from the deck."
-msgstr "Он появится в конце. Перемести в него карточки из колоды."
 
 msgid "It loads as soon as you’re back online."
 msgstr "Она загрузится, как только ты снова будешь онлайн."
@@ -2838,9 +2832,6 @@ msgstr "Перенесено в другую колоду"
 
 msgid "Moves from {elsewhere}"
 msgstr "Перейдёт из серии «{elsewhere}»"
-
-msgid "Moving a card keeps its progress."
-msgstr "При перемещении прогресс карточки сохраняется."
 
 msgid "Moving cards needs a connection."
 msgstr "Чтобы перемещать карточки, нужно подключение."
@@ -4129,9 +4120,6 @@ msgstr "На этой неделе"
 
 msgid "Those terms are already in your decks"
 msgstr "Эти термины уже есть в твоих колодах"
-
-msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"

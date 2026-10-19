@@ -916,9 +916,6 @@ msgstr "AI fills"
 msgid "AI fills in"
 msgstr "AI fills in"
 
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI fills them only when they help. It never changes your text."
-
 msgid "AI hook"
 msgstr "AI hook"
 
@@ -1026,6 +1023,9 @@ msgstr "API reference"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "App language, and the language AI uses for meanings."
+
+msgid "Apply"
+msgstr "Apply"
 
 msgid "Apply filters"
 msgstr "Apply filters"
@@ -2309,9 +2309,6 @@ msgstr "How it works"
 msgid "How it’s asked"
 msgstr "How it’s asked"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot."
-
 msgid "How much time a day?"
 msgstr "How much time a day?"
 
@@ -2458,9 +2455,6 @@ msgstr "Inviting needs a connection."
 
 msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
 msgstr "It can’t reach your decks from its next request. To use it again, connect it from the app."
-
-msgid "It goes at the end. Move cards into it from the deck."
-msgstr "It goes at the end. Move cards into it from the deck."
 
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
@@ -2838,9 +2832,6 @@ msgstr "Moved to another deck"
 
 msgid "Moves from {elsewhere}"
 msgstr "Moves from {elsewhere}"
-
-msgid "Moving a card keeps its progress."
-msgstr "Moving a card keeps its progress."
 
 msgid "Moving cards needs a connection."
 msgstr "Moving cards needs a connection."
@@ -4129,9 +4120,6 @@ msgstr "This week"
 
 msgid "Those terms are already in your decks"
 msgstr "Those terms are already in your decks"
-
-msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Tick a tag to put it on every card, or untick it to take it off."
 
 msgid "Time"
 msgstr "Time"

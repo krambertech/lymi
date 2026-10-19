@@ -22,6 +22,8 @@ export function useChoiceSheet<K extends string>(refocus: () => void) {
   const chips = useSharedValue(1);
   const choosing = useRef(false);
   choosing.current = choice !== null;
+  // How the open sheet's draft is applied, for a choice ticked several at a time.
+  const apply = useRef<(() => void) | null>(null);
   useEffect(() => {
     const shown = Keyboard.addListener("keyboardDidShow", () => {
       if (!choosing.current) hold.value = withTiming(0, timed(SETTLE));
@@ -36,6 +38,7 @@ export function useChoiceSheet<K extends string>(refocus: () => void) {
     hold.value = Keyboard.isVisible() ? (Keyboard.metrics()?.height ?? 0) : 0;
     chips.value = withTiming(0, timed(CHIPS_LEAVE));
     Keyboard.dismiss();
+    apply.current = null;
     setHeld(kind);
     setChoice(kind);
   };
@@ -51,6 +54,15 @@ export function useChoiceSheet<K extends string>(refocus: () => void) {
     chips,
     open,
     close,
+    /** Lets the open sheet's draft be applied by its ✓. */
+    keep: (next: () => void) => {
+      apply.current = next;
+    },
+    /** The sheet's ✓, or the keyboard's done key: applies the draft and closes. */
+    done: () => {
+      apply.current?.();
+      close();
+    },
     /** What the form's `Sheet` takes, bar its title and content. */
     sheet: {
       open: choice !== null,
@@ -58,4 +70,15 @@ export function useChoiceSheet<K extends string>(refocus: () => void) {
       onDismiss: closed,
     },
   };
+}
+
+/**
+ * A choice ticked several at a time, as a draft its sheet's ✓ applies; close and a swipe drop it.
+ * Mounted with its sheet, so each opening starts from `value`.
+ */
+export function useDraft<T>(value: T, apply: (next: T) => void, keep: (apply: () => void) => void) {
+  const [draft, setDraft] = useState(value);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the latest draft is what ✓ applies.
+  useEffect(() => keep(() => apply(draft)), [draft]);
+  return [draft, setDraft] as const;
 }

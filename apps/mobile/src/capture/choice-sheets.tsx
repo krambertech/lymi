@@ -6,6 +6,7 @@ import { useDecks, useOwnedDecks, useSections } from "../data/queries";
 import { SEARCHED_PAST, SearchField, useSearched } from "../ui/menu";
 import { Text } from "../ui/primitives";
 import { SheetGroup, SheetRow } from "../ui/sheet";
+import { useDraft } from "./choice-sheet";
 import { useChoices } from "./choices";
 import { ModesChoices } from "./modes";
 import { PictureChoices } from "./picture";
@@ -13,6 +14,9 @@ import { TagsChoices } from "./tags";
 
 /** One of Add a word's choices, each opened from its chip as a sheet over the card. */
 export type ChoiceKind = "deck" | "section" | "picture" | "modes" | "tags";
+
+/** The choices ticked several at a time, whose sheets keep a draft that ✓ applies. */
+export const DRAFTED: ReadonlySet<ChoiceKind> = new Set(["modes", "tags"]);
 
 /** Each choice's name, the title of its sheet. */
 export const CHOICE_TITLES: Record<ChoiceKind, MessageDescriptor> = {
@@ -26,6 +30,10 @@ export const CHOICE_TITLES: Record<ChoiceKind, MessageDescriptor> = {
 interface ChoiceProps {
   /** Once one of a list is chosen, which closes the sheet. */
   onChosen?: () => void;
+  /** The sheet's ✓ from inside it, such as the keyboard's done key: applies the draft and closes. */
+  onDone: () => void;
+  /** Lets a choice ticked several at a time hand its sheet's ✓ the draft to apply. */
+  keep: (apply: () => void) => void;
   /** The card as typed so far, which the modes read and the picture's description must not name. */
   card: { term: string; meaning: string };
 }
@@ -100,16 +108,17 @@ function SectionChoice({ onChosen }: ChoiceProps) {
   );
 }
 
-/** How the card is asked; several can be ticked, so the sheet stays until it is swiped away. */
-function ModesChoice({ card }: ChoiceProps) {
+/** How the card is asked; several can be ticked, and the sheet's ✓ keeps them. */
+function ModesChoice({ card, keep }: ChoiceProps) {
   const { deckId, modes, setModes, picture } = useChoices();
+  const [draft, setDraft] = useDraft(modes, setModes, keep);
   const decks = useDecks().data ?? [];
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
   return (
     <ModesChoices
-      value={modes}
+      value={draft}
       deckModes={(deck?.reviewModes ?? []).map(modeKey)}
-      onChange={setModes}
+      onChange={setDraft}
       term={card.term}
       meaning={card.meaning}
       picture={!picture ? "none" : picture.description.trim() ? "described" : "undescribed"}
@@ -123,14 +132,13 @@ function PictureChoice({ card }: ChoiceProps) {
   return <PictureChoices value={picture} onChange={setPicture} card={card} />;
 }
 
-/** The card's tags, which stay for the next card. */
-function TagsChoice({ onChosen }: ChoiceProps) {
+/** The card's tags, which stay for the next card; the sheet's ✓ keeps what is ticked. */
+function TagsChoice({ onDone, keep }: ChoiceProps) {
   const { deckId, tags, setTags } = useChoices();
+  const [draft, setDraft] = useDraft(tags, setTags, keep);
   const decks = useDecks().data ?? [];
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
-  return (
-    <TagsChoices value={tags} onChange={setTags} deckId={deck?.id} onDone={() => onChosen?.()} />
-  );
+  return <TagsChoices value={draft} onChange={setDraft} deckId={deck?.id} onDone={onDone} />;
 }
 
 /** What each choice's sheet holds, by the chip that opens it. */

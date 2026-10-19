@@ -47,9 +47,8 @@ name: Card choices
 - assertVisible: "^${TAG_TWO}$"
 - assertVisible: "^${TAG_ONE}$"
 - takeScreenshot: 01-tags
-- swipe:
-    start: 50%, 30%
-    end: 50%, 95%
+# The ticks are a draft until the sheet's ✓; a swipe would drop them.
+- tapOn: "Apply"
 - waitForAnimationToEnd
 # The keyboard comes back on the term, and a new Simulator shows iOS's slide-to-type tip over it once.
 - tapOn:
@@ -112,9 +111,8 @@ name: Card choices
 - tapOn: "How it’s asked"
 - tapOn: "Picture → term.*"
 - takeScreenshot: 04-modes-with-picture
-- swipe:
-    start: 50%, 30%
-    end: 50%, 95%
+# The ticks are a draft until the sheet's ✓; a swipe would drop them.
+- tapOn: "Apply"
 - waitForAnimationToEnd
 - tapOn: "Add to ${DECK}"
 - extendedWaitUntil:
@@ -150,9 +148,8 @@ name: Card choices
     timeout: 20000
 - tapOn: "^${TAG_TWO}$"
 - takeScreenshot: 06-edit-tags
-- swipe:
-    start: 50%, 30%
-    end: 50%, 95%
+# The ticks are a draft until the sheet's ✓; a swipe would drop them.
+- tapOn: "Apply"
 - waitForAnimationToEnd
 - tapOn: "Save"
 - extendedWaitUntil:

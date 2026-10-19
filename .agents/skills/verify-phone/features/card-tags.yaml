@@ -20,9 +20,8 @@ name: Card tags
 - tapOn: "Create “${NEW}”"
 - assertVisible: "^${NEW}$"
 - takeScreenshot: 02-edited
-- swipe:
-    start: 50%, 30%
-    end: 50%, 95%
+# The ticks are a draft until the sheet's ✓; a swipe would drop them.
+- tapOn: "Apply"
 - waitForAnimationToEnd
 - tapOn: "Save"
 - extendedWaitUntil:

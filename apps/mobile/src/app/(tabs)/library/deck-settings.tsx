@@ -27,7 +27,7 @@ import { Select } from "../../../ui/menu";
 import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
 import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 
@@ -106,7 +106,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const purposes = usePurposes();
   const [editing, setEditing] = useState<"name" | "description" | "instructions" | null>(null);
   const [asking, setAsking] = useState(false);
-  const [choosingFields, setChoosingFields] = useState(false);
+  // The fields ticked in the sheet, saved together by its ✓; null while the sheet is closed.
+  const [fields, setFields] = useState<DeckEnrichField[] | null>(null);
   // ✓ or the keyboard's done key saves; close or a swipe leaves the deck as it was. phone.md "Sheets".
   const finishEditing = () => {
     if (editing === "name") commitName();
@@ -185,11 +186,15 @@ function Settings({ deck }: { deck: DeckSummary }) {
           ? t`All`
           : plural(filled.length, { one: "# field", other: "# fields" });
   const toggleField = (field: DeckEnrichField) =>
-    void save({
-      enrichFields: DECK_ENRICH_FIELDS.filter((f) =>
-        f === field ? !deck.enrichFields.includes(f) : deck.enrichFields.includes(f),
-      ),
-    });
+    setFields((prev) =>
+      prev
+        ? DECK_ENRICH_FIELDS.filter((f) => (f === field ? !prev.includes(f) : prev.includes(f)))
+        : prev,
+    );
+  const saveFields = () => {
+    if (fields && fields.join() !== deck.enrichFields.join()) void save({ enrichFields: fields });
+    setFields(null);
+  };
   const language = deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`No language`;
   const way = asked.find((a) => a.value === deck.directions) ?? asked[0];
 
@@ -324,7 +329,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
                 icon="ai"
                 label={t`AI fills`}
                 value={fieldsValue}
-                onPress={() => setChoosingFields(true)}
+                onPress={() => setFields(deck.enrichFields)}
               />
               <Row
                 icon="lesson"
@@ -342,7 +347,6 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? t`Instructions`
                   : t`Name`
             }
-            description={editing === "instructions" ? t`Only you see these.` : undefined}
             save={{ label: t`Save`, onPress: finishEditing }}
             open={editing !== null}
             onOpenChange={(open) => !open && cancelEditing()}
@@ -354,12 +358,13 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? instructionsField
                   : nameField}
             </View>
+            {editing === "instructions" && <SheetNote>{t`Only you see these.`}</SheetNote>}
           </Sheet>
           <Sheet
             title={t`Fields AI can fill`}
-            open={choosingFields}
-            onOpenChange={setChoosingFields}
-            description={t`AI fills them only when they help. It never changes your text.`}
+            open={fields !== null}
+            onOpenChange={(open) => !open && setFields(null)}
+            save={{ label: t`Save`, onPress: saveFields }}
           >
             <SheetGroup>
               {DECK_ENRICH_FIELDS.map((field) => (
@@ -367,7 +372,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   key={field}
                   label={fieldLabels[field]}
                   multiple
-                  chosen={deck.enrichFields.includes(field)}
+                  chosen={(fields ?? deck.enrichFields).includes(field)}
                   onPress={() => toggleField(field)}
                 />
               ))}

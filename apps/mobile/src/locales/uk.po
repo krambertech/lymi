@@ -916,9 +916,6 @@ msgstr "AI заповнює"
 msgid "AI fills in"
 msgstr "AI доповнить"
 
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
-
 msgid "AI hook"
 msgstr "Зачіпка від AI"
 
@@ -1026,6 +1023,9 @@ msgstr "Довідник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Мова застосунку й мова, якою AI пише значення."
+
+msgid "Apply"
+msgstr "Застосувати"
 
 msgid "Apply filters"
 msgstr "Застосувати фільтри"
@@ -2309,9 +2309,6 @@ msgstr "Як це працює"
 msgid "How it’s asked"
 msgstr "Як питати"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Скільки повторень на день зберігає лік днів поспіль. Рахується кожна оцінка, навіть «Не пам’ятаю»."
-
 msgid "How much time a day?"
 msgstr "Скільки часу на день?"
 
@@ -2458,9 +2455,6 @@ msgstr "Щоб запрошувати, потрібне з’єднання."
 
 msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
 msgstr "З наступного запиту він не матиме доступу до твоїх колод. Щоб користуватися ним знову, підключи його із самого застосунку."
-
-msgid "It goes at the end. Move cards into it from the deck."
-msgstr "Він з’явиться в кінці. Перемісти в нього картки з колоди."
 
 msgid "It loads as soon as you’re back online."
 msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
@@ -2838,9 +2832,6 @@ msgstr "Перенесено в іншу колоду"
 
 msgid "Moves from {elsewhere}"
 msgstr "Перейде із серії «{elsewhere}»"
-
-msgid "Moving a card keeps its progress."
-msgstr "Після переміщення прогрес картки зберігається."
 
 msgid "Moving cards needs a connection."
 msgstr "Щоб переміщати картки, потрібне з’єднання."
@@ -4129,9 +4120,6 @@ msgstr "Цього тижня"
 
 msgid "Those terms are already in your decks"
 msgstr "Ці терміни вже є у твоїх колодах"
-
-msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Познач тег, щоб додати його на всі картки, або зніми позначку, щоб прибрати."
 
 msgid "Time"
 msgstr "Час"

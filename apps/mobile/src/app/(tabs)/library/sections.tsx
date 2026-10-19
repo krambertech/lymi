@@ -250,12 +250,7 @@ export default function DeckSections() {
         <SheetNote>{t`Anyone studying the deck can start a later section early.`}</SheetNote>
       </Sheet>
 
-      <Sheet
-        title={t`Archived sections`}
-        description={t`Restore brings a section back in its place, with the cards archived alongside it.`}
-        open={showArchived}
-        onOpenChange={setShowArchived}
-      >
+      <Sheet title={t`Archived sections`} open={showArchived} onOpenChange={setShowArchived}>
         {/* In the sheet, since a toast would sit under it. */}
         {restore.isError && <SheetError>{errorMessage(restore.error)}</SheetError>}
         <View className="overflow-hidden rounded-xl bg-glass-plate">
@@ -285,6 +280,7 @@ export default function DeckSections() {
             </View>
           ))}
         </View>
+        <SheetNote>{t`Restore brings a section back in its place, with the cards archived alongside it.`}</SheetNote>
       </Sheet>
     </Screen>
   );
@@ -328,7 +324,6 @@ function NameSheet({
   return (
     <Sheet
       title={renaming ? t`Rename section` : t`New section`}
-      description={renaming ? undefined : t`It goes at the end. Move cards into it from the deck.`}
       save={{
         label: renaming ? t`Save` : t`Create section`,
         onPress: submit,

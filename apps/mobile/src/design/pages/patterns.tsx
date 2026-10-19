@@ -9,7 +9,7 @@ import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon } from "../../ui/icons";
 import { Select } from "../../ui/menu";
 import { Button, IconButton, Text } from "../../ui/primitives";
-import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
+import { Sheet, SheetGroup, SheetNote, SheetRow } from "../../ui/sheet";
 import { Toast } from "../../ui/toast";
 import { MONO, Row, Sub, Variants } from "../frame";
 
@@ -163,18 +163,26 @@ export function Sheets() {
     setDeckTitle(draft.trim() || deckTitle);
     setRenaming(false);
   };
+  const [picking, setPicking] = useState(false);
+  const [section, setSection] = useState("Lesson 1");
+  const [ticking, setTicking] = useState<string[] | null>(null);
+  const [ticked, setTicked] = useState(["noun"]);
+  const tick = (tag: string) =>
+    setTicking((prev) =>
+      prev ? (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]) : prev,
+    );
   return (
     <>
       <Sub
-        title="Which sheet"
-        note="What the task holds decides the kind, and the kind decides its glass. Glass wherever the task is quick; opaque where the learner reads or types at length."
+        title="Sheet header"
+        note="Every sheet with a title has one header, which Sheet draws: close at the start, the title centred, and an amber ✓ at the end when the sheet holds something to save. A list where a tap is the choice has no ✓. Nothing explains the sheet under its title; a consequence the learner can’t see goes in a note under the rows."
         source="docs/design/system/phone.md"
       >
         <Variants
           items={[
             {
-              label: "Row sheet, glass",
-              note: "A choice or a one-field edit over the screen: a menu, a Select, a deck’s name. Rename the deck below; done or a swipe keeps what was typed.",
+              label: "Saves: close, title, ✓",
+              note: "A one-field edit or a form. Close and a swipe leave it as it was; ✓ or the keyboard’s done key saves.",
               render: () => (
                 <Row>
                   <Button
@@ -185,7 +193,104 @@ export function Sheets() {
                       setRenaming(true);
                     }}
                   />
-                  <Sheet title="Name" open={renaming} onOpenChange={(open) => !open && keep()}>
+                </Row>
+              ),
+            },
+            {
+              label: "A tap is the choice: close and title",
+              note: "The tap closes the sheet, so there is nothing for ✓ to do. A note under the rows says what the move keeps or loses.",
+              render: () => (
+                <Row>
+                  <Button
+                    label={`Move to “${section}”…`}
+                    variant="secondary"
+                    onPress={() => setPicking(true)}
+                  />
+                  <Sheet title="Move 3 cards to" open={picking} onOpenChange={setPicking}>
+                    <SheetGroup>
+                      {["Lesson 1", "Lesson 2", "Lesson 3"].map((name) => (
+                        <SheetRow
+                          key={name}
+                          label={name}
+                          chosen={name === section}
+                          onPress={() => {
+                            setSection(name);
+                            setPicking(false);
+                          }}
+                        />
+                      ))}
+                    </SheetGroup>
+                    <SheetNote>A card keeps its progress and leaves its section.</SheetNote>
+                  </Sheet>
+                </Row>
+              ),
+            },
+            {
+              label: "Ticked several at a time: close, title, ✓",
+              note: "The ticks are a draft until ✓; close and a swipe leave them as they were.",
+              render: () => (
+                <Row>
+                  <Button
+                    label={`Tags: ${ticked.join(", ") || "none"}`}
+                    variant="secondary"
+                    onPress={() => setTicking(ticked)}
+                  />
+                  <Sheet
+                    title="Tags"
+                    open={ticking !== null}
+                    onOpenChange={(open) => !open && setTicking(null)}
+                    save={{
+                      label: "Apply",
+                      onPress: () => {
+                        if (ticking) setTicked(ticking);
+                        setTicking(null);
+                      },
+                    }}
+                  >
+                    <SheetGroup>
+                      {["noun", "verb", "money"].map((tag) => (
+                        <SheetRow
+                          key={tag}
+                          label={tag}
+                          multiple
+                          chosen={(ticking ?? ticked).includes(tag)}
+                          onPress={() => tick(tag)}
+                        />
+                      ))}
+                    </SheetGroup>
+                  </Sheet>
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Which sheet"
+        note="What the task holds decides the kind, and the kind decides its glass. Glass wherever the task is quick; opaque where the learner reads or types at length."
+        source="docs/design/system/phone.md"
+      >
+        <Variants
+          items={[
+            {
+              label: "Row sheet, glass",
+              note: "A choice or a one-field edit over the screen: a menu, a Select, a deck’s name. Rename the deck below; ✓ or done keeps what was typed, close or a swipe leaves it.",
+              render: () => (
+                <Row>
+                  <Button
+                    label={`Rename “${deckTitle}”`}
+                    variant="secondary"
+                    onPress={() => {
+                      setDraft(deckTitle);
+                      setRenaming(true);
+                    }}
+                  />
+                  <Sheet
+                    title="Name"
+                    open={renaming}
+                    onOpenChange={setRenaming}
+                    save={{ label: "Save", onPress: keep }}
+                  >
                     <View className="rounded-xl bg-glass-plate px-4">
                       <TextInput
                         value={draft}

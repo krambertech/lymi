@@ -213,6 +213,8 @@ function TagCardsSheet({
       <SearchField
         label={t`Tags`}
         placeholder={t`Find or create a tag`}
+        // The keyboard lifts the sheet to full height, where iOS makes it opaque and a plate fill vanishes.
+        fill="group"
         query={query}
         onChange={setQuery}
         onSubmit={() => {

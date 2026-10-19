@@ -1,0 +1,32 @@
+# A deck's owner selects every card and puts a new tag on all of them from Tags.
+appId: app.lymi
+name: Deck tools, tags
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Archive"
+    timeout: 10000
+- takeScreenshot: 01-owner-actions
+- tapOn: "^Tags$"
+- extendedWaitUntil:
+    visible: "Tags for ${COUNT} cards"
+    timeout: 10000
+- takeScreenshot: 02-tags-sheet
+- tapOn: "Find or create a tag"
+- inputText: "${TAG}"
+- tapOn: "Create “${TAG}”"
+- assertVisible: "${TAG}, ${COUNT} of ${COUNT}"
+- takeScreenshot: 03-tag-created
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: "Changed the tags on ${COUNT} cards"
+    timeout: 20000
+- takeScreenshot: 04-tagged

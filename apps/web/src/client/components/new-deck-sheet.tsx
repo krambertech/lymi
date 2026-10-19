@@ -55,6 +55,9 @@ export function NewDeckSheet({ open, onOpenChange, seriesId }: Props) {
   const seed = first
     ? seedFrom(settings.data?.learningKind ?? null, settings.data?.learningLanguage ?? null)
     : undefined;
+  // Held while the sheet closes: a remount there autofocuses its Name field and swallows the next key, such as N.
+  const [formKey, setFormKey] = useState(seed?.purpose ?? "");
+  if (open && formKey !== (seed?.purpose ?? "")) setFormKey(seed?.purpose ?? "");
   const create = useMutation({
     mutationFn: (input: DeckInput) => writes.createDeck(input),
     onSuccess: ({ id, queued }) => {
@@ -70,7 +73,7 @@ export function NewDeckSheet({ open, onOpenChange, seriesId }: Props) {
       <DialogContent>
         <DialogTitle>{t`New deck`}</DialogTitle>
         <NewDeckForm
-          key={`${open}:${seed?.purpose ?? ""}`}
+          key={formKey}
           seed={seed}
           pending={create.isPending}
           error={create.isError ? errorMessage(create.error) : undefined}

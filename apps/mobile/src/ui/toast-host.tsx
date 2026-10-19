@@ -105,14 +105,16 @@ export function ToastFloor({
   const scope = useContext(ToastScope);
   const ref = useRef<Animated.View>(null);
   const id = useRef(nextFloor++).current;
+  const mounted = useRef(true);
   const { height: screen } = useWindowDimensions();
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
       floors.delete(id);
       emit();
-    },
-    [id],
-  );
+    };
+  }, [id]);
   return (
     <Animated.View
       ref={ref}
@@ -120,6 +122,8 @@ export function ToastFloor({
       onLayout={(e) => {
         if (typeof onLayout === "function") onLayout(e);
         ref.current?.measureInWindow((_x, y) => {
+          // A measure that answers after unmount would leave a floor nothing removes.
+          if (!mounted.current) return;
           floors.set(id, { scope, height: Math.max(0, screen - y) });
           emit();
         });

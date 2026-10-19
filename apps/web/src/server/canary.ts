@@ -1,5 +1,5 @@
 import { createOpenAiTextProvider, createSpeechProviders, type SpeechProvider } from "./ai";
-import { createJapaneseContextProvider, JapaneseContextError } from "./ai/japanese-audio-context";
+import { createLeadInWriter, LeadInError } from "./ai/lead-in-writer";
 import {
   type Dependency,
   type DependencyOutcome,
@@ -8,6 +8,7 @@ import {
   recordCheck,
 } from "./dependency-health";
 import type { Bindings } from "./env";
+import { japanese } from "./lead-ins/japanese";
 import { decisionModel, keepScore } from "./lessons/keep";
 import { pingLessonReader } from "./lessons/reader";
 
@@ -124,15 +125,20 @@ function checks(env: Bindings, hourly: boolean): Check[] {
       }
     }
     // Google limits Gemini 2.5 to keys that already used it, so the deployed key is checked here.
-    const context = createJapaneseContextProvider(env, meteredFetch(env, "gemini_text", "canary"));
-    if (context)
+    const writer = createLeadInWriter(env, meteredFetch(env, "gemini_text", "canary"));
+    if (writer)
       list.push({
         dependency: "gemini_text",
         run: async () => {
+          const input = { term: "船", reading: "ふね", meaning: "boat" };
           try {
-            await context.generate({ term: "船", reading: "ふね", meaning: "boat" });
+            await writer.write({
+              instructions: japanese.instructions,
+              input,
+              accepts: (previousText) => japanese.accepts(previousText, input),
+            });
           } catch (error) {
-            if (!(error instanceof JapaneseContextError)) throw error;
+            if (!(error instanceof LeadInError)) throw error;
             // A reply that failed our checks still proves the key works.
             if (error.reason === "failed") throw new CheckFailed("failed");
           }

@@ -1,9 +1,8 @@
 import { Hono } from "hono";
 import { createSpeechProviders } from "../ai";
-import { createJapaneseContextProvider } from "../ai/japanese-audio-context";
-import { meteredFetch } from "../dependency-health";
 import { ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
+import { leadInDependencies } from "../lead-ins";
 import { pronunciationAudio } from "../services";
 
 export const audio = new Hono<AppEnv>();
@@ -13,7 +12,7 @@ const noop = () => {};
 audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (c) => {
   const work = pronunciationAudio(ctxOf(c), c.req.param("cardId"), {
     bucket: c.env.AUDIO,
-    japaneseContext: createJapaneseContextProvider(c.env, meteredFetch(c.env, "gemini_text")),
+    leadIns: leadInDependencies(c.env),
     providers: (language) => createSpeechProviders(c.env, language),
     storedOnly: c.req.query("stored") === "1",
   });

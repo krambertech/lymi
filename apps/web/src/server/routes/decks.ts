@@ -21,12 +21,11 @@ import {
 import { Hono } from "hono";
 import { z } from "zod";
 import { createSpeechProviders } from "../ai";
-import { createJapaneseContextProvider } from "../ai/japanese-audio-context";
-import { meteredFetch } from "../dependency-health";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
+import { leadInDependencies } from "../lead-ins";
 import { ownerAnalytics } from "../posthog";
 import {
   approveEdition,
@@ -356,7 +355,7 @@ decks.put(
         ctx.db,
         {
           bucket: c.env.AUDIO,
-          japaneseContext: createJapaneseContextProvider(c.env, meteredFetch(c.env, "gemini_text")),
+          leadIns: leadInDependencies(c.env),
           providers: (language) => createSpeechProviders(c.env, language),
           analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },

@@ -4,7 +4,7 @@ Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Ever
 
 ## What watches production
 
-The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English or, for ElevenLabs, which has no native English voice, in Estonian, and asks the Japanese lead-in model for one word's context, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
+The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English or, for ElevenLabs, which has no native English voice, in Estonian, and asks the lead-in writer for one Japanese word's lead-in, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
 
 Every real call to an outside service records its outcome too: `meteredFetch` and `metered` in `apps/web/src/server/dependency-health.ts`, covering AI text, the lesson reader, Workers AI, speech, email and web push. Both write to the `lymi_health` Analytics Engine dataset, which holds no account, card or request content.
 
@@ -31,7 +31,7 @@ Unexpected errors still reach PostHog Error Tracking: HTTP and MCP failures, exh
 | [Cloudflare Worker issue](#cloudflare-worker-issue) | Cloudflare | Any real-time issue on `lymi` or `lymi-site` |
 | [Cloudflare incident](#cloudflare-incident) | Cloudflare | A major or critical Cloudflare incident |
 | [Errors in production](#errors-in-production) | PostHog | Any `$exception` in an hour |
-| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation` and `pronunciation_context` |
+| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation` and `lead_in` |
 | [Nobody reviewed yesterday](#nobody-reviewed-yesterday) | PostHog | Zero `review_graded` in a day, checked at 09:00 Tallinn |
 
 Cloudflare alerts are under Observability → Alerts and re-send at most hourly while firing. PostHog alerts are on [the alerts page](https://eu.posthog.com/project/292417/alerts) and read the insights tagged `ops`. The three `lymi_health` alerts use these queries, with Cloudflare supplying the time range:
@@ -100,4 +100,4 @@ An exception reached PostHog Error Tracking. Open [Error Tracking](https://eu.po
 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
 
-Japanese term audio logs `pronunciation_context_resolved` with `outcome: cached|cooldown|generated|unneeded|rejected|failed|invalid_cache`, fixed model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
+Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.

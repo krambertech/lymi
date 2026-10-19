@@ -115,7 +115,10 @@ describe("Japanese generated audio invalidation", () => {
     }));
     const deps = {
       bucket,
-      japaneseContext: { model: "gemini-2.5-flash-lite", generate },
+      leadIns: {
+        writer: { model: "gemini-2.5-flash-lite", write: generate },
+        decide: { run: async () => ({ answers: { ambiguous: { noul: 0.9 } } }) },
+      },
       providers: () => [
         {
           provider: "elevenlabs" as const,

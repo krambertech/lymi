@@ -391,7 +391,7 @@ export const analyticsEvents = {
       "deck_choice",
       "lesson_read",
       "pronunciation",
-      "pronunciation_context",
+      "lead_in",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
@@ -435,6 +435,12 @@ export const analyticsEvents = {
     // Optional because earlier phone releases send neither.
     preloaded: z.boolean().optional(),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+  }),
+  lead_in_decided: z.object({
+    language: z.string().regex(/^[a-z]{2,3}$/),
+    outcome: z.enum(["unambiguous", "written", "no_fragment", "refused", "failed"]),
+    decided_by: z.enum(["model", "writer"]),
+    score: z.number().min(0).max(1).optional(),
   }),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
@@ -522,6 +528,7 @@ export const analyticsProducers = {
   library_searched: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],
+  lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],

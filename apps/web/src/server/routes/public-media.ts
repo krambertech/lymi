@@ -1,10 +1,9 @@
 import { Hono } from "hono";
 import { createSpeechProviders } from "../ai";
-import { createJapaneseContextProvider } from "../ai/japanese-audio-context";
 import { tooManyRequests } from "../auth-rate-limit";
-import { meteredFetch } from "../dependency-health";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
+import { leadInDependencies } from "../lead-ins";
 import { ownerAnalytics } from "../posthog";
 import { spendPublicAudio } from "../public-audio-rate-limit";
 import { publisherAvatar } from "../services";
@@ -33,7 +32,7 @@ publicMedia.get(
         c.req.param("cardId"),
         {
           bucket: c.env.AUDIO,
-          japaneseContext: createJapaneseContextProvider(c.env, meteredFetch(c.env, "gemini_text")),
+          leadIns: leadInDependencies(c.env),
           providers: (language) => createSpeechProviders(c.env, language),
           analytics: ownerAnalytics(c.env, c.get("db"), (work) => c.executionCtx.waitUntil(work)),
         },

@@ -2,26 +2,21 @@ import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/c
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider, SpeechUsage } from "../ai";
-import type { JapaneseContextProvider } from "../ai/japanese-audio-context";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
+import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
 import { trackSpeechCall } from "./analytics";
-import {
-  type AudioContext,
-  japaneseAudioContext,
-  japaneseContextInput,
-  withAudioLease,
-} from "./audio-context";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
+import { type SpokenLeadIn, settleLeadIn, withAudioLease } from "./lead-in";
 
 const MAX_AUDIO_BYTES = 8_000_000;
 // Bump this when every stored pronunciation needs to be regenerated on its next play.
 const AUDIO_CACHE_VERSION = 2;
 
 export interface AudioDependencies {
-  japaneseContext?: JapaneseContextProvider | null | undefined;
+  leadIns?: LeadInDependencies | undefined;
   bucket: R2Bucket;
   /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
@@ -60,26 +55,26 @@ export async function pronunciationAudio(
   }
 
   const providers = deps.providers(language.data);
-  const input =
-    deps.japaneseContext &&
-    providers[0]?.provider === "elevenlabs" &&
-    providers[0]?.model === "eleven_v4"
-      ? japaneseContextInput(card)
-      : null;
-  const context =
-    input && deps.japaneseContext
-      ? await japaneseAudioContext(
+  const writer = deps.leadIns?.writer;
+  const policy =
+    writer && providers[0] && takesLeadIn(providers[0]) ? leadInPolicy(language.data) : undefined;
+  const screened = policy?.screen(card);
+  const input = typeof screened === "object" ? screened : null;
+  const spoken =
+    policy && input && writer && deps.leadIns
+      ? await settleLeadIn(
           card,
+          policy,
           input,
           deps.bucket,
-          deps.japaneseContext,
+          { ...deps.leadIns, writer },
           deps.storedOnly,
           ctx.analytics,
         )
       : undefined;
-  if (input && deps.storedOnly && !context)
+  if (input && deps.storedOnly && !spoken)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
-  return generatedPronunciation(ctx, card, deps, providers, language.data, context);
+  return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
 }
 
 async function generatedPronunciation(
@@ -88,13 +83,13 @@ async function generatedPronunciation(
   deps: AudioDependencies,
   providers: SpeechProvider[],
   language: string,
-  context?: AudioContext,
+  spoken?: SpokenLeadIn,
   leased = false,
 ): Promise<R2ObjectBody> {
   const preferred = providers[0];
   if (
     card.audioKey &&
-    (!preferred || card.audioKey === (await audioKey(card, preferred, context)))
+    (!preferred || card.audioKey === (await audioKey(card, preferred, spoken)))
   ) {
     const remembered = await deps.bucket.get(card.audioKey);
     if (remembered) return remembered;
@@ -103,21 +98,21 @@ async function generatedPronunciation(
     throw new ServiceError("unavailable", "Pronunciation audio is not configured");
   }
 
-  if (context && !leased && !deps.storedOnly) {
-    const key = await audioKey(card, preferred, context);
+  if (spoken && !leased && !deps.storedOnly) {
+    const key = await audioKey(card, preferred, spoken);
     const cached = await deps.bucket.get(key);
     if (cached) {
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, preferred.provider);
       return cached;
     }
     return withAudioLease(deps.bucket, `${key}.lock`, () =>
-      generatedPronunciation(ctx, card, deps, providers, language, context, true),
+      generatedPronunciation(ctx, card, deps, providers, language, spoken, true),
     );
   }
 
   let lastFailure: unknown;
   for (const provider of providers) {
-    const key = await audioKey(card, provider, context);
+    const key = await audioKey(card, provider, spoken);
     const cached = await deps.bucket.get(key);
     if (cached) {
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, provider.provider);
@@ -147,8 +142,8 @@ async function generatedPronunciation(
         usage: (reported) => {
           usage = reported;
         },
-        ...(provider.provider === "elevenlabs" && context?.previousText
-          ? { previousText: context.previousText }
+        ...(takesLeadIn(provider) && spoken?.previousText
+          ? { previousText: spoken.previousText }
           : {}),
       });
       audio = await boundedAudio(generated);
@@ -189,15 +184,15 @@ async function generatedPronunciation(
   }
 
   // A clip of the same kana without a lead-in, from before contexts, still beats no sound.
-  const fallbacks = context
+  const fallbacks = spoken
     ? await Promise.all(
         providers.flatMap((provider) => [
-          audioKey(card, provider, context),
+          audioKey(card, provider, spoken),
           audioKey(card, provider),
         ]),
       )
     : [];
-  if (card.audioKey && (!context || fallbacks.includes(card.audioKey))) {
+  if (card.audioKey && (!spoken || fallbacks.includes(card.audioKey))) {
     const remembered = await deps.bucket.get(card.audioKey);
     if (remembered) return remembered;
   }
@@ -349,13 +344,18 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
   return cleared.length;
 }
 
+/** Only the voice the lead-ins were auditioned on hears them; others speak the term alone. */
+function takesLeadIn(provider: SpeechProvider): boolean {
+  return provider.provider === "elevenlabs" && provider.model === "eleven_v4";
+}
+
 async function audioKey(
   card: Card,
   provider: SpeechProvider,
-  context?: AudioContext,
+  spoken?: SpokenLeadIn,
 ): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${provider.provider === "elevenlabs" && context?.previousText ? `\u0000${context.identity}\u0000${context.previousText ?? ""}` : ""}`,
+    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText ?? ""}` : ""}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

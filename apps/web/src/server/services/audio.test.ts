@@ -1,7 +1,7 @@
 import type { Card } from "@lymi/core/schema";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
-import { JapaneseContextError } from "../ai/japanese-audio-context";
+import { LeadInError, type LeadInRequest } from "../ai/lead-in-writer";
 import type { Db } from "../db";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
@@ -673,28 +673,42 @@ function contextBucket() {
 const japaneseCard = () =>
   card({ term: "橋", pronunciation: "はし", meaning: "bridge", language: "ja" });
 
-function contextGenerator() {
+/** A decision model that always gives this score, or fails when it is null. */
+function decider(score: number | null) {
   return {
-    model: "gemini-2.5-flash-lite",
-    generate: vi.fn(async () => ({
-      previousText: "川を渡る",
-      inputTokens: 300,
-      outputTokens: 400,
-    })),
+    run: vi.fn(async () => {
+      if (score === null) throw new Error("down");
+      return { answers: { ambiguous: { noul: score } } };
+    }),
+  };
+}
+const ambiguous = decider(0.9);
+
+function leadIns(score: number | null = 0.9) {
+  return {
+    writer: {
+      model: "gemini-2.5-flash-lite",
+      write: vi.fn(async (_request: LeadInRequest) => ({
+        previousText: "川を渡る" as string | null,
+        inputTokens: 300,
+        outputTokens: 400,
+      })),
+    },
+    decide: decider(score),
   };
 }
 
 describe("Japanese preceding context", () => {
   it("preloads only existing contextual audio without buying context or speech", async () => {
     const { bucket } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     const row = japaneseCard();
     await expect(
       pronunciationAudio(context(row), row.id, { ...deps, storedOnly: true }),
     ).rejects.toMatchObject({ code: "not_found" });
-    expect(japaneseContext.generate).not.toHaveBeenCalled();
+    expect(lead.writer.write).not.toHaveBeenCalled();
     expect(speech).not.toHaveBeenCalled();
     const first = await pronunciationAudio(context(row), row.id, deps);
     const preload = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, {
@@ -716,24 +730,24 @@ describe("Japanese preceding context", () => {
     await expect(pronunciationAudio(context(row), row.id, changedVoice)).rejects.toMatchObject({
       code: "not_found",
     });
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
   });
   it("pays once for context and speech, reuses context across voices, and invalidates on meaning edits", async () => {
     const { bucket } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     let voice = "Hiroki";
     const deps = {
       bucket,
-      japaneseContext,
+      leadIns: lead,
       providers: () => [{ ...provider("elevenlabs", speech), locale: "ja-JP", voice }],
     };
     const row = japaneseCard();
     const first = await pronunciationAudio(context(row), row.id, deps);
     const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, deps);
     expect(replay.key).toBe(first.key);
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenLastCalledWith({
       text: "はし",
@@ -748,7 +762,7 @@ describe("Japanese preceding context", () => {
       deps,
     );
     expect(changedVoice.key).not.toBe(first.key);
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledTimes(2);
     const changedMeaning = await pronunciationAudio(
       context({ ...row, meaning: "a bridge over a stream", audioKey: changedVoice.key }),
@@ -756,14 +770,14 @@ describe("Japanese preceding context", () => {
       deps,
     );
     expect(changedMeaning.key).not.toBe(changedVoice.key);
-    expect(japaneseContext.generate).toHaveBeenCalledTimes(2);
+    expect(lead.writer.write).toHaveBeenCalledTimes(2);
   });
 
   it("keeps recordings and non-Japanese terms outside context generation", async () => {
     const { bucket, put } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     await put("recorded.mp3", new Uint8Array([1, 2, 3]));
     await pronunciationAudio(
       context({ ...japaneseCard(), audioKey: "recorded.mp3", audioSource: "recorded" }),
@@ -771,7 +785,7 @@ describe("Japanese preceding context", () => {
       deps,
     );
     await pronunciationAudio(context(card()), "card-1", deps);
-    expect(japaneseContext.generate).not.toHaveBeenCalled();
+    expect(lead.writer.write).not.toHaveBeenCalled();
     expect(speech).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledWith({
       text: "jäääär",
@@ -782,20 +796,20 @@ describe("Japanese preceding context", () => {
 
   it("keeps a refused lead-in as no context instead of buying it again", async () => {
     const { bucket } = contextBucket();
-    const japaneseContext = contextGenerator();
-    japaneseContext.generate.mockResolvedValue({
+    const lead = leadIns();
+    lead.writer.write.mockResolvedValue({
       previousText: "とても",
       inputTokens: 300,
       outputTokens: 10,
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     vi.useFakeTimers({ toFake: ["Date"] });
     const first = await pronunciationAudio(context(japaneseCard()), "card-1", deps);
     vi.setSystemTime(Date.now() + 30 * 86_400_000);
     await pronunciationAudio(context({ ...japaneseCard(), audioKey: first.key }), "card-1", deps);
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledWith({
       text: "はし",
@@ -806,26 +820,26 @@ describe("Japanese preceding context", () => {
 
   it("retries an outage after a day and an interrupted call after minutes", async () => {
     const { bucket, objects } = contextBucket();
-    const japaneseContext = contextGenerator();
-    japaneseContext.generate.mockRejectedValueOnce(new JapaneseContextError("failed"));
+    const lead = leadIns();
+    lead.writer.write.mockRejectedValueOnce(new LeadInError("failed"));
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     vi.useFakeTimers({ toFake: ["Date"] });
     const row = japaneseCard();
     await pronunciationAudio(context(row), row.id, deps);
     vi.setSystemTime(Date.now() + 23 * 3_600_000);
     await pronunciationAudio(context(row), row.id, deps);
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     vi.setSystemTime(Date.now() + 2 * 3_600_000);
     await pronunciationAudio(context(row), row.id, deps);
-    expect(japaneseContext.generate).toHaveBeenCalledTimes(2);
+    expect(lead.writer.write).toHaveBeenCalledTimes(2);
 
     // A Worker cut off mid-call leaves its pending marker and lock behind.
     const interrupted = { ...row, id: "card-2", meaning: "a bridge" };
-    japaneseContext.generate.mockImplementationOnce(() => new Promise<never>(() => undefined));
+    lead.writer.write.mockImplementationOnce(() => new Promise<never>(() => undefined));
     void pronunciationAudio(context(interrupted), interrupted.id, deps);
-    await vi.waitFor(() => expect(japaneseContext.generate).toHaveBeenCalledTimes(3));
+    await vi.waitFor(() => expect(lead.writer.write).toHaveBeenCalledTimes(3));
     const lock = [...objects].find(
       ([key]) => key.startsWith("cards/card-2/") && key.endsWith(".lock"),
     );
@@ -835,21 +849,21 @@ describe("Japanese preceding context", () => {
     ).rejects.toMatchObject({ code: "unavailable" });
     vi.setSystemTime(Date.now() + 60_000);
     await pronunciationAudio(context(interrupted), interrupted.id, deps);
-    expect(japaneseContext.generate).toHaveBeenCalledTimes(3);
+    expect(lead.writer.write).toHaveBeenCalledTimes(3);
     vi.setSystemTime(Date.now() + 5 * 60_000);
     await pronunciationAudio(context(interrupted), interrupted.id, deps);
-    expect(japaneseContext.generate).toHaveBeenCalledTimes(4);
+    expect(lead.writer.write).toHaveBeenCalledTimes(4);
   });
 
   it("buys a broken cached context again rather than failing every play", async () => {
     const { bucket, objects, put } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     vi.spyOn(console, "info").mockImplementation(() => undefined);
     const row = japaneseCard();
     const first = await pronunciationAudio(context(row), row.id, deps);
-    const key = [...objects.keys()].find((k) => k.includes("/context/") && k.endsWith(".json"));
+    const key = [...objects.keys()].find((k) => k.includes("/lead-in/") && k.endsWith(".json"));
     for (const broken of ["{", JSON.stringify({ status: "ready", previousText: "橋の" })]) {
       await put(String(key), broken);
       const replay = await pronunciationAudio(
@@ -859,27 +873,27 @@ describe("Japanese preceding context", () => {
       );
       expect(replay.key).toBe(first.key);
     }
-    expect(japaneseContext.generate).toHaveBeenCalledTimes(3);
+    expect(lead.writer.write).toHaveBeenCalledTimes(3);
     expect(speech).toHaveBeenCalledOnce();
   });
 
   it("reports the context call's cost under its own span, a failed one included", async () => {
     const { bucket } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     const capture = vi.fn();
     const analytics = { writeDataPoint: vi.fn(), capture };
     await pronunciationAudio({ ...context(japaneseCard()), analytics }, "card-1", deps);
-    japaneseContext.generate.mockRejectedValueOnce(
-      new JapaneseContextError("failed", { inputTokens: 0, outputTokens: 0, status: 403 }),
+    lead.writer.write.mockRejectedValueOnce(
+      new LeadInError("failed", { inputTokens: 0, outputTokens: 0, status: 403 }),
     );
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const edited = { ...japaneseCard(), meaning: "a bridge" };
     await pronunciationAudio({ ...context(edited), analytics }, "card-1", deps);
     const spans = capture.mock.calls
       .map(([event]) => event)
-      .filter((event) => event.$ai_span_name === "pronunciation_context");
+      .filter((event) => event.$ai_span_name === "lead_in");
     expect(spans).toEqual([
       expect.objectContaining({
         $ai_provider: "google",
@@ -907,7 +921,7 @@ describe("Japanese preceding context", () => {
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const audio = await pronunciationAudio(context({ ...row, audioKey: old.key }), row.id, {
       bucket,
-      japaneseContext: contextGenerator(),
+      leadIns: leadIns(),
       providers: () => [provider("elevenlabs", down)],
     });
     expect(audio.key).toBe(old.key);
@@ -916,7 +930,7 @@ describe("Japanese preceding context", () => {
 
   it("serializes first plays across independent callers before either can bill twice", async () => {
     const { bucket } = contextBucket();
-    const japaneseContext = contextGenerator();
+    const lead = leadIns();
     let finish!: () => void;
     let started!: () => void;
     const pending = new Promise<void>((resolve) => {
@@ -925,13 +939,13 @@ describe("Japanese preceding context", () => {
     const generating = new Promise<void>((resolve) => {
       started = resolve;
     });
-    japaneseContext.generate.mockImplementation(async () => {
+    lead.writer.write.mockImplementation(async () => {
       started();
       await pending;
       return { previousText: "川を渡る", inputTokens: 300, outputTokens: 400 };
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const deps = { bucket, japaneseContext, providers: () => [provider("elevenlabs", speech)] };
+    const deps = { bucket, leadIns: lead, providers: () => [provider("elevenlabs", speech)] };
     const first = pronunciationAudio(context(japaneseCard()), "card-1", deps);
     await generating;
     await expect(pronunciationAudio(context(japaneseCard()), "card-1", deps)).rejects.toThrow(
@@ -939,7 +953,7 @@ describe("Japanese preceding context", () => {
     );
     finish();
     await first;
-    expect(japaneseContext.generate).toHaveBeenCalledOnce();
+    expect(lead.writer.write).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
   });
   it("reuses existing kana-only audio when no useful lead-in is returned", async () => {
@@ -955,10 +969,92 @@ describe("Japanese preceding context", () => {
     }));
     const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, {
       ...baseline,
-      japaneseContext: { model: "gemini-2.5-flash-lite", generate },
+      leadIns: { writer: { model: "gemini-2.5-flash-lite", write: generate }, decide: ambiguous },
     });
     expect(replay.key).toBe(first.key);
     expect(speech).toHaveBeenCalledOnce();
     expect(generate).toHaveBeenCalledOnce();
+  });
+  it("asks the writer only when the decision model hears another word, and reports each decision once", async () => {
+    const { bucket } = contextBucket();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const capture = vi.fn();
+    const analytics = { writeDataPoint: vi.fn(), capture };
+    const decisions = () =>
+      capture.mock.calls.map(([event]) => event).filter((e) => e.name === "lead_in_decided");
+    vi.spyOn(console, "info").mockImplementation(() => undefined);
+
+    const clear = leadIns(0.12);
+    const deps = { bucket, leadIns: clear, providers: () => [provider("elevenlabs", speech)] };
+    const clock = { ...japaneseCard(), term: "時計", pronunciation: "とけい", meaning: "clock" };
+    const first = await pronunciationAudio({ ...context(clock), analytics }, clock.id, deps);
+    await pronunciationAudio(
+      { ...context({ ...clock, audioKey: first.key }), analytics },
+      clock.id,
+      deps,
+    );
+    expect(clear.decide.run).toHaveBeenCalledOnce();
+    expect(clear.writer.write).not.toHaveBeenCalled();
+    expect(speech).toHaveBeenCalledWith({
+      text: "とけい",
+      language: "ja",
+      usage: expect.any(Function),
+    });
+
+    const unsure = leadIns(null);
+    await pronunciationAudio({ ...context(japaneseCard()), analytics }, "card-1", {
+      ...deps,
+      leadIns: unsure,
+    });
+    expect(unsure.writer.write).toHaveBeenCalledOnce();
+    expect(speech).toHaveBeenLastCalledWith(expect.objectContaining({ previousText: "川を渡る" }));
+
+    expect(decisions()).toEqual([
+      expect.objectContaining({
+        language: "ja",
+        outcome: "unambiguous",
+        decided_by: "model",
+        score: 0.12,
+      }),
+      expect.objectContaining({ outcome: "written", decided_by: "writer" }),
+    ]);
+    expect(decisions()[1]).not.toHaveProperty("score");
+  });
+
+  it("never asks a model about a card the policy screens out", async () => {
+    const { bucket } = contextBucket();
+    const lead = leadIns();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const coffee = {
+      ...japaneseCard(),
+      term: "コーヒー",
+      pronunciation: "こーひー",
+      meaning: "coffee",
+    };
+    await pronunciationAudio(context(coffee), coffee.id, {
+      bucket,
+      leadIns: lead,
+      providers: () => [provider("elevenlabs", speech)],
+    });
+    expect(lead.decide.run).not.toHaveBeenCalled();
+    expect(lead.writer.write).not.toHaveBeenCalled();
+    expect(speech).toHaveBeenCalledOnce();
+  });
+
+  it("speaks other voices without a lead-in, so only the auditioned voice pays for one", async () => {
+    const { bucket } = contextBucket();
+    const lead = leadIns();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    await pronunciationAudio(context(japaneseCard()), "card-1", {
+      bucket,
+      leadIns: lead,
+      providers: () => [provider("gemini-api", speech)],
+    });
+    expect(lead.decide.run).not.toHaveBeenCalled();
+    expect(speech).toHaveBeenCalledWith({
+      text: "はし",
+      language: "ja",
+      usage: expect.any(Function),
+    });
   });
 });

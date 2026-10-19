@@ -1,48 +1,44 @@
-import { kanaReading } from "@lymi/core";
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
+import { LeadInError, type LeadInUsage } from "../ai/lead-in-writer";
 import {
-  JAPANESE_CONTEXT_POLICY,
-  JapaneseContextError,
-  type JapaneseContextInput,
-  type JapaneseContextProvider,
-  type JapaneseContextUsage,
-  validJapaneseLeadIn,
-} from "../ai/japanese-audio-context";
-import { type AnalyticsWriter, textCallReporter } from "./analytics";
+  DECISION_MODEL,
+  type LeadInDependencies,
+  type LeadInInput,
+  type LeadInPolicy,
+  leadInScore,
+} from "../lead-ins";
+import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import { ServiceError } from "./context";
 
-// About as long as one context call plus one speech call, so a cut-off request blocks a card briefly.
+// About as long as one decision, one lead-in and one speech call, so a cut-off request blocks briefly.
 const LEASE_MS = 45_000;
 const FAILURE_COOLDOWN_MS = 86_400_000;
 // An interrupted call leaves its pending marker behind; that card retries after this instead of a day.
 const INTERRUPTED_COOLDOWN_MS = 300_000;
 
-export interface AudioContext {
+export interface SpokenLeadIn {
   identity: string;
   previousText: string | null;
 }
 
-const ContextRecord = z.discriminatedUnion("status", [
-  z.object({ status: z.literal("ready"), previousText: z.string().nullable() }),
+/** How a card's lead-in was settled; stored with it and reported once. */
+const OUTCOMES = ["unambiguous", "written", "no_fragment", "refused"] as const;
+type Outcome = (typeof OUTCOMES)[number];
+
+const LeadInRecord = z.discriminatedUnion("status", [
+  z.object({
+    status: z.literal("ready"),
+    previousText: z.string().nullable(),
+    outcome: z.enum(OUTCOMES).optional(),
+    score: z.number().nullable().optional(),
+  }),
   z.object({
     status: z.literal("failed"),
     retryAt: z.number(),
     pendingUntil: z.number().optional(),
   }),
 ]);
-
-export function japaneseContextInput(card: Card): JapaneseContextInput | null {
-  const reading = kanaReading(card);
-  if (
-    !reading ||
-    !card.meaning?.trim() ||
-    card.meaning.length > 500 ||
-    /[。！？!?\n]/u.test(card.term)
-  )
-    return null;
-  return { term: card.term, reading, meaning: card.meaning };
-}
 
 export async function audioFingerprint(value: unknown): Promise<string> {
   const hash = new Uint8Array(
@@ -94,34 +90,43 @@ export async function withAudioLease<T>(
   }
 }
 
-export async function japaneseAudioContext(
+/**
+ * The words said before a term, decided once per card input: free rules first, then the decision
+ * model, and the writer only when the reading alone could name another word.
+ */
+export async function settleLeadIn(
   card: Card,
-  input: JapaneseContextInput,
+  policy: LeadInPolicy,
+  input: LeadInInput,
   bucket: R2Bucket,
-  provider: JapaneseContextProvider,
+  deps: LeadInDependencies & { writer: NonNullable<LeadInDependencies["writer"]> },
   cachedOnly = false,
   analytics?: AnalyticsWriter,
-): Promise<AudioContext | undefined> {
+): Promise<SpokenLeadIn | undefined> {
+  const { writer } = deps;
   const identity = await audioFingerprint({
     input,
-    model: provider.model,
-    policy: JAPANESE_CONTEXT_POLICY,
+    language: policy.language,
+    policy: policy.version,
+    decision: [DECISION_MODEL, policy.threshold],
+    writer: writer.model,
   });
-  const key = `cards/${card.id}/context/${identity}.json`;
-  const log = (outcome: string, detail: Record<string, number> = {}) =>
+  const key = `cards/${card.id}/lead-in/${identity}.json`;
+  const log = (outcome: string, detail: Record<string, number | string> = {}) =>
     console.info(
       JSON.stringify({
-        event: "pronunciation_context_resolved",
+        event: "lead_in_resolved",
         outcome,
-        model: provider.model,
+        language: policy.language,
+        model: writer.model,
         ...detail,
       }),
     );
-  const record = async (value: z.input<typeof ContextRecord>) =>
+  const record = async (value: z.input<typeof LeadInRecord>) =>
     bucket.put(key, JSON.stringify(value), {
       httpMetadata: { contentType: "application/json" },
     });
-  const read = async (): Promise<AudioContext | null> => {
+  const read = async (): Promise<SpokenLeadIn | null> => {
     const object = await bucket.get(key);
     if (!object) return null;
     if (object.size > 4096) {
@@ -129,11 +134,11 @@ export async function japaneseAudioContext(
       log("invalid_cache");
       return null;
     }
-    const parsed = ContextRecord.safeParse(await object.json().catch(() => null));
+    const parsed = LeadInRecord.safeParse(await object.json().catch(() => null));
     // A record a later, stricter policy would refuse is bought again rather than breaking playback.
     if (
       !parsed.success ||
-      (parsed.data.status === "ready" && !validJapaneseLeadIn(parsed.data.previousText, input))
+      (parsed.data.status === "ready" && !policy.accepts(parsed.data.previousText, input))
     ) {
       log("invalid_cache");
       return null;
@@ -164,50 +169,66 @@ export async function japaneseAudioContext(
       pendingUntil: Date.now() + LEASE_MS,
     });
     const started = Date.now();
-    const report = (usage: JapaneseContextUsage | undefined, error: boolean) =>
+    const score = await leadInScore(deps.decide, policy, input);
+    const decide = (outcome: Outcome | "failed") =>
+      track(analytics, {
+        name: "lead_in_decided",
+        language: policy.language,
+        outcome,
+        decided_by: score === null ? "writer" : "model",
+        ...(score === null ? {} : { score: Math.round(score * 100) / 100 }),
+      });
+    const settle = async (outcome: Outcome, previousText: string | null) => {
+      await record({ status: "ready", previousText, outcome, score });
+      decide(outcome);
+      log(outcome, { latencyMs: Date.now() - started });
+      return { identity, previousText };
+    };
+    if (score !== null && score < policy.threshold) return settle("unambiguous", null);
+
+    const written = Date.now();
+    const report = (usage: LeadInUsage | undefined, error: boolean) =>
       textCallReporter(
         analytics,
-        "pronunciation_context",
+        "lead_in",
       )({
         provider: "google",
-        model: provider.model,
+        model: writer.model,
         inputTokens: usage?.inputTokens ?? 0,
         outputTokens: usage?.outputTokens ?? 0,
         reasoningTokens: usage?.reasoningTokens,
-        latencyMs: Date.now() - started,
+        latencyMs: Date.now() - written,
         error,
         status: usage?.status,
       });
+    let result: Awaited<ReturnType<typeof writer.write>>;
     try {
-      const result = await provider.generate(input);
-      if (!validJapaneseLeadIn(result.previousText, input))
-        throw new JapaneseContextError("rejected", result);
-      report(result, false);
-      await record({ status: "ready", previousText: result.previousText });
-      log(result.previousText ? "generated" : "unneeded", {
-        inputTokens: result.inputTokens,
-        outputTokens: result.outputTokens,
-        latencyMs: Date.now() - started,
+      result = await writer.write({
+        instructions: policy.instructions,
+        input: { ...input },
+        accepts: (previousText) => policy.accepts(previousText, input),
       });
-      return { identity, previousText: result.previousText };
+      if (!policy.accepts(result.previousText, input)) throw new LeadInError("refused", result);
     } catch (error) {
-      const failure = error instanceof JapaneseContextError ? error : undefined;
-      report(failure?.usage, failure?.reason !== "rejected");
-      // At temperature 0 a refused reply would come back the same, so it is kept as no context.
-      await record(
-        failure?.reason === "rejected"
-          ? { status: "ready", previousText: null }
-          : { status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS },
-      );
+      const failure = error instanceof LeadInError ? error : undefined;
+      // A refused reply was billed and kept, so it is not an outage.
+      report(failure?.usage, failure?.reason !== "refused");
+      // At temperature 0 a refused reply would come back the same, so it is kept as no lead-in.
+      if (failure?.reason === "refused") return settle("refused", null);
+      await record({ status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS });
+      decide("failed");
       console.warn(
         JSON.stringify({
-          event: "pronunciation_context_resolved",
-          outcome: failure?.reason === "rejected" ? "rejected" : "failed",
-          model: provider.model,
+          event: "lead_in_resolved",
+          outcome: "failed",
+          language: policy.language,
+          model: writer.model,
           latencyMs: Date.now() - started,
         }),
       );
       return { identity, previousText: null };
     }
+    report(result, false);
+    return settle(result.previousText ? "written" : "no_fragment", result.previousText);
   });
 }

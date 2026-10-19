@@ -1,10 +1,9 @@
 import { createSpeechProviders } from "./ai";
-import { createJapaneseContextProvider } from "./ai/japanese-audio-context";
 import { handleFetch } from "./app";
 import { runCanary } from "./canary";
 import { createDb } from "./db";
-import { meteredFetch } from "./dependency-health";
 import type { Bindings } from "./env";
+import { leadInDependencies } from "./lead-ins";
 import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
@@ -55,7 +54,7 @@ export default {
         "published-audio",
         voicePublishedDecks(db, {
           bucket: env.AUDIO,
-          japaneseContext: createJapaneseContextProvider(env, meteredFetch(env, "gemini_text")),
+          leadIns: leadInDependencies(env),
           providers: (language) => createSpeechProviders(env, language),
           analytics: ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
         }),

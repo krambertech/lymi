@@ -289,9 +289,8 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
     ? offered.filter((name) => rank(name) < 3).sort((a, b) => rank(a) - rank(b))
     : offered;
   const fresh = !!typed && !offered.some((name) => tagKey(name) === needle);
-  /** What Return takes: the tag typed, or the one tag the letters found. */
-  const pick =
-    shown[0] !== undefined && (rank(shown[0]) === 0 || shown.length === 1) ? shown[0] : undefined;
+  /** What Return takes: the tag named exactly as typed; any other text is a new tag. */
+  const pick = shown[0] !== undefined && rank(shown[0]) === 0 ? shown[0] : undefined;
 
   const count = (name: string) => carried.get(tagKey(name))?.count ?? 0;
   const start = (name: string): TagChoice => {
@@ -313,7 +312,18 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
   };
   const add = offered.filter((name) => choiceOf(name) === "all" && start(name) !== "all");
   const remove = offered.filter((name) => choiceOf(name) === "none" && start(name) !== "none");
-  return { total, shown, typed, fresh, pick, choiceOf, next, after, change: { add, remove } };
+  return {
+    total,
+    offered,
+    shown,
+    typed,
+    fresh,
+    pick,
+    choiceOf,
+    next,
+    after,
+    change: { add, remove },
+  };
 }
 
 /**

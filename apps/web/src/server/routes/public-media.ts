@@ -3,6 +3,7 @@ import { createSpeechProviders } from "../ai";
 import { tooManyRequests } from "../auth-rate-limit";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
+import { leadInDependencies } from "../lead-ins";
 import { ownerAnalytics } from "../posthog";
 import { spendPublicAudio } from "../public-audio-rate-limit";
 import { publisherAvatar } from "../services";
@@ -24,16 +25,20 @@ publicMedia.get(
         audio: c.env.AUDIO,
       });
     } else {
-      const found = await publicPronunciation(
+      const work = publicPronunciation(
         c.get("db"),
         c.req.param("cardId"),
         {
           bucket: c.env.AUDIO,
+          leadIns: leadInDependencies(c.env),
           providers: (language) => createSpeechProviders(c.env, language),
           analytics: ownerAnalytics(c.env, c.get("db"), (work) => c.executionCtx.waitUntil(work)),
         },
         () => spendPublicAudio(c),
       );
+      // A visitor who leaves mid-generation still gets the clip stored, and its lease released.
+      c.executionCtx.waitUntil(work.catch(() => undefined));
+      const found = await work;
       if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
       object = found.clip;
     }

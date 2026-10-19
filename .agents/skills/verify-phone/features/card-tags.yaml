@@ -19,6 +19,11 @@ name: Card tags
 - inputText: "${NEW}"
 - tapOn: "Create “${NEW}”"
 - assertVisible: "^${NEW}$"
+# A comma between names puts on each of them.
+- inputText: "loan, bank"
+- pressKey: Enter
+- assertVisible: "^loan$"
+- assertVisible: "^bank$"
 - takeScreenshot: 02-edited
 # The ticks are a draft until the sheet's ✓; a swipe would drop them.
 - tapOn: "Apply"

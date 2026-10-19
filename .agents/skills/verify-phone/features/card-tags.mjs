@@ -10,12 +10,12 @@ export async function env({ api }) {
   return { DECK_ID: deck.id, CARD_ID: row.card.id, NEW };
 }
 
-/** Unticking money and creating refund leaves noun and refund, in that order. */
+/** Unticking money, creating refund, then typing "loan, bank" leaves noun, refund, loan and bank. */
 export async function check({ api, poll }) {
   const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   return poll(async () => {
     const row = (await api(`/api/decks/${deck.id}/cards`)).find((r) => r.card.term === TERM);
-    if (row.card.tags.join() !== `noun,${NEW}`)
+    if (row.card.tags.join() !== `noun,${NEW},loan,bank`)
       throw new Error(`Tags: ${row.card.tags.join(", ")}`);
     return { term: TERM, tags: row.card.tags };
   });

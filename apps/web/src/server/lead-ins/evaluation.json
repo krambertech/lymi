@@ -1,0 +1,336 @@
+{
+  "note": "Drafted by Claude on 19 October 2026 from common homophones; a native speaker has not reviewed these labels yet. `ambiguous` means another common word shares the kana reading, so the reading alone may be heard as that word or with its accent.",
+  "languages": {
+    "ja": [
+      {
+        "term": "橋",
+        "reading": "はし",
+        "meaning": "bridge",
+        "ambiguous": true,
+        "rivals": "橋, 箸, 端"
+      },
+      {
+        "term": "箸",
+        "reading": "はし",
+        "meaning": "chopsticks",
+        "ambiguous": true,
+        "rivals": "橋, 箸, 端"
+      },
+      {
+        "term": "端",
+        "reading": "はし",
+        "meaning": "edge, end",
+        "ambiguous": true,
+        "rivals": "橋, 箸, 端"
+      },
+      {
+        "term": "雨",
+        "reading": "あめ",
+        "meaning": "rain",
+        "ambiguous": true,
+        "rivals": "雨, 飴"
+      },
+      {
+        "term": "飴",
+        "reading": "あめ",
+        "meaning": "candy",
+        "ambiguous": true,
+        "rivals": "雨, 飴"
+      },
+      {
+        "term": "紙",
+        "reading": "かみ",
+        "meaning": "paper",
+        "ambiguous": true,
+        "rivals": "紙, 髪, 神"
+      },
+      {
+        "term": "髪",
+        "reading": "かみ",
+        "meaning": "hair",
+        "ambiguous": true,
+        "rivals": "紙, 髪, 神"
+      },
+      {
+        "term": "神",
+        "reading": "かみ",
+        "meaning": "god",
+        "ambiguous": true,
+        "rivals": "紙, 髪, 神"
+      },
+      {
+        "term": "花",
+        "reading": "はな",
+        "meaning": "flower",
+        "ambiguous": true,
+        "rivals": "花, 鼻"
+      },
+      {
+        "term": "鼻",
+        "reading": "はな",
+        "meaning": "nose",
+        "ambiguous": true,
+        "rivals": "花, 鼻"
+      },
+      {
+        "term": "柿",
+        "reading": "かき",
+        "meaning": "persimmon",
+        "ambiguous": true,
+        "rivals": "柿, 牡蠣"
+      },
+      {
+        "term": "牡蠣",
+        "reading": "かき",
+        "meaning": "oyster",
+        "ambiguous": true,
+        "rivals": "柿, 牡蠣"
+      },
+      {
+        "term": "雲",
+        "reading": "くも",
+        "meaning": "cloud",
+        "ambiguous": true,
+        "rivals": "雲, 蜘蛛"
+      },
+      {
+        "term": "蜘蛛",
+        "reading": "くも",
+        "meaning": "spider",
+        "ambiguous": true,
+        "rivals": "雲, 蜘蛛"
+      },
+      {
+        "term": "石",
+        "reading": "いし",
+        "meaning": "stone",
+        "ambiguous": true,
+        "rivals": "石, 医師, 意志"
+      },
+      {
+        "term": "医師",
+        "reading": "いし",
+        "meaning": "doctor",
+        "ambiguous": true,
+        "rivals": "石, 医師, 意志"
+      },
+      {
+        "term": "着る",
+        "reading": "きる",
+        "meaning": "to wear",
+        "ambiguous": true,
+        "rivals": "着る, 切る"
+      },
+      {
+        "term": "切る",
+        "reading": "きる",
+        "meaning": "to cut",
+        "ambiguous": true,
+        "rivals": "着る, 切る"
+      },
+      {
+        "term": "暑い",
+        "reading": "あつい",
+        "meaning": "hot (weather)",
+        "ambiguous": true,
+        "rivals": "暑い, 厚い, 熱い"
+      },
+      {
+        "term": "厚い",
+        "reading": "あつい",
+        "meaning": "thick",
+        "ambiguous": true,
+        "rivals": "暑い, 厚い, 熱い"
+      },
+      {
+        "term": "買う",
+        "reading": "かう",
+        "meaning": "to buy",
+        "ambiguous": true,
+        "rivals": "買う, 飼う"
+      },
+      {
+        "term": "飼う",
+        "reading": "かう",
+        "meaning": "to keep (a pet)",
+        "ambiguous": true,
+        "rivals": "買う, 飼う"
+      },
+      {
+        "term": "公園",
+        "reading": "こうえん",
+        "meaning": "park",
+        "ambiguous": true,
+        "rivals": "公園, 講演"
+      },
+      {
+        "term": "講演",
+        "reading": "こうえん",
+        "meaning": "lecture",
+        "ambiguous": true,
+        "rivals": "公園, 講演"
+      },
+      {
+        "term": "帰る",
+        "reading": "かえる",
+        "meaning": "to go home",
+        "ambiguous": true,
+        "rivals": "帰る, 変える, 蛙"
+      },
+      {
+        "term": "変える",
+        "reading": "かえる",
+        "meaning": "to change",
+        "ambiguous": true,
+        "rivals": "帰る, 変える, 蛙"
+      },
+      {
+        "term": "蛙",
+        "reading": "かえる",
+        "meaning": "frog",
+        "ambiguous": true,
+        "rivals": "帰る, 変える, 蛙"
+      },
+      {
+        "term": "酒",
+        "reading": "さけ",
+        "meaning": "sake, alcohol",
+        "ambiguous": true,
+        "rivals": "酒, 鮭"
+      },
+      {
+        "term": "鮭",
+        "reading": "さけ",
+        "meaning": "salmon",
+        "ambiguous": true,
+        "rivals": "酒, 鮭"
+      },
+      {
+        "term": "時計",
+        "reading": "とけい",
+        "meaning": "clock",
+        "ambiguous": false
+      },
+      {
+        "term": "電車",
+        "reading": "でんしゃ",
+        "meaning": "train",
+        "ambiguous": false
+      },
+      {
+        "term": "食べる",
+        "reading": "たべる",
+        "meaning": "to eat",
+        "ambiguous": false
+      },
+      {
+        "term": "猫",
+        "reading": "ねこ",
+        "meaning": "cat",
+        "ambiguous": false
+      },
+      {
+        "term": "犬",
+        "reading": "いぬ",
+        "meaning": "dog",
+        "ambiguous": false
+      },
+      {
+        "term": "水",
+        "reading": "みず",
+        "meaning": "water",
+        "ambiguous": false
+      },
+      {
+        "term": "友達",
+        "reading": "ともだち",
+        "meaning": "friend",
+        "ambiguous": false
+      },
+      {
+        "term": "学校",
+        "reading": "がっこう",
+        "meaning": "school",
+        "ambiguous": false
+      },
+      {
+        "term": "新聞",
+        "reading": "しんぶん",
+        "meaning": "newspaper",
+        "ambiguous": false
+      },
+      {
+        "term": "飛行機",
+        "reading": "ひこうき",
+        "meaning": "airplane",
+        "ambiguous": false
+      },
+      {
+        "term": "自転車",
+        "reading": "じてんしゃ",
+        "meaning": "bicycle",
+        "ambiguous": false
+      },
+      {
+        "term": "卵",
+        "reading": "たまご",
+        "meaning": "egg",
+        "ambiguous": false
+      },
+      {
+        "term": "靴",
+        "reading": "くつ",
+        "meaning": "shoes",
+        "ambiguous": false
+      },
+      {
+        "term": "窓",
+        "reading": "まど",
+        "meaning": "window",
+        "ambiguous": false
+      },
+      {
+        "term": "机",
+        "reading": "つくえ",
+        "meaning": "desk",
+        "ambiguous": false
+      },
+      {
+        "term": "魚",
+        "reading": "さかな",
+        "meaning": "fish",
+        "ambiguous": false
+      },
+      {
+        "term": "野菜",
+        "reading": "やさい",
+        "meaning": "vegetables",
+        "ambiguous": false
+      },
+      {
+        "term": "図書館",
+        "reading": "としょかん",
+        "meaning": "library",
+        "ambiguous": false
+      },
+      {
+        "term": "病院",
+        "reading": "びょういん",
+        "meaning": "hospital",
+        "ambiguous": false
+      },
+      {
+        "term": "美しい",
+        "reading": "うつくしい",
+        "meaning": "beautiful",
+        "ambiguous": false
+      },
+      {
+        "term": "忙しい",
+        "reading": "いそがしい",
+        "meaning": "busy",
+        "ambiguous": false
+      }
+    ]
+  }
+}

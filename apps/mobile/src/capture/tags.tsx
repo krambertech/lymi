@@ -45,9 +45,26 @@ export function useTagList({
     if (choice === "all" && picker.choiceOf(name) !== "all") onAdded?.(via, true);
     choose(new Map(choices).set(tagKey(name), choice), created);
   };
+  /** Puts on each name typed, a comma between them; a card stops taking new ones at its limit. */
   const create = () => {
-    onAdded?.("typed", false);
-    choose(new Map(choices).set(tagKey(picker.typed), "all"), [...created, picker.typed]);
+    const next = new Map(choices);
+    const made = [...created];
+    const only = cards.length === 1 ? cards[0] : undefined;
+    let room = only
+      ? TAG_LIMITS.count - retag(only, picker.change.add, picker.change.remove).tags.length
+      : Number.POSITIVE_INFINITY;
+    const names = query.split(",").map((name) => name.trim().slice(0, TAG_LIMITS.length));
+    for (const name of names) {
+      if (!name || next.get(tagKey(name)) === "all") continue;
+      const known = picker.offered.find((o) => tagKey(o) === tagKey(name));
+      if (known && picker.choiceOf(known) === "all") continue;
+      if (room <= 0) break;
+      room -= 1;
+      onAdded?.("typed", !!known);
+      if (!known) made.push(name);
+      next.set(tagKey(name), "all");
+    }
+    choose(next, made);
     setQuery("");
   };
   return { picker, query, setQuery, set, create };
@@ -86,7 +103,8 @@ export function TagList({
         onSubmit={() => {
           if (!typed) onDone?.();
           else if (fresh && !full) create();
-          else if (pick) {
+          // A full card only takes a tag off, as its unticked rows are dimmed.
+          else if (pick && !(full && picker.choiceOf(pick) !== "all")) {
             set(pick, picker.next(pick), "typed");
             setQuery("");
           }

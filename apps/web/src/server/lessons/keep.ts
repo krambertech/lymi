@@ -18,6 +18,7 @@ export type DecisionModel = { run(model: string, input: unknown): Promise<unknow
 export function decisionModel(
   env: { AI?: Ai; AI_GATEWAY_ID?: string | undefined } & HealthEnv,
   source: DependencySource = "traffic",
+  timeoutMs = 30_000,
 ): DecisionModel {
   const ai = env.AI;
   if (!ai) return undefined;
@@ -32,7 +33,7 @@ export function decisionModel(
           ai.run(model as keyof AiModels, input as never, {
             gateway: { id, skipCache: true },
             extraHeaders: { "cf-aig-collect-log-payload": "false" },
-            signal: AbortSignal.timeout(30_000),
+            signal: AbortSignal.timeout(timeoutMs),
           }),
         source,
       ),

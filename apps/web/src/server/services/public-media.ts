@@ -25,7 +25,7 @@ export async function publicMediaFile(
 }
 
 /**
- * A live published card's pronunciation: the stored clip or approved recording, or one made on
+ * A live published card's pronunciation: the stored clip or recording, or one made on
  * its first play when `spend` has budget left, so a deck is voiced only as far as visitors listen. #759.
  */
 export async function publicPronunciation(
@@ -63,7 +63,7 @@ export async function publicPronunciation(
       ),
     );
   const language = LanguageTag.safeParse(card?.language);
-  // A recording its publisher has not approved is never heard on the public page, nor replaced.
+  // A recording whose clip is missing is never replaced with generated speech. CONTEXT.md, Recording.
   if (card?.audioSource === "recorded") throw new ServiceError("not_found", "Media not found");
   if (!card || !language.success || !canSpeakTerm(card) || !deps.providers(language.data).length) {
     throw new ServiceError("not_found", "Media not found");

@@ -214,7 +214,7 @@ export const cards = sqliteTable(
      * import brought, which is the card's audio for good. Null without audio.
      */
     audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
-    /** The recording its publisher approved for a published deck's page; public only while it is `audio_key`. */
+    /** Retired: recordings follow their deck without approval. Nothing reads it; a later migration drops it. */
     audioApprovedKey: text("audio_approved_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })

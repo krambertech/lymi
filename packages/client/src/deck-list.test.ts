@@ -208,7 +208,7 @@ describe("tagPicker", () => {
     });
     expect(p.shown).toEqual(["Food", "food court", "seafood"]);
     expect(p.pick).toBe("Food");
-    expect(pick([], "verb").pick).toBe("verbs");
+    expect(pick([], "verb").pick).toBeUndefined();
     expect(pick([], "v").pick).toBeUndefined();
   });
 

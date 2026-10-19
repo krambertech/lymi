@@ -75,7 +75,12 @@ function TagCardsBody({
         noValidate
         onSubmit={(e) => {
           e.preventDefault();
-          if (!fresh) return;
+          // Return takes the tag named exactly as typed, as the phone's list does.
+          if (!fresh) {
+            if (picker.pick) set(picker.pick, picker.next(picker.pick));
+            setQuery("");
+            return;
+          }
           setCreated((prev) => [...prev, typed]);
           set(typed, "all");
           setQuery("");

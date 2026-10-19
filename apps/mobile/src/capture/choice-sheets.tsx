@@ -135,10 +135,11 @@ function PictureChoice({ card }: ChoiceProps) {
 /** The card's tags, which stay for the next card; the sheet's ✓ keeps what is ticked. */
 function TagsChoice({ onDone, keep }: ChoiceProps) {
   const { deckId, tags, setTags } = useChoices();
-  const [draft, setDraft] = useDraft(tags, setTags, keep);
   const decks = useDecks().data ?? [];
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
-  return <TagsChoices value={draft} onChange={setDraft} deckId={deck?.id} onDone={onDone} />;
+  return (
+    <TagsChoices value={tags} onChange={setTags} deckId={deck?.id} onDone={onDone} keep={keep} />
+  );
 }
 
 /** What each choice's sheet holds, by the chip that opens it. */

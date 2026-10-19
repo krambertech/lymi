@@ -1724,6 +1724,9 @@ msgstr "Країни, зорі, птахи чи будь-що інше з наз
 msgid "Create “{typed}”"
 msgstr "Створити «{typed}»"
 
+msgid "Create {listed}"
+msgstr "Створити {listed}"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Спершу створи колоду, а тоді додай до неї урок."
 

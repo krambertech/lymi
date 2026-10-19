@@ -225,7 +225,12 @@ function TagCardsSheet({
       title={plural(total, { one: "Tags for # card", other: "Tags for # cards" })}
       open={open}
       onOpenChange={onOpenChange}
-      save={{ label: t`Save`, onPress: () => onSave(change), disabled: changed === 0 || !online }}
+      save={{
+        label: t`Save`,
+        // Anything still typed goes on too, as Return would put it.
+        onPress: () => onSave(list.settle()),
+        disabled: (changed === 0 && !list.query.trim()) || !online,
+      }}
     >
       <TagList list={list} />
       {!online && <SheetNote>{t`Changing tags needs a connection.`}</SheetNote>}

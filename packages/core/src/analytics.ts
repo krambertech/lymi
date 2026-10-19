@@ -232,7 +232,7 @@ export const analyticsEvents = {
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
-    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
+    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined", "today"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
   signed_in: z.object({}),
@@ -280,6 +280,8 @@ export const analyticsEvents = {
     source,
     count,
     fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
+    /** Of `count`, the cards whose text was converted to how Lymi stores it. */
+    normalized: count.optional(),
   }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
@@ -315,6 +317,15 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  ready_decks_narrowed: z.object({
+    topic: z.enum(["all", "language", "test"]),
+    // A catalogue language's tag, never what the learner typed.
+    language: z
+      .string()
+      .regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})?$/)
+      .nullable(),
+    searched: z.boolean(),
+  }),
   origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
   context_menu_action: z.object({
     menu: z.enum(CONTEXT_MENU_SURFACES),
@@ -511,6 +522,7 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],

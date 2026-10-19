@@ -11,6 +11,7 @@ import {
   missingReadings,
   parseReadings,
   readingKey,
+  splitTermReading,
   stripReadings,
   termReading,
 } from "./reading";
@@ -362,15 +363,45 @@ describe("kanaReading", () => {
 
 describe("readingKey", () => {
   it("folds katakana, spacing and composition, so one reading written two ways is one", () => {
-    expect(readingKey({ language: "ja", pronunciation: "ジョウズ" })).toBe("じょうず");
-    expect(readingKey({ language: "ja-JP", pronunciation: " じょう  ず " })).toBe("じょうず");
-    expect(readingKey({ language: "ja", pronunciation: "た・べる" })).toBe("たべる");
-    expect(readingKey({ language: "ja", pronunciation: "じょう\u3000ず" })).toBe("じょうず");
-    expect(readingKey({ language: "ja", pronunciation: "か\u3099" })).toBe("が");
+    const key = (pronunciation: string, language = "ja") =>
+      readingKey({ term: "上手", language, pronunciation });
+    expect(key("ジョウズ")).toBe("じょうず");
+    expect(key(" じょう  ず ", "ja-JP")).toBe("じょうず");
+    expect(key("じょう・ず")).toBe("じょうず");
+    expect(key("じょう\u3000ず")).toBe("じょうず");
+    expect(readingKey({ term: "外", language: "ja", pronunciation: "そと" })).toBe("そと");
+    expect(readingKey({ term: "画", language: "ja", pronunciation: "か\u3099" })).toBe("が");
   });
   it("has no reading where none applies", () => {
-    expect(readingKey({ language: "ja", pronunciation: "jōzu" })).toBeNull();
-    expect(readingKey({ language: "zh", pronunciation: "xuéxí" })).toBeNull();
-    expect(readingKey({ language: "it", pronunciation: null })).toBeNull();
+    expect(readingKey({ term: "上手", language: "ja", pronunciation: "jōzu" })).toBeNull();
+    expect(readingKey({ term: "学习", language: "zh", pronunciation: "xuéxí" })).toBeNull();
+    expect(readingKey({ term: "ciao", language: "it", pronunciation: null })).toBeNull();
+  });
+  it("keys only a reading that fits the term, so a stray reading never splits a word", () => {
+    expect(readingKey({ term: "食べる", language: "ja", pronunciation: "たべる" })).toBe("たべる");
+    expect(readingKey({ term: "食べる", language: "ja", pronunciation: "しょくじ" })).toBeNull();
+    expect(readingKey({ term: "ねこ", language: "ja", pronunciation: "いぬ" })).toBeNull();
+    expect(readingKey({ term: "食べる · 食べます", language: "ja", pronunciation: "たべる" })).toBe(
+      "たべる",
+    );
+    // Alignment cannot read a Latin letter, so the reading stands.
+    expect(readingKey({ term: "Tシャツ", language: "ja", pronunciation: "ティーシャツ" })).toBe(
+      "てぃーしゃつ",
+    );
+  });
+});
+
+describe("splitTermReading", () => {
+  it("splits a term written with inline readings into the term and its whole reading", () => {
+    expect(splitTermReading("食[た]べる")).toEqual({ term: "食べる", reading: "たべる" });
+    expect(splitTermReading("引[ひ]き出[だ]し")).toEqual({ term: "引き出し", reading: "ひきだし" });
+    expect(splitTermReading(" 上手[ジョウズ] ")).toEqual({ term: "上手", reading: "じょうず" });
+  });
+  it("leaves a term alone unless every kanji has a kana reading", () => {
+    expect(splitTermReading("食べる")).toBeNull();
+    expect(splitTermReading("食[た]べ物")).toBeNull();
+    expect(splitTermReading("食[ta]べる")).toBeNull();
+    expect(splitTermReading("T[てぃー]シャツ")).toBeNull();
+    expect(splitTermReading("[sound:a.mp3]食べる")).toBeNull();
   });
 });

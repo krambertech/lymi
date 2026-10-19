@@ -925,6 +925,8 @@ export const OnboardingInput = z.object({
   /** A BCP 47 tag, or the name the learner typed for a language Lymi does not list. */
   learningLanguage: z.string().trim().min(1).max(60).nullable(),
   dailyGoal: DailyGoal.nullable(),
+  /** Set by the web's Today, which a new account starts on instead of Welcome's questions. */
+  from: z.enum(["today"]).optional(),
 });
 export type OnboardingInput = z.infer<typeof OnboardingInput>;
 export const ANALYTICS_CONSENT_VERSION = 1;

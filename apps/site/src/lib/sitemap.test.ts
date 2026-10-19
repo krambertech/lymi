@@ -11,7 +11,7 @@ describe("runtimeSitemap", () => {
   it("lists a shelf's page only in the locales that have it, pointing at each other", () => {
     const xml = runtimeSitemap(
       [],
-      [{ en: "/explore/languages/german", uk: "/uk/explore/languages/german" }],
+      [{ paths: { en: "/explore/languages/german", uk: "/uk/explore/languages/german" } }],
     );
     expect(locs(xml).filter((loc) => loc?.includes("german"))).toEqual([
       "https://lymi.app/explore/languages/german",
@@ -20,6 +20,31 @@ describe("runtimeSitemap", () => {
     const german = entry(xml, "/explore/languages/german");
     expect(german).toContain('hreflang="uk" href="https://lymi.app/uk/explore/languages/german"');
     expect(german).not.toContain('hreflang="ru"');
+  });
+
+  it("dates a shelf's page by the newest of its own decks", () => {
+    const deck = (slug: string, updatedAt: string) => ({
+      slug,
+      updatedAt: new Date(updatedAt),
+      meaningLanguage: "en",
+      editions: [],
+    });
+    const xml = runtimeSitemap(
+      [
+        deck("german-a1-vocabulary", "2026-09-01T00:00:00Z"),
+        deck("travel-german", "2026-09-12T00:00:00Z"),
+        deck("travel-greek", "2026-10-01T00:00:00Z"),
+      ],
+      [
+        {
+          paths: { en: "/explore/languages/german" },
+          slugs: ["german-a1-vocabulary", "travel-german"],
+        },
+      ],
+    );
+    expect(entry(xml, "/explore/languages/german")).toContain(
+      "<lastmod>2026-09-12T00:00:00.000Z</lastmod>",
+    );
   });
 
   it("lists a guide page in every locale, dated by the newest of its own decks", () => {

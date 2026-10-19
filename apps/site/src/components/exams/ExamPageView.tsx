@@ -37,13 +37,6 @@ function Localized({ locale, children }: LocaleProps & { children: ReactNode }) 
   return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
-/** An exam page's document title: its heading and Lymi's name. */
-export function examTitle(exam: Exam, locale: Locale): string {
-  const i18n = pageI18n(locale);
-  const heading = i18n._(exam.heading);
-  return i18n._(msg`${heading} · Lymi`);
-}
-
 /** The latest change among some decks, for "updated" beside a source. */
 function latest(slugs: readonly string[], updated: Record<string, string>): string | undefined {
   return slugs

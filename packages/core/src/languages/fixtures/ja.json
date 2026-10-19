@@ -46,6 +46,82 @@
       "plain": "[sound:taberu.mp3]を聞く"
     }
   ],
-  "keys": [["じょうず", "ジョウズ", "じょう ず", "じょうず"]],
-  "noKey": ["dʒoːzɯ", "jōzu", "jouzu"]
+  "keys": [
+    {
+      "term": "上手",
+      "pronunciations": ["じょうず", "ジョウズ", "じょう ず", "じょうず"]
+    }
+  ],
+  "noKey": [
+    {
+      "term": "上手",
+      "pronunciation": "dʒoːzɯ"
+    },
+    {
+      "term": "上手",
+      "pronunciation": "jōzu"
+    },
+    {
+      "term": "上手",
+      "pronunciation": "jouzu"
+    },
+    {
+      "term": "食べる",
+      "pronunciation": "しょくじ"
+    }
+  ],
+  "inputs": [
+    {
+      "sent": {
+        "term": "食[た]べる"
+      },
+      "stored": {
+        "term": "食べる",
+        "pronunciation": "たべる"
+      },
+      "normalized": ["term", "pronunciation"]
+    },
+    {
+      "sent": {
+        "term": "食[た]べる",
+        "pronunciation": "タベル"
+      },
+      "stored": {
+        "term": "食べる",
+        "pronunciation": "タベル"
+      },
+      "normalized": ["term"]
+    },
+    {
+      "sent": {
+        "term": "上手[じょうず]",
+        "pronunciation": "うわて"
+      },
+      "stored": {
+        "term": "上手[じょうず]",
+        "pronunciation": "うわて"
+      },
+      "normalized": []
+    },
+    {
+      "sent": {
+        "term": "食[た]べ物"
+      },
+      "stored": {
+        "term": "食[た]べ物"
+      },
+      "normalized": []
+    },
+    {
+      "sent": {
+        "term": "食べる",
+        "pronunciation": "たべる"
+      },
+      "stored": {
+        "term": "食べる",
+        "pronunciation": "たべる"
+      },
+      "normalized": []
+    }
+  ]
 }

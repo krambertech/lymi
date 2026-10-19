@@ -127,7 +127,7 @@ Start with list_decks. It names the decks, their languages and the language mean
 
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
 
-A term already in the learner's decks is skipped, never rejected, and the result names the existing card. A Japanese term whose kana reading differs from the existing card's is a different word and gets its own card, as long as both have a reading. Re-sending the same batch is safe.
+A term already in the learner's decks is skipped, never rejected, and the result names the existing card. A Japanese term whose kana reading differs from the existing card's is a different word and gets its own card, as long as both have a reading. A Japanese term sent with its reading inline, 食[た]べる, is stored as 食べる with the reading たべる, and the result lists the converted fields in normalized. Re-sending the same batch is safe.
 
 To change, archive or restore many cards, send them in one update_cards, archive_cards or restore_cards call, up to 200 at a time, rather than one call per card. Each card succeeds or fails on its own and the result says which, with an error code. A card whose save failed comes back as unavailable with nothing on it changed; send only those again. Set response to "terse" on add_cards or update_cards when you only need each card's id and status back.
 
@@ -319,7 +319,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
             response === "terse"
               ? terseOutcome(o)
               : o.status === "added"
-                ? { id: o.id, status: "added" as const, card: cardOut(o.card) }
+                ? {
+                    id: o.id,
+                    status: "added" as const,
+                    card: cardOut(o.card),
+                    ...(o.normalized ? { normalized: o.normalized } : {}),
+                  }
                 : {
                     id: o.id,
                     status: "skipped" as const,
@@ -369,7 +374,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
             response === "terse"
               ? terseOutcome(o)
               : o.status === "updated"
-                ? { id: o.id, status: "updated" as const, card: cardOut(o.card) }
+                ? {
+                    id: o.id,
+                    status: "updated" as const,
+                    card: cardOut(o.card),
+                    ...(o.normalized ? { normalized: o.normalized } : {}),
+                  }
                 : o,
           ),
         });
@@ -1371,7 +1381,12 @@ const AddCardsOut = z.object({
   skipped: z.number().int(),
   results: z.array(
     z.union([
-      z.object({ id: z.string(), status: z.literal("added"), card: CardOut }),
+      z.object({
+        id: z.string(),
+        status: z.literal("added"),
+        card: CardOut,
+        normalized: TerseCardOutcomeOut.shape.normalized,
+      }),
       z.object({
         id: z.string().describe("The existing card"),
         status: z.literal("skipped"),
@@ -1388,7 +1403,12 @@ const UpdateCardsOut = z.object({
   failed: z.number().int(),
   results: z.array(
     z.union([
-      z.object({ id: z.string(), status: z.literal("updated"), card: CardOut }),
+      z.object({
+        id: z.string(),
+        status: z.literal("updated"),
+        card: CardOut,
+        normalized: TerseCardOutcomeOut.shape.normalized,
+      }),
       WriteErrorOut,
       TerseOut,
     ]),

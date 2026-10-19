@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { languagePrompts } from "../languages";
 import { type CheckedCard, checkCard, isSentence, tally, words } from "./checks";
 
 const reply = (fields: Partial<Record<string, string | null>>) => ({
@@ -63,6 +64,20 @@ describe("checkCard", () => {
           "私の友達の妹は小さい時から毎日ピアノを練習していたので今ではとても上手に弾けます。",
       }),
     ).toEqual(["example: under twelve words"]);
+  });
+
+  it("holds a reply to the rules its language module adds", () => {
+    const japanese: CheckedCard = {
+      term: "毎朝",
+      mayFill: ["example"],
+      language: true,
+      rules: languagePrompts("ja")?.checks,
+      expect: {},
+    };
+    expect(broken(japanese, { example: "毎朝[まいあさ]パンを食[た]べます。" })).toEqual([]);
+    expect(broken(japanese, { example: "毎朝パンを食べます。" })).toEqual([
+      "example: readings over kanji",
+    ]);
   });
 
   it("passes a short gloss with forms in the notes", () => {

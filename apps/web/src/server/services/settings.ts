@@ -138,6 +138,8 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
   const before = await getSettings(ctx);
   // Once set up, the goal changes only in the streak modal, so a second pass changes nothing.
   if (before.onboardedAt) return before;
+  // Today sets up only a new account; one already reviewing keeps its goal and stays out of the count.
+  if (input.from === "today" && !(await awaitsWelcome(ctx.db, ctx.userId))) return before;
   const dailyGoal =
     input.dailyGoal ?? (before.dailyGoalChosenAt ? before.dailyGoal : STARTING_DAILY_GOAL);
   const now = new Date();
@@ -173,14 +175,18 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
       value: dailyGoal,
       is_change: before.dailyGoalChosenAt !== null,
     });
-  track(ctx.analytics, {
-    name: "welcome_step_finished",
-    step_name: "setup",
-    skipped: input.learningKind === null && input.dailyGoal === null,
-  });
+  if (input.from !== "today")
+    track(ctx.analytics, {
+      name: "welcome_step_finished",
+      step_name: "setup",
+      skipped: input.learningKind === null && input.dailyGoal === null,
+    });
   if (dailyGoal !== before.dailyGoal) await applyGoalToToday(ctx, dailyGoal);
   // Only the shortcut from a shared or published deck chooses a goal without saying what it is for.
-  const kind = input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined");
+  const kind =
+    input.from === "today"
+      ? "today"
+      : (input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined"));
   track(ctx.analytics, { name: "onboarding_finished", kind });
   return getSettings(ctx);
 }

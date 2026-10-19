@@ -7,6 +7,8 @@ interface Props {
   /** The front card's id; its sentences replace the last card's. */
   front: string | undefined;
   examples: Record<string, string[]>;
+  /** The sentences' language. */
+  lang: string;
 }
 
 /**
@@ -45,8 +47,8 @@ function Sentence({ text }: { text: string }) {
   );
 }
 
-/** Faint sentences drifting behind a hand of Japanese cards, each using the word on top; they sharpen as they arrive and blur as they leave. */
-export function HandExamples({ front, examples }: Props) {
+/** Faint sentences drifting behind a hand of cards, each using the word on top; they sharpen as they arrive and blur as they leave. */
+export function HandExamples({ front, examples, lang }: Props) {
   const still = useStill();
   const lines = (front && examples[front]) || [];
   const start = front ? seed(front) : 0;
@@ -62,7 +64,7 @@ export function HandExamples({ front, examples }: Props) {
           return (
             <motion.p
               key={`${front}-${line}`}
-              lang="ja"
+              lang={lang}
               initial={still ? false : { opacity: 0, filter: "blur(8px)" }}
               animate={{ opacity: 0.7, filter: "blur(0px)" }}
               exit={

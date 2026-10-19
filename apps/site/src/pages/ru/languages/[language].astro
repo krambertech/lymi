@@ -1,0 +1,19 @@
+---
+import ShelfMissing from "../../../components/explore/ShelfMissing.astro";
+import LanguagePage from "../../../components/languages/LanguagePage.astro";
+import { MISSING_CACHE_CONTROL } from "../../../lib/deck-page";
+import { languageOfPage } from "../../../lib/language-pages";
+import { resolveLanguageDecks } from "../../../lib/public-catalog";
+
+export const prerender = false;
+
+const language = languageOfPage(Astro.params.language ?? "");
+const page = language ? await resolveLanguageDecks(Astro, "ru", language) : null;
+if (page instanceof Response) return page;
+if (!page) {
+  Astro.response.status = 404;
+  Astro.response.headers.set("cache-control", MISSING_CACHE_CONTROL);
+}
+---
+
+{page ? <LanguagePage page={page} /> : <ShelfMissing />}

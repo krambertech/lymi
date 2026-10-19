@@ -1,53 +1,68 @@
-import { createHash } from "node:crypto";
 import { ENRICHED_FIELDS } from "@lymi/core";
 import { describe, expect, it } from "vitest";
+import { LANGUAGE_PROMPTS } from "../languages";
+import { supportedNamesIn } from "../languages/test-helpers";
 import { checkCard } from "./checks";
-import { GUIDED_LANGUAGES, languageGuide } from "./languages";
+import { languageGuide } from "./languages";
 import {
   cardBrief,
   deckBrief,
   ENRICHMENT_INSTRUCTIONS,
   ENRICHMENT_PROMPT_VERSION,
   NOTES_READ_MAX,
-  REPLY_SCHEMA,
   readReply,
 } from "./prompt";
+import { enrichmentPromptHash } from "./recorded-run";
+
+/** The worked examples in a block of prompt text: each card line and the reply under it. */
+function workedExamples(text: string) {
+  const lines = text.split("\n");
+  return lines.flatMap((line, at) => {
+    const term = lines[at - 1]?.match(/Card "([^"]+)"/)?.[1];
+    return line.startsWith("{") && term ? [{ term, reply: JSON.parse(line) }] : [];
+  });
+}
 
 describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
-    const guides = GUIDED_LANGUAGES.map(languageGuide);
-    const hash = createHash("sha256")
-      .update(JSON.stringify({ ENRICHMENT_INSTRUCTIONS, REPLY_SCHEMA, guides }))
-      .digest("hex")
-      .slice(0, 16);
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
-    expect({ ENRICHMENT_PROMPT_VERSION, hash }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 4,
-      hash: "144506686689fc51",
+    expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
+      ENRICHMENT_PROMPT_VERSION: 5,
+      hash: "dbeb5724de066434",
     });
   });
 
   it("keeps its own examples to its own rules", () => {
-    const lines = ENRICHMENT_INSTRUCTIONS.split("\n");
-    const examples = lines.flatMap((line, at) => {
-      const term = lines[at - 1]?.match(/Card "([^"]+)"/)?.[1];
-      return line.startsWith("{") && term ? [{ term, reply: JSON.parse(line) }] : [];
-    });
-    expect(examples).toHaveLength(6);
+    const examples = workedExamples(ENRICHMENT_INSTRUCTIONS);
+    expect(examples).toHaveLength(5);
     for (const { term, reply } of examples) {
       expect(Object.keys(reply).sort()).toEqual([...ENRICHED_FIELDS].sort());
       const broken = checkCard(
-        {
-          term,
-          mayFill: ENRICHED_FIELDS,
-          language: term !== "mitochondrion",
-          readings: /\p{Script=Han}/u.test(term),
-          expect: {},
-        },
+        { term, mayFill: ENRICHED_FIELDS, language: term !== "mitochondrion", expect: {} },
         { id: term, ...reply },
       ).filter((result) => !result.pass);
       expect(broken).toEqual([]);
     }
+  });
+
+  it("leaves each supported language to its module", () => {
+    expect(supportedNamesIn(ENRICHMENT_INSTRUCTIONS)).toEqual([]);
+  });
+});
+
+describe("a supported language's worked example", () => {
+  it.each(Object.values(LANGUAGE_PROMPTS))("keeps to its own rules in $tag", (prompts) => {
+    const examples = workedExamples(prompts.enrich.example);
+    expect(examples).toHaveLength(1);
+    for (const { term, reply } of examples) {
+      expect(Object.keys(reply).sort()).toEqual([...ENRICHED_FIELDS].sort());
+      const broken = checkCard(
+        { term, mayFill: ENRICHED_FIELDS, language: true, rules: prompts.checks, expect: {} },
+        { id: term, ...reply },
+      ).filter((result) => !result.pass);
+      expect(broken).toEqual([]);
+    }
+    expect(languageGuide(prompts.tag)).toMatch(/\nworked example: .+ deck, /);
   });
 });
 

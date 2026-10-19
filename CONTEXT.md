@@ -40,7 +40,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Meaning language**: The language meanings are written in. Follows the app language and is not shown as its own setting. Independent of any card's language. The one exception is a published deck added in a chosen edition, which stays in that language whatever the app language becomes. _Avoid_: Native language, mother tongue, L1, base language
 
-**Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Languages match by their primary subtag, so `ja` and `ja-JP` are one language, and a kana spelling never matches a kanji one. In Japanese, two cards whose kana readings both exist and differ are two words, so 上手 read じょうず and 上手 read うわて are not duplicates; a card without a reading matches either. Adding one is skipped, never rejected, and the caller is told which card already exists.
+**Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Languages match by their primary subtag, so `ja` and `ja-JP` are one language, and a kana spelling never matches a kanji one. In Japanese, two cards whose kana readings both exist, fit the term and differ are two words, so 上手 read じょうず and 上手 read うわて are not duplicates; a card without a reading matches either. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
 **Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
 
@@ -70,7 +70,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Review day**: One learner-local date measured against its goal. It is open until satisfied, then goal met or exhausted; a day Lymi confirms had nothing eligible is nothing due. The day boundary follows the review timezone. _Avoid_: Session, day (in the API)
 
-**Daily goal**: How many recall attempts satisfy a learner-local day's streak goal: chosen at Welcome, 25 when Welcome is skipped, and 50 for an account that never saw it. Every accepted grade counts, Forgot and a card seen again included; completing every eligible review below the goal also satisfies the day. Changed afterwards only in the streak modal. _Avoid_: Target, quota, XP, cards per day
+**Daily goal**: How many recall attempts satisfy a learner-local day's streak goal: 25 for a new account from its first visit to Today or a skipped Welcome, the learner's choice at Welcome on the phone, and 50 for an account from before either. Every accepted grade counts, Forgot and a card seen again included; completing every eligible review below the goal also satisfies the day. Changed afterwards only in the streak modal. _Avoid_: Target, quota, XP, cards per day
 
 ### Integrations and oversight
 
@@ -120,9 +120,11 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Deck report**: Counts a publisher reads about their own published decks through the API: adds, first reviews, returning learners and page views. It never names a learner. ADR 0028. _Avoid_: Analytics, stats, insights (Insights is the learner's own screen)
 
-**Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Decks sit on a shelf per language they teach, then a shelf per subject, such as Science or Citizenship. Today's getting started guide points to it with a banner, **Start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
+**Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Decks sit on a shelf per language they teach, then a shelf per subject, such as Science or Citizenship. Today's first-run guide offers its decks under **Or start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
-**Welcome**: The screens a new account sees once, before Today: what the learner is learning, a daily goal, and a way to start, from a ready-made deck or their own material. Skipping it lands on Today's getting started guide. An account made from a published deck or an invitation is welcomed with that deck, asked only the daily goal, then reviews it. In code, onboarding. _Avoid_: Tour, wizard, setup flow
+**First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), then ways to create a first deck and ready-made decks. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
+
+**Welcome**: The phone's screens a new account sees once, before Today: what the learner is learning, a daily goal, and a way to start. The web retired them for the first-run guide, and `/welcome` leads to Today. _Avoid_: Tour, wizard
 
 **Deck tag**: One label from a fixed list that a publisher puts on a published deck, such as Travel or HSK 1. The deck's page shows its tags as plain chips, and Explore's search finds them. It is not a **Tag** on a card, and nothing copies one into the other. _Avoid_: Topic, keyword, category (the category is the deck's shelf)
 

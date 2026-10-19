@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
+import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, languageOfPage } from "./language-pages";
 import {
   englishOnlyPaths,
   isRuntimePage,
@@ -75,6 +76,21 @@ describe("public routes", () => {
 
   it("has every page built from content in every locale", () => {
     expect([...contentPaths].filter((path) => !allRoutes.has(path))).toEqual([]);
+  });
+
+  it("serves each supported language's page from the language route in every locale", () => {
+    for (const tag of LANGUAGE_PAGE_TAGS) {
+      const { page } = LANGUAGE_PAGES[tag];
+      expect(languageOfPage(page)).toBe(tag);
+      expect(isRuntimePage(page)).toBe(true);
+      for (const locale of locales) {
+        const path = localizedPath(page, locale);
+        expect(runtimePaths.has(path.replace(/[^/]+$/, "[language]"))).toBe(true);
+        // A file of its own would shadow the shared route.
+        expect(allRoutes.has(path)).toBe(false);
+      }
+    }
+    expect(languageOfPage("estonian")).toBeUndefined();
   });
 
   it("lists every public page in the sitemap", async () => {

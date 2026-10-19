@@ -4,14 +4,17 @@
  * with U+0301, and in the voice's own stress markup — and writes a page where a fluent reader marks
  * the syllable she hears. It calls paid voices, so it is a script and never a test:
  *
- *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,gemini,openai,chirp] [--out dir]
+ *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,gemini,openai,chirp or a voice name] [--out dir]
  *   pnpm --filter @lymi/web eval:stress --summary stress-ratings.json [--out dir]
  *   pnpm --filter @lymi/web eval:stress --serve [--port 5243] [--out dir]
+ *   pnpm --filter @lymi/web eval:stress --library uk
  *
  * Keys come from `.dev.vars`, and a voice without its key is skipped. `--dry` sends nothing: it writes
  * every request body and a page of silent clips. A clip already on disk is reused, so a rerun bills
  * only what failed. `--summary` prints the results table from ratings the page exported. `--serve`
  * serves the page on localhost, since a browser that opens it as a file may not load the clips.
+ * `--library` lists ElevenLabs library voices verified for eleven_v4 in a language, to pick
+ * candidates from; it needs a key with the Voices: read permission.
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
@@ -19,7 +22,9 @@ import { createServer } from "node:http";
 import { extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
+import { z } from "zod";
 import { createElevenLabsSpeechProvider } from "../ai/elevenlabs-speech";
+import { providerEndpoint } from "../ai/gateway";
 import { createGeminiApiSpeechProvider } from "../ai/gemini-api-speech";
 import { createGoogleChirpProvider } from "../ai/google-chirp";
 import { createGoogleGeminiProvider } from "../ai/google-gemini";
@@ -43,6 +48,8 @@ interface Voice {
   name?: string;
   /** A voice weighed against today's: it speaks the marked words only. */
   candidate?: boolean;
+  /** The marked forms a candidate speaks, when not every word. */
+  words?: string[];
   /** What its third mode sends, or null when it has no stress markup for this language. */
   markup: string | null;
   create(request: Fetch): SpeechProvider;
@@ -73,7 +80,9 @@ const ACUTE = "́";
 const VOWEL = /[аеёиіїоуыэєюя]/u;
 const ACCENT_FLAGS: Record<string, string> = { uk: "Russian vowels" };
 // Library voices to weigh against today's, each verified for eleven_v4 in its language (2026-10-19).
-const CANDIDATE_VOICES: Record<string, { voice: string; name: string }[]> = {
+// `words` limits a voice to a few marked forms: two stress pairs and the Ukrainian vowels.
+const UK_SAMPLE = ["за́мок", "замо́к", "ру́ки", "руки́", "дити́на", "їжа́к", "єди́ний", "неді́ля"];
+const CANDIDATE_VOICES: Record<string, { voice: string; name: string; words?: string[] }[]> = {
   ru: [
     { voice: "3EuKHIEZbSzrHGNmdYsx", name: "Nikolay" },
     { voice: "MWyJiWDobXN8FX3CJTdE", name: "Oleg" },
@@ -81,6 +90,14 @@ const CANDIDATE_VOICES: Record<string, { voice: string; name: string }[]> = {
   uk: [
     { voice: "Ntd0iVwICtUtA6Fvx27M", name: "Evgeniy Shevchenko" },
     { voice: "eLDtXX7z65CuLasDRxrP", name: "Leonid Drapei" },
+    // Kateryna's picks from the library website, named by ID since this key can't read their names.
+    ...[
+      "dZde1M1SiLkAKiqjpqqT",
+      "TEyBWD5tAHAWqAGEv6yI",
+      "2OXYbN1uGomXXJtv9Dq6",
+      "2o2uQnlGaNuV3ObRpxXt",
+      "BFmokXObxZMCBXC0A9ny",
+    ].map((voice) => ({ voice, name: voice, words: UK_SAMPLE })),
   ],
 };
 const GEMINI_CANDIDATE = "Charon";
@@ -111,6 +128,12 @@ if (summaryFile) {
   process.exit(0);
 }
 
+const library = option("--library");
+if (library) {
+  await listLibrary(library);
+  process.exit(0);
+}
+
 if (args.includes("--serve")) {
   const port = Number(option("--port") ?? 5243);
   serve(port);
@@ -138,7 +161,7 @@ for (const language of languages) {
   if (!items.length) throw new Error(`No stress words for ${language}`);
   items.forEach(check);
   for (const voice of voices(env, language)) {
-    if (only && !only.includes(voice.key)) continue;
+    if (only && !only.includes(voice.key) && !only.includes(voice.name ?? "")) continue;
     if (!voice.ready) {
       console.log(`${language} ${voice.key}: skipped, set ${voice.needs} in apps/web/.dev.vars`);
       continue;
@@ -232,6 +255,61 @@ console.log(
   `\n${clips.length} clips. Run with --serve and open http://localhost:5243/, or open ${join(out, "index.html")}`,
 );
 
+async function listLibrary(language: string) {
+  const env = liveEnv();
+  const endpoint = providerEndpoint(env, "elevenlabs");
+  const Voices = z.object({
+    voices: z.array(
+      z.object({
+        voice_id: z.string(),
+        name: z.string(),
+        gender: z.string().nullish(),
+        age: z.string().nullish(),
+        accent: z.string().nullish(),
+        use_case: z.string().nullish(),
+        description: z.string().nullish(),
+        usage_character_count_1y: z.number().nullish(),
+        verified_languages: z
+          .array(
+            z.object({ language: z.string(), model_id: z.string(), accent: z.string().nullish() }),
+          )
+          .nullish(),
+      }),
+    ),
+  });
+  for (const gender of ["female", "male"]) {
+    const query = new URLSearchParams({
+      language,
+      gender,
+      page_size: "100",
+      sort: "usage_character_count_1y",
+    });
+    const response = await fetch(`${endpoint.base}/v1/shared-voices?${query}`, {
+      headers: { "xi-api-key": env.ELEVENLABS_API_KEY?.trim() ?? "", ...endpoint.headers },
+    });
+    if (!response.ok) {
+      console.error(
+        `ElevenLabs library: ${response.status} ${(await response.text()).slice(0, 200)}`,
+      );
+      process.exit(1);
+    }
+    const voices = Voices.parse(await response.json()).voices.filter((voice) =>
+      voice.verified_languages?.some(
+        (verified) => verified.language === language && verified.model_id === "eleven_v4",
+      ),
+    );
+    console.log(`\n${gender}: ${voices.length} verified for eleven_v4`);
+    for (const voice of voices.slice(0, 15)) {
+      const accent = voice.verified_languages?.find(
+        (verified) => verified.language === language && verified.model_id === "eleven_v4",
+      )?.accent;
+      console.log(
+        `  ${voice.voice_id} | ${voice.name} | ${voice.age ?? ""} | ${accent ?? voice.accent ?? ""} | ${voice.use_case ?? ""} | ${voice.usage_character_count_1y ?? 0} characters a year | ${(voice.description ?? "").replace(/\s+/g, " ").slice(0, 100)}`,
+      );
+    }
+  }
+}
+
 /** Serves the page and its clips, with byte ranges, which some browsers need to play audio. */
 function serve(port: number) {
   const types: Record<string, string> = {
@@ -242,7 +320,7 @@ function serve(port: number) {
   };
   createServer((request, response) => {
     const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
-    const path = normalize(join(out, pathname === "/" ? "index.html" : pathname));
+    const path = normalize(join(out, pathname.endsWith("/") ? `${pathname}index.html` : pathname));
     if (!path.startsWith(normalize(out) + sep) || !existsSync(path) || !statSync(path).isFile()) {
       response.writeHead(404).end();
       return;
@@ -297,6 +375,7 @@ function voices(env: Env, language: string): Voice[] {
         ready: Boolean(env.ELEVENLABS_API_KEY?.trim()),
         name: candidate.name,
         candidate: true,
+        ...(candidate.words ? { words: candidate.words } : {}),
         markup: null,
         create: (request) => createElevenLabsSpeechProvider(env, gemini, candidate.voice, request),
         markupRequest: (plain) => ({ text: plain }),
@@ -394,7 +473,10 @@ function requests(voice: Voice, item: StressItem) {
     forms,
     spoken,
   });
-  if (voice.candidate) return item.forms.map((form) => job("acute", [form], { text: form.marked }));
+  if (voice.candidate)
+    return item.forms
+      .filter((form) => !voice.words || voice.words.includes(form.marked))
+      .map((form) => job("acute", [form], { text: form.marked }));
   return [
     job("plain", item.forms, { text: plain }),
     ...item.forms.flatMap((form) => [

@@ -64,9 +64,55 @@ function useApplyTags(deckId: string) {
   const qc = useQueryClient();
   const id = `tag-cards-${deckId}`;
 
+  const fullNote = (full: number) =>
+    t`${plural(full, { one: "# card", other: "# cards" })} already had 20 tags, so a tag was left off.`;
+  const none = (e: unknown, sent: number) =>
+    e instanceof Error && e.message === "none"
+      ? plural(sent, {
+          one: "Couldn’t change the tags on # card.",
+          other: "Couldn’t change the tags on # cards.",
+        })
+      : errorMessage(e);
+
+  /** Undo: sends each card its old tags; cards it leaves as they were get a message and Try again for just those. */
+  const revert = (back: Edit[], forward: Edit[]) => {
+    toast.close(id);
+    const sent = back.length;
+    send(qc, deckId, back, forward).then(
+      (saved) => {
+        const unsaved = sent - saved.size;
+        if (unsaved === 0) return;
+        const left = (e: Edit) => !saved.has(e.cardId);
+        toast.add({
+          id,
+          error: true,
+          title: plural(sent, {
+            one: `Couldn’t change the tags on ${unsaved} of # card.`,
+            other: `Couldn’t change the tags on ${unsaved} of # cards.`,
+          }),
+          action: {
+            label: t`Try again`,
+            onPress: () => revert(back.filter(left), forward.filter(left)),
+          },
+        });
+      },
+      (e: unknown) =>
+        toast.add({
+          id,
+          error: true,
+          title: none(e, sent),
+          action: { label: t`Try again`, onPress: () => revert(back, forward) },
+        }),
+    );
+  };
+
   const apply = (rows: readonly DeckRow[], change: Change) => {
     const { edits, undo, full } = tagEdits(rows, change);
-    if (edits.length === 0) return;
+    // Every chosen card already held twenty, so nothing was sent, which the learner should hear.
+    if (edits.length === 0) {
+      if (full > 0) toast.add({ id, title: fullNote(full) });
+      return;
+    }
     const sent = edits.length;
     send(qc, deckId, edits, undo).then(
       (saved) => {
@@ -98,12 +144,7 @@ function useApplyTags(deckId: string) {
               : t`Changed the tags on ${plural(count, { one: "# card", other: "# cards" })}`,
           action: {
             label: t`Undo`,
-            onPress: () => {
-              toast.close(id);
-              send(qc, deckId, undo, edits).catch((e) =>
-                toast.add({ id, error: true, title: errorMessage(e) }),
-              );
-            },
+            onPress: () => revert(undo, edits),
           },
         });
       },
@@ -111,13 +152,7 @@ function useApplyTags(deckId: string) {
         toast.add({
           id,
           error: true,
-          title:
-            e instanceof Error && e.message === "none"
-              ? plural(sent, {
-                  one: "Couldn’t change the tags on # card.",
-                  other: "Couldn’t change the tags on # cards.",
-                })
-              : errorMessage(e),
+          title: none(e, sent),
           action: { label: t`Try again`, onPress: () => apply(rows, change) },
         }),
     );
@@ -218,11 +253,13 @@ function TagCardsSheet({
         query={query}
         onChange={setQuery}
         onSubmit={() => {
-          // Return creates a new name, or ticks the one tag the letters found.
-          const first = shown[0];
+          // Return creates a new name, or ticks the tag the letters name, or the one they found.
+          const match =
+            shown.find((name) => tagKey(name) === tagKey(typed)) ??
+            (shown.length === 1 ? shown[0] : undefined);
           if (fresh) create();
-          else if (typed && first) {
-            set(first, picker.next(first));
+          else if (typed && match) {
+            set(match, picker.next(match));
             setQuery("");
           }
         }}

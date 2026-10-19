@@ -104,6 +104,12 @@ export function useTagCards(deckId: string) {
   const apply = (rows: readonly DeckRow[], change: Change) => {
     const { edits, undo, full } = tagEdits(rows, change);
     if (edits.length > 0) write.mutate({ edits, undo, offerUndo: true, full, change });
+    // Every chosen card already held twenty, so nothing was sent, which the learner should hear.
+    else if (full > 0)
+      toast.add({
+        id: `tag-cards-${deckId}`,
+        title: t`${plural(full, { one: "# card", other: "# cards" })} already had 20 tags, so a tag was left off.`,
+      });
   };
 
   return { apply, pending: write.isPending };

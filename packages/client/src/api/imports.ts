@@ -5,6 +5,9 @@ import { request } from "./request";
 export type Import = ImportOut;
 export type ImportPreview = ImportPreviewOut;
 
+/** The server reads stored notes and answers in milliseconds, so this long means the network dropped it. */
+export const PREVIEW_TIMEOUT_MS = 20_000;
+
 export const importsApi = {
   import: (id: string) => request<Import>(`/api/imports/${id}`),
   startImport: (file: { name: string; size: number }) =>
@@ -22,10 +25,13 @@ export const importsApi = {
     }),
   completeImport: (id: string) =>
     request<Import>(`/api/imports/${id}/complete`, { method: "POST" }),
-  previewImport: (id: string, choices: ImportChoicesInput) =>
+  /** A preview the network never settles ends as an error the screen offers to try again. */
+  previewImport: (id: string, choices: ImportChoicesInput, signal?: AbortSignal) =>
     request<ImportPreview>(`/api/imports/${id}/preview`, {
       method: "POST",
       body: JSON.stringify(choices),
+      timeout: PREVIEW_TIMEOUT_MS,
+      ...(signal ? { signal } : {}),
     }),
   confirmImport: (id: string, choices: ImportChoicesInput) =>
     request<Import>(`/api/imports/${id}/confirm`, {

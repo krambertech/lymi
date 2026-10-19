@@ -53,7 +53,8 @@ function healthy(url: string): Promise<Response> {
 async function run(env: Bindings, at: Date) {
   vi.useFakeTimers({ toFake: ["setTimeout"] });
   const done = runCanary(env, at);
-  await vi.runAllTimersAsync();
+  // Past every retry wait but bounded: the unit worker's shared local runtime re-arms its socket timers on this clock, so running all timers may never end.
+  await vi.advanceTimersByTimeAsync(10_000);
   await done;
 }
 

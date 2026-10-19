@@ -1,0 +1,23 @@
+# Archive in review: reveal a card, archive it from its menu, and see the toast at the foot over the next cue.
+appId: app.lymi
+name: Archive in review
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- waitForAnimationToEnd
+- longPressOn:
+    point: "50%,35%"
+- waitForAnimationToEnd
+# The card's menu is a native sheet Maestro's hierarchy leaves out, so Archive card, its last row, is tapped where it sits.
+- tapOn:
+    point: "30%,91%"
+- waitForAnimationToEnd
+- takeScreenshot: 01-archived-toast

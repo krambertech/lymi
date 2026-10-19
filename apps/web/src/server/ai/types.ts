@@ -1,4 +1,5 @@
 export type SpeechRequest = {
+  previousText?: string | undefined;
   text: string;
   language: string;
   /** Receives what the vendor bills by, when the provider can tell. */
@@ -46,7 +47,7 @@ export type TextRequest = {
 
 /** One model call's size and time, for cost; it never carries the prompt or the reply. */
 export type TextCall = {
-  provider: "openai" | "anthropic";
+  provider: "openai" | "anthropic" | "google";
   model: string;
   inputTokens: number;
   outputTokens: number;

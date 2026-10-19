@@ -1,4 +1,5 @@
 import { createOpenAiTextProvider, createSpeechProviders, type SpeechProvider } from "./ai";
+import { createLeadInWriter, LeadInError } from "./ai/lead-in-writer";
 import {
   type Dependency,
   type DependencyOutcome,
@@ -7,6 +8,7 @@ import {
   recordCheck,
 } from "./dependency-health";
 import type { Bindings } from "./env";
+import { japanese } from "./lead-ins/japanese";
 import { decisionModel, keepScore } from "./lessons/keep";
 import { pingLessonReader } from "./lessons/reader";
 
@@ -122,6 +124,24 @@ function checks(env: Bindings, hourly: boolean): Check[] {
         });
       }
     }
+    // Google limits Gemini 2.5 to keys that already used it, so the deployed key is checked here.
+    const writer = createLeadInWriter(env, meteredFetch(env, "gemini_text", "canary"));
+    if (writer)
+      list.push({
+        dependency: "gemini_text",
+        run: async () => {
+          try {
+            await writer.write({
+              instructions: japanese.instructions,
+              input: { term: "船", reading: "ふね", meaning: "boat" },
+            });
+          } catch (error) {
+            if (!(error instanceof LeadInError)) throw error;
+            // An unusable reply still proves the key works.
+            if (error.reason === "failed") throw new CheckFailed("failed");
+          }
+        },
+      });
   }
   return list;
 }

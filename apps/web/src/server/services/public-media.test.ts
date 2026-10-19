@@ -221,8 +221,17 @@ describe("public deck media", () => {
       app.route("/public/media", publicMedia);
       app.onError(handleError);
       const bindings = env as unknown as AppEnv["Bindings"];
+      const execution = {
+        waitUntil: () => {},
+        passThroughOnException: () => {},
+      } as unknown as ExecutionContext;
       const path = `/public/media/card/${cardId}/audio`;
-      const response = await app.request(path, { headers: { Range: "bytes=1-2" } }, bindings);
+      const response = await app.request(
+        path,
+        { headers: { Range: "bytes=1-2" } },
+        bindings,
+        execution,
+      );
       expect(response.status).toBe(200);
       expect(response.headers.get("Content-Type")).toBe(contentType);
       expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
@@ -236,7 +245,7 @@ describe("public deck media", () => {
         404,
       );
       await withdrawDeck(publisher, deckId);
-      expect((await app.request(path, {}, bindings)).status).toBe(404);
+      expect((await app.request(path, {}, bindings, execution)).status).toBe(404);
     },
   );
 

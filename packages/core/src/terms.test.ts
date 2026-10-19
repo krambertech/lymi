@@ -6,6 +6,7 @@ import {
   duplicateKey,
   headword,
   normaliseTerm,
+  pronunciationInputKey,
   revealedAnswer,
   revealsAnswer,
   SPOKEN_TERM_MAX,
@@ -129,5 +130,34 @@ describe("standsAlone", () => {
     expect(standsAlone("家")).toBe(true);
     expect(standsAlone("ね")).toBe(true);
     expect(standsAlone("물")).toBe(true);
+  });
+});
+
+describe("pronunciationInputKey", () => {
+  const card = {
+    id: "c1",
+    term: "上手",
+    language: "ja-JP",
+    pronunciation: "じょうず",
+    meaning: "skilled",
+    audioSource: "generated",
+  };
+  it("changes with the reading or meaning, even when the visible kanji stays the same", () => {
+    expect(pronunciationInputKey(card)).not.toBe(
+      pronunciationInputKey({ ...card, pronunciation: "うわて" }),
+    );
+    expect(pronunciationInputKey(card)).not.toBe(
+      pronunciationInputKey({ ...card, meaning: "the upper hand" }),
+    );
+  });
+  it("preserves recordings and non-Japanese replays across meaning edits", () => {
+    for (const row of [
+      { ...card, audioSource: "recorded" },
+      { ...card, language: "et" },
+    ]) {
+      expect(pronunciationInputKey(row)).toBe(
+        pronunciationInputKey({ ...row, meaning: "updated meaning" }),
+      );
+    }
   });
 });

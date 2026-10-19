@@ -53,7 +53,7 @@ const item: Import = {
   summary,
   choices: null,
   counts: null,
-  progress: { written: 0, chunks: 0 },
+  progress: { written: 0, chunks: 0, media: { done: 0, total: 0 } },
   upload: { partBytes: 1024, parts: 1, received: 1 },
   createdBy: "user",
   createdAt: "2026-10-19T00:00:00.000Z",

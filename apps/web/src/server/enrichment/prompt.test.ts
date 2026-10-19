@@ -1,4 +1,4 @@
-import { ENRICHED_FIELDS } from "@lymi/core";
+import { ENRICHED_FIELDS, LANGUAGE_FORMATS } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { LANGUAGE_PROMPTS } from "../languages";
 import { supportedNamesIn } from "../languages/test-helpers";
@@ -27,8 +27,8 @@ describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 5,
-      hash: "dbeb5724de066434",
+      ENRICHMENT_PROMPT_VERSION: 6,
+      hash: "a2b08bace2305a65",
     });
   });
 
@@ -72,6 +72,24 @@ describe("languageGuide", () => {
     expect(languageGuide("pt-BR")).toContain("pt-BR");
     expect(languageGuide("xx")).toBeUndefined();
     expect(languageGuide(null)).toBeUndefined();
+  });
+
+  it.each(LANGUAGE_FORMATS)(
+    "takes $tag's pronunciation and example lines from its format",
+    (format) => {
+      const guide = languageGuide(format.tag) ?? "";
+      expect(guide).toContain(`\npronunciation: ${format.pronunciation.format} For example: `);
+      expect(guide).toContain(format.pronunciation.sample.pronunciation);
+      if (format.example) expect(guide).toMatch(/^example: /);
+      expect(guide.includes(format.example?.sample ?? "\0")).toBe(format.example !== null);
+    },
+  );
+
+  it("asks Korean for pronounced Hangul and Sino-Korean roots, never romanization", () => {
+    const guide = languageGuide("ko-KR") ?? "";
+    expect(guide).toContain("학교 → 학꾜");
+    expect(guide).toContain("學 학");
+    expect(guide).not.toMatch(/Revised Romanization|hakgyo/);
   });
 });
 

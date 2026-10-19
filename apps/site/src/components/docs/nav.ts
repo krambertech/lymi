@@ -9,6 +9,7 @@ export type DocPath =
   | "/docs/authentication"
   | "/docs/mobile"
   | "/docs/cards"
+  | "/docs/languages"
   | "/docs/import-from-anki"
   | "/docs/import-from-mochi"
   | "/docs/import-from-noji"
@@ -98,6 +99,14 @@ export const PAGES: DocPage[] = [
     nav: "Decks and cards",
     title: "Decks and cards",
     blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/languages",
+    nav: "Languages",
+    title: "Languages",
+    blurb:
+      "How a card's pronunciation and example are written in each language with its own format.",
     section: "Guides",
   },
   {

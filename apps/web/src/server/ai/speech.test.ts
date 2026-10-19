@@ -80,7 +80,7 @@ describe("speech provider routing", () => {
 
   it("routes native voices first and leaves Gemini as their fallback", () => {
     const configured = { ...env, GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
-    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja"]) {
+    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja", "ko"]) {
       expect(names(createSpeechProviders(configured, language))).toEqual([
         "elevenlabs",
         "gemini-api",
@@ -97,7 +97,6 @@ describe("speech provider routing", () => {
       "nb-NO",
       "he",
       "hi",
-      "ko",
       "ro",
       "sr",
       "es",

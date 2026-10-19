@@ -43,6 +43,7 @@ const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "el",
   "it",
   "ja",
+  "ko",
   "ru",
   "uk",
 ]);

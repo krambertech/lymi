@@ -88,7 +88,7 @@ erDiagram
     text term "the word or phrase"
     text normalized_term "normaliseTerm(term), duplicate key"
     text meaning "nullable"
-    text pronunciation "nullable, IPA or hint"
+    text pronunciation "nullable, in the language's format, else IPA or a respelling"
     text example "nullable"
     text notes "nullable, grammar etc"
     text hook "nullable memory hook, not an edition field"

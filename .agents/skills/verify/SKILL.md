@@ -26,6 +26,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
+| Korean cards | [korean.md](features/korean.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |

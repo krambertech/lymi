@@ -59,6 +59,7 @@ export const englishOnlyPaths = [
   "/docs/quickstart",
   "/docs/mobile",
   "/docs/cards",
+  "/docs/languages",
   "/docs/import-from-anki",
   "/docs/import-from-mochi",
   "/docs/import-from-noji",

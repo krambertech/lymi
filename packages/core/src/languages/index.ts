@@ -2,11 +2,29 @@
  * The one place that compares language codes: shared code asks these functions what a card's
  * language does, and never checks a tag itself. docs/proposals/supported-languages.md.
  */
+import type { LanguageOut } from "../responses/languages";
 import { japanese } from "./japanese";
-import type { LanguageSupport, ReadingEngine, Script, SpeechInput, SupportedTag } from "./types";
+import { EXAMPLE_NOTATION } from "./notation";
+import type {
+  LanguageFormat,
+  LanguageSupport,
+  ReadingEngine,
+  Script,
+  SpeechInput,
+  SupportedTag,
+} from "./types";
 
 export * from "./names";
-export type { LanguageSupport, ReadingEngine, Script, SpeechInput, SupportedTag } from "./types";
+export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";
+export type {
+  DuplicateRule,
+  LanguageFormat,
+  LanguageSupport,
+  ReadingEngine,
+  Script,
+  SpeechInput,
+  SupportedTag,
+} from "./types";
 
 /** Each record keeps its literal type, so a registry elsewhere can follow what a record turns on. */
 export const SUPPORTED_LANGUAGES = {
@@ -15,15 +33,40 @@ export const SUPPORTED_LANGUAGES = {
 
 /** A language with a row of data and no engine. */
 interface LanguageConfig {
-  /** The pronunciation holds a Reading, and the card form calls the field so. */
-  pronunciation: "reading";
+  /** What the card form calls the field: a Reading for a script that does not show its sound. */
+  pronunciation: "reading" | "pronunciation";
   /** The cue shows the pronunciation as a line until the card is Known. */
   cueLine: boolean;
+  /** ISO 15924 code of the script its terms are written in. */
+  script: string;
+  format: LanguageFormat;
 }
 
 /** Chinese keeps its pinyin line here until its record lands. */
 const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
-  zh: { pronunciation: "reading", cueLine: true },
+  zh: {
+    pronunciation: "reading",
+    cueLine: true,
+    script: "Hani",
+    format: {
+      name: "Chinese",
+      pronunciation: "Pinyin with tone marks, not IPA.",
+      sample: { term: "学习", pronunciation: "xuéxí" },
+      duplicates: "term",
+    },
+  },
+  ko: {
+    pronunciation: "pronunciation",
+    cueLine: false,
+    script: "Kore",
+    format: {
+      name: "Korean",
+      pronunciation:
+        "How the term is said, in Hangul, only where that differs from its spelling. Null when the term is said as written. Not romanization or IPA.",
+      sample: { term: "학교", pronunciation: "학꾜" },
+      duplicates: "term",
+    },
+  },
 };
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -78,4 +121,44 @@ export function writtenWithReading(language: string | null | undefined): boolean
  */
 export function cueKeepsReading(language: string | null | undefined, known: boolean): boolean {
   return !known && !!languageConfig(language)?.cueLine;
+}
+
+function formatOut(
+  tag: string,
+  row: {
+    pronunciation: LanguageOut["pronunciation"]["label"];
+    script: string;
+    format: LanguageFormat;
+  },
+  engine: ReadingEngine | null,
+): LanguageOut {
+  const notation = engine ? EXAMPLE_NOTATION[engine] : null;
+  return {
+    tag,
+    name: row.format.name,
+    script: row.script,
+    pronunciation: {
+      label: row.pronunciation,
+      format: row.format.pronunciation,
+      sample: row.format.sample,
+    },
+    example: notation
+      ? { format: notation.format, pattern: notation.pattern.source, sample: notation.sample }
+      : null,
+    duplicates: row.format.duplicates,
+  };
+}
+
+/** Every language Lymi writes in its own format, supported ones first. */
+export const LANGUAGE_FORMATS: readonly LanguageOut[] = [
+  ...Object.values(SUPPORTED_LANGUAGES).map((record) =>
+    formatOut(record.tag, record, record.engine),
+  ),
+  ...Object.entries(CONFIGURED).map(([tag, row]) => formatOut(tag, row, null)),
+];
+
+/** How this language's cards are written, or null for a language with no format of its own. */
+export function languageFormat(language: string | null | undefined): LanguageOut | null {
+  const key = languageKey(language);
+  return LANGUAGE_FORMATS.find((format) => format.tag === key) ?? null;
 }

@@ -29,6 +29,13 @@ A Japanese card is shaped by its language, with no setting of its own:
 
 The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
 
+## Korean cards
+
+- **Pronunciation**: the term as it is said, in Hangul, only where that differs from the spelling: 학교 is said 학꾜, 국물 궁물. Empty for a word said as written, such as 사랑. No romanization, which a learner outgrows once they read Hangul.
+- **Notes**: a verb or adjective's polite present form, 가다 → 가요. A Sino-Korean word gives each root's hanja and reading with one or two words that share it, 學 학: 학생, 학년, so one root opens a family of words. A native Korean word has no roots line.
+
+`GET /api/languages` and [the docs](https://lymi.app/docs/languages) give every language's format from the records in `packages/core/src/languages`.
+
 ## Notes
 
 Notes are read after the answer and are never needed to grade it. Empty notes are fine.

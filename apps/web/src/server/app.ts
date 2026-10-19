@@ -36,6 +36,7 @@ import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
+import { languages } from "./routes/languages";
 import { lessonReads } from "./routes/lessons";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
@@ -202,6 +203,7 @@ app.route("/api/join", joinOpen);
 app.get("/add/:slug", addPage);
 app.route("/api/add", addOpen);
 app.route("/public/media", publicMedia);
+app.route("/api/languages", languages);
 
 // OAuth discovery lives at the site root by RFC 8414 and RFC 9728. Better Auth answers these
 // from its request hooks, so they are forwarded as they are.

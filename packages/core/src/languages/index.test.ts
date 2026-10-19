@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   cueKeepsReading,
   drawsReadings,
+  LANGUAGE_FORMATS,
+  languageFormat,
   languageScript,
   languageSupport,
   speechInputs,
@@ -64,5 +66,32 @@ describe("cueKeepsReading", () => {
     expect(cueKeepsReading("ja", false)).toBe(false);
     expect(cueKeepsReading("ko", false)).toBe(false);
     expect(cueKeepsReading(null, false)).toBe(false);
+  });
+});
+
+describe("languageFormat", () => {
+  it("finds a format from any tag of its language", () => {
+    expect(languageFormat("ja-JP")?.tag).toBe("ja");
+    expect(languageFormat("ko-KR")?.name).toBe("Korean");
+    expect(languageFormat("zh-TW")?.pronunciation.label).toBe("reading");
+  });
+  it("has none for a language Lymi writes the general way", () => {
+    for (const tag of ["it", "en", "", null, "constructor"]) expect(languageFormat(tag)).toBeNull();
+  });
+  it("calls Korean's pronounced Hangul a pronunciation, not a Reading", () => {
+    expect(languageFormat("ko")?.pronunciation).toMatchObject({
+      label: "pronunciation",
+      sample: { term: "학교", pronunciation: "학꾜" },
+    });
+    expect(writtenWithReading("ko")).toBe(false);
+  });
+  it("gives a bracket pattern only to a reading style with an inline notation", () => {
+    for (const format of LANGUAGE_FORMATS) {
+      if (!format.example) continue;
+      const pattern = new RegExp(format.example.pattern, "gu");
+      expect(format.example.sample).toMatch(pattern);
+    }
+    expect(languageFormat("ja")?.example).not.toBeNull();
+    expect(languageFormat("zh")?.example).toBeNull();
   });
 });

@@ -87,7 +87,7 @@ export function McpOverview() {
         items={[
           {
             term: <code>list_decks</code>,
-            def: "Every active deck with its card and due counts, plus the language your meanings are written in.",
+            def: "Every active deck with its card and due counts, the language your meanings are written in, and how each deck language writes a pronunciation and an example.",
           },
           {
             term: <code>get_deck</code>,

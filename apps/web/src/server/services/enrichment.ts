@@ -11,6 +11,7 @@ import {
   normalizeCardText,
   unsetFields,
 } from "@lymi/core";
+import { eventLanguages } from "@lymi/core/analytics";
 import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
@@ -353,11 +354,13 @@ export async function enrichCards(
     ).map((card) => [card.id, card]),
   );
   const rows = [];
+  const languages = [];
   let readingsAdded = 0;
   for (const card of before) {
     const write = attempted.get(card.id) ?? {};
     const fields = landed(after.get(card.id), write);
     if (fields.length === 0) continue;
+    languages.push(after.get(card.id)?.language);
     if (write.readingsFor !== undefined && fields.includes("example")) readingsAdded += 1;
     rows.push(
       auditStatement(ctx, {
@@ -382,6 +385,7 @@ export async function enrichCards(
     ...(readingsAdded ? { readings_added: readingsAdded } : {}),
     prompt_version: ENRICHMENT_PROMPT_VERSION,
     has_style: briefs.some((deck) => deck.style),
+    ...(rows.length ? { languages: eventLanguages(languages) } : {}),
   });
   return { enriched: rows.length };
 }

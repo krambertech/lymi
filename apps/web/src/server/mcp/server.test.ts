@@ -297,11 +297,71 @@ describe("Lymi MCP server", () => {
           due: 3,
         },
       ],
+      languages: {},
     });
     expect(services.listDecks).toHaveBeenCalledWith(
       expect.objectContaining({ userId: "user-1", actor: "mcp" }),
       { archived: undefined },
     );
+  });
+
+  it("says how each deck language with a format of its own writes a card", async () => {
+    const summary = (id: string, defaultLanguage: string | null) => ({
+      id,
+      name: id,
+      description: null,
+      meaningLanguage: null,
+      defaultLanguage,
+      directions: "recognition" as const,
+      reviewModes: [{ cue: "term" as const, target: "meaning" as const }],
+      position: 0,
+      seriesId: null,
+      sectionProgression: "automatic" as const,
+      purpose: "language" as const,
+      enrichFields: ["meaning" as const],
+      enrichInstructions: null,
+      enrichStyle: null,
+      total: 0,
+      due: 0,
+      archivedAt: null,
+      ...owned,
+    });
+    services.listDecks.mockResolvedValue([
+      summary("korean", "ko-KR"),
+      summary("japanese", "ja"),
+      summary("italian", "it"),
+      summary("mixed", null),
+    ]);
+    services.getSettings.mockResolvedValue({
+      userId: "user-1",
+      appLanguage: "uk",
+      meaningLanguage: "uk",
+      dailyGoal: 50,
+      analyticsConsent: null,
+      analyticsConsentUpdatedAt: null,
+      dailyGoalChosenAt: null,
+      reviewTimezone: null,
+      reviewTimezoneMode: "automatic",
+      reviewTimezoneUpdatedAt: null,
+      onboardedAt: null,
+      learningKind: null,
+      learningLanguage: null,
+      createdAt: now,
+      updatedAt: now,
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "list_decks", arguments: {} });
+
+    const { languages } = res.structuredContent as {
+      languages: Record<string, { tag: string; pronunciation: { sample: object } }>;
+    };
+    expect(Object.keys(languages)).toEqual(["ko-KR", "ja"]);
+    expect(languages["ko-KR"]?.pronunciation.sample).toEqual({
+      term: "학교",
+      pronunciation: "학꾜",
+    });
+    expect(languages.ja?.tag).toBe("ja");
   });
 
   it("lists archived decks with when each was archived, so one can be found to restore", async () => {

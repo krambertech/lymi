@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
+import { languageKey } from "./languages";
 import { ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -46,6 +47,18 @@ export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chos
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
+const MAX_EVENT_LANGUAGES = 20;
+const languageList = z.array(z.string().regex(/^[a-z]{2,3}$/)).max(MAX_EVENT_LANGUAGES);
+
+/** The primary subtags among these cards' languages, sorted, for an event's `languages`. */
+export function eventLanguages(languages: Iterable<string | null | undefined>): string[] {
+  const keys = new Set<string>();
+  for (const language of languages) {
+    const key = languageKey(language);
+    if (/^[a-z]{2,3}$/.test(key)) keys.add(key);
+  }
+  return [...keys].sort().slice(0, MAX_EVENT_LANGUAGES);
+}
 /** The optional fields a typed card can arrive holding, by name; never their text. */
 export const TYPED_CARD_FIELDS = [
   "example",
@@ -353,6 +366,7 @@ export const analyticsEvents = {
     readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
     has_style: z.boolean().optional(),
+    languages: languageList.optional(),
   }),
   deck_style_learned: z.object({
     outcome: z.enum(["learned", "empty", "failed"]),
@@ -369,6 +383,7 @@ export const analyticsEvents = {
     example: count,
     notes: count,
     pronunciation: count,
+    languages: languageList.optional(),
   }),
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),

@@ -4,7 +4,7 @@
  * a bracketed kana reading belongs to the kanji just before it. docs/card-writing.md.
  */
 
-import { drawsReadings, readingEngine } from "./languages";
+import { drawsReadings, EXAMPLE_NOTATION, readingEngine } from "./languages";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -15,7 +15,7 @@ const BASE = /[\p{Script=Han}〆ヵヶ]/u;
 const KANA = /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u;
 const KANA_TEXT = /^[\p{Script=Hiragana}\p{Script=Katakana}ー・\s]+$/u;
 /** An inline reading: up to 30 kana in square brackets. `[sound:…]` and other bracketed text are not. */
-const INLINE = /\[([\p{Script=Hiragana}\p{Script=Katakana}ー]{1,30})\]/gu;
+const INLINE = EXAMPLE_NOTATION.furigana.pattern;
 
 /** How far back an inline reading looks for its kanji, so a crafted example stays cheap to read. */
 const LOOK_BACK = 20;

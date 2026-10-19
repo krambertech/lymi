@@ -6,8 +6,6 @@ import { toast } from "../components/ui/toast";
 import { errorMessage } from "./api";
 
 let batches = 0;
-/** The batch toast up now, which the next batch's replaces. */
-let shown: string | undefined;
 
 /**
  * Archive, Move to deck and the important mark for a deck's chosen cards, each saying what it did
@@ -17,13 +15,8 @@ let shown: string | undefined;
 export function useCardBatch(deckId: string) {
   const { t } = useLingui();
   const qc = useQueryClient();
-  // Each batch gets its own toast, since Base UI merges a repeated id into the toast already up, and
-  // closes the last one's, so one shows at a time.
-  const next = () => {
-    if (shown) toast.close(shown);
-    shown = `card-batch-${deckId}-${++batches}`;
-    return shown;
-  };
+  // Base UI merges a repeated id into the toast already up, so each batch's toast, and its Undo, gets its own.
+  const next = () => `card-batch-${deckId}-${++batches}`;
   const failed = (id: string, e: unknown, title: string, retry: () => void) =>
     toast.add({
       id,

@@ -93,7 +93,7 @@ function DeckPage() {
     enabled: isOwner,
     staleTime: Number.POSITIVE_INFINITY,
   });
-  const [tagging, setTagging] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const [tagging, setTagging] = useState<{ cardIds: string[] } | null>(null);
   const tagCards = useTagCards(deckId);
   const batch = useCardBatch(deckId);
   const [movingCards, setMovingCards] = useState<{ cardIds: string[]; after: () => void } | null>(
@@ -107,7 +107,7 @@ function DeckPage() {
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
-  const [picking, setPicking] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const [picking, setPicking] = useState<{ cardIds: string[] } | null>(null);
   // The picker keeps its cards while it closes, so it never flashes "Move 0 cards".
   const lastPicking = useRef(picking);
   if (picking) lastPicking.current = picking;
@@ -297,7 +297,7 @@ function DeckPage() {
                 onArchiveDeck: () => archiveDeck.mutate(),
                 onExport: () => setExporting(true),
                 onMoveToSeries: () => setMovingToSeries(true),
-                onTagCards: (cardIds, after) => setTagging({ cardIds, after }),
+                onTagCards: (cardIds) => setTagging({ cardIds }),
                 onMoveCardsToDeck:
                   ownDecks.length > 0
                     ? (cardIds, after) => setMovingCards({ cardIds, after })
@@ -313,7 +313,7 @@ function DeckPage() {
                       params: { deckId },
                       hash: "sections",
                     }),
-                  onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
+                  onPickSection: (cardIds) => setPicking({ cardIds }),
                   onMoveCards: (cardIds, section) =>
                     sectionActions.moveCards.mutate({
                       cardIds,
@@ -394,7 +394,6 @@ function DeckPage() {
                 (cards.data ?? []).filter((row) => chosen.has(row.card.id)),
                 change,
               );
-              tagging.after();
               setTagging(null);
             }}
           />
@@ -439,7 +438,6 @@ function DeckPage() {
                     ? cards.data?.find((row) => row.card.id === picking.cardIds[0])?.card.term
                     : undefined,
               });
-              picking.after();
               setPicking(null);
             }}
             pending={sectionActions.create.isPending}
@@ -458,7 +456,6 @@ function DeckPage() {
                 id: `move-cards-${deckId}`,
                 title: t`Moved to ${sectionName}`,
               });
-              picking.after();
               setPicking(null);
               sectionActions.create.reset();
             }}

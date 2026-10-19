@@ -164,8 +164,7 @@ export interface DeckOwnerActions {
   onArchiveDeck: () => void;
   onExport: () => void;
   onMoveToSeries: () => void;
-  /** Open the tags dialog for these cards; `after` runs once it saves. */
-  onTagCards: (cardIds: string[], after: () => void) => void;
+  onTagCards: (cardIds: string[]) => void;
   /** Open the deck picker for these cards; absent while the learner has no other deck of their own. */
   onMoveCardsToDeck?: ((cardIds: string[], after: () => void) => void) | undefined;
   onArchiveCards: (cardIds: string[]) => void;
@@ -179,8 +178,7 @@ export interface DeckMemberActions {
 /** What the owner does to sections from the deck page; the route holds the dialogs. */
 export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> {
   onCreate: () => void;
-  /** Open the picker for these cards; `after` runs once they have moved. */
-  onPickSection: (cardIds: string[], after: () => void) => void;
+  onPickSection: (cardIds: string[]) => void;
   onMoveCards: (cardIds: string[], section: Section | null) => void;
 }
 
@@ -887,6 +885,16 @@ export function DeckDetailView({
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const orderedRef = useRef(ordered);
   orderedRef.current = ordered;
+  // A chosen card the list stops showing, such as one unmarked under the Important filter, leaves the selection.
+  useEffect(() => {
+    if (!shown) return;
+    setSelected((prev) => {
+      if (!prev) return prev;
+      const here = new Set(ordered.map((r) => r.card.id));
+      const kept = [...prev].filter((id) => here.has(id));
+      return kept.length === prev.size ? prev : new Set(kept);
+    });
+  }, [shown, ordered]);
 
   // Stable, so the memoised rows keep their props while one card's checkbox changes.
   const toggleSelected = useCallback((id: string, range: boolean) => {
@@ -923,8 +931,10 @@ export function DeckDetailView({
   useEffect(() => {
     if (!selected) return;
     const onKey = (e: KeyboardEvent) => {
-      // A menu or dialog open over the list takes this Escape for itself.
-      const overlay = document.querySelector("[role='menu'], [role='dialog']");
+      // A menu or dialog open over the list takes this Escape for itself; a toast is a dialog too, but never does.
+      const overlay = document.querySelector(
+        "[role='menu'], [role='dialog']:not([data-slot='toast'])",
+      );
       if (e.key === "Escape" && !e.defaultPrevented && !overlay) stopSelecting();
     };
     window.addEventListener("keydown", onKey);
@@ -1026,7 +1036,7 @@ export function DeckDetailView({
             if (beside && near) requestAnimationFrame(() => cardRow(near.card.id)?.focus());
           },
           onMove: (deckId) => owner.onMoveCard(shownWord.card.id, deckId),
-          onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id], () => {}),
+          onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id]),
         }
       }
       decks={decks}
@@ -1333,16 +1343,10 @@ export function DeckDetailView({
                     ))
                 }
                 marked={!!cards?.length && !unmarked}
-                onMark={
-                  onMarkCards &&
-                  (() => {
-                    const ids = [...selected];
-                    stopSelecting();
-                    onMarkCards(ids, unmarked);
-                  })
-                }
-                onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}
-                onMove={owner && (() => owner.sections.onPickSection([...selected], stopSelecting))}
+                // In-place changes keep the cards chosen for the next; Move to deck and Archive end it.
+                onMark={onMarkCards && (() => onMarkCards([...selected], unmarked))}
+                onTags={owner && (() => owner.onTagCards([...selected]))}
+                onMove={owner && (() => owner.sections.onPickSection([...selected]))}
                 onMoveToDeck={
                   owner?.onMoveCardsToDeck &&
                   (() => owner.onMoveCardsToDeck?.([...selected], stopSelecting))

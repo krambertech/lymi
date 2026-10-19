@@ -154,7 +154,8 @@ for (const language of languages) {
         writeFileSync(path, dry ? silence() : audio);
         made += 1;
       } catch (error) {
-        clip.error = error instanceof Error ? error.message : String(error);
+        const status = (error as { status?: number }).status;
+        clip.error = `${error instanceof Error ? error.message : String(error)}${status ? ` (${status})` : ""}`;
         failed += 1;
       }
     });
@@ -167,10 +168,20 @@ for (const language of languages) {
   }
 }
 
+// A run limited by --language or --voice keeps the other voices' clips on the page.
+const index = join(out, "clips.json");
+if (!dry && existsSync(index))
+  for (const clip of JSON.parse(readFileSync(index, "utf8")) as Clip[])
+    if (!sections.includes(`${clip.language} ${clip.voice}`)) clips.push(clip);
 // Sections follow the chain, Russian first; within one the hash order shuffles the words.
-const section = (clip: Clip) => sections.indexOf(`${clip.language} ${clip.voice}`);
-clips.sort((a, b) => section(a) - section(b) || a.id.localeCompare(b.id));
-writeFileSync(join(out, "clips.json"), `${JSON.stringify(clips, null, 2)}\n`);
+const CHAIN = ["elevenlabs", "gemini-api", "google-gemini", "openai", "google-chirp"];
+const rank = (clip: Clip) =>
+  STRESS_ITEMS.findIndex((item) => item.language === clip.language) * CHAIN.length +
+  CHAIN.findIndex((provider) => clip.voice.startsWith(`${provider} `));
+clips.sort(
+  (a, b) => rank(a) - rank(b) || a.voice.localeCompare(b.voice) || a.id.localeCompare(b.id),
+);
+writeFileSync(index, `${JSON.stringify(clips, null, 2)}\n`);
 writeFileSync(join(out, "requests.json"), `${JSON.stringify(sent, null, 2)}\n`);
 writeFileSync(join(out, "index.html"), page(clips));
 if (dry) {

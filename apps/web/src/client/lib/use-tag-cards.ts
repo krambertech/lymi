@@ -8,9 +8,6 @@ import { api, errorMessage } from "./api";
 import { deckCardsQuery } from "./queries";
 import { captureAnalytics } from "./telemetry";
 
-/** One bulk edit carries at most this many cards. */
-const PER_CALL = 200;
-
 type Edit = { cardId: string; tags: string[] };
 type Change = { add: string[]; remove: string[] };
 
@@ -20,20 +17,15 @@ export function useTagCards(deckId: string) {
   const qc = useQueryClient();
   const cardsKey = deckCardsQuery(deckId).queryKey;
 
-  /** Sends the edits a call at a time; a call that fails, and every one after it, counts as unsaved. */
+  /** Cards a failed call never reached come back unsaved, beside whatever earlier calls saved. */
   const send = async (edits: Edit[]) => {
-    const saved = new Set<string>();
-    let error: unknown;
-    for (let i = 0; i < edits.length && error === undefined; i += PER_CALL) {
-      const chunk = edits.slice(i, i + PER_CALL);
-      try {
-        const out = await api.editCards(chunk.map(({ cardId, tags }) => ({ cardId, tags })));
-        for (const r of out.results) if (r.status !== "error") saved.add(r.id);
-      } catch (caught) {
-        error = caught;
-      }
+    try {
+      const out = await api.editCards(edits);
+      const saved = new Set(out.results.flatMap((r) => (r.status === "error" ? [] : [r.id])));
+      return { saved, error: undefined };
+    } catch (error) {
+      return { saved: new Set<string>(), error };
     }
-    return { saved, error };
   };
 
   const place = (edits: Edit[]) => {

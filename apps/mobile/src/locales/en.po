@@ -658,6 +658,18 @@ msgstr "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
+msgid "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+msgstr "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+
+msgid "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+msgstr "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+
+msgid "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+msgstr "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+
+msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+msgstr "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 

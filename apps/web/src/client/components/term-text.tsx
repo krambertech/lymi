@@ -30,7 +30,7 @@ export function TermText({ card, hidden, room }: TermTextProps) {
   const lang = language ?? undefined;
   if (segments) return <Furigana segments={segments} lang={lang} hidden={hidden} />;
   if (room && drawsReadings(language))
-    return <Furigana segments={[{ text: term, reading: " " }]} lang={lang} hidden />;
+    return <Furigana segments={[{ text: term, reading: "\u00a0" }]} lang={lang} hidden />;
   return term;
 }
 

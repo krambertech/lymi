@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { ScrollView, useWindowDimensions } from "react-native";
 import { useDeckCards } from "../data/queries";
+import { captureEvent } from "../telemetry/posthog";
 import { SearchField } from "../ui/menu";
 import { SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
 
@@ -21,12 +22,15 @@ export function useTagList({
   cards,
   suggestions,
   onChange,
+  onAdded,
 }: {
   /** The tags each card holds as the list opens, one list per card. */
   cards: readonly (readonly string[])[];
   /** Tags in use elsewhere, offered after the ones the cards carry. */
   suggestions: readonly { name: string }[];
   onChange?: ((change: Change) => void) | undefined;
+  /** A tag put on: picked from the list, or typed, and whether it was one already in use. */
+  onAdded?: ((via: "suggestion" | "typed", inUse: boolean) => void) | undefined;
 }) {
   const [created, setCreated] = useState<string[]>([]);
   const [choices, setChoices] = useState<ReadonlyMap<string, TagChoice>>(new Map());
@@ -37,9 +41,12 @@ export function useTagList({
     setCreated(made);
     onChange?.(tagPicker({ cards, created: made, suggestions, choices: next, query: "" }).change);
   };
-  const set = (name: string, choice: TagChoice) =>
+  const set = (name: string, choice: TagChoice, via: "suggestion" | "typed" = "suggestion") => {
+    if (choice === "all" && picker.choiceOf(name) !== "all") onAdded?.(via, true);
     choose(new Map(choices).set(tagKey(name), choice), created);
+  };
   const create = () => {
+    onAdded?.("typed", false);
     choose(new Map(choices).set(tagKey(picker.typed), "all"), [...created, picker.typed]);
     setQuery("");
   };
@@ -80,7 +87,7 @@ export function TagList({
           if (!typed) onDone?.();
           else if (fresh && !full) create();
           else if (pick) {
-            set(pick, picker.next(pick));
+            set(pick, picker.next(pick), "typed");
             setQuery("");
           }
         }}
@@ -152,6 +159,7 @@ export function TagsChoices({ value, onChange, deckId, onDone }: TagsChoicesProp
     cards: [start],
     suggestions,
     onChange: (change) => onChange(retag(start, change.add, change.remove).tags),
+    onAdded: (via, inUse) => captureEvent("tag_added", { via, in_use: inUse }),
   });
   return <TagList list={list} full={value.length >= TAG_LIMITS.count} onDone={onDone} />;
 }

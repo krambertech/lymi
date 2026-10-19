@@ -82,6 +82,10 @@ describe("analytics privacy contract", () => {
       eventProperties("tag_added", { via: "suggestion", in_use: true, name: "food" }, "browser"),
     ).toEqual({ via: "suggestion", in_use: true });
     expect(eventProperties("tag_added", { via: "typed", in_use: false }, "worker")).toBeNull();
+    expect(eventProperties("tag_added", { via: "typed", in_use: false }, "phone")).toEqual({
+      via: "typed",
+      in_use: false,
+    });
     // A play is the learner's own press, so the server never sends one, and the card stays behind.
     expect(
       eventProperties(

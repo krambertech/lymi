@@ -57,13 +57,33 @@ export function kanaReading(card: {
   return KANA_TEXT.test(reading) ? reading : null;
 }
 
-/** The reading the duplicate rule compares: a Japanese card's folded kana reading, else null. */
+/**
+ * The reading the duplicate rule compares: a Japanese card's folded kana reading when it fits the
+ * term, else null, so an IPA line or another word's reading never splits one word into two cards.
+ */
 export function readingKey(card: {
+  term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string | null {
   const reading = kanaReading(card);
-  return reading ? foldReading(reading) : null;
+  if (!reading) return null;
+  const folded = foldReading(reading);
+  return fitsTerm(card.term, folded) ? folded : null;
+}
+
+/**
+ * Whether a folded kana reading can be the term's: it aligns with the term or its first form. A
+ * term too long to align, or with letters or digits alignment cannot read, such as Tシャツ, takes it.
+ */
+function fitsTerm(term: string, reading: string): boolean {
+  const text = term.normalize("NFC").trim();
+  if (Array.from(text).length > ALIGN_MAX) return true;
+  if ([...text].some((char) => /[\p{L}\p{N}]/u.test(char) && !isBase(char) && !isKana(char))) {
+    return true;
+  }
+  const at = text.indexOf(" · ");
+  return align(text, reading) !== null || (at > 0 && align(text.slice(0, at), reading) !== null);
 }
 
 type Run = { kind: "base" | "kana" | "other"; text: string };
@@ -324,6 +344,30 @@ export function exampleReadings(
     (segment) => segment.reading !== undefined,
   );
   return { readings: drawn.length, known: drawn.filter((segment) => segment.known).length };
+}
+
+/**
+ * A term written with inline readings as the term and its whole reading, `食[た]べる` → 食べる read
+ * たべる, or null unless every bracket is a reading and every kanji has one. Kana and punctuation
+ * outside the brackets read as written; any other letter or digit leaves it null.
+ */
+export function splitTermReading(text: string): { term: string; reading: string } | null {
+  const segments = parseReadings(text.normalize("NFC").trim());
+  if (!segments.some((segment) => segment.reading !== undefined)) return null;
+  let term = "";
+  let reading = "";
+  for (const segment of segments) {
+    term += segment.text;
+    if (segment.reading !== undefined) {
+      reading += segment.reading;
+      continue;
+    }
+    for (const char of segment.text) {
+      if (isKana(char)) reading += char;
+      else if (isBase(char) || /[\p{L}\p{N}[\]]/u.test(char)) return null;
+    }
+  }
+  return { term: term.trim(), reading: foldReading(reading) };
 }
 
 /** Text with its inline readings taken out: `毎朝[まいあさ]パンを食[た]べる` → `毎朝パンを食べる`. */

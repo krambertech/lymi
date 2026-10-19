@@ -84,36 +84,39 @@ test("⌘Enter runs the row's second action and typing starts again from the fir
   expect(onRun).toHaveBeenLastCalledWith("Insights", { mod: true });
 });
 
-test.each([0, 1, 2, 3])("a click runs the row and leaves focus in the field after %i resizes", async (resizes) => {
-  for (let i = 0; i < resizes; i++) {
-    await page.viewport(1024, 768);
-    await page.viewport(390, 844);
-  }
-  const onRun = vi.fn();
-  await render(<Palette onRun={onRun} />);
-  const top = window.top as Window;
-  const fe = window.frameElement as HTMLElement | null;
-  const geo = (tag: string) => {
-    const rows = ["Today", "Library", "Insights"].map((n) => {
-      const r = page.getByRole("option", { name: n }).element().getBoundingClientRect();
-      return `${n}:${Math.round(r.top)}-${Math.round(r.bottom)}`;
-    });
-    const f = fe?.getBoundingClientRect();
-    const tvv = top.visualViewport;
-    const hit = document.elementFromPoint(100, 252)?.textContent?.slice(0, 15);
-    console.log(
-      `PALETTE-DIAG ${tag} rows=${rows.join(" ")} hit@252=${hit} topvv=${tvv?.scale}/${tvv?.offsetLeft},${tvv?.offsetTop}/${tvv?.pageLeft},${tvv?.pageTop} topScroll=${top.scrollX},${top.scrollY} topInner=${top.innerWidth}x${top.innerHeight} topDoc=${top.document.documentElement.scrollWidth}x${top.document.documentElement.scrollHeight} frame=${f && [f.left, f.top, f.width, f.height].map(Math.round).join(",")} frameT=${fe && getComputedStyle(fe).transform} parentT=${fe?.parentElement && getComputedStyle(fe.parentElement).transform} inner=${window.innerWidth}x${window.innerHeight} vv=${window.visualViewport?.scale}/${window.visualViewport?.offsetTop}`,
-    );
-  };
-  geo(`before ${resizes}`);
-  try {
-    await page.getByRole("option", { name: "Library" }).click({ timeout: 3000 });
-  } finally {
-    geo("after");
-  }
-  expect(onRun).toHaveBeenLastCalledWith("Library", { mod: false });
-  await expect.element(page.getByRole("combobox", { name: "Search" })).toHaveFocus();
-});
+test.each([0, 1, 2, 3])(
+  "a click runs the row and leaves focus in the field after %i resizes",
+  async (resizes) => {
+    for (let i = 0; i < resizes; i++) {
+      await page.viewport(1024, 768);
+      await page.viewport(390, 844);
+    }
+    const onRun = vi.fn();
+    await render(<Palette onRun={onRun} />);
+    const top = window.top as Window;
+    const fe = window.frameElement as HTMLElement | null;
+    const geo = (tag: string) => {
+      const rows = ["Today", "Library", "Insights"].map((n) => {
+        const r = page.getByRole("option", { name: n }).element().getBoundingClientRect();
+        return `${n}:${Math.round(r.top)}-${Math.round(r.bottom)}`;
+      });
+      const f = fe?.getBoundingClientRect();
+      const tvv = top.visualViewport;
+      const hit = document.elementFromPoint(100, 252)?.textContent?.slice(0, 15);
+      console.log(
+        `PALETTE-DIAG ${tag} rows=${rows.join(" ")} hit@252=${hit} topvv=${tvv?.scale}/${tvv?.offsetLeft},${tvv?.offsetTop}/${tvv?.pageLeft},${tvv?.pageTop} topScroll=${top.scrollX},${top.scrollY} topInner=${top.innerWidth}x${top.innerHeight} topDoc=${top.document.documentElement.scrollWidth}x${top.document.documentElement.scrollHeight} frame=${f && [f.left, f.top, f.width, f.height].map(Math.round).join(",")} frameT=${fe && getComputedStyle(fe).transform} parentT=${fe?.parentElement && getComputedStyle(fe.parentElement).transform} inner=${window.innerWidth}x${window.innerHeight} vv=${window.visualViewport?.scale}/${window.visualViewport?.offsetTop}`,
+      );
+    };
+    geo(`before ${resizes}`);
+    try {
+      await page.getByRole("option", { name: "Library" }).click({ timeout: 3000 });
+    } finally {
+      geo("after");
+    }
+    expect(onRun).toHaveBeenLastCalledWith("Library", { mod: false });
+    await expect.element(page.getByRole("combobox", { name: "Search" })).toHaveFocus();
+  },
+);
 
 test("with no rows to scroll, a pinned row sits right under the field", async () => {
   await render(

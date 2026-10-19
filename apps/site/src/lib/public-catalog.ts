@@ -17,6 +17,7 @@ import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
 import { type Locale, locales } from "./routes";
+import type { SitemapShelf } from "./sitemap";
 
 export interface ExplorePage {
   locale: Locale;
@@ -115,20 +116,23 @@ export async function resolveShelfPage(
   return { locale, shelf, route, alternates, others };
 }
 
-/** Every shelf page there is, each with its address in the locales that have it, for the sitemap. */
-export async function shelfPagePaths(): Promise<Partial<Record<Locale, string>>[]> {
+/** Every shelf page there is, with its address in the locales that have it and its decks, for the sitemap. */
+export async function shelfPagePaths(): Promise<SitemapShelf[]> {
   const db = drizzle(env.DB);
   const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
-  const byRoute = new Map<string, Partial<Record<Locale, string>>>();
+  const byRoute = new Map<string, { paths: Partial<Record<Locale, string>>; slugs: Set<string> }>();
   locales.forEach((each, at) => {
     for (const shelf of shelvesOf(catalogs[at] ?? [])) {
       const route = shelfRoute(shelf);
       if (!route || !hasShelfPage(shelf)) continue;
       const key = `${route.kind}/${route.name}`;
-      byRoute.set(key, { ...byRoute.get(key), [each]: shelfPath(route, each) });
+      const entry = byRoute.get(key) ?? { paths: {}, slugs: new Set<string>() };
+      entry.paths[each] = shelfPath(route, each);
+      for (const deck of shelf.decks) entry.slugs.add(deck.slug);
+      byRoute.set(key, entry);
     }
   });
-  return [...byRoute.values()];
+  return [...byRoute.values()].map(({ paths, slugs }) => ({ paths, slugs: [...slugs] }));
 }
 
 export interface ExamsPage {

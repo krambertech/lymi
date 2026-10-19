@@ -9,9 +9,11 @@ import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
 import DeckStack from "../islands/DeckStack";
+import { shelfLabel } from "../explore/explore-labels";
 import { EXPLORE_NAME } from "../explore/explore-meta";
+import { shelfPath } from "../../lib/explore";
 import { deckDescription, deckShareText, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckRelated, editionOf } from "./DeckView";
+import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckNeighbours, DeckRelated, editionOf } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -27,6 +29,10 @@ const path = deck ? sectionPath(deck) : null;
 const stack = deck ? stackCards(deck) : [];
 const edition = deck ? editionOf(deck) : undefined;
 const share = deck ? deckShareText(i18n, deck) : null;
+const shelf =
+  page.status === 200 && page.links.shelf
+    ? { name: shelfLabel(i18n, page.links.shelf), path: shelfPath(page.links.shelf.route, locale) }
+    : null;
 ---
 
 {
@@ -49,7 +55,7 @@ const share = deck ? deckShareText(i18n, deck) : null;
         slot="head"
         is:inline
         type="application/ld+json"
-        set:html={jsonForScript(deckBreadcrumbs(page.deck, locale, i18n._(EXPLORE_NAME)))}
+        set:html={jsonForScript(deckBreadcrumbs(page.deck, locale, i18n._(EXPLORE_NAME), shelf))}
       />
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
         <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>
@@ -89,6 +95,7 @@ const share = deck ? deckShareText(i18n, deck) : null;
             </div>
           </section>
           <DeckRelated decks={page.related} locale={locale} />
+          <DeckNeighbours deck={page.deck} links={page.links} locale={locale} />
         </main>
         <DeckFooterFacts deck={page.deck} locale={locale} />
         <DeckFooter locale={locale} languagePaths={paths} />

@@ -2,6 +2,7 @@ import { env, waitUntil } from "cloudflare:workers";
 import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
+  listPublicCatalog,
   listPublicDeckSlugs,
   listRelatedDecks,
   loadPublicDeck,
@@ -9,6 +10,7 @@ import {
 } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
+import { type DeckLinks, deckLinks } from "./deck-links";
 import {
   countsAsPageView,
   DECK_CACHE_CONTROL,
@@ -21,7 +23,13 @@ import {
 import type { Locale } from "./routes";
 
 export type DeckPage =
-  | { status: 200; locale: Locale; deck: PublicDeckOut; related: PublicDeckSummary[] }
+  | {
+      status: 200;
+      locale: Locale;
+      deck: PublicDeckOut;
+      related: PublicDeckSummary[];
+      links: DeckLinks;
+    }
   | { status: 404 | 410; locale: Locale; slug: string };
 
 const catalogDb = () => drizzle(env.DB);
@@ -63,10 +71,14 @@ export async function resolveDeckPage(
     astro.response.status = status;
     return { status, locale, slug };
   }
-  const related = await listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE });
+  const [related, catalog] = await Promise.all([
+    listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE }),
+    listPublicCatalog(db, locale),
+  ]);
+  const links = deckLinks(catalog, result.deck, related);
   const etag = deckEtag({
     slug: result.deck.slug,
-    content: deckContentHash(result.deck, related),
+    content: deckContentHash(result.deck, related, links),
     locale,
     version: env.CF_VERSION_METADATA?.id,
   });
@@ -80,7 +92,7 @@ export async function resolveDeckPage(
       headers: { "cache-control": DECK_CACHE_CONTROL, etag },
     });
   }
-  return { status: 200, locale, deck: result.deck, related };
+  return { status: 200, locale, deck: result.deck, related, links };
 }
 
 export function publishedDeckSlugs() {

@@ -108,6 +108,16 @@ describe("deckBreadcrumbs", () => {
       ],
     });
   });
+
+  it("puts the deck's shelf between Explore and the deck when it has a page", () => {
+    const shelf = { name: "Естонська", path: "/uk/explore/languages/estonian" };
+    const crumbs = deckBreadcrumbs(deck(), "uk", "Каталог", shelf).itemListElement;
+    expect(crumbs.map((crumb) => [crumb.position, crumb.name, crumb.item])).toEqual([
+      [1, "Каталог", "https://lymi.app/uk/explore"],
+      [2, "Естонська", "https://lymi.app/uk/explore/languages/estonian"],
+      [3, "Everyday Estonian", "https://lymi.app/uk/explore/everyday-estonian"],
+    ]);
+  });
 });
 
 describe("exploreStructuredData", () => {

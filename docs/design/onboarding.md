@@ -6,8 +6,8 @@ A new account starts on Today, not on a separate set of screens. Today carries a
 
 `FirstRunGuide` in `components/first-run.tsx` sits on the bare canvas, dashed like every empty state ([empty-states.md](system/empty-states.md)), with the lantern spilling its light at the start: a heading, one line, a count ("1 of 3 done") and three numbered steps.
 
-1. **Create a deck**: done once the learner has any deck, made, joined or added.
-2. **Add cards**: done once a deck has cards. While current it holds **Add a card** and, where Smart add is allowed, **Turn your notes into cards**; an empty deck is named in its line.
+1. **Create a deck**: done once the learner has a deck of their own, or any deck with cards. An empty deck someone shared does not count, because its member cannot add to it.
+2. **Add cards**: done once a deck has cards. While current it holds **Add a card** and, where Smart add is allowed, **Turn your notes into cards**; the learner's own empty deck is named in its line.
 3. **Finish your first review**: holds **Review**, which opens that deck's review. The guide leaves with the first accepted grade.
 
 A done step is an amber check with its title struck through, the current step's number is dark and its action shows, and a later step waits muted. There are no progress bars. The heading greets the learner by first name and stays put; the line under it says what comes next. While the guide shows, Today's own cards wait, because they have nothing to say yet.
@@ -24,7 +24,7 @@ A done step is an amber check with its title struck through, the current step's 
 
 ## Getting set up
 
-Today's first visit counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where that deck has ticked the first two steps and **Review** is the next press; an account already set up goes to the deck as before.
+Today's first visit counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where that deck has ticked the first two steps and **Review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.
 
 ## Motion
 

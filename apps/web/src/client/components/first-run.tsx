@@ -78,10 +78,13 @@ export function useFirstArrival() {
   return first;
 }
 
-/** The step the learner is on: 0 until a deck exists, 1 until it has cards, then 2 until reviewed. */
+/**
+ * The step the learner is on: 0 until a deck exists, 1 until it has cards, then 2 until reviewed.
+ * An empty deck someone shared does not count, because its member cannot add to it.
+ */
 export function currentStep(decks: DeckSummary[] | undefined) {
-  if (!decks?.length) return 0;
-  return startedDeck(decks) ? 2 : 1;
+  if (startedDeck(decks)) return 2;
+  return decks?.some((d) => d.role === "owner") ? 1 : 0;
 }
 
 /** Each step seen and each step finished, once, as Today's guide always reported them. */
@@ -127,7 +130,7 @@ export function FirstRunGuide({ name, decks, play, onAddCard, onSmartAdd }: Guid
   const current = currentStep(decks);
   useStepAnalytics(current);
   const deck = startedDeck(decks);
-  const empty = decks?.find((d) => d.total === 0);
+  const empty = decks?.find((d) => d.total === 0 && d.role === "owner");
   const first = name?.trim().split(/\s+/)[0];
   const steps: { key: string; title: ReactNode; detail: ReactNode; action?: ReactNode }[] = [
     {

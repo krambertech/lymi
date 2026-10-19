@@ -72,6 +72,24 @@ test("an empty deck ticks the first step and asks for cards", async () => {
   expect(onAddCard).toHaveBeenCalledOnce();
 });
 
+test("an empty deck someone shared leaves the first step to do", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("no mock deck");
+  await wrap(
+    <FirstRunGuide
+      name="Kateryna"
+      decks={[{ ...deck, total: 0, due: 0, role: "learner" }]}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />,
+  );
+  await expect.element(page.getByText("0 of 3 done")).toBeInTheDocument();
+  await expect
+    .element(page.getByRole("listitem").filter({ hasText: "Create a deck" }))
+    .toHaveAttribute("aria-current", "step");
+});
+
 test("a deck with cards leads to the first review", async () => {
   const [deck] = decks;
   await wrap(

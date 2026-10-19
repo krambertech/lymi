@@ -1040,9 +1040,6 @@ msgstr "Архивировано «{name}»"
 msgid "Archived “{sectionName}”"
 msgstr "Архивировано «{sectionName}»"
 
-msgid "Archived “{term}”"
-msgstr "Архивировано «{term}»"
-
 #. placeholder {0}: cards(done.length)
 msgid "Archived {0}"
 msgstr "Архивировано {0}"
@@ -1198,6 +1195,9 @@ msgstr "Приглашение для {name} в «{deck}» отменено"
 
 msgid "Card added"
 msgstr "Карточка добавлена"
+
+msgid "Card archived"
+msgstr "Карточка архивирована"
 
 msgid "Card options"
 msgstr "Параметры карточки"

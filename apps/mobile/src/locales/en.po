@@ -1040,9 +1040,6 @@ msgstr "Archived “{name}”"
 msgid "Archived “{sectionName}”"
 msgstr "Archived “{sectionName}”"
 
-msgid "Archived “{term}”"
-msgstr "Archived “{term}”"
-
 #. placeholder {0}: cards(done.length)
 msgid "Archived {0}"
 msgstr "Archived {0}"
@@ -1198,6 +1195,9 @@ msgstr "Cancelled the invitation to {name} for {deck}"
 
 msgid "Card added"
 msgstr "Card added"
+
+msgid "Card archived"
+msgstr "Card archived"
 
 msgid "Card options"
 msgstr "Card options"

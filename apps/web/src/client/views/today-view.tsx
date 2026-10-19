@@ -26,8 +26,8 @@ import { RollingNumber } from "../components/rolling-number";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
 import { restedYesterday, type StreakSummary } from "../components/streak";
-import { isGuiding } from "../lib/first-run";
 import type { DeckSummary, Series } from "../lib/api";
+import { isGuiding } from "../lib/first-run";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;

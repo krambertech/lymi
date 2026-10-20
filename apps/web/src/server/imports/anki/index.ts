@@ -1,4 +1,6 @@
 import {
+  examplesCarryReadings,
+  type FieldRole,
   fieldsFromRoles,
   fitFields,
   formatReadings,
@@ -10,13 +12,16 @@ import {
   importFieldText,
   importTags,
   isPitchField,
+  isSentencePinyinField,
   parseReadings,
   type Rating,
   type ReviewModeKey,
+  readingEngine,
   soundCount,
   soundSources,
   termRecording,
 } from "@lymi/core";
+import { stripPinyin } from "@lymi/core/pinyin";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
 import {
   decodeProto,
@@ -36,13 +41,20 @@ import { ANKI_DAY_SECONDS, ANKI_SEPARATOR, ankiDueMoment } from "./model";
 import {
   clozeAnswer,
   clozeNumbers,
+  fieldLanguage,
   furiganaBase,
   furiganaReading,
   hasFurigana,
+  inlinePinyin,
   isImageOcclusion,
+  markedExample,
+  pinyinLine,
+  pinyinReading,
   plainReading,
   questionField,
+  repeatsText,
   revealCloze,
+  samePinyin,
   withoutOtherReadings,
 } from "./text";
 
@@ -234,6 +246,60 @@ function guessRoles(model: Model) {
   return roles;
 }
 
+/**
+ * Which of a note's notes fields only repeat it: the term with markup added, such as Chinese
+ * Support Redux's coloured copy, or the Reading in tone numbers. A field that does in every note
+ * is guessed Skip, so the fields step shows what the cards will hold.
+ */
+function repeatedFields(type: SourceNoteType, fields: readonly string[]): (boolean | null)[] {
+  const values = fields.map((field, i) => importFieldText(type.fields[i] ?? "", field));
+  const first = (role: FieldRole) => values.find((value, i) => type.roles[i] === role && value);
+  const term = withoutReadings(first("term")) ?? "";
+  const reading = first("pronunciation");
+  return type.roles.map((role, i) => {
+    const value = values[i];
+    if (role !== "notes" || !value) return null;
+    return (
+      (!!term && repeatsText(fields[i] ?? "", term)) || (!!reading && samePinyin(value, reading))
+    );
+  });
+}
+
+/**
+ * A Chinese note's notes with lines that repeat the term or the example left out, as a
+ * traditional form written alike does. Where examples draw pinyin, a sentence's pinyin goes
+ * inline over the example when it fits one syllable a character; otherwise it stays a notes line
+ * with tone marks. docs/proposals/chinese.md, Import.
+ */
+function pinyinFields(
+  type: SourceNoteType,
+  roles: readonly FieldRole[],
+  values: readonly string[],
+  inlineExample: boolean,
+): { roles: FieldRole[]; values: string[]; example?: string } {
+  const first = (role: FieldRole) => values.find((value, i) => roles[i] === role && value);
+  const term = withoutReadings(first("term")) ?? "";
+  const example = first("example");
+  const out = [...values];
+  let inline: string | undefined;
+  const kept = roles.map((role, i) => {
+    const value = values[i];
+    if (role !== "notes" || !value) return role;
+    if ((term && repeatsText(value, term)) || (example && repeatsText(value, example))) {
+      return "skip";
+    }
+    if (!isSentencePinyinField(type.fields[i] ?? "")) return role;
+    // A cloze's example is its revealed sentence, which the pinyin field may not read.
+    if (inlineExample && type.kind === "basic" && example && !inline) {
+      inline = inlinePinyin(stripPinyin(example), value) ?? undefined;
+      if (inline) return "skip";
+    }
+    out[i] = pinyinLine(value);
+    return role;
+  });
+  return inline ? { roles: kept, values: out, example: inline } : { roles: kept, values: out };
+}
+
 /** Media file name to zip entry name, from a JSON map or Anki's protobuf list. */
 async function mediaIndex(file: RandomAccess, zip: Map<string, ZipEntry>) {
   const index = new Map<string, string>();
@@ -311,6 +377,9 @@ export const anki: SourceAdapter<AnkiNote> = {
 
     const noteTypes = new Map<string, SourceNoteType>();
     const deckCounts = new Map<string, number>();
+    const deckTypes = new Map<string, Set<string>>();
+    /** Per note type and notes field: notes that fill it, and of those, notes where it only repeats. */
+    const repeats = new Map<string, { filled: number[]; repeated: number[] }>();
     const summary: SourceSummary = {
       decks: [],
       noteTypes: [],
@@ -352,14 +421,23 @@ export const anki: SourceAdapter<AnkiNote> = {
       }
       type.notes++;
       if (type.samples.length < 3) type.samples.push(fields.map(htmlToText));
+      if (!model.cloze) {
+        const counts = repeats.get(typeKey) ?? { filled: [], repeated: [] };
+        repeatedFields(type, fields).forEach((repeated, i) => {
+          if (repeated === null) return;
+          counts.filled[i] = (counts.filled[i] ?? 0) + 1;
+          if (repeated) counts.repeated[i] = (counts.repeated[i] ?? 0) + 1;
+        });
+        repeats.set(typeKey, counts);
+      }
       summary.notes++;
       for (const card of cards) summary.reviews += card.reviews.length / 2;
       // A deck counts Lymi cards: one per cloze number, otherwise one per note in its first card's deck.
-      if (model.cloze) {
-        for (const card of cards) deckCounts.set(card.deck, (deckCounts.get(card.deck) ?? 0) + 1);
-      } else {
-        const deck = (cards[0] as AnkiCard).deck;
+      for (const deck of model.cloze
+        ? cards.map((card) => card.deck)
+        : [(cards[0] as AnkiCard).deck]) {
         deckCounts.set(deck, (deckCounts.get(deck) ?? 0) + 1);
+        deckTypes.set(deck, (deckTypes.get(deck) ?? new Set()).add(typeKey));
       }
       if (fields.some((field) => imageSources(field).some((src) => media.has(src)))) {
         summary.pictures++;
@@ -384,7 +462,23 @@ export const anki: SourceAdapter<AnkiNote> = {
       throw new ImportFileError("unrecognized", "The collection holds no cards Lymi can import");
     }
 
+    for (const [key, { filled, repeated }] of repeats) {
+      const type = noteTypes.get(key) as SourceNoteType;
+      type.roles = type.roles.map((role, i) =>
+        filled[i] && repeated[i] === filled[i] ? "skip" : role,
+      );
+    }
     summary.noteTypes = [...noteTypes.values()];
+    // A deck whose note types all name pinyin is Chinese, whatever its name says.
+    const languages: Record<string, string> = {};
+    for (const [deck, types] of deckTypes) {
+      const found = new Set(
+        [...types].map((key) => fieldLanguage(noteTypes.get(key)?.fields ?? [])),
+      );
+      const [language] = found;
+      if (found.size === 1 && language) languages[deck] = language;
+    }
+    if (Object.keys(languages).length > 0) summary.languages = languages;
     summary.decks = [...deckCounts]
       .map(([key, cards]) => {
         const deck = decks.get(key);
@@ -402,8 +496,14 @@ export const anki: SourceAdapter<AnkiNote> = {
   cards(note, summary, choices) {
     const type = summary.noteTypes.find((t) => t.key === note.type);
     if (!type) return [];
-    const roles = choices.roles[type.key] ?? type.roles;
+    const chosen = choices.roles[type.key] ?? type.roles;
     const values = note.fields.map((field, i) => importFieldText(type.fields[i] ?? "", field));
+    const language = choices.languages[note.cards[0]?.deck ?? ""];
+    const pinyin = readingEngine(language) === "pinyin";
+    // Chinese examples keep pinyin once they draw it (docs/proposals/chinese.md, slice 4).
+    const examplePinyin = pinyin && examplesCarryReadings(language);
+    const chinese = pinyin ? pinyinFields(type, chosen, values, examplePinyin) : null;
+    const roles = chinese?.roles ?? chosen;
     const tags = importTags(note.tags);
     const picture = note.fields.flatMap(imageSources)[0];
     const clips = note.fields.map(soundSources);
@@ -416,7 +516,8 @@ export const anki: SourceAdapter<AnkiNote> = {
       (name, i) =>
         roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),
     );
-    const base = fieldsFromRoles(values, roles);
+    const base = fieldsFromRoles(chinese?.values ?? values, roles);
+    if (chinese?.example) base.example = chinese.example;
 
     const build = (
       externalId: string,
@@ -428,13 +529,20 @@ export const anki: SourceAdapter<AnkiNote> = {
       const fitted = fitFields({
         term: withoutReadings(term) ?? "",
         meaning: withoutReadings(raw.meaning),
+        // Tone numbers stay for `normalizeCardText`, which counts the Readings it converts.
         pronunciation: raw.pronunciation
-          ? plainReading(raw.pronunciation)
+          ? pinyin
+            ? pinyinReading(plainReading(raw.pronunciation), withoutReadings(term) ?? "")
+            : plainReading(raw.pronunciation)
           : hasFurigana(term)
             ? furiganaReading(term)
             : undefined,
-        // Kana readings stay in Lymi's notation; pinyin and other readings go, as they always did.
-        example: raw.example && formatReadings(parseReadings(withoutOtherReadings(raw.example))),
+        // Kana readings stay in Lymi's notation, and pinyin where examples draw it; others go.
+        example:
+          raw.example &&
+          (examplePinyin
+            ? markedExample(raw.example)
+            : formatReadings(parseReadings(withoutOtherReadings(raw.example)))),
         notes: raw.notes,
       });
       if (!fitted.fields.term) return [];

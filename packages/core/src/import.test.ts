@@ -204,6 +204,51 @@ describe("guessFieldRoles", () => {
       "skip",
     ]);
   });
+  it("reads Chinese decks' script names, keeping the simplified term and its sentence", () => {
+    const both = {
+      WordTraditional: "notes",
+      WordSimplified: "term",
+      Definition: "meaning",
+      SentenceTraditional: "notes",
+      SentenceSimplified: "example",
+      SentencePinyin: "notes",
+      SentenceZhuyin: "notes",
+      SentenceTranslation: "notes",
+      WordAudio: "skip",
+    };
+    expect(guessFieldRoles(Object.keys(both))).toEqual(Object.values(both));
+    expect(guessFieldRoles(["Traditional", "Hanzi", "Pinyin", "English"])).toEqual([
+      "notes",
+      "term",
+      "pronunciation",
+      "meaning",
+    ]);
+    // A deck written only in traditional characters keeps them as its term, and its sentence.
+    expect(guessFieldRoles(["Traditional", "Pinyin", "English"])).toEqual([
+      "term",
+      "pronunciation",
+      "meaning",
+    ]);
+    expect(
+      guessFieldRoles(["Traditional", "Pinyin", "Sentence Traditional", "Sentence Simplified"]),
+    ).toEqual(["term", "pronunciation", "example", "notes"]);
+  });
+  it("reads script names only in a Chinese note type, since Trad is also a translation", () => {
+    for (const names of [
+      ["Mot", "Trad"],
+      ["Word", "Trad"],
+      ["Parola", "Trad."],
+      ["Name", "Character"],
+    ]) {
+      expect(guessFieldRoles(names)).toEqual(["term", "meaning"]);
+    }
+    expect(guessFieldRoles(["Simp", "Trad", "Pinyin", "English"])).toEqual([
+      "term",
+      "notes",
+      "pronunciation",
+      "meaning",
+    ]);
+  });
   it("gives each single role to one field", () => {
     expect(guessFieldRoles(["Word", "Term", "Meaning", "Translation"])).toEqual([
       "term",
@@ -304,6 +349,14 @@ describe("pitchNotation", () => {
 });
 
 describe("importFieldText", () => {
+  it("leaves ruby annotations out of the text they annotate", () => {
+    expect(
+      importFieldText(
+        "Ruby",
+        "<ruby>你<rt>nǐ</rt></ruby><ruby>好<rp>(</rp><rt>hǎo</rt><rp>)</rp></ruby>",
+      ),
+    ).toBe("你好");
+  });
   it("reads a translation as one line and a pitch field as its notation", () => {
     expect(importFieldText("Sentence Meaning", "I eat<br>with chopsticks.")).toBe(
       "I eat with chopsticks.",

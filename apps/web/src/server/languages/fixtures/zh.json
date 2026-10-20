@@ -536,6 +536,30 @@
       "field": "example",
       "text": "我[wǒ]去[qù]银行[yínháng]。",
       "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "孩子[háizi]们[men]喜欢[xǐhuan]玩儿[wánr]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "树[shù]长[zhǎng]得[de]很[hěn]快[kuài]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我[wǒ]上[shang]学[xué]。",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "们[men]",
+      "pass": false
     }
   ]
 }

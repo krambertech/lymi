@@ -18,13 +18,17 @@ const NEUTRAL = new Set([
   ..."着过得地们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
 ]);
 
+/** Grammatical endings that never start a word, so they join the word before even in a bracket of their own: 孩子[háizi]们[men]. */
+const SUFFIXES = new Set([..."们子头着过得地"]);
+
 /**
  * Whether every syllable of one word's pinyin carries a tone mark, unless it is neutral: a
  * particle (了 le), or a character after another in the word that dictionaries write unmarked
- * (东西 dōngxi) or that repeats the one before it (妈妈 māma). A reading over several characters
- * at once needs every mark.
+ * (东西 dōngxi) or that repeats the one before it (妈妈 māma). `joined` is the character a
+ * bracket follows with nothing between, which a suffix still joins. A reading over several
+ * characters at once needs every mark.
  */
-function tonedWord(segments: readonly PinyinSegment[]): boolean {
+function tonedWord(segments: readonly PinyinSegment[], joined = ""): boolean {
   let before = "";
   for (const { text, reading } of segments) {
     if (reading === undefined) continue;
@@ -34,7 +38,9 @@ function tonedWord(segments: readonly PinyinSegment[]): boolean {
     const [char = ""] = text;
     if ([...text.replace(/[儿兒]$/u, "")].length === 1 && syllables.length === 1) {
       const neutral =
-        PARTICLES.has(char) || (before !== "" && (NEUTRAL.has(char) || char === before));
+        PARTICLES.has(char) ||
+        (before !== "" && (NEUTRAL.has(char) || char === before)) ||
+        ((before || joined) !== "" && SUFFIXES.has(char));
       if (!hasToneMark(reading) && !neutral) return false;
     } else if (!syllables.length || !syllables.every((syllable) => hasToneMark(syllable.text))) {
       return false;
@@ -54,11 +60,18 @@ export function tonedPinyin(term: string, reading: string): boolean {
 
 /** Whether every bracket of an example's pinyin, each one word, is in tone marks by the same rule as a term's. */
 export function tonedExample(text: string): boolean {
+  let joined = "";
   return parsePinyin(text).every(({ text: word, reading }) => {
-    if (reading === undefined) return true;
+    if (reading === undefined) {
+      joined = "";
+      return true;
+    }
     if (numbered(reading)) return false;
     const clean = cleanPinyin(reading);
-    return tonedWord(alignPinyin(word, readingTokens(clean)) ?? [{ text: word, reading: clean }]);
+    const segments = alignPinyin(word, readingTokens(clean)) ?? [{ text: word, reading: clean }];
+    const toned = tonedWord(segments, joined);
+    joined = [...word].at(-1) ?? "";
+    return toned;
   });
 }
 

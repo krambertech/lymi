@@ -373,6 +373,27 @@
     {
       "rule": "tone marks on every syllable",
       "field": "pronunciation",
+      "term": "西",
+      "text": "xi",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "上",
+      "text": "shang",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "吗",
+      "text": "ma",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
       "term": "学习",
       "text": "ɕɥɛ̌ɕǐ",
       "pass": false
@@ -418,6 +439,18 @@
       "rule": "tone marks on every syllable",
       "field": "example",
       "text": "孩子们[háizimen]喜欢[xǐhuan]妈妈[māma]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "东[dōng]西[xi]",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我们[wǒmen]知道[zhīdao]了[le]。",
       "pass": true
     },
     {

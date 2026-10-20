@@ -1,37 +1,41 @@
 import { missingReadings, stripReadings } from "@lymi/core";
 import {
+  alignPinyin,
+  cleanPinyin,
   hasToneMark,
   type PinyinSegment,
   parsePinyin,
-  pinyinExampleSegments,
   pinyinTermReading,
   readingTokens,
 } from "@lymi/core/pinyin";
 import type { LanguagePrompts } from "./types";
 
-/** Characters dictionaries read in the neutral tone in common words: particles (了, 吗), suffixes (们, 子) and second syllables (东西, 朋友). */
+/** Particles, which dictionaries write unmarked even as a word of their own. */
+const PARTICLES = new Set([..."了的吗呢吧啊着过得地么"]);
+
+/** Characters dictionaries read in the neutral tone after another in the same word: 东西 dōngxi, 我们 wǒmen, 晚上 wǎnshang. */
 const NEUTRAL = new Set([
-  ..."了的吗呢吧啊着过得地么们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
+  ..."们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
 ]);
 
 /**
- * Whether every syllable over a Han character carries a tone mark, unless the character reads in
- * the neutral tone: one dictionaries write unmarked (东西 dōngxi, 我们 wǒmen) or one repeating the
- * character before it (妈妈 māma). A reading over several characters at once needs every mark.
+ * Whether every syllable of one word's pinyin carries a tone mark, unless it is neutral: a
+ * particle (了 le), or a character after another in the word that dictionaries write unmarked
+ * (东西 dōngxi) or that repeats the one before it (妈妈 māma). A reading over several characters
+ * at once needs every mark.
  */
-function tonedSegments(segments: readonly PinyinSegment[]): boolean {
+function tonedWord(segments: readonly PinyinSegment[]): boolean {
   let before = "";
   for (const { text, reading } of segments) {
-    if (reading === undefined) {
-      before = "";
-      continue;
-    }
+    if (reading === undefined) continue;
     const tokens = readingTokens(reading);
     if (tokens.some((token) => !token.syllables && !/^[A-Z]+$/.test(token.word))) return false;
     const syllables = tokens.flatMap((token) => token.syllables ?? []);
     const [char = ""] = text;
     if ([...text.replace(/[儿兒]$/u, "")].length === 1 && syllables.length === 1) {
-      if (!hasToneMark(reading) && !NEUTRAL.has(char) && char !== before) return false;
+      const neutral =
+        PARTICLES.has(char) || (before !== "" && (NEUTRAL.has(char) || char === before));
+      if (!hasToneMark(reading) && !neutral) return false;
     } else if (!syllables.length || !syllables.every((syllable) => hasToneMark(syllable.text))) {
       return false;
     }
@@ -45,15 +49,17 @@ const numbered = (reading: string) => /\d/.test(reading);
 /** Whether a term's pinyin is in tone marks, never numbers, with a mark on every syllable that is not neutral. */
 export function tonedPinyin(term: string, reading: string): boolean {
   const segments = numbered(reading) ? null : pinyinTermReading(term, reading);
-  return !!segments?.some((segment) => segment.reading !== undefined) && tonedSegments(segments);
+  return !!segments?.some((segment) => segment.reading !== undefined) && tonedWord(segments);
 }
 
-/** Whether every bracket of an example's pinyin is in tone marks, by the same rule as a term's. */
+/** Whether every bracket of an example's pinyin, each one word, is in tone marks by the same rule as a term's. */
 export function tonedExample(text: string): boolean {
-  if (parsePinyin(text).some(({ reading }) => reading !== undefined && numbered(reading))) {
-    return false;
-  }
-  return tonedSegments(pinyinExampleSegments(text));
+  return parsePinyin(text).every(({ text: word, reading }) => {
+    if (reading === undefined) return true;
+    if (numbered(reading)) return false;
+    const clean = cleanPinyin(reading);
+    return tonedWord(alignPinyin(word, readingTokens(clean)) ?? [{ text: word, reading: clean }]);
+  });
 }
 
 /** Chinese: pinyin in tone marks and citation tones, inline in examples after each word. docs/proposals/chinese.md. */

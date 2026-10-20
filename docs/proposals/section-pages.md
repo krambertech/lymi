@@ -68,7 +68,11 @@ flowchart TD
 
 ## Phone and web
 
-Both apps get the same pages and routes and follow the same rules. Layout and input differ, as [PRODUCT.md](../../PRODUCT.md#surfaces) asks. By default the web ships first and the phone follows through a linked issue.
+Both apps get the same pages and routes and follow the same rules. Layout and input differ, as [PRODUCT.md](../../PRODUCT.md#surfaces) asks.
+
+This breaks the web-first default on purpose: the phone leads the screens. The clunky block is a phone-width problem, and checking progress and reviewing one section are daily jobs the phone leads. The shared parts come first because both apps need them. Section links, the opening rules and the stats are rules of the deck, so a link copied on the phone or Go to section in ⌘K must open on the web. The web gains as much from one place to manage sections, since today it hides them in deck settings.
+
+The web may not need the Sections page as a separate destination. A laptop's deck page is wide enough to show every section beside the list, so the same URL can show the overview there.
 
 | | Phone | Web |
 | --- | --- | --- |
@@ -85,7 +89,9 @@ Two checks keep it that way. A unit test checks that every surface gets the same
 
 ## Delivery
 
-1. **Scope the deck page.** One screen that takes a scope, and selection in one hook. No visible change. It gets its own pull request, so the risky part is reviewed alone.
+Step 1 and the stats endpoint from step 5 come first, since both apps need them. The phone then ships steps 2 to 5, and the web follows with its own layout through a linked issue.
+
+1. **Scope the deck page.** One screen that takes a scope, selection in one hook, and `sectionActions` in `packages/client`. No visible change. It gets its own pull request, so the risky part is reviewed alone.
 2. **The section line** replaces the section block in the deck's summary, with all four opening sentences.
 3. **The section page**, including No section and waiting sections, with the stats the server has today: known, learning, new and due.
 4. **The Sections page** takes over section management from deck settings.

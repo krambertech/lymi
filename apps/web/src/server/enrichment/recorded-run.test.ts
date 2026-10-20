@@ -1,11 +1,9 @@
 import { CONFIGURED_LANGUAGES } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { CARDS_PER_CALL } from "./prompt";
 import {
   enrichesByDefault,
   enrichmentPromptHash,
   languagePassRates,
-  passRates,
   type RecordedRun,
   readFixtures,
   recordedRuns,
@@ -35,13 +33,15 @@ describe("the recorded enrichment run", () => {
     ).toEqual(now);
   });
 
-  it("passes each rule about as often as the run before it, on the cases both ran", () => {
+  it("keeps each rule on the cases the run before it passed, beyond one call's noise", () => {
     // Two runs of one prompt differ only by the model's noise, which the gate absorbs.
     if (!latest || !previous || previous.run.hash === latest.run.hash) return;
     const shared = new Set(previous.run.calls.flatMap((call) => call.cases));
-    const rates = (calls: typeof latest.run.calls) =>
-      passRates(scoreCalls(decks, calls).filter((one) => shared.has(one.item.id)));
-    expect(regressions(rates(previous.run.calls), rates(latest.run.calls))).toEqual([]);
+    const scored = (calls: typeof latest.run.calls) =>
+      scoreCalls(decks, calls).filter((one) => shared.has(one.item.id));
+    expect(
+      regressions(scored(previous.run.calls), scored(latest.run.calls), latest.run.calls),
+    ).toEqual([]);
   });
 });
 
@@ -83,23 +83,40 @@ describe("enrichesByDefault", () => {
 });
 
 describe("regressions", () => {
-  const rates = (entries: [string, number, number][]) =>
-    new Map(entries.map(([rule, pass, total]) => [rule, { pass, total }]));
+  /** Cases keeping or failing one rule each, as `rule:case:pass` entries. */
+  const cases = (...entries: string[]) =>
+    entries.map((entry) => {
+      const [rule = "", id = "", pass = ""] = entry.split(":");
+      const [field = "", name = ""] = rule.split(".");
+      return {
+        item: { id },
+        results: [{ field: field as "example", rule: name, pass: pass === "ok" }],
+      };
+    });
+  const kanji = (a: string, b: string, c: string, d: string) =>
+    cases(
+      `example.readings over kanji:a:${a}`,
+      `example.readings over kanji:b:${b}`,
+      `example.readings over kanji:c:${c}`,
+      `example.readings over kanji:d:${d}`,
+    );
+  const before = kanji("ok", "ok", "ok", "ok");
 
-  it("allows one call's worth of noise, scaled to the run's size, and ignores a new rule", () => {
-    const noise = CARDS_PER_CALL;
+  it("fails a small rule that loses cases in two calls, and lets the same loss in one call pass", () => {
+    const apart = [{ cases: ["a", "b"] }, { cases: ["c", "d"] }];
+    const together = [{ cases: ["a", "c"] }, { cases: ["b", "d"] }];
+    const lost = kanji("no", "ok", "no", "ok");
+    expect(regressions(before, lost, apart)).toEqual([
+      "example: readings over kanji: newly fails a, c, across 2 calls",
+    ]);
+    expect(regressions(before, lost, together)).toEqual([]);
+  });
+
+  it("ignores a rule the run before never checked, and a case it already failed", () => {
+    const calls = [{ cases: ["a"] }, { cases: ["b"] }, { cases: ["c", "d"] }];
     expect(
-      regressions(
-        rates([
-          ["language: only mayFill", 300, 300],
-          ["example: readings over kanji", 40, 40],
-        ]),
-        rates([
-          ["language: only mayFill", 300 - noise, 300],
-          ["example: readings over kanji", 40 - noise - 1, 40],
-          ["notes: no table", 0, 3],
-        ]),
-      ),
-    ).toEqual([`example: readings over kanji: ${39 - noise}/40, was 40/40`]);
+      regressions(kanji("no", "no", "ok", "ok"), kanji("no", "no", "ok", "ok"), calls),
+    ).toEqual([]);
+    expect(regressions([], cases("notes.no table:a:no", "notes.no table:b:no"), calls)).toEqual([]);
   });
 });

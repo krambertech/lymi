@@ -13,7 +13,7 @@ import {
 } from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
 import { languagePrompts } from "../languages";
-import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
+import { type CaseExpectations, type CheckResult, checkCard, ruleKey, tally } from "./checks";
 import { GUIDED_LANGUAGES, languageGuide } from "./languages";
 import {
   CARDS_PER_CALL,
@@ -170,20 +170,41 @@ export function passRates(scored: readonly ScoredCase[]) {
   return tally(scored.flatMap((one) => one.results));
 }
 
-/** One call's worth of cases either way is the model's own noise between runs, which arrives a whole call at a time. */
-const SLACK = CARDS_PER_CALL;
+/** Whether each case keeps each rule, a case failing a rule when any of its checks under it fails. */
+function caseOutcomes(
+  scored: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+): Map<string, Map<string, boolean>> {
+  const byRule = new Map<string, Map<string, boolean>>();
+  for (const { item, results } of scored) {
+    for (const result of results) {
+      const key = ruleKey(result);
+      const cases = byRule.get(key) ?? new Map<string, boolean>();
+      cases.set(item.id, (cases.get(item.id) ?? true) && result.pass);
+      byRule.set(key, cases);
+    }
+  }
+  return byRule;
+}
 
-/** Rules that pass on fewer cases than the previous run, scaled to this run's count, beyond the noise. */
+/**
+ * Rules that now fail cases they passed in the previous run, in two or more of the latest run's
+ * calls. The model's noise lands a whole call at a time, so a loss within one call is noise and a
+ * loss across calls is a regression, however small the rule.
+ */
 export function regressions(
-  previous: ReturnType<typeof passRates>,
-  latest: ReturnType<typeof passRates>,
+  previous: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+  latest: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+  calls: readonly { cases: readonly string[] }[],
 ): string[] {
-  return [...latest].flatMap(([rule, now]) => {
-    const before = previous.get(rule);
-    if (!before?.total) return [];
-    const expected = (before.pass / before.total) * now.total;
-    return now.pass < expected - SLACK
-      ? [`${rule}: ${now.pass}/${now.total}, was ${before.pass}/${before.total}`]
+  const callOf = new Map(calls.flatMap((call, at) => call.cases.map((id) => [id, at] as const)));
+  const before = caseOutcomes(previous);
+  return [...caseOutcomes(latest)].flatMap(([rule, cases]) => {
+    const was = before.get(rule);
+    if (!was) return [];
+    const lost = [...cases].flatMap(([id, pass]) => (!pass && was.get(id) ? [id] : []));
+    const spread = new Set(lost.map((id) => callOf.get(id)));
+    return spread.size > 1
+      ? [`${rule}: newly fails ${lost.join(", ")}, across ${spread.size} calls`]
       : [];
   });
 }

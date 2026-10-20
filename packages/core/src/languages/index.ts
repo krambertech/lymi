@@ -4,6 +4,7 @@
  */
 import type { LanguageOut } from "../responses/languages";
 import { chinese } from "./chinese";
+import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
 import type {
@@ -16,6 +17,7 @@ import type {
   SupportedTag,
 } from "./types";
 
+export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./configured";
 export * from "./names";
 export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";
 export type {
@@ -39,30 +41,6 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   zh: chinese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
-
-/** A language with a row of data and no engine. docs/proposals/supported-languages.md, Tiers. */
-interface LanguageConfig {
-  /** What the card form calls the field. */
-  pronunciation: "pronunciation";
-  /** ISO 15924 codes of the scripts its terms are written in. */
-  scripts: readonly string[];
-  format: LanguageFormat;
-}
-
-const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
-  ko: {
-    pronunciation: "pronunciation",
-    scripts: ["Kore"],
-    format: {
-      name: "Korean",
-      pronunciation: "How the term is said, in Hangul, only where that differs from its spelling.",
-      empty: "the term is said as written",
-      never: "Not romanization or IPA.",
-      sample: { term: "학교", pronunciation: "학꾜" },
-      duplicates: "term",
-    },
-  },
-};
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
 export function languageKey(language: string | null | undefined): string {
@@ -187,9 +165,8 @@ function formatSource(
 ): { tag: string; row: FormatRow; engine: ReadingEngine | null } | null {
   const record = languageSupport(language);
   if (record) return { tag: record.tag, row: record, engine: record.engine };
-  const key = languageKey(language);
-  const row = Object.hasOwn(CONFIGURED, key) ? CONFIGURED[key] : undefined;
-  return row ? { tag: key, row, engine: null } : null;
+  const tag = configuredTag(language);
+  return tag ? { tag, row: CONFIGURED[tag] as LanguageConfig, engine: null } : null;
 }
 
 /** How this language's cards are written, or null for a language with no format of its own. */
@@ -202,4 +179,15 @@ export function languageFormat(language: string | null | undefined): LanguageOut
 export function pronunciationGuide(language: string | null | undefined): string | null {
   const format = formatSource(language)?.row.format;
   return format ? describePronunciation(format, "null") : null;
+}
+
+/** A configured language's own tag, found from any of its tags, so `tl` is Filipino's `fil`. */
+function configuredTag(language: string | null | undefined): string | null {
+  return languageSupport(language) ? null : (CONFIGURED_TAGS.get(languageKey(language)) ?? null);
+}
+
+/** A configured language's row, found from any of its tags, or null. */
+export function configuredLanguage(language: string | null | undefined): LanguageConfig | null {
+  const tag = configuredTag(language);
+  return tag ? (CONFIGURED[tag] ?? null) : null;
 }

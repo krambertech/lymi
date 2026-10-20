@@ -1,5 +1,5 @@
 import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lymi/core";
-import { deckEnrichFields, deckPurpose, newId } from "@lymi/core";
+import { deckEnrichFields, deckPurpose, newDeckEnrichFields, newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
@@ -163,6 +163,8 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
   const seriesId = input.seriesId ?? null;
   if (seriesId) await activeSeries(ctx, seriesId);
   const id = chosen ?? newId();
+  const enrichFields =
+    input.enrichFields ?? newDeckEnrichFields(input.defaultLanguage, input.purpose);
   await db.insert(schema.decks).values({
     id,
     userId,
@@ -172,7 +174,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     directions: resolveDeckDirections(input) ?? "recognition",
     sectionProgression: input.sectionProgression ?? "automatic",
     purpose: input.purpose ?? null,
-    ...(input.enrichFields ? { enrichFields: input.enrichFields } : {}),
+    ...(enrichFields ? { enrichFields } : {}),
     ...(input.enrichInstructions?.trim()
       ? { enrichInstructions: input.enrichInstructions.trim() }
       : {}),
@@ -265,10 +267,19 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
       : seriesId === null
         ? { seriesId: null, position: 0 }
         : { seriesId, position: await nextDeckPosition(ctx, seriesId) };
+  // A deck that never chose and moves into a language below the bar stores that, as a new one would.
+  const moved =
+    fields.defaultLanguage !== undefined &&
+    fields.defaultLanguage !== stored?.defaultLanguage &&
+    !stored?.enrichFields &&
+    !fields.enrichFields
+      ? newDeckEnrichFields(fields.defaultLanguage, fields.purpose ?? stored?.purpose)
+      : null;
   const result = await db
     .update(schema.decks)
     .set({
       ...fields,
+      ...(moved ? { enrichFields: moved } : {}),
       // Blank instructions are none, so the prompt never carries an empty section.
       ...(enrichInstructions === undefined
         ? {}

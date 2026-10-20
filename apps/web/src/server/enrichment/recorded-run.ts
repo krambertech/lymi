@@ -4,6 +4,8 @@
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import {
+  CONFIGURED_LANGUAGES,
+  configuredLanguage,
   type DeckPurpose,
   deckEnrichFields,
   deckPurpose,
@@ -200,4 +202,43 @@ export function regressions(
       ? [`${rule}: ${now.pass}/${now.total}, was ${before.pass}/${before.total}`]
       : [];
   });
+}
+
+/** The share of a configured language's expectations a run must meet before its decks enrich unasked. */
+export const ENRICHMENT_BAR = 0.9;
+
+/** The rules that check what a case expects of the AI, rather than the house style every card keeps. */
+function expected(rule: string): boolean {
+  return /^(answered|expected |includes |excludes )/.test(rule);
+}
+
+/** How often a run meets each configured language's expectations, by the row's own tag. */
+export function languagePassRates(scored: readonly ScoredCase[]) {
+  const tags = new Map(Object.entries(CONFIGURED_LANGUAGES).map(([tag, row]) => [row, tag]));
+  const rates = new Map<string, { pass: number; total: number }>();
+  for (const { deck, results } of scored) {
+    const config = configuredLanguage(deck.language);
+    const tag = config && tags.get(config);
+    if (!tag) continue;
+    const count = rates.get(tag) ?? { pass: 0, total: 0 };
+    for (const result of results.filter((one) => expected(one.rule))) {
+      count.total += 1;
+      if (result.pass) count.pass += 1;
+    }
+    rates.set(tag, count);
+  }
+  return rates;
+}
+
+/**
+ * Whether a language's new decks should enrich unasked: it meets the bar in the latest run and in
+ * the run before, so one noisy run can close the gate but never open it.
+ */
+export function enrichesByDefault(
+  latest: { pass: number; total: number } | undefined,
+  previous: { pass: number; total: number } | undefined,
+): boolean {
+  const passes = (rate: { pass: number; total: number } | undefined) =>
+    !!rate?.total && rate.pass / rate.total >= ENRICHMENT_BAR;
+  return passes(latest) && passes(previous);
 }

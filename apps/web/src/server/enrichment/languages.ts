@@ -1,6 +1,11 @@
 import { LANGUAGE_FORMATS, languageFormat, languageKey, pronunciationGuide } from "@lymi/core";
 import { type FieldGuide, LANGUAGE_PROMPTS, languagePrompts } from "../languages";
 
+const FILIPINO: FieldGuide = {
+  notes:
+    "Verb: the root and the focus its affix marks, actor (*-um-*, *mag-*), object (*-in*, *i-*) or place (*-an*), then the completed · ongoing · future forms (*kumain · kumakain · kakain*, root *kain*, actor focus).",
+};
+
 /**
  * How to write cards in one language, field by field, keyed by primary language subtag. The
  * deck's samples and instructions override it. Keep each rule short and plain. A supported
@@ -83,6 +88,25 @@ const GUIDES: Record<string, FieldGuide> = {
   ko: {
     notes:
       "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",
+  },
+  fil: FILIPINO,
+  tl: FILIPINO,
+  vi: {
+    example: "Write every word with its tone marks.",
+    notes:
+      "Noun: its usual classifier (*con chó*, *cái bàn*). A word that differs between the north and the south: give the other one (*bát*, north; *chén*, south).",
+  },
+  ka: {
+    notes:
+      "Verb: the verbal noun it is listed under, then the present and the aorist, third person singular (*წერა: წერს · დაწერა*). Noun: its stem only if it drops a vowel (*ფანჯარა → ფანჯრის*).",
+  },
+  hy: {
+    notes:
+      "Noun: an irregular plural (*մարդ → մարդիկ*). Verb: the present, first person singular (*գրել → գրում եմ*), and an irregular aorist.",
+  },
+  ta: {
+    notes:
+      "Verb: the root, which is also the command, with the past and future, first person singular (*வா: வந்தேன் · வருவேன்*). Where everyday speech says the word differently from its written form, give the spoken form (*தண்ணீர்*, said *taṇṇi*).",
   },
 };
 

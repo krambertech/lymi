@@ -9,6 +9,7 @@ import {
   emptyFields,
   fieldsToFill,
   needsEnrichment,
+  newDeckEnrichFields,
 } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -25,7 +26,7 @@ import {
   updateCard,
 } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
-import { createDeck } from "./decks";
+import { createDeck, updateDeck } from "./decks";
 import {
   type EnrichmentQueue,
   enrichCards,
@@ -66,9 +67,18 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
     expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
     expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    expect(defaultEnrichFields("vi")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
+  });
+
+  it("stores no AI fields on a new deck below the evaluation's bar, and leaves other decks to their defaults", () => {
+    for (const tag of ["tl", "fil-PH"]) expect(newDeckEnrichFields(tag)).toEqual([]);
+    expect(defaultEnrichFields("tl")).toEqual(["meaning", "example"]);
+    for (const tag of ["vi", "it", null]) expect(newDeckEnrichFields(tag)).toBeNull();
+    expect(newDeckEnrichFields("tl", "subject")).toBeNull();
   });
 
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {
@@ -245,6 +255,38 @@ describe("enrichCards", () => {
 
   /** An add with a queue, so every card with an empty field starts at `working`. */
   const queue: EnrichmentQueue = { create: async () => undefined };
+
+  it("keeps a new Tagalog deck's AI fields off, and an owner's choice", async () => {
+    const ctx = await learner(db, "enrich-gate", "Kateryna");
+    const gated = await createDeck(ctx, { name: "Tagalog", defaultLanguage: "tl" });
+    const chosen = await createDeck(ctx, {
+      name: "Tagalog 2",
+      defaultLanguage: "tl",
+      enrichFields: ["meaning"],
+    });
+    const open = await createDeck(ctx, { name: "Tiếng Việt", defaultLanguage: "vi" });
+    const stored = async (id: string) =>
+      (await db.select().from(schema.decks).where(eq(schema.decks.id, id)))[0]?.enrichFields;
+    expect(await stored(gated.id)).toEqual([]);
+    expect(await stored(chosen.id)).toEqual(["meaning"]);
+    expect(await stored(open.id)).toBeNull();
+  });
+
+  it("stores the gate on a deck that never chose and moves into a language below the bar", async () => {
+    const ctx = await learner(db, "enrich-move", "Kateryna");
+    const stored = async (id: string) =>
+      (await db.select().from(schema.decks).where(eq(schema.decks.id, id)))[0]?.enrichFields;
+    const unchosen = await createDeck(ctx, { name: "Words", defaultLanguage: "it" });
+    const chosen = await createDeck(ctx, {
+      name: "Chosen",
+      defaultLanguage: "it",
+      enrichFields: ["meaning", "notes"],
+    });
+    await updateDeck(ctx, unchosen.id, { defaultLanguage: "tl" });
+    await updateDeck(ctx, chosen.id, { defaultLanguage: "tl" });
+    expect(await stored(unchosen.id)).toEqual([]);
+    expect(await stored(chosen.id)).toEqual(["meaning", "notes"]);
+  });
 
   it("fills empty fields, leaves the lesson's meaning alone and records one Activity row", async () => {
     const ctx = await learner(db, "enrich-1", "Kateryna");

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  configuredLanguage,
   drawsReadings,
   examplesCarryReadings,
   LANGUAGE_FORMATS,
@@ -103,6 +104,17 @@ describe("languageFormat", () => {
   it("follows the record lookup, so Cantonese gets no pinyin format", () => {
     expect(languageFormat("zh-yue")).toBeNull();
     expect(languageFormat("zh-cmn-Hant-TW")?.duplicates).toBe("term-and-reading");
+  });
+  it("finds a configured row from an alias, under the row's own tag", () => {
+    for (const tag of ["tl", "fil-PH"])
+      expect(languageFormat(tag)).toMatchObject({ tag: "fil", name: "Filipino" });
+    expect(LANGUAGE_FORMATS.filter((format) => format.name === "Filipino")).toHaveLength(1);
+    expect(configuredLanguage("tl")).toBe(configuredLanguage("fil"));
+  });
+  it("finds no configured row for a supported language or another language's extended subtag", () => {
+    for (const tag of ["ja", "zh", "zh-yue", "it", null])
+      expect(configuredLanguage(tag)).toBeNull();
+    expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
   });
   it("has none for a language Lymi writes the general way", () => {
     for (const tag of ["it", "en", "", null, "constructor"]) expect(languageFormat(tag)).toBeNull();

@@ -166,6 +166,8 @@ function style(
   if (field === "pronunciation") {
     record(field, "no slashes or brackets", !/^[/[]|[/\]]$/.test(text), text);
   }
+  // Duplicates and search compare composed text, so a decomposed tone or accent mark would not match.
+  record(field, "composed (NFC)", text === text.normalize("NFC"), text);
   for (const check of card.rules ?? []) {
     if (check.field !== field) continue;
     const pass = check.pass(text, { term: card.term, example: card.addReadingsTo });

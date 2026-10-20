@@ -1,5 +1,6 @@
 import { CONFIGURED_LANGUAGES } from "@lymi/core";
 import { describe, expect, it } from "vitest";
+import { ruleKey } from "./checks";
 import {
   enrichesByDefault,
   enrichmentPromptHash,
@@ -42,6 +43,25 @@ describe("the recorded enrichment run", () => {
     expect(
       regressions(scored(previous.run.calls), scored(latest.run.calls), latest.run.calls),
     ).toEqual([]);
+  });
+});
+
+describe("the evaluation's shape", () => {
+  it("spreads each rule's cases over two or more calls, so one bad call can never hide its loss", () => {
+    if (!latest) return;
+    const callOf = new Map(
+      latest.run.calls.flatMap((call, at) => call.cases.map((id) => [id, at] as const)),
+    );
+    const callsOf = new Map<string, Set<number | undefined>>();
+    for (const { item, results } of scoreCalls(decks, latest.run.calls)) {
+      // "answered" is recorded only for a card the model skipped, so it has no shape to keep.
+      for (const result of results.filter((one) => one.rule !== "answered")) {
+        const key = ruleKey(result);
+        callsOf.set(key, (callsOf.get(key) ?? new Set()).add(callOf.get(item.id)));
+      }
+    }
+    const confined = [...callsOf].flatMap(([rule, calls]) => (calls.size < 2 ? [rule] : []));
+    expect(confined, "Give these rules cases in a second deck of evaluation.json").toEqual([]);
   });
 });
 
@@ -102,14 +122,20 @@ describe("regressions", () => {
     );
   const before = kanji("ok", "ok", "ok", "ok");
 
-  it("fails a small rule that loses cases in two calls, and lets the same loss in one call pass", () => {
-    const apart = [{ cases: ["a", "b"] }, { cases: ["c", "d"] }];
-    const together = [{ cases: ["a", "c"] }, { cases: ["b", "d"] }];
-    const lost = kanji("no", "ok", "no", "ok");
-    expect(regressions(before, lost, apart)).toEqual([
-      "example: readings over kanji: newly fails a, c, across 2 calls",
+  it("fails a rule that loses more cases than its largest call holds", () => {
+    // Two cases in each of two calls: one bad call can take two of them, never three.
+    const calls = [{ cases: ["a", "b"] }, { cases: ["c", "d"] }];
+    expect(regressions(before, kanji("no", "no", "no", "ok"), calls)).toEqual([
+      "example: readings over kanji: newly fails a, b, c, beyond one call's 2",
     ]);
-    expect(regressions(before, lost, together)).toEqual([]);
+  });
+
+  it("lets a loss within its largest call's share pass, and counts a case that recovers", () => {
+    const calls = [{ cases: ["a", "b"] }, { cases: ["c", "d"] }];
+    expect(regressions(before, kanji("no", "no", "ok", "ok"), calls)).toEqual([]);
+    expect(regressions(before, kanji("no", "ok", "no", "ok"), calls)).toEqual([]);
+    const recovered = kanji("ok", "ok", "ok", "no");
+    expect(regressions(recovered, kanji("no", "no", "no", "ok"), calls)).toEqual([]);
   });
 
   it("ignores a rule the run before never checked, and a case it already failed", () => {

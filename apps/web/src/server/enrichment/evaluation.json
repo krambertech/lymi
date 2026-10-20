@@ -308,6 +308,39 @@
       ]
     },
     {
+      "id": "ja-en-n4",
+      "name": "Japanese N4",
+      "language": "ja",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "ja-n4-01",
+          "term": "電車",
+          "expect": {
+            "meaning": { "oneOf": ["train", "electric train"] },
+            "pronunciation": { "oneOf": ["でんしゃ"] }
+          }
+        },
+        {
+          "id": "ja-n4-02",
+          "term": "新しい",
+          "expect": {
+            "meaning": { "oneOf": ["new"] },
+            "pronunciation": { "oneOf": ["あたらしい"] }
+          }
+        },
+        {
+          "id": "ja-n4-03",
+          "term": "先生",
+          "expect": {
+            "meaning": { "includes": ["teacher"] },
+            "pronunciation": { "oneOf": ["せんせい"] }
+          }
+        }
+      ]
+    },
+    {
       "id": "zh-en",
       "name": "HSK 1",
       "language": "zh",
@@ -2001,7 +2034,10 @@
         {
           "id": "es-uk-02",
           "term": "tener",
-          "expect": { "meaning": { "oneOf": ["мати"] }, "example": "filled" }
+          "expect": {
+            "meaning": { "oneOf": ["мати"], "excludes": ["иметь"] },
+            "example": "filled"
+          }
         }
       ]
     },

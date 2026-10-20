@@ -186,10 +186,13 @@ function caseOutcomes(
   return byRule;
 }
 
+/** One bad call's worth of a rule's cases is the most noise a run can explain; the limits of comparing two runs this way are in krambertech/lymi#897. */
+const SLACK_MAX = CARDS_PER_CALL;
+
 /**
- * Rules that now fail cases they passed in the previous run, in two or more of the latest run's
- * calls. The model's noise lands a whole call at a time, so a loss within one call is noise and a
- * loss across calls is a regression, however small the rule.
+ * Rules that now fail more of the cases the previous run passed than one bad call could explain:
+ * the rule's cases in its largest call, at most SLACK_MAX, net of cases that newly pass. The
+ * model's noise lands a whole call at a time, with the odd stray case beside it.
  */
 export function regressions(
   previous: readonly { item: { id: string }; results: readonly CheckResult[] }[],
@@ -201,10 +204,14 @@ export function regressions(
   return [...caseOutcomes(latest)].flatMap(([rule, cases]) => {
     const was = before.get(rule);
     if (!was) return [];
+    const perCall = new Map<number | undefined, number>();
+    for (const id of cases.keys())
+      perCall.set(callOf.get(id), (perCall.get(callOf.get(id)) ?? 0) + 1);
+    const slack = Math.min(SLACK_MAX, Math.max(...perCall.values()));
     const lost = [...cases].flatMap(([id, pass]) => (!pass && was.get(id) ? [id] : []));
-    const spread = new Set(lost.map((id) => callOf.get(id)));
-    return spread.size > 1
-      ? [`${rule}: newly fails ${lost.join(", ")}, across ${spread.size} calls`]
+    const gained = [...cases].filter(([id, pass]) => pass && was.get(id) === false).length;
+    return lost.length - gained > slack
+      ? [`${rule}: newly fails ${lost.join(", ")}, beyond one call's ${slack}`]
       : [];
   });
 }

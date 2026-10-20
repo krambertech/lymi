@@ -2758,6 +2758,9 @@ msgstr "Keep the reading under 200 characters."
 msgid "Keep the source under 200 characters."
 msgstr "Keep the source under 200 characters."
 
+msgid "Keep the stress under 200 characters."
+msgstr "Keep the stress under 200 characters."
+
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
 
@@ -3929,6 +3932,9 @@ msgstr "Review on your own schedule. New cards appear as they are added."
 msgid "Review progress"
 msgstr "Review progress"
 
+msgid "Review shows the stress only when it’s the term with a stress mark added, as in за́мок."
+msgstr "Review shows the stress only when it’s the term with a stress mark added, as in за́мок."
+
 msgid "Review these decks together, in this order."
 msgstr "Review these decks together, in this order."
 
@@ -4316,6 +4322,10 @@ msgstr "Streak"
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
+
+msgctxt "which syllable of a term is stressed"
+msgid "Stress"
+msgstr "Stress"
 
 msgctxt "Password strength"
 msgid "Strong"

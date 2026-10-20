@@ -46,6 +46,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | term | термін | термин |
 | meaning | значення | значение |
 | example | приклад | пример |
+| Stress (a Russian card's pronunciation) | наголос | ударение |
 | deck | колода | колода |
 | Library (screen) | Бібліотека | Библиотека |
 | series (group of decks) | серія | серия |

@@ -173,7 +173,7 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
         rating: 3,
         reviewedAt: new Date(),
       },
-      furigana,
+      { over: furigana, inPlace: furigana },
     );
   await at(eat as string, true, "term_to_meaning");
   await at(eat as string, true, "meaning_to_term");
@@ -186,7 +186,7 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
   expect(readings).toEqual(["cue", "answer", undefined]);
 });
 
-it("names the language whose reading was drawn, so Chinese and Japanese chart apart", async () => {
+it("names the language whose reading was drawn, so Chinese, Japanese and Russian chart apart", async () => {
   const student = await learner(db, "analytics-reading-language", "Learner");
   const { analytics, capture, settled } = writer();
   const ctx = { ...student, analytics };
@@ -194,6 +194,8 @@ it("names the language whose reading was drawn, so Chinese and Japanese chart ap
   for (const [language, term, pronunciation] of [
     ["zh-TW", "學習", "xue2 xi2"],
     ["ja", "見る", "みる"],
+    ["ru", "замок", "замо́к"],
+    ["ru-RU", "мука", "[mʊˈka]"],
     ["ko", "학교", "hakgyo"],
   ] as const) {
     const deck = await createDeck(ctx, { name: language, defaultLanguage: language });
@@ -211,7 +213,39 @@ it("names the language whose reading was drawn, so Chinese and Japanese chart ap
   expect(graded).toEqual([
     ["cue", "zh"],
     ["cue", "ja"],
+    ["cue", "ru"],
     [undefined, undefined],
+    [undefined, undefined],
+  ]);
+});
+
+it("leaves out where the stress showed for a phone that draws it only after the reveal", async () => {
+  const student = await learner(db, "analytics-stress-since", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "Слова", defaultLanguage: "ru" });
+  const [lock, eat] = await addCards(ctx, [
+    { deckId: deck.id, term: "замок", meaning: "a lock", pronunciation: "замо́к" },
+    { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる", language: "ja" },
+  ]);
+  // A 0.0.3 phone draws furigana but shows the stress as a line after the reveal.
+  const older = { over: true, inPlace: false };
+  for (const added of [lock, eat]) {
+    const cardId = added?.status === "added" ? added.card.id : "";
+    await gradeCard(
+      ctx,
+      { cardId, direction: "recognition", rating: 3, reviewedAt: new Date() },
+      older,
+    );
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language]);
+  expect(graded).toEqual([
+    [undefined, undefined],
+    ["cue", "ja"],
   ]);
 });
 

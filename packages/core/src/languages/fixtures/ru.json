@@ -1,0 +1,78 @@
+{
+  "tags": { "ru": null, "ru-RU": null, "RU": null, "ru_Cyrl_UA": null },
+  "terms": [
+    { "term": "замок", "pronunciation": "за́мок", "drawn": "за́мок" },
+    { "term": "замок", "pronunciation": "замо́к", "drawn": "замо́к" },
+    { "term": "мука", "pronunciation": "мука́", "drawn": "мука́" },
+    { "term": "мука", "pronunciation": "му́ка", "drawn": "му́ка" },
+    { "term": "Москва", "pronunciation": "москва́", "drawn": "Москва́" },
+    { "term": "ЗАМОК", "pronunciation": "за́мок", "drawn": "ЗА́МОК" },
+    { "term": "мойка", "pronunciation": "мо́йка", "drawn": "мо́йка" },
+    { "term": "ежик", "pronunciation": "ёжик", "drawn": "ёжик" },
+    { "term": "Ежик", "pronunciation": "ё́жик", "drawn": "Ёжик" },
+    { "term": "все", "pronunciation": "всё", "drawn": "всё" },
+    { "term": "в дом", "pronunciation": "в до́м", "drawn": null },
+    { "term": "пойти домой", "pronunciation": "пойти́ домо́й", "drawn": "пойти́ домо́й" },
+    { "term": "идти · шёл", "pronunciation": "идти́ · шёл", "drawn": "идти́ · шёл" },
+    { "term": "по-русски", "pronunciation": "по-ру́сски", "drawn": "по-ру́сски" },
+    { "term": "ёлка", "pronunciation": "ёлка", "drawn": null },
+    { "term": "замок", "pronunciation": "[ˈzamək]", "drawn": null }
+  ],
+  "examples": [
+    { "text": "Я закры́л дверь на замо́к.", "plain": "Я закрыл дверь на замок." },
+    { "text": "Мо́йка у окна́, а ёжик — в саду́.", "plain": "Мойка у окна, а ёжик — в саду." },
+    { "text": "Без му́ки нет нау́ки.", "plain": "Без муки нет науки." }
+  ],
+  "keys": [
+    { "term": "замок", "pronunciations": ["за́мок", "ЗА́МОК", "За́мок", " за́мок "] },
+    { "term": "мука", "pronunciations": ["мука́", "МУКА́"] },
+    { "term": "ежик", "pronunciations": ["ёжик", "ё́жик", "Ёжик"] },
+    { "term": "все", "pronunciations": ["всё", "всё́", "ВСЁ"] },
+    { "term": "пойти домой", "pronunciations": ["пойти́ домо́й", "пойти́  домо́й"] }
+  ],
+  "apart": [
+    { "term": "замок", "pronunciations": ["за́мок", "замо́к"] },
+    { "term": "мука", "pronunciations": ["му́ка", "мука́"] },
+    { "term": "плачу", "pronunciations": ["пла́чу", "плачу́"] },
+    { "term": "стоит", "pronunciations": ["сто́ит", "стои́т"] },
+    { "term": "духи", "pronunciations": ["ду́хи", "духи́"] }
+  ],
+  "noKey": [
+    { "term": "замок", "pronunciation": "замок" },
+    { "term": "замок", "pronunciation": "[ˈzamək]" },
+    { "term": "замок", "pronunciation": "zámok" },
+    { "term": "звонок", "pronunciation": "замо́к" },
+    { "term": "замок", "pronunciation": "зам́ок" },
+    { "term": "дом", "pronunciation": "до́м" },
+    { "term": "ёлка", "pronunciation": "ёлка" },
+    { "term": "ёлка", "pronunciation": "елка" },
+    { "term": "за́мок", "pronunciation": "за́мок" }
+  ],
+  "inputs": [
+    {
+      "sent": { "term": "замок", "pronunciation": "замóк" },
+      "stored": { "term": "замок", "pronunciation": "замо́к" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "мука", "pronunciation": "MУКÁ" },
+      "stored": { "term": "мука", "pronunciation": "MУКА́" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "замок", "pronunciation": "за́мок" },
+      "stored": { "term": "замок", "pronunciation": "за́мок" },
+      "normalized": []
+    },
+    {
+      "sent": { "term": "кафе", "pronunciation": "café" },
+      "stored": { "term": "кафе", "pronunciation": "café" },
+      "normalized": []
+    },
+    {
+      "sent": { "term": "за́мок" },
+      "stored": { "term": "за́мок" },
+      "normalized": []
+    }
+  ]
+}

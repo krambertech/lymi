@@ -5,13 +5,28 @@ export type SupportedTag = "ja";
  * A tag with a record in the index: each supported tag, and one whose language is still landing.
  * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
  */
-export type RecordTag = SupportedTag | "zh";
+export type RecordTag = SupportedTag | "zh" | "ru";
 
 /** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
 export type Script = "Jpan" | "Hans" | "Hant";
 
-/** How a reading is drawn: furigana puts kana over kanji, pinyin one syllable over each hanzi; both align at display. */
-export type ReadingEngine = "furigana" | "pinyin";
+/**
+ * How a reading is drawn: furigana puts kana over kanji and pinyin one syllable over each hanzi,
+ * both aligned at display; stress draws the term with its marks in place.
+ */
+export type ReadingEngine = "furigana" | "pinyin" | "stress";
+
+/** Where a stress mark may stand, for the marks-in-place engine. */
+export interface StressRules {
+  /** The lower-case vowels an acute may stand on. */
+  vowels: string;
+  /**
+   * Letters whose dots are themselves a mark, each with the letter natives write in its place, so
+   * a pronunciation may restore ё where the term writes е. Such a letter is always stressed and
+   * takes no acute.
+   */
+  restores?: Readonly<Record<string, string>>;
+}
 
 /** What makes two cards of a language the same card: the term alone, or the term and a differing Reading. */
 export type DuplicateRule = "term" | "term-and-reading";
@@ -37,8 +52,13 @@ export interface LanguageFormat {
 /** What a supported language does differently, chosen from the card's language tag alone. */
 export interface LanguageSupport {
   tag: RecordTag;
-  /** The scripts it is written in; the first unless `script` picks another from the full tag. */
-  scripts: readonly [Script, ...Script[]];
+  /**
+   * The scripts whose faces it is drawn in; the first unless `script` picks another from the full
+   * tag. None when Onest draws its letters.
+   */
+  scripts: readonly Script[];
+  /** The ISO 15924 scripts its terms are written in, published where `scripts` names no face for them. */
+  written?: readonly string[];
   /** The script a full tag names, from its lower-case subtags. */
   script?: (subtags: readonly string[]) => Script;
   /**
@@ -47,8 +67,10 @@ export interface LanguageSupport {
    */
   extlangs?: readonly string[];
   engine: ReadingEngine;
-  /** The pronunciation holds a Reading, and the card form calls the field so. */
-  pronunciation: "reading";
+  /** Where the stress engine lets a mark stand. */
+  stress?: StressRules;
+  /** What the pronunciation holds, which the card form names the field after: a Reading, or the term with its stress marked. */
+  pronunciation: "reading" | "stress";
   format: LanguageFormat;
   speech: {
     /** Generated speech says the card's Reading in place of the term, so 上手 is said as the card reads it. */

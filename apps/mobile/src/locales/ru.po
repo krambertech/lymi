@@ -3877,6 +3877,10 @@ msgstr "{current, plural, one {# день подряд} few {# дня подря
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Дни подряд: {streak, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
 
+msgctxt "which syllable of a term is stressed"
+msgid "Stress"
+msgstr "Ударение"
+
 msgid "Stuck? Read the guide"
 msgstr "Что-то не получается? Прочитай руководство"
 

@@ -9,8 +9,10 @@ import {
   languageScript,
   languageSupport,
   pronunciationGuide,
+  pronunciationName,
   speechInputs,
   speechLocale,
+  stressRules,
   supportedLanguage,
   writtenWithReading,
 } from ".";
@@ -26,6 +28,10 @@ describe("languageSupport", () => {
     for (const tag of ["zh-yue", "zh-yue-HK", "yue", "yue-Hant", "zh-hak", "zh-nan", "zh-min-nan"])
       expect(languageSupport(tag)).toBeNull();
   });
+  it("finds Russian from any Russian tag", () => {
+    for (const tag of ["ru", "ru-RU", "RU", "ru_Cyrl"])
+      expect(languageSupport(tag)?.tag).toBe("ru");
+  });
   it("has no record for any other language", () => {
     for (const tag of ["ko", "en", "", null, undefined, "constructor"])
       expect(languageSupport(tag)).toBeNull();
@@ -33,9 +39,10 @@ describe("languageSupport", () => {
 });
 
 describe("supportedLanguage", () => {
-  it("leaves out Chinese until it joins SupportedTag", () => {
+  it("leaves out Chinese and Russian until they join SupportedTag", () => {
     expect(supportedLanguage("ja-JP")?.tag).toBe("ja");
     expect(supportedLanguage("zh")).toBeNull();
+    expect(supportedLanguage("ru")).toBeNull();
   });
 });
 
@@ -45,6 +52,16 @@ describe("drawsReadings", () => {
     expect(drawsReadings("zh-TW")).toBe(true);
     expect(drawsReadings("zh-yue")).toBe(false);
     expect(drawsReadings(null)).toBe(false);
+  });
+  it("leaves Russian out, since its stress marks are drawn in place", () => {
+    expect(drawsReadings("ru")).toBe(false);
+  });
+});
+
+describe("stressRules", () => {
+  it("lets Russian stress any vowel and restore ё, and no other language mark one", () => {
+    expect(stressRules("ru-RU")).toEqual({ vowels: "аеёиоуыэюя", restores: { ё: "е" } });
+    for (const tag of ["uk", "bg", "ja", null]) expect(stressRules(tag)).toBeNull();
   });
 });
 
@@ -72,6 +89,9 @@ describe("languageScript", () => {
 describe("speechInputs", () => {
   it("makes a Japanese clip from its reading and, for the lead-in, its meaning", () => {
     expect(speechInputs("ja-JP")).toEqual(["pronunciation", "meaning"]);
+  });
+  it("makes a Russian clip from its marked stress", () => {
+    expect(speechInputs("ru")).toEqual(["pronunciation"]);
   });
   it("makes every other clip from the term alone", () => {
     for (const tag of ["zh", "ko", null]) expect(speechInputs(tag)).toEqual([]);
@@ -165,5 +185,28 @@ describe("languageFormat", () => {
     }
     expect(languageFormat("ja")?.example).not.toBeNull();
     expect(languageFormat("zh")?.example).toBeNull();
+  });
+});
+
+describe("languageFormat for Russian", () => {
+  it("publishes Cyrillic, though Onest draws it with no face of its own", () => {
+    expect(languageFormat("ru")).toMatchObject({
+      scripts: ["Cyrl"],
+      pronunciation: { label: "stress", sample: { term: "замок", pronunciation: "за́мок" } },
+      duplicates: "term-and-reading",
+    });
+    expect(languageScript("ru")).toBeNull();
+  });
+  it("names a script for every language it publishes", () => {
+    for (const format of LANGUAGE_FORMATS) expect(format.scripts.length).toBeGreaterThan(0);
+  });
+});
+
+describe("pronunciationName", () => {
+  it("calls a Russian pronunciation its Stress", () => {
+    expect(pronunciationName("ru")).toBe("stress");
+    expect(pronunciationName("ja")).toBe("reading");
+    expect(pronunciationName("uk")).toBe("pronunciation");
+    expect(pronunciationName(null)).toBe("pronunciation");
   });
 });

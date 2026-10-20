@@ -200,6 +200,12 @@ export function Cards() {
           the tone over 一 or 不, so <code>bù shì</code> and <code>bú shì</code> are one word.
           Pinyin with no tone mark counts as no reading.
         </li>
+        <li>
+          In Russian the stress counts the same way. Send the term as natives write it and the
+          pronunciation with U+0301 over the stressed vowel: <code>замок</code> stressed{" "}
+          <code>за́мок</code> (a castle) and <code>замо́к</code> (a lock) are two words. A
+          pronunciation that is not the term with marks added, such as IPA, counts as no reading.
+        </li>
         <li>A card with no language only collides with other cards that have no language.</li>
         <li>Archived cards do not collide. Adding a term you archived makes a fresh card.</li>
       </ul>

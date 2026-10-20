@@ -10,6 +10,7 @@ import {
   exampleReadings,
   languageSupport,
   legacyDirection,
+  markedTerm,
   missed,
   modeKey,
   modeOf,
@@ -271,8 +272,11 @@ function fadedReadings(example: string | null, faded: number | undefined) {
 export async function gradeCard(
   ctx: ServiceContext,
   input: GradeInput,
-  /** The grader draws furigana, so `review_graded` can say where; a phone before 0.0.2 does not. */
-  furigana = true,
+  /**
+   * What the grader draws on the term, so `review_graded` can say where: a reading over it, which a
+   * phone before 0.0.2 lacks, and stress marks in place, which a phone before 0.0.4 lacks.
+   */
+  draws: { over: boolean; inPlace: boolean } = { over: true, inPlace: true },
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;
@@ -400,7 +404,9 @@ export async function gradeCard(
     ...(input.aid ? { aid: input.aid } : {}),
     ...readingsDrawn(
       row,
-      furigana && termReading(row) ? readingShown(key, state.state) : null,
+      (termReading(row) ? draws.over : markedTerm(row) !== null && draws.inPlace)
+        ? readingShown(key, state.state)
+        : null,
       fadedReadings(row.example, input.readingsFaded),
     ),
   });

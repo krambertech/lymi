@@ -115,7 +115,7 @@ describe("example pinyin for an older phone", () => {
     route.request("/api/cards", { headers }, env);
 
   it("takes the pinyin out of each Chinese example, and leaves furigana and the response's headers", async () => {
-    const response = await fetched(phone("0.0.3"));
+    const response = await fetched(phone("0.0.4"));
     expect(response.headers.get("x-lymi-test")).toBe("kept");
     expect(await response.json()).toEqual({
       card: { example: "我去银行。", language: "zh" },

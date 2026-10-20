@@ -75,6 +75,14 @@ describe("matchesSearch", () => {
     expect(matchesSearch(card({ meaning: "ねこ" }), searchKey("ネコ"))).toBe(true);
   });
 
+  it("ignores stress marks on both sides and keeps accents NFC composes", () => {
+    expect(matchesSearch(card({ normalizedTerm: "за́мок" }), searchKey("замок"))).toBe(true);
+    expect(matchesSearch(card({ pronunciation: "замо́к" }), searchKey("за́мок"))).toBe(true);
+    expect(matchesSearch(card({ example: "Без му́ки нет нау́ки." }), searchKey("муки"))).toBe(true);
+    expect(searchKey("cafe\u0301")).not.toBe(searchKey("cafe"));
+    expect(searchKey("ѓ")).not.toBe(searchKey("г"));
+  });
+
   it("matches a note's words across its Markdown, never its syntax", () => {
     const formatted = card({ notes: "**hea** aeg → *head aega*\n\n- one\n- two" });
     expect(matchesSearch(formatted, foldForSearch("hea aeg"))).toBe(true);
@@ -582,6 +590,30 @@ describe("text stored as Lymi keeps it", () => {
       .select({ payload: schema.auditLog.payload })
       .from(schema.auditLog)
       .where(and(eq(schema.auditLog.entityId, id), eq(schema.auditLog.action, action)));
+
+  it("keeps за́мок and замо́к apart, while an unmarked add meets either", async () => {
+    const app = await learner(db, "stress-apart", "Kateryna");
+    const deck = await createDeck(app, { name: "Russian", defaultLanguage: "ru" });
+    const outcomes = await addCards(app, [
+      { deckId: deck.id, term: "замок", pronunciation: "за́мок" },
+      { deckId: deck.id, term: "замок", pronunciation: "замóк" },
+      { deckId: deck.id, term: "Замок", pronunciation: "ЗА́МОК" },
+      { deckId: deck.id, term: "замок" },
+      // IPA is not the term with a mark, so it never tells this card from the others.
+      { deckId: deck.id, term: "замок", pronunciation: "[zɐˈmok]" },
+    ]);
+    expect(outcomes.map((o) => o.status)).toEqual([
+      "added",
+      "added",
+      "skipped",
+      "skipped",
+      "skipped",
+    ]);
+    expect(outcomes[1]).toMatchObject({
+      card: { pronunciation: "замо́к" },
+      normalized: ["pronunciation"],
+    });
+  });
 
   it("splits an MCP add's bracketed term before the duplicate check and the audit row", async () => {
     const app = await learner(db, "stored-1", "Kateryna");

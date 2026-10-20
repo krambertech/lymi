@@ -1,5 +1,5 @@
 import { languageKey, saysReading, speechInputs } from "./languages";
-import { kanaReading, stripReadings } from "./reading";
+import { kanaReading, markedTerm, stripReadings } from "./reading";
 
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,
@@ -83,13 +83,16 @@ export function headword(term: string): string {
   return at > 0 ? term.slice(0, at) : term;
 }
 
-/** What generated speech says: the card's Reading where its language says one, so 上手 is said じょうず or うわて as the card reads it, else the term. */
+/**
+ * What generated speech says: the card's Reading where its language says one, so 上手 is said
+ * じょうず or うわて and замок за́мок or замо́к as the card reads it, else the term.
+ */
 export function spokenText(card: {
   term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string {
-  return (saysReading(card.language) && kanaReading(card)) || card.term;
+  return (saysReading(card.language) && (kanaReading(card) ?? markedTerm(card))) || card.term;
 }
 
 /** What an in-memory player's clip was made from, so it is discarded when any of it changes. */

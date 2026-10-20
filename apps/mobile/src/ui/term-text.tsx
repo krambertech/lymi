@@ -2,6 +2,7 @@ import {
   drawsReadings,
   exampleSegments,
   type KnownReadings,
+  markedTerm,
   markKnownReadings,
   termReading,
 } from "@lymi/core";
@@ -11,8 +12,9 @@ import { Furigana } from "./furigana";
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
 /**
- * A card's term, with its reading drawn over it when its language draws one. Without a reading it
- * is `plain` when given, else one plain `Text` in the same classes.
+ * A card's term, with its reading drawn over it or its stress marked in place when its language
+ * does either. Without a reading over it, it is `plain` of the text when given, else one plain
+ * `Text` in the same classes; `hidden` draws it without its stress, as on a Known card's cue.
  */
 export function TermText({
   card,
@@ -27,17 +29,22 @@ export function TermText({
   };
   /** Holds a reading's room over a term without one, so a list of terms that draw readings keeps one height. */
   room?: boolean;
-  plain?: ReactNode;
+  plain?: (text: string) => ReactNode;
 }) {
   const { term, language, pronunciation } = card;
   const segments = useMemo(
     () => termReading({ term, language, pronunciation }),
     [term, language, pronunciation],
   );
-  if (!segments && plain !== undefined) return plain;
+  const marked = useMemo(
+    () => markedTerm({ term, language, pronunciation }),
+    [term, language, pronunciation],
+  );
+  const text = marked !== null && !props.hidden ? marked : term;
+  if (!segments && plain !== undefined) return plain(text);
   return (
     <Furigana
-      segments={segments ?? [{ text: term }]}
+      segments={segments ?? [{ text }]}
       room={room && drawsReadings(language)}
       lang={language}
       {...props}

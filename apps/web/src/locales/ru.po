@@ -2758,6 +2758,9 @@ msgstr "Чтение должно быть короче 200 символов."
 msgid "Keep the source under 200 characters."
 msgstr "Источник должен быть короче 200 символов."
 
+msgid "Keep the stress under 200 characters."
+msgstr "Ударение должно быть короче 200 символов."
+
 msgid "Keep the term under 500 characters."
 msgstr "Термин должен быть короче 500 символов."
 
@@ -3929,6 +3932,9 @@ msgstr "Повторяй в своём темпе. Новые карточки �
 msgid "Review progress"
 msgstr "Прогресс повторения"
 
+msgid "Review shows the stress only when it’s the term with a stress mark added, as in за́мок."
+msgstr "Ударение видно в повторении, только если это термин с добавленным знаком ударения, как за́мок."
+
 msgid "Review these decks together, in this order."
 msgstr "Повторяй эти колоды вместе, в этом порядке."
 
@@ -4316,6 +4322,10 @@ msgstr "Дни подряд"
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{0, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
+
+msgctxt "which syllable of a term is stressed"
+msgid "Stress"
+msgstr "Ударение"
 
 msgctxt "Password strength"
 msgid "Strong"

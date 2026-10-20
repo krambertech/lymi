@@ -5,7 +5,7 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, drawsTermReading, writtenWithReading } from "@lymi/core";
+import { deserializeState, termShowsPronunciation } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -13,6 +13,7 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
+import { fieldLabel } from "../../../../capture/card-fields";
 import type { FormField } from "../../../../capture/form";
 import { useArchiveCard } from "../../../../card/card-menu";
 import { languageName } from "../../../../data/languages";
@@ -115,7 +116,7 @@ export default function CardPage() {
   }, [playError]);
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
-  const reading = useMemo(() => !!card && drawsTermReading(card), [card]);
+  const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -203,12 +204,7 @@ export default function CardPage() {
     card.pronunciation && (
       <Field
         key="pronunciation"
-        // Japanese and Chinese call a term's pronunciation its reading.
-        label={
-          writtenWithReading(card.language)
-            ? t({ message: "Reading", context: "how a term is read" })
-            : t`Pronunciation`
-        }
+        label={i18n._(fieldLabel("pronunciation", card.language))}
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
@@ -368,7 +364,7 @@ export default function CardPage() {
     <Screen
       title={card.term}
       titleLang={card.language}
-      // The page holds the term with its furigana, and the bar takes it plain once it scrolls under.
+      // The page holds the term with its furigana or stress, and the bar takes it plain once it scrolls under.
       header={
         reading ? (
           <TermText

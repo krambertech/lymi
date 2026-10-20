@@ -223,6 +223,42 @@ describe("pronunciation audio", () => {
     });
   });
 
+  it("says a Russian card's marked stress, so за́мок and замо́к are two clips", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const get = vi.fn(async (key: string) => objects.get(key) ?? null);
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
+    const russian = { term: "замок", normalizedTerm: "замок", language: "ru" };
+
+    const castle = await pronunciationAudio(
+      context(card({ ...russian, pronunciation: "за́мок" })),
+      "card-1",
+      deps,
+    );
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "за́мок",
+      language: "ru",
+      usage: expect.any(Function),
+    });
+    const lock = await pronunciationAudio(
+      context(card({ ...russian, pronunciation: "замо́к", audioKey: castle.key })),
+      "card-1",
+      deps,
+    );
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "замо́к",
+      language: "ru",
+      usage: expect.any(Function),
+    });
+    expect(lock.key).not.toBe(castle.key);
+  });
+
   it("keeps saying the term for a language without readings, whatever the pronunciation", async () => {
     const get = vi.fn(async () => null);
     const put = vi.fn(async () => undefined);

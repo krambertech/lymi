@@ -75,7 +75,8 @@ describe("languageGuide", () => {
     expect(languageGuide(null)).toBeUndefined();
   });
 
-  it.each(LANGUAGE_FORMATS)(
+  // Russian's general guide keeps its own line until its prompt module and recorded run replace it.
+  it.each(LANGUAGE_FORMATS.filter((format) => format.tag !== "ru"))(
     "takes $tag's pronunciation and example lines from its format",
     (format) => {
       const guide = languageGuide(format.tag) ?? "";
@@ -85,6 +86,12 @@ describe("languageGuide", () => {
       expect(guide.includes(format.example?.sample ?? "\0")).toBe(format.example !== null);
     },
   );
+
+  it("keeps Russian's accent line, so the model reads what the last recorded run read", () => {
+    expect(languageGuide("ru")).toContain(
+      "pronunciation: The term in Cyrillic with an accent mark on the stressed vowel (молоко́)",
+    );
+  });
 
   it("asks Korean for pronounced Hangul and Sino-Korean roots, never romanization", () => {
     const guide = languageGuide("ko-KR") ?? "";

@@ -1,12 +1,14 @@
 /**
  * Readings drawn over a term or an example: furigana over kanji, or pinyin over hanzi through
- * `./pinyin`. A term's reading is its pronunciation, aligned at display; an example carries its
- * readings inline, `食[た]べる`, where a bracketed kana reading belongs to the kanji just before
- * it, or `你好[nǐ hǎo]` in Chinese. docs/card-writing.md.
+ * `./pinyin`; `./stress` draws a term's marks in place instead. A term's reading is its
+ * pronunciation, aligned at display; an example carries its readings inline, `食[た]べる`, where a
+ * bracketed kana reading belongs to the kanji just before it, or `你好[nǐ hǎo]` in Chinese.
+ * docs/card-writing.md.
  */
 
-import { EXAMPLE_NOTATION, readingEngine } from "./languages";
+import { EXAMPLE_NOTATION, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
+import { markedForm, stressKey } from "./stress";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -60,9 +62,9 @@ export function kanaReading(card: {
 }
 
 /**
- * The reading the duplicate rule compares: a Japanese card's folded kana reading, or a Chinese
- * card's toned pinyin, when it fits the term, else null, so an IPA line or another word's reading
- * never splits one word into two cards.
+ * The reading the duplicate rule compares: a Japanese card's folded kana reading, a Chinese card's
+ * toned pinyin or a Russian card's marked stress, when it fits the term, else null, so an IPA line
+ * or another word's reading never splits one word into two cards.
  */
 export function readingKey(card: {
   term: string;
@@ -72,6 +74,8 @@ export function readingKey(card: {
   if (readingEngine(card.language) === "pinyin") {
     return card.pronunciation ? pinyinKey(card.term, card.pronunciation) : null;
   }
+  const rules = stressRules(card.language);
+  if (rules) return card.pronunciation ? stressKey(card.term, card.pronunciation, rules) : null;
   const reading = kanaReading(card);
   if (!reading) return null;
   const folded = foldReading(reading);
@@ -203,6 +207,36 @@ export function termReading(card: {
     ]);
   } else segments = alignReading(card.term, clean);
   return segments.some((segment) => segment.reading !== undefined) ? segments : null;
+}
+
+/**
+ * The term with its stress marked in place, за́мок, or null when the card's language draws no marks
+ * in place or its pronunciation is not the term with a mark added. A screen that draws a term's
+ * first form alone (идти of идти · шёл) takes the first form of the pronunciation.
+ */
+export function markedTerm(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string | null {
+  const rules = stressRules(card.language);
+  if (!rules || !card.pronunciation) return null;
+  const at = card.pronunciation.indexOf(" · ");
+  return (
+    markedForm(card.term, card.pronunciation, rules) ??
+    (at > 0 && !card.term.includes(" · ")
+      ? markedForm(card.term, card.pronunciation.slice(0, at), rules)
+      : null)
+  );
+}
+
+/** Whether the term as drawn shows the card's pronunciation, over it or in place, so no screen repeats it as a line. */
+export function termShowsPronunciation(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): boolean {
+  return termReading(card) !== null || markedTerm(card) !== null;
 }
 
 /** Whether a drawn reading is written in letters, as pinyin is, so it needs room from the reading beside it. */

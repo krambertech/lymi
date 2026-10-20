@@ -8,7 +8,8 @@
     ".": "./src/index.ts",
     "./tokens.css": "./tokens.css",
     "./uniwind.css": "./uniwind.gen.css",
-    "./tray.css": "./tray.css"
+    "./tray.css": "./tray.css",
+    "./fonts/*": "./fonts/*"
   },
   "scripts": {
     "generate": "node scripts/generate.mjs",

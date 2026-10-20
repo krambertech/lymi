@@ -23,4 +23,6 @@ export const EXAMPLE_NOTATION = {
     pattern: PINYIN_BRACKET,
     sample: "我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。",
   },
+  // Stress marks stay in the sentence as written, with nothing in brackets.
+  stress: null,
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

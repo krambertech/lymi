@@ -36,6 +36,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Smart add | [smart-add.md](features/smart-add.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
 | Chinese: pinyin over each hanzi in review, simplified and traditional | [chinese.md](features/chinese.md) |
+| Russian: stress in place on the cue and the field named Stress | [russian.md](features/russian.md) |
 
 ## Launch
 

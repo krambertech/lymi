@@ -2,23 +2,27 @@
  * Each supported language's AI text, one module per language, so generic prompts never name one.
  * docs/proposals/supported-languages.md.
  */
-import { languageSupport, type RecordTag } from "@lymi/core";
+import { languageSupport, type SupportedTag } from "@lymi/core";
 import { chinese } from "./chinese";
 import { japanese } from "./japanese";
 import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Keyed by every record, so a language's prompts are evaluated before it joins SupportedTag. */
+/** Every supported language, and Chinese, whose module is evaluated before zh joins SupportedTag. */
+type PromptTag = SupportedTag | "zh";
+
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
   zh: chinese,
-} as const satisfies Record<RecordTag, LanguagePrompts>;
+} as const satisfies Record<PromptTag, LanguagePrompts>;
 
-/** The AI text for a language with a record, or null for any other. */
+/** The AI text for a language with a prompt module, or null for any other. */
 export function languagePrompts(tag: string | null | undefined): LanguagePrompts | null {
-  const support = languageSupport(tag);
-  return support ? LANGUAGE_PROMPTS[support.tag] : null;
+  const record = languageSupport(tag)?.tag;
+  return record && Object.hasOwn(LANGUAGE_PROMPTS, record)
+    ? LANGUAGE_PROMPTS[record as PromptTag]
+    : null;
 }
 
 /** What a reading printed in a lesson looks like in this language, or undefined when no rule says. */

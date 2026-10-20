@@ -190,6 +190,33 @@ test("a traditional Chinese card draws pinyin over its characters", async () => 
   expect(pinyinShown()).toEqual(["xué", "xí"]);
 });
 
+// A stress mark is drawn in place, so the marked and plain terms are each whole text.
+const drawn = (text: string) => shown(text).filter((el) => !el.classList.contains("sr-only"));
+const spoken = (text: string) =>
+  [...document.querySelectorAll(".sr-only")].filter((el) => el.textContent === text);
+
+test("a New or Learning Russian card draws its stress in place on the cue", async () => {
+  const { reveal } = await reviewCue({ term: "замок", language: "ru", pronunciation: "замо́к" }, 1);
+  expect(drawn("замо́к")).toHaveLength(1);
+  expect(drawn("замок")).toHaveLength(0);
+  expect(spoken("замо́к")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
+  // The cue already shows the stress, so no line under the answer repeats it.
+  expect(drawn("замо́к")).toHaveLength(1);
+  // The marks are the term's own text, so a screen reader hears them once too.
+  expect(spoken("замо́к")).toHaveLength(0);
+});
+
+test("a Known Russian card's cue is the plain term until the reveal", async () => {
+  const { reveal } = await reviewCue({ term: "замок", language: "ru", pronunciation: "за́мок" }, 2);
+  expect(drawn("замок")).toHaveLength(1);
+  expect(drawn("за́мок")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => drawn("за́мок")).toHaveLength(1);
+  expect(drawn("замок")).toHaveLength(0);
+});
+
 test("another language's reading waits for the reveal, even on a New card", async () => {
   const { reveal } = await reviewCue({ term: "학교", language: "ko", pronunciation: "학꾜" }, 0);
   expect(shown("학꾜")).toHaveLength(0);

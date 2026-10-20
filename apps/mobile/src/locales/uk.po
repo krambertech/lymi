@@ -1102,6 +1102,10 @@ msgstr "Заархівовано розділ «{name}» у колоді «{deck
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Архівує кожну картку, яку додав цей імпорт, і кожну створену ним колоду, у якій немає інших карток. Нічого не видаляється, і все можна відновити."
 
+msgctxt "language"
+msgid "Armenian"
+msgstr "Вірменська"
+
 msgid "Arts"
 msgstr "Мистецтво"
 
@@ -2128,6 +2132,10 @@ msgstr "Поля типу «{name}»"
 
 msgid "Files"
 msgstr "Файли"
+
+msgctxt "language"
+msgid "Filipino"
+msgstr "Філіппінська"
 
 msgid "Fill in the rest with AI"
 msgstr "Доповнити решту з AI"
@@ -3891,6 +3899,10 @@ msgstr "Скасувати останню оцінку"
 
 msgid "Take photo"
 msgstr "Сфотографувати"
+
+msgctxt "language"
+msgid "Tamil"
+msgstr "Тамільська"
 
 msgid "Technology"
 msgstr "Технології"

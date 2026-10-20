@@ -10,6 +10,6 @@
   },
   "homepage": "https://lymi.app/docs/mcp",
   "repository": "https://github.com/krambertech/lymi",
-  "license": "AGPL-3.0-only",
+  "license": "FSL-1.1-MIT",
   "keywords": ["vocabulary", "language learning", "spaced repetition", "flashcards"]
 }

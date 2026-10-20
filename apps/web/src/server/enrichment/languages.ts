@@ -6,6 +6,13 @@ const FILIPINO: FieldGuide = {
     "Verb: the root and the focus its affix marks, actor (*-um-*, *mag-*), object (*-in*, *i-*) or place (*-an*), then the completed · ongoing · future forms (*kumain · kumakain · kakain*, root *kain*, actor focus).",
 };
 
+const NORWEGIAN: FieldGuide = {
+  notes:
+    "Noun: the gender, then the definite singular and the plural, in Bokmål, the standard a plain no tag means (*en bil, bilen, biler*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*kjøre · kjører · kjørte · har kjørt*). A word told apart from another only by its pitch accent: say which tone it has and what the other means (*hender*, tone 2: happens; tone 1: hands).",
+  pronunciation:
+    "Leave pronunciation null, unless the word isn't said as Norwegian spelling suggests.",
+};
+
 /**
  * How to write cards in one language, field by field, keyed by primary language subtag. The
  * deck's samples and instructions override it. Keep each rule short and plain. A supported
@@ -14,12 +21,12 @@ const FILIPINO: FieldGuide = {
 const GUIDES: Record<string, FieldGuide> = {
   et: {
     notes:
-      "Give the three forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*maja · maja · maja*). Verb: ma-infinitive · da-infinitive · present tense, first person (*tulema · tulla · tulen*). Add one short line only if needed: the case a verb takes (*aitama* + partitive), or a similar word to tell apart (*pikk* for people, *kõrge* for buildings). For a sentence: list its main words with their forms, and say which case or form matters and why, like the partitive object after *ei*.",
+      "Give the three forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*maja · maja · maja*). Verb: ma-infinitive · da-infinitive · present tense, first person (*tulema · tulla · tulen*). Add one short line only if needed: the case a verb takes (*aitama* + partitive), a short illative that is hard to guess (*maja → majja*), or a similar word to tell apart (*pikk* for people, *kõrge* for buildings). For a sentence: list its main words with their forms, and say which case or form matters and why, like the partitive object after *ei*.",
     pronunciation: "Estonian is read as it is written. Leave pronunciation null.",
   },
   fi: {
     notes:
-      "Give the main forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*talo · talon · taloa*). Verb: first infinitive · present tense, first person (*tulla · tulen*). Add one short line only for the case a verb takes (*pitää* + elative: *pitää jostakin*). For a sentence: say which case matters and why.",
+      "Give the main forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular · partitive plural, so consonant gradation shows (*katu · kadun · katua · katuja*). Verb: first infinitive · present tense, first person · past tense, first person (*tulla · tulen · tulin*). Add one short line only for the case a verb takes (*pitää* + elative: *pitää jostakin*). For a sentence: say which case matters and why.",
     pronunciation: "Finnish is read as it is written. Leave pronunciation null.",
   },
   de: {
@@ -31,12 +38,12 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   nl: {
     notes:
-      "Noun: the article and plural (*de hond, honden*; *het huis, huizen*). Strong or irregular verb: infinitive · past singular · past participle (*lopen · liep · gelopen*).",
+      "Noun: the article and plural (*de hond, honden*; *het huis, huizen*). Strong or irregular verb: infinitive · past singular · past participle, with *is* when the perfect takes *zijn* (*komen · kwam · is gekomen*). Separable verb: mark the prefix (*op|bellen*).",
     pronunciation: "Leave pronunciation null, unless the word doesn't follow Dutch spelling rules.",
   },
   sv: {
     notes:
-      "Noun: en or ett, and the plural (*en bil, bilar*). Verb: infinitive · present · past · supine (*skriva · skriver · skrev · skrivit*).",
+      "Noun: en or ett, the definite singular and the plural (*en bil, bilen, bilar*). Verb: infinitive · present · past · supine (*skriva · skriver · skrev · skrivit*). A word told apart from another only by its pitch accent: say which accent it has and what the other means (*anden*, accent 2: the spirit; accent 1: the duck).",
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
@@ -54,7 +61,7 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   pl: {
     notes:
-      "Verb: the aspect pair, imperfective / perfective (*robić / zrobić*), and the case it takes if it isn't the accusative (*bać się* + genitive). Noun: an irregular plural or genitive.",
+      "Verb: the aspect pair, imperfective / perfective (*robić / zrobić*), and the case it takes if it isn't the accusative (*bać się* + genitive). Noun: the gender if the ending doesn't show it, and the genitive singular and nominative plural where they are irregular, including a masculine-personal plural (*student, studenta, studenci*). A word that looks like a Ukrainian or Russian word but means something else: say so (*dywan* is a carpet, not a sofa).",
     pronunciation:
       "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule.",
   },
@@ -91,6 +98,34 @@ const GUIDES: Record<string, FieldGuide> = {
   ko: {
     notes:
       "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",
+  },
+  lv: {
+    notes:
+      "Noun: the genitive singular, and the gender if the ending doesn't show it (*suns, suņa*; *sirds*, feminine). Verb: infinitive · present · past, first person singular (*iet · eju · gāju*).",
+    pronunciation:
+      "Latvian is read as it is written, stressed on the first syllable. Leave pronunciation null.",
+  },
+  lt: {
+    notes:
+      "Noun: nominative · genitive singular (*namas · namo*), and the gender if the ending doesn't show it. Verb: infinitive · present · past, third person (*eiti · eina · ėjo*).",
+  },
+  nb: NORWEGIAN,
+  no: NORWEGIAN,
+  nn: {
+    notes:
+      "Noun: the gender, then the definite singular and the plural, in Nynorsk (*ein bil, bilen, bilar*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*køyre · køyrer · køyrde · har køyrt*).",
+    pronunciation:
+      "Leave pronunciation null, unless the word isn't said as Norwegian spelling suggests.",
+  },
+  da: {
+    notes:
+      "Noun: en or et, the definite singular and the plural (*en bil, bilen, biler*; *et hus, huset, huse*). Verb: infinitive · present · past · perfect (*køre · kører · kørte · har kørt*).",
+  },
+  is: {
+    notes:
+      "Noun: the gender, then nominative · genitive singular · nominative plural (*hestur, hests, hestar*, masculine). Strong verb: infinitive · past singular · past participle (*fara · fór · farið*). Keep þ, ð, æ and ö as written.",
+    pronunciation:
+      "Leave pronunciation null, unless the word isn't said as Icelandic spelling suggests.",
   },
   fil: FILIPINO,
   tl: FILIPINO,

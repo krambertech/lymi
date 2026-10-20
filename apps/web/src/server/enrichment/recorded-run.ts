@@ -170,8 +170,8 @@ export function passRates(scored: readonly ScoredCase[]) {
   return tally(scored.flatMap((one) => one.results));
 }
 
-/** One case either way is the model's own noise between runs. */
-const SLACK = 1;
+/** One call's worth of cases either way is the model's own noise between runs, which arrives a whole call at a time. */
+const SLACK = CARDS_PER_CALL;
 
 /** Rules that pass on fewer cases than the previous run, scaled to this run's count, beyond the noise. */
 export function regressions(

@@ -1,5 +1,6 @@
 import { CONFIGURED_LANGUAGES } from "@lymi/core";
 import { describe, expect, it } from "vitest";
+import { CARDS_PER_CALL } from "./prompt";
 import {
   enrichesByDefault,
   enrichmentPromptHash,
@@ -85,19 +86,20 @@ describe("regressions", () => {
   const rates = (entries: [string, number, number][]) =>
     new Map(entries.map(([rule, pass, total]) => [rule, { pass, total }]));
 
-  it("allows one case of noise, scaled to the run's size, and ignores a new rule", () => {
+  it("allows one call's worth of noise, scaled to the run's size, and ignores a new rule", () => {
+    const noise = CARDS_PER_CALL;
     expect(
       regressions(
         rates([
-          ["meaning: short gloss", 10, 10],
-          ["example: readings over kanji", 4, 4],
+          ["language: only mayFill", 300, 300],
+          ["example: readings over kanji", 40, 40],
         ]),
         rates([
-          ["meaning: short gloss", 9, 10],
-          ["example: readings over kanji", 2, 4],
+          ["language: only mayFill", 300 - noise, 300],
+          ["example: readings over kanji", 40 - noise - 1, 40],
           ["notes: no table", 0, 3],
         ]),
       ),
-    ).toEqual(["example: readings over kanji: 2/4, was 4/4"]);
+    ).toEqual([`example: readings over kanji: ${39 - noise}/40, was 40/40`]);
   });
 });

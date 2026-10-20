@@ -15,7 +15,7 @@ const ERROR_TYPES = new Set([
   "WorkflowError",
 ]);
 
-// Runtime-written messages that name a network or chunk failure, kept without the address they name.
+// Runtime-written messages that name a network, chunk or invocation-limit failure, kept without the address they name.
 const KNOWN_MESSAGES: [RegExp, string][] = [
   [/^Load failed$/, "Load failed"],
   [/^Failed to fetch(?: \([^)]*\))?$/, "Failed to fetch"],
@@ -28,11 +28,39 @@ const KNOWN_MESSAGES: [RegExp, string][] = [
   [/^Failed to fetch dynamically imported module: /, "Failed to fetch dynamically imported module"],
   [/^error loading dynamically imported module: /, "error loading dynamically imported module"],
   [/^Unable to preload CSS for /, "Unable to preload CSS"],
+  [
+    /^Too many API requests by single worker invocation/i,
+    "Too many API requests by single worker invocation",
+  ],
+  [
+    /^Too many subrequests by single worker invocation/i,
+    "Too many subrequests by single worker invocation",
+  ],
 ];
+
+// D1's fixed failure messages from developers.cloudflare.com/d1/observability/debug-d1/, kept without any SQL that follows.
+const D1_MESSAGES = [
+  "Network connection lost",
+  "Replica disconnected from primary",
+  "Internal error in D1 DB storage caused object to be reset",
+  "Internal error while starting up D1 DB storage caused object to be reset",
+  "Cannot resolve D1 DB due to transient issue on remote node",
+  "Can't read from request stream because client disconnected",
+  "D1 DB storage operation exceeded timeout which caused object to be reset",
+  "D1 DB reset because its code was updated",
+  "D1 DB is overloaded. Requests queued for too long",
+  "D1 DB is overloaded. Too many requests queued",
+  "D1 DB's isolate exceeded its memory limit and was reset",
+  "D1 DB exceeded its CPU time limit and was reset",
+].map((message) => `D1_ERROR: ${message}`);
 
 function knownMessage(value: unknown): string {
   if (typeof value !== "string") return "Unexpected error";
-  return KNOWN_MESSAGES.find(([pattern]) => pattern.test(value))?.[1] ?? "Unexpected error";
+  return (
+    D1_MESSAGES.find((message) => value.startsWith(message)) ??
+    KNOWN_MESSAGES.find(([pattern]) => pattern.test(value))?.[1] ??
+    "Unexpected error"
+  );
 }
 
 const CHUNK_ID = /^[A-Za-z0-9-]{1,64}$/;

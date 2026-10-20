@@ -8,6 +8,7 @@ import {
   deckQuestions,
   LISTED_SECTIONS,
   listedSections,
+  questionOnly,
   unlistedSections,
   WORDS_PER_SECTION,
 } from "./deck-content";
@@ -65,6 +66,17 @@ describe("listedSections", () => {
     const many = Array.from({ length: 20 }, (_, at) => ({ name: `S${at}`, cards: cards(9, "x") }));
     expect(unlistedSections(deck({ sections: many }))).toBe(20 - LISTED_SECTIONS);
     expect(unlistedSections(deck())).toBe(0);
+  });
+});
+
+describe("questionOnly", () => {
+  it("keeps a question card's question and drops the options after the blank line", () => {
+    const term = "Welches Wappen gehört zum Bundesland Berlin?\n\n• Altona\n• Pankow";
+    expect(questionOnly(term)).toBe("Welches Wappen gehört zum Bundesland Berlin?");
+  });
+
+  it("leaves a term without a blank line whole, line breaks included", () => {
+    expect(questionOnly("Which flag is this?\nPick one")).toBe("Which flag is this?\nPick one");
   });
 });
 

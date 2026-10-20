@@ -71,6 +71,11 @@ export function deckIntro(i18n: I18n, deck: PublicDeckOut): string[] {
 }
 
 /** How many sections with cards the word list leaves out, past the first LISTED_SECTIONS. */
+/** The text before a term's first blank line: a question card's question without its options. */
+export function questionOnly(term: string): string {
+  return (term.split(/\n[ \t]*\n/, 1)[0] ?? term).trim();
+}
+
 export function unlistedSections(deck: PublicDeckOut): number {
   const filled = deck.sections.filter((section) => section.cards.length > 0).length;
   return Math.max(0, filled - LISTED_SECTIONS);

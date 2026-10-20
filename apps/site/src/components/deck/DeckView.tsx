@@ -25,7 +25,13 @@ import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
 import { Questions } from "../landing/Questions";
 import { SiteFooter } from "../landing/SiteFooter";
-import { deckIntro, deckQuestions, listedSections, unlistedSections } from "./deck-content";
+import {
+  deckIntro,
+  deckQuestions,
+  listedSections,
+  questionOnly,
+  unlistedSections,
+} from "./deck-content";
 import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
@@ -218,8 +224,10 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
   if (sections.length === 0) return null;
   const intro = deckIntro(i18n, deck);
   const unlisted = unlistedSections(deck);
-  // A subject deck's term is a whole question, often with its options, so it is cut short here.
-  const termClamp = taughtLanguage(deck) ? "" : "line-clamp-3";
+  // A subject deck's term is a whole question, often followed by a blank line and its options,
+  // so only the question is shown, clamped in case it runs long.
+  const subject = !taughtLanguage(deck);
+  const termClamp = subject ? "line-clamp-3" : "";
   return (
     <section
       id="words"
@@ -261,7 +269,7 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
                         termClamp,
                       )}
                     >
-                      {card.term}
+                      {subject ? questionOnly(card.term) : card.term}
                     </span>
                     {card.meaning && (
                       <span

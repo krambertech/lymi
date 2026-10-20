@@ -148,7 +148,8 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       sample: { term: "namas", pronunciation: "nãmas" },
       duplicates: "term",
     },
-    starts: ["notes", "pronunciation"],
+    // Its accents miss often enough live that pronunciation waits for the owner to turn it on.
+    starts: ["notes"],
     enrichByDefault: true,
   },
   nb: {

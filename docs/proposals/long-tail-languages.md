@@ -35,7 +35,7 @@ Each language's notes are in [Writing cards](../card-writing.md).
 | Georgian | `ka` | national romanization with ejectives marked: ჭიქა ch'ika | configured |
 | Armenian | `hy` | Eastern Armenian romanized as said: քույր k'uyr | configured |
 | Tamil | `ta` | the written word read aloud, romanized: தம்பி tambi | configured, until the word-by-word engine of [Tamil](tamil.md), whose letters it already uses |
-| Lithuanian | `lt` | the term with its accent mark: nãmas, výras, kalbà | configured |
+| Lithuanian | `lt` | the term with its accent mark: nãmas, výras, kalbà; starts off, since live runs wrote vỹras for výras | configured |
 | Danish | `da` | IPA as Den Danske Ordbog writes it, with stød: hus ˈhuˀs | configured |
 | Estonian, Finnish, Latvian, Icelandic | `et`, `fi`, `lv`, `is` | empty: read as written | configured, no format |
 | Swedish, Norwegian, Dutch | `sv`, `nb` (`no` means Bokmål), `nn`, `nl` | empty | configured, no format |

@@ -19,9 +19,9 @@ describe("a language below the evaluation's bar", () => {
     expect(newDeckEnrichFields("vi")).toBeNull();
   });
 
-  it("leaves a deck whose owner never chose on its language's defaults", () => {
-    expect(defaultEnrichFields("xa")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(deckEnrichFields(null, "xa")).toEqual(["meaning", "example", "pronunciation"]);
+  it("leaves a deck whose owner never chose on meaning and example, without the row's starting fields", () => {
+    expect(defaultEnrichFields("xa")).toEqual(["meaning", "example"]);
+    expect(deckEnrichFields(null, "xa")).toEqual(["meaning", "example"]);
     expect(deckEnrichFields([], "xa")).toEqual([]);
   });
 });

@@ -59,16 +59,15 @@ export default async function drive({ page, base, step, api, expect }) {
 
   await step("Lithuanian keeps its accent mark; Norwegian decks start with notes", async () => {
     const lithuanian = await post("/api/decks", { name: "Lietuvių", defaultLanguage: "lt" });
+    expect(lithuanian.enrichFields).toEqual(["meaning", "example", "notes"]);
     const norwegian = await post("/api/decks", { name: "Norsk", defaultLanguage: "no" });
-    expect(lithuanian.enrichFields).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(norwegian.enrichFields).toEqual(["meaning", "example", "notes"]);
+    // The learner's own accent mark goes in and must come back unchanged.
     await post("/api/cards/batch", {
-      cards: [{ deckId: lithuanian.id, term: "vyras", enrich: true }],
+      cards: [{ deckId: lithuanian.id, term: "vyras", meaning: "man", pronunciation: "výras" }],
     });
-    await expect.poll(settled(["vyras"]), { timeout: 120_000 }).toEqual([null]);
     const man = await find("vyras");
-    expect(man.pronunciationSource).toBe("ai");
-    expect(man.pronunciation.normalize("NFD")).toMatch(/^vy\p{M}+ras$/u);
+    expect(man.pronunciation).toBe("výras");
     await page.goto(`/review?deck=${lithuanian.id}`);
     await page
       .getByRole("button", { name: "Reveal the card" })

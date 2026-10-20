@@ -8,14 +8,14 @@ No persona has cards in these languages, so the recipe makes decks as `fresh` th
 
 ## Drive
 
-[`configured-languages.mjs`](configured-languages.mjs): read `/api/languages`; make a Tagalog deck and a Georgian deck; add bahay and წყალი with `enrich: true` and wait; make a Lithuanian and a Norwegian deck, add vyras with `enrich: true`, review it and reveal it; review წყალი's deck and press **Reveal the card**.
+[`configured-languages.mjs`](configured-languages.mjs): read `/api/languages`; make a Tagalog deck and a Georgian deck; add bahay and წყალი with `enrich: true` and wait; make a Lithuanian deck, which starts without pronunciation, and a Norwegian deck; add vyras with the learner's own výras, review it and reveal it; review წყალი's deck and press **Reveal the card**.
 
 ## End state
 
-`/api/languages` lists `fil` once, with no `tl` entry, and `vi`, `ka`, `hy`, `ta` and `lt`, but not `et` or `nb`, which have no format of their own. The Tagalog deck's `enrichFields` are all four fields and the Georgian deck's are meaning, example and pronunciation. bahay has a meaning and a pronunciation with a stress mark, both `ai`. წყალი has `pronunciation` ts'q'ali from `ai`. vyras has a `pronunciation` from `ai` with an accent mark on its y, such as výras, and its reveal shows that exact text; the Norwegian deck starts with meaning, example and notes. After the reveal of წყალი the line ts'q'ali shows, and the term's font family names `Helvetica Neue` from `--face-geor`.
+`/api/languages` lists `fil` once, with no `tl` entry, and `vi`, `ka`, `hy`, `ta` and `lt`, but not `et` or `nb`, which have no format of their own. The Tagalog deck's `enrichFields` are all four fields and the Georgian deck's are meaning, example and pronunciation. bahay has a meaning and a pronunciation with a stress mark, both `ai`. წყალი has `pronunciation` ts'q'ali from `ai`. vyras keeps its pronunciation výras exactly, and its reveal shows it; the Norwegian deck starts with meaning, example and notes. After the reveal of წყალი the line ts'q'ali shows, and the term's font family names `Helvetica Neue` from `--face-geor`.
 
 ## Gotchas
 
 - Enrichment calls the real model: `apps/web/.dev.vars` needs `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`, and a run without them leaves the cards `failed`.
-- Which vowel the model marks in bahay, and which accent it puts on vyras, varies; check that a mark is there and survives, not which one.
+- Which vowel the model marks in bahay varies; check that a mark is there, not which one. Lithuanian's accent comes from the learner, because the AI's accents are what its gate measures.
 - The hidden copy that sizes the card holds the answer before the reveal, so check visible text.

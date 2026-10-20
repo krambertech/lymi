@@ -113,7 +113,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["pronunciation"],
-    enrichByDefault: false,
+    enrichByDefault: true,
   },
   et: {
     pronunciation: "pronunciation",

@@ -315,6 +315,10 @@
     "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", Meiryo;
   --face-hans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC";
   --face-hant: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC";
+  /* Apple's own Georgian and Armenian faces are hidden from the web; these are their nearest named ones. */
+  --face-geor: "Helvetica Neue", "Segoe UI", "Noto Sans Georgian", Sylfaen;
+  --face-armn: "Noto Sans Armenian", Mshtakan, "Segoe UI", Sylfaen;
+  --face-taml: "Tamil Sangam MN", "Nirmala UI", "Noto Sans Tamil", Latha;
 }
 
 @layer base {
@@ -327,5 +331,14 @@
   /* After zh, so a traditional tag wins; zh-Hans-TW still matches neither. */
   :is(:lang(zh-Hant), :lang(zh-TW), :lang(zh-HK), :lang(zh-MO)):not(:lang(zh-yue)) {
     font-family: "Onest", "Onest Fallback", var(--face-hant), ui-sans-serif, system-ui, sans-serif;
+  }
+  :lang(ka) {
+    font-family: "Onest", "Onest Fallback", var(--face-geor), ui-sans-serif, system-ui, sans-serif;
+  }
+  :lang(hy) {
+    font-family: "Onest", "Onest Fallback", var(--face-armn), ui-sans-serif, system-ui, sans-serif;
+  }
+  :lang(ta) {
+    font-family: "Onest", "Onest Fallback", var(--face-taml), ui-sans-serif, system-ui, sans-serif;
   }
 }

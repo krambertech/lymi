@@ -1,3 +1,5 @@
+import { configuredLanguage } from "./languages";
+
 /** The fields enrichment may fill. Text already on a card is never overwritten, whatever wrote it. */
 export const ENRICHED_FIELDS = [
   "meaning",
@@ -31,11 +33,11 @@ export function enrichmentStalled(
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
-/** Languages whose cards list a word's forms or roots, so notes start on. */
-const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv", "ko"]);
+/** Languages without a configured row whose cards list a word's forms, so notes start on. */
+const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv"]);
 
-/** Languages whose spelling does not show how a word is said or stressed, so pronunciation starts on. */
-const READING_LANGUAGES = new Set(["zh", "ja", "ko", "ru", "uk"]);
+/** Languages without a configured row whose spelling does not show how a word is said or stressed. */
+const READING_LANGUAGES = new Set(["zh", "ja", "ru", "uk"]);
 
 /** What a deck is for: a language, a subject or exam, or something else. */
 export const DECK_PURPOSES = ["language", "subject", "other"] as const;
@@ -56,12 +58,31 @@ export function defaultEnrichFields(
 ): DeckEnrichField[] {
   const primary = language?.split("-")[0]?.toLowerCase();
   if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
+  // Below the evaluation's bar a deck that never chose stays where it was before the row existed.
+  const configured = configuredLanguage(language);
+  if (configured && !configured.enrichByDefault) return ["meaning", "example"];
+  const starts = (field: "notes" | "pronunciation", fallback: ReadonlySet<string>) =>
+    configured ? configured.starts.includes(field) : fallback.has(primary);
   return [
     "meaning",
     "example",
-    ...(FORM_LANGUAGES.has(primary) ? (["notes"] as const) : []),
-    ...(READING_LANGUAGES.has(primary) ? (["pronunciation"] as const) : []),
+    ...(starts("notes", FORM_LANGUAGES) ? (["notes"] as const) : []),
+    ...(starts("pronunciation", READING_LANGUAGES) ? (["pronunciation"] as const) : []),
   ];
+}
+
+/**
+ * What a new deck stores when its owner chose no AI fields: none in a language below the
+ * evaluation's bar, so the AI waits to be asked; otherwise nothing, and the deck follows its
+ * language's defaults. Stored, so a later move of the bar never changes an existing deck.
+ * docs/proposals/long-tail-languages.md.
+ */
+export function newDeckEnrichFields(
+  language: string | null | undefined,
+  purpose?: DeckPurpose | null,
+): DeckEnrichField[] | null {
+  if (deckPurpose(purpose, language) !== "language") return null;
+  return configuredLanguage(language)?.enrichByDefault === false ? [] : null;
 }
 
 /** How long a deck's learned style may be, so it stays a list and not an essay. ADR 0037. */

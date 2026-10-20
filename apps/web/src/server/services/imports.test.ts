@@ -427,16 +427,13 @@ describe("importing an HSK-shaped Anki deck", () => {
       ...(await fresh()),
       analytics: { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} },
     };
-    const { id } = await upload(ctx, "hsk.apkg", fixture("hsk.apkg"));
-    await inspectImport(ctx, id, env.IMPORTS);
-    const deck = (await getImport(ctx, id)).summary?.decks[0]?.key as string;
-    const { preview, result } = await runImport(ctx, "hsk.apkg", {
-      languages: { [deck]: "zh" },
-      roles: {},
-    });
-    expect(preview).toMatchObject({ added: 5, recordings: 5, soundsLeftOut: 2 });
-    expect(result.counts).toMatchObject({ added: 5, recordings: 5, readingsConverted: 1 });
+    // The file's pinyin fields say which decks are Chinese, so no language is chosen.
+    const { preview, result } = await runImport(ctx, "hsk.apkg");
+    expect(preview).toMatchObject({ added: 9, recordings: 6, soundsLeftOut: 2 });
+    expect(result.counts).toMatchObject({ added: 9, recordings: 6, readingsConverted: 1 });
     expect(await card(ctx, "东西")).toMatchObject({ language: "zh", pronunciation: "dōng xi" });
+    expect(await card(ctx, "學習")).toMatchObject({ language: "zh-Hant", notes: "我学习中文。" });
+    expect((await card(ctx, "il cane")).language).not.toMatch(/^zh/);
     // The sentence's pinyin is inline or a notes line, as examplesCarryReadings decides.
     const bank = await card(ctx, "银行");
     expect(bank.pronunciation).toBe("yínháng");

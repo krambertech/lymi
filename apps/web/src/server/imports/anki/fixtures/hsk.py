@@ -1,8 +1,9 @@
 """Builds a small Anki package shaped like the HSK decks Chinese learners bring, with invented content.
 
-Three note types: one with both scripts, marked pinyin in Chinese Support Redux's tone-colour spans
-beside a numbered pinyin field and a sentence; one with tone numbers and a sentence; and Chinese
-Support Redux's own basic type with its coloured hanzi.
+In the HSK deck: a type with both scripts, marked pinyin in Chinese Support Redux's tone-colour
+spans beside a numbered pinyin field and a sentence; one with tone numbers and a sentence; and
+Chinese Support Redux's own type with its coloured hanzi and ruby. A TOCFL deck learns traditional
+characters, and an Italian deck's "Trad." is a translation, not a script.
 
 Run from this directory: uv run --python 3.12 --with anki==26.9 python hsk.py (needs ffmpeg)
 """
@@ -41,7 +42,9 @@ TYPES = {
         "AudioHanzi",
         "AudioSentence",
     ],
-    "Chinese (Basic)": ["Hanzi", "English", "Pinyin", "Color", "Sound"],
+    "Chinese (Advanced)": ["Hanzi", "English", "Pinyin", "Color", "Ruby", "Sound"],
+    "TOCFL": ["Traditional", "Pinyin", "Meaning", "SentenceTraditional", "SentenceSimplified"],
+    "Lessico": ["Parola", "Trad."],
 }
 
 
@@ -68,7 +71,7 @@ def main():
         media = col.media.dir()
         for i, name in enumerate(
             ["hsk_yinhang.mp3", "hsk_yinhang_s.mp3", "hsk_yidianr.mp3", "hsk_xuexi.mp3",
-             "hsk_dongxi.mp3", "hsk_dongxi_s.mp3", "hsk_nihao.mp3"]
+             "hsk_dongxi.mp3", "hsk_dongxi_s.mp3", "hsk_nihao.mp3", "hsk_hen.mp3"]
         ):
             clip(media, name, 300 + 60 * i)
 
@@ -78,12 +81,12 @@ def main():
                 col.models.add_field(model, col.models.new_field(field))
             template = col.models.new_template("Recognition")
             template["qfmt"] = "{{" + fields[0] + "}}"
-            template["afmt"] = "{{FrontSide}}<hr id=answer>{{Pinyin}}"
+            template["afmt"] = "{{FrontSide}}<hr id=answer>{{" + fields[1] + "}}"
             col.models.add_template(model, template)
             col.models.add(model)
-        deck = col.decks.id("HSK::HSK 1")
+        hsk = col.decks.id("HSK::HSK 1")
 
-        def add(type_name, fields):
+        def add(type_name, fields, deck=hsk):
             note = col.new_note(col.models.by_name(type_name))
             for key, value in fields.items():
                 note[key] = value
@@ -138,6 +141,33 @@ def main():
             },
         )
         add(
+            "HSK Vocabulary",
+            {
+                # Written alike in both scripts, so neither traditional field adds a line.
+                "Simplified": "很",
+                "Traditional": "很",
+                "Pinyin": toned(("hěn", 3)),
+                "Pinyin.1": "hen3",
+                "Meaning": "very",
+                "Audio": "[sound:hsk_hen.mp3]",
+                "SentenceSimplified": "我很好。",
+                "SentenceTraditional": "我很好。",
+                "SentencePinyin": "Wo3 hen3 hao3.",
+                "SentenceMeaning": "I am very well.",
+            },
+        )
+        add(
+            "HSK Vocabulary",
+            {
+                # Two readings, one a line: neither is a two-syllable word over one character.
+                "Simplified": "行",
+                "Traditional": "行",
+                "Pinyin": toned(("xíng", 2)) + "<br>" + toned(("háng", 2)),
+                "Pinyin.1": "xing2<br>hang2",
+                "Meaning": "to go; a row",
+            },
+        )
+        add(
             "HSK 3.0",
             {
                 "Hanzi": "东西",
@@ -151,15 +181,28 @@ def main():
             },
         )
         add(
-            "Chinese (Basic)",
+            "Chinese (Advanced)",
             {
                 "Hanzi": "你好",
                 "English": "hello",
                 "Pinyin": toned(("nǐ", 3), ("hǎo", 3), gap=" "),
                 "Color": toned(("你", 3), ("好", 3)),
+                "Ruby": "<ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>",
                 "Sound": "[sound:hsk_nihao.mp3]",
             },
         )
+        add(
+            "TOCFL",
+            {
+                "Traditional": "學習",
+                "Pinyin": "xuéxí",
+                "Meaning": "to study",
+                "SentenceTraditional": "我學習中文。",
+                "SentenceSimplified": "我学习中文。",
+            },
+            deck=col.decks.id("TOCFL"),
+        )
+        add("Lessico", {"Parola": "il cane", "Trad.": "the dog"}, deck=col.decks.id("Italiano"))
 
         col.export_anki_package(
             out_path=os.path.join(HERE, "hsk.apkg"),

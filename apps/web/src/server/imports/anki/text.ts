@@ -1,5 +1,5 @@
 /** Anki's own field syntax: cloze deletions, furigana, pinyin and the fields a template asks from. */
-import { htmlToText } from "@lymi/core";
+import { htmlToText, traditionalTerm } from "@lymi/core";
 import {
   alignPinyin,
   cleanPinyin,
@@ -150,9 +150,17 @@ export function isImageOcclusion(template: string): boolean {
   return /\{\{[^}]*image-occlusion:/i.test(template);
 }
 
-/** A pinyin field as one line; tone-colour spans are already gone with the rest of the HTML. */
-export function pinyinReading(text: string): string {
-  return text.replace(/\s+/gu, " ").trim();
+/**
+ * A pinyin field as one line. Lines that read the term together, as `yì` and `diǎnr` read 一点儿,
+ * join with a space; other lines are separate readings, as `xíng` and `háng` are for 行.
+ */
+export function pinyinReading(text: string, term: string): string {
+  const lines = text
+    .split("\n")
+    .map((line) => line.replace(/\s+/gu, " ").trim())
+    .filter(Boolean);
+  const joined = lines.join(" ");
+  return lines.length < 2 || alignPinyin(term, readingTokens(joined)) ? joined : lines.join(" / ");
 }
 
 const pinyinFold = (text: string) =>
@@ -166,13 +174,25 @@ export function samePinyin(a: string, b: string): boolean {
 }
 
 /**
- * Whether a field repeats the term with only markup or readings added, as Chinese Support Redux's
- * coloured `Color` and `<ruby>` fields do.
+ * Whether a field repeats a text with only markup or readings added, as Chinese Support Redux's
+ * coloured `Color` and `<ruby>` fields repeat the term.
  */
-export function repeatsTerm(html: string, term: string): boolean {
-  const bare = (text: string) => stripPinyin(furiganaBase(text)).replace(/\s+/gu, "");
-  const text = htmlToText(html.replace(/<rt\b[^>]*>[\s\S]*?<\/rt>/giu, ""));
-  return !!text && bare(text) === bare(term);
+export function repeatsText(html: string, text: string): boolean {
+  const bare = (value: string) => stripPinyin(furiganaBase(value)).replace(/\s+/gu, "");
+  const own = htmlToText(html.replace(/<(rt|rp)\b[^>]*>[\s\S]*?<\/\1>/giu, ""));
+  return !!own && bare(own) === bare(text);
+}
+
+/** A sentence's pinyin as a notes line, tone numbers written as marks like the Reading's. */
+export function pinyinLine(text: string): string {
+  return pinyinSyllables(text) ? cleanPinyin(text) : text;
+}
+
+/** The language a note type's fields say its deck is in: Mandarin from a pinyin or zhuyin field. */
+export function fieldLanguage(names: readonly string[]): string | null {
+  if (!names.some((name) => /pinyin|zhuyin|bopomofo|拼音|注音/iu.test(name))) return null;
+  if (names.some((name) => /jyutping|cantonese|粵|粤/iu.test(name))) return null;
+  return traditionalTerm(names) ? "zh-Hant" : "zh";
 }
 
 /** An example's inline pinyin with tone numbers written as marks: `你好[ni3 hao3]` → `你好[nǐ hǎo]`. */

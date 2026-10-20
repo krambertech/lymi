@@ -390,7 +390,8 @@ export function importFieldText(
   toText: (raw: string) => string = htmlToText,
 ): string {
   if (isPitchField(name)) return pitchNotation(raw);
-  const text = toText(raw);
+  // Ruby's annotations would run into the text they annotate: 你nǐ好hǎo.
+  const text = toText(raw.replace(/<(rt|rp)\b[^>]*>[\s\S]*?<\/\1>/giu, ""));
   return isTranslationField(name) ? text.replace(/\s*\n\s*/g, " ") : text;
 }
 
@@ -495,6 +496,10 @@ const SENTENCE_PINYIN_PATTERN = /\b(sentence|example|context)s?\b.*\b(pinyin|zhu
 const SCRIPT_WORDS =
   /\b(simplified|simp|traditional|trad|hanzi|characters?)\b|简体字?|簡體字?|繁体字?|繁體字?|汉字|漢字/giu;
 const TRADITIONAL = /\b(traditional|trad)\b|繁体|繁體/iu;
+const SIMPLIFIED = /\b(simplified|simp)\b|简体|簡體/iu;
+/** A field only a Chinese note type names; "Trad" alone is as often a French or Italian translation. */
+const CHINESE_FIELD =
+  /\b(pinyin|zhuyin|bopomofo|hanzi|simplified|traditional)\b|拼音|注音|简体|簡體|繁体|繁體|汉字|漢字/iu;
 
 /** "ExpressionFurigana" and "word_audio" as spaced words, so the patterns' word edges find them. */
 function fieldWords(name: string): string {
@@ -502,6 +507,11 @@ function fieldWords(name: string): string {
     .replace(/(\p{Ll}|\d)(\p{Lu})/gu, "$1 $2")
     .replace(/[_\-.]+/g, " ")
     .trim();
+}
+
+/** Whether a note type's fields are Chinese, so script names such as "Trad" mean characters. */
+export function looksChinese(names: readonly string[]): boolean {
+  return names.some((name) => CHINESE_FIELD.test(fieldWords(name)));
 }
 
 /** A Chinese field's name without its script: "WordTraditional" → "Word", "Hanzi" → "". Null when it names none. */
@@ -521,6 +531,11 @@ function patternRole(text: string): FieldRole | undefined {
  * so "Expression Reading" is a reading and "Main Definition" a meaning.
  */
 export function namedFieldRole(name: string): FieldRole | undefined {
+  return fieldRole(name, false);
+}
+
+/** `namedFieldRole`, reading script names as a Chinese note type's. */
+function fieldRole(name: string, chinese: boolean): FieldRole | undefined {
   const words = fieldWords(name);
   if (SKIP_PATTERN.test(words) || FLAG_PATTERN.test(words)) return "skip";
   if (/\bpitch\b/i.test(words)) {
@@ -529,7 +544,7 @@ export function namedFieldRole(name: string): FieldRole | undefined {
   }
   if (TRANSLATION_PATTERN.test(words) || SENTENCE_PINYIN_PATTERN.test(words)) return "notes";
   // "SentenceHanzi" is a sentence and "Simplified" the term itself.
-  const rest = scriptRest(name);
+  const rest = chinese ? scriptRest(name) : null;
   if (rest === "") return "term";
   const named = rest ?? words;
   return patternRole(named.split(/\s+/).at(-1) ?? "") ?? patternRole(named);
@@ -557,17 +572,38 @@ export function isSentencePinyinField(name: string): boolean {
   return SENTENCE_PINYIN_PATTERN.test(fieldWords(name));
 }
 
-/**
- * "WordTraditional" beside "WordSimplified", or "Traditional" beside "Hanzi", holds the same text in
- * traditional characters, which becomes a notes line; the field it repeats keeps its role.
- */
-function isTraditionalOf(name: string, names: readonly string[]): boolean {
+/** Whether a field names a script and another field holds the same thing in the other one. */
+function hasTwin(name: string, names: readonly string[], script: RegExp): boolean {
   const rest = scriptRest(name);
   return (
     rest !== null &&
-    TRADITIONAL.test(fieldWords(name)) &&
-    names.some((other) => !TRADITIONAL.test(fieldWords(other)) && scriptRest(other) === rest)
+    script.test(fieldWords(name)) &&
+    names.some((other) => !script.test(fieldWords(other)) && scriptRest(other) === rest)
   );
+}
+
+/**
+ * Whether a Chinese note type's term is in traditional characters: a field naming traditional
+ * holds the term, with no simplified field beside it.
+ */
+export function traditionalTerm(names: readonly string[]): boolean {
+  return (
+    looksChinese(names) &&
+    names.some(
+      (name) =>
+        TRADITIONAL.test(fieldWords(name)) &&
+        fieldRole(name, true) === "term" &&
+        !hasTwin(name, names, TRADITIONAL),
+    )
+  );
+}
+
+/**
+ * "WordTraditional" beside "WordSimplified", or "Traditional" beside "Hanzi", holds the same text in
+ * the script the term is not in, which becomes a notes line; the field it repeats keeps its role.
+ */
+function isOtherScriptOf(name: string, names: readonly string[]): boolean {
+  return hasTwin(name, names, traditionalTerm(names) ? SIMPLIFIED : TRADITIONAL);
 }
 
 /** "Expression Furigana" beside "Expression" repeats that field with readings over its kanji. */
@@ -584,12 +620,13 @@ function isFuriganaOf(name: string, names: readonly string[]): boolean {
  * learner corrects this in the preview.
  */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
+  const chinese = looksChinese(names);
   const roles = names.map((name) =>
     isFuriganaOf(name, names)
       ? "skip"
-      : isTraditionalOf(name, names)
+      : chinese && isOtherScriptOf(name, names)
         ? "notes"
-        : namedFieldRole(name),
+        : fieldRole(name, chinese),
   );
   // One pitch line is enough; a second pitch field, such as a graph beside positions, is left out.
   const pitch = names.findIndex((name, i) => roles[i] === "notes" && isPitchField(name));

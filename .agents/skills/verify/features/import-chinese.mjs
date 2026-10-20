@@ -19,34 +19,37 @@ export default async function drive({ page, step, api, expect }) {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Choose file", exact: true }).click();
     await (await chooser).setFiles(file);
-    await expect(looksRight.or(ready)).toBeVisible({ timeout: 30_000 });
+    // Three decks ask which to keep first.
+    const decks = page.getByRole("button", { name: "Continue", exact: true });
+    await expect(decks).toBeVisible({ timeout: 30_000 });
+    await decks.click();
+    await expect(looksRight.or(ready)).toBeVisible();
     while (await looksRight.isVisible()) {
       await looksRight.click();
       await expect(looksRight.or(ready)).toBeVisible();
     }
-    await expect(ready).toHaveText("Ready to import 5 cards");
+    await expect(ready).toHaveText("Ready to import 9 cards");
   });
 
-  await step("Make the deck Chinese", async () => {
+  await step("The preview reads the HSK and TOCFL decks as Chinese from their fields", async () => {
+    await expect(main.getByText(/^6 cards bring their recordings\./)).toBeVisible();
     await main.getByRole("button", { name: "Change languages", exact: true }).click();
     const dialog = page.getByRole("dialog", { name: "Languages" });
-    await dialog.getByRole("combobox").click();
-    await page.keyboard.type("Chinese");
-    await page
-      .getByRole("option", { name: /^Chinese/ })
-      .first()
-      .click();
-    await dialog.getByRole("button", { name: "Use these languages", exact: true }).click();
+    await expect(dialog).toBeVisible();
+    const text = await dialog.innerText();
+    expect(text).toMatch(/HSK \/ HSK 1[\s\S]*Chinese/);
+    expect(text).toMatch(/TOCFL[\s\S]*Chinese/);
+    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(dialog).toBeHidden();
-    await expect(main.getByText(/^5 cards bring their recordings\./)).toBeVisible();
+    return { languages: text };
   });
 
   await step("Import and see pinyin Readings, notes and recordings stored", async () => {
-    await page.getByRole("button", { name: "Import 5 cards", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "Imported 5 cards" })).toBeVisible({
+    await page.getByRole("button", { name: "Import 9 cards", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Imported 9 cards" })).toBeVisible({
       timeout: 60_000,
     });
-    await expect(main.getByText("5 recordings were imported.", { exact: true })).toBeVisible();
+    await expect(main.getByText("6 recordings were imported.", { exact: true })).toBeVisible();
     const decks = await api("/api/decks");
     const deck = decks.find((d) => d.name === "HSK / HSK 1" || d.name === "HSK::HSK 1");
     expect(deck?.defaultLanguage).toBe("zh");
@@ -63,7 +66,11 @@ export default async function drive({ page, step, api, expect }) {
     );
     expect(byTerm("东西").pronunciation).toBe("dōng xi");
     expect(byTerm("你好")).toMatchObject({ pronunciation: "nǐ hǎo", notes: null });
-    for (const card of list) expect(card.audioKey).toMatch(/\/recorded\//);
+    expect(byTerm("行").pronunciation).toBe("xíng / háng");
+    expect(byTerm("很").notes).not.toMatch(/很好。\n|Wo3/);
+    for (const card of list.filter((c) => c.term !== "行")) {
+      expect(card.audioKey).toMatch(/\/recorded\//);
+    }
     return {
       deck: deck.id,
       cards: list.map((c) => ({

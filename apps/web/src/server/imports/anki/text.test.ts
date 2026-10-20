@@ -2,16 +2,18 @@ import { describe, expect, it } from "vitest";
 import {
   clozeAnswer,
   clozeNumbers,
+  fieldLanguage,
   furiganaBase,
   furiganaReading,
   hasFurigana,
   inlinePinyin,
   isImageOcclusion,
   markedExample,
+  pinyinLine,
   pinyinReading,
   plainReading,
   questionField,
-  repeatsTerm,
+  repeatsText,
   revealCloze,
   samePinyin,
 } from "./text";
@@ -84,8 +86,20 @@ describe("plainReading", () => {
 });
 
 describe("pinyin", () => {
-  it("reads a pinyin field as one line", () => {
-    expect(pinyinReading("yì\ndiǎnr ")).toBe("yì diǎnr");
+  it("reads a pinyin field as one line, keeping separate readings apart", () => {
+    expect(pinyinReading("yì\ndiǎnr ", "一点儿")).toBe("yì diǎnr");
+    expect(pinyinReading("xíng\nháng", "行")).toBe("xíng / háng");
+    expect(pinyinReading("yín  háng", "银行")).toBe("yín háng");
+  });
+  it("writes a sentence's numbered pinyin in tone marks, and anything else as it is", () => {
+    expect(pinyinLine("Wo3 hen3 hao3.")).toBe("Wǒ hěn hǎo.");
+    expect(pinyinLine("see p. 3")).toBe("see p. 3");
+  });
+  it("names Mandarin from pinyin fields, and traditional when its term is", () => {
+    expect(fieldLanguage(["Hanzi", "Pinyin", "Meaning"])).toBe("zh");
+    expect(fieldLanguage(["Traditional", "拼音", "Meaning"])).toBe("zh-Hant");
+    expect(fieldLanguage(["Characters", "Jyutping", "Pinyin"])).toBeNull();
+    expect(fieldLanguage(["Front", "Back"])).toBeNull();
   });
   it("knows numbered pinyin for the marked pinyin it repeats", () => {
     expect(samePinyin("yin2hang2", "yínháng")).toBe(true);
@@ -94,13 +108,14 @@ describe("pinyin", () => {
     expect(samePinyin("yin2xing2", "yínháng")).toBe(false);
     expect(samePinyin("bank", "bank")).toBe(false);
   });
-  it("knows a coloured or ruby copy of the term", () => {
+  it("knows a coloured or ruby copy of a text", () => {
     const toned = '<span class="tone3">你</span><span class="tone3">好</span>';
-    expect(repeatsTerm(toned, "你好")).toBe(true);
-    expect(repeatsTerm("<ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>", "你好")).toBe(true);
-    expect(repeatsTerm("你[nǐ]好[hǎo]", "你好")).toBe(true);
-    expect(repeatsTerm("您好", "你好")).toBe(false);
-    expect(repeatsTerm("", "你好")).toBe(false);
+    expect(repeatsText(toned, "你好")).toBe(true);
+    expect(repeatsText("<ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>", "你好")).toBe(true);
+    expect(repeatsText("你[nǐ]好[hǎo]", "你好")).toBe(true);
+    expect(repeatsText("我很好。", "我[Wǒ]很[hěn]好[hǎo]。")).toBe(true);
+    expect(repeatsText("您好", "你好")).toBe(false);
+    expect(repeatsText("", "你好")).toBe(false);
   });
   it("marks tone numbers inside an example's brackets", () => {
     expect(markedExample("我说你好[ni3 hao3]。")).toBe("我说你好[nǐ hǎo]。");

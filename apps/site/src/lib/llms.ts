@@ -1,5 +1,4 @@
 import { PAGES } from "../components/docs/nav";
-import { SOURCE_CODE_URL } from "../components/landing/site-links";
 import { EXAMS, examPath } from "./exams";
 import { pageI18n } from "./i18n";
 
@@ -32,9 +31,9 @@ export function llmsTxt(): string {
   return [
     "# Lymi",
     "",
-    "> Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.",
+    "> Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.",
     "",
-    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An AI assistant can add and enrich cards over MCP or the HTTP API, and anything it writes is marked as AI. Decks can be published, joined by a link, imported from Anki or Mochi, and exported as an Anki package or a Lymi file. Lymi is free to use, and its source is AGPL-3.0.",
+    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An AI assistant can add and enrich cards over MCP or the HTTP API, and anything it writes is marked as AI. Decks can be published, joined by a link, imported from Anki or Mochi, and exported as an Anki package or a Lymi file. Lymi is free to use.",
     "",
     "## Pages",
     "",
@@ -54,7 +53,6 @@ export function llmsTxt(): string {
     `- [Changelog](${SITE}/changelog): new features and improvements in Lymi.`,
     `- [Privacy](${SITE}/privacy): what Lymi stores and who can read it.`,
     `- [Support](${SITE}/support): sign-in, connected apps, API keys and data requests.`,
-    `- [Source code](${SOURCE_CODE_URL}): the repository, licensed AGPL-3.0.`,
     "",
     "## Exam pages",
     "",

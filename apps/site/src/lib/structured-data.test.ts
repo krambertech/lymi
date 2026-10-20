@@ -199,7 +199,7 @@ describe("marketingPage", () => {
     expect(faq.mainEntity[0].name).not.toBe(i18n._(TEACHERS_QUESTIONS[0].question));
   });
 
-  it("names the product as free, open source and the same entity on every page", () => {
+  it("names the product as free and the same entity on every page", () => {
     const [app, faq] = marketingPage({
       name: "Lymi for language learning",
       description: "Keep the words.",
@@ -212,7 +212,6 @@ describe("marketingPage", () => {
       "@id": "https://lymi.app/#app",
       url: "https://lymi.app/languages",
       isAccessibleForFree: true,
-      sameAs: ["https://github.com/krambertech/lymi"],
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     });
     expect(faq).toMatchObject({ "@type": "FAQPage" });
@@ -231,7 +230,6 @@ describe("marketingPage", () => {
       "WebSite",
       "SoftwareApplication",
     ]);
-    expect(home[0]).toMatchObject({ sameAs: ["https://github.com/krambertech/lymi"] });
     expect(home[1]).toMatchObject({ publisher: { "@id": "https://lymi.app/#organization" } });
   });
 

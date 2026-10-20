@@ -13,13 +13,12 @@ describe("llmsTxt", () => {
     expect(text).toContain(`> ${pageI18n("en")._(LANDING_BLURB)}`);
   });
 
-  it("points at the pages an assistant should read, and at the source", () => {
+  it("points at the pages an assistant should read", () => {
     for (const url of [
       "https://lymi.app/",
       "https://lymi.app/explore",
       "https://lymi.app/docs",
       "https://lymi.app/privacy",
-      "https://github.com/krambertech/lymi",
     ]) {
       expect(text).toContain(url);
     }
@@ -37,8 +36,7 @@ describe("llmsTxt", () => {
     }
   });
 
-  it("says Lymi is free and open source", () => {
-    expect(text).toContain("open-source");
+  it("says Lymi is free", () => {
     expect(text).toContain("free");
   });
 

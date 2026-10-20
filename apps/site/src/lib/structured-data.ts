@@ -1,7 +1,6 @@
 import type { I18n } from "@lingui/core";
 import { type PublicDeckOut, type PublicDeckSummary, taughtLanguage } from "@lymi/core/catalog";
 import type { Question } from "../components/landing/faq";
-import { SOURCE_CODE_URL } from "../components/landing/site-links";
 import { deckPath, languageName } from "./deck-page";
 import { explorePath } from "./explore";
 import type { Locale } from "./routes";
@@ -152,13 +151,11 @@ export function softwareApplication(page: { description: string; path: string; l
     url: new URL(page.path, SITE).toString(),
     inLanguage: page.locale,
     isAccessibleForFree: true,
-    license: "https://www.gnu.org/licenses/agpl-3.0.html",
-    sameAs: [SOURCE_CODE_URL],
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   };
 }
 
-/** The entity behind the product, so a search engine can tie Lymi to its source and its site. */
+/** The entity behind the product, so a search engine can tie Lymi to its site. */
 export function organizationAndSite(locale: string) {
   return [
     {
@@ -169,7 +166,6 @@ export function organizationAndSite(locale: string) {
       url: `${SITE}/`,
       logo: `${SITE}/icon.svg`,
       email: "hello@lymi.app",
-      sameAs: [SOURCE_CODE_URL],
     },
     {
       "@context": "https://schema.org",

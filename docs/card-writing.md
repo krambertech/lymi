@@ -51,7 +51,7 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **German** notes give a noun's plural, a strong verb's forms and a separable verb's prefix, *ein|kaufen*; the term keeps its article, and duplicates still compare it.
 - **French** pronunciation is IPA, with each liaison in a phrase marked ‿; notes give an adjective's irregular feminine and plural, *beau, belle, beaux*.
 - **Spanish** and **Italian** keep every written accent, *árbol*, *città*; notes give stem changes and irregular forms, and Italian's *essere*.
-- **Portuguese**: `pt` and `pt-BR` are said as in Brazil and `pt-PT` as in Portugal, each in IPA; notes give the other variety's word where they differ, *ônibus* or *autocarro*.
+- **Portuguese**: `pt` and `pt-PT` are said as in Portugal and `pt-BR` as in Brazil, each in IPA; notes give the other variety's word where they differ, *ônibus* or *autocarro*.
 - **Hungarian** keeps its long vowels; notes give the indefinite and definite present, *olvas · olvassa*, -ik verbs and irregular accusatives, *tűz → tüzet*.
 - **Czech** keeps háček, čárka and ů; notes give the aspect pair, *dělat / udělat*, and irregular forms, *člověk, lidé*.
 

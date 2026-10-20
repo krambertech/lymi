@@ -53,7 +53,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["notes", "pronunciation"],
-    enrichByDefault: true,
+    enrichByDefault: false,
   },
   vi: {
     pronunciation: "pronunciation",
@@ -252,24 +252,24 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     format: {
       name: "Portuguese",
       pronunciation:
-        "IPA as the word is said in Brazil, without slashes; a pt-PT deck is said as in Portugal.",
+        "IPA as the word is said in Portugal, without slashes; a pt-BR deck is said as in Brazil.",
       empty: null,
       never: "Not a respelling.",
-      sample: { term: "obrigado", pronunciation: "obɾiˈɡadu" },
+      sample: { term: "obrigado", pronunciation: "ɔbɾiˈɣaðu" },
       duplicates: "term",
     },
     starts: [],
     enrichByDefault: true,
   },
-  "pt-PT": {
+  "pt-BR": {
     pronunciation: "pronunciation",
     scripts: ["Latn"],
     format: {
-      name: "European Portuguese",
-      pronunciation: "IPA as the word is said in Portugal, without slashes.",
+      name: "Brazilian Portuguese",
+      pronunciation: "IPA as the word is said in Brazil, without slashes.",
       empty: null,
       never: "Not a respelling.",
-      sample: { term: "obrigado", pronunciation: "ɔbɾiˈɣaðu" },
+      sample: { term: "obrigado", pronunciation: "obɾiˈɡadu" },
       duplicates: "term",
     },
     starts: [],

@@ -12,7 +12,7 @@ No persona has cards in these languages, so the recipe makes decks as `fresh` th
 
 ## End state
 
-`/api/languages` lists `fil` once, with no `tl` entry, and `vi`, `ka`, `hy`, `ta` and `lt`, but not `et` or `nb`, which have no format of their own. The Tagalog deck's `enrichFields` are all four fields and the Georgian deck's are meaning, example and pronunciation. bahay has a meaning and a pronunciation with a stress mark, both `ai`. წყალი has `pronunciation` ts'q'ali from `ai`. vyras keeps its pronunciation výras exactly, and its reveal shows it; the Norwegian deck starts with meaning, example and notes. `/api/languages` lists `pt` and `pt-PT` apart, and leite in the `pt-PT` deck is said as in Portugal, with ɨ and no tʃ. After the reveal of წყალი the line ts'q'ali shows, and the term's font family names `Helvetica Neue` from `--face-geor`.
+`/api/languages` lists `fil` once, with no `tl` entry, and `vi`, `ka`, `hy`, `ta` and `lt`, but not `et` or `nb`, which have no format of their own. The Tagalog deck starts with no AI fields while Filipino is below the bar and with all four otherwise, and the Georgian deck with meaning, example and pronunciation. Below the bar bahay gains nothing on add; once the fields are on and Enrich is asked, or straight away above it, it has a meaning and a pronunciation with a stress mark, both `ai`. წყალი has `pronunciation` ts'q'ali from `ai`. vyras keeps its pronunciation výras exactly, and its reveal shows it; the Norwegian deck starts with meaning, example and notes. `/api/languages` lists `pt` and `pt-BR` apart, and leite in the `pt-PT` deck is said as in Portugal, with ɨ and no tʃ. After the reveal of წყალი the line ts'q'ali shows, and the term's font family names `Helvetica Neue` from `--face-geor`.
 
 ## Gotchas
 

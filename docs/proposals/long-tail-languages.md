@@ -40,7 +40,7 @@ Each language's notes are in [Writing cards](../card-writing.md).
 | Estonian, Finnish, Latvian, Icelandic | `et`, `fi`, `lv`, `is` | empty: read as written | configured, no format |
 | Swedish, Norwegian, Dutch | `sv`, `nb` (`no` means Bokmål), `nn`, `nl` | empty | configured, no format |
 | Polish | `pl` | empty: stress is penultimate | configured, no format |
-| French, Portuguese | `fr`, `pt` (Brazil), `pt-PT` | IPA; French marks liaison, each Portuguese row its variety | configured |
+| French, Portuguese | `fr`, `pt` (Portugal), `pt-BR` | IPA; French marks liaison, each Portuguese row its variety | configured |
 | German, Spanish, Italian, Hungarian, Czech | `de`, `es`, `it`, `hu`, `cs` | empty | configured, no format |
 | Persian, Urdu | | | platform: right-to-left first |
 | Cantonese | `yue` | | supported: jyutping engine |

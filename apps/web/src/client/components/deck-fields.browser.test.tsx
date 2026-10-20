@@ -85,16 +85,16 @@ describe("LanguageField", () => {
     const onChange = vi.fn();
     await render(<Harness onChange={onChange} />);
     await open();
-    await userEvent.keyboard("kk");
+    await userEvent.keyboard("eu");
 
-    await expect.poll(options).toEqual(["Use “kk” as the tag"]);
+    await expect.poll(options).toEqual(["Use “eu” as the tag"]);
     await userEvent.keyboard("{Enter}");
-    expect(onChange).toHaveBeenCalledExactlyOnceWith("kk");
-    await expect.element(box()).toHaveTextContent("Kazakh");
+    expect(onChange).toHaveBeenCalledExactlyOnceWith("eu");
+    await expect.element(box()).toHaveTextContent("Basque");
 
     await open();
     await expect
-      .element(page.getByRole("option", { name: /^Kazakh/ }))
+      .element(page.getByRole("option", { name: /^Basque/ }))
       .toHaveAttribute("aria-selected", "true");
   });
 

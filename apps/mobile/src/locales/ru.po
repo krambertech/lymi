@@ -2028,10 +2028,6 @@ msgctxt "language"
 msgid "Estonian"
 msgstr "Эстонский"
 
-msgctxt "language"
-msgid "European Portuguese"
-msgstr "Европейский португальский"
-
 msgid "Every card"
 msgstr "Все карточки"
 

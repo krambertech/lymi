@@ -26,8 +26,6 @@ import { OddsBars } from "../scheduling/OddsBars";
 import { Precedence } from "../scheduling/Precedence";
 import { ReturnGaps, SlotPattern } from "../scheduling/Returns";
 
-const REPO = "https://github.com/krambertech/lymi/blob/main";
-
 const REVIEW_ORDER_NAMES: Record<ReviewOrderId, string> = {
   due: "Oldest due date first",
   lowest: "Lowest recall first",
@@ -473,12 +471,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
       <H2>Why these weights</H2>
       <p>
         The weights come from a simulated year under each rule Lymi considered. Every rule uses the
-        same draw with a different order, and every grade goes through the real scheduler. See{" "}
-        <a href={`${REPO}/packages/core/simulation`}>the simulation code</a> and{" "}
-        <a href={`${REPO}/docs/adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md`}>
-          the decision
-        </a>
-        .
+        same draw with a different order, and every grade goes through the real scheduler.
       </p>
 
       <H3>Review order</H3>

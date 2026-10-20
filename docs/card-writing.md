@@ -41,7 +41,7 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Georgian** (`ka`) and **Armenian** (`hy`): the pronunciation is a romanization, Georgian's national system with each ejective marked (ჭიქა ch'ika), and Eastern Armenian as it is said (քույր k'uyr).
 - **Tamil** (`ta`): the pronunciation romanizes the written word as it is read aloud, with macrons and dots (தம்பி tambi). Notes give the spoken form where it differs, *தண்ணீர்*, said *taṇṇi*.
 
-A configured language's AI fills cards unasked only while its evaluation passes the bar ([long-tail languages](proposals/long-tail-languages.md)); Filipino is below it, so its decks start with no AI fields until the owner turns them on.
+A configured language's AI fills cards unasked only while its evaluation passes the bar ([long-tail languages](proposals/long-tail-languages.md)); a new deck in a language below it starts with no AI fields until the owner turns them on.
 
 `GET /api/languages` and [the docs](https://lymi.app/docs/languages) give every language's format from the records in `packages/core/src/languages`.
 

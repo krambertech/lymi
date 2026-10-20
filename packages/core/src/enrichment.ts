@@ -59,8 +59,6 @@ export function defaultEnrichFields(
   const primary = language?.split("-")[0]?.toLowerCase();
   if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
   const configured = configuredLanguage(language);
-  // Below the evaluation's bar the AI waits to be asked. docs/proposals/long-tail-languages.md.
-  if (configured && !configured.enrichByDefault) return [];
   const starts = (field: "notes" | "pronunciation", fallback: ReadonlySet<string>) =>
     configured ? configured.starts.includes(field) : fallback.has(primary);
   return [
@@ -69,6 +67,20 @@ export function defaultEnrichFields(
     ...(starts("notes", FORM_LANGUAGES) ? (["notes"] as const) : []),
     ...(starts("pronunciation", READING_LANGUAGES) ? (["pronunciation"] as const) : []),
   ];
+}
+
+/**
+ * What a new deck stores when its owner chose no AI fields: none in a language below the
+ * evaluation's bar, so the AI waits to be asked; otherwise nothing, and the deck follows its
+ * language's defaults. Stored, so a later move of the bar never changes an existing deck.
+ * docs/proposals/long-tail-languages.md.
+ */
+export function newDeckEnrichFields(
+  language: string | null | undefined,
+  purpose?: DeckPurpose | null,
+): DeckEnrichField[] | null {
+  if (deckPurpose(purpose, language) !== "language") return null;
+  return configuredLanguage(language)?.enrichByDefault === false ? [] : null;
 }
 
 /** How long a deck's learned style may be, so it stays a list and not an essay. ADR 0037. */

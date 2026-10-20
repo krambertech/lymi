@@ -35,7 +35,8 @@ describe("the recorded enrichment run", () => {
   });
 
   it("passes each rule about as often as the run before it, on the cases both ran", () => {
-    if (!latest || !previous) return;
+    // Two runs of one prompt differ only by the model's noise, which the gate absorbs.
+    if (!latest || !previous || previous.run.hash === latest.run.hash) return;
     const shared = new Set(previous.run.calls.flatMap((call) => call.cases));
     const rates = (calls: typeof latest.run.calls) =>
       passRates(scoreCalls(decks, calls).filter((one) => shared.has(one.item.id)));
@@ -71,10 +72,10 @@ describe("the enrichment gate", () => {
 });
 
 describe("enrichesByDefault", () => {
-  it("turns a language on after two passing runs, or one when it is new, and off after one failing run", () => {
+  it("turns a language on after two passing runs, a new one included, and off after one failing run", () => {
     expect(enrichesByDefault({ pass: 35, total: 37 }, { pass: 33, total: 37 })).toBe(false);
     expect(enrichesByDefault({ pass: 35, total: 37 }, { pass: 36, total: 37 })).toBe(true);
-    expect(enrichesByDefault({ pass: 35, total: 37 }, undefined)).toBe(true);
+    expect(enrichesByDefault({ pass: 35, total: 37 }, undefined)).toBe(false);
     expect(enrichesByDefault({ pass: 33, total: 37 }, { pass: 37, total: 37 })).toBe(false);
     expect(enrichesByDefault(undefined, undefined)).toBe(false);
   });

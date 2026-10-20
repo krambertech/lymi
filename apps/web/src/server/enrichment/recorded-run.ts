@@ -215,14 +215,14 @@ export function languagePassRates(scored: readonly ScoredCase[]) {
 }
 
 /**
- * Whether a language's decks should enrich unasked: it meets the bar in the latest run, and in
- * the run before when that run had its cases, so one noisy run can turn it off but not on.
+ * Whether a language's new decks should enrich unasked: it meets the bar in the latest run and in
+ * the run before, so one noisy run can close the gate but never open it.
  */
 export function enrichesByDefault(
   latest: { pass: number; total: number } | undefined,
   previous: { pass: number; total: number } | undefined,
 ): boolean {
-  const passes = (rate: { pass: number; total: number }) =>
-    rate.total > 0 && rate.pass / rate.total >= ENRICHMENT_BAR;
-  return !!latest && passes(latest) && (!previous?.total || passes(previous));
+  const passes = (rate: { pass: number; total: number } | undefined) =>
+    !!rate?.total && rate.pass / rate.total >= ENRICHMENT_BAR;
+  return passes(latest) && passes(previous);
 }

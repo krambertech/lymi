@@ -9,6 +9,7 @@ import {
   emptyFields,
   fieldsToFill,
   needsEnrichment,
+  newDeckEnrichFields,
 } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -73,14 +74,11 @@ describe("deck enrichment fields", () => {
     expect(deckEnrichFields([], "it")).toEqual([]);
   });
 
-  it("leaves a deck in a language below the evaluation's bar for its owner to ask", () => {
-    for (const tag of ["tl", "fil-PH"]) expect(defaultEnrichFields(tag)).toEqual([]);
-    expect(deckEnrichFields(null, "tl")).toEqual([]);
-    expect(deckEnrichFields(["meaning", "pronunciation"], "tl")).toEqual([
-      "meaning",
-      "pronunciation",
-    ]);
-    expect(defaultEnrichFields("tl", "subject")).toEqual(["meaning"]);
+  it("stores no AI fields on a new deck below the evaluation's bar, and leaves other decks to their defaults", () => {
+    for (const tag of ["tl", "fil-PH"]) expect(newDeckEnrichFields(tag)).toEqual([]);
+    expect(defaultEnrichFields("tl")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    for (const tag of ["vi", "it", null]) expect(newDeckEnrichFields(tag)).toBeNull();
+    expect(newDeckEnrichFields("tl", "subject")).toBeNull();
   });
 
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {
@@ -236,6 +234,22 @@ describe("enrichCards", () => {
 
   /** An add with a queue, so every card with an empty field starts at `working`. */
   const queue: EnrichmentQueue = { create: async () => undefined };
+
+  it("keeps a new Tagalog deck's AI fields off, and an owner's choice", async () => {
+    const ctx = await learner(db, "enrich-gate", "Kateryna");
+    const gated = await createDeck(ctx, { name: "Tagalog", defaultLanguage: "tl" });
+    const chosen = await createDeck(ctx, {
+      name: "Tagalog 2",
+      defaultLanguage: "tl",
+      enrichFields: ["meaning"],
+    });
+    const open = await createDeck(ctx, { name: "Tiếng Việt", defaultLanguage: "vi" });
+    const stored = async (id: string) =>
+      (await db.select().from(schema.decks).where(eq(schema.decks.id, id)))[0]?.enrichFields;
+    expect(await stored(gated.id)).toEqual([]);
+    expect(await stored(chosen.id)).toEqual(["meaning"]);
+    expect(await stored(open.id)).toBeNull();
+  });
 
   it("fills empty fields, leaves the lesson's meaning alone and records one Activity row", async () => {
     const ctx = await learner(db, "enrich-1", "Kateryna");

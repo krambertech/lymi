@@ -1,5 +1,5 @@
 import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lymi/core";
-import { deckEnrichFields, deckPurpose, newId } from "@lymi/core";
+import { deckEnrichFields, deckPurpose, newDeckEnrichFields, newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
@@ -163,6 +163,8 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
   const seriesId = input.seriesId ?? null;
   if (seriesId) await activeSeries(ctx, seriesId);
   const id = chosen ?? newId();
+  const enrichFields =
+    input.enrichFields ?? newDeckEnrichFields(input.defaultLanguage, input.purpose);
   await db.insert(schema.decks).values({
     id,
     userId,
@@ -172,7 +174,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     directions: resolveDeckDirections(input) ?? "recognition",
     sectionProgression: input.sectionProgression ?? "automatic",
     purpose: input.purpose ?? null,
-    ...(input.enrichFields ? { enrichFields: input.enrichFields } : {}),
+    ...(enrichFields ? { enrichFields } : {}),
     ...(input.enrichInstructions?.trim()
       ? { enrichInstructions: input.enrichInstructions.trim() }
       : {}),

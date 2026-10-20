@@ -38,6 +38,33 @@ import { join } from "./members";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
+/** A private-use language, qaa, configured below the evaluation's bar, so the gate's tests hold whatever a real language scores. */
+const { GATED } = vi.hoisted(() => ({ GATED: "qaa" }));
+
+vi.mock("../../../../../packages/core/src/languages/configured", async (importOriginal) => {
+  const real =
+    await importOriginal<typeof import("../../../../../packages/core/src/languages/configured")>();
+  const gated = {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Gated",
+      pronunciation: "The term as written.",
+      empty: null,
+      never: null,
+      sample: { term: "qa", pronunciation: "qa" },
+      duplicates: "term",
+    },
+    starts: ["notes", "pronunciation"],
+    enrichByDefault: false,
+  } as const;
+  return {
+    ...real,
+    CONFIGURED: { ...real.CONFIGURED, [GATED]: gated },
+    CONFIGURED_TAGS: new Map([...real.CONFIGURED_TAGS, [GATED, GATED]]),
+  };
+});
+
 const full = {
   meaning: "to hurry up",
   example: "Sbrigati, il treno parte!",
@@ -75,10 +102,10 @@ describe("deck enrichment fields", () => {
   });
 
   it("stores no AI fields on a new deck below the evaluation's bar, and leaves other decks to their defaults", () => {
-    for (const tag of ["tl", "fil-PH"]) expect(newDeckEnrichFields(tag)).toEqual([]);
-    expect(defaultEnrichFields("tl")).toEqual(["meaning", "example"]);
-    for (const tag of ["vi", "it", null]) expect(newDeckEnrichFields(tag)).toBeNull();
-    expect(newDeckEnrichFields("tl", "subject")).toBeNull();
+    for (const tag of [GATED, `${GATED}-PH`]) expect(newDeckEnrichFields(tag)).toEqual([]);
+    expect(defaultEnrichFields(GATED)).toEqual(["meaning", "example"]);
+    for (const tag of ["vi", "tl", "it", null]) expect(newDeckEnrichFields(tag)).toBeNull();
+    expect(newDeckEnrichFields(GATED, "subject")).toBeNull();
   });
 
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {
@@ -256,12 +283,12 @@ describe("enrichCards", () => {
   /** An add with a queue, so every card with an empty field starts at `working`. */
   const queue: EnrichmentQueue = { create: async () => undefined };
 
-  it("keeps a new Tagalog deck's AI fields off, and an owner's choice", async () => {
+  it("keeps a new deck's AI fields off in a language below the bar, and an owner's choice", async () => {
     const ctx = await learner(db, "enrich-gate", "Kateryna");
-    const gated = await createDeck(ctx, { name: "Tagalog", defaultLanguage: "tl" });
+    const gated = await createDeck(ctx, { name: "Gated", defaultLanguage: GATED });
     const chosen = await createDeck(ctx, {
-      name: "Tagalog 2",
-      defaultLanguage: "tl",
+      name: "Gated 2",
+      defaultLanguage: GATED,
       enrichFields: ["meaning"],
     });
     const open = await createDeck(ctx, { name: "Tiếng Việt", defaultLanguage: "vi" });
@@ -282,8 +309,8 @@ describe("enrichCards", () => {
       defaultLanguage: "it",
       enrichFields: ["meaning", "notes"],
     });
-    await updateDeck(ctx, unchosen.id, { defaultLanguage: "tl" });
-    await updateDeck(ctx, chosen.id, { defaultLanguage: "tl" });
+    await updateDeck(ctx, unchosen.id, { defaultLanguage: GATED });
+    await updateDeck(ctx, chosen.id, { defaultLanguage: GATED });
     expect(await stored(unchosen.id)).toEqual([]);
     expect(await stored(chosen.id)).toEqual(["meaning", "notes"]);
   });

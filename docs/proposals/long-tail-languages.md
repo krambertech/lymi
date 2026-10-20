@@ -16,7 +16,7 @@ A configured language joins with an invented fixture in `apps/web/src/server/enr
 
 **Enforcement.** Each row in `packages/core/src/languages/configured.ts` states `enrichByDefault`. `recorded-run.test.ts` fails when a row has no fixture or disagrees with the recorded runs, and names the value to set. A language turns on only when it meets the bar in the latest run and in the run before, so a new language needs two runs, and turns off after one run below it: one noisy run can close the gate but never open it. Runs of different prompts are compared only on the cases both answered, so a new fixture is not a regression; two runs of one prompt are not compared, since they differ only by noise.
 
-**Where it stands.** Every configured language passes twice except Filipino, which misses its stress marks (baháy for báhay, basá for bása, read) and failed one of its two runs, so new Filipino decks wait for their owner.
+**Where it stands.** Every configured language has passed two runs in a row, so new decks in each of them enrich by default. Filipino sits closest to the bar: it misses some stress marks (baháy for báhay, basá for bása, read) and failed one of its first two runs before passing two in a row.
 
 ## Voices
 
@@ -42,7 +42,7 @@ A language with no native voice speaks with Gemini's default voice; one Gemini d
 
 | Language | Tags | Pronunciation | Notes | Tier |
 | --- | --- | --- | --- | --- |
-| Filipino | `fil`, `tl` | the term with stress marks: báhay, bátà, basâ | verb focus and aspect | configured, below the bar |
+| Filipino | `fil`, `tl` | the term with stress marks: báhay, bátà, basâ | verb focus and aspect | configured |
 | Vietnamese | `vi` | tone marks for a term typed without them (cam on → cảm ơn), an abbreviation said (km → ki-lô-mét), else empty | classifier, north and south words | configured |
 | Georgian | `ka` | national romanization with ejectives marked: ჭიქა ch'ika | verbal noun, present, aorist | configured |
 | Armenian | `hy` | Eastern Armenian romanized as said: քույր k'uyr | irregular plurals, present | configured |

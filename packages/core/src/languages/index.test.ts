@@ -118,7 +118,7 @@ describe("languageFormat", () => {
     expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
   });
   it("configures a language with no format of its own and publishes none for it", () => {
-    for (const tag of ["et", "fi", "lv", "nb", "no", "nn", "da", "nl"]) {
+    for (const tag of ["et", "fi", "lv", "nb", "no", "nn", "sv", "is", "pl", "nl"]) {
       expect(configuredLanguage(tag)).not.toBeNull();
       expect(languageFormat(tag)).toBeNull();
     }

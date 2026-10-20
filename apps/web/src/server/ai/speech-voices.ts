@@ -24,7 +24,8 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   ro: { voice: "am5XuPVtut7uKJQKMja2", name: "Mike L - Soft, Clear and Charming" },
   ru: { voice: "0BcDz9UPwL3MpsnTeUlO", name: "Denis - Pleasant, Engaging and Friendly" },
   sr: { voice: "g8TYYIFt2Qo27yGQmTYq", name: "Jovana - Warm Serbian Narrator" },
-  sv: { voice: "4xkUqaR9MYOJHoaC1Nak", name: "Sanna Hartfield - Direct and Natural" },
+  // Stockholm; chosen over Gemini, Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
+  sv: { voice: "kPdGSxhZAqy4bmPAf9iJ", name: "Evelina - Calm, Clear and Engaging" },
   tr: { voice: "RXCCWbOxP7Hisa63Xsv5", name: "Adam - Calm, Relaxing and Informative" },
   uk: { voice: "9Sj8ugvpK1DmcAXyvi3a", name: "Alex Nekrasov - Confident and Clear" },
   // Northern; chosen over Gemini and four native voices, docs/proposals/long-tail-languages.md.
@@ -51,6 +52,7 @@ const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "ko",
   "nb",
   "ru",
+  "sv",
   "uk",
   "vi",
 ]);

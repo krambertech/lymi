@@ -8,7 +8,7 @@ const FILIPINO: FieldGuide = {
 
 const NORWEGIAN: FieldGuide = {
   notes:
-    "Noun: the gender, then the definite singular and the plural, in Bokmål (*en bil, bilen, biler*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*kjøre · kjører · kjørte · har kjørt*).",
+    "Noun: the gender, then the definite singular and the plural, in Bokmål, the standard a plain no tag means (*en bil, bilen, biler*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*kjøre · kjører · kjørte · har kjørt*). A word told apart from another only by its pitch accent: say which tone it has and what the other means (*hender*, tone 2: happens; tone 1: hands).",
   pronunciation:
     "Leave pronunciation null, unless the word isn't said as Norwegian spelling suggests.",
 };
@@ -26,7 +26,7 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   fi: {
     notes:
-      "Give the main forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*talo · talon · taloa*). Verb: first infinitive · present tense, first person · past tense, first person (*tulla · tulen · tulin*). Add one short line only for the case a verb takes (*pitää* + elative: *pitää jostakin*). For a sentence: say which case matters and why.",
+      "Give the main forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular · partitive plural, so consonant gradation shows (*katu · kadun · katua · katuja*). Verb: first infinitive · present tense, first person · past tense, first person (*tulla · tulen · tulin*). Add one short line only for the case a verb takes (*pitää* + elative: *pitää jostakin*). For a sentence: say which case matters and why.",
     pronunciation: "Finnish is read as it is written. Leave pronunciation null.",
   },
   de: {
@@ -43,7 +43,7 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   sv: {
     notes:
-      "Noun: en or ett, and the plural (*en bil, bilar*). Verb: infinitive · present · past · supine (*skriva · skriver · skrev · skrivit*).",
+      "Noun: en or ett, the definite singular and the plural (*en bil, bilen, bilar*). Verb: infinitive · present · past · supine (*skriva · skriver · skrev · skrivit*). A word told apart from another only by its pitch accent: say which accent it has and what the other means (*anden*, accent 2: the spirit; accent 1: the duck).",
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
@@ -61,7 +61,7 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   pl: {
     notes:
-      "Verb: the aspect pair, imperfective / perfective (*robić / zrobić*), and the case it takes if it isn't the accusative (*bać się* + genitive). Noun: an irregular plural or genitive.",
+      "Verb: the aspect pair, imperfective / perfective (*robić / zrobić*), and the case it takes if it isn't the accusative (*bać się* + genitive). Noun: the gender if the ending doesn't show it, and the genitive singular and nominative plural where they are irregular, including a masculine-personal plural (*student, studenta, studenci*). A word that looks like a Ukrainian or Russian word but means something else: say so (*dywan* is a carpet, not a sofa).",
     pronunciation:
       "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule.",
   },
@@ -120,7 +120,12 @@ const GUIDES: Record<string, FieldGuide> = {
   da: {
     notes:
       "Noun: en or et, the definite singular and the plural (*en bil, bilen, biler*; *et hus, huset, huse*). Verb: infinitive · present · past · perfect (*køre · kører · kørte · har kørt*).",
-    pronunciation: "Leave pronunciation null; the audio says the word.",
+  },
+  is: {
+    notes:
+      "Noun: the gender, then nominative · genitive singular · nominative plural (*hestur, hests, hestar*, masculine). Strong verb: infinitive · past singular · past participle (*fara · fór · farið*). Keep þ, ð, æ and ö as written.",
+    pronunciation:
+      "Leave pronunciation null, unless the word isn't said as Icelandic spelling suggests.",
   },
   fil: FILIPINO,
   tl: FILIPINO,

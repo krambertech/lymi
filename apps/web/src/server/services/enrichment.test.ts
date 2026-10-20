@@ -71,7 +71,8 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("tl")).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
     expect(defaultEnrichFields("lt")).toEqual(["meaning", "example", "notes", "pronunciation"]);
-    for (const tag of ["fi", "lv", "nb", "no", "nn", "da", "nl"])
+    expect(defaultEnrichFields("da")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    for (const tag of ["fi", "lv", "nb", "no", "nn", "sv", "is", "pl", "nl"])
       expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);

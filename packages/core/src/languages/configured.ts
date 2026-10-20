@@ -113,7 +113,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["pronunciation"],
-    enrichByDefault: true,
+    enrichByDefault: false,
   },
   et: {
     pronunciation: "pronunciation",
@@ -167,6 +167,35 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     enrichByDefault: true,
   },
   da: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Danish",
+      pronunciation:
+        "How the word is said, in IPA as Den Danske Ordbog writes it: stress ˈ, length ː and stød ˀ, leaving out the letters that are not said.",
+      empty: null,
+      never: "Not a respelling.",
+      sample: { term: "hus", pronunciation: "ˈhuˀs" },
+      duplicates: "term",
+    },
+    starts: ["notes", "pronunciation"],
+    enrichByDefault: true,
+  },
+  sv: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  is: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  pl: {
     pronunciation: "pronunciation",
     scripts: ["Latn"],
     format: null,

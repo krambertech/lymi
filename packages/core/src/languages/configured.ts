@@ -53,7 +53,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["notes", "pronunciation"],
-    enrichByDefault: true,
+    enrichByDefault: false,
   },
   vi: {
     pronunciation: "pronunciation",
@@ -113,7 +113,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["pronunciation"],
-    enrichByDefault: false,
+    enrichByDefault: true,
   },
   et: {
     pronunciation: "pronunciation",
@@ -210,11 +210,90 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     starts: ["notes"],
     enrichByDefault: true,
   },
+  de: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  fr: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "French",
+      pronunciation:
+        "IPA, without slashes. In a phrase, mark each liaison with ‿ (les amis → lez‿ami).",
+      empty: null,
+      never: "Not a respelling.",
+      sample: { term: "oiseau", pronunciation: "wazo" },
+      duplicates: "term",
+    },
+    starts: [],
+    enrichByDefault: true,
+  },
+  es: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: [],
+    enrichByDefault: true,
+  },
+  it: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: [],
+    enrichByDefault: true,
+  },
+  pt: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Portuguese",
+      pronunciation:
+        "IPA as the word is said in Portugal, without slashes; a pt-BR deck is said as in Brazil.",
+      empty: null,
+      never: "Not a respelling.",
+      sample: { term: "obrigado", pronunciation: "ɔbɾiˈɣaðu" },
+      duplicates: "term",
+    },
+    starts: [],
+    enrichByDefault: true,
+  },
+  "pt-BR": {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Brazilian Portuguese",
+      pronunciation: "IPA as the word is said in Brazil, without slashes.",
+      empty: null,
+      never: "Not a respelling.",
+      sample: { term: "obrigado", pronunciation: "obɾiˈɡadu" },
+      duplicates: "term",
+    },
+    starts: [],
+    enrichByDefault: true,
+  },
+  hu: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: [],
+    enrichByDefault: true,
+  },
+  cs: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: [],
+    enrichByDefault: true,
+  },
 };
 
-/** The row's own tag for each tag a configured row answers to, its aliases included. */
+/** The row's own tag for each tag a configured row answers to, in lower case, its aliases included. */
 export const CONFIGURED_TAGS: ReadonlyMap<string, string> = new Map(
   Object.entries(CONFIGURED).flatMap(([tag, row]) =>
-    [tag, ...(row.aliases ?? [])].map((each) => [each, tag] as const),
+    [tag, ...(row.aliases ?? [])].map((each) => [each.toLowerCase(), tag] as const),
   ),
 );

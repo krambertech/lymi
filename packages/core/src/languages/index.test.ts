@@ -113,7 +113,7 @@ describe("languageFormat", () => {
     expect(configuredLanguage("tl")).toBe(configuredLanguage("fil"));
   });
   it("finds no configured row for a supported language or another language's extended subtag", () => {
-    for (const tag of ["ja", "zh", "zh-yue", "it", null])
+    for (const tag of ["ja", "zh", "zh-yue", "en", null])
       expect(configuredLanguage(tag)).toBeNull();
     expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
   });
@@ -124,6 +124,13 @@ describe("languageFormat", () => {
     }
     expect(configuredLanguage("no")).toBe(configuredLanguage("nb"));
   });
+  it("lets a region's row win over its language's, so Portugal and Brazil differ", () => {
+    for (const tag of ["pt-BR", "pt_br", "PT-br", "pt-Latn-BR"])
+      expect(languageFormat(tag)?.tag).toBe("pt-BR");
+    for (const tag of ["pt", "pt-PT", "pt-Latn-PT"]) expect(languageFormat(tag)?.tag).toBe("pt");
+    expect(languageFormat("pt")?.pronunciation.sample.pronunciation).toBe("ɔbɾiˈɣaðu");
+  });
+
   it("keeps Lithuanian accent marks, including a tilde with no precomposed letter", () => {
     const format = languageFormat("lt");
     expect(format?.pronunciation.sample).toEqual({ term: "namas", pronunciation: "nãmas" });

@@ -22,7 +22,7 @@ A configured language joins with an invented fixture in `apps/web/src/server/enr
 
 A native ElevenLabs voice goes first only where it beats Gemini TTS, which speaks every language here: each candidate from the public library said ten words, scored by whether two of three transcribers heard them back. Vietnamese uses Ninh Đôn (northern): Gemini said nước as nục and refused ngân hàng. Bokmål uses Mia Starset (Oslo), which said tjue and kirke cleanly where Gemini drifted, and Swedish uses Evelina (Stockholm), which every listener heard right. Danish keeps Søren, chosen by listening, although the transcribers heard Gemini better; Danish's soft d and stød defeat them, so a person decides. Filipino and Tamil keep Gemini, which matched or beat every native voice. Polish keeps it, tied with the best native voice; Georgian, Armenian, Nynorsk, Icelandic, Latvian and Lithuanian keep it because the library has no voice for them, and Gemini's refusals, 3 of 10 Lithuanian words, fall to OpenAI. Estonian, Finnish and Dutch keep the voices already chosen by listening. A person should listen before these choices are final.
 
-A language with no native voice speaks with Gemini's default voice; one Gemini does not list falls to OpenAI, then Chirp; one none of them lists has no audio, and the audio route answers that it is not configured.
+Without a native voice a language speaks with Gemini, then OpenAI, then Chirp; with none of them it has no audio.
 
 ## Languages and tiers
 
@@ -40,6 +40,8 @@ Each language's notes are in [Writing cards](../card-writing.md).
 | Estonian, Finnish, Latvian, Icelandic | `et`, `fi`, `lv`, `is` | empty: read as written | configured, no format |
 | Swedish, Norwegian, Dutch | `sv`, `nb` (`no` means Bokmål), `nn`, `nl` | empty | configured, no format |
 | Polish | `pl` | empty: stress is penultimate | configured, no format |
+| French, Portuguese | `fr`, `pt` (Portugal), `pt-BR` | IPA; French marks liaison, each Portuguese row its variety | configured |
+| German, Spanish, Italian, Hungarian, Czech | `de`, `es`, `it`, `hu`, `cs` | empty | configured, no format |
 | Persian, Urdu | | | platform: right-to-left first |
 | Cantonese | `yue` | | supported: jyutping engine |
 
@@ -52,5 +54,5 @@ Filipino marks stress in place rather than respelling it in capitals: Filipino d
 3. Who reviews each invented fixture? A wrong expectation fails a right answer.
 4. Vietnamese has two tone placements, hòa and hoà, which NFC does not unify: should the duplicate key fold them?
 5. Should Western Armenian (`hyw`) get its own row?
-6. Should `GET /api/languages` publish whether a language enriches unasked, so a connected app can warn before it asks?
+6. Should `GET /api/languages` say whether a language enriches unasked?
 7. Should deck settings say why a gated language's AI fields start off?

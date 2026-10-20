@@ -187,9 +187,16 @@ export function pronunciationGuide(language: string | null | undefined): string 
   return format ? describePronunciation(format, "null") : null;
 }
 
-/** A configured language's own tag, found from any of its tags, so `tl` is Filipino's `fil`. */
+/** A configured language's own tag, found from any of its tags, so `tl` is Filipino's `fil` and `pt-BR` is `pt-br`. */
 function configuredTag(language: string | null | undefined): string | null {
-  return languageSupport(language) ? null : (CONFIGURED_TAGS.get(languageKey(language)) ?? null);
+  if (languageSupport(language)) return null;
+  // A row for a region, such as pt-br, wins over its language's own.
+  const [primary = "", ...rest] = subtags(language);
+  const region = rest.find((part) => /^[a-z]{2}$/.test(part));
+  return (
+    (region && CONFIGURED_TAGS.get(`${primary}-${region}`)) ||
+    (CONFIGURED_TAGS.get(primary) ?? null)
+  );
 }
 
 /** A configured language's row, found from any of its tags, or null. */

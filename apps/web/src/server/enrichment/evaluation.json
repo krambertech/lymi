@@ -1565,6 +1565,425 @@
       ]
     },
     {
+      "id": "de-en-b1",
+      "name": "German B1 for the DTZ",
+      "language": "de",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "de-en-b1-01",
+          "term": "der Tisch",
+          "expect": {
+            "meaning": { "includes": ["table"] },
+            "notes": { "includes": ["Tische"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "de-en-b1-02",
+          "term": "die Hand",
+          "expect": { "meaning": { "includes": ["hand"] }, "notes": { "includes": ["Hände"] } }
+        },
+        {
+          "id": "de-en-b1-03",
+          "term": "das Haus",
+          "expect": { "meaning": { "includes": ["house"] }, "notes": { "includes": ["Häuser"] } }
+        },
+        {
+          "id": "de-en-b1-04",
+          "term": "der Arzt",
+          "expect": { "meaning": { "includes": ["doctor"] }, "notes": { "includes": ["Ärzte"] } }
+        },
+        {
+          "id": "de-en-b1-05",
+          "term": "gehen",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "notes": { "includes": ["ging", "gegangen"] }
+          }
+        },
+        {
+          "id": "de-en-b1-06",
+          "term": "einkaufen",
+          "expect": { "meaning": { "includes": ["shop"] }, "notes": { "includes": ["ein|kaufen"] } }
+        },
+        {
+          "id": "de-en-b1-07",
+          "term": "warten",
+          "expect": { "meaning": { "includes": ["wait"] }, "notes": { "includes": ["auf"] } }
+        },
+        {
+          "id": "de-en-b1-08",
+          "term": "Wo ist der Bahnhof?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "fr-en-b1",
+      "name": "French for the TCF",
+      "language": "fr",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "fr-en-b1-01",
+          "term": "beau",
+          "expect": {
+            "meaning": { "includes": ["beautiful"] },
+            "notes": { "includes": ["belle", "beaux"] }
+          }
+        },
+        {
+          "id": "fr-en-b1-02",
+          "term": "vieux",
+          "expect": { "meaning": { "includes": ["old"] }, "notes": { "includes": ["vieille"] } }
+        },
+        {
+          "id": "fr-en-b1-03",
+          "term": "le cheval",
+          "expect": { "meaning": { "includes": ["horse"] }, "notes": { "includes": ["chevaux"] } }
+        },
+        {
+          "id": "fr-en-b1-04",
+          "term": "venir",
+          "expect": {
+            "meaning": { "includes": ["come"] },
+            "notes": { "includes": ["venu", "être"] }
+          }
+        },
+        {
+          "id": "fr-en-b1-05",
+          "term": "aller",
+          "expect": { "meaning": { "includes": ["go"] }, "notes": { "includes": ["vais"] } }
+        },
+        {
+          "id": "fr-en-b1-06",
+          "term": "oiseau",
+          "expect": {
+            "meaning": { "includes": ["bird"] },
+            "pronunciation": { "oneOf": ["wazo", "wa.zo"] }
+          }
+        },
+        {
+          "id": "fr-en-b1-07",
+          "term": "les amis",
+          "expect": {
+            "meaning": { "includes": ["friends"] },
+            "pronunciation": { "includes": ["‿", "z"] }
+          }
+        },
+        {
+          "id": "fr-en-b1-08",
+          "term": "Où est la gare ?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "es-en-b1",
+      "name": "Spanish for the DELE",
+      "language": "es",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "es-en-b1-01",
+          "term": "poder",
+          "expect": { "meaning": { "includes": ["can"] }, "notes": { "includes": ["puedo"] } }
+        },
+        {
+          "id": "es-en-b1-02",
+          "term": "dormir",
+          "expect": { "meaning": { "includes": ["sleep"] }, "notes": { "includes": ["duermo"] } }
+        },
+        {
+          "id": "es-en-b1-03",
+          "term": "pedir",
+          "expect": { "meaning": { "includes": ["ask"] }, "notes": { "includes": ["pido"] } }
+        },
+        {
+          "id": "es-en-b1-04",
+          "term": "mano",
+          "expect": { "meaning": { "includes": ["hand"] }, "notes": { "includes": ["feminine"] } }
+        },
+        {
+          "id": "es-en-b1-05",
+          "term": "árbol",
+          "expect": {
+            "meaning": { "includes": ["tree"] },
+            "example": { "includes": ["árbol"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "es-en-b1-06",
+          "term": "niño",
+          "expect": { "meaning": { "includes": ["boy"] }, "example": { "includes": ["niño"] } }
+        },
+        {
+          "id": "es-en-b1-07",
+          "term": "café",
+          "expect": { "meaning": { "includes": ["coffee"] }, "example": { "includes": ["café"] } }
+        },
+        {
+          "id": "es-en-b1-08",
+          "term": "¿Dónde está la estación?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "it-en-b1",
+      "name": "Italian for the CILS B1",
+      "language": "it",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "it-en-b1-01",
+          "term": "l'uovo",
+          "expect": { "meaning": { "includes": ["egg"] }, "notes": { "includes": ["uova"] } }
+        },
+        {
+          "id": "it-en-b1-02",
+          "term": "il braccio",
+          "expect": { "meaning": { "includes": ["arm"] }, "notes": { "includes": ["braccia"] } }
+        },
+        {
+          "id": "it-en-b1-03",
+          "term": "andare",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "notes": { "includes": ["vado", "essere"] }
+          }
+        },
+        {
+          "id": "it-en-b1-04",
+          "term": "venire",
+          "expect": {
+            "meaning": { "includes": ["come"] },
+            "notes": { "includes": ["vengo", "essere"] }
+          }
+        },
+        {
+          "id": "it-en-b1-05",
+          "term": "città",
+          "expect": { "meaning": { "includes": ["city"] }, "example": { "includes": ["città"] } }
+        },
+        {
+          "id": "it-en-b1-06",
+          "term": "perché",
+          "expect": { "meaning": { "includes": ["why"] }, "example": { "includes": ["perché"] } }
+        },
+        {
+          "id": "it-en-b1-07",
+          "term": "Dov'è la stazione?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "pt-br-en",
+      "name": "Brazilian Portuguese A2",
+      "language": "pt-BR",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "pt-br-en-01",
+          "term": "tia",
+          "expect": { "meaning": { "includes": ["aunt"] }, "pronunciation": { "includes": ["tʃ"] } }
+        },
+        {
+          "id": "pt-br-en-02",
+          "term": "cidade",
+          "expect": { "meaning": { "includes": ["city"] }, "pronunciation": { "includes": ["dʒ"] } }
+        },
+        {
+          "id": "pt-br-en-03",
+          "term": "leite",
+          "expect": { "meaning": { "includes": ["milk"] }, "pronunciation": { "includes": ["tʃ"] } }
+        },
+        {
+          "id": "pt-br-en-04",
+          "term": "ônibus",
+          "expect": { "meaning": { "includes": ["bus"] }, "notes": { "includes": ["autocarro"] } }
+        },
+        {
+          "id": "pt-br-en-05",
+          "term": "trem",
+          "expect": { "meaning": { "includes": ["train"] }, "notes": { "includes": ["comboio"] } }
+        },
+        {
+          "id": "pt-br-en-06",
+          "term": "fazer",
+          "expect": {
+            "meaning": { "includes": ["do"] },
+            "notes": { "includes": ["faço", "feito"] }
+          }
+        },
+        {
+          "id": "pt-br-en-07",
+          "term": "Onde fica a estação?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "pt-pt-en",
+      "name": "European Portuguese for the CIPLE",
+      "language": "pt-PT",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "pt-pt-en-01",
+          "term": "tia",
+          "expect": { "meaning": { "includes": ["aunt"] }, "pronunciation": { "excludes": ["tʃ"] } }
+        },
+        {
+          "id": "pt-pt-en-02",
+          "term": "cidade",
+          "expect": { "meaning": { "includes": ["city"] }, "pronunciation": { "excludes": ["dʒ"] } }
+        },
+        {
+          "id": "pt-pt-en-03",
+          "term": "leite",
+          "expect": { "meaning": { "includes": ["milk"] }, "pronunciation": { "includes": ["ɨ"] } }
+        },
+        {
+          "id": "pt-pt-en-04",
+          "term": "autocarro",
+          "expect": { "meaning": { "includes": ["bus"] }, "notes": { "includes": ["nibus"] } }
+        },
+        {
+          "id": "pt-pt-en-05",
+          "term": "comboio",
+          "expect": { "meaning": { "includes": ["train"] }, "notes": { "includes": ["trem"] } }
+        },
+        {
+          "id": "pt-pt-en-06",
+          "term": "fazer",
+          "expect": {
+            "meaning": { "includes": ["do"] },
+            "notes": { "includes": ["faço", "feito"] }
+          }
+        },
+        {
+          "id": "pt-pt-en-07",
+          "term": "Onde fica a estação?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "hu-en",
+      "name": "Hungarian A2",
+      "language": "hu",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "hu-en-01",
+          "term": "ló",
+          "expect": { "meaning": { "includes": ["horse"] }, "notes": { "includes": ["lovak"] } }
+        },
+        {
+          "id": "hu-en-02",
+          "term": "tűz",
+          "expect": { "meaning": { "includes": ["fire"] }, "notes": { "includes": ["tüzet"] } }
+        },
+        {
+          "id": "hu-en-03",
+          "term": "kenyér",
+          "expect": { "meaning": { "includes": ["bread"] }, "notes": { "includes": ["kenyeret"] } }
+        },
+        {
+          "id": "hu-en-04",
+          "term": "olvas",
+          "expect": { "meaning": { "includes": ["read"] }, "notes": { "includes": ["olvassa"] } }
+        },
+        {
+          "id": "hu-en-05",
+          "term": "kér",
+          "expect": { "meaning": { "includes": ["ask"] }, "notes": { "includes": ["kéri"] } }
+        },
+        {
+          "id": "hu-en-06",
+          "term": "eszik",
+          "expect": { "meaning": { "includes": ["eat"] }, "notes": { "includes": ["-ik"] } }
+        },
+        {
+          "id": "hu-en-07",
+          "term": "ház",
+          "expect": { "meaning": { "includes": ["house"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "hu-en-08",
+          "term": "Hol van az állomás?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "cs-en",
+      "name": "Czech for permanent residence",
+      "language": "cs",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "cs-en-01",
+          "term": "dělat",
+          "expect": {
+            "meaning": { "includes": ["do"] },
+            "notes": { "includes": ["udělat"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "cs-en-02",
+          "term": "psát",
+          "expect": { "meaning": { "includes": ["write"] }, "notes": { "includes": ["napsat"] } }
+        },
+        {
+          "id": "cs-en-03",
+          "term": "člověk",
+          "expect": { "meaning": { "includes": ["person"] }, "notes": { "includes": ["lidé"] } }
+        },
+        {
+          "id": "cs-en-04",
+          "term": "dům",
+          "expect": { "meaning": { "includes": ["house"] }, "notes": { "includes": ["domu"] } }
+        },
+        {
+          "id": "cs-en-05",
+          "term": "kůň",
+          "expect": { "meaning": { "includes": ["horse"] }, "notes": { "includes": ["koně"] } }
+        },
+        {
+          "id": "cs-en-06",
+          "term": "úkol",
+          "expect": { "meaning": { "includes": ["task"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "cs-en-07",
+          "term": "Kde je nádraží?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
       "id": "es-uk",
       "name": "Іспанська A1",
       "language": "es",

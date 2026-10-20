@@ -9,6 +9,7 @@ import {
   importProgress,
   type LymiFileCard,
   type LymiFileManifest,
+  newDeckEnrichFields,
   normalizeCardText,
 } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
@@ -279,6 +280,20 @@ describe("importing a Quizlet set", () => {
     // The same set again updates what it added and adds nothing.
     const again = await runImport(ctx, "quizlet.txt", NO_CHOICES, bytes);
     expect(again.preview).toMatchObject({ added: 0, existing: 6 });
+  });
+
+  it("stores a new deck's AI fields as the language's evaluation decides", async () => {
+    const ctx = await fresh();
+    const bytes = pasted(quizletText("04-cyrillic-rtl-bom.txt"), { deckName: "Tagalog" });
+    const { id } = await upload(ctx, "quizlet.txt", bytes);
+    await inspectImport(ctx, id, env.IMPORTS);
+    const deck = (await getImport(ctx, id)).summary?.decks[0]?.key as string;
+    await runImport(ctx, "quizlet.txt", { languages: { [deck]: "tl" }, roles: {} }, bytes);
+    const [stored] = await db
+      .select({ enrichFields: schema.decks.enrichFields })
+      .from(schema.decks)
+      .where(and(eq(schema.decks.userId, ctx.userId), eq(schema.decks.name, "Tagalog")));
+    expect(stored?.enrichFields).toEqual(newDeckEnrichFields("tl"));
   });
 
   it("reads a bare .txt with detected separators", async () => {

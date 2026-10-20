@@ -58,7 +58,9 @@ export function defaultEnrichFields(
 ): DeckEnrichField[] {
   const primary = language?.split("-")[0]?.toLowerCase();
   if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
+  // Below the evaluation's bar a deck that never chose stays where it was before the row existed.
   const configured = configuredLanguage(language);
+  if (configured && !configured.enrichByDefault) return ["meaning", "example"];
   const starts = (field: "notes" | "pronunciation", fallback: ReadonlySet<string>) =>
     configured ? configured.starts.includes(field) : fallback.has(primary);
   return [

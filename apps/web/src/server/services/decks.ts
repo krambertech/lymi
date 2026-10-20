@@ -267,10 +267,19 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
       : seriesId === null
         ? { seriesId: null, position: 0 }
         : { seriesId, position: await nextDeckPosition(ctx, seriesId) };
+  // A deck that never chose and moves into a language below the bar stores that, as a new one would.
+  const moved =
+    fields.defaultLanguage !== undefined &&
+    fields.defaultLanguage !== stored?.defaultLanguage &&
+    !stored?.enrichFields &&
+    !fields.enrichFields
+      ? newDeckEnrichFields(fields.defaultLanguage, fields.purpose ?? stored?.purpose)
+      : null;
   const result = await db
     .update(schema.decks)
     .set({
       ...fields,
+      ...(moved ? { enrichFields: moved } : {}),
       // Blank instructions are none, so the prompt never carries an empty section.
       ...(enrichInstructions === undefined
         ? {}

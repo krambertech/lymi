@@ -2,13 +2,20 @@ import { describe, expect, it } from "vitest";
 import {
   clozeAnswer,
   clozeNumbers,
+  fieldLanguage,
   furiganaBase,
   furiganaReading,
   hasFurigana,
+  inlinePinyin,
   isImageOcclusion,
+  markedExample,
+  pinyinLine,
+  pinyinReading,
   plainReading,
   questionField,
+  repeatsText,
   revealCloze,
+  samePinyin,
 } from "./text";
 
 describe("cloze", () => {
@@ -75,5 +82,58 @@ describe("plainReading", () => {
     expect(plainReading("かんじ")).toBe("かんじ");
     expect(plainReading("ネコ")).toBe("ネコ");
     expect(plainReading("[sound:neko.mp3]")).toBe("[sound:neko.mp3]");
+  });
+});
+
+describe("pinyin", () => {
+  it("reads a pinyin field as one line, keeping separate readings apart", () => {
+    expect(pinyinReading("yì\ndiǎnr ", "一点儿")).toBe("yì diǎnr");
+    expect(pinyinReading("xíng\nháng", "行")).toBe("xíng / háng");
+    expect(pinyinReading("yín  háng", "银行")).toBe("yín háng");
+  });
+  it("writes a sentence's numbered pinyin in tone marks, and anything else as it is", () => {
+    expect(pinyinLine("Wo3 hen3 hao3.")).toBe("Wǒ hěn hǎo.");
+    expect(pinyinLine("see p. 3")).toBe("see p. 3");
+  });
+  it("names Mandarin from pinyin fields, and traditional when its term is", () => {
+    expect(fieldLanguage(["Hanzi", "Pinyin", "Meaning"])).toBe("zh");
+    expect(fieldLanguage(["Traditional", "拼音", "Meaning"])).toBe("zh-Hant");
+    expect(fieldLanguage(["Characters", "Jyutping", "Pinyin"])).toBeNull();
+    expect(fieldLanguage(["Front", "Back"])).toBeNull();
+  });
+  it("knows numbered pinyin for the marked pinyin it repeats", () => {
+    expect(samePinyin("yin2hang2", "yínháng")).toBe(true);
+    expect(samePinyin("yi4 dian3r", "yìdiǎnr")).toBe(true);
+    expect(samePinyin("ma5", "ma")).toBe(true);
+    expect(samePinyin("yin2xing2", "yínháng")).toBe(false);
+    expect(samePinyin("bank", "bank")).toBe(false);
+  });
+  it("knows a coloured or ruby copy of a text", () => {
+    const toned = '<span class="tone3">你</span><span class="tone3">好</span>';
+    expect(repeatsText(toned, "你好")).toBe(true);
+    expect(repeatsText("<ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>", "你好")).toBe(true);
+    expect(repeatsText("你[nǐ]好[hǎo]", "你好")).toBe(true);
+    expect(repeatsText("我很好。", "我[Wǒ]很[hěn]好[hǎo]。")).toBe(true);
+    expect(repeatsText("您好", "你好")).toBe(false);
+    expect(repeatsText("", "你好")).toBe(false);
+  });
+  it("marks tone numbers inside an example's brackets", () => {
+    expect(markedExample("我说你好[ni3 hao3]。")).toBe("我说你好[nǐ hǎo]。");
+    expect(markedExample("[sound:a.mp3] no pinyin")).toBe("[sound:a.mp3] no pinyin");
+  });
+  it("puts a sentence's pinyin inline, one bracket a pinyin word", () => {
+    expect(inlinePinyin("我去银行。", "Wǒ qù yínháng.")).toBe("我[Wǒ]去[qù]银行[yín háng]。");
+    expect(inlinePinyin("小姐，请回来", "Xiǎojie, qǐng huílai")).toBe(
+      "小姐[Xiǎo jie]，请[qǐng]回来[huí lai]",
+    );
+    expect(inlinePinyin("我有一点儿。", "wo3 you3 yi4dian3r")).toBe(
+      "我[wǒ]有[yǒu]一点儿[yì diǎnr]。",
+    );
+  });
+  it("gives no inline pinyin when the syllables do not fall one a character", () => {
+    expect(inlinePinyin("他学习3个小时。", "Tā xuéxí sān gè xiǎoshí.")).toBeNull();
+    expect(inlinePinyin("我去银行。", "Wǒ qù.")).toBeNull();
+    expect(inlinePinyin("我去OK", "Wǒ qù OK")).toBeNull();
+    expect(inlinePinyin("你好", "a sentence in English")).toBeNull();
   });
 });

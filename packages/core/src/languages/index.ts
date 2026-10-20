@@ -159,7 +159,9 @@ function formatOut(tag: string, row: FormatRow, engine: ReadingEngine | null): L
 /** Every language Lymi writes in its own format, records first. */
 export const LANGUAGE_FORMATS: readonly LanguageOut[] = [
   ...Object.values(LANGUAGE_RECORDS).map((record) => formatOut(record.tag, record, record.engine)),
-  ...Object.entries(CONFIGURED).map(([tag, row]) => formatOut(tag, row, null)),
+  ...Object.entries(CONFIGURED).flatMap(([tag, { format, ...row }]) =>
+    format ? [formatOut(tag, { ...row, format }, null)] : [],
+  ),
 ];
 
 /** The row a tag's format comes from, found the way every other function here finds a language. */
@@ -169,7 +171,8 @@ function formatSource(
   const record = languageSupport(language);
   if (record) return { tag: record.tag, row: record, engine: record.engine };
   const tag = configuredTag(language);
-  return tag ? { tag, row: CONFIGURED[tag] as LanguageConfig, engine: null } : null;
+  const row = tag ? CONFIGURED[tag] : undefined;
+  return tag && row?.format ? { tag, row: { ...row, format: row.format }, engine: null } : null;
 }
 
 /** How this language's cards are written, or null for a language with no format of its own. */

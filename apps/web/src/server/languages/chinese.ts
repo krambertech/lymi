@@ -11,11 +11,11 @@ import {
 import type { LanguagePrompts } from "./types";
 
 /** Particles, which dictionaries write unmarked even as a word of their own. */
-const PARTICLES = new Set([..."了的吗呢吧啊着过得地么"]);
+const PARTICLES = new Set([..."了的吗呢吧啊么"]);
 
-/** Characters dictionaries read in the neutral tone after another in the same word: 东西 dōngxi, 我们 wǒmen, 晚上 wǎnshang. */
+/** Characters dictionaries read in the neutral tone after another in the same word: 东西 dōngxi, 我们 wǒmen, 觉得 juéde. */
 const NEUTRAL = new Set([
-  ..."们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
+  ..."着过得地们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
 ]);
 
 /**

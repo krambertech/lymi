@@ -394,6 +394,20 @@
     {
       "rule": "tone marks on every syllable",
       "field": "pronunciation",
+      "term": "地",
+      "text": "di",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "觉得",
+      "text": "juéde",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
       "term": "学习",
       "text": "ɕɥɛ̌ɕǐ",
       "pass": false

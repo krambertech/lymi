@@ -70,22 +70,22 @@ const GUIDES: Record<string, FieldGuide> = {
       "The term for a noun has its article, to show gender. Don't repeat the article in the meaning.",
     notes:
       "Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.",
+    example: "Keep every written accent (*città*, *perché*).",
     pronunciation: "Leave pronunciation null, unless the stress isn't where the spelling suggests.",
   },
   es: {
     notes:
       "Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).",
+    example: "Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).",
     pronunciation: "Spanish is read as it is written. Leave pronunciation null.",
   },
   fr: {
     notes:
-      "Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.",
-    pronunciation: "IPA, because French spelling doesn't show how a word sounds.",
+      "Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Adjective: an irregular feminine or plural (*beau, belle, beaux*). Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.",
   },
   pt: {
     notes:
-      "Verb: its irregular forms (*fazer: faço, fiz, feito*). Noun: the gender if the ending doesn't show it (*o mapa*).",
-    pronunciation: "IPA. European Portuguese, unless the deck's language is pt-BR.",
+      "Verb: its irregular forms (*fazer: faço, fiz, feito*). Noun: the gender if the ending doesn't show it (*o mapa*). A word Brazil and Portugal say differently: give the other one (*ônibus*, Brazil; *autocarro*, Portugal). Write each in the spelling of the deck's variety.",
   },
   en: {
     notes:
@@ -98,6 +98,18 @@ const GUIDES: Record<string, FieldGuide> = {
   ko: {
     notes:
       "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",
+  },
+  hu: {
+    notes:
+      "Noun: an irregular plural or accusative (*ló, lovak, lovat*). Verb: the third person singular present, indefinite and definite (*olvas · olvassa*), and say so if it is an -ik verb (*eszik*). Suffixes follow vowel harmony: give the form this word takes where it is not the usual one (*tűz → tüzet*). Keep long vowels (á é í ó ö ő ú ü ű) as written.",
+    pronunciation:
+      "Hungarian is read as it is written, stressed on the first syllable. Leave pronunciation null.",
+  },
+  cs: {
+    notes:
+      "Verb: the aspect pair, imperfective / perfective (*dělat / udělat*). Noun: the gender if the ending doesn't show it, and an irregular genitive or plural (*člověk, lidé*; *dům, domu*). Keep háček and čárka, and ů apart from ú, as written.",
+    pronunciation:
+      "Czech is read as it is written, stressed on the first syllable. Leave pronunciation null.",
   },
   lv: {
     notes:

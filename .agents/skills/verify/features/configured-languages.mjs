@@ -78,6 +78,26 @@ export default async function drive({ page, base, step, api, expect }) {
     return { man, decks: [lithuanian, norwegian] };
   });
 
+  await step("A pt-PT deck is said as in Portugal", async () => {
+    const { languages } = await api("/api/languages");
+    const tags = languages.map((language) => language.tag);
+    expect(tags).toEqual(expect.arrayContaining(["pt", "pt-PT", "fr"]));
+    const portugal = await post("/api/decks", {
+      name: "Português",
+      defaultLanguage: "pt-PT",
+      enrichFields: ["meaning", "pronunciation"],
+    });
+    expect(portugal.enrichFields).toEqual(["meaning", "pronunciation"]);
+    await post("/api/cards/batch", {
+      cards: [{ deckId: portugal.id, term: "leite", enrich: true }],
+    });
+    await expect.poll(settled(["leite"]), { timeout: 120_000 }).toEqual([null]);
+    const filled = await find("leite");
+    expect(filled.pronunciation).toMatch(/ɨ/);
+    expect(filled.pronunciation).not.toMatch(/tʃ/);
+    return { filled };
+  });
+
   await step("Review წყალი and reveal it: ts'q'ali shows, in Georgian's face", async () => {
     await page.goto(`/review?deck=${georgian.id}`);
     const term = page.getByText("წყალი").filter({ visible: true }).first();

@@ -113,7 +113,7 @@ describe("languageFormat", () => {
     expect(configuredLanguage("tl")).toBe(configuredLanguage("fil"));
   });
   it("finds no configured row for a supported language or another language's extended subtag", () => {
-    for (const tag of ["ja", "zh", "zh-yue", "it", null])
+    for (const tag of ["ja", "zh", "zh-yue", "en", null])
       expect(configuredLanguage(tag)).toBeNull();
     expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
   });
@@ -123,6 +123,12 @@ describe("languageFormat", () => {
       expect(languageFormat(tag)).toBeNull();
     }
     expect(configuredLanguage("no")).toBe(configuredLanguage("nb"));
+  });
+  it("lets a region's row win over its language's, so Portugal and Brazil differ", () => {
+    for (const tag of ["pt-PT", "pt_pt", "PT-pt", "pt-Latn-PT"])
+      expect(languageFormat(tag)?.tag).toBe("pt-PT");
+    for (const tag of ["pt", "pt-BR", "pt-Latn-BR"]) expect(languageFormat(tag)?.tag).toBe("pt");
+    expect(languageFormat("pt-PT")?.pronunciation.sample.pronunciation).toBe("ɔbɾiˈɣaðu");
   });
   it("keeps Lithuanian accent marks, including a tilde with no precomposed letter", () => {
     const format = languageFormat("lt");

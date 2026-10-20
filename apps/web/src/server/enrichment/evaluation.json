@@ -588,7 +588,7 @@
           "id": "zh-tw-03",
           "term": "還",
           "meaning": "to give back",
-          "expect": { "pronunciation": { "oneOf": ["huán"] } }
+          "expect": { "pronunciation": { "oneOf": ["huán"] }, "example": { "excludes": ["hái"] } }
         },
         {
           "id": "zh-tw-04",

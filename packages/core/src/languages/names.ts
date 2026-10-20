@@ -32,6 +32,7 @@ export const LANGUAGE_TAGS = [
   "pl",
   "pt",
   "pt-BR",
+  "pt-PT",
   "ro",
   "ru",
   "sk",

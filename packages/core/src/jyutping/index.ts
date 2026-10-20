@@ -85,11 +85,12 @@ export function jyutpingPair(char: string, syllable: string): string {
 }
 
 /**
- * A pronunciation as stored: raised tone numbers become digits (nei⁵ hou² → nei5 hou2), but only
- * when that gives toned Jyutping, so an IPA line with Chao tone numbers stays as written.
+ * A pronunciation as stored: raised or full-width tone numbers and letters become plain ones
+ * (nei⁵ hou², nei５ hou２ → nei5 hou2), but only when that gives toned Jyutping, so an IPA line with
+ * Chao tone numbers stays as written.
  */
 export function jyutpingDigits(pronunciation: string): string {
-  if (!/[¹²³⁴⁵⁶]/u.test(pronunciation)) return pronunciation;
+  if (pronunciation.normalize("NFKC") === pronunciation.normalize("NFC")) return pronunciation;
   const clean = cleanJyutping(pronunciation);
   return jyutpingSyllables(clean)?.every(hasTone) ? clean : pronunciation;
 }

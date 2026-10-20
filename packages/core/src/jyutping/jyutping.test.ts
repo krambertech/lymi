@@ -23,6 +23,8 @@ describe("jyutpingSyllables", () => {
     expect(jyutpingSyllables("nei5hou2")).toEqual(["nei5", "hou2"]);
     expect(jyutpingSyllables("Hoeng1gong2")).toEqual(["Hoeng1", "gong2"]);
     expect(jyutpingSyllables("gwong2-dung1")).toEqual(["gwong2", "dung1"]);
+    expect(jyutpingSyllables("nei５ hou２")).toEqual(["nei5", "hou2"]);
+    expect(jyutpingSyllables("ｎｅｉ5")).toEqual(["nei5"]);
   });
   it("reads the syllabic nasals of 唔 and 五, and keeps ng as an initial where a vowel follows", () => {
     expect(jyutpingSyllables("m4 goi1")).toEqual(["m4", "goi1"]);
@@ -69,6 +71,12 @@ describe("jyutpingTermReading", () => {
     expect(drawn("卡拉OK", "kaa1 laa1 OK")).toBe("卡[kaa1]拉[laa1]OK");
     expect(drawn("T恤", "T seot1")).toBe("T恤[seot1]");
   });
+  it("lets letters take a syllable a letter, or one for the run, when the reading says them", () => {
+    expect(drawn("T恤", "ti1 seot1")).toBe("T[ti1]恤[seot1]");
+    expect(drawn("A貨", "ei1 fo3")).toBe("A[ei1]貨[fo3]");
+    expect(drawn("卡拉OK", "kaa1 laa1 ou1 kei1")).toBe("卡[kaa1]拉[laa1]OK[ou1 kei1]");
+    expect(drawn("BB仔", "bi4 zai2")).toBe("BB[bi4]仔[zai2]");
+  });
   it("puts a reading that does not fit over the whole term", () => {
     expect(drawn("你好嗎", "nei5 hou2")).toBe("你好嗎[nei5 hou2]");
   });
@@ -93,7 +101,13 @@ describe("jyutpingKey", () => {
   it("matches across spacing, case, punctuation and raised tone numbers", () => {
     const key = jyutpingKey("香港", "hoeng1 gong2");
     expect(key).toBe("hoeng1gong2");
-    for (const reading of ["Hoeng1gong2", "hoeng1-gong2", "hoeng¹ gong²", "hoeng1 gong2."])
+    for (const reading of [
+      "Hoeng1gong2",
+      "hoeng1-gong2",
+      "hoeng¹ gong²",
+      "hoeng１ gong２",
+      "hoeng1 gong2.",
+    ])
       expect(jyutpingKey("香港", reading)).toBe(key);
   });
   it("gives no key unless every character's syllable carries a tone", () => {
@@ -108,6 +122,8 @@ describe("jyutpingKey", () => {
   });
   it("keys letters by the characters' syllables alone", () => {
     expect(jyutpingKey("卡拉OK", "kaa1 laa1 OK")).toBe("kaa1laa1");
+    expect(jyutpingKey("T恤", "ti1 seot1")).toBe("ti1seot1");
+    expect(jyutpingKey("A貨", "ei1 fo3")).toBe("ei1fo3");
   });
 });
 
@@ -140,6 +156,15 @@ describe("parseJyutping", () => {
       { text: "上去" },
     ]);
   });
+  it("reads hyphens and raised or full-width tone numbers inside a bracket", () => {
+    expect(parseJyutping("我講廣東話[gwong2-dung1 waa2]。")[1]).toEqual({
+      text: "廣東話",
+      reading: "gwong2-dung1 waa2",
+    });
+    expect(parseJyutping("你好[nei⁵ hou²]")).toEqual([{ text: "你好", reading: "nei⁵ hou²" }]);
+    expect(parseJyutping("你好[nei５ hou２]")).toEqual([{ text: "你好", reading: "nei５ hou２" }]);
+    expect(stripJyutping("我講廣東話[gwong2-dung1 waa2]。")).toBe("我講廣東話。");
+  });
   it("leaves a bracket that is not toned Jyutping, or finds too few characters, as written", () => {
     for (const text of ["[sound:hou2.mp3]你好", "我話[ok]", "好[hou2 hou2]", "我[hao3]"])
       expect(parseJyutping(text)).toEqual([{ text }]);
@@ -160,6 +185,7 @@ describe("parseJyutping", () => {
 describe("jyutpingDigits", () => {
   it("lowers raised tone numbers when that gives Jyutping", () => {
     expect(jyutpingDigits("nei⁵ hou²")).toBe("nei5 hou2");
+    expect(jyutpingDigits("nei５ hou２")).toBe("nei5 hou2");
   });
   it("leaves anything else as written", () => {
     expect(jyutpingDigits("nei5 hou2")).toBe("nei5 hou2");

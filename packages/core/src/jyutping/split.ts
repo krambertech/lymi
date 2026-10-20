@@ -7,8 +7,6 @@ export type ReadingToken = { word: string; syllables: string[] | null };
 const BREAK = /[\s'’ʼ‘-]+/u;
 /** Punctuation a word may carry that is no part of its sound. */
 const EDGE = /^[\p{P}]+|[\p{P}]+$/gu;
-/** Tone numbers some sources write raised, as in nei⁵ hou², in tone order. */
-const RAISED = "¹²³⁴⁵⁶";
 
 /**
  * A word written solid as syllables, or null. Each takes the longest syllable that lets the rest
@@ -38,13 +36,12 @@ function syllablesOf(word: string): string[] | null {
   return /^[a-z1-6]+$/iu.test(word) ? splitWord(word) : null;
 }
 
-/** A reading cleaned for drawing and splitting: NFC, raised tone numbers as digits, single spaces. */
+/**
+ * A reading cleaned for drawing and splitting: NFKC, so raised tone numbers (nei⁵) and an input
+ * method's full-width ones (nei５) become digits, with single spaces.
+ */
 export function cleanJyutping(reading: string): string {
-  return reading
-    .normalize("NFC")
-    .trim()
-    .replace(/[¹²³⁴⁵⁶]/gu, (digit) => String(RAISED.indexOf(digit) + 1))
-    .replace(/\s+/gu, " ");
+  return reading.normalize("NFKC").trim().replace(/\s+/gu, " ");
 }
 
 /** A reading as its words, each split into syllables when it is Jyutping. */

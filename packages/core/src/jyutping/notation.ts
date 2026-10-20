@@ -6,8 +6,8 @@ import { isHan } from "../pinyin/align";
 import type { JyutpingSegment } from "./align";
 import { hasTone, jyutpingSyllables } from "./split";
 
-/** A bracket that may hold Jyutping: letters, tone numbers, spaces and apostrophes. */
-export const JYUTPING_BRACKET = /\[([a-zA-Z1-6 '’]{1,60})\]/gu;
+/** A bracket that may hold Jyutping: letters, tone numbers plain, raised or full-width, spaces, hyphens and apostrophes. */
+export const JYUTPING_BRACKET = /\[([a-zA-Zａ-ｚＡ-Ｚ1-6¹²³⁴⁵⁶１-６ '’-]{1,60})\]/gu;
 
 /** A bracket's syllables when it is toned Jyutping, so `[OK]` or `[sound:ni.mp3]` never reads a character. */
 function bracketSyllables(reading: string): string[] | null {

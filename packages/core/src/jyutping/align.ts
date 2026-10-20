@@ -24,37 +24,77 @@ function runs(text: string): Run[] {
   return out;
 }
 
+/** A run of Latin letters, which Cantonese may read a syllable a letter (A貨, ei1 fo3) or as one. */
+const LATIN = /^\p{Script=Latin}+$/u;
+
+type Queued = { text: string; word: boolean };
+
+/** The ways a run of letters or digits may take the reading at `next`: how many items, and whether they are drawn over it. */
+function wordOptions(run: Run, queue: readonly Queued[], next: number) {
+  const out: { take: number; drawn: boolean }[] = [];
+  if (queue[next]?.text.toLowerCase() === run.text.toLowerCase())
+    out.push({ take: 1, drawn: false });
+  if (LATIN.test(run.text)) {
+    const letters = [...run.text].length;
+    const syllables = (take: number) =>
+      take > 0 && queue.slice(next, next + take).filter((item) => !item.word).length === take;
+    if (letters > 1 && syllables(letters)) out.push({ take: letters, drawn: true });
+    if (syllables(1)) out.push({ take: 1, drawn: true });
+  }
+  out.push({ take: 0, drawn: false });
+  return out;
+}
+
 /**
- * The term with one syllable over each Han character, or null when they do not fit. Letters and
- * digits stay plain and take a word of the reading only when it is them as written (卡拉OK, kaa1
- * laa1 OK).
+ * The term with one syllable over each Han character, or null when they do not fit. Letters take
+ * a word of the reading that is them as written (卡拉OK, kaa1 laa1 OK), else a syllable a letter or
+ * one for the run (T恤, ti1 seot1), else none; digits stay plain.
  */
 export function alignJyutping(
   term: string,
   tokens: readonly ReadingToken[],
 ): JyutpingSegment[] | null {
-  const queue = tokens.flatMap((token) =>
+  const queue = tokens.flatMap<Queued>((token) =>
     token.syllables
       ? token.syllables.map((text) => ({ text, word: false }))
       : [{ text: token.word, word: true }],
   );
-  const out: JyutpingSegment[] = [];
-  let next = 0;
-  for (const run of runs(term)) {
-    if (run.kind === "han") {
-      const syllable = queue[next];
-      if (!syllable || syllable.word) return null;
-      next += 1;
-      out.push({ text: run.text, reading: syllable.text });
-      continue;
+  const parts = runs(term);
+  const failed = new Set<string>();
+  const visit = (at: number, next: number): JyutpingSegment[] | null => {
+    const run = parts[at];
+    if (!run) return next === queue.length ? [] : null;
+    if (failed.has(`${at}:${next}`)) return null;
+    const options =
+      run.kind === "han"
+        ? queue[next]?.word === false
+          ? [{ take: 1, drawn: true }]
+          : []
+        : run.kind === "word"
+          ? wordOptions(run, queue, next)
+          : [{ take: 0, drawn: false }];
+    for (const { take, drawn } of options) {
+      const rest = visit(at + 1, next + take);
+      if (!rest) continue;
+      const reading = queue
+        .slice(next, next + take)
+        .map((item) => item.text)
+        .join(" ");
+      return [drawn ? { text: run.text, reading } : { text: run.text }, ...rest];
     }
-    if (run.kind === "word" && queue[next]?.text.toLowerCase() === run.text.toLowerCase())
-      next += 1;
+    failed.add(`${at}:${next}`);
+    return null;
+  };
+  const segments = visit(0, 0);
+  if (!segments) return null;
+  const out: JyutpingSegment[] = [];
+  for (const segment of segments) {
     const last = out.at(-1);
-    if (last && last.reading === undefined) last.text += run.text;
-    else out.push({ text: run.text });
+    if (segment.reading === undefined && last && last.reading === undefined)
+      last.text += segment.text;
+    else out.push(segment);
   }
-  return next === queue.length ? out : null;
+  return out;
 }
 
 /**

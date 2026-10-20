@@ -29,6 +29,14 @@ describe("markedForm", () => {
   it("draws ё in the term's case where the pronunciation restores it", () => {
     expect(markedForm("ЕЖ", "ёж", RU)).toBe("ЁЖ");
   });
+  it("counts a hyphenated word's syllables across the hyphen", () => {
+    expect(markedForm("что-то", "что́-то", RU)).toBe("что́-то");
+    expect(markedForm("из-за", "и́з-за", RU)).toBe("и́з-за");
+    expect(markedForm("пол-литра", "по́л-ли́тра", RU)).toBe("по́л-ли́тра");
+    expect(markedForm("кто‑то", "кто́‑то", RU)).toBe("кто́‑то");
+    // A hyphen between spaces is no part of a word.
+    expect(markedForm("дом - сад", "до́м - са́д", RU)).toBeNull();
+  });
   it("lets a word take two acutes, as тво́ро́г does", () => {
     expect(markedForm("творог", "тво́ро́г", RU)).toBe("тво́ро́г");
   });

@@ -9,6 +9,7 @@ export const russian = {
   tag: "ru",
   // Onest draws Cyrillic and U+0301.
   scripts: [],
+  written: ["Cyrl"],
   engine: "stress",
   stress: { vowels: "аеёиоуыэюя", restores: { ё: "е" } },
   pronunciation: "stress",

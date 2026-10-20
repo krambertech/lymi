@@ -3932,6 +3932,9 @@ msgstr "Повторюй у своєму темпі. Нові картки з’
 msgid "Review progress"
 msgstr "Прогрес повторення"
 
+msgid "Review shows the stress only when it’s the term with a stress mark added, as in за́мок."
+msgstr "Наголос видно під час повторення, лише якщо це термін із доданим знаком наголосу, як-от за́мок."
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
 

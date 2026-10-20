@@ -69,11 +69,19 @@ export function markedForm(term: string, pronunciation: string, rules: StressRul
   return marks > 0 ? out.normalize("NFC") : null;
 }
 
-/** The characters split at each one that is not a letter, which stands as a word of its own. */
+/** A hyphen between letters joins one word, so что́-то counts its syllables across it. */
+const HYPHEN = /^[-\u2010\u2011]$/u;
+
+/**
+ * The characters split at each one that is not a letter, which stands as a word of its own. A
+ * hyphen with letters on both sides stays inside its word.
+ */
 function words(chars: readonly Drawn[]): Drawn[][] {
   const out: Drawn[][] = [[]];
-  for (const char of chars) {
-    if (/^\p{L}/u.test(char.text)) (out.at(-1) as Drawn[]).push(char);
+  for (const [i, char] of chars.entries()) {
+    const letter = (at: number) => /^\p{L}/u.test(chars[at]?.text ?? "");
+    const joins = HYPHEN.test(char.text) && letter(i - 1) && letter(i + 1);
+    if (letter(i) || joins) (out.at(-1) as Drawn[]).push(char);
     else out.push([char], []);
   }
   return out;

@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
+  drawsTermReading,
   gradeAllowed,
   type KnownReadings,
   type Rating,
@@ -523,6 +524,8 @@ export function ReviewCard({
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
   const reading = useMemo(() => termShowsPronunciation(card), [card]);
+  // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
+  const readingOver = useMemo(() => drawsTermReading(card), [card]);
   const cueReading = revealed || stateKey(item.fsrsState) !== "known";
   const term = <TermText card={card} />;
   const label =
@@ -719,9 +722,11 @@ export function ReviewCard({
     const pronunciation =
       card.pronunciation &&
       (reading ? (
-        <p className="sr-only" lang={card.language ?? undefined}>
-          {card.pronunciation}
-        </p>
+        readingOver && (
+          <p className="sr-only" lang={card.language ?? undefined}>
+            {card.pronunciation}
+          </p>
+        )
       ) : (
         <motion.p
           variants={answerLine}
@@ -951,7 +956,7 @@ export function ReviewCard({
                     </p>
                     {/* A drawn reading is hidden from a screen reader, which hears the reading here while
                         it shows on the cue; after the reveal the answer's line says it. */}
-                    {mode.cue === "term" && reading && cueReading && !revealed && (
+                    {mode.cue === "term" && readingOver && cueReading && !revealed && (
                       <p className="sr-only" lang={card.language ?? undefined}>
                         {card.pronunciation}
                       </p>

@@ -21,5 +21,6 @@ export * from "./responses";
 export * from "./sections";
 export * from "./slipping";
 export * from "./streak";
+export * from "./stress";
 export * from "./terms";
 export * from "./types";

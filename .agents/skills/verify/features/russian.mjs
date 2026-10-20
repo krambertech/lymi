@@ -113,7 +113,7 @@ export default async function drive({ page, base, step, api, expect }) {
     },
   );
 
-  await step("The card form calls a Russian pronunciation Stress", async () => {
+  await step("The card form calls a Russian pronunciation Stress and previews it", async () => {
     await page.goto("/library");
     await page
       .getByRole("main")
@@ -123,8 +123,17 @@ export default async function drive({ page, base, step, api, expect }) {
     await page.getByRole("main").getByRole("button", { name: "Add", exact: true }).click();
     await page.getByRole("menuitem", { name: /^New card/ }).click();
     const dialog = page.getByRole("dialog", { name: "Add a card" });
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("мука");
     await dialog.getByRole("button", { name: "Stress", exact: true }).click();
-    await expect(dialog.getByRole("textbox", { name: "Stress", exact: true })).toBeVisible();
+    const stress = dialog.getByRole("textbox", { name: "Stress", exact: true });
+    await stress.fill("мука́");
+    // The preview draws the stress in place; it is aria-hidden, so read it by its text.
+    await expect(dialog.getByText("мука́", { exact: true })).toBeVisible();
+    const hint = dialog.getByText(/^Review shows the stress only when/);
+    await expect(hint).toHaveCount(0);
+    // A typo that is not the term with marks added draws nothing, and the form says so.
+    await stress.fill("мкуа́");
+    await expect(hint).toBeVisible();
     await page.keyboard.press("Escape");
     const { cards } = await api(`/api/cards?deckId=${words.id}`);
     return { cards };

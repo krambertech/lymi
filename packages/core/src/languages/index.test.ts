@@ -188,6 +188,20 @@ describe("languageFormat", () => {
   });
 });
 
+describe("languageFormat for Russian", () => {
+  it("publishes Cyrillic, though Onest draws it with no face of its own", () => {
+    expect(languageFormat("ru")).toMatchObject({
+      scripts: ["Cyrl"],
+      pronunciation: { label: "stress", sample: { term: "замок", pronunciation: "за́мок" } },
+      duplicates: "term-and-reading",
+    });
+    expect(languageScript("ru")).toBeNull();
+  });
+  it("names a script for every language it publishes", () => {
+    for (const format of LANGUAGE_FORMATS) expect(format.scripts.length).toBeGreaterThan(0);
+  });
+});
+
 describe("pronunciationName", () => {
   it("calls a Russian pronunciation its Stress", () => {
     expect(pronunciationName("ru")).toBe("stress");

@@ -57,6 +57,8 @@ export interface LanguageSupport {
    * tag. None when Onest draws its letters.
    */
   scripts: readonly Script[];
+  /** The ISO 15924 scripts its terms are written in, published where `scripts` names no face for them. */
+  written?: readonly string[];
   /** The script a full tag names, from its lower-case subtags. */
   script?: (subtags: readonly string[]) => Script;
   /**

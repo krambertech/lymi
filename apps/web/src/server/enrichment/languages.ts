@@ -170,7 +170,7 @@ export function languageGuide(tag: string | null | undefined): string | undefine
     ...(format?.example && { example: `${format.example.format} ${format.example.sample}` }),
     // A general guide keeps its own pronunciation line until its language's prompt module replaces it.
     ...(format &&
-      !general?.pronunciation && {
+      (enrich?.guide || !general?.pronunciation) && {
         pronunciation: `${pronunciationGuide(tag)} For example: ${format.pronunciation.sample.term} → ${format.pronunciation.sample.pronunciation}.`,
       }),
   };

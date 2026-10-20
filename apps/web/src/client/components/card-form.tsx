@@ -4,14 +4,16 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
-  drawsTermReading,
   hasReadings,
+  hasStress,
   ImageDescription,
+  markedTerm,
   modeKey,
   modeOf,
   pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
+  termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
@@ -321,7 +323,13 @@ export function CardForm(props: CardFormProps) {
   // Japanese and Chinese call a term's pronunciation its reading, and Russian its stress.
   const named = pronunciationName(language);
   const termCard = { term: term.trim(), language, pronunciation };
-  const termDrawn = drawsTermReading(termCard);
+  const termDrawn = termShowsPronunciation(termCard);
+  // A Stress that is not the term with marks added draws nothing, so say so while it is typed.
+  const stressMissed =
+    named === "stress" &&
+    !!termCard.term &&
+    hasStress(pronunciation) &&
+    markedTerm(termCard) === null;
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
@@ -655,6 +663,13 @@ export function CardForm(props: CardFormProps) {
         pronunciation,
         setPronunciation,
         cardLimits.pronunciation,
+        {
+          description: stressMissed && (
+            <FieldDescription>
+              {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
+            </FieldDescription>
+          ),
+        },
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
     hook: () =>

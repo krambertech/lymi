@@ -8,11 +8,11 @@ No persona has Russian cards, so the recipe makes decks as `fresh` through `/api
 
 ## Drive
 
-[`russian.mjs`](russian.mjs): add замок stressed за́мок, stressed замóк with a Latin ó, unstressed, and in IPA; search for за́мок; review a New мука stressed мука́ and reveal it; review a Known мука stressed му́ка and reveal it; open Add a card in the first deck and add its Stress field.
+[`russian.mjs`](russian.mjs): add замок stressed за́мок, stressed замóк with a Latin ó, unstressed, and in IPA; search for за́мок; review a New мука stressed мука́ and reveal it; review a Known мука stressed му́ка and reveal it; open Add a card in the first deck, type мука, add its Stress field and type мука́, then the typo мкуа́.
 
 ## End state
 
-за́мок and замо́к are added, the second stored with a Cyrillic о and U+0301 and `normalized` `pronunciation`, and the unmarked and IPA adds are skipped. The search returns both cards. The New cue reads мука́ before and after the reveal with no second visible line repeating it. The Known cue reads мука before the reveal and му́ка after it. Add a card offers a Stress chip whose field is a textbox named Stress.
+за́мок and замо́к are added, the second stored with a Cyrillic о and U+0301 and `normalized` `pronunciation`, and the unmarked and IPA adds are skipped. The search returns both cards. The New cue reads мука́ before and after the reveal with no second visible line repeating it. The Known cue reads мука before the reveal and му́ка after it. Add a card offers a Stress chip whose field is a textbox named Stress; мука́ previews in place with no hint, and мкуа́ shows the hint that review shows the stress only when it's the term with a mark added.
 
 ## Gotchas
 

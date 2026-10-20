@@ -149,6 +149,7 @@ function describePronunciation(format: LanguageFormat, empty: "omit" | "null"): 
 type FormatRow = {
   pronunciation: LanguageOut["pronunciation"]["label"];
   scripts: readonly string[];
+  written?: readonly string[];
   format: LanguageFormat;
 };
 
@@ -157,7 +158,7 @@ function formatOut(tag: string, row: FormatRow, engine: ReadingEngine | null): L
   return {
     tag,
     name: row.format.name,
-    scripts: [...row.scripts],
+    scripts: [...(row.written ?? row.scripts)],
     pronunciation: {
       label: row.pronunciation,
       format: describePronunciation(row.format, "omit"),

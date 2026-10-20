@@ -14,9 +14,7 @@ export type IndicSegment = { text: string; reading?: string; known?: boolean };
 const RUN = /[\p{Script=Tamil}\u{200c}\u{200d}]+/gu;
 /** A Tamil vowel or consonant: a run without one, such as a lone digit, is not a word. */
 const LETTER = /[அ-ஹ]/u;
-
-/** Past this many characters a term is a passage, and a card's own reading goes over it whole. */
-const ALIGN_MAX = 80;
+const JOINERS = /[\u{200c}\u{200d}]/gu;
 
 /** Each Tamil word apart from the text around it; Tamil words are written with spaces between them. */
 function words(text: string): { text: string; word: boolean }[] {
@@ -46,24 +44,50 @@ export function tamilReading(text: string): string {
     .join("");
 }
 
-/**
- * Whether a pronunciation is a reading in Latin letters, with or without Lymi's marks, rather than
- * IPA, a respelling in Tamil script or a hint, so an old IPA line is never drawn as a reading.
- */
+/** Whether a pronunciation is written in Latin letters, with or without Lymi's marks, rather than IPA or Tamil script. */
 export function isTamilReading(pronunciation: string | null | undefined): boolean {
   const text = pronunciation?.normalize("NFD").trim() ?? "";
   return /^[a-z\p{M}]+(?:[ '’-]+[a-z\p{M}]+)*$/iu.test(text);
 }
 
-/** A reading folded for comparison: NFC, lower case, no spaces, hyphens or apostrophes, and aa ii uu as ā ī ū. */
+/**
+ * A reading folded for comparison, so Lymi's letters and chat spelling meet: no marks, case,
+ * spaces, hyphens or apostrophes, and doubled vowels single, so pāḍal and paadal are both padal.
+ */
 function foldReading(reading: string): string {
   return reading
-    .normalize("NFC")
+    .normalize("NFD")
+    .replace(/[\p{M}\s'’-]/gu, "")
     .toLowerCase()
-    .replace(/[\s'’-]/gu, "")
-    .replace(/aa/g, "ā")
-    .replace(/ii/g, "ī")
-    .replace(/uu/g, "ū");
+    .replace(/([aeiou])\1/g, "$1");
+}
+
+/** How many letters must change to turn one folded reading into the other. */
+function distance(a: string, b: string): number {
+  let row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      next[j] = Math.min(
+        (row[j] as number) + 1,
+        (next[j - 1] as number) + 1,
+        (row[j - 1] as number) + cost,
+      );
+    }
+    row = next;
+  }
+  return row[b.length] as number;
+}
+
+/**
+ * Whether a word of the card's own reading can be the word's: within one letter in three of the
+ * spelling's reading once folded, so பஸ் may read bas, while a gloss such as song never passes.
+ */
+function readsAs(own: string, spelled: string): boolean {
+  const a = foldReading(own);
+  const b = foldReading(spelled);
+  return distance(a, b) <= Math.max(1, Math.floor(Math.max(a.length, b.length) / 3));
 }
 
 /**
@@ -78,8 +102,8 @@ export function sameTamilReading(term: string, pronunciation: string): boolean {
 
 /**
  * The term with a reading over each Tamil word, or null when it has none. A card's own reading,
- * from its pronunciation, replaces the spelling's: word for word when it has as many words, else
- * over the whole term. A pronunciation that is not a reading, such as IPA, is ignored.
+ * from its pronunciation, replaces the spelling's only when it has as many words and each is close
+ * to the spelling's reading; anything else in the field, such as IPA, a hint or a gloss, is ignored.
  */
 export function tamilTermReading(
   term: string,
@@ -89,11 +113,11 @@ export function tamilTermReading(
   const drawn = segments.filter((segment) => segment.reading !== undefined);
   if (drawn.length === 0) return null;
   if (!pronunciation || !isTamilReading(pronunciation)) return segments;
-  const own = pronunciation.normalize("NFC").trim();
-  const tokens = own.split(/\s+/u);
-  if (tokens.length !== drawn.length || Array.from(term).length > ALIGN_MAX) {
-    return [{ text: term, reading: own }];
-  }
+  const tokens = pronunciation.normalize("NFC").trim().split(/\s+/u);
+  const fits =
+    tokens.length === drawn.length &&
+    drawn.every((segment, i) => readsAs(tokens[i] as string, segment.reading as string));
+  if (!fits) return segments;
   let next = 0;
   return segments.map((segment) =>
     segment.reading === undefined
@@ -102,9 +126,9 @@ export function tamilTermReading(
   );
 }
 
-/** One Tamil word as a Known pair, keyed under the engine so it never meets a kana or pinyin pair. */
+/** One Tamil word as a Known pair, keyed under the engine so it never meets a kana or pinyin pair; joiners never part two spellings of a word. */
 export function tamilPair(word: string): string {
-  return `tamil:${word.normalize("NFC")}`;
+  return `indic:${word.normalize("NFC").replace(JOINERS, "")}`;
 }
 
 /**

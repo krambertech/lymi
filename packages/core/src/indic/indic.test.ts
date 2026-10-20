@@ -146,9 +146,19 @@ describe("tamilTermReading", () => {
     ]);
   });
 
-  it("draws the card's own reading over the whole term when the words do not match", () => {
+  it("takes a loanword's own reading a few letters from the spelling's", () => {
+    expect(tamilTermReading("டாக்டர்", "ḍākṭar")).toEqual([{ text: "டாக்டர்", reading: "ḍākṭar" }]);
+    expect(tamilTermReading("டாக்டர்", "doktar")).toEqual([{ text: "டாக்டர்", reading: "doktar" }]);
+  });
+
+  it("ignores Latin words that are a hint or a gloss, not a reading", () => {
+    const spelled = [{ text: "பஸ்", reading: "pas" }];
+    expect(tamilTermReading("பஸ்", "sounds like bus")).toEqual(spelled);
+    expect(tamilTermReading("பாடல்", "song")).toEqual([{ text: "பாடல்", reading: "pāḍal" }]);
     expect(tamilTermReading("பஸ் நிலையம்", "busstand")).toEqual([
-      { text: "பஸ் நிலையம்", reading: "busstand" },
+      { text: "பஸ்", reading: "pas" },
+      { text: " " },
+      { text: "நிலையம்", reading: "nilaiyam" },
     ]);
   });
 
@@ -184,16 +194,21 @@ describe("sameTamilReading", () => {
     expect(sameTamilReading("தமிழ் பாடல்", "tamizh-pāḍal")).toBe(true);
   });
 
+  it("counts a chat-style respelling of the same sounds as a repeat", () => {
+    expect(sameTamilReading("பாடல்", "paadal")).toBe(true);
+    expect(sameTamilReading("கோடு", "koodu")).toBe(true);
+    expect(sameTamilReading("தேன்", "teen")).toBe(true);
+  });
+
   it("is false for a word said against the rule, or a field that is not a reading", () => {
     expect(sameTamilReading("பஸ்", "bas")).toBe(false);
-    expect(sameTamilReading("பாடல்", "paadal")).toBe(false);
     expect(sameTamilReading("பாடல்", "/paːɖal/")).toBe(false);
   });
 });
 
 describe("Known words", () => {
   it("gives one pair per word, namespaced by the engine", () => {
-    expect(tamilPairs("தமிழ் பாடல்")).toEqual(["tamil:தமிழ்", "tamil:பாடல்"]);
+    expect(tamilPairs("தமிழ் பாடல்")).toEqual(["indic:தமிழ்", "indic:பாடல்"]);
     expect(tamilPairs("song")).toEqual([]);
   });
 
@@ -206,6 +221,12 @@ describe("Known words", () => {
       { text: ", " },
       { text: "வீட்டில்", reading: "vīṭṭil" },
     ]);
+  });
+
+  it("meets a Known word typed with a joiner", () => {
+    expect(tamilPairs("க்\u{200d}ஷ")).toEqual(tamilPairs("க்ஷ"));
+    const known = new Set(tamilPairs("க்ஷ"));
+    expect(markKnownTamil(tamilSegments("க்\u{200d}ஷ"), known)[0]?.known).toBe(true);
   });
 
   it("leaves the runs alone without Known words", () => {

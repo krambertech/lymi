@@ -133,7 +133,7 @@ function consonant(unit: Consonant, before: Unit | undefined, after: Unit | unde
   const { letter, vowel } = unit;
   const next = after?.kind === "consonant" ? after.letter : null;
   if (letter === "ற") {
-    // ற்ற is said ttr and ன்ற ndr, as in காற்று kātru and ஒன்று ondru.
+    // ற்ற reads tr and ன்ற ndr, as in காற்று kātru and ஒன்று ondru.
     if (vowel === null && next === "ற") return "t";
     const prior = before?.kind === "consonant" && before.vowel === null ? before.letter : null;
     return prior === "ன" ? "dr" : "r";

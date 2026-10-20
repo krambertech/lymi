@@ -31,6 +31,13 @@
       ],
       "port": 4322,
       "autoPort": true
+    },
+    {
+      "name": "stress-listening",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@lymi/web", "eval:stress", "--serve", "--port", "5243"],
+      "port": 5243,
+      "autoPort": true
     }
   ]
 }

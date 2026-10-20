@@ -21,6 +21,8 @@ import {
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
+  LanguageOut,
+  languageFormat,
   ResponseShape,
   ReviewMode,
   RoundsOut,
@@ -99,6 +101,7 @@ import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
 import { registerViews, viewUri } from "./app-resource";
+import { forDirectories } from "./directory-shape";
 import { HOST_EXTENSION_CAPABILITIES, registerHostExtensions } from "./host-extensions";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
@@ -118,12 +121,12 @@ export interface McpPrincipal {
   reportError?: ((error: unknown, tool: string) => Promise<void>) | undefined;
 }
 
-/** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
-export const DECK_CARD_LIMIT = 200;
+/** How many of a deck's newest cards `get_deck` names; `search_cards` pages through the rest. */
+export const DECK_PREVIEW_LIMIT = 15;
 
 const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and tend cards; the learner reviews them in the app, and you never grade a review.
 
-Start with list_decks. It names the decks, their languages and the language meanings are written in.
+Start with list_decks. It names the decks, their languages and the language meanings are written in. Its languages map says how each deck language writes a card's pronunciation and example; write those fields in that format.
 
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
 
@@ -135,7 +138,7 @@ A card may have one picture, set with set_card_image from a public link or base6
 
 A series is an optional, ordered group of the learner's own decks that they review together. Put a deck in one with update_deck and seriesId, or set a series' whole deck list with update_series. Decks the learner joined from someone else never belong to their series.
 
-A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, list the deck's cards with get_deck, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
+A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, page through the deck's cards with search_cards and its deckId, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -149,6 +152,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     { name: "lymi", version: "0.2.0" },
     { instructions: INSTRUCTIONS, capabilities: HOST_EXTENSION_CAPABILITIES },
   );
+  forDirectories(server);
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
   const views = {
@@ -167,7 +171,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "List decks",
       description:
-        "Every active deck with its card count and how many cards are due now, plus the language meanings are written in. Call this first: card adds need a deck id. " +
+        "Every active deck with its card count and how many cards are due now, the language meanings are written in, and how each deck language writes a pronunciation and an example. Call this first: card adds need a deck id. " +
         "Set archived to true to list archived decks instead, for example to find one to restore.",
       inputSchema: z.object({
         archived: z
@@ -187,6 +191,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         return result({
           meaningLanguage: settings.meaningLanguage,
           decks: decks.map(deckSummary),
+          languages: deckLanguages(decks),
         });
       }),
   );
@@ -195,9 +200,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_deck",
     {
       title: "Get a deck",
-      description: `One deck: how many of its cards are due now and how many are new, learning and known, then its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
+      description: `One deck's summary: its settings, how many active cards it has, how many are due now and how many are new, learning and known, and the term and meaning of its ${DECK_PREVIEW_LIMIT} newest cards. For every card with all its fields, page through search_cards with the deckId; to find one card, search by its term. list_sections has the deck's sections and how far the learner is in each.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
-      outputSchema: DeckWithCardsOut,
+      outputSchema: DeckSummaryResultOut,
       ...withView(readTool, "deck"),
     },
     ({ deckId }) =>
@@ -208,17 +213,16 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           listDecks(ctx),
           deckStages(ctx, deckId),
         ]);
-        return result({
+        const summary = result({
           deck: deckOut(deck),
           total: rows.length,
           due: decks.find((d) => d.id === deckId)?.due ?? 0,
           stages,
-          truncated: rows.length > DECK_CARD_LIMIT,
-          cards: rows.slice(0, DECK_CARD_LIMIT).map((row) => ({
-            ...cardOut(row.card),
-            dueAt: row.state ? row.state.due.toISOString() : null,
-          })),
+          newest: rows.slice(0, DECK_PREVIEW_LIMIT).map(({ card }) => cardPreview(card)),
         });
+        if (rows.length <= DECK_PREVIEW_LIMIT) return summary;
+        const more = `These are the ${DECK_PREVIEW_LIMIT} newest of ${rows.length} cards. For the rest, page through search_cards with deckId "${deckId}".`;
+        return { ...summary, content: [...summary.content, { type: "text", text: more }] };
       }),
   );
 
@@ -854,7 +858,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         version: CardImagePatch.shape.version,
       }),
       outputSchema: CardOut,
-      ...writeTool({ idempotent: false, overwrites: true }),
+      ...writeTool({ idempotent: false, overwrites: true, openWorld: true }),
     },
     ({ cardId, url, data, description, version }) =>
       run("set_card_image", async () => {
@@ -1014,6 +1018,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     writeMeta: writeTool({ idempotent: true })._meta,
     viewUri: (view) => viewUri(view, views.locale),
     cardOut,
+    deckPreview: (cards) => cards.slice(0, DECK_PREVIEW_LIMIT).map(cardPreview),
   });
 
   withSecuritySchemes(server);
@@ -1058,16 +1063,18 @@ const readTool = {
 function writeTool({
   idempotent,
   overwrites = false,
+  openWorld = false,
 }: {
   idempotent: boolean;
   overwrites?: boolean;
+  openWorld?: boolean;
 }) {
   return {
     annotations: {
       readOnlyHint: false,
       destructiveHint: overwrites,
       idempotentHint: idempotent,
-      openWorldHint: false,
+      openWorldHint: openWorld,
     },
     _meta: { securitySchemes: [{ type: "oauth2", scopes: ["write"] }] },
   };
@@ -1333,18 +1340,38 @@ function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
 const DecksOut = z.object({
   meaningLanguage: z.string().describe("The language meanings are written in"),
   decks: z.array(DeckSummaryOut),
+  languages: z
+    .record(z.string(), LanguageOut)
+    .describe(
+      "How cards are written in each deck language that has a format of its own, keyed by the deck's defaultLanguage. A deck language missing here holds IPA or a plain respelling, with plain examples.",
+    ),
 });
 
-const DeckWithCardsOut = z.object({
+/** The format of each deck language that has one, keyed by the tag as the deck holds it. */
+function deckLanguages(decks: readonly { defaultLanguage: string | null }[]) {
+  return Object.fromEntries(
+    decks.flatMap(({ defaultLanguage }) => {
+      const format = languageFormat(defaultLanguage);
+      return defaultLanguage && format ? [[defaultLanguage, format]] : [];
+    }),
+  );
+}
+
+const DeckSummaryResultOut = z.object({
   deck: DeckOut,
-  total: z.number().int(),
+  total: z.number().int().describe("Active cards in the deck"),
   due: z.number().int().describe("Cards in the deck due now"),
   stages: z
     .object({ new: z.number().int(), learning: z.number().int(), known: z.number().int() })
     .describe("Active cards by stage: a card is known only once every way it is asked is"),
-  truncated: z.boolean().describe(`True when the deck has more than ${DECK_CARD_LIMIT} cards`),
-  cards: z.array(CardOut.extend({ dueAt: Timestamp.nullable() })),
+  newest: z
+    .array(z.object({ id: z.string(), term: z.string(), meaning: z.string().nullable() }))
+    .describe(`The ${DECK_PREVIEW_LIMIT} newest active cards; search_cards has the rest`),
 });
+
+function cardPreview(card: CardView) {
+  return { id: card.id, term: card.term, meaning: card.meaning };
+}
 
 const SearchOut = z.object({
   cards: z.array(CardOut.extend({ deckName: z.string(), stats: CardReviewStatsOut.optional() })),
@@ -1435,7 +1462,7 @@ const RestoreCardsOut = z.object({
 type Fits<T extends U, U> = T;
 export type _ViewContract = [
   Fits<CardOut, ViewCard>,
-  Fits<z.infer<typeof DeckWithCardsOut>, ViewDeckResult>,
+  Fits<z.infer<typeof DeckSummaryResultOut>, ViewDeckResult>,
   Fits<z.infer<typeof DueOut>, ViewDueResult>,
 ];
 

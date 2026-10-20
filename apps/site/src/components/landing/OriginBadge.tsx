@@ -16,14 +16,23 @@ const SHOWN: Record<Origin, string> = {
   estonia: "in-data-[origin=estonia]:flex",
 };
 
-function Badge({ origin, children }: { origin: Origin; children: ReactNode }) {
+function Badge({
+  origin,
+  always,
+  children,
+}: {
+  origin: Origin;
+  /** Shown to every visitor, not only to those whose browser points to the place. */
+  always?: boolean;
+  children: ReactNode;
+}) {
   const stripes = STRIPES[origin];
   const height = 12 / stripes.length;
   return (
     <p
       className={clsx(
-        "edge mb-6 hidden h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text",
-        SHOWN[origin],
+        "edge mb-6 h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text",
+        always ? "flex" : ["hidden", SHOWN[origin]],
       )}
     >
       <svg
@@ -56,5 +65,14 @@ export function OriginBadge() {
         <Trans>Estonian startup</Trans>
       </Badge>
     </>
+  );
+}
+
+/** The Estonian page's own badge: there, being from Estonia is the point, so every visitor sees it. */
+export function EstonianStartup() {
+  return (
+    <Badge origin="estonia" always>
+      <Trans>Estonian startup</Trans>
+    </Badge>
   );
 }

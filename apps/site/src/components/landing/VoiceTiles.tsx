@@ -41,8 +41,15 @@ function Wave({ peaks, played }: { peaks: number[] | null; played: number }) {
   );
 }
 
+interface Props {
+  words: VoiceWord[];
+  lang: string;
+  /** The folder under `/audio/` holding each word's clip, named by its id. */
+  folder: string;
+}
+
 /** Words that play their recording, each drawing its own waveform as it plays. */
-export function VoiceTiles({ words }: { words: VoiceWord[] }) {
+export function VoiceTiles({ words, lang, folder }: Props) {
   const { t, i18n } = useLingui();
   const root = useRef<HTMLDivElement>(null);
   const inView = useInView(root, { once: true, margin: "200px" });
@@ -53,17 +60,17 @@ export function VoiceTiles({ words }: { words: VoiceWord[] }) {
   useEffect(() => {
     if (!inView) return;
     for (const w of words) {
-      peaksOf(`/audio/japanese/${w.id}.mp3`)
+      peaksOf(`/audio/${folder}/${w.id}.mp3`)
         .then((p) => setPeaks((all) => ({ ...all, [w.id]: p })))
         .catch(() => {});
     }
-  }, [inView, words]);
+  }, [inView, words, folder]);
 
   useEffect(() => () => audio.current?.pause(), []);
 
   const play = (id: string) => {
     audio.current?.pause();
-    const clip = new Audio(`/audio/japanese/${id}.mp3`);
+    const clip = new Audio(`/audio/${folder}/${id}.mp3`);
     audio.current = clip;
     setPlaying({ id, at: 0 });
     let frame = 0;
@@ -93,11 +100,11 @@ export function VoiceTiles({ words }: { words: VoiceWord[] }) {
             key={w.id}
             type="button"
             onClick={() => play(w.id)}
-            aria-label={t`Play ${w.term}, ${w.reading}`}
+            aria-label={w.reading ? t`Play ${w.term}, ${w.reading}` : t`Play ${w.term}`}
             className="grid gap-2.5 rounded-lg bg-plate-2 p-4 text-start edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-hover"
           >
             <span className="flex items-start justify-between gap-2">
-              <span lang="ja" className="text-3xl leading-tight font-medium text-text">
+              <span lang={lang} className="text-3xl leading-tight font-medium text-text">
                 {w.term}
               </span>
               <span
@@ -109,9 +116,11 @@ export function VoiceTiles({ words }: { words: VoiceWord[] }) {
                 <Volume2 aria-hidden="true" className="size-4" />
               </span>
             </span>
-            <span lang="ja" className="text-md text-amber-text">
-              {w.reading}
-            </span>
+            {w.reading && (
+              <span lang={lang} className="text-md text-amber-text">
+                {w.reading}
+              </span>
+            )}
             <Wave peaks={peaks[w.id] ?? null} played={on ? (playing?.at ?? 0) : 0} />
             <span className="text-sm text-muted">{i18n._(w.meaning)}</span>
           </button>

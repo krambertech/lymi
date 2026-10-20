@@ -9,12 +9,12 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "pronunciation",
     type: "string",
-    note: "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), a Chinese card in pinyin with tone marks (xuéxí for 学习).",
+    note: "How the term is said: IPA or a plain respelling, unless the Languages page gives the card's language a format of its own, such as kana for Japanese.",
   },
   {
     name: "example",
     type: "string",
-    note: "One sentence using the term. A Japanese example carries a kana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。",
+    note: "One sentence using the term. The Languages page says which languages carry readings inside it, and in what notation.",
   },
   {
     name: "notes",
@@ -192,6 +192,13 @@ export function Cards() {
           In Japanese the reading counts too. <code>上手</code> read <code>じょうず</code> (skilful)
           and read <code>うわて</code> (a cut above) are two words, and Lymi treats them as two.
           When either card has no reading, term and language decide.
+        </li>
+        <li>
+          In Chinese the pinyin counts the same way. <code>行</code> read <code>háng</code> (a row)
+          and read <code>xíng</code> (to go) are two words. Pinyin sent with tone numbers, such as{" "}
+          <code>xing2</code>, is stored with tone marks. Punctuation never counts, and neither does
+          the tone over 一 or 不, so <code>bù shì</code> and <code>bú shì</code> are one word.
+          Pinyin with no tone mark counts as no reading.
         </li>
         <li>A card with no language only collides with other cards that have no language.</li>
         <li>Archived cards do not collide. Adding a term you archived makes a fresh card.</li>

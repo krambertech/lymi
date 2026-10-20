@@ -72,6 +72,12 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
           body: msg`Export the deck again from Noji in OFC format, then choose that file.`,
         };
       }
+      if (source === "pleco") {
+        return {
+          title: msg`Couldn’t read this file`,
+          body: msg`Export your cards again from Pleco as a text file in UTF-8, then choose that file.`,
+        };
+      }
       return source === "mochi"
         ? {
             title: msg`Couldn’t read this file`,
@@ -96,9 +102,11 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
               ? msg`In Mochi, export one deck at a time instead of everything.`
               : source === "noji"
                 ? msg`In Noji, export one sub-deck at a time instead of the whole deck.`
-                : source === "lymi"
-                  ? msg`Export one deck at a time instead of the whole library.`
-                  : msg`Export one deck at a time, or export again without media.`,
+                : source === "pleco"
+                  ? msg`In Pleco, export one category at a time, or export again without dictionary definitions.`
+                  : source === "lymi"
+                    ? msg`Export one deck at a time instead of the whole library.`
+                    : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {
@@ -271,6 +279,11 @@ export function FieldsDialog({
             <Trans>
               Choose what each side of a Noji card becomes on a Lymi card. One side is the term.
             </Trans>
+          ) : source === "pleco" ? (
+            <Trans>
+              Choose what each Pleco field becomes on a Lymi card. Make Traditional the term to
+              learn traditional characters.
+            </Trans>
           ) : source === "lymi" ? (
             <Trans>Choose what each field becomes on the new card. One field is the term.</Trans>
           ) : (
@@ -434,6 +447,7 @@ export function ImportSources({
     { source: "noji", detail: t`An .ofc file from Noji` },
     { source: "lymi", detail: t`A Lymi file from another Lymi account` },
     { source: "quizlet", detail: t`Text you copy from a Quizlet set` },
+    { source: "pleco", detail: t`A text file of your Pleco flashcards` },
   ];
   return (
     <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">

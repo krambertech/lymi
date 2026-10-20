@@ -1,0 +1,71 @@
+# Every sheet that has a title, opened and photographed one after another, then closed the way
+# its header allows, so the same flow runs before and after a change to sheets.
+appId: app.lymi
+name: Sheets
+---
+- runFlow: _open.yaml
+# A deck's own sheets.
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- tapOn: "Deck options"
+- tapOn: "Move to series"
+- waitForAnimationToEnd
+- takeScreenshot: 01-move-to-series
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Move to series$" } }
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- tapOn: "Move to section"
+- waitForAnimationToEnd
+- takeScreenshot: 02-move-to-section
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Move .* cards to$" } }
+- tapOn: "Actions for the selected cards"
+- tapOn: "Move to deck"
+- waitForAnimationToEnd
+- takeScreenshot: 03-move-to-deck
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Move .* cards to$" } }
+- tapOn: "Actions for the selected cards"
+- tapOn: "^Tags$"
+- waitForAnimationToEnd
+- takeScreenshot: 04-tags-chosen-cards
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Tags for .*$" } }
+- tapOn: "Stop selecting"
+# Deck settings.
+- openLink: lymi://library/deck-settings?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Instructions.*"
+    timeout: 20000
+- tapOn: "Name.*"
+- waitForAnimationToEnd
+- takeScreenshot: 05-deck-name
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Name$" } }
+- tapOn: "Modes.*"
+- waitForAnimationToEnd
+- takeScreenshot: 06-how-cards-are-asked
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^How cards are asked$" } }
+- tapOn: "AI fills.*"
+- waitForAnimationToEnd
+- takeScreenshot: 07-fields-ai-can-fill
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Fields AI can fill$" } }
+- tapOn: "Instructions.*"
+- waitForAnimationToEnd
+- takeScreenshot: 08-instructions
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Instructions$" } }
+# Sections.
+- openLink: lymi://library/sections?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "How sections open.*"
+    timeout: 20000
+- tapOn: "How sections open.*"
+- waitForAnimationToEnd
+- takeScreenshot: 09-how-sections-open
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^How sections open$" } }
+- scrollUntilVisible:
+    element: "Archived sections.*"
+- tapOn: "Archived sections.*"
+- waitForAnimationToEnd
+- takeScreenshot: 10-archived-sections
+- runFlow: { file: _dismiss.yaml, env: { MARK: "^Archived sections$" } }

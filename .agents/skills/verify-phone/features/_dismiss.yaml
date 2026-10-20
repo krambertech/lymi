@@ -1,0 +1,22 @@
+# Closes the open sheet: its close where it has one, else a swipe down while ${MARK}, text only
+# the sheet shows, is still on screen.
+appId: app.lymi
+---
+- tapOn:
+    text: "^(Close|Cancel)$"
+    optional: true
+- runFlow:
+    when:
+      visible: "${MARK}"
+    commands:
+      - swipe:
+          start: 50%, 72%
+          end: 50%, 99%
+- runFlow:
+    when:
+      visible: "${MARK}"
+    commands:
+      - swipe:
+          start: 50%, 45%
+          end: 50%, 99%
+- waitForAnimationToEnd

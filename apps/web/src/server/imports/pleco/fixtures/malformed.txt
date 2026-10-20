@@ -1,0 +1,12 @@
+绿茶[綠茶]	lu:4cha2	green tea
+
+	ni3	no characters before the tab
+谢谢
+朋友	peng2you5	friend	extra column after a stray tab
+東西	dong1xi5	traditional characters with no brackets
+猫[貓	mao1	an unclosed bracket
+//
+   
+一点儿[一點兒]	yi1dian3r5	a little
+//   
+苹果[蘋果]	ping2guo3	

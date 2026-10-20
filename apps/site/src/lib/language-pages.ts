@@ -33,3 +33,10 @@ export const LANGUAGE_PAGE_TAGS = Object.keys(LANGUAGE_PAGES) as SupportedTag[];
 export function languageOfPage(name: string): SupportedTag | undefined {
   return LANGUAGE_PAGE_TAGS.find((tag) => LANGUAGE_PAGES[tag].page === name);
 }
+
+/** The published decks the Estonian page leads to, which keeps its own route until Estonian joins the table. */
+export const ESTONIAN_PAGE_DECKS = [
+  "everyday-estonian",
+  "estonian-top-100-verbs",
+  "estonian-top-1000-words",
+] as const;

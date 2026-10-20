@@ -1,4 +1,4 @@
-import type { ReadingSegment } from "@lymi/core";
+import { lettersReading, type ReadingSegment } from "@lymi/core";
 import { clsx } from "clsx";
 import { Fragment } from "react";
 
@@ -27,6 +27,7 @@ export function Furigana({ segments, lang, hidden }: Props) {
           aria-hidden="true"
           className={clsx(
             "transition-[opacity,visibility] duration-200 ease-out motion-reduce:transition-none",
+            lettersReading(segment.reading) && "px-[0.2em]",
             (hidden || segment.known) && "invisible opacity-0",
           )}
         >

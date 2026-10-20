@@ -19,5 +19,5 @@ The owner's deck has every card marked important. The member's deck has none mar
 ## Gotchas
 
 - Which section is current depends on the learner's seed, so the flows match the heading by **You are here** rather than by name.
-- Capture's chip row sits over the keyboard and scrolls sideways; `hideKeyboard` fails there, so the owner flow swipes the row where it is.
+- Capture's chip row sits over the keyboard or at the foot and scrolls sideways; `hideKeyboard` fails there, so `_chip.yaml` swipes the row in both places.
 - iOS opens the ⋯ menu upwards from the toolbar, so its groups read bottom to top.

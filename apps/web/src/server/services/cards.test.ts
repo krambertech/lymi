@@ -232,6 +232,7 @@ describe("field sources", () => {
         example: 1,
         notes: 0,
         pronunciation: 0,
+        languages: ["it"],
       },
       {
         name: "ai_text_corrected",
@@ -241,6 +242,7 @@ describe("field sources", () => {
         example: 0,
         notes: 0,
         pronunciation: 1,
+        languages: ["it"],
       },
     ]);
   });

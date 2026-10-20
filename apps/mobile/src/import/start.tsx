@@ -10,6 +10,7 @@ import { usePalette } from "../theme/palette";
 import { Button, Plate, Press, RowArrow, Text } from "../ui/primitives";
 import { ImportShell } from "./shell";
 import {
+  type FileSource,
   hasGuide,
   openGuide,
   type Picked,
@@ -56,7 +57,7 @@ export function ImportSources() {
 }
 
 /** One app's import page: its export steps first, then Choose file at the thumb. imports.md. */
-export function ImportStart({ source }: { source: Exclude<ImportSource, "quizlet"> }) {
+export function ImportStart({ source }: { source: FileSource }) {
   const { t, i18n } = useLingui();
   const qc = useQueryClient();
   const router = useRouter();

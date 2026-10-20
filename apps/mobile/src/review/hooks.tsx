@@ -174,7 +174,13 @@ export function HookOffer({
       className="absolute inset-x-0 bottom-0 px-3 pb-3"
     >
       {glass ? (
-        <GlassView isInteractive glassEffectStyle="clear" style={OFFER_SHAPE}>
+        <GlassView
+          isInteractive
+          glassEffectStyle="clear"
+          // Untinted clear glass on the white card glows past the card's white on device, so it takes the fallback's grey.
+          tintColor={`${p["plate-2"]}b3`}
+          style={OFFER_SHAPE}
+        >
           {face}
         </GlassView>
       ) : (

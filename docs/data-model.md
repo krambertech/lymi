@@ -88,7 +88,7 @@ erDiagram
     text term "the word or phrase"
     text normalized_term "normaliseTerm(term), duplicate key"
     text meaning "nullable"
-    text pronunciation "nullable, IPA or hint"
+    text pronunciation "nullable, in the language's format, else IPA or a respelling"
     text example "nullable"
     text notes "nullable, grammar etc"
     text hook "nullable memory hook, not an edition field"
@@ -132,7 +132,7 @@ erDiagram
   imports {
     text id PK
     text user_id FK
-    text source "anki | mochi | noji | lymi"
+    text source "anki | mochi | noji | lymi | quizlet | pleco"
     text file_name "private, never logged"
     int byte_size
     text status "uploading | inspecting | ready | importing | done | failed | cancelled"

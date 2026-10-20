@@ -2,11 +2,11 @@ import { useLingui } from "@lingui/react/macro";
 import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
 import { useInView } from "motion/react";
-import { useMemo, useRef } from "react";
+import { type ReactNode, useMemo, useRef } from "react";
 import { FLAME_PARTS } from "../lantern-geometry";
 import { usePlayback, useStill } from "./playback";
 
-/** Six reviews of one card: the gap grows each time it's remembered, and the reading goes once it's Known. */
+/** Six reviews of one card: the gap grows each time it's remembered. */
 const STOPS = [
   { day: 0, state: "new" },
   { day: 1, state: "learning" },
@@ -33,7 +33,13 @@ function FlameMark({ className }: { className: string }) {
   );
 }
 
-export function ReturnLane() {
+interface Props {
+  /** The card's face at one review, told whether the card is Known by then. */
+  term: (known: boolean) => ReactNode;
+  lang: string;
+}
+
+export function ReturnLane({ term, lang }: Props) {
   const { t } = useLingui();
   const root = useRef<HTMLOListElement>(null);
   const still = useStill();
@@ -69,23 +75,13 @@ export function ReturnLane() {
               className="grid grid-cols-[76px_24px_minmax(0,1fr)] items-center gap-4 @3xl:grid-cols-1 @3xl:justify-items-center @3xl:gap-2.5 @3xl:text-center"
             >
               <span
-                lang="ja"
+                lang={lang}
                 className={clsx(
                   "grid h-[86px] w-[76px] place-items-center rounded-md bg-plate text-2xl leading-[1.6] font-medium text-text edge-2 transition-[opacity,translate] duration-500 @3xl:h-[104px] @3xl:w-[92px] @3xl:text-[26px]",
                   !on && "translate-y-1.5 opacity-35",
                 )}
               >
-                <ruby>
-                  電車
-                  <rt
-                    className={clsx(
-                      "text-[0.45em] text-amber-text",
-                      stop.state === "known" && "invisible opacity-0",
-                    )}
-                  >
-                    でんしゃ
-                  </rt>
-                </ruby>
+                {term(stop.state === "known")}
               </span>
               {/* The room's colour around the flame breaks the line, so the line meets each flame without crossing it. */}
               <span className="relative grid place-items-center @3xl:bg-canvas @3xl:px-3">

@@ -43,7 +43,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
       .click();
     await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages/estonian$`));
     await expect(
-      page.getByRole("heading", { level: 1, name: "Keep what you learn in Estonian." }),
+      page.getByRole("heading", { level: 1, name: "The flashcard app that speaks Estonian." }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
@@ -51,14 +51,12 @@ test("a language learner can reach the languages pages and turn notes and cards 
     );
   });
 
-  await test.step("an Estonian conversation plays out and explains its words", async () => {
-    // The lines drift gently; reduced motion holds them still for a pointer and shows the whole exchange.
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.getByRole("button", { name: /At the café/ }).click();
-    const word = page.getByRole("button", { name: "kaneelisai", exact: true });
+  await test.step("picking a word shows its three forms", async () => {
+    await waitForIslands(page);
+    const word = page.getByRole("button", { name: "minema", exact: true });
     await word.click();
-    await expect(page.getByRole("tooltip", { name: "cinnamon bun" })).toBeVisible();
-    await expect(page.getByText("A coffee and a cinnamon bun, please.")).toHaveCSS("opacity", "1");
+    await expect(word).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByText("minema · To go", { exact: true })).toBeVisible();
   });
 
   await test.step("the Ukrainian landing page opens the Ukrainian languages page", async () => {
@@ -91,10 +89,12 @@ test("a language learner can reach the languages pages and turn notes and cards 
   });
 
   await test.step("every edition of both pages is in the sitemap", async () => {
-    const sitemap = await (await request.get(`${publicSite}/sitemap-pages.xml`)).text();
+    const pages = await (await request.get(`${publicSite}/sitemap-pages.xml`)).text();
+    // The Estonian page renders per request, so the deck sitemap lists it.
+    const decks = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
     for (const prefix of ["", "/uk", "/ru"]) {
-      expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages</loc>`);
-      expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages/estonian</loc>`);
+      expect(pages).toContain(`<loc>https://lymi.app${prefix}/languages</loc>`);
+      expect(decks).toContain(`<loc>https://lymi.app${prefix}/languages/estonian</loc>`);
     }
   });
 });

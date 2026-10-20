@@ -87,11 +87,11 @@ export function McpOverview() {
         items={[
           {
             term: <code>list_decks</code>,
-            def: "Every active deck with its card and due counts, plus the language your meanings are written in.",
+            def: "Every active deck with its card and due counts, the language your meanings are written in, and how each deck language writes a pronunciation and an example.",
           },
           {
             term: <code>get_deck</code>,
-            def: "One deck and its cards, newest first, up to 200. For a bigger deck, page through search_cards.",
+            def: "One deck's summary: its card, due and stage counts, and the terms of its 15 newest cards. For every card, page through search_cards.",
           },
           {
             term: <code>create_deck</code>,

@@ -171,7 +171,7 @@ const ACTIONS: Command[] = [
     kind: "action",
     title: msg`Import cards`,
     keywords: msg({
-      message: "anki quizlet",
+      message: "anki quizlet pleco",
       comment: "Words, separated by spaces, that also find this command in the command menu",
     }),
     icon: Download,

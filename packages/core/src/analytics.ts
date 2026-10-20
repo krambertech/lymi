@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
+import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
 import { ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -46,6 +47,18 @@ export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chos
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
+const MAX_EVENT_LANGUAGES = 20;
+const languageList = z.array(z.string().regex(/^[a-z]{2,3}$/)).max(MAX_EVENT_LANGUAGES);
+
+/** The primary subtags among these cards' languages, sorted, for an event's `languages`. */
+export function eventLanguages(languages: Iterable<string | null | undefined>): string[] {
+  const keys = new Set<string>();
+  for (const language of languages) {
+    const key = languageKey(language);
+    if (/^[a-z]{2,3}$/.test(key)) keys.add(key);
+  }
+  return [...keys].sort().slice(0, MAX_EVENT_LANGUAGES);
+}
 /** The optional fields a typed card can arrive holding, by name; never their text. */
 export const TYPED_CARD_FIELDS = [
   "example",
@@ -86,6 +99,7 @@ const source = z.enum([
   "lymi",
   "csv",
   "quizlet",
+  "pleco",
   "ai_mcp",
   "typed",
   "lesson",
@@ -232,7 +246,7 @@ export const analyticsEvents = {
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
-    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
+    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined", "today"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
   signed_in: z.object({}),
@@ -244,6 +258,9 @@ export const analyticsEvents = {
     reading: z.enum(["cue", "answer"]).optional(),
     example_readings: count.optional(),
     readings_faded: count.optional(),
+    reading_language: z
+      .enum(Object.keys(LANGUAGE_RECORDS) as [RecordTag, ...RecordTag[]])
+      .optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),
@@ -292,13 +309,13 @@ export const analyticsEvents = {
   import_started: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco", "unknown"]),
     outcome: z.literal("started"),
   }),
   import_finished: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco", "unknown"]),
     outcome: z.enum(["done", "failed"]),
     recordings: count.optional(),
     recordings_skipped: count.optional(),
@@ -306,6 +323,8 @@ export const analyticsEvents = {
     pictures: count.optional(),
     pictures_skipped: count.optional(),
     write_seconds: count.optional(),
+    /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
+    readings_converted: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({
@@ -317,6 +336,15 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  ready_decks_narrowed: z.object({
+    topic: z.enum(["all", "language", "test"]),
+    // A catalogue language's tag, never what the learner typed.
+    language: z
+      .string()
+      .regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})?$/)
+      .nullable(),
+    searched: z.boolean(),
+  }),
   origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
   context_menu_action: z.object({
     menu: z.enum(CONTEXT_MENU_SURFACES),
@@ -344,6 +372,7 @@ export const analyticsEvents = {
     readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
     has_style: z.boolean().optional(),
+    languages: languageList.optional(),
   }),
   deck_style_learned: z.object({
     outcome: z.enum(["learned", "empty", "failed"]),
@@ -360,6 +389,7 @@ export const analyticsEvents = {
     example: count,
     notes: count,
     pronunciation: count,
+    languages: languageList.optional(),
   }),
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
@@ -513,6 +543,7 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],
@@ -526,7 +557,7 @@ export const analyticsProducers = {
   lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
-  tag_added: ["browser"],
+  tag_added: ["browser", "phone"],
   card_field_added: ["browser"],
   deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],

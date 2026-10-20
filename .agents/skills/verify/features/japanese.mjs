@@ -174,25 +174,4 @@ export default async function drive({ page, base, step, api, expect }) {
       return { results };
     },
   );
-
-  await step("Review a New Chinese card: its pinyin stays on the cue", async () => {
-    const chinese = await post("/api/decks", { name: "中文", defaultLanguage: "zh" });
-    await post("/api/cards/batch", {
-      cards: [
-        {
-          deckId: chinese.id,
-          term: "学习",
-          meaning: "to study",
-          pronunciation: "xuéxí",
-          enrich: false,
-        },
-      ],
-    });
-    await page.goto(`/review?deck=${chinese.id}`);
-    const pinyin = page.getByText("xuéxí", { exact: true }).filter({ visible: true });
-    await expect(pinyin).toBeVisible();
-    await expect(page.getByText("to study", { exact: true }).filter({ visible: true })).toHaveCount(
-      0,
-    );
-  });
 }

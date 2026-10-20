@@ -8,6 +8,7 @@ import {
   drawKey,
   drawOrder,
   exampleReadings,
+  languageSupport,
   legacyDirection,
   missed,
   modeKey,
@@ -244,6 +245,17 @@ function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
   return modeOf(key).cue === "term" && state !== 2 ? "cue" : "answer";
 }
 
+/** Where the term's reading showed and how the example's faded, with the language whose engine drew them. */
+function readingsDrawn(
+  card: { language: string | null },
+  reading: "cue" | "answer" | null,
+  faded: ReturnType<typeof fadedReadings>,
+) {
+  const language = languageSupport(card.language)?.tag;
+  if (!language || (reading === null && !("example_readings" in faded))) return faded;
+  return { ...(reading ? { reading } : {}), ...faded, reading_language: language };
+}
+
 /** How many readings the card's example draws, and how many the grader saw fade, when it says. */
 function fadedReadings(example: string | null, faded: number | undefined) {
   if (faded === undefined) return {};
@@ -386,8 +398,11 @@ export async function gradeCard(
     grade: rating,
     ...(CARD_STATES[state.state] ? { state: CARD_STATES[state.state] } : {}),
     ...(input.aid ? { aid: input.aid } : {}),
-    ...(furigana && termReading(row) ? { reading: readingShown(key, state.state) } : {}),
-    ...fadedReadings(row.example, input.readingsFaded),
+    ...readingsDrawn(
+      row,
+      furigana && termReading(row) ? readingShown(key, state.state) : null,
+      fadedReadings(row.example, input.readingsFaded),
+    ),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.

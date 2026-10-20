@@ -17,7 +17,7 @@ export function ImportStart({ source }: { source: ImportSource }) {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const start = useMutation({
-    mutationFn: (file: File) => startUpload(file, qc),
+    mutationFn: (file: File) => startUpload(file, qc, source),
     onSuccess: (item) =>
       navigate({ to: "/import/$importId", params: { importId: item.id }, replace: true }),
   });

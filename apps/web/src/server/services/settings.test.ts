@@ -132,6 +132,35 @@ describe("getting set up", () => {
     expect(done.dailyGoalChosenAt).toBeInstanceOf(Date);
   });
 
+  it("counts a start from Today as its own kind, on the lighter goal", async () => {
+    const who = await learner(db, "today-start", "Today");
+    const events: AnalyticsEvent[] = [];
+    const done = await finishOnboarding(
+      { ...who, analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) } },
+      { ...skip, from: "today" },
+    );
+    expect(events).toContainEqual({ name: "onboarding_finished", kind: "today" });
+    expect(events.some((e) => e.name === "welcome_step_finished")).toBe(false);
+    expect(done).toMatchObject({ dailyGoal: 25, dailyGoalChosenAt: null });
+  });
+
+  it("leaves an account that already reviewed as it was when Today opens", async () => {
+    const who = await learner(db, "today-older", "Older");
+    const deck = await createDeck(who, { name: "Estonian", defaultLanguage: "et" });
+    const [outcome] = await addCards(who, [CardInput.parse({ deckId: deck.id, term: "tere" })]);
+    if (outcome?.status !== "added") throw new Error("not added");
+    await gradeCard(who, { cardId: outcome.card.id, direction: "recognition", rating: 3 });
+    const goal = (await getSettings(who)).dailyGoal;
+    const events: AnalyticsEvent[] = [];
+    const after = await finishOnboarding(
+      { ...who, analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) } },
+      { ...skip, from: "today" },
+    );
+    expect(after).toMatchObject({ onboardedAt: null, dailyGoal: goal });
+    expect(goal).not.toBe(25);
+    expect(events).toEqual([]);
+  });
+
   it("refuses an integration", async () => {
     const who = await learner(db, "keyholder", "Keyholder");
     await expect(finishOnboarding({ ...who, actor: "api" }, skip)).rejects.toMatchObject({

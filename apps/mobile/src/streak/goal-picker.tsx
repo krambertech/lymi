@@ -81,7 +81,7 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
       title={t`Daily goal`}
       description={
         connected
-          ? t`How many reviews a day keep your streak. Every grade counts, even Forgot.`
+          ? t`Reviews a day to keep your streak. Forgot counts too.`
           : t`Changing the goal needs a connection.`
       }
       open={open}

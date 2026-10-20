@@ -45,8 +45,12 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
 
 /** Each script's letters with the marks and full-width forms that run with them, none of which Onest has. */
+const HANZI_RUNS =
+  /([\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u;
 const SCRIPT_RUNS: Record<Script, RegExp> = {
   Jpan: /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u,
+  Hans: HANZI_RUNS,
+  Hant: HANZI_RUNS,
 };
 
 // iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".
@@ -161,20 +165,20 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 // Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop. `xl` is
-// iOS's large button, 52 pt with a 17 pt label, since the web's 64 px stacks too tall on a phone.
+// Today's one Review button alone; a stack of buttons, such as a review's end, takes `lg`.
 const HEIGHT: Record<ButtonSize, string> = {
   sm: "h-8 px-3 rounded-sm",
   md: "h-11 px-4 rounded-md",
   lg: "h-12 px-5 rounded-md",
-  xl: "h-[52px] px-5 rounded-md",
+  xl: "h-16 px-5 rounded-md",
 };
 const LABEL: Record<ButtonSize, string> = {
   sm: "text-sm",
   md: "text-md",
   lg: "text-md",
-  xl: "text-md",
+  xl: "text-lg",
 };
-const ICON: Record<ButtonSize, number> = { sm: 16, md: 18, lg: 20, xl: 18 };
+const ICON: Record<ButtonSize, number> = { sm: 16, md: 18, lg: 20, xl: 20 };
 const SLOP = { sm: 6, md: 0, lg: 0, xl: 0 } as const;
 
 function look(variant: ButtonVariant, p: Palette, strong = false) {

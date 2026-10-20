@@ -609,11 +609,11 @@ export const CardInput = z.object({
     .optional(),
   pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional().meta({
     description:
-      "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), and when two cards both have one, a different reading makes a different card: 上手 read じょうず and うわて are two. A Chinese card holds pinyin with tone marks (xuéxí for 学习).",
+      "How the term is said, in the format GET /api/languages gives for the card's language, which also says when a differing reading makes a different card. Any other language holds IPA or a plain respelling.",
   }),
   example: z.string().trim().max(CARD_LIMITS.example).optional().meta({
     description:
-      "One sentence in the term's language. A Japanese example carries a kana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。 A Chinese example takes no inline pinyin.",
+      "One sentence in the term's language. Where GET /api/languages gives the language an example notation, the sentence carries its readings inline in it; otherwise it is plain.",
   }),
   notes: z
     .string()
@@ -925,6 +925,8 @@ export const OnboardingInput = z.object({
   /** A BCP 47 tag, or the name the learner typed for a language Lymi does not list. */
   learningLanguage: z.string().trim().min(1).max(60).nullable(),
   dailyGoal: DailyGoal.nullable(),
+  /** Set by the web's Today, which a new account starts on instead of Welcome's questions. */
+  from: z.enum(["today"]).optional(),
 });
 export type OnboardingInput = z.infer<typeof OnboardingInput>;
 export const ANALYTICS_CONSENT_VERSION = 1;

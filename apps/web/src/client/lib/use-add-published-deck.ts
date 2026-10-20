@@ -10,10 +10,10 @@ import { captureAnalytics } from "./telemetry";
  * it pressed was read in, so the deck lands in Library saying what Explore said: the server pins
  * nothing when it is told nothing, and a membership's edition is never chosen again. ADR 0015.
  *
- * The learner always stays where they pressed. `announce` says who tells them it worked: a shelf
- * raises a toast that offers the deck, while a deck's own page shows the change itself.
+ * `announce` says who tells them it worked: a shelf raises a toast that offers the deck, a deck's
+ * own page shows the change itself, and Today's first run opens the deck's first review at once.
  */
-export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" }) {
+export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" | "review" }) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -26,11 +26,17 @@ export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" }
       // The deck's cards join the day's review. A cached queue would open the next review on the
       // old cards before its refetch begins, so it goes rather than going stale.
       qc.removeQueries({ queryKey: ["queue"] });
-      await Promise.all([
+      const refreshed = Promise.all([
         qc.invalidateQueries({ queryKey: ["decks"] }),
         qc.invalidateQueries({ queryKey: ["explore"] }),
         qc.invalidateQueries({ queryKey: ["rounds"] }),
       ]);
+      // Leaving before the refetch lands keeps the page under the press from reshuffling first.
+      if (announce === "review") {
+        void navigate({ to: "/review", search: { deck: deckId } });
+        return;
+      }
+      await refreshed;
       if (announce === "page") return;
       toast.add({
         id: `added-${deckId}`,

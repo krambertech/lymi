@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Db } from "../db";
 import type { CardView, getDeck } from "../services";
 import { ServiceError } from "../services/context";
-import { buildMcpServer, type McpPrincipal } from "./server";
+import { buildMcpServer, DECK_PREVIEW_LIMIT, type McpPrincipal } from "./server";
 
 vi.mock("../services", async () => {
   const context = await import("../services/context");
@@ -217,16 +217,35 @@ describe("Lymi MCP server", () => {
     for (const tool of tools) {
       const { annotations } = tool;
       expect(tool.title, tool.name).toBeTruthy();
+      expect(annotations?.title, tool.name).toBe(tool.title);
       expect(tool.outputSchema, tool.name).toBeDefined();
       expect(typeof annotations?.readOnlyHint, tool.name).toBe("boolean");
       expect(typeof annotations?.destructiveHint, tool.name).toBe("boolean");
-      expect(annotations?.openWorldHint, tool.name).toBe(false);
+      expect(annotations?.openWorldHint, tool.name).toBe(tool.name === "set_card_image");
       if (!annotations?.readOnlyHint) {
         expect(typeof annotations?.idempotentHint, tool.name).toBe("boolean");
       }
       const scope = annotations?.readOnlyHint ? "read" : "write";
       expect(tool._meta?.securitySchemes, tool.name).toEqual([{ type: "oauth2", scopes: [scope] }]);
     }
+  });
+
+  it("gives every parameter its schema inline, because directory portals do not follow $ref", async () => {
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+
+    for (const tool of tools) {
+      expect(JSON.stringify(tool.inputSchema), tool.name).not.toContain("$ref");
+      for (const [name, property] of Object.entries(tool.inputSchema.properties ?? {})) {
+        const shape = property as { type?: unknown; anyOf?: unknown };
+        expect(shape.type ?? shape.anyOf, `${tool.name}.${name}`).toBeDefined();
+      }
+    }
+    const createDeck = tools.find((t) => t.name === "create_deck");
+    expect(createDeck?.inputSchema.properties?.sectionProgression).toMatchObject({
+      type: "string",
+      enum: ["automatic", "manual", "open"],
+    });
   });
 
   it("never offers the daily goal as something an assistant can change", async () => {
@@ -297,11 +316,71 @@ describe("Lymi MCP server", () => {
           due: 3,
         },
       ],
+      languages: {},
     });
     expect(services.listDecks).toHaveBeenCalledWith(
       expect.objectContaining({ userId: "user-1", actor: "mcp" }),
       { archived: undefined },
     );
+  });
+
+  it("says how each deck language with a format of its own writes a card", async () => {
+    const summary = (id: string, defaultLanguage: string | null) => ({
+      id,
+      name: id,
+      description: null,
+      meaningLanguage: null,
+      defaultLanguage,
+      directions: "recognition" as const,
+      reviewModes: [{ cue: "term" as const, target: "meaning" as const }],
+      position: 0,
+      seriesId: null,
+      sectionProgression: "automatic" as const,
+      purpose: "language" as const,
+      enrichFields: ["meaning" as const],
+      enrichInstructions: null,
+      enrichStyle: null,
+      total: 0,
+      due: 0,
+      archivedAt: null,
+      ...owned,
+    });
+    services.listDecks.mockResolvedValue([
+      summary("korean", "ko-KR"),
+      summary("japanese", "ja"),
+      summary("italian", "it"),
+      summary("mixed", null),
+    ]);
+    services.getSettings.mockResolvedValue({
+      userId: "user-1",
+      appLanguage: "uk",
+      meaningLanguage: "uk",
+      dailyGoal: 50,
+      analyticsConsent: null,
+      analyticsConsentUpdatedAt: null,
+      dailyGoalChosenAt: null,
+      reviewTimezone: null,
+      reviewTimezoneMode: "automatic",
+      reviewTimezoneUpdatedAt: null,
+      onboardedAt: null,
+      learningKind: null,
+      learningLanguage: null,
+      createdAt: now,
+      updatedAt: now,
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "list_decks", arguments: {} });
+
+    const { languages } = res.structuredContent as {
+      languages: Record<string, { tag: string; pronunciation: { sample: object } }>;
+    };
+    expect(Object.keys(languages)).toEqual(["ko-KR", "ja"]);
+    expect(languages["ko-KR"]?.pronunciation.sample).toEqual({
+      term: "학교",
+      pronunciation: "학꾜",
+    });
+    expect(languages.ja?.tag).toBe("ja");
   });
 
   it("lists archived decks with when each was archived, so one can be found to restore", async () => {
@@ -486,6 +565,29 @@ describe("Lymi MCP server", () => {
         expect.objectContaining({ uri: `lymi://card/${card.id}`, name: card.term }),
       ],
     });
+  });
+
+  it("summarises a mentioned deck like get_deck, not as every card's fields", async () => {
+    const rows = Array.from({ length: 365 }, (_, i) => ({
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      state: null,
+    }));
+    services.getDeck.mockResolvedValue(deck);
+    services.listDeckCards.mockResolvedValue(rows);
+    const client = await connect("read");
+
+    const { contents } = await client.readResource({ uri: "lymi://deck/deck-1" });
+
+    const text = (contents[0] as { text: string }).text;
+    expect(text.length).toBeLessThan(4_000);
+    const body = JSON.parse(text);
+    expect(body).toMatchObject({
+      deck: { id: "deck-1", name: "Italian", defaultLanguage: "it" },
+      total: 365,
+      more: expect.stringContaining('search_cards with deckId "deck-1"'),
+    });
+    expect(body.newest).toHaveLength(DECK_PREVIEW_LIMIT);
+    expect(body.newest[0]).toEqual({ id: "card-0", term: card.term, meaning: card.meaning });
   });
 
   it("saves the app language from ChatGPT's settings, and only with write", async () => {
@@ -1066,7 +1168,7 @@ describe("Lymi MCP server", () => {
     });
   });
 
-  it("returns a deck with its progress, its cards and each card's due time, dates as ISO strings", async () => {
+  it("returns a deck with its progress and its newest cards' terms, dates as ISO strings", async () => {
     services.getDeck.mockResolvedValue(deck);
     services.listDecks.mockResolvedValue([{ ...deck, total: 1, due: 1 }]);
     services.deckStages.mockResolvedValue({ new: 1, learning: 0, known: 0 });
@@ -1098,8 +1200,32 @@ describe("Lymi MCP server", () => {
       total: 1,
       due: 1,
       stages: { new: 1, learning: 0, known: 0 },
-      truncated: false,
-      cards: [{ id: "card-1", term: "sbrigarsi", dueAt: now.toISOString() }],
+      newest: [{ id: "card-1", term: "sbrigarsi", meaning: card.meaning }],
+    });
+    expect(res.content).toHaveLength(1);
+  });
+
+  it("summarises a large deck in a few kilobytes and points to search_cards for the rest", async () => {
+    const rows = Array.from({ length: 365 }, (_, i) => ({
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      state: null,
+    }));
+    services.getDeck.mockResolvedValue(deck);
+    services.listDecks.mockResolvedValue([{ ...deck, total: 365, due: 40 }]);
+    services.deckStages.mockResolvedValue({ new: 200, learning: 100, known: 65 });
+    services.listDeckCards.mockResolvedValue(rows);
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_deck", arguments: { deckId: "deck-1" } });
+
+    const structured = res.structuredContent as { total: number; newest: object[] };
+    expect(structured.total).toBe(365);
+    expect(structured.newest).toHaveLength(DECK_PREVIEW_LIMIT);
+    expect(structured.newest[0]).toEqual({ id: "card-0", term: card.term, meaning: card.meaning });
+    expect(JSON.stringify(res.content).length).toBeLessThan(8_000);
+    expect(res.content).toContainEqual({
+      type: "text",
+      text: expect.stringContaining('search_cards with deckId "deck-1"'),
     });
   });
 

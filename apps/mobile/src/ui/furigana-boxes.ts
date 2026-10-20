@@ -1,4 +1,4 @@
-import type { ReadingSegment } from "@lymi/core";
+import { lettersReading, type ReadingSegment } from "@lymi/core";
 
 /** A run to draw: `tail` marks text after the term, such as its other forms, drawn in its own style. */
 export type Run = ReadingSegment & { tail?: boolean };
@@ -88,7 +88,18 @@ export function clampBoxes(
   return keep;
 }
 
-/** What VoiceOver says for the runs: the reading in place of the kanji it is drawn over, while shown. */
+/**
+ * The room each side of a reading written in letters, so pinyin wider than its hanzi never runs
+ * into the syllable beside it, as the web's `rt` pads it; kana readings take none.
+ */
+export function readingInset(reading: string, readingSize: number): number {
+  return lettersReading(reading) ? Math.ceil(readingSize * 0.2) : 0;
+}
+
+/**
+ * What VoiceOver says for the runs: the reading in place of the kanji it is drawn over, while shown
+ * and while the language says its reading; a Chinese voice reads hanzi better than pinyin.
+ */
 export function spokenReading(segments: readonly ReadingSegment[], shown: boolean): string {
   return segments
     .map((segment) =>

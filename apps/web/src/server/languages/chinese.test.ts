@@ -16,7 +16,14 @@ const fixtures = JSON.parse(
     language?: string;
     asked: ReviewModeKey[];
   }[];
-  checks: { rule: string; field: EnrichedField; text: string; example?: string; pass: boolean }[];
+  checks: {
+    rule: string;
+    field: EnrichedField;
+    term?: string;
+    text: string;
+    example?: string;
+    pass: boolean;
+  }[];
 };
 
 describe("the zh lesson slot", () => {
@@ -65,10 +72,10 @@ describe("the zh hook slot", () => {
 describe("the zh checks", () => {
   it("score each invented reply as a careful reader would", () => {
     expect(fixtures.checks.length).toBeGreaterThanOrEqual(20);
-    for (const { rule, field, text, example, pass } of fixtures.checks) {
+    for (const { rule, field, term = "", text, example, pass } of fixtures.checks) {
       const check = chinese.checks.find((one) => one.rule === rule && one.field === field);
       expect(check, `${field}: ${rule}`).toBeDefined();
-      expect(check?.pass(text, { term: "", example }), `${rule}: ${text}`).toBe(pass);
+      expect(check?.pass(text, { term, example }), `${rule}: ${text}`).toBe(pass);
     }
   });
 });

@@ -1,30 +1,59 @@
 import { missingReadings, stripReadings } from "@lymi/core";
-import { hasToneMark, parsePinyin, readingTokens } from "@lymi/core/pinyin";
+import {
+  hasToneMark,
+  type PinyinSegment,
+  parsePinyin,
+  pinyinExampleSegments,
+  pinyinTermReading,
+  readingTokens,
+} from "@lymi/core/pinyin";
 import type { LanguagePrompts } from "./types";
 
-/** Particles dictionaries write in the neutral tone, the only syllables that may open a reading unmarked. */
-const PARTICLES = new Set(["a", "ba", "de", "guo", "le", "ma", "me", "ne", "zhe"]);
+/** Characters dictionaries read in the neutral tone in common words: particles (了, 吗), suffixes (们, 子) and second syllables (东西, 朋友). */
+const NEUTRAL = new Set([
+  ..."了的吗呢吧啊着过得地么们子头个西友气欢生亮候服字识诉上思系息睛白情方楚烦发户腐宜算意和戚呼娘矩实道里边量",
+]);
 
 /**
- * Whether pinyin carries tone marks rather than numbers, with a mark on every syllable but a
- * neutral one: an unmarked syllable follows another (dōngxi, bù kèqi) or is a particle (le).
- * Letters the term writes as letters, such as the OK of 卡拉OK, need none.
+ * Whether every syllable over a Han character carries a tone mark, unless the character reads in
+ * the neutral tone: one dictionaries write unmarked (东西 dōngxi, 我们 wǒmen) or one repeating the
+ * character before it (妈妈 māma). A reading over several characters at once needs every mark.
  */
-export function tonedPinyin(reading: string): boolean {
-  if (/\d/.test(reading)) return false;
-  let first = true;
-  for (const token of readingTokens(reading.normalize("NFC").trim())) {
-    if (!token.syllables) {
-      if (!/^[A-Z]+$/.test(token.word)) return false;
+function tonedSegments(segments: readonly PinyinSegment[]): boolean {
+  let before = "";
+  for (const { text, reading } of segments) {
+    if (reading === undefined) {
+      before = "";
       continue;
     }
-    for (const syllable of token.syllables) {
-      const plain = syllable.text.toLowerCase();
-      if (!hasToneMark(syllable.text) && first && !PARTICLES.has(plain)) return false;
-      first = false;
+    const tokens = readingTokens(reading);
+    if (tokens.some((token) => !token.syllables && !/^[A-Z]+$/.test(token.word))) return false;
+    const syllables = tokens.flatMap((token) => token.syllables ?? []);
+    const [char = ""] = text;
+    if ([...text.replace(/[儿兒]$/u, "")].length === 1 && syllables.length === 1) {
+      if (!hasToneMark(reading) && !NEUTRAL.has(char) && char !== before) return false;
+    } else if (!syllables.length || !syllables.every((syllable) => hasToneMark(syllable.text))) {
+      return false;
     }
+    before = char;
   }
-  return !first;
+  return true;
+}
+
+const numbered = (reading: string) => /\d/.test(reading);
+
+/** Whether a term's pinyin is in tone marks, never numbers, with a mark on every syllable that is not neutral. */
+export function tonedPinyin(term: string, reading: string): boolean {
+  const segments = numbered(reading) ? null : pinyinTermReading(term, reading);
+  return !!segments?.some((segment) => segment.reading !== undefined) && tonedSegments(segments);
+}
+
+/** Whether every bracket of an example's pinyin is in tone marks, by the same rule as a term's. */
+export function tonedExample(text: string): boolean {
+  if (parsePinyin(text).some(({ reading }) => reading !== undefined && numbered(reading))) {
+    return false;
+  }
+  return tonedSegments(pinyinExampleSegments(text));
 }
 
 /** Chinese: pinyin in tone marks and citation tones, inline in examples after each word. docs/proposals/chinese.md. */
@@ -39,13 +68,12 @@ Why: the meaning says 行 is read xíng here, not háng. Every example carries p
   lesson: "pinyin over, under or beside the hanzi, in tone marks or tone numbers (xuéxí, xue2xi2)",
   hook: "Most words join two or more characters whose own meanings build the word's: 电脑 is electric + brain, 火车 is fire + vehicle. Try that route first. A sound-alike follows the pinyin syllable by syllable. Never write hanzi or pinyin in the hook.",
   checks: [
-    { field: "pronunciation", rule: "tone marks on every syllable", pass: tonedPinyin },
     {
-      field: "example",
+      field: "pronunciation",
       rule: "tone marks on every syllable",
-      pass: (text) =>
-        parsePinyin(text).every(({ reading }) => reading === undefined || tonedPinyin(reading)),
+      pass: (text, card) => tonedPinyin(card.term, text),
     },
+    { field: "example", rule: "tone marks on every syllable", pass: tonedExample },
     { field: "example", rule: "pinyin over hanzi", pass: (text) => !missingReadings(text, "zh") },
     {
       field: "example",

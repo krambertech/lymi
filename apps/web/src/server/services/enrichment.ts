@@ -85,7 +85,7 @@ export function enrichmentWrite(
   card: Fillable,
   filled: Filled,
   allowed: readonly EnrichedField[] = ENRICHED_FIELDS,
-  /** The language whose readings the run may add to the card's example, or null. */
+  /** The language whose readings the run asked for in the card's example, or null. */
   readingsIn: string | null = null,
 ): EnrichmentWrite {
   const open = new Set(unsetFields(card).filter((field) => allowed.includes(field)));
@@ -107,12 +107,13 @@ export function enrichmentWrite(
     });
     write.pronunciation = fields.pronunciation ?? write.pronunciation;
   }
-  // Compared untrimmed: the learner's text comes back exactly, with readings and nothing else.
+  // Compared untrimmed, in the language the card has after this write, which is what draws it:
+  // pinyin on a card left without a language would show as brackets.
   if (
     readingsIn &&
     card.example &&
     filled.example &&
-    addsReadingsOnly(card.example, filled.example, readingsIn)
+    addsReadingsOnly(card.example, filled.example, write.language ?? card.language)
   ) {
     write.example = filled.example;
     write.readingsFor = card.example;

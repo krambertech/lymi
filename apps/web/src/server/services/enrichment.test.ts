@@ -182,8 +182,8 @@ describe("enrichmentWrite", () => {
     expect(enrichmentWrite(card, withReadings, [], null)).toEqual({});
   });
 
-  it("adds pinyin to a Chinese example by the same rule", () => {
-    const card = { ...blank, example: "今天不行。" };
+  it("adds pinyin to a Chinese example by the same rule, once the card is Chinese", () => {
+    const card = { ...blank, language: "zh", example: "今天不行。" };
     const pinyin = { ...reply, example: "今天[jīntiān]不行[bù xíng]。" };
     expect(enrichmentWrite(card, pinyin, [], "zh")).toEqual({
       example: "今天[jīntiān]不行[bù xíng]。",
@@ -192,7 +192,15 @@ describe("enrichmentWrite", () => {
     expect(
       enrichmentWrite(card, { ...pinyin, example: "今天[jīntiān]行[xíng]。" }, [], "zh"),
     ).toEqual({});
-    expect(enrichmentWrite(card, pinyin, [], "ja")).toEqual({});
+    expect(enrichmentWrite({ ...card, language: "ja" }, pinyin, [], "ja")).toEqual({});
+    // A card without a language would draw the brackets, unless this reply gives it one.
+    const unset = { ...card, language: null };
+    expect(enrichmentWrite(unset, { ...pinyin, language: null }, [], "zh")).toEqual({});
+    expect(enrichmentWrite(unset, { ...pinyin, language: "zh" }, ["language"], "zh")).toEqual({
+      language: "zh",
+      example: "今天[jīntiān]不行[bù xíng]。",
+      readingsFor: "今天不行。",
+    });
   });
 
   it("drops a value the model left out and a language tag that is not one", () => {

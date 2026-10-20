@@ -48,6 +48,13 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Icelandic** notes give gender and nominative · genitive singular · nominative plural, *hestur, hests, hestar*; þ, ð, æ and ö stay as written.
 - **Polish** notes give the aspect pair, *robić / zrobić*, irregular genitive and plural forms including masculine-personal plurals, *studenci*, and say when a word looks like a Ukrainian or Russian one but means something else, *dywan*, a carpet.
 
+- **German** notes give a noun's plural, a strong verb's forms and a separable verb's prefix, *ein|kaufen*; the term keeps its article, and duplicates still compare it.
+- **French** pronunciation is IPA, with each liaison in a phrase marked ‿; notes give an adjective's irregular feminine and plural, *beau, belle, beaux*.
+- **Spanish** and **Italian** keep every written accent, *árbol*, *città*; notes give stem changes and irregular forms, and Italian's *essere*.
+- **Portuguese**: `pt` and `pt-PT` are said as in Portugal and `pt-BR` as in Brazil, each in IPA; notes give the other variety's word where they differ, *ônibus* or *autocarro*.
+- **Hungarian** keeps its long vowels; notes give the indefinite and definite present, *olvas · olvassa*, -ik verbs and irregular accusatives, *tűz → tüzet*.
+- **Czech** keeps háček, čárka and ů; notes give the aspect pair, *dělat / udělat*, and irregular forms, *člověk, lidé*.
+
 A configured language's AI fills cards unasked only while its evaluation passes the bar ([long-tail languages](proposals/long-tail-languages.md)); a new deck in a language below it starts with no AI fields until the owner turns them on.
 
 `GET /api/languages` and [the docs](https://lymi.app/docs/languages) give every language's format from the records in `packages/core/src/languages`.

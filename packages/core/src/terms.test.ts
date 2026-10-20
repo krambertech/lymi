@@ -138,6 +138,12 @@ describe("spokenText", () => {
   it("says a Japanese card's kana reading, so the card decides how 上手 is read", () => {
     expect(spokenText({ term: "上手", language: "ja", pronunciation: "うわて" })).toBe("うわて");
   });
+  it("says a Russian card's marked stress, so за́мок and замо́к are two clips", () => {
+    expect(spokenText({ term: "замок", language: "ru", pronunciation: "замо́к" })).toBe("замо́к");
+    expect(spokenText({ term: "ежик", language: "ru-RU", pronunciation: "ёжик" })).toBe("ёжик");
+    expect(spokenText({ term: "замок", language: "ru", pronunciation: "[ˈzamək]" })).toBe("замок");
+    expect(spokenText({ term: "замок", language: "bg", pronunciation: "за́мок" })).toBe("замок");
+  });
   it("says the term where there is no reading to say", () => {
     expect(spokenText({ term: "上手", language: "ja", pronunciation: "jōzu" })).toBe("上手");
     expect(spokenText({ term: "学习", language: "zh", pronunciation: "xuéxí" })).toBe("学习");

@@ -28,17 +28,24 @@ export default async function drive({ page, base, step, api, expect }) {
     },
   );
 
-  await step("Make a Tagalog and a Georgian deck: each starts with its row's fields", async () => {
-    tagalog = await post("/api/decks", { name: "Tagalog", defaultLanguage: "tl" });
-    georgian = await post("/api/decks", { name: "ქართული", defaultLanguage: "ka" });
-    expect(tagalog.enrichFields).toEqual(["meaning", "example", "notes", "pronunciation"]);
-    expect(georgian.enrichFields).toEqual(["meaning", "example", "pronunciation"]);
-    return { decks: [tagalog, georgian] };
-  });
+  await step(
+    "Make a Tagalog and a Georgian deck: each starts as its evaluation allows",
+    async () => {
+      tagalog = await post("/api/decks", { name: "Tagalog", defaultLanguage: "tl" });
+      georgian = await post("/api/decks", { name: "ქართული", defaultLanguage: "ka" });
+      // Filipino sits at the bar, so its gate may be either way; the deck must match it.
+      expect([[], ["meaning", "example", "notes", "pronunciation"]]).toContainEqual(
+        tagalog.enrichFields,
+      );
+      expect(georgian.enrichFields).toEqual(["meaning", "example", "pronunciation"]);
+      return { decks: [tagalog, georgian] };
+    },
+  );
 
   await step(
     "Add bahay and წყალი with enrichment: stress marks and a romanization land",
     async () => {
+      const gated = tagalog.enrichFields.length === 0;
       const { results } = await post("/api/cards/batch", {
         cards: [
           { deckId: tagalog.id, term: "bahay", enrich: true },
@@ -47,13 +54,22 @@ export default async function drive({ page, base, step, api, expect }) {
       });
       expect(results.map((r) => r.status)).toEqual(["added", "added"]);
       await expect.poll(settled(["bahay", "წყალი"]), { timeout: 120_000 }).toEqual([null, null]);
+      if (gated) {
+        // Below the bar nothing lands unasked; the owner turns fields on, then asks.
+        expect((await find("bahay")).meaning).toBeNull();
+        await page.request.patch(`${base}/api/decks/${tagalog.id}`, {
+          data: { enrichFields: ["meaning", "pronunciation"] },
+        });
+        await post(`/api/cards/${(await find("bahay")).id}/enrich`, {});
+        await expect.poll(settled(["bahay"]), { timeout: 120_000 }).toEqual([null]);
+      }
       const house = await find("bahay");
       const water = await find("წყალი");
       expect(house).toMatchObject({ meaningSource: "ai", pronunciationSource: "ai" });
       expect(house.meaning).toMatch(/house|home/i);
       expect(house.pronunciation.normalize("NFD")).toMatch(/[\u0300\u0301\u0302]/);
       expect(water).toMatchObject({ pronunciation: "ts'q'ali", pronunciationSource: "ai" });
-      return { house, water };
+      return { gated, house, water };
     },
   );
 
@@ -76,6 +92,26 @@ export default async function drive({ page, base, step, api, expect }) {
       page.getByText(man.pronunciation, { exact: true }).filter({ visible: true }),
     ).toBeVisible();
     return { man, decks: [lithuanian, norwegian] };
+  });
+
+  await step("A pt-PT deck is said as in Portugal", async () => {
+    const { languages } = await api("/api/languages");
+    const tags = languages.map((language) => language.tag);
+    expect(tags).toEqual(expect.arrayContaining(["pt", "pt-BR", "fr"]));
+    const portugal = await post("/api/decks", {
+      name: "Português",
+      defaultLanguage: "pt-PT",
+      enrichFields: ["meaning", "pronunciation"],
+    });
+    expect(portugal.enrichFields).toEqual(["meaning", "pronunciation"]);
+    await post("/api/cards/batch", {
+      cards: [{ deckId: portugal.id, term: "leite", enrich: true }],
+    });
+    await expect.poll(settled(["leite"]), { timeout: 120_000 }).toEqual([null]);
+    const filled = await find("leite");
+    expect(filled.pronunciation).toMatch(/ɨ/);
+    expect(filled.pronunciation).not.toMatch(/tʃ/);
+    return { filled };
   });
 
   await step("Review წყალი and reveal it: ts'q'ali shows, in Georgian's face", async () => {

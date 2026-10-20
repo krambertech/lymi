@@ -3,9 +3,10 @@
  * records it, so a converted term still meets its duplicate and a converted Reading is never a
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
-import { type ReadingEngine, readingEngine } from "./languages";
+import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
+import { cyrillicStress } from "./stress";
 
 /** A field `normalizeCardText` may convert. */
 export type NormalizedField = "term" | "pronunciation";
@@ -17,10 +18,20 @@ export type CardText = {
 };
 
 /** Each engine's conversions, such as pinyin's tone numbers to marks; each returns only the fields it changed. */
-const CONVERT: Record<ReadingEngine, (text: CardText) => CardText> = {
+const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardText> = {
   furigana: splitBracketedTerm,
   pinyin: markTones,
+  stress: markStress,
 };
+
+/**
+ * A pronunciation's accented Latin look-alikes become Cyrillic vowels with U+0301: замóк → замо́к.
+ * The term is left as sent until the stress fold changes its key.
+ */
+function markStress({ pronunciation }: CardText, language: string): CardText {
+  const rules = stressRules(language);
+  return pronunciation && rules ? { pronunciation: cyrillicStress(pronunciation, rules) } : {};
+}
 
 /** Pinyin sent with tone numbers stores with tone marks: ni3 hao3 → nǐ hǎo. */
 function markTones({ pronunciation }: CardText): CardText {
@@ -48,7 +59,7 @@ export function normalizeCardText<T extends CardText>(
   fields: T,
 ): { fields: T; normalized: NormalizedField[] } {
   const engine = readingEngine(language);
-  const changed = engine ? CONVERT[engine](fields) : {};
+  const changed = engine && language ? CONVERT[engine](fields, language) : {};
   const normalized = (["term", "pronunciation"] as const).filter(
     (field) => changed[field] !== undefined && changed[field] !== fields[field],
   );

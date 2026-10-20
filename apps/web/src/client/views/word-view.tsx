@@ -12,6 +12,7 @@ import {
   type KnownReadings,
   needsEnrichment,
   type ReviewMode,
+  termShowsPronunciation,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
@@ -479,6 +480,10 @@ export function WordView({
   const [moving, setMoving] = useState(false);
   const forms = splitForms(card.term);
   const reading = useMemo(
+    () => termShowsPronunciation({ ...card, term: forms.word }),
+    [card, forms.word],
+  );
+  const readingOver = useMemo(
     () => drawsTermReading({ ...card, term: forms.word }),
     [card, forms.word],
   );
@@ -616,13 +621,16 @@ export function WordView({
           )}
         </h1>
         {card.pronunciation && reading && card.pronunciationSource !== "ai" ? (
-          // Furigana draws the reading over the term, so the line is only for a screen reader.
-          <p className="sr-only">{card.pronunciation}</p>
+          // A reading drawn over the term needs this line only for a screen reader; stress drawn in
+          // place is the heading's own text, so it needs none.
+          readingOver && <p className="sr-only">{card.pronunciation}</p>
         ) : card.pronunciation ? (
           <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
-            <span className={reading ? "sr-only" : "[overflow-wrap:anywhere]"}>
-              {card.pronunciation}
-            </span>
+            {(!reading || readingOver) && (
+              <span className={reading ? "sr-only" : "[overflow-wrap:anywhere]"}>
+                {card.pronunciation}
+              </span>
+            )}
             {card.pronunciationSource === "ai" && (
               <SourceChip source="ai" field="pronunciation" size="xs" />
             )}

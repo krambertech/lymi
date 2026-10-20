@@ -3,7 +3,10 @@ import { OPEN } from "./common";
 
 export const LanguageOut = z
   .object({
-    tag: z.string().meta({ description: "The primary BCP 47 subtag, such as `ja`" }),
+    tag: z.string().meta({
+      description:
+        "The primary BCP 47 subtag, such as `ja`, or a language and region written apart, such as `pt-BR`",
+    }),
     name: z.string().meta({ description: "The language's English name" }),
     scripts: z.array(z.string()).meta({
       description:
@@ -11,10 +14,10 @@ export const LanguageOut = z
     }),
     pronunciation: z
       .object({
-        label: z.enum(["reading", "pronunciation"]).meta({
+        label: z.enum(["reading", "stress", "pronunciation"]).meta({
           ...OPEN,
           description:
-            "What the app calls the field: `reading` for a script that does not show its sound",
+            "What the app calls the field: `reading` for a script that does not show its sound, `stress` where it holds the term with its stress marked",
         }),
         format: z.string().meta({ description: "What the field holds" }),
         sample: z.object({ term: z.string(), pronunciation: z.string() }),

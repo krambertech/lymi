@@ -4,14 +4,16 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
-  drawsTermReading,
   hasReadings,
+  hasStress,
   ImageDescription,
+  markedTerm,
   modeKey,
   modeOf,
+  pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
-  writtenWithReading,
+  termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
@@ -318,10 +320,16 @@ export function CardForm(props: CardFormProps) {
   const tagsInUse = useQuery({ ...tagsQuery, enabled: !st }).data;
   const deckLanguage = current?.defaultLanguage ?? null;
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
-  // Japanese and Chinese call a term's pronunciation its reading.
-  const reads = writtenWithReading(language);
+  // Japanese and Chinese call a term's pronunciation its reading, and Russian its stress.
+  const named = pronunciationName(language);
   const termCard = { term: term.trim(), language, pronunciation };
-  const termDrawn = drawsTermReading(termCard);
+  const termDrawn = termShowsPronunciation(termCard);
+  // A Stress that is not the term with marks added draws nothing, so say so while it is typed.
+  const stressMissed =
+    named === "stress" &&
+    !!termCard.term &&
+    hasStress(pronunciation) &&
+    markedTerm(termCard) === null;
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
@@ -404,9 +412,12 @@ export function CardForm(props: CardFormProps) {
           deckId: t`Choose a deck.`,
           term: values.term ? t`Keep the term under 500 characters.` : t`Type the term.`,
           meaning: t`Keep the meaning under 2000 characters.`,
-          pronunciation: reads
-            ? t`Keep the reading under 200 characters.`
-            : t`Keep the pronunciation under 200 characters.`,
+          pronunciation:
+            named === "reading"
+              ? t`Keep the reading under 200 characters.`
+              : named === "stress"
+                ? t`Keep the stress under 200 characters.`
+                : t`Keep the pronunciation under 200 characters.`,
           example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
           hook: t`Keep the hook under 200 characters.`,
@@ -610,9 +621,12 @@ export function CardForm(props: CardFormProps) {
     );
   };
 
-  const pronunciationLabel = reads
-    ? t({ message: "Reading", context: "how a term is read" })
-    : t`Pronunciation`;
+  const pronunciationLabel =
+    named === "reading"
+      ? t({ message: "Reading", context: "how a term is read" })
+      : named === "stress"
+        ? t({ message: "Stress", context: "which syllable of a term is stressed" })
+        : t`Pronunciation`;
   // How the term and the example will read, so a reading or bracket in the wrong place shows at
   // once. It repeats what the fields hold, so assistive tech reads the fields instead.
   const exampleDrawn = hasReadings(example);
@@ -649,6 +663,13 @@ export function CardForm(props: CardFormProps) {
         pronunciation,
         setPronunciation,
         cardLimits.pronunciation,
+        {
+          description: stressMissed && (
+            <FieldDescription>
+              {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
+            </FieldDescription>
+          ),
+        },
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
     hook: () =>

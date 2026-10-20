@@ -11,13 +11,16 @@ export const PUBLISHED_AUDIO_BATCH = 40;
 export const PUBLISHED_AUDIO_CONCURRENCY = 4;
 /** Cards a publish voices itself: a request's `waitUntil` ends about 30 seconds after the response. */
 export const PUBLISHED_AUDIO_ON_PUBLISH = 12;
+/** Decks a run reads, at about 5 D1 queries each plus 6 per edition, inside the 1,000 an invocation shares across its cron jobs. */
+export const PUBLISHED_AUDIO_DECKS = 20;
+const HOUR = 3_600_000;
 
 export interface PublishedAudioRun {
   /** Cards that got a clip in this run. */
   voiced: number;
   /** Cards the providers could not voice this run; the next run tries them again. */
   failed: number;
-  /** Speakable cards still without a clip after this run. */
+  /** Speakable front cards of the decks this run read still without a clip. */
   remaining: number;
 }
 
@@ -26,17 +29,22 @@ export interface PublishedAudioRun {
  * and the hand, so the first plays a visitor makes are instant. Every other card is voiced on its
  * first play from the page, which keeps the spend to what visitors use. #759.
  * Cards that already have a clip are skipped, which makes every run safe to repeat.
+ * Each hourly run reads the next slice of decks in slug order, so every deck comes round in turn.
  */
 export async function voicePublishedDecks(
   db: Db,
   deps: AudioDependencies & { analytics?: (userId: string) => AnalyticsWriter },
-  options: { slug?: string; limit?: number; concurrency?: number } = {},
+  options: { slug?: string; limit?: number; concurrency?: number; decks?: number; at?: Date } = {},
 ): Promise<PublishedAudioRun> {
   const limit = options.limit ?? PUBLISHED_AUDIO_BATCH;
   const concurrency = Math.max(1, options.concurrency ?? PUBLISHED_AUDIO_CONCURRENCY);
   const slugs = options.slug
     ? [options.slug]
-    : (await listPublicDeckSlugs(db)).map((row) => row.slug);
+    : rotatingSlice(
+        (await listPublicDeckSlugs(db)).map((row) => row.slug),
+        options.decks ?? PUBLISHED_AUDIO_DECKS,
+        Math.floor((options.at ?? new Date()).getTime() / HOUR),
+      );
   // Newest-published decks first: a deck just published is the one visitors are opening now.
   const publishedAt = new Map(
     (
@@ -57,7 +65,21 @@ export async function voicePublishedDecks(
   /** Each front card's deck, by its place in the newest-first order. */
   const deckRank = new Map<string, number>();
   for (const [rank, slug] of newestFirst.entries()) {
-    for (const id of await publicDeckFrontCards(db, slug)) {
+    let front: string[];
+    try {
+      front = await publicDeckFrontCards(db, slug);
+    } catch (error) {
+      // One deck's failed read waits for its next turn instead of failing every other deck's.
+      console.warn(
+        JSON.stringify({
+          event: "published_audio_deck_skipped",
+          slug,
+          error: error instanceof Error ? error.name : "UnknownError",
+        }),
+      );
+      continue;
+    }
+    for (const id of front) {
       if (!deckRank.has(id)) deckRank.set(id, rank);
     }
   }
@@ -123,4 +145,11 @@ export async function voicePublishedDecks(
   };
   await Promise.all(Array.from({ length: Math.min(concurrency, batch.length) }, worker));
   return { voiced, failed, remaining: pending.length - voiced };
+}
+
+/** The `run`th window of `size` items, wrapping, so consecutive runs cover every item in turn. */
+function rotatingSlice<T>(items: T[], size: number, run: number): T[] {
+  if (items.length <= size) return items;
+  const start = (run * size) % items.length;
+  return [...items, ...items].slice(start, start + size);
 }

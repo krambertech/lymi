@@ -43,6 +43,10 @@ describe("speech provider routing", () => {
     expect(nativeSpeechVoice("cmn-TW")?.name).toMatch(/Ling/);
   });
 
+  it("speaks Russian with Nikolay, who reads U+0301 as stress", () => {
+    expect(nativeSpeechVoice("ru-RU")?.voice).toBe("3EuKHIEZbSzrHGNmdYsx");
+  });
+
   it("recognizes OpenAI's published languages and common tag aliases", () => {
     expect(openAiSupportsLanguage("et-EE")).toBe(true);
     expect(openAiSupportsLanguage("cy")).toBe(true);

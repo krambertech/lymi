@@ -27,8 +27,8 @@ describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 9,
-      hash: "7a581fbcc3e1b677",
+      ENRICHMENT_PROMPT_VERSION: 11,
+      hash: "7bd549c11488406c",
     });
   });
 
@@ -69,12 +69,14 @@ describe("a supported language's worked example", () => {
 describe("languageGuide", () => {
   it("names each field a language has advice for, and nothing for a language without", () => {
     expect(languageGuide("et")).toMatch(/^notes: .*tulema · tulla · tulen.*\npronunciation: /s);
-    expect(languageGuide("pt-BR")).toContain("pt-BR");
+    expect(languageGuide("pt-BR")).toContain("said in Brazil");
+    expect(languageGuide("pt")).toContain("pronunciation: IPA as the word is said in Portugal");
     expect(languageGuide("xx")).toBeUndefined();
     expect(languageGuide(null)).toBeUndefined();
   });
 
-  it.each(LANGUAGE_FORMATS)(
+  // Russian's general guide keeps its own line until its prompt module and recorded run replace it.
+  it.each(LANGUAGE_FORMATS.filter((format) => format.tag !== "ru"))(
     "takes $tag's pronunciation and example lines from its format",
     (format) => {
       const guide = languageGuide(format.tag) ?? "";
@@ -84,6 +86,12 @@ describe("languageGuide", () => {
       expect(guide.includes(format.example?.sample ?? "\0")).toBe(format.example !== null);
     },
   );
+
+  it("keeps Russian's accent line, so the model reads what the last recorded run read", () => {
+    expect(languageGuide("ru")).toContain(
+      "pronunciation: The term in Cyrillic with an accent mark on the stressed vowel (молоко́)",
+    );
+  });
 
   it("asks Korean for pronounced Hangul and Sino-Korean roots, never romanization", () => {
     const guide = languageGuide("ko-KR") ?? "";

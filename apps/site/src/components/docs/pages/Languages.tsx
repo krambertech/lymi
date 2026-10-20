@@ -5,6 +5,7 @@ import { Defs, H2, Lead, NextLinks, Note } from "../Prose";
 
 const LABELS: Record<LanguageOut["pronunciation"]["label"], string> = {
   reading: "Reading",
+  stress: "Stress",
   pronunciation: "Pronunciation",
 };
 

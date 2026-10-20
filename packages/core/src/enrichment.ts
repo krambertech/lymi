@@ -33,9 +33,6 @@ export function enrichmentStalled(
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
-/** Languages without a configured row whose cards list a word's forms, so notes start on. */
-const FORM_LANGUAGES = new Set(["de"]);
-
 /** Languages without a configured row whose spelling does not show how a word is said or stressed. */
 const READING_LANGUAGES = new Set(["zh", "ja", "ru", "uk"]);
 
@@ -61,13 +58,14 @@ export function defaultEnrichFields(
   // Below the evaluation's bar a deck that never chose stays where it was before the row existed.
   const configured = configuredLanguage(language);
   if (configured && !configured.enrichByDefault) return ["meaning", "example"];
-  const starts = (field: "notes" | "pronunciation", fallback: ReadonlySet<string>) =>
-    configured ? configured.starts.includes(field) : fallback.has(primary);
+  const pronounced = configured
+    ? configured.starts.includes("pronunciation")
+    : READING_LANGUAGES.has(primary);
   return [
     "meaning",
     "example",
-    ...(starts("notes", FORM_LANGUAGES) ? (["notes"] as const) : []),
-    ...(starts("pronunciation", READING_LANGUAGES) ? (["pronunciation"] as const) : []),
+    ...(configured?.starts.includes("notes") ? (["notes"] as const) : []),
+    ...(pronounced ? (["pronunciation"] as const) : []),
   ];
 }
 

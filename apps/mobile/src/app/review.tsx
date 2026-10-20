@@ -13,7 +13,6 @@ import {
   countedRating,
   type Drawn,
   drawKey,
-  drawsTermReading,
   type FieldSource,
   gradeAllowed,
   interval,
@@ -22,6 +21,7 @@ import {
   type Rating,
   ROUNDS,
   type Round,
+  termShowsPronunciation,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -1278,8 +1278,8 @@ function CardPlate({
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const reading = card.pronunciation;
-  // Furigana or pinyin over the term: on the cue until the card is Known, and always once it is the answer.
-  const furigana = useMemo(() => drawsTermReading(card), [card]);
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  const furigana = useMemo(() => termShowsPronunciation(card), [card]);
   const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
@@ -1501,8 +1501,8 @@ function CardPlate({
                           )}
                         </Animated.View>
                       )}
-                      {/* After the reveal unless a reading is drawn over the term, which VoiceOver
-                    reads out. Under a term cue it reads the term out. */}
+                      {/* After the reveal unless the term draws it, over it or in place, which
+                    VoiceOver reads out. Under a term cue it reads the term out. */}
                       {card.pronunciation && !furigana && (
                         <Animated.View entering={arrive()}>
                           <Text className="text-md text-muted" lang={card.language}>

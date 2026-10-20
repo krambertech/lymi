@@ -52,17 +52,21 @@ export default {
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
-    // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
+    // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.
     if (at.getUTCMinutes() < 15) {
       const db = createDb(env.DB);
       run(
         "published-audio",
-        voicePublishedDecks(db, {
-          bucket: env.AUDIO,
-          leadIns: leadInDependencies(env),
-          providers: (language) => createSpeechProviders(env, language),
-          analytics: ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
-        }),
+        voicePublishedDecks(
+          db,
+          {
+            bucket: env.AUDIO,
+            leadIns: leadInDependencies(env),
+            providers: (language) => createSpeechProviders(env, language),
+            analytics: ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
+          },
+          { at },
+        ),
       );
     }
     if (runsCanary(env)) run("canary", runCanary(env, at));

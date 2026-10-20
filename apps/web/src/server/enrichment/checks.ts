@@ -175,13 +175,19 @@ function style(
   }
 }
 
+/** The rule a result counts under, with every includes or excludes check of a field as one. */
+export function ruleKey(result: CheckResult): string {
+  const { field, rule } = result;
+  return `${field}: ${rule.startsWith("includes ") || rule.startsWith("excludes ") ? rule.split(" ")[0] : rule}`;
+}
+
 /** Pass counts per rule, so a report shows which habit fails rather than which card. */
 export function tally(
   results: readonly CheckResult[],
 ): Map<string, { pass: number; total: number }> {
   const byRule = new Map<string, { pass: number; total: number }>();
   for (const result of results) {
-    const key = `${result.field}: ${result.rule.startsWith("includes ") || result.rule.startsWith("excludes ") ? result.rule.split(" ")[0] : result.rule}`;
+    const key = ruleKey(result);
     const count = byRule.get(key) ?? { pass: 0, total: 0 };
     count.total += 1;
     if (result.pass) count.pass += 1;

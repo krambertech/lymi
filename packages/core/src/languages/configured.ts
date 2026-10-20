@@ -53,7 +53,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["notes", "pronunciation"],
-    enrichByDefault: false,
+    enrichByDefault: true,
   },
   vi: {
     pronunciation: "pronunciation",

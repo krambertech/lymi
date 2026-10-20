@@ -13,7 +13,7 @@ import {
 } from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
 import { languagePrompts } from "../languages";
-import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
+import { type CaseExpectations, type CheckResult, checkCard, ruleKey, tally } from "./checks";
 import { GUIDED_LANGUAGES, languageGuide } from "./languages";
 import {
   CARDS_PER_CALL,
@@ -170,20 +170,48 @@ export function passRates(scored: readonly ScoredCase[]) {
   return tally(scored.flatMap((one) => one.results));
 }
 
-/** One case either way is the model's own noise between runs. */
-const SLACK = 1;
+/** Whether each case keeps each rule, a case failing a rule when any of its checks under it fails. */
+function caseOutcomes(
+  scored: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+): Map<string, Map<string, boolean>> {
+  const byRule = new Map<string, Map<string, boolean>>();
+  for (const { item, results } of scored) {
+    for (const result of results) {
+      const key = ruleKey(result);
+      const cases = byRule.get(key) ?? new Map<string, boolean>();
+      cases.set(item.id, (cases.get(item.id) ?? true) && result.pass);
+      byRule.set(key, cases);
+    }
+  }
+  return byRule;
+}
 
-/** Rules that pass on fewer cases than the previous run, scaled to this run's count, beyond the noise. */
+/** One bad call's worth of a rule's cases is the most noise a run can explain; the limits of comparing two runs this way are in krambertech/lymi#897. */
+const SLACK_MAX = CARDS_PER_CALL;
+
+/**
+ * Rules that now fail more of the cases the previous run passed than one bad call could explain:
+ * the rule's cases in its largest call, at most SLACK_MAX, net of cases that newly pass. The
+ * model's noise lands a whole call at a time, with the odd stray case beside it.
+ */
 export function regressions(
-  previous: ReturnType<typeof passRates>,
-  latest: ReturnType<typeof passRates>,
+  previous: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+  latest: readonly { item: { id: string }; results: readonly CheckResult[] }[],
+  calls: readonly { cases: readonly string[] }[],
 ): string[] {
-  return [...latest].flatMap(([rule, now]) => {
-    const before = previous.get(rule);
-    if (!before?.total) return [];
-    const expected = (before.pass / before.total) * now.total;
-    return now.pass < expected - SLACK
-      ? [`${rule}: ${now.pass}/${now.total}, was ${before.pass}/${before.total}`]
+  const callOf = new Map(calls.flatMap((call, at) => call.cases.map((id) => [id, at] as const)));
+  const before = caseOutcomes(previous);
+  return [...caseOutcomes(latest)].flatMap(([rule, cases]) => {
+    const was = before.get(rule);
+    if (!was) return [];
+    const perCall = new Map<number | undefined, number>();
+    for (const id of cases.keys())
+      perCall.set(callOf.get(id), (perCall.get(callOf.get(id)) ?? 0) + 1);
+    const slack = Math.min(SLACK_MAX, Math.max(...perCall.values()));
+    const lost = [...cases].flatMap(([id, pass]) => (!pass && was.get(id) ? [id] : []));
+    const gained = [...cases].filter(([id, pass]) => pass && was.get(id) === false).length;
+    return lost.length - gained > slack
+      ? [`${rule}: newly fails ${lost.join(", ")}, beyond one call's ${slack}`]
       : [];
   });
 }

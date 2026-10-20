@@ -17,13 +17,15 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   ja: { voice: "vzIXwvf41vKosKu00hYj", name: "Hiroki - Calm and Precise" },
   ko: { voice: "s07IwTCOrCDCaETjUVjx", name: "Hyunbin - Diplomatic, Clear and Measured" },
   nl: { voice: "YUdpWWny7k5yb4QCeweX", name: "Ruth - Warm and Dynamic Narrator" },
-  nb: { voice: "xF681s0UeE04gsf0mVsJ", name: "Olaf - Clear and Natural" },
+  // Oslo; chosen over Gemini, Olaf, Martin and Maja E, docs/proposals/long-tail-languages.md.
+  nb: { voice: "uNsWM1StCcpydKYOjKyu", name: "Mia Starset - Clear and Friendly" },
   pl: { voice: "H5xTcsAIeS5RAykjz57a", name: "Alex - Warm Storyteller" },
   "pt-BR": { voice: "Qrdut83w0Cr152Yb4Xn3", name: "Paulo - Expressive and Confident" },
   ro: { voice: "am5XuPVtut7uKJQKMja2", name: "Mike L - Soft, Clear and Charming" },
   ru: { voice: "0BcDz9UPwL3MpsnTeUlO", name: "Denis - Pleasant, Engaging and Friendly" },
   sr: { voice: "g8TYYIFt2Qo27yGQmTYq", name: "Jovana - Warm Serbian Narrator" },
-  sv: { voice: "4xkUqaR9MYOJHoaC1Nak", name: "Sanna Hartfield - Direct and Natural" },
+  // Stockholm; chosen over Gemini, Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
+  sv: { voice: "kPdGSxhZAqy4bmPAf9iJ", name: "Evelina - Calm, Clear and Engaging" },
   tr: { voice: "RXCCWbOxP7Hisa63Xsv5", name: "Adam - Calm, Relaxing and Informative" },
   uk: { voice: "9Sj8ugvpK1DmcAXyvi3a", name: "Alex Nekrasov - Confident and Clear" },
   // Northern; chosen over Gemini and four native voices, docs/proposals/long-tail-languages.md.
@@ -48,7 +50,9 @@ const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "it",
   "ja",
   "ko",
+  "nb",
   "ru",
+  "sv",
   "uk",
   "vi",
 ]);

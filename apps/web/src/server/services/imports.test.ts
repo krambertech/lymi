@@ -13,6 +13,7 @@ import {
   normalizeCardText,
 } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
+import { stripPinyin } from "@lymi/core/pinyin";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
@@ -431,6 +432,31 @@ describe("importing a Pleco export", () => {
     const second = await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
     expect(second.preview).toMatchObject({ added: 0, existing: preview.added });
     expect(await cardsOf(ctx)).toHaveLength(preview.added);
+  });
+});
+
+describe("importing an HSK-shaped Anki deck", () => {
+  it("writes Chinese cards with pinyin Readings, notes and recordings, counting converted tones", async () => {
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} },
+    };
+    // The file's pinyin fields say which decks are Chinese, so no language is chosen.
+    const { preview, result } = await runImport(ctx, "hsk.apkg");
+    expect(preview).toMatchObject({ added: 9, recordings: 6, soundsLeftOut: 2 });
+    expect(result.counts).toMatchObject({ added: 9, recordings: 6, readingsConverted: 1 });
+    expect(await card(ctx, "东西")).toMatchObject({ language: "zh", pronunciation: "dōng xi" });
+    expect(await card(ctx, "學習")).toMatchObject({ language: "zh-Hant", notes: "我学习中文。" });
+    expect((await card(ctx, "il cane")).language).not.toMatch(/^zh/);
+    // The sentence's pinyin is inline or a notes line, as examplesCarryReadings decides.
+    const bank = await card(ctx, "银行");
+    expect(bank.pronunciation).toBe("yínháng");
+    expect(stripPinyin(bank.example ?? "")).toBe("我去银行。");
+    expect(bank.notes?.startsWith("銀行\nnoun\n我去銀行。\n")).toBe(true);
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_finished", source: "anki", readings_converted: 1 }),
+    );
   });
 });
 

@@ -2356,6 +2356,10 @@ msgctxt "language"
 msgid "Hungarian"
 msgstr "Венгерский"
 
+msgctxt "language"
+msgid "Icelandic"
+msgstr "Исландский"
+
 msgid "Idea"
 msgstr "Идея"
 
@@ -3012,6 +3016,10 @@ msgstr "Нет"
 msgctxt "language"
 msgid "Norwegian"
 msgstr "Норвежский"
+
+msgctxt "language"
+msgid "Norwegian Nynorsk"
+msgstr "Норвежский (нюнорск)"
 
 msgid "Not in review yet"
 msgstr "Пока не в повторениях"

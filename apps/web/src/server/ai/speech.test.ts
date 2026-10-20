@@ -90,7 +90,19 @@ describe("speech provider routing", () => {
 
   it("routes native voices first and leaves Gemini as their fallback", () => {
     const configured = { ...env, GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
-    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja", "ko", "vi"]) {
+    for (const language of [
+      "et-EE",
+      "uk",
+      "ru",
+      "zh",
+      "pt-BR",
+      "ja",
+      "ko",
+      "vi",
+      "nb",
+      "no",
+      "sv",
+    ]) {
       expect(names(createSpeechProviders(configured, language))).toEqual([
         "elevenlabs",
         "gemini-api",
@@ -101,18 +113,21 @@ describe("speech provider routing", () => {
     expect(createSpeechProviders(configured, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
     expect(createSpeechProviders(configured, "ko-KR")[0]?.voice).toBe("s07IwTCOrCDCaETjUVjx");
     expect(createSpeechProviders(configured, "vi-VN")[0]?.voice).toBe("aN7cv9yXNrfIR87bDmyD");
+    expect(createSpeechProviders(configured, "nb-NO")[0]?.voice).toBe("uNsWM1StCcpydKYOjKyu");
+    expect(createSpeechProviders(configured, "sv-SE")[0]?.voice).toBe("kPdGSxhZAqy4bmPAf9iJ");
     expect(createSpeechProviders(configured, "pt-PT")[0]?.provider).toBe("gemini-api");
     for (const language of [
       "cs",
       "pl",
-      "no",
-      "nb-NO",
+      "nn",
+      "lv",
+      "lt",
       "he",
       "hi",
       "ro",
       "sr",
       "es",
-      "sv",
+      "is",
       "tr",
       "en",
       "ka",

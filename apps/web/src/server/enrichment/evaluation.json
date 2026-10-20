@@ -1089,6 +1089,721 @@
       ]
     },
     {
+      "id": "fi-en",
+      "name": "Finnish for the YKI test",
+      "language": "fi",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "fi-en-01",
+          "term": "talo",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "notes": { "includes": ["talon", "taloa", "taloja"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "fi-en-02",
+          "term": "kirja",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["kirjan", "kirjaa", "kirjoja"] }
+          }
+        },
+        {
+          "id": "fi-en-03",
+          "term": "käsi",
+          "expect": {
+            "meaning": { "includes": ["hand"] },
+            "notes": { "includes": ["käden", "kättä", "käsiä"] }
+          }
+        },
+        {
+          "id": "fi-en-04",
+          "term": "oleskelulupa",
+          "expect": {
+            "meaning": { "includes": ["residence"] },
+            "notes": { "includes": ["oleskeluluvan", "oleskelulupia"] }
+          }
+        },
+        {
+          "id": "fi-en-05",
+          "term": "työ",
+          "expect": {
+            "meaning": { "includes": ["work"] },
+            "notes": { "includes": ["työn", "työtä", "töitä"] }
+          }
+        },
+        {
+          "id": "fi-en-06",
+          "term": "mennä",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "notes": { "includes": ["menen", "menin"] }
+          }
+        },
+        {
+          "id": "fi-en-07",
+          "term": "puhua",
+          "expect": {
+            "meaning": { "includes": ["speak"] },
+            "notes": { "includes": ["puhun", "puhuin"] }
+          }
+        },
+        {
+          "id": "fi-en-08",
+          "term": "lääkäri",
+          "expect": { "meaning": { "includes": ["doctor"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "fi-en-09",
+          "term": "Missä asema on?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "lv-en",
+      "name": "Latvian for the naturalisation test",
+      "language": "lv",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "lv-en-01",
+          "term": "māja",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "notes": { "includes": ["mājas"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "lv-en-02",
+          "term": "suns",
+          "expect": {
+            "meaning": { "includes": ["dog"] },
+            "notes": { "includes": ["suņa"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "lv-en-03",
+          "term": "darbs",
+          "expect": { "meaning": { "includes": ["work"] }, "notes": { "includes": ["darba"] } }
+        },
+        {
+          "id": "lv-en-04",
+          "term": "ārsts",
+          "expect": { "meaning": { "includes": ["doctor"] }, "notes": { "includes": ["ārsta"] } }
+        },
+        {
+          "id": "lv-en-05",
+          "term": "nakts",
+          "expect": { "meaning": { "includes": ["night"] }, "notes": { "includes": ["fem"] } }
+        },
+        {
+          "id": "lv-en-06",
+          "term": "iet",
+          "expect": { "meaning": { "includes": ["go"] }, "notes": { "includes": ["eju", "gāju"] } }
+        },
+        {
+          "id": "lv-en-07",
+          "term": "būt",
+          "expect": { "meaning": { "includes": ["be"] }, "notes": { "includes": ["esmu", "biju"] } }
+        },
+        {
+          "id": "lv-en-08",
+          "term": "dzīvot",
+          "expect": { "meaning": { "includes": ["live"] }, "notes": { "includes": ["dzīvoju"] } }
+        },
+        {
+          "id": "lv-en-09",
+          "term": "Kur ir stacija?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "lt-en",
+      "name": "Lithuanian for the citizenship test",
+      "language": "lt",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "lt-en-01",
+          "term": "vyras",
+          "expect": { "meaning": { "includes": ["man"] }, "pronunciation": { "oneOf": ["výras"] } }
+        },
+        {
+          "id": "lt-en-02",
+          "term": "kalba",
+          "expect": {
+            "meaning": { "includes": ["language"] },
+            "pronunciation": { "oneOf": ["kalbà"] }
+          }
+        },
+        {
+          "id": "lt-en-03",
+          "term": "vanduo",
+          "expect": {
+            "meaning": { "includes": ["water"] },
+            "pronunciation": { "oneOf": ["vanduõ"] }
+          }
+        },
+        {
+          "id": "lt-en-04",
+          "term": "duona",
+          "expect": {
+            "meaning": { "includes": ["bread"] },
+            "pronunciation": { "oneOf": ["dúona"] }
+          }
+        },
+        {
+          "id": "lt-en-05",
+          "term": "miestas",
+          "expect": {
+            "meaning": { "includes": ["city"] },
+            "pronunciation": { "oneOf": ["miẽstas"] }
+          }
+        },
+        {
+          "id": "lt-en-06",
+          "term": "darbas",
+          "expect": {
+            "meaning": { "includes": ["work"] },
+            "pronunciation": { "oneOf": ["dárbas"] }
+          }
+        },
+        {
+          "id": "lt-en-07",
+          "term": "diena",
+          "expect": { "meaning": { "includes": ["day"] }, "pronunciation": { "oneOf": ["dienà"] } }
+        },
+        {
+          "id": "lt-en-08",
+          "term": "eiti",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "notes": { "includes": ["eina", "ėjo"] },
+            "pronunciation": { "oneOf": ["eĩti"] }
+          }
+        },
+        {
+          "id": "lt-en-09",
+          "term": "gyventi",
+          "expect": {
+            "meaning": { "includes": ["live"] },
+            "notes": { "includes": ["gyvena", "gyveno"] },
+            "pronunciation": { "oneOf": ["gyvénti"] }
+          }
+        },
+        {
+          "id": "lt-en-10",
+          "term": "ačiū",
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ãčiū"] } }
+        }
+      ]
+    },
+    {
+      "id": "nb-en",
+      "name": "Norwegian for the citizenship test",
+      "language": "nb",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "nb-en-01",
+          "term": "bok",
+          "expect": { "meaning": { "includes": ["book"] }, "notes": { "includes": ["bøker"] } }
+        },
+        {
+          "id": "nb-en-02",
+          "term": "mann",
+          "expect": {
+            "meaning": { "includes": ["man"] },
+            "notes": { "includes": ["mannen", "menn"] }
+          }
+        },
+        {
+          "id": "nb-en-03",
+          "term": "barn",
+          "expect": { "meaning": { "includes": ["child"] }, "notes": { "includes": ["barnet"] } }
+        },
+        {
+          "id": "nb-en-04",
+          "term": "lege",
+          "expect": { "meaning": { "includes": ["doctor"] }, "notes": { "includes": ["legen"] } }
+        },
+        {
+          "id": "nb-en-05",
+          "term": "skrive",
+          "expect": {
+            "meaning": { "includes": ["write"] },
+            "notes": { "includes": ["skrev", "skrevet"] }
+          }
+        },
+        {
+          "id": "nb-en-06",
+          "term": "gå",
+          "expect": { "meaning": { "includes": ["go"] }, "notes": { "includes": ["gikk", "gått"] } }
+        },
+        {
+          "id": "nb-en-07",
+          "term": "arbeid",
+          "expect": { "meaning": { "includes": ["work"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "nb-en-08",
+          "term": "Hvor er stasjonen?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "nn-en",
+      "name": "Nynorsk A2",
+      "language": "nn",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "nn-en-01",
+          "term": "hest",
+          "expect": {
+            "meaning": { "includes": ["horse"] },
+            "notes": { "includes": ["hesten", "hestar"] }
+          }
+        },
+        {
+          "id": "nn-en-02",
+          "term": "bok",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["boka", "bøker"] }
+          }
+        },
+        {
+          "id": "nn-en-03",
+          "term": "mann",
+          "expect": {
+            "meaning": { "includes": ["man"] },
+            "notes": { "includes": ["mannen", "menn"] }
+          }
+        },
+        {
+          "id": "nn-en-04",
+          "term": "veke",
+          "expect": { "meaning": { "includes": ["week"] }, "notes": { "includes": ["veka"] } }
+        },
+        {
+          "id": "nn-en-05",
+          "term": "lækjar",
+          "expect": { "meaning": { "includes": ["doctor"] }, "notes": { "includes": ["lækjaren"] } }
+        },
+        {
+          "id": "nn-en-06",
+          "term": "skrive",
+          "expect": { "meaning": { "includes": ["write"] }, "notes": { "includes": ["skreiv"] } }
+        },
+        {
+          "id": "nn-en-07",
+          "term": "gå",
+          "expect": { "meaning": { "includes": ["go"] }, "notes": { "includes": ["gjekk"] } }
+        },
+        {
+          "id": "nn-en-08",
+          "term": "Kvar er stasjonen?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "da-en",
+      "name": "Danish for the citizenship test",
+      "language": "da",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "da-en-01",
+          "term": "bog",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["bogen", "bøger"] }
+          }
+        },
+        {
+          "id": "da-en-02",
+          "term": "barn",
+          "expect": {
+            "meaning": { "includes": ["child"] },
+            "notes": { "includes": ["barnet", "børn"] }
+          }
+        },
+        {
+          "id": "da-en-03",
+          "term": "mand",
+          "expect": {
+            "meaning": { "includes": ["man"] },
+            "notes": { "includes": ["manden", "mænd"] }
+          }
+        },
+        {
+          "id": "da-en-04",
+          "term": "kvinde",
+          "expect": {
+            "meaning": { "includes": ["woman"] },
+            "notes": { "includes": ["kvinden", "kvinder"] }
+          }
+        },
+        {
+          "id": "da-en-05",
+          "term": "læge",
+          "expect": { "meaning": { "includes": ["doctor"] }, "notes": { "includes": ["lægen"] } }
+        },
+        {
+          "id": "da-en-06",
+          "term": "skrive",
+          "expect": {
+            "meaning": { "includes": ["write"] },
+            "notes": { "includes": ["skrev", "skrevet"] }
+          }
+        },
+        {
+          "id": "da-en-07",
+          "term": "gå",
+          "expect": { "meaning": { "includes": ["go", "walk"] }, "notes": { "includes": ["gik"] } }
+        },
+        {
+          "id": "da-en-08",
+          "term": "Hvor er stationen?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        },
+        {
+          "id": "da-en-09",
+          "term": "hund",
+          "expect": { "meaning": { "includes": ["dog"] }, "pronunciation": { "includes": ["ˀ"] } }
+        },
+        {
+          "id": "da-en-10",
+          "term": "mad",
+          "expect": { "meaning": { "includes": ["food"] }, "pronunciation": { "includes": ["ð"] } }
+        },
+        {
+          "id": "da-en-11",
+          "term": "gade",
+          "expect": {
+            "meaning": { "includes": ["street"] },
+            "pronunciation": { "includes": ["ð"] }
+          }
+        },
+        {
+          "id": "da-en-12",
+          "term": "bord",
+          "expect": { "meaning": { "includes": ["table"] }, "pronunciation": { "excludes": ["d"] } }
+        }
+      ]
+    },
+    {
+      "id": "nl-en",
+      "name": "Dutch for the civic integration exam",
+      "language": "nl",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "nl-en-01",
+          "term": "boek",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["het boek", "boeken"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "nl-en-02",
+          "term": "stoel",
+          "expect": {
+            "meaning": { "includes": ["chair"] },
+            "notes": { "includes": ["de stoel", "stoelen"] }
+          }
+        },
+        {
+          "id": "nl-en-03",
+          "term": "kind",
+          "expect": {
+            "meaning": { "includes": ["child"] },
+            "notes": { "includes": ["het kind", "kinderen"] }
+          }
+        },
+        {
+          "id": "nl-en-04",
+          "term": "huisarts",
+          "expect": { "notes": { "includes": ["de huisarts", "huisartsen"] } }
+        },
+        {
+          "id": "nl-en-05",
+          "term": "gaan",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "notes": { "includes": ["ging", "is gegaan"] }
+          }
+        },
+        {
+          "id": "nl-en-06",
+          "term": "schrijven",
+          "expect": {
+            "meaning": { "includes": ["write"] },
+            "notes": { "includes": ["schreef", "geschreven"] }
+          }
+        },
+        {
+          "id": "nl-en-07",
+          "term": "afspreken",
+          "expect": { "notes": { "includes": ["af|spreken"] } }
+        },
+        {
+          "id": "nl-en-08",
+          "term": "Waar is het station?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "sv-en",
+      "name": "Swedish for the citizenship test",
+      "language": "sv",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "sv-en-01",
+          "term": "bok",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["boken", "böcker"] }
+          }
+        },
+        {
+          "id": "sv-en-02",
+          "term": "hus",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "notes": { "includes": ["ett hus", "huset"] }
+          }
+        },
+        {
+          "id": "sv-en-03",
+          "term": "man",
+          "expect": {
+            "meaning": { "includes": ["man"] },
+            "notes": { "includes": ["mannen", "män"] }
+          }
+        },
+        {
+          "id": "sv-en-04",
+          "term": "barn",
+          "expect": { "meaning": { "includes": ["child"] }, "notes": { "includes": ["barnet"] } }
+        },
+        {
+          "id": "sv-en-05",
+          "term": "anden",
+          "meaning": "the spirit",
+          "expect": { "notes": { "includes": ["accent 2"] } }
+        },
+        {
+          "id": "sv-en-06",
+          "term": "anden",
+          "meaning": "the duck",
+          "expect": { "notes": { "includes": ["accent 1"] } }
+        },
+        {
+          "id": "sv-en-07",
+          "term": "gå",
+          "expect": {
+            "meaning": { "includes": ["go", "walk"] },
+            "notes": { "includes": ["gick", "gått"] }
+          }
+        },
+        {
+          "id": "sv-en-08",
+          "term": "skriva",
+          "expect": {
+            "meaning": { "includes": ["write"] },
+            "notes": { "includes": ["skrev", "skrivit"] }
+          }
+        },
+        {
+          "id": "sv-en-09",
+          "term": "läkare",
+          "expect": { "meaning": { "includes": ["doctor"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "sv-en-10",
+          "term": "Var ligger stationen?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "is-en",
+      "name": "Icelandic for the citizenship test",
+      "language": "is",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "is-en-01",
+          "term": "hús",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "notes": { "includes": ["húss", "neuter"] }
+          }
+        },
+        {
+          "id": "is-en-02",
+          "term": "kona",
+          "expect": {
+            "meaning": { "includes": ["woman"] },
+            "notes": { "includes": ["konu", "konur"] }
+          }
+        },
+        {
+          "id": "is-en-03",
+          "term": "maður",
+          "expect": {
+            "meaning": { "includes": ["man"] },
+            "notes": { "includes": ["manns", "menn"] }
+          }
+        },
+        {
+          "id": "is-en-04",
+          "term": "bók",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "notes": { "includes": ["bókar", "bækur"] }
+          }
+        },
+        {
+          "id": "is-en-05",
+          "term": "dagur",
+          "expect": {
+            "meaning": { "includes": ["day"] },
+            "notes": { "includes": ["dags", "dagar"] }
+          }
+        },
+        {
+          "id": "is-en-06",
+          "term": "borg",
+          "expect": {
+            "meaning": { "includes": ["city"] },
+            "notes": { "includes": ["borgar", "borgir"] }
+          }
+        },
+        {
+          "id": "is-en-07",
+          "term": "koma",
+          "expect": {
+            "meaning": { "includes": ["come"] },
+            "notes": { "includes": ["kom", "komið"] }
+          }
+        },
+        {
+          "id": "is-en-08",
+          "term": "ganga",
+          "expect": {
+            "meaning": { "includes": ["walk"] },
+            "notes": { "includes": ["gekk", "gengið"] }
+          }
+        },
+        { "id": "is-en-09", "term": "þakka", "expect": { "meaning": { "includes": ["thank"] } } },
+        {
+          "id": "is-en-10",
+          "term": "Hvar er stöðin?",
+          "expect": { "meaning": { "includes": ["station"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "pl-uk",
+      "name": "Польська для карти поляка",
+      "language": "pl",
+      "meaningLanguage": "uk",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "pl-uk-01",
+          "term": "zapomnieć",
+          "expect": { "meaning": { "includes": ["забу"] }, "notes": { "includes": ["zapominać"] } }
+        },
+        {
+          "id": "pl-uk-02",
+          "term": "uroda",
+          "expect": { "meaning": { "excludes": ["урод", "потвор"] } }
+        },
+        { "id": "pl-uk-03", "term": "dywan", "expect": { "meaning": { "includes": ["килим"] } } },
+        {
+          "id": "pl-uk-04",
+          "term": "robić",
+          "expect": {
+            "meaning": { "includes": ["роб"] },
+            "notes": { "includes": ["zrobić"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "pl-uk-05",
+          "term": "student",
+          "expect": {
+            "meaning": { "includes": ["студент"] },
+            "notes": { "includes": ["studenci"] }
+          }
+        },
+        {
+          "id": "pl-uk-06",
+          "term": "Polak",
+          "expect": { "meaning": { "includes": ["поляк"] }, "notes": { "includes": ["Polacy"] } }
+        },
+        {
+          "id": "pl-uk-07",
+          "term": "pies",
+          "expect": { "meaning": { "includes": ["соба"] }, "notes": { "includes": ["psa"] } }
+        },
+        {
+          "id": "pl-uk-08",
+          "term": "mąż",
+          "expect": {
+            "meaning": { "includes": ["чолов"] },
+            "notes": { "includes": ["męża", "mężowie"] }
+          }
+        },
+        {
+          "id": "pl-uk-09",
+          "term": "miasto",
+          "expect": { "meaning": { "includes": ["міст"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-uk-10",
+          "term": "Gdzie jest dworzec?",
+          "expect": { "meaning": { "includes": ["вокзал"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
       "id": "es-uk",
       "name": "Іспанська A1",
       "language": "es",

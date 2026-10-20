@@ -12,7 +12,8 @@ export interface LanguageConfig {
   pronunciation: "pronunciation";
   /** ISO 15924 codes of the scripts its terms are written in. */
   scripts: readonly string[];
-  format: LanguageFormat;
+  /** How its cards are written where that differs from the general way, or null where it does not. */
+  format: LanguageFormat | null;
   /** Other primary subtags learners use for the same language, such as `tl` for Filipino. */
   aliases?: readonly string[];
   starts: readonly StartingField[];
@@ -112,6 +113,101 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["pronunciation"],
+    enrichByDefault: false,
+  },
+  et: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  fi: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  lv: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  lt: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Lithuanian",
+      pronunciation:
+        "The term with its accent mark, as Lithuanian dictionaries print it: an acute, grave or tilde on the stressed syllable (výras, kalbà).",
+      empty: null,
+      never: "Not IPA.",
+      sample: { term: "namas", pronunciation: "nãmas" },
+      duplicates: "term",
+    },
+    // Its accents miss often enough live that pronunciation waits for the owner to turn it on.
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  nb: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    aliases: ["no"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  nn: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  da: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Danish",
+      pronunciation:
+        "How the word is said, in IPA as Den Danske Ordbog writes it: stress ˈ, length ː and stød ˀ, leaving out the letters that are not said.",
+      empty: null,
+      never: "Not a respelling.",
+      sample: { term: "hus", pronunciation: "ˈhuˀs" },
+      duplicates: "term",
+    },
+    starts: ["notes", "pronunciation"],
+    enrichByDefault: true,
+  },
+  sv: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  is: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  pl: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  nl: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
     enrichByDefault: true,
   },
 };

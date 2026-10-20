@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { normaliseTerm } from "../terms";
 import {
   configuredLanguage,
   drawsReadings,
@@ -115,6 +116,21 @@ describe("languageFormat", () => {
     for (const tag of ["ja", "zh", "zh-yue", "it", null])
       expect(configuredLanguage(tag)).toBeNull();
     expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
+  });
+  it("configures a language with no format of its own and publishes none for it", () => {
+    for (const tag of ["et", "fi", "lv", "nb", "no", "nn", "sv", "is", "pl", "nl"]) {
+      expect(configuredLanguage(tag)).not.toBeNull();
+      expect(languageFormat(tag)).toBeNull();
+    }
+    expect(configuredLanguage("no")).toBe(configuredLanguage("nb"));
+  });
+  it("keeps Lithuanian accent marks, including a tilde with no precomposed letter", () => {
+    const format = languageFormat("lt");
+    expect(format?.pronunciation.sample).toEqual({ term: "namas", pronunciation: "nãmas" });
+    const tilde = "tė̃vas".normalize("NFC");
+    expect(normaliseTerm(tilde)).toBe(tilde);
+    expect(normaliseTerm(tilde)).toContain("\u0303");
+    expect(normaliseTerm("Výras")).toBe("výras");
   });
   it("has none for a language Lymi writes the general way", () => {
     for (const tag of ["it", "en", "", null, "constructor"]) expect(languageFormat(tag)).toBeNull();

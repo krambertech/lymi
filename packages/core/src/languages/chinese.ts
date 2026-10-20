@@ -20,9 +20,10 @@ export const chinese = {
   pronunciation: "reading",
   format: {
     name: "Chinese",
-    pronunciation: "Pinyin with tone marks, not IPA.",
+    pronunciation:
+      "Pinyin in tone marks and citation tones, as dictionaries write them: 不是 bù shì and 一起 yīqǐ, never the spoken bú or yì. A neutral tone has no mark (péngyou, dōngxi), an erhua r joins the syllable before it (yīdiǎnr), and letters stay as written (kǎlā OK). Where a character has two readings, as 行 háng and xíng do, the meaning decides.",
     empty: null,
-    never: null,
+    never: "Not IPA or tone numbers.",
     sample: { term: "学习", pronunciation: "xuéxí" },
     duplicates: "term-and-reading",
   },

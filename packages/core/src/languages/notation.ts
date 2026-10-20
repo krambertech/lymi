@@ -1,3 +1,4 @@
+import { PINYIN_BRACKET } from "../pinyin/notation";
 import type { ReadingEngine } from "./types";
 
 /** How an example carries its readings inline: the words that say so, a match for one reading, and a sentence. */
@@ -16,6 +17,10 @@ export const EXAMPLE_NOTATION = {
     pattern: /\[([\p{Script=Hiragana}\p{Script=Katakana}ー]{1,30})\]/gu,
     sample: "毎朝[まいあさ]パンを食[た]べます。",
   },
-  // Null until Chinese slice 4 draws `PINYIN_BRACKET` and strips it for older phones; filling it publishes the notation.
-  pinyin: null,
+  pinyin: {
+    format:
+      "Pinyin in square brackets right after each word of every example, one syllable for each character, in tone marks, and nothing after punctuation, letters or digits.",
+    pattern: PINYIN_BRACKET,
+    sample: "我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。",
+  },
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

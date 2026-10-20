@@ -128,7 +128,7 @@ export function mayAddReadings(card: Card, deck: DeckRow | undefined): string | 
   const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
   const language = card.language ?? deck?.defaultLanguage ?? null;
   return fields.includes("example") &&
-    !!card.example &&
+    card.example &&
     examplesCarryReadings(language) &&
     missingReadings(card.example, language)
     ? language

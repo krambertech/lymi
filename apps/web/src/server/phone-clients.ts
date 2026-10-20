@@ -58,7 +58,7 @@ export function clientSupports(c: Context<AppEnv>, since: ShownSince): boolean {
 }
 
 /** The first phone release that draws pinyin in a Chinese example. docs/proposals/chinese.md, slice 4. */
-export const EXAMPLE_PINYIN_SINCE: ShownSince = { ios: "0.0.3" };
+export const EXAMPLE_PINYIN_SINCE: ShownSince = { ios: "0.0.4" };
 
 /** Inline pinyin as it reads in JSON, so a response without any skips the parse. */
 const INLINE_PINYIN = /\p{Script=Han}\[[\p{Script=Latin}]/u;

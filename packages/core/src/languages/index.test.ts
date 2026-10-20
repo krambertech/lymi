@@ -129,6 +129,7 @@ describe("languageFormat", () => {
       expect(format.example.sample).toMatch(pattern);
     }
     expect(languageFormat("ja")?.example).not.toBeNull();
-    expect(languageFormat("zh")?.example).toBeNull();
+    expect(languageFormat("zh")?.example?.sample).toBe("我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。");
+    expect(languageFormat("ko")?.example).toBeNull();
   });
 });

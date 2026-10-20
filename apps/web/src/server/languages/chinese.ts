@@ -31,16 +31,10 @@ export function tonedPinyin(reading: string): boolean {
 export const chinese = {
   tag: "zh",
   enrich: {
-    guide: {
-      example:
-        "Every example carries pinyin, also one you write yourself: in square brackets right after each word, one syllable for each character, in tone marks, and nothing after punctuation, letters or digits: 我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。",
-      notes: "Noun: its usual measure word (*一本书*: 本 for books).",
-      pronunciation:
-        "Pinyin in tone marks and citation tones, as dictionaries write them: 不是 bù shì and 一起 yīqǐ, never the spoken bú or yì. A neutral tone has no mark (péngyou, dōngxi), an erhua r joins the syllable before it (yīdiǎnr), and letters stay as written (kǎlā OK). Where a character has two readings, as 行 háng and xíng do, the meaning decides. Not IPA or tone numbers.",
-    },
+    guide: { notes: "Noun: its usual measure word (*一本书*: 本 for books)." },
     example: `Chinese deck, no samples, meaningLanguage en. Card "行", meaning "to walk; OK", mayFill: example, notes, pronunciation.
 {"meaning": null, "example": "今天[jīntiān]不行[bù xíng]。", "notes": null, "pronunciation": "xíng", "language": null}
-Why: the meaning says 行 is read xíng here, not háng. The example carries pinyin after each word, with 不 in its citation tone. A card with addReadings gets its own example back the same way, with nothing else changed.`,
+Why: the meaning says 行 is read xíng here, not háng. Every example carries pinyin after each word, one you write as much as the learner's, with 不 in its citation tone. A card with addReadings gets its own example back that way, with nothing else changed.`,
   },
   lesson: "pinyin over, under or beside the hanzi, in tone marks or tone numbers (xuéxí, xue2xi2)",
   hook: "Most words join two or more characters whose own meanings build the word's: 电脑 is electric + brain, 火车 is fire + vehicle. Try that route first. A sound-alike follows the pinyin syllable by syllable. Never write hanzi or pinyin in the hook.",

@@ -11,6 +11,7 @@ import {
   type ImportPreviewOut,
   isImageMode,
   type NormalizedField,
+  newDeckEnrichFields,
   newId,
   normaliseTerm,
   normalizeCardText,
@@ -514,16 +515,18 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       ? directionsFromModes(deck.reviewModes)
       : ([...tallyByDeck].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "recognition");
     const id = newId();
+    const language = work.choices.languages[deck.key] ?? null;
+    const enrichFields = newDeckEnrichFields(language);
     const externalId = deckExternalId(work.row.source, deck.key, deck.name);
     const description = deck.description
       ? [...deck.description].slice(0, IMPORT_LIMITS.deckDescription).join("")
       : null;
     // Inserted only while no active deck holds the external id, so a retried step makes no second deck.
     statements.push(
-      sql`insert into decks (id, user_id, name, description, default_language, directions, position, import_id, external_id, archived_at)
+      sql`insert into decks (id, user_id, name, description, default_language, directions, position, import_id, external_id, archived_at, enrich_fields)
         select ${id}, ${userId}, ${names.get(deck.key) ?? deck.name}, ${description},
-          ${work.choices.languages[deck.key] ?? null}, ${directions}, 0, ${work.row.id}, ${externalId},
-          ${deck.archived ? Date.now() : null}
+          ${language}, ${directions}, 0, ${work.row.id}, ${externalId},
+          ${deck.archived ? Date.now() : null}, ${enrichFields ? JSON.stringify(enrichFields) : null}
         where not exists (
           select 1 from decks where user_id = ${userId} and external_id = ${externalId}
             and (archived_at is null or import_id = ${work.row.id})

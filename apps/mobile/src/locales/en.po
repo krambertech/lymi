@@ -1105,6 +1105,10 @@ msgstr "Archived the section {name} in {deck}"
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 
+msgctxt "language"
+msgid "Armenian"
+msgstr "Armenian"
+
 msgid "Arts"
 msgstr "Arts"
 
@@ -2134,6 +2138,10 @@ msgstr "Fields of {name}"
 
 msgid "Files"
 msgstr "Files"
+
+msgctxt "language"
+msgid "Filipino"
+msgstr "Filipino"
 
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
@@ -3900,6 +3908,10 @@ msgstr "Take back the last grade"
 
 msgid "Take photo"
 msgstr "Take photo"
+
+msgctxt "language"
+msgid "Tamil"
+msgstr "Tamil"
 
 msgid "Technology"
 msgstr "Technology"

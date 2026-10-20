@@ -440,6 +440,416 @@
       ]
     },
     {
+      "id": "tl-en",
+      "name": "Tagalog A1",
+      "language": "tl",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "tl-en-01",
+          "term": "bahay",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "pronunciation": { "oneOf": ["báhay"] }
+          }
+        },
+        {
+          "id": "tl-en-02",
+          "term": "tubig",
+          "expect": {
+            "meaning": { "includes": ["water"] },
+            "pronunciation": { "oneOf": ["túbig"] }
+          }
+        },
+        {
+          "id": "tl-en-03",
+          "term": "salamat",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["salámat"] }
+          }
+        },
+        {
+          "id": "tl-en-04",
+          "term": "maganda",
+          "expect": {
+            "meaning": { "includes": ["beautiful"] },
+            "pronunciation": { "oneOf": ["magandá"] }
+          }
+        },
+        {
+          "id": "tl-en-05",
+          "term": "bata",
+          "expect": { "meaning": { "includes": ["child"] }, "pronunciation": { "oneOf": ["bátà"] } }
+        },
+        {
+          "id": "tl-en-06",
+          "term": "basa",
+          "meaning": "wet",
+          "expect": { "pronunciation": { "oneOf": ["basâ"] } }
+        },
+        {
+          "id": "tl-en-07",
+          "term": "basa",
+          "meaning": "read",
+          "expect": { "pronunciation": { "oneOf": ["bása"] } }
+        },
+        {
+          "id": "tl-en-08",
+          "term": "mahal",
+          "expect": { "pronunciation": { "oneOf": ["mahál"] } }
+        },
+        {
+          "id": "tl-en-09",
+          "term": "kumain",
+          "expect": {
+            "notes": { "includes": ["kain", "actor"] }
+          }
+        },
+        {
+          "id": "tl-en-10",
+          "term": "kainin",
+          "expect": {
+            "meaning": { "includes": ["eat"] },
+            "notes": { "includes": ["kain", "object"] }
+          }
+        },
+        {
+          "id": "tl-en-11",
+          "term": "Kumusta ka?",
+          "expect": { "meaning": { "includes": ["how are you"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "vi-en",
+      "name": "Vietnamese A1",
+      "language": "vi",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "vi-en-01",
+          "term": "chó",
+          "expect": {
+            "meaning": { "includes": ["dog"] },
+            "notes": { "includes": ["con"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "vi-en-02",
+          "term": "bàn",
+          "expect": {
+            "meaning": { "includes": ["table"] },
+            "notes": { "includes": ["cái"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "vi-en-03",
+          "term": "cảm ơn",
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "vi-en-04",
+          "term": "cam on",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["cảm ơn"] }
+          }
+        },
+        {
+          "id": "vi-en-05",
+          "term": "xin chao",
+          "expect": {
+            "meaning": { "includes": ["hello"] },
+            "pronunciation": { "oneOf": ["xin chào"] }
+          }
+        },
+        {
+          "id": "vi-en-06",
+          "term": "km",
+          "expect": {
+            "meaning": { "includes": ["kilomet"] },
+            "pronunciation": { "oneOf": ["ki-lô-mét", "ki lô mét"] }
+          }
+        },
+        {
+          "id": "vi-en-07",
+          "term": "nước",
+          "expect": { "meaning": { "includes": ["water"] }, "example": { "includes": ["nước"] } }
+        },
+        {
+          "id": "vi-en-08",
+          "term": "đẹp",
+          "expect": { "meaning": { "includes": ["beautiful"] }, "example": { "includes": ["đẹp"] } }
+        },
+        {
+          "id": "vi-en-09",
+          "term": "ngân hàng",
+          "expect": { "meaning": { "includes": ["bank"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "vi-en-10",
+          "term": "học sinh",
+          "expect": { "meaning": { "includes": ["student"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "vi-en-11",
+          "term": "Bạn khỏe không?",
+          "expect": { "meaning": { "includes": ["how are you"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "ka-en",
+      "name": "Georgian A1",
+      "language": "ka",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "ka-en-01",
+          "term": "გამარჯობა",
+          "expect": {
+            "meaning": { "includes": ["hello"] },
+            "pronunciation": { "oneOf": ["gamarjoba"] }
+          }
+        },
+        {
+          "id": "ka-en-02",
+          "term": "მადლობა",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["madloba"] }
+          }
+        },
+        {
+          "id": "ka-en-03",
+          "term": "წყალი",
+          "expect": {
+            "meaning": { "includes": ["water"] },
+            "pronunciation": { "oneOf": ["ts'q'ali"] }
+          }
+        },
+        {
+          "id": "ka-en-04",
+          "term": "ქალაქი",
+          "expect": {
+            "meaning": { "includes": ["city"] },
+            "pronunciation": { "oneOf": ["kalaki"] }
+          }
+        },
+        {
+          "id": "ka-en-05",
+          "term": "კაცი",
+          "expect": { "meaning": { "includes": ["man"] }, "pronunciation": { "oneOf": ["k'atsi"] } }
+        },
+        {
+          "id": "ka-en-06",
+          "term": "პური",
+          "expect": {
+            "meaning": { "includes": ["bread"] },
+            "pronunciation": { "oneOf": ["p'uri"] }
+          }
+        },
+        {
+          "id": "ka-en-07",
+          "term": "ღვინო",
+          "expect": {
+            "meaning": { "includes": ["wine"] },
+            "pronunciation": { "oneOf": ["ghvino"] }
+          }
+        },
+        {
+          "id": "ka-en-08",
+          "term": "სახლი",
+          "expect": {
+            "meaning": { "includes": ["house"] },
+            "pronunciation": { "oneOf": ["sakhli"] }
+          }
+        },
+        {
+          "id": "ka-en-09",
+          "term": "თბილისი",
+          "expect": { "pronunciation": { "oneOf": ["tbilisi"] } }
+        },
+        {
+          "id": "ka-en-10",
+          "term": "ტელეფონი",
+          "expect": {
+            "meaning": { "includes": ["phone"] },
+            "pronunciation": { "oneOf": ["t'eleponi"] }
+          }
+        },
+        {
+          "id": "ka-en-11",
+          "term": "წერა",
+          "expect": { "meaning": { "includes": ["writ"] }, "notes": { "includes": ["წერს"] } }
+        }
+      ]
+    },
+    {
+      "id": "hy-en",
+      "name": "Armenian A1",
+      "language": "hy",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "hy-en-01",
+          "term": "բարև",
+          "expect": {
+            "meaning": { "includes": ["hello"] },
+            "pronunciation": { "oneOf": ["barev"] }
+          }
+        },
+        {
+          "id": "hy-en-02",
+          "term": "շնորհակալություն",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["shnorhakalut'yun"] }
+          }
+        },
+        {
+          "id": "hy-en-03",
+          "term": "ջուր",
+          "expect": { "meaning": { "includes": ["water"] }, "pronunciation": { "oneOf": ["jur"] } }
+        },
+        {
+          "id": "hy-en-04",
+          "term": "հաց",
+          "expect": {
+            "meaning": { "includes": ["bread"] },
+            "pronunciation": { "oneOf": ["hats'"] }
+          }
+        },
+        {
+          "id": "hy-en-05",
+          "term": "երեք",
+          "expect": {
+            "meaning": { "includes": ["three"] },
+            "pronunciation": { "oneOf": ["yerek'"] }
+          }
+        },
+        { "id": "hy-en-06", "term": "տուն", "expect": { "pronunciation": { "oneOf": ["tun"] } } },
+        {
+          "id": "hy-en-07",
+          "term": "քաղաք",
+          "expect": {
+            "meaning": { "includes": ["city"] },
+            "pronunciation": { "oneOf": ["k'aghak'"] }
+          }
+        },
+        {
+          "id": "hy-en-08",
+          "term": "գիրք",
+          "expect": { "meaning": { "includes": ["book"] }, "pronunciation": { "oneOf": ["girk'"] } }
+        },
+        {
+          "id": "hy-en-09",
+          "term": "եղբայր",
+          "expect": {
+            "meaning": { "includes": ["brother"] },
+            "pronunciation": { "oneOf": ["yeghbayr"] }
+          }
+        },
+        {
+          "id": "hy-en-10",
+          "term": "ոչ",
+          "expect": { "meaning": { "includes": ["no"] }, "pronunciation": { "oneOf": ["voch'"] } }
+        },
+        {
+          "id": "hy-en-11",
+          "term": "մարդ",
+          "expect": { "pronunciation": { "oneOf": ["mard"] }, "notes": { "includes": ["մարդիկ"] } }
+        }
+      ]
+    },
+    {
+      "id": "ta-en",
+      "name": "Tamil A1",
+      "language": "ta",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "ta-en-01",
+          "term": "வணக்கம்",
+          "expect": {
+            "meaning": { "includes": ["hello"] },
+            "pronunciation": { "oneOf": ["vaṇakkam"] }
+          }
+        },
+        {
+          "id": "ta-en-02",
+          "term": "நன்றி",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["nandri", "nanri"] }
+          }
+        },
+        {
+          "id": "ta-en-03",
+          "term": "தண்ணீர்",
+          "expect": {
+            "meaning": { "includes": ["water"] },
+            "pronunciation": { "oneOf": ["taṇṇīr"] }
+          }
+        },
+        { "id": "ta-en-04", "term": "அம்மா", "expect": { "pronunciation": { "oneOf": ["ammā"] } } },
+        { "id": "ta-en-05", "term": "அப்பா", "expect": { "pronunciation": { "oneOf": ["appā"] } } },
+        {
+          "id": "ta-en-06",
+          "term": "புத்தகம்",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "pronunciation": { "oneOf": ["puttagam"] }
+          }
+        },
+        {
+          "id": "ta-en-07",
+          "term": "வீடு",
+          "expect": { "meaning": { "includes": ["house"] }, "pronunciation": { "oneOf": ["vīḍu"] } }
+        },
+        {
+          "id": "ta-en-08",
+          "term": "நாய்",
+          "expect": { "meaning": { "includes": ["dog"] }, "pronunciation": { "oneOf": ["nāy"] } }
+        },
+        {
+          "id": "ta-en-09",
+          "term": "பூனை",
+          "expect": { "meaning": { "includes": ["cat"] }, "pronunciation": { "oneOf": ["pūnai"] } }
+        },
+        {
+          "id": "ta-en-10",
+          "term": "பழம்",
+          "expect": {
+            "meaning": { "includes": ["fruit"] },
+            "pronunciation": { "oneOf": ["pazham"] }
+          }
+        },
+        {
+          "id": "ta-en-11",
+          "term": "போ",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "pronunciation": { "oneOf": ["pō"] },
+            "notes": { "includes": ["போனேன்"] }
+          }
+        }
+      ]
+    },
+    {
       "id": "es-uk",
       "name": "Іспанська A1",
       "language": "es",

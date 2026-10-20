@@ -96,7 +96,11 @@ function record(run: RecordedRun) {
   for (const file of readdirSync(RUNS_DIR)) {
     if (file.endsWith(".json") && file !== before) rmSync(new URL(file, RUNS_DIR));
   }
-  const file = `${run.recordedAt.slice(0, 10)}-v${run.version}-${run.hash}.json`;
+  // A second run of one prompt on one day keeps the first, which the gate reads beside it.
+  const day = run.recordedAt.slice(0, 10);
+  const taken = before?.startsWith(`${day}-v${run.version}-${run.hash}`);
+  const when = taken ? run.recordedAt.slice(0, 16).replace(":", "") : day;
+  const file = `${when}-v${run.version}-${run.hash}.json`;
   writeFileSync(new URL(file, RUNS_DIR), `${JSON.stringify(run, null, 2)}\n`);
   console.log(`Recorded runs/${file}`);
 }

@@ -174,3 +174,23 @@ it("keeps a runtime's network or chunk failure message without the address it na
   ]);
   expect(JSON.stringify(values)).not.toContain("private");
 });
+
+it("keeps D1's own failure class without the SQL or parameters that follow it", () => {
+  const sanitized = exceptionProperties({
+    $exception_list: [
+      "Failed query: select * from cards where term = ?\nparams: private",
+      "D1_ERROR: Network connection lost.",
+      "D1_ERROR: D1 DB is overloaded. Too many requests queued.: SQLITE_BUSY private",
+      "Too many API requests by single worker invocation.",
+      "D1_ERROR: no such column: private: SQLITE_ERROR",
+    ].map((value) => ({ type: "Error", value })),
+  }).$exception_list as { value: string }[];
+  expect(sanitized.map((exception) => exception.value)).toEqual([
+    "Unexpected error",
+    "D1_ERROR: Network connection lost",
+    "D1_ERROR: D1 DB is overloaded. Too many requests queued",
+    "Too many API requests by single worker invocation",
+    "Unexpected error",
+  ]);
+  expect(JSON.stringify(sanitized)).not.toContain("private");
+});

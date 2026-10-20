@@ -1,6 +1,10 @@
 import { deckPageHand, deckPageSpread } from "@lymi/core/catalog";
-import { loadPublicDeck, publicDeckFrontCards } from "@lymi/core/catalog/server";
-import { eq } from "@lymi/core/db";
+import {
+  listPublicDeckSlugs,
+  loadPublicDeck,
+  publicDeckFrontCards,
+} from "@lymi/core/catalog/server";
+import { eq, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
@@ -198,5 +202,44 @@ describe("published deck audio", () => {
       remaining: 1,
     });
     expect(await voicedIn(deck.id)).toEqual([]);
+  });
+
+  it("skips a deck whose read fails and voices the other decks", async () => {
+    const broken = await publishedDeck("unreadable", terms(6, "katki"));
+    const healthy = await publishedDeck("readable", terms(6, "terve"));
+    const healthyFront = await publicDeckFrontCards(db, "readable");
+    // A stored value the read cannot parse stands in for D1 failing on this one deck.
+    await db.run(sql`update deck_publications set sources = 'not json' where slug = 'unreadable'`);
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+
+    const run = await voicePublishedDecks(db, voice(speech), { decks: 1_000 });
+    expect(run.failed).toBe(0);
+    expect(await voicedIn(broken.id)).toEqual([]);
+    expect((await voicedIn(healthy.id)).sort()).toEqual([...healthyFront].sort());
+    expect(warn).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "published_audio_deck_skipped",
+        slug: "unreadable",
+        error: "SyntaxError",
+      }),
+    );
+    warn.mockRestore();
+  });
+
+  it("reads the next slice of decks each hour", async () => {
+    const deck = await publishedDeck("rotation", terms(6, "ring"));
+    const slugs = (await listPublicDeckSlugs(db)).map((row) => row.slug);
+    const turn = slugs.indexOf("rotation");
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const hour = (run: number) => new Date(run * 3_600_000);
+
+    await voicePublishedDecks(db, voice(speech), { decks: 1, at: hour(turn + 1) });
+    expect(await voicedIn(deck.id)).toEqual([]);
+    const run = await voicePublishedDecks(db, voice(speech), { decks: 1, at: hour(turn) });
+    expect(run.voiced).toBeGreaterThan(0);
+    expect((await voicedIn(deck.id)).sort()).toEqual(
+      [...(await publicDeckFrontCards(db, "rotation"))].sort(),
+    );
   });
 });

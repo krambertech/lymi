@@ -88,6 +88,6 @@
   ],
   "pairs": [
     { "term": "银行", "pronunciation": "yínháng", "pairs": ["pinyin:银[yín]", "pinyin:行[háng]"] },
-    { "term": "一点儿", "pronunciation": "yì diǎnr", "pairs": ["pinyin:一[yì]", "pinyin:点[diǎn]"] }
+    { "term": "一点儿", "pronunciation": "yì diǎnr", "pairs": ["pinyin:一[yi]", "pinyin:点[diǎn]"] }
   ]
 }

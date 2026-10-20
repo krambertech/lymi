@@ -1,6 +1,7 @@
 or {
   `termReading($_)`,
-  `parseReadings($_)`
+  `parseReadings($_)`,
+  `exampleSegments($_, $_)`
 } as $call where {
-  register_diagnostic(span=$call, message="A screen draws a term with TermText and an example with ExampleText from term-text.tsx, which choose how the card's language draws its reading. Ask drawsTermReading(card) or hasReadings(text) for layout.")
+  register_diagnostic(span=$call, message="A screen draws a term with TermText and an example with ExampleText from term-text.tsx, which choose how the card's language draws its reading. Ask drawsTermReading(card) or hasReadings(text, language) for layout.")
 }

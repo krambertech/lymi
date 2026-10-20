@@ -3,7 +3,14 @@
  * evaluate.ts and the test that rescores the recorded runs in `runs/` on every CI run.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { type DeckPurpose, deckEnrichFields, deckPurpose, fieldsToFill } from "@lymi/core";
+import {
+  type DeckPurpose,
+  deckEnrichFields,
+  deckPurpose,
+  examplesCarryReadings,
+  fieldsToFill,
+  missingReadings,
+} from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
 import { languagePrompts } from "../languages";
 import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
@@ -110,6 +117,16 @@ function mayFillOf(deck: FixtureDeck, item: FixtureCase) {
   );
 }
 
+/** Whether the service would ask for readings in the case's example, as `mayAddReadings` does. */
+function addsReadings(deck: FixtureDeck, item: FixtureCase): boolean {
+  return (
+    deckEnrichFields(deck.fields ?? null, deck.language, deck.purpose).includes("example") &&
+    !!item.example &&
+    examplesCarryReadings(deck.language) &&
+    missingReadings(item.example, deck.language)
+  );
+}
+
 /** The requests the service would make for a deck: one per wave of cards, all with the same deck. */
 export function requests(deck: FixtureDeck): { input: string; cases: string[] }[] {
   const brief = deckBrief({
@@ -125,7 +142,9 @@ export function requests(deck: FixtureDeck): { input: string; cases: string[] }[
     input: enrichmentInput(
       deck.meaningLanguage,
       [brief],
-      wave.map((item) => cardBrief(stored(deck, item), mayFillOf(deck, item))),
+      wave.map((item) =>
+        cardBrief(stored(deck, item), mayFillOf(deck, item), addsReadings(deck, item)),
+      ),
     ),
     cases: wave.map((item) => item.id),
   }));
@@ -149,6 +168,8 @@ export function scoreCalls(decks: readonly FixtureDeck[], calls: readonly Call[]
           term: item.term,
           mayFill: mayFillOf(deck, item),
           language: deckPurpose(deck.purpose, deck.language) === "language",
+          tag: deck.language,
+          ...(addsReadings(deck, item) ? { addReadingsTo: item.example } : {}),
           rules: languagePrompts(deck.language)?.checks,
           expect: item.expect,
         },

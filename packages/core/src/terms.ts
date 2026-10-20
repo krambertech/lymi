@@ -35,7 +35,7 @@ export function standsAlone(text: string): boolean {
 
 /** A picture description that contains the term or the meaning would show the answer before reveal. */
 export function revealsAnswer(
-  card: { term: string; meaning?: string | null | undefined },
+  card: { term: string; meaning?: string | null | undefined; language?: string | null | undefined },
   description: string,
 ): boolean {
   return revealedAnswer(card, description) !== null;
@@ -43,10 +43,10 @@ export function revealsAnswer(
 
 /** Which field a description gives away, and that field's text, so a refusal can name it. */
 export function revealedAnswer(
-  card: { term: string; meaning?: string | null | undefined },
+  card: { term: string; meaning?: string | null | undefined; language?: string | null | undefined },
   description: string,
 ): { field: "term" | "meaning"; text: string } | null {
-  const text = normaliseTerm(stripReadings(description));
+  const text = normaliseTerm(stripReadings(description, card.language));
   for (const field of ["term", "meaning"] as const) {
     const answer = card[field] ?? "";
     const key = normaliseTerm(answer);

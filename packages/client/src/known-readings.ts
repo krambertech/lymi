@@ -143,9 +143,9 @@ export function useKnownReadings(): KnownReadings {
  */
 export function readingsFadedField(
   qc: QueryClient,
-  example: string | null | undefined,
+  card: { example?: string | null | undefined; language?: string | null | undefined },
 ): { readingsFaded?: number } {
   const { known, complete } = cachedKnownReadings(qc);
-  const counts = exampleReadings(example, known);
+  const counts = exampleReadings(card.example, card.language, known);
   return complete && counts.readings ? { readingsFaded: counts.known } : {};
 }

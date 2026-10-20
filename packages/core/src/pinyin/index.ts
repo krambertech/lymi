@@ -8,7 +8,13 @@ import { hasToneMark, toneMarks, untoned } from "./tones";
 
 export type { PinyinSegment } from "./align";
 export { alignPinyin, pinyinTermSegments } from "./align";
-export { formatPinyin, PINYIN_BRACKET, parsePinyin, stripPinyin } from "./notation";
+export {
+  formatPinyin,
+  PINYIN_BRACKET,
+  parsePinyin,
+  pinyinExampleSegments,
+  stripPinyin,
+} from "./notation";
 export { cleanPinyin, pinyinSyllables, readingTokens, type Syllable } from "./split";
 export { hasToneMark, toneMarks } from "./tones";
 
@@ -86,7 +92,8 @@ export function pinyinPairs(segments: readonly PinyinSegment[]): string[] {
   return out;
 }
 
-/** One character and its syllable as a Known pair. */
+/** One character and its syllable as a Known pair; 一 and 不 drop their tone, as in the duplicate key. */
 export function pinyinPair(char: string, syllable: string): string {
-  return `pinyin:${char.normalize("NFC")}[${toneMarks(syllable.normalize("NFC")).toLowerCase()}]`;
+  const marked = toneMarks(syllable.normalize("NFC")).toLowerCase();
+  return `pinyin:${char.normalize("NFC")}[${SANDHI.test(char) ? toneless(marked) : marked}]`;
 }

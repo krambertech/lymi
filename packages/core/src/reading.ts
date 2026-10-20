@@ -2,11 +2,11 @@
  * Readings drawn over a term or an example: furigana over kanji, or pinyin over hanzi through
  * `./pinyin`. A term's reading is its pronunciation, aligned at display; an example carries its
  * readings inline, `食[た]べる`, where a bracketed kana reading belongs to the kanji just before
- * it. docs/card-writing.md.
+ * it, or `你好[nǐ hǎo]` in Chinese. docs/card-writing.md.
  */
 
 import { EXAMPLE_NOTATION, readingEngine } from "./languages";
-import { pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
+import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -327,14 +327,24 @@ export function knownReadings(
 }
 
 /**
- * The runs with `known` on each reading whose kanji and reading are a Known pair, alone or joined
- * with the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known 毎.
+ * The runs with `known` on each reading whose characters and reading are a Known pair. Furigana
+ * also joins the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known
+ * 毎; pinyin fades character by character.
  */
 export function markKnownReadings(
   segments: readonly ReadingSegment[],
   known: KnownReadings | undefined,
+  language: string | null | undefined,
 ): readonly ReadingSegment[] {
   if (!known?.size || !segments.some((segment) => segment.reading !== undefined)) return segments;
+  if (readingEngine(language) === "pinyin") {
+    return segments.map((segment) => {
+      const pairs = segment.reading === undefined ? [] : pinyinPairs([segment]);
+      return pairs.length && pairs.every((pair) => known.has(pair))
+        ? { ...segment, known: true }
+        : segment;
+    });
+  }
   const marked = segments.map((segment) => ({ ...segment }));
   for (let i = 0; i < marked.length; i++) {
     let text = "";
@@ -352,12 +362,24 @@ export function markKnownReadings(
   return marked;
 }
 
+/**
+ * An example's inline readings as runs to draw, in its language's notation: pinyin, one run per
+ * character, for Chinese, and kana brackets for any other language.
+ */
+export function exampleSegments(
+  text: string,
+  language: string | null | undefined,
+): ReadingSegment[] {
+  return readingEngine(language) === "pinyin" ? pinyinExampleSegments(text) : parseReadings(text);
+}
+
 /** How many readings an example draws, and how many of them fade over the learner's Known words. */
 export function exampleReadings(
   example: string | null | undefined,
+  language: string | null | undefined,
   known?: KnownReadings | undefined,
 ): { readings: number; known: number } {
-  const drawn = markKnownReadings(parseReadings(example ?? ""), known).filter(
+  const drawn = markKnownReadings(exampleSegments(example ?? "", language), known, language).filter(
     (segment) => segment.reading !== undefined,
   );
   return { readings: drawn.length, known: drawn.filter((segment) => segment.known).length };
@@ -388,20 +410,20 @@ export function splitTermReading(text: string): { term: string; reading: string 
 }
 
 /** Text with its inline readings taken out: `毎朝[まいあさ]パンを食[た]べる` → `毎朝パンを食べる`. */
-export function stripReadings(text: string): string {
-  return parseReadings(text)
+export function stripReadings(text: string, language: string | null | undefined): string {
+  return exampleSegments(text, language)
     .map((segment) => segment.text)
     .join("");
 }
 
 /** Whether text carries any inline reading. */
-export function hasReadings(text: string): boolean {
-  return parseReadings(text).some((segment) => segment.reading !== undefined);
+export function hasReadings(text: string, language: string | null | undefined): boolean {
+  return exampleSegments(text, language).some((segment) => segment.reading !== undefined);
 }
 
-/** Whether text has kanji that no inline reading covers. */
-export function missingReadings(text: string): boolean {
-  return parseReadings(text).some(
+/** Whether text has kanji or hanzi that no inline reading covers. */
+export function missingReadings(text: string, language: string | null | undefined): boolean {
+  return exampleSegments(text, language).some(
     (segment) => segment.reading === undefined && [...segment.text].some(isBase),
   );
 }
@@ -429,6 +451,12 @@ export function formatReadings(segments: readonly ReadingSegment[]): string {
 }
 
 /** Whether `after` is `before` with readings added and nothing else changed. */
-export function addsReadingsOnly(before: string, after: string): boolean {
-  return after !== before && stripReadings(after) === before && hasReadings(after);
+export function addsReadingsOnly(
+  before: string,
+  after: string,
+  language: string | null | undefined,
+): boolean {
+  return (
+    after !== before && stripReadings(after, language) === before && hasReadings(after, language)
+  );
 }

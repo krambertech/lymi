@@ -80,9 +80,6 @@ const GUIDES: Record<string, FieldGuide> = {
       "Irregular verb: base · past · past participle (*go · went · gone*). Phrasal verb: whether the object can go between the verb and the particle. Noun: an irregular plural.",
     pronunciation: "IPA, because English spelling doesn't show how a word sounds.",
   },
-  zh: {
-    notes: "Noun: its usual measure word (*一本书*: 本 for books).",
-  },
   ko: {
     notes:
       "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",

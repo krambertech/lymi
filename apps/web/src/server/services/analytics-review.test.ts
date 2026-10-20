@@ -251,3 +251,37 @@ it("counts the example's readings and the ones that faded, never the example", a
   ]);
   expect(JSON.stringify(graded)).not.toContain("パン");
 });
+
+it("counts a Chinese example's pinyin one character at a time, as zh", async () => {
+  const student = await learner(db, "analytics-example-pinyin", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "中文", defaultLanguage: "zh" });
+  const [added] = await addCards(ctx, [
+    {
+      deckId: deck.id,
+      term: "行长",
+      meaning: "bank president",
+      pronunciation: "hángzhǎng",
+      example: "行长说不行[hángzhǎng shuō bù xíng]。",
+    },
+  ]);
+  await gradeCard(ctx, {
+    cardId: added?.status === "added" ? added.card.id : "",
+    direction: "recognition",
+    rating: 3,
+    reviewedAt: new Date(),
+    readingsFaded: 1,
+  });
+  await settled();
+  const [graded] = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded");
+  expect(graded).toMatchObject({
+    reading: "cue",
+    example_readings: 5,
+    readings_faded: 1,
+    reading_language: "zh",
+  });
+  expect(JSON.stringify(graded)).not.toContain("说");
+});

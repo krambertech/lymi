@@ -1,8 +1,8 @@
 import {
   drawsReadings,
+  exampleSegments,
   type KnownReadings,
   markKnownReadings,
-  parseReadings,
   termReading,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
@@ -45,7 +45,7 @@ export function TermText({
   );
 }
 
-/** An example, with its inline readings drawn; furigana is the only engine until a second language has one. */
+/** An example, with its inline readings drawn in its language's notation: furigana, or pinyin for Chinese. */
 export function ExampleText({
   text,
   known,
@@ -54,6 +54,10 @@ export function ExampleText({
   text: string;
   known?: KnownReadings | undefined;
 }) {
-  const segments = useMemo(() => markKnownReadings(parseReadings(text), known), [text, known]);
+  const { lang } = props;
+  const segments = useMemo(
+    () => markKnownReadings(exampleSegments(text, lang), known, lang),
+    [text, known, lang],
+  );
   return <Furigana segments={segments} {...props} />;
 }

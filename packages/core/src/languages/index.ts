@@ -106,10 +106,7 @@ export function drawsReadings(language: string | null | undefined): boolean {
   return readingEngine(language) !== null;
 }
 
-/**
- * Whether this language's examples carry inline readings Lymi parses, so the AI may add them:
- * furigana's today. Pinyin joins when Chinese examples draw it (docs/proposals/chinese.md, slice 4).
- */
+/** Whether this language's examples carry inline readings Lymi parses, so the AI may add them. */
 export function examplesCarryReadings(language: string | null | undefined): boolean {
   const engine = readingEngine(language);
   return engine !== null && EXAMPLE_NOTATION[engine] !== null;

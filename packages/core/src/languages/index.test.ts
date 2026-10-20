@@ -47,9 +47,9 @@ describe("drawsReadings", () => {
 });
 
 describe("examplesCarryReadings", () => {
-  it("lets Japanese examples carry readings, and Chinese ones not yet", () => {
+  it("lets Japanese and Chinese examples carry readings", () => {
     expect(examplesCarryReadings("ja")).toBe(true);
-    expect(examplesCarryReadings("zh")).toBe(false);
+    expect(examplesCarryReadings("zh-TW")).toBe(true);
     expect(examplesCarryReadings("ko")).toBe(false);
   });
 });

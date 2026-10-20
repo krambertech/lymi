@@ -60,8 +60,12 @@ function isSyllable(letters: string): boolean {
   return SYLLABLES.has(lower) || (lower.endsWith("r") && SYLLABLES.has(lower.slice(0, -1)));
 }
 
+/** An erhua r written as its own neutral syllable, as CC-CEDICT does: yi1 dian3 r5. */
+const APART_R = /^r$/i;
+
 /**
- * Pinyin written with tone numbers as tone marks: ni3 hao3 → nǐ hǎo, lv4 and lu:4 → lǜ, ma5 → ma.
+ * Pinyin written with tone numbers as tone marks: ni3 hao3 → nǐ hǎo, lv4 and lu:4 → lǜ, ma5 → ma,
+ * and an erhua r5 → r.
  * Text is returned as written unless every digit in it ends a syllable, since only then can it
  * mean one thing.
  */
@@ -69,6 +73,7 @@ export function toneMarks(text: string): string {
   let whole = true;
   let matched = false;
   const out = text.normalize("NFC").replace(NUMBERED, (match, letters: string, tone: string) => {
+    if (APART_R.test(letters) && (tone === "5" || tone === "0")) return letters;
     const spelled = letters.replace(/u:/gi, (u) => (u[0] === "U" ? "Ü" : "ü"));
     const syllable = spelled.replace(/v/g, "ü").replace(/V/g, "Ü");
     if (!isSyllable(syllable)) {

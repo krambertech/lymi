@@ -4,6 +4,8 @@ import {
   isClientVersion,
   type PhonePlatform,
   parseClientHeader,
+  readingEngine,
+  stripReadings,
   UPDATE_REQUIRED,
 } from "@lymi/core";
 import type { Context, MiddlewareHandler } from "hono";
@@ -54,3 +56,40 @@ export function clientSupports(c: Context<AppEnv>, since: ShownSince): boolean {
   const first = since[phone.platform];
   return first !== undefined && compareVersions(phone.version, first) >= 0;
 }
+
+/** The first phone release that draws pinyin in a Chinese example. docs/proposals/chinese.md, slice 4. */
+export const EXAMPLE_PINYIN_SINCE: ShownSince = { ios: "0.0.3" };
+
+/** Inline pinyin as it reads in JSON, so a response without any skips the parse. */
+const INLINE_PINYIN = /\p{Script=Han}\[[\p{Script=Latin}]/u;
+
+/** A JSON value with the pinyin taken out of the example of every card in a pinyin language. */
+export function withoutExamplePinyin(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutExamplePinyin);
+  if (!value || typeof value !== "object") return value;
+  const out: Record<string, unknown> = {};
+  for (const [key, item] of Object.entries(value)) out[key] = withoutExamplePinyin(item);
+  const { example, language } = out;
+  if (typeof example === "string" && typeof language === "string") {
+    if (readingEngine(language) === "pinyin") out.example = stripReadings(example, language);
+  }
+  return out;
+}
+
+/**
+ * Takes example pinyin out of every JSON answer to a phone release that would show its brackets as
+ * text. Until the minimum version passes EXAMPLE_PINYIN_SINCE this runs on each such request. ADR 0032.
+ */
+export const leaveOutExamplePinyin: MiddlewareHandler<AppEnv> = async (c, next) => {
+  await next();
+  if (!c.get("phone") || clientSupports(c, EXAMPLE_PINYIN_SINCE)) return;
+  if (!c.res.headers.get("content-type")?.includes("application/json")) return;
+  const text = await c.res.clone().text();
+  if (!INLINE_PINYIN.test(text)) return;
+  const headers = new Headers(c.res.headers);
+  headers.delete("content-length");
+  c.res = new Response(JSON.stringify(withoutExamplePinyin(JSON.parse(text))), {
+    status: c.res.status,
+    headers,
+  });
+};

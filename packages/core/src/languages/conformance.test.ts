@@ -49,7 +49,11 @@ const NOTATION: Record<
     strip: (text: string) => string;
   }
 > = {
-  furigana: { parse: parseReadings, format: formatReadings, strip: stripReadings },
+  furigana: {
+    parse: parseReadings,
+    format: formatReadings,
+    strip: (text) => stripReadings(text, "ja"),
+  },
   pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin },
 };
 

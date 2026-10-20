@@ -29,6 +29,7 @@ const card = (fields: Partial<Parameters<typeof matchesSearch>[0]>) => ({
   meaning: null,
   example: null,
   notes: null,
+  language: null,
   ...fields,
 });
 

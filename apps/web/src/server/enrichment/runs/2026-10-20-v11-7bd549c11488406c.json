@@ -1,8 +1,8 @@
 {
-  "version": 9,
-  "hash": "7a581fbcc3e1b677",
+  "version": 11,
+  "hash": "7bd549c11488406c",
   "model": "gpt-6-luna",
-  "recordedAt": "2026-10-20T16:35:17.983Z",
+  "recordedAt": "2026-10-20T02:57:10.432Z",
   "calls": [
     {
       "deck": "et-ru-words",
@@ -18,7 +18,7 @@
       "reply": [
         {
           "id": "et-ru-01",
-          "meaning": "идти; уходить",
+          "meaning": "идти",
           "example": null,
           "notes": "*minema · minna · lähen*",
           "pronunciation": null,
@@ -44,7 +44,7 @@
           "id": "et-ru-04",
           "meaning": "бояться",
           "example": null,
-          "notes": "*kartma · karta · kardan*\n*kartma* + partitive",
+          "notes": "*kartma · karta · kardan*\n*kartma* + партитив",
           "pronunciation": null,
           "language": null
         },
@@ -77,9 +77,9 @@
       "reply": [
         {
           "id": "et-ph-01",
-          "meaning": "Я не могу найти свои ключи.",
+          "meaning": "Я не нахожу свои ключи.",
           "example": null,
-          "notes": "- находить — *leidma · leida · leian*\n- ключ — *võti · võtme · võtit*\nпосле *ei* объект стоит в партитиве: *võtmeid*",
+          "notes": "- находить — *leidma · leida · leian*\n- ключ — *võti · võtme · võtit*\nпосле *ei* объект в партитиве: ***võtmeid***",
           "pronunciation": null,
           "language": null
         },
@@ -87,7 +87,7 @@
           "id": "et-ph-02",
           "meaning": "Ты хочешь кофе?",
           "example": null,
-          "notes": "- хотеть — *tahtma · tahta · tahan*\n- кофе — *kohv · kohvi · kohvi*\nпосле *tahad* объект стоит в партитиве: *kohvi*",
+          "notes": "- хотеть — *tahtma · tahta · tahan*\n- кофе — *kohv · kohvi · kohvi*\nнеопределённый объект *kohvi* стоит в партитиве",
           "pronunciation": null,
           "language": null
         },
@@ -95,7 +95,7 @@
           "id": "et-ph-03",
           "meaning": "Я живу в Таллине.",
           "example": null,
-          "notes": "- жить — *elama · elada · elan*\n- Таллин — *Tallinn · Tallinna · Tallinnat*\n*Tallinnas* — инессив, обозначает место («где?»)",
+          "notes": "- жить — *elama · elada · elan*\n- Таллин — *Tallinn · Tallinna · Tallinnat*\n*Tallinnas* — местный падеж: где?",
           "pronunciation": null,
           "language": null
         }
@@ -113,7 +113,7 @@
         {
           "id": "et-en-01",
           "meaning": "to eat",
-          "example": "Ma söön hommikusööki.",
+          "example": "Ma söön hommikul putru.",
           "notes": "*sööma · süüa · söön*",
           "pronunciation": null,
           "language": null
@@ -121,7 +121,7 @@
         {
           "id": "et-en-02",
           "meaning": "house",
-          "example": "See maja on väga vana.",
+          "example": "Meie maja on vana.",
           "notes": "*maja · maja · maja*",
           "pronunciation": null,
           "language": null
@@ -129,7 +129,7 @@
         {
           "id": "et-en-03",
           "meaning": "Good morning!",
-          "example": null,
+          "example": "Tere hommikust, vanaema!",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -138,7 +138,7 @@
     },
     {
       "deck": "it-en",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"it-en\",\"name\":\"Italiano · Lezione 14\",\"language\":\"it\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article, to show gender. Don't repeat the article in the meaning.\\nnotes: Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.\\npronunciation: Leave pronunciation null, unless the stress isn't where the spelling suggests.\",\"samples\":[]}],\"cards\":[{\"id\":\"it-en-01\",\"deck\":\"it-en\",\"term\":\"sbrigarsi\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-02\",\"deck\":\"it-en\",\"term\":\"il binario\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-03\",\"deck\":\"it-en\",\"term\":\"Che ore sono?\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-04\",\"deck\":\"it-en\",\"term\":\"in bocca al lupo\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-05\",\"deck\":\"it-en\",\"term\":\"andare\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]}]}",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"it-en\",\"name\":\"Italiano · Lezione 14\",\"language\":\"it\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article, to show gender. Don't repeat the article in the meaning.\\nexample: Keep every written accent (*città*, *perché*).\\nnotes: Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.\\npronunciation: Leave pronunciation null, unless the stress isn't where the spelling suggests.\",\"samples\":[]}],\"cards\":[{\"id\":\"it-en-01\",\"deck\":\"it-en\",\"term\":\"sbrigarsi\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-02\",\"deck\":\"it-en\",\"term\":\"il binario\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-03\",\"deck\":\"it-en\",\"term\":\"Che ore sono?\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-04\",\"deck\":\"it-en\",\"term\":\"in bocca al lupo\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"it-en-05\",\"deck\":\"it-en\",\"term\":\"andare\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\"]}]}",
       "cases": [
         "it-en-01",
         "it-en-02",
@@ -150,15 +150,15 @@
         {
           "id": "it-en-01",
           "meaning": "to hurry up",
-          "example": "Mi sbrigo e arrivo subito.",
+          "example": "Dobbiamo sbrigarci, il treno parte tra cinque minuti.",
           "notes": null,
           "pronunciation": null,
           "language": null
         },
         {
           "id": "it-en-02",
-          "meaning": "railway track",
-          "example": "Il treno parte dal binario cinque.",
+          "meaning": "railway platform; track",
+          "example": "Il treno parte dal binario tre.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -182,7 +182,7 @@
         {
           "id": "it-en-05",
           "meaning": "to go",
-          "example": "Vado al supermercato a piedi.",
+          "example": "Domani andiamo al mare.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -202,7 +202,7 @@
         {
           "id": "de-en-01",
           "meaning": "bench; bank",
-          "example": "Wir sitzen auf einer Bank im Park.",
+          "example": "Ich sitze auf der Bank im Park.",
           "notes": "- plural: *die Bänke* (bench), *die Banken* (bank)",
           "pronunciation": null,
           "language": null
@@ -218,15 +218,15 @@
         {
           "id": "de-en-03",
           "meaning": "key",
-          "example": "Ich finde meinen Schlüssel nicht.",
-          "notes": "plural: *die Schlüssel*",
+          "example": "Der Schlüssel liegt auf dem Tisch.",
+          "notes": "- plural: *die Schlüssel*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "de-en-04",
           "meaning": "to wait",
-          "example": "Wir warten auf den Bus.",
+          "example": "Ich warte auf den Bus.",
           "notes": "*warten auf* + accusative",
           "pronunciation": null,
           "language": null
@@ -253,7 +253,7 @@
         {
           "id": "ru-en-02",
           "meaning": "to do; to make",
-          "example": "Что ты любишь делать?",
+          "example": "Я делаю домашнее задание.",
           "notes": null,
           "pronunciation": "де́лать",
           "language": null
@@ -281,7 +281,7 @@
         {
           "id": "ja-en-01",
           "meaning": "to eat",
-          "example": "毎朝[まいあさ]パンを食[た]べます。",
+          "example": "朝[あさ]ごはんを食[た]べます。",
           "notes": null,
           "pronunciation": "たべる",
           "language": null
@@ -289,7 +289,7 @@
         {
           "id": "ja-en-02",
           "meaning": "thank you",
-          "example": "ありがとう、うれしいです。",
+          "example": "ありがとう、またね。",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -305,7 +305,7 @@
         {
           "id": "ja-en-04",
           "meaning": "every morning",
-          "example": "毎朝[まいあさ]六時[ろくじ]に起[お]きます。",
+          "example": "毎朝[まいあさ]水[みず]を飲[の]みます。",
           "notes": null,
           "pronunciation": "まいあさ",
           "language": null
@@ -314,24 +314,16 @@
     },
     {
       "deck": "zh-en",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"zh-en\",\"name\":\"HSK 1\",\"language\":\"zh\",\"purpose\":\"language\",\"guide\":\"notes: Noun: its usual measure word (*一本书*: 本 for books).\\npronunciation: Pinyin with tone marks, not IPA. For example: 学习 → xuéxí.\",\"samples\":[]}],\"cards\":[{\"id\":\"zh-en-01\",\"deck\":\"zh-en\",\"term\":\"学习\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-02\",\"deck\":\"zh-en\",\"term\":\"书\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-03\",\"deck\":\"zh-en\",\"term\":\"银行\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-04\",\"deck\":\"zh-en\",\"term\":\"行\",\"language\":\"zh\",\"meaning\":\"row; line of business\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-05\",\"deck\":\"zh-en\",\"term\":\"行\",\"language\":\"zh\",\"meaning\":\"to walk; OK\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-06\",\"deck\":\"zh-en\",\"term\":\"不行\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-07\",\"deck\":\"zh-en\",\"term\":\"行长\",\"language\":\"zh\",\"meaning\":\"bank president\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-08\",\"deck\":\"zh-en\",\"term\":\"长\",\"language\":\"zh\",\"meaning\":\"long\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-09\",\"deck\":\"zh-en\",\"term\":\"长\",\"language\":\"zh\",\"meaning\":\"to grow\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-10\",\"deck\":\"zh-en\",\"term\":\"长城\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]}]}",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"zh-en\",\"name\":\"HSK 1\",\"language\":\"zh\",\"purpose\":\"language\",\"guide\":\"notes: Noun: its usual measure word (*一本书*: 本 for books).\\npronunciation: Pinyin with tone marks, not IPA. For example: 学习 → xuéxí.\",\"samples\":[]}],\"cards\":[{\"id\":\"zh-en-01\",\"deck\":\"zh-en\",\"term\":\"学习\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-02\",\"deck\":\"zh-en\",\"term\":\"书\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]}]}",
       "cases": [
         "zh-en-01",
-        "zh-en-02",
-        "zh-en-03",
-        "zh-en-04",
-        "zh-en-05",
-        "zh-en-06",
-        "zh-en-07",
-        "zh-en-08",
-        "zh-en-09",
-        "zh-en-10"
+        "zh-en-02"
       ],
       "reply": [
         {
           "id": "zh-en-01",
           "meaning": "to study; to learn",
-          "example": "我每天学习中文。",
+          "example": "我喜欢学习中文。",
           "notes": null,
           "pronunciation": "xuéxí",
           "language": null
@@ -339,313 +331,9 @@
         {
           "id": "zh-en-02",
           "meaning": "book",
-          "example": "我有一本书。",
+          "example": "这本书很好。",
           "notes": null,
           "pronunciation": "shū",
-          "language": null
-        },
-        {
-          "id": "zh-en-03",
-          "meaning": "bank",
-          "example": "银行在前面。",
-          "notes": null,
-          "pronunciation": "yínháng",
-          "language": null
-        },
-        {
-          "id": "zh-en-04",
-          "meaning": null,
-          "example": "请写在这一行。",
-          "notes": null,
-          "pronunciation": "háng",
-          "language": null
-        },
-        {
-          "id": "zh-en-05",
-          "meaning": null,
-          "example": "这样做行吗？",
-          "notes": null,
-          "pronunciation": "xíng",
-          "language": null
-        },
-        {
-          "id": "zh-en-06",
-          "meaning": "not okay; impossible",
-          "example": "这样做不行。",
-          "notes": null,
-          "pronunciation": "bùxíng",
-          "language": null
-        },
-        {
-          "id": "zh-en-07",
-          "meaning": null,
-          "example": "他是这家银行的行长。",
-          "notes": null,
-          "pronunciation": "hángzhǎng",
-          "language": null
-        },
-        {
-          "id": "zh-en-08",
-          "meaning": null,
-          "example": "这条路很长。",
-          "notes": null,
-          "pronunciation": "cháng",
-          "language": null
-        },
-        {
-          "id": "zh-en-09",
-          "meaning": null,
-          "example": "树长得很快。",
-          "notes": null,
-          "pronunciation": "zhǎng",
-          "language": null
-        },
-        {
-          "id": "zh-en-10",
-          "meaning": "the Great Wall",
-          "example": "长城很有名。",
-          "notes": null,
-          "pronunciation": "Chángchéng",
-          "language": null
-        }
-      ]
-    },
-    {
-      "deck": "zh-en",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"zh-en\",\"name\":\"HSK 1\",\"language\":\"zh\",\"purpose\":\"language\",\"guide\":\"notes: Noun: its usual measure word (*一本书*: 本 for books).\\npronunciation: Pinyin with tone marks, not IPA. For example: 学习 → xuéxí.\",\"samples\":[]}],\"cards\":[{\"id\":\"zh-en-11\",\"deck\":\"zh-en\",\"term\":\"还\",\"language\":\"zh\",\"meaning\":\"still; also\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-12\",\"deck\":\"zh-en\",\"term\":\"还\",\"language\":\"zh\",\"meaning\":\"to give back\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-13\",\"deck\":\"zh-en\",\"term\":\"东西\",\"language\":\"zh\",\"meaning\":\"thing\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-14\",\"deck\":\"zh-en\",\"term\":\"东西\",\"language\":\"zh\",\"meaning\":\"east and west\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-en-15\",\"deck\":\"zh-en\",\"term\":\"一点儿\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-16\",\"deck\":\"zh-en\",\"term\":\"哪儿\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-17\",\"deck\":\"zh-en\",\"term\":\"玩儿\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-18\",\"deck\":\"zh-en\",\"term\":\"一起\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-19\",\"deck\":\"zh-en\",\"term\":\"不是\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-20\",\"deck\":\"zh-en\",\"term\":\"不客气\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]}]}",
-      "cases": [
-        "zh-en-11",
-        "zh-en-12",
-        "zh-en-13",
-        "zh-en-14",
-        "zh-en-15",
-        "zh-en-16",
-        "zh-en-17",
-        "zh-en-18",
-        "zh-en-19",
-        "zh-en-20"
-      ],
-      "reply": [
-        {
-          "id": "zh-en-11",
-          "meaning": null,
-          "example": "我还想喝水。",
-          "notes": null,
-          "pronunciation": "hái",
-          "language": null
-        },
-        {
-          "id": "zh-en-12",
-          "meaning": null,
-          "example": "我明天还你钱。",
-          "notes": null,
-          "pronunciation": "huán",
-          "language": null
-        },
-        {
-          "id": "zh-en-13",
-          "meaning": null,
-          "example": "我买了很多东西。",
-          "notes": null,
-          "pronunciation": "dōngxi",
-          "language": null
-        },
-        {
-          "id": "zh-en-14",
-          "meaning": null,
-          "example": "东西两边都有商店。",
-          "notes": null,
-          "pronunciation": "dōngxī",
-          "language": null
-        },
-        {
-          "id": "zh-en-15",
-          "meaning": "a little",
-          "example": "我想喝一点儿水。",
-          "notes": null,
-          "pronunciation": "yìdiǎnr",
-          "language": null
-        },
-        {
-          "id": "zh-en-16",
-          "meaning": "where",
-          "example": "你家在哪儿？",
-          "notes": null,
-          "pronunciation": "nǎr",
-          "language": null
-        },
-        {
-          "id": "zh-en-17",
-          "meaning": "to play",
-          "example": "孩子们喜欢在公园玩儿。",
-          "notes": null,
-          "pronunciation": "wánr",
-          "language": null
-        },
-        {
-          "id": "zh-en-18",
-          "meaning": "together",
-          "example": "我们一起去学校吧。",
-          "notes": null,
-          "pronunciation": "yìqǐ",
-          "language": null
-        },
-        {
-          "id": "zh-en-19",
-          "meaning": "is not",
-          "example": "我不是老师。",
-          "notes": null,
-          "pronunciation": "búshì",
-          "language": null
-        },
-        {
-          "id": "zh-en-20",
-          "meaning": "you're welcome",
-          "example": "不客气，这是我的工作。",
-          "notes": null,
-          "pronunciation": "búkèqi",
-          "language": null
-        }
-      ]
-    },
-    {
-      "deck": "zh-en",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"zh-en\",\"name\":\"HSK 1\",\"language\":\"zh\",\"purpose\":\"language\",\"guide\":\"notes: Noun: its usual measure word (*一本书*: 本 for books).\\npronunciation: Pinyin with tone marks, not IPA. For example: 学习 → xuéxí.\",\"samples\":[]}],\"cards\":[{\"id\":\"zh-en-21\",\"deck\":\"zh-en\",\"term\":\"卡拉OK\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-22\",\"deck\":\"zh-en\",\"term\":\"朋友\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-23\",\"deck\":\"zh-en\",\"term\":\"觉得\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-24\",\"deck\":\"zh-en\",\"term\":\"睡觉\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-25\",\"deck\":\"zh-en\",\"term\":\"音乐\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-26\",\"deck\":\"zh-en\",\"term\":\"快乐\",\"language\":\"zh\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-en-27\",\"deck\":\"zh-en\",\"term\":\"银行\",\"language\":\"zh\",\"meaning\":\"bank\",\"example\":\"我去银行取钱。\",\"mayFill\":[\"pronunciation\"]},{\"id\":\"zh-en-28\",\"deck\":\"zh-en\",\"term\":\"不行\",\"language\":\"zh\",\"meaning\":\"not OK\",\"example\":\"今天不行，明天吧。\",\"mayFill\":[\"pronunciation\"]},{\"id\":\"zh-en-29\",\"deck\":\"zh-en\",\"term\":\"东西\",\"language\":\"zh\",\"meaning\":\"thing\",\"example\":\"我想买点儿东西。\",\"mayFill\":[\"pronunciation\"]},{\"id\":\"zh-en-30\",\"deck\":\"zh-en\",\"term\":\"还\",\"language\":\"zh\",\"meaning\":\"to give back\",\"example\":\"明天我还你书。\",\"mayFill\":[\"pronunciation\"]}]}",
-      "cases": [
-        "zh-en-21",
-        "zh-en-22",
-        "zh-en-23",
-        "zh-en-24",
-        "zh-en-25",
-        "zh-en-26",
-        "zh-en-27",
-        "zh-en-28",
-        "zh-en-29",
-        "zh-en-30"
-      ],
-      "reply": [
-        {
-          "id": "zh-en-21",
-          "meaning": "karaoke",
-          "example": "我们去唱卡拉OK吧。",
-          "notes": null,
-          "pronunciation": "kǎlā OK",
-          "language": null
-        },
-        {
-          "id": "zh-en-22",
-          "meaning": "friend",
-          "example": "他是我的好朋友。",
-          "notes": null,
-          "pronunciation": "péngyou",
-          "language": null
-        },
-        {
-          "id": "zh-en-23",
-          "meaning": "to think; to feel",
-          "example": "我觉得这个电影很好看。",
-          "notes": null,
-          "pronunciation": "juéde",
-          "language": null
-        },
-        {
-          "id": "zh-en-24",
-          "meaning": "to sleep",
-          "example": "我晚上十点睡觉。",
-          "notes": null,
-          "pronunciation": "shuìjiào",
-          "language": null
-        },
-        {
-          "id": "zh-en-25",
-          "meaning": "music",
-          "example": "我喜欢听音乐。",
-          "notes": null,
-          "pronunciation": "yīnyuè",
-          "language": null
-        },
-        {
-          "id": "zh-en-26",
-          "meaning": "happy; joyful",
-          "example": "她每天都很快乐。",
-          "notes": null,
-          "pronunciation": "kuàilè",
-          "language": null
-        },
-        {
-          "id": "zh-en-27",
-          "meaning": null,
-          "example": null,
-          "notes": null,
-          "pronunciation": "yínháng",
-          "language": null
-        },
-        {
-          "id": "zh-en-28",
-          "meaning": null,
-          "example": null,
-          "notes": null,
-          "pronunciation": "bùxíng",
-          "language": null
-        },
-        {
-          "id": "zh-en-29",
-          "meaning": null,
-          "example": null,
-          "notes": null,
-          "pronunciation": "dōngxi",
-          "language": null
-        },
-        {
-          "id": "zh-en-30",
-          "meaning": null,
-          "example": null,
-          "notes": null,
-          "pronunciation": "huán",
-          "language": null
-        }
-      ]
-    },
-    {
-      "deck": "zh-tw-en",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"zh-tw-en\",\"name\":\"華語 A1\",\"language\":\"zh-TW\",\"purpose\":\"language\",\"guide\":\"notes: Noun: its usual measure word (*一本书*: 本 for books).\\npronunciation: Pinyin with tone marks, not IPA. For example: 学习 → xuéxí.\",\"samples\":[]}],\"cards\":[{\"id\":\"zh-tw-01\",\"deck\":\"zh-tw-en\",\"term\":\"學習\",\"language\":\"zh-TW\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-tw-02\",\"deck\":\"zh-tw-en\",\"term\":\"銀行\",\"language\":\"zh-TW\",\"mayFill\":[\"meaning\",\"example\",\"pronunciation\"]},{\"id\":\"zh-tw-03\",\"deck\":\"zh-tw-en\",\"term\":\"還\",\"language\":\"zh-TW\",\"meaning\":\"to give back\",\"mayFill\":[\"example\",\"pronunciation\"]},{\"id\":\"zh-tw-04\",\"deck\":\"zh-tw-en\",\"term\":\"長\",\"language\":\"zh-TW\",\"meaning\":\"long\",\"mayFill\":[\"example\",\"pronunciation\"]}]}",
-      "cases": [
-        "zh-tw-01",
-        "zh-tw-02",
-        "zh-tw-03",
-        "zh-tw-04"
-      ],
-      "reply": [
-        {
-          "id": "zh-tw-01",
-          "meaning": "to study; to learn",
-          "example": "我每天學習中文。",
-          "notes": null,
-          "pronunciation": "xuéxí",
-          "language": null
-        },
-        {
-          "id": "zh-tw-02",
-          "meaning": "bank",
-          "example": "我去銀行存錢。",
-          "notes": null,
-          "pronunciation": "yínháng",
-          "language": null
-        },
-        {
-          "id": "zh-tw-03",
-          "meaning": null,
-          "example": "請把書還給我。",
-          "notes": null,
-          "pronunciation": "huán",
-          "language": null
-        },
-        {
-          "id": "zh-tw-04",
-          "meaning": null,
-          "example": "這條路很長。",
-          "notes": null,
-          "pronunciation": "cháng",
           "language": null
         }
       ]
@@ -670,38 +358,38 @@
           "id": "ko-en-01",
           "meaning": "school",
           "example": "저는 학교에 가요.",
-          "notes": "學 *학*: *학생, 학년*\n校 *교*: *교실, 교장*",
+          "notes": "- 學 학: *학년*, *학문*\n- 校 교: *교실*, *교장*",
           "pronunciation": "학꾜",
           "language": null
         },
         {
           "id": "ko-en-02",
           "meaning": "student",
-          "example": "저 학생은 제 친구예요.",
-          "notes": "學 *학*: *학교, 학습*\n生 *생*: *생일, 생명*",
+          "example": "저는 학생이에요.",
+          "notes": "- 學 학: *학년*, *학문*\n- 生 생: *생일*, *생활*",
           "pronunciation": "학쌩",
           "language": null
         },
         {
           "id": "ko-en-03",
           "meaning": "broth; soup stock",
-          "example": "이 국물은 정말 맛있어요.",
+          "example": "국물이 맛있어요.",
           "notes": null,
           "pronunciation": "궁물",
           "language": null
         },
         {
           "id": "ko-en-04",
-          "meaning": "together; with",
-          "example": "친구와 같이 영화를 봐요.",
+          "meaning": "together",
+          "example": "같이 가요.",
           "notes": null,
           "pronunciation": "가치",
           "language": null
         },
         {
           "id": "ko-en-05",
-          "meaning": "to be good",
-          "example": "오늘은 날씨가 좋아요.",
+          "meaning": "good; to be good",
+          "example": "날씨가 좋아요.",
           "notes": "*좋다 → 좋아요*",
           "pronunciation": "조타",
           "language": null
@@ -709,7 +397,7 @@
         {
           "id": "ko-en-06",
           "meaning": "love",
-          "example": "사랑은 큰 힘이에요.",
+          "example": "사랑은 중요해요.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -725,8 +413,8 @@
         {
           "id": "ko-en-08",
           "meaning": "contact; communication",
-          "example": "친구에게 연락해요.",
-          "notes": "連 *연*: *연결, 연속*\n絡 *락*: *맥락, 연락*",
+          "example": "매일 연락해요.",
+          "notes": "- 連 연: *연결*, *연속*\n- 絡 락: *맥락*, *연락*",
           "pronunciation": "열락",
           "language": null
         },
@@ -734,14 +422,14 @@
           "id": "ko-en-09",
           "meaning": "library",
           "example": "도서관에서 공부해요.",
-          "notes": "圖 *도*: *지도, 도표*\n書 *서*: *도서, 서점*\n館 *관*: *박물관, 미술관*",
+          "notes": "- 圖 도: *도형*, *도면*\n- 書 서: *서점*, *독서*\n- 館 관: *박물관*, *미술관*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "ko-en-10",
           "meaning": "to read",
-          "example": "저는 매일 책을 읽어요.",
+          "example": "책을 읽어요.",
           "notes": "*읽다 → 읽어요*",
           "pronunciation": "익따",
           "language": null
@@ -758,16 +446,16 @@
       "reply": [
         {
           "id": "ko-en-11",
-          "meaning": "Korean language",
+          "meaning": "Korean",
           "example": "저는 한국어를 공부해요.",
-          "notes": "- 韓 한: *한국*, *한식*\n- 國 국: *국가*, *국적*\n- 語 어: *언어*, *한국어*",
+          "notes": "- 韓 한: *한국*, *한복*\n- 國 국: *국가*, *한국*\n- 語 어: *언어*, *영어*",
           "pronunciation": "한구거",
           "language": null
         },
         {
           "id": "ko-en-12",
           "meaning": "to eat",
-          "example": "맛있게 먹어요.",
+          "example": "저는 밥을 먹어요.",
           "notes": "*먹다 → 먹어요*",
           "pronunciation": "먹따",
           "language": null
@@ -801,9 +489,9 @@
         {
           "id": "tl-en-02",
           "meaning": "water",
-          "example": "Uminom ako ng tubig.",
+          "example": "Uminom ako ng malamig na tubig.",
           "notes": null,
-          "pronunciation": "tubíg",
+          "pronunciation": "túbig",
           "language": null
         },
         {
@@ -816,8 +504,8 @@
         },
         {
           "id": "tl-en-04",
-          "meaning": "beautiful; good-looking",
-          "example": "Maganda ang panahon ngayon.",
+          "meaning": "beautiful; good",
+          "example": "Maganda ang tanawin dito.",
           "notes": null,
           "pronunciation": "magánda",
           "language": null
@@ -825,48 +513,48 @@
         {
           "id": "tl-en-05",
           "meaning": "child",
-          "example": "Masaya ang bata sa parke.",
+          "example": "Masayang naglalaro ang bata sa labas.",
           "notes": null,
-          "pronunciation": "bátà",
+          "pronunciation": "báta",
           "language": null
         },
         {
           "id": "tl-en-06",
           "meaning": null,
-          "example": "Basâ ang damit ko.",
-          "notes": "*Basâ* (wet) contrasts with *bása* (read).",
+          "example": "Basa pa ang damit ko.",
+          "notes": null,
           "pronunciation": "basâ",
           "language": null
         },
         {
           "id": "tl-en-07",
           "meaning": null,
-          "example": "Nagbabasa siya ng nobela gabi-gabi.",
-          "notes": "*Bása* (read) contrasts with *basâ* (wet).",
-          "pronunciation": "bása",
+          "example": "Nagbabasa siya ng libro gabi-gabi.",
+          "notes": null,
+          "pronunciation": "basá",
           "language": null
         },
         {
           "id": "tl-en-08",
-          "meaning": "expensive; beloved",
-          "example": "Mahal ang mga prutas sa palengke.",
+          "meaning": "expensive; dear",
+          "example": "Mahal ang kape rito.",
           "notes": null,
           "pronunciation": "mahál",
           "language": null
         },
         {
           "id": "tl-en-09",
-          "meaning": "to eat",
-          "example": "Kumain kami sa labas kagabi.",
-          "notes": "- root: *kain*; actor focus (-um-)\n- *kumain · kumakain · kakain*",
-          "pronunciation": "kumá.in",
+          "meaning": "ate",
+          "example": "Kumain kami ng almusal nang maaga.",
+          "notes": "- root *kain*; actor focus (*-um-*)\n- completed · ongoing · future: *kumain · kumakain · kakain*",
+          "pronunciation": "kumáin",
           "language": null
         },
         {
           "id": "tl-en-10",
-          "meaning": "to eat (something)",
-          "example": "Kainin mo ang gulay bago umalis.",
-          "notes": "- root: *kain*; object focus (-in)\n- *kinain · kinakain · kakainin*",
+          "meaning": "eat (something)",
+          "example": "Kainin mo ang prutas bago umalis.",
+          "notes": "- root *kain*; object focus (*-in*)\n- completed · ongoing · future: *kinain · kinakain · kakainin*",
           "pronunciation": "kainín",
           "language": null
         }
@@ -909,22 +597,22 @@
           "id": "vi-en-01",
           "meaning": "dog",
           "example": "Con chó đang ngủ.",
-          "notes": "Classifier: *con* (*con chó*).",
+          "notes": "Classifier: *con chó*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "vi-en-02",
           "meaning": "table; desk",
-          "example": "Cái bàn này rất chắc.",
-          "notes": "Classifier: *cái* (*cái bàn*).",
+          "example": "Cái bàn này rất đẹp.",
+          "notes": "Classifier: *cái bàn*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "vi-en-03",
           "meaning": "thank you",
-          "example": "Tôi cảm ơn cô giáo.",
+          "example": "Tôi muốn cảm ơn bạn.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -932,7 +620,7 @@
         {
           "id": "vi-en-04",
           "meaning": "thank you",
-          "example": "Tôi cảm ơn cô giáo.",
+          "example": "Tôi muốn cảm ơn bạn.",
           "notes": null,
           "pronunciation": "cảm ơn",
           "language": null
@@ -948,7 +636,7 @@
         {
           "id": "vi-en-06",
           "meaning": "kilometer",
-          "example": "Tôi đi bộ khoảng 2 km mỗi ngày.",
+          "example": "Nhà tôi cách đây 5 km.",
           "notes": null,
           "pronunciation": "ki-lô-mét",
           "language": null
@@ -957,14 +645,14 @@
           "id": "vi-en-07",
           "meaning": "water; country",
           "example": "Tôi uống nước mỗi ngày.",
-          "notes": "Measure phrase: *một ly nước* (a glass of water).",
+          "notes": "Classifier: *giọt nước*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "vi-en-08",
           "meaning": "beautiful",
-          "example": "Căn nhà này rất đẹp.",
+          "example": "Căn phòng này rất đẹp.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -972,16 +660,16 @@
         {
           "id": "vi-en-09",
           "meaning": "bank",
-          "example": "Ngân hàng mở cửa lúc tám giờ.",
-          "notes": "Usually counted without a classifier: *một ngân hàng*.",
+          "example": "Tôi đến ngân hàng vào buổi sáng.",
+          "notes": null,
           "pronunciation": null,
           "language": null
         },
         {
           "id": "vi-en-10",
-          "meaning": "student; pupil",
+          "meaning": "student",
           "example": "Học sinh đang đọc sách.",
-          "notes": "Classifier: *em* (*một em học sinh*).",
+          "notes": null,
           "pronunciation": null,
           "language": null
         }
@@ -1023,7 +711,7 @@
         {
           "id": "ka-en-01",
           "meaning": "hello",
-          "example": "გამარჯობა, როგორ ხარ?",
+          "example": "გამარჯობა, ნინო!",
           "notes": null,
           "pronunciation": "gamarjoba",
           "language": null
@@ -1039,7 +727,7 @@
         {
           "id": "ka-en-03",
           "meaning": "water",
-          "example": "წყალი მინდა.",
+          "example": "მე წყალი მინდა.",
           "notes": "*წყალი → წყლის*",
           "pronunciation": "ts'q'ali",
           "language": null
@@ -1047,15 +735,15 @@
         {
           "id": "ka-en-04",
           "meaning": "city",
-          "example": "ეს დიდი ქალაქია.",
+          "example": "თბილისი დიდი ქალაქია.",
           "notes": null,
           "pronunciation": "kalaki",
           "language": null
         },
         {
           "id": "ka-en-05",
-          "meaning": "man; person",
-          "example": "კაცი აქ არის.",
+          "meaning": "man",
+          "example": "კაცი სახლშია.",
           "notes": null,
           "pronunciation": "k'atsi",
           "language": null
@@ -1071,15 +759,15 @@
         {
           "id": "ka-en-07",
           "meaning": "wine",
-          "example": "ღვინო მინდა.",
-          "notes": null,
+          "example": "ეს ქართული ღვინოა.",
+          "notes": "*ღვინო → ღვინის*",
           "pronunciation": "ghvino",
           "language": null
         },
         {
           "id": "ka-en-08",
           "meaning": "house",
-          "example": "სახლი დიდია.",
+          "example": "ჩემი სახლი დიდია.",
           "notes": null,
           "pronunciation": "sakhli",
           "language": null
@@ -1087,17 +775,17 @@
         {
           "id": "ka-en-09",
           "meaning": "Tbilisi",
-          "example": "თბილისი საქართველოს დედაქალაქია.",
+          "example": "თბილისი საქართველოშია.",
           "notes": null,
           "pronunciation": "tbilisi",
           "language": null
         },
         {
           "id": "ka-en-10",
-          "meaning": "phone",
-          "example": "ტელეფონი მაგიდაზე დევს.",
+          "meaning": "telephone; phone",
+          "example": "ეს ჩემი ტელეფონია.",
           "notes": null,
-          "pronunciation": "t'eleponi",
+          "pronunciation": "teleponi",
           "language": null
         }
       ]
@@ -1112,7 +800,7 @@
         {
           "id": "ka-en-11",
           "meaning": "writing; to write",
-          "example": "წერა მიყვარს.",
+          "example": "წერა ძალიან მიყვარს.",
           "notes": "*წერა: წერს · დაწერა*",
           "pronunciation": "ts'era",
           "language": null
@@ -1137,27 +825,27 @@
       "reply": [
         {
           "id": "hy-en-01",
-          "meaning": "hello",
+          "meaning": "hello; hi",
           "example": "Բարև, Անի։",
           "notes": null,
           "pronunciation": "barev",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-02",
           "meaning": "thank you",
-          "example": "Շնորհակալություն։",
+          "example": "Շնորհակալություն, Անի։",
           "notes": null,
           "pronunciation": "shnorhakalut'yun",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-03",
           "meaning": "water",
-          "example": "Ես ջուր եմ ուզում։",
-          "notes": "- irregular plural: *ջուր → ջրեր*",
+          "example": "Ես ջուր եմ խմում։",
+          "notes": "*ջուր → ջրեր*",
           "pronunciation": "jur",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-04",
@@ -1165,7 +853,7 @@
           "example": "Ես հաց եմ ուտում։",
           "notes": null,
           "pronunciation": "hats'",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-05",
@@ -1173,47 +861,47 @@
           "example": "Ես երեք գիրք ունեմ։",
           "notes": null,
           "pronunciation": "yerek'",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-06",
           "meaning": "house; home",
-          "example": "Տունը մեծ է։",
-          "notes": "- irregular plural: *տուն → տներ*",
+          "example": "Մեր տունը մեծ է։",
+          "notes": "*տուն → տներ*",
           "pronunciation": "tun",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-07",
           "meaning": "city",
-          "example": "Քաղաքը շատ մեծ է։",
+          "example": "Երևանը մեծ քաղաք է։",
           "notes": null,
           "pronunciation": "k'aghak'",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-08",
           "meaning": "book",
           "example": "Ես գիրք եմ կարդում։",
-          "notes": "- irregular plural: *գիրք → գրքեր*",
+          "notes": "*գիրք → գրքեր*",
           "pronunciation": "girk'",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-09",
           "meaning": "brother",
-          "example": "Եղբայրս Երևանում է։",
+          "example": "Իմ եղբայրը տանն է։",
           "notes": null,
           "pronunciation": "yeghbayr",
-          "language": null
+          "language": "hy"
         },
         {
           "id": "hy-en-10",
           "meaning": "no; not",
-          "example": "Ոչ, չեմ ուզում։",
+          "example": "Ոչ, շնորհակալություն։",
           "notes": null,
           "pronunciation": "voch'",
-          "language": null
+          "language": "hy"
         }
       ]
     },
@@ -1226,9 +914,9 @@
       "reply": [
         {
           "id": "hy-en-11",
-          "meaning": "person",
-          "example": "Ես մարդ եմ։",
-          "notes": "irregular plural: *մարդ → մարդիկ*",
+          "meaning": "person; man",
+          "example": "Նա լավ մարդ է։",
+          "notes": "- irregular plural: *մարդիկ*",
           "pronunciation": "mard",
           "language": null
         }
@@ -1252,8 +940,8 @@
       "reply": [
         {
           "id": "ta-en-01",
-          "meaning": "hello; greetings",
-          "example": "வணக்கம், எப்படி இருக்கிறீர்கள்?",
+          "meaning": "hello",
+          "example": "வணக்கம், அம்மா.",
           "notes": null,
           "pronunciation": "vaṇakkam",
           "language": null
@@ -1261,7 +949,7 @@
         {
           "id": "ta-en-02",
           "meaning": "thank you; thanks",
-          "example": "உதவிக்கு நன்றி.",
+          "example": "நன்றி, அப்பா.",
           "notes": null,
           "pronunciation": "nandri",
           "language": null
@@ -1270,14 +958,14 @@
           "id": "ta-en-03",
           "meaning": "water",
           "example": "எனக்கு தண்ணீர் வேண்டும்.",
-          "notes": "*தண்ணீர்* is often said *taṇṇi*.",
+          "notes": "Spoken: *taṇṇi*",
           "pronunciation": "taṇṇīr",
           "language": null
         },
         {
           "id": "ta-en-04",
           "meaning": "mother; mom",
-          "example": "என் அம்மா வீட்டில் இருக்கிறார்.",
+          "example": "அம்மா சாப்பாடு செய்கிறார்.",
           "notes": null,
           "pronunciation": "ammā",
           "language": null
@@ -1285,7 +973,7 @@
         {
           "id": "ta-en-05",
           "meaning": "father; dad",
-          "example": "என் அப்பா வீட்டில் இருக்கிறார்.",
+          "example": "அப்பா வீட்டில் இருக்கிறார்.",
           "notes": null,
           "pronunciation": "appā",
           "language": null
@@ -1293,7 +981,7 @@
         {
           "id": "ta-en-06",
           "meaning": "book",
-          "example": "நான் ஒரு புத்தகம் படிக்கிறேன்.",
+          "example": "இது என் புத்தகம்.",
           "notes": null,
           "pronunciation": "puttakam",
           "language": null
@@ -1301,9 +989,9 @@
         {
           "id": "ta-en-07",
           "meaning": "house; home",
-          "example": "அது என் வீடு.",
+          "example": "வீடு பெரியது.",
           "notes": null,
-          "pronunciation": "vīṭu",
+          "pronunciation": "vīḍu",
           "language": null
         },
         {
@@ -1317,7 +1005,7 @@
         {
           "id": "ta-en-09",
           "meaning": "cat",
-          "example": "பூனை தூங்குகிறது.",
+          "example": "பூனை பால் குடிக்கிறது.",
           "notes": null,
           "pronunciation": "pūnai",
           "language": null
@@ -1325,7 +1013,7 @@
         {
           "id": "ta-en-10",
           "meaning": "fruit",
-          "example": "நான் ஒரு பழம் சாப்பிட்டேன்.",
+          "example": "நான் பழம் சாப்பிடுகிறேன்.",
           "notes": null,
           "pronunciation": "pazham",
           "language": null
@@ -1341,8 +1029,8 @@
       "reply": [
         {
           "id": "ta-en-11",
-          "meaning": "to go",
-          "example": "நான் வீட்டுக்குப் போகிறேன்.",
+          "meaning": "go",
+          "example": "நான் கடைக்குப் போகிறேன்.",
           "notes": "*போ: போனேன் · போவேன்*",
           "pronunciation": "pō",
           "language": null
@@ -1383,7 +1071,7 @@
         {
           "id": "fi-en-03",
           "meaning": "hand; arm",
-          "example": "Käsi on kipeä.",
+          "example": "Hänellä on lämmin käsi.",
           "notes": "*käsi · käden · kättä · käsiä*",
           "pronunciation": null,
           "language": null
@@ -1391,7 +1079,7 @@
         {
           "id": "fi-en-04",
           "meaning": "residence permit",
-          "example": "Hän hakee oleskelulupaa.",
+          "example": "Hän sai oleskeluluvan viime viikolla.",
           "notes": "*oleskelulupa · oleskeluluvan · oleskelulupaa · oleskelulupia*",
           "pronunciation": null,
           "language": null
@@ -1399,7 +1087,7 @@
         {
           "id": "fi-en-05",
           "meaning": "work; job",
-          "example": "Työ alkaa kahdeksalta.",
+          "example": "Minulla on paljon työtä tänään.",
           "notes": "*työ · työn · työtä · töitä*",
           "pronunciation": null,
           "language": null
@@ -1407,23 +1095,23 @@
         {
           "id": "fi-en-06",
           "meaning": "to go",
-          "example": "Menen kotiin nyt.",
-          "notes": "*mennä · menen · menin*",
+          "example": "Menemme tänään elokuviin.",
+          "notes": "*mennä · menen · menin*\n- *mennä* + illative: *mennä johonkin*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "fi-en-07",
           "meaning": "to speak; to talk",
-          "example": "Puhumme lomasta tänään.",
-          "notes": "*puhua · puhun · puhuin*\n*puhua* + elative: *puhua jostakin*",
+          "example": "Puhun vähän suomea.",
+          "notes": "*puhua · puhun · puhuin*\n- *puhua* + elative: *puhua jostakin*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "fi-en-08",
           "meaning": "doctor",
-          "example": "Lääkäri auttaa minua.",
+          "example": "Lääkäri tulee pian.",
           "notes": "*lääkäri · lääkärin · lääkäriä · lääkäreitä*",
           "pronunciation": null,
           "language": null
@@ -1432,7 +1120,7 @@
           "id": "fi-en-09",
           "meaning": "Where is the station?",
           "example": null,
-          "notes": "*Missä* is inessive, used to ask where something is located.",
+          "notes": "The inessive in *missä* asks where something is.",
           "pronunciation": null,
           "language": null
         }
@@ -1455,27 +1143,27 @@
       "reply": [
         {
           "id": "lv-en-01",
-          "meaning": "house",
-          "example": "Tā ir mana māja.",
+          "meaning": "house; home",
+          "example": "Šī ir mana māja.",
           "notes": "*māja, mājas*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-02",
           "meaning": "dog",
-          "example": "Suns skrien parkā.",
+          "example": "Mans suns guļ pie durvīm.",
           "notes": "*suns, suņa*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-03",
           "meaning": "work; job",
-          "example": "Mans darbs sākas astoņos.",
+          "example": "Man šodien ir daudz darba.",
           "notes": "*darbs, darba*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-04",
@@ -1483,39 +1171,39 @@
           "example": "Ārsts strādā slimnīcā.",
           "notes": "*ārsts, ārsta*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-05",
           "meaning": "night",
-          "example": "Nakts bija auksta.",
+          "example": "Nakts bija ļoti klusa.",
           "notes": "*nakts*, feminine",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-06",
-          "meaning": "to go",
-          "example": "Es eju uz veikalu.",
+          "meaning": "to go; to walk",
+          "example": "Es gribu iet mājās.",
           "notes": "*iet · eju · gāju*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-07",
           "meaning": "to be",
-          "example": "Es gribu būt ārsts.",
+          "example": "Es vēlos būt ārsts.",
           "notes": "*būt · esmu · biju*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-08",
           "meaning": "to live",
-          "example": "Es dzīvoju Rīgā.",
+          "example": "Es gribu dzīvot Latvijā.",
           "notes": "*dzīvot · dzīvoju · dzīvoju*",
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         },
         {
           "id": "lv-en-09",
@@ -1523,7 +1211,7 @@
           "example": null,
           "notes": null,
           "pronunciation": null,
-          "language": "lv"
+          "language": null
         }
       ]
     },
@@ -1545,8 +1233,8 @@
       "reply": [
         {
           "id": "lt-en-01",
-          "meaning": "man; husband",
-          "example": "Tai mano vyras.",
+          "meaning": "man",
+          "example": "Tas vyras dirba ligoninėje.",
           "notes": "*vyras · vyro*",
           "pronunciation": "výras",
           "language": null
@@ -1554,7 +1242,7 @@
         {
           "id": "lt-en-02",
           "meaning": "language; speech",
-          "example": "Lietuvių kalba yra graži.",
+          "example": "Lietuvių kalba man patinka.",
           "notes": "*kalba · kalbos*",
           "pronunciation": "kalbà",
           "language": null
@@ -1562,23 +1250,23 @@
         {
           "id": "lt-en-03",
           "meaning": "water",
-          "example": "Vanduo yra šaltas.",
-          "notes": "*vanduo · vandens*",
+          "example": "Geriu šaltą vandenį.",
+          "notes": "*vanduo · vandens* (masculine)",
           "pronunciation": "vanduõ",
           "language": null
         },
         {
           "id": "lt-en-04",
           "meaning": "bread",
-          "example": "Duona yra ant stalo.",
+          "example": "Perku šviežios duonos.",
           "notes": "*duona · duonos*",
           "pronunciation": "duonà",
           "language": null
         },
         {
           "id": "lt-en-05",
-          "meaning": "city; town",
-          "example": "Gyvenu mieste.",
+          "meaning": "city",
+          "example": "Kaunas yra didelis miestas.",
           "notes": "*miestas · miesto*",
           "pronunciation": "miẽstas",
           "language": null
@@ -1586,7 +1274,7 @@
         {
           "id": "lt-en-06",
           "meaning": "work; job",
-          "example": "Mano darbas įdomus.",
+          "example": "Mano darbas prasideda aštuntą.",
           "notes": "*darbas · darbo*",
           "pronunciation": "dárbas",
           "language": null
@@ -1601,8 +1289,8 @@
         },
         {
           "id": "lt-en-08",
-          "meaning": "to go; to walk",
-          "example": "Noriu eiti namo.",
+          "meaning": "to go",
+          "example": "Aš einu į parduotuvę.",
           "notes": "*eiti · eina · ėjo*",
           "pronunciation": "eĩti",
           "language": null
@@ -1610,9 +1298,9 @@
         {
           "id": "lt-en-09",
           "meaning": "to live",
-          "example": "Aš gyvenu Vilniuje.",
+          "example": "Jie gyvena Vilniuje.",
           "notes": "*gyventi · gyvena · gyveno*",
-          "pronunciation": "gyvénti",
+          "pronunciation": "gyvènti",
           "language": null
         },
         {
@@ -1642,15 +1330,15 @@
         {
           "id": "nb-en-01",
           "meaning": "book",
-          "example": "Jeg leser en bok hver kveld.",
-          "notes": "en bok, boken, bøker",
+          "example": "Jeg leser en bok.",
+          "notes": "en bok, boka, bøker",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "nb-en-02",
           "meaning": "man",
-          "example": "Mannen venter på bussen.",
+          "example": "Han er en hyggelig mann.",
           "notes": "en mann, mannen, menn",
           "pronunciation": null,
           "language": null
@@ -1658,7 +1346,7 @@
         {
           "id": "nb-en-03",
           "meaning": "child",
-          "example": "Barnet leker i hagen.",
+          "example": "Barnet leker ute.",
           "notes": "et barn, barnet, barn",
           "pronunciation": null,
           "language": null
@@ -1666,7 +1354,7 @@
         {
           "id": "nb-en-04",
           "meaning": "doctor",
-          "example": "Legen kommer snart.",
+          "example": "Jeg må snakke med legen.",
           "notes": "en lege, legen, leger",
           "pronunciation": null,
           "language": null
@@ -1674,7 +1362,7 @@
         {
           "id": "nb-en-05",
           "meaning": "to write",
-          "example": "Hun skriver et brev.",
+          "example": "Jeg liker å skrive brev.",
           "notes": "skrive · skriver · skrev · har skrevet",
           "pronunciation": null,
           "language": null
@@ -1682,15 +1370,15 @@
         {
           "id": "nb-en-06",
           "meaning": "to go; to walk",
-          "example": "Vi går hjem nå.",
+          "example": "Vi går til skolen hver dag.",
           "notes": "gå · går · gikk · har gått",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "nb-en-07",
-          "meaning": "work; labor",
-          "example": "Han har mye arbeid i dag.",
+          "meaning": "work",
+          "example": "Hun har mye arbeid i dag.",
           "notes": "et arbeid, arbeidet, arbeider",
           "pronunciation": null,
           "language": null
@@ -1722,7 +1410,7 @@
         {
           "id": "nn-en-01",
           "meaning": "horse",
-          "example": "Hesten står på marka.",
+          "example": "Hesten spring over marka.",
           "notes": "*ein hest, hesten, hestar*",
           "pronunciation": null,
           "language": null
@@ -1746,7 +1434,7 @@
         {
           "id": "nn-en-04",
           "meaning": "week",
-          "example": "Eg reiser neste veke.",
+          "example": "Eg kjem tilbake neste veke.",
           "notes": "*ei veke, veka, veker*",
           "pronunciation": null,
           "language": null
@@ -1754,7 +1442,7 @@
         {
           "id": "nn-en-05",
           "meaning": "doctor",
-          "example": "Lækjaren arbeider på sjukehuset.",
+          "example": "Lækjaren snakka med pasienten.",
           "notes": "*ein lækjar, lækjaren, lækjarar*",
           "pronunciation": null,
           "language": null
@@ -1804,47 +1492,47 @@
         {
           "id": "da-en-01",
           "meaning": "book",
-          "example": "Jeg læser en bog.",
-          "notes": "*en bog, bogen, bøger*",
+          "example": "Jeg læser en bog hver aften.",
+          "notes": "*en bog · bogen · bøger*",
           "pronunciation": "ˈbɔˀw",
           "language": null
         },
         {
           "id": "da-en-02",
           "meaning": "child",
-          "example": "Barnet leger.",
-          "notes": "*et barn, barnet, børn*",
+          "example": "Barnet leger i haven.",
+          "notes": "*et barn · barnet · børn*",
           "pronunciation": "ˈbɑːnˀ",
           "language": null
         },
         {
           "id": "da-en-03",
-          "meaning": "man",
+          "meaning": "man; husband",
           "example": "Manden arbejder på kontoret.",
-          "notes": "*en mand, manden, mænd*",
+          "notes": "*en mand · manden · mænd*",
           "pronunciation": "ˈmanˀ",
           "language": null
         },
         {
           "id": "da-en-04",
           "meaning": "woman",
-          "example": "Kvinden bor i København.",
-          "notes": "*en kvinde, kvinden, kvinder*",
+          "example": "Kvinden drikker kaffe.",
+          "notes": "*en kvinde · kvinden · kvinder*",
           "pronunciation": "ˈkvenə",
           "language": null
         },
         {
           "id": "da-en-05",
           "meaning": "doctor",
-          "example": "Hun er læge.",
-          "notes": "*en læge, lægen, læger*",
+          "example": "Jeg skal til lægen i morgen.",
+          "notes": "*en læge · lægen · læger*",
           "pronunciation": "ˈlɛːjə",
           "language": null
         },
         {
           "id": "da-en-06",
           "meaning": "to write",
-          "example": "Jeg skriver et brev.",
+          "example": "Hun skriver et brev til sin ven.",
           "notes": "*skrive · skriver · skrev · har skrevet*",
           "pronunciation": "ˈsgʁiːvə",
           "language": null
@@ -1852,9 +1540,9 @@
         {
           "id": "da-en-07",
           "meaning": "to walk; to go",
-          "example": "Vi går hjem nu.",
-          "notes": "*gå · går · gik · har gået*",
-          "pronunciation": "ˈgɔˀ",
+          "example": "Vi går en tur efter aftensmaden.",
+          "notes": "*gå · går · gik · er gået*",
+          "pronunciation": "ˈɡɔˀ",
           "language": null
         },
         {
@@ -1868,16 +1556,16 @@
         {
           "id": "da-en-09",
           "meaning": "dog",
-          "example": "Hunden sover på sofaen.",
-          "notes": "*en hund, hunden, hunde*",
+          "example": "Hunden sover under bordet.",
+          "notes": "*en hund · hunden · hunde*",
           "pronunciation": "ˈhunˀ",
           "language": null
         },
         {
           "id": "da-en-10",
           "meaning": "food; meal",
-          "example": "Jeg laver mad hver aften.",
-          "notes": "*en mad, maden, madder*",
+          "example": "Vi laver mad sammen i aften.",
+          "notes": "*en mad · maden · madder*",
           "pronunciation": "ˈmæˀð",
           "language": null
         }
@@ -1894,17 +1582,17 @@
         {
           "id": "da-en-11",
           "meaning": "street",
-          "example": "Gaden er meget smal.",
-          "notes": "*en gade, gaden, gader*",
+          "example": "Der er mange butikker på denne gade.",
+          "notes": "- *en gade, gaden, gader*",
           "pronunciation": "ˈɡæːðə",
           "language": null
         },
         {
           "id": "da-en-12",
           "meaning": "table",
-          "example": "Bogen ligger på bordet.",
-          "notes": "*et bord, bordet, borde*",
-          "pronunciation": "ˈboɐ̯ˀ",
+          "example": "Maden står på bordet.",
+          "notes": "- *et bord, bordet, borde*",
+          "pronunciation": "ˈbɔˀɐ",
           "language": null
         }
       ]
@@ -1926,7 +1614,7 @@
         {
           "id": "nl-en-01",
           "meaning": "book",
-          "example": "Ik lees een boek voor het slapen.",
+          "example": "Ik lees een boek.",
           "notes": "*het boek, boeken*",
           "pronunciation": null,
           "language": null
@@ -1942,15 +1630,15 @@
         {
           "id": "nl-en-03",
           "meaning": "child",
-          "example": "Het kind speelt buiten.",
+          "example": "Het kind speelt in de tuin.",
           "notes": "*het kind, kinderen*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "nl-en-04",
-          "meaning": "general practitioner",
-          "example": "Ik maak een afspraak bij de huisarts.",
+          "meaning": "family doctor",
+          "example": "Ik bel de huisarts.",
           "notes": "*de huisarts, huisartsen*",
           "pronunciation": null,
           "language": null
@@ -1958,7 +1646,7 @@
         {
           "id": "nl-en-05",
           "meaning": "to go",
-          "example": "Wij gaan morgen naar de markt.",
+          "example": "We gaan morgen naar het strand.",
           "notes": "*gaan · ging · is gegaan*",
           "pronunciation": null,
           "language": null
@@ -1966,22 +1654,22 @@
         {
           "id": "nl-en-06",
           "meaning": "to write",
-          "example": "Ik schrijf een brief aan mijn moeder.",
-          "notes": "*schrijven · schreef · geschreven*",
+          "example": "Ik schrijf elke week een brief.",
+          "notes": "*schrijven · schreef · heeft geschreven*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "nl-en-07",
-          "meaning": "to arrange to meet",
-          "example": "We spreken om zes uur af.",
-          "notes": "*af|spreken · sprak af · afgesproken*",
+          "meaning": "to arrange to meet; to make an appointment",
+          "example": "We spreken morgen om tien uur af.",
+          "notes": "*af|spreken · sprak af · heeft afgesproken*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "nl-en-08",
-          "meaning": "Where is the station?",
+          "meaning": "Where is the train station?",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2008,24 +1696,24 @@
         {
           "id": "sv-en-01",
           "meaning": "book",
-          "example": "Jag läser en bok på tåget.",
-          "notes": "*en bok, boken, böcker*",
+          "example": "Jag läser en bok.",
+          "notes": "- *en bok · boken · böcker*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-02",
           "meaning": "house",
-          "example": "De bor i ett litet hus.",
-          "notes": "*ett hus, huset, hus*",
+          "example": "De bor i ett stort hus.",
+          "notes": "- *ett hus · huset · hus*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-03",
-          "meaning": "man; husband",
-          "example": "En man väntar utanför.",
-          "notes": "*en man, mannen, män*",
+          "meaning": "man",
+          "example": "Mannen bor här.",
+          "notes": "- *en man · mannen · män*",
           "pronunciation": null,
           "language": null
         },
@@ -2033,47 +1721,47 @@
           "id": "sv-en-04",
           "meaning": "child",
           "example": "Barnet leker i trädgården.",
-          "notes": "*ett barn, barnet, barn*",
+          "notes": "- *ett barn · barnet · barn*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-05",
           "meaning": null,
-          "example": "Anden vakar över skogen.",
-          "notes": "Accent 2; accent 1 means duck.",
+          "example": "Anden flög genom väggen.",
+          "notes": "- *en ande · anden · andar* (accent 2); *anden* (accent 1) means the duck",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-06",
           "meaning": null,
-          "example": "Anden simmar i dammen.",
-          "notes": "Accent 1; accent 2 means spirit.",
+          "example": "Anden simmar i sjön.",
+          "notes": "- *en and · anden · änder* (accent 1); *anden* (accent 2) means the spirit",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-07",
-          "meaning": "to go; walk",
-          "example": "Vi måste gå nu.",
-          "notes": "*gå · går · gick · gått*",
+          "meaning": "to go; to walk",
+          "example": "Vi går hem nu.",
+          "notes": "- *gå · går · gick · gått*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-08",
           "meaning": "to write",
-          "example": "Hon skriver ett brev till sin vän.",
-          "notes": "*skriva · skriver · skrev · skrivit*",
+          "example": "Hon skriver ett brev.",
+          "notes": "- *skriva · skriver · skrev · skrivit*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "sv-en-09",
           "meaning": "doctor",
-          "example": "Läkaren hjälper patienten.",
-          "notes": "*en läkare, läkaren, läkare*",
+          "example": "Jag ska träffa läkaren i dag.",
+          "notes": "- *en läkare · läkaren · läkare*",
           "pronunciation": null,
           "language": null
         },
@@ -2105,56 +1793,56 @@
       "reply": [
         {
           "id": "is-en-01",
-          "meaning": "house",
-          "example": "Þetta hús er gamalt.",
-          "notes": "neuter: *hús · húss · hús*",
+          "meaning": "house; home",
+          "example": "Húsið er mjög stórt.",
+          "notes": "neuter: *hús, húss, hús*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-02",
           "meaning": "woman; wife",
-          "example": "Kona bíður við dyrnar.",
-          "notes": "feminine: *kona · konu · konur*",
+          "example": "Konan býr í Reykjavík.",
+          "notes": "feminine: *kona, konu, konur*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-03",
           "meaning": "man; person",
-          "example": "Maður kemur inn í herbergið.",
-          "notes": "masculine: *maður · manns · menn*",
+          "example": "Maðurinn er heima.",
+          "notes": "masculine: *maður, manns, menn*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-04",
           "meaning": "book",
-          "example": "Ég les bók á hverju kvöldi.",
-          "notes": "feminine: *bók · bókar · bækur*",
+          "example": "Ég les bók.",
+          "notes": "feminine: *bók, bókar, bækur*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-05",
           "meaning": "day",
-          "example": "Það er fallegur dagur í dag.",
-          "notes": "masculine: *dagur · dags · dagar*",
+          "example": "Dagurinn er langur.",
+          "notes": "masculine: *dagur, dags, dagar*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-06",
           "meaning": "city",
-          "example": "Reykjavík er stærsta borg Íslands.",
-          "notes": "feminine: *borg · borgar · borgir*",
+          "example": "Borgin er mjög stór.",
+          "notes": "feminine: *borg, borgar, borgir*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "is-en-07",
           "meaning": "to come",
-          "example": "Ég kem heim klukkan sex.",
+          "example": "Hún kemur á morgun.",
           "notes": "*koma · kom · komið*",
           "pronunciation": null,
           "language": null
@@ -2162,7 +1850,7 @@
         {
           "id": "is-en-08",
           "meaning": "to walk; to go",
-          "example": "Við göngum heim eftir vinnu.",
+          "example": "Við göngum í skólann.",
           "notes": "*ganga · gekk · gengið*",
           "pronunciation": null,
           "language": null
@@ -2170,7 +1858,7 @@
         {
           "id": "is-en-09",
           "meaning": "to thank",
-          "example": "Ég vil þakka þér fyrir hjálpina.",
+          "example": "Ég vil þakka þér.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -2204,8 +1892,8 @@
         {
           "id": "pl-uk-01",
           "meaning": "забути",
-          "example": "Nie zapomnij o spotkaniu.",
-          "notes": "*zapominać / zapomnieć*",
+          "example": "Nie zapomnij o kluczach.",
+          "notes": "недоконаний / доконаний: *zapominać / zapomnieć*\n*zapomnieć* + родовий відмінок; *zapomnieć o* + місцевий відмінок",
           "pronunciation": null,
           "language": null
         },
@@ -2220,48 +1908,48 @@
         {
           "id": "pl-uk-03",
           "meaning": "килим",
-          "example": "Nowy dywan leży w salonie.",
-          "notes": "*dywan* — це килим, а не диван.",
+          "example": "Położyliśmy dywan w salonie.",
+          "notes": "Не диван: *dywan* — це килим.",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "pl-uk-04",
-          "meaning": "робити; виготовляти",
-          "example": "Co robisz po pracy?",
-          "notes": "*robić / zrobić*",
+          "meaning": "робити",
+          "example": "Co robisz wieczorem?",
+          "notes": "недоконаний / доконаний: *robić / zrobić*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "pl-uk-05",
           "meaning": "студент",
-          "example": "Student mieszka w akademiku.",
-          "notes": "- чол. особа: *student, studenta, studenci*",
+          "example": "Student uczy się do egzaminu.",
+          "notes": "род. одн. *studenta*, мн. чол.-особ. *studenci*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "pl-uk-06",
           "meaning": "поляк",
-          "example": "Ten Polak mówi po polsku.",
-          "notes": "- чол. особа: *Polak, Polaka, Polacy*",
+          "example": "Mój sąsiad jest Polakiem.",
+          "notes": "род. одн. *Polaka*, мн. чол.-особ. *Polacy*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "pl-uk-07",
           "meaning": "пес",
-          "example": "Pies śpi pod stołem.",
-          "notes": "- чол.: *pies, psa, psy*",
+          "example": "Ten pies lubi długie spacery.",
+          "notes": "род. одн. *psa*, мн. *psy*",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "pl-uk-08",
           "meaning": "чоловік",
-          "example": "Mój mąż gotuje kolację.",
-          "notes": "- чол.: *mąż, męża, mężowie*",
+          "example": "Jej mąż pracuje w domu.",
+          "notes": "род. одн. *męża*, мн. чол.-особ. *mężowie*",
           "pronunciation": null,
           "language": null
         },
@@ -2284,8 +1972,612 @@
       ]
     },
     {
+      "deck": "de-en-b1",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"de-en-b1\",\"name\":\"German B1 for the DTZ\",\"language\":\"de\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article. Don't repeat the article in the meaning.\\nnotes: Noun: the plural (*die Hunde*), if the term doesn't show it. Strong or irregular verb: infinitive · third person present if the vowel changes · past · perfect (*fahren · fährt · fuhr · ist gefahren*). Verb with a fixed preposition or case: give it (*warten auf* + accusative). Separable verb: mark the prefix (*an|rufen*).\\npronunciation: Leave pronunciation null, unless the word doesn't follow German spelling rules.\",\"samples\":[]}],\"cards\":[{\"id\":\"de-en-b1-01\",\"deck\":\"de-en-b1\",\"term\":\"der Tisch\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-02\",\"deck\":\"de-en-b1\",\"term\":\"die Hand\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-03\",\"deck\":\"de-en-b1\",\"term\":\"das Haus\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-04\",\"deck\":\"de-en-b1\",\"term\":\"der Arzt\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-05\",\"deck\":\"de-en-b1\",\"term\":\"gehen\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-06\",\"deck\":\"de-en-b1\",\"term\":\"einkaufen\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-07\",\"deck\":\"de-en-b1\",\"term\":\"warten\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"de-en-b1-08\",\"deck\":\"de-en-b1\",\"term\":\"Wo ist der Bahnhof?\",\"language\":\"de\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "de-en-b1-01",
+        "de-en-b1-02",
+        "de-en-b1-03",
+        "de-en-b1-04",
+        "de-en-b1-05",
+        "de-en-b1-06",
+        "de-en-b1-07",
+        "de-en-b1-08"
+      ],
+      "reply": [
+        {
+          "id": "de-en-b1-01",
+          "meaning": "table",
+          "example": "Der Tisch steht in der Küche.",
+          "notes": "- plural: *die Tische*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-02",
+          "meaning": "hand",
+          "example": "Meine Hand tut heute weh.",
+          "notes": "- plural: *die Hände*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-03",
+          "meaning": "house",
+          "example": "Das Haus ist sehr alt.",
+          "notes": "- plural: *die Häuser*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-04",
+          "meaning": "doctor",
+          "example": "Der Arzt kommt um neun Uhr.",
+          "notes": "- plural: *die Ärzte*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-05",
+          "meaning": "to go; to walk",
+          "example": "Wir gehen heute ins Kino.",
+          "notes": "*gehen · geht · ging · ist gegangen*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-06",
+          "meaning": "to shop; to buy groceries",
+          "example": "Ich kaufe heute im Supermarkt ein.",
+          "notes": "*ein|kaufen*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-07",
+          "meaning": "to wait",
+          "example": "Ich warte auf den Bus.",
+          "notes": "*warten auf* + accusative",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "de-en-b1-08",
+          "meaning": "Where is the train station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "fr-en-b1",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"fr-en-b1\",\"name\":\"French for the TCF\",\"language\":\"fr\",\"purpose\":\"language\",\"guide\":\"notes: Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Adjective: an irregular feminine or plural (*beau, belle, beaux*). Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.\\npronunciation: IPA, without slashes. In a phrase, mark each liaison with ‿ (les amis → lez‿ami). Not a respelling. For example: oiseau → wazo.\",\"samples\":[]}],\"cards\":[{\"id\":\"fr-en-b1-01\",\"deck\":\"fr-en-b1\",\"term\":\"beau\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-02\",\"deck\":\"fr-en-b1\",\"term\":\"vieux\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-03\",\"deck\":\"fr-en-b1\",\"term\":\"le cheval\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-04\",\"deck\":\"fr-en-b1\",\"term\":\"venir\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-05\",\"deck\":\"fr-en-b1\",\"term\":\"aller\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-06\",\"deck\":\"fr-en-b1\",\"term\":\"oiseau\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-07\",\"deck\":\"fr-en-b1\",\"term\":\"les amis\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"fr-en-b1-08\",\"deck\":\"fr-en-b1\",\"term\":\"Où est la gare ?\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "fr-en-b1-01",
+        "fr-en-b1-02",
+        "fr-en-b1-03",
+        "fr-en-b1-04",
+        "fr-en-b1-05",
+        "fr-en-b1-06",
+        "fr-en-b1-07",
+        "fr-en-b1-08"
+      ],
+      "reply": [
+        {
+          "id": "fr-en-b1-01",
+          "meaning": "beautiful; handsome",
+          "example": "C'est un beau jardin.",
+          "notes": "*beau, belle, beaux*",
+          "pronunciation": "bo",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-02",
+          "meaning": "old",
+          "example": "Mon grand-père est vieux.",
+          "notes": "*vieux, vieille, vieux*",
+          "pronunciation": "vjø",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-03",
+          "meaning": "horse",
+          "example": "Le cheval court dans le champ.",
+          "notes": "irregular plural: *chevaux*",
+          "pronunciation": "lə ʃəval",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-04",
+          "meaning": "to come",
+          "example": "Nous venons demain.",
+          "notes": "*venir*: *je viens*, *venu*; uses *être* in the *passé composé*",
+          "pronunciation": "və.niʁ",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-05",
+          "meaning": "to go",
+          "example": "Je vais au marché.",
+          "notes": "*aller*: *je vais*, *allé*; uses *être* in the *passé composé*",
+          "pronunciation": "a.le",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-06",
+          "meaning": "bird",
+          "example": "Un oiseau chante dans l'arbre.",
+          "notes": "masculine",
+          "pronunciation": "wa.zo",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-07",
+          "meaning": "the friends",
+          "example": "Les amis arrivent ce soir.",
+          "notes": null,
+          "pronunciation": "le.z‿a.mi",
+          "language": null
+        },
+        {
+          "id": "fr-en-b1-08",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": "u ɛ la ɡaʁ",
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "es-en-b1",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"es-en-b1\",\"name\":\"Spanish for the DELE\",\"language\":\"es\",\"purpose\":\"language\",\"guide\":\"example: Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).\\nnotes: Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).\\npronunciation: Spanish is read as it is written. Leave pronunciation null.\",\"samples\":[]}],\"cards\":[{\"id\":\"es-en-b1-01\",\"deck\":\"es-en-b1\",\"term\":\"poder\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-02\",\"deck\":\"es-en-b1\",\"term\":\"dormir\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-03\",\"deck\":\"es-en-b1\",\"term\":\"pedir\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-04\",\"deck\":\"es-en-b1\",\"term\":\"mano\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-05\",\"deck\":\"es-en-b1\",\"term\":\"árbol\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-06\",\"deck\":\"es-en-b1\",\"term\":\"niño\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-07\",\"deck\":\"es-en-b1\",\"term\":\"café\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"es-en-b1-08\",\"deck\":\"es-en-b1\",\"term\":\"¿Dónde está la estación?\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "es-en-b1-01",
+        "es-en-b1-02",
+        "es-en-b1-03",
+        "es-en-b1-04",
+        "es-en-b1-05",
+        "es-en-b1-06",
+        "es-en-b1-07",
+        "es-en-b1-08"
+      ],
+      "reply": [
+        {
+          "id": "es-en-b1-01",
+          "meaning": "to be able to; can",
+          "example": "Puedo ayudarte con la mudanza.",
+          "notes": "*poder: puedo*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-02",
+          "meaning": "to sleep",
+          "example": "Duermo ocho horas cada noche.",
+          "notes": "*dormir: duermo*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-03",
+          "meaning": "to ask for; to request",
+          "example": "Pido una ensalada para compartir.",
+          "notes": "*pedir: pido*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-04",
+          "meaning": "hand",
+          "example": "La mano me duele un poco.",
+          "notes": "*la mano*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-05",
+          "meaning": "tree",
+          "example": "El árbol da mucha sombra.",
+          "notes": "*el árbol*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-06",
+          "meaning": "boy; child",
+          "example": "El niño juega en el parque.",
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-07",
+          "meaning": "coffee; coffee shop",
+          "example": "Tomamos un café después de comer.",
+          "notes": "*el café*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "es-en-b1-08",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "it-en-b1",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"it-en-b1\",\"name\":\"Italian for the CILS B1\",\"language\":\"it\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article, to show gender. Don't repeat the article in the meaning.\\nexample: Keep every written accent (*città*, *perché*).\\nnotes: Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.\\npronunciation: Leave pronunciation null, unless the stress isn't where the spelling suggests.\",\"samples\":[]}],\"cards\":[{\"id\":\"it-en-b1-01\",\"deck\":\"it-en-b1\",\"term\":\"l'uovo\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-02\",\"deck\":\"it-en-b1\",\"term\":\"il braccio\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-03\",\"deck\":\"it-en-b1\",\"term\":\"andare\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-04\",\"deck\":\"it-en-b1\",\"term\":\"venire\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-05\",\"deck\":\"it-en-b1\",\"term\":\"città\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-06\",\"deck\":\"it-en-b1\",\"term\":\"perché\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"it-en-b1-07\",\"deck\":\"it-en-b1\",\"term\":\"Dov'è la stazione?\",\"language\":\"it\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "it-en-b1-01",
+        "it-en-b1-02",
+        "it-en-b1-03",
+        "it-en-b1-04",
+        "it-en-b1-05",
+        "it-en-b1-06",
+        "it-en-b1-07"
+      ],
+      "reply": [
+        {
+          "id": "it-en-b1-01",
+          "meaning": "egg",
+          "example": "Ho mangiato un uovo a colazione.",
+          "notes": "- plural: *le uova*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-02",
+          "meaning": "arm",
+          "example": "Mi fa male il braccio.",
+          "notes": "- plural: *le braccia*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-03",
+          "meaning": "to go",
+          "example": "Vado al lavoro a piedi.",
+          "notes": "- irregular forms: *vado, andato*; uses *essere*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-04",
+          "meaning": "to come",
+          "example": "Vengo a casa tua domani.",
+          "notes": "- irregular forms: *vengo, venuto*; uses *essere*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-05",
+          "meaning": "city",
+          "example": "La città è molto tranquilla.",
+          "notes": "- plural: *le città*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-06",
+          "meaning": "why; because",
+          "example": "Resto a casa perché piove.",
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "it-en-b1-07",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "pt-br-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"pt-br-en\",\"name\":\"Brazilian Portuguese A2\",\"language\":\"pt-BR\",\"purpose\":\"language\",\"guide\":\"notes: Verb: its irregular forms (*fazer: faço, fiz, feito*). Noun: the gender if the ending doesn't show it (*o mapa*). A word Brazil and Portugal say differently: give the other one (*ônibus*, Brazil; *autocarro*, Portugal). Write each in the spelling of the deck's variety.\\npronunciation: IPA as the word is said in Brazil, without slashes. Not a respelling. For example: obrigado → obɾiˈɡadu.\",\"samples\":[]}],\"cards\":[{\"id\":\"pt-br-en-01\",\"deck\":\"pt-br-en\",\"term\":\"tia\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-02\",\"deck\":\"pt-br-en\",\"term\":\"cidade\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-03\",\"deck\":\"pt-br-en\",\"term\":\"leite\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-04\",\"deck\":\"pt-br-en\",\"term\":\"ônibus\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-05\",\"deck\":\"pt-br-en\",\"term\":\"trem\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-06\",\"deck\":\"pt-br-en\",\"term\":\"fazer\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-br-en-07\",\"deck\":\"pt-br-en\",\"term\":\"Onde fica a estação?\",\"language\":\"pt-BR\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "pt-br-en-01",
+        "pt-br-en-02",
+        "pt-br-en-03",
+        "pt-br-en-04",
+        "pt-br-en-05",
+        "pt-br-en-06",
+        "pt-br-en-07"
+      ],
+      "reply": [
+        {
+          "id": "pt-br-en-01",
+          "meaning": "aunt",
+          "example": "Minha tia mora perto.",
+          "notes": null,
+          "pronunciation": "ˈtʃiɐ",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-02",
+          "meaning": "city",
+          "example": "A cidade é muito bonita.",
+          "notes": "*a cidade*",
+          "pronunciation": "sidaˈdʒi",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-03",
+          "meaning": "milk",
+          "example": "Eu bebo leite todas as manhãs.",
+          "notes": "*o leite*",
+          "pronunciation": "ˈlejtʃi",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-04",
+          "meaning": "bus",
+          "example": "O ônibus está atrasado.",
+          "notes": "- *o ônibus*\n- Portugal: *autocarro*",
+          "pronunciation": "ˈõnibus",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-05",
+          "meaning": "train",
+          "example": "O trem chega às oito.",
+          "notes": "- *o trem*\n- Portugal: *comboio*",
+          "pronunciation": "tɾẽj̃",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-06",
+          "meaning": "to do; to make",
+          "example": "Vou fazer o jantar hoje.",
+          "notes": "*fazer: faço, fiz, feito*",
+          "pronunciation": "faˈzeɾ",
+          "language": null
+        },
+        {
+          "id": "pt-br-en-07",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": "ˈõdʒi ˈfikɐ a estaˈsɐ̃w̃",
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "pt-pt-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"pt-pt-en\",\"name\":\"European Portuguese for the CIPLE\",\"language\":\"pt-PT\",\"purpose\":\"language\",\"guide\":\"notes: Verb: its irregular forms (*fazer: faço, fiz, feito*). Noun: the gender if the ending doesn't show it (*o mapa*). A word Brazil and Portugal say differently: give the other one (*ônibus*, Brazil; *autocarro*, Portugal). Write each in the spelling of the deck's variety.\\npronunciation: IPA as the word is said in Portugal, without slashes; a pt-BR deck is said as in Brazil. Not a respelling. For example: obrigado → ɔbɾiˈɣaðu.\",\"samples\":[]}],\"cards\":[{\"id\":\"pt-pt-en-01\",\"deck\":\"pt-pt-en\",\"term\":\"tia\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-02\",\"deck\":\"pt-pt-en\",\"term\":\"cidade\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-03\",\"deck\":\"pt-pt-en\",\"term\":\"leite\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-04\",\"deck\":\"pt-pt-en\",\"term\":\"autocarro\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-05\",\"deck\":\"pt-pt-en\",\"term\":\"comboio\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-06\",\"deck\":\"pt-pt-en\",\"term\":\"fazer\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"pt-pt-en-07\",\"deck\":\"pt-pt-en\",\"term\":\"Onde fica a estação?\",\"language\":\"pt-PT\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "pt-pt-en-01",
+        "pt-pt-en-02",
+        "pt-pt-en-03",
+        "pt-pt-en-04",
+        "pt-pt-en-05",
+        "pt-pt-en-06",
+        "pt-pt-en-07"
+      ],
+      "reply": [
+        {
+          "id": "pt-pt-en-01",
+          "meaning": "aunt",
+          "example": "A minha tia mora em Lisboa.",
+          "notes": null,
+          "pronunciation": "ˈtiɐ",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-02",
+          "meaning": "city",
+          "example": "A cidade fica perto do mar.",
+          "notes": "*a cidade*",
+          "pronunciation": "siˈðaðɨ",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-03",
+          "meaning": "milk",
+          "example": "Bebo leite ao pequeno-almoço.",
+          "notes": "*o leite*",
+          "pronunciation": "ˈlɐjtɨ",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-04",
+          "meaning": "bus",
+          "example": "O autocarro passa às oito.",
+          "notes": "*ônibus* (Brazil)",
+          "pronunciation": "ɐwtuˈkaʁu",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-05",
+          "meaning": "train",
+          "example": "O comboio chega daqui a dez minutos.",
+          "notes": "*trem* (Brazil)",
+          "pronunciation": "kõˈboj.u",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-06",
+          "meaning": "to do; to make",
+          "example": "Vou fazer compras depois do trabalho.",
+          "notes": "*fazer: faço, fiz, feito*",
+          "pronunciation": "fɐˈzeɾ",
+          "language": null
+        },
+        {
+          "id": "pt-pt-en-07",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": "ˈõdɨ ˈfikɐ ɐʃtɐˈsɐ̃w",
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "hu-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"hu-en\",\"name\":\"Hungarian A2\",\"language\":\"hu\",\"purpose\":\"language\",\"guide\":\"notes: Noun: an irregular plural or accusative (*ló, lovak, lovat*). Verb: the third person singular present, indefinite and definite (*olvas · olvassa*), and say so if it is an -ik verb (*eszik*). Suffixes follow vowel harmony: give the form this word takes where it is not the usual one (*tűz → tüzet*). Keep long vowels (á é í ó ö ő ú ü ű) as written.\\npronunciation: Hungarian is read as it is written, stressed on the first syllable. Leave pronunciation null.\",\"samples\":[]}],\"cards\":[{\"id\":\"hu-en-01\",\"deck\":\"hu-en\",\"term\":\"ló\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-02\",\"deck\":\"hu-en\",\"term\":\"tűz\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-03\",\"deck\":\"hu-en\",\"term\":\"kenyér\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-04\",\"deck\":\"hu-en\",\"term\":\"olvas\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-05\",\"deck\":\"hu-en\",\"term\":\"kér\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-06\",\"deck\":\"hu-en\",\"term\":\"eszik\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-07\",\"deck\":\"hu-en\",\"term\":\"ház\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"hu-en-08\",\"deck\":\"hu-en\",\"term\":\"Hol van az állomás?\",\"language\":\"hu\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "hu-en-01",
+        "hu-en-02",
+        "hu-en-03",
+        "hu-en-04",
+        "hu-en-05",
+        "hu-en-06",
+        "hu-en-07",
+        "hu-en-08"
+      ],
+      "reply": [
+        {
+          "id": "hu-en-01",
+          "meaning": "horse",
+          "example": "A ló gyorsan fut.",
+          "notes": "- plural: *lovak*\n- accusative: *lovat*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-02",
+          "meaning": "fire",
+          "example": "A tűz meleg és fényes.",
+          "notes": "- plural: *tüzek*\n- accusative: *tüzet*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-03",
+          "meaning": "bread",
+          "example": "Friss kenyeret eszem reggelire.",
+          "notes": "- plural: *kenyerek*\n- accusative: *kenyeret*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-04",
+          "meaning": "to read",
+          "example": "Anna minden este könyvet olvas.",
+          "notes": "*olvas · olvassa*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-05",
+          "meaning": "to ask for; to request",
+          "example": "Egy kávét kérek.",
+          "notes": "*kér · kéri*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-06",
+          "meaning": "to eat",
+          "example": "A fiú almát eszik.",
+          "notes": "*eszik · eszi*; an -ik verb",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-07",
+          "meaning": "house",
+          "example": "A ház nagy és szép.",
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "hu-en-08",
+          "meaning": "Where is the station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "cs-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"cs-en\",\"name\":\"Czech for permanent residence\",\"language\":\"cs\",\"purpose\":\"language\",\"guide\":\"notes: Verb: the aspect pair, imperfective / perfective (*dělat / udělat*). Noun: the gender if the ending doesn't show it, and an irregular genitive or plural (*člověk, lidé*; *dům, domu*). Keep háček and čárka, and ů apart from ú, as written.\\npronunciation: Czech is read as it is written, stressed on the first syllable. Leave pronunciation null.\",\"samples\":[]}],\"cards\":[{\"id\":\"cs-en-01\",\"deck\":\"cs-en\",\"term\":\"dělat\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-02\",\"deck\":\"cs-en\",\"term\":\"psát\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-03\",\"deck\":\"cs-en\",\"term\":\"člověk\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-04\",\"deck\":\"cs-en\",\"term\":\"dům\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-05\",\"deck\":\"cs-en\",\"term\":\"kůň\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-06\",\"deck\":\"cs-en\",\"term\":\"úkol\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"cs-en-07\",\"deck\":\"cs-en\",\"term\":\"Kde je nádraží?\",\"language\":\"cs\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "cs-en-01",
+        "cs-en-02",
+        "cs-en-03",
+        "cs-en-04",
+        "cs-en-05",
+        "cs-en-06",
+        "cs-en-07"
+      ],
+      "reply": [
+        {
+          "id": "cs-en-01",
+          "meaning": "to do; to make",
+          "example": "Co budeš dnes dělat?",
+          "notes": "- imperfective / perfective: *dělat / udělat*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-02",
+          "meaning": "to write",
+          "example": "Píšu dopis kamarádovi.",
+          "notes": "- imperfective / perfective: *psát / napsat*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-03",
+          "meaning": "person; human being",
+          "example": "Ten člověk čeká na autobus.",
+          "notes": "- plural: *lidé*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-04",
+          "meaning": "house; building",
+          "example": "Bydlíme v novém domě.",
+          "notes": "- genitive: *domu*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-05",
+          "meaning": "horse",
+          "example": "Kůň běží po louce.",
+          "notes": "- genitive: *koně*",
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-06",
+          "meaning": "task; assignment",
+          "example": "Musím dokončit úkol do večera.",
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        },
+        {
+          "id": "cs-en-07",
+          "meaning": "Where is the train station?",
+          "example": null,
+          "notes": null,
+          "pronunciation": null,
+          "language": null
+        }
+      ]
+    },
+    {
       "deck": "es-uk",
-      "input": "{\"meaningLanguage\":\"uk\",\"decks\":[{\"id\":\"es-uk\",\"name\":\"Іспанська A1\",\"language\":\"es\",\"purpose\":\"language\",\"guide\":\"notes: Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).\\npronunciation: Spanish is read as it is written. Leave pronunciation null.\",\"samples\":[]}],\"cards\":[{\"id\":\"es-uk-01\",\"deck\":\"es-uk\",\"term\":\"la mano\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"es-uk-02\",\"deck\":\"es-uk\",\"term\":\"tener\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]}]}",
+      "input": "{\"meaningLanguage\":\"uk\",\"decks\":[{\"id\":\"es-uk\",\"name\":\"Іспанська A1\",\"language\":\"es\",\"purpose\":\"language\",\"guide\":\"example: Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).\\nnotes: Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).\\npronunciation: Spanish is read as it is written. Leave pronunciation null.\",\"samples\":[]}],\"cards\":[{\"id\":\"es-uk-01\",\"deck\":\"es-uk\",\"term\":\"la mano\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"es-uk-02\",\"deck\":\"es-uk\",\"term\":\"tener\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]}]}",
       "cases": [
         "es-uk-01",
         "es-uk-02"
@@ -2337,7 +2629,7 @@
     },
     {
       "deck": "es-en-pattern",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"es-en-pattern\",\"name\":\"Spanish verbs\",\"language\":\"es\",\"purpose\":\"language\",\"guide\":\"notes: Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).\\npronunciation: Spanish is read as it is written. Leave pronunciation null.\",\"samples\":[{\"term\":\"hablar\",\"meaning\":\"to speak\",\"example\":\"Hablo español en casa.\"},{\"term\":\"vivir\",\"meaning\":\"to live\",\"example\":\"Vivimos cerca del mar.\"},{\"term\":\"beber\",\"meaning\":\"to drink\",\"example\":\"Bebo café por la mañana.\"}]}],\"cards\":[{\"id\":\"es-en-01\",\"deck\":\"es-en-pattern\",\"term\":\"comer\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"es-en-02\",\"deck\":\"es-en-pattern\",\"term\":\"escribir\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]}]}",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"es-en-pattern\",\"name\":\"Spanish verbs\",\"language\":\"es\",\"purpose\":\"language\",\"guide\":\"example: Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).\\nnotes: Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).\\npronunciation: Spanish is read as it is written. Leave pronunciation null.\",\"samples\":[{\"term\":\"hablar\",\"meaning\":\"to speak\",\"example\":\"Hablo español en casa.\"},{\"term\":\"vivir\",\"meaning\":\"to live\",\"example\":\"Vivimos cerca del mar.\"},{\"term\":\"beber\",\"meaning\":\"to drink\",\"example\":\"Bebo café por la mañana.\"}]}],\"cards\":[{\"id\":\"es-en-01\",\"deck\":\"es-en-pattern\",\"term\":\"comer\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"es-en-02\",\"deck\":\"es-en-pattern\",\"term\":\"escribir\",\"language\":\"es\",\"mayFill\":[\"meaning\",\"example\"]}]}",
       "cases": [
         "es-en-01",
         "es-en-02"
@@ -2363,7 +2655,7 @@
     },
     {
       "deck": "fr-en-medical",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"fr-en-medical\",\"name\":\"Français médical\",\"language\":\"fr\",\"purpose\":\"language\",\"guide\":\"notes: Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.\\npronunciation: IPA, because French spelling doesn't show how a word sounds.\",\"instructions\":\"French for nurses on a hospital ward. Always give the clinical sense, never the everyday one. No example sentences.\",\"samples\":[]}],\"cards\":[{\"id\":\"fr-en-01\",\"deck\":\"fr-en-medical\",\"term\":\"la tension\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"fr-en-02\",\"deck\":\"fr-en-medical\",\"term\":\"le pouls\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"fr-en-03\",\"deck\":\"fr-en-medical\",\"term\":\"une piqûre\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]}]}",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"fr-en-medical\",\"name\":\"Français médical\",\"language\":\"fr\",\"purpose\":\"language\",\"guide\":\"notes: Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Adjective: an irregular feminine or plural (*beau, belle, beaux*). Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.\\npronunciation: IPA, without slashes. In a phrase, mark each liaison with ‿ (les amis → lez‿ami). Not a respelling. For example: oiseau → wazo.\",\"instructions\":\"French for nurses on a hospital ward. Always give the clinical sense, never the everyday one. No example sentences.\",\"samples\":[]}],\"cards\":[{\"id\":\"fr-en-01\",\"deck\":\"fr-en-medical\",\"term\":\"la tension\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"fr-en-02\",\"deck\":\"fr-en-medical\",\"term\":\"le pouls\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]},{\"id\":\"fr-en-03\",\"deck\":\"fr-en-medical\",\"term\":\"une piqûre\",\"language\":\"fr\",\"mayFill\":[\"meaning\",\"example\"]}]}",
       "cases": [
         "fr-en-01",
         "fr-en-02",
@@ -2407,7 +2699,7 @@
         {
           "id": "de-ov-01",
           "meaning": "dog",
-          "example": "Der Hund spielt im Garten.",
+          "example": "Der Hund schläft auf dem Sofa.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -2415,7 +2707,7 @@
         {
           "id": "de-ov-02",
           "meaning": "cat",
-          "example": "Die Katze schläft auf dem Sofa.",
+          "example": "Die Katze spielt mit einem Ball.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -2432,7 +2724,7 @@
       "reply": [
         {
           "id": "bio-01",
-          "meaning": "organelle that produces most of a cell’s ATP",
+          "meaning": "organelle where most cellular ATP is produced",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2440,7 +2732,7 @@
         },
         {
           "id": "bio-02",
-          "meaning": "movement of water across a membrane toward higher solute concentration",
+          "meaning": "water moving across a selectively permeable membrane toward higher solute concentration",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2458,7 +2750,7 @@
       "reply": [
         {
           "id": "exam-01",
-          "meaning": "The first ten amendments to the U.S. Constitution",
+          "meaning": "the first ten amendments to the U.S. Constitution, protecting individual freedoms",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2466,7 +2758,7 @@
         },
         {
           "id": "exam-02",
-          "meaning": "The group of electors that formally elects the U.S. president",
+          "meaning": "the body of electors that formally chooses the U.S. president",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2492,7 +2784,7 @@
         },
         {
           "id": "exam-de-02",
-          "meaning": "конституція Федеративної Республіки Німеччина",
+          "meaning": "основний закон і конституція Німеччини",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -2502,7 +2794,7 @@
     },
     {
       "deck": "lesson-meaning",
-      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"lesson-meaning\",\"name\":\"Italiano · Lezione 15\",\"language\":\"it\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article, to show gender. Don't repeat the article in the meaning.\\nnotes: Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.\\npronunciation: Leave pronunciation null, unless the stress isn't where the spelling suggests.\",\"samples\":[]}],\"cards\":[{\"id\":\"lm-01\",\"deck\":\"lesson-meaning\",\"term\":\"la stazione\",\"language\":\"it\",\"meaning\":\"the station\",\"mayFill\":[\"example\"]}]}",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"lesson-meaning\",\"name\":\"Italiano · Lezione 15\",\"language\":\"it\",\"purpose\":\"language\",\"guide\":\"meaning: The term for a noun has its article, to show gender. Don't repeat the article in the meaning.\\nexample: Keep every written accent (*città*, *perché*).\\nnotes: Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.\\npronunciation: Leave pronunciation null, unless the stress isn't where the spelling suggests.\",\"samples\":[]}],\"cards\":[{\"id\":\"lm-01\",\"deck\":\"lesson-meaning\",\"term\":\"la stazione\",\"language\":\"it\",\"meaning\":\"the station\",\"mayFill\":[\"example\"]}]}",
       "cases": [
         "lm-01"
       ],
@@ -2510,7 +2802,7 @@
         {
           "id": "lm-01",
           "meaning": null,
-          "example": "La stazione è vicina al centro.",
+          "example": "La stazione è vicina.",
           "notes": null,
           "pronunciation": null,
           "language": null

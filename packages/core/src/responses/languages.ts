@@ -3,7 +3,10 @@ import { OPEN } from "./common";
 
 export const LanguageOut = z
   .object({
-    tag: z.string().meta({ description: "The primary BCP 47 subtag, such as `ja`" }),
+    tag: z.string().meta({
+      description:
+        "The primary BCP 47 subtag, such as `ja`, or a language and region written apart, such as `pt-BR`",
+    }),
     name: z.string().meta({ description: "The language's English name" }),
     scripts: z.array(z.string()).meta({
       description:

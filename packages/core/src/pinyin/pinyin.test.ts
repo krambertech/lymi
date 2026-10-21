@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   formatPinyin,
   parsePinyin,
+  pinyinExampleSegments,
   pinyinKey,
   pinyinPairs,
   pinyinSyllables,
@@ -37,6 +38,8 @@ describe("toneMarks", () => {
   });
   it("marks an erhua syllable before its r", () => {
     expect(toneMarks("yi4 dian3r")).toBe("yì diǎnr");
+    expect(toneMarks("yi1 dian3 r5")).toBe("yī diǎn r");
+    expect(toneMarks("r5")).toBe("r5");
   });
   it("leaves text alone unless every digit ends a syllable", () => {
     expect(toneMarks("nǐ hǎo")).toBe("nǐ hǎo");
@@ -119,12 +122,13 @@ describe("pinyinKey", () => {
 });
 
 describe("pinyinPairs", () => {
-  it("pairs each character with its syllable, and an erhua character without its r", () => {
+  it("pairs each character with its syllable, an erhua character without its r, and 一 or 不 without a tone", () => {
     const pairs = (term: string, reading: string) =>
       pinyinPairs(pinyinTermReading(term, reading) ?? []);
     expect(pairs("银行", "yínháng")).toEqual(["pinyin:银[yín]", "pinyin:行[háng]"]);
     expect(pairs("不行", "bù xíng")).toContain("pinyin:行[xíng]");
-    expect(pairs("一点儿", "yì diǎnr")).toEqual(["pinyin:一[yì]", "pinyin:点[diǎn]"]);
+    expect(pairs("一点儿", "yì diǎnr")).toEqual(["pinyin:一[yi]", "pinyin:点[diǎn]"]);
+    expect(pairs("不是", "bù shì")).toEqual(pairs("不是", "bú shì"));
     expect(pairs("你好吗", "nǐ")).toEqual([]);
   });
 });
@@ -141,6 +145,19 @@ describe("inline pinyin", () => {
       expect(formatPinyin(parsePinyin(text))).toBe(text);
       expect(stripPinyin(text)).toBe(plain);
     }
+  });
+  it("splits a bracket into one run per character, in tone marks", () => {
+    expect(pinyinExampleSegments("我说你好[ni3 hao3]。")).toEqual([
+      { text: "我说" },
+      { text: "你", reading: "nǐ" },
+      { text: "好", reading: "hǎo" },
+      { text: "。" },
+    ]);
+    expect(pinyinExampleSegments("要一点儿[yìdiǎnr]")).toEqual([
+      { text: "要" },
+      { text: "一", reading: "yì" },
+      { text: "点儿", reading: "diǎnr" },
+    ]);
   });
   it("reads as many characters before a bracket as it has syllables", () => {
     expect(parsePinyin("我说你好[nǐ hǎo]")).toEqual([

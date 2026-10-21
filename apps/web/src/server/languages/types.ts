@@ -1,4 +1,4 @@
-import type { EnrichedField, SupportedTag } from "@lymi/core";
+import type { EnrichedField, RecordTag } from "@lymi/core";
 
 /**
  * How to write each field of a card in one language, as the enrichment guide says it. A language
@@ -10,7 +10,8 @@ export type FieldGuide = Partial<Record<"meaning" | "example" | "notes" | "pronu
 export type LanguageCheck = {
   field: EnrichedField;
   rule: string;
-  pass: (text: string) => boolean;
+  /** `card.example` is the learner's own example, which a reply may only add readings to. */
+  pass: (text: string, card: { term: string; example?: string | undefined }) => boolean;
 };
 
 /**
@@ -18,7 +19,7 @@ export type LanguageCheck = {
  * as per-deck or per-card input, so system prompts stay static and name no language.
  */
 export interface LanguagePrompts {
-  tag: SupportedTag;
+  tag: RecordTag;
   /** Enrichment: the deck's field guide, then one worked example in the system prompt's format. */
   enrich: { guide: FieldGuide; example: string };
   /** Adding cards from a lesson: what a reading the lesson prints looks like. */

@@ -258,9 +258,12 @@ function readingsDrawn(
 }
 
 /** How many readings the card's example draws, and how many the grader saw fade, when it says. */
-function fadedReadings(example: string | null, faded: number | undefined) {
+function fadedReadings(
+  card: { example: string | null; language: string | null },
+  faded: number | undefined,
+) {
   if (faded === undefined) return {};
-  const { readings } = exampleReadings(example);
+  const { readings } = exampleReadings(card.example, card.language);
   return readings ? { example_readings: readings, readings_faded: Math.min(faded, readings) } : {};
 }
 
@@ -407,7 +410,7 @@ export async function gradeCard(
       (termReading(row) ? draws.over : markedTerm(row) !== null && draws.inPlace)
         ? readingShown(key, state.state)
         : null,
-      fadedReadings(row.example, input.readingsFaded),
+      fadedReadings(row, input.readingsFaded),
     ),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });

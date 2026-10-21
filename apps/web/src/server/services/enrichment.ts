@@ -85,7 +85,8 @@ export function enrichmentWrite(
   card: Fillable,
   filled: Filled,
   allowed: readonly EnrichedField[] = ENRICHED_FIELDS,
-  addReadings = false,
+  /** The language whose readings the run asked for in the card's example, or null. */
+  readingsIn: string | null = null,
 ): EnrichmentWrite {
   const open = new Set(unsetFields(card).filter((field) => allowed.includes(field)));
   const write: EnrichmentWrite = {};
@@ -106,12 +107,13 @@ export function enrichmentWrite(
     });
     write.pronunciation = fields.pronunciation ?? write.pronunciation;
   }
-  // Compared untrimmed: the learner's text comes back exactly, with readings and nothing else.
+  // Compared untrimmed, in the language the card has after this write, which is what draws it:
+  // pinyin on a card left without a language would show as brackets.
   if (
-    addReadings &&
+    readingsIn &&
     card.example &&
     filled.example &&
-    addsReadingsOnly(card.example, filled.example)
+    addsReadingsOnly(card.example, filled.example, write.language ?? card.language)
   ) {
     write.example = filled.example;
     write.readingsFor = card.example;
@@ -119,15 +121,19 @@ export function enrichmentWrite(
   return write;
 }
 
-/** Whether a run may add readings to the card's example: the deck lets the AI write examples, its language's examples carry readings, and kanji in it have none. */
-export function mayAddReadings(card: Card, deck: DeckRow | undefined): boolean {
+/**
+ * The language whose readings a run may add to the card's example, or null: the deck lets the AI
+ * write examples, the language's examples carry readings, and characters in it have none.
+ */
+export function mayAddReadings(card: Card, deck: DeckRow | undefined): string | null {
   const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
-  return (
-    fields.includes("example") &&
-    !!card.example &&
-    examplesCarryReadings(card.language ?? deck?.defaultLanguage) &&
-    missingReadings(card.example)
-  );
+  const language = card.language ?? deck?.defaultLanguage ?? null;
+  return fields.includes("example") &&
+    card.example &&
+    examplesCarryReadings(language) &&
+    missingReadings(card.example, language)
+    ? language
+    : null;
 }
 
 type DeckRow = Pick<
@@ -266,7 +272,7 @@ export async function enrichCards(
 
   let filled = new Map<string, Filled>();
   const briefs: DeckBrief[] = [];
-  const asked = (ask: (typeof asks)[number]) => ask.mayFill.length > 0 || ask.addReadings;
+  const asked = (ask: (typeof asks)[number]) => ask.mayFill.length > 0 || ask.addReadings !== null;
   if (asks.some(asked)) {
     for (const deck of deckRows) {
       briefs.push(
@@ -287,7 +293,7 @@ export async function enrichCards(
       meaningLanguage,
       briefs,
       asks.flatMap((ask) =>
-        asked(ask) ? [cardBrief(ask.card, ask.mayFill, ask.addReadings)] : [],
+        asked(ask) ? [cardBrief(ask.card, ask.mayFill, ask.addReadings !== null)] : [],
       ),
     );
     filled = new Map((await askProvider(provider, input)).map((card) => [card.id, card]));

@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
 import { useKnownReadings } from "@lymi/client/known-readings";
-import { drawsTermReading, hasReadings, termShowsPronunciation } from "@lymi/core";
+import { drawsTermReading, hasReadings, stripReadings, termShowsPronunciation } from "@lymi/core";
 import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
@@ -30,13 +30,15 @@ export function peekHeight(card: Card, width: number, scale: number) {
   // Furigana stands a reading's line over each line it draws on, and then says the pronunciation.
   const drawn = drawsTermReading({ ...card, term: word });
   const shown = termShowsPronunciation({ ...card, term: word });
-  const example = card.example && (hasReadings(card.example) ? 23 + 12 : 23);
+  const example = card.example && (hasReadings(card.example, card.language) ? 23 + 12 : 23);
   const text =
     lines(word, 34 * scale, inner, 2) * (drawn ? 41 + 21 : 41) +
     (forms ? 4 + 23 : 0) +
     lines(card.meaning || "", 20 * scale, inner, 3) * 26 +
     (card.pronunciation && !shown ? 8 + 23 : 0) +
-    (card.example && example ? 8 + lines(card.example, 17 * scale, inner, 2) * example : 0);
+    (card.example && example
+      ? 8 + lines(stripReadings(card.example, card.language), 17 * scale, inner, 2) * example
+      : 0);
   return Math.min(Math.round(FRAME + text * scale), 420);
 }
 

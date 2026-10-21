@@ -31,7 +31,7 @@ function runs(text: string): Run[] {
 
 /**
  * The term with one syllable over each Han character, or null when they do not fit. 儿 after a
- * syllable ending in erhua r shares it (一点儿, yì diǎnr); letters and digits stay plain and take
+ * syllable ending in erhua r shares it (一点儿, yīdiǎnr); letters and digits stay plain and take
  * a word of the reading only when it is them as written (卡拉OK, kǎlā OK).
  */
 export function alignPinyin(term: string, tokens: readonly ReadingToken[]): PinyinSegment[] | null {

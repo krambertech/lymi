@@ -629,7 +629,7 @@ export function CardForm(props: CardFormProps) {
         : t`Pronunciation`;
   // How the term and the example will read, so a reading or bracket in the wrong place shows at
   // once. It repeats what the fields hold, so assistive tech reads the fields instead.
-  const exampleDrawn = hasReadings(example);
+  const exampleDrawn = hasReadings(example, language);
   const readingPreview = (termDrawn || exampleDrawn) && (
     <div
       key="reading-preview"

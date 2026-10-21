@@ -108,7 +108,9 @@ describe("spokenReading", () => {
     const known = knownReadings([
       { term: "食べる", pronunciation: "たべる", language: "ja", known: true },
     ]);
-    expect(spokenReading(markKnownReadings(segments, known), true)).toBe("まいあさパンを食べる");
+    expect(spokenReading(markKnownReadings(segments, known, "ja"), true)).toBe(
+      "まいあさパンを食べる",
+    );
   });
 
   it("says the text where a reading only holds room", () => {

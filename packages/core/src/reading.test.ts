@@ -3,6 +3,7 @@ import {
   addsReadingsOnly,
   alignReading,
   exampleReadings,
+  exampleSegments,
   formatReadings,
   hasReadings,
   kanaReading,
@@ -219,7 +220,7 @@ describe("parseReadings", () => {
       { text: "毎朝ご" },
       { text: "飯", reading: "はん" },
     ]);
-    expect(stripReadings("今日はお弁当[おべんとう]")).toBe("今日はお弁当");
+    expect(stripReadings("今日はお弁当[おべんとう]", "ja")).toBe("今日はお弁当");
     // Here お ends なお, and おお is 多's own reading.
     expect(parseReadings("なお多[おお]く")).toEqual([
       { text: "なお" },
@@ -235,14 +236,14 @@ describe("parseReadings", () => {
   it("reads a crafted long example quickly", () => {
     const text = `${"漢あ".repeat(800)}[${"あ".repeat(390)}]`;
     const started = performance.now();
-    expect(stripReadings(text)).toBe(text);
-    expect(stripReadings(`${"漢あ".repeat(800)}[${"あ".repeat(30)}]`)).toHaveLength(1600);
+    expect(stripReadings(text, "ja")).toBe(text);
+    expect(stripReadings(`${"漢あ".repeat(800)}[${"あ".repeat(30)}]`, "ja")).toHaveLength(1600);
     expect(performance.now() - started).toBeLessThan(500);
   });
 
   it("drops the space Anki puts before a reading, and keeps one between words", () => {
-    expect(stripReadings("私[わたし]は 毎朝[まいあさ]")).toBe("私は毎朝");
-    expect(stripReadings("I like 寿司[すし]")).toBe("I like 寿司");
+    expect(stripReadings("私[わたし]は 毎朝[まいあさ]", "ja")).toBe("私は毎朝");
+    expect(stripReadings("I like 寿司[すし]", "ja")).toBe("I like 寿司");
   });
 
   it("leaves brackets that are not readings as written", () => {
@@ -262,7 +263,7 @@ describe("markKnownReadings", () => {
   });
   /** The kanji whose reading fades in the example, given the learner's cards. */
   const faded = (example: string, cards: Parameters<typeof knownReadings>[0]) =>
-    markKnownReadings(parseReadings(example), knownReadings(cards))
+    markKnownReadings(parseReadings(example), knownReadings(cards), "ja")
       .filter((segment) => segment.known)
       .map((segment) => segment.text);
 
@@ -314,39 +315,74 @@ describe("markKnownReadings", () => {
 
   it("leaves the runs as they are when nothing is Known", () => {
     const segments = parseReadings("食[た]べる");
-    expect(markKnownReadings(segments, new Set())).toBe(segments);
-    expect(markKnownReadings(segments, undefined)).toBe(segments);
+    expect(markKnownReadings(segments, new Set(), "ja")).toBe(segments);
+    expect(markKnownReadings(segments, undefined, "ja")).toBe(segments);
   });
 
   it("counts an example's readings and the ones that fade", () => {
     const example = "毎朝[まいあさ]パンを食[た]べます。";
     const known = knownReadings([card("食べる", "たべる")]);
-    expect(exampleReadings(example, known)).toEqual({ readings: 2, known: 1 });
-    expect(exampleReadings(example)).toEqual({ readings: 2, known: 0 });
-    expect(exampleReadings(null, known)).toEqual({ readings: 0, known: 0 });
+    expect(exampleReadings(example, "ja", known)).toEqual({ readings: 2, known: 1 });
+    expect(exampleReadings(example, "ja")).toEqual({ readings: 2, known: 0 });
+    expect(exampleReadings(null, "ja", known)).toEqual({ readings: 0, known: 0 });
+  });
+});
+
+describe("example pinyin", () => {
+  const known = knownReadings([
+    { term: "银行", pronunciation: "yínháng", language: "zh", known: true },
+  ]);
+  const faded = (example: string) =>
+    markKnownReadings(exampleSegments(example, "zh"), known, "zh")
+      .filter((segment) => segment.known)
+      .map((segment) => `${segment.text} ${segment.reading}`);
+
+  it("fades a character whose syllable a Known card reads the same", () => {
+    expect(faded("行长[hángzhǎng]来了。")).toEqual(["行 háng"]);
+    expect(faded("今天不行[bù xíng]。")).toEqual([]);
+    expect(faded("我去银行[yín háng]。")).toEqual(["银 yín", "行 háng"]);
+  });
+
+  it("never meets a kana pair, and reads kana brackets only for other languages", () => {
+    expect(faded("銀行[ぎんこう]")).toEqual([]);
+    expect(exampleSegments("银行[yínháng]", "ja")).toEqual([{ text: "银行[yínháng]" }]);
+    expect(exampleSegments("食[た]べる", "zh")).toEqual([{ text: "食[た]べる" }]);
+  });
+
+  it("counts, strips and checks pinyin as furigana", () => {
+    expect(exampleReadings("我去银行[yínháng]。", "zh-TW", known)).toEqual({
+      readings: 2,
+      known: 2,
+    });
+    expect(stripReadings("我[wǒ]去[qù]银行[yínháng]。", "zh")).toBe("我去银行。");
+    expect(hasReadings("我去银行。", "zh")).toBe(false);
+    expect(missingReadings("我去银行[yínháng]。", "zh")).toBe(true);
+    expect(missingReadings("我[wǒ]去[qù]银行[yínháng]。", "zh")).toBe(false);
+    expect(addsReadingsOnly("今天不行。", "今天[jīntiān]不行[bù xíng]。", "zh")).toBe(true);
+    expect(addsReadingsOnly("今天不行。", "今天[jīntiān]不行[bù xíng]！", "zh")).toBe(false);
   });
 });
 
 describe("stripReadings", () => {
   it("leaves the text as written", () => {
-    expect(stripReadings("毎朝[まいあさ]パンを食[た]べる")).toBe("毎朝パンを食べる");
-    expect(stripReadings("Sbrigati, il treno parte!")).toBe("Sbrigati, il treno parte!");
+    expect(stripReadings("毎朝[まいあさ]パンを食[た]べる", "ja")).toBe("毎朝パンを食べる");
+    expect(stripReadings("Sbrigati, il treno parte!", "ja")).toBe("Sbrigati, il treno parte!");
   });
 });
 
 describe("hasReadings", () => {
   it("is true only for text with an inline reading", () => {
-    expect(hasReadings("食[た]べる")).toBe(true);
-    expect(hasReadings("食べる")).toBe(false);
-    expect(hasReadings("[sound:a.mp3]")).toBe(false);
+    expect(hasReadings("食[た]べる", "ja")).toBe(true);
+    expect(hasReadings("食べる", "ja")).toBe(false);
+    expect(hasReadings("[sound:a.mp3]", "ja")).toBe(false);
   });
 });
 
 describe("missingReadings", () => {
   it("is true while any kanji has no reading", () => {
-    expect(missingReadings("毎朝パンを食[た]べる")).toBe(true);
-    expect(missingReadings("毎朝[まいあさ]パンを食[た]べる")).toBe(false);
-    expect(missingReadings("パンをたべる")).toBe(false);
+    expect(missingReadings("毎朝パンを食[た]べる", "ja")).toBe(true);
+    expect(missingReadings("毎朝[まいあさ]パンを食[た]べる", "ja")).toBe(false);
+    expect(missingReadings("パンをたべる", "ja")).toBe(false);
   });
 });
 
@@ -366,13 +402,15 @@ describe("formatReadings", () => {
 
 describe("addsReadingsOnly", () => {
   it("accepts the same text with readings added", () => {
-    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝[まいあさ]パンを食[た]べる")).toBe(true);
+    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝[まいあさ]パンを食[た]べる", "ja")).toBe(true);
   });
 
   it("refuses any other change, or no change", () => {
-    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝[まいあさ]パンを食[た]べます")).toBe(false);
-    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝パンを食べる")).toBe(false);
-    expect(addsReadingsOnly("食[た]べる", "食[た]べる")).toBe(false);
+    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝[まいあさ]パンを食[た]べます", "ja")).toBe(
+      false,
+    );
+    expect(addsReadingsOnly("毎朝パンを食べる", "毎朝パンを食べる", "ja")).toBe(false);
+    expect(addsReadingsOnly("食[た]べる", "食[た]べる", "ja")).toBe(false);
   });
 });
 

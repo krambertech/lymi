@@ -374,7 +374,7 @@ export function deckCsv(rows: readonly DeckRow[]): string {
         esc(card.term),
         esc(card.meaning),
         esc(card.pronunciation),
-        esc(card.example && stripReadings(card.example)),
+        esc(card.example && stripReadings(card.example, card.language)),
         esc(card.notes),
         esc(card.language),
         esc(card.source),

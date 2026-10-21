@@ -56,7 +56,12 @@ const NOTATION: Record<
     draw: (card: Card) => string | null;
   }
 > = {
-  furigana: { parse: parseReadings, format: formatReadings, strip: stripReadings, draw: overTerm },
+  furigana: {
+    parse: parseReadings,
+    format: formatReadings,
+    strip: (text) => stripReadings(text, "ja"),
+    draw: overTerm,
+  },
   pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin, draw: overTerm },
   // Marks stay in the text, so an example parses as one run.
   stress: {

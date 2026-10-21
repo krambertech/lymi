@@ -1,5 +1,5 @@
 # Chinese: a New card draws pinyin over each hanzi on the cue and keeps it after the reveal, in the
-# simplified and the traditional face.
+# simplified and the traditional face, and an example's pinyin fades over a Known character.
 appId: app.lymi
 name: Chinese
 ---
@@ -30,3 +30,21 @@ name: Chinese
     point: "50%,80%"
 - assertVisible: ".*${TRAD_MEANING}.*"
 - takeScreenshot: 04-traditional-revealed
+- tapOn: "End review"
+- tapOn: "Library"
+# The deck is last in the list, under the tab bar, so it is scrolled to the middle first.
+- scrollUntilVisible:
+    element: "${FADE_DECK}.*"
+    centerElement: true
+- tapOn: "${FADE_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${FADE_TERM}.*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${FADE_MEANING}.*"
+# VoiceOver says the hanzi, so the fade shows only in the screenshot: no háng over the example's
+# first 行, while 不行 keeps xíng.
+- assertVisible: ".*${FADE_SPOKEN}.*"
+- takeScreenshot: 05-example-pinyin-fades

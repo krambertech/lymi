@@ -71,7 +71,7 @@ export type CardSearchPage = {
 /** The fields a pinned edition can replace, so their comparisons read the edition's text. */
 const EDITION_FIELDS = ["term", "meaning", "example", "pronunciation", "notes"] as const;
 type TextField = "meaning" | "example" | "pronunciation" | "notes" | "source";
-type ScanRow = Pick<Card, "id" | "deckId" | "normalizedTerm" | "tags" | TextField>;
+type ScanRow = Pick<Card, "id" | "deckId" | "normalizedTerm" | "tags" | "language" | TextField>;
 type Check = (row: ScanRow) => boolean;
 type SortKey = { field: CardSortField; direction: "asc" | "desc"; expr: SQL };
 
@@ -158,7 +158,7 @@ export async function searchCards(
         : field === "example"
           ? stripReadings
           : (text: string) => text;
-    const text = (row: ScanRow) => foldForSearch(read(row[field] ?? ""));
+    const text = (row: ScanRow) => foldForSearch(read(row[field] ?? "", row.language));
     if (edition && whole) {
       checks.push((row) =>
         pinned.has(row.deckId) ? whole(text(row)) : !partial || partial(text(row)),
@@ -379,6 +379,7 @@ export async function searchCards(
         notes: schema.cards.notes,
         source: schema.cards.source,
         tags: schema.cards.tags,
+        language: schema.cards.language,
         ...sortValues,
       })
       .from(schema.cards)

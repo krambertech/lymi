@@ -179,16 +179,37 @@ describe("enrichmentWrite", () => {
   it("adds readings to an example only when its text is otherwise unchanged", () => {
     const card = { ...blank, example: "毎朝パンを食べます。" };
     const withReadings = { ...reply, example: "毎朝[まいあさ]パンを食[た]べます。" };
-    expect(enrichmentWrite(card, withReadings, ["meaning"], true)).toEqual({
+    expect(enrichmentWrite(card, withReadings, ["meaning"], "ja")).toEqual({
       meaning: "AI meaning",
       meaningSource: "ai",
       example: "毎朝[まいあさ]パンを食[た]べます。",
       readingsFor: "毎朝パンを食べます。",
     });
     expect(
-      enrichmentWrite(card, { ...reply, example: "毎朝[まいあさ]パンを食[た]べる。" }, [], true),
+      enrichmentWrite(card, { ...reply, example: "毎朝[まいあさ]パンを食[た]べる。" }, [], "ja"),
     ).toEqual({});
-    expect(enrichmentWrite(card, withReadings, [], false)).toEqual({});
+    expect(enrichmentWrite(card, withReadings, [], null)).toEqual({});
+  });
+
+  it("adds pinyin to a Chinese example by the same rule, once the card is Chinese", () => {
+    const card = { ...blank, language: "zh", example: "今天不行。" };
+    const pinyin = { ...reply, example: "今天[jīntiān]不行[bù xíng]。" };
+    expect(enrichmentWrite(card, pinyin, [], "zh")).toEqual({
+      example: "今天[jīntiān]不行[bù xíng]。",
+      readingsFor: "今天不行。",
+    });
+    expect(
+      enrichmentWrite(card, { ...pinyin, example: "今天[jīntiān]行[xíng]。" }, [], "zh"),
+    ).toEqual({});
+    expect(enrichmentWrite({ ...card, language: "ja" }, pinyin, [], "ja")).toEqual({});
+    // A card without a language would draw the brackets, unless this reply gives it one.
+    const unset = { ...card, language: null };
+    expect(enrichmentWrite(unset, { ...pinyin, language: null }, [], "zh")).toEqual({});
+    expect(enrichmentWrite(unset, { ...pinyin, language: "zh" }, ["language"], "zh")).toEqual({
+      language: "zh",
+      example: "今天[jīntiān]不行[bù xíng]。",
+      readingsFor: "今天不行。",
+    });
   });
 
   it("drops a value the model left out and a language tag that is not one", () => {
@@ -945,7 +966,7 @@ describe("enrichment that follows the deck", () => {
     );
   });
 
-  it("never asks for readings in a Chinese example, which carries none yet", async () => {
+  it("adds pinyin to a Chinese example and keeps it the learner's", async () => {
     const ctx = await learner(db, "deck-fields-readings-zh", "Kateryna");
     const deck = await createDeck(ctx, { name: "中文", defaultLanguage: "zh" });
     const card = await added(
@@ -957,7 +978,7 @@ describe("enrichment that follows the deck", () => {
         {
           id: card.id,
           meaning: "to study",
-          example: "我在学校学习。",
+          example: "我[wǒ]在[zài]学校[xuéxiào]学习[xuéxí]。",
           notes: null,
           pronunciation: "xuéxí",
           language: null,
@@ -966,7 +987,12 @@ describe("enrichment that follows the deck", () => {
     });
     await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
     const input = JSON.parse(provider.asked[0]?.input ?? "{}");
-    expect(input.cards?.[0]?.addReadings).toBeFalsy();
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, addReadings: true })]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "我[wǒ]在[zài]学校[xuéxiào]学习[xuéxí]。",
+      exampleSource: "manual",
+      pronunciation: "xuéxí",
+    });
   });
 
   it("never changes a Japanese example's text while adding readings", async () => {

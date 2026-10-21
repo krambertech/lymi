@@ -1154,7 +1154,7 @@ function Turn({
       </View>
       {revealed && (
         <GradeStrip
-          still={!top}
+          still={!top || still}
           next={item.next}
           easyLocked={easyLocked}
           lockedTip={lockedTip}
@@ -1649,7 +1649,7 @@ function GradeStrip({
   lockedTip,
   onGrade,
 }: {
-  /** Underneath, the grades are already in place. */
+  /** Already in place: underneath, or on a card brought back. */
   still?: boolean;
   /** When each grade brings the card back, which VoiceOver reads with it, as on the web. */
   next: QueueItem["next"];

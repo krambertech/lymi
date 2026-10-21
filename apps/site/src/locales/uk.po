@@ -1008,9 +1008,6 @@ msgstr "Картки збережуть дати повторення, які м
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
 
-msgid "castle"
-msgstr "замок (фортеця)"
-
 msgid "CCSE Spanish nationality test"
 msgstr "Іспит CCSE на громадянство Іспанії"
 
@@ -2423,9 +2420,6 @@ msgstr "Буквально — «кінь кінь тигр тигр»."
 
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Дослівно — «це йде». Так кажуть офіціанти, приймаючи замовлення."
-
-msgid "lock"
-msgstr "замок (на дверях)"
 
 msgid "Long time no see"
 msgstr "Давно не бачились"

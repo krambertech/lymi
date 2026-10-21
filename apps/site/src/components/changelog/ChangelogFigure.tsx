@@ -23,7 +23,6 @@ import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
 import { SmartAddFigure } from "./SmartAddFigure";
-import { StressFigure } from "./StressFigure";
 import { TagsFigure } from "./TagsFigure";
 import { VoicesFigure } from "./VoicesFigure";
 import { WelcomeFigure } from "./WelcomeFigure";
@@ -54,7 +53,6 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "command-menu": CommandMenuFigure,
   "japanese-card": JapaneseCardFigure,
   pinyin: PinyinFigure,
-  stress: StressFigure,
 };
 
 interface Props {

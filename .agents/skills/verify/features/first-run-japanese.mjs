@@ -17,7 +17,7 @@ export default async function drive({ page, step, api, expect }) {
     });
     expect(seeded.status()).toBeLessThan(400);
     await page.goto("/api/dev/sign-in?as=fresh&reset=1&returnTo=/today");
-    await expect(page.getByRole("heading", { name: /^Welcome, / })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Welcome to Lymi/ })).toBeVisible();
     const explore = await api("/api/explore");
     const japanese = explore.decks.filter((d) => d.language === "ja").map((d) => d.slug);
     expect(japanese).toContain("read-japanese-kana");

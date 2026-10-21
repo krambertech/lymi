@@ -18,7 +18,7 @@ Today's code:
 - `readingKey` is Japanese-only, so 行 read háng (a row) and 行 read xíng (to go) are duplicates.
 - The enrichment guide writes pinyin with tone marks but none in examples, and the Anki adapter strips example pinyin (`我[wǒ]` → `我`).
 - Audio speaks the hanzi; `publishedLocale` in `apps/web/src/server/ai/speech.ts` reaches `cmn-TW` only for that exact tag, so `zh-TW` and `zh-Hant` cards get a mainland voice.
-- `chinese-hsk-1-vocabulary` and `chinese-hsk-2-vocabulary` are published and follow the 2025 syllabus (`apps/site/src/lib/exams.ts`); `BEGINNER_DECKS` in `packages/client/src/welcome.ts` has only `ja`.
+- `chinese-hsk-1-vocabulary` and `chinese-hsk-2-vocabulary` are published and follow the 2025 syllabus (`apps/site/src/lib/exams.ts`), and Welcome offers them through `BEGINNER_DECKS` in `packages/client/src/welcome.ts`. No HSK 3 deck is published.
 
 No HSK Anki deck or Pleco export has been test-imported yet.
 
@@ -45,7 +45,7 @@ Each slice builds on supported-languages slices 1–4: the record index, `TermTe
 3. The zh prompt module, reviewed by a fluent reader, with a recorded run.
 4. Example pinyin fading over Known characters on the web and the phone. The Worker strips the notation from older phones until the minimum supported version draws it.
 5. Import fidelity: test-import one HSK Anki deck and one Pleco export, then the Anki field mapping and the Pleco adapter.
-6. A beginner's start, the page and the `LanguageOut` entry: Welcome offers a Chinese learner HSK 1, HSK 2 and a new HSK 3 deck; the page view and showpiece go through `LANGUAGE_PAGES` and `LanguagePage.astro`; `zh` joins `SupportedTag`.
+6. A beginner's start, the page and the `LanguageOut` entry: Welcome offers a Chinese learner HSK 1, then HSK 2, and an HSK 3 deck once open question 2 settles it; the page view and showpiece go through `LANGUAGE_PAGES` and `LanguagePage.astro`; `zh` joins `SupportedTag`.
 
 ## Instrumentation
 

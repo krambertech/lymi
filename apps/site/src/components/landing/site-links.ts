@@ -32,7 +32,6 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     icon: Languages,
     hue: 4,
   },
-  { page: "chinese", label: msg`Chinese`, footerOnly: true },
   { page: "estonian", label: msg`Estonian`, footerOnly: true },
   ...Object.values(LANGUAGE_PAGES).map(
     ({ page, label }): UseCaseLink => ({ page, label, footerOnly: true }),

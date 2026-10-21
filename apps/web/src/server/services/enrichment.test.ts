@@ -616,11 +616,19 @@ describe("enrichCards", () => {
     const ctx = await learner(db, "enrich-6c", "Kateryna");
     const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
     const input = CardInput.parse({ id: "0stuckworking000002", deckId: deck.id, term: "煎餅" });
-    const cutOff: EnrichmentQueue = { create: () => new Promise(() => {}) };
+    let handedOver!: () => void;
+    const reached = new Promise<void>((resolve) => {
+      handedOver = resolve;
+    });
+    const cutOff: EnrichmentQueue = {
+      create: () => {
+        handedOver();
+        return new Promise(() => {});
+      },
+    };
     void addCards(ctx, [input], cutOff);
-    await vi.waitFor(async () =>
-      expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working"),
-    );
+    await reached;
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working");
     const refusing: EnrichmentQueue = { create: vi.fn().mockRejectedValue(new Error("no")) };
     const [again] = await addCards(ctx, [input], refusing);
     if (again?.status !== "added") throw new Error("not added");

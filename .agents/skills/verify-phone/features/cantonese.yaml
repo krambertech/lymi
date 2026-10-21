@@ -6,6 +6,10 @@ name: Cantonese
 - runFlow: _open.yaml
 - tapOn: "Library"
 - tapOn: "${DECK}.*"
+# The first run after a bundle loads can take the tap before the deck's count arrives.
+- extendedWaitUntil:
+    visible: ".*to review.*"
+    timeout: 30000
 - tapOn: "^Review.*"
 - extendedWaitUntil:
     visible: ".*${TERM}, read ${READING}. Tap to reveal"

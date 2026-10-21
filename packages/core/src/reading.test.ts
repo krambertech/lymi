@@ -17,6 +17,7 @@ import {
   stripReadings,
   termReading,
   termShowsPronunciation,
+  toneRuns,
 } from "./reading";
 
 describe("markedTerm", () => {
@@ -516,5 +517,22 @@ describe("splitTermReading", () => {
     expect(splitTermReading("食[ta]べる")).toBeNull();
     expect(splitTermReading("T[てぃー]シャツ")).toBeNull();
     expect(splitTermReading("[sound:a.mp3]食べる")).toBeNull();
+  });
+});
+
+describe("toneRuns", () => {
+  it("parts each Jyutping tone number from its syllable", () => {
+    expect(toneRuns("gwong2 dung1")).toEqual([
+      { text: "gwong", tone: false },
+      { text: "2", tone: true },
+      { text: " dung", tone: false },
+      { text: "1", tone: true },
+    ]);
+    expect(toneRuns("nei5hou2").map((run) => run.text)).toEqual(["nei", "5", "hou", "2"]);
+  });
+  it("leaves a reading with no tone number whole", () => {
+    expect(toneRuns("xuéxí")).toEqual([{ text: "xuéxí", tone: false }]);
+    expect(toneRuns("たべる")).toEqual([{ text: "たべる", tone: false }]);
+    expect(toneRuns("3")).toEqual([{ text: "3", tone: false }]);
   });
 });

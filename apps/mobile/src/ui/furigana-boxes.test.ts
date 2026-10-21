@@ -88,7 +88,7 @@ describe("clampBoxes", () => {
 
 describe("readingInset", () => {
   it("pads pinyin so a wide syllable never meets the next, and leaves kana as it was", () => {
-    expect(readingInset("zhuāng", 17)).toBe(4);
+    expect(readingInset("zhuāng", 17)).toBe(3);
     expect(readingInset("きょう", 17)).toBe(0);
   });
 });

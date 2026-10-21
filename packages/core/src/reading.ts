@@ -289,6 +289,25 @@ export function lettersReading(reading: string): boolean {
   return /\p{Script=Latin}/u.test(reading);
 }
 
+/** A tone number after a letter, as Jyutping writes one after each syllable. */
+const TONE_NUMBER = /(?<=\p{L})[1-6]/gu;
+
+/**
+ * A drawn reading as runs, each tone number its own run so a screen can raise it (gwong² dung¹)
+ * while the stored text keeps plain digits. A reading without one is a single run.
+ */
+export function toneRuns(reading: string): { text: string; tone: boolean }[] {
+  const out: { text: string; tone: boolean }[] = [];
+  let at = 0;
+  for (const match of reading.matchAll(TONE_NUMBER)) {
+    if (match.index > at) out.push({ text: reading.slice(at, match.index), tone: false });
+    out.push({ text: match[0], tone: true });
+    at = match.index + match[0].length;
+  }
+  if (at < reading.length || out.length === 0) out.push({ text: reading.slice(at), tone: false });
+  return out;
+}
+
 /** Whether a reading is drawn over the card's term, for a screen that lays out around it. */
 export function drawsTermReading(card: {
   term: string;

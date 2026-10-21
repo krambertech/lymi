@@ -1,4 +1,4 @@
-import { lettersReading, type ReadingSegment } from "@lymi/core";
+import { lettersReading, type ReadingSegment, toneRuns } from "@lymi/core";
 import { clsx } from "clsx";
 import { Fragment } from "react";
 
@@ -25,13 +25,22 @@ export function Furigana({ segments, lang, hidden }: Props) {
         {/* biome-ignore lint/a11y/noAriaHiddenOnFocusable: rt is never focusable */}
         <rt
           aria-hidden="true"
+          data-letters={lettersReading(segment.reading) || undefined}
           className={clsx(
             "transition-[opacity,visibility] duration-200 ease-out motion-reduce:transition-none",
-            lettersReading(segment.reading) && "px-[0.2em]",
             (hidden || segment.known) && "invisible opacity-0",
           )}
         >
-          {segment.reading}
+          {toneRuns(segment.reading).map((run, at) =>
+            run.tone ? (
+              // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+              <span key={at} data-tone>
+                {run.text}
+              </span>
+            ) : (
+              run.text
+            ),
+          )}
         </rt>
         <rp>)</rp>
       </ruby>

@@ -33,6 +33,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Korean cards | [korean.md](features/korean.md) |
 | Filipino, Vietnamese, Georgian, Armenian and Tamil | [configured-languages.md](features/configured-languages.md) |
 | Russian cards | [russian.md](features/russian.md) |
+| Ukrainian cards | [ukrainian.md](features/ukrainian.md) |
 | Tamil cards | [tamil.md](features/tamil.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
 | First run | [first-run.md](features/first-run.md) |

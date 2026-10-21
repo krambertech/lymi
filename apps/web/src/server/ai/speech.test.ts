@@ -55,6 +55,10 @@ describe("speech provider routing", () => {
     expect(nativeSpeechVoice("ru-RU")?.voice).toBe("3EuKHIEZbSzrHGNmdYsx");
   });
 
+  it("speaks Ukrainian with the voice the listening test chose, which reads U+0301 as stress", () => {
+    expect(nativeSpeechVoice("uk-UA")?.voice).toBe("2OXYbN1uGomXXJtv9Dq6");
+  });
+
   it("recognizes OpenAI's published languages and common tag aliases", () => {
     expect(openAiSupportsLanguage("et-EE")).toBe(true);
     expect(openAiSupportsLanguage("cy")).toBe(true);

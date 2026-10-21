@@ -1,8 +1,8 @@
-"""Write fonts/onest-cyrillic-wght-normal.woff2: Onest's Cyrillic file with a stress anchor on every Russian vowel.
+"""Write fonts/onest-cyrillic-wght-normal.woff2: Onest's Cyrillic file with a stress anchor on every Russian and Ukrainian vowel.
 
-Onest anchors U+0301 over е, и, э, ю and я but not а, о, у, ы, А or О, so a browser draws за́мок's acute
-beside the а. Each Cyrillic letter that shares its Latin twin's outline takes that twin's anchor, and у and
-ы take their own centre at y's height. iOS places the mark without an anchor, so the phone keeps Onest as
+Onest anchors U+0301 over е, и, э, ю, я and ї but not а, о, у, ы, і, є, А, О or Є, so a browser draws за́мок's
+acute beside the а. Each Cyrillic letter that shares its Latin twin's outline takes that twin's anchor, and
+the rest take their own centre at the height of the Latin letter they look most like. iOS places the mark without an anchor, so the phone keeps Onest as
 published. Run from the repository root after `pip install fonttools brotli`, whenever
 @fontsource-variable/onest changes:
 
@@ -20,7 +20,13 @@ MARK = "acutecomb"
 # Cyrillic letters drawn as their Latin twins, so the twin's anchor fits exactly.
 TWINS = {"uni0430": "a", "uni043E": "o", "uni0410": "A", "uni041E": "O"}
 # Cyrillic letters with a shape of their own: centred over their outline, at the height of the Latin letter named.
-CENTRED = {"uni0443": "y", "uni044B": "y"}
+CENTRED = {
+    "uni0443": "y",
+    "uni044B": "y",
+    "uni0456": "i",
+    "uni0454": "e",
+    "uni0404": "E",
+}
 
 
 def acute_lookup(font):

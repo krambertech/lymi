@@ -79,11 +79,7 @@ it("says where web review drew a Japanese term's reading, and nothing for other 
   await gradeCard(ctx, { cardId: thanks.id, direction: "recognition", rating: 3, reviewedAt: at });
   // The phone draws no furigana yet, so its grades say nothing about where it was.
   const phone = { cardId: school.id, direction: "recognition" as const, rating: 3 as const };
-  await gradeCard(
-    ctx,
-    { ...phone, reviewedAt: at },
-    { over: false, inPlace: false, byWord: false },
-  );
+  await gradeCard(ctx, { ...phone, reviewedAt: at }, { over: false, inPlace: {}, byWord: false });
   const graded = (await events()).filter((event) => event.name === "review_graded");
   expect(graded.map((event) => event.reading)).toEqual(["cue", "answer", undefined, undefined]);
 });

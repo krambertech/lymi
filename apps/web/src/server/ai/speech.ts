@@ -98,6 +98,8 @@ const GEMINI_LOCALES = new Map<string, string>([
   ["uk", "uk-UA"],
   ["ur", "ur-PK"],
   ["vi", "vi-VN"],
+  // Not on Cloud's list, but the Gemini API's TTS speaks it; docs/proposals/cantonese.md, Voice.
+  ["yue", "yue-HK"],
 ]);
 
 const GEMINI_EXACT_LOCALES = new Set([

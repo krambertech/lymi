@@ -4,6 +4,7 @@
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
 import { sameTamilReading } from "./indic";
+import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
@@ -22,9 +23,15 @@ export type CardText = {
 const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardText> = {
   furigana: splitBracketedTerm,
   pinyin: markTones,
+  jyutping: plainToneNumbers,
   stress: markStress,
   indic: dropSpelledReading,
 };
+
+/** Jyutping sent with raised or full-width tone numbers stores them plain: nei⁵ hou² → nei5 hou2. */
+function plainToneNumbers({ pronunciation }: CardText): CardText {
+  return pronunciation ? { pronunciation: jyutpingDigits(pronunciation) } : {};
+}
 
 /**
  * A Tamil pronunciation that only repeats the reading the spelling gives is left empty, so the

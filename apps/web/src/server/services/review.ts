@@ -247,13 +247,19 @@ function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
   return modeOf(key).cue === "term" && state !== 2 ? "cue" : "answer";
 }
 
+/** What a grader draws on a term, by engine; a test may leave Jyutping out, which counts as drawn. */
+type Draws = { over: boolean; inPlace: boolean; byWord: boolean; jyutping?: boolean };
+
 /** Whether the grader drew the card's reading on its term, by the way its engine draws one. */
 function termDrawn(
   card: { term: string; language: string | null; pronunciation: string | null },
-  draws: { over: boolean; inPlace: boolean; byWord: boolean },
+  draws: Draws,
 ): boolean {
-  if (termReading(card))
-    return readingEngine(card.language) === "indic" ? draws.byWord : draws.over;
+  if (termReading(card)) {
+    const engine = readingEngine(card.language);
+    if (engine === "indic") return draws.byWord;
+    return draws.over && (engine !== "jyutping" || draws.jyutping !== false);
+  }
   return markedTerm(card) !== null && draws.inPlace;
 }
 
@@ -288,14 +294,11 @@ export async function gradeCard(
   input: GradeInput,
   /**
    * What the grader draws on the term, so `review_graded` can say where: a reading over it, which a
-   * phone before 0.0.2 lacks, stress marks in place, which a phone before 0.0.4 lacks, and a Tamil
-   * reading over each word, which a phone before 0.0.6 lacks.
+   * phone before 0.0.2 lacks, stress marks in place, which a phone before 0.0.4 lacks, a Tamil
+   * reading over each word, which a phone before 0.0.6 lacks, and Jyutping over the term, which a
+   * phone before 0.0.7 lacks.
    */
-  draws: { over: boolean; inPlace: boolean; byWord: boolean } = {
-    over: true,
-    inPlace: true,
-    byWord: true,
-  },
+  draws: Draws = { over: true, inPlace: true, byWord: true, jyutping: true },
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;

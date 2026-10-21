@@ -1,0 +1,506 @@
+{
+  "about": "Invented cases for the yue module's lesson, hook and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent reader of written Cantonese should review these with cantonese.ts.",
+  "lesson": [
+    {
+      "term": "學習",
+      "printed": "hok6 zaap6",
+      "reading": "hok6 zaap6"
+    },
+    {
+      "term": "學習",
+      "printed": "hok6zaap6",
+      "reading": "hok6zaap6"
+    },
+    {
+      "term": "學習",
+      "printed": "hok⁶ zaap⁶",
+      "reading": "hok6 zaap6"
+    },
+    {
+      "term": "銀行",
+      "printed": "ngan4 hong4",
+      "reading": "ngan4 hong4"
+    },
+    {
+      "term": "行",
+      "printed": "hong4",
+      "reading": "hong4"
+    },
+    {
+      "term": "行",
+      "printed": "hang4",
+      "reading": "hang4"
+    },
+    {
+      "term": "行路",
+      "printed": "hang4 lou6",
+      "reading": "hang4 lou6"
+    },
+    {
+      "term": "長",
+      "printed": "coeng4",
+      "reading": "coeng4"
+    },
+    {
+      "term": "長",
+      "printed": "zoeng2",
+      "reading": "zoeng2"
+    },
+    {
+      "term": "樂",
+      "printed": "lok6",
+      "reading": "lok6"
+    },
+    {
+      "term": "音樂",
+      "printed": "jam1 ngok6",
+      "reading": "jam1 ngok6"
+    },
+    {
+      "term": "唔該",
+      "printed": "m4 goi1",
+      "reading": "m4 goi1"
+    },
+    {
+      "term": "五",
+      "printed": "ng5",
+      "reading": "ng5"
+    },
+    {
+      "term": "食咗",
+      "printed": "sik6 zo2",
+      "reading": "sik6 zo2"
+    },
+    {
+      "term": "嘅",
+      "printed": "ge3",
+      "reading": "ge3"
+    },
+    {
+      "term": "冇",
+      "printed": "mou5",
+      "reading": "mou5"
+    },
+    {
+      "term": "一啲",
+      "printed": "jat1 di1",
+      "reading": "jat1 di1"
+    },
+    {
+      "term": "搭𨋢",
+      "printed": "daap3 lip1",
+      "reading": "daap3 lip1"
+    },
+    {
+      "term": "T恤",
+      "printed": "ti1 seot1",
+      "reading": "ti1 seot1"
+    },
+    {
+      "term": "你好",
+      "printed": "nei５ hou２",
+      "reading": "nei5 hou2"
+    },
+    {
+      "term": "仔女",
+      "printed": "zai2 neoi2",
+      "reading": "zai2 neoi2"
+    },
+    {
+      "term": "香港",
+      "printed": "Hoeng1gong2",
+      "reading": "Hoeng1gong2"
+    },
+    {
+      "term": "好",
+      "printed": "hou3",
+      "reading": "hou3"
+    }
+  ],
+  "hook": [
+    {
+      "term": "電腦",
+      "pronunciation": "din6 nou5",
+      "meaning": "computer",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "雪櫃",
+      "pronunciation": "syut3 gwai6",
+      "meaning": "fridge",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "火車",
+      "pronunciation": "fo2 ce1",
+      "meaning": "train",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "飛機",
+      "pronunciation": "fei1 gei1",
+      "meaning": "airplane",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "手機",
+      "pronunciation": "sau2 gei1",
+      "meaning": "mobile phone",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "巴士",
+      "pronunciation": "baa1 si2",
+      "meaning": "bus",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "的士",
+      "pronunciation": "dik1 si2",
+      "meaning": "taxi",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "銀行",
+      "pronunciation": "ngan4 hong4",
+      "meaning": "bank",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "唔該",
+      "pronunciation": "m4 goi1",
+      "meaning": "thank you (for a service)",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "多謝",
+      "pronunciation": "do1 ze6",
+      "meaning": "thank you (for a gift)",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "食飯",
+      "pronunciation": "sik6 faan6",
+      "meaning": "to have a meal",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "飲茶",
+      "pronunciation": "jam2 caa4",
+      "meaning": "to have dim sum",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "早晨",
+      "pronunciation": "zou2 san4",
+      "meaning": "good morning",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "朋友",
+      "pronunciation": "pang4 jau5",
+      "meaning": "friend",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "屋企",
+      "pronunciation": "uk1 kei2",
+      "meaning": "home",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "返工",
+      "pronunciation": "faan1 gung1",
+      "meaning": "to go to work",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "放工",
+      "pronunciation": "fong3 gung1",
+      "meaning": "to finish work",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "今日",
+      "pronunciation": "gam1 jat6",
+      "meaning": "today",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "聽日",
+      "pronunciation": "ting1 jat6",
+      "meaning": "tomorrow",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "琴日",
+      "pronunciation": "kam4 jat6",
+      "meaning": "yesterday",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "靚",
+      "pronunciation": "leng3",
+      "meaning": "pretty",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "𨋢",
+      "pronunciation": "lip1",
+      "meaning": "lift; elevator",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "電話",
+      "pronunciation": "din6 waa2",
+      "meaning": "телефон",
+      "language": "zh-yue",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "學校",
+      "pronunciation": "hok6 haau6",
+      "meaning": "школа",
+      "language": "zh-yue",
+      "asked": ["meaning_to_term"]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hok6 zaap6",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hok6zaap6",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hok zaap",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hok6 zaap",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hohk jaahp",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "xué xí",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "xue2 xi2",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "唔該",
+      "text": "m4 goi1",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "五",
+      "text": "ng5",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "搭𨋢",
+      "text": "daap3 lip1",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "卡拉OK",
+      "text": "kaa1 laa1 OK",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "T恤",
+      "text": "ti1 seot1",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "你好",
+      "text": "nei5",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "香港",
+      "text": "heung1 gong2",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping with a tone on every syllable",
+      "field": "pronunciation",
+      "term": "學習",
+      "text": "hɔːk˨ tsaːp˨",
+      "pass": false
+    },
+    {
+      "rule": "every bracket is toned Jyutping",
+      "field": "example",
+      "text": "我[ngo5]去[heoi3]銀行[ngan4 hong4]。",
+      "pass": true
+    },
+    {
+      "rule": "every bracket is toned Jyutping",
+      "field": "example",
+      "text": "我[ngo]去[heoi]銀行。",
+      "pass": false
+    },
+    {
+      "rule": "every bracket is toned Jyutping",
+      "field": "example",
+      "text": "銀行[yínháng]",
+      "pass": false
+    },
+    {
+      "rule": "every bracket is toned Jyutping",
+      "field": "example",
+      "text": "你好[nei⁵ hou²]",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping over characters",
+      "field": "example",
+      "text": "我[ngo5]食咗[sik6 zo2]飯[faan6]。",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping over characters",
+      "field": "example",
+      "text": "我食咗飯[faan6]。",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping over characters",
+      "field": "example",
+      "text": "唱[coeng3]卡拉[kaa1 laa1]OK",
+      "pass": true
+    },
+    {
+      "rule": "Jyutping over characters",
+      "field": "example",
+      "text": "佢搭𨋢[daap3 lip1]。",
+      "pass": false
+    },
+    {
+      "rule": "Jyutping over characters",
+      "field": "example",
+      "text": "佢[keoi5]搭𨋢[daap3 lip1]。",
+      "pass": true
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "佢[keoi5]食咗[sik6 zo2]飯[faan6]。",
+      "pass": true
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "他[taa1]吃了[hek3 liu5]飯[faan6]。",
+      "pass": false
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "我哋[ngo5 dei6]去[heoi3]。",
+      "pass": true
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "我們[ngo5 mun4]去[heoi3]。",
+      "pass": false
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "其他[kei4 taa1]人[jan4]都[dou1]嚟[lai4]。",
+      "pass": true
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "呢個[ni1 go3]係[hai6]乜嘢[mat1 je5]？",
+      "pass": true
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "text": "這個[ze2 go3]是[si6]什麼[sam6 mo1]？",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under Jyutping",
+      "field": "example",
+      "example": "唔該晒。",
+      "text": "唔該[m4 goi1]晒[saai3]。",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under Jyutping",
+      "field": "example",
+      "example": "唔該晒。",
+      "text": "唔該[m4 goi1]。",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under Jyutping",
+      "field": "example",
+      "example": "唔該晒。",
+      "text": "唔該[m4 goi1]晒[saai3]！",
+      "pass": false
+    },
+    {
+      "rule": "written Cantonese",
+      "field": "example",
+      "example": "他吃了飯。",
+      "text": "他[taa1]吃了[hek3 liu5]飯[faan6]。",
+      "pass": true
+    }
+  ]
+}

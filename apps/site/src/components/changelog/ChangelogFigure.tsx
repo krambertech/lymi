@@ -18,6 +18,7 @@ import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { JapaneseCardFigure } from "./JapaneseCardFigure";
+import { PinyinFigure } from "./PinyinFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
@@ -51,6 +52,7 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "sign-in-apple": SignInAppleFigure,
   "command-menu": CommandMenuFigure,
   "japanese-card": JapaneseCardFigure,
+  pinyin: PinyinFigure,
 };
 
 interface Props {

@@ -286,6 +286,40 @@ it("says where a Tamil reading showed only for a grader that draws it over each 
   ]);
 });
 
+it("names Cantonese as yue, and leaves it out for a phone that shows its Jyutping as a line", async () => {
+  const student = await learner(db, "analytics-jyutping-since", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "廣東話", defaultLanguage: "zh-yue" });
+  const [bank, eat] = await addCards(ctx, [
+    { deckId: deck.id, term: "銀行", meaning: "bank", pronunciation: "ngan4 hong4" },
+    { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる", language: "ja" },
+  ]);
+  const bankId = bank?.status === "added" ? bank.card.id : "";
+  const eatId = eat?.status === "added" ? eat.card.id : "";
+  const at = new Date();
+  await gradeCard(ctx, { cardId: bankId, direction: "recognition", rating: 3, reviewedAt: at });
+  // A 0.0.6 phone draws pinyin, furigana and Tamil but shows Jyutping as a line.
+  const older = { over: true, inPlace: true, byWord: true, jyutping: false };
+  for (const cardId of [bankId, eatId]) {
+    await gradeCard(
+      ctx,
+      { cardId, direction: "recognition", rating: 3, reviewedAt: new Date(at.getTime() + 1000) },
+      older,
+    );
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language]);
+  expect(graded).toEqual([
+    ["cue", "yue"],
+    [undefined, undefined],
+    ["cue", "ja"],
+  ]);
+});
+
 it("counts the example's readings and the ones that faded, never the example", async () => {
   const student = await learner(db, "analytics-example-readings", "Learner");
   const { analytics, capture, settled } = writer();

@@ -25,3 +25,10 @@ describe("a language below the evaluation's bar", () => {
     expect(deckEnrichFields([], "xa")).toEqual([]);
   });
 });
+
+describe("a deck whose owner never chose", () => {
+  it("lets the AI write a Cantonese Reading under yue as under zh-yue", () => {
+    for (const tag of ["yue", "yue-HK", "zh-yue"])
+      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "pronunciation"]);
+  });
+});

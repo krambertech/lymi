@@ -4667,6 +4667,9 @@ msgstr "Віджети"
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
 
+msgid "won’t do, no"
+msgstr "не можна, ні"
+
 msgid "word"
 msgstr "слово"
 

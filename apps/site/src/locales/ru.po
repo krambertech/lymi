@@ -4667,6 +4667,9 @@ msgstr "Виджеты"
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
 
+msgid "won’t do, no"
+msgstr "нельзя, нет"
+
 msgid "word"
 msgstr "слово"
 

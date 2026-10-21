@@ -1,4 +1,4 @@
-import { type ReadingSegment, saysReading } from "@lymi/core";
+import { lettersReading, type ReadingSegment, saysReading, toneRuns } from "@lymi/core";
 import { READING_FADE } from "@lymi/design";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -84,6 +84,12 @@ function FadingRuby(props: Props) {
   return <Ruby {...props} fade={fade} />;
 }
 
+/** The largest a reading in letters is drawn, the lede's size, so a big cue's pinyin stays quiet. */
+const LETTERS_MAX = 15.5;
+
+/** A Jyutping tone number's size against its syllable's. */
+const TONE_SCALE = 0.7;
+
 /** An ellipsis is about one em across in either face. */
 const ELLIPSIS_EM = 1;
 
@@ -109,8 +115,14 @@ function Ruby({
   const flat = StyleSheet.flatten([resolved, style]);
   const size = flat.fontSize ?? 17;
   const drawn = fitType(size, fontScale, maxFontSizeMultiplier).drawn;
-  // Half the text's drawn size and never under 10 pt, as the web's `rt`.
-  const readingSize = Math.max(10, drawn / 2);
+  // Half the text's drawn size and never under 10 pt, as the web's `rt`; letters 0.4 of it, capped at the lede.
+  const letters = segments.some((segment) => segment.reading && lettersReading(segment.reading));
+  const readingSize = letters
+    ? Math.min(
+        Math.max(10, drawn * 0.4),
+        fitType(LETTERS_MAX, fontScale, maxFontSizeMultiplier).drawn,
+      )
+    : Math.max(10, drawn / 2);
   const slot = Math.ceil(readingSize * 1.2);
   const pitch = slot + Math.ceil(((flat.lineHeight ?? size * 1.2) * drawn) / size);
   const keep = useClamp(boxes.length, lines, drawn * ELLIPSIS_EM);
@@ -126,15 +138,15 @@ function Ruby({
       {run}
     </Text>
   );
-  const reading = (run: string) => (
+  const readingText = (run: string, size: number, lineHeight: number, inset = 0) => (
     <Text
       className="text-text-2"
       style={{
-        fontSize: readingSize,
-        lineHeight: slot,
+        fontSize: size,
+        lineHeight,
         fontWeight: "400",
         letterSpacing: 0,
-        paddingHorizontal: readingInset(run, readingSize),
+        paddingHorizontal: inset,
       }}
       allowFontScaling={false}
       numberOfLines={1}
@@ -143,6 +155,27 @@ function Ruby({
       {run}
     </Text>
   );
+  // React Native cannot raise a run inside a line, so a tone number is its own text at the row's top.
+  const reading = (run: string) => {
+    const parts = toneRuns(run);
+    const inset = readingInset(run, readingSize);
+    if (parts.length === 1) return readingText(run, readingSize, slot, inset);
+    return (
+      <View className="flex-row items-start" style={{ height: slot, paddingHorizontal: inset }}>
+        {parts.map((part, at) =>
+          part.tone ? (
+            // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+            <View key={at}>
+              {readingText(part.text, readingSize * TONE_SCALE, readingSize * TONE_SCALE)}
+            </View>
+          ) : (
+            // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+            <View key={at}>{readingText(part.text, readingSize, slot)}</View>
+          ),
+        )}
+      </View>
+    );
+  };
   // The ellipsis and the mark close the last line kept, so a cut never takes the ★ with it.
   const end = (
     <View className="flex-row items-end" style={{ paddingTop: slot }} onLayout={keep.onEnd}>

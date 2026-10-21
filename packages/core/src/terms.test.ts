@@ -22,6 +22,10 @@ describe("termKey", () => {
     expect(termKey("ru-RU", "замо́к")).toBe(termKey("ru", "замок"));
     expect(termKey("ru", "Ёжик")).toBe("ёжик");
   });
+  it("drops Ukrainian stress marks the same way, and keeps ї", () => {
+    expect(termKey("uk", "Ру́ки")).toBe("руки");
+    expect(termKey("uk-UA", "їжа́к")).toBe("їжак");
+  });
   it("keeps the mark in every other language", () => {
     expect(termKey("lt", "ą́")).toBe("ą́");
     expect(termKey("bg", "за́мок")).not.toBe(termKey("bg", "замок"));

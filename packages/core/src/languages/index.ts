@@ -20,6 +20,7 @@ import type {
   StressRules,
   SupportedTag,
 } from "./types";
+import { ukrainian } from "./ukrainian";
 
 export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./configured";
 export * from "./names";
@@ -47,6 +48,7 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ru: russian,
   ta: tamil,
+  uk: ukrainian,
   yue: cantonese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 

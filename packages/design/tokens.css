@@ -352,25 +352,25 @@
   }
   /* Languages written in Arabic script by default; Onest still draws their Latin and Cyrillic. */
   :is(
-      :lang(ar),
-      :lang(fa),
-      :lang(ur),
-      :lang(ps),
-      :lang(ckb),
-      :lang(ug),
-      :lang(sd):not(:lang(sd-Deva)),
-      :lang(ks):not(:lang(ks-Deva)),
-      :lang(arz),
-      :lang(apc),
-      :lang(ajp),
-      :lang(acm),
-      :lang(afb),
-      :lang(ary),
-      :lang(aeb),
-      :lang(arq),
-      :lang(ayl),
-      :lang(apd)
-    ) {
+    :lang(ar),
+    :lang(fa),
+    :lang(ur),
+    :lang(ps),
+    :lang(ckb),
+    :lang(ug),
+    :lang(sd):not(:lang(sd-Deva)),
+    :lang(ks):not(:lang(ks-Deva)),
+    :lang(arz),
+    :lang(apc),
+    :lang(ajp),
+    :lang(acm),
+    :lang(afb),
+    :lang(ary),
+    :lang(aeb),
+    :lang(arq),
+    :lang(ayl),
+    :lang(apd)
+  ) {
     font-family: "Onest", "Onest Fallback", var(--face-arab), ui-sans-serif, system-ui, sans-serif;
   }
   :is(:lang(he), :lang(yi)) {

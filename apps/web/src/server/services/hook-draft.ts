@@ -35,6 +35,9 @@ const DECK_MEANINGS = 8;
 /** One line the learner can read in a glance under the cue. */
 const MAX_WORDS = 6;
 
+/** The rule now lives in core, for the clients; language tests still read it from here. */
+export { hookable } from "@lymi/core";
+
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
 export const HOOK_PROMPT_VERSION = 4;
 

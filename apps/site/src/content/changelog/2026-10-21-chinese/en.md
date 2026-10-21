@@ -4,7 +4,7 @@ summary: Lymi has features made for Chinese, from pinyin over each character to 
 figure: pinyin
 ---
 
-Chinese has features in Lymi made just for it. In the welcome, choose A language, then Chinese. Lymi offers HSK 1 first, then HSK 2 and HSK 3.
+Chinese has features in Lymi made just for it. In the welcome, choose A language, then Chinese. Lymi offers HSK 1 first, then HSK 2.
 
 ## Chinese cards
 
@@ -19,7 +19,7 @@ Chinese has features in Lymi made just for it. In the welcome, choose A language
 
 ## Import from Pleco and Anki
 
-You can now import your Pleco flashcards. Open Settings and choose Pleco under Import. Choose simplified or traditional for the cards. The other form goes in the notes. Each Pleco category becomes a tag.
+You can now import your Pleco flashcards. On the web, open Settings and choose Pleco under Import. Choose simplified or traditional for the cards. The other form goes in the notes. Each Pleco category becomes a tag.
 
 Importing an HSK deck from Anki now keeps its pinyin as each card’s Reading. A traditional form goes in the notes. Example sentences keep their pinyin.
 

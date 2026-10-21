@@ -1,4 +1,5 @@
 import {
+  boldStress,
   examplesCarryReadings,
   type FieldRole,
   fieldsFromRoles,
@@ -497,7 +498,9 @@ export const anki: SourceAdapter<AnkiNote> = {
     const type = summary.noteTypes.find((t) => t.key === note.type);
     if (!type) return [];
     const chosen = choices.roles[type.key] ?? type.roles;
-    const values = note.fields.map((field, i) => importFieldText(type.fields[i] ?? "", field));
+    const values = note.fields.map((field, i) =>
+      importFieldText(type.fields[i] ?? "", field, (raw) => htmlToText(boldStress(raw))),
+    );
     const language = choices.languages[note.cards[0]?.deck ?? ""];
     const pinyin = readingEngine(language) === "pinyin";
     // Chinese examples keep pinyin once they draw it (docs/proposals/chinese.md, slice 4).

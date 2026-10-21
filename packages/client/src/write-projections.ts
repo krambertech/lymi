@@ -7,7 +7,7 @@ import {
   modeKey,
   modeOf,
   modesFromDirections,
-  normaliseTerm,
+  termKey,
 } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Card, CardHit, CardSearchPage, CardState, DeckSummary, Me } from "./api";
@@ -96,7 +96,10 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     userId: lookup.me?.id ?? "",
     deckId: input.deckId,
     term: input.term,
-    normalizedTerm: normaliseTerm(input.term),
+    normalizedTerm: termKey(
+      input.language === undefined ? (deck?.defaultLanguage ?? null) : input.language,
+      input.term,
+    ),
     meaning: input.meaning ?? null,
     pronunciation: input.pronunciation ?? null,
     example: input.example ?? null,
@@ -165,7 +168,9 @@ export function patchCard(card: Card, patch: CardPatch): Card {
     if (value !== undefined) (next as Record<string, unknown>)[field] = value;
   }
   if (reviewModes !== undefined) next.reviewModes = reviewModes;
-  if (patch.term !== undefined) next.normalizedTerm = normaliseTerm(patch.term);
+  if (patch.term !== undefined || patch.language !== undefined) {
+    next.normalizedTerm = termKey(next.language, next.term);
+  }
   // A section belongs to one deck, so a move without a section leaves it, as the server does.
   if (patch.deckId && patch.deckId !== card.deckId && patch.sectionId === undefined) {
     next.sectionId = null;

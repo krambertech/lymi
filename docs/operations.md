@@ -101,3 +101,7 @@ An exception reached PostHog Error Tracking. Open [Error Tracking](https://eu.po
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
 
 Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
+
+## The Russian stress backfill
+
+The `stress-backfill` cron job moves U+0301 out of Russian terms stored before the stress fold (ADR 0004): a stressed term with an empty pronunciation becomes the plain term with the stress as its pronunciation, a card beside another pronunciation keeps its stressed term, and two cards that become duplicates both stay. It runs hourly as the system actor and logs one JSON line with `split`, `folded`, `kept`, `duplicates` and `written`. `pnpm --filter @lymi/web backfill:stress --remote` prints the same counts against production without writing. Remove the job once a production run logs `written: 0`.

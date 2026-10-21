@@ -6,6 +6,7 @@ import {
   normalizeCardText,
   readingKey,
   sameReading,
+  termKey,
 } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
@@ -478,7 +479,7 @@ function localDuplicate(input: CardInput): { card: Card; deckName: string } | nu
   if (!client) return null;
   const lookup = cacheLookup(client);
   const language = addLanguage(input) ?? null;
-  const key = duplicateKey(language, normaliseTerm(input.term));
+  const key = duplicateKey(language, termKey(language, input.term));
   const reading = readingKey({ term: input.term, language, pronunciation: input.pronunciation });
   for (const [, rows] of client.getQueriesData<{ card: Card }[]>({ queryKey: ["decks"] })) {
     if (!Array.isArray(rows)) continue;

@@ -1,4 +1,4 @@
-import type { DAILY_GOAL_PRESETS, LearningKind } from "@lymi/core";
+import type { DAILY_GOAL_PRESETS, LearningKind, SupportedTag } from "@lymi/core";
 import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@lymi/core/catalog";
 
 // Welcome's choices, shared by the web and the phone so both ask the same questions with the same
@@ -16,16 +16,17 @@ export const START_DECKS = 4;
 /** Shelves a test deck sits on; every other subject is a subject. */
 const TEST_CATEGORIES = ["citizenship", "driving"];
 /**
- * Published decks a beginner in a language should start with, in the order to take them; the rest
- * of the language's decks follow in Explore's order. docs/proposals/japanese.md.
+ * Published decks a beginner in a supported language should start with, in the order to take them;
+ * the rest of the language's decks follow in Explore's order. docs/proposals/supported-languages.md.
  */
-export const BEGINNER_DECKS: Record<string, readonly string[]> = {
+export const BEGINNER_DECKS: Readonly<Record<SupportedTag, readonly string[]>> = {
   ja: [
     "read-japanese-kana",
     "japanese-n5-vocabulary-practice",
     "japanese-n4-vocabulary",
     "travel-japanese",
   ],
+  zh: ["chinese-hsk-1-vocabulary", "chinese-hsk-2-vocabulary"],
 };
 
 /** Minutes are a rough guide: about twenty seconds a review, rounded to a figure that reads as one. */
@@ -39,7 +40,10 @@ export const GOAL_MINUTES: Record<(typeof DAILY_GOAL_PRESETS)[number], number> =
 /** A language's decks, those a beginner starts from first and the rest in Explore's order. */
 export function languageDecks(catalog: PublicDeckSummary[], language: string | null) {
   const decks = catalog.filter((d) => taughtLanguage(d) === language);
-  const first = (language && BEGINNER_DECKS[language]) || [];
+  const first =
+    language && Object.hasOwn(BEGINNER_DECKS, language)
+      ? BEGINNER_DECKS[language as SupportedTag]
+      : [];
   const rank = (slug: string) => {
     const at = first.indexOf(slug);
     return at === -1 ? first.length : at;

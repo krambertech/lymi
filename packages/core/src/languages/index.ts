@@ -37,12 +37,12 @@ export type {
 /** Each record keeps its literal type, so a registry elsewhere can follow what a record turns on. */
 export const SUPPORTED_LANGUAGES = {
   ja: japanese,
+  zh: chinese,
 } as const satisfies Record<SupportedTag, LanguageSupport>;
 
 /** Every record, including one whose language has not yet joined SupportedTag. */
 export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
-  zh: chinese,
   ru: russian,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 

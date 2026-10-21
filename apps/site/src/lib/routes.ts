@@ -10,7 +10,6 @@ export const localizedPages = {
   landing: "/",
   languages: "/languages",
   estonian: "/languages/estonian",
-  chinese: "/languages/chinese",
   ...languagePages,
   assistants: "/ai-assistants",
   teachers: "/teachers",
@@ -28,7 +27,6 @@ export type LocalizedPage = keyof typeof localizedPages;
 /** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = [
   "/languages/estonian",
-  "/languages/chinese",
   "/languages/[language]",
   "/explore",
   "/explore/[slug]",

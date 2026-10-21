@@ -4,7 +4,6 @@ import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { CHINESE_PAGE_DECKS } from "../../lib/language-pages";
 import { openLymiUrl, signUpUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
@@ -36,9 +35,6 @@ import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { VoiceTiles } from "./VoiceTiles";
-
-export const CHINESE_TITLE = msg`Learn Chinese vocabulary with flashcards · Lymi`;
-export const CHINESE_BLURB = msg`A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole.`;
 
 const Zh = ({ children }: { children: ReactNode }) => <span lang="zh-Hans">{children}</span>;
 
@@ -148,7 +144,7 @@ function OwnAiSection() {
 }
 
 interface Props {
-  /** Every published Chinese deck in this locale. */
+  /** Every published Chinese deck in this locale, those a beginner starts from first. */
   decks: PublicDeckSummary[];
   locale: Locale;
 }
@@ -156,11 +152,6 @@ interface Props {
 /** The page for people learning Mandarin: pinyin that fades by character, readings kept apart, Pleco brought in. */
 export function ChineseView({ decks, locale }: Props) {
   const openAppUrl = openLymiUrl();
-  const rank = (slug: string) => {
-    const at = (CHINESE_PAGE_DECKS as readonly string[]).indexOf(slug);
-    return at === -1 ? CHINESE_PAGE_DECKS.length : at;
-  };
-  const ordered = [...decks].sort((a, b) => rank(a.slug) - rank(b.slug));
   const steps = CHINESE_PATH.flatMap((step) => {
     const deck = decks.find((d) => d.slug === step.slug);
     return deck
@@ -172,7 +163,7 @@ export function ChineseView({ decks, locale }: Props) {
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
       <header>
         <SiteNav openAppUrl={openAppUrl} current="chinese" />
-        <Hero firstDeck={ordered[0]} />
+        <Hero firstDeck={decks[0]} />
       </header>
 
       <main>
@@ -323,9 +314,9 @@ export function ChineseView({ decks, locale }: Props) {
           <ChineseBento />
         </Wide>
 
-        {ordered.length > 0 && (
+        {decks.length > 0 && (
           <LanguageDecks
-            decks={ordered}
+            decks={decks}
             locale={locale}
             shelf="chinese"
             body={

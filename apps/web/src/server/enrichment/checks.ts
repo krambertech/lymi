@@ -29,6 +29,10 @@ export type CheckedCard = {
   mayFill: readonly EnrichedField[];
   /** The deck teaches a language, so a meaning is a gloss rather than an explanation. */
   language: boolean;
+  /** The card's language tag, which says how an example writes its readings. */
+  tag?: string | null | undefined;
+  /** The learner's own example, which the card asked the model to add readings to. */
+  addReadingsTo?: string | undefined;
   /** The rules the card's language module adds. */
   rules?: readonly LanguageCheck[] | undefined;
   expect: CaseExpectations;
@@ -81,7 +85,8 @@ export function checkCard(card: CheckedCard, reply: Filled | undefined): CheckRe
   }
   for (const field of ENRICHED_FIELDS) {
     const text = reply[field]?.trim() || null;
-    if (!card.mayFill.includes(field)) {
+    const readings = field === "example" && card.addReadingsTo !== undefined;
+    if (!card.mayFill.includes(field) && !readings) {
       record(field, "only mayFill", text === null, text ?? undefined);
       continue;
     }
@@ -149,7 +154,7 @@ function style(
   }
   if (field === "example") {
     record(field, "no example for a sentence", !isSentence(card.term), text);
-    record(field, "under twelve words", words(stripReadings(text)) < 12, text);
+    record(field, "under twelve words", words(stripReadings(text, card.tag)) < 12, text);
   }
   if (field === "notes") {
     const lines = text.split("\n").filter((line) => line.trim());
@@ -164,8 +169,16 @@ function style(
   // Duplicates and search compare composed text, so a decomposed tone or accent mark would not match.
   record(field, "composed (NFC)", text === text.normalize("NFC"), text);
   for (const check of card.rules ?? []) {
-    if (check.field === field) record(field, check.rule, check.pass(text), text);
+    if (check.field !== field) continue;
+    const pass = check.pass(text, { term: card.term, example: card.addReadingsTo });
+    record(field, check.rule, pass, text);
   }
+}
+
+/** The rule a result counts under, with every includes or excludes check of a field as one. */
+export function ruleKey(result: CheckResult): string {
+  const { field, rule } = result;
+  return `${field}: ${rule.startsWith("includes ") || rule.startsWith("excludes ") ? rule.split(" ")[0] : rule}`;
 }
 
 /** Pass counts per rule, so a report shows which habit fails rather than which card. */
@@ -174,7 +187,7 @@ export function tally(
 ): Map<string, { pass: number; total: number }> {
   const byRule = new Map<string, { pass: number; total: number }>();
   for (const result of results) {
-    const key = `${result.field}: ${result.rule.startsWith("includes ") || result.rule.startsWith("excludes ") ? result.rule.split(" ")[0] : result.rule}`;
+    const key = ruleKey(result);
     const count = byRule.get(key) ?? { pass: 0, total: 0 };
     count.total += 1;
     if (result.pass) count.pass += 1;

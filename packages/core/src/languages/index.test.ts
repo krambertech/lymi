@@ -66,9 +66,9 @@ describe("stressRules", () => {
 });
 
 describe("examplesCarryReadings", () => {
-  it("lets Japanese examples carry readings, and Chinese ones not yet", () => {
+  it("lets Japanese and Chinese examples carry readings", () => {
     expect(examplesCarryReadings("ja")).toBe(true);
-    expect(examplesCarryReadings("zh")).toBe(false);
+    expect(examplesCarryReadings("zh-TW")).toBe(true);
     expect(examplesCarryReadings("ko")).toBe(false);
   });
 });
@@ -184,7 +184,8 @@ describe("languageFormat", () => {
       expect(format.example.sample).toMatch(pattern);
     }
     expect(languageFormat("ja")?.example).not.toBeNull();
-    expect(languageFormat("zh")?.example).toBeNull();
+    expect(languageFormat("zh")?.example?.sample).toBe("我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。");
+    expect(languageFormat("ko")?.example).toBeNull();
   });
 });
 

@@ -137,4 +137,62 @@ export default async function drive({ page, base, step, api, expect }) {
     const { cards } = await api(`/api/cards?term=${encodeURIComponent("东西")}`);
     return { graded, cards };
   });
+
+  await step(
+    "An example's pinyin fades over 行 read háng, which a Known 银行 reads, and never over 行 xíng",
+    async () => {
+      const bank = await deck("银行", "zh");
+      const { results } = await post("/api/cards/batch", {
+        cards: [
+          {
+            deckId: bank.id,
+            term: "银行",
+            meaning: "bank",
+            pronunciation: "yínháng",
+            enrich: false,
+          },
+        ],
+      });
+      // Easy a day ago: Known and not due, so it gives its pairs without joining the review.
+      const graded = await post("/api/review/grade", {
+        cardId: results[0].card.id,
+        direction: "recognition",
+        rating: 4,
+        reviewedAt: new Date(Date.now() - 86_400_000).toISOString(),
+      });
+      expect(graded.state).toBe(2);
+      const president = await deck("行长", "zh");
+      const added = await post("/api/cards/batch", {
+        cards: [
+          {
+            deckId: president.id,
+            term: "行长",
+            meaning: "bank president",
+            pronunciation: "hángzhǎng",
+            example: "行长说不行[hángzhǎng shuō bù xíng]。",
+            enrich: false,
+          },
+        ],
+      });
+      await page.goto(`/review?deck=${president.id}`);
+      await expect.poll(pinyin).toEqual(["háng", "zhǎng"]);
+      await reveal();
+      // The term's own pinyin stays; in the example only háng, the Known 银行's 行, fades.
+      await expect.poll(pinyin).toEqual(["háng", "zhǎng", "zhǎng", "shuō", "bù", "xíng"]);
+      await expect(page.locator("rt", { hasText: "háng" })).toHaveCount(2);
+      const card = added.results[0].card;
+      await page.goto(`/library/${president.id}?card=${card.id}`);
+      await expect
+        .poll(() =>
+          page
+            .getByRole("complementary")
+            .getByRole("article")
+            .locator("rt")
+            .filter({ visible: true })
+            .evaluateAll((rts) => rts.map((rt) => rt.textContent)),
+        )
+        .toEqual(["háng", "zhǎng", "zhǎng", "shuō", "bù", "xíng"]);
+      return { graded, card };
+    },
+  );
 }

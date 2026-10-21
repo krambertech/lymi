@@ -16,7 +16,7 @@ A configured language joins with an invented fixture in `apps/web/src/server/enr
 
 **Enforcement.** Each row in `packages/core/src/languages/configured.ts` states `enrichByDefault`. `recorded-run.test.ts` fails when a row has no fixture or disagrees with the recorded runs, and names the value to set. A language turns on only when it meets the bar in the latest run and in the run before, so a new language needs two runs, and turns off after one run below it: one noisy run can close the gate but never open it. Runs of different prompts are compared only on the cases both answered, so a new fixture is not a regression; two runs of one prompt are not compared, since they differ only by noise.
 
-**Where it stands.** Filipino and Tamil sit at the bar, so runs of an unchanged prompt move them: Filipino misses two or three stress marks a run (baháy for báhay) and its gate is open; Tamil lost five romanizations in one run and its gate is closed. Every other configured language passes.
+**Where it stands.** Filipino and Tamil sit at the bar, so runs of an unchanged prompt move them: Filipino misses two or three stress marks a run (baháy for báhay) and its gate is open; Tamil lost five romanizations in one run, then passed two in a row, so its gate is open too. Every other configured language passes.
 
 ## Voices
 

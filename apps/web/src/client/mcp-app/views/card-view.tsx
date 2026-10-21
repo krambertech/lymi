@@ -23,7 +23,7 @@ export function CardView({ card }: { card: ViewCard }) {
     {
       label: t`Example`,
       // Small type leaves no room for furigana, so the example reads as written.
-      text: card.example && stripReadings(card.example),
+      text: card.example && stripReadings(card.example, card.language),
       field: "example",
       ai: card.exampleSource === "ai",
       lang,

@@ -3,7 +3,13 @@ import { Hono } from "hono";
 import { beforeAll, describe, expect, it } from "vitest";
 import type { Bindings } from "./env";
 import type { AppEnv } from "./index";
-import { clientSupports, requireSupportedPhone } from "./phone-clients";
+import {
+  clientSupports,
+  EXAMPLE_PINYIN_SINCE,
+  leaveOutExamplePinyin,
+  requireSupportedPhone,
+  withoutExamplePinyin,
+} from "./phone-clients";
 import { type Session, type TestApp, testApp } from "./test-app";
 
 const phone = (version: string) => ({
@@ -89,5 +95,51 @@ describe("clientSupports", () => {
     expect(await kind(phone("1.3.0"))).toBe("new");
     expect(await kind({})).toBe("new");
     expect(await kind({ "x-lymi-client": "platform=android; version=9.0.0" })).toBe("old");
+  });
+});
+
+describe("example pinyin for an older phone", () => {
+  const cards = {
+    card: { example: "我去银行[yínháng]。", language: "zh" },
+    results: [
+      { card: { example: "行长[hángzhǎng]来了。", language: "zh-TW" } },
+      { card: { example: "食[た]べる", language: "ja" } },
+    ],
+  };
+  const route = new Hono<AppEnv>()
+    .use("/api/*", requireSupportedPhone)
+    .use("/api/*", leaveOutExamplePinyin)
+    .get("/api/cards", (c) => c.json(cards, 200, { "x-lymi-test": "kept" }));
+  const env = { PHONE_MINIMUM_VERSION_IOS: "0.0.1" } as Bindings;
+  const fetched = (headers: Record<string, string>) =>
+    route.request("/api/cards", { headers }, env);
+
+  it("takes the pinyin out of each Chinese example, and leaves furigana and the response's headers", async () => {
+    const response = await fetched(phone("0.0.4"));
+    expect(response.headers.get("x-lymi-test")).toBe("kept");
+    expect(await response.json()).toEqual({
+      card: { example: "我去银行。", language: "zh" },
+      results: [
+        { card: { example: "行长来了。", language: "zh-TW" } },
+        { card: { example: "食[た]べる", language: "ja" } },
+      ],
+    });
+  });
+
+  it("sends it to a release that draws it, and to every caller without the header", async () => {
+    for (const headers of [phone(EXAMPLE_PINYIN_SINCE.ios as string), {}]) {
+      expect(await (await fetched(headers)).json()).toEqual(cards);
+    }
+  });
+
+  it("leaves a value that is not a card's example alone", () => {
+    expect(withoutExamplePinyin({ example: "你好[nǐ hǎo]", language: "ko" })).toEqual({
+      example: "你好[nǐ hǎo]",
+      language: "ko",
+    });
+    expect(withoutExamplePinyin({ notes: "你好[nǐ hǎo]", language: "zh" })).toEqual({
+      notes: "你好[nǐ hǎo]",
+      language: "zh",
+    });
   });
 });

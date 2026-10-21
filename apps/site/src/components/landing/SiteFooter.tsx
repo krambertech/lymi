@@ -4,7 +4,7 @@ import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
-import { SOURCE_CODE_URL, USE_CASE_LINKS } from "./site-links";
+import { USE_CASE_LINKS } from "./site-links";
 
 const linkClass = "rounded-xs hoverable:hover:text-text";
 
@@ -82,11 +82,6 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
             <li>
               <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
                 <Trans>Changelog</Trans>
-              </a>
-            </li>
-            <li>
-              <a href={SOURCE_CODE_URL} className={linkClass}>
-                <Trans>Source code</Trans>
               </a>
             </li>
             <li>

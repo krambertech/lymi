@@ -12,8 +12,6 @@ import {
 import { LANGUAGE_PAGES } from "../../lib/language-pages";
 import type { LocalizedPage } from "../../lib/routes";
 
-export const SOURCE_CODE_URL = "https://github.com/krambertech/lymi";
-
 export interface UseCaseLink {
   page: LocalizedPage;
   label: MessageDescriptor;

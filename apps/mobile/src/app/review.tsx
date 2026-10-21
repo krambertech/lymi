@@ -792,7 +792,7 @@ function Run({
       ...(peeked ? { aid: "hook" as const } : {}),
       ...recallTimes(),
       // Counted from the card as it shows, edits made during this review included.
-      ...readingsFadedField(qc, (edits.get(item.card.id) ?? item.card).example),
+      ...readingsFadedField(qc, edits.get(item.card.id) ?? item.card),
     };
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();

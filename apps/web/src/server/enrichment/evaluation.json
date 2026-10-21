@@ -308,6 +308,39 @@
       ]
     },
     {
+      "id": "ja-en-n4",
+      "name": "Japanese N4",
+      "language": "ja",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "ja-n4-01",
+          "term": "電車",
+          "expect": {
+            "meaning": { "oneOf": ["train", "electric train"] },
+            "pronunciation": { "oneOf": ["でんしゃ"] }
+          }
+        },
+        {
+          "id": "ja-n4-02",
+          "term": "新しい",
+          "expect": {
+            "meaning": { "oneOf": ["new"] },
+            "pronunciation": { "oneOf": ["あたらしい"] }
+          }
+        },
+        {
+          "id": "ja-n4-03",
+          "term": "先生",
+          "expect": {
+            "meaning": { "includes": ["teacher"] },
+            "pronunciation": { "oneOf": ["せんせい"] }
+          }
+        }
+      ]
+    },
+    {
       "id": "zh-en",
       "name": "HSK 1",
       "language": "zh",
@@ -317,12 +350,251 @@
         {
           "id": "zh-en-01",
           "term": "学习",
-          "expect": { "meaning": { "includes": ["stud"] }, "pronunciation": { "oneOf": ["xuéxí"] } }
+          "expect": {
+            "meaning": { "includes": ["stud"] },
+            "pronunciation": { "oneOf": ["xuéxí", "xué xí"] }
+          }
         },
         {
           "id": "zh-en-02",
           "term": "书",
           "expect": { "meaning": { "oneOf": ["book"] }, "pronunciation": { "oneOf": ["shū"] } }
+        },
+        {
+          "id": "zh-en-03",
+          "term": "银行",
+          "expect": {
+            "meaning": { "oneOf": ["bank"] },
+            "pronunciation": { "oneOf": ["yínháng", "yín háng"] }
+          }
+        },
+        {
+          "id": "zh-en-04",
+          "term": "行",
+          "meaning": "row; line of business",
+          "expect": { "pronunciation": { "oneOf": ["háng"] } }
+        },
+        {
+          "id": "zh-en-05",
+          "term": "行",
+          "meaning": "to walk; OK",
+          "expect": { "pronunciation": { "oneOf": ["xíng"] } }
+        },
+        {
+          "id": "zh-en-06",
+          "term": "不行",
+          "expect": { "meaning": "filled", "pronunciation": { "oneOf": ["bùxíng", "bù xíng"] } }
+        },
+        {
+          "id": "zh-en-07",
+          "term": "行长",
+          "meaning": "bank president",
+          "expect": { "pronunciation": { "oneOf": ["hángzhǎng", "háng zhǎng"] } }
+        },
+        {
+          "id": "zh-en-08",
+          "term": "长",
+          "meaning": "long",
+          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
+        },
+        {
+          "id": "zh-en-09",
+          "term": "长",
+          "meaning": "to grow",
+          "expect": { "pronunciation": { "oneOf": ["zhǎng"] } }
+        },
+        {
+          "id": "zh-en-10",
+          "term": "长城",
+          "expect": {
+            "meaning": { "includes": ["great wall"] },
+            "pronunciation": { "oneOf": ["Chángchéng", "Cháng chéng", "chángchéng", "cháng chéng"] }
+          }
+        },
+        {
+          "id": "zh-en-11",
+          "term": "还",
+          "meaning": "still; also",
+          "expect": { "pronunciation": { "oneOf": ["hái"] } }
+        },
+        {
+          "id": "zh-en-12",
+          "term": "还",
+          "meaning": "to give back",
+          "expect": { "pronunciation": { "oneOf": ["huán"] } }
+        },
+        {
+          "id": "zh-en-13",
+          "term": "东西",
+          "meaning": "thing",
+          "expect": { "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] } }
+        },
+        {
+          "id": "zh-en-14",
+          "term": "东西",
+          "meaning": "east and west",
+          "expect": { "pronunciation": { "oneOf": ["dōngxī", "dōng xī"] } }
+        },
+        {
+          "id": "zh-en-15",
+          "term": "一点儿",
+          "expect": {
+            "meaning": { "includes": ["little"] },
+            "pronunciation": { "oneOf": ["yīdiǎnr", "yī diǎnr"] }
+          }
+        },
+        {
+          "id": "zh-en-16",
+          "term": "哪儿",
+          "expect": { "meaning": { "includes": ["where"] }, "pronunciation": { "oneOf": ["nǎr"] } }
+        },
+        {
+          "id": "zh-en-17",
+          "term": "玩儿",
+          "expect": { "meaning": { "includes": ["play"] }, "pronunciation": { "oneOf": ["wánr"] } }
+        },
+        {
+          "id": "zh-en-18",
+          "term": "一起",
+          "expect": {
+            "meaning": { "includes": ["together"] },
+            "pronunciation": { "oneOf": ["yīqǐ", "yī qǐ"] }
+          }
+        },
+        {
+          "id": "zh-en-19",
+          "term": "不是",
+          "expect": { "meaning": "filled", "pronunciation": { "oneOf": ["bùshì", "bù shì"] } }
+        },
+        {
+          "id": "zh-en-20",
+          "term": "不客气",
+          "expect": {
+            "meaning": { "includes": ["welcome"] },
+            "pronunciation": { "oneOf": ["bùkèqi", "bù kèqi", "bù kè qi"] }
+          }
+        },
+        {
+          "id": "zh-en-21",
+          "term": "卡拉OK",
+          "expect": {
+            "meaning": { "includes": ["karaoke"] },
+            "pronunciation": { "oneOf": ["kǎlā OK", "kǎlāOK", "kǎ lā OK"] }
+          }
+        },
+        {
+          "id": "zh-en-22",
+          "term": "朋友",
+          "expect": {
+            "meaning": { "oneOf": ["friend"] },
+            "pronunciation": { "oneOf": ["péngyou", "péng you"] }
+          }
+        },
+        {
+          "id": "zh-en-23",
+          "term": "觉得",
+          "expect": { "meaning": "filled", "pronunciation": { "oneOf": ["juéde", "jué de"] } }
+        },
+        {
+          "id": "zh-en-24",
+          "term": "睡觉",
+          "expect": {
+            "meaning": { "includes": ["sleep"] },
+            "pronunciation": { "oneOf": ["shuìjiào", "shuì jiào"] }
+          }
+        },
+        {
+          "id": "zh-en-25",
+          "term": "音乐",
+          "expect": {
+            "meaning": { "oneOf": ["music"] },
+            "pronunciation": { "oneOf": ["yīnyuè", "yīn yuè"] }
+          }
+        },
+        {
+          "id": "zh-en-26",
+          "term": "快乐",
+          "expect": {
+            "meaning": { "includes": ["happy"] },
+            "pronunciation": { "oneOf": ["kuàilè", "kuài lè"] }
+          }
+        },
+        {
+          "id": "zh-en-27",
+          "term": "银行",
+          "meaning": "bank",
+          "example": "我去银行取钱。",
+          "expect": {
+            "pronunciation": { "oneOf": ["yínháng", "yín háng"] },
+            "example": { "includes": ["háng]"] }
+          }
+        },
+        {
+          "id": "zh-en-28",
+          "term": "不行",
+          "meaning": "not OK",
+          "example": "今天不行，明天吧。",
+          "expect": {
+            "pronunciation": { "oneOf": ["bùxíng", "bù xíng"] },
+            "example": { "includes": ["xíng]"], "excludes": ["háng"] }
+          }
+        },
+        {
+          "id": "zh-en-29",
+          "term": "东西",
+          "meaning": "thing",
+          "example": "我想买点儿东西。",
+          "expect": {
+            "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] },
+            "example": { "includes": ["xi]"], "excludes": ["xī"] }
+          }
+        },
+        {
+          "id": "zh-en-30",
+          "term": "还",
+          "meaning": "to give back",
+          "example": "明天我还你书。",
+          "expect": {
+            "pronunciation": { "oneOf": ["huán"] },
+            "example": { "includes": ["huán"], "excludes": ["hái"] }
+          }
+        }
+      ]
+    },
+    {
+      "id": "zh-tw-en",
+      "name": "華語 A1",
+      "language": "zh-TW",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "zh-tw-01",
+          "term": "學習",
+          "expect": {
+            "meaning": { "includes": ["stud"] },
+            "pronunciation": { "oneOf": ["xuéxí", "xué xí"] }
+          }
+        },
+        {
+          "id": "zh-tw-02",
+          "term": "銀行",
+          "expect": {
+            "meaning": { "oneOf": ["bank"] },
+            "pronunciation": { "oneOf": ["yínháng", "yín háng"] }
+          }
+        },
+        {
+          "id": "zh-tw-03",
+          "term": "還",
+          "meaning": "to give back",
+          "expect": { "pronunciation": { "oneOf": ["huán"] }, "example": { "excludes": ["hái"] } }
+        },
+        {
+          "id": "zh-tw-04",
+          "term": "長",
+          "meaning": "long",
+          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
         }
       ]
     },
@@ -2001,7 +2273,10 @@
         {
           "id": "es-uk-02",
           "term": "tener",
-          "expect": { "meaning": { "oneOf": ["мати"] }, "example": "filled" }
+          "expect": {
+            "meaning": { "oneOf": ["мати"], "excludes": ["иметь"] },
+            "example": "filled"
+          }
         }
       ]
     },

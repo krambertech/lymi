@@ -1694,8 +1694,8 @@ msgstr "Бесплатные японские колоды с чтением и 
 msgid "free of charge"
 msgstr "бесплатно"
 
-msgid "Free, open source, and yours"
-msgstr "Бесплатно, открыто и твоё"
+msgid "Free, works offline, and yours"
+msgstr "Бесплатно, офлайн и твоё"
 
 msgid "French"
 msgstr "Французский"
@@ -2367,20 +2367,20 @@ msgstr "Lymi для преподавателей · Одна колода на �
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi есть публичный API. Добавь слово через быструю команду на телефоне, перенеси список из таблицы или покажи на своём сайте, что пора повторить."
 
+msgid "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+msgstr "У Lymi есть публичный API. Добавляй карточки через быструю команду на телефоне или из таблицы либо показывай на своём сайте, что пора повторить."
+
 msgid "Lymi home"
 msgstr "Главная страница Lymi"
+
+msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
+msgstr "Lymi — приложение с флеш-карточками и интервальными повторениями. Добавь слово или термин, AI впишет значение, и карточка вернётся перед тем, как ты её забудешь. Бесплатно."
 
 msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
 msgstr "Lymi — приложение с флеш-карточками: оно возвращает каждую карточку как раз перед тем, как ты её забудешь. Бесплатно."
 
-msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
-msgstr "Lymi — приложение с флеш-карточками и интервальными повторениями, с открытым кодом. Добавь слово или термин, AI впишет значение, и карточка вернётся перед тем, как ты её забудешь. Бесплатно."
-
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi бесплатный, а первая карточка займёт минуту."
-
-msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-msgstr "У Lymi открытый код и публичный API. Добавляй карточки через быструю команду на телефоне или из таблицы либо показывай на своём сайте, что пора повторить."
 
 msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
 msgstr "Lymi предоставляет Krambertech OÜ, эстонское частное общество с ограниченной ответственностью. В этой политике «Lymi», «мы» и «нас» означают Krambertech OÜ. Связаться с нами можно по адресу <0>hello@lymi.app</0>."
@@ -2599,8 +2599,8 @@ msgstr "Новые"
 msgid "New cards land here."
 msgstr "Новые карточки появятся здесь."
 
-msgid "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
-msgstr "Новые возможности и улучшения Lymi — приложения с флеш-карточками и интервальными повторениями, с открытым кодом."
+msgid "New features and improvements in Lymi, the flashcard app with spaced repetition."
+msgstr "Новые возможности и улучшения Lymi — приложения с флеш-карточками и интервальными повторениями."
 
 msgid "New York DMV written test"
 msgstr "Письменный экзамен DMV в Нью-Йорке"
@@ -2764,9 +2764,6 @@ msgstr "Открыть Lymi"
 
 msgid "Open menu"
 msgstr "Открыть меню"
-
-msgid "Open source"
-msgstr "Открытый код"
 
 msgid "Open the deck"
 msgstr "Открыть колоду"
@@ -3139,6 +3136,9 @@ msgstr "Повторяй несколько минут в день"
 msgid "Review a few minutes a day."
 msgstr "Повторяй несколько минут в день."
 
+msgid "Review and add cards without a connection. Everything syncs when you’re back online."
+msgstr "Повторяй и добавляй карточки без интернета. Всё синхронизируется, как только ты снова будешь онлайн."
+
 msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 msgstr "Пока существует аккаунт, история повторений только дополняется, чтобы расписание и запись обучения оставались точными. Отмена создаёт отдельную запись, а не переписывает исходное повторение."
 
@@ -3205,8 +3205,8 @@ msgstr "продажа"
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизируй с частотой вдвое выше максимальной"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
-msgstr "Сохрани слово, термин или идею как флеш-карточку. Lymi покажет её снова как раз перед тем, как ты забудешь. Код открыт, пользование бесплатное."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
+msgstr "Сохрани слово, термин или идею как флеш-карточку. Lymi покажет её снова как раз перед тем, как ты забудешь. Бесплатно."
 
 msgid "Say it"
 msgstr "Произношение"
@@ -3417,9 +3417,6 @@ msgstr "Договорились"
 
 msgid "Sounds good; that works"
 msgstr "Договорились; подходит"
-
-msgid "Source code"
-msgstr "Исходный код"
 
 msgid "Sources"
 msgstr "Источники"
@@ -3675,9 +3672,6 @@ msgstr "Подрумянивание, которое придаёт вкус ж�
 
 msgid "The cards from this page will land here."
 msgstr "Карточки с этой страницы появятся здесь."
-
-msgid "The code is public on GitHub, so anyone can see how Lymi works."
-msgstr "Код открыт на GitHub, так что любой может посмотреть, как работает Lymi."
 
 msgid "The cost of making one more unit"
 msgstr "Сколько стоит произвести ещё одну единицу"
@@ -4458,6 +4452,9 @@ msgstr "Работа"
 
 msgid "Work and study"
 msgstr "Работа и учёба"
+
+msgid "Works offline"
+msgstr "Работает без интернета"
 
 msgid "Writing"
 msgstr "Письмо"

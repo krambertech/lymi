@@ -49,7 +49,7 @@ A published deck page translates its own chrome, title, description and structur
 
 ## Structured data and llms.txt
 
-`apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which carries the same `@id`, the AGPL licence and the repository in `sameAs` wherever it appears, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.
+`apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which carries the same `@id` wherever it appears, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.
 
 `/llms.txt` gives an assistant one definition of Lymi, taken word for word from the homepage description, and the URLs worth following. It holds no count, and `llms.test.ts` fails when one appears.
 

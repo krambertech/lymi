@@ -2,30 +2,30 @@
  * Each supported language's AI text, one module per language, so generic prompts never name one.
  * docs/proposals/supported-languages.md.
  */
-import { languageKey, type SupportedTag, supportedLanguage } from "@lymi/core";
+import { languageSupport, type SupportedTag } from "@lymi/core";
+import { chinese } from "./chinese";
 import { japanese } from "./japanese";
 import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
+/** Every supported language, and Chinese, whose module is evaluated before zh joins SupportedTag. */
+type PromptTag = SupportedTag | "zh";
+
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
-} as const satisfies Record<SupportedTag, LanguagePrompts>;
+  zh: chinese,
+} as const satisfies Record<PromptTag, LanguagePrompts>;
 
-/** Chinese keeps its lesson reading here until its module lands. */
-const CONFIGURED_LESSON: Readonly<Record<string, string>> = { zh: "pinyin" };
-
-/** The AI text for a supported language, or null for any other. */
+/** The AI text for a language with a prompt module, or null for any other. */
 export function languagePrompts(tag: string | null | undefined): LanguagePrompts | null {
-  const support = supportedLanguage(tag);
-  return support ? LANGUAGE_PROMPTS[support.tag] : null;
+  const record = languageSupport(tag)?.tag;
+  return record && Object.hasOwn(LANGUAGE_PROMPTS, record)
+    ? LANGUAGE_PROMPTS[record as PromptTag]
+    : null;
 }
 
 /** What a reading printed in a lesson looks like in this language, or undefined when no rule says. */
 export function lessonReading(tag: string | null | undefined): string | undefined {
-  const key = languageKey(tag);
-  return (
-    languagePrompts(tag)?.lesson ??
-    (Object.hasOwn(CONFIGURED_LESSON, key) ? CONFIGURED_LESSON[key] : undefined)
-  );
+  return languagePrompts(tag)?.lesson;
 }

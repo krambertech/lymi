@@ -2,8 +2,8 @@
  * Pinyin inline in an example, as Anki's Chinese decks write it: `你好[nǐ hǎo]`, where the bracket
  * reads as many Han characters just before it as it has syllables.
  */
-import { isHan, type PinyinSegment } from "./align";
-import { pinyinSyllables } from "./split";
+import { alignPinyin, isHan, type PinyinSegment } from "./align";
+import { cleanPinyin, pinyinSyllables, readingTokens } from "./split";
 
 /** A bracket that may hold pinyin: letters, tone marks or numbers, spaces and apostrophes. */
 export const PINYIN_BRACKET = /\[([\p{Script=Latin}\p{M}0-5 '’:]{1,60})\]/gu;
@@ -42,6 +42,18 @@ export function parsePinyin(text: string): PinyinSegment[] {
   }
   out.push({ text: text.slice(cursor) });
   return out.filter((segment) => segment.text);
+}
+
+/**
+ * An example's inline pinyin as one run per Han character, in tone marks, so each syllable can
+ * fade on its own: `你好[ni3 hao3]` → 你 nǐ, 好 hǎo.
+ */
+export function pinyinExampleSegments(text: string): PinyinSegment[] {
+  return parsePinyin(text).flatMap((segment) => {
+    if (segment.reading === undefined) return [segment];
+    const reading = cleanPinyin(segment.reading);
+    return alignPinyin(segment.text, readingTokens(reading)) ?? [{ ...segment, reading }];
+  });
 }
 
 /** Text with its inline pinyin taken out: `我说你好[nǐ hǎo]` → `我说你好`. */

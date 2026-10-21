@@ -15,9 +15,9 @@ const RECOGNITION: ReviewMode = { cue: "term", target: "meaning" };
 const PRODUCTION: ReviewMode = { cue: "meaning", target: "term" };
 const YESTERDAY = "2026-10-16T09:00:00.000Z";
 
-const row = (term: string, pronunciation: string, state: number | null): DeckRow =>
+const row = (term: string, pronunciation: string, state: number | null, language = "ja"): DeckRow =>
   ({
-    card: { id: term, term, pronunciation, language: "ja" },
+    card: { id: term, term, pronunciation, language },
     state:
       state === null ? null : { state, mode: RECOGNITION, lastReview: state ? YESTERDAY : null },
   }) as unknown as DeckRow;
@@ -46,7 +46,7 @@ const graded = (
 };
 
 const faded = (qc: QueryClient, example: string) =>
-  markKnownReadings(parseReadings(example), cachedKnownReadings(qc).known)
+  markKnownReadings(parseReadings(example), cachedKnownReadings(qc).known, "ja")
     .filter((segment) => segment.known)
     .map((segment) => segment.text);
 
@@ -141,15 +141,34 @@ describe("cachedKnownReadings", () => {
 describe("readingsFadedField", () => {
   it("counts the example's faded readings once every deck is cached, a zero included", () => {
     const qc = studying();
-    expect(readingsFadedField(qc, EXAMPLE)).toEqual({ readingsFaded: 1 });
-    expect(readingsFadedField(qc, "毎朝[まいあさ]")).toEqual({ readingsFaded: 0 });
+    expect(readingsFadedField(qc, { example: EXAMPLE, language: "ja" })).toEqual({
+      readingsFaded: 1,
+    });
+    expect(readingsFadedField(qc, { example: "毎朝[まいあさ]", language: "ja" })).toEqual({
+      readingsFaded: 0,
+    });
+  });
+
+  it("counts pinyin by the card's language, a Known character fading only in its own reading", () => {
+    const qc = new QueryClient();
+    qc.setQueryData(decksQuery.queryKey, [{ id: "z" }] as never);
+    qc.setQueryData(deckCardsQuery("z").queryKey, [row("银行", "yínháng", 2, "zh")]);
+    expect(readingsFadedField(qc, { example: "行长[hángzhǎng]来了。", language: "zh" })).toEqual({
+      readingsFaded: 1,
+    });
+    expect(readingsFadedField(qc, { example: "不行[bù xíng]。", language: "zh" })).toEqual({
+      readingsFaded: 0,
+    });
+    expect(readingsFadedField(qc, { example: "行长[hángzhǎng]来了。", language: "ja" })).toEqual(
+      {},
+    );
   });
 
   it("says nothing for an example without readings, or while a deck's cards are not cached", () => {
     const qc = studying();
-    expect(readingsFadedField(qc, "パンを食べる。")).toEqual({});
-    expect(readingsFadedField(qc, null)).toEqual({});
+    expect(readingsFadedField(qc, { example: "パンを食べる。", language: "ja" })).toEqual({});
+    expect(readingsFadedField(qc, { example: null, language: "ja" })).toEqual({});
     qc.setQueryData(decksQuery.queryKey, [{ id: "d" }, { id: "e" }] as never);
-    expect(readingsFadedField(qc, EXAMPLE)).toEqual({});
+    expect(readingsFadedField(qc, { example: EXAMPLE, language: "ja" })).toEqual({});
   });
 });

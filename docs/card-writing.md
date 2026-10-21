@@ -27,6 +27,13 @@ A Japanese card is shaped by its language, with no setting of its own:
 - **Notes**: the word type and the polite form on one line, "ichidan verb · 食べます", "i-adjective · 高いです", and a transitive or intransitive pair when there is one.
 - **Example**: one short sentence with a reading in square brackets after each run of kanji, and none over kana: `毎朝[まいあさ]パンを食[た]べます。`. A reading over a longer stretch, Anki's `食べます[たべます]`, is read the same way.
 
+## Chinese cards
+
+- **Term**: the word in the script its deck's tag names, simplified or traditional; Lymi never converts between them.
+- **Reading**: pinyin in tone marks and citation tones, as dictionaries write them: 学习 xuéxí, 不是 bù shì, 东西 dōngxi. Tone numbers, xue2xi2, are stored as marks.
+- **Notes**: a noun's usual measure word, "*一本书*: 本 for books".
+- **Example**: one short sentence with pinyin in square brackets after each word, one syllable per character, and none after punctuation, letters or digits: `我[wǒ]去[qù]银行[yínháng]。`.
+
 The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
 
 ## Korean cards

@@ -1,0 +1,565 @@
+{
+  "about": "Invented cases for the zh module's lesson, hook and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Mandarin reader should review these with chinese.ts.",
+  "lesson": [
+    {
+      "term": "学习",
+      "printed": "xué xí",
+      "reading": "xué xí"
+    },
+    {
+      "term": "学习",
+      "printed": "xue2 xi2",
+      "reading": "xué xí"
+    },
+    {
+      "term": "学习",
+      "printed": "xue2xi2",
+      "reading": "xuéxí"
+    },
+    {
+      "term": "银行",
+      "printed": "yin2hang2",
+      "reading": "yínháng"
+    },
+    {
+      "term": "行",
+      "printed": "hang2",
+      "reading": "háng"
+    },
+    {
+      "term": "行",
+      "printed": "xing2",
+      "reading": "xíng"
+    },
+    {
+      "term": "不行",
+      "printed": "bu4 xing2",
+      "reading": "bù xíng"
+    },
+    {
+      "term": "行长",
+      "printed": "hang2zhang3",
+      "reading": "hángzhǎng"
+    },
+    {
+      "term": "长",
+      "printed": "chang2",
+      "reading": "cháng"
+    },
+    {
+      "term": "长",
+      "printed": "zhang3",
+      "reading": "zhǎng"
+    },
+    {
+      "term": "还",
+      "printed": "hai2",
+      "reading": "hái"
+    },
+    {
+      "term": "还",
+      "printed": "huan2",
+      "reading": "huán"
+    },
+    {
+      "term": "东西",
+      "printed": "dong1xi5",
+      "reading": "dōngxi"
+    },
+    {
+      "term": "东西",
+      "printed": "dong1 xi1",
+      "reading": "dōng xī"
+    },
+    {
+      "term": "一点儿",
+      "printed": "yi1 dian3 r5",
+      "reading": "yī diǎn r"
+    },
+    {
+      "term": "一点儿",
+      "printed": "yīdiǎnr",
+      "reading": "yīdiǎnr"
+    },
+    {
+      "term": "哪儿",
+      "printed": "na3r",
+      "reading": "nǎr"
+    },
+    {
+      "term": "一起",
+      "printed": "yi1 qi3",
+      "reading": "yī qǐ"
+    },
+    {
+      "term": "不是",
+      "printed": "bu4 shi4",
+      "reading": "bù shì"
+    },
+    {
+      "term": "女儿",
+      "printed": "nü3 er2",
+      "reading": "nǚ ér"
+    },
+    {
+      "term": "绿",
+      "printed": "lv4",
+      "reading": "lǜ"
+    },
+    {
+      "term": "绿",
+      "printed": "lu:4",
+      "reading": "lǜ"
+    },
+    {
+      "term": "卡拉OK",
+      "printed": "ka3la1 OK",
+      "reading": "kǎlā OK"
+    },
+    {
+      "term": "朋友",
+      "printed": "Peng2you5",
+      "reading": "Péngyou"
+    },
+    {
+      "term": "學習",
+      "printed": "xue2xi2",
+      "reading": "xuéxí"
+    }
+  ],
+  "hook": [
+    {
+      "term": "电脑",
+      "pronunciation": "diànnǎo",
+      "meaning": "computer",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "火车",
+      "pronunciation": "huǒchē",
+      "meaning": "train",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "飞机",
+      "pronunciation": "fēijī",
+      "meaning": "airplane",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "手机",
+      "pronunciation": "shǒujī",
+      "meaning": "mobile phone",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "电视",
+      "pronunciation": "diànshì",
+      "meaning": "television",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "大学",
+      "pronunciation": "dàxué",
+      "meaning": "university",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "中国",
+      "pronunciation": "Zhōngguó",
+      "meaning": "China",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "银行",
+      "pronunciation": "yínháng",
+      "meaning": "bank",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "行",
+      "pronunciation": "xíng",
+      "meaning": "OK; to walk",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "长",
+      "pronunciation": "cháng",
+      "meaning": "long",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "还",
+      "pronunciation": "huán",
+      "meaning": "to give back",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "东西",
+      "pronunciation": "dōngxi",
+      "meaning": "thing",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "一点儿",
+      "pronunciation": "yīdiǎnr",
+      "meaning": "a little",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "书",
+      "pronunciation": "shū",
+      "meaning": "book",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "茶",
+      "pronunciation": "chá",
+      "meaning": "tea",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "猫",
+      "pronunciation": "māo",
+      "meaning": "cat",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "朋友",
+      "pronunciation": "péngyou",
+      "meaning": "friend",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "学生",
+      "pronunciation": "xuésheng",
+      "meaning": "student",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "卡拉OK",
+      "pronunciation": "kǎlā OK",
+      "meaning": "karaoke",
+      "asked": ["term_to_meaning"]
+    },
+    {
+      "term": "電腦",
+      "pronunciation": "diànnǎo",
+      "meaning": "компьютер",
+      "language": "zh-TW",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "火車",
+      "pronunciation": "huǒchē",
+      "meaning": "поезд",
+      "language": "zh-TW",
+      "asked": ["meaning_to_term"]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "xuéxí",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "xué xí",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "xue2xi2",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "xuexi",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "xuéxi",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "东西",
+      "text": "dōngxi",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "东西",
+      "text": "dōng xi",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "不客气",
+      "text": "bù kèqi",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "一点儿",
+      "text": "yīdiǎnr",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "哪儿",
+      "text": "nǎr",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "卡拉OK",
+      "text": "kǎlā OK",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "了",
+      "text": "le",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "行",
+      "text": "hang",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "你好",
+      "text": "nǐ hao",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "妈妈",
+      "text": "māma",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "朋友",
+      "text": "péngyou",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "西",
+      "text": "xi",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "上",
+      "text": "shang",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "吗",
+      "text": "ma",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "地",
+      "text": "di",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "觉得",
+      "text": "juéde",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "ɕɥɛ̌ɕǐ",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "pronunciation",
+      "term": "学习",
+      "text": "",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我[wǒ]去[qù]银行[yínháng]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我[wo3]去[qu4]银行[yin2hang2]。",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "买东西[mǎi dōngxi]了[le]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "银行[yinhang]",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "你好[nǐ hao]。",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "孩子们[háizimen]喜欢[xǐhuan]妈妈[māma]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "东[dōng]西[xi]",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我们[wǒmen]知道[zhīdao]了[le]。",
+      "pass": true
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "我[wǒ]去[qù]银行[yínháng]。",
+      "pass": true
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "我去银行[yínháng]。",
+      "pass": false
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "唱[chàng]卡拉[kǎlā]OK",
+      "pass": true
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "唱[chàng]卡拉OK[kǎlā]",
+      "pass": false
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "要一点儿[yīdiǎnr]水[shuǐ]",
+      "pass": false
+    },
+    {
+      "rule": "pinyin over hanzi",
+      "field": "example",
+      "text": "要[yào]一点儿[yīdiǎnr]水[shuǐ]",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under pinyin",
+      "field": "example",
+      "example": "今天不行。",
+      "text": "今天[jīntiān]不行[bù xíng]。",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under pinyin",
+      "field": "example",
+      "example": "今天不行。",
+      "text": "今天[jīntiān]行[xíng]。",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under pinyin",
+      "field": "example",
+      "example": "今天不行。",
+      "text": "今天[jīntiān]不行[bù xíng]！",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under pinyin",
+      "field": "example",
+      "example": "我想买点儿东西。",
+      "text": "我[wǒ]想[xiǎng]买[mǎi]点儿[diǎnr]东西[dōngxi]。",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under pinyin",
+      "field": "example",
+      "text": "我[wǒ]去[qù]银行[yínháng]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "孩子[háizi]们[men]喜欢[xǐhuan]玩儿[wánr]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "树[shù]长[zhǎng]得[de]很[hěn]快[kuài]。",
+      "pass": true
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "我[wǒ]上[shang]学[xué]。",
+      "pass": false
+    },
+    {
+      "rule": "tone marks on every syllable",
+      "field": "example",
+      "text": "们[men]",
+      "pass": false
+    }
+  ]
+}

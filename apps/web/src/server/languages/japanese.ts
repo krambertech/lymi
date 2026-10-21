@@ -16,6 +16,6 @@ Why: addReadings asks for the same example with a reading after each run of kanj
   lesson: "furigana over or beside kanji, a kana gloss in brackets",
   hook: null,
   checks: [
-    { field: "example", rule: "readings over kanji", pass: (text) => !missingReadings(text) },
+    { field: "example", rule: "readings over kanji", pass: (text) => !missingReadings(text, "ja") },
   ],
 } as const satisfies LanguagePrompts;

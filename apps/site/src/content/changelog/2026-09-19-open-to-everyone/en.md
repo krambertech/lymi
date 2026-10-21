@@ -7,8 +7,6 @@ Until now, Lymi was invite-only. From today, anyone can create an account, for f
 
 Sign up with Google, or with an email address and a password. If you forget your password, you can reset it by email.
 
-Lymi is open source, too. The code is public on GitHub under the AGPL licence, so anyone can see how Lymi works and how it treats your data.
-
 ### Fixes and improvements
 
 - Send feedback from the menu behind your name: a bug, an idea or anything else. It goes straight to the people who make Lymi, and we answer by email.

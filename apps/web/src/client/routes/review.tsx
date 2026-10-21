@@ -806,7 +806,7 @@ function Review() {
         timezone: deviceTimezone(),
         ...(aid ? { aid } : {}),
         ...recallTimes(),
-        ...readingsFadedField(qc, item.card.example),
+        ...readingsFadedField(qc, item.card),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;

@@ -1,6 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Gift, GitFork, KeyRound } from "lucide-react";
+import { Gift, KeyRound, WifiOff } from "lucide-react";
 import { openLymiUrl } from "../../lib/origins";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
@@ -18,11 +18,10 @@ import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
-import { SOURCE_CODE_URL } from "./site-links";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
-export const LANDING_BLURB = msg`Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
+export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
@@ -73,7 +72,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           lede={
             <Trans>
               Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
-              forget. Open source, and free to use.
+              forget. Free to use.
             </Trans>
           }
         />
@@ -137,8 +136,8 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           title={<Trans>Connect your own tools.</Trans>}
           body={
             <Trans>
-              Lymi is open source and has a public API. Add cards from a phone shortcut or a
-              spreadsheet, or show what’s due on your own site.
+              Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show
+              what’s due on your own site.
             </Trans>
           }
           after={
@@ -148,9 +147,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               </a>
               <a href="/docs/api" className={buttonClass("ghost")}>
                 <Trans>API reference</Trans>
-              </a>
-              <a href={SOURCE_CODE_URL} className={buttonClass("ghost")}>
-                <Trans>Source code</Trans>
               </a>
             </div>
           }
@@ -181,7 +177,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         </FeatureSection>
 
         <Assurances
-          label={<Trans>Free, open source, and yours</Trans>}
+          label={<Trans>Free, works offline, and yours</Trans>}
           items={[
             {
               id: "free",
@@ -190,10 +186,15 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               body: <Trans>Lymi costs nothing. No trial, and no payment details to sign up.</Trans>,
             },
             {
-              id: "open-source",
-              icon: GitFork,
-              title: <Trans>Open source</Trans>,
-              body: <Trans>The code is public on GitHub, so anyone can see how Lymi works.</Trans>,
+              id: "offline",
+              icon: WifiOff,
+              title: <Trans>Works offline</Trans>,
+              body: (
+                <Trans>
+                  Review and add cards without a connection. Everything syncs when you’re back
+                  online.
+                </Trans>
+              ),
             },
             {
               id: "your-data",

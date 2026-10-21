@@ -1694,8 +1694,8 @@ msgstr "Free Japanese decks with readings and a voice on every card. Add one in 
 msgid "free of charge"
 msgstr "free of charge"
 
-msgid "Free, open source, and yours"
-msgstr "Free, open source, and yours"
+msgid "Free, works offline, and yours"
+msgstr "Free, works offline, and yours"
 
 msgid "French"
 msgstr "French"
@@ -2367,20 +2367,20 @@ msgstr "Lymi for teachers · One deck for your whole class"
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 
+msgid "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+msgstr "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+
 msgid "Lymi home"
 msgstr "Lymi home"
+
+msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
+msgstr "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
 
 msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
 msgstr "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
 
-msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
-msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
-
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi is free to use, and your first card takes a minute."
-
-msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-msgstr "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
 
 msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
 msgstr "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
@@ -2599,8 +2599,8 @@ msgstr "New"
 msgid "New cards land here."
 msgstr "New cards land here."
 
-msgid "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
-msgstr "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
+msgid "New features and improvements in Lymi, the flashcard app with spaced repetition."
+msgstr "New features and improvements in Lymi, the flashcard app with spaced repetition."
 
 msgid "New York DMV written test"
 msgstr "New York DMV written test"
@@ -2764,9 +2764,6 @@ msgstr "Open Lymi"
 
 msgid "Open menu"
 msgstr "Open menu"
-
-msgid "Open source"
-msgstr "Open source"
 
 msgid "Open the deck"
 msgstr "Open the deck"
@@ -3139,6 +3136,9 @@ msgstr "Review a few minutes a day"
 msgid "Review a few minutes a day."
 msgstr "Review a few minutes a day."
 
+msgid "Review and add cards without a connection. Everything syncs when you’re back online."
+msgstr "Review and add cards without a connection. Everything syncs when you’re back online."
+
 msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 msgstr "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 
@@ -3205,8 +3205,8 @@ msgstr "sale"
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
-msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
+msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
 
 msgid "Say it"
 msgstr "Say it"
@@ -3417,9 +3417,6 @@ msgstr "Sounds good"
 
 msgid "Sounds good; that works"
 msgstr "Sounds good; that works"
-
-msgid "Source code"
-msgstr "Source code"
 
 msgid "Sources"
 msgstr "Sources"
@@ -3675,9 +3672,6 @@ msgstr "The browning that gives seared, baked and toasted food its flavour"
 
 msgid "The cards from this page will land here."
 msgstr "The cards from this page will land here."
-
-msgid "The code is public on GitHub, so anyone can see how Lymi works."
-msgstr "The code is public on GitHub, so anyone can see how Lymi works."
 
 msgid "The cost of making one more unit"
 msgstr "The cost of making one more unit"
@@ -4458,6 +4452,9 @@ msgstr "Work"
 
 msgid "Work and study"
 msgstr "Work and study"
+
+msgid "Works offline"
+msgstr "Works offline"
 
 msgid "Writing"
 msgstr "Writing"

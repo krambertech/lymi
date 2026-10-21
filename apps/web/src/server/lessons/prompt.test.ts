@@ -27,8 +27,8 @@ describe("the lesson prompt", () => {
     const hash = promptHash({ INSTRUCTIONS, REPLY_SCHEMA, brief: brief(DECKS) });
     // Raise LESSON_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ LESSON_PROMPT_VERSION, hash }).toEqual({
-      LESSON_PROMPT_VERSION: 1,
-      hash: "1da21601789c8f30",
+      LESSON_PROMPT_VERSION: 2,
+      hash: "6688da2040fe47c5",
     });
   });
 
@@ -42,7 +42,9 @@ describe("decksBrief", () => {
     expect(brief([deck("ja", "ja")])).toContain(
       "Deck ja: ja, teaching Japanese\n  Readings: furigana over or beside kanji, a kana gloss in brackets.\n  term — meaning",
     );
-    expect(brief([deck("zh", "zh-TW")])).toContain("  Readings: pinyin.");
+    expect(brief([deck("zh", "zh-TW")])).toContain(
+      "  Readings: pinyin over, under or beside the hanzi",
+    );
     expect(brief([deck("et", "et")])).not.toContain("Readings:");
   });
 });

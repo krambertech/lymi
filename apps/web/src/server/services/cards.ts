@@ -431,7 +431,10 @@ export function searchKey(text: string): string {
 
 /** True when the needle, a `searchKey`, occurs in the term, reading, meaning, example or notes. */
 export function matchesSearch(
-  card: Pick<Card, "normalizedTerm" | "pronunciation" | "meaning" | "example" | "notes">,
+  card: Pick<
+    Card,
+    "normalizedTerm" | "pronunciation" | "meaning" | "example" | "notes" | "language"
+  >,
   needle: string,
 ): boolean {
   const notes = card.notes && notesToText(card.notes);
@@ -439,7 +442,7 @@ export function matchesSearch(
     card.normalizedTerm,
     card.pronunciation,
     card.meaning,
-    card.example && stripReadings(card.example),
+    card.example && stripReadings(card.example, card.language),
     notes,
   ]) {
     if (field && searchKey(field).includes(needle)) return true;

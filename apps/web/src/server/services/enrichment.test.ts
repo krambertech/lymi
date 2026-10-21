@@ -225,6 +225,18 @@ describe("enrichmentWrite", () => {
     );
   });
 
+  it("adds stress to a Ukrainian example by the same rule", () => {
+    const card = { ...blank, language: "uk", example: "Я працюю в банку." };
+    const marked = { ...reply, example: "Я працю́ю в ба́нку." };
+    expect(enrichmentWrite(card, marked, [], "uk")).toEqual({
+      example: "Я працю́ю в ба́нку.",
+      readingsFor: "Я працюю в банку.",
+    });
+    expect(enrichmentWrite(card, { ...marked, example: "Я рабо́таю в ба́нку." }, [], "uk")).toEqual(
+      {},
+    );
+  });
+
   it("drops a value the model left out and a language tag that is not one", () => {
     expect(
       enrichmentWrite(blank, {

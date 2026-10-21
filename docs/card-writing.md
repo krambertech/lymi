@@ -52,7 +52,14 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Notes**: stress on every form. A verb's "Perfective: *сде́лать*" and a case other than the accusative, "+ instrumental: *занима́ться*"; a noun's gender when the ending hides it and a plural that is irregular or moves the stress, "Plural: *города́*"; the homograph, "Stressed elsewhere: *за́мок*, a castle".
 - **Example**: one short sentence with U+0301 over the stressed vowel of each word of two or more syllables, as that form is said, and none over ё or a word of one syllable: Я живу́ в Москве́. The marks never fade, because stress moves as a word changes form.
 
-The AI may add stress marks to an example someone else wrote only when removing them gives the text back; it never rewrites it.
+## Ukrainian cards
+
+- **Term**: the word as natives write it, with no stress marks; ’, ʼ and ' are one apostrophe.
+- **Stress**: the term with U+0301 over the stressed vowel of each word of two or more syllables, stored as the pronunciation: дорога read доро́га (road) or дорога́ (dear), брати read бра́ти (to take) or брати́ (brothers). Empty when every word has one syllable: дім, п'ять. Nothing is restored, since ї's dots are part of the letter.
+- **Notes**: a verb's aspect pair, *роби́ти / зроби́ти*, and a case other than the accusative, *дя́кувати* + dative; a noun's gender when the ending hides it and an irregular plural, *дити́на · ді́ти*; the forms that show a stress moving, *рука́ · ру́ки*; the homograph with its stress elsewhere; and a word that looks Russian but means something else, *неді́ля*, Sunday, not a week.
+- **Example**: one short sentence in Ukrainian, never Russian, marked as a Russian example is: Я живу́ в Ки́єві.
+
+The AI may add stress marks to a Russian or Ukrainian example someone else wrote only when removing them gives the text back; it never rewrites it.
 
 ## Tamil cards
 

@@ -33,7 +33,7 @@ describe("the lesson prompt", () => {
     const hash = promptHash({ INSTRUCTIONS, REPLY_SCHEMA, brief: brief(DECKS) });
     // Raise LESSON_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ LESSON_PROMPT_VERSION, hash }).toEqual({
-      LESSON_PROMPT_VERSION: 4,
+      LESSON_PROMPT_VERSION: 5,
       hash: "a32794a21b0752f8",
     });
   });

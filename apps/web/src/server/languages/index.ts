@@ -8,8 +8,8 @@ import { chinese } from "./chinese";
 import { japanese } from "./japanese";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
-import { ukrainian } from "./ukrainian";
 import type { LanguagePrompts } from "./types";
+import { ukrainian } from "./ukrainian";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { languageGuide } from "./languages";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const ENRICHMENT_PROMPT_VERSION = 17;
+export const ENRICHMENT_PROMPT_VERSION = 18;
 
 /** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
 export const LANGUAGE_MAX = 12;

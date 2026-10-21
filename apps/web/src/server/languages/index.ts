@@ -8,18 +8,20 @@ import { chinese } from "./chinese";
 import { japanese } from "./japanese";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
+import { ukrainian } from "./ukrainian";
 import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Russian, Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
-type PromptTag = SupportedTag | "ru" | "ta" | "yue";
+/** Every supported language, and Russian, Tamil, Ukrainian and Cantonese, whose modules are evaluated before they join SupportedTag. */
+type PromptTag = SupportedTag | "ru" | "ta" | "uk" | "yue";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
   zh: chinese,
   ru: russian,
   ta: tamil,
+  uk: ukrainian,
   yue: cantonese,
 } as const satisfies Record<PromptTag, LanguagePrompts>;
 

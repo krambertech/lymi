@@ -170,9 +170,9 @@ export function UkrainianView({ decks, locale }: Props) {
           title={<Trans>One spelling, two words.</Trans>}
           body={
             <Trans>
-              Ukrainian writes <Uk>за́мок</Uk>, a castle, and <Uk>замо́к</Uk>, a lock, the same
-              way. Only the stress tells them apart. Lymi keeps each as its own card, with its own
-              stress and its own sound.
+              Ukrainian writes <Uk>за́мок</Uk>, a castle, and <Uk>замо́к</Uk>, a lock, the same way.
+              Only the stress tells them apart. Lymi keeps each as its own card, with its own stress
+              and its own sound.
             </Trans>
           }
         >
@@ -191,7 +191,9 @@ export function UkrainianView({ decks, locale }: Props) {
         >
           <ReturnLane
             lang="uk"
-            term={(known) => <span className="whitespace-nowrap">{known ? "неділя" : "неді́ля"}</span>}
+            term={(known) => (
+              <span className="whitespace-nowrap">{known ? "неділя" : "неді́ля"}</span>
+            )}
           />
         </Wide>
 
@@ -230,8 +232,8 @@ export function UkrainianView({ decks, locale }: Props) {
           body={
             <Trans>
               A native Ukrainian AI voice reads every card and stresses the syllable the mark shows,
-              so <Uk>за́мок</Uk> and <Uk>замо́к</Uk> sound different. If a card has its own
-              recording, that plays instead.
+              so <Uk>за́мок</Uk> and <Uk>замо́к</Uk> sound different. If a card has its own recording,
+              that plays instead.
             </Trans>
           }
         >

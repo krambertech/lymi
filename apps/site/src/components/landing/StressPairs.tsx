@@ -64,9 +64,7 @@ export function StressPairs({ pairs, lang }: Props) {
       className="mt-12 rounded-2xl bg-plate-2 px-3 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
     >
       <p className="sr-only">
-        {pairs
-          .flatMap((p) => p.forms.map((f) => `${f.marked}: ${i18n._(f.meaning)}`))
-          .join(", ")}
+        {pairs.flatMap((p) => p.forms.map((f) => `${f.marked}: ${i18n._(f.meaning)}`)).join(", ")}
       </p>
       <p
         aria-hidden="true"

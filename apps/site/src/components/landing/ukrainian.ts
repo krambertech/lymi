@@ -45,10 +45,22 @@ export const UKRAINIAN_HAND: HandCard[] = [
 
 /** Sentences that use the front card's word, drawn faintly behind the hand; the word sits between asterisks. */
 export const UKRAINIAN_EXAMPLES: Record<string, string[]> = {
-  "zamok-castle": ["Стари́й *за́мок* на горі́.", "Цей *за́мок* ду́же стари́й.", "*За́мок* відкри́тий для тури́стів."],
-  "zamok-lock": ["*Замо́к* на две́рях злама́вся.", "Я купи́в нови́й *замо́к*.", "Цей *замо́к* не відчиня́ється."],
+  "zamok-castle": [
+    "Стари́й *за́мок* на горі́.",
+    "Цей *за́мок* ду́же стари́й.",
+    "*За́мок* відкри́тий для тури́стів.",
+  ],
+  "zamok-lock": [
+    "*Замо́к* на две́рях злама́вся.",
+    "Я купи́в нови́й *замо́к*.",
+    "Цей *замо́к* не відчиня́ється.",
+  ],
   doroha: ["*Доро́га* веде́ до мі́ста.", "Ця *доро́га* ду́же до́вга.", "*Доро́га* додо́му займа́є годи́ну."],
-  nedilia: ["*Неді́ля* — вихідни́й день.", "Насту́пна *неді́ля* бу́де те́плою.", "*Неді́ля* — мій улю́блений день."],
+  nedilia: [
+    "*Неді́ля* — вихідни́й день.",
+    "Насту́пна *неді́ля* бу́де те́плою.",
+    "*Неді́ля* — мій улю́блений день.",
+  ],
   diakuiu: ["*Дя́кую* за допомо́гу!", "*Дя́кую*, все до́бре.", "Ще раз *дя́кую*!"],
   yabluko: ["Я з'їв *я́блуко*.", "Це *я́блуко* ду́же соло́дке.", "Дай мені́ *я́блуко*, будь ла́ска."],
   voda: ["*Вода́* ду́же холо́дна.", "Де тут *вода́*?", "Ця *вода́* чи́ста."],
@@ -76,7 +88,11 @@ export const UKRAINIAN_PAIRS: StressPair[] = [
     word: "дорога",
     forms: [
       { marked: "доро́га", meaning: msg`Road`, audio: "/audio/ukrainian/doroha.mp3" },
-      { marked: "дорога́", meaning: msg`Dear (feminine)`, audio: "/audio/ukrainian/doroha-dear.mp3" },
+      {
+        marked: "дорога́",
+        meaning: msg`Dear (feminine)`,
+        audio: "/audio/ukrainian/doroha-dear.mp3",
+      },
     ],
   },
 ];

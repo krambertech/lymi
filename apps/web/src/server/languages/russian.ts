@@ -1,16 +1,6 @@
-import { addsStress, LANGUAGE_RECORDS, markedForm, missingStress, wordStress } from "@lymi/core";
+import { LANGUAGE_RECORDS } from "@lymi/core";
+import { stressChecks } from "./stress-checks";
 import type { LanguagePrompts } from "./types";
-
-const RULES = LANGUAGE_RECORDS.ru.stress;
-
-/** Whether every word carries at most one acute. */
-const oneMark = (text: string) => wordStress(text, RULES).every((word) => word.acutes <= 1);
-
-/** Whether no acute stands over ё or over a word of one syllable, which carry no mark. */
-const noIdleMark = (text: string) =>
-  wordStress(text, RULES).every(
-    (word) => !word.acuteOnDotted && (word.syllables > 1 || word.acutes === 0),
-  );
 
 /**
  * Russian: the term as natives write it, and the pronunciation and every example with U+0301
@@ -32,26 +22,5 @@ Why: the meaning says замок is a lock, замо́к, not a castle, за́м
   lesson:
     "an acute over the stressed vowel, in the term itself or beside it (молоко́), as Russian textbooks print stress",
   hook: "The pronunciation's acute marks the stressed syllable, which carries the word: make that syllable the loud one in a sound-alike, since a hook stressed elsewhere teaches the wrong word. Many words share a root with an English loan (телефо́н, теа́тр); when one does, try that route first.",
-  checks: [
-    {
-      field: "pronunciation",
-      rule: "the term with its stress marked",
-      pass: (text, card) =>
-        markedForm(card.term, text, RULES) !== null && !missingStress(text, RULES),
-    },
-    { field: "pronunciation", rule: "one mark per word", pass: oneMark },
-    { field: "pronunciation", rule: "no mark on ё or one syllable", pass: noIdleMark },
-    {
-      field: "example",
-      rule: "stress on every word of two or more syllables",
-      pass: (text) => !missingStress(text, RULES),
-    },
-    { field: "example", rule: "one mark per word", pass: oneMark },
-    { field: "example", rule: "no mark on ё or one syllable", pass: noIdleMark },
-    {
-      field: "example",
-      rule: "text unchanged under marks",
-      pass: (text, card) => !card.example || addsStress(card.example, text),
-    },
-  ],
+  checks: stressChecks(LANGUAGE_RECORDS.ru.stress, "no mark on ё or one syllable"),
 } as const satisfies LanguagePrompts;

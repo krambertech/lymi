@@ -1,0 +1,245 @@
+{
+  "tags": {
+    "uk": null,
+    "uk-UA": null,
+    "UK": null,
+    "uk_Cyrl_UA": null
+  },
+  "terms": [
+    {
+      "term": "замок",
+      "pronunciation": "за́мок",
+      "drawn": "за́мок"
+    },
+    {
+      "term": "замок",
+      "pronunciation": "замо́к",
+      "drawn": "замо́к"
+    },
+    {
+      "term": "руки",
+      "pronunciation": "ру́ки",
+      "drawn": "ру́ки"
+    },
+    {
+      "term": "руки",
+      "pronunciation": "руки́",
+      "drawn": "руки́"
+    },
+    {
+      "term": "брати",
+      "pronunciation": "бра́ти",
+      "drawn": "бра́ти"
+    },
+    {
+      "term": "брати",
+      "pronunciation": "брати́",
+      "drawn": "брати́"
+    },
+    {
+      "term": "дорога",
+      "pronunciation": "доро́га",
+      "drawn": "доро́га"
+    },
+    {
+      "term": "дорога",
+      "pronunciation": "дорога́",
+      "drawn": "дорога́"
+    },
+    {
+      "term": "викликати",
+      "pronunciation": "ви́кликати",
+      "drawn": "ви́кликати"
+    },
+    {
+      "term": "викликати",
+      "pronunciation": "виклика́ти",
+      "drawn": "виклика́ти"
+    },
+    {
+      "term": "м’ясо",
+      "pronunciation": "м'я́со",
+      "drawn": "м’я́со"
+    },
+    {
+      "term": "об'єкт",
+      "pronunciation": "об'є́кт",
+      "drawn": "об'є́кт"
+    },
+    {
+      "term": "їжак",
+      "pronunciation": "їжа́к",
+      "drawn": "їжа́к"
+    },
+    {
+      "term": "дитина",
+      "pronunciation": "дити́на",
+      "drawn": "дити́на"
+    },
+    {
+      "term": "Київ",
+      "pronunciation": "ки́їв",
+      "drawn": "Ки́їв"
+    },
+    {
+      "term": "ЗАМОК",
+      "pronunciation": "за́мок",
+      "drawn": "ЗА́МОК"
+    },
+    {
+      "term": "добрий день",
+      "pronunciation": "до́брий день",
+      "drawn": "до́брий день"
+    },
+    {
+      "term": "п'ять",
+      "pronunciation": "п'ять",
+      "drawn": null
+    },
+    {
+      "term": "ежик",
+      "pronunciation": "ёжик",
+      "drawn": null
+    },
+    {
+      "term": "замок",
+      "pronunciation": "[zɐˈmɔk]",
+      "drawn": null
+    },
+    {
+      "term": "неділя",
+      "pronunciation": "неді́ля",
+      "drawn": "неді́ля"
+    }
+  ],
+  "examples": [
+    {
+      "text": "Я зачини́в две́рі на замо́к.",
+      "plain": "Я зачинив двері на замок."
+    },
+    {
+      "text": "У ме́не холо́дні ру́ки.",
+      "plain": "У мене холодні руки."
+    },
+    {
+      "text": "М’я́со на столі́, а їжа́к — у саду́.",
+      "plain": "М’ясо на столі, а їжак — у саду."
+    }
+  ],
+  "keys": [
+    {
+      "term": "замок",
+      "pronunciations": ["за́мок", "ЗА́МОК", "За́мок", " за́мок "]
+    },
+    {
+      "term": "м'ясо",
+      "pronunciations": ["м'я́со", "м’я́со", "мʼя́со", "м`я́со"]
+    },
+    {
+      "term": "руки",
+      "pronunciations": ["руки́", "РУКИ́"]
+    }
+  ],
+  "apart": [
+    {
+      "term": "замок",
+      "pronunciations": ["за́мок", "замо́к"]
+    },
+    {
+      "term": "руки",
+      "pronunciations": ["ру́ки", "руки́"]
+    },
+    {
+      "term": "брати",
+      "pronunciations": ["бра́ти", "брати́"]
+    },
+    {
+      "term": "дорога",
+      "pronunciations": ["доро́га", "дорога́"]
+    },
+    {
+      "term": "викликати",
+      "pronunciations": ["ви́кликати", "виклика́ти"]
+    }
+  ],
+  "noKey": [
+    {
+      "term": "замок",
+      "pronunciation": "замок"
+    },
+    {
+      "term": "замок",
+      "pronunciation": "[ˈzamɔk]"
+    },
+    {
+      "term": "замок",
+      "pronunciation": "zámok"
+    },
+    {
+      "term": "дім",
+      "pronunciation": "ді́м"
+    },
+    {
+      "term": "їжак",
+      "pronunciation": "їжак"
+    },
+    {
+      "term": "ежик",
+      "pronunciation": "ёжик"
+    },
+    {
+      "term": "замок",
+      "pronunciation": "зам́ок"
+    },
+    {
+      "term": "п'ять",
+      "pronunciation": "п'я́ть"
+    }
+  ],
+  "inputs": [
+    {
+      "sent": {
+        "term": "замок",
+        "pronunciation": "замóк"
+      },
+      "stored": {
+        "term": "замок",
+        "pronunciation": "замо́к"
+      },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": {
+        "term": "кіно",
+        "pronunciation": "кíно"
+      },
+      "stored": {
+        "term": "кіно",
+        "pronunciation": "кі́но"
+      },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": {
+        "term": "замок",
+        "pronunciation": "за́мок"
+      },
+      "stored": {
+        "term": "замок",
+        "pronunciation": "за́мок"
+      },
+      "normalized": []
+    },
+    {
+      "sent": {
+        "term": "кафе",
+        "pronunciation": "café"
+      },
+      "stored": {
+        "term": "кафе",
+        "pronunciation": "café"
+      },
+      "normalized": []
+    }
+  ]
+}

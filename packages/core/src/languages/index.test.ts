@@ -67,9 +67,10 @@ describe("drawsReadings", () => {
 });
 
 describe("stressRules", () => {
-  it("lets Russian stress any vowel and restore ё, and no other language mark one", () => {
+  it("lets Russian restore ё and Ukrainian restore nothing, and no other language mark one", () => {
     expect(stressRules("ru-RU")).toEqual({ vowels: "аеёиоуыэюя", restores: { ё: "е" } });
-    for (const tag of ["uk", "bg", "ja", null]) expect(stressRules(tag)).toBeNull();
+    expect(stressRules("uk-UA")).toEqual({ vowels: "аеєиіїоуюя" });
+    for (const tag of ["bg", "be", "ja", null]) expect(stressRules(tag)).toBeNull();
   });
 });
 
@@ -215,10 +216,11 @@ describe("languageFormat for Russian", () => {
 });
 
 describe("pronunciationName", () => {
-  it("calls a Russian pronunciation its Stress", () => {
+  it("calls a Russian or Ukrainian pronunciation its Stress", () => {
     expect(pronunciationName("ru")).toBe("stress");
+    expect(pronunciationName("uk")).toBe("stress");
     expect(pronunciationName("ja")).toBe("reading");
-    expect(pronunciationName("uk")).toBe("pronunciation");
+    expect(pronunciationName("pl")).toBe("pronunciation");
     expect(pronunciationName(null)).toBe("pronunciation");
   });
 });

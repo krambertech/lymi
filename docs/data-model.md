@@ -86,7 +86,7 @@ erDiagram
     text user_id FK
     text deck_id FK
     text term "the word or phrase"
-    text normalized_term "normaliseTerm(term), duplicate key"
+    text normalized_term "termKey(language, term), duplicate key"
     text meaning "nullable"
     text pronunciation "nullable, in the language's format, else IPA or a respelling"
     text example "nullable"

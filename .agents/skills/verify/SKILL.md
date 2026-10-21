@@ -33,6 +33,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Korean cards | [korean.md](features/korean.md) |
 | Filipino, Vietnamese, Georgian, Armenian and Tamil | [configured-languages.md](features/configured-languages.md) |
 | Russian cards | [russian.md](features/russian.md) |
+| Ukrainian cards | [ukrainian.md](features/ukrainian.md) |
 | Tamil cards | [tamil.md](features/tamil.md) |
 | Right-to-left cards: Arabic direction, mixed runs, inputs and isolated toasts | [right-to-left.md](features/right-to-left.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |

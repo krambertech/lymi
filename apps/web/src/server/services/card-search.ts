@@ -17,6 +17,7 @@ import {
   resolveDateValue,
   type StringComparator,
   stripReadings,
+  stripStress,
 } from "@lymi/core";
 import {
   and,
@@ -500,9 +501,11 @@ function idConditions(column: SQLWrapper, comparator: IdComparator): SQL[] {
 function termConditions(comparator: StringComparator): SQL[] {
   const key = schema.cards.normalizedTerm;
   const fold = normaliseTerm;
+  // A term named with its stress also finds the Russian card whose key dropped it. ADR 0004.
+  const either = (term: string) => [...new Set([fold(term), stripStress(fold(term))])];
   const out: SQL[] = [];
-  if (comparator.eq !== undefined) out.push(sql`${key} = ${fold(comparator.eq)}`);
-  if (comparator.in) out.push(sql`${key} in ${inList(comparator.in.map(fold))}`);
+  if (comparator.eq !== undefined) out.push(sql`${key} in ${inList(either(comparator.eq))}`);
+  if (comparator.in) out.push(sql`${key} in ${inList(comparator.in.flatMap(either))}`);
   if (comparator.contains !== undefined) {
     out.push(sql`instr(${key}, ${fold(comparator.contains)}) > 0`);
   }

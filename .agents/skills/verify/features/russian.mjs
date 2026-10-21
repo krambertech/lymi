@@ -57,6 +57,27 @@ export default async function drive({ page, base, step, api, expect }) {
     },
   );
 
+  await step(
+    "A stressed term splits into the term and its stress, and a second stress is a second card",
+    async () => {
+      const { results } = await post("/api/cards/batch", {
+        cards: [
+          { deckId: words.id, term: "пла́чу", meaning: "I cry", enrich: false },
+          { deckId: words.id, term: "плачу́", meaning: "I pay", enrich: false },
+          { deckId: words.id, term: "плачу", enrich: false },
+        ],
+      });
+      expect(results.map((r) => r.status)).toEqual(["added", "added", "skipped"]);
+      expect(results[0]).toMatchObject({
+        card: { term: "плачу", normalizedTerm: "плачу", pronunciation: "пла́чу" },
+        normalized: ["term", "pronunciation"],
+      });
+      const { cards } = await api(`/api/cards?term=${encodeURIComponent("пла́чу")}`);
+      expect(cards.map((card) => card.pronunciation).sort()).toEqual(["пла́чу", "плачу́"].sort());
+      return { results, cards };
+    },
+  );
+
   await step("Search for the marked form finds both plain terms", async () => {
     const { cards } = await api(`/api/cards?query=${encodeURIComponent("за́мок")}`);
     expect(cards.map((card) => card.pronunciation).sort()).toEqual(["за́мок", "замо́к"].sort());

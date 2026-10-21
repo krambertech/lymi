@@ -28,7 +28,8 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   // Stockholm; chosen over Gemini, Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
   sv: { voice: "kPdGSxhZAqy4bmPAf9iJ", name: "Evelina - Calm, Clear and Engaging" },
   tr: { voice: "RXCCWbOxP7Hisa63Xsv5", name: "Adam - Calm, Relaxing and Informative" },
-  uk: { voice: "9Sj8ugvpK1DmcAXyvi3a", name: "Alex Nekrasov - Confident and Clear" },
+  // Stresses the U+0301 syllable in 8 of 8 marked words and chosen by ear, PR #864; named by ID, which Lymi's key can't read a name for.
+  uk: { voice: "2OXYbN1uGomXXJtv9Dq6", name: "2OXYbN1uGomXXJtv9Dq6" },
   // Northern; chosen over Gemini and four native voices, docs/proposals/long-tail-languages.md.
   vi: { voice: "aN7cv9yXNrfIR87bDmyD", name: "Ninh Đôn - Deep and Warm" },
   cmn: { voice: "bhJUNIXWQQ94l8eI2VUf", name: "Amy - Friendly, Young and Natural" },

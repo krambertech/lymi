@@ -259,6 +259,37 @@ describe("pronunciation audio", () => {
     expect(lock.key).not.toBe(castle.key);
   });
 
+  it("says a Ukrainian card's marked stress, so ру́ки and руки́ are two clips", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const get = vi.fn(async (key: string) => objects.get(key) ?? null);
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
+    const ukrainian = { term: "руки", normalizedTerm: "руки", language: "uk" };
+
+    const genitive = await pronunciationAudio(
+      context(card({ ...ukrainian, pronunciation: "руки́" })),
+      "card-1",
+      deps,
+    );
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "руки́",
+      language: "uk",
+      usage: expect.any(Function),
+    });
+    const plural = await pronunciationAudio(
+      context(card({ ...ukrainian, pronunciation: "ру́ки", audioKey: genitive.key })),
+      "card-1",
+      deps,
+    );
+    expect(plural.key).not.toBe(genitive.key);
+  });
+
   it("keeps saying the term for a language without readings, whatever the pronunciation", async () => {
     const get = vi.fn(async () => null);
     const put = vi.fn(async () => undefined);

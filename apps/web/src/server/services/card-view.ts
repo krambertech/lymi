@@ -1,4 +1,4 @@
-import { enrichmentStalled, normaliseTerm, type ReviewMode } from "@lymi/core";
+import { enrichmentStalled, type ReviewMode, termKey } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import type { Card, CardImage, CardLocalization } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -143,10 +143,9 @@ export async function editionText(
 }
 
 /** The card as a reader of its pinned edition sees it: that edition's text and no tags yet. */
-export function seenIn<T extends Pick<Card, "id" | "deckId" | "normalizedTerm" | "tags">>(
-  card: T,
-  editions: EditionText,
-): T {
+export function seenIn<
+  T extends Pick<Card, "id" | "deckId" | "normalizedTerm" | "tags" | "language">,
+>(card: T, editions: EditionText): T {
   if (!editions.pinned.has(card.deckId)) return card;
   return { ...inEdition(card, editions.text.get(card.id)), tags: [] };
 }
@@ -210,7 +209,7 @@ export async function presentCards(
  * A localized term carries its own folded key, so search matches the words the learner sees
  * rather than the deck's own. Nothing here is written back: the stored card is unchanged.
  */
-export function inEdition<T extends Pick<Card, "normalizedTerm">>(
+export function inEdition<T extends Pick<Card, "normalizedTerm" | "language">>(
   card: T,
   text: CardLocalization | undefined,
 ): T {
@@ -221,7 +220,7 @@ export function inEdition<T extends Pick<Card, "normalizedTerm">>(
   return {
     ...card,
     ...replaced,
-    ...(text.term ? { normalizedTerm: normaliseTerm(text.term) } : {}),
+    ...(text.term ? { normalizedTerm: termKey(card.language, text.term) } : {}),
   };
 }
 

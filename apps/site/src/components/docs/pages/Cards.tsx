@@ -201,8 +201,8 @@ export function Cards() {
           Pinyin with no tone mark counts as no reading.
         </li>
         <li>
-          In Russian the stress counts the same way. Send the term as natives write it and the
-          pronunciation with U+0301 over the stressed vowel: <code>замок</code> stressed{" "}
+          In Russian and Ukrainian the stress counts the same way. Send the term as natives write it
+          and the pronunciation with U+0301 over the stressed vowel: <code>замок</code> stressed{" "}
           <code>за́мок</code> (a castle) and <code>замо́к</code> (a lock) are two words. A
           pronunciation that is not the term with marks added, such as IPA, counts as no reading.
         </li>

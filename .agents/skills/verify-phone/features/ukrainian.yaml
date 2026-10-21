@@ -1,0 +1,32 @@
+# Ukrainian: a New card draws its stress in place on the cue and keeps it after the reveal, and the
+# card page calls the field Stress.
+appId: app.lymi
+name: Ukrainian
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- takeScreenshot: 01-deck-row
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TERM}, read ${STRESS}. Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*${MEANING}.*"
+- takeScreenshot: 02-new-cue-stress
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*${MEANING}.*"
+- takeScreenshot: 03-revealed
+- tapOn: "End review"
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+# The row names the card by its term, as VoiceOver reads it.
+- tapOn: "${TERM}, ${MEANING}.*"
+# The field is one element whose label holds its name and its value.
+- extendedWaitUntil:
+    visible: "Stress.*"
+    timeout: 15000
+- assertVisible: "${STRESS}"
+- takeScreenshot: 04-card-page

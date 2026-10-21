@@ -4,7 +4,7 @@ A Russian card whose pronunciation is its term with U+0301 over the stressed vow
 
 ## Reach
 
-No persona has Russian cards, so [`russian.mjs`](russian.mjs) adds to `learner` a Русский deck holding замок stressed замóк, typed with a Latin ó; the flow opens it from Library and presses its **Review**.
+No persona has Russian cards, so [`russian.mjs`](russian.mjs) adds to `learner` a Русский deck holding замок stressed замóк, typed with a Latin ó, and мука́ sent with its stress in the term; the flow opens it from Library and presses its **Review**.
 
 ## Drive
 
@@ -12,7 +12,7 @@ No persona has Russian cards, so [`russian.mjs`](russian.mjs) adds to `learner` 
 
 ## End state
 
-The deck's row and the cue draw замо́к with the acute over о; the card's label reads "Recognition card for замок, read замо́к"; after the reveal the grades and the meaning show with the stress still on the term; the card page names its field Stress. The check reads the card back with its Latin ó stored as о and U+0301.
+The deck's row and the cue draw замо́к with the acute over о; the card's label reads "Recognition card for замок, read замо́к"; after the reveal the grades and the meaning show with the stress still on the term; the card page names its field Stress. The check reads the card back with its Latin ó stored as о and U+0301, and мука́ back as the term мука stressed мука́.
 
 ## Gotchas
 

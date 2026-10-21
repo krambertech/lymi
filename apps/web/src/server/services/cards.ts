@@ -24,6 +24,7 @@ import {
   speechInputs,
   stripReadings,
   TEXT_MODES,
+  termKey,
 } from "@lymi/core";
 import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
@@ -177,7 +178,7 @@ export async function addCards(
     if (sent.sectionId && sectionDeck.get(sent.sectionId) !== deck.id) throw notFound("Section");
     const language = sent.language === undefined ? deck.defaultLanguage : sent.language;
     const { fields: input, normalized } = normalizeCardText(language, sent);
-    return { input, deck, language, key: normaliseTerm(input.term), normalized };
+    return { input, deck, language, key: termKey(language, input.term), normalized };
   });
 
   const terms = prepared.flatMap((p) => (p.deck ? [p.key] : []));
@@ -937,9 +938,10 @@ function editWrite(
       : deckId !== current.deckId
         ? { sectionId: null }
         : {};
-  // Always recompute the duplicate key, so a card whose stored key predates normaliseTerm()
-  // (the 0002 backfill used SQLite's ASCII-only lower()) is repaired by any edit.
-  const normalizedTerm = normaliseTerm(patch.term ?? current.term);
+  // Always recompute the duplicate key, so a card whose stored key predates termKey(), such as a
+  // stressed Russian term the backfill left beside another pronunciation, is repaired by any edit.
+  const language = patch.language === undefined ? current.language : patch.language;
+  const normalizedTerm = termKey(language, patch.term ?? current.term);
   const pronunciationChanged =
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
@@ -947,7 +949,7 @@ function editWrite(
   // the language and the fields its language makes a clip from. CONTEXT.md, Recording.
   const audioStale =
     current.audioSource === "recorded"
-      ? normalizedTerm !== normaliseTerm(current.term)
+      ? normalizedTerm !== termKey(language, current.term)
       : pronunciationChanged ||
         speechInputs(current.language).some(
           (field) => patch[field] !== undefined && patch[field] !== current[field],

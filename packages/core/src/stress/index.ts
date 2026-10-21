@@ -40,13 +40,26 @@ type Drawn = { text: string; vowel: boolean; restored: boolean; acute: boolean }
  * consonant draws nothing.
  */
 export function markedForm(term: string, pronunciation: string, rules: StressRules): string | null {
+  const read = readStress(term, pronunciation, rules);
+  return read && read.marks > 0 ? read.form : null;
+}
+
+/**
+ * The term as `markedForm` draws it and how many marks it carries, or null when the pronunciation
+ * is not the term with marks added, so a caller can tell marks that say nothing from wrong ones.
+ */
+export function readStress(
+  term: string,
+  pronunciation: string,
+  rules: StressRules,
+): { form: string; marks: number } | null {
   const plain = units(clean(term));
   const marked = units(clean(pronunciation));
   if (plain.length === 0 || plain.length !== marked.length) return null;
   const drawn: Drawn[] = [];
   for (const [i, unit] of plain.entries()) {
-    const lower = unit.toLowerCase().normalize("NFC");
-    const read = (marked[i] as string).toLowerCase();
+    const lower = apostrophe(unit.toLowerCase().normalize("NFC"));
+    const read = apostrophe((marked[i] as string).toLowerCase());
     const acute = read.includes(STRESS) && !lower.includes(STRESS);
     const letter = (acute ? read.replace(STRESS, "") : read).normalize("NFC");
     const restored = letter !== lower;
@@ -66,21 +79,26 @@ export function markedForm(term: string, pronunciation: string, rules: StressRul
       out += acute ? char.text + STRESS : char.text;
     }
   }
-  return marks > 0 ? out.normalize("NFC") : null;
+  return { form: out.normalize("NFC"), marks };
 }
 
-/** A hyphen between letters joins one word, so что́-то counts its syllables across it. */
-const HYPHEN = /^[-\u2010\u2011]$/u;
+/** A hyphen or apostrophe between letters joins one word, so что́-то and об'є́кт count their syllables across it. */
+const JOINER = /^[-\u2010\u2011'\u2018\u2019\u02BC`]$/u;
+
+/** Ukrainian's apostrophes as one, so a term written м’ясо takes the pronunciation м'я́со. */
+const APOSTROPHES = /[\u2018\u2019\u02BC`]/gu;
+
+const apostrophe = (text: string) => text.replace(APOSTROPHES, "'");
 
 /**
  * The characters split at each one that is not a letter, which stands as a word of its own. A
- * hyphen with letters on both sides stays inside its word.
+ * hyphen or apostrophe with letters on both sides stays inside its word.
  */
 function words(chars: readonly Drawn[]): Drawn[][] {
   const out: Drawn[][] = [[]];
   for (const [i, char] of chars.entries()) {
     const letter = (at: number) => /^\p{L}/u.test(chars[at]?.text ?? "");
-    const joins = HYPHEN.test(char.text) && letter(i - 1) && letter(i + 1);
+    const joins = JOINER.test(char.text) && letter(i - 1) && letter(i + 1);
     if (letter(i) || joins) (out.at(-1) as Drawn[]).push(char);
     else out.push([char], []);
   }
@@ -93,7 +111,8 @@ function words(chars: readonly Drawn[]): Drawn[][] {
  * pronunciation, IPA or another word's stress never splits one.
  */
 export function stressKey(term: string, pronunciation: string, rules: StressRules): string | null {
-  return markedForm(term, pronunciation, rules)?.toLowerCase() ?? null;
+  const marked = markedForm(term, pronunciation, rules);
+  return marked === null ? null : apostrophe(marked.toLowerCase());
 }
 
 /** Accented Latin letters that look like a Cyrillic vowel, as a keyboard without Cyrillic marks types them. */

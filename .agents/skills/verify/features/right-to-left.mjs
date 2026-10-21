@@ -84,7 +84,9 @@ export default async function drive({ page, base, step, expect }) {
   );
 
   await step("Archive it: the toast names the term in its own order", async () => {
-    await page.getByRole("button", { name: "Card options" }).click();
+    // A ⋯ with a pointer and a screen reader's button on touch: the keyboard opens either.
+    await page.getByRole("button", { name: "Card options" }).focus();
+    await page.keyboard.press("Enter");
     await page.getByRole("menuitem", { name: "Archive card" }).click();
     const title = page.locator("[data-slot=toast-title]", { hasText: "Archived" });
     await expect(title.locator("bdi")).toHaveText(TERM);

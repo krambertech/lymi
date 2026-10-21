@@ -48,8 +48,8 @@
     },
     {
       "term": "викликати",
-      "printed": "викли́кати",
-      "reading": "викли́кати"
+      "printed": "виклика́ти",
+      "reading": "виклика́ти"
     },
     {
       "term": "неділя",
@@ -425,7 +425,7 @@
     {
       "rule": "stress on every word of two or more syllables",
       "field": "example",
-      "text": "П'ять комі́в.",
+      "text": "П'ять коті́в.",
       "pass": true
     },
     {

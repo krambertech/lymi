@@ -219,9 +219,7 @@ describe("enrichmentWrite", () => {
       example: "Я живу́ в Москве́.",
       readingsFor: "Я живу́ в Москве.",
     });
-    expect(enrichmentWrite(card, { ...marked, example: "Я живу в Москве́." }, [], "ru")).toEqual(
-      {},
-    );
+    expect(enrichmentWrite(card, { ...marked, example: "Я живу в Москве́." }, [], "ru")).toEqual({});
     expect(enrichmentWrite(card, { ...marked, example: "Мы живём в Москве́." }, [], "ru")).toEqual(
       {},
     );

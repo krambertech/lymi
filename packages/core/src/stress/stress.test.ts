@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { addsStress, cyrillicStress, hasStress, markedForm, missingStress, stripStress, wordStress } from ".";
+import {
+  addsStress,
+  cyrillicStress,
+  hasStress,
+  markedForm,
+  missingStress,
+  stripStress,
+  wordStress,
+} from ".";
 
 const RU = { vowels: "аеёиоуыэюя", restores: { ё: "е" } } as const;
 

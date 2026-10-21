@@ -889,7 +889,7 @@ msgstr "Добавить"
 msgid "Add “{0}”"
 msgstr "Добавить «{0}»"
 
-#. placeholder {0}: isolate(deck.name)
+#. placeholder {0}: deck.name
 msgid "Add “{0}” to Library"
 msgstr "Добавить «{0}» в Библиотеку"
 
@@ -2047,7 +2047,7 @@ msgstr "Готово"
 msgid "Download"
 msgstr "Скачать"
 
-#. placeholder {0}: isolate(entry.export?.fileName ?? "")
+#. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Скачать {0}"
 
@@ -4358,7 +4358,7 @@ msgstr "Теги"
 msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
 msgstr "Здесь появятся теги с карточек этой колоды: их можно переименовать, объединить или архивировать."
 
-#. placeholder {0}: names(value.map(isolate))
+#. placeholder {0}: names(value)
 msgid "Tags: {0}"
 msgstr "Теги: {0}"
 

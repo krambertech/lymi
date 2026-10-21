@@ -889,7 +889,7 @@ msgstr "Add"
 msgid "Add “{0}”"
 msgstr "Add “{0}”"
 
-#. placeholder {0}: isolate(deck.name)
+#. placeholder {0}: deck.name
 msgid "Add “{0}” to Library"
 msgstr "Add “{0}” to Library"
 
@@ -2047,7 +2047,7 @@ msgstr "Done"
 msgid "Download"
 msgstr "Download"
 
-#. placeholder {0}: isolate(entry.export?.fileName ?? "")
+#. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Download {0}"
 
@@ -4358,7 +4358,7 @@ msgstr "Tags"
 msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
 msgstr "Tags you put on this deck’s cards show here, to rename, merge or archive."
 
-#. placeholder {0}: names(value.map(isolate))
+#. placeholder {0}: names(value)
 msgid "Tags: {0}"
 msgstr "Tags: {0}"
 

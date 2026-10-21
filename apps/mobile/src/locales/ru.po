@@ -1458,7 +1458,7 @@ msgstr "Подтверди через Apple, чтобы навсегда уда�
 msgid "Connect"
 msgstr "Подключить"
 
-#. placeholder {0}: isolate(a.name)
+#. placeholder {0}: a.name
 msgid "Connect {0}"
 msgstr "Подключить {0}"
 

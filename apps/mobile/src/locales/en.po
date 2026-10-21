@@ -1458,7 +1458,7 @@ msgstr "Confirm with Apple to delete your account for good."
 msgid "Connect"
 msgstr "Connect"
 
-#. placeholder {0}: isolate(a.name)
+#. placeholder {0}: a.name
 msgid "Connect {0}"
 msgstr "Connect {0}"
 

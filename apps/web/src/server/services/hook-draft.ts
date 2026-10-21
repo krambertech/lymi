@@ -35,7 +35,7 @@ const DECK_MEANINGS = 8;
 const MAX_WORDS = 6;
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HOOK_PROMPT_VERSION = 3;
+export const HOOK_PROMPT_VERSION = 4;
 
 export const HOOK_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",

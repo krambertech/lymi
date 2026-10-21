@@ -6,16 +6,18 @@ import { languageSupport, type SupportedTag } from "@lymi/core";
 import { cantonese } from "./cantonese";
 import { chinese } from "./chinese";
 import { japanese } from "./japanese";
+import { tamil } from "./tamil";
 import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Cantonese, whose module is evaluated before yue joins SupportedTag. */
-type PromptTag = SupportedTag | "yue";
+/** Every supported language, and Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
+type PromptTag = SupportedTag | "ta" | "yue";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
   zh: chinese,
+  ta: tamil,
   yue: cantonese,
 } as const satisfies Record<PromptTag, LanguagePrompts>;
 

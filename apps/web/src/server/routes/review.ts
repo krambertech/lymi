@@ -186,9 +186,11 @@ review.get(
 /** The first phone release that draws furigana, so its grades say where the reading showed. */
 const FURIGANA_SINCE = { ios: "0.0.2" };
 /** The first phone release that draws a Cantonese card's Jyutping over its term rather than as a line. */
-const JYUTPING_SINCE = { ios: "0.0.6" };
+const JYUTPING_SINCE = { ios: "0.0.7" };
 /** The first phone release that draws a Russian card's stress on its term rather than as a line after the reveal. */
 const STRESS_SINCE = { ios: "0.0.4" };
+/** The first phone release that draws a Tamil card's reading over each word. */
+const WORD_READING_SINCE = { ios: "0.0.6" };
 
 review.post(
   "/grade",
@@ -208,6 +210,7 @@ review.post(
         over: clientSupports(c, FURIGANA_SINCE),
         jyutping: clientSupports(c, JYUTPING_SINCE),
         inPlace: clientSupports(c, STRESS_SINCE),
+        byWord: clientSupports(c, WORD_READING_SINCE),
       }),
     ),
 );

@@ -9,6 +9,7 @@ import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
 import { russian } from "./russian";
+import { tamil } from "./tamil";
 import type {
   LanguageFormat,
   LanguageSupport,
@@ -45,6 +46,7 @@ export const SUPPORTED_LANGUAGES = {
 export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ru: russian,
+  ta: tamil,
   yue: cantonese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
@@ -94,6 +96,7 @@ const OVER_SCRIPT: Record<ReadingEngine, boolean> = {
   pinyin: true,
   jyutping: true,
   stress: false,
+  indic: true,
 };
 
 /** Whether Lymi draws readings over this language's terms and examples, rather than marks in place. */

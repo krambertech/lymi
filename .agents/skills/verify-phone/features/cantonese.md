@@ -17,4 +17,4 @@ Before the reveal the card's label reads "Recognition card for 搭𨋢, read daa
 ## Gotchas
 
 - Before the reveal the card is one button whose label says the term and its Jyutping, so the flow matches the Jyutping inside that label; VoiceOver reads the characters, not the Jyutping drawn over them.
-- The Simulator's dev client must be a 0.0.6 bundle or later; the Worker strips example Jyutping from older phones, so an older bundle shows the example plain.
+- The Simulator's dev client must be a 0.0.7 bundle or later; the Worker strips example Jyutping from older phones, so an older bundle shows the example plain.

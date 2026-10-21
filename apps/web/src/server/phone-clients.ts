@@ -62,7 +62,7 @@ export function clientSupports(c: Context<AppEnv>, since: ShownSince): boolean {
 export const EXAMPLE_PINYIN_SINCE: ShownSince = { ios: "0.0.5" };
 
 /** The first phone release that draws Jyutping in a Cantonese example. docs/proposals/cantonese.md. */
-export const EXAMPLE_JYUTPING_SINCE: ShownSince = { ios: "0.0.6" };
+export const EXAMPLE_JYUTPING_SINCE: ShownSince = { ios: "0.0.7" };
 
 /** Each engine whose inline example readings an older phone would show as text, with the first release that draws them. */
 const EXAMPLE_READINGS_SINCE: Partial<Record<ReadingEngine, ShownSince>> = {

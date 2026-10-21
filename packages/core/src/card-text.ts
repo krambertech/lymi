@@ -3,7 +3,7 @@
  * records it, so a converted term still meets its duplicate and a converted Reading is never a
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
-
+import { sameTamilReading } from "./indic";
 import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
@@ -25,11 +25,22 @@ const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardT
   pinyin: markTones,
   jyutping: plainToneNumbers,
   stress: markStress,
+  indic: dropSpelledReading,
 };
 
 /** Jyutping sent with raised or full-width tone numbers stores them plain: nei⁵ hou² → nei5 hou2. */
 function plainToneNumbers({ pronunciation }: CardText): CardText {
   return pronunciation ? { pronunciation: jyutpingDigits(pronunciation) } : {};
+}
+
+/**
+ * A Tamil pronunciation that only repeats the reading the spelling gives is left empty, so the
+ * field holds only words not said as spelled. An edit that sends no term keeps it as sent.
+ */
+function dropSpelledReading({ term, pronunciation }: CardText): CardText {
+  return term !== undefined && pronunciation && sameTamilReading(term, pronunciation)
+    ? { pronunciation: null }
+    : {};
 }
 
 /**

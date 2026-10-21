@@ -45,6 +45,13 @@ Only a `yue` or `zh-yue` tag is Cantonese; `zh-HK` is Chinese.
 
 The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
 
+## Tamil cards
+
+- **Term**: the word in written Tamil, as school, books and signs spell it, in Tamil script.
+- **Reading**: Lymi reads each word's spelling itself and draws the reading over the word in Latin letters, long vowels with a macron and retroflex consonants with a dot below: பாடல் pāḍal, தங்கம் taṅgam. The pronunciation holds a reading only for a word not said as spelled, mostly a loanword: பஸ் bas. A pronunciation that repeats the spelling's reading, even in chat spelling (paadal), is stored empty.
+- **Notes**: a verb's root with its past and future, *வா: வந்தேன் · வருவேன்*, and the spoken form where everyday speech differs, Spoken: *இருக்கு* (irukku). The spoken form never goes in the pronunciation.
+- **Example**: one short sentence in written Tamil, in Tamil script only. It carries no readings; Lymi draws them.
+
 ## Korean cards
 
 - **Pronunciation**: the term as it is said, in Hangul, only where that differs from the spelling: 학교 is said 학꾜, 국물 궁물. Empty for a word said as written, such as 사랑. No romanization, which a learner outgrows once they read Hangul.
@@ -55,7 +62,6 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Filipino** (`fil`, `tl`): the pronunciation is the term with its stress marks, an acute on the stressed vowel (báhay), a grave on a final vowel cut by a glottal stop (bátà) and a circumflex where both meet (basâ). Notes give a verb's root, its focus and its three aspects: *kumain · kumakain · kakain*.
 - **Vietnamese** (`vi`): every word keeps its tone marks. The pronunciation is empty unless the term does not show how it is said: typed without tone marks (cam on → cảm ơn) or abbreviated (km → ki-lô-mét). Notes give a noun's classifier, *con chó*.
 - **Georgian** (`ka`) and **Armenian** (`hy`): the pronunciation is a romanization, Georgian's national system with each ejective marked (ჭიქა ch'ika), and Eastern Armenian as it is said (քույր k'uyr).
-- **Tamil** (`ta`): the pronunciation romanizes the written word as it is read aloud, with macrons and dots (தம்பி tambi). Notes give the spoken form where it differs, *தண்ணீர்*, said *taṇṇi*.
 
 - **Lithuanian** (`lt`): the pronunciation is the term with its accent mark as dictionaries print it, an acute, grave or tilde on the stressed syllable (nãmas, výras, kalbà); the marks are never stripped. The AI's accents miss often enough that a new Lithuanian deck starts with pronunciation off. Notes give a noun's nominative and genitive and a verb's three forms: *eiti · eina · ėjo*.
 - **Estonian, Finnish and Latvian** are read as written, so the pronunciation stays empty; notes give the principal forms, Finnish's with the plural partitive so consonant gradation shows, *katu · kadun · katua · katuja*, and for Latvian the genitive and any gender the ending hides: *suns, suņa*.

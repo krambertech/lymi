@@ -5,16 +5,17 @@ export type SupportedTag = "ja" | "zh";
  * A tag with a record in the index: each supported tag, and one whose language is still landing.
  * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
  */
-export type RecordTag = SupportedTag | "ru" | "yue";
+export type RecordTag = SupportedTag | "ru" | "ta" | "yue";
 
 /** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
-export type Script = "Jpan" | "Hans" | "Hant";
+export type Script = "Jpan" | "Hans" | "Hant" | "Taml";
 
 /**
  * How a reading is drawn: furigana puts kana over kanji, and pinyin and Jyutping one syllable over
- * each Han character, all aligned at display; stress draws the term with its marks in place.
+ * each Han character, all aligned at display; stress draws the term with its marks in place; indic
+ * works each word's reading out from its spelling and draws it over the whole word.
  */
-export type ReadingEngine = "furigana" | "pinyin" | "jyutping" | "stress";
+export type ReadingEngine = "furigana" | "pinyin" | "jyutping" | "stress" | "indic";
 
 /** Where a stress mark may stand, for the marks-in-place engine. */
 export interface StressRules {

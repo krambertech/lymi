@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { type CardText, normalizeCardText } from "../card-text";
+import { tamilSegments } from "../indic";
 import { formatJyutping, parseJyutping, stripJyutping } from "../jyutping";
 import { formatPinyin, parsePinyin, stripPinyin } from "../pinyin";
 import {
@@ -16,6 +17,7 @@ import {
 import { stripStress } from "../stress";
 import ja from "./fixtures/ja.json";
 import ru from "./fixtures/ru.json";
+import ta from "./fixtures/ta.json";
 import yue from "./fixtures/yue.json";
 import zh from "./fixtures/zh.json";
 import {
@@ -73,6 +75,16 @@ const NOTATION: Record<
     strip: stripStress,
     draw: markedTerm,
   },
+  // Readings come from the spelling, so an example is plain text and the term draws as word[reading].
+  indic: {
+    parse: tamilSegments,
+    format: (segments) => segments.map((segment) => segment.text).join(""),
+    strip: (text) => text,
+    draw: (card) => {
+      const segments = termReading(card);
+      return segments && formatPinyin(segments);
+    },
+  },
 };
 
 function overTerm(card: Card): string | null {
@@ -80,7 +92,7 @@ function overTerm(card: Card): string | null {
   return segments && NOTATION[readingEngine(card.language) as ReadingEngine].format(segments);
 }
 
-const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, yue };
+const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, ta, yue };
 
 const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
 

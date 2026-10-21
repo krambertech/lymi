@@ -1371,7 +1371,7 @@ function CardPlate({
             ? undefined
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
-              : mode.cue === "term" && furigana && cueFurigana
+              : mode.cue === "term" && furigana && cueFurigana && reading
                 ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
                   ? t`Recognition card for ${cue}. Tap to reveal`

@@ -6,6 +6,7 @@
  * docs/card-writing.md.
  */
 
+import { markKnownTamil, tamilPairs, tamilSegments, tamilTermReading } from "./indic";
 import { EXAMPLE_NOTATION, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 import { markedForm, stressKey } from "./stress";
@@ -183,7 +184,8 @@ export function alignReading(term: string, reading: string): ReadingSegment[] {
 /**
  * The term as drawn with its reading, or null when nothing is drawn over it: the card is not in
  * a language Lymi draws readings for, it has no reading in its engine's script, or its term has
- * no kanji or hanzi. A term that lists forms (食べる · 食べます) carries a one-form reading over
+ * no kanji, hanzi or Tamil word. A Tamil term's reading comes from its spelling, or from its
+ * pronunciation where that reads as the word. A term that lists forms (食べる · 食べます) carries a one-form reading over
  * its first form.
  */
 export function termReading(card: {
@@ -191,6 +193,9 @@ export function termReading(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): ReadingSegment[] | null {
+  if (readingEngine(card.language) === "indic") {
+    return tamilTermReading(card.term, card.pronunciation);
+  }
   if (readingEngine(card.language) === "pinyin") {
     const segments = card.pronunciation ? pinyinTermReading(card.term, card.pronunciation) : null;
     return segments?.some((segment) => segment.reading !== undefined) ? segments : null;
@@ -335,6 +340,7 @@ export function readingPairs(card: {
   pronunciation?: string | null | undefined;
 }): string[] {
   if (readingEngine(card.language) === "pinyin") return pinyinPairs(termReading(card) ?? []);
+  if (readingEngine(card.language) === "indic") return tamilPairs(card.term);
   const keys: string[] = [];
   for (const { text, reading } of termReading(card) ?? []) {
     if (reading === undefined || ![...text].every(isBase)) continue;
@@ -363,7 +369,7 @@ export function knownReadings(
 /**
  * The runs with `known` on each reading whose characters and reading are a Known pair. Furigana
  * also joins the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known
- * 毎; pinyin fades character by character.
+ * 毎; pinyin fades character by character, and a Tamil reading word by word.
  */
 export function markKnownReadings(
   segments: readonly ReadingSegment[],
@@ -371,6 +377,7 @@ export function markKnownReadings(
   language: string | null | undefined,
 ): readonly ReadingSegment[] {
   if (!known?.size || !segments.some((segment) => segment.reading !== undefined)) return segments;
+  if (readingEngine(language) === "indic") return markKnownTamil(segments, known);
   if (readingEngine(language) === "pinyin") {
     return segments.map((segment) => {
       const pairs = segment.reading === undefined ? [] : pinyinPairs([segment]);
@@ -397,14 +404,17 @@ export function markKnownReadings(
 }
 
 /**
- * An example's inline readings as runs to draw, in its language's notation: pinyin, one run per
- * character, for Chinese, and kana brackets for any other language.
+ * An example's readings as runs to draw, in its language's notation: pinyin, one run per
+ * character, for Chinese, each word's reading from its spelling for Tamil, and kana brackets for
+ * any other language.
  */
 export function exampleSegments(
   text: string,
   language: string | null | undefined,
 ): ReadingSegment[] {
-  return readingEngine(language) === "pinyin" ? pinyinExampleSegments(text) : parseReadings(text);
+  const engine = readingEngine(language);
+  if (engine === "indic") return tamilSegments(text);
+  return engine === "pinyin" ? pinyinExampleSegments(text) : parseReadings(text);
 }
 
 /** How many readings an example draws, and how many of them fade over the learner's Known words. */

@@ -149,6 +149,7 @@ describe("tamilTermReading", () => {
   it("takes a loanword's own reading a few letters from the spelling's", () => {
     expect(tamilTermReading("டாக்டர்", "ḍākṭar")).toEqual([{ text: "டாக்டர்", reading: "ḍākṭar" }]);
     expect(tamilTermReading("டாக்டர்", "doktar")).toEqual([{ text: "டாக்டர்", reading: "doktar" }]);
+    expect(tamilTermReading("பேக்", "bēg")).toEqual([{ text: "பேக்", reading: "bēg" }]);
   });
 
   it("ignores Latin words that are a hint or a gloss, not a reading", () => {

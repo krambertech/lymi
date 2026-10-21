@@ -151,10 +151,6 @@ const GUIDES: Record<string, FieldGuide> = {
     notes:
       "Noun: an irregular plural (*մարդ → մարդիկ*). Verb: the present, first person singular (*գրել → գրում եմ*), and an irregular aorist.",
   },
-  ta: {
-    notes:
-      "Verb: the root, which is also the command, with the past and future, first person singular (*வா: வந்தேன் · வருவேன்*). Where everyday speech says the word differently from its written form, give the spoken form (*தண்ணீர்*, said *taṇṇi*).",
-  },
 };
 
 /** A deck's guide as one block of text the model reads, or undefined for a language without one. */

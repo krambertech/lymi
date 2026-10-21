@@ -11,6 +11,7 @@
     "./notes": "./src/notes.ts",
     "./reading": "./src/reading.ts",
     "./pinyin": "./src/pinyin/index.ts",
+    "./indic": "./src/indic/index.ts",
     "./catalog": "./src/catalog.ts",
     "./catalog/server": "./src/catalog-server.ts",
     "./publication-media": "./src/publication-media.ts",

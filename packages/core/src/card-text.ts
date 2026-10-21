@@ -3,6 +3,7 @@
  * records it, so a converted term still meets its duplicate and a converted Reading is never a
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
+import { sameTamilReading } from "./indic";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
@@ -22,7 +23,18 @@ const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardT
   furigana: splitBracketedTerm,
   pinyin: markTones,
   stress: markStress,
+  indic: dropSpelledReading,
 };
+
+/**
+ * A Tamil pronunciation that only repeats the reading the spelling gives is left empty, so the
+ * field holds only words not said as spelled. An edit that sends no term keeps it as sent.
+ */
+function dropSpelledReading({ term, pronunciation }: CardText): CardText {
+  return term !== undefined && pronunciation && sameTamilReading(term, pronunciation)
+    ? { pronunciation: null }
+    : {};
+}
 
 /**
  * A pronunciation's accented Latin look-alikes become Cyrillic vowels with U+0301: замóк → замо́к.

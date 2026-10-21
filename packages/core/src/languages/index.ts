@@ -8,6 +8,7 @@ import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
 import { russian } from "./russian";
+import { tamil } from "./tamil";
 import type {
   LanguageFormat,
   LanguageSupport,
@@ -44,6 +45,7 @@ export const SUPPORTED_LANGUAGES = {
 export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ru: russian,
+  ta: tamil,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -84,7 +86,12 @@ export function readingEngine(language: string | null | undefined): ReadingEngin
 }
 
 /** Engines that draw a reading over the script, so a term keeps a reading's room above it. */
-const OVER_SCRIPT: Record<ReadingEngine, boolean> = { furigana: true, pinyin: true, stress: false };
+const OVER_SCRIPT: Record<ReadingEngine, boolean> = {
+  furigana: true,
+  pinyin: true,
+  stress: false,
+  indic: true,
+};
 
 /** Whether Lymi draws readings over this language's terms and examples, rather than marks in place. */
 export function drawsReadings(language: string | null | undefined): boolean {

@@ -80,13 +80,19 @@ function distance(a: string, b: string): number {
   return row[b.length] as number;
 }
 
+/** A folded reading with each stop voiceless, since a loanword's own reading most often differs from its spelling's in voice. */
+function unvoiced(reading: string): string {
+  return reading.replace(/[bgdj]/g, (stop) => ({ b: "p", g: "k", d: "t", j: "c" })[stop] ?? stop);
+}
+
 /**
  * Whether a word of the card's own reading can be the word's: within one letter in three of the
- * spelling's reading once folded, so பஸ் may read bas, while a gloss such as song never passes.
+ * spelling's reading once folded and unvoiced, so பஸ் may read bas and பேக் bēg, while a gloss
+ * such as song never passes.
  */
 function readsAs(own: string, spelled: string): boolean {
-  const a = foldReading(own);
-  const b = foldReading(spelled);
+  const a = unvoiced(foldReading(own));
+  const b = unvoiced(foldReading(spelled));
   return distance(a, b) <= Math.max(1, Math.floor(Math.max(a.length, b.length) / 3));
 }
 

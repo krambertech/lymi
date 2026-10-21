@@ -18,7 +18,13 @@ const deck = (id: string, language: string | null): DeckCandidate => ({
 });
 
 /** One deck in each kind of language, so the hash covers every reading line and the brief's own wording. */
-const DECKS = [deck("ja", "ja-JP"), deck("zh", "zh"), deck("et", "et"), deck("none", null)];
+const DECKS = [
+  deck("ja", "ja-JP"),
+  deck("zh", "zh"),
+  deck("ta", "ta"),
+  deck("et", "et"),
+  deck("none", null),
+];
 const brief = (decks: DeckCandidate[]) =>
   decksBrief(decks, { fixed: false, hint: undefined, meaningLanguage: "en", limit: 1 });
 
@@ -27,8 +33,8 @@ describe("the lesson prompt", () => {
     const hash = promptHash({ INSTRUCTIONS, REPLY_SCHEMA, brief: brief(DECKS) });
     // Raise LESSON_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ LESSON_PROMPT_VERSION, hash }).toEqual({
-      LESSON_PROMPT_VERSION: 2,
-      hash: "6688da2040fe47c5",
+      LESSON_PROMPT_VERSION: 3,
+      hash: "a32794a21b0752f8",
     });
   });
 

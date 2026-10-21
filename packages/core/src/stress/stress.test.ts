@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cyrillicStress, hasStress, markedForm, stripStress } from ".";
+import { addsStress, cyrillicStress, hasStress, markedForm, missingStress, stripStress, wordStress } from ".";
 
 const RU = { vowels: "аеёиоуыэюя", restores: { ё: "е" } } as const;
 
@@ -53,5 +53,38 @@ describe("cyrillicStress", () => {
   });
   it("leaves a letter the language does not write", () => {
     expect(cyrillicStress("кíно", RU)).toBe("кíно");
+  });
+});
+
+describe("wordStress", () => {
+  it("counts each Cyrillic word's syllables and marks, and skips Latin words", () => {
+    expect(wordStress("Я ви́жу ёлку и café.", RU)).toEqual([
+      { word: "Я", syllables: 1, acutes: 0, dotted: false, acuteOnDotted: false },
+      { word: "ви́жу", syllables: 2, acutes: 1, dotted: false, acuteOnDotted: false },
+      { word: "ёлку", syllables: 2, acutes: 0, dotted: true, acuteOnDotted: false },
+      { word: "и", syllables: 1, acutes: 0, dotted: false, acuteOnDotted: false },
+    ]);
+    expect(wordStress("ё́лка", RU)[0]?.acuteOnDotted).toBe(true);
+    expect(wordStress("что́-то", RU)).toHaveLength(1);
+  });
+});
+
+describe("missingStress", () => {
+  it("finds a word of two or more syllables with neither an acute nor ё", () => {
+    expect(missingStress("Я живу́ в Москве́.", RU)).toBe(false);
+    expect(missingStress("Я живу в Москве́.", RU)).toBe(true);
+    expect(missingStress("Ёлка в лесу́.", RU)).toBe(false);
+    expect(missingStress("Я бачу ялинку.", { vowels: "аеєиіїоуюя" })).toBe(true);
+    expect(missingStress("OK, да.", RU)).toBe(false);
+  });
+});
+
+describe("addsStress", () => {
+  it("takes marks added to the same text, keeping the marks it had", () => {
+    expect(addsStress("Я живу в Москве.", "Я живу́ в Москве́.")).toBe(true);
+    expect(addsStress("Я живу́ в Москве.", "Я живу́ в Москве́.")).toBe(true);
+    expect(addsStress("Я живу́ в Москве.", "Я живу в Москве́.")).toBe(false);
+    expect(addsStress("Я живу в Москве.", "Я живу́ в Москве́!")).toBe(false);
+    expect(addsStress("Я живу в Москве.", "Я живу в Москве.")).toBe(false);
   });
 });

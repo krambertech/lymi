@@ -1,0 +1,548 @@
+{
+  "about": "Invented cases for the ru module's lesson, hook and check slots, led by the stress homographs; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Russian reader, reviews these with russian.ts.",
+  "lesson": [
+    {
+      "term": "замок",
+      "printed": "зáмок",
+      "reading": "за́мок"
+    },
+    {
+      "term": "замок",
+      "printed": "замóк",
+      "reading": "замо́к"
+    },
+    {
+      "term": "замок",
+      "printed": "замо́к",
+      "reading": "замо́к"
+    },
+    {
+      "term": "замок",
+      "printed": "за́мок",
+      "reading": "за́мок"
+    },
+    {
+      "term": "мука",
+      "printed": "мукá",
+      "reading": "мука́"
+    },
+    {
+      "term": "мука",
+      "printed": "мýка",
+      "reading": "му́ка"
+    },
+    {
+      "term": "плачу",
+      "printed": "плáчу",
+      "reading": "пла́чу"
+    },
+    {
+      "term": "плачу",
+      "printed": "плачу́",
+      "reading": "плачу́"
+    },
+    {
+      "term": "стоит",
+      "printed": "стóит",
+      "reading": "сто́ит"
+    },
+    {
+      "term": "стоит",
+      "printed": "стои́т",
+      "reading": "стои́т"
+    },
+    {
+      "term": "духи",
+      "printed": "дýхи",
+      "reading": "ду́хи"
+    },
+    {
+      "term": "духи",
+      "printed": "духи́",
+      "reading": "духи́"
+    },
+    {
+      "term": "полки",
+      "printed": "пóлки",
+      "reading": "по́лки"
+    },
+    {
+      "term": "полки",
+      "printed": "полки́",
+      "reading": "полки́"
+    },
+    {
+      "term": "молоко",
+      "printed": "молокó",
+      "reading": "молоко́"
+    },
+    {
+      "term": "город",
+      "printed": "гóрод",
+      "reading": "го́род"
+    },
+    {
+      "term": "сделать",
+      "printed": "сдéлать",
+      "reading": "сде́лать"
+    },
+    {
+      "term": "работать",
+      "printed": "рабо́тать",
+      "reading": "рабо́тать"
+    },
+    {
+      "term": "еж",
+      "printed": "ёж",
+      "reading": "ёж"
+    },
+    {
+      "term": "ежик",
+      "printed": "ёжик",
+      "reading": "ёжик"
+    },
+    {
+      "term": "все",
+      "printed": "всё",
+      "reading": "всё"
+    },
+    {
+      "term": "добрый день",
+      "printed": "дóбрый день",
+      "reading": "до́брый день"
+    },
+    {
+      "term": "Как дела?",
+      "printed": "Как делá?",
+      "reading": "Как дела́?"
+    },
+    {
+      "term": "что-то",
+      "printed": "чтó-то",
+      "reading": "что́-то"
+    },
+    {
+      "term": "Аист",
+      "printed": "Áист",
+      "reading": "А́ист"
+    }
+  ],
+  "hook": [
+    {
+      "term": "замок",
+      "meaning": "lock",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "замо́к"
+    },
+    {
+      "term": "замок",
+      "meaning": "castle",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "за́мок"
+    },
+    {
+      "term": "мука",
+      "meaning": "flour",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "мука́"
+    },
+    {
+      "term": "мука",
+      "meaning": "torment",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "му́ка"
+    },
+    {
+      "term": "плакать",
+      "meaning": "to cry",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "пла́кать"
+    },
+    {
+      "term": "платить",
+      "meaning": "to pay",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "плати́ть"
+    },
+    {
+      "term": "духи",
+      "meaning": "perfume",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "духи́"
+    },
+    {
+      "term": "полка",
+      "meaning": "shelf",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "по́лка"
+    },
+    {
+      "term": "телефон",
+      "meaning": "telephone",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "телефо́н"
+    },
+    {
+      "term": "театр",
+      "meaning": "theatre",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "теа́тр"
+    },
+    {
+      "term": "молоко",
+      "meaning": "milk",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "молоко́"
+    },
+    {
+      "term": "город",
+      "meaning": "city",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "го́род"
+    },
+    {
+      "term": "собака",
+      "meaning": "dog",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "соба́ка"
+    },
+    {
+      "term": "окно",
+      "meaning": "window",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "окно́"
+    },
+    {
+      "term": "работать",
+      "meaning": "to work",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "рабо́тать"
+    },
+    {
+      "term": "говорить",
+      "meaning": "to speak",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "говори́ть"
+    },
+    {
+      "term": "ёлка",
+      "meaning": "fir tree",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "ребёнок",
+      "meaning": "child",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "дом",
+      "meaning": "house",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "ковёр",
+      "meaning": "килим",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "неделя",
+      "meaning": "тиждень",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "неде́ля"
+    },
+    {
+      "term": "пятница",
+      "meaning": "п'ятниця",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "пя́тница"
+    }
+  ],
+  "checks": [
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "за́мок",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замо́к",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замок",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замóк",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "мука",
+      "text": "мука́",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "мука",
+      "text": "му́ка",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "ˈzamək",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "zámok",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "еж",
+      "text": "ёж",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "все",
+      "text": "всё",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "добрый день",
+      "text": "до́брый день",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "добрый день",
+      "text": "до́брый ден",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "добрый день",
+      "text": "добрый де́нь",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "Как дела?",
+      "text": "Как дела́?",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "дом",
+      "text": "дом",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "работать",
+      "text": "рабо́та",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "что-то",
+      "text": "что́-то",
+      "pass": true
+    },
+    {
+      "rule": "one mark per word",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "за́мо́к",
+      "pass": false
+    },
+    {
+      "rule": "one mark per word",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "за́мок",
+      "pass": true
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "pronunciation",
+      "term": "ёлка",
+      "text": "ё́лка",
+      "pass": false
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "pronunciation",
+      "term": "дом",
+      "text": "до́м",
+      "pass": false
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "pronunciation",
+      "term": "добрый день",
+      "text": "до́брый день",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Ключ не подхо́дит к замку́.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Ключ не подходит к замку́.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "В ко́мнате ёлка.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Мы живём в Москве́.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Я люблю́ молоко.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Это мой дом.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Э́то мой дом.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Где Wi-Fi?",
+      "pass": true
+    },
+    {
+      "rule": "one mark per word",
+      "field": "example",
+      "text": "Мы ку́пи́ли хлеб.",
+      "pass": false
+    },
+    {
+      "rule": "one mark per word",
+      "field": "example",
+      "text": "Мы купи́ли хлеб.",
+      "pass": true
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "example",
+      "text": "Мы живё́м в Москве́.",
+      "pass": false
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "example",
+      "text": "Мы живём в Москве́.",
+      "pass": true
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "example",
+      "text": "Я́ люблю́ чай.",
+      "pass": false
+    },
+    {
+      "rule": "no mark on ё or one syllable",
+      "field": "example",
+      "text": "Я люблю́ ча́й.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я рабо́таю в ба́нке.",
+      "example": "Я работаю в банке.",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я рабо́таю в ба́нке!",
+      "example": "Я работаю в банке.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я тру́жусь в ба́нке.",
+      "example": "Я работаю в банке.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я работаю в банке.",
+      "example": "Я работаю в банке.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я рабо́таю в ба́нке.",
+      "example": "Я рабо́таю в банке.",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я работаю в ба́нке.",
+      "example": "Я рабо́таю в банке.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Мы гуля́ем в па́рке.",
+      "pass": true
+    }
+  ]
+}

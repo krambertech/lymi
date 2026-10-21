@@ -212,6 +212,21 @@ describe("enrichmentWrite", () => {
     });
   });
 
+  it("adds stress to a Russian example, keeping the marks it had", () => {
+    const card = { ...blank, language: "ru", example: "Я живу́ в Москве." };
+    const marked = { ...reply, example: "Я живу́ в Москве́." };
+    expect(enrichmentWrite(card, marked, [], "ru")).toEqual({
+      example: "Я живу́ в Москве́.",
+      readingsFor: "Я живу́ в Москве.",
+    });
+    expect(enrichmentWrite(card, { ...marked, example: "Я живу в Москве́." }, [], "ru")).toEqual(
+      {},
+    );
+    expect(enrichmentWrite(card, { ...marked, example: "Мы живём в Москве́." }, [], "ru")).toEqual(
+      {},
+    );
+  });
+
   it("drops a value the model left out and a language tag that is not one", () => {
     expect(
       enrichmentWrite(blank, {
@@ -1000,6 +1015,35 @@ describe("enrichment that follows the deck", () => {
       example: "我[wǒ]在[zài]学校[xuéxiào]学习[xuéxí]。",
       exampleSource: "manual",
       pronunciation: "xuéxí",
+    });
+  });
+
+  it("adds stress to a Russian example and keeps it the learner's", async () => {
+    const ctx = await learner(db, "deck-fields-readings-ru", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+    const card = await added(
+      ctx,
+      CardInput.parse({ deckId: deck.id, term: "работать", example: "Я работаю в банке." }),
+    );
+    const provider = fakeProvider({
+      cards: [
+        {
+          id: card.id,
+          meaning: "to work",
+          example: "Я рабо́таю в ба́нке.",
+          notes: null,
+          pronunciation: "рабо́тать",
+          language: null,
+        },
+      ],
+    });
+    await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, addReadings: true })]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "Я рабо́таю в ба́нке.",
+      exampleSource: "manual",
+      pronunciation: "рабо́тать",
     });
   });
 

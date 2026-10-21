@@ -39,7 +39,7 @@ const MAX_WORDS = 6;
 export { hookable } from "@lymi/core";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HOOK_PROMPT_VERSION = 5;
+export const HOOK_PROMPT_VERSION = 6;
 
 export const HOOK_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",

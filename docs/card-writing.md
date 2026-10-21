@@ -45,6 +45,15 @@ Only a `yue` or `zh-yue` tag is Cantonese; `zh-HK` is Chinese.
 
 The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
 
+## Russian cards
+
+- **Term**: the word as natives write it, with no stress marks.
+- **Stress**: the term with U+0301 over the stressed vowel of each word of two or more syllables, stored as the pronunciation: замок read за́мок (castle) or замо́к (lock), and ё restored where the term writes е, еж read ёж. Empty when the term already shows its stress, every word having one syllable or ё: дом, ёлка. An accented Latin look-alike, замóк, is stored as the Cyrillic vowel and U+0301.
+- **Notes**: a verb's aspect pair, *де́лать / сде́лать*, and a case other than the accusative; a noun's gender when the ending hides it and an irregular plural; the forms that show a stress moving, *го́род · города́*; and the homograph with its stress elsewhere, *за́мок* is a castle.
+- **Example**: one short sentence with U+0301 over the stressed vowel of each word of two or more syllables, as that form is said, and none over ё or a word of one syllable: Я живу́ в Москве́. The marks never fade, because stress moves as a word changes form.
+
+The AI may add stress marks to an example someone else wrote only when removing them gives the text back; it never rewrites it.
+
 ## Tamil cards
 
 - **Term**: the word in written Tamil, as school, books and signs spell it, in Tamil script.

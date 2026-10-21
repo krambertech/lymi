@@ -4,7 +4,6 @@ import { expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { BidiTrans } from "../lib/bidi";
 import { DeckRow } from "./deck-row";
 import { StaticNavProvider } from "./nav-link";
 
@@ -18,7 +17,7 @@ i18n.activate("en");
 
 test("a joined deck names its owner and an owned deck names nobody", async () => {
   await render(
-    <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+    <I18nProvider i18n={i18n}>
       <StaticNavProvider path="">
         <ul>
           <li>
@@ -53,7 +52,7 @@ test("a deck added from Explore draws its publisher's mark", async () => {
   // what a real /public/media address would do with no Worker behind it.
   const photo = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   await render(
-    <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+    <I18nProvider i18n={i18n}>
       <StaticNavProvider path="">
         <ul>
           <li>

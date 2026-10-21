@@ -9,7 +9,6 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { decks } from "../design/mock";
 import type { ConnectedApp } from "../lib/api";
-import { BidiTrans } from "../lib/bidi";
 import { connectedAppsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { CreateFirstDeck, FirstRunGuide, ReadyToStart } from "./first-run";
@@ -22,7 +21,7 @@ i18n.activate("en");
 
 function wrap(node: ReactNode) {
   return render(
-    <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+    <I18nProvider i18n={i18n}>
       <StaticNavProvider path="/today">{node}</StaticNavProvider>
     </I18nProvider>,
   );
@@ -189,7 +188,7 @@ test("an assistant already connected turns its card into what it can do", async 
   ] satisfies ConnectedApp[]);
   render(
     <QueryClientProvider client={qc}>
-      <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+      <I18nProvider i18n={i18n}>
         <StaticNavProvider path="/today">
           <CreateFirstDeck started play={false} onSmartAdd={undefined} onCreateDeck={undefined} />
         </StaticNavProvider>
@@ -204,7 +203,7 @@ test("an assistant already connected turns its card into what it can do", async 
 test("a learner whose only deck was shared is offered a deck of their own", async () => {
   render(
     <QueryClientProvider client={new QueryClient()}>
-      <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+      <I18nProvider i18n={i18n}>
         <StaticNavProvider path="/today">
           <CreateFirstDeck
             started={false}

@@ -1,9 +1,10 @@
 export const title = "Right to left";
 
-const DECK = "عربي";
+/** A deck name holding a Latin level, which isolation keeps to the Arabic word's left. */
+const DECK = "عربي A1";
 /** An Arabic word holding a Latin one, which must stay to its left. */
 const TERM = "كتاب PDF";
-const MEANING = "book (as a PDF)";
+const MEANING = "book, as a PDF";
 const EXAMPLE = "قرأتُ كتاب Harry Potter مرتين";
 
 export async function env({ api }) {
@@ -22,13 +23,12 @@ export async function env({ api }) {
   return { DECK, DECK_ID: deck.id, TERM, MEANING };
 }
 
-/** The card is archived and kept its text as typed, with no isolate stored. */
+/** The deck is archived under its name as typed, with no isolate stored. */
 export async function check({ api, poll }) {
   return poll(async () => {
-    const { cards } = await api(`/api/cards?query=${encodeURIComponent("كتاب")}&archived=true`);
-    const card = cards.find((c) => c.term === TERM);
-    if (!card?.archivedAt) throw new Error(`“${TERM}” is not archived`);
-    if (card.example !== EXAMPLE) throw new Error(`“${TERM}” lost its example`);
-    return card;
+    const decks = await api("/api/decks?archived=true");
+    const deck = decks.find((d) => d.name === DECK);
+    if (!deck) throw new Error(`“${DECK}” is not among the archived decks`);
+    return deck;
   });
 }

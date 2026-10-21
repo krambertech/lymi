@@ -2,6 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { isolate } from "@lymi/core";
 import type { CSSProperties, ReactNode } from "react";
 import type { Section, Sections } from "../lib/api";
+import { bidi } from "../lib/bidi";
 import { Button } from "./button";
 
 export interface SectionProgressProps {
@@ -101,7 +102,7 @@ export function SectionProgress({
     <div className="grid gap-3 border-t border-edge px-5 pt-3.5 pb-4 @md/plates:ps-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
         <div className="grid min-w-0 flex-1 basis-56 gap-0.5">
-          <p className="text-md font-medium text-balance text-text">{title}</p>
+          <p className="text-md font-medium text-balance text-text">{bidi(title)}</p>
           <p className="text-sm text-text-2">{detail}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

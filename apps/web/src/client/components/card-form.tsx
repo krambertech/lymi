@@ -33,6 +33,7 @@ import {
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { Card, DeckSummary } from "../lib/api";
+import { bidi } from "../lib/bidi";
 import { composing } from "../lib/composing";
 import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
@@ -519,7 +520,7 @@ export function CardForm(props: CardFormProps) {
           {notice?.kind === "warn" && (
             <AlertCircle className="mt-0.5 size-3.5 shrink-0 text-danger" aria-hidden="true" />
           )}
-          {notice && <span className="min-w-0">{notice.text}</span>}
+          {notice && <span className="min-w-0">{bidi(notice.text)}</span>}
           {notice?.kind === "warn" && onRetryPicture && (
             <Button size="sm" variant="ghost" className="-my-1 shrink-0" onClick={onRetryPicture}>
               <Trans>Add picture</Trans>
@@ -836,7 +837,11 @@ export function CardForm(props: CardFormProps) {
           className={cn("min-w-0", chips && (onCreateMoreChange ? "ms-auto" : "flex-1"))}
         >
           <span className="truncate">
-            {adding ? (deckName ? t`Add to ${{ deckName: isolate(deckName) }}` : t`Add`) : t`Save`}
+            {adding
+              ? deckName
+                ? bidi(t`Add to ${{ deckName: isolate(deckName) }}`)
+                : t`Add`
+              : t`Save`}
           </span>
           {!chips && !st && (
             <span aria-hidden="true" className="contents">

@@ -23,7 +23,7 @@ import {
   rowState,
   splitForms,
 } from "@lymi/client/deck-list";
-import { isolate } from "@lymi/core";
+import { isolate, unisolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Check,
@@ -165,26 +165,27 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
   };
   const term = (id: string) => rows.get(id.slice(CARD.length))?.card.term ?? "";
 
+  // Spoken only, so the isolates come off again: they would reach the screen reader and nothing else.
   const announcements: Announcements = {
     onDragStart: ({ active }) => {
       const name = term(String(active.id));
-      return t`Picked up ${{ name: isolate(name) }}.`;
+      return unisolate(t`Picked up ${{ name: isolate(name) }}.`);
     },
     onDragOver: ({ active, over }) => {
       if (!over) return undefined;
       const name = term(String(active.id));
       const where = place(String(over.id));
-      return t`${{ name: isolate(name) }} is over ${where}.`;
+      return unisolate(t`${{ name: isolate(name) }} is over ${where}.`);
     },
     onDragEnd: ({ active, over }) => {
       const name = term(String(active.id));
-      if (!over) return t`${{ name: isolate(name) }} is back where it was.`;
+      if (!over) return unisolate(t`${{ name: isolate(name) }} is back where it was.`);
       const where = place(String(over.id));
-      return t`Dropped ${{ name: isolate(name) }} at ${where}.`;
+      return unisolate(t`Dropped ${{ name: isolate(name) }} at ${where}.`);
     },
     onDragCancel: ({ active }) => {
       const name = term(String(active.id));
-      return t`${{ name: isolate(name) }} is back where it was.`;
+      return unisolate(t`${{ name: isolate(name) }} is back where it was.`);
     },
   };
 

@@ -1,5 +1,5 @@
 # Right to left: an Arabic deck's rows, cue and example run right to left in the English app, and
-# archiving a card names it in its own order.
+# archiving the deck names it in its own order.
 appId: app.lymi
 name: Right to left
 ---
@@ -22,16 +22,15 @@ name: Right to left
 - assertVisible: ".*${MEANING}.*"
 - takeScreenshot: 03-revealed
 - tapOn: "End review"
-- openLink: lymi://library/${DECK_ID}
+# Archiving the deck names it in the toast: the Latin A1 stays on the Arabic name's left.
+- openLink: lymi://library/deck-settings?id=${DECK_ID}
 - scrollUntilVisible:
-    element: "${TERM}, .*"
+    element: "Archive deck"
     centerElement: true
-- longPressOn: "${TERM}, .*"
+- tapOn: "Archive deck"
 - extendedWaitUntil:
-    visible: "Archive card"
+    visible: "Archived “.?${DECK}.?”"
     timeout: 10000
-- tapOn: "Archive card"
-- extendedWaitUntil:
-    visible: "Archived “.?${TERM}.?”"
-    timeout: 10000
+# Library slides in under the toast; the screenshot waits for it to settle.
+- waitForAnimationToEnd
 - takeScreenshot: 04-archived-toast

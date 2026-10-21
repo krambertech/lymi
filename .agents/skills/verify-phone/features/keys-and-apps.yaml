@@ -29,14 +29,14 @@ name: API keys and connected apps
     visible: "${KEY}"
     timeout: 10000
 - takeScreenshot: 04-listed
-- tapOn: "Options for .?${KEY}.?"
+- tapOn: "Options for ${KEY}"
 - extendedWaitUntil:
     visible: "Revoke key"
     timeout: 10000
 - takeScreenshot: 05-menu
 - tapOn: "Revoke key"
 - extendedWaitUntil:
-    visible: "Revoke “.?${KEY}.?”\\?"
+    visible: "Revoke “${KEY}”\\?"
     timeout: 10000
 - takeScreenshot: 06-alert
 - tapOn: "Revoke key"

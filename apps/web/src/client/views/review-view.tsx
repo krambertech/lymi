@@ -532,9 +532,9 @@ export function ReviewCard({
   const term = <TermText card={card} />;
   const label =
     mode.cue === "term"
-      ? t`Recognition card for ${{ front: isolate(front) }}`
+      ? t`Recognition card for ${front}`
       : mode.cue === "meaning"
-        ? t`Production card for ${{ front: isolate(front) }}`
+        ? t`Production card for ${front}`
         : t`Picture card`;
 
   const [fit, setFit] = useState<Fit>(UNMEASURED);
@@ -1110,8 +1110,8 @@ export function ReviewCard({
           ? t`Memory hook: ${spokenAid}`
           : revealed
             ? offer && offerSeen
-              ? t`Answer: ${{ back: isolate(back) }}. You can add a memory hook.`
-              : t`Answer: ${{ back: isolate(back) }}`
+              ? t`Answer: ${back}. You can add a memory hook.`
+              : t`Answer: ${back}`
             : ""}
       </p>
     </section>

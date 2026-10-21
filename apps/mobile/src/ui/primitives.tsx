@@ -11,6 +11,7 @@ import {
 } from "react";
 import {
   ActivityIndicator,
+  I18nManager,
   Platform,
   Pressable,
   type PressableProps,
@@ -54,6 +55,11 @@ const SCRIPT_RUNS: Record<Script, RegExp> = {
   Taml: /([\u0b80-\u0bff\u{200c}\u{200d}]+)/u,
 };
 
+const RTL_IN_APP = {
+  writingDirection: "rtl",
+  textAlign: I18nManager.isRTL ? "right" : "left",
+} as const;
+
 // iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".
 const NAMES_FACES = Platform.OS === "ios";
 
@@ -94,14 +100,15 @@ export function Text({
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
   const fit = fitType(size, fontScale, maxFontSizeMultiplier ?? undefined);
   const script = NAMES_FACES ? languageScript(lang) : null;
-  // iOS orders a right-to-left term from its tag, so one that opens with a Latin word still reads right.
+  // iOS orders a right-to-left term from its tag, so one that opens with a Latin word still reads right;
+  // it stays on the app's start edge, as a row expects, unless a block of it asks for `textStart`.
   const rtl = textDirection(lang) === "rtl";
   return (
     <RNText
       className={`font-sans ${className ?? ""}`}
       dynamicTypeRamp={fit.ramp}
       maxFontSizeMultiplier={fit.cap}
-      style={[{ letterSpacing: fit.letterSpacing }, rtl && { writingDirection: "rtl" }, style]}
+      style={[{ letterSpacing: fit.letterSpacing }, rtl && RTL_IN_APP, style]}
       {...props}
     >
       {script ? inScript(children, script) : children}

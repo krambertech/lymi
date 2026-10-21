@@ -31,6 +31,12 @@ describe("isolate", () => {
     expect(isolate("")).toBe("");
   });
 
+  it("leaves text with no right-to-left letter as it is", () => {
+    expect(isolate("Verbi 2")).toBe("Verbi 2");
+    expect(isolate("猫")).toBe("猫");
+    expect(isolate("שלום")).toBe("\u2068שלום\u2069");
+  });
+
   it("comes off again for an accessible name", () => {
     expect(unisolate(`Options for ${isolate("كتب")}`)).toBe("Options for كتب");
     expect(unisolate(undefined)).toBeUndefined();

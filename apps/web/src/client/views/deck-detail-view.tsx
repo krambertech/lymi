@@ -13,7 +13,7 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT, isolate, type KnownReadings } from "@lymi/core";
+import { CHOSEN_LIMIT, isolate, type KnownReadings, unisolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -81,6 +81,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
 import type { DeckSummary, Section, Sections } from "../lib/api";
+import { bidi } from "../lib/bidi";
 import { captureAnalytics } from "../lib/telemetry";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { type WordHistory, WordView } from "./word-view";
@@ -387,11 +388,11 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
     <button
       type="button"
       onClick={onRemove}
-      aria-label={t`Remove filter: ${label}`}
+      aria-label={t`Remove filter: ${unisolate(label)}`}
       // The hit area reaches 40 px, as far as the 8 px gap to the next chip allows.
       className="relative inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2 transition-[background-color,color,scale] duration-150 ease-out before:absolute before:-inset-1 before:content-[''] active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text motion-reduce:active:scale-100"
     >
-      {label}
+      {bidi(label)}
       <X className="size-3.5 text-muted" aria-hidden="true" />
     </button>
   );

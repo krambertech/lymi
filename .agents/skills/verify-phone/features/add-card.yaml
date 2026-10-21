@@ -33,9 +33,9 @@ name: Add a card
 - tapOn: "Meaning.*"
 - inputText: "${MEANING}"
 - takeScreenshot: 01-filled
-- tapOn: "Add to .?${DECK}.?"
+- tapOn: "Add to ${DECK}"
 - extendedWaitUntil:
-    visible: "Added “.?${TERM}.?” to .?${DECK}.?"
+    visible: "Added “${TERM}” to ${DECK}"
     timeout: 20000
 - takeScreenshot: 02-added
 - tapOn: "^Done$"

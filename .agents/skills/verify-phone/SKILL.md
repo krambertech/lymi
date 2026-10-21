@@ -71,7 +71,7 @@ For each feature the runner resets the persona with `POST /api/dev/sign-in?as=<p
 
 Find controls by the text and accessibility labels a VoiceOver user hears, never by position; `maestro --device <udid> hierarchy` prints what the app exposes. The one exception is written down in its entry's gotchas with the reason.
 
-Learner text inside interface text, such as a term in **Archived “…”** or a deck in **Options for …**, is wrapped in invisible Unicode isolates, U+2068 and U+2069, so a flow matches it with `.?` on each side: `Archived “.?${TERM}.?”`.
+Learner text holding a right-to-left letter, such as an Arabic deck in **Archived “…”**, is wrapped in invisible Unicode isolates, U+2068 and U+2069, inside interface text, so a flow that may meet one matches it with `.?` on each side: `Archived “.?${DECK}.?”`.
 
 ## Evidence
 

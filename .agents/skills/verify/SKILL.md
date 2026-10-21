@@ -45,6 +45,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |
 | First run for a Ukrainian beginner | [first-run-ukrainian.md](features/first-run-ukrainian.md) |
+| First run for a Russian beginner | [first-run-russian.md](features/first-run-russian.md) |
 | AI services | [ai-services.md](features/ai-services.md) |
 
 ## Launch

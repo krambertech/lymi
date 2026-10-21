@@ -35,6 +35,12 @@ export const LANGUAGE_PAGES = {
     title: msg`Learn Ukrainian vocabulary with flashcards · Lymi`,
     blurb: msg`A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2.`,
   },
+  ru: {
+    page: "russian",
+    label: msg`Russian`,
+    title: msg`Learn Russian vocabulary with flashcards · Lymi`,
+    blurb: msg`A free flashcard app for Russian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and the core words.`,
+  },
 } as const satisfies Record<SupportedTag, LanguagePageRow>;
 
 export type LanguagePageName = (typeof LANGUAGE_PAGES)[SupportedTag]["page"];

@@ -37,7 +37,7 @@ export function DeckPath({ steps, lang }: Props) {
   }
 
   const done = beat >= total - 1;
-  const stacked = lang !== "ja";
+  const stacked = !steps.some((step) => step.words.some((word) => word.furigana));
 
   useEffect(() => {
     // Once through the path, then it rests on the last word.
@@ -109,7 +109,7 @@ export function DeckPath({ steps, lang }: Props) {
                       transition={{ duration: 0.45, ease: EASE }}
                       className={clsx(
                         "flex h-full",
-                        // Furigana needs the height, so a Japanese word sits beside its answer; a Latin phrase sits above it.
+                        // A reading over the characters needs the height, so such a word sits beside its answer; a Latin phrase sits above it.
                         stacked
                           ? "min-w-0 flex-col items-start justify-end gap-1"
                           : "items-end justify-between gap-3",

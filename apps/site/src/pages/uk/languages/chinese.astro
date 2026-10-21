@@ -1,0 +1,44 @@
+---
+import ChinesePage from "../../../components/islands/ChinesePage";
+import { CHINESE_BLURB, CHINESE_TITLE } from "../../../components/landing/ChineseView";
+import { SHARE_IMAGE_ALT } from "../../../components/landing/LandingView";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../../lib/i18n";
+import { resolveChineseDecks } from "../../../lib/public-catalog";
+import { localizedPath } from "../../../lib/routes";
+import { marketingPage } from "../../../lib/structured-data";
+
+export const prerender = false;
+
+const locale = "uk";
+const page = await resolveChineseDecks(Astro, locale);
+if (page instanceof Response) return page;
+const i18n = pageI18n(locale);
+const title = i18n._(CHINESE_TITLE);
+const description = i18n._(CHINESE_BLURB);
+const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
+const path = localizedPath("chinese", locale);
+
+const structuredData = marketingPage({
+  name: title,
+  description,
+  path,
+  i18n,
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={path}
+  localizedPage="chinese"
+  shareImageAlt={shareImageAlt}
+>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <ChinesePage client:load locale={locale} decks={page.decks} />
+</BaseLayout>

@@ -3788,9 +3788,8 @@ msgstr "Remove {name}?"
 msgid "Remove a filter above, or show every card in this deck."
 msgstr "Remove a filter above, or show every card in this deck."
 
-#. placeholder {0}: unisolate(label)
-msgid "Remove filter: {0}"
-msgstr "Remove filter: {0}"
+msgid "Remove filter: {label}"
+msgstr "Remove filter: {label}"
 
 msgid "Remove from deck"
 msgstr "Remove from deck"

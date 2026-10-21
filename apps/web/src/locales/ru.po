@@ -3788,9 +3788,8 @@ msgstr "Исключить {name}?"
 msgid "Remove a filter above, or show every card in this deck."
 msgstr "Убери фильтр выше или покажи все карточки этой колоды."
 
-#. placeholder {0}: unisolate(label)
-msgid "Remove filter: {0}"
-msgstr ""
+msgid "Remove filter: {label}"
+msgstr "Убрать фильтр: {label}"
 
 msgid "Remove from deck"
 msgstr "Исключить из колоды"

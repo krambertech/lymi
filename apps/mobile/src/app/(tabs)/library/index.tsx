@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
-import { isolate } from "@lymi/core";
+import { isolate, unisolate } from "@lymi/core";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import { languageName } from "../../../data/languages";
@@ -162,7 +162,7 @@ function SeriesGroup({
             onPress={review}
             drawn={36}
             accessibilityRole="button"
-            accessibilityLabel={reviewLabel}
+            accessibilityLabel={unisolate(reviewLabel)}
             className="h-9 flex-row items-center gap-1.5 rounded-full bg-amber ps-3 pe-3.5"
           >
             <Icon name="play" size={15} colour={p["amber-ink"]} strokeWidth={2.25} />

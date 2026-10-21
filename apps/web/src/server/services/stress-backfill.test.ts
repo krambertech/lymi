@@ -18,8 +18,12 @@ describe("runStressBackfill", () => {
     await dispose();
   });
 
-  /** Russian cards as they were stored before the stress fold: added in a language without it, then moved. */
-  async function storedBeforeFold(id: string, cards: { term: string; pronunciation?: string }[]) {
+  /** Cards as they were stored before the stress fold: added in a language without it, then moved. */
+  async function storedBeforeFold(
+    id: string,
+    cards: { term: string; pronunciation?: string }[],
+    language = "ru",
+  ) {
     const ctx = await learner(db, id, "Kateryna");
     const deck = await createDeck(ctx, { name: "Слова", defaultLanguage: "bg" });
     const added = await addCards(
@@ -27,7 +31,7 @@ describe("runStressBackfill", () => {
       cards.map((card) => ({ deckId: deck.id, ...card })),
     );
     const ids = added.flatMap((outcome) => (outcome.status === "added" ? [outcome.card.id] : []));
-    await db.update(schema.cards).set({ language: "ru" }).where(inArray(schema.cards.id, ids));
+    await db.update(schema.cards).set({ language }).where(inArray(schema.cards.id, ids));
     return { ctx, ids };
   }
 
@@ -55,7 +59,7 @@ describe("runStressBackfill", () => {
     const before = await read(ids);
 
     const dry = await runStressBackfill(db, { dryRun: true });
-    expect(dry).toEqual({ split: 3, folded: 1, kept: 1, duplicates: 1, written: 0 });
+    expect(dry).toEqual({ split: 3, folded: 1, kept: 1, rekeyed: 0, duplicates: 1, written: 0 });
     expect(await read(ids)).toEqual(before);
 
     const wet = await runStressBackfill(db, { dryRun: false });
@@ -87,9 +91,27 @@ describe("runStressBackfill", () => {
       split: 0,
       folded: 0,
       kept: 1,
+      rekeyed: 0,
       duplicates: 0,
       written: 0,
     });
+  });
+
+  it("rekeys a Ukrainian term written with ’ and leaves the term as written", async () => {
+    const { ids } = await storedBeforeFold(
+      "stress-apostrophe",
+      [{ term: "м’ясо" }, { term: "мʼята" }, { term: "ру́ки" }],
+      "uk",
+    );
+    const dry = await runStressBackfill(db, { dryRun: true });
+    expect(dry).toMatchObject({ split: 1, rekeyed: 2 });
+    const wet = await runStressBackfill(db, { dryRun: false });
+    expect(wet).toMatchObject({ split: 1, rekeyed: 2, written: 3 });
+    const [meat, mint, hands] = await Promise.all(ids.map(async (id) => (await read([id]))[0]));
+    expect(meat).toMatchObject({ term: "м’ясо", normalizedTerm: "м'ясо" });
+    expect(mint).toMatchObject({ term: "мʼята", normalizedTerm: "м'ята" });
+    expect(hands).toMatchObject({ term: "руки", normalizedTerm: "руки", pronunciation: "ру́ки" });
+    expect(await runStressBackfill(db, { dryRun: true })).toMatchObject({ rekeyed: 0, split: 0 });
   });
 
   it("writes as the system, with an audit row for each card", async () => {

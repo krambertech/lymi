@@ -85,10 +85,14 @@ export function readStress(
 /** A hyphen or apostrophe between letters joins one word, so что́-то and об'є́кт count their syllables across it. */
 const JOINER = /^[-\u2010\u2011'\u2018\u2019\u02BC`]$/u;
 
-/** Ukrainian's apostrophes as one, so a term written м’ясо takes the pronunciation м'я́со. */
 const APOSTROPHES = /[\u2018\u2019\u02BC`]/gu;
 
-const apostrophe = (text: string) => text.replace(APOSTROPHES, "'");
+/** Ukrainian's apostrophes as one, so a term written м’ясо takes the pronunciation м'я́со. */
+export function foldApostrophes(text: string): string {
+  return text.replace(APOSTROPHES, "'");
+}
+
+const apostrophe = foldApostrophes;
 
 /**
  * The characters split at each one that is not a letter, which stands as a word of its own. A

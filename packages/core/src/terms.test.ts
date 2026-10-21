@@ -26,6 +26,12 @@ describe("termKey", () => {
     expect(termKey("uk", "Ру́ки")).toBe("руки");
     expect(termKey("uk-UA", "їжа́к")).toBe("їжак");
   });
+  it("makes Ukrainian's apostrophes one, and leaves Russian's alone", () => {
+    for (const term of ["м’ясо", "м‘ясо", "мʼясо", "м`ясо", "М'я́со"]) {
+      expect(termKey("uk", term)).toBe("м'ясо");
+    }
+    expect(termKey("ru", "Д’Артаньян")).toBe("д’артаньян");
+  });
   it("keeps the mark in every other language", () => {
     expect(termKey("lt", "ą́")).toBe("ą́");
     expect(termKey("bg", "за́мок")).not.toBe(termKey("bg", "замок"));

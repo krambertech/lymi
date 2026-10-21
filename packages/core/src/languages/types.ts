@@ -27,6 +27,8 @@ export interface StressRules {
    * takes no acute.
    */
   restores?: Readonly<Record<string, string>>;
+  /** Its apostrophes, ’ ‘ ʼ and `, are one letter with ', so м’ясо and м'ясо are one term. */
+  apostrophes?: boolean;
 }
 
 /** What makes two cards of a language the same card: the term alone, or the term and a differing Reading. */

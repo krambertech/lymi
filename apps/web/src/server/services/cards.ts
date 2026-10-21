@@ -14,6 +14,7 @@ import {
   emptyFields,
   enrichmentStalled,
   fieldsToFill,
+  foldApostrophes,
   type NormalizedField,
   needsEnrichment,
   newId,
@@ -422,12 +423,15 @@ export function foldForSearch(text: string): string {
 /**
  * The free-text search key: the duplicate-key fold, then NFKC so full- and half-width forms
  * meet, then katakana to hiragana so a kana query finds either script, then without a stress mark
- * left over from NFC, so замок finds за́мок while é and ѓ, which NFC composes, still count.
+ * left over from NFC, so замок finds за́мок while é and ѓ, which NFC composes, still count, and
+ * with every apostrophe as ', so м'ясо finds м’ясо.
  */
 export function searchKey(text: string): string {
-  return foldForSearch(text.normalize("NFKC"))
-    .replace(/[\u30a1-\u30f6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60))
-    .replaceAll("\u0301", "");
+  return foldApostrophes(
+    foldForSearch(text.normalize("NFKC"))
+      .replace(/[\u30a1-\u30f6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60))
+      .replaceAll("\u0301", ""),
+  );
 }
 
 /** True when the needle, a `searchKey`, occurs in the term, reading, meaning, example or notes. */

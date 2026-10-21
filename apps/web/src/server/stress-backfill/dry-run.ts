@@ -1,13 +1,20 @@
 /**
- * Prints what the stress backfill would write, and writes nothing: how many stressed Russian terms
- * split, fold, stay beside another pronunciation, and meet a duplicate. It reads D1 through
+ * Prints what the stress backfill would write, and writes nothing: how many stressed terms split,
+ * fold, stay beside another pronunciation, or are Ukrainian terms rekeyed for their apostrophes,
+ * and how many meet a duplicate. It reads D1 through
  * Wrangler, so it runs against the local database or production before the job does:
  *
  *   pnpm --filter @lymi/web backfill:stress --local
  *   pnpm --filter @lymi/web backfill:stress --remote
  */
 import { execFileSync } from "node:child_process";
-import { type ActiveRow, countDuplicates, planStressBackfill, type StressRow } from "./plan";
+import {
+  type ActiveRow,
+  BACKFILL_TERMS,
+  countDuplicates,
+  planStressBackfill,
+  type StressRow,
+} from "./plan";
 
 const target = process.argv.includes("--remote") ? "--remote" : "--local";
 const cwd = new URL("../../..", import.meta.url).pathname;
@@ -34,7 +41,7 @@ const card = (row: Record<string, unknown>): ActiveRow => ({
 const quoted = (value: string) => `'${value.replaceAll("'", "''")}'`;
 const COLUMNS = "id, user_id, language, term, normalized_term, pronunciation, archived_at";
 
-const read = d1(`select ${COLUMNS} from cards where instr(term, char(769)) > 0`);
+const read = d1(`select ${COLUMNS} from cards where ${BACKFILL_TERMS}`);
 const rows: StressRow[] = read.map(card);
 const { changes, counts } = planStressBackfill(rows);
 const keys = [...new Set(changes.map((change) => change.normalizedTerm))];
@@ -58,9 +65,12 @@ const active = new Map(
 );
 const duplicates = countDuplicates(changes, [...active.values()]);
 
-console.log(`Stress backfill dry run (${target}): ${read.length} cards with U+0301 in the term`);
+console.log(
+  `Stress backfill dry run (${target}): ${read.length} cards with U+0301 or an apostrophe other than ' in the term`,
+);
 console.log(`  split    ${counts.split}  stress moves into an empty pronunciation`);
 console.log(`  folded   ${counts.folded}  term loses marks its pronunciation already says`);
 console.log(`  kept     ${counts.kept}  beside another pronunciation, stressed key kept`);
+console.log(`  rekeyed  ${counts.rekeyed}  Ukrainian term keyed with ' for its apostrophe`);
 console.log(`  meet     ${duplicates}  rewritten cards that meet a duplicate, left as they are`);
 console.log("Nothing was written.");

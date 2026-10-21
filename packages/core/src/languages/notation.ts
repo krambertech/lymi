@@ -25,4 +25,6 @@ export const EXAMPLE_NOTATION = {
   },
   // Stress marks stay in the sentence as written, with nothing in brackets.
   stress: null,
+  // Each word's reading comes from its spelling at display, so examples are plain sentences.
+  indic: null,
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

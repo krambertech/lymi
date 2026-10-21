@@ -516,6 +516,35 @@ const N4_JA = japanese([
   { term: "急ぐ", pronunciation: "いそぐ", meaning: "to hurry" },
 ]);
 
+/** Chinese decks under production's slugs, published Core Chinese Words first, so Welcome reorders them. */
+const chinese = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "zh", meaningSource: "lesson" as const }));
+
+const CORE_ZH = chinese([
+  { term: "时间", pronunciation: "shíjiān", meaning: "time" },
+  { term: "朋友", pronunciation: "péngyou", meaning: "friend" },
+  { term: "工作", pronunciation: "gōngzuò", meaning: "work; job" },
+]);
+
+const HSK1_ZH = chinese([
+  { term: "你好", pronunciation: "nǐ hǎo", meaning: "hello" },
+  { term: "学习", pronunciation: "xuéxí", meaning: "to study" },
+  {
+    term: "银行",
+    pronunciation: "yínháng",
+    meaning: "bank",
+    example: "我[wǒ]去[qù]银行[yínháng]。",
+  },
+  { term: "喜欢", pronunciation: "xǐhuan", meaning: "to like" },
+]);
+
+const HSK2_ZH = chinese([
+  { term: "觉得", pronunciation: "juéde", meaning: "to feel; to think" },
+  { term: "地铁", pronunciation: "dìtiě", meaning: "metro; subway" },
+  { term: "准备", pronunciation: "zhǔnbèi", meaning: "to prepare" },
+  { term: "已经", pronunciation: "yǐjīng", meaning: "already" },
+]);
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -716,7 +745,7 @@ export const personas: Persona[] = [
     group: "Together",
     name: "Lymi",
     description:
-      "The publisher account. Estonian, Finnish, driving and Japanese decks; one in English and Ukrainian editions.",
+      "The publisher account. Estonian, Finnish, driving, Japanese and Chinese decks; one in English and Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -855,6 +884,51 @@ export const personas: Persona[] = [
           summary: "Words for the JLPT N4.",
           category: "languages",
           tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Chinese Words",
+        description: "Everyday words worth knowing first.",
+        defaultLanguage: "zh",
+        introducedDaysAgo: 7,
+        cards: CORE_ZH,
+        publication: {
+          slug: "core-chinese-words",
+          summary: "Everyday words worth knowing first.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Chinese HSK 2 Vocabulary",
+        description: "Words for HSK 2.",
+        defaultLanguage: "zh",
+        introducedDaysAgo: 6,
+        cards: HSK2_ZH,
+        publication: {
+          slug: "chinese-hsk-2-vocabulary",
+          summary: "Words for HSK 2.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Chinese HSK 1 Vocabulary",
+        description: "Words for HSK 1.",
+        defaultLanguage: "zh",
+        introducedDaysAgo: 5,
+        cards: HSK1_ZH,
+        publication: {
+          slug: "chinese-hsk-1-vocabulary",
+          summary: "Words for HSK 1.",
+          category: "languages",
+          tags: ["exam-hsk-1", "beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
         },

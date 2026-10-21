@@ -39,9 +39,10 @@ describe("languageSupport", () => {
 });
 
 describe("supportedLanguage", () => {
-  it("leaves out Chinese and Russian until they join SupportedTag", () => {
+  it("finds Japanese and Chinese, and leaves out Russian until it joins SupportedTag", () => {
     expect(supportedLanguage("ja-JP")?.tag).toBe("ja");
-    expect(supportedLanguage("zh")).toBeNull();
+    expect(supportedLanguage("zh-Hant-TW")?.tag).toBe("zh");
+    expect(supportedLanguage("zh-yue")).toBeNull();
     expect(supportedLanguage("ru")).toBeNull();
   });
 });

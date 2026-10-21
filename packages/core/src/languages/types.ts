@@ -1,20 +1,21 @@
 /** A tag Lymi treats in full. A tag joins only in the last delivery slice for its language. */
-export type SupportedTag = "ja";
+export type SupportedTag = "ja" | "zh";
 
 /**
  * A tag with a record in the index: each supported tag, and one whose language is still landing.
  * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
  */
-export type RecordTag = SupportedTag | "zh" | "ru";
+export type RecordTag = SupportedTag | "ru" | "ta";
 
 /** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
-export type Script = "Jpan" | "Hans" | "Hant";
+export type Script = "Jpan" | "Hans" | "Hant" | "Taml";
 
 /**
  * How a reading is drawn: furigana puts kana over kanji and pinyin one syllable over each hanzi,
- * both aligned at display; stress draws the term with its marks in place.
+ * both aligned at display; stress draws the term with its marks in place; indic works each word's
+ * reading out from its spelling and draws it over the whole word.
  */
-export type ReadingEngine = "furigana" | "pinyin" | "stress";
+export type ReadingEngine = "furigana" | "pinyin" | "stress" | "indic";
 
 /** Where a stress mark may stand, for the marks-in-place engine. */
 export interface StressRules {

@@ -5,6 +5,7 @@ import {
   markedTerm,
   markKnownReadings,
   termReading,
+  textDirection,
 } from "@lymi/core";
 import { useMemo } from "react";
 import { Furigana } from "./furigana";
@@ -26,6 +27,15 @@ interface TermTextProps {
  * does either, else as plain text.
  */
 export function TermText({ card, hidden, room }: TermTextProps) {
+  // Its own direction isolates the term, so an Arabic one keeps its order inside an English line.
+  return (
+    <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+      <TermRuns card={card} hidden={hidden} room={room} />
+    </span>
+  );
+}
+
+function TermRuns({ card, hidden, room }: TermTextProps) {
   const { term, language, pronunciation } = card;
   const segments = useMemo(
     () => termReading({ term, language, pronunciation }),
@@ -56,5 +66,9 @@ export function ExampleText({ text, lang, known }: ExampleTextProps) {
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
   );
-  return <Furigana segments={segments} lang={lang} />;
+  return (
+    <span lang={lang} dir={textDirection(lang)}>
+      <Furigana segments={segments} lang={lang} />
+    </span>
+  );
 }

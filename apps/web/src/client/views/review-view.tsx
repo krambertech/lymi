@@ -9,6 +9,7 @@ import {
   type Rating,
   type ReviewAid,
   termShowsPronunciation,
+  textDirection,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -531,9 +532,9 @@ export function ReviewCard({
   const term = <TermText card={card} />;
   const label =
     mode.cue === "term"
-      ? t`Recognition card for ${front}`
+      ? t`Recognition card for ${{ front: isolate(front) }}`
       : mode.cue === "meaning"
-        ? t`Production card for ${front}`
+        ? t`Production card for ${{ front: isolate(front) }}`
         : t`Picture card`;
 
   const [fit, setFit] = useState<Fit>(UNMEASURED);
@@ -699,6 +700,7 @@ export function ReviewCard({
           variants={answerLine}
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
+          dir={textDirection(card.language)}
         >
           <ExampleText
             text={card.example}
@@ -754,6 +756,7 @@ export function ReviewCard({
                   TERM_SIZE[step],
                 )}
                 lang={card.language ?? undefined}
+                dir={textDirection(card.language)}
               >
                 {term}
                 {sound()}
@@ -766,6 +769,7 @@ export function ReviewCard({
                     "hyphenate whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
                     CONTEXT_SIZE[step],
                   )}
+                  dir="auto"
                 >
                   {card.meaning}
                 </motion.p>
@@ -779,6 +783,7 @@ export function ReviewCard({
                   "hyphenate whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
                   picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
                 )}
+                dir="auto"
               >
                 {back}
               </motion.p>
@@ -947,6 +952,7 @@ export function ReviewCard({
                   <>
                     <p
                       lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                      dir={mode.cue === "term" ? textDirection(card.language) : "auto"}
                       className={clsx(
                         "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
                         CUE_SIZE[step],
@@ -1102,8 +1108,8 @@ export function ReviewCard({
           ? t`Memory hook: ${spokenAid}`
           : revealed
             ? offer && offerSeen
-              ? t`Answer: ${back}. You can add a memory hook.`
-              : t`Answer: ${back}`
+              ? t`Answer: ${{ back: isolate(back) }}. You can add a memory hook.`
+              : t`Answer: ${{ back: isolate(back) }}`
             : ""}
       </p>
     </section>

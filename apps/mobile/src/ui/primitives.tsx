@@ -1,4 +1,4 @@
-import { languageScript, type Script } from "@lymi/core";
+import { languageScript, type Script, textDirection } from "@lymi/core";
 import { faces, shadows } from "@lymi/design";
 import {
   Children,
@@ -94,12 +94,14 @@ export function Text({
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
   const fit = fitType(size, fontScale, maxFontSizeMultiplier ?? undefined);
   const script = NAMES_FACES ? languageScript(lang) : null;
+  // iOS orders a right-to-left term from its tag, so one that opens with a Latin word still reads right.
+  const rtl = textDirection(lang) === "rtl";
   return (
     <RNText
       className={`font-sans ${className ?? ""}`}
       dynamicTypeRamp={fit.ramp}
       maxFontSizeMultiplier={fit.cap}
-      style={[{ letterSpacing: fit.letterSpacing }, style]}
+      style={[{ letterSpacing: fit.letterSpacing }, rtl && { writingDirection: "rtl" }, style]}
       {...props}
     >
       {script ? inScript(children, script) : children}

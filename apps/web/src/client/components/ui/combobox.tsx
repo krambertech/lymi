@@ -398,6 +398,7 @@ function ComboboxInput({
       <ComboboxPrimitive.Input
         ref={ref}
         data-slot="combobox-input"
+        dir="auto"
         aria-label={placeholder}
         autoCapitalize="none"
         spellCheck={false}

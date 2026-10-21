@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { keyed } from "@lymi/client/keyed";
-import { isImageMode, isolate } from "@lymi/core";
+import { isImageMode, isolate, textDirection } from "@lymi/core";
 import type { ExploreDeckOut, PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import { previewMode, publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
@@ -366,6 +366,7 @@ export function ExploreDeckView({
                       >
                         <span
                           lang={deck.language ?? undefined}
+                          dir={textDirection(deck.language)}
                           className="whitespace-pre-line text-base text-text [overflow-wrap:anywhere]"
                         >
                           {card.term}

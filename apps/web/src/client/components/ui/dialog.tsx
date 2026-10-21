@@ -2,6 +2,7 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { cn } from "cn";
 import * as React from "react";
+import { bidi } from "../../lib/bidi";
 import { useOverlayShape } from "../../lib/device";
 import { useControllableState } from "../../lib/use-controllable-state";
 import {
@@ -283,13 +284,15 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
+function DialogTitle({ className, children, ...props }: DialogPrimitive.Title.Props) {
   return useDialogShape("DialogTitle") === "desktop" ? (
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn("text-lg font-medium text-text", className)}
       {...props}
-    />
+    >
+      {bidi(children)}
+    </DialogPrimitive.Title>
   ) : (
     // Pinned to the top of the drawer, so scrolling the form, or the keyboard revealing a field,
     // never carries the title off the screen.
@@ -297,7 +300,9 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
       data-slot="dialog-title"
       className={cn("sticky top-0 z-10 -mx-4 -mt-2 bg-plate px-4 pt-2 pb-1", className)}
       {...props}
-    />
+    >
+      {bidi(children)}
+    </DrawerTitle>
   );
 }
 

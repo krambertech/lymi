@@ -1,3 +1,4 @@
+import { textDirection } from "@lymi/core";
 import { I18nManager, Platform, type TextProps } from "react-native";
 
 type Ramp = NonNullable<TextProps["dynamicTypeRamp"]>;
@@ -113,6 +114,14 @@ export const MULTILINE = {
 
 /** Text set to the end of its box. React Native ignores `text-end`, so the side follows the layout direction here. */
 export const TEXT_END = { textAlign: I18nManager.isRTL ? "left" : "right" } as const;
+
+/**
+ * A block of card-language text set to its own start, as the web's `text-start` under `dir` does:
+ * an Arabic cue in the left-to-right app aligns right.
+ */
+export function textStart(language: string | null | undefined): typeof TEXT_END | undefined {
+  return (textDirection(language) === "rtl") === I18nManager.isRTL ? undefined : TEXT_END;
+}
 
 /**
  * How far an inline view's centre is lifted on a line, in em, so a button after a word sits on its

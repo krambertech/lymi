@@ -595,8 +595,13 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
       <>
         <RectangleHorizontal className="size-4 text-text" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate">
-          <span className="font-medium">{row.card.term}</span>
-          {row.card.meaning && <span className="text-muted"> · {row.card.meaning}</span>}
+          <bdi className="font-medium">{row.card.term}</bdi>
+          {row.card.meaning && (
+            <span className="text-muted">
+              {" · "}
+              <bdi>{row.card.meaning}</bdi>
+            </span>
+          )}
         </span>
         <span className="max-w-[40%] shrink-0 truncate text-sm text-muted">
           {row.card.deckName}

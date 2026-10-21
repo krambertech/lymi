@@ -319,6 +319,9 @@
   --face-geor: "Helvetica Neue", "Segoe UI", "Noto Sans Georgian", Sylfaen;
   --face-armn: "Noto Sans Armenian", Mshtakan, "Segoe UI", Sylfaen;
   --face-taml: "Tamil Sangam MN", "Nirmala UI", "Noto Sans Tamil", Latha;
+  /* Each system's own sans for Arabic and Hebrew; a Naskh face for Arabic is still an open question. */
+  --face-arab: "Geeza Pro", "Segoe UI", "Noto Sans Arabic", Tahoma;
+  --face-hebr: "Arial Hebrew", "Segoe UI", "Noto Sans Hebrew", Arial;
 }
 
 @layer base {
@@ -346,5 +349,31 @@
   }
   :lang(ta) {
     font-family: "Onest", "Onest Fallback", var(--face-taml), ui-sans-serif, system-ui, sans-serif;
+  }
+  /* Languages written in Arabic script by default; Onest still draws their Latin and Cyrillic. */
+  :is(
+      :lang(ar),
+      :lang(fa),
+      :lang(ur),
+      :lang(ps),
+      :lang(ckb),
+      :lang(ug),
+      :lang(sd):not(:lang(sd-Deva)),
+      :lang(ks):not(:lang(ks-Deva)),
+      :lang(arz),
+      :lang(apc),
+      :lang(ajp),
+      :lang(acm),
+      :lang(afb),
+      :lang(ary),
+      :lang(aeb),
+      :lang(arq),
+      :lang(ayl),
+      :lang(apd)
+    ) {
+    font-family: "Onest", "Onest Fallback", var(--face-arab), ui-sans-serif, system-ui, sans-serif;
+  }
+  :is(:lang(he), :lang(yi)) {
+    font-family: "Onest", "Onest Fallback", var(--face-hebr), ui-sans-serif, system-ui, sans-serif;
   }
 }

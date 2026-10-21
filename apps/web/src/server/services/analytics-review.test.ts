@@ -390,3 +390,27 @@ it("counts a Chinese example's pinyin one character at a time, as zh", async () 
   });
   expect(JSON.stringify(graded)).not.toContain("说");
 });
+
+it("says a right-to-left card's direction once, never its text", async () => {
+  const student = await learner(db, "analytics-rtl", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "عربي", defaultLanguage: "ar" });
+  const [book, cat] = await addCards(ctx, [
+    { deckId: deck.id, term: "كتاب", meaning: "book" },
+    { deckId: deck.id, term: "Katze", meaning: "cat", language: "de" },
+  ]);
+  const bookId = book?.status === "added" ? book.card.id : "";
+  const catId = cat?.status === "added" ? cat.card.id : "";
+  const at = new Date();
+  const grade = { cardId: bookId, direction: "recognition" as const, rating: 3 as const };
+  await gradeCard(ctx, { ...grade, reviewedAt: at });
+  await gradeCard(ctx, { ...grade, reviewedAt: at });
+  await gradeCard(ctx, { ...grade, cardId: catId, reviewedAt: at });
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded");
+  expect(graded.map((event) => event.text_direction)).toEqual(["rtl", undefined]);
+  expect(JSON.stringify(graded)).not.toContain("كتاب");
+});

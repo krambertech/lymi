@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { type LayoutChangeEvent, type TextStyle, useWindowDimensions, View } from "react-native";
-import { fitType, INLINE_LIFT } from "../theme/type";
+import { fitType, INLINE_LIFT, textStart } from "../theme/type";
 import { Text } from "../ui/primitives";
 import { TermText } from "../ui/term-text";
 
@@ -103,6 +103,7 @@ export function CardLine({
       className="text-text"
       style={[
         style,
+        textStart(lang),
         // Room the speaker can stand in past the line, given back so the card's layout never moves.
         after ? { paddingVertical: SPEAKER_ROOM, marginVertical: -SPEAKER_ROOM } : null,
         muted ? { color: muted } : null,
@@ -138,7 +139,7 @@ export function CardLine({
       hidden={hidden}
       lang={lang}
       className="text-text"
-      style={[style, muted ? { color: muted } : null]}
+      style={[style, textStart(lang), muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       after={
         after ? (

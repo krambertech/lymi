@@ -201,6 +201,8 @@ export const faces = {
   Geor: ["Helvetica Neue", "Segoe UI", "Noto Sans Georgian", "Sylfaen"],
   Armn: ["Noto Sans Armenian", "Mshtakan", "Segoe UI", "Sylfaen"],
   Taml: ["Tamil Sangam MN", "Nirmala UI", "Noto Sans Tamil", "Latha"],
+  Arab: ["Geeza Pro", "Segoe UI", "Noto Sans Arabic", "Tahoma"],
+  Hebr: ["Arial Hebrew", "Segoe UI", "Noto Sans Hebrew", "Arial"],
 } as const;
 
 /** The eight deck hues per surface and room, from tray.css, indexed by core's `trayHue`. */

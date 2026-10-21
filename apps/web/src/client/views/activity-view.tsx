@@ -434,8 +434,8 @@ function CardRow({ card, link }: { card: ActivityCard; link: CardLink }) {
   const face = (
     <>
       <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="truncate text-base font-medium">{card.term}</span>
-        {card.meaning && <span className="truncate text-sm text-muted">{card.meaning}</span>}
+        <bdi className="truncate text-base font-medium">{card.term}</bdi>
+        {card.meaning && <bdi className="truncate text-sm text-muted">{card.meaning}</bdi>}
       </span>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
     </>

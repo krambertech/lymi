@@ -190,6 +190,7 @@ function CommandInput({ lead, trail, className, ...props }: InputProps) {
         {lead}
       </span>
       <input
+        dir="auto"
         className={cn(
           "h-full min-w-0 flex-1 bg-transparent text-text caret-amber outline-none placeholder:text-muted",
           skin === "dev" ? "font-mono text-base md:text-sm" : "text-base sm:text-lg",

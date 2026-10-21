@@ -4667,6 +4667,9 @@ msgstr "Widgets"
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 
+msgid "won’t do, no"
+msgstr "won’t do, no"
+
 msgid "word"
 msgstr "word"
 

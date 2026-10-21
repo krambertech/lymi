@@ -29,6 +29,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Chinese cards | [chinese.md](features/chinese.md) |
+| Cantonese cards | [cantonese.md](features/cantonese.md) |
 | Korean cards | [korean.md](features/korean.md) |
 | Filipino, Vietnamese, Georgian, Armenian and Tamil | [configured-languages.md](features/configured-languages.md) |
 | Russian cards | [russian.md](features/russian.md) |

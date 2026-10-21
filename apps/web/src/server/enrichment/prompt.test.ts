@@ -27,8 +27,8 @@ describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 13,
-      hash: "7170e0389faf312c",
+      ENRICHMENT_PROMPT_VERSION: 14,
+      hash: "5269a5e46bd52d19",
     });
   });
 
@@ -57,7 +57,14 @@ describe("a supported language's worked example", () => {
     for (const { term, reply } of examples) {
       expect(Object.keys(reply).sort()).toEqual([...ENRICHED_FIELDS].sort());
       const broken = checkCard(
-        { term, mayFill: ENRICHED_FIELDS, language: true, rules: prompts.checks, expect: {} },
+        {
+          term,
+          tag: prompts.tag,
+          mayFill: ENRICHED_FIELDS,
+          language: true,
+          rules: prompts.checks,
+          expect: {},
+        },
         { id: term, ...reply },
       ).filter((result) => !result.pass);
       expect(broken).toEqual([]);

@@ -34,6 +34,15 @@ A Japanese card is shaped by its language, with no setting of its own:
 - **Notes**: a noun's usual measure word, "*一本书*: 本 for books".
 - **Example**: one short sentence with pinyin in square brackets after each word, one syllable per character, and none after punctuation, letters or digits: `我[wǒ]去[qù]银行[yínháng]。`.
 
+## Cantonese cards
+
+Only a `yue` or `zh-yue` tag is Cantonese; `zh-HK` is Chinese.
+
+- **Term**: the word as written in Hong Kong, in traditional characters unless the tag says `Hans` or `CN`.
+- **Reading**: Jyutping with a tone number from 1 to 6 after each syllable: 你好 nei5 hou2, 唔該 m4 goi1, 搭𨋢 daap3 lip1. Raised tone numbers, nei⁵, are stored as digits; Yale and pinyin are stored as written and never split one word into two cards.
+- **Notes**: a noun's usual classifier, "*一本書*: 本 for books", and the Standard Written Chinese form where it differs.
+- **Example**: one short sentence in written Cantonese (佢, 咗, 嘅, 唔), with Jyutping in square brackets after each word, one syllable per character: `我[ngo5]去[heoi3]銀行[ngan4 hong4]攞錢[lo2 cin2]。`.
+
 The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
 
 ## Tamil cards

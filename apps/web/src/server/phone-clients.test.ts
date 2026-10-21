@@ -5,10 +5,11 @@ import type { Bindings } from "./env";
 import type { AppEnv } from "./index";
 import {
   clientSupports,
+  EXAMPLE_JYUTPING_SINCE,
   EXAMPLE_PINYIN_SINCE,
-  leaveOutExamplePinyin,
+  leaveOutExampleReadings,
   requireSupportedPhone,
-  withoutExamplePinyin,
+  withoutExampleReadings,
 } from "./phone-clients";
 import { type Session, type TestApp, testApp } from "./test-app";
 
@@ -98,23 +99,24 @@ describe("clientSupports", () => {
   });
 });
 
-describe("example pinyin for an older phone", () => {
+describe("example pinyin and Jyutping for an older phone", () => {
   const cards = {
     card: { example: "我去银行[yínháng]。", language: "zh" },
     results: [
       { card: { example: "行长[hángzhǎng]来了。", language: "zh-TW" } },
       { card: { example: "食[た]べる", language: "ja" } },
+      { card: { example: "我去銀行[ngan4 hong4]。", language: "yue" } },
     ],
   };
   const route = new Hono<AppEnv>()
     .use("/api/*", requireSupportedPhone)
-    .use("/api/*", leaveOutExamplePinyin)
+    .use("/api/*", leaveOutExampleReadings)
     .get("/api/cards", (c) => c.json(cards, 200, { "x-lymi-test": "kept" }));
   const env = { PHONE_MINIMUM_VERSION_IOS: "0.0.1" } as Bindings;
   const fetched = (headers: Record<string, string>) =>
     route.request("/api/cards", { headers }, env);
 
-  it("takes the pinyin out of each Chinese example, and leaves furigana and the response's headers", async () => {
+  it("takes the pinyin and Jyutping out of each example, and leaves furigana and the response's headers", async () => {
     const response = await fetched(phone("0.0.4"));
     expect(response.headers.get("x-lymi-test")).toBe("kept");
     expect(await response.json()).toEqual({
@@ -122,22 +124,31 @@ describe("example pinyin for an older phone", () => {
       results: [
         { card: { example: "行长来了。", language: "zh-TW" } },
         { card: { example: "食[た]べる", language: "ja" } },
+        { card: { example: "我去銀行。", language: "yue" } },
       ],
     });
   });
 
-  it("sends it to a release that draws it, and to every caller without the header", async () => {
-    for (const headers of [phone(EXAMPLE_PINYIN_SINCE.ios as string), {}]) {
+  it("takes out only the Jyutping for a release that draws pinyin but not Jyutping", async () => {
+    const response = await fetched(phone(EXAMPLE_PINYIN_SINCE.ios as string));
+    const body = (await response.json()) as typeof cards;
+    expect(body.card).toEqual(cards.card);
+    expect(body.results[2]).toEqual({ card: { example: "我去銀行。", language: "yue" } });
+  });
+
+  it("sends both to a release that draws them, and to every caller without the header", async () => {
+    for (const headers of [phone(EXAMPLE_JYUTPING_SINCE.ios as string), {}]) {
       expect(await (await fetched(headers)).json()).toEqual(cards);
     }
   });
 
   it("leaves a value that is not a card's example alone", () => {
-    expect(withoutExamplePinyin({ example: "你好[nǐ hǎo]", language: "ko" })).toEqual({
+    const ENGINES = new Set(["pinyin", "jyutping"] as const);
+    expect(withoutExampleReadings({ example: "你好[nǐ hǎo]", language: "ko" }, ENGINES)).toEqual({
       example: "你好[nǐ hǎo]",
       language: "ko",
     });
-    expect(withoutExamplePinyin({ notes: "你好[nǐ hǎo]", language: "zh" })).toEqual({
+    expect(withoutExampleReadings({ notes: "你好[nǐ hǎo]", language: "zh" }, ENGINES)).toEqual({
       notes: "你好[nǐ hǎo]",
       language: "zh",
     });

@@ -26,6 +26,14 @@ describe("ankiExample", () => {
     expect(ankiExample("銀行[ぎんこう]", "zh")).toBe("銀行&#91;ぎんこう&#93;");
   });
 
+  it("writes a Cantonese example's Jyutping the same way, and leaves pinyin as text", () => {
+    const jyutping = "我[ngo5]去[heoi3]銀行[ngan4 hong4]，話你好[nei5 hou2]。";
+    expect(ankiExample(jyutping, "zh-yue")).toBe(
+      "我[ngo5]去[heoi3]銀行[ngan4 hong4]，話 你好[nei5 hou2]。",
+    );
+    expect(ankiExample("你好[nǐ hǎo]", "yue")).toBe("你好&#91;nǐ hǎo&#93;");
+  });
+
   it("is empty for no example", () => {
     expect(ankiExample(null, "ja")).toBe("");
   });

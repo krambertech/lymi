@@ -25,7 +25,13 @@ describe("languageSupport", () => {
   it("finds Chinese from every zh tag but Cantonese's", () => {
     for (const tag of ["zh", "zh-CN", "zh-TW", "zh-HK", "zh-Hant", "zh_Hans_SG", "zh-cmn"])
       expect(languageSupport(tag)?.tag).toBe("zh");
-    for (const tag of ["zh-yue", "zh-yue-HK", "yue", "yue-Hant", "zh-hak", "zh-nan", "zh-min-nan"])
+  });
+  it("finds Cantonese from yue and zh-yue tags alone, so zh-HK stays Chinese", () => {
+    for (const tag of ["yue", "yue-HK", "yue-Hant", "zh-yue", "zh-yue-HK", "ZH_YUE"])
+      expect(languageSupport(tag)?.tag).toBe("yue");
+  });
+  it("finds no record for another Chinese language", () => {
+    for (const tag of ["zh-hak", "zh-nan", "zh-min-nan", "zh-wuu"])
       expect(languageSupport(tag)).toBeNull();
   });
   it("finds Russian from any Russian tag", () => {
@@ -48,10 +54,11 @@ describe("supportedLanguage", () => {
 });
 
 describe("drawsReadings", () => {
-  it("draws Japanese and Chinese readings and no others", () => {
+  it("draws Japanese, Chinese and Cantonese readings and no others", () => {
     expect(drawsReadings("ja-JP")).toBe(true);
     expect(drawsReadings("zh-TW")).toBe(true);
-    expect(drawsReadings("zh-yue")).toBe(false);
+    expect(drawsReadings("zh-yue")).toBe(true);
+    expect(drawsReadings("zh-hak")).toBe(false);
     expect(drawsReadings(null)).toBe(false);
   });
   it("leaves Russian out, since its stress marks are drawn in place", () => {
@@ -102,6 +109,8 @@ describe("speechInputs", () => {
 describe("speechLocale", () => {
   it("speaks traditional Chinese with the Taiwan voice and leaves the rest to the default", () => {
     expect(speechLocale("zh-Hant")).toBe("cmn-TW");
+    expect(speechLocale("zh-yue")).toBe("yue-HK");
+    expect(speechLocale("yue-Hans")).toBe("yue-HK");
     expect(speechLocale("zh")).toBeNull();
     expect(speechLocale("ja")).toBeNull();
   });
@@ -112,7 +121,7 @@ describe("writtenWithReading", () => {
     for (const tag of ["ja", "ja-JP", "zh", "zh-TW"]) expect(writtenWithReading(tag)).toBe(true);
   });
   it("calls every other pronunciation a pronunciation", () => {
-    for (const tag of ["ko", "ru", "en", "zh-yue", null])
+    for (const tag of ["ko", "ru", "en", "zh-hak", null])
       expect(writtenWithReading(tag)).toBe(false);
   });
 });
@@ -123,8 +132,9 @@ describe("languageFormat", () => {
     expect(languageFormat("ko-KR")?.name).toBe("Korean");
     expect(languageFormat("zh-TW")?.pronunciation.label).toBe("reading");
   });
-  it("follows the record lookup, so Cantonese gets no pinyin format", () => {
-    expect(languageFormat("zh-yue")).toBeNull();
+  it("follows the record lookup, so zh-yue gets Cantonese's format", () => {
+    expect(languageFormat("zh-yue")?.name).toBe("Cantonese");
+    expect(languageFormat("zh-hak")).toBeNull();
     expect(languageFormat("zh-cmn-Hant-TW")?.duplicates).toBe("term-and-reading");
   });
   it("finds a configured row from an alias, under the row's own tag", () => {

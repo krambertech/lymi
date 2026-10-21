@@ -50,7 +50,7 @@ interface ExampleTextProps {
   known?: KnownReadings | undefined;
 }
 
-/** An example, with its inline readings drawn in its language's notation: furigana, or pinyin for Chinese. */
+/** An example, with its inline readings drawn in its language's notation: furigana, or pinyin and Jyutping for Chinese and Cantonese. */
 export function ExampleText({ text, lang, known }: ExampleTextProps) {
   const segments = useMemo(
     () => markKnownReadings(exampleSegments(text, lang), known, lang),

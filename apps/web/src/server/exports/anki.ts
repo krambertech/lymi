@@ -9,6 +9,7 @@ import {
   type ReviewModeKey,
   readingEngine,
 } from "@lymi/core";
+import { parseJyutping } from "@lymi/core/jyutping";
 import { parsePinyin } from "@lymi/core/pinyin";
 import { ANKI_DAY_SECONDS, ANKI_SEPARATOR, ankiDayNumber } from "../imports/anki/model";
 import { SqliteWriter, type SqlWriteValue, type TableWriter } from "./sqlite-writer";
@@ -186,8 +187,8 @@ const DECK_CONFIG = {
 };
 
 /**
- * An example as an Anki field its furigana filter reads right, kana or pinyin by the card's
- * language. The filter gives a reading everything back to a space, so each reading's characters
+ * An example as an Anki field its furigana filter reads right, kana, pinyin or Jyutping by the
+ * card's language. The filter gives a reading everything back to a space, so each reading's characters
  * start after one, which Anki drops when it draws them; any other bracket is an entity, so
  * `Haus[e]` stays text.
  */
@@ -195,8 +196,10 @@ export function ankiExample(
   text: string | null | undefined,
   language: string | null | undefined,
 ): string {
-  const segments =
-    readingEngine(language) === "pinyin" ? parsePinyin(text ?? "") : parseReadings(text ?? "");
+  const engine = readingEngine(language);
+  const parse =
+    engine === "pinyin" ? parsePinyin : engine === "jyutping" ? parseJyutping : parseReadings;
+  const segments = parse(text ?? "");
   let out = "";
   for (const { text: run, reading } of segments) {
     const html = ankiField(run).replaceAll("[", "&#91;").replaceAll("]", "&#93;");

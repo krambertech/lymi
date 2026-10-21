@@ -1,0 +1,42 @@
+# Cantonese: a New card draws Jyutping over each character on the cue, 𨋢 included, and keeps it
+# after the reveal, and an example's Jyutping fades over a Known character.
+appId: app.lymi
+name: Cantonese
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+# The first run after a bundle loads can take the tap before the deck's count arrives.
+- extendedWaitUntil:
+    visible: ".*to review.*"
+    timeout: 30000
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TERM}, read ${READING}. Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*${MEANING}.*"
+- takeScreenshot: 01-new-cue-jyutping
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*${MEANING}.*"
+- takeScreenshot: 02-revealed
+- tapOn: "End review"
+- tapOn: "Library"
+# The deck is last in the list, under the tab bar, so it is scrolled to the middle first.
+- scrollUntilVisible:
+    element: "${FADE_DECK}.*"
+    centerElement: true
+- tapOn: "${FADE_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${FADE_TERM}.*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${FADE_MEANING}.*"
+# VoiceOver says the characters, so the fade shows only in the screenshot: no hong4 over the
+# example's 行 of 行業, while 難行 keeps hang4.
+- assertVisible: ".*${FADE_SPOKEN}.*"
+- takeScreenshot: 03-example-jyutping-fades

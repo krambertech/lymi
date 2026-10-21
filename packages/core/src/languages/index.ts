@@ -3,6 +3,7 @@
  * language does, and never checks a tag itself. docs/proposals/supported-languages.md.
  */
 import type { LanguageOut } from "../responses/languages";
+import { cantonese } from "./cantonese";
 import { chinese } from "./chinese";
 import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
@@ -46,6 +47,7 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ru: russian,
   ta: tamil,
+  yue: cantonese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -58,16 +60,19 @@ function subtags(language: string | null | undefined): string[] {
   return (language ?? "").trim().toLowerCase().split(/[-_]/);
 }
 
+const hasRecord = (tag: string): tag is RecordTag => Object.hasOwn(LANGUAGE_RECORDS, tag);
+
 /**
  * The record a full tag names, or null: by its primary subtag, unless an extended language subtag
- * names another language, so zh-yue, Cantonese, never draws pinyin.
+ * names another language, which takes that language's record if it has one, so zh-yue is
+ * Cantonese and zh-hak is no record.
  */
 export function languageSupport(language: string | null | undefined): LanguageSupport | null {
   const [primary = "", second = ""] = subtags(language);
-  if (!Object.hasOwn(LANGUAGE_RECORDS, primary)) return null;
-  const record: LanguageSupport = LANGUAGE_RECORDS[primary as RecordTag];
-  const other = /^[a-z]{3}$/.test(second) && !record.extlangs?.includes(second);
-  return other ? null : record;
+  if (!hasRecord(primary)) return null;
+  const record: LanguageSupport = LANGUAGE_RECORDS[primary];
+  if (!/^[a-z]{3}$/.test(second) || record.extlangs?.includes(second)) return record;
+  return hasRecord(second) ? LANGUAGE_RECORDS[second] : null;
 }
 
 /** The record for a tag that has joined SupportedTag, for a registry keyed by it, or null. */
@@ -89,6 +94,7 @@ export function readingEngine(language: string | null | undefined): ReadingEngin
 const OVER_SCRIPT: Record<ReadingEngine, boolean> = {
   furigana: true,
   pinyin: true,
+  jyutping: true,
   stress: false,
   indic: true,
 };

@@ -93,7 +93,7 @@ export function clampBoxes(
  * into the syllable beside it, as the web's `rt` pads it; kana readings take none.
  */
 export function readingInset(reading: string, readingSize: number): number {
-  return lettersReading(reading) ? Math.ceil(readingSize * 0.2) : 0;
+  return lettersReading(reading) ? Math.ceil(readingSize * 0.125) : 0;
 }
 
 /**

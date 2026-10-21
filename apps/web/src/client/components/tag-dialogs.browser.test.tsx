@@ -5,12 +5,17 @@ import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
+import { BidiTrans } from "../lib/bidi";
 import { MergeTagDialog, RenameTagDialog } from "./tag-dialogs";
 
 i18n.load("en", messages);
 i18n.activate("en");
 
-const wrap = (node: ReactNode) => <I18nProvider i18n={i18n}>{node}</I18nProvider>;
+const wrap = (node: ReactNode) => (
+  <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
+    {node}
+  </I18nProvider>
+);
 
 /** Opens its dialog on a press, as the Tags page does, so a phone's drawer slides in from its own start. */
 function Opener({

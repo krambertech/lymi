@@ -1381,10 +1381,10 @@ function CardPlate({
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
               : mode.cue === "term" && furigana && cueFurigana && reading
-                ? t`Recognition card for ${{ cue: isolate(cue) }}, read ${reading}. Tap to reveal`
+                ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
-                  ? t`Recognition card for ${{ cue: isolate(cue) }}. Tap to reveal`
-                  : t`Production card for ${{ cue: isolate(cue) }}. Tap to reveal`
+                  ? t`Recognition card for ${cue}. Tap to reveal`
+                  : t`Production card for ${cue}. Tap to reveal`
         }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}

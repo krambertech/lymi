@@ -402,11 +402,11 @@ msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgid "{0} is already in {1}"
 msgstr "{0} is already in {1}"
 
-#. placeholder {0}: empty.name
+#. placeholder {0}: isolate(empty.name)
 msgid "{0} is empty. Add the words you want to remember."
 msgstr "{0} is empty. Add the words you want to remember."
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "{0} is ready. Your first review takes a few minutes."
 msgstr "{0} is ready. Your first review takes a few minutes."
 
@@ -434,7 +434,7 @@ msgstr "{0} of your cards are known."
 msgid "{0} remembered, {1} forgotten."
 msgstr "{0} remembered, {1} forgotten."
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
 

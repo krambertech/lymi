@@ -334,7 +334,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
         <Button
           size="sm"
           className="shrink-0"
-          aria-label={t`Download ${isolate(entry.export?.fileName ?? "")}`}
+          aria-label={t`Download ${entry.export?.fileName ?? ""}`}
           render={<a href={download} download={entry.export?.fileName} />}
         >
           <Download data-icon="inline-start" aria-hidden="true" />

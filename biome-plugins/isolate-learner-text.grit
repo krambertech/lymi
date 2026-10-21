@@ -1,4 +1,5 @@
 // Learner text is a term, meaning, example, note, query, tag, or a deck, section, series, key or person's name.
+// An accessible name draws nothing, so it takes no isolate: its invisible characters would only reach a screen reader.
 or {
   JsTemplateExpression(),
   JsxElement()
@@ -6,7 +7,8 @@ or {
   $match <: or {
     r"(?s)^(?:t|msg)\s*`.*\$\{\s*shortQuote\(.*",
     r"(?s)^(?:t|msg)\s*`.*\$\{\s*(?:[\w?]+\.)*(?:\w*[tT]erm|\w*[mM]eaning|[eE]xample|\w*[nN]otes?|\w*[qQ]uery|typed|cue|tag|deck|quoted|owner|\w*[nN]ame)(?:\s*\?\?\s*\"[^\"]*\")?\s*\}.*",
-    r"(?s)^<Trans\b.*(?:[^>]|<(?:strong|em|b|i|span)\b[^>]*>)\{\s*(?:[\w?]+\.)*(?:\w*[tT]erm|\w*[mM]eaning|[eE]xample|\w*[nN]otes?|\w*[qQ]uery|typed|cue|tag|deck|quoted|owner|\w*[nN]ame)\s*\}.*"
+    r"(?s)^<Trans\b(?:[^>]*>\s*|.*(?:[^>]|<(?:strong|em|b|i|span)\b[^>]*>))\{\s*(?:[\w?]+\.)*(?:\w*[tT]erm|\w*[mM]eaning|[eE]xample|\w*[nN]otes?|\w*[qQ]uery|typed|cue|tag|deck|quoted|owner|\w*[nN]ame)\s*\}.*"
   },
+  not $match <: within JsxAttribute(name=r"aria-label|accessibilityLabel|accessibilityHint"),
   register_diagnostic(span=$match, message="Learner text in interface text can run right to left and reorder the sentence around it. Isolate it with a labelled placeholder, which keeps the message: ${{ term: isolate(term) }} in t or msg, {{ term: isolate(term) }} in <Trans>, or isolate(card.term) for a property. docs/proposals/right-to-left.md.")
 }

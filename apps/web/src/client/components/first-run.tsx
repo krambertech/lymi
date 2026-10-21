@@ -139,7 +139,7 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
       key: "cards",
       title: <Trans>Add cards</Trans>,
       detail: empty ? (
-        <Trans>{empty.name} is empty. Add the words you want to remember.</Trans>
+        <Trans>{isolate(empty.name)} is empty. Add the words you want to remember.</Trans>
       ) : (
         <Trans>The words you want to remember, one card each.</Trans>
       ),
@@ -233,7 +233,7 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
             style={play ? at(T.lede) : undefined}
           >
             {current === 2 && deck ? (
-              <Trans>{deck.name} is ready. Your first review takes a few minutes.</Trans>
+              <Trans>{isolate(deck.name)} is ready. Your first review takes a few minutes.</Trans>
             ) : (
               <Trans>Three steps to your first review.</Trans>
             )}
@@ -328,7 +328,7 @@ function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
           >
             <a
               href={publicSiteUrl(guide)}
-              aria-label={t`Connect ${{ name: isolate(name) }}`}
+              aria-label={t`Connect ${name}`}
               onClick={() => pick("ai_mcp")}
               className="relative rounded-[13px] transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none"
             >

@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { isolate, REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
 import { ArrowLeftRight, Languages, Layers, Plus, Tag } from "lucide-react";
 import { type ReactElement, useState } from "react";
+import { bidi } from "../lib/bidi";
 import { MODE_LABELS } from "../lib/review-modes";
 import { LanguageCombobox, languageName } from "./deck-fields";
 import { FieldChipContent, fieldChipClassName } from "./field-chip";
@@ -70,7 +71,7 @@ export function SectionChip({
       <SelectTrigger
         look="chip"
         className={fieldChipClassName(!!name)}
-        aria-label={name ? t`Section: ${{ name: isolate(name) }}` : t`Section`}
+        aria-label={name ? t`Section: ${name}` : t`Section`}
       >
         <FieldChipContent icon={Layers} filled={!!name}>
           {name ?? t`Section`}
@@ -203,7 +204,7 @@ export function TagsChip({
         <ComboboxTrigger
           look="chip"
           className={fieldChipClassName(value.length > 0)}
-          aria-label={value.length ? t`Tags: ${names(value.map(isolate))}` : t`Tags`}
+          aria-label={value.length ? t`Tags: ${names(value)}` : t`Tags`}
           aria-invalid={invalid || undefined}
         >
           <FieldChipContent icon={Tag} filled={value.length > 0}>
@@ -242,7 +243,9 @@ export function TagsChip({
                 icon={<Plus className="size-4 text-text-2" />}
               >
                 <span className="flex-1 truncate">
-                  {t`Create ${names(option.create.map((name) => t`“${{ name: isolate(name) }}”`))}`}
+                  {bidi(
+                    t`Create ${names(option.create.map((name) => t`“${{ name: isolate(name) }}”`))}`,
+                  )}
                 </span>
               </ComboboxItem>
             ) : (
@@ -387,7 +390,7 @@ export function LanguageChip({
       <ComboboxTrigger
         look="chip"
         className={fieldChipClassName(!!name)}
-        aria-label={name ? t`Language: ${{ name: isolate(name) }}` : t`Language`}
+        aria-label={name ? t`Language: ${name}` : t`Language`}
       >
         <FieldChipContent icon={Languages} filled={!!name}>
           {name ?? t`No language`}

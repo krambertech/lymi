@@ -280,10 +280,7 @@ export function LibraryView({
               </IconButton>
             }
           />
-          <DropdownMenuContent
-            aria-label={t`Options for ${{ seriesName: isolate(seriesName) }}`}
-            align="end"
-          >
+          <DropdownMenuContent aria-label={t`Options for ${seriesName}`} align="end">
             {onCreateDeckInSeries && (
               <DropdownMenuItem onClick={() => onCreateDeckInSeries(s)}>
                 <Plus />
@@ -336,7 +333,7 @@ export function LibraryView({
       <NavLink
         to="/review"
         search={{ series: s.id }}
-        aria-label={t`Review ${{ seriesName: isolate(seriesName) }}, ${plural(due, { one: "# card due", other: "# cards due" })}`}
+        aria-label={t`Review ${seriesName}, ${plural(due, { one: "# card due", other: "# cards due" })}`}
         // The end matches a deck row's (DeckRow): the count where theirs sits, the chevron under theirs.
         className="group -mt-3.5 flex items-center gap-4 rounded-b-xl bg-amber-soft pt-6 pb-3 ps-5 pe-4 text-amber-tint-ink transition-[background-color] duration-150 hoverable:hover:bg-amber-tint"
       >

@@ -231,6 +231,7 @@ export function ExploreDeckView({
               />
             </div>
             <h1
+              dir="auto"
               lang={deck.meaningLanguage}
               className="mt-3 text-2xl font-medium tracking-[-0.02em] text-balance text-text @4xl:text-3xl"
             >

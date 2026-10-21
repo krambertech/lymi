@@ -73,6 +73,7 @@ export function CardNotes({ source, className }: Props) {
   const blocks = useMemo(() => parseNotes(source), [source]);
   return (
     <div
+      dir="auto"
       className={cn(
         "grid grid-cols-[minmax(0,1fr)] gap-[0.5lh] [overflow-wrap:anywhere]",
         className,

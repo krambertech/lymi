@@ -10,3 +10,8 @@ export function isolate(text: string | null | undefined): string {
   if (text.startsWith(FSI) && text.endsWith(PDI)) return text;
   return `${FSI}${text}${PDI}`;
 }
+
+/** Text without the isolates `isolate` added, for an accessible name, which draws nothing. */
+export function unisolate<T extends string | null | undefined>(text: T): T {
+  return (text ? text.replace(/[\u2068\u2069]/g, "") : text) as T;
+}

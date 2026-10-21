@@ -402,11 +402,11 @@ msgstr "{0} забуто <0>·</0> {1, plural, one {# повторення} few 
 msgid "{0} is already in {1}"
 msgstr "{0} уже є в {1}"
 
-#. placeholder {0}: empty.name
+#. placeholder {0}: isolate(empty.name)
 msgid "{0} is empty. Add the words you want to remember."
 msgstr "Колода «{0}» порожня. Додай слова, які хочеш запам’ятати."
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "{0} is ready. Your first review takes a few minutes."
 msgstr "Колода «{0}» готова. Перше повторення займе кілька хвилин."
 
@@ -434,7 +434,7 @@ msgstr "Засвоєно {0} ваших карток."
 msgid "{0} remembered, {1} forgotten."
 msgstr "Запам’ятано: {0}, забуто: {1}."
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} shared a deck"
 msgstr "{0} ділиться колодою"
 

@@ -22,7 +22,7 @@ name: Deck tools, tags
 - takeScreenshot: 02-tags-sheet
 - tapOn: "Find or create a tag"
 - inputText: "${TAG}"
-- tapOn: "Create “${TAG}”"
+- tapOn: "Create “.?${TAG}.?”"
 - assertVisible: "${TAG}, ${COUNT} of ${COUNT}"
 - takeScreenshot: 03-tag-created
 # "pronoun" lists above "noun"; Return ticks the tag typed, not the first that contains it.

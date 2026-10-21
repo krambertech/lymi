@@ -771,7 +771,9 @@ export function WordView({
                   }}
                   className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-start text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
                 >
-                  <span className="truncate font-medium">{d.name}</span>
+                  <span dir="auto" className="truncate font-medium">
+                    {d.name}
+                  </span>
                   <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
                 </button>
               </li>

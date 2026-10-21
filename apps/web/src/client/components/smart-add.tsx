@@ -963,7 +963,7 @@ function ListStep({
             <SelectContent>
               {decks.map((d) => (
                 <SelectItem key={d.id} value={d.id}>
-                  {d.name}
+                  <bdi>{d.name}</bdi>
                 </SelectItem>
               ))}
             </SelectContent>

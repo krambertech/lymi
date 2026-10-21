@@ -165,7 +165,7 @@ export function SeriesForm({
                         )
                       }
                     />
-                    <span className="grid min-w-0 flex-1">
+                    <span dir="auto" className="grid min-w-0 flex-1">
                       <FieldLabel className="truncate text-base font-normal">
                         {deck.name}
                       </FieldLabel>

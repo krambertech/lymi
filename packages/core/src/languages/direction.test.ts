@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isolate } from "../isolate";
+import { isolate, unisolate } from "../isolate";
 import { textDirection } from "./direction";
 
 describe("textDirection", () => {
@@ -29,5 +29,10 @@ describe("isolate", () => {
     expect(isolate("كتاب")).toBe("⁨كتاب⁩");
     expect(isolate(isolate("كتاب"))).toBe("⁨كتاب⁩");
     expect(isolate("")).toBe("");
+  });
+
+  it("comes off again for an accessible name", () => {
+    expect(unisolate(`Options for ${isolate("كتب")}`)).toBe("Options for كتب");
+    expect(unisolate(undefined)).toBeUndefined();
   });
 });

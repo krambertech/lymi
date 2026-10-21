@@ -628,7 +628,7 @@ function MemberRow({
             </IconButton>
           }
         />
-        <DropdownMenuContent aria-label={t`Options for ${isolate(member.name)}`} align="end">
+        <DropdownMenuContent aria-label={t`Options for ${member.name}`} align="end">
           <DropdownMenuItem variant="danger" onClick={onRemove}>
             <UserMinus />
             <Trans>Remove from deck</Trans>

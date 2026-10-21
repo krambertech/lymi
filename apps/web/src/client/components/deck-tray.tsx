@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { isolate, modeOf } from "@lymi/core";
+import { modeOf } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
@@ -172,6 +172,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
         />
         <div className="grid gap-1 px-3.5">
           <h3
+            dir="auto"
             lang={deck.meaningLanguage}
             className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-text"
           >
@@ -199,7 +200,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
               size="sm"
               onClick={onAdd}
               loading={adding}
-              aria-label={t`Add “${isolate(deck.name)}” to Library`}
+              aria-label={t`Add “${deck.name}” to Library`}
             >
               <Plus data-icon="inline-start" aria-hidden="true" />
               <Trans>Add</Trans>

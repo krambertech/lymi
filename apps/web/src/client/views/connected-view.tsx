@@ -28,9 +28,9 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
           {/* An app Lymi cannot name is written about, never named with a placeholder. */}
           {appName ? (
             refused ? (
-              <Trans>{appName} was not connected</Trans>
+              <Trans>{{ appName: isolate(appName) }} was not connected</Trans>
             ) : (
-              <Trans>{appName} is connected</Trans>
+              <Trans>{{ appName: isolate(appName) }} is connected</Trans>
             )
           ) : refused ? (
             <Trans>The app was not connected</Trans>

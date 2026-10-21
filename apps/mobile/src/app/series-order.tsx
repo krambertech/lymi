@@ -1,7 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
-import { isolate } from "@lymi/core";
 import { useRouter } from "expo-router";
 import { Alert, ScrollView, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -65,7 +64,7 @@ export default function SeriesOrder() {
                 <View
                   className="h-full flex-row items-center gap-3 bg-plate ps-4 pe-1"
                   accessible
-                  accessibilityLabel={t`${{ seriesName: isolate(seriesName) }}, ${plural(s.deckIds.length, { one: "# deck", other: "# decks" })}`}
+                  accessibilityLabel={t`${seriesName}, ${plural(s.deckIds.length, { one: "# deck", other: "# decks" })}`}
                   accessibilityActions={[
                     ...(at > 0 ? [{ name: "up", label: t`Move up` }] : []),
                     ...(at < list.length - 1 ? [{ name: "down", label: t`Move down` }] : []),

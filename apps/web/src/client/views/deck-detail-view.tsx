@@ -1165,7 +1165,7 @@ export function DeckDetailView({
   return (
     <div ref={rootRef} className="flex min-h-0 flex-1">
       <Screen
-        title={deck?.name}
+        title={deck && <bdi>{deck.name}</bdi>}
         back={backToLibrary}
         sub={
           deck

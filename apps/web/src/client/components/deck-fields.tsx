@@ -4,6 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { type DeckPurpose, type Directions, isolate, LANGUAGE_TAGS } from "@lymi/core";
 import { ClipboardCheck, Languages, Shapes } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
+import { bidi } from "../lib/bidi";
 import { RadioCard } from "./radio-card";
 import {
   Combobox,
@@ -175,7 +176,7 @@ export function LanguageCombobox({
         <ComboboxList>
           {(option: LanguageOption) => (
             <ComboboxItem key={option.value ?? ""} value={option}>
-              <span className="flex-1 truncate">{option.label}</span>
+              <span className="flex-1 truncate">{bidi(option.label)}</span>
               {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
             </ComboboxItem>
           )}

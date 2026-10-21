@@ -10,6 +10,7 @@ export const e2eAccounts = [
   "writes-offline",
   "responsive-creation",
   "long-cards",
+  "right-to-left",
   "review-returns",
   "review-queued",
   "review-offline",

@@ -1,4 +1,4 @@
-import { languageScript, type Script, textDirection } from "@lymi/core";
+import { languageScript, type Script, textDirection, unisolate } from "@lymi/core";
 import { faces, shadows } from "@lymi/design";
 import {
   Children,
@@ -328,7 +328,7 @@ export function IconButton({
       hitSlop={slop}
       testID={testID}
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       accessibilityState={{ disabled, busy }}
       className={`items-center justify-center ${box} ${ICON_BOX[size]} ${round ? "rounded-full" : "rounded-md"} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}

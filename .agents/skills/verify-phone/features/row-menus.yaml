@@ -56,7 +56,7 @@ name: Long-press menus
     timeout: 10000
 - tapOn: "Archive card"
 - extendedWaitUntil:
-    visible: "Archived “${ARCHIVE_TERM}”"
+    visible: "Archived “.?${ARCHIVE_TERM}.?”"
     timeout: 10000
 - takeScreenshot: 03-archived
 - tapOn: "Undo"
@@ -74,7 +74,7 @@ name: Long-press menus
     text: "Add to Library"
     index: 1
 - extendedWaitUntil:
-    visible: "Added “${EXPLORE_DECK}” to Library"
+    visible: "Added “.?${EXPLORE_DECK}.?” to Library"
     timeout: 20000
 - takeScreenshot: 05-added
 - openLink: lymi://search?q=${ARCHIVE_TERM}

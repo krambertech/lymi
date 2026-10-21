@@ -1,3 +1,4 @@
+import { unisolate } from "@lymi/core";
 import type { ReactNode } from "react";
 import { View } from "react-native";
 import { usePalette } from "../theme/palette";
@@ -72,7 +73,7 @@ export function ListRow({
   const label = listRowLabel(face.title, countLabel ?? face.count, face.line);
   if (!onPress) {
     return (
-      <View accessible accessibilityLabel={label}>
+      <View accessible accessibilityLabel={unisolate(label)}>
         <ListRowFace {...face} />
       </View>
     );
@@ -82,7 +83,7 @@ export function ListRow({
       scale={0.99}
       onPress={onPress}
       accessibilityRole={face.end === "add" ? "button" : "link"}
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       accessibilityHint={hint}
     >
       <ListRowFace {...face} />

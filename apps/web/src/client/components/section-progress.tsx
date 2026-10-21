@@ -43,7 +43,7 @@ export function SectionProgress({
       variant="ghost"
       className="-ms-2 px-2 text-text-2"
       onClick={() => onGoTo(current.id)}
-      aria-label={t`Go to ${{ currentName: isolate(currentName) }}`}
+      aria-label={t`Go to ${currentName}`}
     >
       {next && progress.ready ? (
         <Trans>Go to {{ currentName: isolate(currentName) }}</Trans>

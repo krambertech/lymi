@@ -9,6 +9,7 @@ import { StaticNavProvider } from "../components/nav-link";
 import { designChrome } from "../design/chrome";
 import { decks as mock } from "../design/mock";
 import type { DeckSummary, Series } from "../lib/api";
+import { BidiTrans } from "../lib/bidi";
 import { type LibraryProps, LibraryView } from "./library-view";
 
 i18n.load("en", messages);
@@ -39,7 +40,7 @@ const series: Series[] = [
 
 const renderLibrary = (props: Partial<LibraryProps> = {}) =>
   render(
-    <I18nProvider i18n={i18n}>
+    <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
       <ShellChrome value={designChrome()}>
         <StaticNavProvider path="/library">
           <div className="@container/shell" style={{ width: 1000 }}>

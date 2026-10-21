@@ -140,7 +140,7 @@ function Row({
         size="sm"
         loading={busy}
         aria-disabled={disabled}
-        aria-label={t`Restore ${{ name: isolate(name) }}`}
+        aria-label={t`Restore ${name}`}
         onClick={() => !disabled && onRestore()}
       >
         <Trans>Restore</Trans>

@@ -92,7 +92,7 @@ name: Card choices
     end: 50%, 95%
 - waitForAnimationToEnd
 # Add refuses to send it and reopens the picture's sheet.
-- tapOn: "Add to ${DECK}"
+- tapOn: "Add to .?${DECK}.?"
 - extendedWaitUntil:
     visible: "Clear the picture"
     timeout: 20000
@@ -114,9 +114,9 @@ name: Card choices
 # The ticks are a draft until the sheet's ✓; a swipe would drop them.
 - tapOn: "Apply"
 - waitForAnimationToEnd
-- tapOn: "Add to ${DECK}"
+- tapOn: "Add to .?${DECK}.?"
 - extendedWaitUntil:
-    visible: "Added “${TERM}” to ${DECK}"
+    visible: "Added “.?${TERM}.?” to .?${DECK}.?"
     timeout: 30000
 # Tags stay for the next card.
 - runFlow:

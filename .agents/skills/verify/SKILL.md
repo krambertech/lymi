@@ -34,6 +34,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Filipino, Vietnamese, Georgian, Armenian and Tamil | [configured-languages.md](features/configured-languages.md) |
 | Russian cards | [russian.md](features/russian.md) |
 | Tamil cards | [tamil.md](features/tamil.md) |
+| Right-to-left cards: Arabic direction, mixed runs, inputs and isolated toasts | [right-to-left.md](features/right-to-left.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |

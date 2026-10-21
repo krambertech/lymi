@@ -484,10 +484,7 @@ function SectionHeading({
               </IconButton>
             }
           />
-          <DropdownMenuContent
-            aria-label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
-            align="end"
-          >
+          <DropdownMenuContent aria-label={t`Options for ${sectionName}`} align="end">
             {startable && (
               <>
                 <DropdownMenuItem onClick={() => onStart(section)}>

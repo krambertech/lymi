@@ -110,10 +110,7 @@ export function DeckTagsView({
                         </IconButton>
                       }
                     />
-                    <DropdownMenuContent
-                      aria-label={t`Options for ${isolate(tag.name)}`}
-                      align="end"
-                    >
+                    <DropdownMenuContent aria-label={t`Options for ${tag.name}`} align="end">
                       <DropdownMenuItem onClick={() => onRename(tag)}>
                         <PencilLine />
                         <Trans>Rename…</Trans>

@@ -221,7 +221,7 @@ function FreshKey({
           selectable
           className="text-sm text-text"
           style={{ fontFamily: "Menlo" }}
-          accessibilityLabel={t`API key for ${{ name: isolate(name) }}`}
+          accessibilityLabel={t`API key for ${name}`}
         >
           {value}
         </Text>

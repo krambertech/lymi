@@ -233,6 +233,15 @@ export async function resolveLanguageDecks(
   return decks instanceof Response ? decks : { locale, language, decks };
 }
 
+/** The Chinese page's decks, which keeps its own route until Chinese joins `LANGUAGE_PAGES`. */
+export async function resolveChineseDecks(
+  astro: AstroGlobal,
+  locale: Locale,
+): Promise<{ locale: Locale; decks: PublicDeckSummary[] } | Response> {
+  const decks = await resolveTaughtDecks(astro, locale, "zh", "chinese");
+  return decks instanceof Response ? decks : { locale, decks };
+}
+
 /** The Estonian page's decks, which keeps its own route until Estonian joins `LANGUAGE_PAGES`. */
 export async function resolveEstonianDecks(
   astro: AstroGlobal,

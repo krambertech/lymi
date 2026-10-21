@@ -75,6 +75,35 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const CHINESE_QUESTIONS: Question[] = [
+  {
+    id: "script",
+    question: msg`Simplified or traditional?`,
+    answer: msg`Either. Each deck is one or the other, and Lymi never converts between them. The free HSK decks are simplified.`,
+  },
+  {
+    id: "pinyin",
+    question: msg`Does Lymi show pinyin?`,
+    answer: msg`Yes, with tone marks. A card shows pinyin over its word until the card is Known. In the examples on your cards, pinyin leaves each character you’ve learned. Turning a card over always shows it.`,
+  },
+  {
+    id: "review",
+    question: msg`What does a card ask me?`,
+    answer: msg`One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type.`,
+  },
+  {
+    id: "pleco",
+    question: msg`Can I bring my Pleco flashcards?`,
+    answer: msg`Yes. Export them from Pleco as a text file and import it. Categories become tags, the other script becomes a note, and tone numbers become marks.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Cards keep their pinyin, their schedule and their word recordings.`,
+  },
+  ...COMMON,
+];
+
 export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "kana",

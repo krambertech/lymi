@@ -40,3 +40,9 @@ export const ESTONIAN_PAGE_DECKS = [
   "estonian-top-100-verbs",
   "estonian-top-1000-words",
 ] as const;
+
+/**
+ * The published decks the Chinese page leads to, in the order to take them. It keeps its own route
+ * until Chinese joins `SupportedTag`. docs/proposals/chinese.md.
+ */
+export const CHINESE_PAGE_DECKS = ["chinese-hsk-1-vocabulary", "chinese-hsk-2-vocabulary"] as const;

@@ -1,4 +1,4 @@
-import { configuredLanguage } from "./languages";
+import { configuredLanguage, languageSupport } from "./languages";
 
 /** The fields enrichment may fill. Text already on a card is never overwritten, whatever wrote it. */
 export const ENRICHED_FIELDS = [
@@ -58,9 +58,10 @@ export function defaultEnrichFields(
   // Below the evaluation's bar a deck that never chose stays where it was before the row existed.
   const configured = configuredLanguage(language);
   if (configured && !configured.enrichByDefault) return ["meaning", "example"];
+  // A record's language always has a Reading or stress to write, so zh-yue and yue alike start with it.
   const pronounced = configured
     ? configured.starts.includes("pronunciation")
-    : READING_LANGUAGES.has(primary);
+    : languageSupport(language) !== null || READING_LANGUAGES.has(primary);
   return [
     "meaning",
     "example",

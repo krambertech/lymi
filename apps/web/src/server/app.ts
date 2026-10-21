@@ -16,7 +16,7 @@ import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
 import { requireStrongPassword } from "./password-rules";
-import { leaveOutExamplePinyin, requireSupportedPhone } from "./phone-clients";
+import { leaveOutExampleReadings, requireSupportedPhone } from "./phone-clients";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { account } from "./routes/account";
@@ -180,7 +180,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 
 // A phone release too old for this API is told to update before anything else answers it.
 app.use("/api/*", requireSupportedPhone);
-app.use("/api/*", leaveOutExamplePinyin);
+app.use("/api/*", leaveOutExampleReadings);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
 app.use("/api/auth/*", limitCredentialRequests);

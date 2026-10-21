@@ -3,6 +3,8 @@
  * records it, so a converted term still meets its duplicate and a converted Reading is never a
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
+
+import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
@@ -21,8 +23,14 @@ export type CardText = {
 const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardText> = {
   furigana: splitBracketedTerm,
   pinyin: markTones,
+  jyutping: plainToneNumbers,
   stress: markStress,
 };
+
+/** Jyutping sent with raised or full-width tone numbers stores them plain: nei⁵ hou² → nei5 hou2. */
+function plainToneNumbers({ pronunciation }: CardText): CardText {
+  return pronunciation ? { pronunciation: jyutpingDigits(pronunciation) } : {};
+}
 
 /**
  * A pronunciation's accented Latin look-alikes become Cyrillic vowels with U+0301: замóк → замо́к.

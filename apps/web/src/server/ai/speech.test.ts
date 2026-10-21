@@ -43,6 +43,14 @@ describe("speech provider routing", () => {
     expect(nativeSpeechVoice("cmn-TW")?.name).toMatch(/Ling/);
   });
 
+  it("speaks every Cantonese tag, zh-yue too, in Hong Kong Cantonese with Aki", () => {
+    for (const tag of ["yue", "yue-HK", "yue-Hans", "zh-yue", "zh-yue-HK", "zh_yue"]) {
+      expect(geminiLocale(tag)).toBe("yue-HK");
+      expect(chirpLocale(tag)).toBe("yue-HK");
+    }
+    expect(nativeSpeechVoice("yue-HK")?.voice).toBe("xDISamJf8LV5rG5A2te1");
+  });
+
   it("speaks Russian with Nikolay, who reads U+0301 as stress", () => {
     expect(nativeSpeechVoice("ru-RU")?.voice).toBe("3EuKHIEZbSzrHGNmdYsx");
   });

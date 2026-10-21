@@ -1,17 +1,55 @@
 /**
- * Readings drawn over a term or an example: furigana over kanji, or pinyin over hanzi through
- * `./pinyin`; `./stress` draws a term's marks in place instead. A term's reading is its
- * pronunciation, aligned at display; an example carries its readings inline, `食[た]べる`, where a
- * bracketed kana reading belongs to the kanji just before it, or `你好[nǐ hǎo]` in Chinese.
+ * Readings drawn over a term or an example: furigana over kanji, or one syllable over each Han
+ * character through `./pinyin` and `./jyutping`; `./stress` draws a term's marks in place instead.
+ * A term's reading is its pronunciation, aligned at display; an example carries its readings inline,
+ * `食[た]べる`, where a bracketed kana reading belongs to the kanji just before it, `你好[nǐ hǎo]` in
+ * Chinese or `你好[nei5 hou2]` in Cantonese.
  * docs/card-writing.md.
  */
 
-import { EXAMPLE_NOTATION, readingEngine, stressRules } from "./languages";
+import {
+  jyutpingExampleSegments,
+  jyutpingKey,
+  jyutpingPairs,
+  jyutpingTermReading,
+} from "./jyutping";
+import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 import { markedForm, stressKey } from "./stress";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
+
+type Segments = (term: string, pronunciation: string) => ReadingSegment[] | null;
+
+/** An engine that puts one syllable over each Han character and fades character by character. */
+interface SyllableEngine {
+  termReading: Segments;
+  key: (term: string, pronunciation: string) => string | null;
+  pairs: (segments: readonly ReadingSegment[]) => string[];
+  example: (text: string) => ReadingSegment[];
+}
+
+const SYLLABLE_ENGINES: Partial<Record<ReadingEngine, SyllableEngine>> = {
+  pinyin: {
+    termReading: pinyinTermReading,
+    key: pinyinKey,
+    pairs: pinyinPairs,
+    example: pinyinExampleSegments,
+  },
+  jyutping: {
+    termReading: jyutpingTermReading,
+    key: jyutpingKey,
+    pairs: jyutpingPairs,
+    example: jyutpingExampleSegments,
+  },
+};
+
+/** The language's syllable-per-character engine, or null for kana or stress. */
+function syllableEngine(language: string | null | undefined): SyllableEngine | null {
+  const engine = readingEngine(language);
+  return (engine && SYLLABLE_ENGINES[engine]) ?? null;
+}
 
 /** Characters a reading is drawn over: kanji, their iteration marks, and the counter ヶ. */
 const BASE = /[\p{Script=Han}〆ヵヶ]/u;
@@ -63,7 +101,7 @@ export function kanaReading(card: {
 
 /**
  * The reading the duplicate rule compares: a Japanese card's folded kana reading, a Chinese card's
- * toned pinyin or a Russian card's marked stress, when it fits the term, else null, so an IPA line
+ * toned pinyin, a Cantonese card's toned Jyutping or a Russian card's marked stress, when it fits the term, else null, so an IPA line
  * or another word's reading never splits one word into two cards.
  */
 export function readingKey(card: {
@@ -71,9 +109,8 @@ export function readingKey(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string | null {
-  if (readingEngine(card.language) === "pinyin") {
-    return card.pronunciation ? pinyinKey(card.term, card.pronunciation) : null;
-  }
+  const syllables = syllableEngine(card.language);
+  if (syllables) return card.pronunciation ? syllables.key(card.term, card.pronunciation) : null;
   const rules = stressRules(card.language);
   if (rules) return card.pronunciation ? stressKey(card.term, card.pronunciation, rules) : null;
   const reading = kanaReading(card);
@@ -191,8 +228,11 @@ export function termReading(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): ReadingSegment[] | null {
-  if (readingEngine(card.language) === "pinyin") {
-    const segments = card.pronunciation ? pinyinTermReading(card.term, card.pronunciation) : null;
+  const syllables = syllableEngine(card.language);
+  if (syllables) {
+    const segments = card.pronunciation
+      ? syllables.termReading(card.term, card.pronunciation)
+      : null;
     return segments?.some((segment) => segment.reading !== undefined) ? segments : null;
   }
   const reading = kanaReading(card);
@@ -239,7 +279,7 @@ export function termShowsPronunciation(card: {
   return termReading(card) !== null || markedTerm(card) !== null;
 }
 
-/** Whether a drawn reading is written in letters, as pinyin is, so it needs room from the reading beside it. */
+/** Whether a drawn reading is written in letters, as pinyin and Jyutping are, so it needs room from the reading beside it. */
 export function lettersReading(reading: string): boolean {
   return /\p{Script=Latin}/u.test(reading);
 }
@@ -334,7 +374,8 @@ export function readingPairs(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string[] {
-  if (readingEngine(card.language) === "pinyin") return pinyinPairs(termReading(card) ?? []);
+  const syllables = syllableEngine(card.language);
+  if (syllables) return syllables.pairs(termReading(card) ?? []);
   const keys: string[] = [];
   for (const { text, reading } of termReading(card) ?? []) {
     if (reading === undefined || ![...text].every(isBase)) continue;
@@ -363,7 +404,7 @@ export function knownReadings(
 /**
  * The runs with `known` on each reading whose characters and reading are a Known pair. Furigana
  * also joins the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known
- * 毎; pinyin fades character by character.
+ * 毎; pinyin and Jyutping fade character by character.
  */
 export function markKnownReadings(
   segments: readonly ReadingSegment[],
@@ -371,9 +412,10 @@ export function markKnownReadings(
   language: string | null | undefined,
 ): readonly ReadingSegment[] {
   if (!known?.size || !segments.some((segment) => segment.reading !== undefined)) return segments;
-  if (readingEngine(language) === "pinyin") {
+  const syllables = syllableEngine(language);
+  if (syllables) {
     return segments.map((segment) => {
-      const pairs = segment.reading === undefined ? [] : pinyinPairs([segment]);
+      const pairs = segment.reading === undefined ? [] : syllables.pairs([segment]);
       return pairs.length && pairs.every((pair) => known.has(pair))
         ? { ...segment, known: true }
         : segment;
@@ -397,14 +439,14 @@ export function markKnownReadings(
 }
 
 /**
- * An example's inline readings as runs to draw, in its language's notation: pinyin, one run per
- * character, for Chinese, and kana brackets for any other language.
+ * An example's inline readings as runs to draw, in its language's notation: one syllable per
+ * character for Chinese and Cantonese, and kana brackets for any other language.
  */
 export function exampleSegments(
   text: string,
   language: string | null | undefined,
 ): ReadingSegment[] {
-  return readingEngine(language) === "pinyin" ? pinyinExampleSegments(text) : parseReadings(text);
+  return syllableEngine(language)?.example(text) ?? parseReadings(text);
 }
 
 /** How many readings an example draws, and how many of them fade over the learner's Known words. */

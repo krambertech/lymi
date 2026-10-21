@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { type CardText, normalizeCardText } from "../card-text";
+import { formatJyutping, parseJyutping, stripJyutping } from "../jyutping";
 import { formatPinyin, parsePinyin, stripPinyin } from "../pinyin";
 import {
   formatReadings,
@@ -15,6 +16,7 @@ import {
 import { stripStress } from "../stress";
 import ja from "./fixtures/ja.json";
 import ru from "./fixtures/ru.json";
+import yue from "./fixtures/yue.json";
 import zh from "./fixtures/zh.json";
 import {
   LANGUAGE_RECORDS,
@@ -63,6 +65,7 @@ const NOTATION: Record<
     draw: overTerm,
   },
   pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin, draw: overTerm },
+  jyutping: { parse: parseJyutping, format: formatJyutping, strip: stripJyutping, draw: overTerm },
   // Marks stay in the text, so an example parses as one run.
   stress: {
     parse: (text) => (text ? [{ text }] : []),
@@ -77,7 +80,7 @@ function overTerm(card: Card): string | null {
   return segments && NOTATION[readingEngine(card.language) as ReadingEngine].format(segments);
 }
 
-const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru };
+const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, yue };
 
 const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
 

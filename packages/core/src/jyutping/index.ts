@@ -8,7 +8,13 @@ import { cleanJyutping, hasTone, jyutpingSyllables, readingTokens } from "./spli
 
 export type { JyutpingSegment } from "./align";
 export { alignJyutping, jyutpingTermSegments } from "./align";
-export { formatJyutping, JYUTPING_BRACKET, parseJyutping, stripJyutping } from "./notation";
+export {
+  formatJyutping,
+  JYUTPING_BRACKET,
+  jyutpingExampleSegments,
+  parseJyutping,
+  stripJyutping,
+} from "./notation";
 export { cleanJyutping, hasTone, jyutpingSyllables, readingTokens } from "./split";
 
 /** Past this many characters a term is a passage, and any Jyutping reading fits it. */

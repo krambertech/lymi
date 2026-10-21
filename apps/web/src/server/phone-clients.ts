@@ -4,6 +4,7 @@ import {
   isClientVersion,
   type PhonePlatform,
   parseClientHeader,
+  type ReadingEngine,
   readingEngine,
   stripReadings,
   UPDATE_REQUIRED,
@@ -60,35 +61,55 @@ export function clientSupports(c: Context<AppEnv>, since: ShownSince): boolean {
 /** The first phone release that draws pinyin in a Chinese example. docs/proposals/chinese.md, slice 4. */
 export const EXAMPLE_PINYIN_SINCE: ShownSince = { ios: "0.0.5" };
 
-/** Inline pinyin as it reads in JSON, so a response without any skips the parse. */
-const INLINE_PINYIN = /\p{Script=Han}\[[\p{Script=Latin}]/u;
+/** The first phone release that draws Jyutping in a Cantonese example. docs/proposals/cantonese.md. */
+export const EXAMPLE_JYUTPING_SINCE: ShownSince = { ios: "0.0.6" };
 
-/** A JSON value with the pinyin taken out of the example of every card in a pinyin language. */
-export function withoutExamplePinyin(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(withoutExamplePinyin);
+/** Each engine whose inline example readings an older phone would show as text, with the first release that draws them. */
+const EXAMPLE_READINGS_SINCE: Partial<Record<ReadingEngine, ShownSince>> = {
+  pinyin: EXAMPLE_PINYIN_SINCE,
+  jyutping: EXAMPLE_JYUTPING_SINCE,
+};
+
+/** Inline pinyin or Jyutping as it reads in JSON, so a response without any skips the parse. */
+const INLINE_SYLLABLES = /\p{Script=Han}\[[\p{Script=Latin}]/u;
+
+/** A JSON value with the readings taken out of the example of every card whose language draws them in one of `engines`. */
+export function withoutExampleReadings(
+  value: unknown,
+  engines: ReadonlySet<ReadingEngine>,
+): unknown {
+  if (Array.isArray(value)) return value.map((item) => withoutExampleReadings(item, engines));
   if (!value || typeof value !== "object") return value;
   const out: Record<string, unknown> = {};
-  for (const [key, item] of Object.entries(value)) out[key] = withoutExamplePinyin(item);
+  for (const [key, item] of Object.entries(value)) out[key] = withoutExampleReadings(item, engines);
   const { example, language } = out;
   if (typeof example === "string" && typeof language === "string") {
-    if (readingEngine(language) === "pinyin") out.example = stripReadings(example, language);
+    const engine = readingEngine(language);
+    if (engine && engines.has(engine)) out.example = stripReadings(example, language);
   }
   return out;
 }
 
 /**
- * Takes example pinyin out of every JSON answer to a phone release that would show its brackets as
- * text. Until the minimum version passes EXAMPLE_PINYIN_SINCE this runs on each such request. ADR 0032.
+ * Takes example pinyin and Jyutping out of every JSON answer to a phone release that would show
+ * their brackets as text. Until the minimum version passes each engine's release this runs on each
+ * such request. ADR 0032.
  */
-export const leaveOutExamplePinyin: MiddlewareHandler<AppEnv> = async (c, next) => {
+export const leaveOutExampleReadings: MiddlewareHandler<AppEnv> = async (c, next) => {
   await next();
-  if (!c.get("phone") || clientSupports(c, EXAMPLE_PINYIN_SINCE)) return;
+  if (!c.get("phone")) return;
+  const engines = new Set(
+    Object.entries(EXAMPLE_READINGS_SINCE).flatMap(([engine, since]) =>
+      clientSupports(c, since) ? [] : [engine as ReadingEngine],
+    ),
+  );
+  if (engines.size === 0) return;
   if (!c.res.headers.get("content-type")?.includes("application/json")) return;
   const text = await c.res.clone().text();
-  if (!INLINE_PINYIN.test(text)) return;
+  if (!INLINE_SYLLABLES.test(text)) return;
   const headers = new Headers(c.res.headers);
   headers.delete("content-length");
-  c.res = new Response(JSON.stringify(withoutExamplePinyin(JSON.parse(text))), {
+  c.res = new Response(JSON.stringify(withoutExampleReadings(JSON.parse(text), engines)), {
     status: c.res.status,
     headers,
   });

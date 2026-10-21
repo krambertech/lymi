@@ -599,6 +599,306 @@
       ]
     },
     {
+      "id": "yue-en",
+      "name": "廣東話 入門",
+      "language": "yue",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "yue-en-01",
+          "term": "學習",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hok6 zaap6", "hok6zaap6"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-02",
+          "term": "銀行",
+          "expect": {
+            "meaning": {
+              "includes": ["bank"]
+            },
+            "pronunciation": {
+              "oneOf": ["ngan4 hong4", "ngan4hong4"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-03",
+          "term": "行",
+          "meaning": "to walk",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hang4"]
+            },
+            "example": {
+              "excludes": ["hong4"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-04",
+          "term": "行",
+          "meaning": "row; line",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hong4"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-05",
+          "term": "唔該",
+          "expect": {
+            "meaning": {
+              "includes": ["thank"]
+            },
+            "pronunciation": {
+              "oneOf": ["m4 goi1", "m4goi1"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-06",
+          "term": "五",
+          "expect": {
+            "meaning": {
+              "includes": ["five"]
+            },
+            "pronunciation": {
+              "oneOf": ["ng5"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-07",
+          "term": "咗",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["zo2"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-08",
+          "term": "嘅",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["ge3"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-09",
+          "term": "冇",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["mou5"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-10",
+          "term": "佢",
+          "expect": {
+            "meaning": {
+              "includes": ["he"]
+            },
+            "pronunciation": {
+              "oneOf": ["keoi5"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-11",
+          "term": "食飯",
+          "expect": {
+            "meaning": {
+              "includes": ["eat"]
+            },
+            "pronunciation": {
+              "oneOf": ["sik6 faan6", "sik6faan6"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-12",
+          "term": "搭𨋢",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["daap3 lip1", "daap3lip1"]
+            },
+            "example": {
+              "includes": ["lip1]"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-13",
+          "term": "長",
+          "meaning": "long",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["coeng4"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-14",
+          "term": "長",
+          "meaning": "to grow",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["zoeng2"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-15",
+          "term": "音樂",
+          "expect": {
+            "meaning": {
+              "includes": ["music"]
+            },
+            "pronunciation": {
+              "oneOf": ["jam1 ngok6", "jam1ngok6"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-16",
+          "term": "快樂",
+          "expect": {
+            "meaning": {
+              "includes": ["happ"]
+            },
+            "pronunciation": {
+              "oneOf": ["faai3 lok6", "faai3lok6"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-17",
+          "term": "好",
+          "meaning": "to like; to be fond of",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hou3"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-18",
+          "term": "雪櫃",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["syut3 gwai6", "syut3gwai6"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-19",
+          "term": "T恤",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["ti1 seot1", "ti1seot1"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-20",
+          "term": "銀行",
+          "meaning": "bank",
+          "example": "我去銀行攞錢。",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["ngan4 hong4", "ngan4hong4"]
+            },
+            "example": {
+              "includes": ["hong4]"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-21",
+          "term": "行",
+          "meaning": "to walk",
+          "example": "我哋行路返屋企。",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hang4"]
+            },
+            "example": {
+              "includes": ["hang4"],
+              "excludes": ["hong4"]
+            }
+          }
+        },
+        {
+          "id": "yue-en-22",
+          "term": "唔該",
+          "meaning": "thank you",
+          "example": "唔該晒。",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["m4 goi1", "m4goi1"]
+            },
+            "example": {
+              "includes": ["goi1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "zh-yue-ru",
+      "name": "Кантонский · Слова",
+      "language": "zh-yue",
+      "meaningLanguage": "ru",
+      "samples": [],
+      "cases": [
+        {
+          "id": "zh-yue-ru-01",
+          "term": "電話",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["din6 waa2", "din6waa2"]
+            }
+          }
+        },
+        {
+          "id": "zh-yue-ru-02",
+          "term": "學校",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["hok6 haau6", "hok6haau6"]
+            }
+          }
+        },
+        {
+          "id": "zh-yue-ru-03",
+          "term": "飲茶",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["jam2 caa4", "jam2caa4"]
+            }
+          }
+        },
+        {
+          "id": "zh-yue-ru-04",
+          "term": "早晨",
+          "expect": {
+            "pronunciation": {
+              "oneOf": ["zou2 san4", "zou2san4"]
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "ko-en",
       "name": "Korean A1",
       "language": "ko",

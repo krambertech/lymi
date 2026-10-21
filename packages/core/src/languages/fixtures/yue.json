@@ -1,0 +1,85 @@
+{
+  "tags": {
+    "yue": "Hant",
+    "yue-HK": "Hant",
+    "yue-Hant": "Hant",
+    "YUE_hk": "Hant",
+    "zh-yue": "Hant",
+    "zh-yue-HK": "Hant",
+    "yue-Hans": "Hans",
+    "yue-CN": "Hans",
+    "zh-yue-Hans-CN": "Hans"
+  },
+  "terms": [
+    { "term": "行", "pronunciation": "hong4", "drawn": "行[hong4]" },
+    { "term": "行", "pronunciation": "hang4", "drawn": "行[hang4]" },
+    { "term": "銀行", "pronunciation": "ngan4hong4", "drawn": "銀[ngan4]行[hong4]" },
+    { "term": "唔該", "pronunciation": "m4 goi1", "drawn": "唔[m4]該[goi1]" },
+    { "term": "五", "pronunciation": "ng5", "drawn": "五[ng5]" },
+    { "term": "食咗", "pronunciation": "sik6 zo2", "drawn": "食[sik6]咗[zo2]" },
+    { "term": "搭𨋢", "pronunciation": "daap3 lip1", "drawn": "搭[daap3]𨋢[lip1]" },
+    { "term": "T恤", "pronunciation": "ti1 seot1", "drawn": "T[ti1]恤[seot1]" },
+    { "term": "卡拉OK", "pronunciation": "kaa1 laa1 OK", "drawn": "卡[kaa1]拉[laa1]OK" },
+    { "term": "你好嗎", "pronunciation": "nei5 hou2", "drawn": "你好嗎[nei5 hou2]" },
+    { "term": "你好", "pronunciation": "ni3 hao3", "drawn": null },
+    { "term": "你好", "pronunciation": "nei˩˧ hou˧˥", "drawn": null }
+  ],
+  "examples": [
+    { "text": "我去銀行[ngan4 hong4]攞錢。", "plain": "我去銀行攞錢。" },
+    { "text": "我[ngo5]食咗[sik6 zo2]飯[faan6]。", "plain": "我食咗飯。" },
+    { "text": "佢搭𨋢[daap3 lip1]上去。", "plain": "佢搭𨋢上去。" },
+    { "text": "[sound:hong4.mp3]行路", "plain": "[sound:hong4.mp3]行路" }
+  ],
+  "keys": [
+    {
+      "term": "香港",
+      "pronunciations": ["hoeng1 gong2", "Hoeng1gong2", "hoeng¹ gong²", "hoeng１ gong２"]
+    },
+    { "term": "唔該", "pronunciations": ["m4 goi1", "m4goi1", "m4-goi1"] }
+  ],
+  "apart": [
+    { "term": "行", "pronunciations": ["hong4", "hang4"] },
+    { "term": "長", "pronunciations": ["coeng4", "zoeng2"] },
+    { "term": "女", "pronunciations": ["neoi5", "neoi2"] }
+  ],
+  "noKey": [
+    { "term": "香港", "pronunciation": "heung1 gong2" },
+    { "term": "香港", "pronunciation": "hoeng gong" },
+    { "term": "你好", "pronunciation": "ni3 hao3" },
+    { "term": "你好", "pronunciation": "nei5" }
+  ],
+  "inputs": [
+    {
+      "sent": { "term": "你好", "pronunciation": "nei⁵ hou²" },
+      "stored": { "term": "你好", "pronunciation": "nei5 hou2" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "你好", "pronunciation": "nei５ hou２" },
+      "stored": { "term": "你好", "pronunciation": "nei5 hou2" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "你好", "pronunciation": "nei5 hou2" },
+      "stored": { "term": "你好", "pronunciation": "nei5 hou2" },
+      "normalized": []
+    },
+    {
+      "sent": { "term": "你好", "pronunciation": "nei¹³ hou³⁵" },
+      "stored": { "term": "你好", "pronunciation": "nei¹³ hou³⁵" },
+      "normalized": []
+    }
+  ],
+  "pairs": [
+    {
+      "term": "銀行",
+      "pronunciation": "ngan4 hong4",
+      "pairs": ["jyutping:銀[ngan4]", "jyutping:行[hong4]"]
+    },
+    {
+      "term": "搭𨋢",
+      "pronunciation": "daap3 lip1",
+      "pairs": ["jyutping:搭[daap3]", "jyutping:𨋢[lip1]"]
+    }
+  ]
+}

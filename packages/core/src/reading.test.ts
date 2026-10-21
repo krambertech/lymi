@@ -363,6 +363,48 @@ describe("example pinyin", () => {
   });
 });
 
+describe("example Jyutping", () => {
+  const known = knownReadings([
+    { term: "銀行", pronunciation: "ngan4 hong4", language: "yue", known: true },
+    { term: "搭𨋢", pronunciation: "daap3 lip1", language: "zh-yue", known: true },
+  ]);
+  const faded = (example: string) =>
+    markKnownReadings(exampleSegments(example, "yue"), known, "yue")
+      .filter((segment) => segment.known)
+      .map((segment) => `${segment.text} ${segment.reading}`);
+
+  it("fades a character whose syllable a Known card reads the same", () => {
+    expect(faded("佢喺行業[hong4 jip6]做嘢。")).toEqual(["行 hong4"]);
+    expect(faded("我行路[hang4 lou6]返屋企。")).toEqual([]);
+    expect(faded("佢搭𨋢[daap3 lip1]上去。")).toEqual(["搭 daap3", "𨋢 lip1"]);
+    expect(faded("我去銀行[ngan⁴ hong⁴]。")).toEqual(["銀 ngan4", "行 hong4"]);
+  });
+
+  it("never meets a pinyin pair", () => {
+    const mandarin = knownReadings([
+      { term: "银行", pronunciation: "yínháng", language: "zh", known: true },
+    ]);
+    expect(markKnownReadings(exampleSegments("银行[ngan4 hong4]", "yue"), mandarin, "yue")).toEqual(
+      [
+        { text: "银", reading: "ngan4" },
+        { text: "行", reading: "hong4" },
+      ],
+    );
+    expect(exampleSegments("銀行[ngan4 hong4]", "zh")).toEqual([{ text: "銀行[ngan4 hong4]" }]);
+  });
+
+  it("counts, strips and checks Jyutping as furigana", () => {
+    expect(exampleReadings("我去銀行[ngan4 hong4]。", "zh-yue", known)).toEqual({
+      readings: 2,
+      known: 2,
+    });
+    expect(stripReadings("我[ngo5]去[heoi3]銀行[ngan4 hong4]。", "yue")).toBe("我去銀行。");
+    expect(missingReadings("我去銀行[ngan4 hong4]。", "yue")).toBe(true);
+    expect(missingReadings("我[ngo5]去[heoi3]銀行[ngan4 hong4]。", "yue")).toBe(false);
+    expect(addsReadingsOnly("唔該晒。", "唔該[m4 goi1]晒[saai3]。", "yue")).toBe(true);
+  });
+});
+
 describe("stripReadings", () => {
   it("leaves the text as written", () => {
     expect(stripReadings("毎朝[まいあさ]パンを食[た]べる", "ja")).toBe("毎朝パンを食べる");

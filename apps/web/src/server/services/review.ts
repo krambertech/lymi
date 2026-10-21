@@ -16,6 +16,7 @@ import {
   modeOf,
   modesFromDirections,
   preview,
+  readingEngine,
   roundOrder,
   schedule,
   serializeState,
@@ -277,9 +278,10 @@ export async function gradeCard(
   input: GradeInput,
   /**
    * What the grader draws on the term, so `review_graded` can say where: a reading over it, which a
-   * phone before 0.0.2 lacks, and stress marks in place, which a phone before 0.0.4 lacks.
+   * phone before 0.0.2 lacks, Jyutping over it, which a phone before 0.0.6 lacks, and stress marks
+   * in place, which a phone before 0.0.4 lacks.
    */
-  draws: { over: boolean; inPlace: boolean } = { over: true, inPlace: true },
+  draws: { over: boolean; jyutping?: boolean; inPlace: boolean } = { over: true, inPlace: true },
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;
@@ -407,7 +409,11 @@ export async function gradeCard(
     ...(input.aid ? { aid: input.aid } : {}),
     ...readingsDrawn(
       row,
-      (termReading(row) ? draws.over : markedTerm(row) !== null && draws.inPlace)
+      (
+        termReading(row)
+          ? draws.over && (readingEngine(row.language) !== "jyutping" || draws.jyutping !== false)
+          : markedTerm(row) !== null && draws.inPlace
+      )
         ? readingShown(key, state.state)
         : null,
       fadedReadings(row, input.readingsFaded),

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   formatJyutping,
   jyutpingDigits,
+  jyutpingExampleSegments,
   jyutpingKey,
   jyutpingPairs,
   jyutpingSyllables,
@@ -164,6 +165,21 @@ describe("parseJyutping", () => {
     expect(parseJyutping("你好[nei⁵ hou²]")).toEqual([{ text: "你好", reading: "nei⁵ hou²" }]);
     expect(parseJyutping("你好[nei５ hou２]")).toEqual([{ text: "你好", reading: "nei５ hou２" }]);
     expect(stripJyutping("我講廣東話[gwong2-dung1 waa2]。")).toBe("我講廣東話。");
+  });
+  it("reads letters before the characters when the bracket says them", () => {
+    expect(parseJyutping("佢着住一件T恤[ti1 seot1]。")).toEqual([
+      { text: "佢着住一件" },
+      { text: "T恤", reading: "ti1 seot1" },
+      { text: "。" },
+    ]);
+    expect(parseJyutping("一件T恤[seot1]")).toEqual([
+      { text: "一件T" },
+      { text: "恤", reading: "seot1" },
+    ]);
+    expect(jyutpingExampleSegments("T恤[ti1 seot1]")).toEqual([
+      { text: "T", reading: "ti1" },
+      { text: "恤", reading: "seot1" },
+    ]);
   });
   it("leaves a bracket that is not toned Jyutping, or finds too few characters, as written", () => {
     for (const text of ["[sound:hou2.mp3]你好", "我話[ok]", "好[hou2 hou2]", "我[hao3]"])

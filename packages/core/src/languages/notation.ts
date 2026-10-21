@@ -1,3 +1,4 @@
+import { JYUTPING_BRACKET } from "../jyutping/notation";
 import { PINYIN_BRACKET } from "../pinyin/notation";
 import type { ReadingEngine } from "./types";
 
@@ -22,6 +23,12 @@ export const EXAMPLE_NOTATION = {
       "Pinyin in square brackets right after each word of every example, one syllable for each character, in tone marks, and nothing after punctuation, letters or digits.",
     pattern: PINYIN_BRACKET,
     sample: "我[wǒ]去[qù]银行[yínháng]取钱[qǔqián]。",
+  },
+  jyutping: {
+    format:
+      "Jyutping with tone numbers in square brackets right after each word of every example, one syllable for each character, and nothing after punctuation, letters or digits.",
+    pattern: JYUTPING_BRACKET,
+    sample: "我[ngo5]去[heoi3]銀行[ngan4 hong4]攞錢[lo2 cin2]。",
   },
   // Stress marks stay in the sentence as written, with nothing in brackets.
   stress: null,

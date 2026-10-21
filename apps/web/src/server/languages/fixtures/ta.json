@@ -1,0 +1,421 @@
+{
+  "about": "Invented cases for the ta module's lesson, hook and check slots, led by the traps: loanwords said against their spelling, chat spellings of a word said as spelled, and Latin letters in an example; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Tamil reader should review these with tamil.ts.",
+  "lesson": [
+    {
+      "term": "வணக்கம்",
+      "printed": "vaṇakkam",
+      "stored": null
+    },
+    {
+      "term": "வணக்கம்",
+      "printed": "vanakkam",
+      "stored": null
+    },
+    {
+      "term": "தண்ணீர்",
+      "printed": "taṇṇīr",
+      "stored": null
+    },
+    {
+      "term": "அம்மா",
+      "printed": "ammā",
+      "stored": null
+    },
+    {
+      "term": "அம்மா",
+      "printed": "amma",
+      "stored": null
+    },
+    {
+      "term": "அப்பா",
+      "printed": "appaa",
+      "stored": null
+    },
+    {
+      "term": "வீடு",
+      "printed": "vīḍu",
+      "stored": null
+    },
+    {
+      "term": "வீடு",
+      "printed": "viidu",
+      "stored": null
+    },
+    {
+      "term": "பாடல்",
+      "printed": "paadal",
+      "stored": null
+    },
+    {
+      "term": "கோடு",
+      "printed": "koodu",
+      "stored": null
+    },
+    {
+      "term": "தேன்",
+      "printed": "teen",
+      "stored": null
+    },
+    {
+      "term": "பழம்",
+      "printed": "pazham",
+      "stored": null
+    },
+    {
+      "term": "தமிழ்",
+      "printed": "tamizh",
+      "stored": null
+    },
+    {
+      "term": "காற்று",
+      "printed": "kaatru",
+      "stored": null
+    },
+    {
+      "term": "ஒன்று",
+      "printed": "ondru",
+      "stored": null
+    },
+    {
+      "term": "மஞ்சள்",
+      "printed": "manjal",
+      "stored": null
+    },
+    {
+      "term": "தங்கம்",
+      "printed": "tangam",
+      "stored": null
+    },
+    {
+      "term": "பள்ளி",
+      "printed": "palli",
+      "stored": null
+    },
+    {
+      "term": "கஷ்டம்",
+      "printed": "kashtam",
+      "stored": null
+    },
+    {
+      "term": "ஜன்னல்",
+      "printed": "jannal",
+      "stored": null
+    },
+    {
+      "term": "சாப்பாடு",
+      "printed": "saappaadu",
+      "stored": null
+    },
+    {
+      "term": "பஸ்",
+      "printed": "bas",
+      "stored": "bas"
+    },
+    {
+      "term": "பஸ்",
+      "printed": "pas",
+      "stored": null
+    },
+    {
+      "term": "டாக்டர்",
+      "printed": "ḍākṭar",
+      "stored": "ḍākṭar"
+    },
+    {
+      "term": "பேக்",
+      "printed": "bēg",
+      "stored": "bēg"
+    }
+  ],
+  "hook": [
+    {
+      "term": "வணக்கம்",
+      "pronunciation": "",
+      "meaning": "hello",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "நன்றி",
+      "pronunciation": "",
+      "meaning": "thank you",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "தண்ணீர்",
+      "pronunciation": "",
+      "meaning": "water",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "அம்மா",
+      "pronunciation": "",
+      "meaning": "mother",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "அப்பா",
+      "pronunciation": "",
+      "meaning": "father",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "வீடு",
+      "pronunciation": "",
+      "meaning": "house",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பாடல்",
+      "pronunciation": "",
+      "meaning": "song",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பழம்",
+      "pronunciation": "",
+      "meaning": "fruit",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பூனை",
+      "pronunciation": "",
+      "meaning": "cat",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "நாய்",
+      "pronunciation": "",
+      "meaning": "dog",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "புத்தகம்",
+      "pronunciation": "",
+      "meaning": "book",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பள்ளி",
+      "pronunciation": "",
+      "meaning": "school",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "கடல்",
+      "pronunciation": "",
+      "meaning": "sea",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "மரம்",
+      "pronunciation": "",
+      "meaning": "tree",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "மழை",
+      "pronunciation": "",
+      "meaning": "rain",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "சோறு",
+      "pronunciation": "",
+      "meaning": "cooked rice",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பால்",
+      "pronunciation": "",
+      "meaning": "milk",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "பஸ்",
+      "pronunciation": "",
+      "meaning": "bus",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "ஜன்னல்",
+      "pronunciation": "",
+      "meaning": "window",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "கதவு",
+      "pronunciation": "",
+      "meaning": "door",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "நிலா",
+      "pronunciation": "",
+      "meaning": "moon",
+      "asked": ["meaning_to_term"]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "பஸ்",
+      "text": "bas",
+      "pass": true
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "பேக்",
+      "text": "bēg",
+      "pass": true
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "டாக்டர்",
+      "text": "ḍākṭar",
+      "pass": true
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "பாடல்",
+      "text": "pāḍal",
+      "pass": false
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "பாடல்",
+      "text": "paadal",
+      "pass": false
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "வணக்கம்",
+      "text": "vanakkam",
+      "pass": false
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "தண்ணீர்",
+      "text": "/taɳɳiːr/",
+      "pass": false
+    },
+    {
+      "rule": "only for a word not said as spelled",
+      "field": "pronunciation",
+      "term": "தண்ணீர்",
+      "text": "தண்ணி",
+      "pass": false
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பஸ்",
+      "text": "bas",
+      "pass": true
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பேக்",
+      "text": "bēg",
+      "pass": true
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பஸ் நிலையம்",
+      "text": "bas nilaiyam",
+      "pass": true
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "டாக்டர்",
+      "text": "doktar",
+      "pass": true
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பஸ்",
+      "text": "bus stop",
+      "pass": false
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பஸ்",
+      "text": "sounds like bus",
+      "pass": false
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பாடல்",
+      "text": "song",
+      "pass": false
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "பஸ் நிலையம்",
+      "text": "busstand",
+      "pass": false
+    },
+    {
+      "rule": "reads as the word",
+      "field": "pronunciation",
+      "term": "தண்ணீர்",
+      "text": "/taɳɳiːr/",
+      "pass": false
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "நான் பஸ்ஸில் போகிறேன்.",
+      "pass": true
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "இது என் வீடு.",
+      "pass": true
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "எனக்கு ௨ புத்தகங்கள் உள்ளன.",
+      "pass": true
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "நான் bus-இல் போகிறேன்.",
+      "pass": false
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "Naan veettukku pogiren.",
+      "pass": false
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "நான் வீட்டுக்குப் போகிறேன் (I am going home).",
+      "pass": false
+    },
+    {
+      "rule": "Tamil script only",
+      "field": "example",
+      "text": "I am going home.",
+      "pass": false
+    }
+  ]
+}

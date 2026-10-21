@@ -51,6 +51,7 @@ const SCRIPT_RUNS: Record<Script, RegExp> = {
   Jpan: /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u,
   Hans: HANZI_RUNS,
   Hant: HANZI_RUNS,
+  Taml: /([\u0b80-\u0bff\u{200c}\u{200d}]+)/u,
 };
 
 // iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".

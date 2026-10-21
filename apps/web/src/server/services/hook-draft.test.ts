@@ -33,8 +33,8 @@ describe("the hook prompt", () => {
     const hash = promptHash({ HOOK_INSTRUCTIONS, HOOK_REPLY_SCHEMA, guides });
     // Raise HOOK_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ HOOK_PROMPT_VERSION, hash }).toEqual({
-      HOOK_PROMPT_VERSION: 2,
-      hash: "6ef2ef4cc6536d42",
+      HOOK_PROMPT_VERSION: 3,
+      hash: "863a6bfee5790f48",
     });
   });
 

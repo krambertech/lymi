@@ -100,21 +100,6 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     starts: ["pronunciation"],
     enrichByDefault: true,
   },
-  ta: {
-    pronunciation: "pronunciation",
-    scripts: ["Taml"],
-    format: {
-      name: "Tamil",
-      pronunciation:
-        "The written term as it is read aloud, romanized: long vowels with a macron (ā ī ū ē ō), retroflex consonants with a dot below (ṭ ḍ ṇ ḷ), ழ as zh, both ந and ன as n, and each stop voiced where it is said voiced.",
-      empty: null,
-      never: "Not IPA.",
-      sample: { term: "தம்பி", pronunciation: "tambi" },
-      duplicates: "term",
-    },
-    starts: ["pronunciation"],
-    enrichByDefault: true,
-  },
   et: {
     pronunciation: "pronunciation",
     scripts: ["Latn"],

@@ -173,7 +173,7 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
         rating: 3,
         reviewedAt: new Date(),
       },
-      { over: furigana, inPlace: furigana },
+      { over: furigana, inPlace: furigana, byWord: furigana },
     );
   await at(eat as string, true, "term_to_meaning");
   await at(eat as string, true, "meaning_to_term");
@@ -229,7 +229,7 @@ it("leaves out where the stress showed for a phone that draws it only after the 
     { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる", language: "ja" },
   ]);
   // A 0.0.3 phone draws furigana but shows the stress as a line after the reveal.
-  const older = { over: true, inPlace: false };
+  const older = { over: true, inPlace: false, byWord: false };
   for (const added of [lock, eat]) {
     const cardId = added?.status === "added" ? added.card.id : "";
     await gradeCard(
@@ -246,6 +246,43 @@ it("leaves out where the stress showed for a phone that draws it only after the 
   expect(graded).toEqual([
     [undefined, undefined],
     ["cue", "ja"],
+  ]);
+});
+
+it("says where a Tamil reading showed only for a grader that draws it over each word", async () => {
+  const student = await learner(db, "analytics-word-since", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "தமிழ்", defaultLanguage: "ta" });
+  const [song] = await addCards(ctx, [
+    { deckId: deck.id, term: "பாடல்", meaning: "song", example: "இது ஒரு பாடல்." },
+  ]);
+  const cardId = song?.status === "added" ? song.card.id : "";
+  // A 0.0.5 phone draws furigana and stress but nothing over a Tamil word; the web draws it.
+  for (const draws of [
+    { over: true, inPlace: true, byWord: false },
+    { over: true, inPlace: true, byWord: true },
+  ]) {
+    await gradeCard(
+      ctx,
+      {
+        cardId,
+        direction: "recognition",
+        rating: 1,
+        reviewedAt: new Date(),
+        ...(draws.byWord ? { readingsFaded: 0 } : {}),
+      },
+      draws,
+    );
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language, event.example_readings]);
+  expect(graded).toEqual([
+    [undefined, undefined, undefined],
+    ["cue", "ta", 3],
   ]);
 });
 

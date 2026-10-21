@@ -1056,67 +1056,118 @@
         {
           "id": "ta-en-01",
           "term": "வணக்கம்",
-          "expect": {
-            "meaning": { "includes": ["hello"] },
-            "pronunciation": { "oneOf": ["vaṇakkam"] }
-          }
+          "expect": { "meaning": { "includes": ["hello"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-02",
           "term": "நன்றி",
-          "expect": {
-            "meaning": { "includes": ["thank"] },
-            "pronunciation": { "oneOf": ["nandri", "nanri"] }
-          }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-03",
+          "term": "பஸ்",
+          "expect": { "meaning": { "includes": ["bus"] }, "pronunciation": { "oneOf": ["bas"] } }
+        },
+        {
+          "id": "ta-en-04",
           "term": "தண்ணீர்",
           "expect": {
             "meaning": { "includes": ["water"] },
-            "pronunciation": { "oneOf": ["taṇṇīr"] }
+            "pronunciation": "empty",
+            "notes": { "includes": ["தண்ணி"] }
           }
         },
-        { "id": "ta-en-04", "term": "அம்மா", "expect": { "pronunciation": { "oneOf": ["ammā"] } } },
-        { "id": "ta-en-05", "term": "அப்பா", "expect": { "pronunciation": { "oneOf": ["appā"] } } },
-        {
-          "id": "ta-en-06",
-          "term": "புத்தகம்",
-          "expect": {
-            "meaning": { "includes": ["book"] },
-            "pronunciation": { "oneOf": ["puttagam"] }
-          }
-        },
+        { "id": "ta-en-05", "term": "அம்மா", "expect": { "pronunciation": "empty" } },
+        { "id": "ta-en-06", "term": "அப்பா", "expect": { "pronunciation": "empty" } },
         {
           "id": "ta-en-07",
-          "term": "வீடு",
-          "expect": { "meaning": { "includes": ["house"] }, "pronunciation": { "oneOf": ["vīḍu"] } }
+          "term": "புத்தகம்",
+          "expect": { "meaning": { "includes": ["book"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-08",
-          "term": "நாய்",
-          "expect": { "meaning": { "includes": ["dog"] }, "pronunciation": { "oneOf": ["nāy"] } }
+          "term": "வீடு",
+          "expect": { "meaning": { "includes": ["house"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-09",
-          "term": "பூனை",
-          "expect": { "meaning": { "includes": ["cat"] }, "pronunciation": { "oneOf": ["pūnai"] } }
+          "term": "நாய்",
+          "expect": { "meaning": { "includes": ["dog"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-10",
-          "term": "பழம்",
-          "expect": {
-            "meaning": { "includes": ["fruit"] },
-            "pronunciation": { "oneOf": ["pazham"] }
-          }
+          "term": "பூனை",
+          "expect": { "meaning": { "includes": ["cat"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-11",
+          "term": "பழம்",
+          "expect": { "meaning": { "includes": ["fruit"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-12",
           "term": "போ",
           "expect": {
             "meaning": { "includes": ["go"] },
-            "pronunciation": { "oneOf": ["pō"] },
+            "pronunciation": "empty",
             "notes": { "includes": ["போனேன்"] }
+          }
+        },
+        {
+          "id": "ta-en-13",
+          "term": "டாக்டர்",
+          "expect": {
+            "meaning": { "includes": ["doctor"] },
+            "pronunciation": { "oneOf": ["ḍākṭar", "dākṭar", "ḍāktar", "ḍokṭar"] }
+          }
+        },
+        {
+          "id": "ta-en-14",
+          "term": "போகிறேன்",
+          "expect": { "pronunciation": "empty", "notes": { "includes": ["போறேன்"] } }
+        },
+        {
+          "id": "ta-en-15",
+          "term": "கடல்",
+          "expect": { "meaning": { "includes": ["sea"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-16",
+          "term": "மழை",
+          "expect": { "meaning": { "includes": ["rain"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-17",
+          "term": "பால்",
+          "expect": { "meaning": { "includes": ["milk"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-18",
+          "term": "ஜன்னல்",
+          "expect": { "meaning": { "includes": ["window"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-19",
+          "term": "கஷ்டம்",
+          "expect": { "meaning": { "includes": ["difficult"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-20",
+          "term": "பாடல்",
+          "expect": { "meaning": { "includes": ["song"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "ta-en-21",
+          "term": "பேக்",
+          "expect": { "meaning": { "includes": ["bag"] }, "pronunciation": { "oneOf": ["bēg"] } }
+        },
+        {
+          "id": "ta-en-22",
+          "term": "அவர்கள்",
+          "expect": {
+            "meaning": { "includes": ["they"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["அவங்க"] }
           }
         }
       ]

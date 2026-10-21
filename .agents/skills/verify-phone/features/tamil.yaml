@@ -1,0 +1,47 @@
+# Tamil: a New card draws each word's reading over it, from its spelling or the card's own, on the
+# cue and after the reveal, and an example's reading fades over a Known word as written.
+appId: app.lymi
+name: Tamil
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- tapOn: "^Review.*"
+# With no pronunciation, the label names the term alone; the reading drawn over it comes from its spelling.
+- extendedWaitUntil:
+    visible: ".*${TERM}. Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*${MEANING}.*"
+- takeScreenshot: 01-new-cue-reading
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*${MEANING}.*"
+- takeScreenshot: 02-revealed
+- tapOn: "End review"
+- tapOn: "Library"
+- tapOn: "${LOAN_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${LOAN_TERM}, read ${LOAN_READING}. Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 03-loanword-own-reading
+- tapOn: "End review"
+- tapOn: "Library"
+# The deck is last in the list, under the tab bar, so it is scrolled to the middle first.
+- scrollUntilVisible:
+    element: "${FADE_DECK}.*"
+    centerElement: true
+- tapOn: "${FADE_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${FADE_TERM}.*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${FADE_MEANING}.*"
+# VoiceOver says the Tamil text, so the fade shows only in the screenshot: nothing over மரம், while
+# மரத்தில் keeps marattil.
+- assertVisible: ".*${FADE_EXAMPLE}.*"
+- takeScreenshot: 04-example-reading-fades

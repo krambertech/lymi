@@ -1,0 +1,45 @@
+{
+  "tags": { "ta": "Taml", "ta-IN": "Taml", "TA": "Taml", "ta-LK": "Taml", "ta_Taml_SG": "Taml" },
+  "terms": [
+    { "term": "பாடல்", "pronunciation": "", "drawn": "பாடல்[pāḍal]" },
+    { "term": "தமிழ் பாடல்", "pronunciation": "", "drawn": "தமிழ்[tamizh] பாடல்[pāḍal]" },
+    { "term": "காற்று", "pronunciation": "kātru", "drawn": "காற்று[kātru]" },
+    { "term": "பஸ்", "pronunciation": "bas", "drawn": "பஸ்[bas]" },
+    { "term": "பஸ்", "pronunciation": "sounds like bus", "drawn": "பஸ்[pas]" },
+    { "term": "பாடல்", "pronunciation": "/paːɖal/", "drawn": "பாடல்[pāḍal]" },
+    { "term": "போ · போனேன்", "pronunciation": "", "drawn": "போ[pō] · போனேன்[pōnēn]" },
+    { "term": "song", "pronunciation": "", "drawn": null }
+  ],
+  "examples": [
+    { "text": "நான் பள்ளிக்குப் போகிறேன்.", "plain": "நான் பள்ளிக்குப் போகிறேன்." },
+    { "text": "இது என் வீடு.", "plain": "இது என் வீடு." }
+  ],
+  "keys": [],
+  "noKey": [{ "term": "பஸ்", "pronunciation": "bas" }, { "term": "பாடல்", "pronunciation": "pāḍal" }],
+  "inputs": [
+    {
+      "sent": { "term": "பாடல்", "pronunciation": "pāḍal" },
+      "stored": { "term": "பாடல்", "pronunciation": null },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "பாடல்", "pronunciation": "paadal" },
+      "stored": { "term": "பாடல்", "pronunciation": null },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "பஸ்", "pronunciation": "bas" },
+      "stored": { "term": "பஸ்", "pronunciation": "bas" },
+      "normalized": []
+    },
+    {
+      "sent": { "pronunciation": "pāḍal" },
+      "stored": { "pronunciation": "pāḍal" },
+      "normalized": []
+    }
+  ],
+  "pairs": [
+    { "term": "வீடு", "pronunciation": "", "pairs": ["indic:வீடு"] },
+    { "term": "தமிழ் பாடல்", "pronunciation": "", "pairs": ["indic:தமிழ்", "indic:பாடல்"] }
+  ]
+}

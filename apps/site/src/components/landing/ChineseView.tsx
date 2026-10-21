@@ -269,8 +269,8 @@ export function ChineseView({ decks, locale }: Props) {
             title={<Trans>Start with HSK&nbsp;1. Keep going.</Trans>}
             body={
               <Trans>
-                Free decks with every word on the 2025 HSK lists. Take HSK&nbsp;1, then HSK&nbsp;2.
-                Each day adds a few new words to your reviews.
+                Free decks for the first two HSK levels. Take HSK&nbsp;1, then HSK&nbsp;2. Each day
+                adds a few new words to your reviews.
               </Trans>
             }
           >

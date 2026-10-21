@@ -99,7 +99,7 @@ export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their pinyin, their schedule and their word recordings.`,
+    answer: msg`Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind.`,
   },
   ...COMMON,
 ];

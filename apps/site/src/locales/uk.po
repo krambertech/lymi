@@ -1757,11 +1757,11 @@ msgstr "Безкоштовно"
 msgid "Free Chinese decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Безкоштовні колоди з китайської з голосом на кожній картці. Додай будь-яку одним дотиком. Скоро буде більше."
 
+msgid "Free decks for the first two HSK levels. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
+msgstr "Безкоштовні колоди для перших двох рівнів HSK. Спершу HSK 1, потім HSK 2. Щодня до повторень додається кілька нових слів."
+
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Безплатні колоди, які проходиш одну за одною. Щодня кілька нових слів, упереміш із повтореннями."
-
-msgid "Free decks with every word on the 2025 HSK lists. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
-msgstr "Безкоштовні колоди з усіма словами списків HSK 2025 року. Спершу HSK 1, потім HSK 2. Щодня до повторень додається кілька нових слів."
 
 msgid "Free Estonian decks with a native voice on every card, with meanings in English, Russian or Ukrainian. Add one in a tap."
 msgstr "Безкоштовні естонські колоди з голосом носія на кожній картці та значеннями українською, російською чи англійською. Додай одним дотиком."
@@ -4736,8 +4736,8 @@ msgstr "Так. Додавати колоди й повторювати їх —
 msgid "Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped."
 msgstr "Так. Пакет Anki імпортується з картками, тегами, зображеннями й історією повторень, тож твій розклад продовжиться з того ж місця."
 
-msgid "Yes. Cards keep their pinyin, their schedule and their word recordings."
-msgstr "Так. Картки зберігають піньїнь, розклад і записи слів."
+msgid "Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind."
+msgstr "Так. Картки зберігають піньїнь, розклад і записи слів. Записи речень не переносяться."
 
 msgid "Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind."
 msgstr "Так. Картки зберігають читання, розклад і записи слів. Записи речень не переносяться."

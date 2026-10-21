@@ -1757,11 +1757,11 @@ msgstr "Free"
 msgid "Free Chinese decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Chinese decks with a voice on every card. Add one in a tap. More are on the way."
 
+msgid "Free decks for the first two HSK levels. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
+msgstr "Free decks for the first two HSK levels. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
+
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
-
-msgid "Free decks with every word on the 2025 HSK lists. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
-msgstr "Free decks with every word on the 2025 HSK lists. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
 
 msgid "Free Estonian decks with a native voice on every card, with meanings in English, Russian or Ukrainian. Add one in a tap."
 msgstr "Free Estonian decks with a native voice on every card, with meanings in English, Russian or Ukrainian. Add one in a tap."
@@ -4736,8 +4736,8 @@ msgstr "Yes. Adding the decks and reviewing them is free."
 msgid "Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped."
 msgstr "Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped."
 
-msgid "Yes. Cards keep their pinyin, their schedule and their word recordings."
-msgstr "Yes. Cards keep their pinyin, their schedule and their word recordings."
+msgid "Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind."
+msgstr "Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind."
 
 msgid "Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind."
 msgstr "Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind."

@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
+import { isolate } from "@lymi/core";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import { languageName } from "../../../data/languages";
@@ -139,7 +140,7 @@ function SeriesGroup({
     router.push(`/review?series=${s.id}`);
   };
   const seriesName = s.name;
-  const reviewLabel = t`Review ${seriesName}, ${plural(due, { one: "# card due", other: "# cards due" })}`;
+  const reviewLabel = t`Review ${{ seriesName: isolate(seriesName) }}, ${plural(due, { one: "# card due", other: "# cards due" })}`;
   return (
     <View>
       <View className="flex-row items-center gap-2 pb-3 ps-1 pt-2">
@@ -202,14 +203,15 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
   const confirmDelete = () => {
     const cancel = { text: t`Cancel`, style: "cancel" as const };
     if (decks === 0) {
-      Alert.alert(t`Delete “${seriesName}”?`, t`The series is deleted for good.`, [
-        cancel,
-        { text: t`Delete`, style: "destructive", onPress: () => remove("keep") },
-      ]);
+      Alert.alert(
+        t`Delete “${{ seriesName: isolate(seriesName) }}”?`,
+        t`The series is deleted for good.`,
+        [cancel, { text: t`Delete`, style: "destructive", onPress: () => remove("keep") }],
+      );
       return;
     }
     Alert.alert(
-      t`Delete “${seriesName}”?`,
+      t`Delete “${{ seriesName: isolate(seriesName) }}”?`,
       t`The series is deleted for good. Its decks can stay in Library or be archived with it.`,
       [
         { text: t`Keep the decks`, onPress: () => remove("keep") },
@@ -220,7 +222,7 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
   };
   return (
     <ActionMenu
-      label={t`Options for ${seriesName}`}
+      label={t`Options for ${{ seriesName: isolate(seriesName) }}`}
       symbol="ellipsis"
       look="row"
       items={[
@@ -268,7 +270,11 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const owner = d.owner.name;
   // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
   const whose =
-    d.role === "owner" ? null : d.owner.former ? t`Its owner left Lymi` : t`Shared by ${owner}`;
+    d.role === "owner"
+      ? null
+      : d.owner.former
+        ? t`Its owner left Lymi`
+        : t`Shared by ${{ owner: isolate(owner) }}`;
   const line = [size, language, whose].filter(Boolean).join(" · ");
   // A deck with cards always shows its count, a quiet 0 when none are due, so every row ends alike.
   const due = d.total > 0 ? d.due : undefined;

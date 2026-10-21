@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ANALYTICS_READY } from "@lymi/client/analytics";
 import { decksFor } from "@lymi/client/welcome";
+import { isolate } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { taughtLanguage } from "@lymi/core/catalog";
 import { EASE_OUT, endEmbers } from "@lymi/design";
@@ -327,7 +328,7 @@ function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
           >
             <a
               href={publicSiteUrl(guide)}
-              aria-label={t`Connect ${name}`}
+              aria-label={t`Connect ${{ name: isolate(name) }}`}
               onClick={() => pick("ai_mcp")}
               className="relative rounded-[13px] transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none"
             >

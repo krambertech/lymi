@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { TAG_LIMITS, tagKey } from "@lymi/core";
+import { isolate, TAG_LIMITS, tagKey } from "@lymi/core";
 import { useState } from "react";
 import { useDesktop } from "../lib/device";
 import { useOpenKey } from "../lib/use-open-key";
@@ -42,7 +42,7 @@ export function RenameTagDialog({ tag, onOpenChange, ...rest }: RenameProps) {
     <Dialog open={!!tag} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t`Rename “${tagName}”`}</DialogTitle>
+          <DialogTitle>{t`Rename “${{ tagName: isolate(tagName) }}”`}</DialogTitle>
           <DialogDescription>
             <Trans>Only this deck’s cards change. Other decks keep the tag as it is.</Trans>
           </DialogDescription>
@@ -99,7 +99,8 @@ function RenameForm({
         {other && !invalid && (
           <FieldDescription>
             <Trans>
-              You already have “{otherName}”, so the two merge into one tag on these cards.
+              You already have “{{ otherName: isolate(otherName) }}”, so the two merge into one tag
+              on these cards.
             </Trans>
           </FieldDescription>
         )}
@@ -143,7 +144,7 @@ export function MergeTagDialog({ tag, tags, onOpenChange, onMerge }: MergeProps)
     <Dialog open={!!tag} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t`Merge “${tagName}” into`}</DialogTitle>
+          <DialogTitle>{t`Merge “${{ tagName: isolate(tagName) }}” into`}</DialogTitle>
           <DialogDescription>
             <Trans>Its cards take the other tag instead, here in this deck only.</Trans>
           </DialogDescription>

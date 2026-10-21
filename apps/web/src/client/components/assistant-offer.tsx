@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { Plug, X } from "lucide-react";
 import { useState } from "react";
@@ -87,7 +88,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
               <li key={name} className="flex">
                 <a
                   href={publicSiteUrl(guide)}
-                  aria-label={t`Connect ${name}`}
+                  aria-label={t`Connect ${{ name: isolate(name) }}`}
                   className="relative rounded-[13px] transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hoverable:hover:translate-y-0"
                 >
                   <Mark app={app} />

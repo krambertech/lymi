@@ -4,6 +4,7 @@ import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   drawsTermReading,
   gradeAllowed,
+  isolate,
   type KnownReadings,
   type Rating,
   type ReviewAid,
@@ -1517,7 +1518,7 @@ export function ReviewComplete({
             <Trans>You’re done for today</Trans>
           ) : screen.heading === "scope_done" ? (
             scopeName ? (
-              <Trans>Nothing left in {scopeName}</Trans>
+              <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
             ) : (
               <Trans>Nothing left in this deck</Trans>
             )

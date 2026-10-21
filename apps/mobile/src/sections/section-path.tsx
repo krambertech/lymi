@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
+import { isolate } from "@lymi/core";
 import type { ReactNode } from "react";
 import { View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -130,7 +131,7 @@ function Stop({
       className={`flex-row items-center gap-3 bg-plate px-4 ${!editing && at > 0 ? "border-t border-edge" : ""}`}
       style={{ height: row }}
       accessible
-      accessibilityLabel={t`Section ${number}: ${name}, ${cards}`}
+      accessibilityLabel={t`Section ${number}: ${{ name: isolate(name) }}, ${cards}`}
       accessibilityActions={[
         ...(editing && at > 0 ? [{ name: "up", label: t`Move up` }] : []),
         ...(editing && !last ? [{ name: "down", label: t`Move down` }] : []),

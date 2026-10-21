@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { SeriesDeleteInput, SeriesInput } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { api, type DeckSummary, errorMessage, type Series } from "./api";
@@ -109,8 +110,8 @@ export function useSeriesActions() {
         id,
         title:
           seriesName !== undefined
-            ? t`Moved “${deckName}” to ${seriesName}`
-            : t`Took “${deckName}” out of its series`,
+            ? t`Moved “${{ deckName: isolate(deckName) }}” to ${{ seriesName: isolate(seriesName) }}`
+            : t`Took “${{ deckName: isolate(deckName) }}” out of its series`,
         actionProps: {
           children: t`Undo`,
           onClick: () => {
@@ -161,8 +162,8 @@ export function useSeriesActions() {
         id: `delete-series-${series.id}`,
         title:
           decks === "archive" && count > 0
-            ? t`Deleted “${seriesName}” and archived its decks`
-            : t`Deleted “${seriesName}”`,
+            ? t`Deleted “${{ seriesName: isolate(seriesName) }}” and archived its decks`
+            : t`Deleted “${{ seriesName: isolate(seriesName) }}”`,
       });
     },
     onError: (error) => failed("delete-series", error),

@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { hasShelfPage, type Shelf } from "@lymi/core/catalog";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
@@ -88,7 +89,7 @@ function ShelfHeader({
   const lede = written
     ? i18n._(written)
     : shelf.language
-      ? t`Ready-made decks for learning ${name}, written by a person and checked card by card.`
+      ? t`Ready-made decks for learning ${{ name: isolate(name) }}, written by a person and checked card by card.`
       : t({
           message: `Ready-made ${name} decks, written by a person and checked card by card.`,
           context: "subject shelf",

@@ -9,6 +9,7 @@ import {
   drawsTermReading,
   type EnrichedField,
   type FsrsCard,
+  isolate,
   type KnownReadings,
   needsEnrichment,
   type ReviewMode,
@@ -610,7 +611,7 @@ export function WordView({
           </span>
           {onPlayAudio && canPlayPronunciation(card) && (
             <IconButton
-              label={t`Say ${card.term}`}
+              label={t`Say ${isolate(card.term)}`}
               variant="secondary"
               round
               size="sm"
@@ -758,7 +759,7 @@ export function WordView({
 
       <Dialog open={moving} onOpenChange={setMoving}>
         <DialogContent>
-          <DialogTitle>{t`Move “${shortQuote(card.term)}” to`}</DialogTitle>
+          <DialogTitle>{t`Move “${isolate(shortQuote(card.term))}” to`}</DialogTitle>
           <ul className="grid gap-1">
             {elsewhere.map((d) => (
               <li key={d.id}>

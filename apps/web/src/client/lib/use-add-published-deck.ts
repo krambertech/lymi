@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
@@ -40,7 +41,7 @@ export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" |
       if (announce === "page") return;
       toast.add({
         id: `added-${deckId}`,
-        title: t`Added “${name}” to Library`,
+        title: t`Added “${{ name: isolate(name) }}” to Library`,
         actionProps: {
           children: t`Open`,
           onClick: () => navigate({ to: "/library/$deckId", params: { deckId } }),

@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { SeriesInput, seriesLimits } from "@lymi/core";
+import { isolate, SeriesInput, seriesLimits } from "@lymi/core";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
@@ -182,7 +182,7 @@ export function SeriesForm({
                     <span className="flex shrink-0 [--hit-x:0px]">
                       <IconButton
                         size="sm"
-                        label={t`Move ${deck.name} up`}
+                        label={t`Move ${isolate(deck.name)} up`}
                         aria-disabled={index === 0}
                         onClick={() => index > 0 && move(index, -1)}
                       >
@@ -190,7 +190,7 @@ export function SeriesForm({
                       </IconButton>
                       <IconButton
                         size="sm"
-                        label={t`Move ${deck.name} down`}
+                        label={t`Move ${isolate(deck.name)} down`}
                         aria-disabled={index === chosen.length - 1}
                         onClick={() => index < chosen.length - 1 && move(index, 1)}
                       >
@@ -248,7 +248,7 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
         deleted.current = false;
         return (gone && pageTitle()) || true;
       }}
-      title={({ name: seriesName }) => t`Delete “${seriesName}”?`}
+      title={({ name: seriesName }) => t`Delete “${{ seriesName: isolate(seriesName) }}”?`}
       description={({ deckIds }) =>
         deckIds.length > 0 ? (
           <Trans>You can’t undo this. Its decks and cards aren’t deleted either way.</Trans>
@@ -329,7 +329,11 @@ export function MoveToSeriesDialog({ deckName, series, onMove, ...rest }: MoveTo
   return (
     <MoveToDialog
       title={t`Move to series`}
-      description={<Trans>“{deckName}” is reviewed with the other decks in its series.</Trans>}
+      description={
+        <Trans>
+          “{{ deckName: isolate(deckName) }}” is reviewed with the other decks in its series.
+        </Trans>
+      }
       items={series ?? []}
       noneLabel={<Trans>No series</Trans>}
       newLabel={t`New series`}

@@ -13,7 +13,7 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT, type KnownReadings } from "@lymi/core";
+import { CHOSEN_LIMIT, isolate, type KnownReadings } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -214,7 +214,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
         <Avatar name={owner} size={18} />
       )}
       <span className="min-w-0 truncate">
-        <Trans>Shared by {owner}</Trans>
+        <Trans>Shared by {{ owner: isolate(owner) }}</Trans>
       </span>
     </>
   );
@@ -223,7 +223,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
 /** What a member sees in a shared deck with nothing in it yet. */
 function OwnerAddsCards({ owner, former }: { owner: string; former: boolean }) {
   if (former) return <Trans>Its owner left Lymi, so no cards will be added.</Trans>;
-  return <Trans>Cards appear here when {owner} adds them.</Trans>;
+  return <Trans>Cards appear here when {{ owner: isolate(owner) }} adds them.</Trans>;
 }
 
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */
@@ -461,7 +461,7 @@ function ListTools({
       const tagName = tags.find((tag) => tag.key === key)?.name ?? key;
       return {
         key: `tag:${key}`,
-        label: t`Tag: ${tagName}`,
+        label: t`Tag: ${{ tagName: isolate(tagName) }}`,
         remove: () => setFilters({ ...filters, tags: toggle(filters.tags, key, false) }),
       };
     }),
@@ -1259,13 +1259,13 @@ export function DeckDetailView({
             />
           ) : !owner ? (
             <StartPanel
-              title={<Trans>No cards in {deck.name} yet</Trans>}
+              title={<Trans>No cards in {isolate(deck.name)} yet</Trans>}
               body={<OwnerAddsCards owner={deck.owner.name} former={deck.owner.former === true} />}
             />
           ) : (
             <StartPanel
               icon={<Layers />}
-              title={<Trans>No cards in {deck.name} yet</Trans>}
+              title={<Trans>No cards in {isolate(deck.name)} yet</Trans>}
               body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
               action={
                 <Button
@@ -1407,7 +1407,11 @@ export function DeckDetailView({
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <NoResults
             icon={query ? <SearchX /> : <ListFilter />}
-            title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
+            title={
+              query
+                ? t`No cards match “${{ query: isolate(query) }}”`
+                : t`No cards match these filters`
+            }
             detail={
               query ? (
                 <Trans>Try a different term or meaning, or clear the search.</Trans>

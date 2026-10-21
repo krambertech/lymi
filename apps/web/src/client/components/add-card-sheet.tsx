@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import type { Card } from "../lib/api";
@@ -104,15 +105,15 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
       if (!pictureError) {
         toast.add({
           title: queued
-            ? t`Added “${term}”. It’s saved on this device until Lymi can be reached.`
-            : t`Added “${term}”`,
+            ? t`Added “${{ term: isolate(term) }}”. It’s saved on this device until Lymi can be reached.`
+            : t`Added “${{ term: isolate(term) }}”`,
         });
         return undefined;
       }
       const card = outcome.card;
       toast.add({
         id: "picture-missing",
-        title: t`Added “${term}” without its picture. ${pictureError}`,
+        title: t`Added “${{ term: isolate(term) }}” without its picture. ${pictureError}`,
         actionProps: {
           children: t`Add picture`,
           onClick: () => {

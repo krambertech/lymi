@@ -9,6 +9,7 @@ import {
   type DeckPurpose,
   type Directions,
   deckLimits,
+  isolate,
   LANGUAGE_TAGS,
 } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
@@ -154,14 +155,14 @@ function Settings({ deck }: { deck: DeckSummary }) {
       value: "recognition",
       label: t`Recognition`,
       line: example?.meaning
-        ? t`See ${example.term}, recall “${example.meaning}”`
+        ? t`See ${isolate(example.term)}, recall “${isolate(example.meaning)}”`
         : t`See the term, recall what it means.`,
     },
     {
       value: "production",
       label: t`Production`,
       line: example?.meaning
-        ? t`See “${example.meaning}”, recall ${example.term}`
+        ? t`See “${isolate(example.meaning)}”, recall ${isolate(example.term)}`
         : t`See the meaning, recall the term.`,
     },
     {
@@ -284,7 +285,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
               <Text className="text-md text-text">
                 {deck.owner.former
                   ? t`Its owner left Lymi, so nobody can change this deck.`
-                  : t`${deck.owner.name} owns this deck and writes its cards.`}
+                  : t`${isolate(deck.owner.name)} owns this deck and writes its cards.`}
               </Text>
             </Plate>
           </Group>

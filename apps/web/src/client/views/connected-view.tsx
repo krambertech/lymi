@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import type { ReactNode } from "react";
 import type { AppIdentity } from "../components/app-mark";
 import { AppIdentityLine, Connection } from "../components/connection";
@@ -43,7 +44,9 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
       <p className="max-w-[34ch] text-md text-text-2">
         {refused ? (
           appName ? (
-            <Trans>Nothing was shared. You can try again from {appName}.</Trans>
+            <Trans>
+              Nothing was shared. You can try again from {{ appName: isolate(appName) }}.
+            </Trans>
           ) : (
             <Trans>Nothing was shared. You can try again from the app.</Trans>
           )

@@ -22,6 +22,7 @@ import type {
 } from "./types";
 
 export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./configured";
+export { type TextDirection, textDirection } from "./direction";
 export * from "./names";
 export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";
 export type {

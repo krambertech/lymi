@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { Archive, ArchiveRestore, ArrowDown, ArrowUp, PencilLine, Plus } from "lucide-react";
 import type { Section } from "../lib/api";
 import { Button, IconButton } from "./button";
@@ -46,14 +47,14 @@ export function SectionManager({
                 <span className="flex shrink-0 items-center [--hit-x:0px]">
                   <IconButton
                     size="sm"
-                    label={t`Rename ${sectionName}`}
+                    label={t`Rename ${{ sectionName: isolate(sectionName) }}`}
                     onClick={() => onRename(section)}
                   >
                     <PencilLine />
                   </IconButton>
                   <IconButton
                     size="sm"
-                    label={t`Move ${sectionName} up`}
+                    label={t`Move ${{ sectionName: isolate(sectionName) }} up`}
                     aria-disabled={index === 0}
                     onClick={() => index > 0 && onMove(section, -1)}
                   >
@@ -61,7 +62,7 @@ export function SectionManager({
                   </IconButton>
                   <IconButton
                     size="sm"
-                    label={t`Move ${sectionName} down`}
+                    label={t`Move ${{ sectionName: isolate(sectionName) }} down`}
                     aria-disabled={index === sections.length - 1}
                     onClick={() => index < sections.length - 1 && onMove(section, 1)}
                   >
@@ -69,7 +70,7 @@ export function SectionManager({
                   </IconButton>
                   <IconButton
                     size="sm"
-                    label={t`Archive ${sectionName}`}
+                    label={t`Archive ${{ sectionName: isolate(sectionName) }}`}
                     onClick={() => onArchive(section)}
                   >
                     <Archive />

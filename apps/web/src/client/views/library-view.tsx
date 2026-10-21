@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { groupDecks, nameInSeries } from "@lymi/client/library-groups";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -274,12 +275,15 @@ export function LibraryView({
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <IconButton label={t`Options for ${seriesName}`} size="sm">
+              <IconButton label={t`Options for ${{ seriesName: isolate(seriesName) }}`} size="sm">
                 <MoreHorizontal />
               </IconButton>
             }
           />
-          <DropdownMenuContent aria-label={t`Options for ${seriesName}`} align="end">
+          <DropdownMenuContent
+            aria-label={t`Options for ${{ seriesName: isolate(seriesName) }}`}
+            align="end"
+          >
             {onCreateDeckInSeries && (
               <DropdownMenuItem onClick={() => onCreateDeckInSeries(s)}>
                 <Plus />
@@ -332,7 +336,7 @@ export function LibraryView({
       <NavLink
         to="/review"
         search={{ series: s.id }}
-        aria-label={t`Review ${seriesName}, ${plural(due, { one: "# card due", other: "# cards due" })}`}
+        aria-label={t`Review ${{ seriesName: isolate(seriesName) }}, ${plural(due, { one: "# card due", other: "# cards due" })}`}
         // The end matches a deck row's (DeckRow): the count where theirs sits, the chevron under theirs.
         className="group -mt-3.5 flex items-center gap-4 rounded-b-xl bg-amber-soft pt-6 pb-3 ps-5 pe-4 text-amber-tint-ink transition-[background-color] duration-150 hoverable:hover:bg-amber-tint"
       >
@@ -477,7 +481,7 @@ export function LibraryView({
       {noMatch && (
         <NoResults
           icon={<SearchX />}
-          title={t`No decks match “${term}”`}
+          title={t`No decks match “${{ term: isolate(term) }}”`}
           detail={<Trans>Try a deck’s name, its language or its series.</Trans>}
           action={
             <Button onClick={() => setQuery("")}>

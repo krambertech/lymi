@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { keyed } from "@lymi/client/keyed";
-import { isImageMode } from "@lymi/core";
+import { isImageMode, isolate } from "@lymi/core";
 import type { ExploreDeckOut, PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import { previewMode, publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
@@ -292,7 +292,7 @@ export function ExploreDeckView({
               )}
             </div>
             <p role="status" className="sr-only">
-              {arrived && <Trans>Added “{name}” to Library</Trans>}
+              {arrived && <Trans>Added “{{ name: isolate(name) }}” to Library</Trans>}
             </p>
           </div>
           {hand.length > 0 && (

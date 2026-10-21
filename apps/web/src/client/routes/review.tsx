@@ -19,6 +19,7 @@ import {
   type Drawn,
   drawKey,
   gradeAllowed,
+  isolate,
   modeKey,
   pronunciationInputKey,
   type Rating,
@@ -837,8 +838,8 @@ function Review() {
               type: "error",
               title:
                 outcome === "gone"
-                  ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
-                  : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
+                  ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
+                  : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
             });
           }
           // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
@@ -1012,7 +1013,7 @@ function Review() {
     }
     toast.add({
       id: `archived-${card.id}`,
-      title: t`Archived “${archivedTerm}”`,
+      title: t`Archived “${{ archivedTerm: isolate(archivedTerm) }}”`,
       actionProps: {
         children: t`Undo`,
         onClick: async () => {

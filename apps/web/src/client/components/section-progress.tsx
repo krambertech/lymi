@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import type { CSSProperties, ReactNode } from "react";
 import type { Section, Sections } from "../lib/api";
 import { Button } from "./button";
@@ -42,9 +43,13 @@ export function SectionProgress({
       variant="ghost"
       className="-ms-2 px-2 text-text-2"
       onClick={() => onGoTo(current.id)}
-      aria-label={t`Go to ${currentName}`}
+      aria-label={t`Go to ${{ currentName: isolate(currentName) }}`}
     >
-      {next && progress.ready ? <Trans>Go to {currentName}</Trans> : <Trans>Go to section</Trans>}
+      {next && progress.ready ? (
+        <Trans>Go to {{ currentName: isolate(currentName) }}</Trans>
+      ) : (
+        <Trans>Go to section</Trans>
+      )}
     </Button>
   );
 
@@ -60,7 +65,7 @@ export function SectionProgress({
       />
     );
   } else if (progress.ready) {
-    title = t`${nextName} is ready`;
+    title = t`${{ nextName: isolate(nextName) }} is ready`;
     detail = (
       <Plural
         value={current.total}
@@ -108,7 +113,7 @@ export function SectionProgress({
               loading={starting}
               onClick={() => onStart(next)}
             >
-              <Trans>Start {nextName}</Trans>
+              <Trans>Start {{ nextName: isolate(nextName) }}</Trans>
             </Button>
           )}
         </div>

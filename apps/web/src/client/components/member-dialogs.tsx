@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { InviteInput } from "@lymi/core";
+import { InviteInput, isolate } from "@lymi/core";
 import { useId, useState } from "react";
 import type { Invitation, Member } from "../lib/api";
 import { useDesktop } from "../lib/device";
@@ -43,7 +43,7 @@ export function RemoveMemberDialog({
     <ConfirmDialog
       subject={member}
       onOpenChange={onOpenChange}
-      title={({ name }) => t`Remove ${name}?`}
+      title={({ name }) => t`Remove ${{ name: isolate(name) }}?`}
       description={
         <Trans>
           They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.

@@ -9,7 +9,7 @@ import {
   refusalDetail,
 } from "@lymi/client/api";
 import { invitationsQuery, joinLinkQuery, membersQuery } from "@lymi/client/queries";
-import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
+import { type InviteRefusal, isolate, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useState } from "react";
@@ -158,7 +158,7 @@ export default function ShareDeck() {
   const askRemove = (member: Member) => {
     const name = member.name;
     Alert.alert(
-      t`Remove ${name}?`,
+      t`Remove ${{ name: isolate(name) }}?`,
       t`They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.`,
       [
         { text: t`Keep member`, style: "cancel" },
@@ -324,7 +324,7 @@ export default function ShareDeck() {
                             onSelect: () => askRemove(member),
                           },
                         ]}
-                        label={t`Options for ${name}`}
+                        label={t`Options for ${{ name: isolate(name) }}`}
                         symbol="ellipsis"
                         look="row"
                         disabled={remove.isPending && remove.variables?.userId === member.userId}

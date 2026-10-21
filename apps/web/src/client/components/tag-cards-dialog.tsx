@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type TagChoice, tagPicker } from "@lymi/client/deck-list";
-import { TAG_LIMITS, tagKey } from "@lymi/core";
+import { isolate, TAG_LIMITS, tagKey } from "@lymi/core";
 import { clsx } from "clsx";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
@@ -132,7 +132,7 @@ function TagCardsBody({
             <li className="border-edge not-first:border-t">
               <button type="submit" className={clsx(row, "text-text-2")}>
                 <Plus className="size-[18px]" aria-hidden="true" />
-                <span className="min-w-0 flex-1 truncate">{t`Create “${typed}”`}</span>
+                <span className="min-w-0 flex-1 truncate">{t`Create “${{ typed: isolate(typed) }}”`}</span>
               </button>
             </li>
           )}

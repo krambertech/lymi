@@ -4,7 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Import, type ImportPreview } from "@lymi/client/api";
 import { splitNoteTypes } from "@lymi/client/imports";
 import { importPreviewQuery, importQuery, usePreviewState } from "@lymi/client/queries";
-import { type FieldRole, type ImportSource, LANGUAGE_TAGS } from "@lymi/core";
+import { type FieldRole, type ImportSource, isolate, LANGUAGE_TAGS } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useMemo, useState } from "react";
 import { View } from "react-native";
@@ -358,7 +358,7 @@ export function ImportPreviewScreen({
   return (
     <ImportShell
       title={t`Import from ${app}`}
-      description={t`${item.fileName} · ${fileSize(item.byteSize)}`}
+      description={t`${isolate(item.fileName)} · ${fileSize(item.byteSize)}`}
       scrollKey={stepKey}
     >
       <Arrive key={stepKey}>
@@ -674,7 +674,7 @@ function FieldsStep({
           : t`Choose what each Anki field becomes on a Lymi card. One field is the term.`;
   return (
     <>
-      <Question title={t`Fields of ${name}`} lede={lede} />
+      <Question title={t`Fields of ${{ name: isolate(name) }}`} lede={lede} />
       <Plate className="overflow-hidden">
         {type.fields.map((field, i) => {
           const role = draft[i] ?? "skip";
@@ -828,7 +828,7 @@ function ImportLines({
             <View className="gap-1 ps-7 pt-2">
               {preview.duplicateExamples.map((d) => (
                 <Text key={`${d.term}-${d.deckName}`} className="text-sm text-text-2">
-                  {t`${d.term} in ${d.deckName}`}
+                  {t`${isolate(d.term)} in ${isolate(d.deckName)}`}
                 </Text>
               ))}
               {preview.duplicates > preview.duplicateExamples.length && (

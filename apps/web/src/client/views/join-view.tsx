@@ -1,5 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { JoinPreviewOut } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { CalendarClock, EyeOff, History, Languages, Layers } from "lucide-react";
 import { type ReactNode, useState } from "react";
@@ -129,7 +130,7 @@ function LiveLink({
           {viewer === "owner" ? (
             <Trans>Your deck</Trans>
           ) : published ? (
-            <Trans>From {deck.owner.name}</Trans>
+            <Trans>From {isolate(deck.owner.name)}</Trans>
           ) : (
             <Trans>{deck.owner.name} shared a deck</Trans>
           )}

@@ -7,6 +7,7 @@ import {
   type LessonTerm,
   refusalCode,
 } from "@lymi/client/api";
+import { isolate } from "@lymi/core";
 import { PLATE_ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
@@ -359,7 +360,7 @@ export default function SmartAdd() {
         id: "smart-added",
         title:
           added > 0
-            ? t`${plural(added, { one: `Added # card to ${name}`, other: `Added # cards to ${name}` })}`
+            ? t`${plural(added, { one: `Added # card to ${{ name: isolate(name) }}`, other: `Added # cards to ${{ name: isolate(name) }}` })}`
             : t`Those terms are already in your decks`,
       });
       setAdded(true);

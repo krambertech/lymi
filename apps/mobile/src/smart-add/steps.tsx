@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { LessonQuestion, LessonTerm } from "@lymi/client/api";
 import type { LessonAccessOut } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { PLATE_ARRIVE, PLATE_RISE } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type RefObject, useEffect, useState } from "react";
@@ -116,7 +117,7 @@ export function InputStep({
                 <IconButton
                   icon="close"
                   size="sm"
-                  label={t`Remove ${name}`}
+                  label={t`Remove ${{ name: isolate(name) }}`}
                   onPress={() => onRemovePage(page.id)}
                 />
               </Animated.View>
@@ -554,7 +555,7 @@ export function ListStep({
 function TermNote({ term }: { term: LessonTerm }) {
   const { t } = useLingui();
   const note = term.formOf
-    ? t`Another form of ${term.formOf.term}, in ${term.formOf.deckName}`
+    ? t`Another form of ${isolate(term.formOf.term)}, in ${isolate(term.formOf.deckName)}`
     : term.keep !== null && !term.ticked
       ? t`May belong on another card`
       : term.handwritten
@@ -576,7 +577,7 @@ function ExistingList({ terms }: { terms: LessonTerm[] }) {
           <Icon name="check" size={16} colour={p.faint} />
           <View className="flex-1">
             <Text className="text-md text-muted">{term.term}</Text>
-            <Text className="text-sm text-muted">{t`In ${term.existing?.deckName ?? ""}`}</Text>
+            <Text className="text-sm text-muted">{t`In ${isolate(term.existing?.deckName ?? "")}`}</Text>
           </View>
         </View>
       ))}

@@ -4,6 +4,7 @@ import type { DeckSummary } from "@lymi/client/api";
 import { GOAL_MINUTES, LANGUAGE_PILLS, type Own } from "@lymi/client/welcome";
 import {
   DAILY_GOAL_PRESETS,
+  isolate,
   LANGUAGE_TAGS,
   type LearningKind,
   STARTING_DAILY_GOAL,
@@ -100,7 +101,9 @@ function JoinedPlate({ deck }: { deck: JoinedDeck }) {
     <Plate className="gap-3 p-5">
       <View className="flex-row items-center justify-between gap-2">
         <Text className="flex-1 text-base text-text-2" numberOfLines={1}>
-          {deck.published ? t`From ${owner}` : t`${owner} shared a deck`}
+          {deck.published
+            ? t`From ${{ owner: isolate(owner) }}`
+            : t`${{ owner: isolate(owner) }} shared a deck`}
         </Text>
         <Chip icon="check">{t`In Library`}</Chip>
       </View>
@@ -291,7 +294,7 @@ export function LanguageChoices({
             ))}
             {typed && !exact && (
               <Pill
-                label={t`Learning “${typed}”`}
+                label={t`Learning “${{ typed: isolate(typed) }}”`}
                 icon="plus"
                 chosen={value === typed}
                 onPress={() => onChange(typed)}

@@ -5,7 +5,7 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, termShowsPronunciation } from "@lymi/core";
+import { deserializeState, isolate, termShowsPronunciation } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -156,7 +156,7 @@ export default function CardPage() {
     ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
     ...(asked ? [{ label: t`Asked`, value: asked, onPress: choose("modes") }] : []),
     ...(card.tags.length
-      ? [{ label: t`Tags`, value: card.tags.join(", "), onPress: choose("tags") }]
+      ? [{ label: t`Tags`, value: card.tags.map(isolate).join(", "), onPress: choose("tags") }]
       : []),
   ];
 

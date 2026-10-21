@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
+import { isolate, REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
 import { ArrowLeftRight, Languages, Layers, Plus, Tag } from "lucide-react";
 import { type ReactElement, useState } from "react";
 import { MODE_LABELS } from "../lib/review-modes";
@@ -70,7 +70,7 @@ export function SectionChip({
       <SelectTrigger
         look="chip"
         className={fieldChipClassName(!!name)}
-        aria-label={name ? t`Section: ${name}` : t`Section`}
+        aria-label={name ? t`Section: ${{ name: isolate(name) }}` : t`Section`}
       >
         <FieldChipContent icon={Layers} filled={!!name}>
           {name ?? t`Section`}
@@ -156,7 +156,7 @@ export function TagsChip({
               name: t`${plural(TAG_LIMITS.count, { one: "A card holds up to # tag.", other: "A card holds up to # tags." })}`,
               note: true,
             }
-          : { name: wanted.join(", "), create: wanted };
+          : { name: wanted.map(isolate).join(", "), create: wanted };
   const rows = extra ? [...matches, extra] : matches;
   const chosen = known.filter((o) => has(o.name));
   const label =
@@ -199,11 +199,11 @@ export function TagsChip({
         if (open) setQuery("");
       }}
     >
-      <WithTip tip={value.length > 1 ? names(value) : null}>
+      <WithTip tip={value.length > 1 ? names(value.map(isolate)) : null}>
         <ComboboxTrigger
           look="chip"
           className={fieldChipClassName(value.length > 0)}
-          aria-label={value.length ? t`Tags: ${names(value)}` : t`Tags`}
+          aria-label={value.length ? t`Tags: ${names(value.map(isolate))}` : t`Tags`}
           aria-invalid={invalid || undefined}
         >
           <FieldChipContent icon={Tag} filled={value.length > 0}>
@@ -242,7 +242,7 @@ export function TagsChip({
                 icon={<Plus className="size-4 text-text-2" />}
               >
                 <span className="flex-1 truncate">
-                  {t`Create ${names(option.create.map((name) => t`“${name}”`))}`}
+                  {t`Create ${names(option.create.map((name) => t`“${{ name: isolate(name) }}”`))}`}
                 </span>
               </ComboboxItem>
             ) : (
@@ -387,7 +387,7 @@ export function LanguageChip({
       <ComboboxTrigger
         look="chip"
         className={fieldChipClassName(!!name)}
-        aria-label={name ? t`Language: ${name}` : t`Language`}
+        aria-label={name ? t`Language: ${{ name: isolate(name) }}` : t`Language`}
       >
         <FieldChipContent icon={Languages} filled={!!name}>
           {name ?? t`No language`}

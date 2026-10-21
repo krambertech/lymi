@@ -26,6 +26,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
@@ -159,23 +160,23 @@ export function LibraryBoard({
   const announcements: Announcements = {
     onDragStart: ({ active }) => {
       const deck = nameOf(active.id);
-      return t`Picked up ${deck}.`;
+      return t`Picked up ${{ deck: isolate(deck) }}.`;
     },
     onDragOver: ({ active, over }) => {
       if (!over) return undefined;
       const deck = nameOf(active.id);
       const place = placeName(containerOf(over.id, items));
-      return t`${deck} is over ${place}.`;
+      return t`${{ deck: isolate(deck) }} is over ${place}.`;
     },
     onDragEnd: ({ active, over }) => {
       const deck = nameOf(active.id);
-      if (!over) return t`${deck} is back where it was.`;
+      if (!over) return t`${{ deck: isolate(deck) }} is back where it was.`;
       const place = placeName(containerOf(active.id, items));
-      return t`Dropped ${deck} in ${place}.`;
+      return t`Dropped ${{ deck: isolate(deck) }} in ${place}.`;
     },
     onDragCancel: ({ active }) => {
       const deck = nameOf(active.id);
-      return t`${deck} is back where it was.`;
+      return t`${{ deck: isolate(deck) }} is back where it was.`;
     },
   };
 

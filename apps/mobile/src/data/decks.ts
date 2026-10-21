@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, type DeckSummary, errorMessage } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { Alert } from "react-native";
@@ -31,7 +32,7 @@ export function useDeckExits(deck: DeckSummary | undefined) {
       toast.add({
         id: toastId,
         error: true,
-        title: t`Couldn’t restore “${name}”.`,
+        title: t`Couldn’t restore “${{ name: isolate(name) }}”.`,
         action: { label: t`Try again`, onPress: () => void restore() },
       });
     }
@@ -43,14 +44,14 @@ export function useDeckExits(deck: DeckSummary | undefined) {
       router.dismissTo("/library" as Href);
       toast.add({
         id: toastId,
-        title: t`Archived “${name}”`,
+        title: t`Archived “${{ name: isolate(name) }}”`,
         action: { label: t`Undo`, onPress: () => void restore() },
       });
     } catch {
       toast.add({
         id: toastId,
         error: true,
-        title: t`Couldn’t archive “${name}”.`,
+        title: t`Couldn’t archive “${{ name: isolate(name) }}”.`,
         action: { label: t`Try again`, onPress: () => void archive() },
       });
     }
@@ -59,7 +60,7 @@ export function useDeckExits(deck: DeckSummary | undefined) {
     archive: () => void archive(),
     leave: () =>
       Alert.alert(
-        t`Leave ${name}?`,
+        t`Leave ${{ name: isolate(name) }}?`,
         t`The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.`,
         [
           { text: t`Keep studying`, style: "cancel" },

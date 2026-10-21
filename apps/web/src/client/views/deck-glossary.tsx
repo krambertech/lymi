@@ -23,6 +23,7 @@ import {
   rowState,
   splitForms,
 } from "@lymi/client/deck-list";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Check,
@@ -167,23 +168,23 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
   const announcements: Announcements = {
     onDragStart: ({ active }) => {
       const name = term(String(active.id));
-      return t`Picked up ${name}.`;
+      return t`Picked up ${{ name: isolate(name) }}.`;
     },
     onDragOver: ({ active, over }) => {
       if (!over) return undefined;
       const name = term(String(active.id));
       const where = place(String(over.id));
-      return t`${name} is over ${where}.`;
+      return t`${{ name: isolate(name) }} is over ${where}.`;
     },
     onDragEnd: ({ active, over }) => {
       const name = term(String(active.id));
-      if (!over) return t`${name} is back where it was.`;
+      if (!over) return t`${{ name: isolate(name) }} is back where it was.`;
       const where = place(String(over.id));
-      return t`Dropped ${name} at ${where}.`;
+      return t`Dropped ${{ name: isolate(name) }} at ${where}.`;
     },
     onDragCancel: ({ active }) => {
       const name = term(String(active.id));
-      return t`${name} is back where it was.`;
+      return t`${{ name: isolate(name) }} is back where it was.`;
     },
   };
 
@@ -300,12 +301,12 @@ function GroupList({
               <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-plate-2 px-4 py-3">
                 <p className="min-w-0 flex-1 basis-48 text-base text-text-2">
                   <Trans>
-                    <span className="font-medium text-text">{section.name} is ready.</span> Start it
-                    to review its cards.
+                    <span className="font-medium text-text">{isolate(section.name)} is ready.</span>{" "}
+                    Start it to review its cards.
                   </Trans>
                 </p>
                 <Button size="sm" onClick={() => onStart(section)}>
-                  <Trans>Start {section.name}</Trans>
+                  <Trans>Start {isolate(section.name)}</Trans>
                 </Button>
               </div>
             )}
@@ -474,12 +475,19 @@ function SectionHeading({
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <IconButton size="sm" className="shrink-0" label={t`Options for ${sectionName}`}>
+              <IconButton
+                size="sm"
+                className="shrink-0"
+                label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
+              >
                 <MoreHorizontal />
               </IconButton>
             }
           />
-          <DropdownMenuContent aria-label={t`Options for ${sectionName}`} align="end">
+          <DropdownMenuContent
+            aria-label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
+            align="end"
+          >
             {startable && (
               <>
                 <DropdownMenuItem onClick={() => onStart(section)}>

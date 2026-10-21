@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { connectedAppsQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { View } from "react-native";
@@ -65,7 +66,7 @@ export function AssistantOffer({ onConnect }: { onConnect: () => void }) {
               void openBrowserAsync(siteUrl(a.guide));
             }}
             accessibilityRole="link"
-            accessibilityLabel={t`Connect ${a.name}`}
+            accessibilityLabel={t`Connect ${isolate(a.name)}`}
             style={{ marginStart: i === 0 ? -2 : -6, zIndex: ASSISTANTS.length - i }}
           >
             {/* The plate's own colour around each tile cuts it out of the one it overlaps. */}

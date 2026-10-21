@@ -17,6 +17,7 @@ import {
   type FieldSource,
   gradeAllowed,
   interval,
+  isolate,
   type KnownReadings,
   modeKey,
   type Rating,
@@ -449,7 +450,9 @@ function Run({
         setDone((n) => n + 1);
         setLastGraded(last);
       }
-      Alert.alert(t`Couldn’t take back your grade for “${term}”. It still counts.`);
+      Alert.alert(
+        t`Couldn’t take back your grade for “${{ term: isolate(term) }}”. It still counts.`,
+      );
     });
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
@@ -631,7 +634,10 @@ function Run({
       setPinned({ cardId: back.id, mode });
       setRevealed(false);
     } catch (e) {
-      Alert.alert(t`Couldn’t restore “${back.term}”.`, e instanceof Error ? e.message : undefined);
+      Alert.alert(
+        t`Couldn’t restore “${isolate(back.term)}”.`,
+        e instanceof Error ? e.message : undefined,
+      );
     }
   };
   // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
@@ -762,7 +768,10 @@ function Run({
     } catch (e) {
       toast.close(ARCHIVED_TOAST);
       bringBack(held);
-      Alert.alert(t`Couldn’t archive “${card.term}”.`, e instanceof Error ? e.message : undefined);
+      Alert.alert(
+        t`Couldn’t archive “${isolate(card.term)}”.`,
+        e instanceof Error ? e.message : undefined,
+      );
     }
   };
   const openMenu = () => {
@@ -834,8 +843,8 @@ function Run({
           }
           Alert.alert(
             outcome === "gone"
-              ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
-              : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
+              ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
+              : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
           );
         }
         // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
@@ -1372,10 +1381,10 @@ function CardPlate({
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
               : mode.cue === "term" && furigana && cueFurigana && reading
-                ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
+                ? t`Recognition card for ${{ cue: isolate(cue) }}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
-                  ? t`Recognition card for ${cue}. Tap to reveal`
-                  : t`Production card for ${cue}. Tap to reveal`
+                  ? t`Recognition card for ${{ cue: isolate(cue) }}. Tap to reveal`
+                  : t`Production card for ${{ cue: isolate(cue) }}. Tap to reveal`
         }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
@@ -1388,7 +1397,7 @@ function CardPlate({
             <View className="min-w-0 shrink flex-row items-center gap-1.5">
               <Icon name="deck" size={14} colour={p.muted} />
               <Text className="shrink text-sm font-medium text-text-2" numberOfLines={1}>
-                {[deck?.name, ...tail].filter(Boolean).join(" · ")}
+                {[isolate(deck?.name), ...tail].filter(Boolean).join(" · ")}
               </Text>
             </View>
             <StateChip state={forgotten ? 3 : fsrsState} inReview />
@@ -1800,7 +1809,9 @@ function Completion({
   const heading = {
     goal_reached: t`Daily goal reached`,
     day_done: t`You’re done for today`,
-    scope_done: scopeName ? t`Nothing left in ${scopeName}` : t`Nothing left in this deck`,
+    scope_done: scopeName
+      ? t`Nothing left in ${{ scopeName: isolate(scopeName) }}`
+      : t`Nothing left in this deck`,
     nothing_due: t`Nothing due`,
     round_done: t`Round done`,
     review_done: t`Review done`,

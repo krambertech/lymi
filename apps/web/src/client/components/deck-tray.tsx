@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { modeOf } from "@lymi/core";
+import { isolate, modeOf } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
@@ -199,7 +199,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
               size="sm"
               onClick={onAdd}
               loading={adding}
-              aria-label={t`Add “${deck.name}” to Library`}
+              aria-label={t`Add “${isolate(deck.name)}” to Library`}
             >
               <Plus data-icon="inline-start" aria-hidden="true" />
               <Trans>Add</Trans>

@@ -330,12 +330,12 @@ msgstr "{0, plural, one {Перевірено # вид} few {Перевірен�
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, one {Усі колоди: #} few {Усі колоди: #} many {Усі колоди: #} other {Усі колоди: #}}"
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(item.fileName)
 #. placeholder {1}: fileSize(item.byteSize)
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(item.fileName)
 msgid "{0} · {date}"
 msgstr "{0} · {date}"
 
@@ -351,8 +351,8 @@ msgstr "{0} Б"
 msgid "{0} GB"
 msgstr "{0} ГБ"
 
-#. placeholder {0}: d.term
-#. placeholder {1}: d.deckName
+#. placeholder {0}: isolate(d.term)
+#. placeholder {1}: isolate(d.deckName)
 msgid "{0} in {1}"
 msgstr "{0} у колоді {1}"
 
@@ -382,7 +382,7 @@ msgstr "Засвоєно {0} ваших карток."
 msgid "{0} Opens on the web."
 msgstr "{0} Відкриється в браузері."
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} owns this deck and writes its cards."
 msgstr "{0} — власник цієї колоди й пише її картки."
 
@@ -391,7 +391,7 @@ msgstr "{0} — власник цієї колоди й пише її картк
 msgid "{0} remembered, {1} forgotten."
 msgstr "Запам’ятано: {0}, забуто: {1}."
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} shared a deck"
 msgstr "{0} ділиться колодою"
 
@@ -987,8 +987,8 @@ msgstr "Пакет Anki"
 msgid "Anki, Mochi, Noji"
 msgstr "Anki, Mochi, Noji"
 
-#. placeholder {0}: term.formOf.term
-#. placeholder {1}: term.formOf.deckName
+#. placeholder {0}: isolate(term.formOf.term)
+#. placeholder {1}: isolate(term.formOf.deckName)
 msgid "Another form of {0}, in {1}"
 msgstr "Інша форма {0}, у «{1}»"
 
@@ -1458,7 +1458,7 @@ msgstr "Підтвердь через Apple, щоб назавжди видал�
 msgid "Connect"
 msgstr "Підключити"
 
-#. placeholder {0}: a.name
+#. placeholder {0}: isolate(a.name)
 msgid "Connect {0}"
 msgstr "Підключити {0}"
 
@@ -1527,7 +1527,7 @@ msgstr "Не вдалося додати колоду. Перевір з’єд�
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Не вдалося додати колоду. Її більше не опубліковано."
 
-#. placeholder {0}: card.term
+#. placeholder {0}: isolate(card.term)
 msgid "Couldn’t archive “{0}”."
 msgstr "Не вдалося архівувати «{0}»."
 
@@ -1671,7 +1671,7 @@ msgstr "Не вдалося прочитати цей текст"
 msgid "Couldn’t remove them. Try again."
 msgstr "Не вдалося вилучити учасника. Спробуй ще раз."
 
-#. placeholder {0}: back.term
+#. placeholder {0}: isolate(back.term)
 msgid "Couldn’t restore “{0}”."
 msgstr "Не вдалося відновити «{0}»."
 
@@ -2205,7 +2205,7 @@ msgctxt "language"
 msgid "French"
 msgstr "Французька"
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "From {0}"
 msgstr "Від {0}"
 
@@ -2417,7 +2417,7 @@ msgstr "Імпорт із {source}"
 msgid "Importing your cards"
 msgstr "Імпортуємо твої картки"
 
-#. placeholder {0}: term.existing?.deckName ?? ""
+#. placeholder {0}: isolate(term.existing?.deckName ?? "")
 msgid "In {0}"
 msgstr "У «{0}»"
 
@@ -3601,16 +3601,16 @@ msgstr "Розділ {number}: {name}, {cards}"
 msgid "Sections"
 msgstr "Розділи"
 
-#. placeholder {0}: example.meaning
-#. placeholder {1}: example.term
+#. placeholder {0}: isolate(example.meaning)
+#. placeholder {1}: isolate(example.term)
 msgid "See “{0}”, recall {1}"
 msgstr "Бачиш «{0}», згадуєш {1}"
 
 msgid "See “{answer}”, recall {word}"
 msgstr "Побачити «{answer}» і згадати {word}"
 
-#. placeholder {0}: example.term
-#. placeholder {1}: example.meaning
+#. placeholder {0}: isolate(example.term)
+#. placeholder {1}: isolate(example.meaning)
 msgid "See {0}, recall “{1}”"
 msgstr "Бачиш {0}, згадуєш «{1}»"
 
@@ -3971,7 +3971,7 @@ msgstr "Не вийшло. Спробуй ще раз."
 msgid "That email and password don’t match."
 msgstr "Ця пошта й пароль не збігаються."
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(item.fileName)
 msgid "That isn’t the same file. Choose {0}."
 msgstr "Це інший файл. Вибери {0}."
 
@@ -4443,7 +4443,7 @@ msgstr "Напиши, що хочеш розповісти Lymi."
 msgid "Writing"
 msgstr "Записується"
 
-#. placeholder {0}: current.fileName
+#. placeholder {0}: isolate(current.fileName)
 msgid "Writing {0}. You can close this. The file stays in Activity for a day."
 msgstr "Записуємо {0}. Це вікно можна закрити. Файл буде в Активності один день."
 

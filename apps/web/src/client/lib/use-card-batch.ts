@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "@lymi/client/card-batch";
+import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { errorMessage } from "./api";
@@ -106,7 +107,7 @@ export function useCardBatch(deckId: string) {
                   one: `Moved ${saved} of # card to ${deckName}`,
                   other: `Moved ${saved} of # cards to ${deckName}`,
                 })
-              : t`Moved ${plural(saved, { one: "# card", other: "# cards" })} to ${deckName}`,
+              : t`Moved ${plural(saved, { one: "# card", other: "# cards" })} to ${{ deckName: isolate(deckName) }}`,
           actionProps: {
             children: t`Undo`,
             onClick: () => undo(id, moving.undo, done),

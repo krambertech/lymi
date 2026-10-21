@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { exploreDeckQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { hasShelfPage, type PublicDeckSummary, type Shelf } from "@lymi/core/catalog";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
@@ -77,7 +78,7 @@ function useDeckMenu() {
                   onSuccess: ({ deckId: id }) =>
                     toast.add({
                       id: `add-deck-${deck.slug}`,
-                      title: t`Added “${name}” to Library`,
+                      title: t`Added “${{ name: isolate(name) }}” to Library`,
                       action: { label: t`Open`, onPress: () => openInLibrary(id) },
                     }),
                   onError: (e) => toast.add({ error: true, title: failure(e) }),

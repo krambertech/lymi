@@ -7,6 +7,7 @@ import {
   importStage,
   namesCaller,
 } from "@lymi/client/activity";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Activity as ActivityIcon,
@@ -106,107 +107,110 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "cards_added":
       return (
         <Trans>
-          Added <Plural value={count} one="# card" other="# cards" /> to {deck}
+          Added <Plural value={count} one="# card" other="# cards" /> to {{ deck: isolate(deck) }}
         </Trans>
       );
     case "cards_enriched":
       return (
         <Trans>
-          Enriched <Plural value={count} one="# card" other="# cards" /> in {deck}
+          Enriched <Plural value={count} one="# card" other="# cards" /> in{" "}
+          {{ deck: isolate(deck) }}
         </Trans>
       );
     case "cards_edited":
       return (
         <Trans>
-          Edited <Plural value={count} one="# card" other="# cards" /> in {deck}
+          Edited <Plural value={count} one="# card" other="# cards" /> in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "cards_archived":
       return (
         <Trans>
-          Archived <Plural value={count} one="# card" other="# cards" /> in {deck}
+          Archived <Plural value={count} one="# card" other="# cards" /> in{" "}
+          {{ deck: isolate(deck) }}
         </Trans>
       );
     case "cards_restored":
       return (
         <Trans>
-          Restored <Plural value={count} one="# card" other="# cards" /> in {deck}
+          Restored <Plural value={count} one="# card" other="# cards" /> in{" "}
+          {{ deck: isolate(deck) }}
         </Trans>
       );
     case "deck_added":
-      return <Trans>Made the deck {deck}</Trans>;
+      return <Trans>Made the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_edited":
-      return <Trans>Edited the deck {deck}</Trans>;
+      return <Trans>Edited the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_archived":
-      return <Trans>Archived the deck {deck}</Trans>;
+      return <Trans>Archived the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_restored":
-      return <Trans>Restored the deck {deck}</Trans>;
+      return <Trans>Restored the deck {{ deck: isolate(deck) }}</Trans>;
     case "series_added":
-      return <Trans>Made the series {name}</Trans>;
+      return <Trans>Made the series {{ name: isolate(name) }}</Trans>;
     case "series_edited":
-      return <Trans>Edited the series {name}</Trans>;
+      return <Trans>Edited the series {{ name: isolate(name) }}</Trans>;
     case "series_deleted":
-      return <Trans>Deleted the series {name}</Trans>;
+      return <Trans>Deleted the series {{ name: isolate(name) }}</Trans>;
     case "series_restored":
-      return <Trans>Restored the series {name}</Trans>;
+      return <Trans>Restored the series {{ name: isolate(name) }}</Trans>;
     case "section_added":
       return (
         <Trans>
-          Made the section {name} in {deck}
+          Made the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_edited":
       return (
         <Trans>
-          Edited the section {name} in {deck}
+          Edited the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_archived":
       return (
         <Trans>
-          Archived the section {name} in {deck}
+          Archived the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_restored":
       return (
         <Trans>
-          Restored the section {name} in {deck}
+          Restored the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "member_joined":
       return (
         <Trans>
-          {name} joined {deck}
+          {{ name: isolate(name) }} joined {{ deck: isolate(deck) }}
         </Trans>
       );
     case "member_left":
       return (
         <Trans>
-          {name} left {deck}
+          {{ name: isolate(name) }} left {{ deck: isolate(deck) }}
         </Trans>
       );
     case "invitation_sent":
       return (
         <Trans>
-          Invited {name} to {deck}
+          Invited {{ name: isolate(name) }} to {{ deck: isolate(deck) }}
         </Trans>
       );
     case "invitation_cancelled":
       return (
         <Trans>
-          Cancelled the invitation to {name} for {deck}
+          Cancelled the invitation to {{ name: isolate(name) }} for {{ deck: isolate(deck) }}
         </Trans>
       );
     case "member_removed":
       return (
         <Trans>
-          Removed {name} from {deck}
+          Removed {{ name: isolate(name) }} from {{ deck: isolate(deck) }}
         </Trans>
       );
     case "link_on":
-      return <Trans>Turned on the join link for {deck}</Trans>;
+      return <Trans>Turned on the join link for {{ deck: isolate(deck) }}</Trans>;
     case "link_off":
-      return <Trans>Turned off the join link for {deck}</Trans>;
+      return <Trans>Turned off the join link for {{ deck: isolate(deck) }}</Trans>;
     case "export":
       return <ExportSentence item={entry.export} />;
     default:
@@ -295,7 +299,9 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const cardsId = useId();
   const Icon = MARK_ICONS[activityMark(entry.kind)];
   const file = entry.import ?? entry.export;
-  const meta = [namesCaller(entry) ? caller : null, file?.fileName, time].filter(Boolean);
+  const meta = [namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time].filter(
+    Boolean,
+  );
   const expandable = entry.cards.length > 0;
   // The one row whose action is on the row itself, because the file is what it offers.
   const download = entry.export?.status === "done" ? entry.export.downloadUrl : null;
@@ -328,7 +334,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
         <Button
           size="sm"
           className="shrink-0"
-          aria-label={t`Download ${entry.export?.fileName ?? ""}`}
+          aria-label={t`Download ${isolate(entry.export?.fileName ?? "")}`}
           render={<a href={download} download={entry.export?.fileName} />}
         >
           <Download data-icon="inline-start" aria-hidden="true" />

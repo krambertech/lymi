@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { tagKey } from "@lymi/core";
+import { isolate, tagKey } from "@lymi/core";
 import {
   Archive,
   Merge,
@@ -105,12 +105,15 @@ export function DeckTagsView({
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       render={
-                        <IconButton size="sm" label={t`Options for ${tag.name}`}>
+                        <IconButton size="sm" label={t`Options for ${isolate(tag.name)}`}>
                           <MoreHorizontal />
                         </IconButton>
                       }
                     />
-                    <DropdownMenuContent aria-label={t`Options for ${tag.name}`} align="end">
+                    <DropdownMenuContent
+                      aria-label={t`Options for ${isolate(tag.name)}`}
+                      align="end"
+                    >
                       <DropdownMenuItem onClick={() => onRename(tag)}>
                         <PencilLine />
                         <Trans>Rename…</Trans>
@@ -132,7 +135,7 @@ export function DeckTagsView({
               ))}
               {shown.length === 0 && (
                 <li className="px-4 py-3.5 text-base text-muted">
-                  <Trans>No tag matches “{query}”.</Trans>
+                  <Trans>No tag matches “{{ query: isolate(query) }}”.</Trans>
                 </li>
               )}
             </Group>

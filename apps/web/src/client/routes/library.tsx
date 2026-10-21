@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -95,7 +96,7 @@ function DeckList() {
                 const toastId = `move-${arrived.id}`;
                 toast.add({
                   id: toastId,
-                  title: t`Moved “${deckName}” to ${seriesName}`,
+                  title: t`Moved “${{ deckName: isolate(deckName) }}” to ${{ seriesName: isolate(seriesName) }}`,
                   actionProps: {
                     children: t`Undo`,
                     onClick: () => {

@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { Archive } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "../components/button";
@@ -86,7 +87,7 @@ export function ArchivedView({
                   key={card.id}
                   name={card.term}
                   language={card.language}
-                  detail={t`${card.deckName} · ${when(card.archivedAt)}`}
+                  detail={t`${isolate(card.deckName)} · ${when(card.archivedAt)}`}
                   busy={restoring === card.id}
                   disabled={!!restoring}
                   onRestore={() => onRestoreCard(card)}
@@ -139,7 +140,7 @@ function Row({
         size="sm"
         loading={busy}
         aria-disabled={disabled}
-        aria-label={t`Restore ${name}`}
+        aria-label={t`Restore ${{ name: isolate(name) }}`}
         onClick={() => !disabled && onRestore()}
       >
         <Trans>Restore</Trans>

@@ -1008,6 +1008,9 @@ msgstr "Картки збережуть дати повторення, які м
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
 
+msgid "castle"
+msgstr "замок (фортеця)"
+
 msgid "CCSE Spanish nationality test"
 msgstr "Іспит CCSE на громадянство Іспанії"
 
@@ -2420,6 +2423,9 @@ msgstr "Буквально — «кінь кінь тигр тигр»."
 
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Дослівно — «це йде». Так кажуть офіціанти, приймаючи замовлення."
+
+msgid "lock"
+msgstr "замок (на дверях)"
 
 msgid "Long time no see"
 msgstr "Давно не бачились"
@@ -4666,6 +4672,9 @@ msgstr "Віджети"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
+
+msgid "won’t do, no"
+msgstr "не можна, ні"
 
 msgid "word"
 msgstr "слово"

@@ -1008,6 +1008,9 @@ msgstr "Cards keep the due dates they had in {app}."
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
 
+msgid "castle"
+msgstr "castle"
+
 msgid "CCSE Spanish nationality test"
 msgstr "CCSE Spanish nationality test"
 
@@ -2420,6 +2423,9 @@ msgstr "Literally “horse horse tiger tiger”."
 
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Literally “that walks”. Waiters say it when they take your order."
+
+msgid "lock"
+msgstr "lock"
 
 msgid "Long time no see"
 msgstr "Long time no see"
@@ -4666,6 +4672,9 @@ msgstr "Widgets"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
+
+msgid "won’t do, no"
+msgstr "won’t do, no"
 
 msgid "word"
 msgstr "word"

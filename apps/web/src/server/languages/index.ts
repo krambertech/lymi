@@ -10,8 +10,8 @@ import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Chinese and Cantonese, whose modules are evaluated before they join SupportedTag. */
-type PromptTag = SupportedTag | "zh" | "yue";
+/** Every supported language, and Cantonese, whose module is evaluated before yue joins SupportedTag. */
+type PromptTag = SupportedTag | "yue";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,

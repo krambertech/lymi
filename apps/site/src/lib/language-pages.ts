@@ -23,6 +23,12 @@ export const LANGUAGE_PAGES = {
     title: msg`Learn Japanese vocabulary with flashcards · Lymi`,
     blurb: msg`A free flashcard app for Japanese. Start with kana, then N5 and N4 words, and add the words from your own lessons. Cards show the reading over the kanji until you know the word.`,
   },
+  zh: {
+    page: "chinese",
+    label: msg`Chinese`,
+    title: msg`Learn Chinese vocabulary with flashcards · Lymi`,
+    blurb: msg`A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole.`,
+  },
 } as const satisfies Record<SupportedTag, LanguagePageRow>;
 
 export type LanguagePageName = (typeof LANGUAGE_PAGES)[SupportedTag]["page"];

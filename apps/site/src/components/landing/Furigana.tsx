@@ -1,18 +1,21 @@
-import { alignReading } from "@lymi/core/reading";
+import { alignReading, lettersReading } from "@lymi/core/reading";
 import { clsx } from "clsx";
 import { Fragment } from "react";
+import { Pinyin } from "./Pinyin";
 
 interface Props {
   term: string;
-  /** The term's reading in kana, drawn over its kanji as review draws it. */
+  /** The term's reading, kana or pinyin, drawn over its characters as review draws it. */
   reading: string;
   lang?: string | undefined;
   /** Keeps the readings' room but hides them, as review does for a Known card's cue. */
   hidden?: boolean | undefined;
 }
 
-/** A Japanese term with its reading as furigana over the kanji, the product's way. */
+/** A term with its reading over its characters: furigana over kanji, pinyin over hanzi. */
 export function Furigana({ term, reading, lang, hidden }: Props) {
+  // A reading in letters is pinyin, one syllable over each character; kana runs align to the kanji.
+  if (lettersReading(reading)) return <Pinyin term={term} pinyin={reading} hidden={hidden} />;
   return alignReading(term, reading).map((segment, index) =>
     segment.reading === undefined ? (
       // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order

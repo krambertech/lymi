@@ -16,7 +16,7 @@ type Policies = {
     : null;
 };
 
-const POLICIES: Policies = { ja: japanese };
+const POLICIES: Policies = { ja: japanese, zh: null };
 
 export function leadInPolicy(language: string | null | undefined): LeadInPolicy | undefined {
   const support = supportedLanguage(language);

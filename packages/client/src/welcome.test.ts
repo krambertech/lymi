@@ -39,6 +39,21 @@ describe("startDecks", () => {
     ]);
   });
 
+  it("offers a Chinese beginner HSK 1, then HSK 2, then the rest in Explore's order", () => {
+    const catalog = [
+      deck("core-chinese-words", "zh"),
+      deck("everyday-chinese-conversation", "zh"),
+      deck("chinese-hsk-2-vocabulary", "zh"),
+      deck("chinese-hsk-1-vocabulary", "zh"),
+    ];
+    expect(slugs(catalog, "zh")).toEqual([
+      "chinese-hsk-1-vocabulary",
+      "chinese-hsk-2-vocabulary",
+      "core-chinese-words",
+      "everyday-chinese-conversation",
+    ]);
+  });
+
   it("fills a missing beginner deck's place with the language's next deck in Explore's order", () => {
     const catalog = [
       deck("travel-japanese"),

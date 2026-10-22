@@ -150,6 +150,27 @@ describe("loadPublicDeck", () => {
     const result = await loadPublicDeck(db, "revised-page");
     expect(result).toMatchObject({ status: "published", deck: { revision: 2, summary: "New." } });
   });
+
+  it("says a section name the edition falls back on is in the original's language", async () => {
+    await editionedSectionDeck("page-section-lang", {
+      uk: { name: "Привітання", status: "approved" },
+      ru: null,
+    });
+    const sectionOf = async (language?: string) => {
+      const result = await loadPublicDeck(db, "page-section-lang", language);
+      return result.status === "published" ? result.deck.sections[0] : undefined;
+    };
+
+    // The original read as itself, and an approved name, are in the page's own language.
+    const en = await sectionOf();
+    expect(en).toMatchObject({ name: "Greetings" });
+    expect(en).not.toHaveProperty("nameLanguage");
+    const uk = await sectionOf("uk");
+    expect(uk).toMatchObject({ name: "Привітання" });
+    expect(uk).not.toHaveProperty("nameLanguage");
+    // The ru edition has no name for the section, so the English one is marked English.
+    expect(await sectionOf("ru")).toMatchObject({ name: "Greetings", nameLanguage: "en" });
+  });
 });
 
 /** Explore's read of the whole catalogue. The second allowlist of ADR 0016. */

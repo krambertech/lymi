@@ -92,6 +92,7 @@ function Sections(props: Omit<Props, "locale">) {
 
   const named = steps.filter((step) => step.position !== null);
   const first = named[0]?.name ?? "";
+  const firstLanguage = named[0]?.nameLanguage ?? props.meaningLanguage;
 
   if (!inOrder) {
     return (
@@ -154,7 +155,7 @@ function Sections(props: Omit<Props, "locale">) {
             <Progression
               progression={props.progression}
               first={first}
-              meaningLanguage={props.meaningLanguage}
+              firstLanguage={firstLanguage}
             />
           </p>
         )}
@@ -169,11 +170,12 @@ function Sections(props: Omit<Props, "locale">) {
 function Progression({
   progression,
   first,
-  meaningLanguage,
+  firstLanguage,
 }: {
   progression: SectionProgression;
   first: string;
-  meaningLanguage: string;
+  /** The language the first section is named in. */
+  firstLanguage: string;
 }) {
   switch (progression) {
     case "open":
@@ -181,14 +183,14 @@ function Progression({
     case "manual":
       return (
         <Trans>
-          You start with <span lang={meaningLanguage}>{first}</span>. When you know most of it, you
+          You start with <span lang={firstLanguage}>{first}</span>. When you know most of it, you
           choose when to start the next.
         </Trans>
       );
     default:
       return (
         <Trans>
-          You start with <span lang={meaningLanguage}>{first}</span>, and the next section opens as
+          You start with <span lang={firstLanguage}>{first}</span>, and the next section opens as
           you learn the one before it.
         </Trans>
       );
@@ -234,7 +236,7 @@ function SectionList({
                   <Trans>Section {position}:</Trans>{" "}
                 </span>
               )}
-              <span lang={step.name === null ? undefined : meaningLanguage}>
+              <span lang={step.name === null ? undefined : (step.nameLanguage ?? meaningLanguage)}>
                 {step.name ?? <Trans>Cards outside a section</Trans>}
               </span>
             </h3>
@@ -440,7 +442,11 @@ function CardsView({
                         {step.position ?? "·"}
                       </span>
                       <span className="@4xl:pt-1.5">
-                        <span lang={step.name === null ? undefined : meaningLanguage}>
+                        <span
+                          lang={
+                            step.name === null ? undefined : (step.nameLanguage ?? meaningLanguage)
+                          }
+                        >
                           {step.name ?? <Trans>Cards outside a section</Trans>}
                         </span>
                         <span className="hidden text-xs text-muted tabular-nums @4xl:block">
@@ -489,7 +495,9 @@ function CardsView({
                         <span className="text-md text-muted tabular-nums">{step.position}</span>
                       )}
                       <span
-                        lang={step.name === null ? undefined : meaningLanguage}
+                        lang={
+                          step.name === null ? undefined : (step.nameLanguage ?? meaningLanguage)
+                        }
                         className="min-w-0 break-words"
                       >
                         {step.name ?? <Trans>Cards outside a section</Trans>}

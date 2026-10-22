@@ -65,6 +65,8 @@ export interface PublicationRow {
 export interface SectionRow {
   id: string;
   name: string;
+  /** Set when an edition's section has no approved name and shows the original's. */
+  nameLanguage?: string;
 }
 
 export interface CardRow {
@@ -170,7 +172,13 @@ export function projectPublicDeck(
     if (media.hasAudio) entry.audio = { cardId: media.cardId };
     mediaByCard.set(media.cardId, entry);
   }
-  for (const section of sectionRows) groups.set(section.id, { name: section.name, cards: [] });
+  for (const section of sectionRows) {
+    groups.set(section.id, {
+      name: section.name,
+      ...(section.nameLanguage ? { nameLanguage: section.nameLanguage } : {}),
+      cards: [],
+    });
+  }
   groups.set(null, { name: null, cards: [] });
   for (const card of cardRows) {
     const group = groups.get(card.sectionId) ?? groups.get(null);
@@ -351,6 +359,7 @@ async function readPublicDeck(
       .select({
         id: sections.id,
         name: sql<string>`coalesce(localization.name, ${sections.name})`,
+        localized: sql<number>`${sql.raw("localization.name")} is not null`,
       })
       .from(sections)
       .leftJoin(
@@ -390,7 +399,10 @@ async function readPublicDeck(
       deckName: text?.name ?? publication.deckName,
       publisherAvatar: activeAvatarVersion(publication),
     },
-    sectionRows,
+    // An edition's section with no approved name shows the original's, in the original's language.
+    sectionRows: sectionRows.map(({ localized, ...section }) =>
+      wanted && localized !== 1 ? { ...section, nameLanguage: original } : section,
+    ),
     cardRows: cardRows.map(({ speakable, ...card }) => ({ ...card, speakable: speakable === 1 })),
     mediaRows,
   };

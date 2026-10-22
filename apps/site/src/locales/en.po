@@ -1602,6 +1602,9 @@ msgstr "Example"
 msgid "Excuse me"
 msgstr "Excuse me"
 
+msgid "expensive"
+msgstr "expensive"
+
 msgid "Expensive; also dear"
 msgstr "Expensive; also dear"
 

@@ -1,3 +1,4 @@
+import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { motion, useInView } from "motion/react";
@@ -67,10 +68,10 @@ export function EnrichEstonian() {
 }
 
 const NOTE_ROWS = [
-  { term: "broneerima", gloss: "to book", card: 0 },
-  { term: "ühistransport", gloss: "public transport", card: 1 },
-  { term: "palun", gloss: "" },
-  { term: "kallis", gloss: "expensive", card: 2 },
+  { term: "broneerima", gloss: msg`to book`, card: 0 },
+  { term: "ühistransport", gloss: msg`public transport`, card: 1 },
+  { term: "palun" },
+  { term: "kallis", gloss: msg`expensive`, card: 2 },
 ] as const;
 
 const NOTE_BEATS = {
@@ -87,7 +88,7 @@ const NOTE_CARDS = ["card0", "card1", "card2"] as const;
 
 /** A photographed page of class notes; its new words land as cards, and the one already kept is skipped. */
 export function NotesToCardsEstonian() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const root = useRef<HTMLDivElement>(null);
   const still = useStill();
   const inView = useInView(root, { amount: 0.5 });
@@ -131,8 +132,8 @@ export function NotesToCardsEstonian() {
             )}
           >
             <span>{row.term}</span>
-            <span lang="en" className="text-xl text-[oklch(0.45_0.02_60)]">
-              {"card" in row ? `= ${row.gloss}` : ""}
+            <span lang={i18n.locale} className="text-xl text-[oklch(0.45_0.02_60)]">
+              {"card" in row ? `= ${t(row.gloss)}` : ""}
             </span>
           </p>
         ))}

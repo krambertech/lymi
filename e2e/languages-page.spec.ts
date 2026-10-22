@@ -98,3 +98,25 @@ test("a language learner can reach the languages pages and turn notes and cards 
     }
   });
 });
+
+// #895: an absolutely placed label inside a deck tile that is not its containing block escapes
+// the deck row's horizontal scroller and widens the whole page on a phone. The seed has too few
+// decks for the row itself to overflow, so the containing block is what is checked.
+test("a language page's deck tiles keep their own labels inside them on a phone", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto(`${publicSite}/languages/estonian`);
+  const tiles = page.locator("a.deck-tile");
+  await expect(tiles.first()).toBeAttached();
+  const escaped = await tiles.evaluateAll((links) =>
+    links.flatMap((tile) =>
+      [...tile.querySelectorAll<HTMLElement>("*")]
+        .filter((element) => getComputedStyle(element).position === "absolute")
+        .filter((element) => !tile.contains(element.offsetParent))
+        .map((element) => `${tile.getAttribute("href")}: ${element.className}`),
+    ),
+  );
+  expect(escaped).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});

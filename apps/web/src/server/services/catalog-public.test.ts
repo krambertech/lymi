@@ -328,4 +328,25 @@ describe("listPublicCatalog", () => {
       expect(await sectionOf(language, "tray-sections-fallback")).toBe("Greetings");
     }
   });
+  it("says a fallback section name is in the original's language", async () => {
+    await editionedSectionDeck("tray-section-lang", {
+      uk: { name: "Привітання", status: "approved" },
+      ru: null,
+    });
+    const rowOf = async (language: string) =>
+      (await listPublicCatalog(db, language)).find((row) => row.slug === "tray-section-lang");
+
+    // A localized name, and the original read as itself, are in the row's own language.
+    const en = await rowOf("en");
+    expect(en).toMatchObject({ meaningLanguage: "en", card: { section: "Greetings" } });
+    expect(en?.card).not.toHaveProperty("sectionLanguage");
+    const uk = await rowOf("uk");
+    expect(uk).toMatchObject({ meaningLanguage: "uk", card: { section: "Привітання" } });
+    expect(uk?.card).not.toHaveProperty("sectionLanguage");
+    // The ru edition has no name for the section, so the English one is marked English.
+    expect(await rowOf("ru")).toMatchObject({
+      meaningLanguage: "ru",
+      card: { section: "Greetings", sectionLanguage: "en" },
+    });
+  });
 });

@@ -135,6 +135,11 @@ export const PublicDeckSummary = z.object({
       term: z.string(),
       meaning: z.string(),
       section: z.string().nullable(),
+      /**
+       * The language the section is named in, when that is not `meaningLanguage`: an edition
+       * whose section has no approved name keeps the original deck's, in the original's language.
+       */
+      sectionLanguage: z.string().optional(),
       /** The mode the tray shows it in, as the deck page's preview would. */
       mode: ReviewModeKey.meta(OPEN),
       image: PublicImage.optional(),

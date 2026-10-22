@@ -113,7 +113,17 @@
   }
 }
 
+/* A section name can run long in some languages; past two lines it would push the term off the card. */
 .deck-tray-section {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* Uppercase ru words such as ДЕМОКРАТИЧЕСКОМ run wider than the card; hyphenate where the browser can, break anywhere where it cannot. */
+  overflow-wrap: anywhere;
+  hyphens: auto;
   font-size: max(0.6875rem, calc(var(--cw) * 0.054));
   font-weight: 500;
   line-height: 1.3;

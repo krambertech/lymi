@@ -358,8 +358,9 @@ async function readPublicDeck(
     db
       .select({
         id: sections.id,
-        name: sql<string>`coalesce(localization.name, ${sections.name})`,
-        localized: sql<number>`${sql.raw("localization.name")} is not null`,
+        // An approved but empty name is no translation, so it falls back as a missing one does.
+        name: sql<string>`coalesce(nullif(localization.name, ''), ${sections.name})`,
+        localized: sql<number>`nullif(${sql.raw("localization.name")}, '') is not null`,
       })
       .from(sections)
       .leftJoin(

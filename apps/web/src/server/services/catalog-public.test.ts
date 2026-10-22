@@ -171,6 +171,31 @@ describe("loadPublicDeck", () => {
     // The ru edition has no name for the section, so the English one is marked English.
     expect(await sectionOf("ru")).toMatchObject({ name: "Greetings", nameLanguage: "en" });
   });
+
+  it("falls back on the original's section name when an edition's approved name is empty", async () => {
+    await editionedSectionDeck("page-section-empty", {
+      uk: { name: "", status: "approved" },
+      ru: { name: "Приветствия", status: "approved" },
+    });
+    const sectionOf = async (language?: string) => {
+      const result = await loadPublicDeck(db, "page-section-empty", language);
+      return result.status === "published" ? result.deck.sections[0] : undefined;
+    };
+    const trayOf = async (language: string) =>
+      (await listPublicCatalog(db, language)).find((row) => row.slug === "page-section-empty")
+        ?.card;
+
+    const en = await sectionOf();
+    expect(en).toMatchObject({ name: "Greetings" });
+    expect(en).not.toHaveProperty("nameLanguage");
+    // An empty name is no translation: the page and the tile both show the original's, marked so.
+    expect(await sectionOf("uk")).toMatchObject({ name: "Greetings", nameLanguage: "en" });
+    expect(await trayOf("uk")).toMatchObject({ section: "Greetings", sectionLanguage: "en" });
+    const ru = await sectionOf("ru");
+    expect(ru).toMatchObject({ name: "Приветствия" });
+    expect(ru).not.toHaveProperty("nameLanguage");
+    expect(await trayOf("ru")).not.toHaveProperty("sectionLanguage");
+  });
 });
 
 /** Explore's read of the whole catalogue. The second allowlist of ADR 0016. */

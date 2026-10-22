@@ -6,6 +6,7 @@ import { useApp } from "@modelcontextprotocol/ext-apps/react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { MCP_VIEWS, type McpView } from "../../shared/mcp-app";
 import { Skeleton } from "../components/skeleton";
+import { BidiTrans } from "../lib/bidi";
 import { bridgeHost, HostContext } from "./host";
 import { ViewFor } from "./view-for";
 
@@ -56,7 +57,7 @@ export function McpApp() {
   const host = useMemo(() => (app ? bridgeHost(app, origin) : null), [app]);
 
   return (
-    <I18nProvider i18n={i18n}>
+    <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
       {error ? (
         <Message>
           <Trans>Couldn’t connect to Lymi. Try again in a moment.</Trans>

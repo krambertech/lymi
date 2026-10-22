@@ -10,7 +10,7 @@ import {
   useUpload,
 } from "@lymi/client/imports";
 import { importQuery } from "@lymi/client/queries";
-import { importProgress } from "@lymi/core";
+import { importProgress, isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -201,7 +201,7 @@ function Working({
   const { t } = useLingui();
   const [refused, setRefused] = useState<string | null>(null);
   const app = SOURCE_NAMES[item.source] ?? item.source;
-  const description = t`${item.fileName} · ${fileSize(item.byteSize)}`;
+  const description = t`${isolate(item.fileName)} · ${fileSize(item.byteSize)}`;
 
   // Quizlet's file was the pasted text, which went with the app, so it starts over with a new paste.
   if (item.status === "uploading" && !upload && item.source === "quizlet") {
@@ -232,7 +232,7 @@ function Working({
       const picked = await pickFile().catch(() => null);
       if (!picked) return;
       if (picked.size !== item.byteSize) {
-        setRefused(t`That isn’t the same file. Choose ${item.fileName}.`);
+        setRefused(t`That isn’t the same file. Choose ${isolate(item.fileName)}.`);
         return;
       }
       const problem = refusal(item.source, picked);
@@ -350,7 +350,7 @@ function Done({
     timeStyle: "short",
   });
   return (
-    <ImportShell title={t`Import from ${app}`} description={t`${item.fileName} · ${date}`}>
+    <ImportShell title={t`Import from ${app}`} description={t`${isolate(item.fileName)} · ${date}`}>
       <Plate className="gap-4 p-5">
         <View className="gap-1">
           <Text className="text-xl font-medium text-text" accessibilityRole="header">

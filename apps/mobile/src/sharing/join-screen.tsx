@@ -9,6 +9,7 @@ import {
   streakQuery,
 } from "@lymi/client/queries";
 import type { JoinPreviewOut } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, Redirect, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -262,8 +263,8 @@ function LiveLink({
     viewer === "owner"
       ? t`Your deck`
       : published
-        ? t`From ${deck.owner.name}`
-        : t`${deck.owner.name} shared a deck`;
+        ? t`From ${isolate(deck.owner.name)}`
+        : t`${isolate(deck.owner.name)} shared a deck`;
 
   const note =
     viewer === "owner"

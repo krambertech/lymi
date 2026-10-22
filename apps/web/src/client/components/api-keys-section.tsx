@@ -1,7 +1,7 @@
 import type { I18n } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
+import { msg, ph } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ApiKeyInput, apiKeyLimits, type Scope } from "@lymi/core";
+import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -316,12 +316,12 @@ function FreshKey({
         <Lantern className="size-8 shrink-0" glow fed={fed} />
         <p className="text-base text-text">
           <Trans>
-            <span className="font-medium">{name}</span> is ready. Copy it now. You won’t see it
-            again.
+            <span className="font-medium">{ph({ name: isolate(name) })}</span> is ready. Copy it
+            now. You won’t see it again.
           </Trans>
         </p>
       </div>
-      <CopyField value={value} label={t`API key for ${name}`} />
+      <CopyField value={value} label={t`API key for ${{ name: isolate(name) }}`} />
       <div className="flex gap-3">
         <Button size="sm" variant="ghost" onClick={onDone}>
           <Trans>Done</Trans>

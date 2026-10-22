@@ -12,6 +12,7 @@ export * from "./images";
 export * from "./import";
 export * from "./import-replay";
 export * from "./import-text";
+export * from "./isolate";
 export * from "./languages";
 export * from "./mcp-clients";
 export * from "./modes";

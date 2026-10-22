@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import { AlertCircle, Check } from "lucide-react";
 import type { ReactNode } from "react";
@@ -62,7 +63,7 @@ export function ConsentView({
           {loading ? (
             <Skeleton className="h-7 w-56" />
           ) : appName ? (
-            <Trans>Let {appName} use your Lymi?</Trans>
+            <Trans>Let {{ appName: isolate(appName) }} use your Lymi?</Trans>
           ) : (
             // A request that named nothing gets its own sentence; no placeholder goes in the gap.
             <Trans>Let this app use your Lymi?</Trans>

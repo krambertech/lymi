@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { splitNoteTypes } from "@lymi/client/imports";
-import { type ImportSource, importProgress, MAX_IMPORT_BYTES } from "@lymi/core";
+import { type ImportSource, importProgress, isolate, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -412,7 +412,7 @@ export function ImportWorkingView({
   const { t, i18n } = useLingui();
   const input = useRef<HTMLInputElement>(null);
   const [refused, setRefused] = useState<string | null>(null);
-  const sub = t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`;
+  const sub = t`${isolate(item.fileName)} · ${fileSize(item.byteSize, i18n.locale)}`;
   const app = SOURCE_NAMES[item.source];
 
   if (item.status === "uploading" && !upload) {
@@ -437,7 +437,7 @@ export function ImportWorkingView({
               e.target.value = "";
               if (!file) return;
               if (file.size !== item.byteSize) {
-                setRefused(t`That isn’t the same file. Choose ${item.fileName}.`);
+                setRefused(t`That isn’t the same file. Choose ${isolate(item.fileName)}.`);
                 return;
               }
               setRefused(null);
@@ -749,7 +749,8 @@ function ImportLines({
               {preview.duplicateExamples.map((d) => (
                 <li key={`${d.term}-${d.deckName}`}>
                   <Trans>
-                    <span className="font-medium text-text">{d.term}</span> in {d.deckName}
+                    <span className="font-medium text-text">{isolate(d.term)}</span> in{" "}
+                    {isolate(d.deckName)}
                   </Trans>
                 </li>
               ))}
@@ -935,7 +936,7 @@ export function ImportPreviewView({
   return (
     <ImportShell
       title={t`Import from ${app}`}
-      sub={t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`}
+      sub={t`${isolate(item.fileName)} · ${fileSize(item.byteSize, i18n.locale)}`}
       back={back}
     >
       {step.id === "decks" && (
@@ -1402,7 +1403,11 @@ export function ImportDoneView({
   const archived = !!item.archivedAt;
   const app = SOURCE_NAMES[item.source];
   return (
-    <ImportShell title={t`Import from ${app}`} sub={t`${item.fileName} · ${date}`} back={back}>
+    <ImportShell
+      title={t`Import from ${app}`}
+      sub={t`${isolate(item.fileName)} · ${date}`}
+      back={back}
+    >
       <section className="edge grid gap-4 rounded-xl bg-plate p-5">
         <div className="grid gap-1">
           <h2 className="text-xl font-medium text-balance">

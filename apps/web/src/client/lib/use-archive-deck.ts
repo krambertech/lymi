@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
@@ -33,7 +34,7 @@ export function useArchiveDeck(deckId: string, name: string | undefined) {
       const deckName = name ?? t`Deck`;
       toast.add({
         id: toastId,
-        title: t`Archived “${deckName}”`,
+        title: t`Archived “${{ deckName: isolate(deckName) }}”`,
         actionProps: { children: t`Undo`, onClick: () => restore.mutate() },
       });
     },

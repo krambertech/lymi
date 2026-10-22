@@ -4,6 +4,7 @@ import { api, apiUrl, type Export, errorMessage } from "@lymi/client/api";
 import { type DeckRow, deckCsv, deckCsvName } from "@lymi/client/deck-list";
 import { exportQuery } from "@lymi/client/queries";
 import type { ExportFormat } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Directory, File, Paths } from "expo-file-system";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -139,7 +140,8 @@ export function ExportSheet({
   const current = exportId && (!writing || slow) ? item.data : undefined;
   const busy = start.isPending || writing;
   const deckName = scope.kind === "deck" ? scope.deckName : "";
-  const title = scope.kind === "deck" ? t`Export ${deckName}` : t`Export library`;
+  const title =
+    scope.kind === "deck" ? t`Export ${{ deckName: isolate(deckName) }}` : t`Export library`;
   const pictures = scope.kind === "deck" && scope.rows?.some((row) => row.card.image);
   const formats: { value: Choice; label: string; detail: string }[] = [
     {
@@ -190,7 +192,7 @@ export function ExportSheet({
       <View className="gap-3 px-4 pb-2" accessibilityLiveRegion="polite">
         <Sweep label={t`Writing the file`} />
         <Text className="text-base text-text-2">
-          {t`Writing ${current.fileName}. You can close this. The file stays in Activity for a day.`}
+          {t`Writing ${isolate(current.fileName)}. You can close this. The file stays in Activity for a day.`}
         </Text>
       </View>
     );

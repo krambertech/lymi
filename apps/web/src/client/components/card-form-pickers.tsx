@@ -1,8 +1,9 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
+import { isolate, REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
 import { ArrowLeftRight, Languages, Layers, Plus, Tag } from "lucide-react";
 import { type ReactElement, useState } from "react";
+import { bidi } from "../lib/bidi";
 import { MODE_LABELS } from "../lib/review-modes";
 import { LanguageCombobox, languageName } from "./deck-fields";
 import { FieldChipContent, fieldChipClassName } from "./field-chip";
@@ -156,7 +157,7 @@ export function TagsChip({
               name: t`${plural(TAG_LIMITS.count, { one: "A card holds up to # tag.", other: "A card holds up to # tags." })}`,
               note: true,
             }
-          : { name: wanted.join(", "), create: wanted };
+          : { name: wanted.map(isolate).join(", "), create: wanted };
   const rows = extra ? [...matches, extra] : matches;
   const chosen = known.filter((o) => has(o.name));
   const label =
@@ -199,7 +200,7 @@ export function TagsChip({
         if (open) setQuery("");
       }}
     >
-      <WithTip tip={value.length > 1 ? names(value) : null}>
+      <WithTip tip={value.length > 1 ? names(value.map(isolate)) : null}>
         <ComboboxTrigger
           look="chip"
           className={fieldChipClassName(value.length > 0)}
@@ -242,7 +243,9 @@ export function TagsChip({
                 icon={<Plus className="size-4 text-text-2" />}
               >
                 <span className="flex-1 truncate">
-                  {t`Create ${names(option.create.map((name) => t`“${name}”`))}`}
+                  {bidi(
+                    t`Create ${names(option.create.map((name) => t`“${{ name: isolate(name) }}”`))}`,
+                  )}
                 </span>
               </ComboboxItem>
             ) : (

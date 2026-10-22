@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, apiUrl, type Card, errorMessage } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
-import { modeKey, type ReviewModeKey } from "@lymi/core";
+import { isolate, modeKey, type ReviewModeKey } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -122,7 +122,7 @@ export default function EditCard() {
   const cardModes = card.reviewModes?.map(modeKey) ?? null;
   const shownModes = modes === undefined ? cardModes : modes;
   const shownTags = tags ?? card.tags;
-  const list = formatList(shownTags, i18n.locale);
+  const list = formatList(shownTags.map(isolate), i18n.locale);
   const shownPicture = picture === undefined ? keptPicture(card) : picture;
   const said = { term: values.term.trim() || card.term, meaning: values.meaning.trim() };
 

@@ -40,6 +40,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Russian: stress in place on the cue and the field named Stress | [russian.md](features/russian.md) |
 | Ukrainian: stress in place on the cue, і included, and the field named Stress | [ukrainian.md](features/ukrainian.md) |
 | Tamil: each word's reading over it in review, and fading over Known words in examples | [tamil.md](features/tamil.md) |
+| Right to left: an Arabic deck's cue, example, rows and toast in their own direction | [right-to-left.md](features/right-to-left.md) |
 
 ## Launch
 
@@ -70,6 +71,8 @@ node .agents/skills/verify-phone/scripts/run.mjs review add-card --pr <n>
 For each feature the runner resets the persona with `POST /api/dev/sign-in?as=<persona>&reset=1`, so it starts from the persona's own data whatever ran before, and runs the doctor. It turns off the dev client's developer-menu introduction and floating button, which cover the top bar's controls, relaunches the app on this worktree's Metro, since a dev client opened without a URL reconnects to the last Metro it saw, and runs the flow. Every flow starts with [`_open.yaml`](features/_open.yaml), which waits for the bundle, closes the developer menu if it still shows, and signs in by **Dev sign-in as learner** when the app is signed out, so no password is typed. When Maestro's driver loses the app mid-snapshot without a command failing, which happens on a loaded Mac, the runner runs the flow once more and says so in `maestro.log`. The flow receives the values it asserts, such as the due count, from the feature's `env()`, then the feature's `check()` polls the stored state until it agrees or 20 seconds pass. Personas are in [Become a persona](../../../docs/local-dev.md#become-a-persona).
 
 Find controls by the text and accessibility labels a VoiceOver user hears, never by position; `maestro --device <udid> hierarchy` prints what the app exposes. The one exception is written down in its entry's gotchas with the reason.
+
+Learner text holding a right-to-left letter, such as an Arabic deck in **Archived “…”**, is wrapped in invisible Unicode isolates, U+2068 and U+2069, inside interface text, so a flow that may meet one matches it with `.?` on each side: `Archived “.?${DECK}.?”`.
 
 ## Evidence
 

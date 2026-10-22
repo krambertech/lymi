@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useEffect, useSyncExternalStore } from "react";
 
 let screenName: string | undefined;
@@ -17,7 +18,7 @@ export function useScreenName(): string | undefined {
 /** Names the browser tab after the screen; until the name is known, the tab says Lymi. */
 export function useDocumentTitle(name: string | undefined) {
   const { t } = useLingui();
-  const title = name ? t`${name} · Lymi` : "Lymi";
+  const title = name ? t`${{ name: isolate(name) }} · Lymi` : "Lymi";
   useEffect(() => {
     document.title = title;
     screenName = name;

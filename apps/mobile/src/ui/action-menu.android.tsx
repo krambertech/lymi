@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { unisolate } from "@lymi/core";
 import { BlurView } from "expo-blur";
 import { Fragment, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
@@ -102,7 +103,7 @@ export function ActionMenu({
             onPress={show}
             disabled={disabled}
             accessibilityRole="button"
-            accessibilityLabel={label}
+            accessibilityLabel={unisolate(label)}
             accessibilityState={{ disabled, expanded }}
             hitSlop={8}
             style={{ width: 32, height: 32, alignItems: "center", justifyContent: "center" }}

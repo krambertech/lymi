@@ -67,6 +67,7 @@ export function CardStream({ cards, language, direction, className }: Props) {
               "hyphenate line-clamp-2 break-words font-medium tracking-[-0.015em]",
               up ? "text-2xl leading-[1.2]" : "text-xl leading-[1.2]",
             )}
+            dir="auto"
           >
             {card.term}
           </span>

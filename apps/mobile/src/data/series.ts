@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, type Series } from "@lymi/client/api";
 import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../ui/toast-host";
 import type { MoveBack } from "./move-undo";
@@ -91,8 +92,8 @@ export function useMoveNotice() {
       id: `move-deck-${deckId}`,
       title:
         seriesName !== undefined
-          ? t`Moved “${deckName}” to ${seriesName}`
-          : t`Took “${deckName}” out of its series`,
+          ? t`Moved “${{ deckName: isolate(deckName) }}” to ${{ seriesName: isolate(seriesName) }}`
+          : t`Took “${{ deckName: isolate(deckName) }}” out of its series`,
       action: { label: t`Undo`, onPress: undo },
     });
 }

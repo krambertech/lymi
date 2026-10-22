@@ -126,7 +126,9 @@ function MoveToList<T extends Item>({
             aria-current={item.id === current}
             onClick={() => (item.id === current ? onClose() : onMove(item))}
           >
-            <span className="min-w-0 flex-1 truncate">{item.name}</span>
+            <span dir="auto" className="min-w-0 flex-1 truncate">
+              {item.name}
+            </span>
             {item.id === current && <Check className="size-[18px]" aria-hidden="true" />}
           </button>
         </li>

@@ -7,6 +7,8 @@ import {
   termReading,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
+import { StyleSheet } from "react-native";
+import { textStart } from "../theme/type";
 import { Furigana } from "./furigana";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
@@ -66,5 +68,11 @@ export function ExampleText({
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
   );
-  return <Furigana segments={segments} {...props} />;
+  return (
+    <Furigana
+      segments={segments}
+      {...props}
+      style={[StyleSheet.flatten(props.style), textStart(lang)]}
+    />
+  );
 }

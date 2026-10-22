@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ExportFormat } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, RotateCcw } from "lucide-react";
 import { useEffect, useId, useState } from "react";
@@ -93,7 +94,8 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
         </div>
         <p className="text-base text-text-2 text-pretty">
           <Trans>
-            Writing {fileName}. You can close this. The file stays in Activity for a day.
+            Writing {{ fileName: isolate(fileName) }}. You can close this. The file stays in
+            Activity for a day.
           </Trans>
         </p>
       </div>
@@ -207,7 +209,8 @@ export function ExportSheet({
   };
   const current = exportId && (!writing || slow) ? item.data : undefined;
   const deckName = scope.kind === "deck" ? scope.deckName : "";
-  const title = scope.kind === "deck" ? t`Export ${deckName}` : t`Export library`;
+  const title =
+    scope.kind === "deck" ? t`Export ${{ deckName: isolate(deckName) }}` : t`Export library`;
 
   return (
     <Dialog open={open} onOpenChange={close}>

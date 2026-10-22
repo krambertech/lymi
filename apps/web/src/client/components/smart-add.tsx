@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { LessonAccessOut } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
@@ -259,7 +260,7 @@ function SmartAdd({
     const added = results.filter((r) => r.status === "added").length;
     toast.add({
       id: "smart-added",
-      title: t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${deck?.name ?? ""}. Lymi is writing their examples.`,
+      title: t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${isolate(deck?.name ?? "")}. Lymi is writing their examples.`,
     });
     onClose();
   };
@@ -584,7 +585,7 @@ function InputStep(props: {
                     </span>
                   </span>
                   <IconButton
-                    label={t`Remove ${name}`}
+                    label={t`Remove ${{ name: isolate(name) }}`}
                     size="sm"
                     onClick={() => onPagesChange(pages.filter((p) => p.id !== page.id))}
                   >
@@ -962,7 +963,7 @@ function ListStep({
             <SelectContent>
               {decks.map((d) => (
                 <SelectItem key={d.id} value={d.id}>
-                  {d.name}
+                  <bdi>{d.name}</bdi>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -1001,7 +1002,7 @@ function ListStep({
                   />
                   <div className="grid min-w-0">
                     <FieldLabel className="text-base font-medium text-text [overflow-wrap:anywhere]">
-                      {term.term}
+                      <bdi>{term.term}</bdi>
                     </FieldLabel>
                     <span className="text-sm text-text-2">{term.gloss}</span>
                     <TermNote term={term} />
@@ -1051,7 +1052,7 @@ function TermNote({ term }: { term: LessonTerm }) {
     return (
       <span className="text-xs text-muted">
         <Trans>
-          Another form of {term.formOf.term}, in {term.formOf.deckName}
+          Another form of {isolate(term.formOf.term)}, in {isolate(term.formOf.deckName)}
         </Trans>
       </span>
     );
@@ -1086,9 +1087,9 @@ function ExistingList({ terms }: { terms: LessonTerm[] }) {
               <Check className="size-4" aria-hidden="true" />
             </span>
             <div className="grid min-w-0 gap-0.5">
-              <span className="text-base text-muted">{term.term}</span>
+              <bdi className="text-base text-muted">{term.term}</bdi>
               <span className="text-sm text-muted">
-                <Trans>In {term.existing?.deckName}</Trans>
+                <Trans>In {isolate(term.existing?.deckName)}</Trans>
               </span>
             </div>
           </li>

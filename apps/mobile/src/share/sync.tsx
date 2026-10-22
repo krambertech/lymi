@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { decksQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
@@ -36,7 +37,7 @@ function useShareStrings(): Record<string, string> {
   const deck = "{deck}";
   return {
     close: t`Close`,
-    add: t`Add to ${deck}`,
+    add: t`Add to ${{ deck: isolate(deck) }}`,
     deck: t`Deck`,
     term: t`Term`,
     meaning: t`Meaning`,
@@ -46,9 +47,9 @@ function useShareStrings(): Record<string, string> {
     aiOn: t`AI fills in`,
     aiOff: t`AI off`,
     aiLabel: t`Fill in the rest with AI`,
-    moved: t`Moved to ${deck}, the deck for this language`,
-    added: t`Added “${term}” to ${deck}`,
-    skipped: t`“${term}” is already in ${deck}`,
+    moved: t`Moved to ${{ deck: isolate(deck) }}, the deck for this language`,
+    added: t`Added “${{ term: isolate(term) }}” to ${{ deck: isolate(deck) }}`,
+    skipped: t`“${{ term: isolate(term) }}” is already in ${{ deck: isolate(deck) }}`,
     signedOut: t`Open Lymi and sign in to add words from other apps.`,
     noDecks: t`Create a deck on the web first, then add cards here.`,
     noText: t`Select a word or phrase, then share it to Lymi.`,

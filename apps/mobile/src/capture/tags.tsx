@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { retag, type TagChoice, tagPicker } from "@lymi/client/deck-list";
 import { tagsQuery } from "@lymi/client/queries";
-import { TAG_LIMITS, tagKey } from "@lymi/core";
+import { isolate, TAG_LIMITS, tagKey } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, useWindowDimensions } from "react-native";
@@ -115,7 +115,7 @@ export function TagList({
   // The one new name, or every new name, that Create makes.
   const typed = fresh[0] ?? "";
   const listed = formatList(
-    fresh.map((name) => `“${name}”`),
+    fresh.map((name) => `“${isolate(name)}”`),
     i18n.locale,
   );
   return (
@@ -156,7 +156,11 @@ export function TagList({
             {creating && (
               <SheetRow
                 icon="plus"
-                label={fresh.length === 1 ? t`Create “${typed}”` : t`Create ${listed}`}
+                label={
+                  fresh.length === 1
+                    ? t`Create “${{ typed: isolate(typed) }}”`
+                    : t`Create ${listed}`
+                }
                 onPress={submit}
               />
             )}

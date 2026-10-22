@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { unisolate } from "@lymi/core";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
@@ -528,7 +529,7 @@ function Back({
       <Press
         onPress={onPress}
         accessibilityRole="button"
-        accessibilityLabel={label}
+        accessibilityLabel={unisolate(label)}
         className="-ms-2"
       >
         <View className="size-11 items-center justify-center">{chevron}</View>
@@ -539,7 +540,7 @@ function Back({
     <Press
       onPress={onPress}
       accessibilityRole="link"
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       className="-ms-2 shrink"
     >
       <View className="h-11 flex-row items-center">
@@ -648,7 +649,12 @@ export function BarButton({
 }) {
   const p = usePalette();
   return (
-    <Press onPress={onPress} drawn={40} accessibilityRole="button" accessibilityLabel={label}>
+    <Press
+      onPress={onPress}
+      drawn={40}
+      accessibilityRole="button"
+      accessibilityLabel={unisolate(label)}
+    >
       <GlassSurface
         tint={amber ? "amber" : "room"}
         style={{

@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -55,7 +56,7 @@ function Consent() {
 
   const app = identifyApp(clientId, client.data?.client_name);
   const appName = app.name;
-  useDocumentTitle(appName ? t`Connect ${appName}` : t`Connect an app`);
+  useDocumentTitle(appName ? t`Connect ${{ appName: isolate(appName) }}` : t`Connect an app`);
 
   async function decide(accept: boolean) {
     setError(null);

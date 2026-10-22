@@ -37,6 +37,7 @@ export type E2EAccount =
   | "welcome"
   | "explore-edition"
   | "long-cards"
+  | "right-to-left"
   | "series"
   | "series-archive"
   | "series-drag"

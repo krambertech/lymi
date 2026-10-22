@@ -156,7 +156,9 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
             key={deck.id}
             className="flex items-baseline justify-between gap-4 border-t border-edge py-3 first:border-t-0 first:pt-0"
           >
-            <span className="min-w-0 truncate text-base text-text">{deck.name}</span>
+            <span dir="auto" className="min-w-0 truncate text-base text-text">
+              {deck.name}
+            </span>
             <span className="shrink-0 text-sm text-muted">
               <Plural value={deck.members} one="# person" other="# people" />
             </span>

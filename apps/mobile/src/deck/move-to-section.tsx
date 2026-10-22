@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Section } from "@lymi/client/api";
 import type { DeckRow } from "@lymi/client/deck-list";
 import { deckCardsQuery, sectionsQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDeckCards, useSections } from "../data/queries";
@@ -81,10 +82,10 @@ export function useMoveCards(deckId: string) {
           id,
           title: one
             ? sectionId
-              ? t`Moved “${term}” to ${sectionName}`
-              : t`Took “${term}” out of its section`
+              ? t`Moved “${{ term: isolate(term) }}” to ${{ sectionName: isolate(sectionName) }}`
+              : t`Took “${{ term: isolate(term) }}” out of its section`
             : sectionId
-              ? t`Moved ${plural(count, { one: "# card", other: "# cards" })} to ${sectionName}`
+              ? t`Moved ${plural(count, { one: "# card", other: "# cards" })} to ${{ sectionName: isolate(sectionName) }}`
               : t`Took ${plural(count, { one: "# card", other: "# cards" })} out of their sections`,
           action: { label: t`Undo`, onPress: () => undo(from) },
         }),
@@ -93,7 +94,7 @@ export function useMoveCards(deckId: string) {
           id,
           error: true,
           title: one
-            ? t`Couldn’t move “${term}”.`
+            ? t`Couldn’t move “${{ term: isolate(term) }}”.`
             : t`Couldn’t move ${plural(count, { one: "# card", other: "# cards" })}.`,
           action: { label: t`Try again`, onPress: () => run(cardIds, section, term) },
         }),
@@ -178,7 +179,7 @@ function MoveToSectionSheet({
     <Sheet
       title={
         term && count === 1
-          ? t`Move “${term}” to`
+          ? t`Move “${{ term: isolate(term) }}” to`
           : plural(count, { one: "Move # card to", other: "Move # cards to" })
       }
       description={online ? t`Cards keep their progress.` : t`Moving cards needs a connection.`}

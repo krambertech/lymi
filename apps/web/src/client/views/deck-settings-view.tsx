@@ -4,6 +4,7 @@ import {
   type DeckPurpose,
   type Directions,
   deckLimits,
+  isolate,
   type SectionProgression,
 } from "@lymi/core";
 import { clsx } from "clsx";
@@ -371,9 +372,9 @@ function DeckAbout({
   const ownerName = deck.owner.name;
   const direction =
     example?.meaning && deck.directions === "recognition"
-      ? t`See ${example.term} → recall “${example.meaning}”`
+      ? t`See ${isolate(example.term)} → recall “${isolate(example.meaning)}”`
       : example?.meaning && deck.directions === "production"
-        ? t`See “${example.meaning}” → recall ${example.term}`
+        ? t`See “${isolate(example.meaning)}” → recall ${isolate(example.term)}`
         : undefined;
   return (
     <>
@@ -413,8 +414,8 @@ function DeckAbout({
             </div>
             <p className="max-w-[60ch] text-sm text-muted">
               <Trans>
-                You study the same cards as {ownerName}, on your own schedule. Nobody else sees your
-                reviews or progress.
+                You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
+                schedule. Nobody else sees your reviews or progress.
               </Trans>
             </p>
           </>
@@ -618,7 +619,11 @@ function MemberRow({
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
-            <IconButton label={t`Options for ${member.name}`} size="sm" aria-disabled={removing}>
+            <IconButton
+              label={t`Options for ${isolate(member.name)}`}
+              size="sm"
+              aria-disabled={removing}
+            >
               <MoreHorizontal />
             </IconButton>
           }

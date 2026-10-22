@@ -29,6 +29,7 @@ import {
   serializeState,
   stateDirection,
   termReading,
+  textDirection,
 } from "@lymi/core";
 import { CARD_STATES } from "@lymi/core/analytics";
 import { and, eq, gte, ne } from "@lymi/core/db";
@@ -445,6 +446,7 @@ export async function gradeCard(
       termDrawn(row, draws) ? readingShown(key, state.state) : null,
       fadedReadings(row, input.readingsFaded),
     ),
+    ...(textDirection(row.language) === "rtl" ? { text_direction: "rtl" as const } : {}),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.

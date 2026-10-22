@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { standsAlone } from "@lymi/core";
+import { isolate, standsAlone } from "@lymi/core";
 import type { AnalyticsProperties, COMMAND_MENU_COMMANDS } from "@lymi/core/analytics";
 import {
   keepPreviousData,
@@ -35,6 +35,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import type { CardHit, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
+import { bidi } from "../lib/bidi";
 import { addInput, refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
 import { modShortcut } from "../lib/device";
@@ -413,7 +414,7 @@ export function CommandMenu({
       if (outcome.status === "skipped") {
         const card = outcome.existing;
         toast.add({
-          title: t`“${quoted}” is already in ${outcome.deckName}`,
+          title: t`“${{ quoted: isolate(quoted) }}” is already in ${isolate(outcome.deckName)}`,
           actionProps: { children: t`Open`, onClick: () => openCard(card) },
         });
         return;
@@ -426,8 +427,8 @@ export function CommandMenu({
       const deckName = target.name;
       toast.add({
         title: queued
-          ? t`Added “${quoted}” to ${deckName}. It’s saved on this device until Lymi can be reached.`
-          : t`Added “${quoted}” to ${deckName}`,
+          ? t`Added “${{ quoted: isolate(quoted) }}” to ${{ deckName: isolate(deckName) }}. It’s saved on this device until Lymi can be reached.`
+          : t`Added “${{ quoted: isolate(quoted) }}” to ${{ deckName: isolate(deckName) }}`,
         ...(queued ? {} : { actionProps: { children: t`Open`, onClick: () => openCard(card) } }),
       });
     } catch (e) {
@@ -548,7 +549,7 @@ export function CommandMenu({
             </CommandGroup>
           ))}
           {groups.length === 0 && !addRow && (!searchable || searched) && (
-            <CommandEmpty>{t`Nothing matches “${shortQuote(query)}”`}</CommandEmpty>
+            <CommandEmpty>{bidi(t`Nothing matches “${isolate(shortQuote(query))}”`)}</CommandEmpty>
           )}
         </CommandList>
       </CommandPalette>
@@ -573,7 +574,9 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
     return (
       <>
         <Layers className="size-4 text-text" aria-hidden="true" />
-        <span className="min-w-0 flex-1 truncate">{row.deck.name}</span>
+        <span dir="auto" className="min-w-0 flex-1 truncate">
+          {row.deck.name}
+        </span>
         {active ? (
           <span className="flex shrink-0 items-center gap-1 text-sm text-muted">
             <Kbd>{modKey()}</Kbd>
@@ -595,8 +598,13 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
       <>
         <RectangleHorizontal className="size-4 text-text" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate">
-          <span className="font-medium">{row.card.term}</span>
-          {row.card.meaning && <span className="text-muted"> · {row.card.meaning}</span>}
+          <bdi className="font-medium">{row.card.term}</bdi>
+          {row.card.meaning && (
+            <span className="text-muted">
+              {" · "}
+              <bdi>{row.card.meaning}</bdi>
+            </span>
+          )}
         </span>
         <span className="max-w-[40%] shrink-0 truncate text-sm text-muted">
           {row.card.deckName}
@@ -642,7 +650,11 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
       )}
       <span className="flex min-w-0 flex-1 text-base">
         {row.existing ? (
-          <span className="truncate text-text">{t`Open “${shortQuote(row.existing.term)}” in ${row.existing.deckName}`}</span>
+          <span className="truncate text-text">
+            {bidi(
+              t`Open “${isolate(shortQuote(row.existing.term))}” in ${isolate(row.existing.deckName)}`,
+            )}
+          </span>
         ) : deckName ? (
           // A long term gives way first: the deck is where the card lands.
           <>
@@ -652,7 +664,7 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
             )}
           </>
         ) : (
-          <span className="truncate text-text">{t`Add “${shortQuote(term)}”`}</span>
+          <span className="truncate text-text">{bidi(t`Add “${isolate(shortQuote(term))}”`)}</span>
         )}
       </span>
       {!row.existing && deckName && (

@@ -121,6 +121,9 @@
   line-clamp: 2;
   overflow: hidden;
   flex-shrink: 0;
+  /* Uppercase ru words such as ДЕМОКРАТИЧЕСКОМ run wider than the card; hyphenate where the browser can, break anywhere where it cannot. */
+  overflow-wrap: anywhere;
+  hyphens: auto;
   font-size: max(0.6875rem, calc(var(--cw) * 0.054));
   font-weight: 500;
   line-height: 1.3;

@@ -13,7 +13,25 @@ import {
   sameReading,
   spokenText,
   standsAlone,
+  termKey,
 } from "./terms";
+
+describe("termKey", () => {
+  it("drops Russian stress marks, so за́мок and замок are one term", () => {
+    expect(termKey("ru", "За́мок")).toBe("замок");
+    expect(termKey("ru-RU", "замо́к")).toBe(termKey("ru", "замок"));
+    expect(termKey("ru", "Ёжик")).toBe("ёжик");
+  });
+  it("drops Ukrainian stress marks the same way, and keeps ї", () => {
+    expect(termKey("uk", "Ру́ки")).toBe("руки");
+    expect(termKey("uk-UA", "їжа́к")).toBe("їжак");
+  });
+  it("keeps the mark in every other language", () => {
+    expect(termKey("lt", "ą́")).toBe("ą́");
+    expect(termKey("bg", "за́мок")).not.toBe(termKey("bg", "замок"));
+    expect(termKey(null, "café")).toBe("café");
+  });
+});
 
 describe("normaliseTerm", () => {
   it("trims, collapses whitespace and case-folds", () => {

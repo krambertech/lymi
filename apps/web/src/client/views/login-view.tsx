@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/react/macro";
-import { MIN_PASSWORD_LENGTH } from "@lymi/core";
+import { isolate, MIN_PASSWORD_LENGTH } from "@lymi/core";
 import type { FormEvent, ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/app-mark";
 import { AppleMark } from "../components/apple-mark";
@@ -101,7 +101,7 @@ export function LoginView({
           <div className="flex flex-col items-center text-center">
             <AppMark app={app} className="size-12" />
             <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-text">
-              <Trans>Continue to {appName}</Trans>
+              <Trans>Continue to {{ appName: isolate(appName) }}</Trans>
             </h1>
             <p className="mt-2 max-w-[36ch] text-md text-text-2">
               <Trans>Sign in, then choose what it can do.</Trans>

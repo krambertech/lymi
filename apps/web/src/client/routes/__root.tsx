@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { warmCache } from "@lymi/client/cache";
 import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -234,14 +235,14 @@ function Shell() {
         if (notice.reason === "skipped") {
           const deckName = notice.deckName;
           toast.add({
-            title: t`“${label}” was already in ${deckName}, so the copy added offline was left out.`,
+            title: t`“${{ label: isolate(label) }}” was already in ${{ deckName: isolate(deckName) }}, so the copy added offline was left out.`,
           });
         } else {
           const reason = notice.message;
           toast.add({
             type: "error",
             title: label
-              ? t`A change to “${label}” made offline couldn’t be saved. ${reason}`
+              ? t`A change to “${{ label: isolate(label) }}” made offline couldn’t be saved. ${reason}`
               : t`A change made offline couldn’t be saved. ${reason}`,
           });
         }

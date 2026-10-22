@@ -19,6 +19,7 @@ import {
   type Drawn,
   drawKey,
   gradeAllowed,
+  isolate,
   modeKey,
   pronunciationInputKey,
   type Rating,
@@ -808,7 +809,9 @@ function Review() {
         ...recallTimes(),
         ...readingsFadedField(qc, item.card),
       });
-      setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
+      // Grading from the strip or the speaker keeps focus on the next card, so keyboard and screen
+      // reader users don't drop to the page body.
+      setFocusReveal(!!document.activeElement?.closest("[data-grade-strip], [data-audio]"));
       const listed = !!leg && !drawLeg;
       if (listed) setLegCards((c) => ({ ...c, graded: withKey(c.graded, gradedKey(item)) }));
       setSending((n) => n + 1);
@@ -836,8 +839,8 @@ function Review() {
               type: "error",
               title:
                 outcome === "gone"
-                  ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
-                  : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
+                  ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
+                  : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
             });
           }
           // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
@@ -901,7 +904,10 @@ function Review() {
         }
         return;
       }
-      if (control) return;
+      const g = GRADES.find((x) => x.key === e.key);
+      // A click leaves focus on the speaker, which keeps Space and Enter to replay and lets the
+      // grade keys through.
+      if (control && !(g && control.matches("[data-audio]"))) return;
       if (!current) return;
       if (e.key === " ") {
         e.preventDefault();
@@ -912,7 +918,6 @@ function Review() {
           setRevealed(true);
         } else onGrade(3, "keyboard");
       }
-      const g = GRADES.find((x) => x.key === e.key);
       if (g) {
         e.preventDefault();
         onGrade(g.rating, "keyboard");
@@ -1011,7 +1016,7 @@ function Review() {
     }
     toast.add({
       id: `archived-${card.id}`,
-      title: t`Archived “${archivedTerm}”`,
+      title: t`Archived “${{ archivedTerm: isolate(archivedTerm) }}”`,
       actionProps: {
         children: t`Undo`,
         onClick: async () => {

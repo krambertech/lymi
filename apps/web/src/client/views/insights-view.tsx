@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type InsightsOut, localDate } from "@lymi/core";
+import { type InsightsOut, localDate, textDirection } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { DAY_GRID_HEIGHT, DayGrid } from "../components/day-grid";
@@ -353,7 +353,11 @@ export function InsightsView({
               >
                 {/* The card in its deck holds the whole text; this row only has to be recognised. */}
                 <span className="hyphenate line-clamp-3 min-w-0 [overflow-wrap:anywhere]">
-                  <span className="font-medium text-text" lang={c.language ?? undefined}>
+                  <span
+                    className="font-medium text-text"
+                    lang={c.language ?? undefined}
+                    dir={textDirection(c.language)}
+                  >
                     {c.term}
                   </span>
                   {c.meaning && <span className="ms-2 text-sm text-muted">{c.meaning}</span>}

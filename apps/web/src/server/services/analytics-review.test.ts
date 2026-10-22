@@ -173,7 +173,7 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
         rating: 3,
         reviewedAt: new Date(),
       },
-      { over: furigana, inPlace: furigana, byWord: furigana },
+      { over: furigana, inPlace: { ru: furigana, uk: furigana }, byWord: furigana },
     );
   await at(eat as string, true, "term_to_meaning");
   await at(eat as string, true, "meaning_to_term");
@@ -229,7 +229,7 @@ it("leaves out where the stress showed for a phone that draws it only after the 
     { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる", language: "ja" },
   ]);
   // A 0.0.3 phone draws furigana but shows the stress as a line after the reveal.
-  const older = { over: true, inPlace: false, byWord: false };
+  const older = { over: true, inPlace: {}, byWord: false };
   for (const added of [lock, eat]) {
     const cardId = added?.status === "added" ? added.card.id : "";
     await gradeCard(
@@ -249,6 +249,41 @@ it("leaves out where the stress showed for a phone that draws it only after the 
   ]);
 });
 
+it("says where a Ukrainian stress showed only for a grader whose build knows Ukrainian", async () => {
+  const student = await learner(db, "analytics-stress-uk", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "Слова", defaultLanguage: "uk" });
+  const added = await addCards(ctx, [
+    { deckId: deck.id, term: "руки", meaning: "hands", pronunciation: "ру́ки" },
+    { deckId: deck.id, term: "замок", meaning: "a lock", pronunciation: "замо́к" },
+  ]);
+  // A 0.0.7 phone draws Russian stress in place but shows Ukrainian's as a line; the web draws both.
+  const graders = [{ ru: true }, { ru: true, uk: true }];
+  for (const [i, inPlace] of graders.entries()) {
+    const card = added[i];
+    await gradeCard(
+      ctx,
+      {
+        cardId: card?.status === "added" ? card.card.id : "",
+        direction: "recognition",
+        rating: 3,
+        reviewedAt: new Date(),
+      },
+      { over: true, inPlace, byWord: true },
+    );
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language]);
+  expect(graded).toEqual([
+    [undefined, undefined],
+    ["cue", "uk"],
+  ]);
+});
+
 it("says where a Tamil reading showed only for a grader that draws it over each word", async () => {
   const student = await learner(db, "analytics-word-since", "Learner");
   const { analytics, capture, settled } = writer();
@@ -260,8 +295,8 @@ it("says where a Tamil reading showed only for a grader that draws it over each 
   const cardId = song?.status === "added" ? song.card.id : "";
   // A 0.0.5 phone draws furigana and stress but nothing over a Tamil word; the web draws it.
   for (const draws of [
-    { over: true, inPlace: true, byWord: false },
-    { over: true, inPlace: true, byWord: true },
+    { over: true, inPlace: { ru: true }, byWord: false },
+    { over: true, inPlace: { ru: true }, byWord: true },
   ]) {
     await gradeCard(
       ctx,
@@ -300,7 +335,7 @@ it("names Cantonese as yue, and leaves it out for a phone that shows its Jyutpin
   const at = new Date();
   await gradeCard(ctx, { cardId: bankId, direction: "recognition", rating: 3, reviewedAt: at });
   // A 0.0.6 phone draws pinyin, furigana and Tamil but shows Jyutping as a line.
-  const older = { over: true, inPlace: true, byWord: true, jyutping: false };
+  const older = { over: true, inPlace: { ru: true }, byWord: true, jyutping: false };
   for (const cardId of [bankId, eatId]) {
     await gradeCard(
       ctx,
@@ -389,4 +424,28 @@ it("counts a Chinese example's pinyin one character at a time, as zh", async () 
     reading_language: "zh",
   });
   expect(JSON.stringify(graded)).not.toContain("说");
+});
+
+it("says a right-to-left card's direction once, never its text", async () => {
+  const student = await learner(db, "analytics-rtl", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "عربي", defaultLanguage: "ar" });
+  const [book, cat] = await addCards(ctx, [
+    { deckId: deck.id, term: "كتاب", meaning: "book" },
+    { deckId: deck.id, term: "Katze", meaning: "cat", language: "de" },
+  ]);
+  const bookId = book?.status === "added" ? book.card.id : "";
+  const catId = cat?.status === "added" ? cat.card.id : "";
+  const at = new Date();
+  const grade = { cardId: bookId, direction: "recognition" as const, rating: 3 as const };
+  await gradeCard(ctx, { ...grade, reviewedAt: at });
+  await gradeCard(ctx, { ...grade, reviewedAt: at });
+  await gradeCard(ctx, { ...grade, cardId: catId, reviewedAt: at });
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded");
+  expect(graded.map((event) => event.text_direction)).toEqual(["rtl", undefined]);
+  expect(JSON.stringify(graded)).not.toContain("كتاب");
 });

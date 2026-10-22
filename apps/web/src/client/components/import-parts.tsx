@@ -189,7 +189,10 @@ export function SampleCard({
   ];
   return (
     <div className={clsx("grid gap-3 transition-opacity duration-150", loading && "opacity-60")}>
-      <p className="text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]">
+      <p
+        className="text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]"
+        dir="auto"
+      >
         {sample.term}
       </p>
       <div className="h-px bg-edge" />

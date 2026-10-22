@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type Card, errorMessage, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { canPlayPronunciation } from "@lymi/core";
+import { canPlayPronunciation, isolate } from "@lymi/core";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -45,7 +45,7 @@ export function useArchiveCard() {
         },
       });
     } catch {
-      toast.add({ error: true, title: t`Couldn’t archive “${term}”.` });
+      toast.add({ error: true, title: t`Couldn’t archive “${{ term: isolate(term) }}”.` });
     }
   };
 }

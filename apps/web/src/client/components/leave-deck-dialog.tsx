@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { ConfirmDialog } from "./confirm-dialog";
 
 interface Props {
@@ -19,7 +20,7 @@ export function LeaveDeckDialog({ open, onOpenChange, deckName, onLeave, pending
     <ConfirmDialog
       subject={open ? deckName : null}
       onOpenChange={onOpenChange}
-      title={(name) => t`Leave ${name}?`}
+      title={(name) => t`Leave ${{ name: isolate(name) }}?`}
       description={
         <Trans>
           The deck leaves Library and its cards stop coming up in review. If you join again, your

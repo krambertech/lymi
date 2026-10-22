@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { SectionInput, sectionLimits } from "@lymi/core";
+import { isolate, SectionInput, sectionLimits } from "@lymi/core";
 import { useId, useState } from "react";
 import type { Section } from "../lib/api";
 import { useDesktop } from "../lib/device";
@@ -156,7 +156,7 @@ export function ArchiveSectionDialog({
       subject={section}
       onOpenChange={onOpenChange}
       size="md"
-      title={({ name: sectionName }) => t`Archive “${sectionName}”?`}
+      title={({ name: sectionName }) => t`Archive “${{ sectionName: isolate(sectionName) }}”?`}
       description={
         <Trans>Nothing is deleted. Restore it from Archived sections in the deck’s menu.</Trans>
       }
@@ -308,7 +308,7 @@ export function MoveToSectionDialog({ term, count, sections, ...rest }: MoveToSe
     <MoveToDialog
       title={
         term && count === 1 ? (
-          t`Move “${term}” to`
+          t`Move “${{ term: isolate(term) }}” to`
         ) : (
           <Plural value={count} one="Move # card to" other="Move # cards to" />
         )
@@ -342,7 +342,9 @@ export function StartEarlyDialog({ target, onOpenChange, onStart }: StartEarlyDi
     <ConfirmDialog
       subject={target}
       onOpenChange={onOpenChange}
-      title={({ section: { name: sectionName } }) => t`Start ${sectionName} early?`}
+      title={({ section: { name: sectionName } }) =>
+        t`Start ${{ sectionName: isolate(sectionName) }} early?`
+      }
       description={({ opening }) => {
         const others = opening.length - 1;
         const cards = opening.reduce((sum, s) => sum + s.total, 0);

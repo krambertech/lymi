@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckRow } from "@lymi/client/deck-list";
 import type { SectionArchiveInput } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage, type Section, type Sections } from "./api";
@@ -90,10 +91,10 @@ export function useSectionActions(deckId: string) {
       const title =
         count === 1 && term
           ? sectionId
-            ? t`Moved “${term}” to ${sectionName}`
-            : t`Took “${term}” out of its section`
+            ? t`Moved “${{ term: isolate(term) }}” to ${{ sectionName: isolate(sectionName) }}`
+            : t`Took “${{ term: isolate(term) }}” out of its section`
           : sectionId
-            ? t`Moved ${plural(count, { one: "# card", other: "# cards" })} to ${sectionName}`
+            ? t`Moved ${plural(count, { one: "# card", other: "# cards" })} to ${{ sectionName: isolate(sectionName) }}`
             : t`Took ${plural(count, { one: "# card", other: "# cards" })} out of their sections`;
       toast.add({
         id,
@@ -137,8 +138,8 @@ export function useSectionActions(deckId: string) {
         id: `archive-section-${section.id}`,
         title:
           cards === "archive" && section.total > 0
-            ? t`Archived “${sectionName}” and its cards`
-            : t`Archived “${sectionName}”`,
+            ? t`Archived “${{ sectionName: isolate(sectionName) }}” and its cards`
+            : t`Archived “${{ sectionName: isolate(sectionName) }}”`,
         actionProps: { children: t`Undo`, onClick: () => restore.mutate(section) },
       });
     },
@@ -157,8 +158,8 @@ export function useSectionActions(deckId: string) {
         id: `start-section-${section.id}`,
         title:
           before > 0
-            ? t`Started ${sectionName} and ${plural(before, { one: "the section before it", other: "the # sections before it" })}`
-            : t`Started ${sectionName}`,
+            ? t`Started ${{ sectionName: isolate(sectionName) }} and ${plural(before, { one: "the section before it", other: "the # sections before it" })}`
+            : t`Started ${{ sectionName: isolate(sectionName) }}`,
       });
     },
     onError: (error) => failed("start-section", error),

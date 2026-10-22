@@ -261,6 +261,7 @@ export const analyticsEvents = {
     reading_language: z
       .enum(Object.keys(LANGUAGE_RECORDS) as [RecordTag, ...RecordTag[]])
       .optional(),
+    text_direction: z.enum(["rtl"]).optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),

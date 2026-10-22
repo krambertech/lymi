@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
@@ -59,7 +60,7 @@ export default function ExploreSearch() {
               <EmptyState
                 fill
                 kind="noMatch"
-                title={t`No decks match “${query}”`}
+                title={t`No decks match “${{ query: isolate(query) }}”`}
                 body={t`Try a word from a card, or a language.`}
                 action={{ label: t`Clear search`, onPress: () => setText("") }}
               />

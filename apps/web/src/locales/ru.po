@@ -25,7 +25,7 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{name}”"
 msgstr "«{name}»"
 
-#. placeholder {0}: outcome.deckName
+#. placeholder {0}: isolate(outcome.deckName)
 msgid "“{quoted}” is already in {0}"
 msgstr "«{quoted}» уже есть в колоде {0}"
 
@@ -366,16 +366,16 @@ msgstr "{0, plural, one {Проверен # вид} few {Проверено # в
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, one {Все колоды: #} few {Все колоды: #} many {Все колоды: #} other {Все колоды: #}}"
 
-#. placeholder {0}: card.deckName
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(card.deckName)
+#. placeholder {0}: isolate(item.fileName)
 #. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
 #. placeholder {1}: when(card.archivedAt)
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(item.fileName)
 msgid "{0} · {date}"
 msgstr "{0} · {date}"
 
@@ -397,16 +397,16 @@ msgstr "{0} к повторению"
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} забыто <0>·</0> {1, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
-#. placeholder {0}: outcome.term
-#. placeholder {1}: outcome.deckName
+#. placeholder {0}: isolate(outcome.term)
+#. placeholder {1}: isolate(outcome.deckName)
 msgid "{0} is already in {1}"
 msgstr "{0} уже есть в {1}"
 
-#. placeholder {0}: empty.name
+#. placeholder {0}: isolate(empty.name)
 msgid "{0} is empty. Add the words you want to remember."
 msgstr "Колода «{0}» пуста. Добавь слова, которые хочешь запомнить."
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "{0} is ready. Your first review takes a few minutes."
 msgstr "Колода «{0}» готова. Первое повторение займёт несколько минут."
 
@@ -434,7 +434,7 @@ msgstr "Выучено {0} ваших карточек."
 msgid "{0} remembered, {1} forgotten."
 msgstr "Запомнено: {0}, забыто: {1}."
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} shared a deck"
 msgstr "{0} делится колодой"
 
@@ -445,7 +445,7 @@ msgstr "Загружено {0}% файла. Выбери тот же файл, �
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До остановки импорта добавлена # карточка.} few {До остановки импорта добавлены # карточки.} many {До остановки импорта добавлено # карточек.} other {До остановки импорта добавлено # карточки.}}"
 
-#. placeholder {0}: deck?.name ?? ""
+#. placeholder {0}: isolate(deck?.name ?? "")
 msgid "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi is writing their examples."
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}} в «{0}». Lymi пишет к ним примеры."
 
@@ -760,12 +760,12 @@ msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {#
 msgid "<0/> invited you to study this deck"
 msgstr "<0/> приглашает тебя изучать эту колоду"
 
-#. placeholder {0}: section.name
+#. placeholder {0}: isolate(section.name)
 msgid "<0>{0} is ready.</0> Start it to review its cards."
 msgstr "<0>Можно начинать {0}.</0> Начни раздел, чтобы повторять его карточки."
 
-#. placeholder {0}: d.term
-#. placeholder {1}: d.deckName
+#. placeholder {0}: isolate(d.term)
+#. placeholder {1}: isolate(d.deckName)
 msgid "<0>{0}</0> in {1}"
 msgstr "<0>{0}</0> в «{1}»"
 
@@ -885,7 +885,7 @@ msgstr "Активность"
 msgid "Add"
 msgstr "Добавить"
 
-#. placeholder {0}: shortQuote(term)
+#. placeholder {0}: isolate(shortQuote(term))
 msgid "Add “{0}”"
 msgstr "Добавить «{0}»"
 
@@ -974,11 +974,11 @@ msgstr "Добавить заметки"
 msgid "Add, edit and archive cards"
 msgstr "Добавлять, редактировать и архивировать карточки"
 
-#. placeholder {0}: outcome.term
+#. placeholder {0}: isolate(outcome.term)
 msgid "Added “{0}”"
 msgstr "Добавлено «{0}»"
 
-#. placeholder {0}: outcome.term
+#. placeholder {0}: isolate(outcome.term)
 #. placeholder {1}: outcome.pictureError
 msgid "Added “{0}” without its picture. {1}"
 msgstr "«{0}» добавлено без изображения. {1}"
@@ -1120,8 +1120,8 @@ msgstr "anna@example.com"
 msgid "Another draft"
 msgstr "Другой черновик"
 
-#. placeholder {0}: term.formOf.term
-#. placeholder {1}: term.formOf.deckName
+#. placeholder {0}: isolate(term.formOf.term)
+#. placeholder {1}: isolate(term.formOf.deckName)
 msgid "Another form of {0}, in {1}"
 msgstr "Другая форма {0}, в «{1}»"
 
@@ -1858,7 +1858,7 @@ msgstr "Не удалось записать файл. Попробуй ещё �
 msgid "Create “{typed}”"
 msgstr "Создать «{typed}»"
 
-#. placeholder {0}: names(option.create.map((name) => t`“${name}”`))
+#. placeholder {0}: names(option.create.map((name) => t`“${{ name: isolate(name) }}”`))
 msgid "Create {0}"
 msgstr "Создать {0}"
 
@@ -2372,7 +2372,7 @@ msgstr "Формат"
 msgid "Former owner"
 msgstr "Бывший владелец"
 
-#. placeholder {0}: deck.owner.name
+#. placeholder {0}: isolate(deck.owner.name)
 msgid "From {0}"
 msgstr "От {0}"
 
@@ -2573,7 +2573,7 @@ msgstr "Импортируем твои карточки"
 msgid "Imports, exports, changes by apps and AI, and shared deck activity appear here. Connect an app or import a deck in Settings."
 msgstr "Здесь появляются импорт, экспорт, изменения от приложений и AI и действия с общими колодами. Подключи приложение или импортируй колоду в Настройках."
 
-#. placeholder {0}: term.existing?.deckName
+#. placeholder {0}: isolate(term.existing?.deckName)
 msgid "In {0}"
 msgstr "В «{0}»"
 
@@ -3042,18 +3042,18 @@ msgstr "Ещё для повторения"
 msgid "More ways to add cards"
 msgstr "Другие способы добавить карточки"
 
-#. placeholder {0}: shortQuote(card.term)
+#. placeholder {0}: isolate(shortQuote(card.term))
 msgid "Move “{0}” to"
 msgstr "Переместить «{0}» в"
 
 msgid "Move “{term}” to"
 msgstr "Переместить «{term}» в"
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "Move {0} down"
 msgstr "Переместить {0} ниже"
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "Move {0} up"
 msgstr "Переместить {0} выше"
 
@@ -3195,7 +3195,7 @@ msgstr "Архивных разделов нет."
 msgid "No card of this kind has a term."
 msgstr "Ни у одной карточки этого вида нет термина."
 
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(deck.name)
 msgid "No cards in {0} yet"
 msgstr "В колоде {0} ещё нет карточек"
 
@@ -3361,7 +3361,7 @@ msgstr "В «{scopeName}» больше ничего"
 msgid "Nothing left in this deck"
 msgstr "В этой колоде больше ничего"
 
-#. placeholder {0}: shortQuote(query)
+#. placeholder {0}: isolate(shortQuote(query))
 msgid "Nothing matches “{0}”"
 msgstr "Ничего не найдено по «{0}»"
 
@@ -3437,8 +3437,8 @@ msgstr "Видно только твоё имя, а прогресс — нет.
 msgid "Open"
 msgstr "Открыть"
 
-#. placeholder {0}: shortQuote(row.existing.term)
-#. placeholder {1}: row.existing.deckName
+#. placeholder {0}: isolate(shortQuote(row.existing.term))
+#. placeholder {1}: isolate(row.existing.deckName)
 msgid "Open “{0}” in {1}"
 msgstr "Открыть «{0}» в колоде {1}"
 
@@ -3479,8 +3479,8 @@ msgid "Optional"
 msgstr "Необязательно"
 
 #. placeholder {0}: invitation.email
-#. placeholder {0}: member.name
-#. placeholder {0}: tag.name
+#. placeholder {0}: isolate(member.name)
+#. placeholder {0}: isolate(tag.name)
 msgid "Options for {0}"
 msgstr "Действия для {0}"
 
@@ -3870,8 +3870,8 @@ msgstr "Восстановить импорт"
 msgid "Restored"
 msgstr "Восстановлено"
 
-#. placeholder {0}: card.term
-#. placeholder {0}: deck.name
+#. placeholder {0}: isolate(card.term)
+#. placeholder {0}: isolate(deck.name)
 msgid "Restored “{0}”"
 msgstr "Восстановлено «{0}»"
 
@@ -4013,7 +4013,7 @@ msgstr "Сохранено на этом устройстве. Для изобр
 msgid "Saving…"
 msgstr "Сохранение…"
 
-#. placeholder {0}: card.term
+#. placeholder {0}: isolate(card.term)
 msgid "Say {0}"
 msgstr "Сказать {0}"
 
@@ -4047,16 +4047,16 @@ msgstr "Раздел: {name}"
 msgid "Sections"
 msgstr "Разделы"
 
-#. placeholder {0}: example.meaning
-#. placeholder {1}: example.term
+#. placeholder {0}: isolate(example.meaning)
+#. placeholder {1}: isolate(example.term)
 msgid "See “{0}” → recall {1}"
 msgstr "Увидеть «{0}» → вспомнить {1}"
 
 msgid "See “{answer}”, recall {word}"
 msgstr "Увидеть «{answer}» и вспомнить {word}"
 
-#. placeholder {0}: example.term
-#. placeholder {1}: example.meaning
+#. placeholder {0}: isolate(example.term)
+#. placeholder {1}: isolate(example.meaning)
 msgid "See {0} → recall “{1}”"
 msgstr "Увидеть {0} → вспомнить «{1}»"
 
@@ -4272,7 +4272,7 @@ msgstr "Источник"
 msgid "Spreadsheet"
 msgstr "Таблица"
 
-#. placeholder {0}: section.name
+#. placeholder {0}: isolate(section.name)
 msgid "Start {0}"
 msgstr "Начать {0}"
 
@@ -4435,7 +4435,7 @@ msgstr "Изображение слишком большое. Выбери фа�
 msgid "That image is too small. Choose one at least 16 pixels wide."
 msgstr "Изображение слишком маленькое. Выбери такое, в котором хотя бы 16 пикселей в ширину."
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: isolate(item.fileName)
 msgid "That isn’t the same file. Choose {0}."
 msgstr "Это другой файл. Выбери {0}."
 

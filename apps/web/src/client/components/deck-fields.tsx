@@ -1,9 +1,10 @@
 import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type DeckPurpose, type Directions, LANGUAGE_TAGS } from "@lymi/core";
+import { type DeckPurpose, type Directions, isolate, LANGUAGE_TAGS } from "@lymi/core";
 import { ClipboardCheck, Languages, Shapes } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
+import { bidi } from "../lib/bidi";
 import { RadioCard } from "./radio-card";
 import {
   Combobox,
@@ -148,7 +149,7 @@ export function LanguageCombobox({
   // Offered beside partial matches too, since "sw" is inside "Swedish" and would otherwise be unreachable.
   const custom: LanguageOption | null =
     TAG_RE.test(tag) && !known.some((o) => o.hint?.toLowerCase() === tag.toLowerCase())
-      ? { value: tag, label: t`Use “${tag}” as the tag` }
+      ? { value: tag, label: t`Use “${{ tag: isolate(tag) }}” as the tag` }
       : null;
   const shown = custom ? [...matches, custom] : matches;
 
@@ -175,7 +176,7 @@ export function LanguageCombobox({
         <ComboboxList>
           {(option: LanguageOption) => (
             <ComboboxItem key={option.value ?? ""} value={option}>
-              <span className="flex-1 truncate">{option.label}</span>
+              <span className="flex-1 truncate">{bidi(option.label)}</span>
               {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
             </ComboboxItem>
           )}
@@ -236,8 +237,10 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
   const noteId = useId();
   const shown = (o: DirectionOption): string => {
     if (!example?.meaning) return i18n._(o.blurb);
-    if (o.value === "recognition") return t`See ${example.term} → recall “${example.meaning}”`;
-    if (o.value === "production") return t`See “${example.meaning}” → recall ${example.term}`;
+    if (o.value === "recognition")
+      return t`See ${isolate(example.term)} → recall “${isolate(example.meaning)}”`;
+    if (o.value === "production")
+      return t`See “${isolate(example.meaning)}” → recall ${isolate(example.term)}`;
     return t`Both of the above, one card at a time.`;
   };
   return (

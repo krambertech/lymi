@@ -193,6 +193,24 @@ export function htmlToText(html: string): string {
     .trim();
 }
 
+/** Cyrillic vowels a deck may mark stressed by setting them in bold or underline. */
+const CYRILLIC_VOWEL = "аеёиоуыэюяієїАЕЁИОУЫЭЮЯІЄЇ";
+const MARKED_VOWEL = new RegExp(`<(b|strong|u)\\b[^>]*>([${CYRILLIC_VOWEL}])</\\1>`, "gi");
+const CYRILLIC_LETTER = /\p{Script=Cyrillic}/u;
+
+/**
+ * An HTML field with each bold or underlined Cyrillic vowel inside a word written with U+0301, as
+ * many Anki decks mark stress: `з<b>а</b>мок` → `за́мок`. A tag around anything else, or around a
+ * vowel standing alone, is left for `htmlToText`.
+ */
+export function boldStress(html: string): string {
+  return html.replace(MARKED_VOWEL, (match, _tag: string, vowel: string, at: number) => {
+    const before = html[at - 1] ?? "";
+    const after = html[at + match.length] ?? "";
+    return CYRILLIC_LETTER.test(before) || CYRILLIC_LETTER.test(after) ? `${vowel}\u0301` : match;
+  });
+}
+
 /** Every `<img src>` in an HTML field, in order, entity-decoded. */
 export function imageSources(html: string): string[] {
   const sources: string[] = [];

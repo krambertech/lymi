@@ -24,6 +24,7 @@
     "eval:style": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/style-evaluate.ts",
     "eval:lead-ins": "tsx --env-file-if-exists=.dev.vars src/server/lead-ins/evaluate.ts",
     "eval:stress": "tsx --env-file-if-exists=.dev.vars src/server/speech-stress/evaluate.ts",
+    "backfill:stress": "tsx src/server/stress-backfill/dry-run.ts",
     "design:dev": "vite --config vite.design.config.ts",
     "design:build": "vite build --config vite.design.config.ts",
     "design:deploy": "pnpm design:build && wrangler deploy -c wrangler.design.jsonc",

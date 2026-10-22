@@ -8,7 +8,7 @@ import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
-import { cyrillicStress } from "./stress";
+import { cyrillicStress, hasStress, readStress, stressKey, stripStress } from "./stress";
 
 /** A field `normalizeCardText` may convert. */
 export type NormalizedField = "term" | "pronunciation";
@@ -44,12 +44,25 @@ function dropSpelledReading({ term, pronunciation }: CardText): CardText {
 }
 
 /**
- * A pronunciation's accented Latin look-alikes become Cyrillic vowels with U+0301: замóк → замо́к.
- * The term is left as sent until the stress fold changes its key.
+ * Accented Latin look-alikes become Cyrillic vowels with U+0301 (замóк → замо́к), and a stressed
+ * term splits into the term as natives write it and its stress as the pronunciation, as a lesson
+ * or an import marks it: за́мок → замок stressed за́мок. A pronunciation that says something else,
+ * such as IPA or another stress, leaves the term as sent.
  */
-function markStress({ pronunciation }: CardText, language: string): CardText {
+function markStress({ term, pronunciation }: CardText, language: string): CardText {
   const rules = stressRules(language);
-  return pronunciation && rules ? { pronunciation: cyrillicStress(pronunciation, rules) } : {};
+  if (!rules) return {};
+  const sent = pronunciation?.trim() ? cyrillicStress(pronunciation, rules) : pronunciation;
+  const out: CardText = sent === pronunciation ? {} : { pronunciation: sent };
+  if (term === undefined) return out;
+  const typed = cyrillicStress(term, rules);
+  const plain = stripStress(typed);
+  const read = hasStress(typed) ? readStress(plain, typed, rules) : null;
+  if (read === null) return typed === term ? out : { ...out, term: typed };
+  // An acute over ё or over a word of one syllable says nothing, so it only leaves the term.
+  if (read.marks === 0) return { ...out, term: plain };
+  if (!sent?.trim()) return { term: plain, pronunciation: read.form };
+  return stressKey(plain, sent, rules) === read.form.toLowerCase() ? { ...out, term: plain } : out;
 }
 
 /** Pinyin sent with tone numbers stores with tone marks: ni3 hao3 → nǐ hǎo. */

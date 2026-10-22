@@ -3,6 +3,7 @@ import { api } from "@lymi/client/api";
 import { cacheWarmer } from "@lymi/client/cache";
 import { retireGrades } from "@lymi/client/grades";
 import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { onlineManager, useQueryClient } from "@tanstack/react-query";
 import { addNetworkStateListener } from "expo-network";
 import { useEffect, useMemo } from "react";
@@ -98,13 +99,13 @@ export function Sync({ learnerId }: { learnerId: string }) {
         if (notice.reason === "skipped") {
           const deckName = notice.deckName;
           Alert.alert(
-            t`“${label}” was already in ${deckName}, so the copy added offline was left out.`,
+            t`“${{ label: isolate(label) }}” was already in ${{ deckName: isolate(deckName) }}, so the copy added offline was left out.`,
           );
         } else {
           const reason = notice.message;
           Alert.alert(
             label
-              ? t`A change to “${label}” made offline couldn’t be saved. ${reason}`
+              ? t`A change to “${{ label: isolate(label) }}” made offline couldn’t be saved. ${reason}`
               : t`A change made offline couldn’t be saved. ${reason}`,
           );
         }

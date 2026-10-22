@@ -1,3 +1,4 @@
+import { unisolate } from "@lymi/core";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { Pressable, View } from "react-native";
@@ -43,7 +44,7 @@ export function RowMenu({
     <View
       accessible
       accessibilityRole={heading ? "header" : kind}
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       onAccessibilityTap={tap}
       accessibilityActions={flat.map((i) => ({ name: i.id, label: i.label }))}
       onAccessibilityAction={(e) => {

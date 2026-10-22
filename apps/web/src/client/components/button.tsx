@@ -1,9 +1,11 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
+import { unisolate } from "@lymi/core";
 import { clsx } from "clsx";
 import { cn } from "cn";
 import { Loader2 } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
+import { bidi } from "../lib/bidi";
 import { Kbd } from "./kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -168,7 +170,7 @@ export function IconButton({
           <button
             ref={ref}
             type="button"
-            aria-label={label}
+            aria-label={unisolate(label)}
             className={clsx(
               "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
               round ? "rounded-full" : size === "xs" ? "rounded-xs" : "rounded-sm",
@@ -191,7 +193,7 @@ export function IconButton({
       >
         {children}
       </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
+      <TooltipContent>{bidi(label)}</TooltipContent>
     </Tooltip>
   );
 }

@@ -15,6 +15,7 @@ import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
 import { shouldPersistQuery } from "@lymi/client/cache";
 import { bindWriteCache } from "@lymi/client/writes";
+import { BidiTrans } from "./lib/bidi";
 import { queryPersister } from "./lib/query-persister";
 import { isLeavingPage, isStaleChunkError } from "./lib/stale-build";
 import { reportClientException } from "./lib/telemetry";
@@ -99,7 +100,7 @@ export function mountApp(root: HTMLElement) {
           dehydrateOptions: { shouldDehydrateQuery: shouldPersistQuery },
         }}
       >
-        <I18nProvider i18n={i18n}>
+        <I18nProvider i18n={i18n} defaultComponent={BidiTrans}>
           <RouterProvider router={router} />
         </I18nProvider>
       </PersistQueryClientProvider>

@@ -16,7 +16,7 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT } from "@lymi/core";
+import { CHOSEN_LIMIT, isolate } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -904,7 +904,7 @@ function MoveToSeries({
           toast.add({
             id: `move-deck-${deck.id}`,
             error: true,
-            title: t`Couldn’t move “${deckName}”.`,
+            title: t`Couldn’t move “${{ deckName: isolate(deckName) }}”.`,
             action: { label: t`Try again`, onPress: () => move(seriesId, then) },
           }),
       },

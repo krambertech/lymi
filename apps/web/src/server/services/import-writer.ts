@@ -22,7 +22,9 @@ import {
   sameReading,
   serializeState,
   stateDirection,
+  stripStress,
   TEXT_MODES,
+  termKey,
 } from "@lymi/core";
 import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
@@ -65,7 +67,7 @@ export async function readNoteChunk<Note>(bucket: R2Bucket, objectKey: string, c
 
 /** The duplicate rule's key for an imported term, as in `addCards`. */
 function dupKey(language: string | null, term: string) {
-  return duplicateKey(language, normaliseTerm(term));
+  return duplicateKey(language, termKey(language, term));
 }
 
 /** The deck path as a Lymi name: `Italian::Lesson 1` reads `Italian / Lesson 1`. */
@@ -114,7 +116,15 @@ function heldDeck(held: Held, key: string, reading: string | null) {
 async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?: string) {
   const { db, userId } = ctx;
   const externalIds = [...new Set(cards.map((c) => c.externalId))];
-  const terms = [...new Set(cards.map((c) => normaliseTerm(c.fields.term)))];
+  // Both keys a term may be stored under, since the stress fold depends on a language chosen later.
+  const terms = [
+    ...new Set(
+      cards.flatMap((c) => [
+        normaliseTerm(c.fields.term),
+        stripStress(normaliseTerm(c.fields.term)),
+      ]),
+    ),
+  ];
   const [external, active] = await Promise.all([
     selectIn(externalIds, (ids) =>
       db
@@ -684,7 +694,7 @@ export async function writeChunk<Note>(
       id,
       deckId,
       term: fields.term,
-      normalizedTerm: normaliseTerm(fields.term),
+      normalizedTerm: termKey(item.language, fields.term),
       meaning: fields.meaning ?? null,
       pronunciation: fields.pronunciation ?? null,
       example: fields.example ?? null,

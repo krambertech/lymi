@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { tagKey } from "@lymi/core";
+import { isolate, tagKey } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
@@ -91,7 +91,7 @@ function DeckTagsPage() {
       const tagName = tag.name;
       toast.add({
         id,
-        title: t`Archived “${tagName}” from ${plural(tag.cards, { one: "# card", other: "# cards" })}`,
+        title: t`Archived “${{ tagName: isolate(tagName) }}” from ${plural(tag.cards, { one: "# card", other: "# cards" })}`,
         actionProps: { children: t`Undo`, onClick: () => restore.mutate(tag) },
       });
     },

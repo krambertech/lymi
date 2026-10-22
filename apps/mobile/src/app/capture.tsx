@@ -3,6 +3,7 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -80,7 +81,7 @@ function Composer() {
   // Read as a Select's trigger is, so the deck pill and the section chip share that message.
   const said = (label: string, chosen: string) => t`${label}: ${chosen}`;
   const deckSaid = said(t`Deck`, deckName);
-  const list = formatList(tags, i18n.locale);
+  const list = formatList(tags.map(isolate), i18n.locale);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
   // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
   const { term: named } = useLocalSearchParams<{ term?: string }>();
@@ -140,7 +141,7 @@ function Composer() {
       haptics.added();
       if (outcome.status === "skipped") {
         const { term, deckName } = { term: outcome.existing.term, deckName: outcome.deckName };
-        say(t`“${term}” is already in ${deckName}`);
+        say(t`“${{ term: isolate(term) }}” is already in ${{ deckName: isolate(deckName) }}`);
         // The form stays, with the term selected, so it can be changed or cleared, as on the web.
         termRef.current?.focus();
         termRef.current?.setSelection(0, text.length);
@@ -159,8 +160,8 @@ function Composer() {
       else
         say(
           queued
-            ? t`Added “${term}”. It’s saved on this phone until Lymi can be reached.`
-            : t`Added “${term}” to ${deckName}`,
+            ? t`Added “${{ term: isolate(term) }}”. It’s saved on this phone until Lymi can be reached.`
+            : t`Added “${{ term: isolate(term) }}” to ${{ deckName: isolate(deckName) }}`,
           { label: t`Undo`, onPress: () => undo(outcome.card.id) },
         );
       captureStore.set(CAPTURE_KEYS.deck, deck.id);
@@ -192,7 +193,7 @@ function Composer() {
   // A picture that did not reach its card waits on the toast's Try again.
   const offerPicture = (id: string, term: string, held: Picture) =>
     say(
-      t`Added “${term}” without its picture`,
+      t`Added “${{ term: isolate(term) }}” without its picture`,
       {
         label: t`Try again`,
         onPress: async () => {
@@ -223,7 +224,7 @@ function Composer() {
             }
             action={{
               icon: "plus",
-              label: t`Add to ${deckName}`,
+              label: t`Add to ${{ deckName: isolate(deckName) }}`,
               disabled: !draft.term.trim(),
               onPress: () => void add(),
             }}

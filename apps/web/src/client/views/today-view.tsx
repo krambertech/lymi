@@ -273,7 +273,9 @@ export function TodayView({
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
                       <DueCount size="lg">{d.due}</DueCount>
                       <span className="grid min-w-0 flex-1 gap-0.5">
-                        <span className="truncate text-md font-medium">{d.name}</span>
+                        <span dir="auto" className="truncate text-md font-medium">
+                          {d.name}
+                        </span>
                         <span className="text-sm text-muted">
                           {d.decks > 0 ? (
                             t`${plural(d.due, { one: "card due", other: "cards due" })} in ${plural(d.decks, { one: "# deck", other: "# decks" })}`

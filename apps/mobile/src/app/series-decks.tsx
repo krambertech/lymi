@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
 import { seriesForm } from "@lymi/client/library-groups";
 import { madeHere } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -141,14 +142,14 @@ export default function SeriesDecks() {
                         <IconButton
                           icon="moveUp"
                           size="sm"
-                          label={t`Move ${deckName} up`}
+                          label={t`Move ${{ deckName: isolate(deckName) }} up`}
                           disabled={at === 0}
                           onPress={() => move(at, -1)}
                         />
                         <IconButton
                           icon="moveDown"
                           size="sm"
-                          label={t`Move ${deckName} down`}
+                          label={t`Move ${{ deckName: isolate(deckName) }} down`}
                           disabled={at === picked.length - 1}
                           onPress={() => move(at, 1)}
                         />

@@ -70,6 +70,40 @@ test("a forgotten card comes back in the same review", async ({ page }, testInfo
   });
 });
 
+test("a click on the speaker leaves the grade keys working, its own keys replay, and focus moves on", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "keyboard and logic, not rendering");
+  await startAsTestLearner(page, testInfo, "review-speaker");
+  await addDeck(page, "Speaker", 3);
+  await page.goto("/review");
+  await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
+  await currentCard(page);
+  await page.keyboard.press("Space");
+  const good = page.getByRole("button", { name: /^Good/ });
+  await expect(good).toBeVisible();
+
+  const speaker = page.getByRole("button", { name: /^(Play|Replay) pronunciation$/ });
+  await speaker.click();
+  await expect(speaker).toBeFocused();
+
+  await test.step("Space and Enter on the speaker replay it and grade nothing", async () => {
+    await page.keyboard.press("Space");
+    await page.keyboard.press("Enter");
+    await expect(speaker).toBeFocused();
+    await expect(good).toBeVisible();
+    await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
+  });
+
+  await test.step("a grade key grades the card", async () => {
+    await page.keyboard.press("3");
+    await expect(page.getByText("1 of 3", { exact: true })).toBeVisible();
+    await expect(good).toBeHidden();
+    await expect(page.getByRole("button", { name: "Reveal the card" })).toBeFocused();
+  });
+});
+
 test("grades that could not be sent still decide the next card after a reload", async ({
   page,
   browserName,

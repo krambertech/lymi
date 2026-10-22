@@ -4,10 +4,12 @@ import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   drawsTermReading,
   gradeAllowed,
+  isolate,
   type KnownReadings,
   type Rating,
   type ReviewAid,
   termShowsPronunciation,
+  textDirection,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -234,6 +236,8 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
           // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
           className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
           aria-disabled={state === "loading"}
+          // The review lets the grade keys through from here, since a click leaves focus on it.
+          data-audio=""
           onClick={(e) => {
             e.stopPropagation();
             onPlay();
@@ -698,6 +702,7 @@ export function ReviewCard({
           variants={answerLine}
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
+          dir={textDirection(card.language)}
         >
           <ExampleText
             text={card.example}
@@ -753,6 +758,7 @@ export function ReviewCard({
                   TERM_SIZE[step],
                 )}
                 lang={card.language ?? undefined}
+                dir={textDirection(card.language)}
               >
                 {term}
                 {sound()}
@@ -765,6 +771,7 @@ export function ReviewCard({
                     "hyphenate whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
                     CONTEXT_SIZE[step],
                   )}
+                  dir="auto"
                 >
                   {card.meaning}
                 </motion.p>
@@ -778,6 +785,7 @@ export function ReviewCard({
                   "hyphenate whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
                   picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
                 )}
+                dir="auto"
               >
                 {back}
               </motion.p>
@@ -886,7 +894,9 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
+                  <span dir="auto" className="min-w-0 truncate font-medium text-text-2">
+                    {deck.name}
+                  </span>
                 </>
               )}
               {/* A text cue says what to recall by itself; only a picture needs its mode named.
@@ -946,6 +956,7 @@ export function ReviewCard({
                   <>
                     <p
                       lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                      dir={mode.cue === "term" ? textDirection(card.language) : "auto"}
                       className={clsx(
                         "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
                         CUE_SIZE[step],
@@ -1517,7 +1528,7 @@ export function ReviewComplete({
             <Trans>You’re done for today</Trans>
           ) : screen.heading === "scope_done" ? (
             scopeName ? (
-              <Trans>Nothing left in {scopeName}</Trans>
+              <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
             ) : (
               <Trans>Nothing left in this deck</Trans>
             )

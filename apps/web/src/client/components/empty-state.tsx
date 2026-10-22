@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
+import { bidi } from "../lib/bidi";
 import { Button } from "./button";
 
 interface ErrorStateProps {
@@ -31,7 +32,7 @@ export function ErrorState({ title, body, onRetry, retrying, action, className }
       >
         <CircleAlert className="size-5" />
       </span>
-      <h2 className="text-lg font-medium text-balance">{title}</h2>
+      <h2 className="text-lg font-medium text-balance">{bidi(title)}</h2>
       <p className="max-w-[40ch] text-base text-text-2 text-pretty">
         {body ?? <Trans>Check your connection and try again.</Trans>}
       </p>
@@ -75,7 +76,7 @@ export function EmptySection({ icon, title, body, action, className, ...rest }: 
       >
         {icon}
       </span>
-      <h3 className="text-base font-medium text-text">{title}</h3>
+      <h3 className="text-base font-medium text-text">{bidi(title)}</h3>
       {body && <p className="max-w-[38ch] text-sm text-muted">{body}</p>}
       {action && <div className="mt-3 flex flex-wrap justify-center gap-2">{action}</div>}
     </div>
@@ -105,7 +106,7 @@ export function NoResults({ icon, title, detail, action }: NoResultsProps) {
       >
         {icon}
       </span>
-      <h2 className="text-base font-medium text-balance text-text">{title}</h2>
+      <h2 className="text-base font-medium text-balance text-text">{bidi(title)}</h2>
       {detail && <p className="max-w-[40ch] text-sm text-pretty text-muted">{detail}</p>}
       {action && <div className="mt-3 flex flex-wrap justify-center gap-2">{action}</div>}
     </section>

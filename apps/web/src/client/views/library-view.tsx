@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { groupDecks, nameInSeries } from "@lymi/client/library-groups";
+import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -274,7 +275,7 @@ export function LibraryView({
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <IconButton label={t`Options for ${seriesName}`} size="sm">
+              <IconButton label={t`Options for ${{ seriesName: isolate(seriesName) }}`} size="sm">
                 <MoreHorizontal />
               </IconButton>
             }
@@ -477,7 +478,7 @@ export function LibraryView({
       {noMatch && (
         <NoResults
           icon={<SearchX />}
-          title={t`No decks match “${term}”`}
+          title={t`No decks match “${{ term: isolate(term) }}”`}
           detail={<Trans>Try a deck’s name, its language or its series.</Trans>}
           action={
             <Button onClick={() => setQuery("")}>

@@ -30,6 +30,8 @@ function Input({
   return (
     <input
       data-slot="input"
+      // Learner text may be Arabic: the field turns right to left as it is typed.
+      dir="auto"
       disabled={disabled || field?.disabled}
       className={cn(
         controlBase,

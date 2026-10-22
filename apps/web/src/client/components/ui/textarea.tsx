@@ -41,6 +41,7 @@ function Textarea({
     <textarea
       ref={setRef}
       data-slot="textarea"
+      dir="auto"
       disabled={disabled || field?.disabled}
       className={cn(
         controlBase,

@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import { cardSearchQuery } from "@lymi/client/queries";
-import { drawsTermReading } from "@lymi/core";
+import { drawsTermReading, isolate } from "@lymi/core";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
@@ -190,7 +190,11 @@ export default function Search() {
             <EmptyState
               fill
               kind="noMatch"
-              title={deckId ? t`No cards match “${query}”` : t`No decks or cards match “${query}”`}
+              title={
+                deckId
+                  ? t`No cards match “${{ query: isolate(query) }}”`
+                  : t`No decks or cards match “${{ query: isolate(query) }}”`
+              }
               body={t`Try another word, or part of one.`}
               action={{ label: t`Clear search`, onPress: () => setText("") }}
             />

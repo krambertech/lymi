@@ -8,7 +8,7 @@ import { TextInput, View } from "react-native";
 import Animated, { Keyframe, LinearTransition } from "react-native-reanimated";
 import { ALWAYS, CROSSFADE, timed, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
+import { inputCap, textStart } from "../theme/type";
 import { FieldChip } from "../ui/field-chip";
 import type { IconName } from "../ui/icons";
 import { Icon } from "../ui/primitives";
@@ -243,7 +243,11 @@ export function CardFields({
                   ? "min-h-12 py-1.5 font-sans font-medium text-text"
                   : "min-h-9 py-1.5 font-sans text-text"
               }
-              style={term ? { fontSize: 28, letterSpacing: -0.56 } : { fontSize: 17 }}
+              // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
+              style={[
+                term ? { fontSize: 28, letterSpacing: -0.56 } : { fontSize: 17 },
+                spec.learned ? textStart(language) : null,
+              ]}
               maxFontSizeMultiplier={inputCap(term ? 28 : 17)}
             />
           </Animated.View>

@@ -1,4 +1,10 @@
-import { lettersReading, type ReadingSegment, saysReading, toneRuns } from "@lymi/core";
+import {
+  lettersReading,
+  type ReadingSegment,
+  saysReading,
+  textDirection,
+  toneRuns,
+} from "@lymi/core";
 import { READING_FADE } from "@lymi/design";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -125,7 +131,9 @@ function Ruby({
     : Math.max(10, drawn / 2);
   const slot = Math.ceil(readingSize * 1.2);
   const pitch = slot + Math.ceil(((flat.lineHeight ?? size * 1.2) * drawn) / size);
-  const keep = useClamp(boxes.length, lines, drawn * ELLIPSIS_EM);
+  // The boxes run the way the language does, which a row would not: it follows the app's direction.
+  const rtl = textDirection(lang) === "rtl";
+  const keep = useClamp(boxes.length, lines, drawn * ELLIPSIS_EM, rtl);
   const shown = keep.count === null ? boxes : boxes.slice(0, keep.count);
 
   const text = (run: string, runClass = className) => (
@@ -192,7 +200,10 @@ function Ruby({
       }
       accessibilityLanguage={lang ?? undefined}
       className="flex-row flex-wrap"
-      style={lines ? { maxHeight: pitch * lines, overflow: "hidden" } : undefined}
+      style={[
+        rtl !== I18nManager.isRTL && { direction: rtl ? "rtl" : "ltr" },
+        lines ? { maxHeight: pitch * lines, overflow: "hidden" } : null,
+      ]}
       onLayout={keep.onLine}
     >
       {shown.map((box, i) => (
@@ -232,7 +243,7 @@ function Ruby({
  * Where to cut runs that would pass `lines`: each box reports where it landed, and once all have,
  * the boxes past the last line go, with room left for the ellipsis and the mark.
  */
-function useClamp(count: number, lines: number | undefined, ellipsis: number) {
+function useClamp(count: number, lines: number | undefined, ellipsis: number, rtl: boolean) {
   const boxes = useRef<({ x: number; y: number; width: number } | undefined)[]>([]);
   const endWidth = useRef(0);
   const [lineWidth, setLineWidth] = useState(0);
@@ -245,7 +256,7 @@ function useClamp(count: number, lines: number | undefined, ellipsis: number) {
     if (all.length < count || all.some((b) => !b)) return;
     const frames: Frame[] = all.map((b) => {
       const { x, y, width } = b as { x: number; y: number; width: number };
-      return { top: y, end: I18nManager.isRTL ? lineWidth - x : x + width };
+      return { top: y, end: rtl ? lineWidth - x : x + width };
     });
     setKept({ key, count: clampBoxes(frames, lines, lineWidth, endWidth.current + ellipsis) });
   };

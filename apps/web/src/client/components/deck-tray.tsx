@@ -172,6 +172,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
         />
         <div className="grid gap-1 px-3.5">
           <h3
+            dir="auto"
             lang={deck.meaningLanguage}
             className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-text"
           >

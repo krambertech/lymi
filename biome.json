@@ -196,6 +196,16 @@
       "plugins": ["./biome-plugins/term-text.grit"]
     },
     {
+      "includes": [
+        "apps/web/src/client/**",
+        "apps/mobile/src/**",
+        "packages/client/src/**",
+        "!**/*.test.ts",
+        "!**/*.test.tsx"
+      ],
+      "plugins": ["./biome-plugins/isolate-learner-text.grit"]
+    },
+    {
       "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {

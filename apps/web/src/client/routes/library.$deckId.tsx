@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { writes } from "@lymi/client/writes";
 import type { CardPatch } from "@lymi/core";
+import { isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -187,7 +188,7 @@ function DeckPage() {
       invalidate();
       toast.add({
         id: `archive-${id}`,
-        title: t`Archived “${archivedTerm}”`,
+        title: t`Archived “${{ archivedTerm: isolate(archivedTerm) }}”`,
         actionProps: { children: t`Undo`, onClick: () => restore.mutate(id) },
       });
     },
@@ -231,7 +232,7 @@ function DeckPage() {
       toast.add({
         id: `save-${id}`,
         type: "error",
-        title: t`Couldn’t save “${failedTerm}”. Check your connection and try again.`,
+        title: t`Couldn’t save “${{ failedTerm: isolate(failedTerm) }}”. Check your connection and try again.`,
         actionProps: { children: t`Retry`, onClick: () => save.mutate({ id, patch }) },
       });
     },
@@ -248,14 +249,17 @@ function DeckPage() {
       // The menu only offers this while a field is empty, so a refusal means the card filled
       // itself, or another device did, between the menu opening and the tap.
       if (error instanceof ApiError && error.status === 400) {
-        toast.add({ id: `enrich-${card.id}`, title: t`“${term}” has nothing left to fill in.` });
+        toast.add({
+          id: `enrich-${card.id}`,
+          title: t`“${{ term: isolate(term) }}” has nothing left to fill in.`,
+        });
         void qc.invalidateQueries({ queryKey: ["decks", deckId, "cards"] });
         return;
       }
       toast.add({
         id: `enrich-${card.id}`,
         type: "error",
-        title: t`Couldn’t enrich “${term}”. Check your connection and try again.`,
+        title: t`Couldn’t enrich “${{ term: isolate(term) }}”. Check your connection and try again.`,
         actionProps: { children: t`Retry`, onClick: () => enrich.mutate(card) },
       });
     },
@@ -454,7 +458,7 @@ function DeckPage() {
               const sectionName = created.name;
               toast.add({
                 id: `move-cards-${deckId}`,
-                title: t`Moved to ${sectionName}`,
+                title: t`Moved to ${{ sectionName: isolate(sectionName) }}`,
               });
               setPicking(null);
               sectionActions.create.reset();
@@ -524,7 +528,7 @@ function DeckPage() {
             const seriesName = created.name;
             toast.add({
               id: `move-${deck.id}`,
-              title: t`Moved “${deckName}” to ${seriesName}`,
+              title: t`Moved “${{ deckName: isolate(deckName) }}” to ${{ seriesName: isolate(seriesName) }}`,
               actionProps: {
                 children: t`Undo`,
                 onClick: () => {

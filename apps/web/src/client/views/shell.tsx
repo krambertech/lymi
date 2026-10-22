@@ -106,7 +106,7 @@ export function Sidebar({
       render={<NavLink to="/library/$deckId" params={{ deckId: d.id }} />}
       end={d.due > 0 && <DueCount>{d.due}</DueCount>}
     >
-      {d.name}
+      <bdi>{d.name}</bdi>
     </RailRow>
   );
   return (

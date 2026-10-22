@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type ApiKeySummary, api, errorMessage } from "@lymi/client/api";
 import { keysQuery } from "@lymi/client/queries";
-import { ApiKeyInput, apiKeyLimits, type Scope } from "@lymi/core";
+import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AccessibilityInfo, Alert, View } from "react-native";
@@ -51,7 +51,7 @@ export default function ApiKeys() {
   });
   const askRevoke = (id: string, name: string) =>
     Alert.alert(
-      t`Revoke “${name}”?`,
+      t`Revoke “${{ name: isolate(name) }}”?`,
       t`Scripts using it stop working at once. This can’t be undone.`,
       [
         { text: t`Keep key`, style: "cancel" },
@@ -181,7 +181,7 @@ function KeyRow({
         </Text>
       </View>
       <ActionMenu
-        label={t`Options for ${name}`}
+        label={t`Options for ${{ name: isolate(name) }}`}
         symbol="ellipsis"
         look="row"
         disabled={revoking}
@@ -213,7 +213,7 @@ function FreshKey({
           <Icon name="keys" size={18} colour={p.good} />
         </View>
         <Text className="flex-1 text-base text-text" accessibilityLiveRegion="polite">
-          {t`${name} is ready. Copy it now. You won’t see it again.`}
+          {t`${{ name: isolate(name) }} is ready. Copy it now. You won’t see it again.`}
         </Text>
       </View>
       <View className="rounded-md bg-plate-2 px-3 py-2.5">

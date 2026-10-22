@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api, type Section, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
@@ -43,7 +44,7 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
     const cards = opening.reduce((sum, s) => sum + s.total, 0);
     const sectionName = section.name;
     Alert.alert(
-      t`Start ${sectionName} early?`,
+      t`Start ${{ sectionName: isolate(sectionName) }} early?`,
       [
         plural(others, {
           one: "The section before it starts too, so sections stay in order.",
@@ -109,7 +110,7 @@ export function SectionProgress({
       other: `You know ${known} of # cards in ${currentName}, the last section.`,
     });
   } else if (progress.ready) {
-    title = t`${nextName} is ready`;
+    title = t`${{ nextName: isolate(nextName) }} is ready`;
     detail = plural(current.total, {
       one: `You know ${known} of # card in ${currentName}.`,
       other: `You know ${known} of # cards in ${currentName}.`,
@@ -140,7 +141,11 @@ export function SectionProgress({
           <Text className="text-sm text-text-2">{detail}</Text>
         </View>
         <Button
-          label={next && progress.ready ? t`Go to ${currentName}` : t`Go to section`}
+          label={
+            next && progress.ready
+              ? t`Go to ${{ currentName: isolate(currentName) }}`
+              : t`Go to section`
+          }
           variant="ghost"
           size="sm"
           onPress={() => onGoTo(current.id)}
@@ -168,7 +173,7 @@ export function SectionProgress({
       )}
       {next && progress.ready && (
         <Button
-          label={t`Start ${nextName}`}
+          label={t`Start ${{ nextName: isolate(nextName) }}`}
           variant={due > 0 ? "secondary" : "primary"}
           loading={starting === next.id}
           onPress={() => onStart(next)}
@@ -307,7 +312,7 @@ export function SectionHeading({
       {items.length > 0 && (
         <ActionMenu
           items={items}
-          label={t`Options for ${sectionName}`}
+          label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
           symbol="ellipsis"
           look="row"
           disabled={starting}
@@ -350,10 +355,10 @@ export function ReadyNote({
   return (
     <View className="mb-1 mt-2 gap-3 rounded-lg bg-plate-2 p-4">
       <Text className="text-base text-text-2">
-        {t`${sectionName} is ready. Start it to review its cards.`}
+        {t`${{ sectionName: isolate(sectionName) }} is ready. Start it to review its cards.`}
       </Text>
       <Button
-        label={t`Start ${sectionName}`}
+        label={t`Start ${{ sectionName: isolate(sectionName) }}`}
         size="sm"
         loading={starting}
         onPress={() => onStart(section)}

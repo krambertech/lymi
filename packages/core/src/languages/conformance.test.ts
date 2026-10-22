@@ -18,6 +18,7 @@ import { stripStress } from "../stress";
 import ja from "./fixtures/ja.json";
 import ru from "./fixtures/ru.json";
 import ta from "./fixtures/ta.json";
+import uk from "./fixtures/uk.json";
 import yue from "./fixtures/yue.json";
 import zh from "./fixtures/zh.json";
 import {
@@ -92,7 +93,7 @@ function overTerm(card: Card): string | null {
   return segments && NOTATION[readingEngine(card.language) as ReadingEngine].format(segments);
 }
 
-const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, ta, yue };
+const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, ta, uk, yue };
 
 const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
 

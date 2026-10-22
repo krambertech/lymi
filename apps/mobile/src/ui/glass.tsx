@@ -1,3 +1,4 @@
+import { unisolate } from "@lymi/core";
 import { GlassView } from "expo-glass-effect";
 import type { ReactNode } from "react";
 import { ActivityIndicator, View, type ViewStyle } from "react-native";
@@ -82,7 +83,7 @@ export function GlassButton({
       onPress={onPress}
       disabled={busy || disabled}
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       accessibilityState={{ busy, disabled }}
     >
       <GlassSurface

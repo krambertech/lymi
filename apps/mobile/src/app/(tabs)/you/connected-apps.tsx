@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, type ConnectedApp, errorMessage } from "@lymi/client/api";
 import { identifyApp, listedApp } from "@lymi/client/app-marks";
 import { connectedAppsQuery } from "@lymi/client/queries";
+import { isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { Alert, View } from "react-native";
@@ -32,7 +33,7 @@ export default function ConnectedApps() {
   });
   const ask = (id: string, name: string) =>
     Alert.alert(
-      t`Disconnect ${name}?`,
+      t`Disconnect ${{ name: isolate(name) }}?`,
       t`It can’t reach your decks from its next request. To use it again, connect it from the app.`,
       [
         { text: t`Stay connected`, style: "cancel" },
@@ -150,7 +151,7 @@ function AppRow({
         </Text>
       </View>
       <ActionMenu
-        label={t`Options for ${name}`}
+        label={t`Options for ${{ name: isolate(name) }}`}
         symbol="ellipsis"
         look="row"
         disabled={disconnecting}

@@ -1,4 +1,11 @@
-import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
+import type {
+  Direction,
+  DrawLogEntry,
+  GradeInput,
+  RecordTag,
+  ReviewModeKey,
+  Round,
+} from "@lymi/core";
 import {
   CHOSEN_LIMIT,
   chosenOrder,
@@ -22,6 +29,7 @@ import {
   serializeState,
   stateDirection,
   termReading,
+  textDirection,
 } from "@lymi/core";
 import { CARD_STATES } from "@lymi/core/analytics";
 import { and, eq, gte, ne } from "@lymi/core/db";
@@ -247,8 +255,16 @@ function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
   return modeOf(key).cue === "term" && state !== 2 ? "cue" : "answer";
 }
 
-/** What a grader draws on a term, by engine; a test may leave Jyutping out, which counts as drawn. */
-type Draws = { over: boolean; inPlace: boolean; byWord: boolean; jyutping?: boolean };
+/**
+ * What a grader draws on a term, by engine, and for stress by the record whose marks it draws in
+ * place; a test may leave Jyutping out, which counts as drawn.
+ */
+type Draws = {
+  over: boolean;
+  inPlace: Partial<Record<RecordTag, boolean>>;
+  byWord: boolean;
+  jyutping?: boolean;
+};
 
 /** Whether the grader drew the card's reading on its term, by the way its engine draws one. */
 function termDrawn(
@@ -260,7 +276,8 @@ function termDrawn(
     if (engine === "indic") return draws.byWord;
     return draws.over && (engine !== "jyutping" || draws.jyutping !== false);
   }
-  return markedTerm(card) !== null && draws.inPlace;
+  const record = languageSupport(card.language)?.tag;
+  return markedTerm(card) !== null && record !== undefined && draws.inPlace[record] === true;
 }
 
 /** Where the term's reading showed and how the example's faded, with the language whose engine drew them. */
@@ -294,11 +311,11 @@ export async function gradeCard(
   input: GradeInput,
   /**
    * What the grader draws on the term, so `review_graded` can say where: a reading over it, which a
-   * phone before 0.0.2 lacks, stress marks in place, which a phone before 0.0.4 lacks, a Tamil
-   * reading over each word, which a phone before 0.0.6 lacks, and Jyutping over the term, which a
-   * phone before 0.0.7 lacks.
+   * phone before 0.0.2 lacks, stress marks in place, which a phone before 0.0.4 lacks for Russian
+   * and before 0.0.8 for Ukrainian, a Tamil reading over each word, which a phone before 0.0.6
+   * lacks, and Jyutping over the term, which a phone before 0.0.7 lacks.
    */
-  draws: Draws = { over: true, inPlace: true, byWord: true, jyutping: true },
+  draws: Draws = { over: true, inPlace: { ru: true, uk: true }, byWord: true, jyutping: true },
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;
@@ -429,6 +446,7 @@ export async function gradeCard(
       termDrawn(row, draws) ? readingShown(key, state.state) : null,
       fadedReadings(row, input.readingsFaded),
     ),
+    ...(textDirection(row.language) === "rtl" ? { text_direction: "rtl" as const } : {}),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.

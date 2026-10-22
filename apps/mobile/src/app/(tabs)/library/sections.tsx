@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
 import { archivedSectionsQuery, sectionsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { SectionInput, type SectionProgression, sectionLimits } from "@lymi/core";
+import { isolate, SectionInput, type SectionProgression, sectionLimits } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -107,7 +107,7 @@ export default function DeckSections() {
       const sectionName = section.name;
       toast.add({
         id: `archive-section-${section.id}`,
-        title: t`Archived “${sectionName}”`,
+        title: t`Archived “${{ sectionName: isolate(sectionName) }}”`,
         // Not the page's restore mutation: Undo can be pressed after the learner has left the page.
         action: {
           label: t`Undo`,

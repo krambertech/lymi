@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { Avatar, FormerOwnerMark } from "./avatar";
 import { languageName } from "./deck-fields";
 import { DueCount } from "./due-count";
@@ -94,7 +95,7 @@ export function DeckRow({
                 <Avatar name={owner} size={18} />
               )}
               <span className="min-w-0 truncate">
-                <Trans>Shared by {owner}</Trans>
+                <Trans>Shared by {{ owner: isolate(owner) }}</Trans>
               </span>
             </span>
           )

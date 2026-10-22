@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
@@ -21,7 +22,10 @@ export function useLeaveDeck(deckId: string, name: string | undefined) {
       qc.invalidateQueries({ queryKey: ["queue"] });
       navigate({ to: "/library" });
       const deckName = name ?? t`Deck`;
-      toast.add({ id: `leave-deck-${deckId}`, title: t`Left “${deckName}”` });
+      toast.add({
+        id: `leave-deck-${deckId}`,
+        title: t`Left “${{ deckName: isolate(deckName) }}”`,
+      });
     },
     onError: (error) => {
       toast.add({ id: `leave-deck-${deckId}`, type: "error", title: errorMessage(error) });

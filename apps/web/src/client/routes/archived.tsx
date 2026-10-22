@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
@@ -42,7 +43,7 @@ function Archived() {
     onSuccess: (_, deck) => {
       invalidate();
       toast.add({
-        title: t`Restored “${deck.name}”`,
+        title: t`Restored “${isolate(deck.name)}”`,
         actionProps: { children: t`Undo`, onClick: () => undoDeck.mutate(deck.id) },
       });
     },
@@ -53,7 +54,7 @@ function Archived() {
     onSuccess: (_, card) => {
       invalidate();
       toast.add({
-        title: t`Restored “${card.term}”`,
+        title: t`Restored “${isolate(card.term)}”`,
         actionProps: { children: t`Undo`, onClick: () => undoCard.mutate(card.id) },
       });
     },

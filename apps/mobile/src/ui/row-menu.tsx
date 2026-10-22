@@ -1,3 +1,4 @@
+import { unisolate } from "@lymi/core";
 import type { ContextMenuAction, ContextMenuSurface } from "@lymi/core/analytics";
 import { type Href, Icon, Label, Link, useRouter } from "expo-router";
 import type { ReactNode } from "react";
@@ -74,7 +75,7 @@ export function RowMenu({
     <View
       accessible
       accessibilityRole={heading ? "header" : kind}
-      accessibilityLabel={label}
+      accessibilityLabel={unisolate(label)}
       onAccessibilityTap={heading ? undefined : tap ? () => tap() : () => router.push(href)}
       accessibilityActions={flat.map((i) => ({ name: i.id, label: i.label }))}
       onAccessibilityAction={(e) => {

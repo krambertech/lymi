@@ -1,5 +1,6 @@
-import { languageKey, saysReading, speechInputs } from "./languages";
+import { languageKey, saysReading, speechInputs, stressRules } from "./languages";
 import { kanaReading, markedTerm, stripReadings } from "./reading";
+import { stripStress } from "./stress";
 
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,
@@ -8,6 +9,16 @@ import { kanaReading, markedTerm, stripReadings } from "./reading";
  */
 export function normaliseTerm(term: string): string {
   return term.normalize("NFC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
+}
+
+/**
+ * A card's `normalized_term`: `normaliseTerm`, then without stress marks where its language draws
+ * them in place, so за́мок and замок are one term and the stress tells two words apart through
+ * the reading key. The fold is never global: NFC keeps U+0301 on Lithuanian ą́. ADR 0004.
+ */
+export function termKey(language: string | null | undefined, term: string): string {
+  const key = normaliseTerm(term);
+  return stressRules(language) ? stripStress(key) : key;
 }
 
 /** What the duplicate rule compares, from a card's language and its `normaliseTerm` key. */

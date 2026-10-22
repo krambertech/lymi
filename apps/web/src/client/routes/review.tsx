@@ -809,7 +809,9 @@ function Review() {
         ...recallTimes(),
         ...readingsFadedField(qc, item.card),
       });
-      setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
+      // Grading from the strip or the speaker keeps focus on the next card, so keyboard and screen
+      // reader users don't drop to the page body.
+      setFocusReveal(!!document.activeElement?.closest("[data-grade-strip], [data-audio]"));
       const listed = !!leg && !drawLeg;
       if (listed) setLegCards((c) => ({ ...c, graded: withKey(c.graded, gradedKey(item)) }));
       setSending((n) => n + 1);

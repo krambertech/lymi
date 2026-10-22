@@ -70,7 +70,7 @@ test("a forgotten card comes back in the same review", async ({ page }, testInfo
   });
 });
 
-test("a click on the speaker leaves the grade keys working, and its own keys replay", async ({
+test("a click on the speaker leaves the grade keys working, its own keys replay, and focus moves on", async ({
   page,
   browserName,
 }, testInfo) => {
@@ -100,6 +100,7 @@ test("a click on the speaker leaves the grade keys working, and its own keys rep
     await page.keyboard.press("3");
     await expect(page.getByText("1 of 3", { exact: true })).toBeVisible();
     await expect(good).toBeHidden();
+    await expect(page.getByRole("button", { name: "Reveal the card" })).toBeFocused();
   });
 });
 

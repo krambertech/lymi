@@ -92,6 +92,10 @@ Cloudflare itself is degraded. Check whether the affected components include Wor
 
 An exception reached PostHog Error Tracking. Open [Error Tracking](https://eu.posthog.com/project/292417/error_tracking), find the newest issue, and use its `route`, `surface` and `release` to locate the code and the deploy. A browser error with `caught_by=router` or `react` broke a screen. Frames name the source file and line when the build uploaded its source maps; a build without `POSTHOG_CLI_API_KEY` ([testing.md](testing.md#delivery-checks)) logs a warning and its stacks stay minified.
 
+## A deploy fails at the source map upload
+
+The product build uploads its source maps to PostHog, and a failed upload fails the build, so a PostHog outage or an expired key blocks every deploy. To ship anyway, remove `POSTHOG_CLI_API_KEY` from the product's Workers Builds project and retry the build; it warns and deploys with minified stacks. Put a working key back once PostHog recovers ([testing.md](testing.md#delivery-checks)).
+
 ## AI calls are failing
 
 `$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation and its Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).

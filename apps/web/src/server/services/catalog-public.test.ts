@@ -210,6 +210,43 @@ async function wideUkrainianDeck(slug: string, count: number) {
   );
 }
 
+/**
+ * A published one-card deck under one section, with published editions in `editions`, each with
+ * the section's name in that language where one is given and approved.
+ */
+async function editionedSectionDeck(
+  slug: string,
+  editions: Record<string, { name: string; status: "approved" | "draft" } | null>,
+) {
+  const deck = await createDeck(lymi, { name: `Section Estonian ${slug}`, defaultLanguage: "et" });
+  const greetings = await createSection(lymi, deck.id, { name: "Greetings" });
+  const [added] = await addCards(lymi, [
+    { deckId: deck.id, sectionId: greetings.id, term: `tere ${slug}`, meaning: "hello" },
+  ]);
+  if (added?.status !== "added") throw new Error(JSON.stringify(added));
+  await publishDeck(lymi, deck.id, input(slug), publishers);
+  for (const [language, section] of Object.entries(editions)) {
+    await db.insert(schema.deckEditions).values({
+      id: newId(),
+      deckId: deck.id,
+      language,
+      status: "published",
+      revision: 1,
+      publishedAt: new Date(),
+    });
+    if (!section) continue;
+    await db.insert(schema.sectionLocalizations).values({
+      id: newId(),
+      sectionId: greetings.id,
+      language,
+      provenance: "human",
+      status: section.status,
+      sourceRevision: 1,
+      name: section.name,
+    });
+  }
+}
+
 describe("listPublicCatalog", () => {
   it("carries a deck's shelf, its counts and one of its cards, and nothing private", async () => {
     const deck = await sectionedDeck("shelf");
@@ -270,4 +307,25 @@ describe("listPublicCatalog", () => {
     expect(row).toMatchObject({ name: "Естонська cap-one", meaningLanguage: "uk", cardCount: 34 });
     expect(row?.card?.meaning).toMatch(/^слово /);
   }, 60_000);
+  it("names the tray card's section in the edition the deck is read in", async () => {
+    await editionedSectionDeck("tray-sections", {
+      uk: { name: "Привітання", status: "approved" },
+      ru: { name: "Приветствия", status: "approved" },
+    });
+    // Editions with no approved name for the section keep the original's.
+    await editionedSectionDeck("tray-sections-fallback", {
+      uk: null,
+      ru: { name: "Черновик", status: "draft" },
+    });
+    const sectionOf = async (language: string | undefined, slug: string) =>
+      (await listPublicCatalog(db, language)).find((row) => row.slug === slug)?.card?.section;
+
+    expect(await sectionOf(undefined, "tray-sections")).toBe("Greetings");
+    expect(await sectionOf("en", "tray-sections")).toBe("Greetings");
+    expect(await sectionOf("uk", "tray-sections")).toBe("Привітання");
+    expect(await sectionOf("ru", "tray-sections")).toBe("Приветствия");
+    for (const language of ["en", "uk", "ru"]) {
+      expect(await sectionOf(language, "tray-sections-fallback")).toBe("Greetings");
+    }
+  });
 });

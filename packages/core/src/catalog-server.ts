@@ -750,6 +750,7 @@ interface CandidateCard {
   cardId: string;
   term: string;
   meaning: string | null;
+  sectionId: string | null;
   sectionName: string | null;
   directions: Directions | null;
   reviewModeKeys: ReviewModeKey[] | null;
@@ -794,8 +795,9 @@ async function sampleCards(
   // Only the card each tray shows is localized: binding every candidate carried one parameter
   // per card, which went past D1's cap of 100 once a few decks were published.
   const pickedIds = [...picked.values()].map((card) => card.cardId);
-  const [localized, pictures] = await Promise.all([
+  const [localized, sectionNames, pictures] = await Promise.all([
     localizedSamples(db, picked, editionOf, language),
+    localizedSectionNames(db, picked, editionOf, language),
     selectIn(pickedIds, (slice) => livePublicationMedia(db, { cardIds: slice })),
   ]);
   const pictureOf = new Map(
@@ -824,7 +826,8 @@ async function sampleCards(
     chosen.set(deckId, {
       term: text?.term ?? card.term,
       meaning: text?.meaning ?? card.meaning,
-      section: card.sectionName,
+      // The section is named in the deck's edition too, as its own page names it.
+      section: (card.sectionId && sectionNames.get(card.sectionId)) ?? card.sectionName,
       mode,
       // The tray shows the picture only as the cue, as review does before a card is turned.
       ...(image && isImageMode(mode) ? { image } : {}),
@@ -862,6 +865,8 @@ async function trayCandidates(
       cardId: ranked.cardId,
       term: ranked.term,
       meaning: ranked.meaning,
+      // Only an active section names the card; an archived one leaves it unsectioned.
+      sectionId: sections.id,
       sectionName: sections.name,
       directions: ranked.directions,
       reviewModeKeys: ranked.reviewModeKeys,
@@ -900,4 +905,34 @@ async function localizedSamples(
       ),
   );
   return new Map(rows.map((row) => [row.cardId, row]));
+}
+
+/** The approved names, in the edition each deck is shown in, of the chosen cards' sections. */
+async function localizedSectionNames(
+  db: CatalogDb,
+  picked: ReadonlyMap<string, TrayCard>,
+  editionOf: Map<string, ShownEdition>,
+  language: string | undefined,
+): Promise<Map<string, string>> {
+  if (!language) return new Map();
+  const wanted = [
+    ...new Set(
+      [...picked]
+        .filter(([deckId]) => editionOf.has(deckId))
+        .flatMap(([, card]) => (card.sectionId ? [card.sectionId] : [])),
+    ),
+  ];
+  const rows = await selectIn(wanted, (slice) =>
+    db
+      .select({ sectionId: sectionLocalizations.sectionId, name: sectionLocalizations.name })
+      .from(sectionLocalizations)
+      .where(
+        and(
+          inArray(sectionLocalizations.sectionId, slice),
+          eq(sectionLocalizations.language, language),
+          eq(sectionLocalizations.status, "approved"),
+        ),
+      ),
+  );
+  return new Map(rows.flatMap((row) => (row.name ? [[row.sectionId, row.name] as const] : [])));
 }

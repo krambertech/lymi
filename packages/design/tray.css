@@ -113,7 +113,14 @@
   }
 }
 
+/* A section name can run long in some languages; past two lines it would push the term off the card. */
 .deck-tray-section {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  flex-shrink: 0;
   font-size: max(0.6875rem, calc(var(--cw) * 0.054));
   font-weight: 500;
   line-height: 1.3;

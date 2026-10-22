@@ -100,3 +100,33 @@ test("shows no row and no tags when there are none", async () => {
   expect(page.getByRole("heading", { name: "More like this" }).elements()).toHaveLength(0);
   expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
 });
+
+test("marks each section name with the language it is written in", async () => {
+  const card = { term: "tere", meaning: "hello", modes: ["term_to_meaning" as const] };
+  const editions: Record<string, { name: string; nameLanguage?: string }> = {
+    en: { name: "Greetings" },
+    uk: { name: "Привітання" },
+    // The ru edition has no name for the section, so the page falls back on the English one.
+    ru: { name: "Greetings", nameLanguage: "en" },
+  };
+  for (const [language, section] of Object.entries(editions)) {
+    const { container, unmount } = await renderDeck(
+      data({
+        deck: {
+          ...data().deck,
+          meaningLanguage: language,
+          editions: ["en", "uk", "ru"],
+          sections: [{ ...section, cards: [card] }],
+        },
+      }),
+    );
+    const want = section.nameLanguage ?? language;
+    const named = [...container.querySelectorAll("[lang]")].filter(
+      (element) => element.textContent === section.name,
+    );
+    // The path, the closed card list and the tray card each name the section.
+    expect(named.length, language).toBeGreaterThanOrEqual(3);
+    for (const element of named) expect(element.getAttribute("lang"), language).toBe(want);
+    await unmount();
+  }
+});

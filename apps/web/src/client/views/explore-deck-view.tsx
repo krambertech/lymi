@@ -36,6 +36,7 @@ function handOf(deck: PublicDeckOut): HandCard[] {
   const hand: HandCard[] = [];
   const sections = deck.sections.map((section) => ({
     name: section.name,
+    nameLanguage: section.nameLanguage,
     cards: section.cards.filter((card) => card.meaning),
   }));
   for (let round = 0; hand.length < 3; round++) {
@@ -48,6 +49,7 @@ function handOf(deck: PublicDeckOut): HandCard[] {
           term: card.term,
           meaning: card.meaning ?? "",
           section: section.name,
+          ...(section.nameLanguage ? { sectionLanguage: section.nameLanguage } : {}),
           mode,
           ...(card.image && isImageMode(mode) ? { image: card.image } : {}),
         });
@@ -322,7 +324,10 @@ export function ExploreDeckView({
                 ({ item: section, key }, at) => (
                   <li key={key} className="flex items-center gap-3 bg-plate px-4 py-3 text-base">
                     <span className="w-5 shrink-0 text-sm text-muted tabular-nums">{at + 1}</span>
-                    <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate text-text">
+                    <span
+                      lang={section.nameLanguage ?? deck.meaningLanguage}
+                      className="min-w-0 flex-1 truncate text-text"
+                    >
                       {section.name}
                     </span>
                     <span className="shrink-0 text-sm text-muted tabular-nums">
@@ -348,7 +353,15 @@ export function ExploreDeckView({
               ({ item: section, key }) => (
                 <details key={key} className="group edge overflow-hidden rounded-md bg-plate">
                   <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
-                    <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate">
+                    {/* The fallback label is interface copy, so only a named section carries a lang. */}
+                    <span
+                      lang={
+                        section.name === null
+                          ? undefined
+                          : (section.nameLanguage ?? deck.meaningLanguage)
+                      }
+                      className="min-w-0 flex-1 truncate"
+                    >
                       {section.name ?? <Trans>Cards outside a section</Trans>}
                     </span>
                     <span className="shrink-0 text-sm text-muted tabular-nums">

@@ -106,7 +106,7 @@ export const navigation: Group = {
                       <RailHeading>Decks</RailHeading>
                       <RailRow
                         render={<NavLink to="/library/$deckId" params={{ deckId: "d1" }} />}
-                        end={<DueCount>8</DueCount>}
+                        end={<DueCount count={8} />}
                       >
                         Italian with Giulia
                       </RailRow>

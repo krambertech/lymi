@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import { isolate } from "@lymi/core";
 import { Avatar, FormerOwnerMark } from "./avatar";
 import { languageName } from "./deck-fields";
@@ -48,7 +48,6 @@ export function DeckRow({
   "aria-describedby": describedBy,
   onOpen,
 }: DeckRowProps) {
-  const { i18n } = useLingui();
   const lang = language ? languageName(language) : null;
   return (
     <NavLink
@@ -104,12 +103,10 @@ export function DeckRow({
       {/* The count sits beside the chevron, so the two read as one end, as on a series' Review all. */}
       <span className="flex shrink-0 items-center gap-1">
         {due > 0 && (
-          <DueCount>
-            <span aria-hidden="true">{i18n.number(due)}</span>
-            <span className="sr-only">
-              <Plural value={due} one="# due today" other="# due today" />
-            </span>
-          </DueCount>
+          <DueCount
+            count={due}
+            label={<Plural value={due} one="# due today" other="# due today" />}
+          />
         )}
         <Go />
       </span>

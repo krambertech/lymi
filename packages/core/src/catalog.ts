@@ -54,6 +54,8 @@ export const PublicDeckOut = z.object({
   sections: z.array(
     z.object({
       name: z.string().nullable(),
+      /** The language the name is in, when it is not `meaningLanguage`: an edition's section with no approved name shows the original's. */
+      nameLanguage: z.string().optional(),
       cards: z.array(
         z.object({
           term: z.string(),

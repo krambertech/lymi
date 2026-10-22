@@ -1,5 +1,6 @@
 import type { PublicDeckOut } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
+import { deckHandCards } from "./deck-hand";
 import {
   countsAsPageView,
   deckContentHash,
@@ -128,6 +129,38 @@ describe("stackCards", () => {
     expect(stackCards(deck({ sections: sections(4) }))).toEqual(stack);
     expect(stackCards(deck())).not.toEqual(stackCards(deck({ revision: 3 })));
     expect(stackCards(deck()).map((card) => card.term)).not.toContain("term 1");
+  });
+});
+
+describe("deckHandCards", () => {
+  // One section per edition: read as itself in en, named in uk, and left with the original's name in ru.
+  const editions = {
+    en: deck(),
+    uk: deck({
+      meaningLanguage: "uk",
+      sections: [{ name: "Привітання", cards: [{ term: "tere", meaning: "привіт", ...asked }] }],
+    }),
+    ru: deck({
+      meaningLanguage: "ru",
+      sections: [
+        {
+          name: "Greetings",
+          nameLanguage: "en",
+          cards: [{ term: "tere", meaning: "привет", ...asked }],
+        },
+      ],
+    }),
+  };
+  const headings = (language: keyof typeof editions) =>
+    deckHandCards(stackCards(editions[language]), "et")
+      .filter((card) => card.source)
+      .map((card) => [card.source, card.sourceLanguage]);
+
+  it("marks a hand card's section with the original's language only when the edition falls back on it", () => {
+    expect(headings("en").length).toBeGreaterThan(0);
+    for (const [, language] of headings("en")) expect(language).toBeUndefined();
+    expect(headings("uk")).toEqual([["Привітання", undefined]]);
+    expect(headings("ru")).toEqual([["Greetings", "en"]]);
   });
 });
 

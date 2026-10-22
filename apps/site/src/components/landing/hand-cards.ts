@@ -12,6 +12,8 @@ export interface HandCard {
   id: string;
   /** Where the card is from, shown above the term. A language names itself, untranslated. */
   source: string | MessageDescriptor;
+  /** The language `source` is written in, when it is not the page's: a deck edition's untranslated section. */
+  sourceLanguage?: string | undefined;
   kind?: MessageDescriptor;
   /** BCP 47 tag of the term, used for `lang` and for the voice. */
   language?: string | undefined;

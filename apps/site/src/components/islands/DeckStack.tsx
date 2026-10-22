@@ -1,9 +1,9 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans } from "@lingui/react/macro";
 import { type CSSProperties, useMemo } from "react";
+import { deckHandCards } from "../../lib/deck-hand";
 import type { DeckCard } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
-import { publicMediaUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { HandOfCards } from "../landing/HandOfCards";
@@ -35,27 +35,7 @@ const EMBERS_AT = 460;
 
 /** The landing page's hand of cards, dealt once from a few of this deck's cards. Nothing is saved. */
 export default function DeckStack({ locale, cards, termLanguage, total, addUrl }: Props) {
-  const hand = useMemo<HandCard[]>(
-    () =>
-      cards.map((card, index) => ({
-        id: `deck-${index}`,
-        source: card.section ?? "",
-        language: termLanguage ?? undefined,
-        term: card.term,
-        meaning: card.meaning,
-        mode: card.mode,
-        audio: card.audio ? publicMediaUrl(card.audio.cardId, "audio") : null,
-        image: card.image
-          ? {
-              url: publicMediaUrl(card.image.cardId, "image"),
-              description: card.image.description,
-              width: card.image.width,
-              height: card.image.height,
-            }
-          : null,
-      })),
-    [cards, termLanguage],
-  );
+  const hand = useMemo(() => deckHandCards(cards, termLanguage), [cards, termLanguage]);
   return (
     <I18nProvider i18n={pageI18n(locale)}>
       <Hand hand={hand} total={total} addUrl={addUrl} />

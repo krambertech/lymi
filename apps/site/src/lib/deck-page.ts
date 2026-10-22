@@ -18,6 +18,8 @@ export type DeckCard = {
   term: string;
   meaning: string;
   section: string | null;
+  /** The language the section is named in, when it is not the deck's meaning language. */
+  sectionLanguage?: string | undefined;
   /** The mode this card is shown in here, as a learner is asked it. */
   mode: ReviewModeKey;
   modes: ReviewModeKey[];
@@ -68,6 +70,7 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
                 term: card.term,
                 meaning: card.meaning,
                 section: section.name,
+                sectionLanguage: section.nameLanguage,
                 mode: previewMode(card),
                 modes: card.modes,
                 image: card.image,
@@ -106,6 +109,8 @@ export interface SectionStep {
   /** 1-based place in the deck's order, or null for cards outside any section. */
   position: number | null;
   name: string | null;
+  /** The language the name is in, when it is not the deck's meaning language. */
+  nameLanguage?: string | undefined;
   cards: PublicDeckOut["sections"][number]["cards"];
 }
 
@@ -118,6 +123,7 @@ export function sectionPath(deck: PublicDeckOut): { inOrder: boolean; steps: Sec
   const steps = deck.sections.map((section) => ({
     position: section.name === null ? null : ++position,
     name: section.name,
+    nameLanguage: section.nameLanguage,
     cards: section.cards,
   }));
   return { inOrder: position > 0, steps };

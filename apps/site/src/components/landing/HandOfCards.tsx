@@ -127,7 +127,8 @@ function FanCard({
   }, [landed]);
 
   const say = (d: string | MessageDescriptor) => (typeof d === "string" ? d : i18n._(d));
-  const heading = [say(card.source), card.kind && say(card.kind)].filter(Boolean).join(" · ");
+  const source = say(card.source);
+  const kind = card.kind ? say(card.kind) : "";
   const audible = card.audio !== null;
   const front = place === "front";
   const { cue, target } = modeOf(card.mode ?? "term_to_meaning");
@@ -137,7 +138,11 @@ function FanCard({
 
   const header = (
     <p className="flex min-h-4 items-center justify-between gap-2 text-xs font-medium tracking-[0.06em] text-muted uppercase">
-      <span>{heading}</span>
+      <span>
+        {source && <span lang={card.sourceLanguage}>{source}</span>}
+        {source && kind && " · "}
+        {kind}
+      </span>
       {card.state && (
         <span className="inline-flex shrink-0 items-center gap-1.5 tracking-normal normal-case">
           <span

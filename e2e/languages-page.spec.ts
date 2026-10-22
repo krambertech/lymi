@@ -113,6 +113,8 @@ test("a language page's deck tiles keep their own labels inside them on a phone"
     links.flatMap((tile) =>
       [...tile.querySelectorAll<HTMLElement>("*")]
         .filter((element) => getComputedStyle(element).position === "absolute")
+        // A hidden element has no offsetParent and takes no space, so it can't widen the page.
+        .filter((element) => element.offsetParent !== null)
         .filter((element) => !tile.contains(element.offsetParent))
         .map((element) => `${tile.getAttribute("href")}: ${element.className}`),
     ),

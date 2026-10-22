@@ -1,5 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
+import posthogSourceMaps from "@posthog/rollup-plugin";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
@@ -17,6 +18,13 @@ const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
 // Workers Builds has no Playwright browsers; GitHub CI runs the component tests before merge.
 const isWorkersBuild = process.env.WORKERS_CI === "1";
+// A PostHog personal API key, set only on the product's Workers Builds project. docs/operations.md.
+const sourceMapKey = process.env.POSTHOG_CLI_API_KEY;
+if (isWorkersBuild && !sourceMapKey && !process.env.VITEST) {
+  console.warn(
+    "POSTHOG_CLI_API_KEY is not set, so this build's errors stay unreadable in PostHog.",
+  );
+}
 // `pnpm verify:changed` and the CI plan name the browser instances a change needs. docs/testing.md.
 const requestedInstances = process.env.LYMI_COMPONENT_INSTANCES
   ? process.env.LYMI_COMPONENT_INSTANCES.split(",").filter(Boolean)
@@ -110,6 +118,20 @@ export default defineConfig({
             }
           : undefined,
       ),
+    // Uploads hidden source maps for the client and the Worker, then deletes them so none ship.
+    !process.env.VITEST &&
+      !!sourceMapKey &&
+      posthogSourceMaps({
+        personalApiKey: sourceMapKey,
+        projectId: "292417",
+        host: "https://eu.posthog.com",
+        sourcemaps: {
+          releaseName: "lymi",
+          ...(process.env.WORKERS_CI_COMMIT_SHA && {
+            releaseVersion: process.env.WORKERS_CI_COMMIT_SHA,
+          }),
+        },
+      }),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icons/apple-touch-icon.png"],
@@ -139,6 +161,8 @@ export default defineConfig({
         // TanStack Query owns data caching so offline reviews go through one path.
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
+        // The service worker reports no errors, so its map would only expose source.
+        sourcemap: false,
         navigateFallback: "/index.html",
         // Workbox tests these against the path and query together, so `/?mode=sign-up` must
         // still reach the Worker's door rather than the cached shell.

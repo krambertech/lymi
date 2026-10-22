@@ -114,7 +114,7 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
               ? frame.platform
               : "web:javascript";
             const filename = scriptFilename(frame.filename);
-            // The phone's uploaded source maps are found by the bundle's chunk ID.
+            // PostHog finds an uploaded source map by the chunk ID the build injected.
             const chunkId =
               typeof frame.chunk_id === "string" && CHUNK_ID.test(frame.chunk_id)
                 ? frame.chunk_id

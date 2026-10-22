@@ -39,6 +39,7 @@
     "@lingui/format-po": "6.9.1",
     "@lingui/vite-plugin": "6.9.1",
     "@modelcontextprotocol/client": "2.0.0",
+    "@posthog/rollup-plugin": "1.6.2",
     "@rolldown/plugin-babel": "0.2.4",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/router-plugin": "^1.168.43",

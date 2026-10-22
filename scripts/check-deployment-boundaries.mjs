@@ -27,6 +27,11 @@ const leakedPwa = siteAssets
   .find((path) => forbiddenSiteAssets.test(path));
 if (leakedPwa) throw new Error(`Public-site build exposes a product PWA asset: ${leakedPwa}`);
 
+// Source maps go to PostHog during the build and are deleted, so the product never serves its source.
+const shippedMap = filesBelow(productDist).find((path) => path.endsWith(".map"));
+if (shippedMap)
+  throw new Error(`Product build ships a source map: ${relativeTo(productDist, shippedMap)}`);
+
 const publicMarkers = [
   "Lymi · Keep what you learn",
   "Keep what you learn in any language.",
@@ -65,5 +70,5 @@ for (const dist of [productDist, siteDist]) {
 }
 
 process.stdout.write(
-  "Deployment boundary check passed: site has no PWA assets; product has no public pages or preview tools; no uncompiled Lingui macro.\n",
+  "Deployment boundary check passed: site has no PWA assets; product has no public pages, preview tools or source maps; no uncompiled Lingui macro.\n",
 );

@@ -557,7 +557,7 @@ function Figure({
         <Skeleton className="h-7 w-12 rounded-sm" />
       ) : (
         <span className="text-2xl font-semibold leading-tight tabular-nums">
-          {new Intl.NumberFormat(i18n.locale).format(value)}
+          {i18n.number(value)}
         </span>
       )}
       <span className="text-sm text-muted">{label}</span>
@@ -1165,7 +1165,7 @@ function DecksStep({
     onSkipDecks(decks.filter((d) => next.has(d.key)).map((d) => d.key));
     setError(false);
   };
-  const count = (n: number) => new Intl.NumberFormat(i18n.locale).format(n);
+  const count = (n: number) => i18n.number(n);
   return (
     <>
       <Question title={t`Which decks do you want in Lymi?`}>

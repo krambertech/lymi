@@ -271,7 +271,7 @@ export function TodayView({
                       className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 hoverable:hover:veil"
                     >
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
-                      <DueCount size="lg">{d.due}</DueCount>
+                      <DueCount size="lg" count={d.due} />
                       <span className="grid min-w-0 flex-1 gap-0.5">
                         <span dir="auto" className="truncate text-md font-medium">
                           {d.name}
@@ -358,7 +358,7 @@ function DueHeading({
  * opens its review; an empty one says so plainly, and an empty New cards tile offers to add some.
  */
 function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | undefined }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const tiles = [
     {
       round: "forgotten" as const,
@@ -400,7 +400,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
           !live && "text-muted",
         )}
       >
-        {item.count}
+        {i18n.number(item.count)}
       </span>
       <span className="grid min-w-0 flex-1 content-start gap-0.5 @3xl:px-5 @3xl:pb-4">
         <span className="flex items-center gap-1.5 text-md font-medium">

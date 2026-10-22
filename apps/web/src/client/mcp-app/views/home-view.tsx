@@ -49,7 +49,7 @@ export function HomeView({ result }: { result: HomeResult }) {
               className="inline-flex items-center gap-2 rounded-full bg-plate-2 py-1 ps-3 pe-1 text-sm text-text-2"
             >
               {deck.name}
-              <DueCount>{deck.due}</DueCount>
+              <DueCount count={deck.due} />
             </li>
           ))}
         </ul>

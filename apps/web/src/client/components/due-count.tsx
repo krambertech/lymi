@@ -1,7 +1,12 @@
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import type { ComponentProps } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
-interface Props extends ComponentProps<"span"> {
+interface Props extends Omit<ComponentProps<"span">, "children"> {
+  /** Formatted for the locale here, so every badge groups digits the same way. */
+  count: number;
+  /** Read instead of the bare number, such as "8 due today". The number is then hidden from screen readers. */
+  label?: ReactNode;
   /** `lg` leads a row, as on Today's deck list. */
   size?: "sm" | "lg" | undefined;
 }
@@ -10,7 +15,9 @@ interface Props extends ComponentProps<"span"> {
  * How many cards are due, on the lantern's amber as a tint. The tint says "act" and the ink keeps
  * the number readable; docs/design/system/colour.md.
  */
-export function DueCount({ size = "sm", className, ...rest }: Props) {
+export function DueCount({ count, label, size = "sm", className, ...rest }: Props) {
+  const { i18n } = useLingui();
+  const shown = i18n.number(count);
   return (
     <span
       className={clsx(
@@ -21,6 +28,15 @@ export function DueCount({ size = "sm", className, ...rest }: Props) {
         className,
       )}
       {...rest}
-    />
+    >
+      {label ? (
+        <>
+          <span aria-hidden="true">{shown}</span>
+          <span className="sr-only">{label}</span>
+        </>
+      ) : (
+        shown
+      )}
+    </span>
   );
 }

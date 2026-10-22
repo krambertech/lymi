@@ -27,7 +27,7 @@ export function DueView({ result }: { result: ViewDueResult }) {
           {decks.map((deck) => (
             <li key={deck.id} className="flex items-center justify-between gap-3 py-2.5">
               <span className="min-w-0 truncate text-text">{deck.name}</span>
-              <DueCount>{deck.due}</DueCount>
+              <DueCount count={deck.due} />
             </li>
           ))}
         </ul>

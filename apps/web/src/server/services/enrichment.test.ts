@@ -1028,7 +1028,7 @@ describe("enrichment that follows the deck", () => {
     });
   });
 
-  it("leaves a Ukrainian example's stress alone until Ukrainian has a prompt module", async () => {
+  it("adds stress to a Ukrainian example and keeps it the learner's", async () => {
     const ctx = await learner(db, "deck-fields-readings-uk", "Kateryna");
     const deck = await createDeck(ctx, { name: "Українська", defaultLanguage: "uk" });
     const card = await added(
@@ -1042,15 +1042,18 @@ describe("enrichment that follows the deck", () => {
           meaning: "to work",
           example: "Я працю́ю в ба́нку.",
           notes: null,
-          pronunciation: null,
+          pronunciation: "працюва́ти",
           language: null,
         },
       ],
     });
     await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
     const input = JSON.parse(provider.asked[0]?.input ?? "{}");
-    expect(input.cards).toEqual([expect.not.objectContaining({ addReadings: true })]);
-    expect(await showCard(ctx, card.id)).toMatchObject({ example: "Я працюю в банку." });
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, addReadings: true })]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "Я працю́ю в ба́нку.",
+      exampleSource: "manual",
+    });
   });
 
   it("adds stress to a Russian example and keeps it the learner's", async () => {

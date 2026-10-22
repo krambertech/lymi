@@ -20,9 +20,11 @@ export function DeckTile({
 }) {
   const { t } = useLingui();
   return (
+    // Positioned, so the sr-only label below sits inside the tile. Otherwise it is placed against
+    // the page, outside any scrolling row the tile is in, and widens the page on a phone. #895.
     <a
       href={deckPath(deck.slug, locale)}
-      className="deck-tile group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+      className="deck-tile group relative block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
     >
       {deck.card ? (
         <div className="deck-tray" data-hue={hue}>

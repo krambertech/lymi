@@ -92,11 +92,11 @@ export default async function drive({ page, base, step, api, expect }) {
     });
     await page.goto(`/review?deck=${hands.id}`);
     await expect.poll(cue).toBe("руки́");
-    // No line under the cue repeats the stress; the cue holds it with the speaker after it.
+    // No line outside the cue, the paragraph with the speaker, repeats the stress.
     const line = page
       .getByText("руки́", { exact: true })
       .filter({ visible: true })
-      .and(page.locator(":not(.sr-only)"));
+      .and(page.locator(":not(.sr-only):not(p:has(button) *)"));
     await expect(line).toHaveCount(0);
     await reveal();
     await expect(

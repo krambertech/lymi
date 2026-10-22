@@ -1,11 +1,12 @@
 /**
- * The Worker job that moves Russian stress out of stored terms, as `stress-backfill/plan.ts`
- * decides. It writes as the system through `updateCards`, so each change has its audit row, and it
+ * The Worker job that moves Russian and Ukrainian stress out of stored terms and rekeys Ukrainian
+ * apostrophes, as `stress-backfill/plan.ts` decides. It writes as the system through `updateCards`, so each change has its audit row, and it
  * sends no event, because no learner acted.
  */
 import { and, inArray, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import {
+  BACKFILL_TERMS,
   countDuplicates,
   planStressBackfill,
   type StressChange,
@@ -36,7 +37,7 @@ export async function runStressBackfill(
   const rows = await db
     .select({ ...columns, archivedAt: schema.cards.archivedAt })
     .from(schema.cards)
-    .where(sql`instr(${schema.cards.term}, char(769)) > 0`);
+    .where(sql.raw(BACKFILL_TERMS));
   const { changes, counts } = planStressBackfill(rows);
   // The cards already keyed as the rewritten terms will be, and the stressed cards themselves.
   const keyed = await selectIn([...new Set(changes.map((c) => c.normalizedTerm))], (keys) =>

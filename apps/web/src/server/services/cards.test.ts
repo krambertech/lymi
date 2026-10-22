@@ -64,6 +64,9 @@ describe("matchesSearch", () => {
     const kanji = card({ normalizedTerm: "漢字", pronunciation: "かんじ" });
     expect(matchesSearch(kanji, searchKey("かんじ"))).toBe(true);
     expect(matchesSearch(kanji, searchKey("カンジ"))).toBe(true);
+    const meat = { ...kanji, normalizedTerm: "м’ясо", language: "uk" };
+    expect(matchesSearch(meat, searchKey("м'ясо"))).toBe(true);
+    expect(matchesSearch(meat, searchKey("мʼясо"))).toBe(true);
     expect(matchesSearch(kanji, searchKey("ｶﾝｼﾞ"))).toBe(true);
     expect(matchesSearch(kanji, searchKey("ひらがな"))).toBe(false);
   });

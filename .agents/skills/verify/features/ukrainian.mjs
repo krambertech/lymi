@@ -63,6 +63,11 @@ export default async function drive({ page, base, step, api, expect }) {
         "skipped",
         "added",
       ]);
+      // The same word with a typewriter apostrophe is the same term.
+      const again = await post("/api/cards/batch", {
+        cards: [{ deckId: words.id, term: "м'ясо", enrich: false }],
+      });
+      expect(again.results.map((r) => r.status)).toEqual(["skipped"]);
       expect(results[1]).toMatchObject({
         card: { pronunciation: "замо́к" },
         normalized: ["pronunciation"],
@@ -70,6 +75,12 @@ export default async function drive({ page, base, step, api, expect }) {
       return { results };
     },
   );
+
+  await step("Search with a typewriter apostrophe finds м’ясо", async () => {
+    const { cards } = await api(`/api/cards?query=${encodeURIComponent("м'ясо")}`);
+    expect(cards.map((card) => card.term)).toEqual(["м\u2019ясо"]);
+    return { cards };
+  });
 
   await step("Search for the marked form finds both plain terms", async () => {
     const { cards } = await api(`/api/cards?query=${encodeURIComponent("за́мок")}`);

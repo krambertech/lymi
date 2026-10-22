@@ -69,7 +69,7 @@ describe("drawsReadings", () => {
 describe("stressRules", () => {
   it("lets Russian restore ё and Ukrainian restore nothing, and no other language mark one", () => {
     expect(stressRules("ru-RU")).toEqual({ vowels: "аеёиоуыэюя", restores: { ё: "е" } });
-    expect(stressRules("uk-UA")).toEqual({ vowels: "аеєиіїоуюя" });
+    expect(stressRules("uk-UA")).toEqual({ vowels: "аеєиіїоуюя", apostrophes: true });
     for (const tag of ["bg", "be", "ja", null]) expect(stressRules(tag)).toBeNull();
   });
 });

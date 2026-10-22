@@ -1,6 +1,6 @@
 /**
- * The one-off move of Russian stress out of the term, so a term stored before the stress fold
- * keys as natives write it: за́мок with no pronunciation becomes замок stressed за́мок, which keeps
+ * The one-off move of Russian and Ukrainian stress out of the term, so a term stored before the
+ * stress fold keys as natives write it, and of a Ukrainian term's key to the one ' gives: за́мок with no pronunciation becomes замок stressed за́мок, which keeps
  * за́мок and замо́к two words. A card with another pronunciation, such as IPA, keeps its stressed
  * term and key until the learner edits it. Two cards the fold makes duplicates, such as за́мок
  * beside замок, both stay; the job counts them and archives nothing. This is the plan, shared by
@@ -9,6 +9,7 @@
  */
 import {
   duplicateKey,
+  hasStress,
   normalizeCardText,
   readingKey,
   sameReading,
@@ -16,7 +17,12 @@ import {
   termKey,
 } from "@lymi/core";
 
-/** A card the job reads: every card whose term carries U+0301, whatever its language. */
+/** The cards the job reads, as SQL over `cards.term`: U+0301, or an apostrophe Ukrainian folds to '. */
+export const BACKFILL_TERMS = [769, 8216, 8217, 700, 96]
+  .map((code) => `instr(term, char(${code})) > 0`)
+  .join(" or ");
+
+/** A card the job reads: every card whose term carries U+0301 or an apostrophe other than ', whatever its language. */
 export type StressRow = {
   id: string;
   userId: string;
@@ -41,6 +47,8 @@ export type StressCounts = {
   folded: number;
   /** Stressed terms beside another pronunciation, such as IPA, left with their stressed key. */
   kept: number;
+  /** Ukrainian terms written with ’, ‘, ʼ or ` whose key becomes the one ' gives, with the term left as written. */
+  rekeyed: number;
   /** Cards that, once rewritten, have an active card with the same term and no reading telling them apart. */
   duplicates: number;
 };
@@ -51,15 +59,26 @@ export function planStressBackfill(rows: readonly StressRow[]): {
   counts: Omit<StressCounts, "duplicates">;
 } {
   const changes: StressChange[] = [];
-  const counts = { split: 0, folded: 0, kept: 0 };
+  const counts = { split: 0, folded: 0, kept: 0, rekeyed: 0 };
   for (const card of rows) {
-    if (!stressRules(card.language)) continue;
+    const rules = stressRules(card.language);
+    if (!rules) continue;
     const { fields, normalized } = normalizeCardText(card.language, {
       term: card.term,
       pronunciation: card.pronunciation,
     });
     if (!normalized.includes("term") || fields.term === undefined) {
-      counts.kept += 1;
+      const key = termKey(card.language, card.term);
+      if (hasStress(card.term)) counts.kept += 1;
+      else if (rules.apostrophes && key !== card.normalizedTerm) {
+        counts.rekeyed += 1;
+        changes.push({
+          card,
+          term: card.term,
+          pronunciation: card.pronunciation,
+          normalizedTerm: key,
+        });
+      }
       continue;
     }
     counts[normalized.includes("pronunciation") ? "split" : "folded"] += 1;

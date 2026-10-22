@@ -13,6 +13,7 @@ export const e2eAccounts = [
   "review-returns",
   "review-queued",
   "review-offline",
+  "review-speaker",
   "review-round",
   "review-scope",
   "review-midnight",

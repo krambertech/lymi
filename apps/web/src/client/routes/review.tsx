@@ -902,7 +902,10 @@ function Review() {
         }
         return;
       }
-      if (control) return;
+      const g = GRADES.find((x) => x.key === e.key);
+      // A click leaves focus on the speaker, which keeps Space and Enter to replay and lets the
+      // grade keys through.
+      if (control && !(g && control.matches("[data-audio]"))) return;
       if (!current) return;
       if (e.key === " ") {
         e.preventDefault();
@@ -913,7 +916,6 @@ function Review() {
           setRevealed(true);
         } else onGrade(3, "keyboard");
       }
-      const g = GRADES.find((x) => x.key === e.key);
       if (g) {
         e.preventDefault();
         onGrade(g.rating, "keyboard");

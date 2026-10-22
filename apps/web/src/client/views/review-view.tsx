@@ -234,6 +234,8 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
           // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
           className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
           aria-disabled={state === "loading"}
+          // The review lets the grade keys through from here, since a click leaves focus on it.
+          data-audio=""
           onClick={(e) => {
             e.stopPropagation();
             onPlay();

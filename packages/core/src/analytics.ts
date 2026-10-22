@@ -633,12 +633,17 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
 /** Query parameters a public page adds to its links so the product learns where a visit began. */
 const CARRIED = { referrer: "ref", landing: "lp" } as const;
 const CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign"] as const;
+/** The query keys a link carries a visit's first touch in. */
+export const FIRST_TOUCH_KEYS = [CARRIED.landing, CARRIED.referrer, ...CAMPAIGN_KEYS] as const;
+// An OAuth round trip comes back from these, so they are never where a visit began.
+const SIGN_IN_HOSTS = new Set(["accounts.google.com", "appleid.apple.com"]);
 
 function externalHost(value: string | null | undefined): string | undefined {
   if (!value) return;
   try {
     const hostname = value.includes("/") ? new URL(value).hostname : value.toLowerCase();
     if (hostname === "lymi.app" || hostname.endsWith(".lymi.app")) return;
+    if (SIGN_IN_HOSTS.has(hostname)) return;
     return host.safeParse(hostname).data;
   } catch {
     return;

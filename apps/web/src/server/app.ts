@@ -1,5 +1,6 @@
 import type { Actor, PhoneClient, Scope } from "@lymi/core";
 import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
+import { FIRST_TOUCH_KEYS } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
 import { routePath } from "hono/route";
@@ -86,9 +87,16 @@ app.get("/", async (c) => {
   if (session) return c.redirect(new URL("/today", c.env.PRODUCT_URL).toString(), 302);
   const destination = new URL("/login", c.env.PRODUCT_URL);
   // The site's Open Lymi and /signup ask for sign-up, since a visitor with no session is most
-  // likely new; the rest of their query, such as campaign tags, rides along to the form.
-  if (c.req.query("mode") === "sign-up") {
-    destination.search = new URL(c.req.url).search;
+  // likely new; the rest of their query, such as campaign tags, rides along to the form. Sign in
+  // carries only the visit's first touch, so a sign-up that starts there keeps its real source.
+  const query = new URL(c.req.url).searchParams;
+  if (query.get("mode") === "sign-up") {
+    destination.search = query.toString();
+  } else {
+    for (const key of FIRST_TOUCH_KEYS) {
+      const value = query.get(key);
+      if (value !== null) destination.searchParams.set(key, value);
+    }
   }
   return c.redirect(destination.toString(), 302);
 });

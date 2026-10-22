@@ -765,7 +765,13 @@ type TrayCard = CandidateCard & { meaning: string; deckDirections: Directions };
  */
 async function sampleCards(
   db: CatalogDb,
-  rows: readonly { deckId: string; slug: string; revision: number; deckDirections: Directions }[],
+  rows: readonly {
+    deckId: string;
+    slug: string;
+    revision: number;
+    deckDirections: Directions;
+    meaningLanguage: string;
+  }[],
   editionOf: Map<string, ShownEdition>,
   language: string | undefined,
 ): Promise<Map<string, PublicDeckSummary["card"]>> {
@@ -817,17 +823,24 @@ async function sampleCards(
         : [],
     ),
   );
+  const originalOf = new Map(rows.map((row) => [row.deckId, row.meaningLanguage]));
   const chosen = new Map<string, PublicDeckSummary["card"]>();
   for (const [deckId, card] of picked) {
     const text = localized.get(card.cardId);
     const image = pictureOf.get(card.cardId);
     const modes = modesOf(card.deckDirections, card, !!image);
     const mode = previewMode({ modes, image });
+    // The section is named in the deck's edition too, as its own page names it.
+    const sectionName = card.sectionId ? sectionNames.get(card.sectionId) : undefined;
+    // An edition's section with no approved name falls back to the original's, which is in the
+    // original's language, so hyphenation and screen readers are told so.
+    const original = originalOf.get(deckId);
+    const fallsBack = editionOf.has(deckId) && !sectionName && card.sectionName && original;
     chosen.set(deckId, {
       term: text?.term ?? card.term,
       meaning: text?.meaning ?? card.meaning,
-      // The section is named in the deck's edition too, as its own page names it.
-      section: (card.sectionId && sectionNames.get(card.sectionId)) ?? card.sectionName,
+      section: sectionName ?? card.sectionName,
+      ...(fallsBack ? { sectionLanguage: original } : {}),
       mode,
       // The tray shows the picture only as the cue, as review does before a card is turned.
       ...(image && isImageMode(mode) ? { image } : {}),

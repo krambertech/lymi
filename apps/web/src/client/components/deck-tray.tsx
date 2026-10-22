@@ -53,7 +53,7 @@ export function TrayCardFace({
   return (
     <>
       {card.section && (
-        <p lang={meaningLanguage} className="deck-tray-section">
+        <p lang={card.sectionLanguage ?? meaningLanguage} className="deck-tray-section">
           {card.section}
         </p>
       )}

@@ -8,6 +8,8 @@ interface Props {
   term: string;
   meaning: string;
   section: string | null;
+  /** The language the section is named in, when it is not `meaningLanguage`. */
+  sectionLanguage?: string | undefined;
   mode: ReviewModeKey;
   image?: { cardId: string; description: string; width: number; height: number } | undefined;
   language: string | null;
@@ -30,6 +32,7 @@ export function PreviewFace({
   term,
   meaning,
   section,
+  sectionLanguage,
   mode,
   image,
   language,
@@ -42,7 +45,7 @@ export function PreviewFace({
   return (
     <>
       {section && (
-        <p lang={meaningLanguage} className={`${kind}-section`}>
+        <p lang={sectionLanguage ?? meaningLanguage} className={`${kind}-section`}>
           {section}
         </p>
       )}

@@ -9,12 +9,11 @@ import {
   type DeckPurpose,
   deckEnrichFields,
   deckPurpose,
-  examplesCarryReadings,
   fieldsToFill,
   missingReadings,
 } from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
-import { languagePrompts } from "../languages";
+import { addsExampleReadings, languagePrompts } from "../languages";
 import { type CaseExpectations, type CheckResult, checkCard, ruleKey, tally } from "./checks";
 import { GUIDED_LANGUAGES, languageGuide } from "./languages";
 import {
@@ -124,7 +123,7 @@ function addsReadings(deck: FixtureDeck, item: FixtureCase): boolean {
   return (
     deckEnrichFields(deck.fields ?? null, deck.language, deck.purpose).includes("example") &&
     !!item.example &&
-    examplesCarryReadings(deck.language) &&
+    addsExampleReadings(deck.language) &&
     missingReadings(item.example, deck.language)
   );
 }

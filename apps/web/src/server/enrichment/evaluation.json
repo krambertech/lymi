@@ -416,6 +416,18 @@
             "meaning": { "oneOf": ["How are you?", "How are things?", "How's it going?"] },
             "example": "empty"
           }
+        },
+        {
+          "id": "ru-en-27",
+          "term": "дома",
+          "meaning": "at home",
+          "expect": { "pronunciation": { "oneOf": ["до́ма"] } }
+        },
+        {
+          "id": "ru-en-28",
+          "term": "дома",
+          "meaning": "houses",
+          "expect": { "pronunciation": { "oneOf": ["дома́"] } }
         }
       ]
     },

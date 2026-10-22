@@ -237,6 +237,15 @@ describe("analytics privacy contract", () => {
     expect(firstTouch("https://lymi.app/", "https://notlymi.app/private", "public").referrer).toBe(
       "notlymi.app",
     );
+    for (const signIn of ["https://accounts.google.com/", "appleid.apple.com"]) {
+      expect(firstTouch("https://lymi.app/", signIn, "public"), signIn).not.toHaveProperty(
+        "referrer",
+      );
+      expect(
+        firstTouch(`https://my.lymi.app/today?ref=${signIn}`, "", "product"),
+        signIn,
+      ).not.toHaveProperty("referrer");
+    }
     expect(
       parseFirstTouch(
         JSON.stringify({

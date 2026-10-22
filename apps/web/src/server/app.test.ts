@@ -51,6 +51,19 @@ describe("the product origin", () => {
     expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
   });
 
+  it("carries a Sign in link's first touch to sign-in, and nothing else", async () => {
+    const query = "lp=%2Fexplore%2Festonian-top-100-verbs&ref=www.google.com&utm_medium=social";
+    const signedOut = await app.fetch(`/?${query}&token=secret`);
+    expect(signedOut.status).toBe(302);
+    expect(signedOut.headers.get("location")).toBe(`${PRODUCT_URL}/login?${query}`);
+
+    const signUp = await app.fetch(`/?mode=sign-up&${query}`);
+    expect(signUp.headers.get("location")).toBe(`${PRODUCT_URL}/login?mode=sign-up&${query}`);
+
+    const signedIn = await app.fetch(`/?${query}`, { as: learner });
+    expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
+  });
+
   it("sends Explore to the site without a live session", async () => {
     const stale = {
       ...learner,

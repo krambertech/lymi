@@ -2,7 +2,7 @@ import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { createAuthClient } from "better-auth/react";
 import { safeProductReturnPath } from "../../shared/origins";
 import { clearStoredLanguage } from "./i18n";
-import { firstTouchData } from "./telemetry";
+import { firstTouchData, withFirstTouch } from "./telemetry";
 
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
@@ -44,7 +44,10 @@ export function signInWithApple(returnTo?: string | null) {
 
 function signInWithProvider(provider: "google" | "apple", returnTo?: string | null) {
   const destination = safeProductReturnPath(returnTo);
-  const errorCallbackURL = `/login?${new URLSearchParams({ returnTo: destination })}`;
+  // A cancelled or refused sign-in comes back to /login, so it keeps the first touch too.
+  const errorCallbackURL = withFirstTouch(
+    `/login?${new URLSearchParams({ returnTo: destination })}`,
+  );
   return authClient.signIn.social({
     provider,
     callbackURL: destination,

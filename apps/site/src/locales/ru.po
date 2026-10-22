@@ -1602,6 +1602,9 @@ msgstr "Пример"
 msgid "Excuse me"
 msgstr "Извините"
 
+msgid "expensive"
+msgstr "дорогой"
+
 msgid "Expensive; also dear"
 msgstr "Дорогой; а ещё милый"
 

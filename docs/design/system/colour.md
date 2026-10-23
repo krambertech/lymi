@@ -76,10 +76,11 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 7. The star of a card the learner marked important, `amber-mark` and always filled, beside the term in a deck's list and before the word Important on the card page. It is the learner's own choice of what to keep lit, so it borrows the lantern's light; it is a mark, never a button, and the word or the screen reader's label carries it.
 
 8. A warning that an action is out of reach for now, as `Notice tone="warning"`: an `amber-mark` icon and ink text on `amber-soft`, above the controls it disables. It asks the learner to come back, so it is the one notice that is not neutral.
+9. The phone's chosen tab: its filled icon in `amber-mark` and its label in `amber-text`. It is the one selected state that is amber, because native tab bars tint the tab the learner is on and ink alone barely parts it from the muted rest; the web's rail keeps its ink row ([phone.md](phone.md)).
 
 A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 
-Never amber for: a selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray or a deck tray, a heading, a link, or decoration.
+Never amber for: any other selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray or a deck tray, a heading, a link, or decoration.
 
 ## Card states
 

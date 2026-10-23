@@ -15,6 +15,7 @@ import { useFrost } from "../ui/glass";
 import type { IconName } from "../ui/icons";
 import { Icon, IconButton, Plate, Text } from "../ui/primitives";
 import { Skeleton } from "../ui/skeleton";
+import { useStreakStart } from "../ui/streak-start";
 import { OnGlass } from "../ui/surface";
 
 const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
@@ -85,6 +86,7 @@ function StreakPanel({
     if (!open) navigation.setOptions({ sheetAllowedDetents: [0.62, 1] });
   };
   const { current, today } = summary;
+  const start = useStreakStart(summary.longest);
   const done = satisfied(today.outcome);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
@@ -125,20 +127,28 @@ function StreakPanel({
           className="flex-row items-center gap-3"
           accessible
           accessibilityRole="header"
-          accessibilityLabel={t`Streak: ${plural(current, { one: "# day in a row", other: "# days in a row" })}`}
+          accessibilityLabel={
+            current > 0
+              ? t`Streak: ${plural(current, { one: "# day in a row", other: "# days in a row" })}`
+              : start
+          }
         >
           <Flame height={44} state={flame} />
-          <View className="flex-row items-baseline gap-2.5">
-            <Text
-              className="text-5xl font-semibold text-text"
-              style={{ fontVariant: ["tabular-nums"] }}
-            >
-              {current}
-            </Text>
-            <Text className="text-lg font-medium text-text-2">
-              {plural(current, { one: "day in a row", other: "days in a row" })}
-            </Text>
-          </View>
+          {current > 0 ? (
+            <View className="flex-row items-baseline gap-2.5">
+              <Text
+                className="text-5xl font-semibold text-text"
+                style={{ fontVariant: ["tabular-nums"] }}
+              >
+                {current}
+              </Text>
+              <Text className="text-lg font-medium text-text-2">
+                {plural(current, { one: "day in a row", other: "days in a row" })}
+              </Text>
+            </View>
+          ) : (
+            <Text className="text-2xl font-semibold text-text">{start}</Text>
+          )}
         </View>
         <Text className="text-base text-text-2">{status}</Text>
       </View>

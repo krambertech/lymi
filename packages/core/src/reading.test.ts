@@ -361,6 +361,8 @@ describe("example pinyin", () => {
     expect(missingReadings("我[wǒ]去[qù]银行[yínháng]。", "zh")).toBe(false);
     expect(addsReadingsOnly("今天不行。", "今天[jīntiān]不行[bù xíng]。", "zh")).toBe(true);
     expect(addsReadingsOnly("今天不行。", "今天[jīntiān]不行[bù xíng]！", "zh")).toBe(false);
+    expect(addsReadingsOnly("Я живу в Москве.", "Я живу́ в Москве́.", "ru")).toBe(true);
+    expect(addsReadingsOnly("Я живу в Москве.", "Я живу в Москве.", "ru")).toBe(false);
   });
 });
 
@@ -426,6 +428,10 @@ describe("missingReadings", () => {
     expect(missingReadings("毎朝パンを食[た]べる", "ja")).toBe(true);
     expect(missingReadings("毎朝[まいあさ]パンを食[た]べる", "ja")).toBe(false);
     expect(missingReadings("パンをたべる", "ja")).toBe(false);
+  });
+  it("finds a Russian word of two or more syllables with no stress shown", () => {
+    expect(missingReadings("Я живу в Москве́.", "ru")).toBe(true);
+    expect(missingReadings("Я живу́ в Москве́.", "ru")).toBe(false);
   });
 });
 

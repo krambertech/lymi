@@ -1,6 +1,8 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { unisolate } from "@lymi/core";
+import MaskedView from "@react-native-masked-view/masked-view";
+import { BlurView } from "expo-blur";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
@@ -18,15 +20,18 @@ import {
   type ListRenderItem,
   Platform,
   RefreshControl,
+  StyleSheet,
   useWindowDimensions,
   View,
   type ViewStyle,
 } from "react-native";
 import Animated, {
+  Easing,
   Extrapolation,
   interpolate,
   runOnJS,
   type SharedValue,
+  useAnimatedProps,
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -117,6 +122,10 @@ const END_ROOM = Platform.OS === "android" ? 64 : undefined;
 const END_NEAR = 600;
 /** How far the page scrolls before the bar is compact: the large title's line has gone under it. */
 const TITLE_GONE = 44;
+/** How far the page scrolls while the title travels into the bar, long enough that it settles rather than snaps. */
+const TITLE_TRAVEL = 96;
+/** The travel slows as the title nears the bar; a stronger curve would outrun the page at the start. */
+const SETTLE = Easing.out(Easing.quad);
 /** A page's title docked in the bar, centred at text-md against the large title's text-3xl. */
 const SMALL = 17 / 34;
 /** A tab's title stays at the start, larger, as iOS's inline large title does: text-xl. */
@@ -220,7 +229,7 @@ export function Screen<T = never>({
   const restY = kind === "tab" ? top + (row - box.h) / 2 : top + row - 4;
   const dock = kind === "tab" ? INLINE_LARGE : SMALL;
   const dockY = top + (row - box.h * dock) / 2;
-  const travel = Math.max(restY - dockY, TITLE_GONE);
+  const travel = Math.max(restY - dockY, TITLE_TRAVEL);
   const [headerHeight, setHeaderHeight] = useState(0);
   const rtl = I18nManager.isRTL;
   // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
@@ -265,7 +274,7 @@ export function Screen<T = never>({
         transform: [{ translateX: 0 }, { translateY: 0 }, { scale: 1 }],
       };
     }
-    const k = interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP);
+    const k = SETTLE(interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP));
     const w = Math.min(box.w * dock, screen - 2 * TRAVEL_SIDE);
     // A page centres it between its back and its actions; a tab keeps it at the start, across
     // from the streak and capture, so the bar does not lean to one side.
@@ -413,26 +422,32 @@ export function Screen<T = never>({
           )}
         </Animated.ScrollView>
       )}
-      <Animated.View
-        pointerEvents="none"
-        className="absolute inset-x-0 top-0"
-        style={[
-          {
-            height: bar + 20,
-            // Solid under the bar, softening only below it, so nothing reads through the title.
-            experimental_backgroundImage: `linear-gradient(to bottom, ${roof} ${Math.round((bar / (bar + 20)) * 100)}%, ${roof}00)`,
-          } as ViewStyle,
-          band,
-        ]}
-      />
-      {/* Over a page's own ground the clock sits on the ground at rest; the room gathers on scroll. */}
-      <Animated.View
-        pointerEvents="none"
-        className="absolute inset-x-0 top-0"
-        style={ground ? band : undefined}
-      >
-        <StatusFade height={top} colour={roof} />
-      </Animated.View>
+      {Platform.OS === "ios" ? (
+        <SoftEdge height={bar} colour={roof} y={y} />
+      ) : (
+        <>
+          <Animated.View
+            pointerEvents="none"
+            className="absolute inset-x-0 top-0"
+            style={[
+              {
+                height: bar + 20,
+                // Solid under the bar, softening only below it, so nothing reads through the title.
+                experimental_backgroundImage: `linear-gradient(to bottom, ${roof} ${Math.round((bar / (bar + 20)) * 100)}%, ${roof}00)`,
+              } as ViewStyle,
+              band,
+            ]}
+          />
+          {/* Over a page's own ground the clock sits on the ground at rest; the room gathers on scroll. */}
+          <Animated.View
+            pointerEvents="none"
+            className="absolute inset-x-0 top-0"
+            style={ground ? band : undefined}
+          >
+            <StatusFade height={top} colour={roof} />
+          </Animated.View>
+        </>
+      )}
       <View
         pointerEvents="none"
         className="absolute start-0 top-0"
@@ -611,6 +626,56 @@ function Ground({
         } as ViewStyle
       }
     />
+  );
+}
+
+/** How far below the bar the blur and the room's tint fade out. */
+const EDGE_FADE = 28;
+/** Strong enough that text under the bar reads as light, not as words. */
+const EDGE_BLUR = 40;
+const EdgeBlur = Animated.createAnimatedComponent(BlurView);
+
+/**
+ * On iOS what scrolls under the bar blurs rather than meeting a solid band, so a lit page's glow
+ * still reads through it. Both the blur and the room's tint gather as content moves, so nothing
+ * crosses the lantern's light at rest, and the tint keeps the bar's title clear.
+ */
+function SoftEdge({
+  height,
+  colour,
+  y,
+}: {
+  height: number;
+  colour: string;
+  y: SharedValue<number>;
+}) {
+  const blur = useAnimatedProps(() => ({
+    intensity: interpolate(y.value, [0, 24], [0, EDGE_BLUR], Extrapolation.CLAMP),
+  }));
+  const tint = useAnimatedStyle(() => ({
+    opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
+  }));
+  const solid = Math.round((height / (height + EDGE_FADE)) * 100);
+  const fade = (from: string) =>
+    ({
+      ...StyleSheet.absoluteFill,
+      experimental_backgroundImage: `linear-gradient(to bottom, ${from} ${solid}%, ${colour}00)`,
+    }) as ViewStyle;
+  return (
+    <View
+      pointerEvents="none"
+      className="absolute inset-x-0 top-0"
+      style={{ height: height + EDGE_FADE }}
+    >
+      <MaskedView
+        style={StyleSheet.absoluteFill}
+        // The mask reads only the gradient's alpha, so the room's own colour serves.
+        maskElement={<View style={fade(colour)} />}
+      >
+        <EdgeBlur animatedProps={blur} tint="default" style={StyleSheet.absoluteFill} />
+      </MaskedView>
+      <Animated.View style={[fade(`${colour}b3`), tint]} />
+    </View>
   );
 }
 

@@ -27,6 +27,7 @@ import {
   AudioLines,
   Check,
   Image as ImageIcon,
+  Languages,
   Library,
   type LucideIcon,
   NotebookPen,
@@ -53,7 +54,7 @@ import { useStaticNav } from "./nav-link";
 import { ExampleText, TermText } from "./term-text";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
-import { Input } from "./ui/input";
+import { controlText, Input } from "./ui/input";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 
@@ -613,6 +614,8 @@ export function CardForm(props: CardFormProps) {
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
       maxLength?: number | null;
+      /** A strip joined to the bottom of the field's box, which squares the box's lower corners. */
+      chin?: ReactNode;
       /** A line that belongs to the field, under its input. */
       below?: ReactNode;
     } = {},
@@ -626,7 +629,19 @@ export function CardForm(props: CardFormProps) {
       <Field key={key} data-extra={key}>
         <FieldLabel aside={roomLeft(value, limit, options.length)}>{label}</FieldLabel>
         {options.description}
-        {options.long ? (
+        {options.long && options.chin ? (
+          // One box: the field and its chin hover and take focus together, with a seam between them.
+          <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-2 hoverable:hover:edge-2 has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
+            <Textarea
+              maxLength={maxLength}
+              value={value}
+              rows={2}
+              className="min-h-[68px] rounded-none bg-transparent shadow-none! outline-none"
+              onChange={(e) => change(e.target.value)}
+            />
+            {options.chin}
+          </div>
+        ) : options.long ? (
           <Textarea
             maxLength={maxLength}
             value={value}
@@ -705,43 +720,50 @@ export function CardForm(props: CardFormProps) {
   const translationId = useId();
   const translationByAi =
     card?.exampleTranslationSource === "ai" && translation === (card.exampleTranslation ?? "");
-  // One quiet line under the example rather than a field of its own: it belongs to the example.
-  const translationLine = (
-    <div data-extra="exampleTranslation" className="grid gap-1">
-      <div className="flex items-start gap-2 ps-3">
-        <span className="flex shrink-0 items-center gap-1.5 pt-1.5">
-          <label htmlFor={translationId} className="text-sm text-muted">
-            {t`Translation`}
-          </label>
-          {translationByAi && translation && (
-            <SourceChip source="ai" field="exampleTranslation" size="xs" />
-          )}
-        </span>
-        <textarea
-          id={translationId}
-          maxLength={cardLimits.exampleTranslation ?? undefined}
-          value={translation}
-          rows={1}
-          dir="auto"
-          aria-invalid={invalid.exampleTranslation ? true : undefined}
-          placeholder={aiTranslates ? t`AI translates it after you save` : t`Add a translation`}
-          className="field-sizing-content min-h-0 w-full resize-none rounded-sm bg-transparent px-1.5 py-1 text-base text-text-2 placeholder:text-muted hoverable:hover:bg-plate-2 focus-visible:bg-plate-2 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
-          onChange={(e) => {
-            setTranslation(e.target.value);
-            clear("exampleTranslation");
-          }}
-        />
-        {roomLeft(translation, cardLimits.exampleTranslation) && (
-          <span className="shrink-0 pt-1.5 text-sm text-muted">
-            {roomLeft(translation, cardLimits.exampleTranslation)}
-          </span>
+  // The example's chin: the translation belongs to the example, so it is part of the example's box.
+  const translationChin = (
+    <div
+      data-extra="exampleTranslation"
+      className="flex items-start gap-2.5 border-edge border-t bg-plate-2 px-3.5 py-2"
+    >
+      <Languages aria-hidden="true" className="mt-[5px] size-4 shrink-0 text-muted" />
+      <textarea
+        id={translationId}
+        aria-label={t`Translation`}
+        maxLength={cardLimits.exampleTranslation ?? undefined}
+        value={translation}
+        rows={1}
+        dir="auto"
+        aria-invalid={invalid.exampleTranslation ? true : undefined}
+        placeholder={aiTranslates ? t`AI translates it after you save` : t`Add a translation`}
+        className={cn(
+          controlText,
+          "min-h-0 w-full resize-none bg-transparent leading-relaxed text-text-2 outline-none placeholder:text-muted [field-sizing:content]",
         )}
-      </div>
+        onChange={(e) => {
+          setTranslation(e.target.value);
+          clear("exampleTranslation");
+        }}
+      />
+      {translationByAi && translation && (
+        <span className="mt-[3px] shrink-0">
+          <SourceChip source="ai" field="exampleTranslation" size="xs" />
+        </span>
+      )}
+      {roomLeft(translation, cardLimits.exampleTranslation) && (
+        <span className="mt-0.5 shrink-0 text-sm text-muted">
+          {roomLeft(translation, cardLimits.exampleTranslation)}
+        </span>
+      )}
+    </div>
+  );
+  const translationNotes = (translationStale || invalid.exampleTranslation) && (
+    <>
       {translationStale && (
-        <p className="ps-3 text-sm text-muted">{t`Translated from an earlier example.`}</p>
+        <FieldDescription>{t`Translated from an earlier example.`}</FieldDescription>
       )}
       <FieldError>{invalid.exampleTranslation}</FieldError>
-    </div>
+    </>
   );
 
   const extraField: Record<Extra, () => ReactNode> = {
@@ -751,7 +773,8 @@ export function CardForm(props: CardFormProps) {
         long: true,
         length: shownLength(example),
         maxLength: cardLimits.example,
-        below: (example.trim() || translation) && translationLine,
+        chin: (example.trim() || translation) && translationChin,
+        below: translationNotes,
       }),
     pronunciation: () =>
       textField(

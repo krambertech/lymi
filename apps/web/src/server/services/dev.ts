@@ -24,7 +24,7 @@ import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
 import { addPublishedDeck, publishDeck } from "./publications";
 import { gradeCard } from "./review";
-import { reviewZone, streak } from "./review-days";
+import { openDay, reviewZone, streak } from "./review-days";
 import { activeCardsOf, activeSectionsOf } from "./revisions";
 import { createSection } from "./sections";
 import { createSeries } from "./series";
@@ -862,6 +862,25 @@ export async function reachGoal(ctx: ServiceContext): Promise<number> {
     await grade(ctx, states[i % states.length] as (typeof states)[number], 3, new Date(at));
   }
   return (await streak(ctx)).today.attempts - before.attempts;
+}
+
+/**
+ * Reopen today with its goal `left` reviews past what it holds, and at least that many cards due,
+ * so the end of the review that turns the day can be played again. A met day goes back to open,
+ * so the run drops by today until the goal is met again.
+ */
+export async function goalAhead(ctx: ServiceContext, left: number) {
+  const zone = await reviewZone(ctx);
+  const { attempts } = (await streak(ctx)).today;
+  const goal = attempts + left;
+  const day = await openDay(ctx, dateFormatter(zone).format(new Date()), zone, goal);
+  await ctx.db
+    .update(schema.reviewDays)
+    .set({ goal, outcome: "open", zeroDueConfirmedAt: null, updatedAt: new Date() })
+    .where(eq(schema.reviewDays.id, day.id));
+  const { due } = await devCounts(ctx);
+  if (due < left) await setDue(ctx, left);
+  return { attempts, goal };
 }
 
 /** Cards an assistant added arrive without an example, so there is something left to enrich. */

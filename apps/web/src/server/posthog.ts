@@ -27,6 +27,7 @@ function phoneProperties(phone: PhoneClient | undefined) {
     $app_version: phone.version,
     ...(phone.build ? { $app_build: phone.build } : {}),
     ...(phone.update ? { app_update: phone.update } : {}),
+    ...(phone.entry ? { entry: phone.entry } : {}),
   };
 }
 

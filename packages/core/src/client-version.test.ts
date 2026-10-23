@@ -16,6 +16,19 @@ describe("the client header", () => {
     expect(parseClientHeader(header)).toEqual({ platform: "ios", version: "1.0" });
   });
 
+  it("reads the entry point of a request made without the app open, and ignores an unknown one", () => {
+    expect(parseClientHeader("platform=ios; version=1.2.0; build=34; entry=shortcut")).toEqual({
+      platform: "ios",
+      version: "1.2.0",
+      build: "34",
+      entry: "shortcut",
+    });
+    expect(parseClientHeader("platform=ios; version=1.2.0; entry=widget")).toEqual({
+      platform: "ios",
+      version: "1.2.0",
+    });
+  });
+
   it("treats a missing or malformed header as no client", () => {
     for (const header of [
       null,

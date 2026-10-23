@@ -31,6 +31,7 @@ import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
+import { isDesktopSurface } from "../lib/desktop";
 import { appleKeyboard } from "../lib/device";
 import { isGuiding } from "../lib/first-run";
 import {
@@ -91,11 +92,14 @@ function Root() {
               viewportClassName={pathname.startsWith("/review") ? REVIEW_TOAST_INSET : undefined}
             />
             {/* Personas and seeds mean nothing on the design system and email pages. */}
-            {DevPanel && !pathname.startsWith("/design") && pathname !== "/emails" && (
-              <Suspense fallback={null}>
-                <DevPanel />
-              </Suspense>
-            )}
+            {DevPanel &&
+              !pathname.startsWith("/design") &&
+              pathname !== "/emails" &&
+              !isDesktopSurface(pathname) && (
+                <Suspense fallback={null}>
+                  <DevPanel />
+                </Suspense>
+              )}
           </SignOutProvider>
         </AddCardProvider>
       </TooltipProvider>
@@ -118,6 +122,8 @@ function Shell() {
   const [commandOpen, setCommandOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
+  // The Mac app's panel is signed in like the app but draws only itself and answers its own 401.
+  const panel = isDesktopSurface(location.pathname);
   const onReview = location.pathname.startsWith("/review");
   // The screen on show, not the one loading: leaving Welcome would otherwise draw the rail around its last question.
   const shown = useRouterState({
@@ -180,7 +186,7 @@ function Shell() {
   ]);
 
   useEffect(() => {
-    if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {
+    if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare && !panel) {
       const returnTo = `${window.location.pathname}${window.location.search}`;
       // The Worker already sends a signed-out Explore visit to the site; this covers a shell the
       // service worker served.
@@ -190,7 +196,7 @@ function Shell() {
       }
       navigate({ to: "/login", search: { returnTo } });
     }
-  }, [me.isError, me.error, bare, navigate]);
+  }, [me.isError, me.error, bare, panel, navigate]);
 
   // Queued writes and grades replay after sign-in, when the connection returns, and when the app
   // comes back to the front; the lists refetch once something landed.
@@ -254,7 +260,7 @@ function Shell() {
 
   // Global shortcuts: N adds, R reviews. Ignored while typing.
   useEffect(() => {
-    if (bare) return;
+    if (bare || panel) return;
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       if (
@@ -278,13 +284,13 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, onReview, bare, add, activeDeckId]);
+  }, [navigate, onReview, bare, panel, add, activeDeckId]);
 
   // ⌘K on a Mac, Ctrl K elsewhere, opens the command menu from any field. Not over another
   // dialog, where it would stack a second modal on a half-written form, and not where the shell
   // is closed on purpose (review, Welcome). Ctrl K on a Mac stays the field's "delete to end".
   useEffect(() => {
-    if (bare || closed) return;
+    if (bare || closed || panel) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.altKey || e.shiftKey) return;
       if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
@@ -296,7 +302,7 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [bare, closed, commandOpen]);
+  }, [bare, closed, panel, commandOpen]);
 
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;
@@ -340,7 +346,7 @@ function Shell() {
     ],
   );
 
-  if (bare) return <Outlet />;
+  if (bare || panel) return <Outlet />;
 
   return (
     <LearnerAvatarProvider enabled={me.isSuccess}>

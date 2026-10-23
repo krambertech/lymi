@@ -893,6 +893,9 @@ msgstr "Add “{0}”"
 msgid "Add “{0}” to Library"
 msgstr "Add “{0}” to Library"
 
+msgid "Add “{quoted}” to {deckName}"
+msgstr "Add “{quoted}” to {deckName}"
+
 msgid "Add {name} to Lymi"
 msgstr "Add {name} to Lymi"
 
@@ -991,6 +994,9 @@ msgstr "Added “{quoted}” to {deckName}"
 
 msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
 msgstr "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
+
+msgid "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
+msgstr "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
 
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
@@ -3469,6 +3475,9 @@ msgstr "Open Lymi from the new icon."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
+msgid "Open Lymi to sign in"
+msgstr "Open Lymi to sign in"
+
 msgid "Open the invitation"
 msgstr "Open the invitation"
 
@@ -4198,6 +4207,9 @@ msgstr "Sign in"
 
 msgid "Sign in as you anywhere else"
 msgstr "Sign in as you anywhere else"
+
+msgid "Sign in to add cards"
+msgstr "Sign in to add cards"
 
 msgid "Sign in to continue."
 msgstr "Sign in to continue."

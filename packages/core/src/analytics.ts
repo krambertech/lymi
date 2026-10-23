@@ -621,6 +621,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/desktop",
     // Phone screens without a web page of their own.
     "/you",
     "/capture",

@@ -893,6 +893,9 @@ msgstr "Додати «{0}»"
 msgid "Add “{0}” to Library"
 msgstr "Додати «{0}» до Бібліотеки"
 
+msgid "Add “{quoted}” to {deckName}"
+msgstr "Додати «{quoted}» у колоду {deckName}"
+
 msgid "Add {name} to Lymi"
 msgstr "Додай колоду «{name}» у Lymi"
 
@@ -991,6 +994,9 @@ msgstr "Додано «{quoted}» у колоду {deckName}"
 
 msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
 msgstr "Додано «{quoted}» у колоду {deckName}. Картка збережена на цьому пристрої, доки Lymi недоступний."
+
+msgid "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
+msgstr "Додано «{quoted}» у колоду {deckName}. Картка збережена на цьому Mac, доки Lymi недоступний."
 
 msgid "Added “{term}”"
 msgstr "Додано «{term}»"
@@ -3469,6 +3475,9 @@ msgstr "Відкрий Lymi з нової іконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Відкрий Lymi в Safari і торкнись «Поділитися»."
 
+msgid "Open Lymi to sign in"
+msgstr "Відкрийте Lymi, щоб увійти"
+
 msgid "Open the invitation"
 msgstr "Відкрити запрошення"
 
@@ -4198,6 +4207,9 @@ msgstr "Увійти"
 
 msgid "Sign in as you anywhere else"
 msgstr "Увійти як ти в інших місцях"
+
+msgid "Sign in to add cards"
+msgstr "Увійдіть, щоб додавати картки"
 
 msgid "Sign in to continue."
 msgstr "Увійди, щоб продовжити."

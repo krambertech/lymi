@@ -32,6 +32,8 @@ const OPEN_PRODUCT_PATHS = [
   "/design",
   // Every email, drawn by the production renderer. Its route redirects home outside local development.
   "/emails",
+  // The Mac app's own windows, such as its quick-add panel; never somewhere to return after sign-in.
+  "/desktop",
 ] as const;
 
 const PRODUCT_PATHS = [...PROTECTED_PRODUCT_PATHS, ...OPEN_PRODUCT_PATHS];

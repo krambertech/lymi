@@ -1,7 +1,7 @@
 ---
-status: exploration
+status: accepted
 date: 2026-10-23
-decision: An Electron shell for the Mac that loads my.lymi.app; Electron over Tauri and SwiftUI is settled, the rest is open
+decision: An Electron shell for the Mac that loads my.lymi.app, with a menu bar lantern and a one-line quick-add panel on the system's own material
 ---
 
 # Mac desktop app
@@ -85,9 +85,10 @@ Electron ships a major every eight weeks and supports the latest three, so a she
 
 The question: does adding from anywhere get used, and does it raise how many cards a week come from outside a lesson? `cards_added` gains `entry: "desktop_panel"` from the panel's requests through `x-lymi-client`, as the phone's App Intents add `entry: "shortcut"`. No event for opening the panel or the tray; adds are the outcome.
 
-## Open decisions
+## Decided on 23 October
 
-1. The panel's look: options on [the visual page](https://claude.ai/artifact/GQeq92LoDbKaDf5uw8awaa).
-2. After an add, the panel stays open with the field cleared and a line saying what was added, with Undo (lean), or closes.
-3. The due count in the menu bar on by default (lean) or off.
-4. The default shortcut: ⌃⌥L (lean, free in common apps; ⌥⌘L is Finder's Downloads), or ⌥Space, which launchers often hold.
+- **The panel is the add bar** (option A on [the visual page](https://claude.ai/artifact/GQeq92LoDbKaDf5uw8awaa)): one line like the command menu's add strip, with the deck as a native pop-up menu. It sits on the window's own macOS material (`vibrancy: "popover"`), not a plate Lymi draws, and keeps Onest. Liquid Glass would need `electron-liquid-glass`, which calls a private AppKit API, so it waits for Electron to support it.
+- **After an add the panel stays open**, the field cleared, with a line saying what was added and Undo (⌘Z). Esc or a click away hides it.
+- **The menu bar shows the due count** by default; the tray menu turns it off.
+- **The shortcut is ⌃⌥L.** ⌥⌘L is Finder's Downloads.
+- Mac only, outside the Mac App Store.

@@ -97,6 +97,13 @@
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
   }
+  /* The Mac app's panel shows its window's own material through the page. */
+  html[data-surface="panel"],
+  html[data-surface="panel"] body,
+  html[data-surface="panel"] #root {
+    min-height: 0;
+    background: transparent;
+  }
   /* Theme switch: swap in one frame, no ragged cascade. */
   html.theme-switching * {
     /* biome-ignore lint/complexity/noImportantStyles: the swap has to beat every component transition */

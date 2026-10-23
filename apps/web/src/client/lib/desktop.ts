@@ -1,48 +1,6 @@
-/**
- * What the Mac app's preload offers the page; absent in a browser. `apps/desktop/src/preload.cts`.
- * An installed app updates long after the web, so a method is only ever added, never renamed or
- * removed, and one added after version 1 is optional here and called with `?.()`.
- */
-export interface DesktopBridge {
-  version: number;
-  hidePanel(): void;
-  resizePanel(height: number): void;
-  /** A `#rrggbb` the window fills with, so it matches the page's theme. */
-  setPanelBackground(color: string): void;
-  added(): void;
-  openApp(path: string): void;
-  /** `selection` is the text selected in the app in front, when the learner lets Lymi read it. */
-  onPanelShown(listener: (shown: { selection: string | null }) => void): () => void;
-  preferences(): Promise<MacPreferences>;
-  setPreference<K extends MacSetting>(key: K, value: MacPreferences[K]): Promise<MacSaved>;
-  /** Asks macOS for Accessibility and opens its page in System Settings. */
-  allowAccessibility(): void;
-  /** Pauses the quick-add shortcut while This Mac records a new one. */
-  setRecordingShortcut(on: boolean): void;
-  /** A product path the app asks the page to show, such as after ⌘Enter in quick add. */
-  onNavigate(listener: (path: string) => void): () => void;
-  /** A command from the Mac's menu bar, such as `today` or `add_card`. */
-  onMenuCommand(listener: (command: string) => void): () => void;
-}
+import type { DesktopBridge } from "@lymi/client/desktop";
 
-/** What the learner sets for this Mac, kept on the Mac; `apps/desktop/src/preferences.ts`. */
-export interface MacPreferences {
-  /** An Electron accelerator, such as `Control+Alt+L`. */
-  shortcut: string;
-  /** Added after version 1 of the bridge, so an older app leaves it out. */
-  showInMenuBar?: boolean;
-  showDue: boolean;
-  fillSelection: boolean;
-  openAtLogin: boolean;
-  /** Whether macOS lets Lymi read the selection; read only. */
-  accessibility: boolean;
-  version: string;
-}
-
-export type MacSetting = "shortcut" | "showInMenuBar" | "showDue" | "fillSelection" | "openAtLogin";
-export type MacSaved =
-  | { ok: true; preferences: MacPreferences }
-  | { ok: false; reason: "taken" | "invalid"; preferences: MacPreferences };
+export type { DesktopBridge, MacPreferences, MacSaved, MacSetting } from "@lymi/client/desktop";
 
 declare global {
   interface Window {

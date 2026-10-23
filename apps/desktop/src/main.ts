@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
+import type { AskApp, MenuCommand, ToApp, ToPage } from "@lymi/client/desktop";
 import {
   app,
   BrowserWindow,
@@ -18,7 +19,7 @@ import {
   Tray,
 } from "electron";
 import { SCHEME, sessionChange } from "./callback.js";
-import { type MenuCommand, setAppMenu } from "./menu.js";
+import { setAppMenu } from "./menu.js";
 import {
   isLoopback,
   isProduct as isProductOf,
@@ -86,7 +87,7 @@ function openMain(path?: string) {
   const url = productUrl(path ?? "/today");
   if (!url) return;
   if (main && !main.isDestroyed()) {
-    if (path) main.webContents.send("app:navigate", path);
+    if (path) toPage(main, "app:navigate", path);
     main.show();
     main.focus();
     return;
@@ -104,7 +105,7 @@ function openMain(path?: string) {
   keepToProduct(main);
   main.once("ready-to-show", () => main?.show());
   // Full screen hides the traffic lights, so the page shows its Lymi tile again.
-  const fullScreen = () => main?.webContents.send("window:full-screen", main.isFullScreen());
+  const fullScreen = () => toPage(main, "window:full-screen", !!main?.isFullScreen());
   main.on("enter-full-screen", fullScreen);
   main.on("leave-full-screen", fullScreen);
   main.webContents.on("did-finish-load", fullScreen);
@@ -182,7 +183,7 @@ async function showPanel() {
   );
   panel.show();
   panel.focus();
-  panel.webContents.send("panel:shown", { selection });
+  toPage(panel, "panel:shown", { selection });
 }
 
 async function refreshDue() {
@@ -246,12 +247,12 @@ function runCommand(command: MenuCommand) {
   if (main && !main.isDestroyed()) {
     main.show();
     main.focus();
-    main.webContents.send("menu:command", command);
+    toPage(main, "menu:command", command);
     return;
   }
   openMain();
   // The preload holds it until the page listens.
-  main?.webContents.once("did-finish-load", () => main?.webContents.send("menu:command", command));
+  main?.webContents.once("did-finish-load", () => toPage(main, "menu:command", command));
 }
 
 function refreshMenus() {
@@ -287,61 +288,81 @@ const preferencesOut = () => ({
   version: app.getVersion(),
 });
 
-ipcMain.handle("prefs:get", (event) => (fromProduct(event) ? preferencesOut() : null));
-ipcMain.handle("prefs:set", (event, key: unknown, value: unknown) => {
-  if (!fromProduct(event)) return null;
-  if (key === "shortcut" && typeof value === "string") {
-    const refused = moveShortcut(value);
-    if (refused) return { ok: false, reason: refused, preferences: preferencesOut() };
-  } else if (key === "showDue" && typeof value === "boolean") prefs = { ...prefs, showDue: value };
-  else if (key === "showInMenuBar" && typeof value === "boolean") {
-    prefs = { ...prefs, showInMenuBar: value };
-  } else if (key === "fillSelection" && typeof value === "boolean") {
-    prefs = { ...prefs, fillSelection: value };
-  } else if (key === "openAtLogin" && typeof value === "boolean") {
-    app.setLoginItemSettings({ openAtLogin: value });
-  } else return { ok: false, reason: "invalid", preferences: preferencesOut() };
-  writePreferences(prefs);
-  refreshMenus();
-  return { ok: true, preferences: preferencesOut() };
-});
-// While This Mac records a new shortcut, the current one must not open the panel instead.
-ipcMain.on("prefs:recording", (event, on: unknown) => {
-  if (!fromProduct(event)) return;
-  if (on === true) globalShortcut.unregister(prefs.shortcut);
-  else if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
-});
-// The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
-ipcMain.on("prefs:accessibility", (event) => {
-  if (!fromProduct(event)) return;
-  systemPreferences.isTrustedAccessibilityClient(true);
-  void shell.openExternal(
-    "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
-  );
-});
+/** What the page sends: the contract's shape, but untrusted, so every value is checked here. */
+type Untrusted<T extends unknown[]> = { [I in keyof T]: unknown };
 
-ipcMain.on("panel:hide", (event) => {
-  if (fromProduct(event)) panel?.hide();
-});
-// The page's plate colour, so the window matches the learner's theme rather than the system's.
-ipcMain.on("panel:background", (event, color: unknown) => {
-  if (!fromProduct(event) || typeof color !== "string" || !/^#[0-9a-f]{6}$/i.test(color)) return;
-  panel?.setBackgroundColor(color);
-});
-ipcMain.on("panel:resize", (event, height: unknown) => {
-  if (!fromProduct(event) || !panel || typeof height !== "number" || !Number.isFinite(height))
-    return;
-  panel.setContentSize(PANEL_WIDTH, Math.min(Math.max(Math.ceil(height), 56), 480));
-});
-ipcMain.on("panel:added", (event) => {
-  if (fromProduct(event)) void refreshDue();
-});
-ipcMain.on("app:open", (event, path: unknown) => {
-  if (!fromProduct(event) || typeof path !== "string" || !productUrl(path)) return;
-  panel?.hide();
-  if (path === "/login") void requestSignIn(PRODUCT_URL);
-  else openMain(path);
-});
+// One handler for each message in the shared contract, which is what makes a missing one fail to
+// compile. Each runs only for a message from the product's own page.
+const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
+  "panel:hide": () => panel?.hide(),
+  "panel:resize": (height) => {
+    if (!panel || typeof height !== "number" || !Number.isFinite(height)) return;
+    panel.setContentSize(PANEL_WIDTH, Math.min(Math.max(Math.ceil(height), 56), 480));
+  },
+  // The page's plate colour, so the window matches the learner's theme rather than the system's.
+  "panel:background": (color) => {
+    if (typeof color === "string" && /^#[0-9a-f]{6}$/i.test(color))
+      panel?.setBackgroundColor(color);
+  },
+  "panel:added": () => void refreshDue(),
+  "app:open": (path) => {
+    if (typeof path !== "string" || !productUrl(path)) return;
+    panel?.hide();
+    if (path === "/login") void requestSignIn(PRODUCT_URL);
+    else openMain(path);
+  },
+  // The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
+  "prefs:accessibility": () => {
+    systemPreferences.isTrustedAccessibilityClient(true);
+    void shell.openExternal(
+      "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
+    );
+  },
+  // While This Mac records a new shortcut, the current one must not open the panel instead.
+  "prefs:recording": (on) => {
+    if (on === true) globalShortcut.unregister(prefs.shortcut);
+    else if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
+  },
+};
+
+const askApp: {
+  [C in keyof AskApp]: (...args: Untrusted<AskApp[C]["args"]>) => AskApp[C]["result"];
+} = {
+  "prefs:get": () => preferencesOut(),
+  "prefs:set": (key, value) => {
+    if (key === "shortcut" && typeof value === "string") {
+      const refused = moveShortcut(value);
+      if (refused) return { ok: false, reason: refused, preferences: preferencesOut() };
+    } else if (key === "showDue" && typeof value === "boolean")
+      prefs = { ...prefs, showDue: value };
+    else if (key === "showInMenuBar" && typeof value === "boolean") {
+      prefs = { ...prefs, showInMenuBar: value };
+    } else if (key === "fillSelection" && typeof value === "boolean") {
+      prefs = { ...prefs, fillSelection: value };
+    } else if (key === "openAtLogin" && typeof value === "boolean") {
+      app.setLoginItemSettings({ openAtLogin: value });
+    } else return { ok: false, reason: "invalid", preferences: preferencesOut() };
+    writePreferences(prefs);
+    refreshMenus();
+    return { ok: true, preferences: preferencesOut() };
+  },
+};
+
+for (const [channel, handler] of Object.entries(toApp)) {
+  ipcMain.on(channel, (event, ...args: unknown[]) => {
+    if (fromProduct(event)) (handler as (...values: unknown[]) => void)(...args);
+  });
+}
+for (const [channel, handler] of Object.entries(askApp)) {
+  ipcMain.handle(channel, (event, ...args: unknown[]) =>
+    fromProduct(event) ? (handler as (...values: unknown[]) => unknown)(...args) : null,
+  );
+}
+
+/** A message to a page, typed by the contract. */
+function toPage<C extends keyof ToPage>(win: BrowserWindow | null, channel: C, value: ToPage[C]) {
+  if (win && !win.isDestroyed()) win.webContents.send(channel, value);
+}
 
 /** The browser's hand-back after sign-in; the windows share the session it lands in. */
 async function onLink(link: string) {

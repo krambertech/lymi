@@ -1,54 +1,57 @@
-// The page's only reach into the shell, as `window.lymiDesktop`; apps/web/src/client/lib/desktop.ts.
+// The page's only reach into the app, as `window.lymiDesktop`. Typed by the shared contract in
+// `packages/client/src/desktop.ts`; a sandboxed preload loads no other file, so it is types only.
+import type { AskApp, DesktopBridge, ToApp, ToPage } from "@lymi/client/desktop";
+
 import electron = require("electron");
 
 const { contextBridge, ipcRenderer } = electron;
 
-ipcRenderer.on("window:full-screen", (_event, on: boolean) => {
-  if (on) document.documentElement.dataset.fullScreen = "";
-  else delete document.documentElement.dataset.fullScreen;
-});
+const send = <C extends keyof ToApp>(channel: C, ...args: ToApp[C]) =>
+  ipcRenderer.send(channel, ...args);
+const ask = <C extends keyof AskApp>(channel: C, ...args: AskApp[C]["args"]) =>
+  ipcRenderer.invoke(channel, ...args) as Promise<AskApp[C]["result"]>;
 
 /**
  * A message the app sends while the page is still starting, such as a menu command that opened
  * the window, waits here until the page listens, and then reaches it once.
  */
-const waiting = new Map<string, string[]>();
-const listening = new Map<string, (value: string) => void>();
-for (const channel of ["menu:command", "app:navigate"]) {
-  ipcRenderer.on(channel, (_event, value: string) => {
+const waiting = new Map<keyof ToPage, unknown[]>();
+const listening = new Map<keyof ToPage, (value: never) => void>();
+for (const channel of ["panel:shown", "menu:command", "app:navigate"] as const) {
+  ipcRenderer.on(channel, (_event, value: unknown) => {
     const listener = listening.get(channel);
-    if (listener) listener(value);
+    if (listener) listener(value as never);
     else waiting.set(channel, [...(waiting.get(channel) ?? []), value]);
   });
 }
-function held(channel: string, listener: (value: string) => void) {
-  listening.set(channel, listener);
-  for (const value of waiting.get(channel) ?? []) listener(value);
+function held<C extends keyof ToPage>(channel: C, listener: (value: ToPage[C]) => void) {
+  listening.set(channel, listener as (value: never) => void);
+  for (const value of waiting.get(channel) ?? []) listener(value as ToPage[C]);
   waiting.delete(channel);
   return () => {
     if (listening.get(channel) === listener) listening.delete(channel);
   };
 }
 
-// Methods are only ever added, never renamed or removed: the web updates long before an installed app.
-contextBridge.exposeInMainWorld("lymiDesktop", {
-  version: 1,
-  hidePanel: () => ipcRenderer.send("panel:hide"),
-  resizePanel: (height: number) => ipcRenderer.send("panel:resize", height),
-  setPanelBackground: (color: string) => ipcRenderer.send("panel:background", color),
-  added: () => ipcRenderer.send("panel:added"),
-  openApp: (path: string) => ipcRenderer.send("app:open", path),
-  preferences: () => ipcRenderer.invoke("prefs:get"),
-  setPreference: (key: string, value: unknown) => ipcRenderer.invoke("prefs:set", key, value),
-  allowAccessibility: () => ipcRenderer.send("prefs:accessibility"),
-  setRecordingShortcut: (on: boolean) => ipcRenderer.send("prefs:recording", on),
-  onNavigate: (listener: (path: string) => void) => held("app:navigate", listener),
-  onMenuCommand: (listener: (command: string) => void) => held("menu:command", listener),
-  onPanelShown: (listener: (shown: { selection: string | null }) => void) => {
-    const handler = (_event: unknown, shown: { selection: string | null }) => listener(shown);
-    ipcRenderer.on("panel:shown", handler);
-    return () => {
-      ipcRenderer.off("panel:shown", handler);
-    };
-  },
+ipcRenderer.on("window:full-screen", (_event, on: ToPage["window:full-screen"]) => {
+  if (on) document.documentElement.dataset.fullScreen = "";
+  else delete document.documentElement.dataset.fullScreen;
 });
+
+const bridge = {
+  version: 1,
+  hidePanel: () => send("panel:hide"),
+  resizePanel: (height) => send("panel:resize", height),
+  setPanelBackground: (color) => send("panel:background", color),
+  added: () => send("panel:added"),
+  openApp: (path) => send("app:open", path),
+  onPanelShown: (listener) => held("panel:shown", listener),
+  preferences: () => ask("prefs:get"),
+  setPreference: (key, value) => ask("prefs:set", key, value),
+  allowAccessibility: () => send("prefs:accessibility"),
+  setRecordingShortcut: (on) => send("prefs:recording", on),
+  onNavigate: (listener) => held("app:navigate", listener),
+  onMenuCommand: (listener) => held("menu:command", listener),
+} satisfies DesktopBridge;
+
+contextBridge.exposeInMainWorld("lymiDesktop", bridge);

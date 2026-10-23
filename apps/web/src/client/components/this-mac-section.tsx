@@ -46,13 +46,13 @@ export function ThisMacSection() {
   async function save<K extends MacSetting>(key: K, value: MacPreferences[K]) {
     if (!bridge) return;
     const saved = await bridge.setPreference(key, value);
+    if (!saved) return setError(t`Couldn’t save that. Try again.`);
     setPrefs(saved.preferences);
+    if (saved.ok) return setError(null);
     setError(
-      saved.ok
-        ? null
-        : saved.reason === "taken"
-          ? t`Another app already uses that shortcut. Try a different one.`
-          : t`Couldn’t save that. Try again.`,
+      saved.reason === "taken"
+        ? t`Another app already uses that shortcut. Try a different one.`
+        : t`Couldn’t save that. Try again.`,
     );
   }
 

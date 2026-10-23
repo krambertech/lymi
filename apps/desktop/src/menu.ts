@@ -1,25 +1,5 @@
+import type { MenuCommand } from "@lymi/client/desktop";
 import { Menu, type MenuItemConstructorOptions, shell } from "electron";
-
-/** What a menu item asks the product to do; the page's own command list answers each one. */
-export type MenuCommand =
-  | "add_card"
-  | "new_deck"
-  | "smart_add"
-  | "import"
-  | "command_menu"
-  | "theme"
-  | "today"
-  | "library"
-  | "insights"
-  | "explore"
-  | "activity"
-  | "review"
-  | "round_new"
-  | "round_forgotten"
-  | "round_slipping"
-  | "back"
-  | "forward"
-  | "settings";
 
 interface Actions {
   run: (command: MenuCommand) => void;

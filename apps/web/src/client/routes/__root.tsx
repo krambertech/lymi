@@ -359,6 +359,9 @@ function Shell() {
             return window.history.forward();
           case "settings":
             return navigate({ to: "/settings", hash: "this-mac" });
+          default:
+            // A command the menu sends and this page does not answer fails to compile here.
+            return command satisfies never;
         }
       }),
     [openCard, openDeck, onSmartAdd, navigate, activeDeckId],

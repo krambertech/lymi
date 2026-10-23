@@ -35,6 +35,9 @@ importers:
 
   apps/desktop:
     devDependencies:
+      '@lymi/client':
+        specifier: workspace:*
+        version: link:../../packages/client
       '@types/node':
         specifier: ^26.6.5
         version: 26.6.5

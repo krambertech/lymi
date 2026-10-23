@@ -1469,6 +1469,9 @@ msgstr "Check your inbox"
 msgid "Checked"
 msgstr "Checked"
 
+msgid "Checking your account…"
+msgstr "Checking your account…"
+
 msgid "Checking your decks for duplicates"
 msgstr "Checking your decks for duplicates"
 
@@ -1655,6 +1658,9 @@ msgstr "Consistency"
 
 msgid "Continue"
 msgstr "Continue"
+
+msgid "Continue as {email}"
+msgstr "Continue as {email}"
 
 msgid "Continue to {appName}"
 msgstr "Continue to {appName}"
@@ -3469,6 +3475,9 @@ msgstr "Open Library"
 msgid "Open Lymi"
 msgstr "Open Lymi"
 
+msgid "Open Lymi for Mac"
+msgstr "Open Lymi for Mac"
+
 msgid "Open Lymi from the new icon."
 msgstr "Open Lymi from the new icon."
 
@@ -3480,6 +3489,9 @@ msgstr "Open Lymi to sign in"
 
 msgid "Open the invitation"
 msgstr "Open the invitation"
+
+msgid "Open this page from Lymi for Mac to sign in there."
+msgstr "Open this page from Lymi for Mac to sign in there."
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
@@ -4217,6 +4229,9 @@ msgstr "Sign in to continue."
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
 
+msgid "Sign in to Lymi for Mac"
+msgstr "Sign in to Lymi for Mac"
+
 msgid "Sign in with your new password."
 msgstr "Sign in with your new password."
 
@@ -4694,6 +4709,9 @@ msgstr "This link is missing the app that asked. Start again from the app."
 msgid "This shelf has no page"
 msgstr "This shelf has no page"
 
+msgid "This sign-in link has expired. Start again from Lymi for Mac."
+msgstr "This sign-in link has expired. Start again from Lymi for Mac."
+
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
 
@@ -4866,6 +4884,9 @@ msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 
 msgid "Use a public http or https link to a picture."
 msgstr "Use a public http or https link to a picture."
+
+msgid "Use another account"
+msgstr "Use another account"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -5112,6 +5133,9 @@ msgstr "You’re done for today"
 
 msgid "You’re done for today."
 msgstr "You’re done for today."
+
+msgid "You’re signed in on your Mac. You can close this tab."
+msgstr "You’re signed in on your Mac. You can close this tab."
 
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "You’ve asked for several codes today. Try again tomorrow."

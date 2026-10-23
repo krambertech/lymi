@@ -1469,6 +1469,9 @@ msgstr "Перевір пошту"
 msgid "Checked"
 msgstr "Перевірено"
 
+msgid "Checking your account…"
+msgstr "Перевіряємо ваш акаунт…"
+
 msgid "Checking your decks for duplicates"
 msgstr "Перевіряю повтори у твоїх колодах"
 
@@ -1655,6 +1658,9 @@ msgstr "Послідовність"
 
 msgid "Continue"
 msgstr "Продовжити"
+
+msgid "Continue as {email}"
+msgstr "Продовжити як {email}"
 
 msgid "Continue to {appName}"
 msgstr "Продовжити в {appName}"
@@ -3469,6 +3475,9 @@ msgstr "Відкрити Бібліотеку"
 msgid "Open Lymi"
 msgstr "Відкрити Lymi"
 
+msgid "Open Lymi for Mac"
+msgstr "Відкрити Lymi для Mac"
+
 msgid "Open Lymi from the new icon."
 msgstr "Відкрий Lymi з нової іконки."
 
@@ -3480,6 +3489,9 @@ msgstr "Відкрийте Lymi, щоб увійти"
 
 msgid "Open the invitation"
 msgstr "Відкрити запрошення"
+
+msgid "Open this page from Lymi for Mac to sign in there."
+msgstr "Відкрийте цю сторінку з Lymi для Mac, щоб увійти в нього."
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Відкрий меню браузера і вибери «Встановити Lymi». Не кожен браузер це пропонує."
@@ -4217,6 +4229,9 @@ msgstr "Увійди, щоб продовжити."
 msgid "Sign in to Lymi"
 msgstr "Увійти в Lymi"
 
+msgid "Sign in to Lymi for Mac"
+msgstr "Вхід у Lymi для Mac"
+
 msgid "Sign in with your new password."
 msgstr "Увійди з новим паролем."
 
@@ -4694,6 +4709,9 @@ msgstr "У цьому посиланні немає застосунку, яки
 msgid "This shelf has no page"
 msgstr "У цієї полиці немає сторінки"
 
+msgid "This sign-in link has expired. Start again from Lymi for Mac."
+msgstr "Посилання для входу застаріло. Почніть знову в Lymi для Mac."
+
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для більшості файлів це займає кілька секунд. У колоди поки нічого не додано."
 
@@ -4866,6 +4884,9 @@ msgstr "Використовуй мовний тег на кшталт ca, pt-BR
 
 msgid "Use a public http or https link to a picture."
 msgstr "Використай публічне посилання на зображення через http або https."
+
+msgid "Use another account"
+msgstr "Увійти в інший акаунт"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."
@@ -5112,6 +5133,9 @@ msgstr "На сьогодні все"
 
 msgid "You’re done for today."
 msgstr "На сьогодні все."
+
+msgid "You’re signed in on your Mac. You can close this tab."
+msgstr "Ви увійшли на своєму Mac. Цю вкладку можна закрити."
 
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "Сьогодні вже надіслано кілька кодів. Спробуй завтра."

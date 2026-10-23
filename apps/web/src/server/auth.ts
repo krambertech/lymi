@@ -1,6 +1,7 @@
 import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
 import type { GenericEndpointContext } from "@better-auth/core";
+import { electron } from "@better-auth/electron";
 import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
@@ -12,6 +13,7 @@ import { getOAuthState } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
+import { DESKTOP_APP_SCHEME } from "../shared/origins";
 import { appleIdTokenVerifier } from "./apple-id-token";
 import { appleClientSecret, appleKeyOf } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
@@ -98,7 +100,12 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN, "https://appleid.apple.com"],
+    trustedOrigins: [
+      env.PRODUCT_URL,
+      PHONE_APP_ORIGIN,
+      `${DESKTOP_APP_SCHEME}:/`,
+      "https://appleid.apple.com",
+    ],
     disabledPaths: UNUSED_OTP_PATHS,
     database: drizzleAdapter(db, {
       provider: "sqlite",
@@ -150,6 +157,9 @@ export function createAuth(
       // The phone app sends no Origin, so this takes it from `expo-origin` and hands the
       // session cookie back on the deep link that ends a Google sign-in.
       expo(),
+      // The Mac app signs in through the system browser, which Google allows and an app's own
+      // window does not: /desktop/sign-in hands it a one-time code, swapped here with PKCE.
+      electron({ cookiePrefix: cookiePrefix(env.PRODUCT_URL) }),
       // The phone app confirms a new account with a code, because a link opens in Safari, which
       // did not sign up, and issue 251's rule would retire the password. The web keeps its link.
       emailOTP({

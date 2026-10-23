@@ -55,9 +55,14 @@ Only `my.lymi.app` loads inside a window. Every other link opens in the default 
 
 The window is a browser on `my.lymi.app`, so its Better Auth cookie persists in the app's `persist:lymi` session like any browser's. Email and password work in the window as they are.
 
-Google refuses OAuth inside embedded browsers with `disallowed_useragent`, and Electron's windows count. Apple's web flow loads, but the system browser has the learner's passkeys and Keychain. So both go through the system browser with Better Auth's own Electron integration (`@better-auth/electron`): the server plugin `electron()`, a custom scheme such as `app.lymi.desktop:/` in `trustedOrigins`, PKCE, and a code the shell exchanges for the session. The shell then sets that session as the `my.lymi.app` cookie in its window session. The phone's `lymi://` scheme stays the phone's. A pasted code is the integration's own fallback when the scheme fails.
+Google refuses OAuth inside embedded browsers with `disallowed_useragent`, and Electron's windows count; the system browser also holds the learner's passkeys and Keychain. So the app signs in there, with Better Auth's Electron plugin on the server (`electron()`, scheme `app.lymi.desktop` in `trustedOrigins`):
 
-Risk to test first: the integration expects a local renderer calling through IPC, while Lymi's window is the remote web app. Setting the returned session as a cookie is the step the docs do not cover.
+1. The app opens `/desktop/sign-in` in the default browser with a PKCE challenge and a state. Clicking Google or Apple in the app's window does the same.
+2. Signed out, that page sends the browser through the ordinary login, which returns to it.
+3. The learner confirms the account with **Open Lymi for Mac**, so a link alone never signs an app in. The page calls the plugin's `transferUser`, and `ensureElectronRedirect` opens `app.lymi.desktop://auth/callback#token=…`.
+4. The app trades the token and its PKCE verifier at `/api/auth/electron/token` and copies the session cookie that call sets into its window session.
+
+The app does this itself in about fifty lines (`apps/desktop/src/sign-in.ts`) rather than through `@better-auth/electron/client`, which keeps its own cookie store for a local renderer that calls through IPC; Lymi's window is the remote product and needs the cookie in its own session. The phone's `lymi://` scheme stays the phone's.
 
 ## Packaging and updates
 

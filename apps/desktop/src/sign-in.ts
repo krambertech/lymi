@@ -1,0 +1,79 @@
+import { createHash, randomBytes } from "node:crypto";
+import type { Session } from "electron";
+import { shell } from "electron";
+
+/** The link scheme the system browser hands the sign-in back on; DESKTOP_APP_SCHEME on the server. */
+export const SCHEME = "app.lymi.desktop";
+/** Each sign-in started here, by its state, until its link comes back. */
+const verifiers = new Map<string, string>();
+
+const base64Url = (bytes: Buffer) => bytes.toString("base64url");
+
+/** Opens the product's hand-off page in the system browser, where Google and passkeys work. */
+export async function requestSignIn(productUrl: string) {
+  const state = base64Url(randomBytes(12));
+  const verifier = base64Url(randomBytes(32));
+  verifiers.set(state, verifier);
+  const url = new URL("/desktop/sign-in", productUrl);
+  url.searchParams.set("client_id", "electron");
+  url.searchParams.set("code_challenge", base64Url(createHash("sha256").update(verifier).digest()));
+  url.searchParams.set("state", state);
+  // A script driving local dev opens the page itself. README.md.
+  if (url.hostname === "localhost") console.log(`sign-in ${url}`);
+  if (process.env.LYMI_DEV_BROWSER !== "off")
+    await shell.openExternal(url.toString(), { activate: true });
+}
+
+/**
+ * Trades the code in an `app.lymi.desktop://auth/callback#token=…` link for a session, and copies
+ * the cookies it sets into the windows' own session, so they are signed in at once.
+ */
+export async function completeSignIn(link: string, productUrl: string, ses: Session) {
+  const url = URL.parse(link);
+  // The page sends `scheme:/auth/callback`; the browser hands macOS `scheme://auth/callback`.
+  const path = url && `${url.host ? `/${url.host}` : ""}${url.pathname}`;
+  if (url?.protocol !== `${SCHEME}:` || path !== "/auth/callback") return false;
+  if (!url.hash.startsWith("#token=")) return false;
+  const token = decodeURIComponent(url.hash.slice("#token=".length));
+  const { identifier, state } = JSON.parse(Buffer.from(token, "base64url").toString()) as {
+    identifier?: string;
+    state?: string;
+  };
+  const verifier = state && verifiers.get(state);
+  if (!identifier || !state || !verifier) return false;
+  verifiers.delete(state);
+  // Node's fetch, as Better Auth's own Electron client does: the session's network refuses an Origin header.
+  const res = await fetch(new URL("/api/auth/electron/token", productUrl), {
+    method: "POST",
+    headers: { "content-type": "application/json", origin: `${SCHEME}:/` },
+    body: JSON.stringify({ token: identifier, state, code_verifier: verifier }),
+  });
+  if (!res.ok) return false;
+  for (const header of res.headers.getSetCookie())
+    await ses.cookies.set(cookieOf(header, productUrl));
+  return true;
+}
+
+function cookieOf(header: string, productUrl: string): Electron.CookiesSetDetails {
+  const [pair = "", ...attributes] = header.split(";").map((part) => part.trim());
+  const split = pair.indexOf("=");
+  const cookie: Electron.CookiesSetDetails = {
+    url: productUrl,
+    name: pair.slice(0, split),
+    value: pair.slice(split + 1),
+  };
+  for (const attribute of attributes) {
+    const [key = "", value = ""] = attribute.split("=");
+    const name = key.toLowerCase();
+    if (name === "path") cookie.path = value;
+    if (name === "httponly") cookie.httpOnly = true;
+    if (name === "secure") cookie.secure = true;
+    if (name === "max-age") cookie.expirationDate = Date.now() / 1000 + Number(value);
+    if (name === "samesite") {
+      const sameSite = value.toLowerCase();
+      cookie.sameSite =
+        sameSite === "none" ? "no_restriction" : sameSite === "strict" ? "strict" : "lax";
+    }
+  }
+  return cookie;
+}

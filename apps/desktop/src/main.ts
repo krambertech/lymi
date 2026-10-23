@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import {
   app,
   BrowserWindow,
@@ -13,6 +13,7 @@ import {
   shell,
   Tray,
 } from "electron";
+import { completeSignIn, requestSignIn, SCHEME } from "./sign-in.js";
 
 const PRODUCT_URL = new URL(process.env.LYMI_URL ?? "https://my.lymi.app").origin;
 const LOOPBACK = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(PRODUCT_URL);
@@ -30,6 +31,9 @@ let panel: BrowserWindow | null = null;
 let main: BrowserWindow | null = null;
 let showDue = true;
 let due: number | null = null;
+let signedIn = true;
+// Google refuses sign-in inside an app's window, and the browser holds the passkeys, so these go there.
+const SIGN_IN_HOSTS = new Set(["accounts.google.com", "appleid.apple.com"]);
 
 const productUrl = (path: string) => new URL(path, PRODUCT_URL).toString();
 
@@ -40,9 +44,11 @@ function keepToProduct(win: BrowserWindow) {
     return { action: "deny" };
   });
   win.webContents.on("will-navigate", (event, url) => {
-    if (new URL(url).origin === PRODUCT_URL) return;
+    const target = new URL(url);
+    if (target.origin === PRODUCT_URL) return;
     event.preventDefault();
-    void shell.openExternal(url);
+    if (SIGN_IN_HOSTS.has(target.hostname)) void requestSignIn(PRODUCT_URL);
+    else void shell.openExternal(url);
   });
 }
 
@@ -59,7 +65,6 @@ function openMain(path = "/today") {
     width: 1280,
     height: 840,
     minWidth: 380,
-    titleBarStyle: "hiddenInset",
     show: false,
     webPreferences: webPreferences(),
   });
@@ -126,6 +131,7 @@ function showPanel() {
 async function refreshDue() {
   try {
     const res = await ses.fetch(productUrl("/api/decks"), { credentials: "include" });
+    signedIn = res.status !== 401;
     if (!res.ok) throw new Error(String(res.status));
     const decks = (await res.json()) as { due: number }[];
     due = decks.reduce((sum, d) => sum + d.due, 0);
@@ -142,6 +148,12 @@ function renderTray() {
   const login = app.getLoginItemSettings();
   tray.setContextMenu(
     Menu.buildFromTemplate([
+      ...(signedIn
+        ? []
+        : [
+            { label: "Sign in…", click: () => void requestSignIn(PRODUCT_URL) },
+            { type: "separator" as const },
+          ]),
       { label: "Add a card", accelerator: SHORTCUT, click: showPanel },
       { label: "Review", click: () => openMain("/review") },
       { label: "Open Lymi", click: () => openMain() },
@@ -179,7 +191,31 @@ ipcMain.on("panel:added", () => void refreshDue());
 ipcMain.on("app:open", (_event, path: unknown) => {
   if (typeof path !== "string" || !path.startsWith("/")) return;
   panel?.hide();
-  openMain(path);
+  if (path === "/login") void requestSignIn(PRODUCT_URL);
+  else openMain(path);
+});
+
+/** The browser's hand-back after sign-in; the windows share the session it lands in. */
+async function onLink(link: string) {
+  await app.whenReady();
+  const done = await completeSignIn(link, PRODUCT_URL, ses).catch(() => false);
+  if (LOOPBACK) console.log(`signed in ${done}`);
+  if (!done) return;
+  await refreshDue();
+  panel?.webContents.reload();
+  openMain();
+}
+
+// Unpackaged, macOS registers Electron.app itself, so a link reaches this running copy.
+if (process.defaultApp) {
+  app.setAsDefaultProtocolClient(SCHEME, process.execPath, [resolve(process.argv[1] ?? ".")]);
+} else {
+  app.setAsDefaultProtocolClient(SCHEME);
+}
+if (!app.requestSingleInstanceLock()) app.quit();
+app.on("open-url", (event, link) => {
+  event.preventDefault();
+  void onLink(link);
 });
 
 app.whenReady().then(async () => {
@@ -203,6 +239,7 @@ app.whenReady().then(async () => {
   if (LOOPBACK) {
     // Lets a script open the panel and find its window without pressing the shortcut. README.md.
     process.on("SIGUSR2", () => {
+      if (!signedIn) return void requestSignIn(PRODUCT_URL);
       showPanel();
       console.log(`panel ${panel?.getMediaSourceId()} tray "${tray?.getTitle()}"`);
     });

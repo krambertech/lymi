@@ -1,6 +1,10 @@
 export const DEFAULT_PUBLIC_SITE_ORIGIN = "https://lymi.app";
 export const DEFAULT_PRODUCT_ORIGIN = "https://my.lymi.app";
 export const DEFAULT_PRODUCT_RETURN_PATH = "/today";
+/** The Mac app's link scheme, which ends its sign-in in the system browser. The phone's is `lymi://`. */
+export const DESKTOP_APP_SCHEME = "app.lymi.desktop";
+/** Where the system browser hands a signed-in learner to the Mac app. */
+export const DESKTOP_SIGN_IN_PATH = "/desktop/sign-in";
 
 /** Screens behind authentication, and so the only ones safe to resume after it. */
 const PROTECTED_PRODUCT_PATHS = [
@@ -87,7 +91,8 @@ export function safeProductReturnPath(value: string | null | undefined): string 
       !(
         isProtectedProductPath(url.pathname) ||
         isJoinPagePath(url.pathname) ||
-        isAddPagePath(url.pathname)
+        isAddPagePath(url.pathname) ||
+        url.pathname === DESKTOP_SIGN_IN_PATH
       )
     ) {
       return DEFAULT_PRODUCT_RETURN_PATH;

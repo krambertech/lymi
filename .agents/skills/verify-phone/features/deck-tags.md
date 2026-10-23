@@ -18,3 +18,4 @@ A deck you own, its settings, then **Tags**.
 
 - A row reads **name, N cards**, and its ⋯ is **Options for name**.
 - The ⋯ is iOS's own menu, so its rows are found by their labels once it has grown.
+- A row in Merge into… reads **name, N**, its count without "cards".

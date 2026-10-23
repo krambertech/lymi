@@ -57,7 +57,7 @@ name: Deck tags
     visible: "Merge “verb” into"
     timeout: 10000
 - takeScreenshot: 06-merge-sheet
-- tapOn: "^noun$"
+- tapOn: "noun, 2"
 - extendedWaitUntil:
     visible: "Merged “verb” into “noun”"
     timeout: 20000

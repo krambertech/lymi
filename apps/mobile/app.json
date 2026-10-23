@@ -21,7 +21,7 @@
       "bundleIdentifier": "app.lymi",
       "appleTeamId": "C8CWG8CD76",
       "usesAppleSignIn": true,
-      "supportsTablet": true,
+      "supportsTablet": false,
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -108,6 +108,7 @@
           }
         }
       ],
+      "./plugins/with-iphone-only.cjs",
       "./plugins/with-widget-localizations.cjs",
       [
         "expo-widgets",

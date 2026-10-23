@@ -1,6 +1,23 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Add ${term} to ${deck}": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить ${term} в ${deck}"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати ${term} до ${deck}"
+          }
+        }
+      }
+    },
     "Add ${term} to Lymi": {
       "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
       "localizations": {
@@ -14,6 +31,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Додати ${term} в Lymi"
+          }
+        }
+      }
+    },
+    "Add a card": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить карточку"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати картку"
           }
         }
       }
@@ -35,6 +69,40 @@
         }
       }
     },
+    "Added “%@” to %@": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«%1$@» добавлено в колоду %2$@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«%1$@» додано до колоди %2$@"
+          }
+        }
+      }
+    },
+    "Adds a card without opening Lymi. Leave the deck empty and Lymi picks your deck for the term’s language.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавляет карточку, не открывая Lymi. Если колода не выбрана, Lymi берёт твою колоду для языка термина."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додає картку, не відкриваючи Lymi. Якщо колоду не вибрано, Lymi бере твою колоду для мови терміна."
+          }
+        }
+      }
+    },
     "Cards due": {
       "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
       "localizations": {
@@ -48,6 +116,91 @@
           "stringUnit": {
             "state": "translated",
             "value": "Картки до повторення"
+          }
+        }
+      }
+    },
+    "Create a deck in Lymi first.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала создай колоду в Lymi."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спершу створи колоду в Lymi."
+          }
+        }
+      }
+    },
+    "Deck": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Колода"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Колода"
+          }
+        }
+      }
+    },
+    "Fill in with AI": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополнить с AI"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доповнити з AI"
+          }
+        }
+      }
+    },
+    "Lymi can’t be reached. Open the app to add “%@” there.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lymi не на связи. Открой приложение, чтобы добавить «%@» там."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lymi не на зв’язку. Відкрий застосунок, щоб додати «%@» там."
+          }
+        }
+      }
+    },
+    "Meaning": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значение"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значення"
           }
         }
       }
@@ -171,6 +324,23 @@
         }
       }
     },
+    "Sign in to Lymi to add “%@”.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Войди в Lymi, чтобы добавить «%@»."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Увійди в Lymi, щоб додати «%@»."
+          }
+        }
+      }
+    },
     "Term": {
       "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
       "localizations": {
@@ -184,6 +354,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Термін"
+          }
+        }
+      }
+    },
+    "That deck isn’t in Lymi anymore. Choose another one in the shortcut.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этой колоды больше нет в Lymi. Выбери другую в команде."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цієї колоди вже немає в Lymi. Вибери іншу в команді."
+          }
+        }
+      }
+    },
+    "That didn’t work. Try again.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось. Попробуй ещё раз."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вийшло. Спробуй ще раз."
+          }
+        }
+      }
+    },
+    "Update Lymi to add cards from Shortcuts.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обнови Lymi, чтобы добавлять карточки из Быстрых команд."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Онови Lymi, щоб додавати картки з Команд."
+          }
+        }
+      }
+    },
+    "What’s the term?": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какой термин?"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Який термін?"
+          }
+        }
+      }
+    },
+    "Which deck?": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какая колода?"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Яка колода?"
+          }
+        }
+      }
+    },
+    "“%@” is already in %@": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«%1$@» уже есть в колоде %2$@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«%1$@» уже є в колоді %2$@"
           }
         }
       }

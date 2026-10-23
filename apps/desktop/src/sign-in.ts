@@ -43,19 +43,19 @@ export async function completeSignIn(link: string, productUrl: string, ses: Sess
   };
   const verifier = state && verifiers.get(state);
   if (!identifier || !state || !verifier) return false;
-  verifiers.delete(state);
-  // Node's fetch, as Better Auth's own Electron client does: the session's network refuses an Origin header.
+  // Node's fetch, as Better Auth's own Electron client does, with no cookie to send.
   const res = await fetch(new URL("/api/auth/electron/token", productUrl), {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      origin: `${SCHEME}:/`,
       // Named in the learner's list of sessions, rather than as Node.
       "user-agent": `Lymi for Mac/${app.getVersion()}`,
     },
     body: JSON.stringify({ token: identifier, state, code_verifier: verifier }),
   });
   if (!res.ok) return false;
+  // Kept until the trade succeeds, so "Open Lymi for Mac again" can finish a sign-in that failed.
+  verifiers.delete(state);
   for (const header of res.headers.getSetCookie())
     await ses.cookies.set(cookieOf(header, productUrl));
   return true;

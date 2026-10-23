@@ -117,7 +117,7 @@ export function Sidebar({
       )}
     >
       {/* In the Mac app the traffic lights take the lockup's place, level with the screen's bar. */}
-      <div className="mx-3 mt-[var(--rail-lockup-top,32px)] mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
+      <div className="mx-3 mt-[var(--rail-lockup-top,2rem)] mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
         <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (

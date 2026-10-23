@@ -25,6 +25,11 @@ export function ThisMacSection() {
   };
   const [error, setError] = useState<string | null>(null);
 
+  // Leaving the screen mid-recording, by a menu shortcut say, gives the shortcut back.
+  useEffect(() => {
+    if (recording) return () => bridge?.setRecordingShortcut(false);
+  }, [recording, bridge]);
+
   useEffect(() => {
     if (!bridge) return;
     const load = () => void bridge.preferences().then(setPrefs);

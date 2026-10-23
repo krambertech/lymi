@@ -2990,6 +2990,9 @@ msgstr "Создана серия «{name}»"
 msgid "Main"
 msgstr "Главная навигация"
 
+msgid "Make a deck in Lymi first. Enter opens Library."
+msgstr "Сначала создайте колоду в Lymi. Enter открывает Библиотеку."
+
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
 

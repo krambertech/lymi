@@ -2990,6 +2990,9 @@ msgstr "Made the series {name}"
 msgid "Main"
 msgstr "Main"
 
+msgid "Make a deck in Lymi first. Enter opens Library."
+msgstr "Make a deck in Lymi first. Enter opens Library."
+
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 

@@ -49,6 +49,8 @@ function DesktopAdd() {
   const list = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const signedOut = me.error instanceof ApiError && me.error.status === 401;
+  // A card needs a deck of the learner's own to land in, and the panel has no room to make one.
+  const noDeck = decks.isSuccess && own.length === 0;
 
   // The page is the whole panel, so it draws no room of its own and lends the window its colour.
   useLayoutEffect(() => {
@@ -235,6 +237,7 @@ function DesktopAdd() {
     if (e.key === "Enter") {
       e.preventDefault();
       if (signedOut) return desktop()?.openApp("/login");
+      if (noDeck) return desktop()?.openApp("/library");
       if (!ready && line?.kind === "existing") return desktop()?.openApp(line.path);
       void add(e.metaKey);
     }
@@ -346,9 +349,15 @@ function DesktopAdd() {
           ))}
         </div>
       )}
-      {!picking && (status || signedOut) && (
+      {!picking && (status || signedOut || noDeck) && (
         <div className="border-t border-edge px-4.5 py-2.5">
-          {status || <p className="text-sm text-text-2">{t`Open Lymi to sign in`}</p>}
+          {status || (
+            <p className="text-sm text-text-2">
+              {signedOut
+                ? t`Open Lymi to sign in`
+                : t`Make a deck in Lymi first. Enter opens Library.`}
+            </p>
+          )}
         </div>
       )}
       {/* Mounted from the start, so a screen reader announces each line as it changes. */}

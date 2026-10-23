@@ -13,7 +13,6 @@ import { getOAuthState } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
-import { DESKTOP_APP_SCHEME } from "../shared/origins";
 import { appleIdTokenVerifier } from "./apple-id-token";
 import { appleClientSecret, appleKeyOf } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
@@ -106,12 +105,9 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [
-      env.PRODUCT_URL,
-      PHONE_APP_ORIGIN,
-      `${DESKTOP_APP_SCHEME}:/`,
-      "https://appleid.apple.com",
-    ],
+    // The Mac app's scheme is left out on purpose: trusting it would let a callback redirect carry
+    // the session cookie there. Its code is traded at `/electron/token` with no cookie to check.
+    trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN, "https://appleid.apple.com"],
     disabledPaths: [...UNUSED_OTP_PATHS, ...UNUSED_ELECTRON_PATHS],
     database: drizzleAdapter(db, {
       provider: "sqlite",

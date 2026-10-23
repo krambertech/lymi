@@ -55,7 +55,7 @@ Only `my.lymi.app` loads inside a window: `will-navigate` and `will-redirect` se
 
 The window is a browser on `my.lymi.app`, so its Better Auth cookie persists in the app's `persist:lymi` session like any browser's. Email and password work in the window as they are.
 
-Google refuses OAuth inside embedded browsers with `disallowed_useragent`, and Electron's windows count; the system browser also holds the learner's passkeys and Keychain. So the app signs in there, with Better Auth's Electron plugin on the server (`electron()`, scheme `app.lymi.desktop` in `trustedOrigins`):
+Google refuses OAuth inside embedded browsers with `disallowed_useragent`, and Electron's windows count; the system browser also holds the learner's passkeys and Keychain. So the app signs in there, with Better Auth's Electron plugin on the server (`electron()`, its social-sign-in route `/electron/init-oauth-proxy` disabled). The app's scheme `app.lymi.desktop` is deliberately not a trusted origin, so no callback redirect can carry a session cookie to it:
 
 1. The app opens `/desktop/sign-in` in the default browser with a PKCE challenge and a state. Clicking Google or Apple in the app's window does the same.
 2. Signed out, that page sends the browser through the ordinary login, which returns to it.

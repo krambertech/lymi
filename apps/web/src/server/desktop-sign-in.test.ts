@@ -77,10 +77,10 @@ describe("signing the Mac app in", () => {
     expect(response.status).toBe(404);
   });
 
-  it("trusts the app's own scheme", async () => {
-    // Better Auth skips its origin check under test, so this asks the rule itself.
+  it("never trusts the app's scheme as a redirect", async () => {
+    // A trusted scheme would let a callback redirect there carry the session cookie.
     const context = await createAuth(app.env, app.db).$context;
-    expect(context.isTrustedOrigin(`${DESKTOP_APP_SCHEME}:/`)).toBe(true);
-    expect(context.isTrustedOrigin("app.lymi.other:/")).toBe(false);
+    expect(context.isTrustedOrigin(`${DESKTOP_APP_SCHEME}:/`)).toBe(false);
+    expect(context.isTrustedOrigin(`${DESKTOP_APP_SCHEME}://auth/callback`)).toBe(false);
   });
 });

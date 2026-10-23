@@ -47,7 +47,8 @@ const PERMISSIONS = new Set(["clipboard-sanitized-write", "notifications", "full
 let ses: Session;
 let tray: Tray | null = null;
 let panel: BrowserWindow | null = null;
-let panelBroken = false;
+// Loads again on the next press: it failed to load, or the learner signed in or out meanwhile.
+let panelStale = false;
 let main: BrowserWindow | null = null;
 let prefs: Preferences;
 let due: number | null = null;
@@ -114,6 +115,8 @@ function openMain(path?: string) {
   main.webContents.on("did-finish-load", fullScreen);
   main.on("closed", () => {
     main = null;
+    // Closed while This Mac recorded a shortcut, the page never said it stopped.
+    if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
     // Back to living in the menu bar once no window is open.
     if (process.platform === "darwin") app.setActivationPolicy("accessory");
   });
@@ -142,9 +145,9 @@ function createPanel() {
   keepToProduct(panel);
   panel.on("blur", () => panel?.hide());
   // Opened at login before the network is up, or crashed: the next press loads it again.
-  panelBroken = false;
+  panelStale = false;
   panel.webContents.on("did-fail-load", (_event, _code, _description, _url, mainFrame) => {
-    if (mainFrame) panelBroken = true;
+    if (mainFrame) panelStale = true;
   });
   panel.webContents.on("render-process-gone", () => {
     panel?.destroy();
@@ -163,8 +166,8 @@ async function showPanel() {
     return;
   }
   if (copying) return;
-  if (panelBroken) {
-    panelBroken = false;
+  if (panelStale) {
+    panelStale = false;
     panel.webContents.reload();
   }
   let selection: string | null = null;
@@ -387,14 +390,21 @@ async function start() {
   void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
-  // Signing in or out in a window changes the session cookie; the tray and the panel follow it.
+  // Signing in or out in a window adds or removes the session cookie, and the tray and the panel
+  // follow. The daily refresh rewrites it in place, an overwrite then an insert, and changes nothing.
+  const isSession = (cookie: Electron.Cookie) => cookie.name.endsWith(SESSION_COOKIE);
+  let hasSession = (await ses.cookies.get({ url: PRODUCT_URL })).some(isSession);
   let settle: ReturnType<typeof setTimeout> | undefined;
-  ses.cookies.on("changed", (_event, cookie) => {
-    if (!cookie.name.endsWith(SESSION_COOKIE)) return;
+  ses.cookies.on("changed", (_event, cookie, cause, removed) => {
+    if (!isSession(cookie) || cause === "overwrite" || cause === "expired-overwrite") return;
+    if (!removed === hasSession) return;
+    hasSession = !removed;
     clearTimeout(settle);
     settle = setTimeout(() => {
       void refreshDue();
-      panel?.webContents.reload();
+      // Never under the learner's typing: an open panel reloads on its next press instead.
+      if (panel?.isVisible()) panelStale = true;
+      else panel?.webContents.reload();
     }, 500);
   });
   if (DEV) {

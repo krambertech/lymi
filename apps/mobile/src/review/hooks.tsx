@@ -1,12 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
-import type { Card } from "@lymi/client/api";
-import { hookDraftQuery } from "@lymi/client/queries";
+import { api, type Card } from "@lymi/client/api";
+import { settingsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS, type FieldSource } from "@lymi/core";
+import { CARD_LIMITS, type FieldSource, hookable } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { GlassView } from "expo-glass-effect";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert, type LayoutChangeEvent, Pressable, TextInput, View } from "react-native";
 import Animated, {
   FadeOut,
@@ -16,12 +16,13 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
+import { captureEvent } from "../telemetry/posthog";
 import { useGlass } from "../theme/glass";
 import { ALWAYS, CROSSFADE, curve, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { SourceChip } from "../ui/chip";
-import { Button, Icon, Text } from "../ui/primitives";
+import { Button, Icon, IconButton, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { useSheetFocus } from "../ui/sheet-focus";
 
@@ -196,8 +197,9 @@ const OFFER_SHAPE = { borderRadius: 18 } as const;
 
 /**
  * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.
- * ✓ and the keyboard's done key save; on an empty field they keep the AI's draft, which is the
- * placeholder, as the web's touch editor does. Close and a swipe down let go.
+ * ✓ and the keyboard's done key save; Close and a swipe down let go. Draft a hook asks the AI for
+ * one and puts it in the field to edit, as the web's editor does; while the field still holds that
+ * draft, the button asks for another.
  */
 export function HookSheet({
   card,
@@ -217,24 +219,65 @@ export function HookSheet({
   const [shown, setShown] = useState(card);
   const [text, setText] = useState(card?.hook ?? "");
   const [pending, setPending] = useState(false);
+  const [drafted, setDrafted] = useState<string | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draftNote, setDraftNote] = useState<string | null>(null);
   const focus = useSheetFocus({ open });
+  // The sheet stays mounted between cards, so each opening counts and a reply from an earlier one is dropped.
+  const opening = useRef(0);
+  // What the field holds now, read when a draft lands after the learner may have typed.
+  const latest = useRef(text);
+  latest.current = text;
   // biome-ignore lint/correctness/useExhaustiveDependencies: once per opening, not per render of the card.
   useEffect(() => {
     if (!open || !card) return;
+    opening.current += 1;
     setShown(card);
     setText(card.hook ?? "");
+    setDrafted(null);
+    setDrafting(false);
+    setDraftNote(null);
   }, [open]);
+  const settings = useQuery(settingsQuery);
   const editing = card ?? shown;
-  const draft = useQuery({
-    ...hookDraftQuery(editing ?? { id: "", term: "", meaning: null }),
-    enabled: open && !!editing && !editing.hook,
-  });
-  const drafted = draft.data ?? null;
   const empty = !text.trim();
+  const untouched = drafted !== null && text === drafted;
+  // Only where the server drafts at all, and never over the learner's own words.
+  const draftable =
+    !!editing &&
+    !!settings.data &&
+    hookable(editing, settings.data.meaningLanguage) &&
+    (empty || untouched || drafting);
+
+  const draft = async () => {
+    if (!editing || drafting) return;
+    const asked = opening.current;
+    const before = latest.current;
+    setDrafting(true);
+    setDraftNote(null);
+    const started = performance.now();
+    const waited = () => Math.min(60_000, Math.round(performance.now() - started));
+    try {
+      const { hook } = await api.draftHook(editing.id);
+      captureEvent("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      if (opening.current !== asked || latest.current !== before) return;
+      if (hook) {
+        setText(hook);
+        setDrafted(hook);
+      } else {
+        setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
+      }
+    } catch {
+      captureEvent("hook_drafted", { outcome: "failed", wait_ms: waited() });
+      if (opening.current === asked) setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+    } finally {
+      if (opening.current === asked) setDrafting(false);
+    }
+  };
 
   const save = async () => {
     if (!editing || pending) return;
-    const hook = text.trim() || drafted || "";
+    const hook = text.trim();
     if (!hook) {
       Alert.alert(t`Write a hook.`);
       return;
@@ -267,8 +310,11 @@ export function HookSheet({
           {...focus}
           value={text}
           maxLength={CARD_LIMITS.hook}
-          onChangeText={setText}
-          placeholder={drafted ?? t`A sound-alike, or something to picture`}
+          onChangeText={(next) => {
+            setText(next);
+            setDraftNote(null);
+          }}
+          placeholder={t`A sound-alike, or something to picture`}
           placeholderTextColor={p.muted}
           accessibilityLabel={t`Memory hook`}
           multiline
@@ -280,16 +326,38 @@ export function HookSheet({
           style={{ fontSize: 17, textAlignVertical: "top" }}
           maxFontSizeMultiplier={inputCap(17)}
         />
-        {/* Inside the field and its room kept, so the sheet never changes height as the draft arrives. */}
-        <View className="min-h-5 flex-row items-center gap-1.5">
-          {empty && drafted ? (
-            <>
-              <Icon name="ai" size={14} colour={p.muted} />
-              <Text className="text-sm text-muted">{t`AI draft`}</Text>
-            </>
-          ) : empty && draft.isFetching ? (
-            <Text className="text-sm text-muted">{t`Drafting a hook…`}</Text>
-          ) : null}
+        {/* Inside the field and its room kept, so the sheet never changes height as a draft arrives or the button goes. */}
+        <View className="min-h-8 flex-row items-center gap-3">
+          <View className="min-w-0 flex-1 flex-row items-center gap-1.5">
+            {draftNote ? (
+              <Text className="text-sm text-muted">{draftNote}</Text>
+            ) : untouched ? (
+              <>
+                <Icon name="ai" size={14} colour={p.muted} />
+                <Text className="text-sm text-muted">{t`AI draft`}</Text>
+              </>
+            ) : null}
+          </View>
+          {/* Labelled while the field is empty, an icon once a draft is in; the sheet's ✓ saves, so the row holds only the draft. */}
+          {draftable &&
+            (untouched ? (
+              <IconButton
+                size="sm"
+                icon="ai"
+                label={t`Another draft`}
+                busy={drafting}
+                onPress={() => void draft()}
+              />
+            ) : (
+              <Button
+                size="sm"
+                variant="ghost"
+                icon="ai"
+                label={t`Draft`}
+                loading={drafting}
+                onPress={() => void draft()}
+              />
+            ))}
         </View>
       </View>
     </Sheet>

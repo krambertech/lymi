@@ -1022,12 +1022,6 @@ msgstr "Ahead"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "AI draft"
-
-msgid "AI draft · Tab keeps it"
-msgstr "AI draft · Tab keeps it"
-
 msgid "AI example"
 msgstr "AI example"
 
@@ -1128,6 +1122,9 @@ msgstr "anki quizlet pleco"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
+
+msgid "Another draft"
+msgstr "Another draft"
 
 #. placeholder {0}: isolate(term.formOf.term)
 #. placeholder {1}: isolate(term.formOf.deckName)
@@ -1719,6 +1716,9 @@ msgstr "Couldn’t connect to Lymi. Try again in a moment."
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Couldn’t delete your account. Check your connection and try again."
 
+msgid "Couldn’t draft a hook. Try again in a moment."
+msgstr "Couldn’t draft a hook. Try again in a moment."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
 
@@ -2065,6 +2065,12 @@ msgstr "Download {0}"
 
 msgid "Download the file from Noji’s email within 24 hours, then choose it here."
 msgstr "Download the file from Noji’s email within 24 hours, then choose it here."
+
+msgid "Draft"
+msgstr "Draft"
+
+msgid "Draft a hook"
+msgstr "Draft a hook"
 
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
@@ -3288,6 +3294,9 @@ msgstr "No section"
 
 msgid "No series"
 msgstr "No series"
+
+msgid "No strong hook for this one. Try again, or write your own."
+msgstr "No strong hook for this one. Try again, or write your own."
 
 msgid "No tag matches “{query}”."
 msgstr "No tag matches “{query}”."

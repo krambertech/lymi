@@ -1022,12 +1022,6 @@ msgstr "Попереду"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "Чернетка AI"
-
-msgid "AI draft · Tab keeps it"
-msgstr "Чернетка AI · Tab, щоб узяти"
-
 msgid "AI example"
 msgstr "Приклад від AI"
 
@@ -1128,6 +1122,9 @@ msgstr "anki quizlet pleco імпорт"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
+
+msgid "Another draft"
+msgstr "Інша чернетка"
 
 #. placeholder {0}: isolate(term.formOf.term)
 #. placeholder {1}: isolate(term.formOf.deckName)
@@ -1719,6 +1716,9 @@ msgstr "Не вдалося підключитися до Lymi. Спробуй �
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Не вдалося видалити акаунт. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t draft a hook. Try again in a moment."
+msgstr "Не вдалося підготувати зачіпку. Спробуй ще раз за мить."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не вдалося доповнити «{term}». Перевір з’єднання й повтори спробу."
 
@@ -2065,6 +2065,12 @@ msgstr "Завантажити {0}"
 
 msgid "Download the file from Noji’s email within 24 hours, then choose it here."
 msgstr "Завантаж файл з листа від Noji протягом 24 годин і вибери його тут."
+
+msgid "Draft"
+msgstr "Чернетка"
+
+msgid "Draft a hook"
+msgstr "Підготувати зачіпку"
 
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
@@ -3288,6 +3294,9 @@ msgstr "Без розділу"
 
 msgid "No series"
 msgstr "Без серії"
+
+msgid "No strong hook for this one. Try again, or write your own."
+msgstr "Для цієї картки немає вдалої зачіпки. Спробуй ще раз або напиши свою."
 
 msgid "No tag matches “{query}”."
 msgstr "Немає тегу, що відповідає «{query}»."

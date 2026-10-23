@@ -3,7 +3,6 @@ import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
-import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
@@ -758,10 +757,6 @@ function Run({
     });
   }
   const offer = cardOffer.key === showing && cardOffer.offer && !cardOffer.parked;
-  // The AI's draft takes seconds, so it starts as soon as writing a hook is one tap away.
-  const prefetchDraft = () => {
-    if (owned && !hook) void qc.prefetchQuery(hookDraftQuery(card));
-  };
   const openHook = () => {
     setHookOpen(true);
     setCardOffer((held) => ({ ...held, parked: true }));
@@ -802,7 +797,6 @@ function Run({
   };
   const openMenu = () => {
     if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
-    prefetchDraft();
     setMenuOpen(true);
   };
 
@@ -942,10 +936,7 @@ function Run({
                 }}
                 onShowHook={() => setAidState({ key: showing, peeked: false, shown: true })}
                 offer={offer && revealed}
-                onOffer={() => {
-                  prefetchDraft();
-                  openHook();
-                }}
+                onOffer={openHook}
                 onMenu={openMenu}
                 easyLocked={peeked}
                 lockedTip={locked.key === showing ? locked.presses : 0}

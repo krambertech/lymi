@@ -1,15 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS } from "@lymi/core";
+import { CARD_LIMITS, hookable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Anchor, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { type Card, errorMessage } from "../lib/api";
+import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
-import { useMouse } from "../lib/device";
-import { hookDraftQuery } from "../lib/queries";
+import { settingsQuery } from "../lib/queries";
+import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
+import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
 
@@ -24,8 +25,8 @@ interface Props {
 /**
  * The card's memory hook, written in its own place under the cue, like a message composer: the
  * field on top and its actions along the foot. Enter saves and Escape lets go. Undo in the toast
- * puts back the hook the card had. A card with no hook shows the AI's draft as the placeholder;
- * Tab, or saving the empty field, keeps it.
+ * puts back the hook the card had. Draft a hook asks the AI for one and puts it in the field to
+ * edit; while the field still holds that draft, the button asks for another.
  */
 export function HookEditor({ card, onCancel, onSaved }: Props) {
   const { t } = useLingui();
@@ -34,10 +35,50 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   const [problem, setProblem] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const field = useRef<HTMLTextAreaElement>(null);
-  const mouse = useMouse();
-  const draft = useQuery({ ...hookDraftQuery(card), enabled: !card.hook });
-  const drafted = draft.data ?? null;
+  const [drafted, setDrafted] = useState<string | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draftNote, setDraftNote] = useState<string | null>(null);
+  // What the field holds now, read when a draft lands after the learner may have typed.
+  const latest = useRef(text);
+  latest.current = text;
+  const settings = useQuery(settingsQuery);
   const empty = !text.trim();
+  const untouched = drafted !== null && text === drafted;
+  // Only where the server drafts at all, and never over the learner's own words.
+  const draftable =
+    !!settings.data &&
+    hookable(card, settings.data.meaningLanguage) &&
+    (empty || untouched || drafting);
+
+  const draft = async () => {
+    // One ask at a time: each counts against the hourly cap and replaces the draft the server keeps.
+    if (drafting) return;
+    const before = latest.current;
+    setDrafting(true);
+    setDraftNote(null);
+    setProblem(null);
+    const started = performance.now();
+    const waited = () => Math.min(60_000, Math.round(performance.now() - started));
+    try {
+      const { hook } = await api.draftHook(card.id);
+      captureAnalytics("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      // Words typed while the draft was on its way are the learner's, so the draft gives way.
+      if (latest.current !== before) return;
+      if (hook) {
+        setText(hook);
+        setDrafted(hook);
+        setProblem(null);
+        field.current?.focus();
+      } else {
+        setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
+      }
+    } catch {
+      captureAnalytics("hook_drafted", { outcome: "failed", wait_ms: waited() });
+      setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+    } finally {
+      setDrafting(false);
+    }
+  };
 
   useEffect(() => {
     const node = field.current;
@@ -62,7 +103,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   };
 
   const save = async () => {
-    const hook = text.trim() || drafted || "";
+    const hook = text.trim();
     if (!hook) {
       setProblem(t`Write a hook.`);
       field.current?.focus();
@@ -104,64 +145,83 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   return (
     <form
       noValidate
-      className="relative z-20 grid gap-1 rounded-md bg-plate-2 ps-3 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
+      className="@container relative z-20 grid gap-1 rounded-md bg-plate-2 ps-3 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
       onSubmit={(e) => {
         e.preventDefault();
         if (!pending) void save();
       }}
     >
-      <label className="flex items-start gap-2 pe-1.5">
-        <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
-        <span className="sr-only">{t`Memory hook`}</span>
-        <textarea
-          ref={field}
-          rows={1}
-          value={text}
-          maxLength={CARD_LIMITS.hook}
-          placeholder={drafted ?? t`A sound-alike, or something to picture`}
-          aria-invalid={!!problem || undefined}
-          onChange={(e) => {
-            setText(e.target.value);
-            setProblem(null);
-          }}
-          onKeyDown={(e) => {
-            // Tab on an empty field keeps the AI's draft, as an editor takes a completion.
-            if (e.key === "Tab" && !e.shiftKey && empty && drafted) {
+      <div className="flex items-start gap-1">
+        <label className="flex min-w-0 flex-1 items-start gap-2 pe-1.5">
+          <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+          <span className="sr-only">{t`Memory hook`}</span>
+          <textarea
+            ref={field}
+            rows={1}
+            value={text}
+            maxLength={CARD_LIMITS.hook}
+            placeholder={t`A sound-alike, or something to picture`}
+            aria-invalid={!!problem || undefined}
+            onChange={(e) => {
+              setText(e.target.value);
+              setProblem(null);
+              setDraftNote(null);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                // The review leaves on Escape; here it only closes the editor.
+                e.preventDefault();
+                e.stopPropagation();
+                onCancel();
+                return;
+              }
+              // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
+              if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
               e.preventDefault();
-              setText(drafted);
-              return;
-            }
-            if (e.key === "Escape") {
-              // The review leaves on Escape; here it only closes the editor.
-              e.preventDefault();
-              e.stopPropagation();
-              onCancel();
-              return;
-            }
-            // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
-            if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
-            e.preventDefault();
-            e.currentTarget.form?.requestSubmit();
-          }}
-          autoComplete="off"
-          enterKeyHint="done"
-          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
-        />
-      </label>
-      <div className="flex items-center gap-1 ps-6">
-        <p role="status" className="min-w-0 flex-1 truncate text-xs text-muted empty:invisible">
+              e.currentTarget.form?.requestSubmit();
+            }}
+            autoComplete="off"
+            enterKeyHint="done"
+            className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
+          />
+        </label>
+        {/* The AI's mark beside the field while it holds the draft as written. */}
+        {untouched && (
+          <span className="mt-0.5 shrink-0">
+            <SourceChip source="ai" field="hook" size="xs" />
+          </span>
+        )}
+      </div>
+      {/* Like a composer: the field's helper at the start, the answer to it at the end. */}
+      <div className="flex flex-wrap items-center gap-1">
+        <p
+          role="status"
+          // A narrow card puts the status on its own line above the actions; a note wraps rather than lose its end.
+          className={`order-first min-w-0 basis-full ps-6 text-xs text-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
+        >
           {problem ? (
             <InlineError>{problem}</InlineError>
-          ) : empty && drafted ? (
-            <span className="inline-flex items-center gap-1.5">
-              <Sparkle className="size-3.5 shrink-0" aria-hidden="true" />
-              {mouse ? <Trans>AI draft · Tab keeps it</Trans> : <Trans>AI draft</Trans>}
-            </span>
-          ) : empty && draft.isFetching ? (
+          ) : drafting ? (
             <Trans>Drafting a hook…</Trans>
+          ) : draftNote ? (
+            draftNote
           ) : null}
         </p>
-        <Button size="sm" variant="ghost" onClick={onCancel}>
+        {draftable && (
+          <Button
+            size="sm"
+            variant="ghost"
+            aria-label={untouched ? t`Another draft` : t`Draft a hook`}
+            loading={drafting}
+            aria-disabled={drafting}
+            className="@md:-order-1"
+            onClick={() => void draft()}
+          >
+            <Sparkle data-icon="inline-start" aria-hidden="true" />
+            {untouched ? <Trans>Another draft</Trans> : <Trans>Draft</Trans>}
+          </Button>
+        )}
+        <Button size="sm" variant="ghost" className="ms-auto" onClick={onCancel}>
           <Trans>Cancel</Trans>
         </Button>
         <Button size="sm" variant="primary" type="submit" loading={pending} aria-disabled={pending}>

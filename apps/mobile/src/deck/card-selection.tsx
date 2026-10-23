@@ -47,7 +47,8 @@ export function useCardSelection({
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selection, setSelected] = useState<ReadonlySet<string> | null>(null);
   const done = useCallback(() => setSelected(null), []);
-  const start = useCallback(() => setSelected(new Set()), []);
+  // A section's Select cards starts with that section's cards chosen.
+  const start = useCallback((ids?: Iterable<string>) => setSelected(new Set(ids)), []);
   const choosing = !!selection;
   // What Review takes from the chosen cards, due ones first, as the web's selection does.
   const reviewable = useMemo(

@@ -1,0 +1,91 @@
+# The section line in a deck's summary, a section's page, its menu and selection, a waiting section, No section, and Archive section.
+appId: app.lymi
+name: Section pages
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- assertVisible: "Sections"
+- assertVisible: ".*, You are here"
+- takeScreenshot: 01-section-line
+- tapOn: "${SECOND}, .* known.*"
+- extendedWaitUntil:
+    visible: "(?i)section 2 of 4"
+    timeout: 20000
+- takeScreenshot: 02-section-page
+- tapOn: "Section options"
+- extendedWaitUntil:
+    visible: "Select cards"
+    timeout: 10000
+- assertVisible: "Archive section"
+- takeScreenshot: 03-section-menu
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Archive"
+    timeout: 10000
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "No cards in this section yet"
+    timeout: 20000
+- takeScreenshot: 04-section-emptied
+- scrollUntilVisible:
+    element: "Next section, ${READY}"
+    centerElement: true
+- tapOn: "Next section, ${READY}"
+# Whether the next section waits or is ready depends on what the seed's learner knows today.
+- extendedWaitUntil:
+    visible: "${READY} opens .*|${READY} is ready."
+    timeout: 20000
+- takeScreenshot: 05-next-section
+- scrollUntilVisible:
+    element: "Next section, ${LOCKED}"
+    centerElement: true
+- tapOn: "Next section, ${LOCKED}"
+- extendedWaitUntil:
+    visible: "Start anyway"
+    timeout: 20000
+- assertVisible: "Opens after ${READY}."
+- assertVisible: "${WAITING}, a ride, Not in review yet"
+- takeScreenshot: 06-waiting-section
+- scrollUntilVisible:
+    element: "Next section, No section"
+    centerElement: true
+- tapOn: "Next section, No section"
+- extendedWaitUntil:
+    visible: "Section options"
+    timeout: 20000
+- tapOn: "Section options"
+- extendedWaitUntil:
+    visible: "Select cards"
+    timeout: 10000
+- assertNotVisible: "Archive section"
+- takeScreenshot: 07-no-section-menu
+- tapOn: "Select cards"
+- tapOn: "Stop selecting"
+- scrollUntilVisible:
+    element: "Previous section, ${LOCKED}"
+    centerElement: true
+- tapOn: "Previous section, ${LOCKED}"
+- extendedWaitUntil:
+    visible: "Start anyway"
+    timeout: 20000
+- tapOn: "Section options"
+- tapOn: "Archive section"
+- extendedWaitUntil:
+    visible: "Archived “${LOCKED}”"
+    timeout: 20000
+- assertVisible: "Search this deck"
+- takeScreenshot: 08-archived-section
+# A tap on a section's heading in the deck's list opens its page too.
+- scrollUntilVisible:
+    element: "At the office, \\d+ cards.*"
+    centerElement: true
+- tapOn: "At the office, \\d+ cards.*"
+- extendedWaitUntil:
+    visible: "(?i)section 1 of 3"
+    timeout: 20000
+- takeScreenshot: 09-heading-opens

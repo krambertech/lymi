@@ -28,6 +28,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "open",
   "review",
   "add_card",
+  "select_cards",
   "play",
   "important",
   "edit",
@@ -37,6 +38,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "start_section",
   "rename_section",
   "reorder_sections",
+  "archive_section",
   "add_to_library",
   "restore",
 ] as const;
@@ -465,6 +467,7 @@ export const analyticsEvents = {
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
   section_go_to: z.object({}),
+  section_page_opened: z.object({ from: z.enum(["line", "heading", "step"]) }),
   hook_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
     wait_ms: z.number().int().nonnegative().max(60_000),
@@ -568,6 +571,7 @@ export const analyticsProducers = {
   changelog_opened: ["browser"],
   library_searched: ["browser"],
   section_go_to: ["phone"],
+  section_page_opened: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   lead_in_decided: ["worker"],

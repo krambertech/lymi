@@ -4,7 +4,7 @@
  * run counts every step it takes in one invocation against the same cap, and a call past it
  * throws, so a run that spends it all cannot even record that it stopped.
  */
-export const SUBREQUEST_LIMIT = 10_000;
+export const SUBREQUEST_LIMIT = 100_000;
 
 /** Calls kept back for recording a failure, and for the few calls the budget does not see. */
 export const FAILURE_RESERVE = 1_000;

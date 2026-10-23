@@ -74,7 +74,7 @@ export const FORM_FIELD: Record<
   exampleTranslation: {
     label: msg`Translation`,
     icon: "example",
-    hint: msg`Translation`,
+    hint: msg`Add a translation`,
     limit: cardLimits.exampleTranslation,
     learned: false,
   },
@@ -212,7 +212,7 @@ export function CardFields({
     const submits = f === submitFrom || !next;
     const term = f === "term";
     const quiet = f === UNDER_EXAMPLE;
-    const size = term ? 28 : quiet ? 15 : 17;
+    const size = term ? 28 : 17;
     return (
       <TextInput
         ref={(r) => {
@@ -244,7 +244,7 @@ export function CardFields({
           term
             ? "min-h-12 py-1.5 font-sans font-medium text-text"
             : quiet
-              ? "min-h-8 py-1 font-sans text-text-2"
+              ? "min-h-9 py-1.5 font-sans text-text-2"
               : "min-h-9 py-1.5 font-sans text-text"
         }
         // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
@@ -282,18 +282,24 @@ export function CardFields({
             {line(f, i, label)}
             {below?.[f] && <Text className="text-sm text-muted">{below[f]}</Text>}
             {f === "example" && shown[i + 1] === UNDER_EXAMPLE && (
-              // Under the example and quieter, as review shows it: the mark names it, so it has no name over it.
-              <View className="flex-row items-start gap-2">
-                <View className="flex-row items-center gap-1 pt-2">
-                  <Icon name="language" size={14} colour={p.muted} />
-                  {ai?.(UNDER_EXAMPLE) && <Icon name="ai" size={12} colour={p.ai} />}
-                </View>
-                <View className="flex-1">
-                  {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
-                  {below?.[UNDER_EXAMPLE] && (
-                    <Text className="text-sm text-muted">{below[UNDER_EXAMPLE]}</Text>
+              // The example's chin: the translation belongs to the example, so it hangs from its line.
+              <View className="gap-1">
+                <View className="flex-row items-start gap-2.5 rounded-xl bg-glass-group px-3.5">
+                  <View style={{ paddingTop: 10 }}>
+                    <Icon name="language" size={16} colour={p.muted} />
+                  </View>
+                  <View className="flex-1">
+                    {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
+                  </View>
+                  {ai?.(UNDER_EXAMPLE) && (
+                    <View style={{ paddingTop: 12 }}>
+                      <Icon name="ai" size={12} colour={p.ai} />
+                    </View>
                   )}
                 </View>
+                {below?.[UNDER_EXAMPLE] && (
+                  <Text className="text-sm text-muted">{below[UNDER_EXAMPLE]}</Text>
+                )}
               </View>
             )}
           </Animated.View>

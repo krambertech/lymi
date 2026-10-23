@@ -827,6 +827,9 @@ msgstr "Add a card"
 msgid "Add a lesson"
 msgstr "Add a lesson"
 
+msgid "Add a translation"
+msgstr "Add a translation"
+
 msgid "Add a word"
 msgstr "Add a word"
 
@@ -931,6 +934,9 @@ msgstr "AI only fills empty fields. It never changes your text."
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI translates it after you save"
+msgstr "AI translates it after you save"
 
 msgid "AI translation"
 msgstr "AI translation"
@@ -2656,9 +2662,6 @@ msgstr "Leave empty for Lymi to write it"
 
 msgid "Leave it empty and the AI fills it in"
 msgstr "Leave it empty and the AI fills it in"
-
-msgid "Leave it empty and the AI translates it"
-msgstr "Leave it empty and the AI translates it"
 
 msgid "Leave out"
 msgstr "Leave out"

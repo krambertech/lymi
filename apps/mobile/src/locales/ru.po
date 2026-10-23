@@ -827,6 +827,9 @@ msgstr "Добавить карточку"
 msgid "Add a lesson"
 msgstr "Добавить урок"
 
+msgid "Add a translation"
+msgstr "Добавь перевод"
+
 msgid "Add a word"
 msgstr "Добавить слово"
 
@@ -931,6 +934,9 @@ msgstr "ИИ заполняет только пустые поля и никог
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI translates it after you save"
+msgstr "AI переведёт после сохранения"
 
 msgid "AI translation"
 msgstr "Перевод от AI"
@@ -2656,9 +2662,6 @@ msgstr "Оставь пустым, и Lymi напишет его"
 
 msgid "Leave it empty and the AI fills it in"
 msgstr "Оставь пустым, и AI дополнит"
-
-msgid "Leave it empty and the AI translates it"
-msgstr "Оставь пустым, и AI переведёт"
 
 msgid "Leave out"
 msgstr "Пропустить"

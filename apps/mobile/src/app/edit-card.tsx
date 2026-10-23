@@ -274,7 +274,7 @@ export default function EditCard() {
               ai={ai}
               placeholder={
                 aiTranslates
-                  ? { exampleTranslation: t`Leave it empty and the AI translates it` }
+                  ? { exampleTranslation: t`AI translates it after you save` }
                   : undefined
               }
               below={

@@ -112,7 +112,7 @@ name: Example translation and audio
 - eraseText: 1
 - inputText: " oggi?"
 - assertNotVisible: "${IT_TRANSLATION}"
-- assertVisible: "Translation Leave it empty and the AI translates it"
+- assertVisible: "Translation AI translates it after you save"
 - takeScreenshot: 09-editor-new-example
 - eraseText: 6
 - inputText: "?"

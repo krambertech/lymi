@@ -8,7 +8,7 @@ const CARDS: { marked: string; meaning: MessageDescriptor }[] = [
   { marked: "замо́к", meaning: msg`lock` },
 ];
 
-/** Two Learning Russian cards turned over: the same letters, each with its stress mark on the cue. */
+/** Two Learning Ukrainian cards: the same letters, each with its stress mark on the cue. */
 export function StressFigure() {
   const { t, i18n } = useLingui();
   return (
@@ -23,7 +23,7 @@ export function StressFigure() {
             {t({ message: "Learning", context: "cards in this state" })}
           </p>
           <p
-            lang="ru"
+            lang="uk"
             className="mt-4 text-[40px] leading-[1.05] font-medium tracking-[-0.02em] text-text"
           >
             {marked}

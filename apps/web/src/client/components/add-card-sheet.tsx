@@ -36,7 +36,15 @@ interface Props {
 /** Whether a draft holds anything the learner typed or chose for this card. */
 const hasWork = (d: CardFormDraft | null) =>
   !!d &&
-  !!(d.term || d.meaning || d.example || d.notes || d.pronunciation || d.picture.kind !== "none");
+  !!(
+    d.term ||
+    d.meaning ||
+    d.example ||
+    d.notes ||
+    d.pronunciation ||
+    d.hook ||
+    d.picture.kind !== "none"
+  );
 
 /** Quick capture: term, meaning and deck, with the rest of the card one tap away. */
 export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCreateDeck }: Props) {

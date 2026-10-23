@@ -335,6 +335,7 @@ export function CardForm(props: CardFormProps) {
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
+  // Adding keeps the hook at the row's end, since a hook is mostly for a card that keeps failing.
   const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hook"];
   // The deck's cards as the deck page last read them; without them the AI's fields lead.
   // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
@@ -792,6 +793,7 @@ export function CardForm(props: CardFormProps) {
           pictureDescribed={hasPicture && !!description.trim()}
           invalid={!!invalid.reviewModes}
         />
+        {adding && chipFor("hook")}
       </FieldChipRow>
       {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
       <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>

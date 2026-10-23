@@ -96,11 +96,24 @@ export function answerOpenCall(call: AnkiConnectCall) {
   );
 }
 
+/** How many notes or note ids one request may still carry, shared by every call in a `multi`. */
+class Budget {
+  left = MAX_NOTES;
+  take(count: number, refusal: string) {
+    if (count > this.left) throw new Refusal(refusal);
+    this.left -= count;
+  }
+}
+
+const tooManyNotes = () => `Send at most ${MAX_NOTES} notes in one request.`;
+const tooManyIds = () => `Ask for at most ${MAX_NOTES} notes in one request.`;
+
 /** Answers one call, and each call inside a `multi`, in the shape its version asks for. */
 export async function answerCall(
   ctx: ServiceContext,
   call: AnkiConnectCall,
   deps: AnkiConnectDeps,
+  budget = new Budget(),
 ): Promise<unknown> {
   try {
     if (call.action === "multi") {
@@ -112,10 +125,10 @@ export async function answerCall(
         throw new Refusal("multi can’t hold another multi.");
       }
       const results: unknown[] = [];
-      for (const each of inner.data) results.push(await answerCall(ctx, each, deps));
+      for (const each of inner.data) results.push(await answerCall(ctx, each, deps, budget));
       return reply(call.version, results, null);
     }
-    return reply(call.version, await run(ctx, call, deps), null);
+    return reply(call.version, await run(ctx, call, deps, budget), null);
   } catch (error) {
     if (error instanceof Refusal || error instanceof ServiceError) {
       return reply(call.version, null, error.message);
@@ -124,7 +137,12 @@ export async function answerCall(
   }
 }
 
-async function run(ctx: ServiceContext, call: AnkiConnectCall, deps: AnkiConnectDeps) {
+async function run(
+  ctx: ServiceContext,
+  call: AnkiConnectCall,
+  deps: AnkiConnectDeps,
+  budget: Budget,
+) {
   const params = call.params ?? {};
   switch (call.action) {
     case "version":
@@ -146,23 +164,25 @@ async function run(ctx: ServiceContext, call: AnkiConnectCall, deps: AnkiConnect
       if (params.modelName !== NOTE_TYPE) throw new Refusal(chooseNoteType());
       return [...NOTE_FIELDS];
     case "canAddNotes":
-      return (await canAdd(ctx, notesOf(params.notes))).map((r) => r.canAdd);
+      return (await canAdd(ctx, notesOf(params.notes, budget))).map((r) => r.canAdd);
     case "canAddNotesWithErrorDetail":
-      return canAdd(ctx, notesOf(params.notes));
+      return canAdd(ctx, notesOf(params.notes, budget));
     case "addNote": {
-      const [outcome] = await add(ctx, notesOf([params.note]), deps);
+      const [outcome] = await add(ctx, notesOf([params.note], budget), deps);
       if (!outcome || "error" in outcome) throw new Refusal(outcome?.error ?? noteUnreadable());
       return outcome.id;
     }
     case "addNotes":
-      return (await add(ctx, notesOf(params.notes), deps)).map((o) => ("id" in o ? o.id : null));
+      return (await add(ctx, notesOf(params.notes, budget), deps)).map((o) =>
+        "id" in o ? o.id : null,
+      );
     case "findNotes":
     case "findCards":
-      return findNotes(ctx, typeof params.query === "string" ? params.query : "");
+      return findNotes(ctx, typeof params.query === "string" ? params.query : "", budget);
     case "notesInfo":
-      return notesInfo(ctx, numbers(params.notes));
+      return notesInfo(ctx, numbers(params.notes, budget));
     case "cardsInfo":
-      return (await notesInfo(ctx, numbers(params.cards))).map((note) =>
+      return (await notesInfo(ctx, numbers(params.cards, budget))).map((note) =>
         "noteId" in note
           ? {
               cardId: note.noteId,
@@ -192,18 +212,18 @@ async function run(ctx: ServiceContext, call: AnkiConnectCall, deps: AnkiConnect
   }
 }
 
-function notesOf(value: unknown): (AnkiConnectNote | null)[] {
+function notesOf(value: unknown, budget: Budget): (AnkiConnectNote | null)[] {
   const notes = Array.isArray(value) ? value : [];
-  if (notes.length > MAX_NOTES) throw new Refusal(`Send at most ${MAX_NOTES} notes at a time.`);
+  budget.take(notes.length, tooManyNotes());
   return notes.map((note) => {
     const parsed = AnkiConnectNote.safeParse(note);
     return parsed.success ? parsed.data : null;
   });
 }
 
-function numbers(value: unknown): number[] {
+function numbers(value: unknown, budget: Budget): number[] {
   const ids = (Array.isArray(value) ? value : []).filter((n): n is number => Number.isInteger(n));
-  if (ids.length > MAX_NOTES) throw new Refusal(`Ask for at most ${MAX_NOTES} notes at a time.`);
+  budget.take(ids.length, tooManyIds());
   return ids;
 }
 
@@ -523,12 +543,17 @@ export function parseQuery(query: string): Query[] {
   });
 }
 
-async function findNotes(ctx: ServiceContext, query: string) {
+async function findNotes(ctx: ServiceContext, query: string, budget: Budget) {
+  const queries = parseQuery(query);
+  budget.take(
+    queries.reduce((sum, q) => sum + (q.notes?.length ?? 0), 0),
+    tooManyIds(),
+  );
   const decks = await ownedDecks(ctx);
   const byName = new Map(decks.map((d) => [d.name, d]));
   const languages = [...new Set(decks.map((d) => d.language))];
   const found = new Set<number>();
-  for (const q of parseQuery(query)) {
+  for (const q of queries) {
     if (q.deck === undefined && q.field === undefined && q.notes === undefined) continue;
     const where = [eq(schema.cards.userId, ctx.userId), isNull(schema.cards.archivedAt)];
     if (q.deck !== undefined) {

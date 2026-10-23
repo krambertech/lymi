@@ -239,7 +239,21 @@ describe("answerCall", () => {
   it("caps a request: notes per call, actions per multi, and no multi inside a multi", async () => {
     const many = Array.from({ length: 201 }, (_, i) => note({ Term: `語${i}` }));
     expect(await call("addNotes", { notes: many })).toMatchObject({
-      error: "Send at most 200 notes at a time.",
+      error: "Send at most 200 notes in one request.",
+    });
+    const half = (from: number) =>
+      Array.from({ length: 150 }, (_, i) => note({ Term: `語${from + i}` }));
+    const split = (await call("multi", {
+      actions: [
+        { action: "canAddNotes", params: { notes: half(0) } },
+        { action: "canAddNotes", params: { notes: half(150) } },
+      ],
+    })) as unknown[];
+    expect(split[0]).toHaveLength(150);
+    expect(split[1]).toEqual({ result: null, error: "Send at most 200 notes in one request." });
+    const ids = Array.from({ length: 201 }, (_, i) => i + 1).join(",");
+    expect(await call("findNotes", { query: `nid:${ids}` })).toMatchObject({
+      error: "Ask for at most 200 notes in one request.",
     });
     const actions = Array.from({ length: 51 }, () => ({ action: "version" }));
     expect(await call("multi", { actions })).toMatchObject({

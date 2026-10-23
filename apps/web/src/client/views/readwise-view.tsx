@@ -23,6 +23,10 @@ import { useConfirmStep } from "../lib/use-confirm-step";
 
 const TOKEN_PAGE = "https://readwise.io/access_token";
 
+/** A plate of rows with hairlines between them, as Settings lists its import sources. */
+const PLATE = "edge grid rounded-xl bg-plate";
+const ROW = "border-edge px-4 py-3 [&:not(:first-child)]:border-t";
+
 type DeckChoice = { id: string; name: string; language: string };
 
 interface Props {
@@ -61,7 +65,12 @@ export function ReadwiseView(props: Props) {
   const { t } = useLingui();
   const { connection } = props;
   return (
-    <Screen title={t`Readwise`} width="md" back={{ label: t`Settings`, to: "/settings" }}>
+    <Screen
+      title={t`Readwise`}
+      width="md"
+      back={{ label: t`Settings`, to: "/settings" }}
+      backOnDesktop
+    >
       {connection === undefined && !props.loadError && <Skeleton className="h-40 w-full" />}
       {props.loadError && (
         <div className="grid justify-items-start gap-3">
@@ -102,7 +111,7 @@ function TokenForm({
     if (token.trim() && !connecting) onConnect(token.trim());
   };
   return (
-    <form onSubmit={submit} className="grid justify-items-start gap-4">
+    <form onSubmit={submit} className={`${PLATE} justify-items-start gap-4 p-5`}>
       <Field invalid={Boolean(error)} className="w-full max-w-md">
         <FieldLabel>{label}</FieldLabel>
         <Input
@@ -152,17 +161,17 @@ function Connect(props: Props) {
         />
       </SettingsGroup>
       <SettingsGroup title={t`What becomes a card`}>
-        <ul className="grid max-w-[60ch] list-disc gap-1 ps-5 text-sm text-text-2">
-          <li>
+        <ul className={`${PLATE} text-sm text-text-2`}>
+          <li className={ROW}>
             <Trans>A highlight of a word or a short phrase.</Trans>
           </li>
-          <li>
+          <li className={ROW}>
             <Trans>
               A longer passage with the word written in its note. The passage becomes the card’s
               example.
             </Trans>
           </li>
-          <li>
+          <li className={ROW}>
             <Trans>
               Kindle, Kobo, Apple Books and Readwise Reader all count, once Readwise has them.
             </Trans>
@@ -241,7 +250,9 @@ function Connected(props: Props & { connection: Readwise }) {
             />
           </>
         ) : (
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          <div
+            className={`${PLATE} flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4`}
+          >
             <div className="grid min-w-0 gap-1">
               <p className="text-base font-medium">
                 <Trans>
@@ -287,26 +298,34 @@ function Decks({ connection, decks, onDeck, saveError }: Props & { connection: R
           </Trans>
         </p>
       ) : (
-        <div className="grid gap-4">
+        <div className={PLATE}>
           {connection.languages.map(({ language, deckId }) => {
             const items = decks
               .filter((d) => d.language === language)
               .map((d) => ({ value: d.id, label: d.name }));
             return (
-              <Field key={language} className="w-full max-w-xs">
-                <FieldLabel>{nameOf(language)}</FieldLabel>
-                <Select
-                  value={deckId}
-                  onValueChange={(v) => {
-                    if (v && v !== deckId) onDeck(language, v as string);
-                  }}
-                  items={items}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t`Choose a deck`} />
-                  </SelectTrigger>
-                  <SelectContent />
-                </Select>
+              <Field
+                key={language}
+                orientation="horizontal"
+                className={`${ROW} flex-wrap items-center gap-x-4 gap-y-2`}
+              >
+                <FieldLabel className="min-w-0 flex-1 text-base text-text">
+                  {nameOf(language)}
+                </FieldLabel>
+                <div className="w-full sm:w-56">
+                  <Select
+                    value={deckId}
+                    onValueChange={(v) => {
+                      if (v && v !== deckId) onDeck(language, v as string);
+                    }}
+                    items={items}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t`Choose a deck`} />
+                    </SelectTrigger>
+                    <SelectContent />
+                  </Select>
+                </div>
               </Field>
             );
           })}
@@ -340,12 +359,12 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
           </Trans>
         </p>
       ) : yours.length === 0 ? null : (
-        <ul className="grid">
+        <ul className={PLATE}>
           {yours.map((book) => {
             const language = nameOf(book.language ?? "");
             const title = book.title || t`Untitled`;
             return (
-              <li key={book.id} className="border-b border-edge py-3 last:border-b-0">
+              <li key={book.id} className={ROW}>
                 <Field orientation="horizontal" className="gap-4">
                   <FieldContent className="min-w-0 gap-0.5">
                     <FieldLabel className="truncate text-base text-text">{title}</FieldLabel>
@@ -375,7 +394,7 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
         </ul>
       )}
       {unplaced.length > 0 && learned.size > 0 && (
-        <div className="grid gap-1">
+        <div className="grid gap-2">
           <p className="max-w-[60ch] text-sm text-text-2">
             <Plural
               value={unplaced.length}
@@ -383,9 +402,9 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
               other="Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights."
             />
           </p>
-          <ul className="grid">
+          <ul className={PLATE}>
             {unplaced.map((book) => (
-              <li key={book.id} className="border-b border-edge py-3 last:border-b-0">
+              <li key={book.id} className={ROW}>
                 <Field orientation="horizontal" className="flex-wrap gap-x-4 gap-y-2">
                   <FieldContent className="min-w-0 flex-1 gap-0.5">
                     <FieldLabel className="truncate text-base text-text">

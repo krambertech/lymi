@@ -1,0 +1,45 @@
+# Archiving a section with cards asks what happens to them: one leaves with its cards, one keeps them and is undone.
+appId: app.lymi
+name: Archive a section
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/sections?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Section 1: ${FIRST}, 5 cards"
+    timeout: 20000
+- swipe:
+    from: "Section 1: ${FIRST}, 5 cards"
+    direction: LEFT
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "Keep the cards"
+    timeout: 10000
+- assertVisible: "Archive its 5 cards too"
+- assertVisible: "Nothing is deleted. Restore it from Archived sections."
+- takeScreenshot: 01-archive-question
+- tapOn: "Archive its 5 cards too"
+- extendedWaitUntil:
+    visible: "Archived .*${FIRST}.* and its cards"
+    timeout: 20000
+- takeScreenshot: 02-archived-with-cards
+- extendedWaitUntil:
+    visible: "Section 1: ${SECOND}, 5 cards"
+    timeout: 20000
+- swipe:
+    from: "Section 1: ${SECOND}, 5 cards"
+    direction: LEFT
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "Keep the cards"
+    timeout: 10000
+- tapOn: "Keep the cards"
+- extendedWaitUntil:
+    visible: "Archived .*${SECOND}.*"
+    timeout: 20000
+- assertNotVisible: "Archived .*${SECOND}.* and its cards"
+- takeScreenshot: 03-archived-keeping-cards
+- tapOn: "Undo"
+- extendedWaitUntil:
+    visible: "Section 1: ${SECOND}, 5 cards"
+    timeout: 20000
+- takeScreenshot: 04-undone

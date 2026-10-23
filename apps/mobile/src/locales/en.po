@@ -453,8 +453,23 @@ msgstr "{count, plural, one {# card} other {# cards}}"
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
+msgid "{count, plural, one {Archive its card too} other {Archive its # cards too}}"
+msgstr "{count, plural, one {Archive its card too} other {Archive its # cards too}}"
+
+msgid "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
+msgstr "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
+
+msgid "{count, plural, one {It stays in the deck without a section, and keeps coming up in review.} other {They stay in the deck without a section, and keep coming up in review.}}"
+msgstr "{count, plural, one {It stays in the deck without a section, and keeps coming up in review.} other {They stay in the deck without a section, and keep coming up in review.}}"
+
+msgid "{count, plural, one {Keep the card} other {Keep the cards}}"
+msgstr "{count, plural, one {Keep the card} other {Keep the cards}}"
+
 msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
 msgstr "{count, plural, one {Move # card to} other {Move # cards to}}"
+
+msgid "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
+msgstr "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
@@ -1053,6 +1068,9 @@ msgstr "Arabic"
 msgid "Archive"
 msgstr "Archive"
 
+msgid "Archive “{sectionName}”?"
+msgstr "Archive “{sectionName}”?"
+
 msgid "Archive card"
 msgstr "Archive card"
 
@@ -1076,6 +1094,9 @@ msgstr "Archived “{name}”"
 
 msgid "Archived “{sectionName}”"
 msgstr "Archived “{sectionName}”"
+
+msgid "Archived “{sectionName}” and its cards"
+msgstr "Archived “{sectionName}” and its cards"
 
 #. placeholder {0}: cards(done.length)
 msgid "Archived {0}"
@@ -2867,6 +2888,9 @@ msgstr "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgid "Moved to {deck}, the deck for this language"
 msgstr "Moved to {deck}, the deck for this language"
 
+msgid "Moved to {sectionName}"
+msgstr "Moved to {sectionName}"
+
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
 
@@ -3065,6 +3089,9 @@ msgstr "Nothing due today, so your streak is safe."
 
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
+
+msgid "Nothing is deleted. Restore it from Archived sections."
+msgstr "Nothing is deleted. Restore it from Archived sections."
 
 msgid "Nothing is due, and today’s goal is met."
 msgstr "Nothing is due, and today’s goal is met."

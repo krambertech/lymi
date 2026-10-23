@@ -1133,7 +1133,8 @@ function Review() {
         onClose={leave}
       />
 
-      {!current && !end && !unconfirmed && !failed && <ReviewSkeleton />}
+      {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
+      {!current && !end && !stopped && !unconfirmed && !failed && <ReviewSkeleton />}
 
       {failed && (
         <ReviewError

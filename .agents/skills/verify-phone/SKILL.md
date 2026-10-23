@@ -16,6 +16,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Sign in with Apple | [sign-in.md](features/sign-in.md) |
 | Today | [today.md](features/today.md) |
 | Review | [review.md](features/review.md) |
+| The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Archive in review | [review-archive.md](features/review-archive.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
@@ -27,6 +28,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
+| Making and archiving sections | [sections.md](features/sections.md) |
 | Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |

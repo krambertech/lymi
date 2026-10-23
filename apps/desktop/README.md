@@ -2,7 +2,7 @@
 
 An Electron shell around the product: its window loads `my.lymi.app`, and it adds a lantern in the menu bar with the due count and a quick-add panel on ⌃⌥L. The panel is the product's `/desktop/add` page, drawn as Lymi's plate in an opaque window that macOS rounds and shadows. The shape and what comes next are in [the proposal](../../docs/proposals/mac-desktop-app.md).
 
-This is a spike: no packaging, signing or updates yet. Sign-in goes through the system browser: the proposal's Sign-in section has the flow.
+Sign-in goes through the system browser: the proposal's Sign-in section has the flow. Each merge that changes this folder releases the app; see Releases below.
 
 ## Run it against local dev
 
@@ -25,3 +25,50 @@ Without a persona the app starts signed out, and **Sign in…** in the tray menu
 ## Drive it from a script
 
 On a loopback URL, `SIGUSR2` to the Electron process opens the panel and prints its window id and the tray's title, or, signed out, starts a sign-in and prints its URL. `LYMI_DEV_BROWSER=off` keeps that URL out of the default browser, so a script can open it in its own, sign in with `/api/dev/sign-in?as=learner&returnTo=…`, press **Open Lymi for Mac**, and pass the hand-back link to `open`. Write a menu command such as `today` or `settings`, or `open`, to `dev-command` in the profile before the signal, and the app runs it as if chosen from the menu bar. Start Electron with `--remote-debugging-port=9333` and Playwright's `chromium.connectOverCDP` reaches the panel's page to type and press Enter.
+
+## Package it
+
+```bash
+pnpm --filter @lymi/desktop package
+pnpm --filter @lymi/desktop launch-check "$PWD/apps/desktop/out/Lymi-darwin-arm64/Lymi.app"
+```
+
+`package` builds an unsigned `Lymi.app` for this Mac's chip in `out/`, signed ad hoc so Apple silicon runs it. `launch-check` starts it with its own temporary profile, beside any other copy, and passes once a product page has the bridge. `make --arch=arm64,x64` also writes the update zips, their `RELEASES.json` feeds and a DMG for each chip in `out/make`. Electron Forge refuses pnpm without an explicit hoist pattern, so `pnpm-workspace.yaml` spells out pnpm's default.
+
+## Releases
+
+The Desktop workflow (`.github/workflows/desktop.yml`) runs the launch check on a pull request that changes this folder, and releases on the merge: both chips built, signed, notarized, launched, checked by Gatekeeper and uploaded to the `lymi-downloads` bucket behind `downloads.lymi.app`. Installed apps read `darwin/<arch>/RELEASES.json` at launch and hourly, download in the background and install on quit; the tray menu offers Restart to update meanwhile. The download button links to `darwin/arm64/Lymi.dmg`, and Intel's to `darwin/x64/Lymi.dmg`.
+
+The release needs six repository secrets, set once. Without them it skips with a notice.
+
+1. **The Developer ID certificate**, which only the Apple account holder can make. In Xcode, Settings → Accounts → Manage Certificates → + → Developer ID Application. In Keychain Access, export it with its private key as a `.p12` with a password, then:
+
+   ```bash
+   base64 -i DeveloperID.p12 | gh secret set MAC_CERTIFICATE_P12
+   ```
+
+   ```bash
+   gh secret set MAC_CERTIFICATE_PASSWORD
+   ```
+
+2. **The notary key.** In App Store Connect, Users and Access → Integrations → App Store Connect API → Team Keys → +, with Developer access. Download the `.p8`, then set the key, its ID and the issuer ID shown above the list:
+
+   ```bash
+   gh secret set APPLE_API_KEY < AuthKey_XXXXXXXXXX.p8
+   ```
+
+   ```bash
+   gh secret set APPLE_API_KEY_ID
+   ```
+
+   ```bash
+   gh secret set APPLE_API_ISSUER
+   ```
+
+3. **The upload token.** In Cloudflare, R2 → Manage API tokens → Create Account API token, with Object Read & Write on `lymi-downloads` only. Set its token value:
+
+   ```bash
+   gh secret set CLOUDFLARE_R2_TOKEN
+   ```
+
+The certificate lasts five years. The version is `1.0.` and the workflow's run number, so every release is newer than the one installed.

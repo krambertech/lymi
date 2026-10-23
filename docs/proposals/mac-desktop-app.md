@@ -66,11 +66,19 @@ The app does this itself in about fifty lines (`apps/desktop/src/sign-in.ts`) ra
 
 ## Packaging and updates
 
-Electron Forge, the Electron team's own tool: `maker-dmg` for the download, `maker-zip` for updates, `osxSign` and `osxNotarize` with an App Store Connect API key, run by a manual GitHub Actions workflow on a macOS runner, like Phone beta.
+Electron Forge packages the app (`apps/desktop/forge.config.js`), one build for Apple silicon and one for Intel: `maker-zip` for updates, and a DMG that `hdiutil` makes in a Forge hook, because Forge's DMG maker needs native modules pnpm does not build. Its fuses stop the app running as plain Node, reading `NODE_OPTIONS` or debugger flags, or loading code from outside its signed archive, and they encrypt its cookies. The release job signs with the Developer ID certificate and notarizes with an App Store Connect API key. Electron 45 needs macOS 13 or later.
 
-The repository is private, so `update.electronjs.org`, which reads public GitHub releases, is out. Instead `@electron-forge/publisher-s3` pushes each build to an R2 bucket behind `downloads.lymi.app`, and `update-electron-app` points Squirrel.Mac at that static feed. R2's S3 endpoint always needs credentials, so the public custom domain is the read path. The cost is a few megabytes of storage per release.
+Builds live in the R2 bucket `lymi-downloads` behind `downloads.lymi.app`. Each chip's folder, `darwin/arm64/` and `darwin/x64/`, holds the update zips, the `RELEASES.json` feed `maker-zip` writes, and `Lymi.dmg`, the newest download. The app reads its own chip's feed with Electron's `autoUpdater` at launch and every hour, downloads in the background, and Squirrel installs the update the next time Lymi quits. Until then the tray menu offers Restart to update. No dialog interrupts an add.
 
-electron-builder lost: it has an R2 publisher and differential updates, but it is a third-party tool with its own updater, and the shell changes so rarely that a full download per release does not matter.
+Safari reports every Mac as Intel, so the site cannot pick a file. lymi.app's download button serves Apple silicon, and an Intel link sits below it. One universal build lost: about 230 MB for every download and every update, against about 115 MB.
+
+GitHub Releases with `update.electronjs.org` lost. The repository is public, so it would work, but the repository's Releases page would become the Mac app's, and updates would rest on a free service with no uptime promise. electron-builder lost too: it has an R2 publisher and differential updates, but it is a third-party tool with its own updater, and the shell changes so rarely that a full download per release does not matter.
+
+## Releases
+
+`.github/workflows/desktop.yml` ships every merge that changes `apps/desktop`. It builds both chips, signs and notarizes them, launches the signed app, checks that Gatekeeper accepts both, and uploads the zip, then the feed, then the DMG. The version is `1.0.` and the workflow's run number, so each release is newer than the last. Merges that change only the web never release the app. Without the signing secrets the job skips with a notice; the setup is in `apps/desktop/README.md`.
+
+Dependabot proposes Electron once a month, so learners update about once a month. An app that misses updates keeps working, because the bridge only gains methods.
 
 ## Keeping it trivial to maintain
 
@@ -79,13 +87,14 @@ The app is a browser around the product, and the product has its own tests, so t
 - **The contract between the app and the page** is one set of types in `packages/client/src/desktop.ts`: the bridge, each message and what it carries, and the menu's commands. The page, the preload and the app's handlers are typed by it, so a renamed message, a handler left out or a menu command the page does not answer fails to compile.
 - **The app's own rules** live in modules with no Electron in them (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`) and have unit tests: the origin boundary, the shortcut rule, saved settings, the sign-in link and cookie copy, telling a sign-in from a session refresh, and the selected text.
 - **The pages only the app shows**, the quick-add panel and This Mac, have component tests against a stand-in for the app, and the server's side of the sign-in hand-off has its own.
-- **Electron stays current by itself:** Dependabot opens one pull request a week for `electron` alone, and Electron's own types change with it, so TypeScript and the tests say whether an upgrade touched anything the app uses. A green one merges.
+- **Electron stays current by itself:** Dependabot opens one pull request a month for `electron` alone, and Electron's own types change with it, so TypeScript and the tests say whether an upgrade touched anything the app uses. A green one merges.
+- **The packaged app launches:** a pull request that changes `apps/desktop` packages it and starts it on a Mac runner (`scripts/launch-check.js`), and the release does the same with the signed build. It must open a product page with the bridge in place, which catches an Electron upgrade, a fuse or a signature that breaks the app.
 
-No end-to-end suite and no CI job that launches Electron: they would mostly test the browser again. A short check by hand before a release is worth it only when the release changes `apps/desktop` itself.
+No end-to-end suite: it would mostly test the browser again. A short check by hand is worth it only when a pull request changes the shortcut, the panel, the selected text or launch at login, which macOS's own interface decides and a runner cannot drive.
 
 ## Not in the first version
 
-- **Windows.** Electron makes it cheap later, but a Windows build needs its own signing, its own panel behaviour (no `panel` type) and its own test. Nobody has asked; ship the Mac and write the code so the platform checks are in one file.
+- **Windows.** Electron makes the code cheap, but the signing is not: Microsoft's Artifact Signing takes individuals only in the US and Canada, so from the EU it needs a registered company, and a bought certificate costs €200–350 a year. Even signed, a new app shows Windows' warning until enough people install it. It also needs its own title bar, tray and panel (no `panel` type) and a PC to test on. Nobody has asked; revisit when learners do, or once Lymi is a company. The platform checks stay in one file.
 - **The Mac App Store.** Its sandbox forbids the selected-text copy and reading `/Volumes` without asking for each file.
 - **Native screens.** Every screen stays the web's.
 

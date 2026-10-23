@@ -1,0 +1,53 @@
+# A deck with no sections: Move to section makes one and moves the chosen cards into it, then the deck's menu makes an empty one.
+appId: app.lymi
+name: Make a section
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Move to section"
+    timeout: 10000
+- takeScreenshot: 01-actions-without-sections
+- tapOn: "Move to section"
+- extendedWaitUntil:
+    visible: "New section"
+    timeout: 10000
+- assertNotVisible: "No section"
+- takeScreenshot: 02-move-sheet
+- tapOn: "New section"
+- extendedWaitUntil:
+    visible: "The .* cards move into it."
+    timeout: 10000
+- inputText: "${MOVED}"
+- takeScreenshot: 03-name-moving
+- tapOn: "Create section"
+- extendedWaitUntil:
+    visible: "Moved to .*${MOVED}.*"
+    timeout: 20000
+- takeScreenshot: 04-moved
+- extendedWaitUntil:
+    visible: "${MOVED}, .*"
+    timeout: 20000
+- tapOn: "Deck options"
+- extendedWaitUntil:
+    visible: "New section"
+    timeout: 10000
+- takeScreenshot: 05-deck-menu
+- tapOn: "New section"
+- extendedWaitUntil:
+    visible: "Create section"
+    timeout: 10000
+- assertNotVisible: "The .* cards move into it."
+- inputText: "${EMPTY}"
+- tapOn: "Create section"
+- extendedWaitUntil:
+    notVisible: "Create section"
+    timeout: 20000
+- takeScreenshot: 06-empty-section

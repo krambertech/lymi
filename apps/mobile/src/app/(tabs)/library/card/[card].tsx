@@ -472,7 +472,7 @@ export default function CardPage() {
                         },
                       ]
                     : []),
-                  ...(owner && moveToSection.canMove
+                  ...(owner
                     ? [
                         {
                           label: t`Move to section…`,

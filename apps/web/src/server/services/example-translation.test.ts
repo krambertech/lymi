@@ -203,16 +203,32 @@ describe("translating examples", () => {
     expect((await showCard(ctx, card.id)).exampleTranslation).toBe("I ate bread.");
   });
 
-  it("keeps a translation once readings or stress are added to the same sentence", async () => {
+  it("keeps a translation once stress marks are added to the same sentence", async () => {
+    const russian = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+    const [outcome] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: russian.id, term: "замок", example: "Это мой замок." })],
+      queue,
+    );
+    if (outcome?.status !== "added") throw new Error("card not added");
+    const card = outcome.card;
+    await settleEnrichment(db, ctx.userId, [card.id]);
+    await translateExamples(ai(), [card.id], translator(() => "This is my castle."));
+    runs.length = 0;
+    await updateCard(ctx, card.id, { example: "Это мой за\u0301мок." }, queue);
+    expect(runs).toEqual([]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      exampleTranslation: "This is my castle.",
+      exampleTranslationStale: false,
+    });
+  });
+
+  it("writes the translation again when an accent changes the word", async () => {
     const card = await add({ term: "essen 5", example: "Ich esse Brot." });
     await translateExamples(ai(), [card.id], translator(english));
     runs.length = 0;
-    await updateCard(ctx, card.id, { example: "Ich ésse Brot." }, queue);
-    expect(runs).toEqual([]);
-    expect(await showCard(ctx, card.id)).toMatchObject({
-      exampleTranslation: "I eat bread.",
-      exampleTranslationStale: false,
-    });
+    await updateCard(ctx, card.id, { example: "Ich e\u0301sse Brot." }, queue);
+    expect(runs).toHaveLength(1);
   });
 
   it("never lands a translation of an example the learner changed while it was written", async () => {

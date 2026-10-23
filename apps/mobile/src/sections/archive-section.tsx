@@ -14,7 +14,7 @@ type SectionCards = SectionArchiveInput["cards"];
  * they stay in the deck or leave with it; either way it happens at once and offers Undo. `archive`
  * a section, and render `sheet`.
  */
-export function useArchiveSection() {
+export function useArchiveSection(onArchived?: (section: Section) => void) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const [asking, setAsking] = useState<Section | null>(null);
@@ -51,6 +51,7 @@ export function useArchiveSection() {
               .catch((e) => failed(e)),
         },
       });
+      onArchived?.(section);
     },
     onError: failed,
     onSettled: refresh,

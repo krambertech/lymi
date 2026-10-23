@@ -31,18 +31,23 @@ test("a learner can read and grade a card at every field limit on any screen", a
   expect(deck.ok()).toBeTruthy();
   const deckId = ((await deck.json()) as { id: string }).id;
 
-  await test.step("meaning and example take up to 2000 characters", async () => {
+  await test.step("the meaning takes up to 2000 characters and the example 250", async () => {
     const tooLong = await page.request.post("/api/cards", {
       data: { deckId, term: "zu lang", meaning: "a".repeat(2001) },
     });
     expect(tooLong.status()).toBe(400);
+    const longExample = await page.request.post("/api/cards", {
+      data: { deckId, term: "zu lang", example: "a".repeat(251) },
+    });
+    expect(longExample.status()).toBe(400);
 
     const added = await page.request.post("/api/cards", {
       data: {
         deckId,
         term: TERM,
         meaning: atLimit("A meaning as long as the field allows. ", 2000),
-        example: atLimit("Er kam zu spät und sagte, es sei Absicht gewesen. ", 2000),
+        example: atLimit("Er kam zu spät und sagte, es sei Absicht gewesen. ", 250),
+        exampleTranslation: atLimit("He came late and said it was on purpose. ", 250),
         notes: NOTES,
         pronunciation: atLimit("ˈvɛndʊŋ ", 200),
         source: atLimit("Grammatik aktiv, Kapitel 12 ", 200),

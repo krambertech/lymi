@@ -305,6 +305,72 @@ describe("highlights waiting for their book's language", () => {
   });
 });
 
+describe("pulls that would overlap", () => {
+  it("run one at a time, so the same highlight never becomes two cards", async () => {
+    const ctx = await reader("rw-overlap");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    await Promise.all([
+      pullReadwiseNow(ctx, depsWith(), { followed: true }),
+      pullReadwiseNow(ctx, depsWith(), { followed: true }),
+      pullReadwiseNow(ctx, depsWith(), { followed: true }),
+    ]);
+    expect(await cardsOf(ctx.userId)).toHaveLength(3);
+    const [row] = await db
+      .select()
+      .from(schema.readwiseConnections)
+      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    expect(row?.pullingUntil).toBeNull();
+  });
+});
+
+describe("a book turned off and on again", () => {
+  it("brings only highlights made after it was turned back on", async () => {
+    const ctx = await reader("rw-refollow");
+    const highlights: Timed[] = [{ book: "9001", id: "r1", text: "sbadigliare", at: later(1_000) }];
+    const deps = depsWith(timedApi(highlights));
+    await connectReadwise(ctx, deps, DEV_READWISE_TOKEN);
+    const { followed: off } = await updateReadwise(ctx, {
+      books: [{ id: "9001", followed: false }],
+    });
+    expect(off).toBe(false);
+    await pullReadwiseNow(ctx, deps);
+    await holdPullAt(ctx.userId, later(10_000));
+
+    const { followed } = await updateReadwise(ctx, { books: [{ id: "9001", followed: true }] });
+    expect(followed).toBe(false);
+    await pullReadwiseNow(ctx, deps);
+    expect(await cardsOf(ctx.userId)).toHaveLength(0);
+  });
+});
+
+describe("a book whose deck is gone", () => {
+  it("waits, and catches up once the learner chooses another deck", async () => {
+    const ctx = await reader("rw-no-deck");
+    const highlights: Timed[] = [{ book: "9001", id: "d1", text: "sbadigliare", at: later(1_000) }];
+    const unknown = { ...depsWith(timedApi(highlights)), languages: null };
+    await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
+    const replacement = await createDeck(ctx, { name: "Italiano 2", defaultLanguage: "it" });
+    // The deck Readwise was given for Italian is archived; another Italian deck remains.
+    await db
+      .update(schema.decks)
+      .set({ archivedAt: new Date() })
+      .where(eq(schema.decks.id, ctx.deckId));
+
+    const placed = await updateReadwise(ctx, { books: [{ id: "9001", language: "it" }] });
+    expect(placed.view.books.find((b) => b.id === "9001")?.followed).toBe(false);
+
+    await updateReadwise(ctx, { books: [{ id: "9001", followed: true }] });
+    await pullReadwiseNow(ctx, unknown, { followed: true });
+    expect(await cardsOf(ctx.userId)).toHaveLength(0);
+    const { followed } = await updateReadwise(ctx, { decks: { it: replacement.id } });
+    expect(followed).toBe(true);
+    await pullReadwiseNow(ctx, unknown, { followed: true });
+    expect((await cardsOf(ctx.userId)).map((c) => [c.term, c.deckId])).toEqual([
+      ["sbadigliare", replacement.id],
+    ]);
+  });
+});
+
 describe("a pull past the page cap", () => {
   it("carries on from Readwise's cursor and then moves the pull point", async () => {
     const ctx = await reader("rw-cursor");

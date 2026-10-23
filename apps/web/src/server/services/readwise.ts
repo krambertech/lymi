@@ -1,5 +1,5 @@
 import { CARD_LIMITS, languageKey } from "@lymi/core";
-import { and, desc, eq, inArray, isNotNull, isNull, lte } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNotNull, isNull, lt, lte, or } from "@lymi/core/db";
 import type { ReadwiseBook, ReadwiseConnection } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
@@ -34,6 +34,8 @@ const PAGES_PER_PULL = 10;
 /** Highlights read per new book to tell its language. */
 const SAMPLE = 12;
 const MANUAL_PULL_GAP = 30 * 1000;
+/** How long a pull holds the connection; a pull that dies mid-way frees it when this runs out. */
+const LEASE = 5 * 60 * 1000;
 const PULLS_PER_RUN = 25;
 
 /** The connection as it is the learner's to see: never the token itself. */
@@ -224,6 +226,7 @@ export async function connectReadwise(
             author: b.author ?? null,
             language,
             followed: Boolean(language && decks[languageKey(language)]),
+            everFollowed: Boolean(language && decks[languageKey(language)]),
             highlights: b.num_highlights ?? 0,
           }),
         ];
@@ -255,7 +258,8 @@ export async function updateReadwise(
   const row = await connectionOf(ctx);
   if (!row) throw new ServiceError("not_found", "Readwise is not connected");
   const learned = await learnedLanguages(ctx);
-  const decks = { ...row.decks, ...input.decks };
+  // An archived deck is no deck: a book of its language is not followed into it.
+  const decks = Object.fromEntries(await activeDecks(ctx, { ...row.decks, ...input.decks }));
   for (const [language, deckId] of Object.entries(input.decks ?? {})) {
     if (!learned.get(language)?.includes(deckId)) {
       throw new ServiceError("invalid", "Choose one of your own decks in that language");
@@ -302,12 +306,19 @@ export async function updateReadwise(
     // Telling Lymi a book's language follows it, when one of the learner's decks takes that language.
     const followed =
       patch.followed ?? (patch.language ? Boolean(decks[patch.language]) : before.followed);
-    const starts = followed && !before.followed;
-    newlyFollowed ||= starts;
+    // Only a first follow reads back to connecting; a book turned back on brings new highlights.
+    const first = followed && !before.everFollowed;
+    newlyFollowed ||= first;
     writes.push(
       ctx.db
         .update(schema.readwiseBooks)
-        .set({ language, followed, pending: before.pending || starts, updatedAt: now })
+        .set({
+          language,
+          followed,
+          pending: before.pending || first,
+          everFollowed: before.everFollowed || followed,
+          updatedAt: now,
+        })
         .where(
           and(
             eq(schema.readwiseBooks.userId, ctx.userId),
@@ -319,7 +330,19 @@ export async function updateReadwise(
   await runBatch(ctx.db, writes);
   const view = await getReadwise(ctx);
   if (!view) throw new Error("The Readwise connection disappeared");
-  return { view, followed: newlyFollowed };
+  // A new deck for a language lets a book waiting on it catch up now.
+  const waiting =
+    Boolean(input.decks) &&
+    (
+      await ctx.db
+        .select({ bookId: schema.readwiseBooks.bookId })
+        .from(schema.readwiseBooks)
+        .where(
+          and(eq(schema.readwiseBooks.userId, ctx.userId), eq(schema.readwiseBooks.pending, true)),
+        )
+        .limit(1)
+    ).length > 0;
+  return { view, followed: newlyFollowed || waiting };
 }
 
 /** Lymi forgets the token and the books; the cards a pull added are ordinary cards and stay. */
@@ -419,6 +442,7 @@ async function pull(
         language,
         followed,
         pending: followed,
+        everFollowed: followed,
         highlights: before?.highlights ?? live(b).length,
         createdAt: before?.createdAt ?? started,
         updatedAt: started,
@@ -428,7 +452,10 @@ async function pull(
   for (const b of placed) known.set(b.bookId, b);
 
   // A book followed since the last pull brings every highlight since connecting, not just new ones.
-  const catching = [...known.values()].filter((b) => b.pending && b.followed).map((b) => b.bookId);
+  // A book without a live deck stays pending, so choosing a deck later still brings its highlights.
+  const catching = [...known.values()]
+    .filter((b) => b.pending && b.followed && decks.get(languageKey(b.language)))
+    .map((b) => b.bookId);
   const caught = catching.length
     ? await readPages(deps, token, { since: row.createdAt, bookIds: catching })
     : { books: [], cursor: null };
@@ -488,6 +515,7 @@ async function pull(
             language: b.language,
             followed: b.followed,
             pending: b.pending,
+            everFollowed: b.everFollowed,
             updatedAt: started,
           },
         }),
@@ -530,14 +558,28 @@ async function activeDecks(ctx: ServiceContext, chosen: Record<string, string>) 
 async function runPull(
   ctx: ServiceContext,
   deps: ReadwiseDeps,
-  row: ReadwiseConnection,
   trigger: "schedule" | "manual",
-): Promise<PullResult> {
+): Promise<PullResult | null> {
   const started = new Date();
+  const [row] = await ctx.db
+    .update(schema.readwiseConnections)
+    .set({ pullingUntil: new Date(started.getTime() + LEASE) })
+    .where(
+      and(
+        eq(schema.readwiseConnections.userId, ctx.userId),
+        or(
+          isNull(schema.readwiseConnections.pullingUntil),
+          lt(schema.readwiseConnections.pullingUntil, started),
+        ),
+      ),
+    )
+    .returning();
+  // Another pull holds the connection; whatever this one would read, that one reads.
+  if (!row) return null;
   const write = (values: Partial<ReadwiseConnection>) =>
     ctx.db
       .update(schema.readwiseConnections)
-      .set({ ...values, updatedAt: new Date() })
+      .set({ ...values, pullingUntil: null, updatedAt: new Date() })
       .where(eq(schema.readwiseConnections.userId, ctx.userId));
   let result: PullResult;
   try {
@@ -592,7 +634,7 @@ export async function pullReadwiseNow(
   const recent = row.lastPullAt && Date.now() - row.lastPullAt.getTime() < MANUAL_PULL_GAP;
   if (row.status === "active" && (followed || !recent)) {
     try {
-      await runPull(ctx, deps, row, "manual");
+      await runPull(ctx, deps, "manual");
     } catch {
       throw new ServiceError("unavailable", "Readwise didn't answer. Try again in a minute.");
     }
@@ -641,8 +683,7 @@ export async function pullDueReadwise(
     const { deps, analytics } = forLearner(row.userId);
     const ctx: ServiceContext = { db, userId: row.userId, actor: "system", analytics };
     try {
-      await runPull(ctx, deps, row, "schedule");
-      pulled += 1;
+      if (await runPull(ctx, deps, "schedule")) pulled += 1;
     } catch (error) {
       failed += 1;
       console.error(JSON.stringify({ job: "readwise", userId: row.userId, error: String(error) }));

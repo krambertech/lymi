@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d21d7ca1-d0db-494c-9c99-13c014cbd6a8",
+  "id": "5b0e80eb-e14e-4231-8e0d-a2781f998c7f",
   "prevId": "b44164be-bbe5-4c56-bf28-59b7820febe2",
   "tables": {
     "account_deletions": {
@@ -3062,6 +3062,14 @@
           "autoincrement": false,
           "default": false
         },
+        "ever_followed": {
+          "name": "ever_followed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
         "highlights": {
           "name": "highlights",
           "type": "integer",
@@ -3179,6 +3187,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "pulling_until": {
+          "name": "pulling_until",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "last_pull_at": {

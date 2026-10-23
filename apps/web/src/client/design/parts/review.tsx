@@ -164,7 +164,7 @@ function ReviewEndShot({
                 </Button>
               )}
               addCards={
-                <Button variant="primary" size="lg" className="w-full">
+                <Button size="lg" className="w-full">
                   Add cards
                 </Button>
               }
@@ -239,7 +239,7 @@ export const review: Group = {
       slug: "session-end",
       name: "End of session",
       source: "views/review-view.tsx",
-      note: "The lantern leaves the header for the middle and rises to full on the way. The count rolls up from where the last end left the day, and embers rise in proportion to what was added; today’s light flares and the run ticks only when the day turns. Each way on is a row that says what it holds; the primary sits last, Continue while the day is open and Done once it is met.",
+      note: "The lantern leaves the header for the middle and rises to full on the way. The count rolls up from where the last end left the day, and embers rise in proportion to what was added; only when the day turns, a spark drops from the flame into today’s light, which fills and throws a few flecks, then hops on to the run’s flame, which catches as the run rolls up by one. Each way on is a row that says what it holds; the primary sits last, Continue while the day is open and Done once it is met.",
       Demo: () => (
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <ReviewEndShot

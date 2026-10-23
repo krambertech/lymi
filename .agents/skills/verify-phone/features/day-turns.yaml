@@ -1,0 +1,25 @@
+# The day turns: grade every card due today Good, and the end screen ticks the run up by one.
+appId: app.lymi
+name: The day turns
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- repeat:
+    times: ${DUE}
+    commands:
+      # The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+      - tapOn:
+          point: "50%,80%"
+      - tapOn: "^Good.*"
+- extendedWaitUntil:
+    visible: "You.re done for today|Daily goal reached"
+    timeout: 20000
+- extendedWaitUntil:
+    visible: "${RUN}"
+    timeout: 10000
+- assertVisible: "days in a row"
+- takeScreenshot: 01-day-turned

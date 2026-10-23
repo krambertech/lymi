@@ -206,6 +206,8 @@ function look(variant: ButtonVariant, p: Palette, strong = false) {
 
 interface ButtonProps {
   label: string;
+  /** A quiet fact after the label, such as how much a review still holds; centred with it. */
+  detail?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   icon?: IconName;
@@ -226,6 +228,7 @@ interface ButtonProps {
  */
 export function Button({
   label,
+  detail,
   variant = "secondary",
   size = "md",
   icon,
@@ -246,6 +249,7 @@ export function Button({
       hitSlop={SLOP[size]}
       testID={testID}
       accessibilityRole="button"
+      accessibilityLabel={detail ? `${label}, ${detail}` : undefined}
       accessibilityState={{ busy: loading, disabled }}
       className={`flex-row items-center justify-center gap-2 ${box} ${HEIGHT[size]} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}
@@ -256,6 +260,17 @@ export function Button({
         <Text className={`${LABEL[size]} font-medium`} style={{ color: ink }}>
           {label}
         </Text>
+        {detail && (
+          <Text
+            className={`${LABEL[size]} opacity-70`}
+            style={{
+              color: variant === "secondary" ? p.muted : ink,
+              fontVariant: ["tabular-nums"],
+            }}
+          >
+            {detail}
+          </Text>
+        )}
       </View>
       {loading && <ActivityIndicator color={ink} className="absolute" />}
     </Press>

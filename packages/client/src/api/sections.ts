@@ -17,11 +17,21 @@ export const sectionsApi = {
   sections: (deckId: string) => request<Sections>(`/api/decks/${deckId}/sections`),
   archivedSections: (deckId: string) =>
     request<Sections>(`/api/decks/${deckId}/sections?archived=true`),
-  createSection: (deckId: string, body: SectionInput) =>
-    request<Section>(`/api/decks/${deckId}/sections`, {
+  /** Past the bulk limit, the first cards come with the section and the rest follow a call at a time. */
+  createSection: async (deckId: string, { cardIds, ...body }: SectionInput) => {
+    const section = await request<Section>(`/api/decks/${deckId}/sections`, {
       method: "POST",
-      body: JSON.stringify(body),
-    }),
+      body: JSON.stringify({
+        ...body,
+        ...(cardIds ? { cardIds: cardIds.slice(0, CARD_BATCH_LIMIT) } : {}),
+      }),
+    });
+    const rest = cardIds?.slice(CARD_BATCH_LIMIT) ?? [];
+    if (rest.length) {
+      await sectionsApi.moveCardsToSection(deckId, { cardIds: rest, sectionId: section.id });
+    }
+    return section;
+  },
   renameSection: (id: string, name: string) =>
     request<Section>(`/api/sections/${id}`, { method: "PATCH", body: JSON.stringify({ name }) }),
   reorderSections: (deckId: string, sectionIds: string[]) =>

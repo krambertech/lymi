@@ -76,6 +76,10 @@ msgstr "{0, plural, one {# карточка уже есть в твоих кол
 msgid "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
 msgstr "{0, plural, one {# карточка — это image occlusion или в ней нет термина, поэтому она пропущена.} few {# карточки — это image occlusion или в них нет термина, поэтому они пропущены.} many {# карточек — это image occlusion или в них нет термина, поэтому они пропущены.} other {# карточки — это image occlusion или в них нет термина, поэтому они пропущены.}}"
 
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# card left} other {# cards left}}"
+msgstr "{0, plural, one {ещё # карточка} few {ещё # карточки} many {ещё # карточек} other {ещё # карточки}}"
+
 #. placeholder {0}: counts.duplicates
 msgid "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
 msgstr "{0, plural, one {# карточка уже была в твоих колодах и пропущена.} few {# карточки уже были в твоих колодах и пропущены.} many {# карточек уже были в твоих колодах и пропущены.} other {# карточки уже были в твоих колодах и пропущены.}}"
@@ -132,17 +136,9 @@ msgstr "{0, plural, one {Забыто # раз} few {Забыто # раза} ma
 msgid "{0, plural, one {# minute} other {# minutes}}"
 msgstr "{0, plural, one {# минута} few {# минуты} many {# минут} other {# минуты}}"
 
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
-msgstr "{0, plural, one {Ещё # карточка — и на сегодня всё} few {Ещё # карточки — и на сегодня всё} many {Ещё # карточек — и на сегодня всё} other {Ещё # карточки — и на сегодня всё}}"
-
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card} other {# more cards}}"
 msgstr "{0, plural, one {ещё # карточка} few {ещё # карточки} many {ещё # карточек} other {ещё # карточки}}"
-
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
-msgstr "{0, plural, one {Ещё # повторение до дневной цели} few {Ещё # повторения до дневной цели} many {Ещё # повторений до дневной цели} other {Ещё # повторения до дневной цели}}"
 
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is image occlusion or has no term, so it’s skipped.} other {# notes are image occlusion or have no term, so they’re skipped.}}"
@@ -207,6 +203,10 @@ msgstr "{0, plural, one {# тег} few {# тега} many {# тегов} other {#
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
 msgstr "{0, plural, one {# термин встречается больше одного раза. Импортируются все карточки.} few {# термина встречаются больше одного раза. Импортируются все карточки.} many {# терминов встречаются больше одного раза. Импортируются все карточки.} other {# термина встречаются больше одного раза. Импортируются все карточки.}}"
+
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# to goal} other {# to goal}}"
+msgstr "{0, plural, one {ещё # до цели} few {ещё # до цели} many {ещё # до цели} other {ещё # до цели}}"
 
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -453,8 +453,23 @@ msgstr "{count, plural, one {# карточку} few {# карточки} many {
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+msgid "{count, plural, one {Archive its card too} other {Archive its # cards too}}"
+msgstr "{count, plural, one {Архивировать и карточку} few {Архивировать и # карточки} many {Архивировать и # карточек} other {Архивировать и # карточки}}"
+
+msgid "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
+msgstr "{count, plural, one {Она пропадёт из колоды и повторений, пока ты не восстановишь раздел.} few {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.} many {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.} other {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.}}"
+
+msgid "{count, plural, one {It stays in the deck without a section, and keeps coming up in review.} other {They stay in the deck without a section, and keep coming up in review.}}"
+msgstr "{count, plural, one {Она останется в колоде без раздела и дальше будет в повторениях.} few {Они останутся в колоде без раздела и дальше будут в повторениях.} many {Они останутся в колоде без раздела и дальше будут в повторениях.} other {Они останутся в колоде без раздела и дальше будут в повторениях.}}"
+
+msgid "{count, plural, one {Keep the card} other {Keep the cards}}"
+msgstr "{count, plural, one {Оставить карточку} few {Оставить карточки} many {Оставить карточки} other {Оставить карточки}}"
+
 msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
 msgstr "{count, plural, one {Переместить # карточку в} few {Переместить # карточки в} many {Переместить # карточек в} other {Переместить # карточки в}}"
+
+msgid "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
+msgstr "{count, plural, one {Карточка переместится в него.} few {# карточки переместятся в него.} many {# карточек переместятся в него.} other {# карточки переместятся в него.}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
@@ -551,6 +566,12 @@ msgstr "{found, plural, one {термин найден} few {термина на
 
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {На # карточке} few {На # карточках} many {На # карточках} other {На # карточках}} уже было 20 тегов, поэтому тег туда не добавлен."
+
+msgid "{goal, plural, one {{to} of # review today} other {{to} of # reviews today}}"
+msgstr "{goal, plural, one {{to} из # повторения сегодня} few {{to} из # повторений сегодня} many {{to} из # повторений сегодня} other {{to} из # повторения сегодня}}"
+
+msgid "{goal, plural, one {of # review today} other {of # reviews today}}"
+msgstr "{goal, plural, one {из # повторения сегодня} few {из # повторений сегодня} many {из # повторений сегодня} other {из # повторения сегодня}}"
 
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
@@ -1053,6 +1074,9 @@ msgstr "Арабский"
 msgid "Archive"
 msgstr "Архивировать"
 
+msgid "Archive “{sectionName}”?"
+msgstr "Архивировать «{sectionName}»?"
+
 msgid "Archive card"
 msgstr "Архивировать карточку"
 
@@ -1076,6 +1100,9 @@ msgstr "Архивировано «{name}»"
 
 msgid "Archived “{sectionName}”"
 msgstr "Архивировано «{sectionName}»"
+
+msgid "Archived “{sectionName}” and its cards"
+msgstr "Архивировано «{sectionName}» вместе с карточками"
 
 #. placeholder {0}: cards(done.length)
 msgid "Archived {0}"
@@ -2873,6 +2900,9 @@ msgstr "В «{sectionName}» {count, plural, one {перемещена # кар�
 msgid "Moved to {deck}, the deck for this language"
 msgstr "Перемещено в {deck}, колоду для этого языка"
 
+msgid "Moved to {sectionName}"
+msgstr "Перемещено в «{sectionName}»"
+
 msgid "Moved to another deck"
 msgstr "Перенесено в другую колоду"
 
@@ -3072,6 +3102,9 @@ msgstr "Сегодня нечего повторять, так что дни п�
 msgid "Nothing forgotten today"
 msgstr "Сегодня ничего не забыто"
 
+msgid "Nothing is deleted. Restore it from Archived sections."
+msgstr "Ничего не удаляется. Восстановить его можно в «Архивных разделах»."
+
 msgid "Nothing is due, and today’s goal is met."
 msgstr "Повторять нечего, и дневная цель выполнена."
 
@@ -3179,6 +3212,9 @@ msgstr "Или выбери файл .txt"
 
 msgid "Other"
 msgstr "Другое"
+
+msgid "other decks"
+msgstr "другие колоды"
 
 msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
 msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на hello@lymi.app, чтобы удалить его."
@@ -3852,6 +3888,9 @@ msgstr "Начать {sectionName}"
 msgid "Start {sectionName} early?"
 msgstr "Начать {sectionName} раньше?"
 
+msgid "Start a new streak"
+msgstr "Начни счёт дней подряд заново"
+
 msgid "Start anyway"
 msgstr "Начать всё равно"
 
@@ -3863,6 +3902,9 @@ msgstr "Начни с колоды"
 
 msgid "Start with a ready-made deck"
 msgstr "Начни с готовой колоды"
+
+msgid "Start your streak"
+msgstr "Начни счёт дней подряд"
 
 msgid "State"
 msgstr "Состояние"

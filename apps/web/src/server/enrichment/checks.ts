@@ -70,6 +70,7 @@ const NOTES_FORBIDDEN: [string, RegExp][] = [
   ["table", /^\s*\|.*\|\s*$/m],
   ["link", /\[[^\]]*\]\([^)]*\)|<https?:/],
   ["code", /`/],
+  ["list", /^\s*[-+*]\s/m],
   ["html", /<\/?[a-z][^>]*>/i],
 ];
 
@@ -131,6 +132,7 @@ function style(
     if (card.language && !isSentence(card.term)) {
       const senses = text.split(";").map((sense) => sense.trim());
       record(field, "three senses at most", senses.length <= 3, text);
+      record(field, 'senses split by "; "', !/ [/·] /.test(text), text);
       record(
         field,
         "short gloss",
@@ -158,7 +160,7 @@ function style(
   }
   if (field === "notes") {
     const lines = text.split("\n").filter((line) => line.trim());
-    record(field, "four lines at most", lines.length <= 4, text);
+    record(field, "six lines at most", lines.length <= 6, text);
     for (const [name, pattern] of NOTES_FORBIDDEN) {
       record(field, `no ${name}`, !pattern.test(text), text);
     }

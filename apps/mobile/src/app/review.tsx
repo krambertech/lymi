@@ -61,6 +61,7 @@ import {
 } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  type AnimatedRef,
   Easing,
   FadeIn,
   FadeOut,
@@ -77,7 +78,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
-import { EndEmbers, LightPool } from "../brand/ending";
+import { EndEmbers, LightPool, TurnSpark } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
@@ -97,7 +98,14 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
-import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
+import {
+  HookLine,
+  HookOffer,
+  HookSheet,
+  PEEK_ROOM,
+  PeekButton,
+  ShowHookButton,
+} from "../review/hooks";
 import { modeLabel } from "../review/modes";
 import {
   PronounceButton,
@@ -124,6 +132,7 @@ import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
+import { useStreakStart } from "../ui/streak-start";
 import { useSystemBack } from "../ui/system-back";
 import { ExampleText, TermText } from "../ui/term-text";
 import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
@@ -679,6 +688,16 @@ function Run({
           action={t`Back`}
           onAction={onClose}
         />
+      </Cover>
+    );
+  }
+  // While the end waits for the last grade to land, the header holds still, so the lantern leaves from it.
+  if (stopped && !result && progress) {
+    return (
+      <Cover style={pull.style}>
+        <View className="flex-1" style={{ paddingTop: insets.top + 4 }}>
+          <Header done={progress.done} total={progress.total} onClose={onClose} />
+        </View>
       </Cover>
     );
   }
@@ -1425,8 +1444,11 @@ function CardPlate({
               keyboardShouldPersistTaps="handled"
               className="flex-1"
               contentContainerClassName="grow px-5 pt-4"
-              // The offer floats over the card's foot, so the last line can scroll clear above it.
-              contentContainerStyle={{ paddingBottom: 16 + (offerShown ? offerRoom : 0) }}
+              // The offer and Peek float over the card's foot, so the last line can scroll clear above them.
+              contentContainerStyle={{
+                paddingBottom:
+                  16 + (offerShown ? offerRoom : 0) + (hook && !revealed ? PEEK_ROOM : 0),
+              }}
               onLayout={(e) => {
                 fit.onRoom(e);
                 edges.onLayout(e);
@@ -1469,16 +1491,28 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {/* The hook has one place, under the cue, before the reveal and after it. */}
-                  {hook && hookShown ? (
+                  {/* The hook has one place, under the cue, held from the start so peeking at it or showing it moves nothing. */}
+                  {hook && (
                     <View className="pt-3">
-                      <HookLine text={hook.text} source={hook.source} still={still} />
+                      <View
+                        className="opacity-0"
+                        style={{ minHeight: HOOK_ROOM }}
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                      >
+                        <HookLine text={hook.text} source={hook.source} still />
+                      </View>
+                      {hookShown ? (
+                        <View className="absolute inset-x-0 top-3">
+                          <HookLine text={hook.text} source={hook.source} still={still} />
+                        </View>
+                      ) : revealed && onShowHook ? (
+                        <View className="absolute inset-x-0 top-2">
+                          <ShowHookButton still={still} onShow={onShowHook} />
+                        </View>
+                      ) : null}
                     </View>
-                  ) : hook && revealed && onShowHook ? (
-                    <View className="pt-2">
-                      <ShowHookButton still={still} onShow={onShowHook} />
-                    </View>
-                  ) : null}
+                  )}
                 </Animated.View>
                 {revealed && (
                   <View className="gap-5 pt-5">
@@ -1610,8 +1644,8 @@ function CardPlate({
                     >
                       {cue}
                     </CardLine>
-                    {hook && hookShown && (
-                      <View className="pt-3">
+                    {hook && (
+                      <View className="pt-3" style={{ minHeight: HOOK_ROOM }}>
                         <HookLine text={hook.text} source={hook.source} still />
                       </View>
                     )}
@@ -1667,6 +1701,8 @@ const gradeIn = (i: number) =>
  */
 /** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
 const GRADE_ROOM = 92;
+/** The hook's place under the cue is never shorter than Show hook's 32 pt, which starts 4 pt above the hook's line. */
+const HOOK_ROOM = 28;
 
 function GradeStrip({
   still = false,
@@ -1819,9 +1855,12 @@ function Completion({
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const { goal, streak, lights, flame, out, progress, fed } = useDay();
+  const { goal, streak: dayStreak, lights, flame, out, progress, fed, summary } = useDay();
+  const start = useStreakStart(summary?.longest ?? 0);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
   const counted = screen.heading !== "nothing_due";
   const heading = {
     goal_reached: t`Daily goal reached`,
@@ -1835,7 +1874,16 @@ function Completion({
   }[screen.heading];
 
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers.filter((o) => !(o.kind === "continue" && screen.continueLeads));
+  // Only Review forgotten sits above Continue, and Done is always last, so nothing moves between ends.
+  const ways = screen.offers.filter((o) => o.kind === "forgotten");
+  const note = proceed?.note;
+  const holds = !note
+    ? undefined
+    : note.kind === "goal"
+      ? t`${plural(note.count, { one: "# to goal", other: "# to goal" })}`
+      : note.kind === "cards"
+        ? t`${plural(note.count, { one: "# card left", other: "# cards left" })}`
+        : t`other decks`;
   const embers = useMemo(
     () => (reduce || out ? [] : endEmbers(screen.embers)),
     [reduce, out, screen.embers],
@@ -1846,16 +1894,27 @@ function Completion({
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
     AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur)),
+    turned ? AT.tick + RUN_CATCH_MS : 0,
   );
 
   const clock = useSharedValue(reduce ? end : 0);
   // The ways on cannot be pressed until they have arrived, so the tap that finishes the sequence never presses one.
   const [settled, setSettled] = useState(reduce);
+  // Until the spark reaches it, the run shows the streak as it stood before this review.
+  const [ticked, setTicked] = useState(!turned);
+  // The spark draws past the moment the ways on can be pressed, until its last fleck has gone.
+  const [sparked, setSparked] = useState(!turned);
   const finish = () => {
     clock.value = end;
     setSettled(true);
+    setTicked(true);
+    setSparked(true);
     void stopHaptics();
   };
+  const room = useAnimatedRef<View>();
+  const lanternPlace = useAnimatedRef<View>();
+  const todayLight = useAnimatedRef<View>();
+  const runFlame = useAnimatedRef<View>();
 
   useEffect(() => {
     void playHaptics(endHaptics(embers, screen.streak, reduce));
@@ -1865,11 +1924,17 @@ function Completion({
     if (reduce) {
       clock.value = end;
       setSettled(true);
+      setTicked(true);
+      setSparked(true);
       return;
     }
     clock.value = withTiming(end, { duration: end, easing: Easing.linear, reduceMotion: ALWAYS });
-    const timer = setTimeout(() => setSettled(true), actionsAt + RISE.ms);
-    return () => clearTimeout(timer);
+    const timers = [
+      setTimeout(() => setSettled(true), actionsAt + RISE.ms),
+      setTimeout(() => setTicked(true), AT.tick),
+      setTimeout(() => setSparked(true), AT.tick + SPARK_LIFE_MS),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, [reduce, clock, end, actionsAt]);
 
   const heading$ = useRise(clock, AT.heading);
@@ -1877,17 +1942,28 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
-  const nudge$ = useRise(clock, AT.run + 120);
-  // At most two ways sit above the last row: Continue and Review forgotten.
-  const way$ = [useRise(clock, AT.actions), useRise(clock, AT.actions + AT.actionStep)];
+  const catch$ = useAnimatedStyle(() => {
+    const u = clock.value - AT.tick;
+    if (!turned || u <= 0) return { transform: [{ scale: 1 }] };
+    return { transform: [{ scale: 1 + 0.3 * Math.exp(-u / 240) * Math.min(1, u / 90) }] };
+  });
+  const tick$ = useAnimatedStyle(() => {
+    if (!turned) return { opacity: 1, transform: [] };
+    const k = beat(clock.value, AT.tick, 460);
+    return { opacity: k, transform: [{ translateY: (1 - k) * 12 }, { scale: 1 + 0.18 * (1 - k) }] };
+  });
+  const warm$ = useAnimatedStyle(() => ({
+    opacity: turned ? Math.min(1, Math.max(0, 1 - (clock.value - AT.tick - 300) / 1100)) : 0,
+  }));
+  const streak = ticked ? dayStreak : dayStreak - 1;
+  const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
-  const doneButton = (variant: "primary" | "secondary") => (
-    <Button label={t`Done`} variant={variant} size="lg" onPress={onClose} />
-  );
+  const done = <Button label={t`Done`} variant="primary" size="lg" onPress={onClose} />;
 
   return (
     <Animated.View
+      ref={room}
       // Under reduced motion the whole screen crossfades in with its final numbers in place.
       entering={reduce ? CROSSFADE : undefined}
       onTouchStart={settled ? undefined : finish}
@@ -1905,7 +1981,7 @@ function Completion({
         showsVerticalScrollIndicator={false}
       >
         <View className="flex-1 items-center justify-center gap-6 px-6">
-          <Flight clock={clock} still={reduce}>
+          <Flight clock={clock} still={reduce} place={lanternPlace}>
             <LightPool
               size={END_LANTERN}
               clock={clock}
@@ -1929,7 +2005,11 @@ function Completion({
             {counted ? (
               <View
                 accessible
-                accessibilityLabel={t`${plural(to, { one: "# review today", other: "# reviews today" })}`}
+                accessibilityLabel={
+                  screen.satisfied
+                    ? t`${plural(to, { one: "# review today", other: "# reviews today" })}`
+                    : t`${plural(goal, { one: `${to} of # review today`, other: `${to} of # reviews today` })}`
+                }
                 className="items-center"
               >
                 <Animated.View style={count$}>
@@ -1937,7 +2017,10 @@ function Completion({
                 </Animated.View>
                 <Animated.View style={label$}>
                   <Text className="text-md text-muted">
-                    {t`${plural(to, { one: "review today", other: "reviews today" })}`}
+                    {/* While the goal is open the count says it, so Continue's count explains itself. */}
+                    {screen.satisfied
+                      ? t`${plural(to, { one: "review today", other: "reviews today" })}`
+                      : t`${plural(goal, { one: "of # review today", other: "of # reviews today" })}`}
                   </Text>
                 </Animated.View>
               </View>
@@ -1961,67 +2044,88 @@ function Completion({
                 goals={lights.goals}
                 goal={goal}
                 sequence={settled ? undefined : AT.lights}
+                turn={turned && !settled ? { at: AT.land, from } : undefined}
+                todayRef={todayLight}
               />
             </Animated.View>
             <Animated.View style={run$} className="flex-row items-center gap-2">
-              <Flame height={20} state={flame} />
-              <Text className="text-md font-semibold text-text" style={styles.figures}>
-                {streak}
-              </Text>
-              <Text className="text-md text-text-2">
-                {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
-              </Text>
-            </Animated.View>
-            {/* While Continue leads, what is left of the day sits under its lights. */}
-            {screen.nudge && (
-              <Animated.View style={nudge$}>
-                <Text className="text-center text-base text-muted">
-                  {screen.nudge.kind === "goal"
-                    ? t`${plural(screen.nudge.count, { one: "# more review to your daily goal", other: "# more reviews to your daily goal" })}`
-                    : t`${plural(screen.nudge.count, { one: "# more card and you’re done for today", other: "# more cards and you’re done for today" })}`}
-                </Text>
+              <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
+                <Flame height={20} state={ticked ? flame : "lit"} />
               </Animated.View>
-            )}
-          </View>
-        </View>
-        {/* One shape for every way on, the count said in words; the primary sits last. */}
-        <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
-          {ways.map((way, i) => (
-            <Animated.View key={way.kind} style={way$[i]}>
-              {way.kind === "forgotten" ? (
-                <Button
-                  label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
-                  lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
-                  size="lg"
-                  onPress={() => onOffer(way)}
-                />
+              {streak > 0 ? (
+                <>
+                  {/* The new run rolls up warm, then cools to its ink. */}
+                  <Animated.View key={streak} style={ticked ? tick$ : undefined}>
+                    <Text className="text-md font-semibold text-text" style={styles.figures}>
+                      {streak}
+                    </Text>
+                    {ticked && (
+                      <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
+                        <Text
+                          className="text-md font-semibold text-amber-text"
+                          style={styles.figures}
+                        >
+                          {streak}
+                        </Text>
+                      </Animated.View>
+                    )}
+                  </Animated.View>
+                  <Text className="text-md text-text-2">
+                    {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
+                  </Text>
+                </>
               ) : (
-                <Button label={t`Continue`} size="lg" onPress={() => onOffer(way)} />
+                <Text className="text-md font-medium text-text">{start}</Text>
               )}
             </Animated.View>
-          ))}
+          </View>
+        </View>
+        {/* One shape for every way on, the count said in words; Done is always last and primary. */}
+        <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
+          {ways.map(
+            (way, i) =>
+              way.kind === "forgotten" && (
+                <Animated.View key={way.kind} style={way$[i]}>
+                  <Button
+                    label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
+                    lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
+                    size="lg"
+                    onPress={() => onOffer(way)}
+                  />
+                </Animated.View>
+              ),
+          )}
           <Animated.View style={done$} className="gap-3">
             {!counted ? (
               <>
-                <Button label={t`Add cards`} variant="primary" size="lg" onPress={onAddCards} />
-                {doneButton("secondary")}
-              </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {doneButton("secondary")}
-                <Button
-                  label={t`Continue`}
-                  variant="primary"
-                  size="lg"
-                  onPress={() => onOffer(proceed)}
-                />
+                <Button label={t`Add cards`} size="lg" onPress={onAddCards} />
+                {done}
               </>
             ) : (
-              doneButton("primary")
+              <>
+                {proceed && (
+                  <Button
+                    label={t`Continue`}
+                    detail={holds}
+                    size="lg"
+                    onPress={() => onOffer(proceed)}
+                  />
+                )}
+                {done}
+              </>
             )}
           </Animated.View>
         </ToastFloor>
       </ScrollView>
+      {turned && !sparked && (
+        <TurnSpark
+          clock={clock}
+          room={room}
+          lantern={lanternPlace}
+          today={todayLight}
+          run={runFlame}
+        />
+      )}
     </Animated.View>
   );
 }
@@ -2033,16 +2137,19 @@ function Completion({
 function Flight({
   clock,
   still,
+  place,
   children,
 }: {
   clock: SharedValue<number>;
   still: boolean;
+  /** Where it lands, which the spark also leaves from. */
+  place: AnimatedRef<View>;
   children: ReactNode;
 }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   // The place it lands, read on the UI thread each frame, so a layout that settles late never misplaces the start.
-  const place = useAnimatedRef<Animated.View>();
+
   const half = HEADER_LANTERN.size / 2;
   const fromX = I18nManager.isRTL
     ? width - HEADER_LANTERN.inset - half
@@ -2131,9 +2238,14 @@ function RollingCount({
 
 /** The count that ends a review, the largest thing on the phone; it keeps a 1.2 line box. */
 const COUNT_SIZE = 80;
+/** How long the spark's flecks and the run's sparks outlast the run's tick; the web's `TurnSpark` stops then too. */
+const SPARK_LIFE_MS = 1300;
+/** How long the run's catch plays after the spark reaches it, warmth included. */
+const RUN_CATCH_MS = 1400;
 
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
+  catch: { transformOrigin: "50% 100%" },
 });

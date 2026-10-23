@@ -77,6 +77,11 @@ function openMain(path = "/today") {
   });
   keepToProduct(main);
   main.once("ready-to-show", () => main?.show());
+  // Full screen hides the traffic lights, so the page shows its Lymi tile again.
+  const fullScreen = () => main?.webContents.send("window:full-screen", main.isFullScreen());
+  main.on("enter-full-screen", fullScreen);
+  main.on("leave-full-screen", fullScreen);
+  main.webContents.on("did-finish-load", fullScreen);
   main.on("closed", () => {
     main = null;
     // Back to living in the menu bar once no window is open.

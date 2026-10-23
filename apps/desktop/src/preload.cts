@@ -7,6 +7,10 @@ const { contextBridge, ipcRenderer } = electron;
 window.addEventListener("DOMContentLoaded", () => {
   document.documentElement.dataset.shell = "mac";
 });
+ipcRenderer.on("window:full-screen", (_event, on: boolean) => {
+  if (on) document.documentElement.dataset.fullScreen = "";
+  else delete document.documentElement.dataset.fullScreen;
+});
 
 contextBridge.exposeInMainWorld("lymiDesktop", {
   hidePanel: () => ipcRenderer.send("panel:hide"),

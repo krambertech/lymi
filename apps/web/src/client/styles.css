@@ -113,7 +113,7 @@
   html[data-shell="mac"]:not([data-surface="panel"]) {
     --rail-lockup-top: 20px;
   }
-  html[data-shell="mac"]:not([data-surface="panel"]) [data-brand-tile] {
+  html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) [data-brand-tile] {
     visibility: hidden;
   }
   html[data-shell="mac"]:not([data-surface="panel"]) body::before {

@@ -6,6 +6,7 @@ import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import {
   drawableLeft,
   forgottenRound,
+  legFinish,
   type Offer,
   reviewEnd,
   streakAsOf,
@@ -519,16 +520,16 @@ function Review() {
         { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
         false,
       );
+      const finish = legFinish(result, ending, drawLeg ? "day" : "list", confirmed);
       if (paused) tracker.abandon("left");
-      else if (end && (ending === "goal" || confirmed))
-        tracker.finish(ending === "goal" ? "goal" : "empty");
+      else if (finish) tracker.finish(finish);
     }
   }, [
     leg,
     current,
     paused,
     stopped,
-    end,
+    result,
     ending,
     confirmed,
     legDone,

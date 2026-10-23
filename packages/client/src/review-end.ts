@@ -136,3 +136,19 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
         : { kind: "goal", count: toGoal },
   };
 }
+
+/**
+ * How an end shown on screen finishes its leg for analytics, or null while it does not. A round or
+ * chosen list is done once it is walked, whatever the draw still holds, so it needs no confirmed
+ * draw; only an empty draw or scope does. docs/analytics.md.
+ */
+export function legFinish(
+  end: EndScreen | "unchecked" | null,
+  ending: Ending,
+  stretch: Stretch,
+  confirmed: boolean,
+): "goal" | "empty" | null {
+  if (!end || end === "unchecked" || ending === "left") return null;
+  if (ending === "goal") return "goal";
+  return confirmed || stretch === "list" ? "empty" : null;
+}

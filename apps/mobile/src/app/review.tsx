@@ -7,7 +7,13 @@ import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
-import { type EndScreen, forgottenRound, type Offer, reviewEnd } from "@lymi/client/review-end";
+import {
+  type EndScreen,
+  forgottenRound,
+  legFinish,
+  type Offer,
+  reviewEnd,
+} from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
@@ -572,12 +578,7 @@ function Run({
     presenting: !!current,
     stopped,
     paused,
-    finished:
-      result && result !== "unchecked" && (ending === "goal" || confirmed)
-        ? ending === "goal"
-          ? "goal"
-          : "empty"
-        : null,
+    finished: legFinish(result, ending, leg?.kind !== "draw" ? "list" : "day", confirmed),
   });
 
   /** Past this end screen: the next one reports what changes from here. */

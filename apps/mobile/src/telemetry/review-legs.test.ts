@@ -1,3 +1,4 @@
+import { legFinish, reviewEnd } from "@lymi/client/review-end";
 import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 import { beforeEach, describe, expect, it } from "vitest";
 import { daysBefore, type ReviewLeg, ReviewLegs } from "./review-legs";
@@ -116,6 +117,49 @@ describe("review legs on the phone", () => {
     legs.step(leg({ done: 0 }));
     legs.step(leg({ done: 1, presenting: false, stopped: true, finished: "goal" }));
     expect(events).toMatchObject([{ is_first_session: false }]);
+  });
+});
+
+describe("a round's end", () => {
+  // A Today round walked to its last card while the day's draw still holds cards it has not refetched.
+  const roundEnd = reviewEnd({
+    stretch: "list",
+    ending: "empty",
+    goal: 10,
+    from: 0,
+    attempts: 3,
+    satisfiedBefore: false,
+    left: 12,
+    confirmed: false,
+    elsewhere: 0,
+    forgotten: 0,
+  });
+  const round = (over: Partial<ReviewLeg>) =>
+    leg({ key: `${DATE}:list:0`, scope: "round", count: 3, ...over });
+
+  it("reports a walked round finished, and leaving it afterwards reports nothing more", () => {
+    legs.step(round({ done: 0 }));
+    legs.step(round({ done: 3 }));
+    legs.step(
+      round({
+        done: 3,
+        presenting: false,
+        stopped: true,
+        finished: legFinish(roundEnd, "empty", "list", false),
+      }),
+    );
+    legs.leave();
+    expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+    expect(events).toMatchObject([{ card_count: 3, ending: "empty", scope: "round" }]);
+  });
+
+  it("still reports a round left partway as abandoned", () => {
+    legs.step(round({ done: 0 }));
+    legs.step(round({ done: 1 }));
+    legs.leave();
+    expect(events).toMatchObject([
+      { name: "review_session_abandoned", reason: "navigation", scope: "round", cards_done: 1 },
+    ]);
   });
 });
 

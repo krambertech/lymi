@@ -51,6 +51,8 @@
       --color-amber-tint: #f8ac3d42;
       --color-amber-tint-ink: #331b06;
       --color-flame-core: #fff4b7;
+      --color-flame-heart: #ffc04b;
+      --color-flame-rim: #f69828;
       --color-glass: #fae5c9;
       --color-glass-unlit: #f0ede9;
       --color-metal: #1c140f;
@@ -116,6 +118,8 @@
       --color-amber-tint: #fdb44329;
       --color-amber-tint-ink: #f9bf60;
       --color-flame-core: #fff4b7;
+      --color-flame-heart: #ffc851;
+      --color-flame-rim: #fba02d;
       --color-glass: #432c17;
       --color-glass-unlit: #292420;
       --color-metal: #f1eee7;

@@ -97,10 +97,23 @@ export function ThisMacSection() {
               {recording ? t`Press keys` : keys}
             </Button>
           </Row>
+          {prefs.showInMenuBar !== undefined && (
+            <SwitchRow
+              label={t`Show in the menu bar`}
+              description={
+                prefs.showInMenuBar
+                  ? t`The lantern opens Lymi, quick add and review from the top of the screen.`
+                  : t`Lymi stays in the Dock instead, so it is always one click away.`
+              }
+              checked={prefs.showInMenuBar}
+              onChange={(on) => void save("showInMenuBar", on)}
+            />
+          )}
           <SwitchRow
-            label={t`Due count in the menu bar`}
-            description={t`Beside the lantern, when cards are due.`}
+            label={t`Due count beside the lantern`}
+            description={t`How many cards are due, next to the lantern in the menu bar.`}
             checked={prefs.showDue}
+            disabled={prefs.showInMenuBar === false}
             onChange={(on) => void save("showDue", on)}
           />
           <SwitchRow
@@ -122,7 +135,7 @@ export function ThisMacSection() {
           />
           <SwitchRow
             label={t`Open at login`}
-            description={t`Lymi waits in the menu bar from the moment you sign in to your Mac.`}
+            description={t`Lymi starts when you sign in to your Mac, ready for quick add.`}
             checked={prefs.openAtLogin}
             onChange={(on) => void save("openAtLogin", on)}
           />
@@ -156,19 +169,29 @@ interface SwitchRowProps {
   label: string;
   description: string;
   checked: boolean;
+  disabled?: boolean;
   onChange: (on: boolean) => void;
   action?: ReactNode;
 }
 
-function SwitchRow({ label, description, checked, onChange, action }: SwitchRowProps) {
+function SwitchRow({ label, description, checked, disabled, onChange, action }: SwitchRowProps) {
   return (
-    <Field orientation="horizontal" className="relative gap-3 border-t border-edge px-4 py-3.5">
+    <Field
+      orientation="horizontal"
+      disabled={disabled}
+      className="relative gap-3 border-t border-edge px-4 py-3.5"
+    >
       <FieldContent className="gap-0.5">
         <FieldLabel className="text-base text-text">{label}</FieldLabel>
         <FieldDescription>{description}</FieldDescription>
       </FieldContent>
       {action}
-      <Switch className="self-center" checked={checked} onCheckedChange={onChange} />
+      <Switch
+        className="self-center"
+        checked={checked}
+        disabled={disabled}
+        onCheckedChange={onChange}
+      />
     </Field>
   );
 }

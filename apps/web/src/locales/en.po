@@ -1310,9 +1310,6 @@ msgstr "Back to streak"
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
 
-msgid "Beside the lantern, when cards are due."
-msgstr "Beside the lantern, when cards are due."
-
 msgid "Beta"
 msgstr "Beta"
 
@@ -2117,8 +2114,8 @@ msgstr "Due"
 msgid "Due by deck"
 msgstr "Due by deck"
 
-msgid "Due count in the menu bar"
-msgstr "Due count in the menu bar"
+msgid "Due count beside the lantern"
+msgstr "Due count beside the lantern"
 
 msgid "Due date"
 msgstr "Due date"
@@ -2511,6 +2508,9 @@ msgstr "How it's asked: {0}"
 
 msgid "How it’s going"
 msgstr "How it’s going"
+
+msgid "How many cards are due, next to the lantern in the menu bar."
+msgstr "How many cards are due, next to the lantern in the menu bar."
 
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
@@ -2972,8 +2972,11 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 
-msgid "Lymi waits in the menu bar from the moment you sign in to your Mac."
-msgstr "Lymi waits in the menu bar from the moment you sign in to your Mac."
+msgid "Lymi starts when you sign in to your Mac, ready for quick add."
+msgstr "Lymi starts when you sign in to your Mac, ready for quick add."
+
+msgid "Lymi stays in the Dock instead, so it is always one click away."
+msgstr "Lymi stays in the Dock instead, so it is always one click away."
 
 msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
 msgstr "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
@@ -4264,6 +4267,9 @@ msgstr "Show another"
 msgid "Show hook"
 msgstr "Show hook"
 
+msgid "Show in the menu bar"
+msgstr "Show in the menu bar"
+
 msgid "Show more"
 msgstr "Show more"
 
@@ -4603,6 +4609,9 @@ msgstr "The language of the app and AI-written meanings."
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
+
+msgid "The lantern opens Lymi, quick add and review from the top of the screen."
+msgstr "The lantern opens Lymi, quick add and review from the top of the screen."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."

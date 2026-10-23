@@ -1310,9 +1310,6 @@ msgstr "Назад до днів поспіль"
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервної копії на ноутбуці"
 
-msgid "Beside the lantern, when cards are due."
-msgstr "Поруч із ліхтариком, коли є картки до повторення."
-
 msgid "Beta"
 msgstr "Бета"
 
@@ -2117,8 +2114,8 @@ msgstr "Коли повторювати"
 msgid "Due by deck"
 msgstr "До повторення за колодами"
 
-msgid "Due count in the menu bar"
-msgstr "Кількість карток у рядку меню"
+msgid "Due count beside the lantern"
+msgstr "Кількість карток біля ліхтарика"
 
 msgid "Due date"
 msgstr "Дата повторення"
@@ -2511,6 +2508,9 @@ msgstr "Як запитується: {0}"
 
 msgid "How it’s going"
 msgstr "Як іде навчання"
+
+msgid "How many cards are due, next to the lantern in the menu bar."
+msgstr "Скільки карток чекає на повторення, поруч із ліхтариком у рядку меню."
 
 msgid "How many cards come back this week"
 msgstr "Скільки карток повернеться цього тижня"
@@ -2972,8 +2972,11 @@ msgstr "Lymi пише перші колоди. А поки що створи в�
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
 
-msgid "Lymi waits in the menu bar from the moment you sign in to your Mac."
-msgstr "Lymi чекатиме в рядку меню щойно ви ввійдете на Mac."
+msgid "Lymi starts when you sign in to your Mac, ready for quick add."
+msgstr "Lymi запускається, щойно ви входите на Mac, і готовий до швидкого додавання."
+
+msgid "Lymi stays in the Dock instead, so it is always one click away."
+msgstr "Натомість Lymi лишається в Dock, тож він завжди за один клік."
 
 msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
 msgstr "Спершу дозвольте Lymi в macOS: «Приватність і безпека», «Доступність»."
@@ -4264,6 +4267,9 @@ msgstr "Показати іншу"
 msgid "Show hook"
 msgstr "Показати зачіпку"
 
+msgid "Show in the menu bar"
+msgstr "Показувати в рядку меню"
+
 msgid "Show more"
 msgstr "Показати більше"
 
@@ -4603,6 +4609,9 @@ msgstr "Мова застосунку та значень, які пише AI."
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "Мова термінів цієї колоди. Нові картки отримують її одразу, а вимові й доповненню від AI вона потрібна. Значення пишуться мовою застосунку."
+
+msgid "The lantern opens Lymi, quick add and review from the top of the screen."
+msgstr "Ліхтарик відкриває Lymi, швидке додавання і повторення з верху екрана."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться в колоді, а наступне поширення створить нове посилання."

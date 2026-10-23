@@ -1,5 +1,6 @@
 import { execFile } from "node:child_process";
 import { ClipboardItem, clipboard, systemPreferences } from "electron";
+import { termFromCopy } from "./term.js";
 
 // Presses ⌘C through Core Graphics, which needs only Accessibility; System Events would also need Automation.
 const COPY = `ObjC.import("CoreGraphics");
@@ -10,7 +11,6 @@ const press = (down) => {
 };
 press(true);
 press(false);`;
-const LONGEST = 120;
 
 /** Whether macOS lets the app press keys. Never asks: only This Mac's button does, once. */
 export function canCopySelection() {
@@ -45,9 +45,7 @@ export async function selectedText(): Promise<string | null> {
       await new Promise((resolve) => setTimeout(resolve, 20));
       text = await clipboard.readText();
     }
-    const term = text.trim().replace(/\s+/g, " ");
-    // A paragraph is not a term; the learner still has the panel to type one.
-    return term && term.length <= LONGEST && !text.trim().includes("\n") ? term : null;
+    return termFromCopy(text);
   } catch (error) {
     console.error("Couldn’t copy the selection", error);
     return null;

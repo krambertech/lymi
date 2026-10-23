@@ -1310,9 +1310,6 @@ msgstr "Назад к дням подряд"
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервной копии на ноутбуке"
 
-msgid "Beside the lantern, when cards are due."
-msgstr "Рядом с фонарём, когда есть карточки к повторению."
-
 msgid "Beta"
 msgstr "Бета"
 
@@ -2117,8 +2114,8 @@ msgstr "Когда повторять"
 msgid "Due by deck"
 msgstr "К повторению по колодам"
 
-msgid "Due count in the menu bar"
-msgstr "Число карточек в строке меню"
+msgid "Due count beside the lantern"
+msgstr "Число карточек рядом с фонарём"
 
 msgid "Due date"
 msgstr "Дата повторения"
@@ -2511,6 +2508,9 @@ msgstr "Как задаётся: {0}"
 
 msgid "How it’s going"
 msgstr "Как идёт учёба"
+
+msgid "How many cards are due, next to the lantern in the menu bar."
+msgstr "Сколько карточек ждёт повторения, рядом с фонарём в строке меню."
 
 msgid "How many cards come back this week"
 msgstr "Сколько карточек вернётся на этой неделе"
@@ -2972,8 +2972,11 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
 
-msgid "Lymi waits in the menu bar from the moment you sign in to your Mac."
-msgstr "Lymi ждёт в строке меню с момента входа на Mac."
+msgid "Lymi starts when you sign in to your Mac, ready for quick add."
+msgstr "Lymi запускается, как только вы входите на Mac, и готов к быстрому добавлению."
+
+msgid "Lymi stays in the Dock instead, so it is always one click away."
+msgstr "Вместо этого Lymi остаётся в Dock, так что он всегда в одном клике."
 
 msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
 msgstr "Сначала разрешите Lymi в macOS: «Конфиденциальность и безопасность», «Универсальный доступ»."
@@ -4264,6 +4267,9 @@ msgstr "Показать другую"
 msgid "Show hook"
 msgstr "Показать зацепку"
 
+msgid "Show in the menu bar"
+msgstr "Показывать в строке меню"
+
 msgid "Show more"
 msgstr "Показать больше"
 
@@ -4603,6 +4609,9 @@ msgstr "Язык приложения и значений, которые пиш
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "Язык терминов этой колоды. Новые карточки получают его сразу, и он нужен для произношения и дополнения от AI. Значения пишутся на языке приложения."
+
+msgid "The lantern opens Lymi, quick add and review from the top of the screen."
+msgstr "Фонарь открывает Lymi, быстрое добавление и повторение с верха экрана."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Ссылка перестанет работать навсегда. Те, кто присоединился, останутся в колоде, а при повторном открытии доступа появится новая ссылка."

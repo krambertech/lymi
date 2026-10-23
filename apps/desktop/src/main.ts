@@ -17,30 +17,29 @@ import {
   systemPreferences,
   Tray,
 } from "electron";
+import { SCHEME, sessionChange } from "./callback.js";
 import { type MenuCommand, setAppMenu } from "./menu.js";
 import {
-  DEFAULT_SHORTCUT,
-  type Preferences,
-  readPreferences,
-  usableShortcut,
-  writePreferences,
-} from "./preferences.js";
+  isLoopback,
+  isProduct as isProductOf,
+  leaving,
+  productOrigin,
+  productUrl as productUrlOf,
+} from "./origin.js";
+import { readPreferences, writePreferences } from "./preferences.js";
 import { canCopySelection, selectedText } from "./selection.js";
-import { completeSignIn, requestSignIn, SCHEME, SESSION_COOKIE } from "./sign-in.js";
+import { DEFAULT_SHORTCUT, type Preferences, usableShortcut } from "./settings.js";
+import { completeSignIn, requestSignIn } from "./sign-in.js";
 
 // A packaged build always talks to production; only a development run may point elsewhere.
-const PRODUCT_URL = new URL((!app.isPackaged && process.env.LYMI_URL) || "https://my.lymi.app")
-  .origin;
-const DEV = !app.isPackaged && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(PRODUCT_URL);
+const PRODUCT_URL = productOrigin(app.isPackaged, process.env.LYMI_URL);
+const DEV = !app.isPackaged && isLoopback(PRODUCT_URL);
 // A local persona instead of a sign-in, never against production. docs/local-dev.md.
 const DEV_PERSONA = DEV ? process.env.LYMI_DEV_PERSONA : undefined;
 const PANEL_WIDTH = 480;
 const DUE_EVERY_MS = 15 * 60_000;
 const assets = join(app.getAppPath(), "assets");
 const preload = join(app.getAppPath(), "dist", "preload.cjs");
-// Google refuses sign-in inside an app's window, and the browser holds the passkeys, so these go there.
-const SIGN_IN_HOSTS = new Set(["accounts.google.com", "appleid.apple.com"]);
-const EXTERNAL_SCHEMES = new Set(["https:", "http:", "mailto:"]);
 // What the product asks the browser for; everything else is refused.
 const PERMISSIONS = new Set(["clipboard-sanitized-write", "notifications", "fullscreen"]);
 
@@ -55,17 +54,12 @@ let due: number | null = null;
 let signedIn = true;
 let copying: Promise<void> | null = null;
 
-/** The window's only trust boundary: a page, a redirect or a caller is the product's or nothing. */
-const isProduct = (url: string | undefined) => URL.parse(url ?? "")?.origin === PRODUCT_URL;
+const isProduct = (url: string | undefined) => isProductOf(url, PRODUCT_URL);
 const fromProduct = (event: IpcMainEvent | IpcMainInvokeEvent) => isProduct(event.senderFrame?.url);
-/** A product path as a full URL, or null when it would leave the product, such as `//elsewhere`. */
-function productUrl(path: string) {
-  const url = URL.parse(path, PRODUCT_URL);
-  return url && url.origin === PRODUCT_URL ? url.toString() : null;
-}
+const productUrl = (path: string) => productUrlOf(path, PRODUCT_URL);
 
 function openExternal(url: string) {
-  if (EXTERNAL_SCHEMES.has(URL.parse(url)?.protocol ?? "")) void shell.openExternal(url);
+  if (leaving(url, PRODUCT_URL) === "browser") void shell.openExternal(url);
 }
 
 /** Only the product loads inside Lymi's windows; every other link or redirect opens in the browser. */
@@ -75,9 +69,10 @@ function keepToProduct(win: BrowserWindow) {
     return { action: "deny" };
   });
   const leave = (event: { preventDefault: () => void }, url: string) => {
-    if (isProduct(url)) return;
+    const where = leaving(url, PRODUCT_URL);
+    if (where === "stay") return;
     event.preventDefault();
-    if (SIGN_IN_HOSTS.has(URL.parse(url)?.hostname ?? "")) void requestSignIn(PRODUCT_URL);
+    if (where === "sign-in") void requestSignIn(PRODUCT_URL);
     else openExternal(url);
   };
   win.webContents.on("will-navigate", leave);
@@ -117,10 +112,9 @@ function openMain(path?: string) {
     main = null;
     // Closed while This Mac recorded a shortcut, the page never said it stopped.
     if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
-    // Back to living in the menu bar once no window is open.
-    if (process.platform === "darwin") app.setActivationPolicy("accessory");
+    placeApp();
   });
-  if (process.platform === "darwin") app.setActivationPolicy("regular");
+  placeApp();
   void main.loadURL(url);
 }
 
@@ -206,6 +200,24 @@ async function refreshDue() {
   renderTray();
 }
 
+/**
+ * Where Lymi lives: in the menu bar alone while no window is open, or in the Dock whenever a
+ * window is open or the learner hid the lantern, so it can always be reached.
+ */
+function placeApp() {
+  if (process.platform !== "darwin") return;
+  const windowOpen = !!main && !main.isDestroyed();
+  app.setActivationPolicy(windowOpen || !prefs.showInMenuBar ? "regular" : "accessory");
+  if (prefs.showInMenuBar && !tray) {
+    const icon = nativeImage.createFromPath(join(assets, "trayTemplate.png"));
+    icon.setTemplateImage(true);
+    tray = new Tray(icon);
+  } else if (!prefs.showInMenuBar && tray) {
+    tray.destroy();
+    tray = null;
+  }
+}
+
 function renderTray() {
   if (!tray) return;
   tray.setTitle(prefs.showDue && due ? String(due) : "", { fontType: "monospacedDigit" });
@@ -243,6 +255,7 @@ function runCommand(command: MenuCommand) {
 }
 
 function refreshMenus() {
+  placeApp();
   renderTray();
   setAppMenu({ run: runCommand, quickAdd: () => void showPanel(), shortcut: prefs.shortcut });
 }
@@ -281,7 +294,9 @@ ipcMain.handle("prefs:set", (event, key: unknown, value: unknown) => {
     const refused = moveShortcut(value);
     if (refused) return { ok: false, reason: refused, preferences: preferencesOut() };
   } else if (key === "showDue" && typeof value === "boolean") prefs = { ...prefs, showDue: value };
-  else if (key === "fillSelection" && typeof value === "boolean") {
+  else if (key === "showInMenuBar" && typeof value === "boolean") {
+    prefs = { ...prefs, showInMenuBar: value };
+  } else if (key === "fillSelection" && typeof value === "boolean") {
     prefs = { ...prefs, fillSelection: value };
   } else if (key === "openAtLogin" && typeof value === "boolean") {
     app.setLoginItemSettings({ openAtLogin: value });
@@ -362,7 +377,6 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 async function start() {
-  if (process.platform === "darwin") app.setActivationPolicy("accessory");
   if (process.defaultApp) app.dock?.setIcon(join(assets, "icon.png"));
   app.setAboutPanelOptions({ applicationName: "Lymi", iconPath: join(assets, "icon.png") });
   ses = session.fromPartition("persist:lymi");
@@ -378,9 +392,6 @@ async function start() {
     const url = productUrl(`/api/dev/sign-in?as=${encodeURIComponent(DEV_PERSONA)}`);
     if (url) await ses.fetch(url, { credentials: "include" });
   }
-  const icon = nativeImage.createFromPath(join(assets, "trayTemplate.png"));
-  icon.setTemplateImage(true);
-  tray = new Tray(icon);
   if (!registerShortcut(prefs.shortcut) && prefs.shortcut !== DEFAULT_SHORTCUT) {
     prefs = { ...prefs, shortcut: DEFAULT_SHORTCUT };
     registerShortcut(prefs.shortcut);
@@ -392,13 +403,15 @@ async function start() {
   powerMonitor.on("resume", () => void refreshDue());
   // Signing in or out in a window adds or removes the session cookie, and the tray and the panel
   // follow. The daily refresh rewrites it in place, an overwrite then an insert, and changes nothing.
-  const isSession = (cookie: Electron.Cookie) => cookie.name.endsWith(SESSION_COOKIE);
-  let hasSession = (await ses.cookies.get({ url: PRODUCT_URL })).some(isSession);
+  let hasSession = (await ses.cookies.get({ url: PRODUCT_URL })).some(
+    (cookie) =>
+      sessionChange(false, { name: cookie.name, cause: "inserted", removed: false }) === true,
+  );
   let settle: ReturnType<typeof setTimeout> | undefined;
   ses.cookies.on("changed", (_event, cookie, cause, removed) => {
-    if (!isSession(cookie) || cause === "overwrite" || cause === "expired-overwrite") return;
-    if (!removed === hasSession) return;
-    hasSession = !removed;
+    const next = sessionChange(hasSession, { name: cookie.name, cause, removed });
+    if (next === null) return;
+    hasSession = next;
     clearTimeout(settle);
     settle = setTimeout(() => {
       void refreshDue();

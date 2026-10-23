@@ -29,6 +29,8 @@ export interface DesktopBridge {
 export interface MacPreferences {
   /** An Electron accelerator, such as `Control+Alt+L`. */
   shortcut: string;
+  /** Added after version 1 of the bridge, so an older app leaves it out. */
+  showInMenuBar?: boolean;
   showDue: boolean;
   fillSelection: boolean;
   openAtLogin: boolean;
@@ -37,7 +39,7 @@ export interface MacPreferences {
   version: string;
 }
 
-export type MacSetting = "shortcut" | "showDue" | "fillSelection" | "openAtLogin";
+export type MacSetting = "shortcut" | "showInMenuBar" | "showDue" | "fillSelection" | "openAtLogin";
 export type MacSaved =
   | { ok: true; preferences: MacPreferences }
   | { ok: false; reason: "taken" | "invalid"; preferences: MacPreferences };

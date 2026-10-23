@@ -1,0 +1,23 @@
+{
+  "name": "@lymi/desktop",
+  "version": "0.0.1",
+  "license": "FSL-1.1-MIT",
+  "private": true,
+  "type": "module",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "node node_modules/electron/install.js && tsc -p tsconfig.build.json && electron .",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "tray-icon": "sh scripts/tray-icon.sh",
+    "app-icon": "sh scripts/app-icon.sh",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@lymi/client": "workspace:*",
+    "@types/node": "^26.6.5",
+    "electron": "45.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

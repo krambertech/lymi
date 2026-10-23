@@ -116,7 +116,8 @@ export function Sidebar({
         className,
       )}
     >
-      <div className="mx-3 mt-8 mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
+      {/* In the Mac app the traffic lights take the lockup's place, level with the screen's bar. */}
+      <div className="mx-3 mt-[var(--rail-lockup-top,2rem)] mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
         <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (
@@ -271,7 +272,8 @@ export function TileLockup({
 }) {
   const { tile, word } = LOCKUP[size];
   return (
-    <span className={clsx("flex items-center gap-2.5", className)}>
+    // `data-brand-tile`: the Mac app's traffic lights take this place, so it hides there.
+    <span data-brand-tile className={clsx("flex items-center gap-2.5", className)}>
       {/* On the bar the tile sits on the canvas, which in the dark room is the tile's own colour. */}
       <AppTile size={tile} title="Lymi" className={size === "bar" ? "edge" : undefined} />
       {/* The phone's bar holds the tile alone: the wordmark read as a second title over the screen's own. */}

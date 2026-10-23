@@ -300,6 +300,8 @@ export const analyticsEvents = {
     fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
     /** Of `count`, the cards whose text was converted to how Lymi stores it. */
     normalized: count.optional(),
+    /** Where in the app the add began, when not a screen of the app itself. */
+    entry: z.enum(["desktop_panel"]).optional(),
   }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
@@ -621,6 +623,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/desktop",
     // Phone screens without a web page of their own.
     "/you",
     "/capture",

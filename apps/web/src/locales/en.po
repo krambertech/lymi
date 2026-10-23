@@ -950,6 +950,9 @@ msgstr "Add cards from your next lesson"
 msgid "Add cards with the API"
 msgstr "Add cards with the API"
 
+msgid "Add from other apps"
+msgstr "Add from other apps"
+
 msgid "Add hook"
 msgstr "Add hook"
 
@@ -1184,6 +1187,9 @@ msgstr "API key for {name}"
 
 msgid "API keys"
 msgstr "API keys"
+
+msgid "Apps that add cards"
+msgstr "Apps that add cards"
 
 msgid "Apps you can import from"
 msgstr "Apps you can import from"
@@ -3805,9 +3811,6 @@ msgstr "Reading"
 msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Reading"
-
-msgid "Reading apps"
-msgstr "Reading apps"
 
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length

@@ -11,17 +11,17 @@ import { Skeleton } from "./skeleton";
 const ROW =
   "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil group-first/row:rounded-t-xl group-last/row:rounded-b-xl";
 
-/** Apps that bring in what the learner reads, one row each; a row's page holds every control. */
-export function ReadingSection() {
+/** Apps that add cards on their own, one row each; a row's page holds every control. */
+export function OtherAppsSection() {
   const { t } = useLingui();
   const state = useQuery(readwiseQuery);
   return (
     <SettingsGroup
-      id="reading"
-      title={t`Reading`}
+      id="other-apps"
+      title={t`Add from other apps`}
       description={t`Add cards from what you read in other apps.`}
     >
-      <ul aria-label={t`Reading apps`} className="edge grid rounded-xl bg-plate">
+      <ul aria-label={t`Apps that add cards`} className="edge grid rounded-xl bg-plate">
         <li className="group/row border-edge [&:not(:first-child)]:border-t">
           <Link to="/settings/readwise" className={ROW}>
             <span className="grid min-w-0 flex-1 gap-0.5">

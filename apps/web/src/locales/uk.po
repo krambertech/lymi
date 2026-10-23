@@ -950,6 +950,9 @@ msgstr "Додай картки з наступного уроку"
 msgid "Add cards with the API"
 msgstr "Додавай картки через API"
 
+msgid "Add from other apps"
+msgstr "Додати з інших застосунків"
+
 msgid "Add hook"
 msgstr "Додати зачіпку"
 
@@ -1184,6 +1187,9 @@ msgstr "Ключ API для {name}"
 
 msgid "API keys"
 msgstr "Ключі API"
+
+msgid "Apps that add cards"
+msgstr "Застосунки, що додають картки"
 
 msgid "Apps you can import from"
 msgstr "Застосунки, з яких можна імпортувати"
@@ -3805,9 +3811,6 @@ msgstr "Читання"
 msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Читання"
-
-msgid "Reading apps"
-msgstr "Застосунки для читання"
 
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length

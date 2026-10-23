@@ -64,7 +64,7 @@ function ReadwiseRoute() {
     mutationFn: api.disconnectReadwise,
     onSuccess: async () => {
       settle({ connection: null });
-      await navigate({ to: "/settings", hash: "reading" });
+      await navigate({ to: "/settings", hash: "other-apps" });
       toast.add({ title: t`Readwise is disconnected` });
     },
   });

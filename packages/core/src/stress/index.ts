@@ -109,6 +109,61 @@ function words(chars: readonly Drawn[]): Drawn[][] {
   return out;
 }
 
+/** One Cyrillic word of a sentence and the stress it carries. */
+export interface WordStress {
+  word: string;
+  syllables: number;
+  /** Acutes over a vowel. */
+  acutes: number;
+  /** It writes a letter whose dots mark its stress, as Russian ё does. */
+  dotted: boolean;
+  /** An acute stands over such a letter. */
+  acuteOnDotted: boolean;
+}
+
+/** A word, with a hyphen between letters keeping it one word, as `words` does for the term. */
+const WORD = /[\p{L}\p{M}]+(?:[-‐‑][\p{L}\p{M}]+)*/gu;
+
+/** Each Cyrillic word of a sentence with its syllables and marks, so a check can say which word lacks its stress. */
+export function wordStress(text: string, rules: StressRules): WordStress[] {
+  return (text.normalize("NFC").match(WORD) ?? []).flatMap((word) => {
+    if (!/\p{Script=Cyrillic}/u.test(word)) return [];
+    const out: WordStress = { word, syllables: 0, acutes: 0, dotted: false, acuteOnDotted: false };
+    for (const unit of units(word)) {
+      const letter = stripStress(unit).toLowerCase();
+      const acute = unit.includes(STRESS);
+      const dotted = rules.restores?.[letter] !== undefined;
+      if (rules.vowels.includes(letter)) out.syllables += 1;
+      if (acute) out.acutes += 1;
+      if (dotted) out.dotted = true;
+      if (acute && dotted) out.acuteOnDotted = true;
+    }
+    return [out];
+  });
+}
+
+/** Whether a word of two or more syllables in the text has no stress shown, by an acute or by ё. */
+export function missingStress(text: string, rules: StressRules): boolean {
+  return wordStress(text, rules).some(
+    (word) => word.syllables > 1 && word.acutes === 0 && !word.dotted,
+  );
+}
+
+/** Whether `after` is `before` with stress marks added, keeping every mark it had and changing nothing else. */
+export function addsStress(before: string, after: string): boolean {
+  if (stripStress(after) !== stripStress(before)) return false;
+  const had = units(before);
+  const has = units(after);
+  if (had.length !== has.length) return false;
+  let added = false;
+  for (const [i, unit] of had.entries()) {
+    const marked = (has[i] as string).includes(STRESS);
+    if (unit.includes(STRESS) && !marked) return false;
+    if (marked && !unit.includes(STRESS)) added = true;
+  }
+  return added;
+}
+
 /**
  * The reading the duplicate rule compares: the marked form in lower case, or null when the
  * pronunciation is not the term with a mark, so за́мок and замо́к are two words while an unmarked

@@ -1902,10 +1902,13 @@ function Completion({
   const [settled, setSettled] = useState(reduce);
   // Until the spark reaches it, the run shows the streak as it stood before this review.
   const [ticked, setTicked] = useState(!turned);
+  // The spark draws past the moment the ways on can be pressed, until its last fleck has gone.
+  const [sparked, setSparked] = useState(!turned);
   const finish = () => {
     clock.value = end;
     setSettled(true);
     setTicked(true);
+    setSparked(true);
     void stopHaptics();
   };
   const room = useAnimatedRef<View>();
@@ -1922,12 +1925,14 @@ function Completion({
       clock.value = end;
       setSettled(true);
       setTicked(true);
+      setSparked(true);
       return;
     }
     clock.value = withTiming(end, { duration: end, easing: Easing.linear, reduceMotion: ALWAYS });
     const timers = [
       setTimeout(() => setSettled(true), actionsAt + RISE.ms),
       setTimeout(() => setTicked(true), AT.tick),
+      setTimeout(() => setSparked(true), AT.tick + SPARK_LIFE_MS),
     ];
     return () => timers.forEach(clearTimeout);
   }, [reduce, clock, end, actionsAt]);
@@ -2112,7 +2117,7 @@ function Completion({
           </Animated.View>
         </ToastFloor>
       </ScrollView>
-      {turned && !settled && (
+      {turned && !sparked && (
         <TurnSpark
           clock={clock}
           room={room}
@@ -2233,6 +2238,8 @@ function RollingCount({
 
 /** The count that ends a review, the largest thing on the phone; it keeps a 1.2 line box. */
 const COUNT_SIZE = 80;
+/** How long the spark's flecks and the run's sparks outlast the run's tick; the web's `TurnSpark` stops then too. */
+const SPARK_LIFE_MS = 1300;
 /** How long the run's catch plays after the spark reaches it, warmth included. */
 const RUN_CATCH_MS = 1400;
 

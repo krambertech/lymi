@@ -15,10 +15,10 @@ export const END_OF_REVIEW = {
   /** When the day has just turned: a spark leaves the flame for today's light… */
   spark: 1500,
   /** …lands, and today's light fills… */
-  land: 1900,
+  land: 2100,
   /** …then a smaller one hops on to the run's flame, which catches as the run ticks. */
-  hop: 2060,
-  tick: 2360,
+  hop: 2260,
+  tick: 2700,
   actions: 2000,
   actionStep: 90,
 } as const;

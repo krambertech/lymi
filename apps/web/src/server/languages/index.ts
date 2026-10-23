@@ -2,21 +2,23 @@
  * Each supported language's AI text, one module per language, so generic prompts never name one.
  * docs/proposals/supported-languages.md.
  */
-import { languageSupport, type SupportedTag } from "@lymi/core";
+import { examplesCarryReadings, languageSupport, type SupportedTag, stressRules } from "@lymi/core";
 import { cantonese } from "./cantonese";
 import { chinese } from "./chinese";
 import { japanese } from "./japanese";
+import { russian } from "./russian";
 import { tamil } from "./tamil";
 import type { LanguagePrompts } from "./types";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
-type PromptTag = SupportedTag | "ta" | "yue";
+/** Every supported language, and Russian, Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
+type PromptTag = SupportedTag | "ru" | "ta" | "yue";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
   zh: chinese,
+  ru: russian,
   ta: tamil,
   yue: cantonese,
 } as const satisfies Record<PromptTag, LanguagePrompts>;
@@ -32,4 +34,12 @@ export function languagePrompts(tag: string | null | undefined): LanguagePrompts
 /** What a reading printed in a lesson looks like in this language, or undefined when no rule says. */
 export function lessonReading(tag: string | null | undefined): string | undefined {
   return languagePrompts(tag)?.lesson;
+}
+
+/**
+ * Whether enrichment may add readings to a learner's example in this language: its examples carry
+ * them, and a stress language also has a prompt module that says where the marks go.
+ */
+export function addsExampleReadings(tag: string | null | undefined): boolean {
+  return examplesCarryReadings(tag) && (!stressRules(tag) || languagePrompts(tag) !== null);
 }

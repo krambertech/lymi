@@ -74,6 +74,24 @@ describe("PostHog delivery", () => {
     });
   });
 
+  it("names the entry point of a phone request made without the app open", async () => {
+    const { bodies } = interceptedEvents();
+    const analytics = productAnalytics(production, "learner-1", undefined, async () => ({
+      allowed: true,
+      ui_locale: "en",
+      phone: { platform: "ios", version: "1.2.0", entry: "shortcut" },
+    }));
+    await analytics.run(async () =>
+      track(analytics, { name: "cards_added", source: "typed", count: 1, fields: [] }),
+    );
+    const body = JSON.parse(bodies[0] ?? "{}");
+    expect(body.batch[0].properties).toMatchObject({
+      client: "phone",
+      entry: "shortcut",
+      source: "typed",
+    });
+  });
+
   it("suppresses product events without consent while keeping aggregate metrics", async () => {
     const { fetch } = interceptedEvents();
     const writeDataPoint = vi.fn();

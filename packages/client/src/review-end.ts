@@ -136,3 +136,65 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
         : { kind: "goal", count: toGoal },
   };
 }
+
+/** What proves a leg ran out: a list every card of which is graded or dropped, or a confirmed draw. */
+export type LegProof =
+  | { stretch: "list"; walked: boolean }
+  | { stretch: "day" | "scope"; confirmed: boolean };
+
+/**
+ * How an end shown on screen finishes its leg for analytics, or null while it does not. A round or
+ * chosen list is done only once every card in it is graded or dropped, whatever the draw still
+ * holds: a page of a longer round running out while the next loads, or after it failed, is not
+ * the round's end. An empty draw or scope needs a confirmed draw. docs/analytics.md.
+ */
+export function legFinish(
+  end: EndScreen | "unchecked" | null,
+  ending: Ending,
+  proof: LegProof,
+): "goal" | "empty" | null {
+  if (!end || end === "unchecked" || ending === "left") return null;
+  if (ending === "goal") return "goal";
+  return (proof.stretch === "list" ? proof.walked : proof.confirmed) ? "empty" : null;
+}
+
+/** The round's own fetch as a list leg sees it. */
+export interface RoundFetch {
+  /** When its data last landed. */
+  updatedAt: number;
+  /** No fetch running or waiting. */
+  idle: boolean;
+  /** The last fetch failed, or the device is offline. */
+  failed: boolean;
+}
+
+/** A refetch asked for once the page in hand ran out: when the data had last landed, and the cards done then. */
+export interface RoundAsk {
+  at: number;
+  done: number;
+}
+
+/**
+ * Where a list leg stands once the cards in hand are used up. The server sends a round a page at a
+ * time, so an emptied page owes one refetch of the round. The round is walked when its graded and
+ * dropped cards cover its size, or when that refetch lands with nothing left: a card can leave the
+ * round meanwhile (archived, deleted or graded on another device), and no page brings it back. A
+ * failed or offline fetch proves neither, so the end shows without the round being walked.
+ */
+export function roundWalk(input: {
+  size: number;
+  /** Cards graded or dropped in this leg. */
+  done: number;
+  /** Cards still in hand to review. */
+  left: number;
+  ask: RoundAsk | null;
+  fetch: RoundFetch;
+}): { walked: boolean; owed: boolean; refetch: boolean } {
+  const { size, done, left, ask, fetch } = input;
+  const asked = ask !== null && ask.done === done;
+  const dry =
+    left === 0 && asked && fetch.idle && !fetch.failed && fetch.updatedAt > (ask?.at ?? Infinity);
+  const walked = done >= size || dry;
+  const owed = left === 0 && !walked && !fetch.failed;
+  return { walked, owed, refetch: owed && fetch.idle && !asked };
+}

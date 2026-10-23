@@ -4,13 +4,15 @@ type Snapshot = { cardsDone: number; cardCount: number; first: boolean; scope?: 
 export class ReviewSessionTracker {
   private completedFirst = false;
   private active: { id: string; key: string; baseline: number; snapshot: Snapshot } | null = null;
+  /** Legs already reported finished: one comes back only by Undo or a late page, never as a second leg. */
+  private readonly finished = new Set<string>();
   constructor(
     private readonly send: (event: ProductAnalyticsEvent) => void,
     private readonly id: () => string,
   ) {}
   update(key: string, snapshot: Snapshot, start = true): void {
     if (this.active && this.active.key !== key) this.abandon("navigation");
-    if (!this.active && !start) return;
+    if (!this.active && (!start || this.finished.has(key))) return;
     if (!this.active)
       this.active = {
         id: this.id(),
@@ -36,6 +38,7 @@ export class ReviewSessionTracker {
     const cards = Math.max(0, active.snapshot.cardsDone - active.baseline);
     if (cards === 0) return;
     this.completedFirst = true;
+    this.finished.add(active.key);
     this.send({
       name: "review_session_finished",
       session_id: active.id,

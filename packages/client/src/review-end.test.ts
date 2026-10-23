@@ -8,7 +8,9 @@ import {
   type EndInput,
   type EndScreen,
   forgottenRound,
+  legFinish,
   reviewEnd,
+  roundWalk,
   streakAsOf,
   streakWith,
 } from "./review-end";
@@ -395,5 +397,80 @@ describe("every end, whatever the inputs", () => {
         throw new Error(`${JSON.stringify(c)}\n${(error as Error).message}`);
       }
     }
+  });
+});
+
+describe("how an end finishes its leg", () => {
+  it("finishes a round walked to its end though the draw still holds unconfirmed cards", () => {
+    const end = reviewEnd(input({ stretch: "list", left: 12, confirmed: false }));
+    expect(end).toMatchObject({ heading: "round_done" });
+    expect(legFinish(end, "empty", { stretch: "list", walked: true })).toBe("empty");
+  });
+
+  it("does not finish a round whose page ran out before every card was graded or dropped", () => {
+    // The first page of a longer round used up while the next loads, or after it failed offline.
+    const end = reviewEnd(input({ stretch: "list", left: 12, confirmed: true }));
+    expect(legFinish(end, "empty", { stretch: "list", walked: false })).toBeNull();
+  });
+
+  it("finishes at the goal, and an empty draw only once confirmed", () => {
+    const goal = reviewEnd(input({ ending: "goal", attempts: GOAL, confirmed: false }));
+    expect(legFinish(goal, "goal", { stretch: "day", confirmed: false })).toBe("goal");
+    expect(legFinish(reviewEnd(input()), "empty", { stretch: "day", confirmed: true })).toBe(
+      "empty",
+    );
+    const met = reviewEnd(input({ attempts: GOAL, confirmed: false }));
+    expect(legFinish(met, "empty", { stretch: "scope", confirmed: false })).toBeNull();
+  });
+
+  it("never finishes a leg the learner left, or before its end is shown", () => {
+    const left = reviewEnd(input({ ending: "left", stretch: "list" }));
+    expect(legFinish(left, "left", { stretch: "list", walked: true })).toBeNull();
+    expect(legFinish("unchecked", "empty", { stretch: "day", confirmed: false })).toBeNull();
+    expect(legFinish(null, "empty", { stretch: "list", walked: true })).toBeNull();
+  });
+});
+
+describe("a round's page running out", () => {
+  const fetch = { updatedAt: 1, idle: true, failed: false };
+  it("asks for the round again once, and waits while it loads", () => {
+    expect(roundWalk({ size: 80, done: 50, left: 0, ask: null, fetch })).toEqual({
+      walked: false,
+      owed: true,
+      refetch: true,
+    });
+    const ask = { at: 1, done: 50 };
+    expect(
+      roundWalk({ size: 80, done: 50, left: 0, ask, fetch: { ...fetch, idle: false } }),
+    ).toEqual({ walked: false, owed: true, refetch: false });
+    expect(roundWalk({ size: 80, done: 50, left: 0, ask, fetch })).toMatchObject({
+      refetch: false,
+    });
+  });
+
+  it("is walked when the refetch lands with nothing left, though a card left the round", () => {
+    const landed = { updatedAt: 2, idle: true, failed: false };
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 79 }, fetch: landed }),
+    ).toEqual({ walked: true, owed: false, refetch: false });
+    // An answer to an earlier page's ask says nothing about this one.
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 50 }, fetch: landed }),
+    ).toEqual({ walked: false, owed: true, refetch: true });
+  });
+
+  it("is not walked when the refetch fails, and stops waiting", () => {
+    const failed = { updatedAt: 1, idle: true, failed: true };
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 79 }, fetch: failed }),
+    ).toEqual({ walked: false, owed: false, refetch: false });
+  });
+
+  it("is walked once every card is graded or dropped, with no refetch", () => {
+    expect(roundWalk({ size: 80, done: 80, left: 0, ask: null, fetch })).toEqual({
+      walked: true,
+      owed: false,
+      refetch: false,
+    });
   });
 });

@@ -24,7 +24,7 @@ A JSON object:
 - cards: the cards to fill. Each has an id, its deck, its term, any text it already has, and mayFill: the empty fields you may fill. A card may also have addReadings: its example lacks the readings its language guide asks for.
 
 ## What to fill
-- Fill only the fields in mayFill. Return null for every other field, except example on a card with addReadings.
+- Fill only the fields in mayFill. Return null for every other field, even language when the card already shows one, except example on a card with addReadings.
 - Always fill language and meaning when they are in mayFill. Skip meaning only if you do not know the term.
 - Fill example, notes and pronunciation only when they help with this card.
 - If the deck has samples, copy their habits: fill a field if most samples fill it, and leave it null if most leave it empty.

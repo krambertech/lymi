@@ -70,6 +70,7 @@ const NOTES_FORBIDDEN: [string, RegExp][] = [
   ["table", /^\s*\|.*\|\s*$/m],
   ["link", /\[[^\]]*\]\([^)]*\)|<https?:/],
   ["code", /`/],
+  ["list", /^\s*[-+*]\s/m],
   ["html", /<\/?[a-z][^>]*>/i],
 ];
 

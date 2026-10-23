@@ -97,11 +97,69 @@ export type AddCardsOptions = {
   fromLesson?: boolean;
   /** A Readwise pull, for the same reason. */
   fromReadwise?: boolean;
+  /** An AnkiConnect client such as Yomitan, so `cards_added` tells its cards from other API calls. */
+  fromAnkiConnect?: boolean;
 };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
 function wantsEnrichment(input: ServerCardInput, actor: Actor): boolean {
   return input.enrich ?? actor === "user";
+}
+
+type HeldCard = { card: Card; deckName: string };
+
+/** The learner's active cards under these term keys. Several can share a key: homographs told apart by their readings. */
+async function heldCards(db: Db, userId: string, terms: string[]) {
+  const rows = await selectIn([...new Set(terms)], (keys) =>
+    db
+      .select({ card: schema.cards, deckName: schema.decks.name })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(
+        and(
+          eq(schema.cards.userId, userId),
+          isNull(schema.cards.archivedAt),
+          inArray(schema.cards.normalizedTerm, keys),
+        ),
+      ),
+  );
+  const held = new Map<string, HeldCard[]>();
+  for (const row of rows) holdCard(held, row);
+  return held;
+}
+
+function holdCard(held: Map<string, HeldCard[]>, row: HeldCard) {
+  const key = duplicateKey(row.card.language, row.card.normalizedTerm);
+  held.set(key, [...(held.get(key) ?? []), row]);
+}
+
+/**
+ * Which of these terms `addCards` would skip as a duplicate, found without writing anything, so a
+ * client can ask before it adds. ADR 0004.
+ */
+export async function duplicatesAmong(
+  { db, userId }: ServiceContext,
+  inputs: { term: string; language: string | null; pronunciation?: string | undefined }[],
+): Promise<boolean[]> {
+  const prepared = inputs.map(({ language, ...text }) => {
+    const { fields } = normalizeCardText(language, text);
+    return {
+      language,
+      key: termKey(language, fields.term),
+      reading: readingKey({ term: fields.term, language, pronunciation: fields.pronunciation }),
+    };
+  });
+  const held = await heldCards(
+    db,
+    userId,
+    prepared.map((p) => p.key),
+  );
+  return prepared.map(
+    ({ language, key, reading }) =>
+      held
+        .get(duplicateKey(language, key))
+        ?.some((row) => sameReading(readingKey(row.card), reading)) ?? false,
+  );
 }
 
 /** One card. Same rule as the batch, one outcome. */
@@ -188,27 +246,12 @@ export async function addCards(
     return { input, deck, language, key: termKey(language, input.term), normalized };
   });
 
-  const terms = prepared.flatMap((p) => (p.deck ? [p.key] : []));
-  const existingRows = await selectIn([...new Set(terms)], (keys) =>
-    db
-      .select({ card: schema.cards, deckName: schema.decks.name })
-      .from(schema.cards)
-      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-      .where(
-        and(
-          eq(schema.cards.userId, userId),
-          isNull(schema.cards.archivedAt),
-          inArray(schema.cards.normalizedTerm, keys),
-        ),
-      ),
+  const existing = await heldCards(
+    db,
+    userId,
+    prepared.flatMap((p) => (p.deck ? [p.key] : [])),
   );
-  // Several cards can share a key: homographs told apart by their readings.
-  const existing = new Map<string, { card: Card; deckName: string }[]>();
-  const hold = (row: { card: Card; deckName: string }) => {
-    const key = duplicateKey(row.card.language, row.card.normalizedTerm);
-    existing.set(key, [...(existing.get(key) ?? []), row]);
-  };
-  for (const row of existingRows) hold(row);
+  const hold = (row: HeldCard) => holdCard(existing, row);
 
   const now = new Date();
   const outcomes: RawOutcome[] = [];
@@ -347,13 +390,15 @@ export async function addCards(
     const source =
       actor === "mcp"
         ? "ai_mcp"
-        : actor === "api"
-          ? "api"
-          : options.fromLesson
-            ? "lesson"
-            : options.fromReadwise
-              ? "readwise"
-              : "typed";
+        : options.fromAnkiConnect
+          ? "anki_connect"
+          : actor === "api"
+            ? "api"
+            : options.fromLesson
+              ? "lesson"
+              : options.fromReadwise
+                ? "readwise"
+                : "typed";
     const converted = outcomes.filter((o) => o.status === "added" && o.normalized?.length).length;
     track(ctx.analytics, {
       name: "cards_added",

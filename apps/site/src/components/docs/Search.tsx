@@ -99,6 +99,17 @@ const TERMS: Record<string, string[]> = {
     "cloze",
     "progress",
   ],
+  "/docs/yomitan": [
+    "yomitan",
+    "yomichan",
+    "pop-up dictionary",
+    "browser extension",
+    "ankiconnect",
+    "look up",
+    "reading",
+    "jmdict",
+    "japanese",
+  ],
   "/docs/import-from-pleco": [
     "pleco",
     "chinese",

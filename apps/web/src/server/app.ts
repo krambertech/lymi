@@ -23,6 +23,7 @@ import { authenticate } from "./principal";
 import { account } from "./routes/account";
 import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
+import { ankiConnect } from "./routes/anki-connect";
 import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
@@ -263,6 +264,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 
 // Resend's delivery reports are signed, not sent with a session.
 app.route("/api/email/events", emailEvents);
+
+// AnkiConnect clients send the key in the body, so this door authenticates itself.
+app.route("/api/anki-connect", ankiConnect);
 
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only

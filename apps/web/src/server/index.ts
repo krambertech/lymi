@@ -8,6 +8,7 @@ import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { readwiseDeps } from "./readwise/deps";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
+import { sweepAnkiConnectUploads } from "./services/anki-connect";
 import { purgeCardAudio } from "./services/audio";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
@@ -53,6 +54,7 @@ export default {
       }),
     );
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
+    run("anki-connect-uploads", sweepAnkiConnectUploads(env.IMPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.

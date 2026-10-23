@@ -1058,3 +1058,25 @@ export type ReadwisePatchInput = z.infer<typeof ReadwisePatchInput>;
 export const apiKeyLimits = {
   name: ApiKeyInput.shape.name.maxLength,
 } satisfies Record<string, number | null>;
+
+/**
+ * One call in the AnkiConnect protocol, which Yomitan and other reading tools speak. Lymi answers
+ * it at `/api/anki-connect`, with a Lymi key in `key`. `multi` nests further calls in `params`.
+ */
+export const AnkiConnectCall = z.object({
+  action: z.string(),
+  version: z.number().int().optional(),
+  params: z.record(z.string(), z.unknown()).optional(),
+  key: z.string().optional(),
+});
+export type AnkiConnectCall = z.infer<typeof AnkiConnectCall>;
+
+/** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
+export const AnkiConnectNote = z.object({
+  deckName: z.string(),
+  modelName: z.string(),
+  fields: z.record(z.string(), z.string()),
+  tags: z.array(z.string()).optional(),
+  options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
+});
+export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;

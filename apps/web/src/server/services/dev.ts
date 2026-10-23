@@ -865,7 +865,7 @@ export async function reachGoal(ctx: ServiceContext): Promise<number> {
 }
 
 /**
- * Reopen today with its goal `left` reviews past what it holds, and at least that many cards due,
+ * Reopen today with the daily goal `left` reviews past what it holds, and at least that many cards due,
  * so the end of the review that turns the day can be played again. A met day goes back to open,
  * so the run drops by today until the goal is met again.
  */
@@ -878,6 +878,8 @@ export async function goalAhead(ctx: ServiceContext, left: number) {
     .update(schema.reviewDays)
     .set({ goal, outcome: "open", zeroDueConfirmedAt: null, updatedAt: new Date() })
     .where(eq(schema.reviewDays.id, day.id));
+  // The review draws to the settings' goal, so it moves too, or the day would read as met already.
+  await updateSettings(ctx, { dailyGoal: goal });
   const { due } = await devCounts(ctx);
   if (due < left) await setDue(ctx, left);
   return { attempts, goal };

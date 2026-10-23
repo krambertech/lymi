@@ -1,5 +1,10 @@
-/** What the Mac app's preload offers the page; absent in a browser. `apps/desktop/src/preload.cts`. */
+/**
+ * What the Mac app's preload offers the page; absent in a browser. `apps/desktop/src/preload.cts`.
+ * An installed app updates long after the web, so a method is only ever added, never renamed or
+ * removed, and one added after version 1 is optional here and called with `?.()`.
+ */
 export interface DesktopBridge {
+  version: number;
   hidePanel(): void;
   resizePanel(height: number): void;
   /** A `#rrggbb` the window fills with, so it matches the page's theme. */
@@ -12,6 +17,10 @@ export interface DesktopBridge {
   setPreference<K extends MacSetting>(key: K, value: MacPreferences[K]): Promise<MacSaved>;
   /** Asks macOS for Accessibility and opens its page in System Settings. */
   allowAccessibility(): void;
+  /** Pauses the quick-add shortcut while This Mac records a new one. */
+  setRecordingShortcut(on: boolean): void;
+  /** A product path the app asks the page to show, such as after ⌘Enter in quick add. */
+  onNavigate(listener: (path: string) => void): () => void;
   /** A command from the Mac's menu bar, such as `today` or `add_card`. */
   onMenuCommand(listener: (command: string) => void): () => void;
 }
@@ -60,11 +69,12 @@ export function shortcutLabel(accelerator: string): string {
 }
 
 /**
- * The accelerator a key press makes, or null until it holds ⌘, ⌃ or ⌥ and a letter, digit, Space
+ * The accelerator a key press makes, or null until it holds ⌘ or ⌃ and a letter, digit, Space
  * or F-key. By the key's place, so a Ukrainian layout records the same shortcut as an English one.
  */
 export function acceleratorFrom(e: KeyboardEvent | React.KeyboardEvent): string | null {
-  if (!(e.metaKey || e.ctrlKey || e.altKey)) return null;
+  // ⌥ alone types accents on a Mac, so a global shortcut needs ⌘ or ⌃; the app checks the same.
+  if (!(e.metaKey || e.ctrlKey)) return null;
   const key =
     /^Key([A-Z])$/.exec(e.code)?.[1] ??
     /^Digit(\d)$/.exec(e.code)?.[1] ??

@@ -116,6 +116,13 @@
   html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) [data-brand-tile] {
     visibility: hidden;
   }
+  /* Dialogs, sheets and toasts take clicks even where they cross the strip. */
+  html[data-shell="mac"] [role="dialog"],
+  html[data-shell="mac"] [role="alertdialog"],
+  html[data-shell="mac"] [data-slot="toast"] {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+  }
   html[data-shell="mac"]:not([data-surface="panel"]) body::before {
     content: "";
     position: fixed;

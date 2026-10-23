@@ -1,6 +1,6 @@
 # Lymi for Mac
 
-An Electron shell around the product: its window loads `my.lymi.app`, and it adds a lantern in the menu bar with the due count and a quick-add panel on ⌃⌥L. The panel is the product's `/desktop/add` page on the system's own material. The shape and what comes next are in [the proposal](../../docs/proposals/mac-desktop-app.md).
+An Electron shell around the product: its window loads `my.lymi.app`, and it adds a lantern in the menu bar with the due count and a quick-add panel on ⌃⌥L. The panel is the product's `/desktop/add` page, drawn as Lymi's plate in an opaque window that macOS rounds and shadows. The shape and what comes next are in [the proposal](../../docs/proposals/mac-desktop-app.md).
 
 This is a spike: no packaging, signing or updates yet. Sign-in goes through the system browser: the proposal's Sign-in section has the flow.
 
@@ -20,7 +20,7 @@ LYMI_URL=http://localhost:5263 LYMI_DEV_PERSONA=learner pnpm --filter @lymi/desk
 
 `pnpm install` skips Electron's binary download, so `dev` fetches it first. The menu bar icon is `assets/tray.svg`; `pnpm --filter @lymi/desktop tray-icon` renders its template PNGs (needs `rsvg-convert`). The app icon is `assets/icon.svg`, the product's icon on Apple's rounded-square grid; `pnpm --filter @lymi/desktop app-icon` renders `icon.png`, which the Dock shows in development, and `icon.icns` for packaging. Unpackaged, the menu bar's first menu still reads Electron, because macOS takes it from Electron's own bundle; a packaged Lymi.app fixes that.
 
-Without a persona the app starts signed out, and **Sign in…** in the tray menu opens `/desktop/sign-in` in the default browser. Unpackaged, macOS registers the generic Electron.app for `app.lymi.desktop` links, so the browser's hand-back reaches the running copy. A dev profile lives in `~/Library/Application Support/Lymi`; delete its `Partitions/lymi` to start signed out again.
+Without a persona the app starts signed out, and **Sign in…** in the tray menu opens `/desktop/sign-in` in the default browser. Unpackaged, macOS registers the generic Electron.app for `app.lymi.desktop` links, so the browser's hand-back reaches the running copy. A sign-in started before a restart cannot finish after it, because the PKCE verifier lives in memory; start it again. A dev profile lives in `~/Library/Application Support/Lymi`; delete its `Partitions/lymi` to start signed out again.
 
 ## Drive it from a script
 

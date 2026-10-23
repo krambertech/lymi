@@ -60,6 +60,8 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 | Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
 | Deployment package dry runs | — | — | production-affecting diffs | both |
 
+The Mac app in `apps/desktop` has no test runner of its own yet: its TypeScript is checked with the rest, its sign-in hand-off is covered by `apps/web/src/server/desktop-sign-in.test.ts`, and the shortcut rules by `apps/web/src/client/lib/desktop.test.ts`. A launch test with Playwright's `_electron` comes with packaging.
+
 - **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
 - **Pull request** and **Main** run `pnpm verify` in CI's `quality` job, with the component instances and journeys that `scripts/ci-plan.mjs` selects.

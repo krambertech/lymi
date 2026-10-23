@@ -3,16 +3,14 @@ import electron = require("electron");
 
 const { contextBridge, ipcRenderer } = electron;
 
-// The product makes room for the window's traffic lights and lets its top edge move the window.
-window.addEventListener("DOMContentLoaded", () => {
-  document.documentElement.dataset.shell = "mac";
-});
 ipcRenderer.on("window:full-screen", (_event, on: boolean) => {
   if (on) document.documentElement.dataset.fullScreen = "";
   else delete document.documentElement.dataset.fullScreen;
 });
 
+// Methods are only ever added, never renamed or removed: the web updates long before an installed app.
 contextBridge.exposeInMainWorld("lymiDesktop", {
+  version: 1,
   hidePanel: () => ipcRenderer.send("panel:hide"),
   resizePanel: (height: number) => ipcRenderer.send("panel:resize", height),
   setPanelBackground: (color: string) => ipcRenderer.send("panel:background", color),
@@ -21,6 +19,14 @@ contextBridge.exposeInMainWorld("lymiDesktop", {
   preferences: () => ipcRenderer.invoke("prefs:get"),
   setPreference: (key: string, value: unknown) => ipcRenderer.invoke("prefs:set", key, value),
   allowAccessibility: () => ipcRenderer.send("prefs:accessibility"),
+  setRecordingShortcut: (on: boolean) => ipcRenderer.send("prefs:recording", on),
+  onNavigate: (listener: (path: string) => void) => {
+    const handler = (_event: unknown, path: string) => listener(path);
+    ipcRenderer.on("app:navigate", handler);
+    return () => {
+      ipcRenderer.off("app:navigate", handler);
+    };
+  },
   onMenuCommand: (listener: (command: string) => void) => {
     const handler = (_event: unknown, command: string) => listener(command);
     ipcRenderer.on("menu:command", handler);

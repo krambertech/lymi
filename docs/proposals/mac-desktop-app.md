@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-10-23
-decision: An Electron shell for the Mac that loads my.lymi.app, with a menu bar lantern and a one-line quick-add panel on the system's own material
+decision: An Electron shell for the Mac that loads my.lymi.app, with a menu bar lantern and a one-line quick-add panel drawn as Lymi's plate
 ---
 
 # Mac desktop app
@@ -37,13 +37,13 @@ flowchart LR
   Kindle -->|uploads vocab.db as an import| API
 ```
 
-Only `my.lymi.app` loads inside a window. Every other link opens in the default browser through `setWindowOpenHandler` and `will-navigate`. Windows run with `contextIsolation` and `sandbox`, and the preload exposes one small bridge, `window.lymiDesktop`, which the web app feature-detects: `hidePanel()` and `selectedText()` for now.
+Only `my.lymi.app` loads inside a window: `will-navigate` and `will-redirect` send every other page to the default browser, a path is loaded only when it resolves to the product's origin, and every message from a page is refused unless it comes from the product. Windows run with `contextIsolation` and `sandbox`, and the session grants a page only clipboard writing, notifications and full screen. The preload exposes one bridge, `window.lymiDesktop`, which the web app feature-detects; its type is `DesktopBridge` in `apps/web/src/client/lib/desktop.ts`. An installed app updates long after the web, so the bridge carries a `version`, and a method is only ever added, never renamed or removed; one added after version 1 is optional on the web's side.
 
 ## Native parts
 
-**Menu bar.** A `Tray` with the lantern as a template image. Its title is the cards due now, the sum of `due` over `GET /api/decks`, fetched with the window's session through `session.fetch` every 15 minutes, on wake and after the panel adds. Zero shows no number. The tray menu has Review, Add a card, Open Lymi, Show due count, Open at login, and Quit.
+**Menu bar.** A `Tray` with the lantern as a template image. Its title is the cards due now, the sum of `due` over `GET /api/decks`, fetched with the window's session through `session.fetch` every 15 minutes, on wake and after the panel adds. Zero shows no number. The tray menu holds actions only: Add a card, Review, Open Lymi, Settings… and Quit, with Sign in… first while signed out. The count and the tray menu follow a sign-in or sign-out in a window at once, through the session cookie.
 
-**Quick-add panel.** `globalShortcut` (⌃⌥L by default, changeable in the tray menu) shows a `BrowserWindow` of `type: "panel"`. On macOS that window floats over full-screen apps and appears on every Space without taking focus from the app beneath. It renders a new route in `apps/web`, `/desktop/add`, so the form is the web's own code and ships with every web deploy. The route uses `writes.addCard`, so offline adds queue in the write outbox like every other add, and enrichment fills the empty fields, as every add in the app does. Esc or clicking away hides the panel.
+**Quick-add panel.** `globalShortcut` (⌃⌥L by default, changeable in This Mac) shows a `BrowserWindow` of `type: "panel"`. On macOS that window floats over full-screen apps and appears on every Space; it takes keyboard focus, as typing needs, without bringing Lymi's other windows forward. A panel that failed to load, such as at login before the network was up, loads again on the next press. It renders a new route in `apps/web`, `/desktop/add`, so the form is the web's own code and ships with every web deploy. The route uses `writes.addCard`, so offline adds queue in the write outbox like every other add, and enrichment fills the empty fields, as every add in the app does. Esc or clicking away hides the panel.
 
 **Launch at login.** `app.setLoginItemSettings({ openAtLogin })` registers the app with `SMAppService` as its main app service. It needs a signed, notarized build to work reliably. `app.setActivationPolicy("accessory")` hides the Dock icon while no main window is open, and `"regular"` brings it back when one opens.
 
@@ -88,7 +88,7 @@ Electron ships a major every eight weeks and supports the latest three, so a she
 
 ## Instrumentation
 
-The question: does adding from anywhere get used, and does it raise how many cards a week come from outside a lesson? `cards_added` gains `entry: "desktop_panel"` from the panel's requests through `x-lymi-client`, as the phone's App Intents add `entry: "shortcut"`. No event for opening the panel or the tray; adds are the outcome.
+The question: does adding from anywhere get used, and does it raise how many cards a week come from outside a lesson? The panel adds with `from=desktop_panel`, which rides in the queued write so an offline add keeps it, and `cards_added` then carries `entry: "desktop_panel"` beside its `typed` source. No event for opening the panel or the tray; adds are the outcome. The hidden panel sends no page view and never settles the day, so it cannot count a day as opened.
 
 ## Decided on 23 October
 

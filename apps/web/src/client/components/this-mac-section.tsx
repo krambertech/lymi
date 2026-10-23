@@ -18,7 +18,11 @@ export function ThisMacSection() {
   const { t } = useLingui();
   const bridge = desktop();
   const [prefs, setPrefs] = useState<MacPreferences | null>(null);
-  const [recording, setRecording] = useState(false);
+  const [recording, setRecordingState] = useState(false);
+  const setRecording = (on: boolean) => {
+    setRecordingState(on);
+    bridge?.setRecordingShortcut(on);
+  };
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -73,13 +77,13 @@ export function ThisMacSection() {
             label={t`Quick add`}
             description={
               recording
-                ? t`Press the new shortcut with ⌘, ⌃ or ⌥. Esc keeps the old one.`
+                ? t`Press the new shortcut with ⌘ or ⌃. Esc keeps the old one.`
                 : t`Opens quick add over any app.`
             }
           >
             <Button
               size="sm"
-              onClick={() => setRecording((on) => !on)}
+              onClick={() => setRecording(!recording)}
               onKeyDown={recording ? onRecordKey : undefined}
               onBlur={() => setRecording(false)}
               aria-label={t`Quick add shortcut: ${keys}. Change`}
@@ -125,15 +129,13 @@ export function ThisMacSection() {
   );
 }
 
-function Row({
-  label,
-  description,
-  children,
-}: {
+interface RowProps {
   label: string;
   description: string;
   children: ReactNode;
-}) {
+}
+
+function Row({ label, description, children }: RowProps) {
   return (
     <div className="flex items-center gap-3 px-4 py-3.5">
       <div className="grid min-w-0 flex-1 gap-0.5">
@@ -145,19 +147,15 @@ function Row({
   );
 }
 
-function SwitchRow({
-  label,
-  description,
-  checked,
-  onChange,
-  action,
-}: {
+interface SwitchRowProps {
   label: string;
   description: string;
   checked: boolean;
   onChange: (on: boolean) => void;
   action?: ReactNode;
-}) {
+}
+
+function SwitchRow({ label, description, checked, onChange, action }: SwitchRowProps) {
   return (
     <Field orientation="horizontal" className="relative gap-3 border-t border-edge px-4 py-3.5">
       <FieldContent className="gap-0.5">

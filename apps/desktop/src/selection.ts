@@ -12,14 +12,9 @@ press(true);
 press(false);`;
 const LONGEST = 120;
 
-let asked = false;
-
-/** Whether macOS lets the app press keys; asks once a run, which opens the system's own prompt. */
+/** Whether macOS lets the app press keys. Never asks: only This Mac's button does, once. */
 export function canCopySelection() {
-  if (process.platform !== "darwin") return false;
-  const trusted = systemPreferences.isTrustedAccessibilityClient(!asked);
-  asked = true;
-  return trusted;
+  return process.platform === "darwin" && systemPreferences.isTrustedAccessibilityClient(false);
 }
 
 /**

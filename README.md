@@ -42,6 +42,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
 apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+apps/desktop      Mac app: Electron shell around the product (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
 packages/design   Tokens, the lantern's geometry, flame rules and motion. Shared by the web, the site and the phone.

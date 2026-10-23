@@ -95,6 +95,7 @@ function DesktopAdd() {
         setLine(null);
         setPicking(false);
         setDeckId(null);
+        setGuessed(null);
         if (selection) setTerm(selection);
         input.current?.focus();
         input.current?.select();
@@ -109,13 +110,20 @@ function DesktopAdd() {
 
   useEffect(() => {
     if (deckId || !standsAlone(trimmed) || own.length < 2) return;
+    // An answer for an earlier term, arriving after a later one, is dropped.
+    let current = true;
     const timer = window.setTimeout(() => {
       api
         .chooseDeck({ term: trimmed })
-        .then((choice) => setGuessed(choice.deckId))
+        .then((choice) => {
+          if (current) setGuessed(choice.deckId);
+        })
         .catch(() => {});
     }, 350);
-    return () => window.clearTimeout(timer);
+    return () => {
+      current = false;
+      window.clearTimeout(timer);
+    };
   }, [deckId, trimmed, own.length]);
 
   function openList() {
@@ -173,6 +181,7 @@ function DesktopAdd() {
     try {
       const { outcome, queued } = await writes.addCard(
         addInput({ deckId: target.id, term: trimmed }),
+        "desktop_panel",
       );
       if (outcome.status === "skipped") {
         const existing = outcome.existing;
@@ -208,7 +217,12 @@ function DesktopAdd() {
 
   async function undo() {
     if (line?.kind !== "added") return;
-    await writes.archiveCard(line.cardId);
+    try {
+      await writes.archiveCard(line.cardId);
+    } catch (e) {
+      setLine({ kind: "failed", text: errorMessage(e) });
+      return;
+    }
     await refreshAfterCardWrite(qc);
     desktop()?.added();
     const archivedTerm = line.quoted;
@@ -235,7 +249,7 @@ function DesktopAdd() {
   }
 
   const status = line && (
-    <p role="status" className="flex min-w-0 items-center gap-2 text-sm text-text-2">
+    <p className="flex min-w-0 items-center gap-2 text-sm text-text-2">
       {line.kind === "added" && (
         <Check aria-hidden className="size-4 shrink-0 text-good" strokeWidth={2.5} />
       )}
@@ -274,6 +288,7 @@ function DesktopAdd() {
           aria-label={t`Term`}
           spellCheck={false}
           autoComplete="off"
+          dir="auto"
           className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-faint"
         />
         {target && (
@@ -336,6 +351,10 @@ function DesktopAdd() {
           {status || <p className="text-sm text-text-2">{t`Open Lymi to sign in`}</p>}
         </div>
       )}
+      {/* Mounted from the start, so a screen reader announces each line as it changes. */}
+      <p role="status" className="sr-only">
+        {line?.text ?? ""}
+      </p>
     </div>
   );
 }

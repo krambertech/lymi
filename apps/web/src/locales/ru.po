@@ -2951,6 +2951,9 @@ msgstr "Файл Lymi"
 msgid "Lymi for Mac {version}"
 msgstr "Lymi для Mac {version}"
 
+msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
+msgstr "Lymi для Mac откроется и выполнит вход. Когда это произойдёт, вкладку можно закрыть."
+
 msgid "Lymi home"
 msgstr "Главная Lymi"
 
@@ -3452,6 +3455,9 @@ msgstr "По одной странице"
 msgid "One side only"
 msgstr "Только одна сторона"
 
+msgid "Only continue if you just chose Sign in in Lymi for Mac."
+msgstr "Продолжайте, только если вы только что выбрали «Войти» в Lymi для Mac."
+
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
 
@@ -3504,6 +3510,9 @@ msgstr "Открыть Lymi"
 
 msgid "Open Lymi for Mac"
 msgstr "Открыть Lymi для Mac"
+
+msgid "Open Lymi for Mac again"
+msgstr "Открыть Lymi для Mac ещё раз"
 
 msgid "Open Lymi from the new icon."
 msgstr "Открой Lymi с новой иконки."
@@ -3701,8 +3710,8 @@ msgstr "Нажми Export, сохрани файл и выбери его зде
 msgid "Press keys"
 msgstr "Нажмите клавиши"
 
-msgid "Press the new shortcut with ⌘, ⌃ or ⌥. Esc keeps the old one."
-msgstr "Нажмите новое сочетание с ⌘, ⌃ или ⌥. Esc оставляет старое."
+msgid "Press the new shortcut with ⌘ or ⌃. Esc keeps the old one."
+msgstr "Нажмите новое сочетание с ⌘ или ⌃. Esc оставляет старое."
 
 msgid "Previous card"
 msgstr "Предыдущая карточка"
@@ -5187,9 +5196,6 @@ msgstr "На сегодня всё"
 
 msgid "You’re done for today."
 msgstr "На сегодня всё."
-
-msgid "You’re signed in on your Mac. You can close this tab."
-msgstr "Вы вошли на своём Mac. Эту вкладку можно закрыть."
 
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "Сегодня уже отправлено несколько кодов. Попробуй завтра."

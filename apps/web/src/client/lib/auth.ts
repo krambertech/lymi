@@ -1,8 +1,6 @@
-import { electronProxyClient } from "@better-auth/electron/proxy";
 import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { createAuthClient } from "better-auth/react";
-import { cookiePrefix } from "../../shared/cookies";
-import { DESKTOP_APP_SCHEME, safeProductReturnPath } from "../../shared/origins";
+import { safeProductReturnPath } from "../../shared/origins";
 import { clearStoredLanguage } from "./i18n";
 import { firstTouchData, withFirstTouch } from "./telemetry";
 
@@ -10,17 +8,11 @@ import { firstTouchData, withFirstTouch } from "./telemetry";
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
  * page's signed `oauth_query` to sign-in calls, so a sign-in that started from an MCP
  * client's authorize request resumes that request, and it types `authClient.oauth2.*`
- * for the consent page. The electron proxy hands a browser sign-in to the Mac app.
+ * for the consent page.
  */
 export const authClient = createAuthClient({
   basePath: "/api/auth",
-  plugins: [
-    oauthProviderClient(),
-    electronProxyClient({
-      protocol: { scheme: DESKTOP_APP_SCHEME },
-      cookiePrefix: cookiePrefix(window.location.origin),
-    }),
-  ],
+  plugins: [oauthProviderClient()],
 });
 
 /**

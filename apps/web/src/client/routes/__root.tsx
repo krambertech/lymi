@@ -133,20 +133,21 @@ function Shell() {
   // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
   const closed = shown.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
+  // The Mac app's panel loads hidden at every login, so it is no visit, no day opened and no rail.
   useEffect(() => {
-    capturePageview(location.pathname);
-  }, [location.pathname]);
+    if (!panel) capturePageview(location.pathname);
+  }, [location.pathname, panel]);
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
-  const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
+  const series = useQuery({ ...seriesQuery, enabled: !bare && !panel && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const smartAccess = useQuery({
     queryKey: ["lesson-reads", "access"],
     queryFn: api.lessonAccess,
-    enabled: !bare && me.isSuccess,
+    enabled: !bare && !panel && me.isSuccess,
     staleTime: Number.POSITIVE_INFINITY,
   });
   const leave = useSignOut();
-  useSettleToday(!bare && me.isSuccess);
+  useSettleToday(!bare && !panel && me.isSuccess);
   useRouteFocus();
 
   const appLanguage = settings.data?.appLanguage;
@@ -314,6 +315,9 @@ function Shell() {
   const onSmartAdd = smartAccess.data?.allowed
     ? () => openSmart(ownedActive ? activeDeckId : undefined)
     : undefined;
+  // The Mac app moves an open window to a product path instead of reloading it.
+  useEffect(() => desktop()?.onNavigate((path) => navigate({ href: path })), [navigate]);
+
   // The Mac app's menu bar runs the same commands as the command menu.
   useEffect(
     () =>

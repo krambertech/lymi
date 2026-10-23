@@ -59,6 +59,12 @@ type ProvingProvider = (typeof PROVING_PROVIDERS)[number];
 const CONFIRMATION_CODE_SECONDS = 15 * 60;
 
 /**
+ * The Electron plugin's route that starts a social sign-in from a bare link. The Mac app signs in
+ * through `/desktop/sign-in`, where the learner confirms the account, so this way round is closed.
+ */
+const UNUSED_ELECTRON_PATHS = ["/electron/init-oauth-proxy"];
+
+/**
  * The email OTP plugin's routes beyond sending and checking a confirmation code. Each is a way
  * in, or a way to set a password, that Lymi has not designed, such as a password on a Google
  * account, so none of them answers.
@@ -106,7 +112,7 @@ export function createAuth(
       `${DESKTOP_APP_SCHEME}:/`,
       "https://appleid.apple.com",
     ],
-    disabledPaths: UNUSED_OTP_PATHS,
+    disabledPaths: [...UNUSED_OTP_PATHS, ...UNUSED_ELECTRON_PATHS],
     database: drizzleAdapter(db, {
       provider: "sqlite",
       // D1 has no interactive transactions. Operations run one after another instead.

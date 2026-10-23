@@ -96,10 +96,11 @@ export const cardsApi = {
   },
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
-  addCard: (body: CardInput) => {
+  /** `from` labels analytics only: the Mac app's quick-add panel. */
+  addCard: (body: CardInput, from?: "desktop_panel") => {
     const json = JSON.stringify(body);
     // Kept alive, the add still lands when the page reloads or navigates away mid-send.
-    return request<AddCardOutcome>("/api/cards", {
+    return request<AddCardOutcome>(`/api/cards${from ? `?from=${from}` : ""}`, {
       method: "POST",
       body: json,
       keepalive: fitsKeepalive(json),

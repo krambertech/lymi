@@ -60,7 +60,7 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 | Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
 | Deployment package dry runs | — | — | production-affecting diffs | both |
 
-The Mac app in `apps/desktop` keeps its decisions in modules that import nothing from Electron, such as `origin.ts`, `settings.ts`, `callback.ts` and `term.ts`, and Vitest runs their tests in Node with the rest of `pnpm test`. The server side of its sign-in is `apps/web/src/server/desktop-sign-in.test.ts`, and the page's shortcut recording `apps/web/src/client/lib/desktop.test.ts`. A launch test with Playwright's `_electron` comes with packaging.
+The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. Nothing launches Electron in CI.
 
 - **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.

@@ -72,13 +72,16 @@ The repository is private, so `update.electronjs.org`, which reads public GitHub
 
 electron-builder lost: it has an R2 publisher and differential updates, but it is a third-party tool with its own updater, and the shell changes so rarely that a full download per release does not matter.
 
-## Keeping Electron cheap
+## Keeping it trivial to maintain
 
-Electron ships a major every eight weeks and supports the latest three, so a shell left alone falls out of support in about six months.
+The app is a browser around the product, and the product has its own tests, so the app's checks cover only what is unique to it. All of them run on every pull request, in seconds, with nothing to start by hand.
 
-- Dependabot, configured for `apps/desktop` only, opens one grouped weekly pull request for `electron` and `@electron-forge/*`.
-- CI on a macOS runner packages the app and runs a Playwright `_electron` smoke test: the app launches against a local page, the tray exists, the shortcut's handler shows the panel, and the panel loads its route.
-- A green bump merges and the next release ships it. The shell holds almost no code, so a major rarely breaks it.
+- **The contract between the app and the page** is one set of types in `packages/client/src/desktop.ts`: the bridge, each message and what it carries, and the menu's commands. The page, the preload and the app's handlers are typed by it, so a renamed message, a handler left out or a menu command the page does not answer fails to compile.
+- **The app's own rules** live in modules with no Electron in them (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`) and have unit tests: the origin boundary, the shortcut rule, saved settings, the sign-in link and cookie copy, telling a sign-in from a session refresh, and the selected text.
+- **The pages only the app shows**, the quick-add panel and This Mac, have component tests against a stand-in for the app, and the server's side of the sign-in hand-off has its own.
+- **Electron stays current by itself:** Dependabot opens one pull request a week for `electron` alone, and Electron's own types change with it, so TypeScript and the tests say whether an upgrade touched anything the app uses. A green one merges.
+
+No end-to-end suite and no CI job that launches Electron: they would mostly test the browser again. A short check by hand before a release is worth it only when the release changes `apps/desktop` itself.
 
 ## Not in the first version
 

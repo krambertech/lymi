@@ -96,3 +96,26 @@ test("leaving the screen with a changed name saves it once", async () => {
   await page.getByRole("button", { name: "Leave" }).click();
   expect(onRename).toHaveBeenCalledExactlyOnceWith("Kateryna P.");
 });
+
+test("going back to the stored name while a save is out sends it", async () => {
+  const onRename = vi.fn();
+  const client = new QueryClient();
+  await render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>
+        <AccountGroup name="Kateryna" email="learner@lymi.local" onRename={onRename} />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  await userEvent.type(field(), " P.");
+  await userEvent.tab();
+  // The rename to "Kateryna P." has not landed, so the stored name is still "Kateryna".
+  void client
+    .getMutationCache()
+    .build(client, { mutationKey: ["rename"], mutationFn: () => new Promise(() => {}) })
+    .execute(undefined);
+  await userEvent.clear(field());
+  await userEvent.type(field(), "Kateryna");
+  await userEvent.tab();
+  expect(onRename.mock.calls).toEqual([["Kateryna P."], ["Kateryna"]]);
+});

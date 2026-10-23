@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { inspectImage, NameInput } from "@lymi/core";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useIsMutating, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -36,6 +36,7 @@ const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,image/avif";
 const NAME_MAX = NameInput.shape.name.maxLength ?? undefined;
 /** The share of the limit past which the field says how much room is left. */
 const NEARLY_FULL = 0.9;
+const RENAME = ["rename"];
 
 interface GroupProps {
   name: string | undefined;
@@ -146,6 +147,7 @@ function NameField({ name, onSave }: { name: string; onSave: (name: string) => v
   const [invalid, setInvalid] = useState<string | undefined>();
   /** The last name handed to `onSave`, so the unmount after a blur does not send it again. */
   const sent = useRef(name);
+  const saving = useIsMutating({ mutationKey: RENAME }) > 0;
 
   // A save lands, or another device renamed the learner; a field being typed in keeps its draft.
   useEffect(() => {
@@ -158,7 +160,9 @@ function NameField({ name, onSave }: { name: string; onSave: (name: string) => v
       return value.trim() ? t`Keep your name under ${NAME_MAX} characters.` : t`Write your name.`;
     }
     const next = parsed.data.name;
-    if (next !== name && !(leaving && next === sent.current)) {
+    // While a save is out the stored name is not yet the latest, so going back to it still sends.
+    const current = saving ? sent.current : name;
+    if (next !== current && !(leaving && next === sent.current)) {
       sent.current = next;
       onSave(next);
     }
@@ -216,6 +220,7 @@ export function useRename() {
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const rename = useMutation({
+    mutationKey: RENAME,
     mutationFn: (name: string) => api.rename(name),
     onMutate: () => {
       window.clearTimeout(timer.current);

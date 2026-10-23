@@ -350,6 +350,18 @@ describe("translating examples", () => {
     expect((await showCard(ctx, outcome.card.id)).exampleTranslationStatus).toBeNull();
   });
 
+  it("takes back an example longer than the limit unchanged, and refuses a new one", async () => {
+    const card = await add({ term: "essen 16", example: "Ich esse Brot." });
+    const long = "Ein langer Satz. ".repeat(20).trim();
+    await db.update(schema.cards).set({ example: long }).where(eq(schema.cards.id, card.id));
+    expect((await updateCard(ctx, card.id, { example: long, meaning: "to dine" })).meaning).toBe(
+      "to dine",
+    );
+    await expect(updateCard(ctx, card.id, { example: `${long} Noch mehr.` })).rejects.toMatchObject(
+      { code: "invalid" },
+    );
+  });
+
   it("writes in the learner's meaning language", async () => {
     const card = await add({ term: "essen 15", example: "Ich esse Brot." });
     const provider = translator(english);

@@ -132,10 +132,7 @@ export function withoutTranslationField(value: unknown): unknown {
   return out;
 }
 
-/**
- * Leaves the example's translation out of a deck's AI fields for a phone release that has no
- * name for it, since its frozen contract lists the fields as a closed set. ADR 0032.
- */
+/** Leaves the translation out of a deck's AI fields for a release whose frozen contract lists them as a closed set. */
 export const leaveOutTranslationField: MiddlewareHandler<AppEnv> = async (c, next) => {
   await next();
   if (!c.get("phone") || clientSupports(c, EXAMPLE_TRANSLATION_SINCE)) return;

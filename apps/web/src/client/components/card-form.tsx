@@ -680,13 +680,12 @@ export function CardForm(props: CardFormProps) {
   // AI to write again rather than saving the old one as the learner's.
   const changeExample = (next: string) => {
     setExample(next);
-    if (
-      card?.exampleTranslationSource === "ai" &&
-      translation === (card.exampleTranslation ?? "") &&
-      exampleShown(next) !== exampleShown(card.example ?? "")
-    ) {
-      setTranslation("");
-    }
+    if (card?.exampleTranslationSource !== "ai") return;
+    const theirs = card.exampleTranslation ?? "";
+    const original = exampleShown(next) === exampleShown(card.example ?? "");
+    // Typed back to the example it was written for, the AI's translation fits it again.
+    if (original && !translation) setTranslation(theirs);
+    else if (!original && translation === theirs) setTranslation("");
   };
   const exampleChanged = exampleShown(example) !== exampleShown(card?.example ?? "");
   const aiTranslates =

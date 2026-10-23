@@ -32,12 +32,7 @@ function stillUntranslated(userId: string, card: Pick<Card, "id" | "example">) {
   );
 }
 
-/**
- * Translate the examples of a run's cards into the learner's meaning language. A run reads each
- * example when it starts and writes only while the card still holds it, so an edit made meanwhile
- * wins and the run that edit queued translates the new example; out-of-order runs therefore never
- * land an older sentence's translation. A card with nothing left to translate just settles.
- */
+/** Translates a run's examples, writing each only while its card still holds that example. ADR 0038. */
 export async function translateExamples(
   ctx: ServiceContext,
   cardIds: readonly string[],
@@ -184,15 +179,16 @@ export function failTranslations(db: Db, userId: string, cardIds: readonly strin
   return settleTranslations(db, userId, cardIds, "failed");
 }
 
-/** Every listed card still waiting on a translation stops waiting, as `status` says. */
+/** Every listed card still waiting on a translation stops waiting; resolves to how many were. */
 export async function settleTranslations(
   db: Db,
   userId: string,
   cardIds: readonly string[],
   status: "failed" | null = null,
-) {
+): Promise<number> {
+  let settled = 0;
   for (const slice of chunked(cardIds, 90)) {
-    await db
+    const rows = await db
       .update(schema.cards)
       .set({ exampleTranslationStatus: status })
       .where(
@@ -201,6 +197,9 @@ export async function settleTranslations(
           inArray(schema.cards.id, slice),
           eq(schema.cards.exampleTranslationStatus, "working"),
         ),
-      );
+      )
+      .returning({ id: schema.cards.id });
+    settled += rows.length;
   }
+  return settled;
 }

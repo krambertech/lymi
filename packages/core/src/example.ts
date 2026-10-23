@@ -1,8 +1,4 @@
-/**
- * How long an example and its translation may be, in the characters a reader sees: an inline
- * reading such as `食[た]` and a stress mark count for nothing, so a Japanese sentence gets the
- * same room as a German one.
- */
+/** How long an example and its translation may be in characters as shown, readings and stress not counted. */
 export const EXAMPLE_LENGTH = 250;
 
 /** Inline readings in any language's notation, and the combining acute that marks stress. */
@@ -24,10 +20,7 @@ export function fitsExample(text: string): boolean {
   return shownLength(text) <= EXAMPLE_LENGTH;
 }
 
-/**
- * A short key for the sentence a translation was written for. It reads the example as shown, so
- * readings or stress marks added to the same sentence leave its translation current.
- */
+/** A key for the sentence as shown, so readings or stress added to it leave its translation current. */
 export function exampleFingerprint(example: string): string {
   const text = exampleShown(example);
   // cyrb53: two 32-bit lanes, enough that two sentences of one card never collide.
@@ -50,10 +43,7 @@ export type TranslatedExample = {
   exampleTranslationOf: string | null;
 };
 
-/**
- * True when the card's translation was written for an earlier example. A translation stored
- * without a fingerprint, such as one an import brought, is taken as written for the example.
- */
+/** True when the card's translation was written for an earlier example; one without a fingerprint never is. */
 export function translationStale(card: TranslatedExample): boolean {
   if (!card.example || !card.exampleTranslation || card.exampleTranslationOf === null) return false;
   return card.exampleTranslationOf !== exampleFingerprint(card.example);

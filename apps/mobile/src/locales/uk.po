@@ -2575,6 +2575,9 @@ msgstr "Залиш Tab і New line. Якщо в картці є переноси
 msgid "Keep the decks"
 msgstr "Залишити колоди"
 
+msgid "Keep the example under 250 characters."
+msgstr "Приклад має бути коротшим за 250 символів."
+
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
 

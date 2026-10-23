@@ -11,11 +11,13 @@ import {
   type DeckEnrichField,
   deckEnrichFields,
   duplicateKey,
+  EXAMPLE_LENGTH,
   emptyFields,
   enrichmentStalled,
   exampleFingerprint,
   exampleShown,
   fieldsToFill,
+  fitsExample,
   foldApostrophes,
   type NormalizedField,
   needsEnrichment,
@@ -851,10 +853,7 @@ function sourceAfter(text: string | null | undefined, stated: FieldSource | null
   return text ? ("manual" as const) : null;
 }
 
-/**
- * Given an enrichment queue, an edit that changes an example the AI translated, or the learner's
- * first example in the app, queues its translation.
- */
+/** Given an enrichment queue, an edit that leaves an example to translate queues it. ADR 0038. */
 export async function updateCard(
   ctx: ServiceContext,
   id: string,
@@ -1021,11 +1020,7 @@ function correctionsOf(
   });
 }
 
-/**
- * What an edit does to the example's translation. The learner's own translation is theirs as
- * sent; a changed example drops one the AI wrote and asks for another, while one a person wrote
- * stays and reads as stale until they rewrite it. An example emptied takes its translation with it.
- */
+/** What an edit does to the example's translation, by the rules in ADR 0038. */
 function translationAfter(
   ctx: ServiceContext,
   lookups: EditLookups,
@@ -1106,6 +1101,13 @@ function editWrite(
     pronunciation: sent.pronunciation === undefined ? current.pronunciation : sent.pronunciation,
   });
   const patch = { ...sent };
+  if (
+    patch.example !== undefined &&
+    patch.example !== (current.example ?? "") &&
+    !fitsExample(patch.example)
+  ) {
+    throw new ServiceError("invalid", `Keep the example under ${EXAMPLE_LENGTH} characters.`);
+  }
   if (text.normalized.includes("term")) patch.term = text.fields.term;
   if (text.normalized.includes("pronunciation")) patch.pronunciation = text.fields.pronunciation;
   if (patch.deckId && patch.deckId !== current.deckId && !lookups.ownedDecks.has(patch.deckId)) {
@@ -1138,7 +1140,8 @@ function editWrite(
         speechInputs(current.language).some(
           (field) => patch[field] !== undefined && patch[field] !== current[field],
         );
-  const { reviewModes, directions: _legacy, ...fields } = patch;
+  // The translation's source is written with its text, in `translationAfter`, never on its own.
+  const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {

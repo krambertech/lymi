@@ -746,6 +746,15 @@ export const CardPatch = CardInput.partial()
   .omit({ id: true, deckId: true, enrich: true })
   .extend({
     deckId: z.string().min(1).optional(),
+    // The service checks the shown length of a changed example, so an older, longer one can be sent back as it is.
+    example: z
+      .string()
+      .trim()
+      .max(CARD_LIMITS.example)
+      .optional()
+      .meta({
+        description: `${CardInput.shape.example.description ?? ""} Sending back the example a card already has is always accepted.`,
+      }),
   });
 export type CardPatch = z.infer<typeof CardPatch>;
 

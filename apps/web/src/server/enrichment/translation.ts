@@ -82,10 +82,7 @@ const Reply = z.object({
   cards: z.array(z.object({ id: z.string(), translation: z.string().nullable().catch(null) })),
 });
 
-/**
- * Each card's translation, or null where the model gave none or one that would not fit the card.
- * A card the reply leaves out is missing from the map.
- */
+/** Each card's translation, null where the model gave none that fits, and missing where it left the card out. */
 export function readTranslations(reply: unknown): Map<string, string | null> {
   const parsed = Reply.safeParse(reply);
   if (!parsed.success) return new Map();

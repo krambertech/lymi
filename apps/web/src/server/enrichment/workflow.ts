@@ -101,11 +101,11 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
           );
         } catch (err) {
           await step.do(`translate fail ${index}`, STEP, async () => {
-            await failTranslations(db, params.userId, ids);
+            const failed = await failTranslations(db, params.userId, ids);
             track(analytics, {
               name: "example_translated",
               outcome: "failed",
-              count: ids.length,
+              count: failed,
               trigger,
             });
             await analytics.flush();

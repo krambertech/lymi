@@ -98,7 +98,14 @@ decks.post(
     errors: [400],
   }),
   body(NewDeckInput, "deck"),
-  async (c) => c.json(await createDeck(ctxOf(c), c.req.valid("json")), 201),
+  async (c) => {
+    const input = c.req.valid("json");
+    // A release that never listed the translation gets it wherever it chose AI examples.
+    if (input.enrichFields?.includes("example") && !clientSupports(c, EXAMPLE_TRANSLATION_SINCE)) {
+      input.enrichFields = [...input.enrichFields, "exampleTranslation"];
+    }
+    return c.json(await createDeck(ctxOf(c), input), 201);
+  },
 );
 
 decks.get(

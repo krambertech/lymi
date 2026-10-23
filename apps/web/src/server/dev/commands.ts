@@ -116,8 +116,12 @@ export const commands: DevCommand[] = [
     keywords: "streak replay celebration spark again",
     blocked: noCards,
     run: async (ctx, { count }) => {
-      const { goal } = await goalAhead(ctx, count);
-      return `Today's goal is now ${goal}, ${count === 1 ? "1 review" : `${count} reviews`} away.`;
+      const { attempts, goal } = await goalAhead(ctx, count);
+      const away = goal - attempts;
+      const reviews = away === 1 ? "1 review" : `${away} reviews`;
+      return away < count
+        ? `Today's goal is now ${goal}, the most it can be, ${reviews} away.`
+        : `Today's goal is now ${goal}, ${reviews} away.`;
     },
   },
   {

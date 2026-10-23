@@ -1,5 +1,6 @@
 import {
   type Actor,
+  DailyGoal,
   dayWindow,
   emptyState,
   type Rating,
@@ -872,7 +873,8 @@ export async function reachGoal(ctx: ServiceContext): Promise<number> {
 export async function goalAhead(ctx: ServiceContext, left: number) {
   const zone = await reviewZone(ctx);
   const { attempts } = (await streak(ctx)).today;
-  const goal = attempts + left;
+  // A goal tops out where the settings allow, so near it fewer than `left` may be left.
+  const goal = Math.min(attempts + left, DailyGoal.maxValue ?? attempts + left);
   const day = await openDay(ctx, dateFormatter(zone).format(new Date()), zone, goal);
   await ctx.db
     .update(schema.reviewDays)
@@ -882,7 +884,8 @@ export async function goalAhead(ctx: ServiceContext, left: number) {
   await updateSettings(ctx, { dailyGoal: goal });
   // Cards left past the goal, as on most days, so the review stops at the goal rather than running out.
   const { due } = await devCounts(ctx);
-  if (due < left + 5) await setDue(ctx, left + 5);
+  const ahead = goal - attempts + 5;
+  if (due < ahead) await setDue(ctx, ahead);
   return { attempts, goal };
 }
 

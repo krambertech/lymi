@@ -256,6 +256,9 @@ async function onLink(link: string) {
   openMain();
 }
 
+// A packaged build takes its name and icon from its bundle; unpackaged, this is Electron's own.
+app.setName("Lymi");
+
 // Unpackaged, macOS registers Electron.app itself, so a link reaches this running copy.
 if (process.defaultApp) {
   app.setAsDefaultProtocolClient(SCHEME, process.execPath, [resolve(process.argv[1] ?? ".")]);
@@ -270,6 +273,8 @@ app.on("open-url", (event, link) => {
 
 app.whenReady().then(async () => {
   if (process.platform === "darwin") app.setActivationPolicy("accessory");
+  if (process.defaultApp) app.dock?.setIcon(join(assets, "icon.png"));
+  app.setAboutPanelOptions({ applicationName: "Lymi", iconPath: join(assets, "icon.png") });
   ses = session.fromPartition("persist:lymi");
   prefs = readPreferences();
   if (DEV_PERSONA) {

@@ -116,7 +116,8 @@ export function Sidebar({
         className,
       )}
     >
-      <div className="mx-3 mt-8 mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
+      {/* The Mac app's window has no title bar, so its traffic lights take room at the top. */}
+      <div className="mx-3 mt-[calc(32px+var(--mac-title-bar,0px))] mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
         <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (

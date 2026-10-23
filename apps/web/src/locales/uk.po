@@ -1120,6 +1120,9 @@ msgstr "anki quizlet pleco імпорт"
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
+msgid "Another app already uses that shortcut. Try a different one."
+msgstr "Це поєднання вже зайняте іншою програмою. Спробуйте інше."
+
 msgid "Another draft"
 msgstr "Інша чернетка"
 
@@ -1303,6 +1306,9 @@ msgstr "Назад до днів поспіль"
 
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервної копії на ноутбуці"
+
+msgid "Beside the lantern, when cards are due."
+msgstr "Поруч із ліхтариком, коли є картки до повторення."
 
 msgid "Beta"
 msgstr "Бета"
@@ -1822,6 +1828,9 @@ msgstr "Не вдалося вилучити учасника. Спробуй щ
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t save that. Try again."
+msgstr "Не вдалося зберегти. Спробуйте ще раз."
+
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
@@ -2105,6 +2114,9 @@ msgstr "Коли повторювати"
 msgid "Due by deck"
 msgstr "До повторення за колодами"
 
+msgid "Due count in the menu bar"
+msgstr "Кількість карток у рядку меню"
+
 msgid "Due date"
 msgstr "Дата повторення"
 
@@ -2320,6 +2332,9 @@ msgstr "Поля «{0}»"
 
 msgid "File"
 msgstr "Файл"
+
+msgid "Fill in selected text"
+msgstr "Вставляти виділений текст"
 
 msgid "Filter"
 msgstr "Фільтр"
@@ -2933,6 +2948,9 @@ msgstr "Lymi не розпізнає цей застосунок. Дозволя
 msgid "Lymi file"
 msgstr "Файл Lymi"
 
+msgid "Lymi for Mac {version}"
+msgstr "Lymi для Mac {version}"
+
 msgid "Lymi home"
 msgstr "Головна Lymi"
 
@@ -2947,6 +2965,12 @@ msgstr "Lymi пише перші колоди. А поки що створи в�
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
+
+msgid "Lymi waits in the menu bar from the moment you sign in to your Mac."
+msgstr "Lymi чекатиме в рядку меню щойно ви ввійдете на Mac."
+
+msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
+msgstr "Спершу дозвольте Lymi в macOS: «Приватність і безпека», «Доступність»."
 
 msgid "Made the deck {deck}"
 msgstr "Створено колоду «{deck}»"
@@ -3454,6 +3478,9 @@ msgstr "Відкрити"
 msgid "Open “{0}” in {1}"
 msgstr "Відкрити «{0}» у колоді {1}"
 
+msgid "Open at login"
+msgstr "Відкривати під час входу"
+
 msgid "Open deck"
 msgstr "Відкрити колоду"
 
@@ -3487,6 +3514,9 @@ msgstr "Відкрий Lymi в Safari і торкнись «Поділитися
 msgid "Open Lymi to sign in"
 msgstr "Відкрийте Lymi, щоб увійти"
 
+msgid "Open System Settings"
+msgstr "Відкрити Системні параметри"
+
 msgid "Open the invitation"
 msgstr "Відкрити запрошення"
 
@@ -3495,6 +3525,9 @@ msgstr "Відкрийте цю сторінку з Lymi для Mac, щоб ув
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Відкрий меню браузера і вибери «Встановити Lymi». Не кожен браузер це пропонує."
+
+msgid "Opens quick add over any app."
+msgstr "Відкриває швидке додавання поверх будь-якої програми."
 
 msgid "Optional"
 msgstr "Необов’язково"
@@ -3665,6 +3698,12 @@ msgstr "Натисни <0>Export now</0>, збережи файл і вибер�
 msgid "Press Export, save the file, then choose it here."
 msgstr "Натисни Export, збережи файл і вибери його тут."
 
+msgid "Press keys"
+msgstr "Натисніть клавіші"
+
+msgid "Press the new shortcut with ⌘, ⌃ or ⌥. Esc keeps the old one."
+msgstr "Натисніть нове поєднання з ⌘, ⌃ або ⌥. Esc залишає старе."
+
 msgid "Previous card"
 msgstr "Попередня картка"
 
@@ -3702,6 +3741,15 @@ msgstr "Вимова з уроку"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "опубліковані колоди"
+
+msgid "Quick add"
+msgstr "Швидке додавання"
+
+msgid "Quick add shortcut: {keys}. Change"
+msgstr "Клавіші швидкого додавання: {keys}. Змінити"
+
+msgid "Quick add starts with the text you selected in the app in front."
+msgstr "Швидке додавання починається з тексту, виділеного в програмі на передньому плані."
 
 msgid "Quickstart"
 msgstr "Швидкий старт"
@@ -4030,6 +4078,9 @@ msgstr "Збережено на цьому пристрої, доки Lymi не 
 
 msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
 msgstr "Збережено на цьому пристрої. Для зображень потрібне з’єднання, тож додай його, коли знову будеш онлайн."
+
+msgid "Saved on this Mac only, so each Mac keeps its own."
+msgstr "Зберігається лише на цьому Mac, тож кожен Mac має свої."
 
 msgid "Saving…"
 msgstr "Збереження…"
@@ -4705,6 +4756,9 @@ msgstr "Це посилання перестало працювати. Попр�
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "У цьому посиланні немає застосунку, який надіслав запит. Почни знову із застосунку."
+
+msgid "This Mac"
+msgstr "Цей Mac"
 
 msgid "This shelf has no page"
 msgstr "У цієї полиці немає сторінки"

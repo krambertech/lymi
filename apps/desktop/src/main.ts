@@ -1,3 +1,4 @@
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
   app,
@@ -14,6 +15,8 @@ import {
   systemPreferences,
   Tray,
 } from "electron";
+import { type MenuCommand, setAppMenu } from "./menu.js";
+import { type Preferences, readPreferences, writePreferences } from "./preferences.js";
 import { canCopySelection, selectedText } from "./selection.js";
 import { completeSignIn, requestSignIn, SCHEME } from "./sign-in.js";
 
@@ -21,7 +24,6 @@ const PRODUCT_URL = new URL(process.env.LYMI_URL ?? "https://my.lymi.app").origi
 const LOOPBACK = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(PRODUCT_URL);
 // A local persona instead of a sign-in, never against production. docs/local-dev.md.
 const DEV_PERSONA = LOOPBACK ? process.env.LYMI_DEV_PERSONA : undefined;
-const SHORTCUT = "Control+Alt+L";
 const PANEL_WIDTH = 480;
 const DUE_EVERY_MS = 15 * 60_000;
 const assets = join(app.getAppPath(), "assets");
@@ -31,8 +33,7 @@ let ses: Session;
 let tray: Tray | null = null;
 let panel: BrowserWindow | null = null;
 let main: BrowserWindow | null = null;
-let showDue = true;
-let fillSelection = true;
+let prefs: Preferences;
 let due: number | null = null;
 let signedIn = true;
 // Google refuses sign-in inside an app's window, and the browser holds the passkeys, so these go there.
@@ -68,6 +69,9 @@ function openMain(path = "/today") {
     width: 1280,
     height: 840,
     minWidth: 380,
+    // No title bar: the traffic lights sit at the top of the product's rail, as in other Mac apps.
+    titleBarStyle: "hidden",
+    trafficLightPosition: { x: 20, y: 20 },
     show: false,
     webPreferences: webPreferences(),
   });
@@ -114,7 +118,7 @@ async function showPanel() {
     return;
   }
   // Copied before the panel shows, while the app the learner was reading still has the selection.
-  const selection = fillSelection && canCopySelection() ? await selectedText() : null;
+  const selection = prefs.fillSelection && canCopySelection() ? await selectedText() : null;
   const { workArea } = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
   panel.setPosition(
     Math.round(workArea.x + (workArea.width - PANEL_WIDTH) / 2),
@@ -140,9 +144,8 @@ async function refreshDue() {
 
 function renderTray() {
   if (!tray) return;
-  tray.setTitle(showDue && due ? String(due) : "", { fontType: "monospacedDigit" });
+  tray.setTitle(prefs.showDue && due ? String(due) : "", { fontType: "monospacedDigit" });
   tray.setToolTip(due ? `Lymi · ${due} due` : "Lymi");
-  const login = app.getLoginItemSettings();
   tray.setContextMenu(
     Menu.buildFromTemplate([
       ...(signedIn
@@ -151,42 +154,79 @@ function renderTray() {
             { label: "Sign in…", click: () => void requestSignIn(PRODUCT_URL) },
             { type: "separator" as const },
           ]),
-      { label: "Add a card", accelerator: SHORTCUT, click: () => void showPanel() },
-      { label: "Review", click: () => openMain("/review") },
+      { label: "Add a card", accelerator: prefs.shortcut, click: () => void showPanel() },
+      { label: "Review", click: () => runCommand("review") },
       { label: "Open Lymi", click: () => openMain() },
       { type: "separator" },
-      {
-        label: "Show due count",
-        type: "checkbox",
-        checked: showDue,
-        click: () => {
-          showDue = !showDue;
-          renderTray();
-        },
-      },
-      {
-        label: "Fill in selected text",
-        type: "checkbox",
-        checked: fillSelection,
-        click: () => {
-          fillSelection = !fillSelection;
-          renderTray();
-        },
-      },
-      {
-        label: "Open at login",
-        type: "checkbox",
-        checked: login.openAtLogin,
-        click: () => {
-          app.setLoginItemSettings({ openAtLogin: !login.openAtLogin });
-          renderTray();
-        },
-      },
+      { label: "Settings…", click: () => runCommand("settings") },
       { type: "separator" },
       { label: "Quit Lymi", role: "quit" },
     ]),
   );
 }
+
+/** A menu command goes to the product's page, which owns what each one does. */
+function runCommand(command: MenuCommand) {
+  if (main && !main.isDestroyed()) {
+    main.show();
+    main.focus();
+    main.webContents.send("menu:command", command);
+    return;
+  }
+  openMain();
+  main?.webContents.once("did-finish-load", () => main?.webContents.send("menu:command", command));
+}
+
+function refreshMenus() {
+  renderTray();
+  setAppMenu({ run: runCommand, quickAdd: () => void showPanel(), shortcut: prefs.shortcut });
+}
+
+/** Moves the quick-add shortcut, keeping the old one when another app already holds the new. */
+function moveShortcut(next: string) {
+  globalShortcut.unregister(prefs.shortcut);
+  let taken = false;
+  try {
+    taken = !globalShortcut.register(next, () => void showPanel());
+  } catch {
+    taken = true;
+  }
+  if (taken) {
+    globalShortcut.register(prefs.shortcut, () => void showPanel());
+    return false;
+  }
+  prefs = { ...prefs, shortcut: next };
+  return true;
+}
+
+const preferencesOut = () => ({
+  ...prefs,
+  openAtLogin: app.getLoginItemSettings().openAtLogin,
+  accessibility: systemPreferences.isTrustedAccessibilityClient(false),
+  version: app.getVersion(),
+});
+
+ipcMain.handle("prefs:get", () => preferencesOut());
+ipcMain.handle("prefs:set", (_event, key: unknown, value: unknown) => {
+  if (key === "shortcut" && typeof value === "string") {
+    if (!moveShortcut(value)) return { ok: false, reason: "taken", preferences: preferencesOut() };
+  } else if (key === "showDue" && typeof value === "boolean") prefs = { ...prefs, showDue: value };
+  else if (key === "fillSelection" && typeof value === "boolean") {
+    prefs = { ...prefs, fillSelection: value };
+  } else if (key === "openAtLogin" && typeof value === "boolean") {
+    app.setLoginItemSettings({ openAtLogin: value });
+  } else return { ok: false, reason: "invalid", preferences: preferencesOut() };
+  writePreferences(prefs);
+  refreshMenus();
+  return { ok: true, preferences: preferencesOut() };
+});
+// macOS shows its own prompt once, then the learner switches Lymi on in System Settings.
+ipcMain.on("prefs:accessibility", () => {
+  systemPreferences.isTrustedAccessibilityClient(true);
+  void shell.openExternal(
+    "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
+  );
+});
 
 ipcMain.on("panel:hide", () => panel?.hide());
 // The page's plate colour, so the window matches the learner's theme rather than the system's.
@@ -231,6 +271,7 @@ app.on("open-url", (event, link) => {
 app.whenReady().then(async () => {
   if (process.platform === "darwin") app.setActivationPolicy("accessory");
   ses = session.fromPartition("persist:lymi");
+  prefs = readPreferences();
   if (DEV_PERSONA) {
     // Signs the window session in as a seeded persona; the route sets the cookie and redirects.
     await ses.fetch(productUrl(`/api/dev/sign-in?as=${encodeURIComponent(DEV_PERSONA)}`), {
@@ -240,15 +281,22 @@ app.whenReady().then(async () => {
   const icon = nativeImage.createFromPath(join(assets, "trayTemplate.png"));
   icon.setTemplateImage(true);
   tray = new Tray(icon);
-  renderTray();
+  refreshMenus();
   createPanel();
-  globalShortcut.register(SHORTCUT, () => void showPanel());
+  globalShortcut.register(prefs.shortcut, () => void showPanel());
   void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
   if (LOOPBACK) {
     // Lets a script open the panel and find its window without pressing the shortcut. README.md.
     process.on("SIGUSR2", () => {
+      // A menu command written to `dev-command` in the profile runs as if chosen from the menu bar.
+      const file = join(app.getPath("userData"), "dev-command");
+      if (existsSync(file)) {
+        const command = readFileSync(file, "utf8").trim();
+        rmSync(file);
+        return command === "open" ? openMain() : runCommand(command as MenuCommand);
+      }
       if (!signedIn) return void requestSignIn(PRODUCT_URL);
       void showPanel();
       console.log(

@@ -31,7 +31,7 @@ import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
-import { isDesktopSurface } from "../lib/desktop";
+import { desktop, isDesktopSurface } from "../lib/desktop";
 import { appleKeyboard } from "../lib/device";
 import { isGuiding } from "../lib/first-run";
 import {
@@ -48,6 +48,7 @@ import { decksQuery, meQuery, seriesQuery, settingsQuery, streakQuery } from "..
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
+import { toggleTheme } from "../lib/theme";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
 
@@ -313,6 +314,51 @@ function Shell() {
   const onSmartAdd = smartAccess.data?.allowed
     ? () => openSmart(ownedActive ? activeDeckId : undefined)
     : undefined;
+  // The Mac app's menu bar runs the same commands as the command menu.
+  useEffect(
+    () =>
+      desktop()?.onMenuCommand((command) => {
+        switch (command) {
+          case "add_card":
+            return openCard(activeDeckId);
+          case "new_deck":
+            return openDeck();
+          case "smart_add":
+            return onSmartAdd?.();
+          case "import":
+            return navigate({ to: "/import" });
+          case "command_menu":
+            return setCommandOpen(true);
+          case "theme":
+            return toggleTheme();
+          case "today":
+            return navigate({ to: "/today" });
+          case "library":
+            return navigate({ to: "/library" });
+          case "insights":
+            return navigate({ to: "/insights" });
+          case "explore":
+            return navigate({ to: "/explore" });
+          case "activity":
+            return navigate({ to: "/activity" });
+          case "review":
+            return navigate({ to: "/review" });
+          case "round_new":
+            return navigate({ to: "/review", search: { round: "new" } });
+          case "round_forgotten":
+            return navigate({ to: "/review", search: { round: "forgotten" } });
+          case "round_slipping":
+            return navigate({ to: "/review", search: { round: "slipping" } });
+          case "back":
+            return window.history.back();
+          case "forward":
+            return window.history.forward();
+          case "settings":
+            return navigate({ to: "/settings", hash: "this-mac" });
+        }
+      }),
+    [openCard, openDeck, onSmartAdd, navigate, activeDeckId],
+  );
   const { signOut, busy: signingOut } = leave;
   const assistant = useAssistantOffer(signedIn);
   // Today's first run offers assistants itself, so the rail does not say it twice.

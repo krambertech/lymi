@@ -1120,6 +1120,9 @@ msgstr "anki quizlet pleco"
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
+msgid "Another app already uses that shortcut. Try a different one."
+msgstr "Another app already uses that shortcut. Try a different one."
+
 msgid "Another draft"
 msgstr "Another draft"
 
@@ -1303,6 +1306,9 @@ msgstr "Back to streak"
 
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
+
+msgid "Beside the lantern, when cards are due."
+msgstr "Beside the lantern, when cards are due."
 
 msgid "Beta"
 msgstr "Beta"
@@ -1822,6 +1828,9 @@ msgstr "Couldn’t remove the member. Try again."
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 
+msgid "Couldn’t save that. Try again."
+msgstr "Couldn’t save that. Try again."
+
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -2105,6 +2114,9 @@ msgstr "Due"
 msgid "Due by deck"
 msgstr "Due by deck"
 
+msgid "Due count in the menu bar"
+msgstr "Due count in the menu bar"
+
 msgid "Due date"
 msgstr "Due date"
 
@@ -2320,6 +2332,9 @@ msgstr "Fields of {0}"
 
 msgid "File"
 msgstr "File"
+
+msgid "Fill in selected text"
+msgstr "Fill in selected text"
 
 msgid "Filter"
 msgstr "Filter"
@@ -2933,6 +2948,9 @@ msgstr "Lymi doesn’t recognise this app. Allow it only if you trust the addres
 msgid "Lymi file"
 msgstr "Lymi file"
 
+msgid "Lymi for Mac {version}"
+msgstr "Lymi for Mac {version}"
+
 msgid "Lymi home"
 msgstr "Lymi home"
 
@@ -2947,6 +2965,12 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi waits in the menu bar from the moment you sign in to your Mac."
+msgstr "Lymi waits in the menu bar from the moment you sign in to your Mac."
+
+msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
+msgstr "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
 
 msgid "Made the deck {deck}"
 msgstr "Made the deck {deck}"
@@ -3454,6 +3478,9 @@ msgstr "Open"
 msgid "Open “{0}” in {1}"
 msgstr "Open “{0}” in {1}"
 
+msgid "Open at login"
+msgstr "Open at login"
+
 msgid "Open deck"
 msgstr "Open deck"
 
@@ -3487,6 +3514,9 @@ msgstr "Open Lymi in Safari and tap Share."
 msgid "Open Lymi to sign in"
 msgstr "Open Lymi to sign in"
 
+msgid "Open System Settings"
+msgstr "Open System Settings"
+
 msgid "Open the invitation"
 msgstr "Open the invitation"
 
@@ -3495,6 +3525,9 @@ msgstr "Open this page from Lymi for Mac to sign in there."
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
+
+msgid "Opens quick add over any app."
+msgstr "Opens quick add over any app."
 
 msgid "Optional"
 msgstr "Optional"
@@ -3665,6 +3698,12 @@ msgstr "Press <0>Export now</0>, save the file, then choose it here."
 msgid "Press Export, save the file, then choose it here."
 msgstr "Press Export, save the file, then choose it here."
 
+msgid "Press keys"
+msgstr "Press keys"
+
+msgid "Press the new shortcut with ⌘, ⌃ or ⌥. Esc keeps the old one."
+msgstr "Press the new shortcut with ⌘, ⌃ or ⌥. Esc keeps the old one."
+
 msgid "Previous card"
 msgstr "Previous card"
 
@@ -3702,6 +3741,15 @@ msgstr "Pronunciation from lesson"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "published decks"
+
+msgid "Quick add"
+msgstr "Quick add"
+
+msgid "Quick add shortcut: {keys}. Change"
+msgstr "Quick add shortcut: {keys}. Change"
+
+msgid "Quick add starts with the text you selected in the app in front."
+msgstr "Quick add starts with the text you selected in the app in front."
 
 msgid "Quickstart"
 msgstr "Quickstart"
@@ -4030,6 +4078,9 @@ msgstr "Saved on this device until Lymi can be reached."
 
 msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
 msgstr "Saved on this device. Pictures need a connection, so add it once you’re back online."
+
+msgid "Saved on this Mac only, so each Mac keeps its own."
+msgstr "Saved on this Mac only, so each Mac keeps its own."
 
 msgid "Saving…"
 msgstr "Saving…"
@@ -4705,6 +4756,9 @@ msgstr "This join link stopped working. Ask the owner for a new one."
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
+
+msgid "This Mac"
+msgstr "This Mac"
 
 msgid "This shelf has no page"
 msgstr "This shelf has no page"

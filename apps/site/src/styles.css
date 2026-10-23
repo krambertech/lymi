@@ -1675,39 +1675,3 @@ html:has(.deck-cards[open]) {
   font-family: "Kanji Chinese Forms", "PingFang SC", "Noto Sans SC", sans-serif;
   font-weight: 500;
 }
-
-/* The Mac app's download page: a slice of a Mac screen, the menu bar on top and the real quick-add
-   panel where macOS shows it, at its own size. */
-.mac-scene {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 11;
-}
-.mac-menubar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-  height: 28px;
-  padding-inline: 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  background: var(--glass-plate);
-}
-.mac-panel {
-  display: block;
-  width: min(480px, calc(100% - 32px));
-  height: auto;
-  margin: 14% auto 0;
-  border-radius: var(--radius-lg);
-  outline: 1px solid var(--image-edge);
-  outline-offset: -1px;
-}
-.mac-panel[data-theme-shot="dark"],
-[data-theme="dark"] .mac-panel[data-theme-shot="light"] {
-  display: none;
-}
-[data-theme="dark"] .mac-panel[data-theme-shot="dark"] {
-  display: block;
-}

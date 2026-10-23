@@ -1377,6 +1377,9 @@ msgstr "Завантажити для Mac"
 msgid "Download Lymi for Mac"
 msgstr "Завантажити Lymi для Mac"
 
+msgid "Drag Lymi to Applications"
+msgstr "Перетягни Lymi до «Програм»"
+
 msgid "Drinking at home in your underwear"
 msgstr "Випивати вдома в спідньому"
 
@@ -2026,6 +2029,9 @@ msgstr "Як влаштований Einbürgerungstest, і колода для �
 msgid "How to connect"
 msgstr "Як підключити"
 
+msgid "How to install"
+msgstr "Як встановити"
+
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
 
@@ -2194,6 +2200,9 @@ msgstr "Так само для уроку на italki, на Preply чи з ре�
 
 msgid "It’s fine; I’m OK"
 msgstr "Усе гаразд; зі мною все добре"
+
+msgid "It’s in your Downloads folder."
+msgstr "Він у теці «Завантаження»."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "Lymi зроблено для репетиторів і невеликих груп. Тут немає журналів, завдань чи оцінок."
@@ -2928,6 +2937,9 @@ msgstr "Лише ти, якщо не поділишся колодою. Карт
 msgid "Open Lymi"
 msgstr "Відкрити Lymi"
 
+msgid "Open Lymi.dmg"
+msgstr "Відкрий Lymi.dmg"
+
 msgid "Open menu"
 msgstr "Відкрити меню"
 
@@ -3542,6 +3554,10 @@ msgstr "Зображення знаків з Wikimedia Commons: суспільн
 msgid "Sign in"
 msgstr "Увійти"
 
+msgctxt "download step"
+msgid "Sign in"
+msgstr "Увійди"
+
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Увійди й дозволь асистентові додавати картки. Потім надішли йому нотатки."
 
@@ -4034,9 +4050,6 @@ msgstr "Питання й відповіді взято з каталогу BAMF
 msgid "The questions, with answers"
 msgstr "Питання з відповідями"
 
-msgid "The quick-add panel with “la biblioteca” typed for the deck Lezione 12, below the Lymi lantern in the menu bar."
-msgstr "Панель швидкого додавання з «la biblioteca» для колоди Lezione 12, а над нею ліхтар Lymi у смузі меню."
-
 msgid "The ranges you’re expected to know cold."
 msgstr "Діапазони, які треба знати напам’ять."
 
@@ -4102,6 +4115,12 @@ msgstr "Уся офіційна база тесту з чеських реалі
 
 msgid "The words and phrases from each unit of the course."
 msgstr "Слова й фрази з кожної теми курсу."
+
+msgid "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
+msgstr "Потім відкрий його. macOS один раз запитає, чи відкривати застосунок з інтернету. Вибери «Відкрити»."
+
+msgid "Then press ⌃⌥L in any app to add a card."
+msgstr "Потім натисни ⌃⌥L у будь-якому застосунку, щоб додати картку."
 
 msgid "Then review them in Lymi."
 msgstr "Потім повторюй їх у Lymi."

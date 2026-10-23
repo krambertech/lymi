@@ -9,13 +9,14 @@ import { PageFooter } from "../PageFooter";
 import {
   DOWNLOAD_BUTTON,
   DOWNLOAD_DESCRIPTION,
-  DOWNLOAD_FIGURE_ALT,
   DOWNLOAD_HEADING,
   DOWNLOAD_INTEL,
   DOWNLOAD_INTEL_LABEL,
   DOWNLOAD_LEDE,
   DOWNLOAD_REQUIREMENT,
   DOWNLOAD_SKIP,
+  DOWNLOAD_STEPS,
+  DOWNLOAD_STEPS_HEADING,
   DOWNLOAD_TITLE,
 } from "./download-copy";
 
@@ -45,63 +46,54 @@ const i18n = pageI18n(locale);
     </header>
 
     <main
-      class="mx-auto grid max-w-[1040px] items-center gap-x-16 gap-y-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] @4xl:pt-20 @4xl:pb-28"
+      class="mx-auto flex max-w-[1040px] flex-col items-center px-5 pt-16 pb-20 text-center @2xl:px-10 @4xl:pt-24 @4xl:pb-28"
     >
-      <div>
-        <img src="/mac/icon.png" width="128" height="128" alt="" class="-ms-3 size-24 @2xl:size-32 @2xl:-ms-4" />
-        <h1 class="mt-4 text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
-          {i18n._(DOWNLOAD_HEADING)}
-        </h1>
-        <p class="mt-5 max-w-[40ch] text-lg text-pretty text-text-2 @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
-        <div id="download" class="mt-9 flex flex-col items-start gap-3">
-          <a href="/download/mac" class={buttonClass("primary", "lg")}>
-            <Download aria-hidden="true" data-icon="inline-start" />
-            {i18n._(DOWNLOAD_BUTTON)}
+      <div class="hero-ground">
+        <img src="/mac/icon.png" width="176" height="176" alt="" class="size-36 @2xl:size-44" />
+      </div>
+      <h1 class="mt-6 text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+        {i18n._(DOWNLOAD_HEADING)}
+      </h1>
+      <p class="mt-5 max-w-[36ch] text-lg text-pretty text-text-2 @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
+      <div id="download" class="mt-9 flex flex-col items-center gap-3">
+        <a href="/download/mac" class={buttonClass("primary", "lg")}>
+          <Download aria-hidden="true" data-icon="inline-start" />
+          {i18n._(DOWNLOAD_BUTTON)}
+        </a>
+        <p class="text-sm text-muted">
+          {i18n._(DOWNLOAD_REQUIREMENT)}
+          <span aria-hidden="true" class="mx-1">·</span>
+          <a
+            href="/download/mac-intel"
+            aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
+            class="rounded-xs text-text-2 underline decoration-edge-2 underline-offset-4 hoverable:hover:text-text hoverable:hover:decoration-current"
+          >
+            {i18n._(DOWNLOAD_INTEL)}
           </a>
-          <p class="text-sm text-muted">
-            {i18n._(DOWNLOAD_REQUIREMENT)}
-            <span aria-hidden="true" class="mx-1">·</span>
-            <a
-              href="/download/mac-intel"
-              aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
-              class="rounded-xs text-text-2 underline decoration-edge-2 underline-offset-4 hoverable:hover:text-text hoverable:hover:decoration-current"
-            >
-              {i18n._(DOWNLOAD_INTEL)}
-            </a>
-          </p>
-        </div>
+        </p>
       </div>
 
-      <figure class="mac-scene changelog-figure rounded-2xl" data-hue="4">
-        <div class="mac-menubar" aria-hidden="true">
-          <svg viewBox="12.5 12.5 95 95" class="size-4" fill="currentColor">
-            <path d="M40.5 48 A19.5 30 0 0 1 79.5 48" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-            <rect x="33" y="50" width="7" height="46" rx="3.5" />
-            <rect x="80" y="50" width="7" height="46" rx="3.5" />
-            <path d="M50 36 H70 L87 51 H33 Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round" />
-            <path
-              d="M60 58 C66.5 64.5 73.8 73 73.8 84 C73.8 90.9 67.62 96.5 60 96.5 C52.38 96.5 46.2 90.9 46.2 84 C46.2 73 53.5 64.5 60 58 Z M60 71.25 C63.25 74.5 66.9 78.75 66.9 84.25 C66.9 87.7 63.81 90.5 60 90.5 C56.19 90.5 53.1 87.7 53.1 84.25 C53.1 78.75 56.75 74.5 60 71.25 Z"
-              fill-rule="evenodd"
-            />
-            <rect x="30" y="91" width="60" height="10" rx="5" />
-            <rect x="38" y="101" width="44" height="6" rx="3" />
-          </svg>
-          <span class="tabular-nums">09:41</span>
-        </div>
-        {
-          (["light", "dark"] as const).map((theme) => (
-            <img
-              src={`/mac/quick-add-${theme}.png`}
-              width="480"
-              height="56"
-              alt={i18n._(DOWNLOAD_FIGURE_ALT)}
-              decoding="async"
-              class="mac-panel"
-              data-theme-shot={theme}
-            />
-          ))
-        }
-      </figure>
+      <section class="mt-20 w-full max-w-[880px] border-t border-edge pt-10 text-start @4xl:mt-24">
+        <h2 class="sr-only">{i18n._(DOWNLOAD_STEPS_HEADING)}</h2>
+        <ol class="grid gap-8 @2xl:grid-cols-3">
+          {
+            DOWNLOAD_STEPS.map((step, index) => (
+              <li class="flex gap-3">
+                <span
+                  aria-hidden="true"
+                  class="grid size-7 shrink-0 place-items-center rounded-full bg-plate-2 text-sm font-medium tabular-nums text-text-2 edge"
+                >
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 class="text-base font-medium text-text">{i18n._(step.title)}</h3>
+                  <p class="mt-1 text-sm text-pretty text-text-2">{i18n._(step.body)}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
     </main>
 
     <PageFooter locale={locale} page="download" />

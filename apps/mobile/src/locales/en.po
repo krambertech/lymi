@@ -987,6 +987,9 @@ msgstr "Anki package"
 msgid "Anki, Mochi, Noji"
 msgstr "Anki, Mochi, Noji"
 
+msgid "Another draft"
+msgstr "Another draft"
+
 #. placeholder {0}: isolate(term.formOf.term)
 #. placeholder {1}: isolate(term.formOf.deckName)
 msgid "Another form of {0}, in {1}"
@@ -1559,6 +1562,9 @@ msgstr "Couldn’t delete your account. Check your connection and try again."
 msgid "Couldn’t download the file. Check your connection and try again."
 msgstr "Couldn’t download the file. Check your connection and try again."
 
+msgid "Couldn’t draft a hook. Try again in a moment."
+msgstr "Couldn’t draft a hook. Try again in a moment."
+
 msgid "Couldn’t finish the import"
 msgstr "Couldn’t finish the import"
 
@@ -1908,8 +1914,8 @@ msgstr "Don’t use your email address in your password."
 msgid "Done"
 msgstr "Done"
 
-msgid "Drafting a hook…"
-msgstr "Drafting a hook…"
+msgid "Draft"
+msgstr "Draft"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Drag a series by its handle. Library shows them in this order."
@@ -3003,6 +3009,9 @@ msgstr "No sections yet"
 
 msgid "No series"
 msgstr "No series"
+
+msgid "No strong hook for this one. Try again, or write your own."
+msgstr "No strong hook for this one. Try again, or write your own."
 
 msgid "No tags yet. Type one to create it."
 msgstr "No tags yet. Type one to create it."

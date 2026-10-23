@@ -63,7 +63,6 @@ import { lastInputWasKey } from "../lib/last-input";
 import {
   decksQuery,
   drawQuery,
-  hookDraftQuery,
   queueQuery,
   sectionsQuery,
   seriesQuery,
@@ -1085,22 +1084,10 @@ function Review() {
     setMenuOpen(true);
   };
 
-  // The AI's hook draft takes seconds, so it starts as soon as writing a hook is one tap away.
-  const prefetchDraft = () => {
-    if (current && owned && !current.card.hook) void qc.prefetchQuery(hookDraftQuery(current.card));
-  };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once per offered reveal, not per render.
-  useEffect(() => {
-    if (revealed && offer) prefetchDraft();
-  }, [revealed, offer, showing]);
-
   const cardMenu = current && (
     <CardMenu
       open={menuOpen}
-      onOpenChange={(open) => {
-        if (open) prefetchDraft();
-        setMenuOpen(open);
-      }}
+      onOpenChange={setMenuOpen}
       visible={mouse}
       hasHook={!!current.card.hook}
       important={importantOf(current.card)}

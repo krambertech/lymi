@@ -69,17 +69,6 @@ export const archivedCardsQuery = queryOptions({
   queryFn: () => fresh(["cards", "archived"], api.archivedCards),
   staleTime: 0,
 });
-/** Keyed on the card's text, so an edit that changes the term or meaning asks for a fresh draft. */
-export const hookDraftQuery = (card: { id: string; term: string; meaning: string | null }) =>
-  queryOptions({
-    queryKey: ["cards", card.id, "hook-draft", card.term, card.meaning],
-    // A draft that cannot be had is no draft: the plain placeholder, settled, not asked again.
-    queryFn: async () => (await api.draftHook(card.id).catch(() => ({ hook: null }))).hook,
-    staleTime: Number.POSITIVE_INFINITY,
-    retry: false,
-    // The server keeps the draft; a copy kept across reloads would outlive a better one.
-    meta: { persist: false },
-  });
 export const cardHistoryQuery = (cardId: string) =>
   queryOptions({
     queryKey: ["cards", cardId, "history"],

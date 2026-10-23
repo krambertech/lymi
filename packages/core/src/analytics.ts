@@ -465,6 +465,10 @@ export const analyticsEvents = {
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
   section_go_to: z.object({}),
+  hook_drafted: z.object({
+    outcome: z.enum(["drafted", "none", "failed"]),
+    wait_ms: z.number().int().nonnegative().max(60_000),
+  }),
   pronunciation_played: z.object({
     outcome: z.enum(["played", "failed"]),
     revealed: z.boolean(),
@@ -564,6 +568,7 @@ export const analyticsProducers = {
   changelog_opened: ["browser"],
   library_searched: ["browser"],
   section_go_to: ["phone"],
+  hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],

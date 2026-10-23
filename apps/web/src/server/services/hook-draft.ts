@@ -2,6 +2,7 @@ import {
   CARD_LIMITS,
   effectiveModes,
   headword,
+  hookable,
   modesFromDirections,
   type ReviewModeKey,
 } from "@lymi/core";
@@ -34,8 +35,11 @@ const DECK_MEANINGS = 8;
 /** One line the learner can read in a glance under the cue. */
 const MAX_WORDS = 6;
 
+/** The rule now lives in core, for the clients; language tests still read it from here. */
+export { hookable } from "@lymi/core";
+
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HOOK_PROMPT_VERSION = 4;
+export const HOOK_PROMPT_VERSION = 5;
 
 export const HOOK_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",
@@ -47,7 +51,7 @@ export const HOOK_INSTRUCTIONS = [
   "Other routes, when they beat a sound-alike:",
   "- A compound: check every term for one first. When the term is two or more words joined, its parts' literal meanings joined with a plus sign are usually the best hook, because they rebuild the term itself: a glove that is literally a hand shoe. Use them when they are vivid or sensible.",
   "- A loanword or a shared root with a word the learner already knows in their own language: name that word.",
-  "Work like this. Say the term aloud as a native speaker does, using its pronunciation when one is given, and split it into syllables. Draft at least six candidates across different routes: a whole-word sound-alike, a chain of short words covering the term, a sound hidden inside a longer word, and a parts or root reading where one exists. Rate each on how much of the term it sounds like, how surely it leads to the meaning, how easily it is pictured or felt, and how naturally it reads. Keep the one that is strong on all four. If none is, return null.",
+  "Work like this. Say the term aloud as a native speaker does, using its pronunciation when one is given. In candidates, write five hooks across different routes: a whole-word sound-alike, a chain of short words covering the term, a sound hidden inside a longer word, and a parts or root reading where one exists. Then copy into hook the one candidate strongest on how much of the term it sounds like, how surely it leads to the meaning, how easily it is pictured or felt, and how naturally it reads. If none is strong on all four, hook is null.",
   "A card may carry guide, advice for hooking terms in its language. Follow it.",
   "Write the sounds shared with the term in capitals.",
   "These are the learner's own hooks for cards asked meaning first, the standard to match, with what makes each work:",
@@ -80,9 +84,10 @@ export const HOOK_REPLY_SCHEMA = {
     type: "object",
     properties: {
       language: { type: "string" },
+      candidates: { type: "array", items: { type: "string" } },
       hook: { type: ["string", "null"], maxLength: CARD_LIMITS.hook },
     },
-    required: ["language", "hook"],
+    required: ["language", "candidates", "hook"],
     additionalProperties: false,
   },
 } as const;
@@ -179,17 +184,6 @@ export function acceptDraft(raw: string | null, card: HookCard): string | null {
   return givesAway(hook, card) ? null : hook;
 }
 
-/**
- * Whether a card is one the keyword method fits: a word or short phrase in a language other than
- * the one its meanings are written in. A fact in the learner's own language has nothing to sound alike.
- */
-export function hookable(card: Omit<HookCard, "asked">, meaningLanguage: string): boolean {
-  if (!card.meaning.trim() || !card.language) return false;
-  const primary = (tag: string) => tag.toLowerCase().split("-")[0];
-  if (primary(card.language) === primary(meaningLanguage)) return false;
-  return headword(card.term).trim().split(/\s+/).length <= 3;
-}
-
 /** What the model reads about one card. */
 export function hookInput(card: HookCard): string {
   const guide = languagePrompts(card.language)?.hook;
@@ -212,18 +206,18 @@ export async function draftHook(provider: TextProvider, card: HookCard): Promise
       instructions: HOOK_INSTRUCTIONS,
       input,
       schema: HOOK_REPLY_SCHEMA,
-      // Medium drafts hooks as well as high, measured on real cards, in about half the time.
-      effort: "medium",
+      // The candidates are written in the reply, so no hidden reasoning: about 2 s, as good as medium's 10 s on real cards.
+      effort: "none",
     }),
   );
   return reply.success ? acceptDraft(reply.data.hook, card) : null;
 }
 
 /**
- * The draft for the owner's hook editor: the one kept on the card, or a fresh one the AI writes
- * and keeps there. Null for a card the keyword method does not fit, where no vendor is configured,
- * or when the AI had none. Keeping the draft is bookkeeping, not a change to the card, so it is
- * not audited and leaves `updatedAt` alone.
+ * A fresh draft for the owner's hook editor, asked for with its Draft button, or null for a card the
+ * keyword method does not fit, where no vendor is configured, or when the AI had none. The draft is
+ * kept on the card only so a hook saved as exactly that text is marked as the AI's; keeping it is
+ * bookkeeping, not a change to the card, so it is not audited and leaves `updatedAt` alone.
  */
 export async function hookDraftFor(
   ctx: ServiceContext,
@@ -263,34 +257,29 @@ export async function hookDraftFor(
     .limit(DECK_MEANINGS);
   const deckMeanings = neighbours.flatMap(({ meaning }) => (meaning?.trim() ? [meaning] : []));
   const hookCard = { ...subject, asked, deckMeanings };
-  // A kept draft is checked again, since the card's modes or its deck's may have changed since.
-  if (card.hookDraft === "") return null;
-  if (card.hookDraft !== null && !givesAway(card.hookDraft, hookCard)) return card.hookDraft;
   if (!provider) return null;
 
-  // A reply can come back empty or break a rule now and then, so one more try before keeping "none".
+  // A reply can come back empty or break a rule now and then, so one more try before answering none.
   let draft: string | null;
   try {
     draft = (await draftHook(provider, hookCard)) ?? (await draftHook(provider, hookCard));
   } catch (error) {
-    // An outage is not an answer, so nothing is kept and the next editor asks again.
     console.error("Drafting a hook failed", {
       error: error instanceof Error ? error.name : "unknown",
     });
-    return null;
+    throw new ServiceError("unavailable", "The AI couldn't draft a hook. Try again in a moment.");
   }
-  // Only while the card still reads as it did and no other request kept a draft meanwhile.
+  // An empty answer keeps the last draft, which may still be in the learner's field. Only while the
+  // card still reads as it did, so a draft never outlives the words it was for.
+  if (draft === null) return null;
   await ctx.db
     .update(schema.cards)
-    .set({ hookDraft: draft ?? "" })
+    .set({ hookDraft: draft })
     .where(
       and(
         eq(schema.cards.id, card.id),
         eq(schema.cards.term, card.term),
         eq(schema.cards.meaning, subject.meaning),
-        card.hookDraft === null
-          ? isNull(schema.cards.hookDraft)
-          : eq(schema.cards.hookDraft, card.hookDraft),
       ),
     );
   return draft;

@@ -583,6 +583,12 @@ msgstr "{lapses, plural, one {забыто # раз} few {забыто # раз�
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сегодняшней цели: {left, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+msgid "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+msgstr "{left, plural, one {Ещё # повторение, чтобы начать счёт дней подряд заново} few {Ещё # повторения, чтобы начать счёт дней подряд заново} many {Ещё # повторений, чтобы начать счёт дней подряд заново} other {Ещё # повторения, чтобы начать счёт дней подряд заново}}"
+
+msgid "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+msgstr "{left, plural, one {Ещё # повторение, чтобы начать счёт дней подряд} few {Ещё # повторения, чтобы начать счёт дней подряд} many {Ещё # повторений, чтобы начать счёт дней подряд} other {Ещё # повторения, чтобы начать счёт дней подряд}}"
+
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {На сегодня использован # урок} few {На сегодня использованы все # урока} many {На сегодня использованы все # уроков} other {На сегодня использовано # урока}}"
 
@@ -3846,6 +3852,9 @@ msgstr "Начать {sectionName}"
 msgid "Start {sectionName} early?"
 msgstr "Начать {sectionName} раньше?"
 
+msgid "Start a new streak"
+msgstr "Начни счёт дней подряд заново"
+
 msgid "Start anyway"
 msgstr "Начать всё равно"
 
@@ -3857,6 +3866,9 @@ msgstr "Начни с колоды"
 
 msgid "Start with a ready-made deck"
 msgstr "Начни с готовой колоды"
+
+msgid "Start your streak"
+msgstr "Начни счёт дней подряд"
 
 msgid "State"
 msgstr "Состояние"

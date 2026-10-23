@@ -25,8 +25,31 @@ export function lastDays(summary: StreakSummary, n = 7) {
   };
 }
 
-/** Said in place of a run of zero, which reads as a failure rather than a start. */
-export function StreakStart({ summary }: { summary: StreakSummary }) {
+/**
+ * Said in place of a run of zero, which reads as a failure rather than a start. Given the reviews
+ * still to go today, it asks for them.
+ */
+export function StreakStart({
+  summary,
+  left,
+}: {
+  summary: StreakSummary;
+  left?: number | null | undefined;
+}) {
+  if (left)
+    return summary.longest > 0 ? (
+      <Plural
+        value={left}
+        one="Review # more to start a new streak"
+        other="Review # more to start a new streak"
+      />
+    ) : (
+      <Plural
+        value={left}
+        one="Review # more to start your streak"
+        other="Review # more to start your streak"
+      />
+    );
   return summary.longest > 0 ? <Trans>Start a new streak</Trans> : <Trans>Start your streak</Trans>;
 }
 

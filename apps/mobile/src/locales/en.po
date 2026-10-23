@@ -583,6 +583,12 @@ msgstr "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
+msgid "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+msgstr "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+
+msgid "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+msgstr "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 
@@ -3846,6 +3852,9 @@ msgstr "Start {sectionName}"
 msgid "Start {sectionName} early?"
 msgstr "Start {sectionName} early?"
 
+msgid "Start a new streak"
+msgstr "Start a new streak"
+
 msgid "Start anyway"
 msgstr "Start anyway"
 
@@ -3857,6 +3866,9 @@ msgstr "Start with a deck"
 
 msgid "Start with a ready-made deck"
 msgstr "Start with a ready-made deck"
+
+msgid "Start your streak"
+msgstr "Start your streak"
 
 msgid "State"
 msgstr "State"

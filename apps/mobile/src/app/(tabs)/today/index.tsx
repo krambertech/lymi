@@ -32,6 +32,7 @@ import { RowMenu } from "../../../ui/row-menu";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 import { Skeleton } from "../../../ui/skeleton";
+import { useStreakStart } from "../../../ui/streak-start";
 import { takeAfterWelcome } from "../../../welcome/gate";
 import { ReadyDecks } from "../../../welcome/ready-decks";
 import { BringYourOwn, StartGuide } from "../../../welcome/start-guide";
@@ -313,26 +314,33 @@ function StreakPlate({ summary }: { summary: StreakOut }) {
   const { streak, goal, dayDone, flame, lights, left } = useDay();
   const router = useRouter();
   const status = useTodayStatus(summary.today, left ?? 0);
+  const start = useStreakStart(summary.longest);
   return (
     <Press
       scale={0.98}
       onPress={() => router.push("/streak")}
       accessibilityRole="button"
-      accessibilityLabel={`${t`Streak: ${plural(streak, { one: "# day in a row", other: "# days in a row" })}`}. ${status}`}
+      accessibilityLabel={`${streak > 0 ? t`Streak: ${plural(streak, { one: "# day in a row", other: "# days in a row" })}` : start}. ${status}`}
     >
       <Plate className="gap-5 p-5">
         <View className="gap-1.5">
           <View className="flex-row items-center gap-2.5">
             <Flame height={30} state={flame} />
-            <Text
-              className="text-3xl font-medium text-text"
-              style={{ fontVariant: ["tabular-nums"] }}
-            >
-              {streak}
-            </Text>
-            <Text className="text-lg text-text-2">
-              {plural(streak, { one: "day in a row", other: "days in a row" })}
-            </Text>
+            {streak > 0 ? (
+              <>
+                <Text
+                  className="text-3xl font-medium text-text"
+                  style={{ fontVariant: ["tabular-nums"] }}
+                >
+                  {streak}
+                </Text>
+                <Text className="text-lg text-text-2">
+                  {plural(streak, { one: "day in a row", other: "days in a row" })}
+                </Text>
+              </>
+            ) : (
+              <Text className="text-xl font-medium text-text">{start}</Text>
+            )}
           </View>
           <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
             {status}

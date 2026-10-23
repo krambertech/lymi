@@ -1441,18 +1441,21 @@ export function ReviewComplete({
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.
   const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  // With no run yet, the run's line asks for what is left today, so the nudge under it would repeat it.
+  const left = !run && screen.nudge ? screen.nudge.count : null;
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers
-    .filter((offer) => !(offer.kind === "continue" && screen.continueLeads))
-    .map((offer) => ({
-      key: offer.kind,
-      icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
-      label:
-        offer.kind === "forgotten"
-          ? t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
-          : t`Continue`,
-      onClick: () => onOffer?.(offer),
-    }));
+  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  const ways = screen.offers.flatMap((offer) =>
+    offer.kind === "forgotten"
+      ? [
+          {
+            key: offer.kind,
+            label: t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
+            onClick: () => onOffer?.(offer),
+          },
+        ]
+      : [],
+  );
   const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(actionsAt + RISE_MS, embers.length ? AT.embers + embersEnd(embers) : 0);
 
@@ -1587,7 +1590,7 @@ export function ReviewComplete({
                 </>
               ) : (
                 <span className="font-medium text-text">
-                  <StreakStart summary={streak ?? week} />
+                  <StreakStart summary={streak ?? week} left={left} />
                 </span>
               )}
             </p>
@@ -1595,7 +1598,7 @@ export function ReviewComplete({
         )}
 
         {/* While Continue leads, what is left of the day sits under its lights. */}
-        {screen.nudge && (
+        {screen.nudge && !left && (
           <p
             className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
             style={at(AT.run + 120)}
@@ -1620,7 +1623,7 @@ export function ReviewComplete({
         <div
           className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
         >
-          {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Continue always sits last. */}
           {ways.map((way, i) => (
             <Button
               key={way.key}
@@ -1629,7 +1632,7 @@ export function ReviewComplete({
               className="seq w-full"
               style={at(AT.actions + i * AT.actionStep)}
             >
-              {way.icon}
+              <StateIcon state="forgot" className="size-4" />
               {way.label}
             </Button>
           ))}
@@ -1639,20 +1642,20 @@ export function ReviewComplete({
                 {addCards}
                 {done("secondary")}
               </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {done("secondary")}
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => onOffer?.(proceed)}
-                  className="w-full"
-                >
-                  <Trans>Continue</Trans>
-                </Button>
-              </>
             ) : (
-              done("primary")
+              <>
+                {done(screen.continueLeads ? "secondary" : "primary")}
+                {proceed && (
+                  <Button
+                    variant={screen.continueLeads ? "primary" : "secondary"}
+                    size="lg"
+                    onClick={() => onOffer?.(proceed)}
+                    className="w-full"
+                  >
+                    <Trans>Continue</Trans>
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </div>

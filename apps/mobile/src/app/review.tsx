@@ -97,7 +97,14 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
-import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
+import {
+  HookLine,
+  HookOffer,
+  HookSheet,
+  PEEK_ROOM,
+  PeekButton,
+  ShowHookButton,
+} from "../review/hooks";
 import { modeLabel } from "../review/modes";
 import {
   PronounceButton,
@@ -124,6 +131,7 @@ import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
+import { useStreakStart } from "../ui/streak-start";
 import { useSystemBack } from "../ui/system-back";
 import { ExampleText, TermText } from "../ui/term-text";
 import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
@@ -1425,8 +1433,11 @@ function CardPlate({
               keyboardShouldPersistTaps="handled"
               className="flex-1"
               contentContainerClassName="grow px-5 pt-4"
-              // The offer floats over the card's foot, so the last line can scroll clear above it.
-              contentContainerStyle={{ paddingBottom: 16 + (offerShown ? offerRoom : 0) }}
+              // The offer and Peek float over the card's foot, so the last line can scroll clear above them.
+              contentContainerStyle={{
+                paddingBottom:
+                  16 + (offerShown ? offerRoom : 0) + (hook && !revealed ? PEEK_ROOM : 0),
+              }}
               onLayout={(e) => {
                 fit.onRoom(e);
                 edges.onLayout(e);
@@ -1469,16 +1480,28 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {/* The hook has one place, under the cue, before the reveal and after it. */}
-                  {hook && hookShown ? (
+                  {/* The hook has one place, under the cue, held from the start so peeking at it or showing it moves nothing. */}
+                  {hook && (
                     <View className="pt-3">
-                      <HookLine text={hook.text} source={hook.source} still={still} />
+                      <View
+                        className="opacity-0"
+                        style={{ minHeight: HOOK_ROOM }}
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                      >
+                        <HookLine text={hook.text} source={hook.source} still />
+                      </View>
+                      {hookShown ? (
+                        <View className="absolute inset-x-0 top-3">
+                          <HookLine text={hook.text} source={hook.source} still={still} />
+                        </View>
+                      ) : revealed && onShowHook ? (
+                        <View className="absolute inset-x-0 top-2">
+                          <ShowHookButton still={still} onShow={onShowHook} />
+                        </View>
+                      ) : null}
                     </View>
-                  ) : hook && revealed && onShowHook ? (
-                    <View className="pt-2">
-                      <ShowHookButton still={still} onShow={onShowHook} />
-                    </View>
-                  ) : null}
+                  )}
                 </Animated.View>
                 {revealed && (
                   <View className="gap-5 pt-5">
@@ -1610,8 +1633,8 @@ function CardPlate({
                     >
                       {cue}
                     </CardLine>
-                    {hook && hookShown && (
-                      <View className="pt-3">
+                    {hook && (
+                      <View className="pt-3" style={{ minHeight: HOOK_ROOM }}>
                         <HookLine text={hook.text} source={hook.source} still />
                       </View>
                     )}
@@ -1667,6 +1690,8 @@ const gradeIn = (i: number) =>
  */
 /** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
 const GRADE_ROOM = 92;
+/** The hook's place under the cue is never shorter than Show hook's 32 pt, which starts 4 pt above the hook's line. */
+const HOOK_ROOM = 28;
 
 function GradeStrip({
   still = false,
@@ -1819,7 +1844,10 @@ function Completion({
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const { goal, streak, lights, flame, out, progress, fed } = useDay();
+  const { goal, streak, lights, flame, out, progress, fed, summary } = useDay();
+  // With no run yet, the run's line asks for what is left today, so the nudge under it would repeat it.
+  const left = streak === 0 ? (screen.nudge?.count ?? null) : null;
+  const start = useStreakStart(summary?.longest ?? 0, left);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
   const counted = screen.heading !== "nothing_due";
@@ -1835,7 +1863,8 @@ function Completion({
   }[screen.heading];
 
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers.filter((o) => !(o.kind === "continue" && screen.continueLeads));
+  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  const ways = screen.offers.filter((o) => o.kind === "forgotten");
   const embers = useMemo(
     () => (reduce || out ? [] : endEmbers(screen.embers)),
     [reduce, out, screen.embers],
@@ -1878,8 +1907,7 @@ function Completion({
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
   const nudge$ = useRise(clock, AT.run + 120);
-  // At most two ways sit above the last row: Continue and Review forgotten.
-  const way$ = [useRise(clock, AT.actions), useRise(clock, AT.actions + AT.actionStep)];
+  const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
   const doneButton = (variant: "primary" | "secondary") => (
@@ -1965,15 +1993,21 @@ function Completion({
             </Animated.View>
             <Animated.View style={run$} className="flex-row items-center gap-2">
               <Flame height={20} state={flame} />
-              <Text className="text-md font-semibold text-text" style={styles.figures}>
-                {streak}
-              </Text>
-              <Text className="text-md text-text-2">
-                {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
-              </Text>
+              {streak > 0 ? (
+                <>
+                  <Text className="text-md font-semibold text-text" style={styles.figures}>
+                    {streak}
+                  </Text>
+                  <Text className="text-md text-text-2">
+                    {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
+                  </Text>
+                </>
+              ) : (
+                <Text className="text-md font-medium text-text">{start}</Text>
+              )}
             </Animated.View>
             {/* While Continue leads, what is left of the day sits under its lights. */}
-            {screen.nudge && (
+            {screen.nudge && !left && (
               <Animated.View style={nudge$}>
                 <Text className="text-center text-base text-muted">
                   {screen.nudge.kind === "goal"
@@ -1984,40 +2018,39 @@ function Completion({
             )}
           </View>
         </View>
-        {/* One shape for every way on, the count said in words; the primary sits last. */}
+        {/* One shape for every way on, the count said in words; Continue always sits last. */}
         <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
-          {ways.map((way, i) => (
-            <Animated.View key={way.kind} style={way$[i]}>
-              {way.kind === "forgotten" ? (
-                <Button
-                  label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
-                  lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
-                  size="lg"
-                  onPress={() => onOffer(way)}
-                />
-              ) : (
-                <Button label={t`Continue`} size="lg" onPress={() => onOffer(way)} />
-              )}
-            </Animated.View>
-          ))}
+          {ways.map(
+            (way, i) =>
+              way.kind === "forgotten" && (
+                <Animated.View key={way.kind} style={way$[i]}>
+                  <Button
+                    label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
+                    lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
+                    size="lg"
+                    onPress={() => onOffer(way)}
+                  />
+                </Animated.View>
+              ),
+          )}
           <Animated.View style={done$} className="gap-3">
             {!counted ? (
               <>
                 <Button label={t`Add cards`} variant="primary" size="lg" onPress={onAddCards} />
                 {doneButton("secondary")}
               </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {doneButton("secondary")}
-                <Button
-                  label={t`Continue`}
-                  variant="primary"
-                  size="lg"
-                  onPress={() => onOffer(proceed)}
-                />
-              </>
             ) : (
-              doneButton("primary")
+              <>
+                {doneButton(screen.continueLeads ? "secondary" : "primary")}
+                {proceed && (
+                  <Button
+                    label={t`Continue`}
+                    variant={screen.continueLeads ? "primary" : "secondary"}
+                    size="lg"
+                    onPress={() => onOffer(proceed)}
+                  />
+                )}
+              </>
             )}
           </Animated.View>
         </ToastFloor>

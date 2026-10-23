@@ -652,6 +652,12 @@ msgstr "{left, plural, one {# character left} other {# characters left}}"
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
+msgid "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+msgstr "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+
+msgid "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+msgstr "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+
 msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 msgstr "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 

@@ -652,6 +652,12 @@ msgstr "{left, plural, one {остался # символ} few {осталось
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сегодняшней цели: {left, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+msgid "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+msgstr "{left, plural, one {Ещё # повторение, чтобы начать счёт дней подряд заново} few {Ещё # повторения, чтобы начать счёт дней подряд заново} many {Ещё # повторений, чтобы начать счёт дней подряд заново} other {Ещё # повторения, чтобы начать счёт дней подряд заново}}"
+
+msgid "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+msgstr "{left, plural, one {Ещё # повторение, чтобы начать счёт дней подряд} few {Ещё # повторения, чтобы начать счёт дней подряд} many {Ещё # повторений, чтобы начать счёт дней подряд} other {Ещё # повторения, чтобы начать счёт дней подряд}}"
+
 msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 msgstr "{limit, plural, one {Умное добавление в бета-версии, поэтому читает до # урока в день.} few {Умное добавление в бета-версии, поэтому читает до # уроков в день.} many {Умное добавление в бета-версии, поэтому читает до # уроков в день.} other {Умное добавление в бета-версии, поэтому читает до # урока в день.}} Урок, который не удалось прочитать, не считается, а счёт начинается заново в полночь."
 

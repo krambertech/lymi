@@ -583,6 +583,12 @@ msgstr "{lapses, plural, one {забуто # раз} few {забуто # раз�
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сьогоднішньої мети: {left, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+msgid "{left, plural, one {Review # more to start a new streak} other {Review # more to start a new streak}}"
+msgstr "{left, plural, one {Ще # повторення, щоб почати лік днів поспіль заново} few {Ще # повторення, щоб почати лік днів поспіль заново} many {Ще # повторень, щоб почати лік днів поспіль заново} other {Ще # повторення, щоб почати лік днів поспіль заново}}"
+
+msgid "{left, plural, one {Review # more to start your streak} other {Review # more to start your streak}}"
+msgstr "{left, plural, one {Ще # повторення, щоб почати лік днів поспіль} few {Ще # повторення, щоб почати лік днів поспіль} many {Ще # повторень, щоб почати лік днів поспіль} other {Ще # повторення, щоб почати лік днів поспіль}}"
+
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {На сьогодні використано # урок} few {На сьогодні використано всі # уроки} many {На сьогодні використано всі # уроків} other {На сьогодні використано # уроку}}"
 
@@ -3846,6 +3852,9 @@ msgstr "Почати {sectionName}"
 msgid "Start {sectionName} early?"
 msgstr "Почати {sectionName} раніше?"
 
+msgid "Start a new streak"
+msgstr "Почни лік днів поспіль заново"
+
 msgid "Start anyway"
 msgstr "Почати все одно"
 
@@ -3857,6 +3866,9 @@ msgstr "Почни з колоди"
 
 msgid "Start with a ready-made deck"
 msgstr "Почни з готової колоди"
+
+msgid "Start your streak"
+msgstr "Почни лік днів поспіль"
 
 msgid "State"
 msgstr "Стан"

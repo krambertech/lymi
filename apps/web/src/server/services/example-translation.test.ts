@@ -213,7 +213,11 @@ describe("translating examples", () => {
     if (outcome?.status !== "added") throw new Error("card not added");
     const card = outcome.card;
     await settleEnrichment(db, ctx.userId, [card.id]);
-    await translateExamples(ai(), [card.id], translator(() => "This is my castle."));
+    await translateExamples(
+      ai(),
+      [card.id],
+      translator(() => "This is my castle."),
+    );
     runs.length = 0;
     await updateCard(ctx, card.id, { example: "Это мой за\u0301мок." }, queue);
     expect(runs).toEqual([]);

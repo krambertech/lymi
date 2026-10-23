@@ -152,6 +152,10 @@ msgstr "{0, plural, one {# файл} few {# файла} many {# файлов} ot
 msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 msgstr "{0, plural, one {# забыта сегодня.} few {# забыты сегодня.} many {# забыто сегодня.} other {# забыто сегодня.}}"
 
+#. placeholder {0}: book.highlights
+msgid "{0, plural, one {# highlight} other {# highlights}}"
+msgstr "{0, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {Ещё # карточка — и на сегодня всё} few {Ещё # карточки — и на сегодня всё} many {Ещё # карточек — и на сегодня всё} other {Ещё # карточки — и на сегодня всё}}"
@@ -301,6 +305,10 @@ msgstr "{0, plural, one {Импортирована # карточка} few {И�
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Больше всего дней подряд: #.} few {Больше всего дней подряд: #.} many {Больше всего дней подряд: #.} other {Больше всего дней подряд: #.}}"
 
+#. placeholder {0}: unplaced.length
+msgid "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
+msgstr "{0, plural, one {Lymi не смог определить, на каком языке эта книга. Выбери язык, чтобы добавить её выделения.} few {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.} many {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.} other {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.}}"
+
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Готово к импорту: # карточка} few {Готово к импорту: # карточки} many {Готово к импорту: # карточек} other {Готово к импорту: # карточки}}"
@@ -365,6 +373,11 @@ msgstr "{0, plural, one {Проверен # вид} few {Проверено # в
 #. placeholder {0}: summary.decks.length
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, one {Все колоды: #} few {Все колоды: #} many {Все колоды: #} other {Все колоды: #}}"
+
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: book.highlights
+msgid "{0} · {1, plural, one {# highlight} other {# highlights}}"
+msgstr "{0} · {1, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
 
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: isolate(card.deckName)
@@ -1531,6 +1544,9 @@ msgstr "Выбери колоду"
 
 msgid "Choose a deck."
 msgstr "Выбери колоду."
+
+msgid "Choose a language"
+msgstr "Выбери язык"
 
 msgid "Choose a recall grade"
 msgstr "Выбрать оценку повторения"

@@ -216,6 +216,131 @@ describe("a book whose language was unknown", () => {
   });
 });
 
+type Timed = { book: string; id: string; text: string; at: Date };
+
+/** A Readwise that honours `updatedAfter`, `ids` and a page per highlight, as the real one pages. */
+function timedApi(
+  highlights: Timed[],
+  options: { counts?: Record<string, number> } = {},
+): ReadwiseApi {
+  const fake = createFakeReadwiseApi();
+  return {
+    ...fake,
+    books: async () =>
+      (await fake.books(DEV_READWISE_TOKEN)).map((b) => ({
+        ...b,
+        num_highlights: options.counts?.[b.id] ?? b.num_highlights,
+      })),
+    exportPage: async (_token, { updatedAfter, cursor, bookIds }) => {
+      const due = highlights.filter(
+        (h) => h.at > updatedAfter && (!bookIds?.length || bookIds.includes(h.book)),
+      );
+      const index = Number(cursor ?? 0);
+      const one = due[index];
+      return {
+        books: one
+          ? [
+              {
+                user_book_id: one.book,
+                title: one.book === "9001" ? "Una stagione a Torino" : "Sügisene linn",
+                readable_title: null,
+                author: null,
+                is_deleted: false,
+                highlights: [{ id: one.id, text: one.text, updated_at: one.at.toISOString() }],
+              },
+            ]
+          : [],
+        cursor: index + 1 < due.length ? String(index + 1) : null,
+      };
+    },
+  };
+}
+
+const later = (ms: number) => new Date(Date.now() + ms);
+
+async function holdPullAt(userId: string, at: Date) {
+  await db
+    .update(schema.readwiseConnections)
+    .set({ pulledThrough: at, lastPullAt: new Date(0) })
+    .where(eq(schema.readwiseConnections.userId, userId));
+}
+
+describe("highlights waiting for their book's language", () => {
+  it("come in once a new highlight lets Lymi place the book", async () => {
+    const ctx = await reader("rw-wait-detect");
+    const unknown = { ...depsWith(), languages: null };
+    await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
+    const highlights: Timed[] = [{ book: "9001", id: "a", text: "sbadigliare", at: later(1_000) }];
+    await pullReadwiseNow(ctx, { ...unknown, api: timedApi(highlights) });
+    expect(await cardsOf(ctx.userId)).toHaveLength(0);
+
+    // The first highlight is now behind the pull point; only a new one shows the book again.
+    await holdPullAt(ctx.userId, later(10_000));
+    highlights.push({ book: "9001", id: "b", text: "di sfuggita", at: later(20_000) });
+    await pullReadwiseNow(ctx, depsWith(timedApi(highlights)));
+    expect((await cardsOf(ctx.userId)).map((c) => c.term)).toEqual(["di sfuggita", "sbadigliare"]);
+  });
+
+  it("come in at once when the learner sets the book's language", async () => {
+    const ctx = await reader("rw-wait-set");
+    const highlights: Timed[] = [{ book: "9001", id: "c", text: "sbadigliare", at: later(1_000) }];
+    const unknown = { ...depsWith(timedApi(highlights)), languages: null };
+    await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
+    await pullReadwiseNow(ctx, unknown);
+    await holdPullAt(ctx.userId, later(10_000));
+
+    const { view, followed } = await updateReadwise(ctx, {
+      books: [{ id: "9001", language: "it" }],
+    });
+    expect(followed).toBe(true);
+    expect(view.books.find((b) => b.id === "9001")).toMatchObject({
+      language: "it",
+      followed: true,
+    });
+    await pullReadwiseNow(ctx, unknown, { followed: true });
+    expect((await cardsOf(ctx.userId)).map((c) => c.term)).toEqual(["sbadigliare"]);
+    await expect(
+      updateReadwise(ctx, { books: [{ id: "9002", language: "et" }] }),
+    ).rejects.toMatchObject({ code: "invalid" });
+  });
+});
+
+describe("a pull past the page cap", () => {
+  it("carries on from Readwise's cursor and then moves the pull point", async () => {
+    const ctx = await reader("rw-cursor");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    const highlights: Timed[] = Array.from({ length: 12 }, (_, i) => ({
+      book: "9001",
+      id: `p${i}`,
+      text: `parola${i}`,
+      at: later(1_000 + i),
+    }));
+    const deps = depsWith(timedApi(highlights, { counts: { "9001": 12 } }));
+    await pullReadwiseNow(ctx, deps);
+    const [first] = await db
+      .select()
+      .from(schema.readwiseConnections)
+      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    expect(first?.pullCursor).toBe("10");
+    expect(await cardsOf(ctx.userId)).toHaveLength(10);
+
+    await db
+      .update(schema.readwiseConnections)
+      .set({ lastPullAt: new Date(0) })
+      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    const view = await pullReadwiseNow(ctx, deps);
+    const [second] = await db
+      .select()
+      .from(schema.readwiseConnections)
+      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    expect(second?.pullCursor).toBeNull();
+    // The point moves to when the first pull of the run began, less the two-minute overlap.
+    expect(second?.pulledThrough.getTime()).toBe((first?.pullCursorFrom?.getTime() ?? 0) - 120_000);
+    expect(await cardsOf(ctx.userId)).toHaveLength(12);
+    expect(view.books.find((b) => b.id === "9001")?.highlights).toBe(12);
+  });
+});
+
 describe("the hourly pull", () => {
   it("pulls only connections that are due, once each", async () => {
     const due = await reader("rw-due");

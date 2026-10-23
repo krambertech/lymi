@@ -1101,6 +1101,10 @@ export const readwiseConnections = sqliteTable("readwise_connections", {
   decks: text("decks", { mode: "json" }).$type<Record<string, string>>().notNull(),
   /** Highlights updated after this are what the next pull asks for. */
   pulledThrough: integer("pulled_through", { mode: "timestamp_ms" }).notNull(),
+  /** Readwise's page cursor when a pull stopped at its page cap, so the next one carries on. */
+  pullCursor: text("pull_cursor"),
+  /** When the pull that left the cursor began, which `pulledThrough` moves to once it is done. */
+  pullCursorFrom: integer("pull_cursor_from", { mode: "timestamp_ms" }),
   nextPullAt: integer("next_pull_at", { mode: "timestamp_ms" }).notNull(),
   lastPullAt: integer("last_pull_at", { mode: "timestamp_ms" }),
   lastPullHighlights: integer("last_pull_highlights").notNull().default(0),
@@ -1124,6 +1128,8 @@ export const readwiseBooks = sqliteTable(
     language: text("language"),
     /** Whether its new highlights become cards. */
     followed: integer("followed", { mode: "boolean" }).notNull(),
+    /** Followed since the last pull, so its highlights since connecting are read in full. */
+    pending: integer("pending", { mode: "boolean" }).notNull().default(false),
     highlights: integer("highlights").notNull().default(0),
     ...timestamps,
   },

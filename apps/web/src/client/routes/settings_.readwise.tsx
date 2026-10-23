@@ -31,14 +31,20 @@ function ReadwiseRoute() {
       const previous = qc.getQueryData(readwiseQuery.queryKey);
       const connection = previous?.connection;
       if (connection) {
-        const follows = new Map((patch.books ?? []).map((b) => [b.id, b.followed]));
+        const patches = new Map((patch.books ?? []).map((b) => [b.id, b]));
+        const deckFor = (language: string) =>
+          connection.languages.find((l) => l.language === language)?.deckId;
         settle({
           connection: {
             ...connection,
-            books: connection.books.map((b) => ({
-              ...b,
-              followed: follows.get(b.id) ?? b.followed,
-            })),
+            books: connection.books.map((b) => {
+              const next = patches.get(b.id);
+              if (!next) return b;
+              const language = next.language ?? b.language;
+              const followed =
+                next.followed ?? (next.language ? Boolean(deckFor(next.language)) : b.followed);
+              return { ...b, language, followed };
+            }),
             languages: connection.languages.map((l) => ({
               ...l,
               deckId: patch.decks?.[l.language] ?? l.deckId,
@@ -51,7 +57,11 @@ function ReadwiseRoute() {
     onError: (_error, _patch, context) => {
       if (context?.previous) settle(context.previous);
     },
-    onSuccess: settle,
+    onSuccess: (next, patch) => {
+      settle(next);
+      // Following a book pulls its highlights at once, so Activity may have new rows.
+      if (patch.books?.length) void qc.invalidateQueries({ queryKey: ["activity"] });
+    },
   });
   const pull = useMutation({
     mutationFn: api.pullReadwise,
@@ -88,6 +98,7 @@ function ReadwiseRoute() {
       connecting={connect.isPending}
       connectError={connect.isError ? connectError(connect.error) : null}
       onFollow={(id, followed) => update.mutate({ books: [{ id, followed }] })}
+      onLanguage={(id, language) => update.mutate({ books: [{ id, language }] })}
       onDeck={(language, deckId) => update.mutate({ decks: { [language]: deckId } })}
       saveError={
         update.isError ? t`Couldn’t save that change. Check your connection and try again.` : null

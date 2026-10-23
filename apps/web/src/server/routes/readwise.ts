@@ -60,12 +60,21 @@ readwise.patch(
     tags: ["Readwise"],
     summary: "Choose books and decks",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Follows or unfollows books, and picks the deck each language's highlights go to.`,
+    description: `${LEARNER_ONLY} Follows or unfollows books, sets a book's language when Lymi could not tell it, and picks the deck each language's highlights go to. A newly followed book's highlights since connecting are pulled at once.`,
     ok,
     errors: [400, 404],
   }),
   body(ReadwisePatchInput, "Readwise settings"),
-  async (c) => c.json({ connection: await updateReadwise(ctxOf(c), c.req.valid("json")) }),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const { view, followed } = await updateReadwise(ctx, c.req.valid("json"));
+    if (!followed) return c.json({ connection: view });
+    // The setting is saved; a Readwise outage leaves the book for the next pull.
+    const connection = await pullReadwiseNow(ctx, readwiseDeps(c.env, ctx.analytics), {
+      followed: true,
+    }).catch(() => view);
+    return c.json({ connection });
+  },
 );
 
 readwise.post(

@@ -152,6 +152,10 @@ msgstr "{0, plural, one {# file} other {# files}} and text"
 msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 msgstr "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 
+#. placeholder {0}: book.highlights
+msgid "{0, plural, one {# highlight} other {# highlights}}"
+msgstr "{0, plural, one {# highlight} other {# highlights}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
@@ -301,6 +305,10 @@ msgstr "{0, plural, one {Imported # card} other {Imported # cards}}"
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 
+#. placeholder {0}: unplaced.length
+msgid "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
+msgstr "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
+
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
@@ -365,6 +373,11 @@ msgstr "{0, plural, other {# kinds checked}}"
 #. placeholder {0}: summary.decks.length
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, other {All # decks}}"
+
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: book.highlights
+msgid "{0} · {1, plural, one {# highlight} other {# highlights}}"
+msgstr "{0} · {1, plural, one {# highlight} other {# highlights}}"
 
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: isolate(card.deckName)
@@ -1531,6 +1544,9 @@ msgstr "Choose a deck"
 
 msgid "Choose a deck."
 msgstr "Choose a deck."
+
+msgid "Choose a language"
+msgstr "Choose a language"
 
 msgid "Choose a recall grade"
 msgstr "Choose a recall grade"

@@ -45,6 +45,13 @@ describe("a translation's example", () => {
     expect(exampleFingerprint("Ich esse Brot.")).not.toBe(exampleFingerprint("Ich aß Brot."));
   });
 
+  it("keeps an accent typed as a combining mark, which changes the word", () => {
+    expect(exampleFingerprint("Un caf\u0065\u0301.")).toBe(exampleFingerprint("Un café."));
+    expect(exampleFingerprint("Un café.")).not.toBe(exampleFingerprint("Un cafe."));
+    expect(exampleFingerprint("Ένα κα\u03b9\u0301ει.")).not.toBe(exampleFingerprint("Ένα καιει."));
+    expect(shownLength("Un caf\u0065\u0301.")).toBe(8);
+  });
+
   it("is stale once the example says something else", () => {
     const of = exampleFingerprint("Ich esse Brot.");
     const card = {

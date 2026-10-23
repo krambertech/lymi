@@ -3,6 +3,28 @@ export const persona = "long";
 export const start = "/library";
 
 export default async function drive({ page, step, api, expect }) {
+  await step("Typing an example and its translation keeps the caret where it is", async () => {
+    await page.keyboard.press("n");
+    const sheet = page
+      .getByRole("dialog")
+      .filter({ has: page.getByRole("textbox", { name: "Term", exact: true }) });
+    await sheet.getByRole("textbox", { name: "Term", exact: true }).fill("die Katze");
+    await sheet.getByRole("button", { name: "Example", exact: true }).click();
+    const example = sheet.getByRole("textbox", { name: "Example", exact: true });
+    await example.click();
+    // One key at a time: the translation's chin appears with the first character.
+    await page.keyboard.type("Die Katze schläft.", { delay: 20 });
+    await expect(example).toBeFocused();
+    await expect(example).toHaveValue("Die Katze schläft.");
+    const translation = sheet.getByRole("textbox", { name: "Translation", exact: true });
+    await translation.click();
+    await page.keyboard.type("The cat sleeps.", { delay: 20 });
+    await expect(translation).toBeFocused();
+    await expect(translation).toHaveValue("The cat sleeps.");
+    await page.keyboard.press("Escape");
+    await page.goto("/library");
+  });
+
   const main = page.getByRole("main");
   const decks = await api("/api/decks");
   const deck = decks.find((d) => d.name === "Lange Karten");

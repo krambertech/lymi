@@ -8,11 +8,11 @@ A deck's card, its **Edit card** button, or review after **Reveal the card**. Th
 
 ## Drive
 
-[`example-translation.mjs`](example-translation.mjs), as `long` from Library: open **Lange Karten**, then **der Hund**; change its example in **Edit card** and save; edit the **Translation** and save; then type an example over 250 characters and save.
+[`example-translation.mjs`](example-translation.mjs), as `long` from Library: type an example and its translation one key at a time in **Add a card**; open **Lange Karten**, then **der Hund**; change its example in **Edit card** and save; edit the **Translation** and save; then type an example over 250 characters and save.
 
 ## End state
 
-The card page reads `Der Hund schläft.` with `(The dog is sleeping.)` under it, as `/api/cards/<id>` stores. After the new example the translation is unchanged, the page says **Translated from an earlier example. Edit it to match.**, and the card reads `exampleTranslationStale: true` with source `manual`. A rewritten translation shows in parentheses, the line goes, and `exampleTranslationStale` is false. An example over 250 characters is refused with **Keep the example under 250 characters.** and the stored example is unchanged.
+Typing keeps the caret in the Example and then the Translation, with every character kept. The card page reads `Der Hund schläft.` with `(The dog is sleeping.)` under it, as `/api/cards/<id>` stores. After the new example the translation is unchanged, the page says **Translated from an earlier example. Edit it to match.**, and the card reads `exampleTranslationStale: true` with source `manual`. A rewritten translation shows in parentheses, the line goes, and `exampleTranslationStale` is false. An example over 250 characters is refused with **Keep the example under 250 characters.** and the stored example is unchanged.
 
 ## Gotchas
 

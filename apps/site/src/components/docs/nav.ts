@@ -23,7 +23,8 @@ export type DocPath =
   | "/docs/mcp/chatgpt"
   | "/docs/mcp/gemini"
   | "/docs/mcp/cursor"
-  | "/docs/mcp/grok";
+  | "/docs/mcp/grok"
+  | "/docs/yomitan";
 
 export interface DocPage {
   to: DocPath;
@@ -86,6 +87,13 @@ export const PAGES: DocPage[] = [
     title: "Grok",
     blurb: "Connect Lymi to Grok as a custom connector, with the client ID Lymi publishes for it.",
     section: "Assistants",
+  },
+  {
+    to: "/docs/yomitan",
+    nav: "Yomitan",
+    title: "Yomitan",
+    blurb: "Add the words you look up in Yomitan’s pop-up dictionary as cards.",
+    section: "Add from other apps",
   },
   {
     to: "/docs/mobile",
@@ -185,6 +193,7 @@ export const PAGES: DocPage[] = [
 export const SECTIONS: { name: string; pages: DocPage[] }[] = [
   "Start",
   "Assistants",
+  "Add from other apps",
   "Guides",
   "API",
 ].map((name) => ({ name, pages: PAGES.filter((p) => p.section === name) }));

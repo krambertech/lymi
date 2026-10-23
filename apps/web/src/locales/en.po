@@ -873,6 +873,9 @@ msgstr "A PDF of the lesson"
 msgid "A PDF, or drop it here"
 msgstr "A PDF, or drop it here"
 
+msgid "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
+msgstr "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
+
 msgid "A reset link works once, within an hour."
 msgstr "A reset link works once, within an hour."
 
@@ -1053,6 +1056,9 @@ msgstr "Added today"
 msgid "Adding…"
 msgstr "Adding…"
 
+msgid "Address and key"
+msgstr "Address and key"
+
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "After connecting, paste a lesson into your assistant and ask it to make cards."
 
@@ -1157,6 +1163,9 @@ msgstr "Anki package"
 msgid "anki quizlet pleco"
 msgstr "anki quizlet pleco"
 
+msgid "AnkiConnect server address"
+msgstr "AnkiConnect server address"
+
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
@@ -1197,6 +1206,9 @@ msgstr "anything"
 
 msgid "Anything"
 msgstr "Anything"
+
+msgid "API key"
+msgstr "API key"
 
 msgid "API key for {name}"
 msgstr "API key for {name}"
@@ -1894,6 +1906,9 @@ msgstr "Couldn’t read this text"
 
 msgid "Couldn’t remove the member. Try again."
 msgstr "Couldn’t remove the member. Try again."
+
+msgid "Couldn’t revoke the old key. Revoke it under API keys in Settings."
+msgstr "Couldn’t revoke the old key. Revoke it under API keys in Settings."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
@@ -2738,6 +2753,9 @@ msgstr "Invited {name} to {deck}"
 msgid "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 msgstr "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 
+msgid "It can add cards. Lymi shows it once."
+msgstr "It can add cards. Lymi shows it once."
+
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "It can read your cards, and add, edit and archive them."
 
@@ -2866,6 +2884,16 @@ msgstr "Keep the stress under 200 characters."
 
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
+
+#. placeholder {0}: shortDate(i18n, key.createdAt)
+#. placeholder {1}: lastUsed(i18n, key.lastRequest)
+msgid "Key made {0} · {1}"
+msgstr "Key made {0} · {1}"
+
+#. placeholder {0}: shortDate(i18n, current.createdAt)
+#. placeholder {1}: lastUsed(i18n, current.lastRequest)
+msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
+msgstr "Key made {0} · {1}. A new key replaces it, and this one stops working."
 
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -3050,6 +3078,9 @@ msgstr "Made the series {name}"
 
 msgid "Main"
 msgstr "Main"
+
+msgid "Make a key for Yomitan"
+msgstr "Make a key for Yomitan"
 
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
@@ -3590,6 +3621,9 @@ msgstr "Open Lymi in Safari and tap Share."
 msgid "Open the invitation"
 msgstr "Open the invitation"
 
+msgid "Open the setup guide"
+msgstr "Open the setup guide"
+
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
 
@@ -3668,6 +3702,9 @@ msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pict
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Paste a transcript, your notes or the lesson’s text"
+
+msgid "Paste both into Yomitan’s Anki settings."
+msgstr "Paste both into Yomitan’s Anki settings."
 
 msgid "Paste notes or a transcript"
 msgstr "Paste notes or a transcript"
@@ -3752,6 +3789,9 @@ msgstr "Play pronunciation"
 
 msgid "Policies and support"
 msgstr "Policies and support"
+
+msgid "Pop-up dictionary that adds the words you look up"
+msgstr "Pop-up dictionary that adds the words you look up"
 
 msgid "Position your photo"
 msgstr "Position your photo"
@@ -3971,6 +4011,9 @@ msgstr "Rename…"
 
 msgid "Renamed “{from}” to “{spelled}”"
 msgstr "Renamed “{from}” to “{spelled}”"
+
+msgid "Replace the key"
+msgstr "Replace the key"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"
@@ -4291,6 +4334,9 @@ msgstr "Set name"
 
 msgid "Settings"
 msgstr "Settings"
+
+msgid "Setup guide"
+msgstr "Setup guide"
 
 msgid "Share link"
 msgstr "Share link"
@@ -5117,6 +5163,9 @@ msgstr "Where each language’s highlights go."
 msgid "Where the cards go"
 msgstr "Where the cards go"
 
+msgid "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
+msgstr "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
+
 msgid "Which days you reviewed"
 msgstr "Which days you reviewed"
 
@@ -5152,6 +5201,9 @@ msgstr "Yesterday was a rest day"
 
 msgid "Yesterday was a rest day. Every grade counts toward today’s goal."
 msgstr "Yesterday was a rest day. Every grade counts toward today’s goal."
+
+msgid "Yomitan"
+msgstr "Yomitan"
 
 msgid "you"
 msgstr "you"

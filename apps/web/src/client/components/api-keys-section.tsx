@@ -3,6 +3,7 @@ import { msg, ph } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { clsx } from "clsx";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api, errorMessage } from "../lib/api";
@@ -295,23 +296,29 @@ function KeyRow({
  * The one moment in Settings where something is handed over. The lantern takes one breath, the
  * way it does when a review lands, and the key is the only thing on the panel worth pressing.
  */
-function FreshKey({
+export function FreshKey({
   name,
   value,
   onDone,
   onRevoke,
+  inPlate,
 }: {
   name: string;
   value: string;
   onDone: () => void;
   onRevoke: () => void;
+  /** Already on a plate, such as a card, so it draws no plate of its own. */
+  inPlate?: boolean | undefined;
 }) {
   const { t } = useLingui();
   const [fed, setFed] = useState(0);
   useEffect(() => setFed(1), []);
 
   return (
-    <div className="enter-card edge grid gap-3 rounded-md bg-plate p-4" role="status">
+    <div
+      className={clsx("enter-card grid gap-3", !inPlate && "edge rounded-md bg-plate p-4")}
+      role="status"
+    >
       <div className="flex items-start gap-2.5">
         <Lantern className="size-8 shrink-0" glow fed={fed} />
         <p className="text-base text-text">
@@ -334,7 +341,7 @@ function FreshKey({
   );
 }
 
-function lastUsed(i18n: I18n, iso: string | null): string {
+export function lastUsed(i18n: I18n, iso: string | null): string {
   if (!iso) return i18n._(msg`never used`);
   const ms = Date.now() - new Date(iso).getTime();
   const m = Math.round(ms / 60_000);
@@ -348,6 +355,6 @@ function lastUsed(i18n: I18n, iso: string | null): string {
   return i18n._(msg`used ${date}`);
 }
 
-function shortDate(i18n: I18n, iso: string): string {
+export function shortDate(i18n: I18n, iso: string): string {
   return i18n.date(iso, { day: "numeric", month: "short" });
 }

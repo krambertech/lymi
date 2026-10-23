@@ -96,7 +96,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Activity**: The list of what came into the learner's decks from outside the app — imports, and writes made by integrations and the AI — with the files they took out and who is in their shared decks: joins, leaves, removals, and the join link going on or off. Nothing lands unseen. Writes of one kind by one caller in one deck on one day are one row, which opens the cards it wrote so they can be inspected, edited or archived without leaving. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
-**Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps and API keys, then exporting the library and importing from another app. Nothing else lives there. The phone has no Settings screen; You holds the same settings there. _Avoid_: You, profile, account, preferences
+**Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps, the apps that add cards from what the learner reads, such as Readwise and Yomitan, and API keys, then exporting the library and importing from another app. Nothing else lives there. The phone has no Settings screen; You holds the same settings there. _Avoid_: You, profile, account, preferences
 
 **Learner menu**: The menu behind the learner's name in the rail and their avatar on the phone. It leads to Settings, Archived, the docs, feedback and sign-out, and on the phone to Activity and Insights as well; keyboard shortcuts appear where there is a keyboard and Install where the browser can do it. _Avoid_: Profile menu, account menu, user menu
 

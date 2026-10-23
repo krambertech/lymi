@@ -26,6 +26,7 @@ export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./confi
 export { type TextDirection, textDirection } from "./direction";
 export * from "./names";
 export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";
+export { fitsLanguage } from "./scripts";
 export type {
   DuplicateRule,
   LanguageFormat,

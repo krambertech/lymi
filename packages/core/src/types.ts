@@ -6,6 +6,7 @@ import {
   ENRICH_INSTRUCTIONS_MAX,
   ENRICHED_FIELDS,
 } from "./enrichment";
+import { EXAMPLE_LENGTH, fitsExample } from "./example";
 import { OPEN } from "./responses/common";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
@@ -217,6 +218,7 @@ export const EDITION_CARD_FIELDS = [
   "meaning",
   "pronunciation",
   "example",
+  "exampleTranslation",
   "notes",
 ] as const;
 export const EditionCardField = z.enum(EDITION_CARD_FIELDS);
@@ -253,6 +255,10 @@ export const CardLocalizationFields = z.object({
   meaning: LocalizedText(2000),
   pronunciation: LocalizedText(200),
   example: LocalizedText(2000),
+  exampleTranslation: LocalizedText(EXAMPLE_LENGTH).meta({
+    description:
+      "The example in this edition's language. A reader sees it only while the card's text is unchanged since this row, and never another edition's.",
+  }),
   notes: LocalizedText(2000),
 });
 export type CardLocalizationFields = z.infer<typeof CardLocalizationFields>;
@@ -611,10 +617,24 @@ export const CardInput = z.object({
     description:
       "How the term is said, in the format GET /api/languages gives for the card's language, which also says when a differing reading makes a different card. Any other language holds IPA or a plain respelling.",
   }),
-  example: z.string().trim().max(CARD_LIMITS.example).optional().meta({
-    description:
-      "One sentence in the term's language. Where GET /api/languages gives the language an example notation, the sentence carries its readings inline in it; otherwise it is plain.",
-  }),
+  example: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.example)
+    .refine(fitsExample, `Keep the example under ${EXAMPLE_LENGTH} characters.`)
+    .optional()
+    .meta({
+      description: `One sentence in the term's language, at most ${EXAMPLE_LENGTH} characters as shown: inline readings and stress marks do not count. Where GET /api/languages gives the language an example notation, the sentence carries its readings inline in it; otherwise it is plain. An example already longer stays until it is changed.`,
+    }),
+  exampleTranslation: z
+    .string()
+    .trim()
+    .max(EXAMPLE_LENGTH, `Keep the translation under ${EXAMPLE_LENGTH} characters.`)
+    .optional()
+    .meta({
+      description:
+        "The example in the learner's meaning language, shown after the answer. Left out, the AI writes one where the deck's enrichFields include exampleTranslation and the add enriches. Empty clears it, and the AI leaves it empty. Ignored without an example.",
+    }),
   notes: z
     .string()
     .trim()
@@ -648,6 +668,7 @@ export const CardInput = z.object({
     .meta({ description: "Overrides the deck's review modes. Null follows the deck." }),
   meaningSource: StatedFieldSource.optional(),
   exampleSource: StatedFieldSource.optional(),
+  exampleTranslationSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
   notesSource: StatedFieldSource.optional(),
   hookSource: StatedFieldSource.optional(),
@@ -682,6 +703,7 @@ export const cardLimits = {
   meaning: CardInput.shape.meaning.unwrap().maxLength,
   pronunciation: CardInput.shape.pronunciation.unwrap().maxLength,
   example: CardInput.shape.example.unwrap().maxLength,
+  exampleTranslation: CardInput.shape.exampleTranslation.unwrap().maxLength,
   notes: CardInput.shape.notes.unwrap().maxLength,
   source: CardInput.shape.source.unwrap().maxLength,
   hook: CardInput.shape.hook.unwrap().maxLength,

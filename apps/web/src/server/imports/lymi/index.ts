@@ -19,8 +19,16 @@ export const MAX_CARDS_BYTES = 64 * 1024 * 1024;
 const MAX_MANIFEST_BYTES = 8 * 1024 * 1024;
 
 export const LYMI_NOTE_TYPE = "lymi:card";
-const FIELDS = ["Term", "Meaning", "Pronunciation", "Example", "Notes"];
-const ROLES: FieldRole[] = ["term", "meaning", "pronunciation", "example", "notes"];
+// Added fields go last, so roles chosen for an import read before they existed still line up.
+const FIELDS = ["Term", "Meaning", "Pronunciation", "Example", "Notes", "Example translation"];
+const ROLES: FieldRole[] = [
+  "term",
+  "meaning",
+  "pronunciation",
+  "example",
+  "notes",
+  "exampleTranslation",
+];
 
 /** One card from a Lymi zip, with what its deck says about the cards that follow it. */
 export type LymiNote = {
@@ -145,6 +153,7 @@ export const lymi: SourceAdapter<LymiNote> = {
           card.pronunciation ?? "",
           card.example ?? "",
           card.notes ?? "",
+          card.exampleTranslation ?? "",
         ]);
       }
       summary.reviews += card.states.reduce((sum, state) => sum + state.reviews.length, 0);
@@ -192,6 +201,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         card.pronunciation ?? "",
         card.example ?? "",
         card.notes ?? "",
+        card.exampleTranslation ?? "",
       ],
       roles,
     );
@@ -222,6 +232,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         fieldSources: {
           meaning: card.meaningSource,
           example: card.exampleSource,
+          exampleTranslation: card.exampleTranslationSource ?? null,
           pronunciation: card.pronunciationSource ?? null,
           notes: card.notesSource ?? null,
         },

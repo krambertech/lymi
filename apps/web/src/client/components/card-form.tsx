@@ -4,6 +4,8 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  EXAMPLE_LENGTH,
+  exampleShown,
   hasReadings,
   hasStress,
   ImageDescription,
@@ -14,6 +16,7 @@ import {
   pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
+  shownLength,
   termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -60,6 +63,8 @@ export interface CardFormValues {
   meaning: string;
   pronunciation: string;
   example: string;
+  /** Empty with an example leaves the AI to translate it, where the deck lets it. */
+  exampleTranslation: string;
   notes: string;
   hook: string;
   source: string;
@@ -148,6 +153,7 @@ const BASE_ORDER: ChipKey[] = ["notes", "tags", "source", "example", "pronunciat
 const FIELD_OF: Record<string, Extra> = {
   description: "picture",
   example: "example",
+  exampleTranslation: "example",
   pronunciation: "pronunciation",
   notes: "notes",
   hook: "hook",
@@ -227,6 +233,9 @@ export function CardForm(props: CardFormProps) {
     draft?.pronunciation ?? card?.pronunciation ?? "",
   );
   const [example, setExample] = useState(draft?.example ?? card?.example ?? "");
+  const [translation, setTranslation] = useState(
+    draft?.exampleTranslation ?? card?.exampleTranslation ?? "",
+  );
   const [notes, setNotes] = useState(draft?.notes ?? card?.notes ?? "");
   const [hook, setHook] = useState(draft?.hook ?? card?.hook ?? "");
   const [source, setSource] = useState(draft?.source ?? card?.source ?? "");
@@ -354,6 +363,7 @@ export function CardForm(props: CardFormProps) {
     meaning: meaning.trim(),
     pronunciation: pronunciation.trim(),
     example: example.trim(),
+    exampleTranslation: example.trim() ? translation.trim() : "",
     notes: notes.trim(),
     hook: hook.trim(),
     source: source.trim(),
@@ -372,9 +382,9 @@ export function CardForm(props: CardFormProps) {
 
   const clear = (key: string) => setInvalid(({ [key]: _, ...rest }) => rest);
   /** What is left in a nearly full field. `maxLength` stops the typing; this says so first. */
-  const roomLeft = (value: string, limit: number | null) => {
-    if (limit === null || value.length < limit * NEARLY_FULL) return undefined;
-    const left = limit - value.length;
+  const roomLeft = (value: string, limit: number | null, length = value.length) => {
+    if (limit === null || length < limit * NEARLY_FULL) return undefined;
+    const left = limit - length;
     return (
       <span role="status">
         {t`${plural(left, { one: "# character left", other: "# characters left" })}`}
@@ -420,13 +430,16 @@ export function CardForm(props: CardFormProps) {
               : named === "stress"
                 ? t`Keep the stress under 200 characters.`
                 : t`Keep the pronunciation under 200 characters.`,
-          example: t`Keep the example under 2000 characters.`,
+          example: t`Keep the example under 250 characters.`,
+          exampleTranslation: t`Keep the translation under 250 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
           hook: t`Keep the hook under 200 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
           reviewModes: t`Choose at least one way to be asked.`,
         });
+    // An example saved before the limit stays as it is until the learner changes it.
+    if (!adding && values.example === (card?.example ?? "").trim()) delete errors.example;
     if (hasPicture && values.description) {
       if (!ImageDescription.safeParse(values.description).success) {
         errors.description = t`Keep the description under 300 characters.`;
@@ -474,6 +487,7 @@ export function CardForm(props: CardFormProps) {
     setMeaning("");
     setPronunciation("");
     setExample("");
+    setTranslation("");
     setNotes("");
     setHook("");
     setModes(null);
@@ -594,19 +608,24 @@ export function CardForm(props: CardFormProps) {
       long?: boolean;
       enterAdds?: boolean;
       description?: ReactNode;
+      /** The length the limit counts, where it is not every character typed. */
+      length?: number;
+      /** Where the limit counts less than is typed, the most that can be typed. */
+      maxLength?: number | null;
     } = {},
   ) => {
     const change = (next: string) => {
       set(next);
       clear(key);
     };
+    const maxLength = (options.maxLength === undefined ? limit : options.maxLength) ?? undefined;
     return (
       <Field key={key} data-extra={key}>
-        <FieldLabel aside={roomLeft(value, limit)}>{label}</FieldLabel>
+        <FieldLabel aside={roomLeft(value, limit, options.length)}>{label}</FieldLabel>
         {options.description}
         {options.long ? (
           <Textarea
-            maxLength={limit ?? undefined}
+            maxLength={maxLength}
             value={value}
             rows={2}
             className={options.enterAdds ? undefined : "min-h-[68px]"}
@@ -615,7 +634,7 @@ export function CardForm(props: CardFormProps) {
           />
         ) : (
           <Input
-            maxLength={limit ?? undefined}
+            maxLength={maxLength}
             value={value}
             autoComplete="off"
             onChange={(e) => change(e.target.value)}
@@ -657,10 +676,66 @@ export function CardForm(props: CardFormProps) {
   // The preview sits under the last of the reading and the example shown, and only once one is.
   const previewAfter = shown.findLast((key) => key === "pronunciation" || key === "example");
 
+  // The AI's translation fits the example it was written for, so a new example clears it for the
+  // AI to write again rather than saving the old one as the learner's.
+  const changeExample = (next: string) => {
+    setExample(next);
+    if (
+      card?.exampleTranslationSource === "ai" &&
+      translation === (card.exampleTranslation ?? "") &&
+      exampleShown(next) !== exampleShown(card.example ?? "")
+    ) {
+      setTranslation("");
+    }
+  };
+  const exampleChanged = exampleShown(example) !== exampleShown(card?.example ?? "");
+  const aiTranslates =
+    !!current?.enrichFields.includes("exampleTranslation") &&
+    !translation.trim() &&
+    (adding ||
+      (exampleChanged &&
+        (card?.exampleTranslation == null || card.exampleTranslationSource === "ai")));
+  const translationStale =
+    !!card?.exampleTranslationStale &&
+    !exampleChanged &&
+    translation === (card.exampleTranslation ?? "");
+  const translationField = () => (
+    <Field key="exampleTranslation" data-extra="exampleTranslation">
+      <FieldLabel aside={roomLeft(translation, cardLimits.exampleTranslation)}>
+        {t`Translation`}
+      </FieldLabel>
+      <Textarea
+        maxLength={cardLimits.exampleTranslation ?? undefined}
+        value={translation}
+        rows={1}
+        dir="auto"
+        placeholder={
+          aiTranslates ? t`AI translates the example if you leave this empty` : undefined
+        }
+        onChange={(e) => {
+          setTranslation(e.target.value);
+          clear("exampleTranslation");
+        }}
+      />
+      {translationStale && (
+        <FieldDescription>{t`Translated from an earlier example.`}</FieldDescription>
+      )}
+      <FieldError>{invalid.exampleTranslation}</FieldError>
+    </Field>
+  );
+
   const extraField: Record<Extra, () => ReactNode> = {
     notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
-    example: () =>
-      textField("example", t`Example`, example, setExample, cardLimits.example, { long: true }),
+    example: () => (
+      <div key="example" className="grid gap-3">
+        {textField("example", t`Example`, example, changeExample, EXAMPLE_LENGTH, {
+          long: true,
+          length: shownLength(example),
+          maxLength: cardLimits.example,
+        })}
+        {(example.trim() || translation) && translationField()}
+      </div>
+    ),
     pronunciation: () =>
       textField(
         "pronunciation",

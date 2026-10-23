@@ -84,7 +84,7 @@ Deck rows and round tiles are whole links that end in `Go`, never a button insid
 
 ## Review
 
-A review holds the screen: the page never scrolls, and the grade strip always sits under the card. A card too long for its room first steps its cue and target down the type scale; the example and notes never shrink or hide, so whatever still does not fit scrolls inside the plate, softened at its top and bottom edges.
+A review holds the screen: the page never scrolls, and the grade strip always sits under the card. A card too long for its room first steps its cue and target down the type scale; the example and notes never shrink or hide, so whatever still does not fit scrolls inside the plate, softened at its top and bottom edges. The example's translation follows its example 4 px below, in parentheses, at the body size in `muted`, arriving with it; it shows only after the reveal, in every mode, and never one written for an earlier example.
 
 The card's head names its deck alone, with its state chip in the corner; a review can mix decks, and Words or Phrases says what kind of answer to give. The section waits for the answer, because a lesson's topic is a hint. Under the answer one line of chips names where the card sits, its section or, without one, its source, never both, because a source written before sections existed tends to restate the section; the AI chip follows when the AI wrote a field shown.
 

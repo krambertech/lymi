@@ -10,8 +10,9 @@ import {
   leaveOutExampleReadings,
   requireSupportedPhone,
   withoutExampleReadings,
+  withoutTranslationField,
 } from "./phone-clients";
-import { type Session, type TestApp, testApp } from "./test-app";
+import { json, type Session, type TestApp, testApp } from "./test-app";
 
 const phone = (version: string) => ({
   "x-lymi-client": `platform=ios; version=${version}; build=7; update=0b1c`,
@@ -152,5 +153,52 @@ describe("example pinyin and Jyutping for an older phone", () => {
       notes: "你好[nǐ hǎo]",
       language: "zh",
     });
+  });
+});
+
+describe("the example's translation among a deck's AI fields", () => {
+  let open: TestApp;
+  let owner: Session;
+
+  beforeAll(async () => {
+    open = await testApp();
+    owner = await open.signUp("phone-translation");
+  }, 60_000);
+
+  it("is left out of a deck's fields for a release that has no name for it, and nothing else", () => {
+    expect(
+      withoutTranslationField({
+        enrichFields: ["meaning", "example", "exampleTranslation"],
+        cards: [{ exampleTranslation: "I eat bread.", enrichmentFields: ["meaning"] }],
+      }),
+    ).toEqual({
+      enrichFields: ["meaning", "example"],
+      cards: [{ exampleTranslation: "I eat bread.", enrichmentFields: ["meaning"] }],
+    });
+  });
+
+  it("stays on when an older release saves the fields it can see", async () => {
+    const created = await open.fetch("/api/decks", {
+      as: owner,
+      ...json({ name: "Deutsch", defaultLanguage: "de" }),
+    });
+    const { id } = (await created.json()) as { id: string };
+    const fields = async (headers: Record<string, string>) =>
+      (
+        (await (await open.fetch(`/api/decks/${id}`, { as: owner, headers })).json()) as {
+          enrichFields: string[];
+        }
+      ).enrichFields;
+    expect(await fields(phone("0.0.8"))).toEqual(["meaning", "example", "notes"]);
+    expect(await fields(phone("0.0.9"))).toContain("exampleTranslation");
+
+    await open.fetch(`/api/decks/${id}`, {
+      as: owner,
+      ...json(
+        { enrichFields: ["meaning", "example"] },
+        { method: "PATCH", headers: phone("0.0.8") },
+      ),
+    });
+    expect(await fields({})).toEqual(["meaning", "example", "exampleTranslation"]);
   });
 });

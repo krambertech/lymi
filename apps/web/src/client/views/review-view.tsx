@@ -8,6 +8,7 @@ import {
   type KnownReadings,
   type Rating,
   type ReviewAid,
+  shownTranslation,
   termShowsPronunciation,
   textDirection,
 } from "@lymi/core";
@@ -653,6 +654,7 @@ export function ReviewCard({
   // The answer moves only when the aid over it arrives or leaves after the reveal.
   const answerGlide = aidGone ? aidGone.animate : shownAfter && aidAnimate;
   const hasExtras = !!(card.example || card.notes);
+  const translation = shownTranslation(card);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -664,6 +666,7 @@ export function ReviewCard({
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.exampleTranslationSource === "ai" && !!translation) ||
     (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none. Sources written
@@ -698,18 +701,28 @@ export function ReviewCard({
   const extrasLines = (
     <>
       {card.example && (
-        <motion.p
-          variants={answerLine}
-          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-          lang={card.language ?? undefined}
-          dir={textDirection(card.language)}
-        >
-          <ExampleText
-            text={card.example}
+        <motion.div variants={answerLine} className="grid gap-1">
+          <p
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
             lang={card.language ?? undefined}
-            known={knownReadings}
-          />
-        </motion.p>
+            dir={textDirection(card.language)}
+          >
+            <ExampleText
+              text={card.example}
+              lang={card.language ?? undefined}
+              known={knownReadings}
+            />
+          </p>
+          {translation && (
+            // In the meaning language, like the meaning, so it takes its direction from its own text.
+            <p
+              className="hyphenate whitespace-pre-line text-base leading-relaxed text-muted [overflow-wrap:anywhere]"
+              dir="auto"
+            >
+              ({translation})
+            </p>
+          )}
+        </motion.div>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">

@@ -22,6 +22,17 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
     patch.example = values.example;
     patch.exampleSource = "manual";
   }
+  // Emptied beside a new example, the AI's translation is the AI's to write again, not a clear.
+  if (values.exampleTranslation !== (card.exampleTranslation ?? "")) {
+    const refresh =
+      !values.exampleTranslation &&
+      card.exampleTranslationSource === "ai" &&
+      patch.example !== undefined;
+    if (!refresh) {
+      patch.exampleTranslation = values.exampleTranslation;
+      if (values.exampleTranslation) patch.exampleTranslationSource = "manual";
+    }
+  }
   if (values.pronunciation !== (card.pronunciation ?? "")) {
     patch.pronunciation = values.pronunciation;
     patch.pronunciationSource = "manual";

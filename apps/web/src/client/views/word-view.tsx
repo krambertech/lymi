@@ -3,6 +3,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { splitForms } from "@lymi/client/deck-list";
 import {
+  canEnrich,
   canPlayPronunciation,
   type DeckEnrichField,
   deserializeState,
@@ -11,7 +12,6 @@ import {
   type FsrsCard,
   isolate,
   type KnownReadings,
-  needsEnrichment,
   type ReviewMode,
   termShowsPronunciation,
 } from "@lymi/core";
@@ -83,6 +83,7 @@ const fieldName: Record<string, MessageDescriptor> = {
   meaning: msg`the meaning`,
   pronunciation: msg`the pronunciation`,
   example: msg`the example`,
+  exampleTranslation: msg`the example’s translation`,
   notes: msg`the notes`,
   hook: msg`the memory hook`,
   source: msg`the source`,
@@ -105,6 +106,7 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   meaning: (value) => msg`Meaning changed to “${value}”`,
   pronunciation: (value) => msg`Pronunciation changed to “${value}”`,
   example: (value) => msg`Example changed to “${value}”`,
+  exampleTranslation: (value) => msg`Translation changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
   hook: (value) => msg`Memory hook changed to “${value}”`,
 };
@@ -497,6 +499,9 @@ export function WordView({
   const filling = card.enrichmentStatus === "working";
   const waiting = (field: EnrichedField) =>
     filling && !card[field] && (card.enrichmentFields?.includes(field) ?? true);
+  const translating = card.exampleTranslationStatus === "working";
+  // A translation of an earlier example is the owner's to fix, so only they still see it.
+  const translation = (owner || !card.exampleTranslationStale) && card.exampleTranslation?.trim();
 
   // A shimmer says nothing out loud, so the card says it: once when the AI starts on it, once
   // when the text lands. Held per card, so moving to another word does not announce its neighbour.
@@ -556,8 +561,8 @@ export function WordView({
                 {card.important ? t`Unmark important` : t`Mark important`}
               </DropdownMenuItem>
             )}
-            {owner && needsEnrichment(card, owner.enrichFields) && (
-              <DropdownMenuItem onClick={owner.onEnrich} disabled={filling}>
+            {owner && canEnrich(card, owner.enrichFields) && (
+              <DropdownMenuItem onClick={owner.onEnrich} disabled={filling || translating}>
                 <Sparkle />
                 <Trans>Enrich</Trans>
               </DropdownMenuItem>
@@ -706,22 +711,51 @@ export function WordView({
           <ReadField
             label={t`Example`}
             aside={
-              card.example &&
-              card.exampleSource === "ai" && <SourceChip source="ai" field="example" size="xs" />
+              card.example && (
+                <>
+                  {card.exampleSource === "ai" && (
+                    <SourceChip source="ai" field="example" size="xs" />
+                  )}
+                  {translation && card.exampleTranslationSource === "ai" && (
+                    <SourceChip source="ai" field="exampleTranslation" size="xs" />
+                  )}
+                </>
+              )
             }
             working={waiting("example")}
           >
             {card.example && (
-              <p
-                lang={card.language ?? undefined}
-                className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
-              >
-                <ExampleText
-                  text={card.example}
+              <div className="grid gap-1">
+                <p
                   lang={card.language ?? undefined}
-                  known={knownReadings}
-                />
-              </p>
+                  className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
+                >
+                  <ExampleText
+                    text={card.example}
+                    lang={card.language ?? undefined}
+                    known={knownReadings}
+                  />
+                </p>
+                {translating && !translation ? (
+                  <p className="flex items-center text-base leading-relaxed" aria-hidden="true">
+                    <Skeleton className="h-3 w-2/3 rounded-sm" />
+                  </p>
+                ) : (
+                  translation && (
+                    <p
+                      dir="auto"
+                      className="hyphenate whitespace-pre-line text-base leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+                    >
+                      ({translation})
+                    </p>
+                  )
+                )}
+                {owner && translation && card.exampleTranslationStale && (
+                  <p className="text-sm text-muted">
+                    <Trans>Translated from an earlier example. Edit it to match.</Trans>
+                  </p>
+                )}
+              </div>
             )}
           </ReadField>
         )}
@@ -755,6 +789,20 @@ export function WordView({
             </button>
           </p>
         )}
+        {owner &&
+          card.enrichmentStatus !== "failed" &&
+          card.exampleTranslationStatus === "failed" && (
+            <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+              <Trans>Couldn’t translate the example.</Trans>
+              <button
+                type="button"
+                onClick={owner.onEnrich}
+                className="-my-2.5 min-h-11 rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+              >
+                <Trans>Try again</Trans>
+              </button>
+            </p>
+          )}
       </div>
 
       <Dialog open={moving} onOpenChange={setMoving}>

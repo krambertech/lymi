@@ -2058,6 +2058,9 @@ msgstr "Example by you"
 msgid "Example from lesson"
 msgstr "Example from lesson"
 
+msgid "Example translation"
+msgstr "Example translation"
+
 msgid "Explore"
 msgstr "Explore"
 

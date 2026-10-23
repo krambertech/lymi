@@ -114,3 +114,38 @@ export const leaveOutExampleReadings: MiddlewareHandler<AppEnv> = async (c, next
     headers,
   });
 };
+
+/** The first phone release that lists the example's translation among a deck's AI fields. */
+export const EXAMPLE_TRANSLATION_SINCE: ShownSince = { ios: "0.0.9" };
+
+/** A JSON value with the example's translation taken out of every deck's `enrichFields`. */
+export function withoutTranslationField(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutTranslationField);
+  if (!value || typeof value !== "object") return value;
+  const out: Record<string, unknown> = {};
+  for (const [key, item] of Object.entries(value)) {
+    out[key] =
+      key === "enrichFields" && Array.isArray(item)
+        ? item.filter((field) => field !== "exampleTranslation")
+        : withoutTranslationField(item);
+  }
+  return out;
+}
+
+/**
+ * Leaves the example's translation out of a deck's AI fields for a phone release that has no
+ * name for it, since its frozen contract lists the fields as a closed set. ADR 0032.
+ */
+export const leaveOutTranslationField: MiddlewareHandler<AppEnv> = async (c, next) => {
+  await next();
+  if (!c.get("phone") || clientSupports(c, EXAMPLE_TRANSLATION_SINCE)) return;
+  if (!c.res.headers.get("content-type")?.includes("application/json")) return;
+  const text = await c.res.clone().text();
+  if (!text.includes('"enrichFields"') || !text.includes('"exampleTranslation"')) return;
+  const headers = new Headers(c.res.headers);
+  headers.delete("content-length");
+  c.res = new Response(JSON.stringify(withoutTranslationField(JSON.parse(text))), {
+    status: c.res.status,
+    headers,
+  });
+};

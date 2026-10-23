@@ -4,10 +4,12 @@ import {
   directionsFromModes,
   duplicateKey,
   emptyImportCounts,
+  exampleFingerprint,
   IMAGE_LIMITS,
   IMPORT_LIMITS,
   type ImportCounts,
   type ImportedCard,
+  type ImportedFields,
   type ImportPreviewOut,
   isImageMode,
   type NormalizedField,
@@ -437,6 +439,7 @@ export async function previewImport<Note>(
         meaning: card.fields.meaning ?? null,
         pronunciation: card.fields.pronunciation ?? null,
         example: card.fields.example ?? null,
+        exampleTranslation: card.fields.exampleTranslation ?? null,
         notes: card.fields.notes ?? null,
         tags: card.tags,
         modes: card.modes,
@@ -671,6 +674,7 @@ export async function writeChunk<Note>(
         meaning: fields.meaning ?? null,
         pronunciation: fields.pronunciation ?? null,
         example: fields.example ?? null,
+        ...translationOf(fields),
         notes: fields.notes ?? null,
         hook: item.card.hook?.text ?? null,
         hookSource: item.card.hook?.source ?? null,
@@ -698,6 +702,10 @@ export async function writeChunk<Note>(
       meaning: fields.meaning ?? null,
       pronunciation: fields.pronunciation ?? null,
       example: fields.example ?? null,
+      ...translationOf(fields),
+      exampleTranslationSource: fields.exampleTranslation
+        ? (item.card.fieldSources?.exampleTranslation ?? "manual")
+        : null,
       notes: fields.notes ?? null,
       hook: item.card.hook?.text ?? null,
       hookSource: item.card.hook?.source ?? null,
@@ -769,6 +777,8 @@ export async function writeChunk<Note>(
     // Only blank fields are filled: whatever the learner wrote since the first import stays.
     const rows = sql`(select json_extract(value, '$.id') as id, json_extract(value, '$.meaning') as meaning,
         json_extract(value, '$.pronunciation') as pronunciation, json_extract(value, '$.example') as example,
+        json_extract(value, '$.exampleTranslation') as example_translation,
+        json_extract(value, '$.exampleTranslationOf') as example_translation_of,
         json_extract(value, '$.notes') as notes, json_extract(value, '$.hook') as hook,
         json_extract(value, '$.hookSource') as hook_source, json_extract(value, '$.tags') as tags
       from json_each(${part}))`;
@@ -776,6 +786,13 @@ export async function writeChunk<Note>(
       sql`update cards set
           meaning_source = case when cards.meaning is null and incoming.meaning is not null then 'manual' else cards.meaning_source end,
           example_source = case when cards.example is null and incoming.example is not null then 'manual' else cards.example_source end,
+          -- A translation lands only beside the example it translates, and never over the learner's.
+          example_translation_source = case when cards.example_translation is null and incoming.example_translation is not null
+              and (cards.example is null or cards.example = incoming.example) then 'manual' else cards.example_translation_source end,
+          example_translation_of = case when cards.example_translation is null and incoming.example_translation is not null
+              and (cards.example is null or cards.example = incoming.example) then incoming.example_translation_of else cards.example_translation_of end,
+          example_translation = case when cards.example_translation is null and incoming.example_translation is not null
+              and (cards.example is null or cards.example = incoming.example) then incoming.example_translation else cards.example_translation end,
           meaning = coalesce(cards.meaning, incoming.meaning),
           pronunciation = coalesce(cards.pronunciation, incoming.pronunciation),
           example = coalesce(cards.example, incoming.example),
@@ -796,11 +813,13 @@ export async function writeChunk<Note>(
   }
   for (const part of jsonParts(cardRows)) {
     statements.push(
-      sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example, notes,
+      sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example,
+          example_translation, example_translation_source, example_translation_of, notes,
           hook, hook_source, language, tags, directions, review_modes, meaning_source, example_source,
           pronunciation_source, notes_source, source, created_by, archived_at, import_id, external_id, created_at, updated_at)
         select ${j("id")}, ${userId}, ${j("deckId")}, ${j("term")}, ${j("normalizedTerm")}, ${j("meaning")},
-          ${j("pronunciation")}, ${j("example")}, ${j("notes")}, ${j("hook")}, ${j("hookSource")}, ${j("language")},
+          ${j("pronunciation")}, ${j("example")}, ${j("exampleTranslation")}, ${j("exampleTranslationSource")},
+          ${j("exampleTranslationOf")}, ${j("notes")}, ${j("hook")}, ${j("hookSource")}, ${j("language")},
           ${j("tags")}, ${j("directions")}, ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")},
           ${j("pronunciationSource")}, ${j("notesSource")}, ${j("source")}, ${actor}, ${j("archivedAt")},
           ${row.id}, ${j("externalId")}, ${now.getTime()}, ${now.getTime()}
@@ -1051,4 +1070,13 @@ export async function ownedImport(ctx: ServiceContext, id: string): Promise<Impo
     .where(and(eq(schema.imports.id, id), eq(schema.imports.userId, ctx.userId)));
   if (!row) throw notFound("Import");
   return row;
+}
+
+/** An imported translation with the fingerprint of the example it came with. */
+function translationOf(fields: ImportedFields) {
+  const text = fields.example && fields.exampleTranslation;
+  return {
+    exampleTranslation: text || null,
+    exampleTranslationOf: text && fields.example ? exampleFingerprint(fields.example) : null,
+  };
 }

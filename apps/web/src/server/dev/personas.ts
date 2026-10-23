@@ -1,10 +1,11 @@
-import type {
-  Actor,
-  AppLanguage,
-  Directions,
-  PublicationCategory,
-  PublicationTag,
-  StatedFieldSource,
+import {
+  type Actor,
+  type AppLanguage,
+  type Directions,
+  EXAMPLE_LENGTH,
+  type PublicationCategory,
+  type PublicationTag,
+  type StatedFieldSource,
 } from "@lymi/core";
 import { HEAVY } from "./heavy-persona";
 import { JAPANESE } from "./japanese-persona";
@@ -97,6 +98,7 @@ export interface PersonaCard {
   term: string;
   meaning?: string;
   example?: string;
+  exampleTranslation?: string;
   pronunciation?: string;
   notes?: string;
   /** Overrides the deck's language. Null is a card without one. */
@@ -386,7 +388,11 @@ const LONG_CARDS: PersonaCard[] = [
     pronunciation: atLimit("ˈvɛndʊŋ bəˈʃʁaɪ̯pt ", 200),
     example: atLimit(
       "Er kam eine Stunde zu spät und sagte, er habe den Zug absichtlich verpasst. ",
-      2000,
+      EXAMPLE_LENGTH,
+    ),
+    exampleTranslation: atLimit(
+      "He came an hour late and said he had missed the train on purpose. ",
+      EXAMPLE_LENGTH,
     ),
     notes: atLimit("Notes at the field's limit, long enough to scroll on every screen. ", 2000),
     source: atLimit("Grammatik aktiv, Kapitel 12 ", 200),
@@ -395,7 +401,12 @@ const LONG_CARDS: PersonaCard[] = [
     term: "Rechtsschutzversicherungsgesellschaften",
     meaning: "legal expenses insurance companies",
   },
-  { term: "der Hund", meaning: "dog", example: "Der Hund schläft." },
+  {
+    term: "der Hund",
+    meaning: "dog",
+    example: "Der Hund schläft.",
+    exampleTranslation: "The dog is sleeping.",
+  },
 ];
 
 /** A second published deck, so Explore has more than one deck on its Languages shelf. */

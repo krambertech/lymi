@@ -79,7 +79,13 @@ const sourceMeta: Record<
   manual: { icon: PencilLine, tone: "default", mark: msg`You` },
 };
 
-type SourceField = "meaning" | "example" | "notes" | "pronunciation" | "hook";
+type SourceField =
+  | "meaning"
+  | "example"
+  | "exampleTranslation"
+  | "notes"
+  | "pronunciation"
+  | "hook";
 
 // Whole sentences per field, so each language can inflect the field word on its own. `field`
 // is the form for a place that does not name the field next to the chip.
@@ -98,6 +104,11 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
     lesson: msg`Example from lesson`,
     ai: msg`AI example`,
     manual: msg`Example by you`,
+  },
+  exampleTranslation: {
+    lesson: msg`Translation from lesson`,
+    ai: msg`AI translation`,
+    manual: msg`Translation by you`,
   },
   notes: {
     lesson: msg`Notes from lesson`,

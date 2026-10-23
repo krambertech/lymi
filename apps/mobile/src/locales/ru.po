@@ -2058,6 +2058,9 @@ msgstr "Твой пример"
 msgid "Example from lesson"
 msgstr "Пример с урока"
 
+msgid "Example translation"
+msgstr "Перевод примера"
+
 msgid "Explore"
 msgstr "Каталог"
 

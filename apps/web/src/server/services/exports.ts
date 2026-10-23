@@ -330,6 +330,8 @@ function fileCard(
     notesSource: card.notesSource,
     hook: card.hook,
     hookSource: card.hookSource,
+    exampleTranslation: card.exampleTranslation,
+    exampleTranslationSource: card.exampleTranslationSource,
     reviewModes: card.directions ? effectiveModes(card.directions, card.reviewModeKeys) : null,
     picture:
       image && picture

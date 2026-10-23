@@ -48,6 +48,18 @@ export const CardOut = z
     meaning: z.string().nullable(),
     pronunciation: z.string().nullable(),
     example: z.string().nullable(),
+    exampleTranslation: z.string().nullable().meta({
+      description:
+        "The example in the meaning language, shown after the answer. Empty when cleared on purpose. For a reader of another edition, that edition's own, or null.",
+    }),
+    exampleTranslationStale: z.boolean().meta({
+      description:
+        "True when the translation was written for an earlier example, which review then leaves out until it is rewritten.",
+    }),
+    exampleTranslationStatus: EnrichmentStatus.nullable().meta({
+      ...OPEN,
+      description: "Set while the AI is translating the example, and null once it settles",
+    }),
     notes: z.string().nullable().meta({ description: "Markdown source in the notes subset" }),
     hook: z.string().nullable().meta({
       description:
@@ -74,6 +86,7 @@ export const CardOut = z
     }),
     meaningSource: FieldSource.nullable().meta(OPEN),
     exampleSource: FieldSource.nullable().meta(OPEN),
+    exampleTranslationSource: FieldSource.nullable().meta(OPEN),
     pronunciationSource: FieldSource.nullable().meta(OPEN),
     notesSource: FieldSource.nullable().meta(OPEN),
     hookSource: FieldSource.nullable().meta(OPEN),

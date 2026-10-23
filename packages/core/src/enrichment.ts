@@ -29,8 +29,17 @@ export function enrichmentStalled(
   );
 }
 
-/** The fields a deck lets the AI fill. Language is always filled, because audio needs it. */
-export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
+/**
+ * The fields a deck lets the AI fill. Language is always filled, because audio needs it. The
+ * example's translation follows the example, whoever wrote it, rather than the enrichment run.
+ */
+export const DECK_ENRICH_FIELDS = [
+  "meaning",
+  "example",
+  "exampleTranslation",
+  "notes",
+  "pronunciation",
+] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
 /** Languages without a configured row whose spelling does not show how a word is said or stressed. */
@@ -57,7 +66,8 @@ export function defaultEnrichFields(
   if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
   // Below the evaluation's bar a deck that never chose stays where it was before the row existed.
   const configured = configuredLanguage(language);
-  if (configured && !configured.enrichByDefault) return ["meaning", "example"];
+  if (configured && !configured.enrichByDefault)
+    return ["meaning", "example", "exampleTranslation"];
   // A record's language always has a Reading or stress to write, so zh-yue and yue alike start with it.
   const pronounced = configured
     ? configured.starts.includes("pronunciation")
@@ -65,6 +75,7 @@ export function defaultEnrichFields(
   return [
     "meaning",
     "example",
+    "exampleTranslation",
     ...(configured?.starts.includes("notes") ? (["notes"] as const) : []),
     ...(pronounced ? (["pronunciation"] as const) : []),
   ];
@@ -125,4 +136,33 @@ export function fieldsToFill(card: Fillable, fields: readonly DeckEnrichField[])
 
 function allows(fields: readonly DeckEnrichField[], field: EnrichedField): boolean {
   return field === "language" || (fields as readonly string[]).includes(field);
+}
+
+/**
+ * Whether the AI should translate this example: the deck lets it, the example has text, and the
+ * translation was never set. A stored "" is a deliberate clear, as for every other field.
+ */
+export function wantsTranslation(
+  card: { example?: string | null | undefined; exampleTranslation?: string | null | undefined },
+  fields: readonly DeckEnrichField[],
+): boolean {
+  return (
+    fields.includes("exampleTranslation") &&
+    !!card.example?.trim() &&
+    card.exampleTranslation == null
+  );
+}
+
+/** Whether Enrich has something to ask for: an empty field the deck allows, or the example's translation. */
+export function canEnrich(
+  card: Fillable & { exampleTranslation?: string | null | undefined },
+  fields: readonly DeckEnrichField[],
+): boolean {
+  return (
+    needsEnrichment(card, fields) ||
+    wantsTranslation(
+      { example: card.example, exampleTranslation: card.exampleTranslation?.trim() || null },
+      fields,
+    )
+  );
 }

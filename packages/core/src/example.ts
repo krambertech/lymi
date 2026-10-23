@@ -7,7 +7,8 @@ const STRESS = /́/g;
 
 /** The example as a reader sees it: no inline readings or stress marks, spaces collapsed. */
 export function exampleShown(text: string): string {
-  return text.replace(READING, "").replace(STRESS, "").normalize("NFC").replace(/\s+/g, " ").trim();
+  // Composed first, so é and ά keep their accents and only a stress with no precomposed letter, as on Cyrillic, goes.
+  return text.normalize("NFC").replace(READING, "").replace(STRESS, "").replace(/\s+/g, " ").trim();
 }
 
 /** How many characters of an example or translation a reader sees. */

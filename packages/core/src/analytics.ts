@@ -104,6 +104,7 @@ const source = z.enum([
   "typed",
   "lesson",
   "api",
+  "readwise",
   "unknown",
 ]);
 const step = z.enum([
@@ -405,6 +406,22 @@ export const analyticsEvents = {
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
+  readwise_connected: z.object({
+    /** Books and articles in the learner's Readwise, and how many Lymi follows. */
+    books: count,
+    followed: count,
+    languages: count,
+    reconnected: z.boolean(),
+  }),
+  readwise_disconnected: z.object({}),
+  readwise_pulled: z.object({
+    trigger: z.enum(["schedule", "manual"]),
+    outcome: z.enum(["done", "refused", "limited", "failed"]),
+    highlights: count,
+    cards: count,
+    skipped: count,
+    duplicates: count,
+  }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -426,6 +443,7 @@ export const analyticsEvents = {
       "import_languages",
       "deck_choice",
       "lesson_read",
+      "readwise_languages",
       "pronunciation",
       "lead_in",
     ]),
@@ -560,6 +578,9 @@ export const analyticsProducers = {
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
+  readwise_connected: ["worker"],
+  readwise_disconnected: ["worker"],
+  readwise_pulled: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

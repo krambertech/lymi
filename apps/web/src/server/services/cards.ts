@@ -67,7 +67,11 @@ type Sources = {
  * A card write from inside the server, which may record Lymi's own AI as a field's source. No
  * caller can claim it; routes parse `CardInput`.
  */
-export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
+export type ServerCardInput = Omit<CardInput, keyof Sources> &
+  Sources & {
+    /** The source's own id, such as `readwise:<highlight id>`, so a later pull finds the card. */
+    externalId?: string | undefined;
+  };
 type Cleared = "meaning" | "pronunciation" | "hook";
 export type ServerCardPatch = Omit<CardPatch, keyof Sources | Cleared> &
   Sources & {
@@ -91,6 +95,8 @@ export type AddCardsOptions = {
   allowCrossDeckDuplicates?: boolean;
   /** Smart add's pick list, so `cards_added` tells its cards from typed ones. */
   fromLesson?: boolean;
+  /** A Readwise pull, for the same reason. */
+  fromReadwise?: boolean;
 };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
@@ -274,7 +280,7 @@ export async function addCards(
       reviewModeKeys: modes?.reviewModeKeys ?? null,
       imageVersion: null,
       importId: null,
-      externalId: null,
+      externalId: input.externalId ?? null,
       sectionId: input.sectionId ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
@@ -345,7 +351,9 @@ export async function addCards(
           ? "api"
           : options.fromLesson
             ? "lesson"
-            : "typed";
+            : options.fromReadwise
+              ? "readwise"
+              : "typed";
     const converted = outcomes.filter((o) => o.status === "added" && o.normalized?.length).length;
     track(ctx.analytics, {
       name: "cards_added",

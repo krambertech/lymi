@@ -1082,3 +1082,53 @@ export const lessonReads = sqliteTable(
   },
   (t) => [index("lesson_reads_user_day_idx").on(t.userId, t.localDate)],
 );
+
+/**
+ * A learner's Readwise connection: the token they pasted, encrypted, and where the hourly pull
+ * stands. Deleted on Disconnect; the cards it added stay. docs/proposals/readwise-highlights.md.
+ */
+export const readwiseConnections = sqliteTable("readwise_connections", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** AES-GCM under a key derived from the auth secret; never sent to a client. */
+  tokenCipher: text("token_cipher").notNull(),
+  /** The token's last four characters, so Settings can show which one is in use. */
+  tokenHint: text("token_hint").notNull(),
+  /** `refused` once Readwise turns the token down; pulls stop until a new one is pasted. */
+  status: text("status", { enum: ["active", "refused"] }).notNull(),
+  /** Each language's deck, keyed by primary subtag, such as `{ "et": "<deck id>" }`. */
+  decks: text("decks", { mode: "json" }).$type<Record<string, string>>().notNull(),
+  /** Highlights updated after this are what the next pull asks for. */
+  pulledThrough: integer("pulled_through", { mode: "timestamp_ms" }).notNull(),
+  nextPullAt: integer("next_pull_at", { mode: "timestamp_ms" }).notNull(),
+  lastPullAt: integer("last_pull_at", { mode: "timestamp_ms" }),
+  lastPullHighlights: integer("last_pull_highlights").notNull().default(0),
+  lastPullCards: integer("last_pull_cards").notNull().default(0),
+  lastPullSkipped: integer("last_pull_skipped").notNull().default(0),
+  ...timestamps,
+});
+
+/** A book or article in the learner's Readwise, with the language its highlights are in. */
+export const readwiseBooks = sqliteTable(
+  "readwise_books",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Readwise's `user_book_id`. */
+    bookId: text("book_id").notNull(),
+    title: text("title").notNull(),
+    author: text("author"),
+    /** Null until its highlights say, or when they are in no one language. */
+    language: text("language"),
+    /** Whether its new highlights become cards. */
+    followed: integer("followed", { mode: "boolean" }).notNull(),
+    highlights: integer("highlights").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.bookId] })],
+);
+
+export type ReadwiseConnection = typeof readwiseConnections.$inferSelect;
+export type ReadwiseBook = typeof readwiseBooks.$inferSelect;

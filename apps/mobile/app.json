@@ -108,6 +108,7 @@
           }
         }
       ],
+      "./plugins/with-iphone-only.cjs",
       "./plugins/with-widget-localizations.cjs",
       [
         "expo-widgets",

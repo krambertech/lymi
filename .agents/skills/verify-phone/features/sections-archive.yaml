@@ -12,12 +12,12 @@ name: Archive a section
     direction: LEFT
 - tapOn: "Archive"
 - extendedWaitUntil:
-    visible: "Keep the cards"
+    visible: "Keep the cards, .*"
     timeout: 10000
-- assertVisible: "Archive its 5 cards too"
+- assertVisible: "Archive its 5 cards too, .*"
 - assertVisible: "Nothing is deleted. Restore it from Archived sections."
 - takeScreenshot: 01-archive-question
-- tapOn: "Archive its 5 cards too"
+- tapOn: "Archive its 5 cards too, .*"
 - extendedWaitUntil:
     visible: "Archived .*${FIRST}.* and its cards"
     timeout: 20000
@@ -30,9 +30,9 @@ name: Archive a section
     direction: LEFT
 - tapOn: "Archive"
 - extendedWaitUntil:
-    visible: "Keep the cards"
+    visible: "Keep the cards, .*"
     timeout: 10000
-- tapOn: "Keep the cards"
+- tapOn: "Keep the cards, .*"
 - extendedWaitUntil:
     visible: "Archived .*${SECOND}.*"
     timeout: 20000

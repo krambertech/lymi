@@ -19,3 +19,4 @@ After create, every card of the deck is in the first new section and the second 
 
 - Toast titles isolate the section's name, so the flows match it with `.*` on each side.
 - A swiped row's actions are plain buttons named **Rename** and **Archive**; archiving the first row makes the second the new Section 1.
+- A sheet row with a second line reads as **label, line**, so the flow matches the row with `, .*` after its label.

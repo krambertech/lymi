@@ -12,8 +12,14 @@ on:
         default: production
         type: choice
         options: [production, beta]
+      platform:
+        description: Which platform to roll back
+        required: true
+        default: all
+        type: choice
+        options: [all, ios, android]
       group:
-        description: An update group ID to bring back instead (optional)
+        description: An update group ID to bring back instead, on its own platform (optional)
         required: false
         type: string
 
@@ -29,6 +35,7 @@ jobs:
       contents: read
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      PHONE_PLATFORMS: ${{ vars.PHONE_PLATFORMS }}
     steps:
       - uses: actions/checkout@v5
 
@@ -55,5 +62,6 @@ jobs:
       - name: Roll back
         env:
           BRANCH: ${{ inputs.branch }}
+          PLATFORM: ${{ inputs.platform }}
           GROUP: ${{ inputs.group }}
-        run: node scripts/phone-release.mjs rollback "$BRANCH" ${GROUP:+"$GROUP"}
+        run: node scripts/phone-release.mjs rollback "$BRANCH" "$PLATFORM" ${GROUP:+"$GROUP"}

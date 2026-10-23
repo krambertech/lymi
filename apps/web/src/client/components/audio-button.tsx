@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Loader2, Volume2 } from "lucide-react";
+import { Clock, Loader2, Volume2 } from "lucide-react";
 import { useAnimate } from "motion/react";
 import { useEffect, useRef } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
@@ -16,6 +16,8 @@ interface AudioButtonProps {
   labels?: { play: string; replay: string } | undefined;
   /** A second speaker on the card, such as the example's, steps back from the term's. */
   quiet?: boolean | undefined;
+  /** Why it cannot play just now, said in a calm tip that leaves the button as it was. */
+  unavailable?: string | null | undefined;
 }
 
 /**
@@ -25,7 +27,15 @@ interface AudioButtonProps {
  * The word joiner keeps the button on the line with the word's last letters, and the line-tall box
  * centres it on that line. Its name is in the app language, not the card's.
  */
-export function AudioButton({ state, error, onPlay, className, labels, quiet }: AudioButtonProps) {
+export function AudioButton({
+  state,
+  error,
+  onPlay,
+  className,
+  labels,
+  quiet,
+  unavailable,
+}: AudioButtonProps) {
   const { t, i18n } = useLingui();
   const button = useRef<HTMLButtonElement>(null);
   const [scope, animate] = useAnimate<HTMLSpanElement>();
@@ -72,7 +82,11 @@ export function AudioButton({ state, error, onPlay, className, labels, quiet }: 
           )}
         </IconButton>
       </span>
-      <ErrorTip anchor={button} message={error} />
+      <ErrorTip
+        anchor={button}
+        message={error ?? unavailable ?? null}
+        reason={!error && unavailable ? Clock : undefined}
+      />
     </span>
   );
 }

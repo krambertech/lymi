@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { canSpeakExample } from "@lymi/core";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card } from "../lib/api";
+import { playAlone } from "../lib/now-playing";
 import { captureAnalytics } from "../lib/telemetry";
 import { AudioButton, AudioPlace } from "./audio-button";
 
@@ -20,6 +21,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
   const played = useRef<Played | null>(null);
   const [state, setState] = useState<"idle" | "loading" | "playing">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [limited, setLimited] = useState<string | null>(null);
   const url = api.exampleAudioUrl(card.id, card.updatedAt);
   // The example on screen now, which a load that settles late checks before it plays.
   const shown = useRef(url);
@@ -49,6 +51,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
   const play = async () => {
     if (state === "loading") return;
     setError(null);
+    setLimited(null);
     const pressed = performance.now();
     const waited = () => Math.min(60_000, Math.round(performance.now() - pressed));
     const kept = played.current?.url === url ? played.current : null;
@@ -65,7 +68,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
         const response = await fetch(url, { credentials: "include" });
         if (response.status === 429) {
           setState("idle");
-          setError(t`Today’s new example audio is used up. Examples you’ve played still play.`);
+          setLimited(t`Today’s new example audio is used up. Examples you’ve played still play.`);
           report("limited");
           return;
         }
@@ -77,11 +80,12 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
           return;
         }
         audio = new Audio(objectUrl);
-        audio.addEventListener("ended", () => setState("idle"));
+        // Ended, or paused because the term's clip started.
+        for (const done of ["ended", "pause"]) audio.addEventListener(done, () => setState("idle"));
         played.current = { url, audio, objectUrl };
       }
       audio.currentTime = 0;
-      await audio.play();
+      await playAlone(audio);
       setState("playing");
       report("played");
     } catch {
@@ -95,6 +99,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
     <AudioButton
       state={state}
       error={error}
+      unavailable={limited}
       onPlay={() => void play()}
       className={className}
       labels={{ play: t`Play example`, replay: t`Replay example` }}

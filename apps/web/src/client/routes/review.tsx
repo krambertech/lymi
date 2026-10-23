@@ -1179,12 +1179,7 @@ function Review() {
               onOffer={onOffer}
               done={doneLink}
               addCards={
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => add.openCard(deck)}
-                >
+                <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add cards</Trans>
                 </Button>

@@ -420,7 +420,7 @@ export default function CardPage() {
                     icon: "important" as const,
                     onSelect: () => void writes.setImportant(card, !card.important),
                   },
-                  ...(owner && moveToSection.canMove
+                  ...(owner
                     ? [
                         {
                           label: t`Move to section…`,

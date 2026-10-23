@@ -76,6 +76,10 @@ msgstr "{0, plural, one {# card is already in your decks, so it’s skipped.} ot
 msgid "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
 msgstr "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
 
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# card left} other {# cards left}}"
+msgstr "{0, plural, one {# card left} other {# cards left}}"
+
 #. placeholder {0}: counts.duplicates
 msgid "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
 msgstr "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
@@ -132,17 +136,9 @@ msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
 msgid "{0, plural, one {# minute} other {# minutes}}"
 msgstr "{0, plural, one {# minute} other {# minutes}}"
 
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
-msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
-
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card} other {# more cards}}"
 msgstr "{0, plural, one {# more card} other {# more cards}}"
-
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
-msgstr "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is image occlusion or has no term, so it’s skipped.} other {# notes are image occlusion or have no term, so they’re skipped.}}"
@@ -207,6 +203,10 @@ msgstr "{0, plural, one {# tag} other {# tags}}"
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
 msgstr "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
+
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# to goal} other {# to goal}}"
+msgstr "{0, plural, one {# to goal} other {# to goal}}"
 
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -453,8 +453,23 @@ msgstr "{count, plural, one {# card} other {# cards}}"
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
+msgid "{count, plural, one {Archive its card too} other {Archive its # cards too}}"
+msgstr "{count, plural, one {Archive its card too} other {Archive its # cards too}}"
+
+msgid "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
+msgstr "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
+
+msgid "{count, plural, one {It stays in the deck without a section, and keeps coming up in review.} other {They stay in the deck without a section, and keep coming up in review.}}"
+msgstr "{count, plural, one {It stays in the deck without a section, and keeps coming up in review.} other {They stay in the deck without a section, and keep coming up in review.}}"
+
+msgid "{count, plural, one {Keep the card} other {Keep the cards}}"
+msgstr "{count, plural, one {Keep the card} other {Keep the cards}}"
+
 msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
 msgstr "{count, plural, one {Move # card to} other {Move # cards to}}"
+
+msgid "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
+msgstr "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
@@ -551,6 +566,12 @@ msgstr "{found, plural, one {term found} other {terms found}}"
 
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+
+msgid "{goal, plural, one {{to} of # review today} other {{to} of # reviews today}}"
+msgstr "{goal, plural, one {{to} of # review today} other {{to} of # reviews today}}"
+
+msgid "{goal, plural, one {of # review today} other {of # reviews today}}"
+msgstr "{goal, plural, one {of # review today} other {of # reviews today}}"
 
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
@@ -1059,6 +1080,9 @@ msgstr "Arabic"
 msgid "Archive"
 msgstr "Archive"
 
+msgid "Archive “{sectionName}”?"
+msgstr "Archive “{sectionName}”?"
+
 msgid "Archive card"
 msgstr "Archive card"
 
@@ -1082,6 +1106,9 @@ msgstr "Archived “{name}”"
 
 msgid "Archived “{sectionName}”"
 msgstr "Archived “{sectionName}”"
+
+msgid "Archived “{sectionName}” and its cards"
+msgstr "Archived “{sectionName}” and its cards"
 
 #. placeholder {0}: tag.cards
 msgid "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
@@ -2907,6 +2934,9 @@ msgstr "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgid "Moved to {deck}, the deck for this language"
 msgstr "Moved to {deck}, the deck for this language"
 
+msgid "Moved to {sectionName}"
+msgstr "Moved to {sectionName}"
+
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
 
@@ -3112,6 +3142,9 @@ msgstr "Nothing due today, so your streak is safe."
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
+msgid "Nothing is deleted. Restore it from Archived sections."
+msgstr "Nothing is deleted. Restore it from Archived sections."
+
 msgid "Nothing is due, and today’s goal is met."
 msgstr "Nothing is due, and today’s goal is met."
 
@@ -3222,6 +3255,9 @@ msgstr "Or choose a .txt file"
 
 msgid "Other"
 msgstr "Other"
+
+msgid "other decks"
+msgstr "other decks"
 
 msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
 msgstr "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
@@ -3904,6 +3940,9 @@ msgstr "Start {sectionName}"
 msgid "Start {sectionName} early?"
 msgstr "Start {sectionName} early?"
 
+msgid "Start a new streak"
+msgstr "Start a new streak"
+
 msgid "Start anyway"
 msgstr "Start anyway"
 
@@ -3915,6 +3954,9 @@ msgstr "Start with a deck"
 
 msgid "Start with a ready-made deck"
 msgstr "Start with a ready-made deck"
+
+msgid "Start your streak"
+msgstr "Start your streak"
 
 msgid "State"
 msgstr "State"

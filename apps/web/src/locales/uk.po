@@ -1028,6 +1028,9 @@ msgstr "AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI example and translation"
+msgstr "Приклад і переклад від AI"
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
 
@@ -2233,6 +2236,12 @@ msgstr "Усе, щоб знову імпортувати в Lymi: картки, 
 
 msgid "Example"
 msgstr "Приклад"
+
+msgid "Example and translation by you"
+msgstr "Твої приклад і переклад"
+
+msgid "Example and translation from lesson"
+msgstr "Приклад і переклад з уроку"
 
 msgid "Example by you"
 msgstr "Твій приклад"

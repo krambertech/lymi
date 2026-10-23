@@ -239,6 +239,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         origin: card.source ?? undefined,
         pictureDescription: card.picture?.description ?? undefined,
         hook: hook ? { text: hook.text, source: card.hookSource ?? "manual" } : undefined,
+        translationStale: card.exampleTranslationStale,
       },
     ];
   },

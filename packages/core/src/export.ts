@@ -127,6 +127,9 @@ export const LymiFileCard = z.object({
   hookSource: FieldSource.nullable().optional(),
   exampleTranslation: z.string().nullable().optional(),
   exampleTranslationSource: FieldSource.nullable().optional(),
+  exampleTranslationStale: z.boolean().optional().meta({
+    description: "The translation was written for an earlier example",
+  }),
   reviewModes: z.array(ReviewModeKey).nullable().meta({
     description: "The card's own modes, or null when it follows its deck",
   }),

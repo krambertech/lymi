@@ -12,7 +12,7 @@ A deck's card, its **Edit card** button, or review after **Reveal the card**. Th
 
 ## End state
 
-Typing keeps the caret in the Example and then the Translation, with every character kept. The card page reads `Der Hund schläft.` followed by `(The dog is sleeping.)`, as `/api/cards/<id>` stores. After the new example the translation is unchanged, the page says **Translated from an earlier example. Edit it to match.**, and the card reads `exampleTranslationStale: true` with source `manual`. A rewritten translation shows in parentheses, the line goes, and `exampleTranslationStale` is false. An example over 250 characters is refused with **Keep the example under 250 characters.** and the stored example is unchanged.
+Typing keeps the caret in the Example and then the Translation, with every character kept. The card page reads `Der Hund schläft.` followed by `(The dog is sleeping.)`, as `/api/cards/<id>` stores. While the new example is typed the form says **Translated from an earlier example.** under the translation. After the new example the translation is unchanged, the page says **Translated from an earlier example. Edit it to match.**, and the card reads `exampleTranslationStale: true` with source `manual`. A rewritten translation shows in parentheses, the line goes, and `exampleTranslationStale` is false. An example over 250 characters is refused with **Keep the example under 250 characters.** and the stored example is unchanged.
 
 ## Gotchas
 

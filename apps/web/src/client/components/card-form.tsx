@@ -716,10 +716,12 @@ export function CardForm(props: CardFormProps) {
     (adding ||
       (exampleChanged &&
         (card?.exampleTranslation == null || card.exampleTranslationSource === "ai")));
+  // Saved as it is, the learner's translation stays and is marked, so the form says so as they type.
   const translationStale =
-    !!card?.exampleTranslationStale &&
-    !exampleChanged &&
-    translation === (card.exampleTranslation ?? "");
+    !!example.trim() &&
+    !!translation.trim() &&
+    translation === (card?.exampleTranslation ?? "") &&
+    (exampleChanged ? card?.exampleTranslationSource !== "ai" : !!card?.exampleTranslationStale);
   const translationId = useId();
   const translationByAi =
     card?.exampleTranslationSource === "ai" && translation === (card.exampleTranslation ?? "");

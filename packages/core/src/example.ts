@@ -44,6 +44,9 @@ export type TranslatedExample = {
   exampleTranslationOf: string | null;
 };
 
+/** Stands for an example no longer known, as when a file says its translation is stale; no fingerprint equals it. */
+export const EARLIER_EXAMPLE = "~earlier";
+
 /** True when the card's translation was written for an earlier example; one without a fingerprint never is. */
 export function translationStale(card: TranslatedExample): boolean {
   if (!card.example || !card.exampleTranslation || card.exampleTranslationOf === null) return false;

@@ -60,6 +60,7 @@ import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
+import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import {
@@ -84,7 +85,7 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
-import { ExampleText, TermText } from "../components/term-text";
+import { TermText } from "../components/term-text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -701,27 +702,15 @@ export function ReviewCard({
   const extrasLines = (
     <>
       {card.example && (
-        <motion.p
-          variants={answerLine}
-          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-          lang={card.language ?? undefined}
-          dir={textDirection(card.language)}
-        >
-          <ExampleText
-            text={card.example}
-            lang={card.language ?? undefined}
+        <motion.div variants={answerLine}>
+          <ExampleLines
+            example={card.example}
+            language={card.language}
             known={knownReadings}
+            translation={translation}
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
-          {translation && (
-            <>
-              {" "}
-              {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
-              <span lang={i18n.locale} dir="auto" className="text-muted">
-                ({translation})
-              </span>
-            </>
-          )}
-        </motion.p>
+        </motion.div>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">

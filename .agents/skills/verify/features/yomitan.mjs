@@ -19,8 +19,8 @@ export default async function drive({ page, step, api, expect }) {
   });
 
   await step("Make a key for Yomitan", async () => {
-    // A reseed keeps API keys, so a key made by an earlier run turns the button into Make a new key.
-    await page.getByRole("button", { name: /^Make a (key for Yomitan|new key)$/ }).click();
+    // A reseed keeps API keys, so a key made by an earlier run turns the button into Replace the key.
+    await page.getByRole("button", { name: /^(Make a key for Yomitan|Replace the key)$/ }).click();
     const output = page.getByLabel("API key for Yomitan");
     await expect(output).toBeVisible();
     key = await output.innerText();

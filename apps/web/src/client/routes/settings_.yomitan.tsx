@@ -17,9 +17,15 @@ function YomitanRoute() {
   useDocumentTitle(t`Yomitan`);
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
+  const current = keys.isSuccess ? yomitanKey(keys.data) : undefined;
+  // A new key replaces the one this page shows, so a key thought leaked stops working.
   const make = useMutation({
-    mutationFn: () => api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
+    mutationFn: async (replacing: string | null) => {
+      const made = await api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" });
+      if (replacing) await api.revokeKey(replacing);
+      return made;
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
   });
   const revoke = useMutation({
     mutationFn: (id: string) => api.revokeKey(id),
@@ -34,13 +40,13 @@ function YomitanRoute() {
     <YomitanView
       address={productUrl("/api/anki-connect")}
       guide={publicSiteUrl("/docs/yomitan")}
-      current={keys.isSuccess ? yomitanKey(keys.data) : undefined}
+      current={current}
       fresh={
         make.data
           ? { id: make.data.id, key: make.data.key, name: make.data.name ?? YOMITAN_KEY_NAME }
           : null
       }
-      onMake={() => make.mutate()}
+      onMake={() => make.mutate(current?.id ?? null)}
       making={make.isPending}
       onDone={() => make.reset()}
       onRevoke={(id) => revoke.mutate(id)}

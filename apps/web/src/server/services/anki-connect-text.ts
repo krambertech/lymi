@@ -14,11 +14,11 @@ const ENTITIES: Record<string, string> = {
 
 function decode(text: string): string {
   return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (entity, name: string) => {
-    if (name.startsWith("#x") || name.startsWith("#X")) {
-      return String.fromCodePoint(Number.parseInt(name.slice(2), 16));
-    }
-    if (name.startsWith("#")) return String.fromCodePoint(Number.parseInt(name.slice(1), 10));
-    return ENTITIES[name.toLowerCase()] ?? entity;
+    if (!name.startsWith("#")) return ENTITIES[name.toLowerCase()] ?? entity;
+    const hex = name[1] === "x" || name[1] === "X";
+    const point = Number.parseInt(name.slice(hex ? 2 : 1), hex ? 16 : 10);
+    // A reference past Unicode's last code point stays as it was written.
+    return point <= 0x10ffff ? String.fromCodePoint(point) : entity;
   });
 }
 

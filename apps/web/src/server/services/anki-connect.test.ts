@@ -143,6 +143,14 @@ describe("answerCall", () => {
     expect(events.filter((e) => e.name === "cards_added")).toEqual([]);
   });
 
+  it("marks a homograph as held when Yomitan's probe has no reading, and adds it with one", async () => {
+    // The probe sends the first field only, so 上手 read うわて cannot be told from じょうず until
+    // the add, which has the reading and gives it its own card.
+    expect(await call("canAddNotesWithErrorDetail", { notes: [probe("上手")] })).toEqual([
+      { canAdd: false, error: "cannot create note because it is a duplicate" },
+    ]);
+  });
+
   it("tells a Japanese homograph by its reading, as adding does", async () => {
     expect(
       await call("canAddNotesWithErrorDetail", {
@@ -228,6 +236,43 @@ describe("answerCall", () => {
     expect((await env.IMPORTS.list({ prefix: "anki-connect/" })).objects).toHaveLength(0);
   });
 
+  it("caps a request: notes per call, actions per multi, and no multi inside a multi", async () => {
+    const many = Array.from({ length: 201 }, (_, i) => note({ Term: `語${i}` }));
+    expect(await call("addNotes", { notes: many })).toMatchObject({
+      error: "Send at most 200 notes at a time.",
+    });
+    const actions = Array.from({ length: 51 }, () => ({ action: "version" }));
+    expect(await call("multi", { actions })).toMatchObject({
+      error: expect.stringContaining("50"),
+    });
+    expect(
+      await call("multi", { actions: [{ action: "multi", params: { actions: [] } }] }),
+    ).toMatchObject({ error: "multi can’t hold another multi." });
+  });
+
+  it("answers a call of more than a hundred notes, past D1's bound-parameter limit", async () => {
+    const terms = Array.from({ length: 120 }, (_, i) => `単語${i}`);
+    const ids = (await call("addNotes", {
+      notes: terms.map((term) => note({ Term: term })),
+    })) as number[];
+    expect(ids).toHaveLength(120);
+    expect(ids.every((id) => typeof id === "number")).toBe(true);
+    const info = (await call("notesInfo", { notes: ids })) as { noteId?: number }[];
+    expect(info.map((n) => n.noteId)).toEqual(ids);
+    expect(await call("findNotes", { query: `nid:${ids.join(",")}` })).toHaveLength(120);
+  });
+
+  it("refuses an upload from a read-only key", async () => {
+    const reading = { ...deps, scope: "read" as const };
+    expect(
+      await answerCall(
+        ctx,
+        { action: "storeMediaFile", version: 2, params: { filename: "a.mp3", data: "SUQz" } },
+        reading,
+      ),
+    ).toMatchObject({ error: expect.stringContaining("can only read") });
+  });
+
   it("refuses to change a card, which Lymi does in the app", async () => {
     expect(await call("updateNoteFields", { note: { id: 1, fields: {} } })).toMatchObject({
       error: expect.stringContaining("edit the card in Lymi"),
@@ -256,5 +301,6 @@ describe("parseQuery", () => {
     ]);
     expect(parseQuery('("term:a") or ("term:b")')).toEqual([{ field: "a" }, { field: "b" }]);
     expect(parseQuery('nid:1,2 ("term:a")')).toEqual([{ notes: [1, 2], field: "a" }]);
+    expect(parseQuery('"term:(笑)"')).toEqual([{ field: "(笑)" }]);
   });
 });

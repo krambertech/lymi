@@ -2870,8 +2870,8 @@ msgstr "Ключ создан {0} · {1}"
 
 #. placeholder {0}: shortDate(i18n, current.createdAt)
 #. placeholder {1}: lastUsed(i18n, current.lastRequest)
-msgid "Key made {0} · {1}. Revoke it under API keys."
-msgstr "Ключ создан {0} · {1}. Отозвать его можно в разделе «Ключи API»."
+msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
+msgstr "Ключ создан {0} · {1}. Новый ключ заменит его, и этот перестанет работать."
 
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
@@ -3059,9 +3059,6 @@ msgstr "Главная навигация"
 
 msgid "Make a key for Yomitan"
 msgstr "Создать ключ для Yomitan"
-
-msgid "Make a new key"
-msgstr "Создать новый ключ"
 
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
@@ -3989,6 +3986,9 @@ msgstr "Переименовать…"
 
 msgid "Renamed “{from}” to “{spelled}”"
 msgstr "«{from}» переименован в «{spelled}»"
+
+msgid "Replace the key"
+msgstr "Заменить ключ"
 
 msgid "Replace the picture"
 msgstr "Заменить изображение"

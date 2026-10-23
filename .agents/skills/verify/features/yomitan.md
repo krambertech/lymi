@@ -16,7 +16,7 @@ The address ends in `/api/anki-connect` and the key starts `lymi_`. `version` an
 
 ## Gotchas
 
-- A reseed keeps API keys, so after an earlier run the button is **Make a new key**.
+- A reseed keeps API keys, so after an earlier run the button is **Replace the key**, which revokes the earlier key.
 - The key is shown once; read it from the panel's **API key for Yomitan** output before pressing **Done**.
 - Yomitan sends `version: 2`, so replies are bare values, not `{ result, error }`.
 - Locally, Vite answers a cross-origin preflight itself; the recipe posts from the product's own page, which needs none.

@@ -8,7 +8,7 @@ import {
   tagKey,
   termKey,
 } from "@lymi/core";
-import { and, asc, eq, inArray, isNull, sql } from "@lymi/core/db";
+import { and, asc, eq, inArray, isNull, selectIn, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
 import { meaningText, plainText, soundFiles, sourceText } from "./anki-connect-text";
@@ -35,6 +35,10 @@ const DUPLICATE = "cannot create note because it is a duplicate";
 const UNSUPPORTED = "unsupported action";
 /** Yomitan's default tag, which Activity already says. */
 const CLIENT_TAGS = new Set(["yomitan"]);
+/** Notes in one call, as many as `POST /api/cards` takes, since each may queue enrichment. */
+export const MAX_NOTES = 200;
+/** Calls in one `multi`, which may not nest; the key's rate limit counts the request once. */
+export const MAX_ACTIONS = 50;
 /** Uploads wait here, in the imports bucket, until their note arrives or the hourly sweep. */
 const STASH = "anki-connect/";
 const STASH_HOURS = 1;
@@ -100,8 +104,13 @@ export async function answerCall(
 ): Promise<unknown> {
   try {
     if (call.action === "multi") {
-      const inner = AnkiConnectCall.array().safeParse(call.params?.actions);
-      if (!inner.success) throw new Refusal("multi needs a list of actions.");
+      const inner = AnkiConnectCall.array().max(MAX_ACTIONS).safeParse(call.params?.actions);
+      if (!inner.success) {
+        throw new Refusal(`multi takes a list of up to ${MAX_ACTIONS} actions.`);
+      }
+      if (inner.data.some((each) => each.action === "multi")) {
+        throw new Refusal("multi can’t hold another multi.");
+      }
       const results: unknown[] = [];
       for (const each of inner.data) results.push(await answerCall(ctx, each, deps));
       return reply(call.version, results, null);
@@ -184,14 +193,18 @@ async function run(ctx: ServiceContext, call: AnkiConnectCall, deps: AnkiConnect
 }
 
 function notesOf(value: unknown): (AnkiConnectNote | null)[] {
-  return (Array.isArray(value) ? value : []).map((note) => {
+  const notes = Array.isArray(value) ? value : [];
+  if (notes.length > MAX_NOTES) throw new Refusal(`Send at most ${MAX_NOTES} notes at a time.`);
+  return notes.map((note) => {
     const parsed = AnkiConnectNote.safeParse(note);
     return parsed.success ? parsed.data : null;
   });
 }
 
 function numbers(value: unknown): number[] {
-  return (Array.isArray(value) ? value : []).filter((n): n is number => Number.isInteger(n));
+  const ids = (Array.isArray(value) ? value : []).filter((n): n is number => Number.isInteger(n));
+  if (ids.length > MAX_NOTES) throw new Refusal(`Ask for at most ${MAX_NOTES} notes at a time.`);
+  return ids;
 }
 
 type Deck = { id: string; name: string; language: string | null };
@@ -353,13 +366,16 @@ async function canAdd(ctx: ServiceContext, notes: (AnkiConnectNote | null)[]) {
 }
 
 /** Adds the notes Lymi can read; a duplicate is skipped and answers with the card holding it. ADR 0004. */
+function requireWrite(ctx: ServiceContext, deps: AnkiConnectDeps) {
+  if (deps.scope === "write") return;
+  track(ctx.analytics, { name: "anki_connect_refused", reason: "read_only" });
+  throw new Refusal(
+    "This Lymi key can only read. In Lymi’s Settings, make a key for Yomitan and paste it into Yomitan.",
+  );
+}
+
 async function add(ctx: ServiceContext, notes: (AnkiConnectNote | null)[], deps: AnkiConnectDeps) {
-  if (deps.scope !== "write") {
-    track(ctx.analytics, { name: "anki_connect_refused", reason: "read_only" });
-    throw new Refusal(
-      "This Lymi key can only read. In Lymi’s Settings, make a key for Yomitan and paste it into Yomitan.",
-    );
-  }
+  requireWrite(ctx, deps);
   const byName = new Map((await ownedDecks(ctx)).map((d) => [d.name, d]));
   const prepared = notes.map((note) => prepare(note, byName));
   for (const p of prepared) {
@@ -411,6 +427,7 @@ async function storeMedia(
   params: Record<string, unknown>,
   deps: AnkiConnectDeps,
 ) {
+  requireWrite(ctx, deps);
   const fileName = typeof params.filename === "string" ? params.filename : "";
   if (!fileName) throw new Refusal("storeMediaFile needs a filename.");
   const { data } = params;
@@ -466,10 +483,12 @@ const rowid = sql<number>`${schema.cards}.rowid`;
 /** AnkiConnect ids are whole numbers, so a card's is its row number. Clients keep it only while a popup is open. */
 async function noteIds({ db, userId }: ServiceContext, cardIds: string[]) {
   if (cardIds.length === 0) return new Map<string, number>();
-  const rows = await db
-    .select({ id: schema.cards.id, note: rowid })
-    .from(schema.cards)
-    .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, cardIds)));
+  const rows = await selectIn(cardIds, (slice) =>
+    db
+      .select({ id: schema.cards.id, note: rowid })
+      .from(schema.cards)
+      .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, slice))),
+  );
   return new Map(rows.map((r) => [r.id, r.note]));
 }
 
@@ -488,7 +507,8 @@ export function parseQuery(query: string): Query[] {
     : [query];
   return alternatives.map((alternative) => {
     const parsed: Query = {};
-    for (const [, quoted, bare] of alternative.replace(/[()]/g, " ").matchAll(/"([^"]*)"|(\S+)/g)) {
+    // Parentheses group outside quotes only, so "term:(笑)" keeps its own.
+    for (const [, quoted, bare] of alternative.matchAll(/"([^"]*)"|([^\s()"]+)/g)) {
       const token = quoted ?? bare ?? "";
       const colon = token.indexOf(":");
       if (colon < 0) continue;
@@ -521,11 +541,12 @@ async function findNotes(ctx: ServiceContext, query: string) {
       const keys = new Set(languages.map((language) => termKey(language, term)));
       where.push(inArray(schema.cards.normalizedTerm, [...keys]));
     }
-    if (q.notes) where.push(inArray(rowid, q.notes));
-    const rows = await ctx.db
-      .select({ note: rowid })
-      .from(schema.cards)
-      .where(and(...where));
+    const search = (notes?: number[]) =>
+      ctx.db
+        .select({ note: rowid })
+        .from(schema.cards)
+        .where(and(...where, ...(notes ? [inArray(rowid, notes)] : [])));
+    const rows = q.notes ? await selectIn(q.notes, search) : await search();
     for (const row of rows) found.add(row.note);
   }
   return [...found];
@@ -533,11 +554,13 @@ async function findNotes(ctx: ServiceContext, query: string) {
 
 async function notesInfo({ db, userId }: ServiceContext, ids: number[]) {
   if (ids.length === 0) return [];
-  const rows = await db
-    .select({ note: rowid, card: schema.cards, deckName: schema.decks.name })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(and(eq(schema.cards.userId, userId), inArray(rowid, ids)));
+  const rows = await selectIn(ids, (slice) =>
+    db
+      .select({ note: rowid, card: schema.cards, deckName: schema.decks.name })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(and(eq(schema.cards.userId, userId), inArray(rowid, slice))),
+  );
   const byNote = new Map(rows.map((row) => [row.note, row]));
   return ids.map((id) => {
     const row = byNote.get(id);

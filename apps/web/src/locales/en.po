@@ -2870,8 +2870,8 @@ msgstr "Key made {0} · {1}"
 
 #. placeholder {0}: shortDate(i18n, current.createdAt)
 #. placeholder {1}: lastUsed(i18n, current.lastRequest)
-msgid "Key made {0} · {1}. Revoke it under API keys."
-msgstr "Key made {0} · {1}. Revoke it under API keys."
+msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
+msgstr "Key made {0} · {1}. A new key replaces it, and this one stops working."
 
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -3059,9 +3059,6 @@ msgstr "Main"
 
 msgid "Make a key for Yomitan"
 msgstr "Make a key for Yomitan"
-
-msgid "Make a new key"
-msgstr "Make a new key"
 
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
@@ -3989,6 +3986,9 @@ msgstr "Rename…"
 
 msgid "Renamed “{from}” to “{spelled}”"
 msgstr "Renamed “{from}” to “{spelled}”"
+
+msgid "Replace the key"
+msgstr "Replace the key"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"

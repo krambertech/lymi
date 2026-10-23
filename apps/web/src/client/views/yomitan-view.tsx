@@ -94,14 +94,14 @@ function KeyState({ current, onMake, making }: Props) {
       {current && (
         <p className="text-sm text-muted tabular-nums">
           <Trans>
-            Key made {shortDate(i18n, current.createdAt)} · {lastUsed(i18n, current.lastRequest)}.
-            Revoke it under API keys.
+            Key made {shortDate(i18n, current.createdAt)} · {lastUsed(i18n, current.lastRequest)}. A
+            new key replaces it, and this one stops working.
           </Trans>
         </p>
       )}
       <Button variant={current ? "secondary" : "primary"} loading={making} onClick={onMake}>
         <KeyRound data-icon="inline-start" aria-hidden="true" />
-        {current ? <Trans>Make a new key</Trans> : <Trans>Make a key for Yomitan</Trans>}
+        {current ? <Trans>Replace the key</Trans> : <Trans>Make a key for Yomitan</Trans>}
       </Button>
       {!current && (
         <p className="text-sm text-muted">

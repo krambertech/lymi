@@ -53,6 +53,10 @@ describe("plainText", () => {
       "毎朝、散歩します。\nA & B ☺",
     );
   });
+
+  it("leaves a reference past the last code point as it was written", () => {
+    expect(plainText("a &#99999999; b &#xFFFFFFF;")).toBe("a &#99999999; b &#xFFFFFFF;");
+  });
 });
 
 describe("sourceText", () => {

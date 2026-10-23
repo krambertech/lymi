@@ -1,5 +1,6 @@
 import {
   type Actor,
+  DailyGoal,
   dayWindow,
   emptyState,
   type Rating,
@@ -24,7 +25,7 @@ import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
 import { addPublishedDeck, publishDeck } from "./publications";
 import { gradeCard } from "./review";
-import { reviewZone, streak } from "./review-days";
+import { openDay, reviewZone, streak } from "./review-days";
 import { activeCardsOf, activeSectionsOf } from "./revisions";
 import { createSection } from "./sections";
 import { createSeries } from "./series";
@@ -862,6 +863,30 @@ export async function reachGoal(ctx: ServiceContext): Promise<number> {
     await grade(ctx, states[i % states.length] as (typeof states)[number], 3, new Date(at));
   }
   return (await streak(ctx)).today.attempts - before.attempts;
+}
+
+/**
+ * Reopen today with the daily goal `left` reviews past what it holds, and a few more cards due than that,
+ * so the end of the review that turns the day can be played again. A met day goes back to open,
+ * so the run drops by today until the goal is met again.
+ */
+export async function goalAhead(ctx: ServiceContext, left: number) {
+  const zone = await reviewZone(ctx);
+  const { attempts } = (await streak(ctx)).today;
+  // A goal tops out where the settings allow, so near it fewer than `left` may be left.
+  const goal = Math.min(attempts + left, DailyGoal.maxValue ?? attempts + left);
+  const day = await openDay(ctx, dateFormatter(zone).format(new Date()), zone, goal);
+  await ctx.db
+    .update(schema.reviewDays)
+    .set({ goal, outcome: "open", zeroDueConfirmedAt: null, updatedAt: new Date() })
+    .where(eq(schema.reviewDays.id, day.id));
+  // The review draws to the settings' goal, so it moves too, or the day would read as met already.
+  await updateSettings(ctx, { dailyGoal: goal });
+  // Cards left past the goal, as on most days, so the review stops at the goal rather than running out.
+  const { due } = await devCounts(ctx);
+  const ahead = goal - attempts + 5;
+  if (due < ahead) await setDue(ctx, ahead);
+  return { attempts, goal };
 }
 
 /** Cards an assistant added arrive without an example, so there is something left to enrich. */

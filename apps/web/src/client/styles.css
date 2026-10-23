@@ -97,7 +97,7 @@
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
   }
-  /* The Mac app's panel shows its window's own material through the page. */
+  /* The Mac app's panel window is clear around the plate the page draws. */
   html[data-surface="panel"],
   html[data-surface="panel"] body,
   html[data-surface="panel"] #root {

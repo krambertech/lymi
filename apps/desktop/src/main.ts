@@ -11,8 +11,10 @@ import {
   screen,
   session,
   shell,
+  systemPreferences,
   Tray,
 } from "electron";
+import { canCopySelection, selectedText } from "./selection.js";
 import { completeSignIn, requestSignIn, SCHEME } from "./sign-in.js";
 
 const PRODUCT_URL = new URL(process.env.LYMI_URL ?? "https://my.lymi.app").origin;
@@ -30,6 +32,7 @@ let tray: Tray | null = null;
 let panel: BrowserWindow | null = null;
 let main: BrowserWindow | null = null;
 let showDue = true;
+let fillSelection = true;
 let due: number | null = null;
 let signedIn = true;
 // Google refuses sign-in inside an app's window, and the browser holds the passkeys, so these go there.
@@ -83,12 +86,11 @@ function createPanel() {
   panel = new BrowserWindow({
     type: "panel",
     width: PANEL_WIDTH,
-    height: 72,
+    height: 112,
     frame: false,
+    // The page draws Lymi's plate; the window around it is clear and shadows the plate's shape.
     transparent: true,
-    vibrancy: "popover",
-    visualEffectState: "active",
-    roundedCorners: true,
+    backgroundColor: "#00000000",
     hasShadow: true,
     resizable: false,
     movable: false,
@@ -111,13 +113,15 @@ function createPanel() {
 }
 
 /** Like Spotlight: centred on the screen under the pointer, a fifth of the way down. */
-function showPanel() {
+async function showPanel() {
   if (!panel || panel.isDestroyed()) createPanel();
   if (!panel) return;
   if (panel.isVisible()) {
     panel.hide();
     return;
   }
+  // Copied before the panel shows, while the app the learner was reading still has the selection.
+  const selection = fillSelection && canCopySelection() ? await selectedText() : null;
   const { workArea } = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
   panel.setPosition(
     Math.round(workArea.x + (workArea.width - PANEL_WIDTH) / 2),
@@ -125,7 +129,7 @@ function showPanel() {
   );
   panel.show();
   panel.focus();
-  panel.webContents.send("panel:shown");
+  panel.webContents.send("panel:shown", { selection });
 }
 
 async function refreshDue() {
@@ -154,7 +158,7 @@ function renderTray() {
             { label: "Sign in…", click: () => void requestSignIn(PRODUCT_URL) },
             { type: "separator" as const },
           ]),
-      { label: "Add a card", accelerator: SHORTCUT, click: showPanel },
+      { label: "Add a card", accelerator: SHORTCUT, click: () => void showPanel() },
       { label: "Review", click: () => openMain("/review") },
       { label: "Open Lymi", click: () => openMain() },
       { type: "separator" },
@@ -164,6 +168,15 @@ function renderTray() {
         checked: showDue,
         click: () => {
           showDue = !showDue;
+          renderTray();
+        },
+      },
+      {
+        label: "Fill in selected text",
+        type: "checkbox",
+        checked: fillSelection,
+        click: () => {
+          fillSelection = !fillSelection;
           renderTray();
         },
       },
@@ -186,6 +199,7 @@ ipcMain.on("panel:hide", () => panel?.hide());
 ipcMain.on("panel:resize", (_event, height: unknown) => {
   if (!panel || typeof height !== "number" || !Number.isFinite(height)) return;
   panel.setContentSize(PANEL_WIDTH, Math.min(Math.max(Math.ceil(height), 56), 480));
+  panel.invalidateShadow();
 });
 ipcMain.on("panel:added", () => void refreshDue());
 ipcMain.on("app:open", (_event, path: unknown) => {
@@ -232,7 +246,7 @@ app.whenReady().then(async () => {
   tray = new Tray(icon);
   renderTray();
   createPanel();
-  globalShortcut.register(SHORTCUT, showPanel);
+  globalShortcut.register(SHORTCUT, () => void showPanel());
   void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
@@ -240,8 +254,10 @@ app.whenReady().then(async () => {
     // Lets a script open the panel and find its window without pressing the shortcut. README.md.
     process.on("SIGUSR2", () => {
       if (!signedIn) return void requestSignIn(PRODUCT_URL);
-      showPanel();
-      console.log(`panel ${panel?.getMediaSourceId()} tray "${tray?.getTitle()}"`);
+      void showPanel();
+      console.log(
+        `panel ${panel?.getMediaSourceId()} tray "${tray?.getTitle()}" accessibility ${systemPreferences.isTrustedAccessibilityClient(false)}`,
+      );
     });
   }
 });

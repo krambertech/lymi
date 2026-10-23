@@ -4,7 +4,8 @@ export interface DesktopBridge {
   resizePanel(height: number): void;
   added(): void;
   openApp(path: string): void;
-  onPanelShown(listener: () => void): () => void;
+  /** `selection` is the text selected in the app in front, when the learner lets Lymi read it. */
+  onPanelShown(listener: (shown: { selection: string | null }) => void): () => void;
 }
 
 declare global {

@@ -8,8 +8,8 @@ contextBridge.exposeInMainWorld("lymiDesktop", {
   resizePanel: (height: number) => ipcRenderer.send("panel:resize", height),
   added: () => ipcRenderer.send("panel:added"),
   openApp: (path: string) => ipcRenderer.send("app:open", path),
-  onPanelShown: (listener: () => void) => {
-    const handler = () => listener();
+  onPanelShown: (listener: (shown: { selection: string | null }) => void) => {
+    const handler = (_event: unknown, shown: { selection: string | null }) => listener(shown);
     ipcRenderer.on("panel:shown", handler);
     return () => {
       ipcRenderer.off("panel:shown", handler);

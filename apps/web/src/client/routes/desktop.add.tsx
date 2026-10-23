@@ -4,7 +4,7 @@ import { isolate, standsAlone } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Check, CornerDownLeft, Plus } from "lucide-react";
+import { Check, ChevronDown, Plus } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Kbd } from "../components/kbd";
 import { ApiError, errorMessage } from "../lib/api";
@@ -37,6 +37,7 @@ function DesktopAdd() {
   const [term, setTerm] = useState("");
   const [line, setLine] = useState<Line | null>(null);
   const [adding, setAdding] = useState(false);
+  const [picking, setPicking] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const signedOut = me.error instanceof ApiError && me.error.status === 401;
@@ -59,8 +60,10 @@ function DesktopAdd() {
 
   useEffect(
     () =>
-      desktop()?.onPanelShown(() => {
+      desktop()?.onPanelShown(({ selection }) => {
         setLine(null);
+        setPicking(false);
+        if (selection) setTerm(selection);
         input.current?.focus();
         input.current?.select();
         void qc.invalidateQueries(decksQuery);
@@ -136,10 +139,18 @@ function DesktopAdd() {
     }
   }
 
+  const fillsMeaning = target?.enrichFields.includes("meaning");
+
   return (
-    <div ref={root} className="flex flex-col px-2 pb-2 text-text">
-      <div className="flex h-14 items-center gap-3 ps-3 pe-1">
-        <Plus aria-hidden className="size-5 shrink-0 text-muted" strokeWidth={2.25} />
+    // The window is clear; this plate is the panel, and macOS shadows its shape.
+    <div
+      ref={root}
+      className="flex flex-col overflow-hidden rounded-lg border border-edge bg-plate text-text"
+    >
+      <div className="flex h-15 items-center gap-3 ps-3.5 pe-3">
+        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber text-amber-ink">
+          <Plus aria-hidden className="size-4" strokeWidth={2.5} />
+        </span>
         <input
           ref={input}
           // biome-ignore lint/a11y/noAutofocus: the panel opens to type a term, like Spotlight
@@ -147,6 +158,7 @@ function DesktopAdd() {
           value={term}
           onChange={(e) => {
             setTerm(e.target.value);
+            setPicking(false);
             if (line?.kind !== "added") setLine(null);
           }}
           onKeyDown={onKeyDown}
@@ -154,36 +166,57 @@ function DesktopAdd() {
           aria-label={t`Term`}
           spellCheck={false}
           autoComplete="off"
-          className="min-w-0 flex-1 bg-transparent text-2xl font-medium tracking-[-0.01em] outline-none placeholder:font-normal placeholder:text-faint"
+          className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-faint"
         />
-        {own.length > 0 && (
-          <select
-            value={target?.id}
-            onChange={(e) => setDeckId(e.target.value)}
-            aria-label={t`Deck`}
-            className="max-w-44 shrink-0 text-sm"
+        {target && (
+          <button
+            type="button"
+            onClick={() => setPicking((open) => !open)}
+            aria-expanded={picking}
+            aria-label={t`Deck: ${{ deckName: isolate(deckName) }}`}
+            className="flex h-8 max-w-48 shrink-0 items-center gap-1.5 rounded-sm bg-plate-2 px-2.5 text-sm font-medium text-text-2 hoverable:hover:bg-hover"
           >
-            {own.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.name}
-              </option>
-            ))}
-          </select>
+            <span className="truncate">{deckName}</span>
+            <ChevronDown aria-hidden className="size-3.5 shrink-0" />
+          </button>
         )}
       </div>
-      {(ready || line || signedOut) && (
-        <div className="flex flex-col gap-0.5 border-t border-edge pt-2">
+      {picking && (
+        <ul className="mx-2 mb-2 flex max-h-56 flex-col overflow-y-auto rounded-md bg-plate-2 p-1">
+          {own.map((d) => (
+            <li key={d.id}>
+              <button
+                type="button"
+                onClick={() => {
+                  setDeckId(d.id);
+                  setPicking(false);
+                  input.current?.focus();
+                }}
+                className="flex w-full items-center gap-2 rounded-sm px-2.5 py-2 text-start text-md hoverable:hover:bg-hover"
+              >
+                <span className="min-w-0 flex-1 truncate">{d.name}</span>
+                {d.id === target?.id && <Check aria-hidden className="size-4 text-text-2" />}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {!picking && (ready || line || signedOut) && (
+        <div className="flex flex-col gap-1 px-2 pb-1">
           {signedOut ? (
             <Row tone="act">
               <span className="flex-1">{t`Open Lymi to sign in`}</span>
-              <Return />
+              <Kbd>↵</Kbd>
             </Row>
           ) : ready ? (
             <Row tone="act">
+              <span className="grid size-5.5 shrink-0 place-items-center rounded-full bg-amber text-amber-ink">
+                <Plus aria-hidden className="size-3" strokeWidth={3} />
+              </span>
               <span className="min-w-0 flex-1 truncate">
                 {t`Add “${{ quoted: isolate(shortQuote(trimmed)) }}” to ${{ deckName: isolate(deckName) }}`}
               </span>
-              <Return />
+              <Kbd>↵</Kbd>
             </Row>
           ) : null}
           {line && (
@@ -201,17 +234,32 @@ function DesktopAdd() {
                 <button
                   type="button"
                   onClick={() => void undo()}
-                  className="flex items-center gap-1.5 rounded-xs px-1.5 py-0.5 font-medium hoverable:hover:bg-hover"
+                  className="flex items-center gap-1.5 rounded-xs px-1.5 py-0.5 font-medium text-text underline underline-offset-3 hoverable:hover:bg-hover"
                 >
                   {t`Undo`}
                   <Kbd>⌘Z</Kbd>
                 </button>
               )}
-              {line.kind === "existing" && !ready && <Return />}
+              {line.kind === "existing" && !ready && <Kbd>↵</Kbd>}
             </Row>
           )}
         </div>
       )}
+      <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 px-4 pt-1 pb-3 text-xs text-muted">
+        <span className="flex items-center gap-1.5">
+          <Kbd>↵</Kbd>
+          {t`Add`}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Kbd>⌘↵</Kbd>
+          {t`Add and open`}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Kbd>esc</Kbd>
+          {t`Close`}
+        </span>
+        {fillsMeaning && <span className="ms-auto text-ai">{t`AI fills in the meaning`}</span>}
+      </div>
     </div>
   );
 }
@@ -220,15 +268,11 @@ function Row({ tone, children }: { tone?: "act"; children: React.ReactNode }) {
   return (
     <div
       className={clsx(
-        "flex min-h-9 items-center gap-2.5 rounded-sm px-3 text-md",
-        tone === "act" ? "bg-amber-tint text-amber-tint-ink" : "text-text-2",
+        "flex min-h-11 items-center gap-2.5 rounded-md px-3 text-md",
+        tone === "act" ? "bg-hover text-text" : "text-text-2",
       )}
     >
       {children}
     </div>
   );
-}
-
-function Return() {
-  return <CornerDownLeft aria-hidden className="size-4 shrink-0 opacity-70" />;
 }

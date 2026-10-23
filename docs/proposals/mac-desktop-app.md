@@ -47,7 +47,7 @@ Only `my.lymi.app` loads inside a window. Every other link opens in the default 
 
 **Launch at login.** `app.setLoginItemSettings({ openAtLogin })` registers the app with `SMAppService` as its main app service. It needs a signed, notarized build to work reliably. `app.setActivationPolicy("accessory")` hides the Dock icon while no main window is open, and `"regular"` brings it back when one opens.
 
-**Selected text (later).** The shortcut copies the frontmost app's selection and fills the term. macOS gives no API for another app's selection without Accessibility permission, so the shell asks for it once, sends ⌘C, reads the clipboard and puts the old clipboard back. A Mac App Store build cannot do this, which is one reason to ship outside the store.
+**Selected text.** The shortcut copies the front app's selection and fills the term. macOS gives no API for another app's selection without Accessibility permission, so the app asks for it once; with it, the app presses ⌘C through Core Graphics, reads the clipboard and puts every item back as it was. A paragraph or more than 120 characters is left out. A Mac App Store build cannot do this, which is one reason to ship outside the store. Reading `AXSelectedText` directly would leave the clipboard alone, but it needs native code and fails in many apps, so it can come later as a first try before the copy.
 
 **Kindle lookups (later).** When a volume holding `system/vocabulary/vocab.db` mounts, the shell offers to bring in the new lookups. Readwise imports Kindle highlights but never sees Vocabulary Builder, so this is the only way in. The brief assumed Lymi's importer reads SQLite with `sql.js`; it does not. It walks pages with its own reader in `apps/web/src/server/imports/sqlite.ts`, because `sql.js` copies a database into its heap. So the better shape is a `kindle` import adapter on the server, reading `WORDS` and `LOOKUPS` with that reader, keeping each lookup's sentence as the example and its id as the source id. Then the web's import page takes a `vocab.db` too, Activity lists it, and importing again updates rather than duplicates. The shell only uploads the file. A `My Clippings.txt` adapter for personal documents fits the same slot.
 
@@ -92,7 +92,7 @@ The question: does adding from anywhere get used, and does it raise how many car
 
 ## Decided on 23 October
 
-- **The panel is the add bar** (option A on [the visual page](https://claude.ai/artifact/GQeq92LoDbKaDf5uw8awaa)): one line like the command menu's add strip, with the deck as a native pop-up menu. It sits on the window's own macOS material (`vibrancy: "popover"`), not a plate Lymi draws, and keeps Onest. Liquid Glass would need `electron-liquid-glass`, which calls a private AppKit API, so it waits for Electron to support it.
+- **The panel is the add bar** (option A on [the visual page](https://claude.ai/artifact/GQeq92LoDbKaDf5uw8awaa)): one line like the command menu's add strip, drawn as Lymi's own plate with the amber plus, a deck chip that opens its list inside the panel, and key hints. The window around it is clear and macOS shadows the plate. A version on the system's frosted material with the native pop-up menu was tried and dropped: it looked apart from Lymi.
 - **After an add the panel stays open**, the field cleared, with a line saying what was added and Undo (⌘Z). Esc or a click away hides it.
 - **The menu bar shows the due count** by default; the tray menu turns it off.
 - **The shortcut is ⌃⌥L.** ⌥⌘L is Finder's Downloads.

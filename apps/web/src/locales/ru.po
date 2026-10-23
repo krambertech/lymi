@@ -908,6 +908,9 @@ msgstr "Добавь фото или PDF урока или вставь его �
 msgid "Add a picture"
 msgstr "Добавить изображение"
 
+msgid "Add and open"
+msgstr "Добавить и открыть"
+
 msgid "Add card"
 msgstr "Добавить карточку"
 
@@ -1030,6 +1033,9 @@ msgstr "AI"
 
 msgid "AI example"
 msgstr "Пример от AI"
+
+msgid "AI fills in the meaning"
+msgstr "AI допишет значение"
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заполняет только пустые поля и не меняет твой текст."
@@ -1972,6 +1978,9 @@ msgstr "Параметры колоды"
 
 msgid "Deck settings"
 msgstr "Настройки колоды"
+
+msgid "Deck: {deckName}"
+msgstr "Колода: {deckName}"
 
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "decks"

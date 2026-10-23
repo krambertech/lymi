@@ -45,7 +45,8 @@ export default {
 
     const download = macDownload(url.pathname);
     if (download) {
-      const capture = request.method === "GET" && downloadCapture(request, request.cf ?? {});
+      const capture =
+        request.method === "GET" && downloadCapture(request, { timezone: request.cf?.timezone });
       // Only production counts, as the site's pages only send from lymi.app.
       if (capture && url.hostname === "lymi.app") {
         const edge = { country: request.cf?.country, ip: request.headers.get("cf-connecting-ip") };

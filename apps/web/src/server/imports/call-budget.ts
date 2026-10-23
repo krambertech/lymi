@@ -47,14 +47,13 @@ export class CallBudget {
     this.used++;
   }
 
-  /** Runs the failure's own calls, which may use the reserve. */
-  async whileFailing<T>(work: () => Promise<T>): Promise<T> {
+  /**
+   * From here on the run is recording its failure, and every call may use the reserve. A failing
+   * run never goes back, so calls that land later, such as an event's settings lookup sent after
+   * the step's work returned, are never refused.
+   */
+  startFailing(): void {
     this.failing = true;
-    try {
-      return await work();
-    } finally {
-      this.failing = false;
-    }
   }
 
   /** The binding with every call it sends out counted; what a call returns stays the binding's. */
@@ -78,5 +77,21 @@ export class CallBudget {
         };
       },
     });
+  }
+}
+
+/**
+ * A step's work, with running out of calls turned into `final`'s error so the Workflow does not
+ * retry a step that has no calls left to spend in this invocation.
+ */
+export async function stopOnSpent<T>(
+  work: () => Promise<T>,
+  final: (message: string) => Error,
+): Promise<T> {
+  try {
+    return await work();
+  } catch (err) {
+    if (err instanceof CallBudgetSpent) throw final(err.message);
+    throw err;
   }
 }

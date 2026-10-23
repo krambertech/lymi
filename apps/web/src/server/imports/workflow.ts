@@ -19,13 +19,18 @@ import {
 } from "../services";
 import { textCallReporter } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
-import { CallBudget, CallBudgetSpent, isCallBudgetSpent } from "./call-budget";
+import { CallBudget, isCallBudgetSpent, stopOnSpent } from "./call-budget";
 import { ImportFileError } from "./files";
 
 const STEP = {
   retries: { limit: 3, delay: "10 seconds", backoff: "exponential" },
   timeout: "10 minutes",
 } as const;
+
+/** Another attempt in this invocation would have no more calls to spend. */
+function noRetryWhenSpent<T>(work: () => Promise<T>): Promise<never> {
+  return stopOnSpent(work, (message) => new NonRetryableError(message)) as Promise<never>;
+}
 
 /** A file error is the file's fault, so retrying cannot help. */
 async function fileErrorsStop<T>(work: () => Promise<T>): Promise<T> {
@@ -77,13 +82,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       let steps = 0;
       const counted = <T>(name: string, work: () => Promise<T>) => {
         steps++;
-        return step.do(name, STEP, () =>
-          (analytics.run(work) as Promise<never>).catch((err: unknown) => {
-            // Another attempt in this invocation has no more calls to spend.
-            if (err instanceof CallBudgetSpent) throw new NonRetryableError(err.message);
-            throw err;
-          }),
-        ) as Promise<T>;
+        return step.do(name, STEP, () => noRetryWhenSpent(() => analytics.run(work))) as Promise<T>;
       };
       const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
       const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
@@ -141,7 +140,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         chunk++;
       }
       await step.do("finish", STEP, () =>
-        analytics.run(() => finishImport(ctx, id, pictures, uploads)),
+        noRetryWhenSpent(() => analytics.run(() => finishImport(ctx, id, pictures, uploads))),
       );
     } catch (err) {
       // Recording the failure may use the calls the budget kept back.

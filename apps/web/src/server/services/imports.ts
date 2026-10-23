@@ -744,7 +744,8 @@ export function failureOf(err: unknown): ImportFailure {
 /**
  * Records a run's failure at once: the import is failed with its reason, `import_failed` is sent
  * and an internal failure is reported. A step's error keeps only its message, which names a file
- * failure. The calls it makes may use what the run's budget kept back.
+ * failure. From here on the run's calls may use what its budget kept back, so events sent after this
+ * returns are never refused.
  */
 export async function failRun(
   db: Db,
@@ -759,10 +760,9 @@ export async function failRun(
     err instanceof Error && ImportFailure.safeParse(err.message).success
       ? (err.message as ImportFailure)
       : failureOf(err);
-  await budget.whileFailing(async () => {
-    await failImport(db, id, failure, uploads, analytics);
-    if (failure === "internal") await report(err);
-  });
+  budget.startFailing();
+  await failImport(db, id, failure, uploads, analytics);
+  if (failure === "internal") await report(err);
   return failure;
 }
 

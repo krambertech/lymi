@@ -20,6 +20,7 @@ import { centralDirectory, ZipSegment } from "../exports/zip";
 import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
 import { bytesSource } from "../imports/files";
 import type { AnalyticsEvent } from "./analytics";
+import { analyticsContextFor } from "./analytics-context";
 import { pronunciationAudio } from "./audio";
 import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
@@ -1569,6 +1570,62 @@ describe("a write that runs out of calls", () => {
     expect(events.map((e) => e.name)).toContain("import_failed");
     expect(reported).toEqual([stopped]);
     // Recording the failure stayed inside the cap.
+    expect(budget.used).toBeLessThanOrEqual(budget.limit);
+  });
+
+  it("still sends import_failed when its settings lookup lands after the failure was recorded", async () => {
+    const learnerCtx = await fresh();
+    const { id } = await upload(learnerCtx, "pictures.zip", await pictureDeck(60));
+    await inspectImport(learnerCtx, id, env.IMPORTS);
+    await confirmImport(learnerCtx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const budget = new CallBudget(80, 20);
+    const runDb = createDb(budget.wrap(env.DB));
+    const uploads = budget.wrap(env.IMPORTS);
+    // As the Worker's analytics does: each event first looks up the learner's settings through
+    // the run's database, later than the capture, and a failed lookup drops the event quietly.
+    const settings = analyticsContextFor(runDb, learnerCtx.userId);
+    // Held until the failure step's work has returned, the latest the lookup can run.
+    let release = () => {};
+    const later = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const sent: string[] = [];
+    const pending: Promise<unknown>[] = [];
+    const analytics = {
+      capture: (e: AnalyticsEvent) => {
+        pending.push(
+          later
+            .then(() => settings())
+            .then(() => sent.push(e.name))
+            .catch(() => {}),
+        );
+      },
+      writeDataPoint: () => {},
+    };
+    const ctx = { ...learnerCtx, db: runDb, analytics };
+    const stopped = await (async () => {
+      const decks = await prepareImportDecks(ctx, id, uploads);
+      const { pictures } = await writeImportChunk(ctx, id, 0, decks, uploads);
+      for (let at = 0; at < pictures.length; at += PICTURES_PER_STEP) {
+        const batch = pictures.slice(at, at + PICTURES_PER_STEP);
+        const storage = {
+          bucket: budget.wrap(env.PRIVATE_IMAGES),
+          images: budget.wrap(env.IMAGES),
+        };
+        await attachImportPictures(ctx, id, batch, uploads, storage, at + batch.length);
+      }
+    })().then(
+      () => null,
+      (err: unknown) => err,
+    );
+    expect(stopped).toBeInstanceOf(CallBudgetSpent);
+    sent.length = 0;
+
+    await failRun(runDb, id, stopped, uploads, budget, analytics, async () => {});
+    // The step's flush, after its work returned.
+    release();
+    await Promise.all(pending);
+    expect(sent).toContain("import_failed");
     expect(budget.used).toBeLessThanOrEqual(budget.limit);
   });
 

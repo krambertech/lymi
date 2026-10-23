@@ -7,6 +7,7 @@ import {
   FAILURE_RESERVE,
   isCallBudgetSpent,
   SUBREQUEST_LIMIT,
+  stopOnSpent,
 } from "./call-budget";
 
 /** A binding shaped like D1 and Images: some calls build locally, the rest go out. */
@@ -50,17 +51,41 @@ describe("a run's call budget", () => {
     expect(sent).toHaveLength(3);
   });
 
-  it("lets the failure's own calls use the reserve", async () => {
+  it("lets a failing run use the reserve for good, so calls that land later still go out", async () => {
     const budget = new CallBudget(5, 2);
     const { binding, sent } = fakeBinding();
     const bucket = budget.wrap(binding);
     for (let i = 0; i < 3; i++) await bucket.get();
-    await budget.whileFailing(async () => {
-      await bucket.get();
-      await bucket.get();
-    });
+    budget.startFailing();
+    await bucket.get();
+    // Later, as an event's settings lookup that runs after the failure step's work returned.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await bucket.get();
     expect(sent).toHaveLength(5);
-    expect(() => bucket.get()).toThrow(CallBudgetSpent);
+  });
+
+  it("turns running out of calls into the step's final error, and leaves other errors alone", async () => {
+    class Final extends Error {}
+    const spent = stopOnSpent(
+      async () => {
+        throw new CallBudgetSpent(9000);
+      },
+      (message) => new Final(message),
+    );
+    await expect(spent).rejects.toBeInstanceOf(Final);
+    const other = stopOnSpent(
+      async () => {
+        throw new Error("network");
+      },
+      (message) => new Final(message),
+    );
+    await expect(other).rejects.not.toBeInstanceOf(Final);
+    await expect(
+      stopOnSpent(
+        async () => 3,
+        (m) => new Final(m),
+      ),
+    ).resolves.toBe(3);
   });
 
   it("is recognised by its message once it has crossed a step", () => {

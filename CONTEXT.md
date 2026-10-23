@@ -46,7 +46,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text. ADR 0033. _Avoid_: Prepare, generate, suggest
 
-**Extract**: The AI choosing which terms in material the learner brought deserve a card: a lesson read by Smart add, or a passage the learner highlighted while reading. It decides a new card's term; enrichment then fills the card's fields. An assistant connected over MCP extracts with its own model and adds the cards itself. _Avoid_: Suggest, propose, detect, pick (the learner picks on Smart add's list)
+**Extract**: The AI choosing which terms in material the learner brought deserve a card: a lesson read by Smart add, or a passage the learner highlighted while reading. It decides a new card's term, and enrichment then fills the card's fields. An assistant connected over MCP extracts with its own model and adds the cards itself. _Avoid_: Suggest, propose, detect, pick (the learner picks on Smart add's list)
 
 ### Remembering
 

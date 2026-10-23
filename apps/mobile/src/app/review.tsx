@@ -61,6 +61,7 @@ import {
 } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  type AnimatedRef,
   Easing,
   FadeIn,
   FadeOut,
@@ -77,7 +78,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
-import { EndEmbers, LightPool } from "../brand/ending";
+import { EndEmbers, LightPool, TurnSpark } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
@@ -1848,6 +1849,8 @@ function Completion({
   const start = useStreakStart(summary?.longest ?? 0);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
   const counted = screen.heading !== "nothing_due";
   const heading = {
     goal_reached: t`Daily goal reached`,
@@ -1881,16 +1884,24 @@ function Completion({
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
     AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur)),
+    turned ? AT.tick + RUN_CATCH_MS : 0,
   );
 
   const clock = useSharedValue(reduce ? end : 0);
   // The ways on cannot be pressed until they have arrived, so the tap that finishes the sequence never presses one.
   const [settled, setSettled] = useState(reduce);
+  // Until the spark reaches it, the run shows the streak as it stood before this review.
+  const [ticked, setTicked] = useState(!turned);
   const finish = () => {
     clock.value = end;
     setSettled(true);
+    setTicked(true);
     void stopHaptics();
   };
+  const room = useAnimatedRef<View>();
+  const lanternPlace = useAnimatedRef<View>();
+  const todayLight = useAnimatedRef<View>();
+  const runFlame = useAnimatedRef<View>();
 
   useEffect(() => {
     void playHaptics(endHaptics(embers, screen.streak, reduce));
@@ -1900,11 +1911,15 @@ function Completion({
     if (reduce) {
       clock.value = end;
       setSettled(true);
+      setTicked(true);
       return;
     }
     clock.value = withTiming(end, { duration: end, easing: Easing.linear, reduceMotion: ALWAYS });
-    const timer = setTimeout(() => setSettled(true), actionsAt + RISE.ms);
-    return () => clearTimeout(timer);
+    const timers = [
+      setTimeout(() => setSettled(true), actionsAt + RISE.ms),
+      setTimeout(() => setTicked(true), AT.tick),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, [reduce, clock, end, actionsAt]);
 
   const heading$ = useRise(clock, AT.heading);
@@ -1912,6 +1927,20 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
+  const catch$ = useAnimatedStyle(() => {
+    const u = clock.value - AT.tick;
+    if (!turned || u <= 0) return { transform: [{ scale: 1 }] };
+    return { transform: [{ scale: 1 + 0.3 * Math.exp(-u / 240) * Math.min(1, u / 90) }] };
+  });
+  const tick$ = useAnimatedStyle(() => {
+    if (!turned) return { opacity: 1, transform: [] };
+    const k = beat(clock.value, AT.tick, 460);
+    return { opacity: k, transform: [{ translateY: (1 - k) * 12 }, { scale: 1 + 0.18 * (1 - k) }] };
+  });
+  const warm$ = useAnimatedStyle(() => ({
+    opacity: turned ? Math.min(1, Math.max(0, 1 - (clock.value - AT.tick - 300) / 1100)) : 0,
+  }));
+  const run = ticked ? streak : streak - 1;
   const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
@@ -1919,6 +1948,7 @@ function Completion({
 
   return (
     <Animated.View
+      ref={room}
       // Under reduced motion the whole screen crossfades in with its final numbers in place.
       entering={reduce ? CROSSFADE : undefined}
       onTouchStart={settled ? undefined : finish}
@@ -1936,7 +1966,7 @@ function Completion({
         showsVerticalScrollIndicator={false}
       >
         <View className="flex-1 items-center justify-center gap-6 px-6">
-          <Flight clock={clock} still={reduce}>
+          <Flight clock={clock} still={reduce} place={lanternPlace}>
             <LightPool
               size={END_LANTERN}
               clock={clock}
@@ -1999,17 +2029,34 @@ function Completion({
                 goals={lights.goals}
                 goal={goal}
                 sequence={settled ? undefined : AT.lights}
+                turn={turned && !settled ? { at: AT.land, from } : undefined}
+                todayRef={todayLight}
               />
             </Animated.View>
             <Animated.View style={run$} className="flex-row items-center gap-2">
-              <Flame height={20} state={flame} />
-              {streak > 0 ? (
+              <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
+                <Flame height={20} state={ticked ? flame : "lit"} />
+              </Animated.View>
+              {run > 0 ? (
                 <>
-                  <Text className="text-md font-semibold text-text" style={styles.figures}>
-                    {streak}
-                  </Text>
+                  {/* The new run rolls up warm, then cools to its ink. */}
+                  <Animated.View key={run} style={ticked ? tick$ : undefined}>
+                    <Text className="text-md font-semibold text-text" style={styles.figures}>
+                      {run}
+                    </Text>
+                    {ticked && (
+                      <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
+                        <Text
+                          className="text-md font-semibold text-amber-text"
+                          style={styles.figures}
+                        >
+                          {run}
+                        </Text>
+                      </Animated.View>
+                    )}
+                  </Animated.View>
                   <Text className="text-md text-text-2">
-                    {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
+                    {t`${plural(run, { one: "day in a row", other: "days in a row" })}`}
                   </Text>
                 </>
               ) : (
@@ -2055,6 +2102,15 @@ function Completion({
           </Animated.View>
         </ToastFloor>
       </ScrollView>
+      {turned && !settled && (
+        <TurnSpark
+          clock={clock}
+          room={room}
+          lantern={lanternPlace}
+          today={todayLight}
+          run={runFlame}
+        />
+      )}
     </Animated.View>
   );
 }
@@ -2066,16 +2122,19 @@ function Completion({
 function Flight({
   clock,
   still,
+  place,
   children,
 }: {
   clock: SharedValue<number>;
   still: boolean;
+  /** Where it lands, which the spark also leaves from. */
+  place: AnimatedRef<View>;
   children: ReactNode;
 }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   // The place it lands, read on the UI thread each frame, so a layout that settles late never misplaces the start.
-  const place = useAnimatedRef<Animated.View>();
+
   const half = HEADER_LANTERN.size / 2;
   const fromX = I18nManager.isRTL
     ? width - HEADER_LANTERN.inset - half
@@ -2164,9 +2223,12 @@ function RollingCount({
 
 /** The count that ends a review, the largest thing on the phone; it keeps a 1.2 line box. */
 const COUNT_SIZE = 80;
+/** How long the run's catch plays after the spark reaches it, warmth included. */
+const RUN_CATCH_MS = 1400;
 
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
+  catch: { transformOrigin: "50% 100%" },
 });

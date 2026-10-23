@@ -55,7 +55,7 @@ The brand lantern omits `progress` and shows the one canonical flame. It never s
 - **Lit** from the first review of the day until the goal, or all day on a live streak, including a day with nothing due: the brand flame, held still.
 - **Full** once today's goal is met or every available review is done: 1.16× the brand flame, and flickering.
 
-`streakFlameFor` in `@lymi/design` reads the state from the streak summary. `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped, because a clipped tip is the one thing that makes the mark look broken. It never sparks; the spark belongs to the lantern. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
+`streakFlameFor` in `@lymi/design` reads the state from the streak summary. `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped, because a clipped tip is the one thing that makes the mark look broken. It never sparks on its own; the spark belongs to the lantern. The one exception is the end of the review that turns the day, where the lantern's spark reaches the run's flame and it throws three as it catches ([motion.md](motion.md#the-end-of-a-review)). The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
 
 ## How the flame moves
 

@@ -61,7 +61,7 @@
     transform: translateY(10px) scale(0.5);
   }
 }
-/* Today's glass is the flame seen small, so as it fills it takes the lantern's glow for a moment. */
+/* Today's glass is the flame seen small, so as the spark lands and it fills it takes the lantern's glow for a moment. */
 .light-flare {
   animation: light-flare 1100ms var(--ease-out) both;
 }
@@ -70,7 +70,8 @@
     filter: drop-shadow(0 0 0 transparent);
   }
   30% {
-    filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 3px var(--glow));
+    filter: drop-shadow(0 0 15px var(--glow)) drop-shadow(0 0 4px var(--glow));
+    scale: 1.08;
   }
   100% {
     filter: drop-shadow(0 0 0 transparent);

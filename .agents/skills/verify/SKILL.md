@@ -15,6 +15,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | --- | --- |
 | Sign in | [sign-in.md](features/sign-in.md) |
 | Review | [review.md](features/review.md) |
+| The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
 | Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |

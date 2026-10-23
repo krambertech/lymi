@@ -1845,9 +1845,7 @@ function Completion({
   const { t } = useLingui();
   const p = usePalette();
   const { goal, streak, lights, flame, out, progress, fed, summary } = useDay();
-  // With no run yet, the run's line asks for what is left today, so the nudge under it would repeat it.
-  const left = streak === 0 ? (screen.nudge?.count ?? null) : null;
-  const start = useStreakStart(summary?.longest ?? 0, left);
+  const start = useStreakStart(summary?.longest ?? 0);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
   const counted = screen.heading !== "nothing_due";
@@ -1863,8 +1861,16 @@ function Completion({
   }[screen.heading];
 
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  // Only Review forgotten sits above Continue, and Done is always last, so nothing moves between ends.
   const ways = screen.offers.filter((o) => o.kind === "forgotten");
+  const note = proceed?.note;
+  const holds = !note
+    ? undefined
+    : note.kind === "goal"
+      ? t`${plural(note.count, { one: "# to goal", other: "# to goal" })}`
+      : note.kind === "cards"
+        ? t`${plural(note.count, { one: "# card left", other: "# cards left" })}`
+        : t`other decks`;
   const embers = useMemo(
     () => (reduce || out ? [] : endEmbers(screen.embers)),
     [reduce, out, screen.embers],
@@ -1906,13 +1912,10 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
-  const nudge$ = useRise(clock, AT.run + 120);
   const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
-  const doneButton = (variant: "primary" | "secondary") => (
-    <Button label={t`Done`} variant={variant} size="lg" onPress={onClose} />
-  );
+  const done = <Button label={t`Done`} variant="primary" size="lg" onPress={onClose} />;
 
   return (
     <Animated.View
@@ -1957,7 +1960,11 @@ function Completion({
             {counted ? (
               <View
                 accessible
-                accessibilityLabel={t`${plural(to, { one: "# review today", other: "# reviews today" })}`}
+                accessibilityLabel={
+                  screen.satisfied
+                    ? t`${plural(to, { one: "# review today", other: "# reviews today" })}`
+                    : t`${plural(goal, { one: `${to} of # review today`, other: `${to} of # reviews today` })}`
+                }
                 className="items-center"
               >
                 <Animated.View style={count$}>
@@ -1965,7 +1972,10 @@ function Completion({
                 </Animated.View>
                 <Animated.View style={label$}>
                   <Text className="text-md text-muted">
-                    {t`${plural(to, { one: "review today", other: "reviews today" })}`}
+                    {/* While the goal is open the count says it, so Continue's count explains itself. */}
+                    {screen.satisfied
+                      ? t`${plural(to, { one: "review today", other: "reviews today" })}`
+                      : t`${plural(goal, { one: "of # review today", other: "of # reviews today" })}`}
                   </Text>
                 </Animated.View>
               </View>
@@ -2006,19 +2016,9 @@ function Completion({
                 <Text className="text-md font-medium text-text">{start}</Text>
               )}
             </Animated.View>
-            {/* While Continue leads, what is left of the day sits under its lights. */}
-            {screen.nudge && !left && (
-              <Animated.View style={nudge$}>
-                <Text className="text-center text-base text-muted">
-                  {screen.nudge.kind === "goal"
-                    ? t`${plural(screen.nudge.count, { one: "# more review to your daily goal", other: "# more reviews to your daily goal" })}`
-                    : t`${plural(screen.nudge.count, { one: "# more card and you’re done for today", other: "# more cards and you’re done for today" })}`}
-                </Text>
-              </Animated.View>
-            )}
           </View>
         </View>
-        {/* One shape for every way on, the count said in words; Continue always sits last. */}
+        {/* One shape for every way on, the count said in words; Done is always last and primary. */}
         <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
           {ways.map(
             (way, i) =>
@@ -2036,20 +2036,20 @@ function Completion({
           <Animated.View style={done$} className="gap-3">
             {!counted ? (
               <>
-                <Button label={t`Add cards`} variant="primary" size="lg" onPress={onAddCards} />
-                {doneButton("secondary")}
+                <Button label={t`Add cards`} size="lg" onPress={onAddCards} />
+                {done}
               </>
             ) : (
               <>
-                {doneButton(screen.continueLeads ? "secondary" : "primary")}
                 {proceed && (
                   <Button
                     label={t`Continue`}
-                    variant={screen.continueLeads ? "primary" : "secondary"}
+                    detail={holds}
                     size="lg"
                     onPress={() => onOffer(proceed)}
                   />
                 )}
+                {done}
               </>
             )}
           </Animated.View>

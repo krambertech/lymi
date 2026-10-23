@@ -164,7 +164,7 @@ function ReviewEndShot({
                 </Button>
               )}
               addCards={
-                <Button variant="primary" size="lg" className="w-full">
+                <Button size="lg" className="w-full">
                   Add cards
                 </Button>
               }

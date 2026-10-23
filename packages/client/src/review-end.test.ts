@@ -213,16 +213,9 @@ const screen = (over: Partial<EndInput>): EndScreen => {
 describe("the end of a stretch", () => {
   it("at the goal's stop, celebrates the day and offers the rest of it beside Done", () => {
     const end = screen({ ending: "goal", from: 0, attempts: 10, left: 12, forgotten: 3 });
-    expect(end).toMatchObject({
-      heading: "goal_reached",
-      satisfied: true,
-      streak: true,
-      embers: 14,
-      continueLeads: false,
-      nudge: null,
-    });
+    expect(end).toMatchObject({ heading: "goal_reached", satisfied: true, streak: true, embers: 14 });
     expect(end.offers).toEqual([
-      { kind: "continue", to: "day" },
+      { kind: "continue", to: "day", note: { kind: "cards", count: 12 } },
       { kind: "forgotten", count: 3 },
     ]);
   });
@@ -232,32 +225,34 @@ describe("the end of a stretch", () => {
     expect(end).toMatchObject({ heading: "day_done", satisfied: true, streak: true, offers: [] });
   });
 
-  it("left below the goal, leads with Continue and says how many more to the goal", () => {
+  it("left below the goal, Continue says how many more reach the goal, where it stops", () => {
     const end = screen({ ending: "left", from: 0, attempts: 4, left: 12 });
-    expect(end).toMatchObject({
-      heading: "review_done",
-      streak: false,
-      continueLeads: true,
-      nudge: { kind: "goal", count: 6 },
-    });
-    expect(end.offers).toEqual([{ kind: "continue", to: "resume" }]);
+    expect(end).toMatchObject({ heading: "review_done", streak: false });
+    expect(end.offers).toEqual([
+      { kind: "continue", to: "resume", note: { kind: "goal", count: 6 } },
+    ]);
   });
 
-  it("left with fewer cards in the day than the goal needs, says how many finish the day", () => {
+  it("left with fewer cards in the day than the goal needs, Continue counts the cards", () => {
     const end = screen({ ending: "left", attempts: 4, left: 3 });
-    expect(end.nudge).toEqual({ kind: "day", count: 3 });
+    expect(end.offers[0]).toMatchObject({ note: { kind: "cards", count: 3 } });
+  });
+
+  it("left in a deck, Continue counts the deck's own cards, which run past the goal", () => {
+    const end = screen({ stretch: "scope", ending: "left", attempts: 4, left: 3, elsewhere: 30 });
+    expect(end.offers[0]).toMatchObject({ to: "resume", note: { kind: "cards", count: 3 } });
   });
 
   it("the rest of the day running out throws embers without the streak moment", () => {
     const end = screen({ from: 10, attempts: 14, left: 0, satisfiedBefore: true });
-    expect(end).toMatchObject({ heading: "day_done", streak: false, continueLeads: false });
+    expect(end).toMatchObject({ heading: "day_done", streak: false, offers: [] });
     expect(end.embers).toBeGreaterThan(0);
   });
 
   it("a deck that crosses the goal and runs out says the goal, and continues to the day", () => {
     const end = screen({ stretch: "scope", from: 6, attempts: 14, left: 0, elsewhere: 12 });
-    expect(end).toMatchObject({ heading: "goal_reached", streak: true, continueLeads: false });
-    expect(end.offers).toEqual([{ kind: "continue", to: "day" }]);
+    expect(end).toMatchObject({ heading: "goal_reached", streak: true });
+    expect(end.offers).toEqual([{ kind: "continue", to: "day", note: { kind: "decks" } }]);
   });
 
   it("a deck that runs out below the goal leaves the day open and leads on to it", () => {
@@ -266,10 +261,8 @@ describe("the end of a stretch", () => {
       heading: "scope_done",
       satisfied: false,
       streak: false,
-      continueLeads: true,
-      nudge: { kind: "goal", count: 3 },
     });
-    expect(end.offers).toEqual([{ kind: "continue", to: "day" }]);
+    expect(end.offers).toEqual([{ kind: "continue", to: "day", note: { kind: "decks" } }]);
   });
 
   it("the last deck running out below the goal finishes the day", () => {
@@ -278,14 +271,14 @@ describe("the end of a stretch", () => {
     // Until the other decks are known, the deck's end claims nothing about the day.
     const unknown = screen({ stretch: "scope", from: 2, attempts: 7, left: 0, elsewhere: null });
     expect(unknown).toMatchObject({ heading: "scope_done", satisfied: false });
-    expect(unknown.nudge).toEqual({ kind: "goal", count: 3 });
+    expect(unknown.offers).toEqual([{ kind: "continue", to: "day", note: { kind: "decks" } }]);
   });
 
   it("a walked round below the goal says Round done and leads on to the day", () => {
     const end = screen({ stretch: "list", from: 2, attempts: 6, left: 12, forgotten: 1 });
-    expect(end).toMatchObject({ heading: "round_done", continueLeads: true });
+    expect(end).toMatchObject({ heading: "round_done" });
     expect(end.offers).toEqual([
-      { kind: "continue", to: "day" },
+      { kind: "continue", to: "day", note: { kind: "goal", count: 4 } },
       { kind: "forgotten", count: 1 },
     ]);
   });
@@ -380,12 +373,13 @@ describe("every end, whatever the inputs", () => {
     for (const o of proceed) expect(o.to).toBe(c.ending === "left" ? "resume" : "day");
     expect(end.offers.filter((o) => o.kind === "forgotten").length).toBe(c.forgotten > 0 ? 1 : 0);
 
-    // Continue leads only while the day is open, and then the line says what is left of it.
-    expect(end.continueLeads).toBe(!end.satisfied && proceed.length > 0);
-    expect(!!end.nudge).toBe(end.continueLeads);
-    if (end.nudge) {
-      expect(end.nudge.count).toBeGreaterThan(0);
-      expect(end.nudge.count).toBeLessThanOrEqual(GOAL - c.attempts);
+    // A count beside Continue is never more than the goal needs while it is open, and never zero.
+    for (const o of proceed) {
+      if (o.note?.kind === "goal") {
+        expect(end.satisfied).toBe(false);
+        expect(o.note.count).toBe(GOAL - c.attempts);
+      }
+      if (o.note && o.note.kind !== "decks") expect(o.note.count).toBeGreaterThan(0);
     }
   }
 

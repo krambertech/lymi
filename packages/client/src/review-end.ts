@@ -64,9 +64,19 @@ export interface EndInput {
   forgotten: number;
 }
 
+/**
+ * What Continue holds, said beside it: the reviews to the goal where it stops there, the cards it
+ * runs through otherwise (cards, since a forgotten card's return adds a review but not a card), or
+ * that it moves on to other decks. Null when the other decks are not known yet.
+ */
+export type ContinueNote =
+  | { kind: "goal"; count: number }
+  | { kind: "cards"; count: number }
+  | { kind: "decks" };
+
 /** Continue picks up the stretch the learner left, or starts the day's draw. */
 export type Offer =
-  | { kind: "continue"; to: "resume" | "day" }
+  | { kind: "continue"; to: "resume" | "day"; note: ContinueNote | null }
   | { kind: "forgotten"; count: number };
 
 export interface EndScreen {
@@ -85,10 +95,6 @@ export interface EndScreen {
   embers: number;
   /** The ways on besides Done, in order. */
   offers: Offer[];
-  /** Continue is the primary button, since the day is open and it has somewhere to go. */
-  continueLeads: boolean;
-  /** The line under the number while Continue leads: how many more to the goal, or to the end of the day. */
-  nudge: { kind: "goal" | "day"; count: number } | null;
 }
 
 /** The end of a stretch by where the day stands, or `unchecked`; ADR 0021. */
@@ -115,25 +121,42 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
               ? "round_done"
               : "review_done";
 
+  const cards = (count: number): ContinueNote | null =>
+    count > 0 ? { kind: "cards", count } : null;
+  // The day's draw stops at the goal while it is open, unless the day runs out first.
+  const dayNote = (): ContinueNote | null =>
+    !satisfied && !(elsewhere !== null && dayLeft < goal - attempts)
+      ? { kind: "goal", count: goal - attempts }
+      : elsewhere !== null
+        ? cards(dayLeft)
+        : null;
   const offers: Offer[] = [];
-  if (ending === "left") offers.push({ kind: "continue", to: "resume" });
-  else if (dayLeft > 0) offers.push({ kind: "continue", to: "day" });
+  if (ending === "left")
+    offers.push({
+      kind: "continue",
+      to: "resume",
+      // A deck or series runs to its own end, past the goal; `left` is not a round's own count.
+      note:
+        stretch === "day"
+          ? dayNote()
+          : stretch === "scope"
+            ? cards(left)
+            : null,
+    });
+  else if (dayLeft > 0)
+    offers.push({
+      kind: "continue",
+      to: "day",
+      note: stretch === "scope" ? { kind: "decks" } : dayNote(),
+    });
   if (input.forgotten > 0) offers.push({ kind: "forgotten", count: input.forgotten });
 
-  const continueLeads = !satisfied && offers.some((o) => o.kind === "continue");
-  const toGoal = goal - attempts;
   return {
     heading,
     satisfied,
     streak: satisfied && !input.satisfiedBefore && attempts > from,
     embers: emberCount(attempts - from, goal),
     offers,
-    continueLeads,
-    nudge: !continueLeads
-      ? null
-      : elsewhere !== null && dayLeft > 0 && dayLeft < toGoal
-        ? { kind: "day", count: dayLeft }
-        : { kind: "goal", count: toGoal },
   };
 }
 

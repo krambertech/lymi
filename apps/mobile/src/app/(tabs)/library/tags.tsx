@@ -142,7 +142,9 @@ export default function DeckTagsPage() {
   }
 
   const nothing = query.data.tags.length === 0 && query.data.archived.length === 0;
-  const searched = query.data.tags.length + query.data.archived.length > SEARCHED_PAST;
+  // A query still filtering keeps its field, so it can be cleared once a merge leaves fifteen or fewer.
+  const searched =
+    query.data.tags.length + query.data.archived.length > SEARCHED_PAST || find !== "";
 
   return (
     <Screen
@@ -356,6 +358,8 @@ function RenameSheet({
   const [invalid, setInvalid] = useState<string | null>(null);
   const [opened, setOpened] = useState<DeckTag | null>(null);
   const focus = useSheetFocus({ open: tag !== null });
+  const open = useRef(false);
+  open.current = tag !== null;
   // Each opening starts from the tag's name.
   if (tag !== opened) {
     setOpened(tag);
@@ -372,8 +376,12 @@ function RenameSheet({
     if (busy || !tag) return;
     if (!typed) return setInvalid(t`Give the tag a name.`);
     if (typed === tag.name) return onClose();
-    // Under the field, since a toast would sit under this sheet.
-    void onSubmit(typed).catch((e) => setInvalid(errorMessage(e)));
+    // Under the field, since a toast would sit under this sheet; once it has been swiped away, a toast.
+    void onSubmit(typed).catch((e) =>
+      open.current
+        ? setInvalid(errorMessage(e))
+        : toast.add({ error: true, title: errorMessage(e) }),
+    );
   };
   return (
     <Sheet

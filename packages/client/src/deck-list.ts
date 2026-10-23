@@ -28,6 +28,20 @@ export interface DeckFilters {
 
 export const noFilters: DeckFilters = { states: [], due: null, sections: [], tags: [] };
 
+/** What a card list shows: a whole deck, or one of its sections, where "" is the cards with none. */
+export interface DeckScope {
+  deckId: string;
+  sectionId?: string | undefined;
+}
+
+/** The filters a list applies: a section's list keeps its own section fixed, whatever else is chosen. */
+export function scopedFilters(
+  filters: DeckFilters,
+  { sectionId }: Pick<DeckScope, "sectionId">,
+): DeckFilters {
+  return sectionId === undefined ? filters : { ...filters, sections: [sectionId] };
+}
+
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
   | { kind: "section"; key: string; section: Section | null; rows: DeckRow[] }

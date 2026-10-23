@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api, type Section, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
+import { type SectionActionId, sectionActions } from "@lymi/client/section-actions";
 import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
@@ -213,61 +214,44 @@ export function SectionHeading({
   const p = usePalette();
   const router = useRouter();
   const locked = section.status !== "open";
-  // A card started early in a section that is not open is still in review, so it counts here too.
-  const reviewable = section.due > 0;
   const sectionName = section.name;
   const sectionsPage = `/library/sections?id=${deckId}`;
+  const action: Record<SectionActionId, MenuItem & Pick<RowMenuItem, "id" | "icon">> = {
+    start_section: {
+      id: "start_section",
+      label: t`Start anyway`,
+      icon: "unlock",
+      onSelect: () => onStart(section),
+    },
+    review: {
+      id: "review",
+      label: t`Review this section`,
+      icon: "play",
+      onSelect: () => router.push(`/review?deck=${deckId}&section=${section.id}` as Href),
+    },
+    add_card: {
+      id: "add_card",
+      label: t`Add card here`,
+      icon: "plus",
+      onSelect: () => router.push(`/capture?deck=${deckId}&section=${section.id}` as Href),
+    },
+    rename_section: {
+      id: "rename_section",
+      label: t`Rename section`,
+      icon: "edit",
+      onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
+    },
+    reorder_sections: {
+      id: "reorder_sections",
+      label: t`Reorder sections`,
+      icon: "grip",
+      onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
+    },
+  };
   // The ⋯ and a long press offer the same rows.
-  const rows: (MenuItem & Pick<RowMenuItem, "id" | "icon">)[][] = [
-    [
-      ...(section.status === "locked"
-        ? [
-            {
-              id: "start_section" as const,
-              label: t`Start anyway`,
-              icon: "unlock" as const,
-              onSelect: () => onStart(section),
-            },
-          ]
-        : []),
-      ...(reviewable
-        ? [
-            {
-              id: "review" as const,
-              label: t`Review this section`,
-              icon: "play" as const,
-              onSelect: () => router.push(`/review?deck=${deckId}&section=${section.id}` as Href),
-            },
-          ]
-        : []),
-    ],
-    owner
-      ? [
-          {
-            id: "add_card" as const,
-            label: t`Add card here`,
-            icon: "plus" as const,
-            onSelect: () => router.push(`/capture?deck=${deckId}&section=${section.id}` as Href),
-          },
-          {
-            id: "rename_section" as const,
-            label: t`Rename section`,
-            icon: "edit" as const,
-            onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
-          },
-          ...(several
-            ? [
-                {
-                  id: "reorder_sections" as const,
-                  label: t`Reorder sections`,
-                  icon: "grip" as const,
-                  onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
-                },
-              ]
-            : []),
-        ]
-      : [],
-  ].filter((group) => group.length > 0);
+  const rows = sectionActions(section, { owner, several }).map((group) =>
+    group.map((id) => action[id]),
+  );
   const items: MenuItem[][] = rows;
   const heading = (
     <View className="flex-row items-start gap-2.5 bg-canvas px-1 pb-3 pt-2">

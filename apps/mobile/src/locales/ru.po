@@ -601,6 +601,9 @@ msgstr "{name} теперь в колоде «{deck}»"
 msgid "{name} left {deck}"
 msgstr "{name} больше не в колоде «{deck}»"
 
+msgid "{name}, {cards}"
+msgstr "{name}, {cards}"
+
 msgid "{nextName} is ready"
 msgstr "Можно начинать {nextName}"
 
@@ -658,6 +661,9 @@ msgstr "{streak, plural, one {# день подряд} few {# дня подря�
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
+
+msgid "{tagCount, plural, one {# tag} other {# tags}}"
+msgstr "{tagCount, plural, one {# тег} few {# тега} many {# тегов} other {# тега}}"
 
 msgid "{to, plural, one {# review today} other {# reviews today}}"
 msgstr "{to, plural, one {# повторение сегодня} few {# повторения сегодня} many {# повторений сегодня} other {# повторения сегодня}}"
@@ -1077,6 +1083,10 @@ msgstr "Архивировано «{name}»"
 msgid "Archived “{sectionName}”"
 msgstr "Архивировано «{sectionName}»"
 
+#. placeholder {0}: tag.cards
+msgid "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
+msgstr "«{tagName}» архивирован с {0, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}}"
+
 #. placeholder {0}: cards(done.length)
 msgid "Archived {0}"
 msgstr "Архивировано {0}"
@@ -1095,6 +1105,9 @@ msgstr "Для архивных колод нужно соединение"
 
 msgid "Archived sections"
 msgstr "Архивные разделы"
+
+msgid "Archived tags"
+msgstr "Архивные теги"
 
 msgid "Archived the deck {deck}"
 msgstr "Заархивирована колода «{deck}»"
@@ -1594,6 +1607,9 @@ msgstr "Не удалось загрузить Обзор"
 
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
+
+msgid "Couldn’t load tags"
+msgstr "Не удалось загрузить теги"
 
 msgid "Couldn’t load the join link"
 msgstr "Не удалось загрузить ссылку для присоединения"
@@ -2149,6 +2165,9 @@ msgstr "Дополнить остальное с AI"
 msgid "Filter"
 msgstr "Фильтр"
 
+msgid "Find a tag"
+msgstr "Найти тег"
+
 msgid "Find or create a tag"
 msgstr "Найди или создай тег"
 
@@ -2252,6 +2271,9 @@ msgstr "Назови раздел."
 
 msgid "Give the series a name."
 msgstr "Дай серии название."
+
+msgid "Give the tag a name."
+msgstr "Дай тегу название."
 
 msgid "Go to {currentName}"
 msgstr "Перейти к «{currentName}»"
@@ -2454,6 +2476,9 @@ msgstr "В Pleco экспортируй категории по одной ил�
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В другом аккаунте открой меню колоды и выбери «Экспортировать колоду» или выбери «Экспортировать библиотеку» в разделе «Ты»."
 
+msgid "In use"
+msgstr "Используются"
+
 msgid "Includes your schedule and review history."
 msgstr "С твоим расписанием и историей повторений."
 
@@ -2517,6 +2542,9 @@ msgstr "Итальянский"
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Его карточки и созданные им колоды скрыты. Восстановление вернёт их вместе с историей."
+
+msgid "Its cards take the other tag instead, here in this deck only."
+msgstr "Его карточки получат другой тег вместо него, только в этой колоде."
 
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Возможно, её колоды сняли с публикации. Все остальные полки по-прежнему в каталоге."
@@ -2796,6 +2824,18 @@ msgstr "Зацепка"
 msgid "Memory hook: {text}"
 msgstr "Зацепка: {text}"
 
+msgid "Merge"
+msgstr "Объединить"
+
+msgid "Merge “{tagName}” into"
+msgstr "Объединить «{tagName}» с"
+
+msgid "Merge into…"
+msgstr "Объединить с…"
+
+msgid "Merged “{from}” into “{spelled}”"
+msgstr "«{from}» объединён с «{spelled}»"
+
 msgid "Message"
 msgstr "Сообщение"
 
@@ -3007,6 +3047,12 @@ msgstr "Без серии"
 msgid "No strong hook for this one. Try again, or write your own."
 msgstr "Для этой карточки нет удачной зацепки. Попробуй ещё раз или напиши свою."
 
+msgid "No tag matches “{query}”."
+msgstr "Нет тега, подходящего под «{query}»."
+
+msgid "No tags yet"
+msgstr "Тегов пока нет"
+
 msgid "No tags yet. Type one to create it."
 msgstr "Тегов пока нет. Введи название, чтобы создать тег."
 
@@ -3119,6 +3165,9 @@ msgstr "Только те, кого ты пригласишь"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
+
+msgid "Only this deck’s cards change. Other decks keep the tag as it is."
+msgstr "Изменятся только карточки этой колоды. В других колодах тег останется как есть."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Видно только твоё имя, а прогресс — нет."
@@ -3420,11 +3469,20 @@ msgstr "Доступ к колоде «{deck}» закрыт для {name}"
 msgid "Rename"
 msgstr "Переименовать"
 
+msgid "Rename “{tagName}”"
+msgstr "Переименовать «{tagName}»"
+
 msgid "Rename section"
 msgstr "Переименовать раздел"
 
 msgid "Rename series"
 msgstr "Переименовать серию"
+
+msgid "Rename…"
+msgstr "Переименовать…"
+
+msgid "Renamed “{from}” to “{spelled}”"
+msgstr "«{from}» переименован в «{spelled}»"
 
 msgid "Reorder sections"
 msgstr "Изменить порядок разделов"
@@ -3909,6 +3967,12 @@ msgstr "Табуляция"
 msgid "Tags"
 msgstr "Теги"
 
+msgid "Tags need a connection"
+msgstr "Для тегов нужно соединение"
+
+msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
+msgstr "Здесь появятся теги с карточек этой колоды: их можно переименовать, объединить или архивировать."
+
 msgid "Tags: {list}"
 msgstr "Теги: {list}"
 
@@ -4025,6 +4089,9 @@ msgstr "Серия будет удалена навсегда."
 
 msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
 msgstr "Серия будет удалена навсегда. Её колоды могут остаться в Библиотеке или уйти в архив вместе с ней."
+
+msgid "The tags on this deck’s cards. Changes here stay in this deck."
+msgstr "Теги на карточках этой колоды. Изменения здесь касаются только этой колоды."
 
 msgid "The upload stopped partway"
 msgstr "Загрузка остановилась на полпути"
@@ -4473,6 +4540,9 @@ msgstr "Вчера был день отдыха. Достигни сегодня
 
 msgid "You"
 msgstr "Ты"
+
+msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
+msgstr "У тебя уже есть «{otherName}», поэтому на этих карточках два тега объединятся в один."
 
 msgid "You are already in this deck."
 msgstr "Ты уже в этой колоде."

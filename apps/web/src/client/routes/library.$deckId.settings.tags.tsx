@@ -8,7 +8,7 @@ import { MergeTagDialog, RenameTagDialog } from "../components/tag-dialogs";
 import { toast } from "../components/ui/toast";
 import { api, type DeckTags, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { deckTagsQuery, tagsQuery } from "../lib/queries";
+import { deckTagsQuery, settleDeckTags, tagsQuery } from "../lib/queries";
 import { DeckTagsView } from "../views/deck-tags-view";
 
 export const Route = createFileRoute("/library/$deckId/settings/tags")({
@@ -27,14 +27,7 @@ function DeckTagsPage() {
   const [renaming, setRenaming] = useState<DeckTag | null>(null);
   const [merging, setMerging] = useState<DeckTag | null>(null);
 
-  const settle = (next: DeckTags) => {
-    qc.setQueryData(deckTagsQuery(deckId).queryKey, next);
-    return Promise.all([
-      qc.invalidateQueries({ queryKey: ["decks", deckId, "cards"] }),
-      qc.invalidateQueries({ queryKey: ["tags"] }),
-      qc.invalidateQueries({ queryKey: ["activity"] }),
-    ]);
-  };
+  const settle = (next: DeckTags) => settleDeckTags(qc, deckId, next);
   const failed = (id: string, error: unknown) =>
     toast.add({ id, type: "error", title: errorMessage(error) });
 

@@ -39,6 +39,8 @@ const CLIENT_TAGS = new Set(["yomitan"]);
 export const MAX_NOTES = 200;
 /** Calls in one `multi`, which may not nest; the key's rate limit counts the request once. */
 export const MAX_ACTIONS = 50;
+/** Search alternatives in one request, each a query; a popup sends one or two per entry. */
+export const MAX_SEARCHES = 100;
 /** Uploads wait here, in the imports bucket, until their note arrives or the hourly sweep. */
 const STASH = "anki-connect/";
 const STASH_HOURS = 1;
@@ -98,10 +100,17 @@ export function answerOpenCall(call: AnkiConnectCall) {
 
 /** How many notes or note ids one request may still carry, shared by every call in a `multi`. */
 class Budget {
-  left = MAX_NOTES;
+  notes = MAX_NOTES;
+  searches = MAX_SEARCHES;
   take(count: number, refusal: string) {
-    if (count > this.left) throw new Refusal(refusal);
-    this.left -= count;
+    if (count > this.notes) throw new Refusal(refusal);
+    this.notes -= count;
+  }
+  search(count: number) {
+    if (count > this.searches) {
+      throw new Refusal(`Search for at most ${MAX_SEARCHES} alternatives in one request.`);
+    }
+    this.searches -= count;
   }
 }
 
@@ -545,9 +554,7 @@ export function parseQuery(query: string): Query[] {
 
 async function findNotes(ctx: ServiceContext, query: string, budget: Budget) {
   const queries = parseQuery(query);
-  if (queries.length > MAX_ACTIONS) {
-    throw new Refusal(`Search for at most ${MAX_ACTIONS} alternatives at once.`);
-  }
+  budget.search(queries.length);
   budget.take(
     queries.reduce((sum, q) => sum + (q.notes?.length ?? 0), 0),
     tooManyIds(),

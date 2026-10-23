@@ -255,9 +255,21 @@ describe("answerCall", () => {
     expect(await call("findNotes", { query: `nid:${ids}` })).toMatchObject({
       error: "Ask for at most 200 notes in one request.",
     });
-    const alternatives = Array.from({ length: 51 }, (_, i) => `("term:${i}")`).join(" or ");
-    expect(await call("findNotes", { query: alternatives })).toMatchObject({
-      error: "Search for at most 50 alternatives at once.",
+    const alternatives = (count: number) =>
+      Array.from({ length: count }, (_, i) => `("term:${i}")`).join(" or ");
+    expect(await call("findNotes", { query: alternatives(101) })).toMatchObject({
+      error: "Search for at most 100 alternatives in one request.",
+    });
+    const searches = (await call("multi", {
+      actions: Array.from({ length: 3 }, () => ({
+        action: "findNotes",
+        params: { query: alternatives(40) },
+      })),
+    })) as unknown[];
+    expect(searches.slice(0, 2)).toEqual([[], []]);
+    expect(searches[2]).toEqual({
+      result: null,
+      error: "Search for at most 100 alternatives in one request.",
     });
     const actions = Array.from({ length: 51 }, () => ({ action: "version" }));
     expect(await call("multi", { actions })).toMatchObject({

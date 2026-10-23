@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { api, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { productUrl, publicSiteUrl } from "../lib/origins";
@@ -17,19 +18,16 @@ function YomitanRoute() {
   useDocumentTitle(t`Yomitan`);
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
-  const current = keys.isSuccess ? yomitanKey(keys.data) : undefined;
+  // An old key that failed to revoke, kept until it leaves the key list so its note stays up.
+  const [stuck, setStuck] = useState<string | null>(null);
+  const current = keys.isSuccess ? yomitanKey(keys.data?.filter((k) => k.id !== stuck)) : undefined;
   // A new key replaces the one this page shows, so a key thought leaked stops working.
   const make = useMutation({
     mutationFn: async (replacing: string | null) => {
       const made = await api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" });
       // The new key is shown once whatever happens to the old one, which can be revoked by hand.
-      const kept = replacing
-        ? await api.revokeKey(replacing).then(
-            () => false,
-            () => true,
-          )
-        : false;
-      return { ...made, kept };
+      if (replacing) await api.revokeKey(replacing).catch(() => setStuck(replacing));
+      return made;
     },
     onSettled: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
   });
@@ -43,7 +41,7 @@ function YomitanRoute() {
   const failed = make.error ?? revoke.error ?? (keys.isError ? keys.error : null);
   const error = failed
     ? errorMessage(failed)
-    : make.data?.kept
+    : stuck && keys.data?.some((k) => k.id === stuck)
       ? t`Couldn’t revoke the old key. Revoke it under API keys in Settings.`
       : null;
 

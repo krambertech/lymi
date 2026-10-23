@@ -88,9 +88,8 @@ function createPanel() {
     width: PANEL_WIDTH,
     height: 112,
     frame: false,
-    // The page draws Lymi's plate; the window around it is clear and shadows the plate's shape.
-    transparent: true,
-    backgroundColor: "#00000000",
+    // An opaque window, so text renders as crisply as in any app; macOS rounds and shadows it.
+    roundedCorners: true,
     hasShadow: true,
     resizable: false,
     movable: false,
@@ -190,10 +189,13 @@ function renderTray() {
 }
 
 ipcMain.on("panel:hide", () => panel?.hide());
+// The page's plate colour, so the window matches the learner's theme rather than the system's.
+ipcMain.on("panel:background", (_event, color: unknown) => {
+  if (typeof color === "string" && /^#[0-9a-f]{6}$/i.test(color)) panel?.setBackgroundColor(color);
+});
 ipcMain.on("panel:resize", (_event, height: unknown) => {
   if (!panel || typeof height !== "number" || !Number.isFinite(height)) return;
   panel.setContentSize(PANEL_WIDTH, Math.min(Math.max(Math.ceil(height), 56), 480));
-  panel.invalidateShadow();
 });
 ipcMain.on("panel:added", () => void refreshDue());
 ipcMain.on("app:open", (_event, path: unknown) => {

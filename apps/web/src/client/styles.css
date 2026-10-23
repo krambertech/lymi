@@ -97,13 +97,6 @@
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
   }
-  /* The Mac app's panel window is clear around the plate the page draws. */
-  html[data-surface="panel"],
-  html[data-surface="panel"] body,
-  html[data-surface="panel"] #root {
-    min-height: 0;
-    background: transparent;
-  }
   /* Theme switch: swap in one frame, no ragged cascade. */
   html.theme-switching * {
     /* biome-ignore lint/complexity/noImportantStyles: the swap has to beat every component transition */
@@ -113,6 +106,14 @@
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
+  }
+  /* The Mac app's panel: the window is the plate, sized to it, and never scrolls. */
+  html[data-surface="panel"],
+  html[data-surface="panel"] body,
+  html[data-surface="panel"] #root {
+    min-height: 0;
+    overflow: hidden;
+    background: var(--plate);
   }
   h1,
   h2,

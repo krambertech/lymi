@@ -6,6 +6,7 @@ const { contextBridge, ipcRenderer } = electron;
 contextBridge.exposeInMainWorld("lymiDesktop", {
   hidePanel: () => ipcRenderer.send("panel:hide"),
   resizePanel: (height: number) => ipcRenderer.send("panel:resize", height),
+  setPanelBackground: (color: string) => ipcRenderer.send("panel:background", color),
   added: () => ipcRenderer.send("panel:added"),
   openApp: (path: string) => ipcRenderer.send("app:open", path),
   onPanelShown: (listener: (shown: { selection: string | null }) => void) => {

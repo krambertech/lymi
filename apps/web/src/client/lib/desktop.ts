@@ -2,6 +2,8 @@
 export interface DesktopBridge {
   hidePanel(): void;
   resizePanel(height: number): void;
+  /** A `#rrggbb` the window fills with, so it matches the page's theme. */
+  setPanelBackground(color: string): void;
   added(): void;
   openApp(path: string): void;
   /** `selection` is the text selected in the app in front, when the learner lets Lymi read it. */

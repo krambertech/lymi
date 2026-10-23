@@ -50,10 +50,33 @@ function DesktopAdd() {
   const root = useRef<HTMLDivElement>(null);
   const signedOut = me.error instanceof ApiError && me.error.status === 401;
 
-  // The window is clear around the plate, so the page draws no room of its own.
+  // The page is the whole panel, so it draws no room of its own and lends the window its colour.
   useLayoutEffect(() => {
     document.documentElement.dataset.surface = "panel";
+    const paint = () => {
+      const canvas = document
+        .createElement("canvas")
+        .getContext("2d", { willReadFrequently: true });
+      if (!canvas) return;
+      // The pixel a canvas draws is sRGB whatever the CSS colour's space, which is what the window takes.
+      canvas.fillStyle = getComputedStyle(document.body).backgroundColor;
+      canvas.fillRect(0, 0, 1, 1);
+      const [r = 0, g = 0, b = 0] = canvas.getImageData(0, 0, 1, 1).data;
+      desktop()?.setPanelBackground(
+        `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`,
+      );
+    };
+    paint();
+    const theme = new MutationObserver(paint);
+    theme.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
+    const scheme = matchMedia("(prefers-color-scheme: dark)");
+    scheme.addEventListener("change", paint);
     return () => {
+      theme.disconnect();
+      scheme.removeEventListener("change", paint);
       delete document.documentElement.dataset.surface;
     };
   }, []);
@@ -233,11 +256,8 @@ function DesktopAdd() {
   );
 
   return (
-    // The window is clear; this plate is the panel, and macOS shadows its shape.
-    <div
-      ref={root}
-      className="flex flex-col overflow-hidden rounded-lg bg-plate text-text ring-1 ring-edge/50 ring-inset"
-    >
+    // The window is the plate: macOS rounds its corners and draws its shadow.
+    <div ref={root} className="flex flex-col bg-plate text-text">
       <div className="flex h-14 items-center gap-2 ps-4.5 pe-3">
         <input
           ref={input}

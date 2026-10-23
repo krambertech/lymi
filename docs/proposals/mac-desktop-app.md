@@ -68,7 +68,7 @@ The app does this itself in about fifty lines (`apps/desktop/src/sign-in.ts`) ra
 
 Electron Forge packages the app (`apps/desktop/forge.config.js`), one build for Apple silicon and one for Intel: `maker-zip` for updates, and a DMG that `hdiutil` makes in a Forge hook, because Forge's DMG maker needs native modules pnpm does not build. Its fuses stop the app running as plain Node, reading `NODE_OPTIONS` or debugger flags, or loading code from outside its signed archive, and they encrypt its cookies. The release job signs with the Developer ID certificate and notarizes with an App Store Connect API key. Electron 45 needs macOS 13 or later.
 
-Builds live in the R2 bucket `lymi-downloads` behind `downloads.lymi.app`. Each chip's folder, `darwin/arm64/` and `darwin/x64/`, holds the update zips, the `RELEASES.json` feed `maker-zip` writes, and `Lymi.dmg`, the newest download. The app reads its own chip's feed with Electron's `autoUpdater` at launch and every hour, downloads in the background, and Squirrel installs the update the next time Lymi quits. Until then the tray menu offers Restart to update. No dialog interrupts an add.
+Builds live in the R2 bucket `lymi-downloads` behind `downloads.lymi.app`. Each chip's folder, `darwin/arm64/` and `darwin/x64/`, holds the update zips, the `RELEASES.json` feed `maker-zip` writes, and `Lymi.dmg`, the newest download. The app reads its own chip's feed with Electron's `autoUpdater` at launch and every hour, downloads in the background, and Squirrel installs the update the next time Lymi quits. Checking stops once an update is downloaded, because on macOS each check downloads it again. Until then the tray menu offers Restart to update. No dialog interrupts an add.
 
 Safari reports every Mac as Intel, so the site cannot pick a file. lymi.app's download button serves Apple silicon, and an Intel link sits below it. One universal build lost: about 230 MB for every download and every update, against about 115 MB.
 
@@ -76,7 +76,7 @@ GitHub Releases with `update.electronjs.org` lost. The repository is public, so 
 
 ## Releases
 
-`.github/workflows/desktop.yml` ships every merge that changes `apps/desktop`. It builds both chips, signs and notarizes them, launches the signed app, checks that Gatekeeper accepts both, and uploads the zip, then the feed, then the DMG. The version is `1.0.` and the workflow's run number, so each release is newer than the last. Merges that change only the web never release the app. Without the signing secrets the job skips with a notice; the setup is in `apps/desktop/README.md`.
+`.github/workflows/desktop.yml` ships every merge that changes `apps/desktop`. It builds both chips, signs and notarizes the apps and the DMGs, launches both signed apps (Intel under Rosetta), checks that Gatekeeper accepts each app and each DMG, and uploads the zip, then the feed, then the DMG. Only `main` releases, and each step sees only the secrets it uses. The version is `1.0.` and the workflow's run number, so each release is newer than the last. Merges that change only the web never release the app. Without the signing secrets the job skips with a notice; the setup is in `apps/desktop/README.md`.
 
 Dependabot proposes Electron once a month, so learners update about once a month. An app that misses updates keeps working, because the bridge only gains methods.
 

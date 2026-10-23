@@ -37,7 +37,7 @@ pnpm --filter @lymi/desktop launch-check "$PWD/apps/desktop/out/Lymi-darwin-arm6
 
 ## Releases
 
-The Desktop workflow (`.github/workflows/desktop.yml`) runs the launch check on a pull request that changes this folder, and releases on the merge: both chips built, signed, notarized, launched, checked by Gatekeeper and uploaded to the `lymi-downloads` bucket behind `downloads.lymi.app`. Installed apps read `darwin/<arch>/RELEASES.json` at launch and hourly, download in the background and install on quit; the tray menu offers Restart to update meanwhile. The download button links to `darwin/arm64/Lymi.dmg`, and Intel's to `darwin/x64/Lymi.dmg`.
+The Desktop workflow (`.github/workflows/desktop.yml`) runs the launch check on a pull request that changes this folder, and releases on the merge to `main`: both chips built, the apps and DMGs signed and notarized, both apps launched, all four checked by Gatekeeper and uploaded to the `lymi-downloads` bucket behind `downloads.lymi.app`. Installed apps read `darwin/<arch>/RELEASES.json` at launch and hourly, download in the background and install on quit; the tray menu offers Restart to update meanwhile. The download button links to `darwin/arm64/Lymi.dmg`, and Intel's to `darwin/x64/Lymi.dmg`.
 
 The release needs six repository secrets, set once. Without them it skips with a notice.
 

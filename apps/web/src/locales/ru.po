@@ -1500,6 +1500,9 @@ msgstr "Проверь почту"
 msgid "Checked"
 msgstr "Проверено"
 
+msgid "Checked at {when}"
+msgstr "Проверено в {when}"
+
 msgid "Checked at {when} · next around {next}"
 msgstr "Проверено в {when} · следующая проверка около {next}"
 
@@ -3467,6 +3470,9 @@ msgstr "Сегодня ничего не забыто"
 
 msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
 msgstr "От {app} пока ничего нет. Здесь появится то, что он добавляет, изменяет или архивирует."
+
+msgid "Nothing from this app yet. What it adds, edits or archives shows here."
+msgstr "От этого приложения пока ничего нет. Здесь появится то, что оно добавляет, изменяет или архивирует."
 
 msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
 msgstr "Ничего не удаляется. Восстановить его можно в меню колоды, в пункте «Архивные разделы»."

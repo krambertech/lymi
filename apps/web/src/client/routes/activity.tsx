@@ -14,6 +14,9 @@ export const Route = createFileRoute("/activity")({
   component: ActivityRoute,
 });
 
+// Names for the apps Lymi runs itself, so a filter with no rows yet still says whose it is.
+const BUILT_IN_APPS: Record<string, string> = { readwise: "Readwise" };
+
 function ActivityRoute() {
   const { t } = useLingui();
   useDocumentTitle(t`Activity`);
@@ -27,7 +30,7 @@ function ActivityRoute() {
       filter={
         app
           ? {
-              name: entries?.[0]?.app ?? null,
+              name: entries?.[0]?.app ?? BUILT_IN_APPS[app] ?? null,
               clear: (className, children) => (
                 <Link to="/activity" className={className}>
                   {children}

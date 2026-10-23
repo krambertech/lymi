@@ -153,18 +153,21 @@ function useStatus(connection: Readwise | null | undefined) {
       ? { hour: "numeric", minute: "2-digit" }
       : { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" },
   );
-  const next = i18n.date(new Date(at.getTime() + 60 * 60 * 1000), {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const nextAt = new Date(at.getTime() + 60 * 60 * 1000);
+  const next = i18n.date(nextAt, { hour: "numeric", minute: "2-digit" });
   return {
     label: t`Connected`,
     tone: "good" as const,
     detail: (
       <>
-        <Trans>
-          Checked at {when} · next around {next}
-        </Trans>
+        {/* A stalled check would otherwise promise a time that has passed. */}
+        {nextAt.getTime() > Date.now() ? (
+          <Trans>
+            Checked at {when} · next around {next}
+          </Trans>
+        ) : (
+          <Trans>Checked at {when}</Trans>
+        )}
         {pull.skipped > 0 && (
           <span className="block">
             <Plural

@@ -562,6 +562,17 @@ export function ActivityView({
           <Skeleton className="ms-1 h-4 w-20 rounded-full" />
           <Skeleton className="h-[145px] rounded-xl" />
         </div>
+      ) : entries.length === 0 && filter ? (
+        <p className="edge rounded-xl bg-plate px-4 py-4 text-base text-text-2">
+          {filter.name ? (
+            <Trans>
+              Nothing from {{ app: isolate(filter.name) }} yet. What it adds, edits or archives
+              shows here.
+            </Trans>
+          ) : (
+            <Trans>Nothing from this app yet. What it adds, edits or archives shows here.</Trans>
+          )}
+        </p>
       ) : entries.length === 0 ? (
         // Not a start panel: an empty Activity is not a screen to fill, it is the good news that
         // nothing landed unseen. It says what the screen is for and asks for nothing.

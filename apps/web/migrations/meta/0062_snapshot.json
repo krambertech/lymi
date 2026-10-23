@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "db5db89c-7850-4de4-be5f-af9ede5b4417",
+  "id": "52d3e9aa-a4a6-4e0c-b738-eb4d5ba8ec51",
   "prevId": "5b0e80eb-e14e-4231-8e0d-a2781f998c7f",
   "tables": {
     "account_deletions": {
@@ -223,7 +223,8 @@
             "actor_client",
             "created_at"
           ],
-          "isUnique": false
+          "isUnique": false,
+          "where": "entity <> 'review'"
         }
       },
       "foreignKeys": {

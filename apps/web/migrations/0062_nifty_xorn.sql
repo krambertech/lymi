@@ -1,1 +1,0 @@
-CREATE INDEX `audit_app_idx` ON `audit_log` (`user_id`,`actor_client`,`created_at`);

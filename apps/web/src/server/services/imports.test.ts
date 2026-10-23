@@ -15,8 +15,9 @@ import {
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { stripPinyin } from "@lymi/core/pinyin";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { type Db, schema } from "../db";
+import { createDb, type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
+import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
 import { bytesSource } from "../imports/files";
 import type { AnalyticsEvent } from "./analytics";
 import { pronunciationAudio } from "./audio";
@@ -32,6 +33,7 @@ import {
   confirmImport,
   expireImports,
   failImport,
+  failRun,
   failureOf,
   finishImport,
   getImport,
@@ -1513,5 +1515,82 @@ describe("a stalled write", () => {
     );
     await expireImports(db, env.IMPORTS);
     expect((await getImport(ctx, id)).status).toBe("importing");
+  });
+});
+
+describe("a write that runs out of calls", () => {
+  it("stops before the cap, marks the import failed and reports it at once", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = {
+      capture: (e: AnalyticsEvent) => events.push(e),
+      writeDataPoint: () => {},
+    };
+    const learnerCtx = await fresh();
+    const { id } = await upload(learnerCtx, "pictures.zip", await pictureDeck(60));
+    await inspectImport(learnerCtx, id, env.IMPORTS);
+    await confirmImport(learnerCtx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+
+    // A budget far smaller than Cloudflare's, so a synthetic 60-picture deck uses it up.
+    const budget = new CallBudget(80, 20);
+    const runDb = createDb(budget.wrap(env.DB));
+    const uploads = budget.wrap(env.IMPORTS);
+    const ctx = { ...learnerCtx, db: runDb, analytics };
+    const storage = {
+      bucket: budget.wrap(env.PRIVATE_IMAGES),
+      images: budget.wrap(env.IMAGES),
+      audio: budget.wrap(env.AUDIO),
+    };
+    let stopped: unknown = null;
+    try {
+      const decks = await prepareImportDecks(ctx, id, uploads);
+      let { pictures: pending } = await writeImportChunk(ctx, id, 0, decks, uploads);
+      let handled = 0;
+      while (pending.length > 0) {
+        const batch = pending.slice(0, PICTURES_PER_STEP);
+        handled += batch.length;
+        await attachImportPictures(ctx, id, batch, uploads, storage, handled);
+        pending = pending.slice(PICTURES_PER_STEP);
+      }
+    } catch (err) {
+      stopped = err;
+    }
+    expect(stopped).toBeInstanceOf(CallBudgetSpent);
+    expect(budget.used).toBe(budget.limit - budget.reserve);
+
+    const reported: unknown[] = [];
+    const failure = await failRun(runDb, id, stopped, uploads, budget, analytics, async (err) => {
+      reported.push(err);
+    });
+    expect(failure).toBe("internal");
+    expect(await getImport(learnerCtx, id)).toMatchObject({
+      status: "failed",
+      failure: "internal",
+    });
+    expect(events.map((e) => e.name)).toContain("import_failed");
+    expect(reported).toEqual([stopped]);
+    // Recording the failure stayed inside the cap.
+    expect(budget.used).toBeLessThanOrEqual(budget.limit);
+  });
+
+  it("keeps a file failure's own reason after it crossed a step as a message", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const reported: unknown[] = [];
+    const failure = await failRun(
+      db,
+      id,
+      new Error("damaged"),
+      env.IMPORTS,
+      new CallBudget(),
+      undefined,
+      async (err) => {
+        reported.push(err);
+      },
+    );
+    expect(failure).toBe("damaged");
+    expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "damaged" });
+    expect(reported).toEqual([]);
   });
 });

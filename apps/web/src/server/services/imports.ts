@@ -6,7 +6,7 @@ import {
   IMPORT_PART_BYTES,
   type ImportChoicesInput,
   type ImportCounts,
-  type ImportFailure,
+  ImportFailure,
   type ImportStartInput,
   newId,
   sourceOfFileName,
@@ -17,6 +17,7 @@ import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
+import type { CallBudget } from "../imports/call-budget";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
@@ -738,6 +739,31 @@ export async function expireImports(
 /** Turns a step's error into the failure the learner is shown. */
 export function failureOf(err: unknown): ImportFailure {
   return err instanceof ImportFileError ? err.failure : "internal";
+}
+
+/**
+ * Records a run's failure at once: the import is failed with its reason, `import_failed` is sent
+ * and an internal failure is reported. A step's error keeps only its message, which names a file
+ * failure. The calls it makes may use what the run's budget kept back.
+ */
+export async function failRun(
+  db: Db,
+  id: string,
+  err: unknown,
+  uploads: R2Bucket,
+  budget: CallBudget,
+  analytics: AnalyticsWriter | undefined,
+  report: (err: unknown) => Promise<void>,
+): Promise<ImportFailure> {
+  const failure: ImportFailure =
+    err instanceof Error && ImportFailure.safeParse(err.message).success
+      ? (err.message as ImportFailure)
+      : failureOf(err);
+  await budget.whileFailing(async () => {
+    await failImport(db, id, failure, uploads, analytics);
+    if (failure === "internal") await report(err);
+  });
+  return failure;
 }
 
 /** The service context a background step acts in: the learner and actor that started the run. */

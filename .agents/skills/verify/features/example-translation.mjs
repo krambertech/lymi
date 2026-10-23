@@ -34,7 +34,7 @@ export default async function drive({ page, step, api, expect }) {
     .find((c) => c.term === "der Hund");
   const stored = () => api(`/api/cards/${hund.id}`);
 
-  await step("The card page shows the example's translation under it", async () => {
+  await step("The card page shows the example's translation after it", async () => {
     await main.getByRole("link", { name: /^Lange Karten/ }).click();
     await main.getByRole("button", { name: /der Hund/ }).click();
     await expect(page.getByText("Der Hund schläft.", { exact: true })).toBeVisible();

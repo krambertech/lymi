@@ -23,22 +23,11 @@ import {
   streakFlameFor,
 } from "@lymi/design";
 import { clsx } from "clsx";
-import {
-  BookMarked,
-  Library,
-  Loader2,
-  Lock,
-  type LucideIcon,
-  Pointer,
-  Signpost,
-  Volume2,
-  X,
-} from "lucide-react";
+import { BookMarked, Library, Lock, type LucideIcon, Pointer, Signpost, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
   motion,
-  useAnimate,
   useIsPresent,
   useMotionValue,
   useTransform,
@@ -633,33 +622,31 @@ export function ReviewCard({
   const extrasLines = (measure: boolean) => (
     <>
       {card.example && (
-        <motion.div variants={answerLine} className="grid gap-1">
-          <p
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+        <motion.p
+          variants={answerLine}
+          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+          dir={textDirection(card.language)}
+        >
+          <ExampleText
+            text={card.example}
             lang={card.language ?? undefined}
-            dir={textDirection(card.language)}
-          >
-            <ExampleText
-              text={card.example}
-              lang={card.language ?? undefined}
-              known={knownReadings}
-            />
-            {measure ? (
-              <ExamplePlace card={card} />
-            ) : (
-              <ExampleAudioButton card={card} surface="review" />
-            )}
-          </p>
-          {translation && (
-            // In the meaning language, like the meaning, so it takes its direction from its own text.
-            <p
-              className="hyphenate whitespace-pre-line text-base leading-relaxed text-muted [overflow-wrap:anywhere]"
-              dir="auto"
-            >
-              ({translation})
-            </p>
+            known={knownReadings}
+          />
+          {measure ? (
+            <ExamplePlace card={card} />
+          ) : (
+            <ExampleAudioButton card={card} surface="review" />
           )}
-        </motion.div>
+          {translation && (
+            <>
+              {" "}
+              {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
+              <span lang={i18n.locale} dir="auto" className="text-muted">
+                ({translation})
+              </span>
+            </>
+          )}
+        </motion.p>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">

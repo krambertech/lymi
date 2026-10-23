@@ -503,7 +503,8 @@ export async function queueEnrichment(
   } catch {
     // The same add sent twice at once can race for the run's name; the one that lost is answered.
     if ((await runState(queue, id)) === "live") return true;
-    await failEnrichment(db, userId, cardIds);
+    // An edit's run was only to translate; a fill under way belongs to another run.
+    if (trigger !== "edit") await failEnrichment(db, userId, cardIds);
     await failTranslations(db, userId, cardIds);
     return false;
   }

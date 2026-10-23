@@ -14,6 +14,7 @@ import {
   type KnownReadings,
   type ReviewMode,
   termShowsPronunciation,
+  textDirection,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
@@ -728,7 +729,7 @@ export function WordView({
             {card.example && (
               <div className="grid gap-1">
                 <p
-                  lang={card.language ?? undefined}
+                  dir={textDirection(card.language)}
                   className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
                 >
                   <ExampleText
@@ -737,20 +738,20 @@ export function WordView({
                     known={knownReadings}
                   />
                   <ExampleAudioButton card={card} surface="card" />
+                  {translation && (
+                    <>
+                      {" "}
+                      {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
+                      <span lang={i18n.locale} dir="auto" className="text-muted">
+                        ({translation})
+                      </span>
+                    </>
+                  )}
                 </p>
-                {translating && !translation ? (
-                  <p className="flex items-center text-base leading-relaxed" aria-hidden="true">
+                {translating && !translation && (
+                  <div className="flex items-center text-base leading-relaxed" aria-hidden="true">
                     <Skeleton className="h-3 w-2/3 rounded-sm" />
-                  </p>
-                ) : (
-                  translation && (
-                    <p
-                      dir="auto"
-                      className="hyphenate whitespace-pre-line text-base leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-                    >
-                      ({translation})
-                    </p>
-                  )
+                  </div>
                 )}
                 {owner && translation && card.exampleTranslationStale && (
                   <p className="text-sm text-muted">

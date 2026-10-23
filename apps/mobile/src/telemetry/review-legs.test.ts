@@ -1,4 +1,10 @@
-import { legFinish, reviewEnd } from "@lymi/client/review-end";
+import {
+  legFinish,
+  type RoundAsk,
+  type RoundFetch,
+  reviewEnd,
+  roundWalk,
+} from "@lymi/client/review-end";
 import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 import { beforeEach, describe, expect, it } from "vitest";
 import { daysBefore, type ReviewLeg, ReviewLegs } from "./review-legs";
@@ -210,6 +216,76 @@ describe("a round's end", () => {
       legs.step(pageEnd(SIZE));
       legs.leave();
       expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+    });
+  });
+
+  describe("when a card leaves it partway", () => {
+    // An 80-card round, one card of which is archived on another device, so the server sends 79.
+    const SIZE = 80;
+    const long = (over: Partial<ReviewLeg>) => round({ count: SIZE, ...over });
+    let ask: RoundAsk | null;
+    let fetch: RoundFetch;
+    let refetches: number;
+    let skeleton: boolean;
+    beforeEach(() => {
+      ask = null;
+      fetch = { updatedAt: 1, idle: true, failed: false };
+      refetches = 0;
+      skeleton = false;
+    });
+    // One render of the screen with no card in hand, as review.tsx works it out, refetching as asked.
+    const render = (done: number) => {
+      const r = roundWalk({ size: SIZE, done, left: 0, ask, fetch });
+      if (r.refetch) {
+        ask = { at: fetch.updatedAt, done };
+        refetches++;
+        fetch = { ...fetch, idle: false };
+      }
+      skeleton = r.owed;
+      legs.step(
+        long({
+          done,
+          presenting: false,
+          stopped: true,
+          // The end waits on the skeleton while the round is owed.
+          finished: r.owed
+            ? null
+            : legFinish(roundEnd, "empty", { stretch: "list", walked: r.walked }),
+        }),
+      );
+    };
+    const land = (ok = true) => {
+      fetch = { updatedAt: fetch.updatedAt + 1, idle: true, failed: !ok };
+    };
+    const walk = (from: number, to: number) => {
+      for (let done = from; done < to; done++) legs.step(long({ done }));
+    };
+
+    it("stops waiting once the refetch has nothing left, and reports it finished once", () => {
+      walk(0, 50);
+      render(50);
+      land(); // The next page brings the 29 cards still in the round.
+      walk(50, 79);
+      render(79);
+      expect(skeleton).toBe(true);
+      land(); // Nothing left: the archived card never comes back.
+      for (let i = 0; i < 20; i++) render(79);
+      expect(skeleton).toBe(false);
+      expect(refetches).toBe(2);
+      legs.leave();
+      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+      expect(events).toMatchObject([{ card_count: 79, ending: "empty", scope: "round" }]);
+    });
+
+    it("is not finished when that refetch fails, and leaving reports it abandoned", () => {
+      walk(0, 79);
+      render(79);
+      land(false);
+      for (let i = 0; i < 20; i++) render(79);
+      expect(skeleton).toBe(false);
+      expect(refetches).toBe(1);
+      legs.leave();
+      expect(events).toMatchObject([{ name: "review_session_abandoned", cards_done: 79 }]);
     });
   });
 

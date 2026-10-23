@@ -10,6 +10,7 @@ import {
   forgottenRound,
   legFinish,
   reviewEnd,
+  roundWalk,
   streakAsOf,
   streakWith,
 } from "./review-end";
@@ -427,5 +428,49 @@ describe("how an end finishes its leg", () => {
     expect(legFinish(left, "left", { stretch: "list", walked: true })).toBeNull();
     expect(legFinish("unchecked", "empty", { stretch: "day", confirmed: false })).toBeNull();
     expect(legFinish(null, "empty", { stretch: "list", walked: true })).toBeNull();
+  });
+});
+
+describe("a round's page running out", () => {
+  const fetch = { updatedAt: 1, idle: true, failed: false };
+  it("asks for the round again once, and waits while it loads", () => {
+    expect(roundWalk({ size: 80, done: 50, left: 0, ask: null, fetch })).toEqual({
+      walked: false,
+      owed: true,
+      refetch: true,
+    });
+    const ask = { at: 1, done: 50 };
+    expect(
+      roundWalk({ size: 80, done: 50, left: 0, ask, fetch: { ...fetch, idle: false } }),
+    ).toEqual({ walked: false, owed: true, refetch: false });
+    expect(roundWalk({ size: 80, done: 50, left: 0, ask, fetch })).toMatchObject({
+      refetch: false,
+    });
+  });
+
+  it("is walked when the refetch lands with nothing left, though a card left the round", () => {
+    const landed = { updatedAt: 2, idle: true, failed: false };
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 79 }, fetch: landed }),
+    ).toEqual({ walked: true, owed: false, refetch: false });
+    // An answer to an earlier page's ask says nothing about this one.
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 50 }, fetch: landed }),
+    ).toEqual({ walked: false, owed: true, refetch: true });
+  });
+
+  it("is not walked when the refetch fails, and stops waiting", () => {
+    const failed = { updatedAt: 1, idle: true, failed: true };
+    expect(
+      roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 79 }, fetch: failed }),
+    ).toEqual({ walked: false, owed: false, refetch: false });
+  });
+
+  it("is walked once every card is graded or dropped, with no refetch", () => {
+    expect(roundWalk({ size: 80, done: 80, left: 0, ask: null, fetch })).toEqual({
+      walked: true,
+      owed: false,
+      refetch: false,
+    });
   });
 });

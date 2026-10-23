@@ -8,7 +8,9 @@ import {
   forgottenRound,
   legFinish,
   type Offer,
+  type RoundAsk,
   reviewEnd,
+  roundWalk,
   streakAsOf,
   streakWith,
 } from "@lymi/client/review-end";
@@ -68,6 +70,7 @@ import {
   streakQuery,
 } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
+import { stepReviewLeg } from "../lib/review-leg";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";
@@ -356,14 +359,40 @@ function Review() {
       : leg.kind === "forgotten"
         ? leg.items.length - legCards.dropped.size
         : legDone + left;
-  // A list is walked once every card in it is graded or dropped, not just the page in hand: the
-  // round's page can run out while a refetch is on its way, or after it failed.
-  const walked =
+  // The refetch asked for once this leg's page in hand ran out; a new leg forgets it.
+  const [ask, setAsk] = useState<(RoundAsk & { leg: Leg }) | null>(null);
+  // The queue serves a round a page at a time, so an emptied page asks for the round again, and the
+  // end waits while it loads. The round is walked once every card in it is graded or dropped, or
+  // when that fetch lands with nothing left for it. Offline or failed, the end shows unwalked.
+  const roundState =
     leg?.kind === "today"
-      ? legCards.graded.size + legCards.dropped.size >= leg.size
-      : leg?.kind === "forgotten"
-        ? legCards.graded.size + legCards.dropped.size >= leg.items.length
-        : false;
+      ? roundWalk({
+          size: leg.size,
+          done: legCards.graded.size + legCards.dropped.size,
+          left: current ? 1 : listLeft.length,
+          ask: ask?.leg === leg ? ask : null,
+          fetch: {
+            updatedAt: roundQueue.dataUpdatedAt,
+            idle: roundQueue.fetchStatus === "idle",
+            failed: roundQueue.isError || roundQueue.fetchStatus === "paused",
+          },
+        })
+      : null;
+  // A forgotten round holds every card from the start, so it is walked once none is left to show.
+  const walked = roundState
+    ? roundState.walked
+    : leg?.kind === "forgotten" && !current && listLeft.length === 0;
+  const roundOwed = !!roundState?.owed && !current;
+  const askRound = !!roundState?.refetch && !current;
+  useEffect(() => {
+    if (!askRound || !leg) return;
+    setAsk({
+      leg,
+      at: roundQueue.dataUpdatedAt,
+      done: legCards.graded.size + legCards.dropped.size,
+    });
+    void roundQueue.refetch();
+  }, [askRound, leg, roundQueue.dataUpdatedAt, legCards, roundQueue.refetch]);
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
@@ -433,7 +462,7 @@ function Review() {
     (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching");
   const result = useMemo(
     () =>
-      stopped && !checking && !landing && !decksLoading && mark && data && state
+      stopped && !checking && !landing && !roundOwed && !decksLoading && mark && data && state
         ? reviewEnd({
             stretch: !drawLeg ? "list" : scoped ? "scope" : "day",
             ending,
@@ -464,6 +493,7 @@ function Review() {
       stopped,
       checking,
       landing,
+      roundOwed,
       decksLoading,
       mark,
       drawLeg,
@@ -512,30 +542,22 @@ function Review() {
               : series
                 ? "series"
                 : "day";
-    if (current && !paused)
-      tracker.update(key, {
-        cardsDone: legDone,
-        cardCount:
-          drawLeg && leg.kind === "draw" && leg.until !== null
-            ? Math.min(legSize, leg.until - leg.from)
-            : legSize,
-        first: sessionFirst.current,
-        scope,
-      });
-    else if (stopped) {
-      tracker.update(
-        key,
-        { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
-        false,
-      );
-      const finish = legFinish(
+    stepReviewLeg(tracker, {
+      key,
+      snapshot: { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
+      presentedCount:
+        drawLeg && leg.kind === "draw" && leg.until !== null
+          ? Math.min(legSize, leg.until - leg.from)
+          : legSize,
+      presenting: !!current && !paused,
+      stopped,
+      paused,
+      finished: legFinish(
         result,
         ending,
         drawLeg ? { stretch: "day", confirmed } : { stretch: "list", walked },
-      );
-      if (paused) tracker.abandon("left");
-      else if (finish) tracker.finish(finish);
-    }
+      ),
+    });
   }, [
     leg,
     current,

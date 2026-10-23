@@ -12,7 +12,9 @@ import {
   forgottenRound,
   legFinish,
   type Offer,
+  type RoundAsk,
   reviewEnd,
+  roundWalk,
 } from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
@@ -500,25 +502,36 @@ function Run({
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
-  // A list is walked once every card in it is graded or dropped, not just the page in hand.
-  const walked =
-    leg?.kind === "list"
-      ? listCards.graded.size + listCards.dropped.size >= leg.size
-      : leg?.kind === "forgotten"
-        ? listCards.graded.size + listCards.dropped.size >= leg.items.length
-        : false;
+  // The refetch asked for once this leg's page in hand ran out; a new leg forgets it.
+  const [ask, setAsk] = useState<(RoundAsk & { leg: Leg }) | null>(null);
   // The server sends a round a page at a time, so an emptied page asks for the next one, and the
-  // end waits while it loads. Offline or failed, the end shows, but the round is not walked.
-  const listOwed =
-    !!leg &&
-    !current &&
-    leg.kind === "list" &&
-    !walked &&
-    list.fetchStatus !== "paused" &&
-    !list.isError;
+  // end waits while it loads. The round is walked once every card in it is graded or dropped, or
+  // when that fetch lands with nothing left for it. Offline or failed, the end shows unwalked.
+  const roundState =
+    leg?.kind === "list"
+      ? roundWalk({
+          size: leg.size,
+          done: listCards.graded.size + listCards.dropped.size,
+          left: current ? 1 : listLeft.length,
+          ask: ask?.leg === leg ? ask : null,
+          fetch: {
+            updatedAt: list.dataUpdatedAt,
+            idle: list.fetchStatus === "idle",
+            failed: list.isError || list.fetchStatus === "paused",
+          },
+        })
+      : null;
+  // A forgotten round holds every card from the start, so it is walked once none is left to show.
+  const walked = roundState
+    ? roundState.walked
+    : leg?.kind === "forgotten" && !current && listLeft.length === 0;
+  const listOwed = !!roundState?.owed && !current;
+  const askRound = !!roundState?.refetch && !current;
   useEffect(() => {
-    if (listOwed && list.fetchStatus === "idle") void list.refetch();
-  }, [listOwed, list.fetchStatus, list.refetch]);
+    if (!askRound || !leg) return;
+    setAsk({ leg, at: list.dataUpdatedAt, done: listCards.graded.size + listCards.dropped.size });
+    void list.refetch();
+  }, [askRound, leg, list.dataUpdatedAt, listCards, list.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
   // A scoped end names its deck, series or section and weighs the decks outside it, so it waits for them.

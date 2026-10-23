@@ -43,6 +43,14 @@ function useAudioExample(
   const shown = useRef(url);
   shown.current = url;
   const loaded = useRef<string | null>(null);
+  // A screen closed mid-load has let its player go, so a late clip is dropped rather than loaded.
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   const pressed = useRef<{ at: number; kept: boolean }>({ at: 0, kept: false });
 
   const report = (outcome: "played" | "failed" | "limited") =>
@@ -85,6 +93,8 @@ function useAudioExample(
   if (!url || !headers || !card) return null;
   const cardId = card.id;
 
+  // The learner left the screen or moved to another card while it loaded, so it never plays over them.
+  const left = () => !mounted.current || shown.current !== url;
   const play = async () => {
     if (loading) return;
     setError(null);
@@ -100,7 +110,7 @@ function useAudioExample(
     try {
       const response = await fetch(url, { headers });
       if (response.status === 429) {
-        if (shown.current !== url) return;
+        if (left()) return;
         setLoading(false);
         setError(t`Today’s new example audio is used up. Examples you’ve played still play.`);
         report("limited");
@@ -108,8 +118,7 @@ function useAudioExample(
       }
       if (!response.ok) throw new Error(`example audio ${response.status}`);
       const bytes = new Uint8Array(await response.arrayBuffer());
-      // The learner moved on while it loaded, so it never plays over the next card.
-      if (shown.current !== url) return;
+      if (left()) return;
       const type = response.headers.get("content-type")?.split(";")[0] ?? "";
       const file = new File(Paths.cache, `example-${cardId}.${EXTENSION[type] ?? "mp3"}`);
       file.write(bytes);
@@ -119,7 +128,7 @@ function useAudioExample(
       setLoading(false);
       setAsked(true);
     } catch {
-      if (shown.current !== url) return;
+      if (left()) return;
       setLoading(false);
       setError(t`Couldn’t play the example. Try again in a moment.`);
       report("failed");

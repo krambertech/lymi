@@ -1907,6 +1907,9 @@ msgstr "Couldn’t read this text"
 msgid "Couldn’t remove the member. Try again."
 msgstr "Couldn’t remove the member. Try again."
 
+msgid "Couldn’t revoke the old key. Revoke it under API keys in Settings."
+msgstr "Couldn’t revoke the old key. Revoke it under API keys in Settings."
+
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 

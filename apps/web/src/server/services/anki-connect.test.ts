@@ -255,6 +255,10 @@ describe("answerCall", () => {
     expect(await call("findNotes", { query: `nid:${ids}` })).toMatchObject({
       error: "Ask for at most 200 notes in one request.",
     });
+    const alternatives = Array.from({ length: 51 }, (_, i) => `("term:${i}")`).join(" or ");
+    expect(await call("findNotes", { query: alternatives })).toMatchObject({
+      error: "Search for at most 50 alternatives at once.",
+    });
     const actions = Array.from({ length: 51 }, () => ({ action: "version" }));
     expect(await call("multi", { actions })).toMatchObject({
       error: expect.stringContaining("50"),

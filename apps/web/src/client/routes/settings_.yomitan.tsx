@@ -22,8 +22,14 @@ function YomitanRoute() {
   const make = useMutation({
     mutationFn: async (replacing: string | null) => {
       const made = await api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" });
-      if (replacing) await api.revokeKey(replacing);
-      return made;
+      // The new key is shown once whatever happens to the old one, which can be revoked by hand.
+      const kept = replacing
+        ? await api.revokeKey(replacing).then(
+            () => false,
+            () => true,
+          )
+        : false;
+      return { ...made, kept };
     },
     onSettled: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
   });
@@ -35,6 +41,11 @@ function YomitanRoute() {
     },
   });
   const failed = make.error ?? revoke.error ?? (keys.isError ? keys.error : null);
+  const error = failed
+    ? errorMessage(failed)
+    : make.data?.kept
+      ? t`Couldn’t revoke the old key. Revoke it under API keys in Settings.`
+      : null;
 
   return (
     <YomitanView
@@ -50,7 +61,7 @@ function YomitanRoute() {
       making={make.isPending}
       onDone={() => make.reset()}
       onRevoke={(id) => revoke.mutate(id)}
-      error={failed ? errorMessage(failed) : null}
+      error={error}
     />
   );
 }

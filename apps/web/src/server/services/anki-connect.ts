@@ -545,6 +545,9 @@ export function parseQuery(query: string): Query[] {
 
 async function findNotes(ctx: ServiceContext, query: string, budget: Budget) {
   const queries = parseQuery(query);
+  if (queries.length > MAX_ACTIONS) {
+    throw new Refusal(`Search for at most ${MAX_ACTIONS} alternatives at once.`);
+  }
   budget.take(
     queries.reduce((sum, q) => sum + (q.notes?.length ?? 0), 0),
     tooManyIds(),

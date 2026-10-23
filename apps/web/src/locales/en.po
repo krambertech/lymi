@@ -905,6 +905,9 @@ msgstr "Add a photo or PDF of the lesson, or paste its text."
 msgid "Add a picture"
 msgstr "Add a picture"
 
+msgid "Add a translation"
+msgstr "Add a translation"
+
 msgid "Add card"
 msgstr "Add card"
 
@@ -1046,8 +1049,8 @@ msgstr "AI notes"
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
 
-msgid "AI translates the example if you leave this empty"
-msgstr "AI translates the example if you leave this empty"
+msgid "AI translates it after you save"
+msgstr "AI translates it after you save"
 
 msgid "AI translation"
 msgstr "AI translation"

@@ -905,6 +905,9 @@ msgstr "Додай фото чи PDF уроку або встав його те�
 msgid "Add a picture"
 msgstr "Додати зображення"
 
+msgid "Add a translation"
+msgstr "Додай переклад"
+
 msgid "Add card"
 msgstr "Додати картку"
 
@@ -1046,8 +1049,8 @@ msgstr "Нотатки від AI"
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
 
-msgid "AI translates the example if you leave this empty"
-msgstr "Якщо залишиш порожнім, AI перекладе приклад"
+msgid "AI translates it after you save"
+msgstr "AI перекладе після збереження"
 
 msgid "AI translation"
 msgstr "Переклад від AI"

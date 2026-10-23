@@ -77,6 +77,6 @@ The release needs seven repository secrets, set once. Without them it skips with
 
 Bucket-scoped Object Read & Write permissions work through [R2’s S3 API](https://developers.cloudflare.com/r2/api/tokens/), so the workflow uploads with the AWS CLI instead of Wrangler’s REST API.
 
-Replace the signing certificate before the expiry shown in Keychain Access.
+Replace the signing certificate before it expires: the one made on 23 October 2026 ends on 1 February 2027, when Apple's Developer ID intermediate does. From 60 days before, each release run warns. Builds already shipped keep opening; only new releases need the new certificate.
 
 The version is `1.0.` and the workflow's run number, so every release is newer than the one installed.

@@ -191,7 +191,7 @@ A haptic answers a touch or marks the goal. These are all of them, each a moment
 | Every grade, Forgot included | Soft impact |
 | Undo, or crossing the line while pulling to end | Selection |
 | The daily goal | Success |
-| The end of a review | A faint tick under each ember and one warm pulse as today's light fills, through Core Haptics |
+| The end of a review | A faint tick under each ember; when the day has just turned, a tick as the spark leaves the flame, a tap as it lands in today's light and one warm pulse as the run's flame catches, through Core Haptics. Under Reduce Motion only the pulse, at once |
 | Starting a review | Medium impact |
 | Choosing a row in a sheet, or a New deck purpose | Selection |
 | Picking up a row to drag, such as a section in Edit | Medium impact |

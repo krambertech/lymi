@@ -440,7 +440,7 @@ const HAPTICS: [string, string, () => void][] = [
   ["The daily goal", "Success", haptics.success],
   [
     "The end of a review",
-    "A faint tick under each ember and a warm pulse as today's light fills, through Core Haptics",
+    "A faint tick under each ember; on the goal, a tick as the spark leaves, a tap as it lands in today's light and a warm pulse as the run's flame catches, through Core Haptics",
     () => void playHaptics(endHaptics(endEmbers(14), true, false)),
   ],
   ["Starting a review", "Medium impact", haptics.start],

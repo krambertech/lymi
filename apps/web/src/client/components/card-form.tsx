@@ -33,7 +33,7 @@ import {
   Plus,
   TextQuote,
 } from "lucide-react";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { Card, DeckSummary } from "../lib/api";
 import { bidi } from "../lib/bidi";
@@ -46,6 +46,7 @@ import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { LanguageChip, ModesChip, SectionChip, TagsChip } from "./card-form-pickers";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
+import { SourceChip } from "./chip";
 import { FieldChipButton, FieldChipRow } from "./field-chip";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
@@ -612,6 +613,8 @@ export function CardForm(props: CardFormProps) {
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
       maxLength?: number | null;
+      /** A line that belongs to the field, under its input. */
+      below?: ReactNode;
     } = {},
   ) => {
     const change = (next: string) => {
@@ -640,6 +643,7 @@ export function CardForm(props: CardFormProps) {
             onChange={(e) => change(e.target.value)}
           />
         )}
+        {options.below}
         <FieldError>{invalid[key]}</FieldError>
       </Field>
     );
@@ -698,43 +702,57 @@ export function CardForm(props: CardFormProps) {
     !!card?.exampleTranslationStale &&
     !exampleChanged &&
     translation === (card.exampleTranslation ?? "");
-  const translationField = () => (
-    <Field key="exampleTranslation" data-extra="exampleTranslation">
-      <FieldLabel aside={roomLeft(translation, cardLimits.exampleTranslation)}>
-        {t`Translation`}
-      </FieldLabel>
-      <Textarea
-        maxLength={cardLimits.exampleTranslation ?? undefined}
-        value={translation}
-        rows={1}
-        dir="auto"
-        placeholder={
-          aiTranslates ? t`AI translates the example if you leave this empty` : undefined
-        }
-        onChange={(e) => {
-          setTranslation(e.target.value);
-          clear("exampleTranslation");
-        }}
-      />
+  const translationId = useId();
+  const translationByAi =
+    card?.exampleTranslationSource === "ai" && translation === (card.exampleTranslation ?? "");
+  // One quiet line under the example rather than a field of its own: it belongs to the example.
+  const translationLine = (
+    <div data-extra="exampleTranslation" className="grid gap-1">
+      <div className="flex items-start gap-2 ps-3">
+        <span className="flex shrink-0 items-center gap-1.5 pt-1.5">
+          <label htmlFor={translationId} className="text-sm text-muted">
+            {t`Translation`}
+          </label>
+          {translationByAi && translation && (
+            <SourceChip source="ai" field="exampleTranslation" size="xs" />
+          )}
+        </span>
+        <textarea
+          id={translationId}
+          maxLength={cardLimits.exampleTranslation ?? undefined}
+          value={translation}
+          rows={1}
+          dir="auto"
+          aria-invalid={invalid.exampleTranslation ? true : undefined}
+          placeholder={aiTranslates ? t`AI translates it after you save` : t`Add a translation`}
+          className="field-sizing-content min-h-0 w-full resize-none rounded-sm bg-transparent px-1.5 py-1 text-base text-text-2 placeholder:text-muted hoverable:hover:bg-plate-2 focus-visible:bg-plate-2 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
+          onChange={(e) => {
+            setTranslation(e.target.value);
+            clear("exampleTranslation");
+          }}
+        />
+        {roomLeft(translation, cardLimits.exampleTranslation) && (
+          <span className="shrink-0 pt-1.5 text-sm text-muted">
+            {roomLeft(translation, cardLimits.exampleTranslation)}
+          </span>
+        )}
+      </div>
       {translationStale && (
-        <FieldDescription>{t`Translated from an earlier example.`}</FieldDescription>
+        <p className="ps-3 text-sm text-muted">{t`Translated from an earlier example.`}</p>
       )}
       <FieldError>{invalid.exampleTranslation}</FieldError>
-    </Field>
+    </div>
   );
 
   const extraField: Record<Extra, () => ReactNode> = {
     notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
-    example: () => (
-      <div key="example" className="grid gap-3">
-        {textField("example", t`Example`, example, changeExample, EXAMPLE_LENGTH, {
-          long: true,
-          length: shownLength(example),
-          maxLength: cardLimits.example,
-        })}
-        {(example.trim() || translation) && translationField()}
-      </div>
-    ),
+    example: () =>
+      textField("example", t`Example`, example, changeExample, EXAMPLE_LENGTH, {
+        long: true,
+        length: shownLength(example),
+        maxLength: cardLimits.example,
+        below: (example.trim() || translation) && translationLine,
+      }),
     pronunciation: () =>
       textField(
         "pronunciation",

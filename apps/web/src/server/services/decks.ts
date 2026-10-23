@@ -183,7 +183,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
-  if (input.purpose) trackPurpose(ctx, input.purpose, true);
+  if (input.purpose) trackPurpose(ctx, input.purpose, true, !!seriesId);
   if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
     trackEnrichmentChoice(
       ctx,
@@ -320,9 +320,21 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
 }
 
 /** The purpose an owner gave a deck, as its fixed category, never the deck's text. */
-function trackPurpose(ctx: ServiceContext, purpose: DeckPurpose, created: boolean) {
+function trackPurpose(
+  ctx: ServiceContext,
+  purpose: DeckPurpose,
+  created: boolean,
+  inSeries?: boolean,
+) {
   const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
-  if (channel) track(ctx.analytics, { name: "deck_purpose_set", purpose, created, channel });
+  if (!channel) return;
+  track(ctx.analytics, {
+    name: "deck_purpose_set",
+    purpose,
+    created,
+    channel,
+    ...(inSeries === undefined ? {} : { in_series: inSeries }),
+  });
 }
 
 /** What a deck now asks the AI for, as flags: never the instructions themselves. */

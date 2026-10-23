@@ -4,6 +4,7 @@ import { type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
 import { createDeck, getDeck, listDecks, updateDeck } from "./decks";
 import { join } from "./members";
+import { createSeries } from "./series";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -71,12 +72,27 @@ describe("a deck's enrichment settings", () => {
     await updateDeck(ctx, deck.id, { purpose: "other" });
     const inferred = await createDeck(ctx, { name: "Deutsch", defaultLanguage: "de" });
     await updateDeck(ctx, inferred.id, { purpose: "language" });
+    const series = await createSeries(ctx, { name: "Biology" });
+    await createDeck(ctx, { name: "Cells", purpose: "subject", seriesId: series.id });
     const set = capture.mock.calls
       .map(([event]) => event)
       .filter((event) => event.name === "deck_purpose_set");
     expect(set).toEqual([
-      { name: "deck_purpose_set", purpose: "subject", created: true, channel: "app" },
+      {
+        name: "deck_purpose_set",
+        purpose: "subject",
+        created: true,
+        channel: "app",
+        in_series: false,
+      },
       { name: "deck_purpose_set", purpose: "other", created: false, channel: "app" },
+      {
+        name: "deck_purpose_set",
+        purpose: "subject",
+        created: true,
+        channel: "app",
+        in_series: true,
+      },
     ]);
   });
 

@@ -403,6 +403,7 @@ export const analyticsEvents = {
     purpose: z.enum(DECK_PURPOSES),
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
+    in_series: z.boolean().optional(),
   }),
   lesson_read_limited: z.object({}),
   lesson_read: z.object({

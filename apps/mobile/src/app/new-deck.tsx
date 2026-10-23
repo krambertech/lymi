@@ -9,12 +9,13 @@ import {
   LANGUAGE_TAGS,
 } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import { type Href, useRouter } from "expo-router";
+import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { AccessibilityInfo, Pressable, ScrollView, TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
+import { useSeriesList } from "../data/queries";
 import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
@@ -31,13 +32,18 @@ import { OnGlass } from "../ui/surface";
  * New deck: a short form, not a row of chips, since every field matters. The name takes the large
  * field with the keyboard up and Return lowers it; what the deck is for is three cards to read and
  * choose, a language deck's language sits inside its card, and how cards are asked is one quiet
- * row with its default. Creating lands in the empty deck. library-decks-and-cards.md.
+ * row with its default. Opened from a series' menu, a Series row says where the deck goes. Creating
+ * lands in the empty deck. library-decks-and-cards.md.
  */
 export default function NewDeck() {
   const { t } = useLingui();
   const router = useRouter();
   const qc = useQueryClient();
   const p = usePalette();
+  const params = useLocalSearchParams<{ series?: string }>();
+  const seriesList = useSeriesList(!!params.series).data ?? [];
+  // "" is no series, so the learner can still make the deck loose.
+  const [seriesId, setSeriesId] = useState(params.series ?? "");
   const [name, setName] = useState("");
   const [purpose, setPurpose] = useState<DeckPurpose | null>(null);
   const [language, setLanguage] = useState("");
@@ -74,6 +80,7 @@ export default function NewDeck() {
       // Only a language deck asks for a language, so another keeps none.
       defaultLanguage: purpose === "language" ? language || null : null,
       directions,
+      ...(seriesId ? { seriesId } : {}),
     });
     if (!parsed.success) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`);
@@ -94,6 +101,7 @@ export default function NewDeck() {
       const { id } = await writes.createDeck(parsed.data);
       haptics.success();
       void qc.invalidateQueries({ queryKey: ["decks"] });
+      if (seriesId) void qc.invalidateQueries({ queryKey: ["series"] });
       router.back();
       router.push(`/library/${id}` as Href);
     } catch (e) {
@@ -117,6 +125,11 @@ export default function NewDeck() {
       trigger={trigger}
     />
   );
+  const seriesOptions = [
+    { value: "", label: t`No series` },
+    ...seriesList.map((s) => ({ value: s.id, label: s.name })),
+  ];
+  const seriesName = seriesOptions.find((o) => o.value === seriesId)?.label;
   const askedSelect = (trigger: ReactNode) => (
     <Select
       label={t`How cards are asked`}
@@ -228,6 +241,15 @@ export default function NewDeck() {
         </View>
 
         <Rows>
+          {params.series && (
+            <Select
+              label={t`Series`}
+              value={seriesId}
+              options={seriesOptions}
+              onChange={setSeriesId}
+              trigger={<RowFace icon="series" label={t`Series`} value={seriesName} stacked />}
+            />
+          )}
           {askedSelect(
             <RowFace icon="modes" label={t`How cards are asked`} value={way?.label} stacked />,
           )}

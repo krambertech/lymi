@@ -228,6 +228,11 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
       items={[
         [
           {
+            label: t`New deck`,
+            icon: "plus",
+            onSelect: () => router.push(`/new-deck?series=${s.id}` as Href),
+          },
+          {
             label: t`Choose decks`,
             icon: "deck",
             onSelect: () => router.push(`/series-decks?id=${s.id}` as Href),

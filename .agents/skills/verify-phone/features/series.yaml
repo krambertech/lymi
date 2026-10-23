@@ -7,6 +7,10 @@ name: Series
 - extendedWaitUntil:
     visible: "${SERIES}"
     timeout: 20000
+# The new series is last, under the tab bar, so its menu is brought to the middle first.
+- scrollUntilVisible:
+    element: "Options for ${SERIES}"
+    centerElement: true
 - takeScreenshot: 01-library
 - tapOn: "Options for ${SERIES}"
 - tapOn: "Delete series"

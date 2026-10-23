@@ -330,36 +330,51 @@ async function pull(
         .where(eq(schema.readwiseBooks.userId, ctx.userId))
     ).map((b) => [b.bookId, b]),
   );
-  const fresh = read.books.filter((b) => !known.has(b.user_book_id) && !b.is_deleted);
+  // A book whose language could not be read before is read again with its new highlights.
+  const unread = read.books.filter(
+    (b) => !b.is_deleted && (known.get(b.user_book_id)?.language ?? null) === null,
+  );
   const languages = await bookLanguages(
     deps,
-    fresh.map((b) => ({
+    unread.map((b) => ({
       id: b.user_book_id,
       title: b.readable_title ?? b.title ?? "",
       texts: b.highlights.filter((h) => !h.is_deleted).map((h) => h.text),
     })),
   );
   const decks = await activeDecks(ctx, row.decks);
-  const added: ReadwiseBook[] = fresh.map((b) => {
+  const placed: ReadwiseBook[] = unread.flatMap((b) => {
     const language = languages.get(b.user_book_id) ?? null;
-    return {
-      userId: ctx.userId,
-      bookId: b.user_book_id,
-      title: (b.readable_title ?? b.title ?? "").slice(0, CARD_LIMITS.source),
-      author: b.author ?? null,
-      language,
-      // A new book in a language the learner studies is followed without asking.
-      followed: Boolean(language && decks.get(languageKey(language))),
-      highlights: b.highlights.length,
-      createdAt: started,
-      updatedAt: started,
-    };
+    const before = known.get(b.user_book_id);
+    if (before && !language) return [];
+    return [
+      {
+        userId: ctx.userId,
+        bookId: b.user_book_id,
+        title: (b.readable_title ?? b.title ?? "").slice(0, CARD_LIMITS.source),
+        author: b.author ?? null,
+        language,
+        // A book newly known to be in a language the learner studies is followed without asking.
+        followed: Boolean(language && decks.get(languageKey(language))),
+        highlights: (before?.highlights ?? 0) + b.highlights.length,
+        createdAt: before?.createdAt ?? started,
+        updatedAt: started,
+      },
+    ];
   });
   await runInBatches(
     ctx.db,
-    added.map((b) => [ctx.db.insert(schema.readwiseBooks).values(b).onConflictDoNothing()]),
+    placed.map((b) => [
+      ctx.db
+        .insert(schema.readwiseBooks)
+        .values(b)
+        .onConflictDoUpdate({
+          target: [schema.readwiseBooks.userId, schema.readwiseBooks.bookId],
+          set: { language: b.language, followed: b.followed, updatedAt: started },
+        }),
+    ]),
   );
-  for (const b of added) known.set(b.bookId, b);
+  for (const b of placed) known.set(b.bookId, b);
 
   const highlights = read.books.flatMap((book) => {
     const followed = known.get(book.user_book_id);

@@ -35,6 +35,8 @@ erDiagram
   user ||--o{ exports : "takes out"
   user ||--o{ feedback : "writes to Lymi"
   user ||--o{ lesson_reads : "counts Smart add"
+  user ||--o| readwise_connections : "pulls highlights"
+  user ||--o{ readwise_books : "follows"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
@@ -408,6 +410,10 @@ A note a learner sends from the learner menu is stored before it is emailed, so 
 ### Smart add reads
 
 `lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. The insert carries its own count, so two reads started together can't both take the last one. Checking a learner's own answer to a read's question needs a read in the last two hours and adds nothing to the count. Operators have no limit.
+
+### Readwise
+
+`readwise_connections` holds one row per learner who pasted a Readwise token: the token sealed with AES-GCM under a key derived from `BETTER_AUTH_SECRET`, its last four characters, `active` or `refused`, the deck for each language keyed by primary subtag, and where the hourly pull stands. `readwise_books` holds the learner's Readwise books with the language read from their highlights and whether Lymi follows them. Disconnect deletes both; the cards a pull added keep `created_by` `system` and an `external_id` of `readwise:<highlight id>`, which stops a later pull adding the same highlight twice. Rotating the auth secret makes stored tokens unreadable, and the next pull marks them refused.
 
 ### Tags and source
 

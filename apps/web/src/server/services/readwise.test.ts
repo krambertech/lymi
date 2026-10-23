@@ -186,6 +186,22 @@ describe("a pull", () => {
   });
 });
 
+describe("a book whose language was unknown", () => {
+  it("is read again on the next pull and followed once it is in a language the learner studies", async () => {
+    const ctx = await reader("rw-unknown");
+    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    expect((await getReadwise(ctx))?.books.every((b) => b.language === null)).toBe(true);
+
+    await pullReadwiseNow(ctx, depsWith());
+    const view = await getReadwise(ctx);
+    expect(view?.books.find((b) => b.id === "9001")).toMatchObject({
+      language: "it",
+      followed: true,
+    });
+    expect(await cardsOf(ctx.userId)).toHaveLength(3);
+  });
+});
+
 describe("the hourly pull", () => {
   it("pulls only connections that are due, once each", async () => {
     const due = await reader("rw-due");

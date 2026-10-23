@@ -213,7 +213,12 @@ const screen = (over: Partial<EndInput>): EndScreen => {
 describe("the end of a stretch", () => {
   it("at the goal's stop, celebrates the day and offers the rest of it beside Done", () => {
     const end = screen({ ending: "goal", from: 0, attempts: 10, left: 12, forgotten: 3 });
-    expect(end).toMatchObject({ heading: "goal_reached", satisfied: true, streak: true, embers: 14 });
+    expect(end).toMatchObject({
+      heading: "goal_reached",
+      satisfied: true,
+      streak: true,
+      embers: 14,
+    });
     expect(end.offers).toEqual([
       { kind: "continue", to: "day", note: { kind: "cards", count: 12 } },
       { kind: "forgotten", count: 3 },

@@ -136,12 +136,7 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
       kind: "continue",
       to: "resume",
       // A deck or series runs to its own end, past the goal; `left` is not a round's own count.
-      note:
-        stretch === "day"
-          ? dayNote()
-          : stretch === "scope"
-            ? cards(left)
-            : null,
+      note: stretch === "day" ? dayNote() : stretch === "scope" ? cards(left) : null,
     });
   else if (dayLeft > 0)
     offers.push({

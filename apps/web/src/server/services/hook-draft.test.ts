@@ -33,13 +33,14 @@ describe("the hook prompt", () => {
     const hash = promptHash({ HOOK_INSTRUCTIONS, HOOK_REPLY_SCHEMA, guides });
     // Raise HOOK_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ HOOK_PROMPT_VERSION, hash }).toEqual({
-      HOOK_PROMPT_VERSION: 5,
-      hash: "fa970ab2b7fc66c3",
+      HOOK_PROMPT_VERSION: 6,
+      hash: "1a3ef6376c9051de",
     });
   });
 
   it("leaves each supported language to its module", () => {
-    expect(supportedNamesIn(HOOK_INSTRUCTIONS)).toEqual([]);
+    // Russian is named as a language a hook is written in, never one being learned.
+    expect(supportedNamesIn(HOOK_INSTRUCTIONS, ["Russian"])).toEqual([]);
   });
 
   it("sends a card without a guide when its language has no hook advice", () => {

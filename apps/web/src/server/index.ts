@@ -6,7 +6,9 @@ import type { Bindings } from "./env";
 import { leadInDependencies } from "./lead-ins";
 import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
+import { appleClientsOf } from "./apple-revoke";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
+import { retryAppleRevocations } from "./services/apple-revocations";
 import { purgeCardAudio } from "./services/audio";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
@@ -53,6 +55,15 @@ export default {
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
+    run(
+      "apple-revocations",
+      retryAppleRevocations(createDb(env.DB), {
+        clients: appleClientsOf(env),
+        events: env.EVENTS,
+      }).then(({ failed }) => {
+        if (failed > 0) throw new Error(`${failed} deleted accounts' Apple grants were not revoked`);
+      }),
+    );
     // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.
     if (at.getUTCMinutes() < 15) {
       const db = createDb(env.DB);

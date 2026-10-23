@@ -5185,6 +5185,9 @@ msgstr "Ти повторюєш у власному ритмі, а {ownerName} �
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ти входиш через Apple, тож після видалення акаунта прибери Lymi з розділу «Вхід з Apple» у налаштуваннях облікового запису Apple."
 
+msgid "You signed in with Apple. If Lymi still shows under Sign in with Apple in your Apple Account settings, remove it there."
+msgstr "Твій акаунт Lymi був пов’язаний з Apple. Якщо Lymi досі є в розділі «Вхід з Apple» у налаштуваннях облікового запису Apple, прибери його там."
+
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 

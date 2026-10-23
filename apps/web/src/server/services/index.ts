@@ -1,6 +1,7 @@
 export * from "./account";
 export * from "./account-deletion";
 export * from "./activity";
+export * from "./apple-revocations";
 export * from "./audio";
 export * from "./avatars";
 export * from "./card-images";

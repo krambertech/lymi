@@ -243,6 +243,10 @@
     {
       "name": "0060_jazzy_wild_child.sql",
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
+    },
+    {
+      "name": "0061_dry_microchip.sql",
+      "sha256": "17cac101f5b52aedc32d5b25ab4b7c1dee8b6d675747278f522eeea0102ebfb5"
     }
   ]
 }

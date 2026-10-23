@@ -18,8 +18,10 @@ import {
   type SQL,
   sql,
 } from "@lymi/core/db";
+import type { AppleClients } from "../apple-revoke";
 import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
+import { appleRevocationRow } from "./apple-revocations";
 import { auditStatement } from "./audit";
 import { runBatch } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
@@ -320,6 +322,8 @@ export interface DeletionDeps {
   verifyApple: ((token: string, nonce: string) => Promise<boolean>) | null;
   /** Ends every session before the rows go, since KV keeps copies the cascade cannot reach. */
   endSessions: (userId: string) => Promise<void>;
+  /** The Sign in with Apple key, which revoking the account's Apple grant needs; null without it. */
+  appleClients: AppleClients | null;
 }
 
 /** What is left to do once the rows are gone: storage the database cannot cascade into. */
@@ -335,6 +339,8 @@ export interface DeletionLeftovers {
   exports: { objectKey: string | null }[];
   /** False when ending the sessions failed after the delete, so the caller tries again. */
   sessionsEnded: boolean;
+  /** The Apple grant's record: pending until revoked, skipped when it could not be tried. Null without Apple. */
+  appleRevocation: Pick<typeof schema.appleRevocations.$inferSelect, "status" | "reason"> | null;
 }
 
 /**
@@ -424,6 +430,13 @@ export async function deleteAccount(
   );
 
   const now = new Date();
+  const apple = await appleRevocationRow(
+    db,
+    userId,
+    deps.appleClients,
+    "apple" in input ? input.apple.authorizationCode : undefined,
+    now,
+  );
   await runBatch(db, [
     ...leaves,
     ...(kept.length > 0
@@ -527,6 +540,7 @@ export async function deleteAccount(
       reviews: summary.reviews,
       keptDecks: kept.length,
     }),
+    ...(apple ? [db.insert(schema.appleRevocations).values(apple)] : []),
     enqueueAudioPurge(db, going, now),
     db.delete(schema.user).where(eq(schema.user.id, userId)),
   ]);
@@ -555,6 +569,7 @@ export async function deleteAccount(
     imports,
     exports,
     sessionsEnded,
+    appleRevocation: apple ? { status: apple.status, reason: apple.reason ?? null } : null,
   };
 }
 

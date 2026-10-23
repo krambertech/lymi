@@ -428,6 +428,13 @@
       "when": 1792408427940,
       "tag": "0060_jazzy_wild_child",
       "breakpoints": true
+    },
+    {
+      "idx": 61,
+      "version": "6",
+      "when": 1792799565376,
+      "tag": "0061_dry_microchip",
+      "breakpoints": true
     }
   ]
 }

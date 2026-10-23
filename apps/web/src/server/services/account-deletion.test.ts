@@ -39,6 +39,7 @@ const deps: DeletionDeps = {
   endSessions: async (userId) => {
     ended.push(userId);
   },
+  appleClients: null,
 };
 
 beforeAll(async () => {

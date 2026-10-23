@@ -22,7 +22,7 @@ const LOOPBACK = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(PRODUCT_URL);
 // A local persona instead of a sign-in, never against production. docs/local-dev.md.
 const DEV_PERSONA = LOOPBACK ? process.env.LYMI_DEV_PERSONA : undefined;
 const SHORTCUT = "Control+Alt+L";
-const PANEL_WIDTH = 640;
+const PANEL_WIDTH = 480;
 const DUE_EVERY_MS = 15 * 60_000;
 const assets = join(app.getAppPath(), "assets");
 const preload = join(app.getAppPath(), "dist", "preload.cjs");
@@ -103,12 +103,6 @@ function createPanel() {
   });
   keepToProduct(panel);
   panel.on("blur", () => panel?.hide());
-  panel.webContents.on("before-input-event", (event, input) => {
-    if (input.type === "keyDown" && input.key === "Escape") {
-      event.preventDefault();
-      panel?.hide();
-    }
-  });
   void panel.loadURL(productUrl("/desktop/add"));
 }
 

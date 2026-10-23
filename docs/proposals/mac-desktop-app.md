@@ -92,7 +92,8 @@ The question: does adding from anywhere get used, and does it raise how many car
 
 ## Decided on 23 October
 
-- **The panel is the add bar** (option A on [the visual page](https://claude.ai/artifact/GQeq92LoDbKaDf5uw8awaa)): one line like the command menu's add strip, drawn as Lymi's own plate with the amber plus, a deck chip that opens its list inside the panel, and key hints. The window around it is clear and macOS shadows the plate. A version on the system's frosted material with the native pop-up menu was tried and dropped: it looked apart from Lymi.
+- **The panel is one line**: the term in a 480 px Lymi plate, its deck as quiet text at the end, and nothing else until something is added. The window around the plate is clear and macOS shadows it. Tried and dropped: the macOS frosted material with the native pop-up menu (it looked apart from Lymi), the add bar with an "Add … to …" row and key hints (busy), a note line under the term, and deck chips.
+- **The deck follows the term's language** through `POST /api/cards/deck-choice`, then the last deck added to, until the learner picks one. ↓ in the term or Enter on the deck opens the list; ↑↓ and Enter pick; Esc closes the list and then the panel. Tab moves between the term and the deck as usual.
 - **After an add the panel stays open**, the field cleared, with a line saying what was added and Undo (⌘Z). Esc or a click away hides it.
 - **The menu bar shows the due count** by default; the tray menu turns it off.
 - **The shortcut is ⌃⌥L.** ⌥⌘L is Finder's Downloads.

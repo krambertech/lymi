@@ -7,6 +7,8 @@ import type {
   CardInput,
   CardPatch,
   CardsInput,
+  DeckChoiceInput,
+  DeckChoiceOut,
   Direction,
   HookDraftOut,
   ImportantCardsOut,
@@ -103,6 +105,12 @@ export const cardsApi = {
       keepalive: fitsKeepalive(json),
     });
   },
+  /** The learner's deck in the term's language; null keeps the caller's choice. Writes nothing. */
+  chooseDeck: (body: DeckChoiceInput) =>
+    request<DeckChoiceOut>("/api/cards/deck-choice", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   /** Many cards in one write; each is added or skipped on its own. */
   addCards: (body: CardsInput, from?: "lesson") =>
     request<{ results: AddCardOutcome[] }>(`/api/cards/batch${from ? `?from=${from}` : ""}`, {

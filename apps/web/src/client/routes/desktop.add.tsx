@@ -4,10 +4,9 @@ import { isolate, standsAlone } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Check, ChevronDown, Plus } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Kbd } from "../components/kbd";
-import { ApiError, errorMessage } from "../lib/api";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { ApiError, api, errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite } from "../lib/card-writes";
 import { desktop } from "../lib/desktop";
 import { lastDeckId, rememberDeck } from "../lib/last-deck";
@@ -24,25 +23,34 @@ type Line =
   | { kind: "undone"; text: string }
   | { kind: "failed"; text: string };
 
-/** The Mac app's quick-add panel: one line, like the add strip in the command menu. */
+/** The Mac app's quick-add panel: the term on one line, with its deck quiet at the end. */
 function DesktopAdd() {
   const { t } = useLingui();
   const qc = useQueryClient();
   const me = useQuery(meQuery);
   const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
   const own = decks.data?.filter((d) => d.role === "owner") ?? [];
+  // The learner's pick wins; otherwise the deck in the term's language, then the last one added to.
   const [deckId, setDeckId] = useState<string | null>(null);
+  const [guessed, setGuessed] = useState<string | null>(null);
   const target =
-    own.find((d) => d.id === deckId) ?? own.find((d) => d.id === lastDeckId()) ?? own[0];
+    own.find((d) => d.id === deckId) ??
+    own.find((d) => d.id === guessed) ??
+    own.find((d) => d.id === lastDeckId()) ??
+    own[0];
   const [term, setTerm] = useState("");
   const [line, setLine] = useState<Line | null>(null);
   const [adding, setAdding] = useState(false);
   const [picking, setPicking] = useState(false);
+  // The deck the arrow keys are on while the list is open.
+  const [active, setActive] = useState(0);
+  const listId = useId();
   const input = useRef<HTMLInputElement>(null);
+  const list = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const signedOut = me.error instanceof ApiError && me.error.status === 401;
 
-  // The window's own material shows through, so the page draws no room of its own.
+  // The window is clear around the plate, so the page draws no room of its own.
   useLayoutEffect(() => {
     document.documentElement.dataset.surface = "panel";
     return () => {
@@ -63,6 +71,7 @@ function DesktopAdd() {
       desktop()?.onPanelShown(({ selection }) => {
         setLine(null);
         setPicking(false);
+        setDeckId(null);
         if (selection) setTerm(selection);
         input.current?.focus();
         input.current?.select();
@@ -74,6 +83,65 @@ function DesktopAdd() {
   const trimmed = term.trim();
   const ready = !!target && standsAlone(trimmed);
   const deckName = target?.name ?? "";
+
+  useEffect(() => {
+    if (deckId || !standsAlone(trimmed) || own.length < 2) return;
+    const timer = window.setTimeout(() => {
+      api
+        .chooseDeck({ term: trimmed })
+        .then((choice) => setGuessed(choice.deckId))
+        .catch(() => {});
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [deckId, trimmed, own.length]);
+
+  function openList() {
+    if (own.length < 2) return;
+    setActive(
+      Math.max(
+        0,
+        own.findIndex((d) => d.id === target?.id),
+      ),
+    );
+    setPicking(true);
+    requestAnimationFrame(() => list.current?.focus());
+  }
+
+  function closeList() {
+    setPicking(false);
+    input.current?.focus();
+  }
+
+  function pick(id: string) {
+    setDeckId(id);
+    closeList();
+  }
+
+  // Esc closes the deck list first and the panel after, wherever focus is.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      if (picking) closeList();
+      else desktop()?.hidePanel();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
+  function onListKeyDown(e: React.KeyboardEvent) {
+    const last = own.length - 1;
+    if (e.key === "ArrowDown") setActive((i) => Math.min(i + 1, last));
+    else if (e.key === "ArrowUp") setActive((i) => Math.max(i - 1, 0));
+    else if (e.key === "Home") setActive(0);
+    else if (e.key === "End") setActive(last);
+    else if (e.key === "Enter" || e.key === " ") {
+      const deck = own[active];
+      if (deck) pick(deck.id);
+    } else if (e.key === "Tab") setPicking(false);
+    else return;
+    if (e.key !== "Tab") e.preventDefault();
+  }
 
   async function add(open: boolean) {
     if (!target || !ready || adding) return;
@@ -133,24 +201,44 @@ function DesktopAdd() {
       if (!ready && line?.kind === "existing") return desktop()?.openApp(line.path);
       void add(e.metaKey);
     }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      openList();
+    }
     if (e.key === "z" && e.metaKey && !trimmed && line?.kind === "added") {
       e.preventDefault();
       void undo();
     }
   }
 
-  const fillsMeaning = target?.enrichFields.includes("meaning");
+  const status = line && (
+    <p role="status" className="flex min-w-0 items-center gap-2 text-sm text-text-2">
+      {line.kind === "added" && (
+        <Check aria-hidden className="size-4 shrink-0 text-good" strokeWidth={2.5} />
+      )}
+      <span className={clsx("min-w-0 truncate", line.kind === "failed" && "text-danger")}>
+        {line.text}
+      </span>
+      {line.kind === "added" && (
+        <button
+          type="button"
+          onClick={() => void undo()}
+          aria-keyshortcuts="Meta+Z"
+          className="shrink-0 rounded-xs font-medium text-text underline underline-offset-3 focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          {t`Undo`}
+        </button>
+      )}
+    </p>
+  );
 
   return (
     // The window is clear; this plate is the panel, and macOS shadows its shape.
     <div
       ref={root}
-      className="flex flex-col overflow-hidden rounded-lg border border-edge bg-plate text-text"
+      className="flex flex-col overflow-hidden rounded-lg bg-plate text-text ring-1 ring-edge/50 ring-inset"
     >
-      <div className="flex h-15 items-center gap-3 ps-3.5 pe-3">
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber text-amber-ink">
-          <Plus aria-hidden className="size-4" strokeWidth={2.5} />
-        </span>
+      <div className="flex h-14 items-center gap-2 ps-4.5 pe-3">
         <input
           ref={input}
           // biome-ignore lint/a11y/noAutofocus: the panel opens to type a term, like Spotlight
@@ -171,108 +259,63 @@ function DesktopAdd() {
         {target && (
           <button
             type="button"
-            onClick={() => setPicking((open) => !open)}
+            onClick={() => (picking ? closeList() : openList())}
+            onKeyDown={(e) => {
+              if (e.key !== "ArrowDown") return;
+              e.preventDefault();
+              openList();
+            }}
+            aria-haspopup="listbox"
             aria-expanded={picking}
+            aria-controls={picking ? listId : undefined}
             aria-label={t`Deck: ${{ deckName: isolate(deckName) }}`}
-            className="flex h-8 max-w-48 shrink-0 items-center gap-1.5 rounded-sm bg-plate-2 px-2.5 text-sm font-medium text-text-2 hoverable:hover:bg-hover"
+            className="flex min-w-0 max-w-48 shrink-0 items-center gap-1 rounded-xs px-1.5 py-0.5 text-sm text-muted hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-ring"
           >
             <span className="truncate">{deckName}</span>
-            <ChevronDown aria-hidden className="size-3.5 shrink-0" />
+            <ChevronsUpDown aria-hidden className="size-3.5 shrink-0 opacity-70" />
           </button>
         )}
       </div>
       {picking && (
-        <ul className="mx-2 mb-2 flex max-h-56 flex-col overflow-y-auto rounded-md bg-plate-2 p-1">
-          {own.map((d) => (
-            <li key={d.id}>
-              <button
-                type="button"
-                onClick={() => {
-                  setDeckId(d.id);
-                  setPicking(false);
-                  input.current?.focus();
-                }}
-                className="flex w-full items-center gap-2 rounded-sm px-2.5 py-2 text-start text-md hoverable:hover:bg-hover"
-              >
-                <span className="min-w-0 flex-1 truncate">{d.name}</span>
-                {d.id === target?.id && <Check aria-hidden className="size-4 text-text-2" />}
-              </button>
-            </li>
+        <div
+          ref={list}
+          id={listId}
+          role="listbox"
+          tabIndex={-1}
+          aria-label={t`Deck`}
+          aria-activedescendant={`${listId}-${active}`}
+          onKeyDown={onListKeyDown}
+          onBlur={(e) => {
+            if (!root.current?.contains(e.relatedTarget)) setPicking(false);
+          }}
+          className="flex max-h-56 flex-col overflow-y-auto border-t border-edge p-1.5 outline-none"
+        >
+          {own.map((d, i) => (
+            // biome-ignore lint/a11y/useKeyWithClickEvents: the listbox takes the keys, as aria-activedescendant expects
+            <div
+              key={d.id}
+              id={`${listId}-${i}`}
+              role="option"
+              tabIndex={-1}
+              aria-selected={d.id === target?.id}
+              onClick={() => pick(d.id)}
+              onMouseMove={() => setActive(i)}
+              className={clsx(
+                "flex cursor-default items-center gap-2 rounded-sm px-2.5 py-1.5 text-md",
+                i === active && "bg-hover",
+              )}
+            >
+              <span className="min-w-0 flex-1 truncate">{d.name}</span>
+              {d.id === target?.id && <Check aria-hidden className="size-4 text-text-2" />}
+            </div>
           ))}
-        </ul>
-      )}
-      {!picking && (ready || line || signedOut) && (
-        <div className="flex flex-col gap-1 px-2 pb-1">
-          {signedOut ? (
-            <Row tone="act">
-              <span className="flex-1">{t`Open Lymi to sign in`}</span>
-              <Kbd>↵</Kbd>
-            </Row>
-          ) : ready ? (
-            <Row tone="act">
-              <span className="grid size-5.5 shrink-0 place-items-center rounded-full bg-amber text-amber-ink">
-                <Plus aria-hidden className="size-3" strokeWidth={3} />
-              </span>
-              <span className="min-w-0 flex-1 truncate">
-                {t`Add “${{ quoted: isolate(shortQuote(trimmed)) }}” to ${{ deckName: isolate(deckName) }}`}
-              </span>
-              <Kbd>↵</Kbd>
-            </Row>
-          ) : null}
-          {line && (
-            <Row>
-              {line.kind === "added" && (
-                <Check aria-hidden className="size-4 shrink-0 text-good" strokeWidth={2.5} />
-              )}
-              <span
-                role="status"
-                className={clsx("min-w-0 flex-1", line.kind === "failed" && "text-danger")}
-              >
-                {line.text}
-              </span>
-              {line.kind === "added" && (
-                <button
-                  type="button"
-                  onClick={() => void undo()}
-                  className="flex items-center gap-1.5 rounded-xs px-1.5 py-0.5 font-medium text-text underline underline-offset-3 hoverable:hover:bg-hover"
-                >
-                  {t`Undo`}
-                  <Kbd>⌘Z</Kbd>
-                </button>
-              )}
-              {line.kind === "existing" && !ready && <Kbd>↵</Kbd>}
-            </Row>
-          )}
         </div>
       )}
-      <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 px-4 pt-1 pb-3 text-xs text-muted">
-        <span className="flex items-center gap-1.5">
-          <Kbd>↵</Kbd>
-          {t`Add`}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Kbd>⌘↵</Kbd>
-          {t`Add and open`}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Kbd>esc</Kbd>
-          {t`Close`}
-        </span>
-        {fillsMeaning && <span className="ms-auto text-ai">{t`AI fills in the meaning`}</span>}
-      </div>
-    </div>
-  );
-}
-
-function Row({ tone, children }: { tone?: "act"; children: React.ReactNode }) {
-  return (
-    <div
-      className={clsx(
-        "flex min-h-11 items-center gap-2.5 rounded-md px-3 text-md",
-        tone === "act" ? "bg-hover text-text" : "text-text-2",
+      {!picking && (status || signedOut) && (
+        <div className="border-t border-edge px-4.5 py-2.5">
+          {status || <p className="text-sm text-text-2">{t`Open Lymi to sign in`}</p>}
+        </div>
       )}
-    >
-      {children}
     </div>
   );
 }

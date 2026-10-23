@@ -893,9 +893,6 @@ msgstr "Add “{0}”"
 msgid "Add “{0}” to Library"
 msgstr "Add “{0}” to Library"
 
-msgid "Add “{quoted}” to {deckName}"
-msgstr "Add “{quoted}” to {deckName}"
-
 msgid "Add {name} to Lymi"
 msgstr "Add {name} to Lymi"
 
@@ -907,9 +904,6 @@ msgstr "Add a photo or PDF of the lesson, or paste its text."
 
 msgid "Add a picture"
 msgstr "Add a picture"
-
-msgid "Add and open"
-msgstr "Add and open"
 
 msgid "Add card"
 msgstr "Add card"
@@ -1033,9 +1027,6 @@ msgstr "AI"
 
 msgid "AI example"
 msgstr "AI example"
-
-msgid "AI fills in the meaning"
-msgstr "AI fills in the meaning"
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."

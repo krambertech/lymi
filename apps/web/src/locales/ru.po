@@ -893,9 +893,6 @@ msgstr "Добавить «{0}»"
 msgid "Add “{0}” to Library"
 msgstr "Добавить «{0}» в Библиотеку"
 
-msgid "Add “{quoted}” to {deckName}"
-msgstr "Добавить «{quoted}» в колоду {deckName}"
-
 msgid "Add {name} to Lymi"
 msgstr "Добавь колоду «{name}» в Lymi"
 
@@ -907,9 +904,6 @@ msgstr "Добавь фото или PDF урока или вставь его �
 
 msgid "Add a picture"
 msgstr "Добавить изображение"
-
-msgid "Add and open"
-msgstr "Добавить и открыть"
 
 msgid "Add card"
 msgstr "Добавить карточку"
@@ -1033,9 +1027,6 @@ msgstr "AI"
 
 msgid "AI example"
 msgstr "Пример от AI"
-
-msgid "AI fills in the meaning"
-msgstr "AI допишет значение"
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заполняет только пустые поля и не меняет твой текст."

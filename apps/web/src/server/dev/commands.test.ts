@@ -96,4 +96,12 @@ describe("dev commands", () => {
     expect(added.note).toBe("Claude added 200 cards.");
     expect((await run("nothing")).status).toBe(404);
   });
+
+  it("reopens a met day a few reviews short of its goal, so the goal can be reached again", async () => {
+    expect((await run("goal")).status).toBe(200);
+    const ahead = (await (await run("goal-ahead", { count: 2 })).json()) as { note: string };
+    expect(ahead.note).toMatch(/^Today's goal is now \d+, 2 reviews away\.$/);
+    const again = (await (await run("goal")).json()) as { note: string };
+    expect(again.note).toBe("Graded 2 more. Today's goal is met.");
+  });
 });

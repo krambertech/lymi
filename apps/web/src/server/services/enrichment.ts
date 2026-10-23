@@ -3,7 +3,6 @@ import {
   deckEnrichFields,
   ENRICHED_FIELDS,
   type EnrichedField,
-  examplesCarryReadings,
   fieldsToFill,
   fitsExample,
   LanguageTag,
@@ -31,6 +30,7 @@ import {
   readReply,
   type Sample,
 } from "../enrichment/prompt";
+import { addsExampleReadings } from "../languages";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -137,7 +137,7 @@ export function mayAddReadings(card: Card, deck: DeckRow | undefined): string | 
   const language = card.language ?? deck?.defaultLanguage ?? null;
   return fields.includes("example") &&
     card.example &&
-    examplesCarryReadings(language) &&
+    addsExampleReadings(language) &&
     missingReadings(card.example, language)
     ? language
     : null;

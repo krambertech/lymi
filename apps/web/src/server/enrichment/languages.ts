@@ -47,12 +47,6 @@ const GUIDES: Record<string, FieldGuide> = {
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
-  ru: {
-    notes:
-      "Verb: the aspect pair, imperfective / perfective (*делать / сделать*), and the case or preposition it takes if it isn't the accusative (*заниматься* + instrumental). Noun: the gender only if the ending doesn't show it (*ночь*, feminine), and an irregular plural or genitive plural.",
-    pronunciation:
-      "The term in Cyrillic with an accent mark on the stressed vowel (молоко́), for each word of two or more syllables. Not IPA.",
-  },
   uk: {
     notes:
       "Verb: the aspect pair, imperfective / perfective (*робити / зробити*), and the case or preposition it takes if it isn't the accusative. Noun: the gender only if the ending doesn't show it, and an irregular plural.",

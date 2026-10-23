@@ -75,9 +75,10 @@ describe("stressRules", () => {
 });
 
 describe("examplesCarryReadings", () => {
-  it("lets Japanese and Chinese examples carry readings", () => {
+  it("lets Japanese and Chinese examples carry readings, and Russian ones stress", () => {
     expect(examplesCarryReadings("ja")).toBe(true);
     expect(examplesCarryReadings("zh-TW")).toBe(true);
+    expect(examplesCarryReadings("ru")).toBe(true);
     expect(examplesCarryReadings("ko")).toBe(false);
   });
 });

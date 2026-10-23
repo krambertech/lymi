@@ -1,5 +1,5 @@
 import { plural } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
 import {
   type DeckFilters,
@@ -17,10 +17,11 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
+import { type LineColumn, lineColumns, opening } from "@lymi/client/section-line";
 import { isolate } from "@lymi/core";
 import { type Href, useRouter } from "expo-router";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { type FlatList, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCardMenu } from "../card/card-menu";
 import { CardPeek, peekHeight, usePeekSize } from "../card/card-peek";
@@ -30,14 +31,16 @@ import { useNextDue } from "../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../data/queries";
 import { useMoveNotice, useSeriesActions } from "../data/series";
 import { ExportSheet } from "../export/export-sheet";
+import { useArchiveSection } from "../sections/archive-section";
 import { useNewSection } from "../sections/name-sheet";
-import { ReadyNote, SectionHeading, SectionProgress, useStartSection } from "../sections/sections";
+import { OpeningLine, OpensAfter, SectionLine, sectionPage } from "../sections/section-line";
+import { ReadyNote, SectionHeading, useSectionMenu, useStartSection } from "../sections/sections";
 import { reportHref } from "../sharing/report";
 import { useOnline } from "../streak/goal-picker";
 import { captureEvent } from "../telemetry/posthog";
 import { haptics } from "../theme/haptics";
-import { useReduceMotion } from "../theme/motion";
 import { usePalette, useRoom } from "../theme/palette";
+import { TEXT_END } from "../theme/type";
 import { ActionMenu } from "../ui/action-menu";
 import { EmptyState } from "../ui/empty-state";
 import { Icon } from "../ui/icons";
@@ -57,6 +60,7 @@ import { useCardSelection } from "./card-selection";
 import { FilterTools } from "./filters";
 import { useMoveToSection } from "./move-to-section";
 import { SelectBox } from "./selection";
+import { StateBar, StateCounts } from "./state-bar";
 import { useTagCards } from "./tag-cards";
 
 /** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
@@ -80,7 +84,8 @@ type Item =
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
  * and Sort narrow and order. Search opens at the foot, as Library's does, for this deck only. A
- * section scope is the same page with its list kept to that section. docs/proposals/section-pages.md.
+ * section scope is the same page with its list kept to that section, its own summary, its menu and
+ * Previous and Next. docs/proposals/section-pages.md.
  */
 export function CardListScreen({ scope }: { scope: DeckScope }) {
   const { t, i18n } = useLingui();
@@ -94,6 +99,16 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
   const rows = cards.data ?? NO_ROWS;
   const sectionsQuery = useSections(id);
   const sections = sectionsQuery.data?.sections ?? NO_SECTIONS;
+  // The section this page is kept to, or null for the deck or for the cards with no section.
+  const section = sectionId ? (sections.find((s) => s.id === sectionId) ?? null) : null;
+  const sectionGone = !!sectionId && !!sectionsQuery.data && !section;
+  const scopeRows = useMemo(
+    () =>
+      scoped
+        ? filterRows(rows, scopedFilters(noFilters, { sectionId }), "", Date.now(), sections)
+        : rows,
+    [rows, scoped, sectionId, sections],
+  );
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   // A tag renamed or a section deleted while the page is open would leave a filter nothing lists to untick.
@@ -139,7 +154,6 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
   const menu = useCallback((card: DeckRow["card"]) => latestMenu.current(card), []);
   const menuShape = `${owner} ${moveToDeck.canMove}`;
   const lift = useRoom() === "dark";
-  const reduce = useReduceMotion();
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const {
     selection,
@@ -155,26 +169,44 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
     moveToSection,
     moveToDeck,
   });
+  // Archiving the section a page is kept to leaves nothing to show, so the page goes back to its deck.
+  const archiveSection = useArchiveSection((archived) => {
+    if (archived.id === sectionId) router.dismissTo(`/library/${id}` as Href);
+  });
+  const sectionMenu = useSectionMenu(
+    id,
+    { owner, several: sections.length > 1, selecting: !!selection },
+    {
+      onStart: sectionStart.start,
+      // From a heading, the section's cards in the list start chosen; its own page starts with none.
+      onSelectCards: (s) =>
+        startSelecting(
+          scoped ? [] : ordered.filter((r) => r.card.sectionId === s.id).map((r) => r.card.id),
+        ),
+      onArchive: (s) => archiveSection.archive(s),
+    },
+  );
+  const statusOf = useMemo(() => new Map(sections.map((s) => [s.id, s.status])), [sections]);
   const items = useMemo(
     () =>
-      groups.flatMap((group): Item[] => {
-        const dim = group.kind === "section" && !!group.section && group.section.status !== "open";
-        return [
-          { kind: "heading", key: `h:${group.key}`, group },
-          ...group.rows.map(
-            (row, i): Item => ({
-              kind: "row",
-              key: row.card.id,
-              row,
-              first: i === 0,
-              last: i === group.rows.length - 1,
-              dim,
-              waiting: dim && rowState(row) === "new",
-            }),
-          ),
-        ];
-      }),
-    [groups],
+      groups.flatMap((group): Item[] => [
+        { kind: "heading", key: `h:${group.key}`, group },
+        ...group.rows.map((row, i): Item => {
+          // A card in a section that isn't open is dimmed however the list is sorted.
+          const status = row.card.sectionId ? statusOf.get(row.card.sectionId) : undefined;
+          const dim = !!status && status !== "open";
+          return {
+            kind: "row",
+            key: row.card.id,
+            row,
+            first: i === 0,
+            last: i === group.rows.length - 1,
+            dim,
+            waiting: dim && rowState(row) === "new",
+          };
+        }),
+      ]),
+    [groups, statusOf],
   );
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
@@ -184,36 +216,39 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
-  const addCard = () => router.push(`/capture?deck=${id}` as Href);
-  const listRef = useRef<FlatList<Item>>(null);
-  // Go to clears the filters and sorts by section, so the heading is in the list it scrolls.
-  const [goingTo, setGoingTo] = useState<string | null>(null);
-  const goTo = (sectionId: string) => {
-    captureEvent("section_go_to", {});
-    setFilters(noFilters);
-    setSort(null);
-    setGoingTo(sectionId);
-  };
-  const bar = insets.top + 56;
-  const scrollTo = useCallback(
-    (index: number) =>
-      listRef.current?.scrollToIndex({ index, viewOffset: bar, animated: !reduce }),
-    [bar, reduce],
+  const addCard = () =>
+    router.push(
+      (section ? `/capture?deck=${id}&section=${section.id}` : `/capture?deck=${id}`) as Href,
+    );
+  const columns = useMemo(() => lineColumns(sections, rows), [sections, rows]);
+  // Previous and Next walk the line's columns, so the cards with no section are the last stop.
+  const at = columns.findIndex((c) => c.id === sectionId);
+  const step = (c: LineColumn | undefined) =>
+    c && {
+      column: c,
+      onPress: () => {
+        captureEvent("section_page_opened", { from: "step" });
+        router.replace(sectionPage(id, c.id));
+      },
+    };
+  const steps = scoped && at >= 0 && (
+    <Steps back={step(columns[at - 1])} forward={step(columns[at + 1])} />
   );
-  useEffect(() => {
-    if (!goingTo) return;
-    setGoingTo(null);
-    const index = items.findIndex((item) => item.key === `h:section:${goingTo}`);
-    if (index >= 0) scrollTo(index);
-  }, [goingTo, items, scrollTo]);
   // The words draw as a list only once the page has a deck with cards to show.
-  const listed = !gone && !cardsFailed && !decksFailed && !!deck && rows.length > 0;
+  const listed =
+    !gone && !sectionGone && !cardsFailed && !decksFailed && !!deck && scopeRows.length > 0;
+  const deckName = deck?.name;
+  const title = scoped ? (section?.name ?? (sectionId === "" ? t`No section` : "")) : deck?.name;
 
   return (
     <Screen
-      title={deck?.name ?? ""}
+      title={title ?? ""}
       onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
-      back={{ label: t`Library`, to: "/library" }}
+      back={
+        scoped
+          ? { label: deck?.name ?? t`Deck`, to: `/library/${id}` as Href }
+          : { label: t`Library`, to: "/library" }
+      }
       list={
         listed && deck
           ? {
@@ -228,8 +263,7 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
                     hereId={progress?.currentId ?? null}
                     starting={sectionStart.starting}
                     onStart={sectionStart.start}
-                    owner={owner}
-                    several={sections.length > 1}
+                    menu={sectionMenu}
                   />
                 ) : (
                   <Slice first={item.first} last={item.last} dim={item.dim} lift={lift}>
@@ -245,26 +279,26 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
                     />
                   </Slice>
                 ),
-              // The last cards scroll clear of the pinned toolbar.
-              footer: selection && <View className="h-16" />,
-              ref: listRef,
-              // A heading past what is drawn: scroll near it so it draws, then go to it.
-              onScrollToIndexFailed: ({ index, averageItemLength }) => {
-                listRef.current?.scrollToOffset({
-                  offset: averageItemLength * index,
-                  animated: false,
-                });
-                setTimeout(() => scrollTo(index), 100);
-              },
+              footer: (steps || selection) && (
+                <View>
+                  {steps}
+                  {/* The last cards scroll clear of the pinned toolbar. */}
+                  {selection && <View className="h-16" />}
+                </View>
+              ),
             }
           : undefined
       }
       past={
-        reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
+        // A section's Review reviews the section, so the deck's accessory stays on the deck's page.
+        scoped || reviewEnd === null
+          ? undefined
+          : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
       }
       actions={
-        // A deck that has gone has nothing to search or change.
-        !gone && (
+        // A deck or section that has gone has nothing to search or change.
+        !gone &&
+        !sectionGone && (
           <View className="flex-row items-center gap-2.5">
             <BarButton
               icon="search"
@@ -272,75 +306,24 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
               onPress={() => router.push(`/search?deck=${id}` as Href)}
             />
             <ActionMenu
-              label={t`Deck options`}
+              label={scoped ? t`Section options` : t`Deck options`}
               symbol="ellipsis"
               look="bar"
-              items={[
-                [
-                  ...(owner
-                    ? [
-                        {
-                          label: t`Add a card`,
-                          icon: "plus" as const,
-                          onSelect: addCard,
-                        },
-                        {
-                          label: t`Smart add`,
-                          icon: "ai" as const,
-                          onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
-                        },
-                      ]
-                    : []),
-                  ...(owner
-                    ? [
-                        {
-                          label: t`Share deck`,
-                          icon: "share" as const,
-                          onSelect: () => router.push(`/share?id=${id}` as Href),
-                        },
-                        {
-                          label: t`Move to series`,
-                          icon: "series" as const,
-                          onSelect: () => setMoving(true),
-                        },
-                        {
-                          label: t`New section`,
-                          icon: "section" as const,
-                          onSelect: () => newSection.open(),
-                        },
-                        {
-                          label: t`Export deck`,
-                          icon: "export" as const,
-                          onSelect: () => setExporting(true),
-                        },
-                      ]
-                    : []),
-                  ...(rows.length > 0 && !selection
-                    ? [
-                        {
-                          label: t`Select cards`,
-                          icon: "check" as const,
-                          onSelect: startSelecting,
-                        },
-                      ]
-                    : []),
-                  {
-                    label: owner ? t`Deck settings` : t`About this deck`,
-                    icon: "settings",
-                    onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
-                  },
-                ],
-                ...(owner
-                  ? [
-                      [
-                        {
-                          label: t`Archive deck`,
-                          icon: "archive" as const,
-                          destructive: true,
-                          onSelect: exits.archive,
-                        },
-                      ],
-                    ]
+              items={
+                scoped
+                  ? section
+                    ? sectionMenu(section)
+                    : selection || scopeRows.length === 0
+                      ? []
+                      : [
+                          [
+                            {
+                              label: t`Select cards`,
+                              icon: "check" as const,
+                              onSelect: () => startSelecting(),
+                            },
+                          ],
+                        ]
                   : [
                       ...(deck
                         ? [
@@ -355,15 +338,83 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
                         : []),
                       // A deck added from Explore or shared with the learner is left, not archived.
                       [
+                        ...(owner
+                          ? [
+                              {
+                                label: t`Add a card`,
+                                icon: "plus" as const,
+                                onSelect: addCard,
+                              },
+                              {
+                                label: t`Smart add`,
+                                icon: "ai" as const,
+                                onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
+                              },
+                            ]
+                          : []),
+                        ...(owner
+                          ? [
+                              {
+                                label: t`Share deck`,
+                                icon: "share" as const,
+                                onSelect: () => router.push(`/share?id=${id}` as Href),
+                              },
+                              {
+                                label: t`Move to series`,
+                                icon: "series" as const,
+                                onSelect: () => setMoving(true),
+                              },
+                              {
+                                label: t`New section`,
+                                icon: "section" as const,
+                                onSelect: () => newSection.open(),
+                              },
+                              {
+                                label: t`Export deck`,
+                                icon: "export" as const,
+                                onSelect: () => setExporting(true),
+                              },
+                            ]
+                          : []),
+                        ...(rows.length > 0 && !selection
+                          ? [
+                              {
+                                label: t`Select cards`,
+                                icon: "check" as const,
+                                onSelect: () => startSelecting(),
+                              },
+                            ]
+                          : []),
                         {
-                          label: t`Leave deck`,
-                          icon: "signOut" as const,
-                          destructive: true,
-                          onSelect: exits.leave,
+                          label: owner ? t`Deck settings` : t`About this deck`,
+                          icon: "settings",
+                          onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
                         },
                       ],
-                    ]),
-              ]}
+                      ...(owner
+                        ? [
+                            [
+                              {
+                                label: t`Archive deck`,
+                                icon: "archive" as const,
+                                destructive: true,
+                                onSelect: exits.archive,
+                              },
+                            ],
+                          ]
+                        : [
+                            // A deck added from Explore or shared with the learner is left, not archived.
+                            [
+                              {
+                                label: t`Leave deck`,
+                                icon: "signOut" as const,
+                                destructive: true,
+                                onSelect: exits.leave,
+                              },
+                            ],
+                          ]),
+                    ]
+              }
             />
           </View>
         )
@@ -385,7 +436,19 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
           failed={t`Couldn’t load this deck`}
           offline={t`This deck needs a connection`}
         />
-      ) : !deck || !cards.data ? (
+      ) : sectionGone && deckName ? (
+        // Archived elsewhere since the deck was opened.
+        <EmptyState
+          kind="noMatch"
+          icon="section"
+          title={t`This section isn’t in the deck`}
+          body={t`It was archived.`}
+          action={{
+            label: t`Back to ${{ deckName: isolate(deckName) }}`,
+            onPress: () => router.dismissTo(`/library/${id}` as Href),
+          }}
+        />
+      ) : !deck || !cards.data || (scoped && !sectionsQuery.data) ? (
         <View className="gap-3">
           <Skeleton height={120} />
           <Skeleton height={64} />
@@ -402,29 +465,84 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
           }
           action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}
         />
+      ) : scoped && scopeRows.length === 0 ? (
+        // Inline, so Previous and Next stay above the tab bar.
+        <View>
+          <Plate>
+            <EmptyState
+              kind="start"
+              size="inline"
+              icon="section"
+              title={section ? t`No cards in this section yet` : t`Every card has a section`}
+              action={section && owner ? { label: t`Add card here`, onPress: addCard } : undefined}
+            />
+          </Plate>
+          {steps}
+        </View>
       ) : (
         <>
           <View
             className="gap-3"
             onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
           >
-            <Top
-              deck={deck}
-              rows={rows}
-              section={
-                progress && (
-                  <SectionProgress
-                    sections={sections}
-                    progress={progress}
-                    due={deck.due}
-                    starting={sectionStart.starting}
+            {scoped ? (
+              <SectionTop
+                section={section}
+                at={at}
+                count={sections.length}
+                rows={scopeRows}
+                opening={
+                  section &&
+                  (() => {
+                    const state = opening(sections, progress);
+                    const about =
+                      state &&
+                      (state.current.id === section.id ||
+                        (state.kind !== "open" && state.next.id === section.id));
+                    if (state && about)
+                      return (
+                        <OpeningLine
+                          state={state}
+                          due={section.due}
+                          starting={sectionStart.starting}
+                          onStart={sectionStart.start}
+                        />
+                      );
+                    const before = sections[sections.indexOf(section) - 1];
+                    return progress && section.status !== "open" && before ? (
+                      <OpensAfter before={before} />
+                    ) : null;
+                  })()
+                }
+              />
+            ) : (
+              <Top
+                deck={deck}
+                rows={rows}
+                section={
+                  columns.length > 0 && (
+                    <DeckSections
+                      deckId={id}
+                      columns={columns}
+                      state={opening(sections, progress)}
+                      due={deck.due}
+                      starting={sectionStart.starting}
+                      onStart={sectionStart.start}
+                    />
+                  )
+                }
+              />
+            )}
+            {scoped
+              ? section && (
+                  <SectionReview
+                    deckId={id}
+                    section={section}
+                    starting={sectionStart.starting === section.id}
                     onStart={sectionStart.start}
-                    onGoTo={goTo}
                   />
                 )
-              }
-            />
-            {deck.due > 0 && <ReviewButton deck={deck} />}
+              : deck.due > 0 && <ReviewButton deck={deck} />}
           </View>
           <View className="gap-6">
             {/* Dimmed while choosing, so what is chosen never changes under the filter. */}
@@ -435,7 +553,7 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
               accessibilityElementsHidden={!!selection}
             >
               <FilterTools
-                rows={rows}
+                rows={scopeRows}
                 // A section's list has no Section filter or sort to offer.
                 sections={scoped ? NO_SECTIONS : sections}
                 filters={filters}
@@ -475,6 +593,7 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
       )}
       {owner && moveToSection.sheet}
       {owner && newSection.sheet}
+      {owner && archiveSection.sheet}
       {owner && moveToDeck.sheet}
       {owner && tagCards.sheet}
     </Screen>
@@ -503,17 +622,15 @@ function Top({
 }: {
   deck: DeckData;
   rows: DeckRow[];
-  /** Where the learner is in a deck whose sections open in order. */
+  /** The deck's sections as a line, with what opens the next. */
   section?: ReactNode;
 }) {
-  const { t, i18n } = useLingui();
-  const p = usePalette();
+  const { t } = useLingui();
   const counts = useCounts(rows);
   const next = useNextDue(rows);
   const due = deck.due;
   const line =
     due > 0 ? null : next ? t`Next card due ${next}.` : rows.length ? t`Nothing scheduled.` : null;
-  const groupLabel = (k: keyof typeof counts) => i18n._(stateMarks[k].groupLabel);
   return (
     <Plate className="gap-4 p-5">
       <View className="flex-row items-baseline justify-between gap-3">
@@ -528,35 +645,115 @@ function Top({
         </Text>
       </View>
       <View className="gap-2.5">
-        <View
-          className="h-2.5 w-full flex-row overflow-hidden rounded-full bg-plate-2"
-          style={{ gap: 2 }}
-        >
-          {(["known", "learning", "new"] as const)
-            .filter((k) => counts[k] > 0)
-            .map((k) => (
-              <View
-                key={k}
-                style={{
-                  flexGrow: counts[k],
-                  flexBasis: 0,
-                  backgroundColor: p[stateMarks[k].tint],
-                }}
-              />
-            ))}
-        </View>
-        <View className="flex-row flex-wrap gap-x-4 gap-y-1">
-          {(["new", "learning", "known"] as const).map((k) => (
-            <View key={k} className="flex-row items-center gap-1.5">
-              <StateIcon state={k} size={14} />
-              <Text className="text-sm font-medium text-text">{i18n.number(counts[k])}</Text>
-              <Text className="text-sm text-muted">{groupLabel(k)}</Text>
-            </View>
-          ))}
-        </View>
+        <StateBar counts={counts} />
+        <StateCounts counts={counts} />
       </View>
       {line && <Text className="text-sm text-muted">{line}</Text>}
       {section}
+    </Plate>
+  );
+}
+
+/**
+ * The deck's sections under its summary: a column each, which opens that section's page, then the
+ * one sentence about what opens the next. Replaced the web's SectionProgress on the phone.
+ */
+function DeckSections({
+  deckId,
+  columns,
+  state,
+  due,
+  starting,
+  onStart,
+}: {
+  deckId: string;
+  columns: LineColumn[];
+  state: ReturnType<typeof opening>;
+  due: number;
+  starting: string | undefined;
+  onStart: (section: Section) => void;
+}) {
+  const { t } = useLingui();
+  const router = useRouter();
+  return (
+    <View className="gap-3 border-t border-edge pt-4">
+      <Text className="text-md font-medium text-text" accessibilityRole="header">
+        {t`Sections`}
+      </Text>
+      <SectionLine
+        columns={columns}
+        hereId={state?.current.id ?? null}
+        tick={state && state.kind !== "open" ? state.current.knownNeeded : null}
+        onOpen={(c) => {
+          captureEvent("section_page_opened", { from: "line" });
+          router.push(sectionPage(deckId, c.id));
+        }}
+      />
+      {state && <OpeningLine state={state} due={due} starting={starting} onStart={onStart} />}
+    </View>
+  );
+}
+
+/**
+ * A section's summary on its page: how much of it is known, where it sits in the deck, its cards'
+ * states as the deck's bar, and what opens next when that is about this section.
+ */
+function SectionTop({
+  section,
+  at,
+  count,
+  rows,
+  opening: openingNode,
+}: {
+  /** Null for the cards with no section. */
+  section: Section | null;
+  /** Its place in the line, from 0. */
+  at: number;
+  count: number;
+  rows: DeckRow[];
+  opening: ReactNode;
+}) {
+  const { t, i18n } = useLingui();
+  const counts = useCounts(rows);
+  const percent = i18n.number(rows.length ? counts.known / rows.length : 0, {
+    style: "percent",
+  });
+  const known = i18n.number(counts.known);
+  const place = i18n.number(at + 1);
+  const total = i18n.number(count);
+  return (
+    <Plate className="gap-4 p-5">
+      <View className="flex-row items-end justify-between gap-3">
+        <View className="shrink gap-1">
+          {section && (
+            <Text
+              className="text-sm font-medium uppercase text-muted"
+              style={{ letterSpacing: 0.8 }}
+            >
+              {t`Section ${place} of ${total}`}
+            </Text>
+          )}
+          <Text className="text-lg text-muted">
+            <Trans>
+              <Text
+                className="text-3xl font-medium tracking-tight text-text"
+                style={{ fontVariant: ["tabular-nums"] }}
+              >
+                {percent}
+              </Text>{" "}
+              known
+            </Trans>
+          </Text>
+        </View>
+        <Text className="shrink pb-1 text-base text-text-2" style={TEXT_END}>
+          {plural(rows.length, { one: `${known} of # card`, other: `${known} of # cards` })}
+        </Text>
+      </View>
+      <View className="gap-2.5">
+        <StateBar counts={counts} />
+        <StateCounts counts={counts} />
+      </View>
+      {openingNode && <View className="border-t border-edge pt-4">{openingNode}</View>}
     </Plate>
   );
 }
@@ -578,6 +775,96 @@ function ReviewButton({ deck }: { deck: DeckData }) {
   );
 }
 
+/**
+ * A section page's one action: Review this section when it has cards due, or Start anyway while it
+ * waits. A section that is ready starts from its summary.
+ */
+function SectionReview({
+  deckId,
+  section,
+  starting,
+  onStart,
+}: {
+  deckId: string;
+  section: Section;
+  starting: boolean;
+  onStart: (section: Section) => void;
+}) {
+  const { t } = useLingui();
+  const router = useRouter();
+  if (section.status === "locked")
+    return (
+      <Button
+        label={t`Start anyway`}
+        variant="secondary"
+        size="lg"
+        loading={starting}
+        onPress={() => onStart(section)}
+      />
+    );
+  if (section.status !== "open" || section.due === 0) return null;
+  return (
+    <Button
+      label={t`Review this section`}
+      variant="primary"
+      size="lg"
+      onPress={() => {
+        haptics.start();
+        router.push(`/review?deck=${deckId}&section=${section.id}` as Href);
+      }}
+    />
+  );
+}
+
+/** The section before and after, so a learner walks the deck without going back to it. */
+function Steps({
+  back,
+  forward,
+}: {
+  back: { column: LineColumn; onPress: () => void } | undefined;
+  forward: { column: LineColumn; onPress: () => void } | undefined;
+}) {
+  if (!back && !forward) return null;
+  return (
+    <View className="flex-row gap-3 pt-6">
+      {back ? <Step {...back} dir="back" /> : <View className="flex-1" />}
+      {forward ? <Step {...forward} dir="forward" /> : <View className="flex-1" />}
+    </View>
+  );
+}
+
+function Step({
+  column,
+  dir,
+  onPress,
+}: {
+  column: LineColumn;
+  dir: "back" | "forward";
+  onPress: () => void;
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  const forward = dir === "forward";
+  const name = column.section?.name ?? t`No section`;
+  return (
+    <Press
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={forward ? t`Next section, ${name}` : t`Previous section, ${name}`}
+      className={`flex-1 gap-0.5 rounded-xl border border-edge px-4 py-3 ${forward ? "items-end" : "items-start"}`}
+    >
+      <View className="flex-row items-center gap-1">
+        {!forward && <Icon name="back" size={14} colour={p.muted} />}
+        <Text className="text-sm text-muted">{forward ? t`Next` : t`Previous`}</Text>
+        {forward && <Icon name="forward" size={14} colour={p.muted} />}
+      </View>
+      <Text className="text-base font-medium text-text" numberOfLines={1}>
+        {name}
+      </Text>
+    </Press>
+  );
+}
+
 /** A group's heading over its words: a section, when it's back, or the day the words arrived. */
 function Heading({
   group: g,
@@ -585,8 +872,7 @@ function Heading({
   hereId,
   starting,
   onStart,
-  owner,
-  several,
+  menu,
 }: {
   group: DeckGroup;
   deckId: string;
@@ -594,10 +880,10 @@ function Heading({
   hereId: string | null;
   starting: string | undefined;
   onStart: (section: Section) => void;
-  owner: boolean;
-  several: boolean;
+  menu: ReturnType<typeof useSectionMenu>;
 }) {
   const { t, i18n } = useLingui();
+  const router = useRouter();
   const title =
     g.kind === "section"
       ? (g.section?.name ?? t`No section`)
@@ -619,10 +905,28 @@ function Heading({
           count={g.rows.length}
           here={section.id === hereId}
           starting={starting === section.id}
-          onStart={onStart}
-          owner={owner}
-          several={several}
+          rows={menu(section)}
         />
+      ) : g.kind === "section" ? (
+        // The cards with no section open their page as a section's heading does.
+        <Press
+          scale={0.99}
+          onPress={() => {
+            captureEvent("section_page_opened", { from: "heading" });
+            router.push(sectionPage(deckId, ""));
+          }}
+          accessibilityRole="link"
+        >
+          <SectionTitle
+            end={
+              <Text className="text-base text-muted">
+                {plural(g.rows.length, { one: "# card", other: "# cards" })}
+              </Text>
+            }
+          >
+            {t`No section`}
+          </SectionTitle>
+        </Press>
       ) : (
         title && (
           <SectionTitle

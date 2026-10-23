@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, type Section, type Sections } from "@lymi/client/api";
+import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
 import { type SectionActionId, sectionActions } from "@lymi/client/section-actions";
 import { isolate } from "@lymi/core";
@@ -8,13 +8,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
+import { captureEvent } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
 import { ActionMenu } from "../ui/action-menu";
 import { Icon } from "../ui/icons";
 import type { MenuItem } from "../ui/menu";
-import { Button, Text } from "../ui/primitives";
+import { Button, Press, Text } from "../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../ui/row-menu";
 import { toast } from "../ui/toast-host";
+import { sectionPage } from "./section-line";
 
 /**
  * Starting a section, as the web's deck page does: one with locked sections before it asks first,
@@ -70,124 +72,91 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
   return { start: ask, starting: start.isPending ? start.variables?.id : undefined };
 }
 
-/**
- * Where the learner is in a deck whose sections open in order, under the deck's summary: the
- * section they are on, Go to its heading, and the one next step. It says what opens the next
- * section in cards, never as a percentage. The web's SectionProgress.
- */
-export function SectionProgress({
-  sections,
-  progress,
-  due,
-  starting,
-  onStart,
-  onGoTo,
-}: {
-  sections: readonly Section[];
-  progress: NonNullable<Sections["progress"]>;
-  /** Cards to review now, so Start takes the amber only when Review does not have it. */
-  due: number;
-  starting: string | undefined;
+/** What a section's menu does, wherever it opens: a heading's ⋯, its long press, or its page's ⋯. */
+export interface SectionMenuHandlers {
   onStart: (section: Section) => void;
-  /** Scrolls the list to the section's heading, with nothing filtered out. */
-  onGoTo: (sectionId: string) => void;
-}) {
-  const { t, i18n } = useLingui();
-  const p = usePalette();
-  const current = sections.find((s) => s.id === progress.currentId);
-  const next = sections.find((s) => s.id === progress.nextId);
-  if (!current) return null;
+  onSelectCards: (section: Section) => void;
+  onArchive: (section: Section) => void;
+}
 
-  const currentName = current.name;
-  const nextName = next?.name ?? "";
-  const known = i18n.number(current.known);
-  const needed = i18n.number(current.knownNeeded);
-  let title: string;
-  let detail: string;
-  if (!next) {
-    title = t`Every section is open`;
-    detail = plural(current.total, {
-      one: `You know ${known} of # card in ${currentName}, the last section.`,
-      other: `You know ${known} of # cards in ${currentName}, the last section.`,
-    });
-  } else if (progress.ready) {
-    title = t`${{ nextName: isolate(nextName) }} is ready`;
-    detail = plural(current.total, {
-      one: `You know ${known} of # card in ${currentName}.`,
-      other: `You know ${known} of # cards in ${currentName}.`,
-    });
-  } else if (current.notStarted > 0 && current.known >= current.knownNeeded) {
-    title = currentName;
-    detail = plural(current.notStarted, {
-      one: "The next section opens once the last card of this section comes up in review.",
-      other: "The next section opens once the last # cards of this section come up in review.",
-    });
-  } else {
-    title = currentName;
-    detail = plural(current.total, {
-      one: `The next section opens when you know ${needed} of # card.`,
-      other: `The next section opens when you know ${needed} of # cards.`,
-    });
-  }
-
-  const meter = !!next && !progress.ready && current.total > 0;
-  const share = current.total > 0 ? Math.min(1, current.known / current.total) : 0;
-  const tick = current.total > 0 ? Math.min(1, current.knownNeeded / current.total) : 0;
-
-  return (
-    <View className="gap-3 border-t border-edge pt-4">
-      <View className="flex-row items-start gap-3">
-        <View className="flex-1 gap-0.5">
-          <Text className="text-md font-medium text-text">{title}</Text>
-          <Text className="text-sm text-text-2">{detail}</Text>
-        </View>
-        <Button
-          label={
-            next && progress.ready
-              ? t`Go to ${{ currentName: isolate(currentName) }}`
-              : t`Go to section`
-          }
-          variant="ghost"
-          size="sm"
-          onPress={() => onGoTo(current.id)}
-        />
-      </View>
-      {meter && (
-        <View className="h-1.5 justify-center" accessibilityElementsHidden>
-          <View className="h-1.5 overflow-hidden rounded-full bg-plate-2">
-            <View
-              className="h-full rounded-full bg-state-known"
-              style={{ width: `${share * 100}%` }}
-            />
-          </View>
-          <View
-            className="absolute w-0.5 rounded-full"
-            style={{
-              start: `${tick * 100}%`,
-              top: -4,
-              bottom: -4,
-              marginStart: -1,
-              backgroundColor: p["text-2"],
-            }}
-          />
-        </View>
-      )}
-      {next && progress.ready && (
-        <Button
-          label={t`Start ${{ nextName: isolate(nextName) }}`}
-          variant={due > 0 ? "secondary" : "primary"}
-          loading={starting === next.id}
-          onPress={() => onStart(next)}
-        />
-      )}
-    </View>
-  );
+/**
+ * A section's actions as menu rows, from the list both apps share, so every place offers the same
+ * rows in the same order.
+ */
+export function useSectionMenu(
+  deckId: string,
+  {
+    owner,
+    several,
+    selecting,
+  }: {
+    owner: boolean;
+    several: boolean;
+    /** A selection is open, so Select cards would replace it. */
+    selecting: boolean;
+  },
+  handlers: SectionMenuHandlers,
+) {
+  const { t } = useLingui();
+  const router = useRouter();
+  const sectionsPage = `/library/sections?id=${deckId}`;
+  return (section: Section): (MenuItem & Pick<RowMenuItem, "id" | "icon">)[][] => {
+    const action: Record<SectionActionId, MenuItem & Pick<RowMenuItem, "id" | "icon">> = {
+      start_section: {
+        id: "start_section",
+        label: t`Start anyway`,
+        icon: "unlock",
+        onSelect: () => handlers.onStart(section),
+      },
+      review: {
+        id: "review",
+        label: t`Review this section`,
+        icon: "play",
+        onSelect: () => router.push(`/review?deck=${deckId}&section=${section.id}` as Href),
+      },
+      add_card: {
+        id: "add_card",
+        label: t`Add card here`,
+        icon: "plus",
+        onSelect: () => router.push(`/capture?deck=${deckId}&section=${section.id}` as Href),
+      },
+      select_cards: {
+        id: "select_cards",
+        label: t`Select cards`,
+        icon: "check",
+        onSelect: () => handlers.onSelectCards(section),
+      },
+      rename_section: {
+        id: "rename_section",
+        label: t`Rename section`,
+        icon: "edit",
+        onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
+      },
+      reorder_sections: {
+        id: "reorder_sections",
+        label: t`Reorder sections`,
+        icon: "grip",
+        onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
+      },
+      archive_section: {
+        id: "archive_section",
+        label: t`Archive section`,
+        icon: "archive",
+        destructive: true,
+        onSelect: () => handlers.onArchive(section),
+      },
+    };
+    return sectionActions(section, { owner, several })
+      .map((group) => group.filter((id) => !(selecting && id === "select_cards")))
+      .filter((group) => group.length > 0)
+      .map((group) => group.map((id) => action[id]));
+  };
 }
 
 /**
  * A section's heading in the deck's list: how much of it the learner knows, or a lock while it
- * waits, its name and count, You are here on the section they are on, and a menu that starts it
- * early or reviews only its cards.
+ * waits, its name and count, You are here on the section they are on, and the section's menu. A tap
+ * opens the section's page.
  */
 export function SectionHeading({
   deckId,
@@ -195,64 +164,34 @@ export function SectionHeading({
   count,
   here,
   starting,
-  onStart,
-  owner,
-  several,
+  rows,
 }: {
   deckId: string;
   section: Section;
   count: number;
   here: boolean;
   starting: boolean;
-  onStart: (section: Section) => void;
-  /** The deck's owner also renames and reorders its sections. */
-  owner: boolean;
-  /** More than one section, so there is an order to change. */
-  several: boolean;
+  /** The section's menu, from `useSectionMenu`. */
+  rows: (MenuItem & Pick<RowMenuItem, "id" | "icon">)[][];
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const router = useRouter();
   const locked = section.status !== "open";
   const sectionName = section.name;
-  const sectionsPage = `/library/sections?id=${deckId}`;
-  const action: Record<SectionActionId, MenuItem & Pick<RowMenuItem, "id" | "icon">> = {
-    start_section: {
-      id: "start_section",
-      label: t`Start anyway`,
-      icon: "unlock",
-      onSelect: () => onStart(section),
-    },
-    review: {
-      id: "review",
-      label: t`Review this section`,
-      icon: "play",
-      onSelect: () => router.push(`/review?deck=${deckId}&section=${section.id}` as Href),
-    },
-    add_card: {
-      id: "add_card",
-      label: t`Add card here`,
-      icon: "plus",
-      onSelect: () => router.push(`/capture?deck=${deckId}&section=${section.id}` as Href),
-    },
-    rename_section: {
-      id: "rename_section",
-      label: t`Rename section`,
-      icon: "edit",
-      onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
-    },
-    reorder_sections: {
-      id: "reorder_sections",
-      label: t`Reorder sections`,
-      icon: "grip",
-      onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
-    },
+  const href = sectionPage(deckId, section.id);
+  const open = () => {
+    captureEvent("section_page_opened", { from: "heading" });
+    router.push(href);
   };
-  // The ⋯ and a long press offer the same rows.
-  const rows = sectionActions(section, { owner, several }).map((group) =>
-    group.map((id) => action[id]),
-  );
   const items: MenuItem[][] = rows;
+  const headingLabel = locked
+    ? plural(count, {
+        one: `${sectionName}, not open yet, # card`,
+        other: `${sectionName}, not open yet, # cards`,
+      })
+    : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` });
+  const label = here ? `${headingLabel}, ${t`You are here`}` : headingLabel;
   const heading = (
     <View className="flex-row items-start gap-2.5 bg-canvas px-1 pb-3 pt-2">
       <View className="h-7 justify-center">
@@ -266,14 +205,7 @@ export function SectionHeading({
         <Text
           className={`text-lg font-medium ${locked ? "text-text-2" : "text-text"}`}
           accessibilityRole="header"
-          accessibilityLabel={
-            locked
-              ? plural(count, {
-                  one: `${sectionName}, not open yet, # card`,
-                  other: `${sectionName}, not open yet, # cards`,
-                })
-              : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` })
-          }
+          accessibilityLabel={headingLabel}
         >
           {sectionName}
           <Text
@@ -304,19 +236,20 @@ export function SectionHeading({
       )}
     </View>
   );
-  if (items.length === 0) return heading;
-  const headingLabel = locked
-    ? plural(count, {
-        one: `${sectionName}, not open yet, # card`,
-        other: `${sectionName}, not open yet, # cards`,
-      })
-    : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` });
+  if (rows.length === 0) {
+    return (
+      <Press scale={0.99} onPress={open} accessibilityRole="header" accessibilityLabel={label}>
+        {heading}
+      </Press>
+    );
+  }
   return (
     <RowMenu
       surface="section_heading"
-      href={`/library/${deckId}` as Href}
+      href={href}
+      onPress={open}
+      label={label}
       kind="heading"
-      label={here ? `${headingLabel}, ${t`You are here`}` : headingLabel}
       items={rows}
     >
       {heading}

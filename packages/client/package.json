@@ -24,6 +24,7 @@
     "./deck-list": "./src/deck-list.ts",
     "./deck-filters": "./src/deck-filters.ts",
     "./section-actions": "./src/section-actions.ts",
+    "./section-line": "./src/section-line.ts",
     "./card-batch": "./src/card-batch.ts",
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts",

@@ -27,7 +27,9 @@ import { type SectionActionId, sectionActions } from "@lymi/client/section-actio
 import { isolate, unisolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
+  Archive,
   Check,
+  ListChecks,
   Lock,
   LockOpen,
   MapPin,
@@ -430,8 +432,11 @@ function SectionHeading({
     start_section: !!onStart,
     review: !!onReview,
     add_card: !!editing,
+    // The web's section page brings these with docs/proposals/section-pages.md.
+    select_cards: false,
     rename_section: !!editing,
     reorder_sections: !!editing,
+    archive_section: false,
   };
   const actions = section
     ? sectionActions(section, { owner: !!editing, several: !!editing?.several })
@@ -443,8 +448,10 @@ function SectionHeading({
     start_section: (section) => onStart?.(section),
     review: (section) => onReview?.(section),
     add_card: (section) => editing?.onAddCard(section),
+    select_cards: () => {},
     rename_section: (section) => editing?.onRename(section),
     reorder_sections: () => editing?.onManage(),
+    archive_section: () => {},
   };
   // One control at the end keeps the menu on the title's first line, so Start anyway joins the menu when there is one.
   const menu = actions.flat().some((id) => id !== "start_section");
@@ -526,8 +533,10 @@ const SECTION_ACTION: Record<SectionActionId, { icon: ReactNode; label: ReactNod
   start_section: { icon: <LockOpen />, label: <Trans>Start anyway</Trans> },
   review: { icon: <Play />, label: <Trans>Review this section</Trans> },
   add_card: { icon: <Plus />, label: <Trans>Add card here</Trans> },
+  select_cards: { icon: <ListChecks />, label: <Trans>Select cards</Trans> },
   rename_section: { icon: <PencilLine />, label: <Trans>Rename</Trans> },
   reorder_sections: { icon: <Settings2 />, label: <Trans>Arrange sections</Trans> },
+  archive_section: { icon: <Archive />, label: <Trans>Archive section</Trans> },
 };
 
 /** One row of a section's menu, drawn from the list both apps share. */

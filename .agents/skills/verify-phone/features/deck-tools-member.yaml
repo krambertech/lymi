@@ -1,4 +1,4 @@
-# A joined deck with sections, as a member: Go to, then a selection's Review and Mark important, with Undo.
+# A joined deck with sections, as a member: the current section, then a selection's Review and Mark important, with Undo.
 appId: app.lymi
 name: Deck tools, member
 ---
@@ -7,11 +7,10 @@ name: Deck tools, member
 - extendedWaitUntil:
     visible: "Search this deck"
     timeout: 20000
-- tapOn: "Go to .*"
 - extendedWaitUntil:
-    visible: ".*, \\d+ cards, You are here"
+    visible: ".*, You are here"
     timeout: 10000
-- takeScreenshot: 01-go-to
+- takeScreenshot: 01-current-section
 - tapOn: "Deck options"
 - assertVisible: "Leave deck"
 - tapOn: "Select cards"

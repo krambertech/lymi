@@ -1,14 +1,12 @@
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloudflare:workers";
 import { NonRetryableError } from "cloudflare:workflows";
-import { ImportFailure as Failures, type ImportFailure } from "@lymi/core";
 import { createTextProvider } from "../ai";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
 import { productAnalytics, reportServerException } from "../posthog";
 import {
   attachImportPictures,
-  failImport,
-  failureOf,
+  failRun,
   finishImport,
   type ImportRunParams,
   inspectImport,
@@ -21,12 +19,18 @@ import {
 } from "../services";
 import { textCallReporter } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
+import { CallBudget, isCallBudgetSpent, stopOnSpent } from "./call-budget";
 import { ImportFileError } from "./files";
 
 const STEP = {
   retries: { limit: 3, delay: "10 seconds", backoff: "exponential" },
   timeout: "10 minutes",
 } as const;
+
+/** Another attempt in this invocation would have no more calls to spend. */
+function noRetryWhenSpent<T>(work: () => Promise<T>): Promise<never> {
+  return stopOnSpent(work, (message) => new NonRetryableError(message)) as Promise<never>;
+}
 
 /** A file error is the file's fault, so retrying cannot help. */
 async function fileErrorsStop<T>(work: () => Promise<T>): Promise<T> {
@@ -46,7 +50,10 @@ async function fileErrorsStop<T>(work: () => Promise<T>): Promise<T> {
 export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams> {
   async run(event: WorkflowEvent<ImportRunParams>, step: WorkflowStep) {
     const params = event.payload;
-    const db = createDb(this.env.DB);
+    // Every call this invocation makes counts against one cap, so the run stops short of it and
+    // keeps enough to record the failure. A replay in a new invocation starts from zero.
+    const budget = new CallBudget();
+    const db = createDb(budget.wrap(this.env.DB));
     const analytics = productAnalytics(
       this.env,
       params.userId,
@@ -54,7 +61,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       analyticsContextFor(db, params.userId),
     );
     const ctx = runContext(db, params, analytics);
-    const uploads = this.env.IMPORTS;
+    const uploads = budget.wrap(this.env.IMPORTS);
     const id = params.importId;
     try {
       if (params.phase === "inspect") {
@@ -75,7 +82,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       let steps = 0;
       const counted = <T>(name: string, work: () => Promise<T>) => {
         steps++;
-        return step.do(name, STEP, () => analytics.run(work) as Promise<never>) as Promise<T>;
+        return step.do(name, STEP, () => noRetryWhenSpent(() => analytics.run(work))) as Promise<T>;
       };
       const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
       const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
@@ -90,9 +97,9 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       let handled = params.resume?.handled ?? 0;
       // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
       const storage = {
-        bucket: this.env.PRIVATE_IMAGES,
-        images: this.env.IMAGES,
-        audio: this.env.AUDIO,
+        bucket: this.env.PRIVATE_IMAGES && budget.wrap(this.env.PRIVATE_IMAGES),
+        images: this.env.IMAGES && budget.wrap(this.env.IMAGES),
+        audio: this.env.AUDIO && budget.wrap(this.env.AUDIO),
       };
 
       for (;;) {
@@ -133,23 +140,21 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         chunk++;
       }
       await step.do("finish", STEP, () =>
-        analytics.run(() => finishImport(ctx, id, pictures, uploads)),
+        noRetryWhenSpent(() => analytics.run(() => finishImport(ctx, id, pictures, uploads))),
       );
     } catch (err) {
-      const failure: ImportFailure =
-        err instanceof Error && Failures.safeParse(err.message).success
-          ? (err.message as ImportFailure)
-          : failureOf(err);
-      await step.do("fail", STEP, async () => {
-        await analytics.run(() => failImport(db, id, failure, uploads, analytics));
-        if (failure === "internal") {
-          await reportServerException(this.env, err, {
-            route: "import",
-            method: "WORKFLOW",
-            userId: params.userId,
-          });
-        }
-      });
+      // Recording the failure may use the calls the budget kept back.
+      await step.do("fail", STEP, () =>
+        analytics.run(() =>
+          failRun(db, id, err, uploads, budget, analytics, (error) =>
+            reportServerException(this.env, error, {
+              route: "import",
+              method: isCallBudgetSpent(error) ? "WORKFLOW budget" : "WORKFLOW",
+              userId: params.userId,
+            }),
+          ),
+        ),
+      );
     }
   }
 }

@@ -3,28 +3,28 @@ import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
 import { archivedSectionsQuery, sectionsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { isolate, SectionInput, type SectionProgression, sectionLimits } from "@lymi/core";
+import type { SectionProgression } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 import { useDecks, useSections } from "../../../data/queries";
+import { useArchiveSection } from "../../../sections/archive-section";
+import { NameSheet } from "../../../sections/name-sheet";
 import { SectionPath } from "../../../sections/section-path";
-import { usePalette } from "../../../theme/palette";
-import { inputCap } from "../../../theme/type";
 import { EmptyState } from "../../../ui/empty-state";
 import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarText, Screen } from "../../../ui/screen";
 import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../ui/sheet";
-import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 
 /**
  * A deck's sections, for its owner, drawn as the path every learner walks. Edit in the bar shows
  * handles to drag, so the order never changes by a stray drag; at rest a row swipes open on Rename
- * and Archive. New section is the path's next stop. Archive has Undo; how sections open sits below.
+ * and Archive. New section is the path's next stop. Archive asks about a section's cards and has
+ * Undo; how sections open sits below.
  */
 export default function DeckSections() {
   const { t, i18n } = useLingui();
@@ -99,28 +99,7 @@ export default function DeckSections() {
     onSuccess: (_r, section) => toast.close(`archive-section-${section.id}`),
     onSettled: refresh,
   });
-  // Archiving happens at once and offers Undo, as a deck's does; its cards stay in the deck without
-  // a section, and Restore, from Undo or Archived sections, moves them back.
-  const archive = useMutation({
-    mutationFn: (section: Section) => api.archiveSection(section.id, { cards: "keep" }),
-    onSuccess: (_r, section) => {
-      const sectionName = section.name;
-      toast.add({
-        id: `archive-section-${section.id}`,
-        title: t`Archived “${{ sectionName: isolate(sectionName) }}”`,
-        // Not the page's restore mutation: Undo can be pressed after the learner has left the page.
-        action: {
-          label: t`Undo`,
-          onPress: () =>
-            void api
-              .restoreSection(section.id)
-              .then(refresh)
-              .catch((e) => failed(e)),
-        },
-      });
-    },
-    ...handlers,
-  });
+  const archive = useArchiveSection();
   const progression = useMutation({
     mutationFn: (sectionProgression: SectionProgression) =>
       writes.updateDeck(id, { sectionProgression }),
@@ -195,7 +174,7 @@ export default function DeckSections() {
           inOrder={deck?.sectionProgression !== "open"}
           onNew={() => setNaming({})}
           onRename={(section) => setNaming({ section })}
-          onArchive={(section) => archive.mutate(section)}
+          onArchive={archive.archive}
           onReorder={(ids) => reorder.mutate(ids)}
           // One order at a time, so the server never receives two that cross.
           busy={reorder.isPending}
@@ -231,6 +210,8 @@ export default function DeckSections() {
           setNaming(null);
         }}
       />
+
+      {archive.sheet}
 
       <Sheet
         title={t`How sections open`}
@@ -291,78 +272,5 @@ export default function DeckSections() {
         </View>
       </Sheet>
     </Screen>
-  );
-}
-
-/** A section is a name, so making or renaming one is one field. */
-function NameSheet({
-  target,
-  onClose,
-  onSubmit,
-  busy,
-}: {
-  target: { section?: Section } | null;
-  onClose: () => void;
-  onSubmit: (name: string) => Promise<void>;
-  busy: boolean;
-}) {
-  const { t } = useLingui();
-  const p = usePalette();
-  const [name, setName] = useState("");
-  const [invalid, setInvalid] = useState<string | null>(null);
-  const [opened, setOpened] = useState<typeof target>(null);
-  const focus = useSheetFocus({ open: target !== null });
-  // Each opening starts from the section's name, or empty for a new one.
-  if (target !== opened) {
-    setOpened(target);
-    setName(target?.section?.name ?? "");
-    setInvalid(null);
-  }
-  const submit = () => {
-    if (busy) return;
-    const parsed = SectionInput.shape.name.safeParse(name);
-    if (!parsed.success) {
-      setInvalid(t`Give the section a name.`);
-      return;
-    }
-    // Under the field, since a toast would sit under this sheet.
-    void onSubmit(parsed.data).catch((e) => setInvalid(errorMessage(e)));
-  };
-  const renaming = !!target?.section;
-  return (
-    <Sheet
-      title={renaming ? t`Rename section` : t`New section`}
-      save={{
-        label: renaming ? t`Save` : t`Create section`,
-        onPress: submit,
-        busy,
-        disabled: !name.trim(),
-      }}
-      open={target !== null}
-      onOpenChange={(open) => !open && onClose()}
-    >
-      <View className="rounded-xl bg-glass-plate px-4">
-        <TextInput
-          value={name}
-          onChangeText={(next) => {
-            setName(next);
-            setInvalid(null);
-          }}
-          {...focus}
-          onSubmitEditing={submit}
-          submitBehavior="submit"
-          returnKeyType="done"
-          maxLength={sectionLimits.name ?? undefined}
-          placeholder={t`Lesson 15`}
-          placeholderTextColor={p.muted}
-          accessibilityLabel={t`Name`}
-          selectionColor={p.text}
-          className="min-h-11 py-2 font-sans text-text"
-          style={{ fontSize: 17 }}
-          maxFontSizeMultiplier={inputCap(17)}
-        />
-      </View>
-      {invalid && <SheetError>{invalid}</SheetError>}
-    </Sheet>
   );
 }

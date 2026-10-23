@@ -691,12 +691,10 @@ function Run({
       </Cover>
     );
   }
-  // The end waits for the last grade to land: the header holds still, so the lantern leaves from it,
-  // and the last card steps back under it. The card keeps its place as the end screen arrives.
+  // While the end waits for the last grade to land, the header holds still, so the lantern leaves from it.
   if (stopped && !result && progress) {
     return (
       <Cover style={pull.style}>
-        {lastGraded && <LastCard key="last" graded={lastGraded} known={known} leaving={false} />}
         <View className="flex-1" style={{ paddingTop: insets.top + 4 }}>
           <Header done={progress.done} total={progress.total} onClose={onClose} />
         </View>
@@ -728,7 +726,6 @@ function Run({
   if (result && mark && state) {
     return (
       <Cover style={pull.style}>
-        {lastGraded && <LastCard key="last" graded={lastGraded} known={known} leaving />}
         <Completion
           screen={result}
           from={mark.attempts}
@@ -1052,84 +1049,6 @@ function Run({
         }}
       />
     </Cover>
-  );
-}
-
-/**
- * The last graded step, where it was, while the end of a review waits for its grade to land and as
- * the end begins: it steps back 8 pt to 0.98 as its grades fade, then fades as the end screen arrives
- * over it. Under reduced motion it does not step back. motion.md "The end of a review".
- */
-function LastCard({
-  graded,
-  known,
-  leaving,
-}: {
-  graded: Graded;
-  known: KnownReadings;
-  leaving: boolean;
-}) {
-  const insets = useSafeAreaInsets();
-  const reduce = useReduceMotion();
-  const back = useSharedValue(0);
-  const grades = useSharedValue(1);
-  const shown = useSharedValue(1);
-  useEffect(() => {
-    const step = { duration: 200, easing: EASE, reduceMotion: ALWAYS };
-    if (!reduce) back.value = withTiming(1, step);
-    grades.value = withTiming(0, step);
-  }, [reduce, back, grades]);
-  useEffect(() => {
-    if (leaving) shown.value = withTiming(0, { duration: 200, easing: EASE, reduceMotion: ALWAYS });
-  }, [leaving, shown]);
-  const style = useAnimatedStyle(() => ({
-    opacity: shown.value,
-    transform: [{ translateY: 8 * back.value }, { scale: 1 - 0.02 * back.value }],
-  }));
-  const strip = useAnimatedStyle(() => ({ opacity: grades.value }));
-  return (
-    <Animated.View
-      pointerEvents="none"
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
-      style={[
-        StyleSheet.absoluteFill,
-        // Where the card stack sits: under the review's 48 pt header.
-        { paddingTop: insets.top + 4 + 48, paddingBottom: Math.max(insets.bottom, 12) },
-        style,
-      ]}
-    >
-      <View className="flex-1 px-4 pt-3">
-        <CardPlate
-          pronounce={null}
-          item={graded.item}
-          deck={graded.deck}
-          forgotten={graded.forgotten}
-          hook={graded.hook}
-          hookShown={!!graded.hook}
-          known={known}
-          revealed
-          still
-          onReveal={undefined}
-          onPeek={undefined}
-          onShowHook={undefined}
-          offer={false}
-          onOffer={undefined}
-          onMenu={undefined}
-          onUndo={undefined}
-        />
-      </View>
-      {/* The grades go as the card steps back, so a wait for the server never looks like a card still asking. */}
-      <Animated.View style={strip}>
-        <GradeStrip
-          still
-          next={graded.item.next}
-          easyLocked={graded.grade.aid === "hook"}
-          lockedTip={0}
-          onGrade={undefined}
-        />
-      </Animated.View>
-    </Animated.View>
   );
 }
 

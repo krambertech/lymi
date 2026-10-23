@@ -119,8 +119,9 @@ export default function CardPage() {
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
   const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
-  // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the text lands.
-  const filling = card?.enrichmentStatus === "working";
+  // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the run settles.
+  const status = card?.enrichmentStatus;
+  const filling = status === "working";
   const announced = useRef(false);
   useEffect(() => {
     if (filling) {
@@ -128,9 +129,11 @@ export default function CardPage() {
       AccessibilityInfo.announceForAccessibility(t`Enriching this card`);
     } else if (announced.current) {
       announced.current = false;
-      AccessibilityInfo.announceForAccessibility(t`Enriched this card`);
+      AccessibilityInfo.announceForAccessibility(
+        status === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
+      );
     }
-  }, [filling, t]);
+  }, [filling, status, t]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>

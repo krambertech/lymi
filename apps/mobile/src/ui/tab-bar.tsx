@@ -72,7 +72,7 @@ export function useAboveTabBar() {
 
 /**
  * The phone's tabs are iOS's own tab bar, so the lens and the press are Apple's Liquid Glass, in
- * Onest with Lucide icons. Inside a deck with cards due, once the deck's own Review button has
+ * Onest with Lucide icons, filled and amber on the chosen tab. Inside a deck with cards due, once the deck's own Review button has
  * scrolled away, its review rides in the bar's accessory, as Podcasts shows what is playing.
  * phone.md "Navigation".
  */
@@ -85,9 +85,12 @@ export function TabBar() {
   const label = { fontFamily: "Onest", fontWeight: "500", fontSize: ANDROID ? 12 : 10 } as const;
   return (
     <NativeTabs
-      labelStyle={{ default: { ...label, color: p.muted }, selected: { ...label, color: p.text } }}
-      iconColor={{ default: p.muted, selected: p.text }}
-      tintColor={p.text}
+      labelStyle={{
+        default: { ...label, color: p.muted },
+        selected: { ...label, color: p["amber-text"] },
+      }}
+      iconColor={{ default: p.muted, selected: p["amber-mark"] }}
+      tintColor={p["amber-mark"]}
       minimizeBehavior="onScrollDown"
       // Material's bar, in the web rail's colours rather than the wallpaper's: its pill is the chip
       // the rail puts under the current page.
@@ -104,19 +107,39 @@ export function TabBar() {
         </NativeTabs.BottomAccessory>
       )}
       <NativeTabs.Trigger name="today">
-        <NativeTabs.Trigger.Icon src={require("../../assets/tabs/today.png")} />
+        <NativeTabs.Trigger.Icon
+          src={{
+            default: require("../../assets/tabs/today.png"),
+            selected: require("../../assets/tabs/today-filled.png"),
+          }}
+        />
         <NativeTabs.Trigger.Label>{t`Today`}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="library">
-        <NativeTabs.Trigger.Icon src={require("../../assets/tabs/library.png")} />
+        <NativeTabs.Trigger.Icon
+          src={{
+            default: require("../../assets/tabs/library.png"),
+            selected: require("../../assets/tabs/library-filled.png"),
+          }}
+        />
         <NativeTabs.Trigger.Label>{t`Library`}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="explore">
-        <NativeTabs.Trigger.Icon src={require("../../assets/tabs/explore.png")} />
+        <NativeTabs.Trigger.Icon
+          src={{
+            default: require("../../assets/tabs/explore.png"),
+            selected: require("../../assets/tabs/explore-filled.png"),
+          }}
+        />
         <NativeTabs.Trigger.Label>{t`Explore`}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="you">
-        <NativeTabs.Trigger.Icon src={require("../../assets/tabs/you.png")} />
+        <NativeTabs.Trigger.Icon
+          src={{
+            default: require("../../assets/tabs/you.png"),
+            selected: require("../../assets/tabs/you-filled.png"),
+          }}
+        />
         <NativeTabs.Trigger.Label>{t`You`}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
     </NativeTabs>

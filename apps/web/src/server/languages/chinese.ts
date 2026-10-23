@@ -79,7 +79,10 @@ export function tonedExample(text: string): boolean {
 export const chinese = {
   tag: "zh",
   enrich: {
-    guide: { notes: "Noun: its usual measure word (*一本书*: 本 for books)." },
+    guide: {
+      notes:
+        "Never the pinyin, which is the pronunciation. Noun: Measure word: *本*, *一本书*. Usage: a near-synonym learners mix (*二 / 两*, *会 / 能*), or for a word of two or more characters, what each means (Characters: 电 electric, 脑 brain).",
+    },
     example: `Chinese deck, no samples, meaningLanguage en. Card "行", meaning "to walk; OK", mayFill: example, notes, pronunciation.
 {"meaning": null, "example": "今天[jīntiān]不行[bù xíng]。", "notes": null, "pronunciation": "xíng", "language": null}
 Why: the meaning says 行 is read xíng here, not háng. Every example carries pinyin after each word, one you write as much as the learner's, with 不 in its citation tone. A card with addReadings gets its own example back that way, with nothing else changed.`,

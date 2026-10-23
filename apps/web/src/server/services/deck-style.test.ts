@@ -165,7 +165,7 @@ describe("learnDeckStyles", () => {
         corrections: 0,
         topic: false,
         chars: 0,
-        prompt_version: 2,
+        prompt_version: 3,
       },
       {
         name: "deck_style_learned",
@@ -174,7 +174,7 @@ describe("learnDeckStyles", () => {
         corrections: 0,
         topic: false,
         chars: article.style.length,
-        prompt_version: 2,
+        prompt_version: 3,
       },
     ]);
   });
@@ -240,7 +240,7 @@ describe("learnDeckStyles", () => {
     const [event] = capture.mock.calls
       .map(([event]) => event)
       .filter((event) => event.name === "deck_style_learned");
-    expect(event).toMatchObject({ corrections: 2, prompt_version: 2 });
+    expect(event).toMatchObject({ corrections: 2, prompt_version: 3 });
   });
 
   it("counts corrections toward learning again, beside the cards they changed", async () => {

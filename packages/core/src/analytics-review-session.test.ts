@@ -60,3 +60,20 @@ it("names what the leg was opened for", () => {
   tracker.finish("empty");
   expect(send.mock.calls[0]?.[0]).toMatchObject({ scope: "chosen", card_count: 3 });
 });
+it("never reports a second finish for a leg, even when its cards come back", () => {
+  const send = vi.fn();
+  const tracker = new ReviewSessionTracker(send, id);
+  tracker.update("round", { cardsDone: 0, cardCount: 3, first: false });
+  tracker.update("round", { cardsDone: 3, cardCount: 3, first: false });
+  tracker.finish("empty");
+  // Undo, or a late page, brings a card back under the same key.
+  tracker.update("round", { cardsDone: 2, cardCount: 3, first: false });
+  tracker.update("round", { cardsDone: 3, cardCount: 3, first: false });
+  tracker.finish("empty");
+  tracker.abandon("navigation");
+  expect(send).toHaveBeenCalledOnce();
+  tracker.update("next", { cardsDone: 3, cardCount: 5, first: false });
+  tracker.update("next", { cardsDone: 4, cardCount: 5, first: false });
+  tracker.finish("empty");
+  expect(send).toHaveBeenCalledTimes(2);
+});

@@ -403,21 +403,29 @@ describe("how an end finishes its leg", () => {
   it("finishes a round walked to its end though the draw still holds unconfirmed cards", () => {
     const end = reviewEnd(input({ stretch: "list", left: 12, confirmed: false }));
     expect(end).toMatchObject({ heading: "round_done" });
-    expect(legFinish(end, "empty", "list", false)).toBe("empty");
+    expect(legFinish(end, "empty", { stretch: "list", walked: true })).toBe("empty");
+  });
+
+  it("does not finish a round whose page ran out before every card was graded or dropped", () => {
+    // The first page of a longer round used up while the next loads, or after it failed offline.
+    const end = reviewEnd(input({ stretch: "list", left: 12, confirmed: true }));
+    expect(legFinish(end, "empty", { stretch: "list", walked: false })).toBeNull();
   });
 
   it("finishes at the goal, and an empty draw only once confirmed", () => {
     const goal = reviewEnd(input({ ending: "goal", attempts: GOAL, confirmed: false }));
-    expect(legFinish(goal, "goal", "day", false)).toBe("goal");
-    expect(legFinish(reviewEnd(input()), "empty", "day", true)).toBe("empty");
+    expect(legFinish(goal, "goal", { stretch: "day", confirmed: false })).toBe("goal");
+    expect(legFinish(reviewEnd(input()), "empty", { stretch: "day", confirmed: true })).toBe(
+      "empty",
+    );
     const met = reviewEnd(input({ attempts: GOAL, confirmed: false }));
-    expect(legFinish(met, "empty", "scope", false)).toBeNull();
+    expect(legFinish(met, "empty", { stretch: "scope", confirmed: false })).toBeNull();
   });
 
   it("never finishes a leg the learner left, or before its end is shown", () => {
     const left = reviewEnd(input({ ending: "left", stretch: "list" }));
-    expect(legFinish(left, "left", "list", true)).toBeNull();
-    expect(legFinish("unchecked", "empty", "day", false)).toBeNull();
-    expect(legFinish(null, "empty", "list", true)).toBeNull();
+    expect(legFinish(left, "left", { stretch: "list", walked: true })).toBeNull();
+    expect(legFinish("unchecked", "empty", { stretch: "day", confirmed: false })).toBeNull();
+    expect(legFinish(null, "empty", { stretch: "list", walked: true })).toBeNull();
   });
 });

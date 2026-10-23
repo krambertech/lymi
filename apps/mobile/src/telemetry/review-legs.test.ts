@@ -145,12 +145,72 @@ describe("a round's end", () => {
         done: 3,
         presenting: false,
         stopped: true,
-        finished: legFinish(roundEnd, "empty", "list", false),
+        finished: legFinish(roundEnd, "empty", { stretch: "list", walked: true }),
       }),
     );
     legs.leave();
     expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
     expect(events).toMatchObject([{ card_count: 3, ending: "empty", scope: "round" }]);
+  });
+
+  describe("longer than one page", () => {
+    // The phone loads a round 50 cards at a time; this one holds 80.
+    const SIZE = 80;
+    const long = (over: Partial<ReviewLeg>) => round({ count: SIZE, ...over });
+    // The end the screen works out once the page in hand runs out, with the draw even confirmed.
+    const pageEnd = (graded: number) =>
+      long({
+        done: graded,
+        presenting: false,
+        stopped: true,
+        finished: legFinish(roundEnd, "empty", { stretch: "list", walked: graded >= SIZE }),
+      });
+    const walk = (from: number, to: number) => {
+      for (let done = from; done < to; done++) legs.step(long({ done }));
+    };
+
+    it("is not finished when the first page runs out while the next loads", () => {
+      walk(0, 50);
+      legs.step(pageEnd(50));
+      expect(events).toEqual([]);
+    });
+
+    it("is finished once every card in the round is graded or dropped, and only once", () => {
+      walk(0, 50);
+      legs.step(pageEnd(50));
+      // The next page lands under the same key and is walked to the end.
+      walk(50, SIZE);
+      legs.step(pageEnd(SIZE));
+      legs.step(pageEnd(SIZE));
+      legs.leave();
+      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+      expect(events).toMatchObject([{ card_count: SIZE, ending: "empty", scope: "round" }]);
+    });
+
+    it("is not finished when the next page fails offline, and leaving reports it abandoned", () => {
+      walk(0, 50);
+      legs.step(pageEnd(50));
+      legs.leave();
+      expect(events).toMatchObject([
+        {
+          name: "review_session_abandoned",
+          reason: "navigation",
+          scope: "round",
+          cards_done: 50,
+          card_count: SIZE,
+        },
+      ]);
+    });
+
+    it("sends no second finish when a card comes back after the round's end", () => {
+      walk(0, SIZE);
+      legs.step(pageEnd(SIZE));
+      // Undo brings the last card back, and it is graded again.
+      legs.step(long({ done: SIZE - 1 }));
+      legs.step(pageEnd(SIZE));
+      legs.leave();
+      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+    });
   });
 
   it("still reports a round left partway as abandoned", () => {

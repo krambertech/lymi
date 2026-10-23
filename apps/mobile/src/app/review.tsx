@@ -500,17 +500,25 @@ function Run({
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
-  // The server sends a round a page at a time, so an emptied page asks for the next one.
+  // A list is walked once every card in it is graded or dropped, not just the page in hand.
+  const walked =
+    leg?.kind === "list"
+      ? listCards.graded.size + listCards.dropped.size >= leg.size
+      : leg?.kind === "forgotten"
+        ? listCards.graded.size + listCards.dropped.size >= leg.items.length
+        : false;
+  // The server sends a round a page at a time, so an emptied page asks for the next one, and the
+  // end waits while it loads. Offline or failed, the end shows, but the round is not walked.
   const listOwed =
     !!leg &&
     !current &&
     leg.kind === "list" &&
-    listCards.graded.size + listCards.dropped.size < leg.size &&
-    list.fetchStatus === "idle" &&
+    !walked &&
+    list.fetchStatus !== "paused" &&
     !list.isError;
   useEffect(() => {
-    if (listOwed) void list.refetch();
-  }, [listOwed, list.refetch]);
+    if (listOwed && list.fetchStatus === "idle") void list.refetch();
+  }, [listOwed, list.fetchStatus, list.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
   // A scoped end names its deck, series or section and weighs the decks outside it, so it waits for them.
@@ -578,7 +586,11 @@ function Run({
     presenting: !!current,
     stopped,
     paused,
-    finished: legFinish(result, ending, leg?.kind !== "draw" ? "list" : "day", confirmed),
+    finished: legFinish(
+      result,
+      ending,
+      leg?.kind !== "draw" ? { stretch: "list", walked } : { stretch: "day", confirmed },
+    ),
   });
 
   /** Past this end screen: the next one reports what changes from here. */

@@ -356,6 +356,14 @@ function Review() {
       : leg.kind === "forgotten"
         ? leg.items.length - legCards.dropped.size
         : legDone + left;
+  // A list is walked once every card in it is graded or dropped, not just the page in hand: the
+  // round's page can run out while a refetch is on its way, or after it failed.
+  const walked =
+    leg?.kind === "today"
+      ? legCards.graded.size + legCards.dropped.size >= leg.size
+      : leg?.kind === "forgotten"
+        ? legCards.graded.size + legCards.dropped.size >= leg.items.length
+        : false;
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
@@ -520,7 +528,11 @@ function Review() {
         { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
         false,
       );
-      const finish = legFinish(result, ending, drawLeg ? "day" : "list", confirmed);
+      const finish = legFinish(
+        result,
+        ending,
+        drawLeg ? { stretch: "day", confirmed } : { stretch: "list", walked },
+      );
       if (paused) tracker.abandon("left");
       else if (finish) tracker.finish(finish);
     }
@@ -532,6 +544,7 @@ function Review() {
     result,
     ending,
     confirmed,
+    walked,
     legDone,
     legSize,
     drawLeg,

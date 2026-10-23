@@ -4440,9 +4440,6 @@ msgstr "Для чего она"
 msgid "What stays for others"
 msgstr "Что останется другим"
 
-msgid "What the example means"
-msgstr "Что значит пример"
-
 msgid "What this is about"
 msgstr "О чём это"
 

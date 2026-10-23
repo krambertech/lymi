@@ -4440,9 +4440,6 @@ msgstr "What it’s for"
 msgid "What stays for others"
 msgstr "What stays for others"
 
-msgid "What the example means"
-msgstr "What the example means"
-
 msgid "What this is about"
 msgstr "What this is about"
 

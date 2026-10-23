@@ -86,7 +86,7 @@ name: Example translation and audio
 - takeScreenshot: 06-card-page-stale
 - tapOn: "^Example.*"
 - extendedWaitUntil:
-    visible: "Translation"
+    visible: "Translation.*"
     timeout: 20000
 - assertVisible: "${STALE_TRANSLATION}"
 - assertVisible: "Translated from an earlier example."

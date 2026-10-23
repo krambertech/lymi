@@ -74,7 +74,7 @@ export const FORM_FIELD: Record<
   exampleTranslation: {
     label: msg`Translation`,
     icon: "example",
-    hint: msg`What the example means`,
+    hint: msg`Translation`,
     limit: cardLimits.exampleTranslation,
     learned: false,
   },
@@ -206,14 +206,63 @@ export function CardFields({
   useEffect(() => {
     if (adding) refs.current[adding]?.focus();
   }, [adding]);
+  const line = (f: FormField, i: number, label: string) => {
+    const spec = FORM_FIELD[f];
+    const next = shown[i + 1];
+    const submits = f === submitFrom || !next;
+    const term = f === "term";
+    const quiet = f === UNDER_EXAMPLE;
+    const size = term ? 28 : quiet ? 15 : 17;
+    return (
+      <TextInput
+        ref={(r) => {
+          refs.current[f] = r;
+          if (term && termRef) termRef.current = r;
+        }}
+        autoFocus={f === focus}
+        value={values[f]}
+        maxLength={spec.limit ?? undefined}
+        onChangeText={(v) => onChange(f, v)}
+        placeholder={placeholder?.[f] ?? i18n._(spec.hint)}
+        placeholderTextColor={p.muted}
+        accessibilityLabel={label}
+        autoCorrect={!spec.learned}
+        spellCheck={!spec.learned}
+        autoCapitalize={spec.learned && f !== "example" ? "none" : "sentences"}
+        // Each wraps as it fills; Return in the notes starts a new line.
+        multiline
+        submitBehavior={f === "notes" ? "newline" : "submit"}
+        returnKeyType={f === "notes" ? "default" : submits ? "done" : "next"}
+        onFocus={() => setTyping(f)}
+        onSubmitEditing={
+          f === "notes"
+            ? undefined
+            : () => (submits || !next ? onSubmit() : refs.current[next]?.focus())
+        }
+        selectionColor={p.text}
+        className={
+          term
+            ? "min-h-12 py-1.5 font-sans font-medium text-text"
+            : quiet
+              ? "min-h-8 py-1 font-sans text-text-2"
+              : "min-h-9 py-1.5 font-sans text-text"
+        }
+        // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
+        style={[
+          { fontSize: size },
+          term ? { letterSpacing: -0.56 } : null,
+          spec.learned ? textStart(language) : null,
+        ]}
+        maxFontSizeMultiplier={inputCap(size)}
+      />
+    );
+  };
   return (
     <>
       {shown.map((f, i) => {
-        const spec = FORM_FIELD[f];
+        // The translation is drawn inside the example's block, under its line.
+        if (f === UNDER_EXAMPLE) return null;
         const label = i18n._(fieldLabel(f, language));
-        const next = shown[i + 1];
-        const submits = f === submitFrom || !next;
-        const term = f === "term";
         return (
           <Animated.View
             key={f}
@@ -221,7 +270,8 @@ export function CardFields({
             layout={reduce ? undefined : MAKE_ROOM}
             // Fires as it grows with each new line too, so the line being typed stays above the keyboard.
             onLayout={(e) => {
-              if (f === (typing ?? adding ?? focus))
+              const shownTyping = typing === UNDER_EXAMPLE ? "example" : typing;
+              if (f === (shownTyping ?? adding ?? focus))
                 reveal?.(e.nativeEvent.layout.y, e.nativeEvent.layout.height);
             }}
           >
@@ -229,45 +279,23 @@ export function CardFields({
               <FieldName>{label}</FieldName>
               {ai?.(f) && <Icon name="ai" size={12} colour={p.ai} />}
             </View>
-            <TextInput
-              ref={(r) => {
-                refs.current[f] = r;
-                if (term && termRef) termRef.current = r;
-              }}
-              autoFocus={f === focus}
-              value={values[f]}
-              maxLength={spec.limit ?? undefined}
-              onChangeText={(v) => onChange(f, v)}
-              placeholder={placeholder?.[f] ?? i18n._(spec.hint)}
-              placeholderTextColor={p.muted}
-              accessibilityLabel={label}
-              autoCorrect={!spec.learned}
-              spellCheck={!spec.learned}
-              autoCapitalize={spec.learned && f !== "example" ? "none" : "sentences"}
-              // Each wraps as it fills; Return in the notes starts a new line.
-              multiline
-              submitBehavior={f === "notes" ? "newline" : "submit"}
-              returnKeyType={f === "notes" ? "default" : submits ? "done" : "next"}
-              onFocus={() => setTyping(f)}
-              onSubmitEditing={
-                f === "notes"
-                  ? undefined
-                  : () => (submits || !next ? onSubmit() : refs.current[next]?.focus())
-              }
-              selectionColor={p.text}
-              className={
-                term
-                  ? "min-h-12 py-1.5 font-sans font-medium text-text"
-                  : "min-h-9 py-1.5 font-sans text-text"
-              }
-              // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
-              style={[
-                term ? { fontSize: 28, letterSpacing: -0.56 } : { fontSize: 17 },
-                spec.learned ? textStart(language) : null,
-              ]}
-              maxFontSizeMultiplier={inputCap(term ? 28 : 17)}
-            />
+            {line(f, i, label)}
             {below?.[f] && <Text className="text-sm text-muted">{below[f]}</Text>}
+            {f === "example" && shown[i + 1] === UNDER_EXAMPLE && (
+              // Under the example and quieter, as review shows it: the mark names it, so it has no name over it.
+              <View className="flex-row items-start gap-2">
+                <View className="flex-row items-center gap-1 pt-2">
+                  <Icon name="language" size={14} colour={p.muted} />
+                  {ai?.(UNDER_EXAMPLE) && <Icon name="ai" size={12} colour={p.ai} />}
+                </View>
+                <View className="flex-1">
+                  {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
+                  {below?.[UNDER_EXAMPLE] && (
+                    <Text className="text-sm text-muted">{below[UNDER_EXAMPLE]}</Text>
+                  )}
+                </View>
+              </View>
+            )}
           </Animated.View>
         );
       })}

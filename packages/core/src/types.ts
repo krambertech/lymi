@@ -1038,6 +1038,32 @@ export const ApiKeyInput = z.object({
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;
 
+export const ReadwiseTokenInput = z.object({
+  token: z.string().trim().min(1, "Paste your Readwise token.").max(200),
+});
+export type ReadwiseTokenInput = z.infer<typeof ReadwiseTokenInput>;
+
+export const ReadwisePatchInput = z.object({
+  books: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        followed: z.boolean().optional(),
+        language: z.string().min(1).max(12).optional().meta({
+          description:
+            "For a book Lymi could not place: a primary subtag one of the learner's decks teaches",
+        }),
+      }),
+    )
+    .max(1000)
+    .optional(),
+  decks: z
+    .record(z.string().min(1).max(12), z.string().min(1))
+    .optional()
+    .meta({ description: "A deck per language, keyed by primary subtag" }),
+});
+export type ReadwisePatchInput = z.infer<typeof ReadwisePatchInput>;
+
 export const apiKeyLimits = {
   name: ApiKeyInput.shape.name.maxLength,
 } satisfies Record<string, number | null>;

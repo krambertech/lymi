@@ -8,6 +8,7 @@ import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
+import { OtherAppsSection } from "../components/other-apps-section";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
@@ -80,6 +81,7 @@ function SettingsRoute() {
     >
       <NotificationsSection />
       <ConnectedAppsSection />
+      <OtherAppsSection />
       <ApiKeysSection />
       <ExportSheet
         open={exporting}

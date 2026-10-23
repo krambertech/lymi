@@ -243,6 +243,10 @@
     {
       "name": "0060_jazzy_wild_child.sql",
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
+    },
+    {
+      "name": "0061_grey_purifiers.sql",
+      "sha256": "1866aee57145e40a422e7aea42804620677406bf976da4ce1d33c2dd525fe78d"
     }
   ]
 }

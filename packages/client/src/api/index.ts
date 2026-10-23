@@ -23,6 +23,7 @@ export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
 export type { LessonEvent, LessonQuestion, LessonRead, LessonTerm } from "./lessons";
 export type { PushSubscriptionStatus } from "./push";
+export type { Readwise } from "./readwise";
 export {
   ApiError,
   apiUrl,
@@ -52,6 +53,7 @@ import { importsApi } from "./imports";
 import { keysApi } from "./keys";
 import { lessonsApi } from "./lessons";
 import { pushApi } from "./push";
+import { readwiseApi } from "./readwise";
 import { reviewApi } from "./review";
 import { sectionsApi } from "./sections";
 import { seriesApi } from "./series";
@@ -68,6 +70,7 @@ export const api = {
   ...decksApi,
   ...exploreApi,
   ...exportsApi,
+  ...readwiseApi,
   ...feedbackApi,
   ...importsApi,
   ...keysApi,

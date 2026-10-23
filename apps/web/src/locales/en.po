@@ -938,6 +938,9 @@ msgstr "Add cards"
 msgid "Add cards and review them to see your progress here."
 msgstr "Add cards and review them to see your progress here."
 
+msgid "Add cards from what you read in other apps."
+msgstr "Add cards from what you read in other apps."
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Add cards from your last lesson, then review them here."
 
@@ -3803,6 +3806,9 @@ msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Reading"
 
+msgid "Reading apps"
+msgstr "Reading apps"
+
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length
 msgid "Reading page {0} of {1}"
@@ -4906,9 +4912,6 @@ msgstr "Turn off link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
-
-msgid "Turn the words you highlight while reading into cards."
-msgstr "Turn the words you highlight while reading into cards."
 
 msgid "Turn your notes into cards"
 msgstr "Turn your notes into cards"

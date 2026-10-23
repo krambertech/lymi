@@ -8,7 +8,10 @@ import { Go } from "./next-steps";
 import { SettingsGroup } from "./settings-group";
 import { Skeleton } from "./skeleton";
 
-/** Sources Lymi reads on its own schedule; Readwise is the first. Its page holds every control. */
+const ROW =
+  "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil group-first/row:rounded-t-xl group-last/row:rounded-b-xl";
+
+/** Apps that bring in what the learner reads, one row each; a row's page holds every control. */
 export function ReadingSection() {
   const { t } = useLingui();
   const state = useQuery(readwiseQuery);
@@ -16,22 +19,23 @@ export function ReadingSection() {
     <SettingsGroup
       id="reading"
       title={t`Reading`}
-      description={t`Turn the words you highlight while reading into cards.`}
+      description={t`Add cards from what you read in other apps.`}
     >
-      {state.isPending ? (
-        <Skeleton className="h-16 w-full rounded-xl" />
-      ) : (
-        <Link
-          to="/settings/readwise"
-          className="edge group flex min-h-16 items-center gap-4 rounded-xl bg-plate px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil"
-        >
-          <span className="grid min-w-0 flex-1 gap-0.5">
-            <span className="text-md font-medium">Readwise</span>
-            <Status connection={state.data?.connection ?? null} />
-          </span>
-          <Go />
-        </Link>
-      )}
+      <ul aria-label={t`Reading apps`} className="edge grid rounded-xl bg-plate">
+        <li className="group/row border-edge [&:not(:first-child)]:border-t">
+          <Link to="/settings/readwise" className={ROW}>
+            <span className="grid min-w-0 flex-1 gap-0.5">
+              <span className="text-md font-medium">Readwise</span>
+              {state.isPending ? (
+                <Skeleton className="h-4 w-48" />
+              ) : (
+                <Status connection={state.data?.connection ?? null} />
+              )}
+            </span>
+            <Go />
+          </Link>
+        </li>
+      </ul>
     </SettingsGroup>
   );
 }

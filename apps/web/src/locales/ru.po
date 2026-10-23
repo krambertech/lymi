@@ -938,6 +938,9 @@ msgstr "Добавить карточки"
 msgid "Add cards and review them to see your progress here."
 msgstr "Добавь карточки и повторяй их, чтобы видеть здесь свой прогресс."
 
+msgid "Add cards from what you read in other apps."
+msgstr "Добавляй карточки из того, что читаешь в других приложениях."
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Добавь карточки с последнего урока, а потом повторяй их здесь."
 
@@ -3803,6 +3806,9 @@ msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Чтение"
 
+msgid "Reading apps"
+msgstr "Приложения для чтения"
+
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length
 msgid "Reading page {0} of {1}"
@@ -4906,9 +4912,6 @@ msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
-
-msgid "Turn the words you highlight while reading into cards."
-msgstr "Превращай слова, которые выделяешь при чтении, в карточки."
 
 msgid "Turn your notes into cards"
 msgstr "Преврати заметки в карточки"

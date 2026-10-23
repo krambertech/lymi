@@ -3,22 +3,39 @@ import { mergeActivity } from "@lymi/client/activity";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDocumentTitle } from "../lib/document-title";
-import { activityQuery } from "../lib/queries";
+import { activityQuery, appActivityQuery } from "../lib/queries";
 import { ActivityView } from "../views/activity-view";
 
 export const Route = createFileRoute("/activity")({
+  // An app's page opens Activity filtered to that app's writes.
+  validateSearch: (s: Record<string, unknown>): { app?: string } => ({
+    ...(typeof s.app === "string" && s.app ? { app: s.app } : {}),
+  }),
   component: ActivityRoute,
 });
 
 function ActivityRoute() {
   const { t } = useLingui();
   useDocumentTitle(t`Activity`);
-  const activity = useInfiniteQuery(activityQuery);
+  const { app } = Route.useSearch();
+  const activity = useInfiniteQuery(app ? appActivityQuery(app) : activityQuery);
   const entries = activity.data?.pages.flatMap((page) => page.entries);
 
   return (
     <ActivityView
       entries={entries && mergeActivity(entries)}
+      filter={
+        app
+          ? {
+              name: entries?.[0]?.app ?? null,
+              clear: (className, children) => (
+                <Link to="/activity" className={className}>
+                  {children}
+                </Link>
+              ),
+            }
+          : undefined
+      }
       today={activity.data?.pages[0]?.today}
       zone={activity.data?.pages[0]?.zone}
       error={activity.isError}

@@ -247,6 +247,10 @@
     {
       "name": "0061_grey_purifiers.sql",
       "sha256": "1866aee57145e40a422e7aea42804620677406bf976da4ce1d33c2dd525fe78d"
+    },
+    {
+      "name": "0062_nifty_xorn.sql",
+      "sha256": "bd59ed4624e37ad984a2f5da7efa8d9d8bafa22cf5ef24a822c69f34d8a62595"
     }
   ]
 }

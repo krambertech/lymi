@@ -172,7 +172,7 @@ type Entry = Omit<ActivityEntryOut, "at" | "import" | "export"> & {
 
 export async function listActivity(
   ctx: ServiceContext,
-  input: { cursor?: string | undefined; limit?: number | undefined } = {},
+  input: { cursor?: string | undefined; limit?: number | undefined; app?: string | undefined } = {},
 ) {
   const limit = Math.min(Math.max(input.limit ?? ACTIVITY_PAGE_ROWS, 1), 200);
   // Days are the learner's own, so a write just after midnight in Kyiv is not yesterday.
@@ -183,16 +183,22 @@ export async function listActivity(
   // an empty list with a live cursor, which the screen would show as nothing having come in.
   const today = day.format(new Date());
   for (let page = 0; page < 5; page++) {
-    const read = await readPage(ctx, { cursor, limit, day });
+    const read = await readPage(ctx, { cursor, limit, day, app: input.app });
     if (read.entries.length > 0 || !read.nextCursor) return { ...read, today, zone };
     cursor = read.nextCursor;
   }
-  return { ...(await readPage(ctx, { cursor, limit, day })), today, zone };
+  return { ...(await readPage(ctx, { cursor, limit, day, app: input.app })), today, zone };
 }
 
 async function readPage(
   ctx: ServiceContext,
-  input: { cursor: string | undefined; limit: number; day: LocalDateFormatter },
+  input: {
+    cursor: string | undefined;
+    limit: number;
+    day: LocalDateFormatter;
+    /** One caller's rows, by the app or key the audit row names: an app's own page. */
+    app?: string | undefined;
+  },
 ) {
   const { db, userId } = ctx;
   const { limit, day } = input;
@@ -210,7 +216,14 @@ async function readPage(
       createdAt: schema.auditLog.createdAt,
     })
     .from(schema.auditLog)
-    .where(and(eq(schema.auditLog.userId, userId), fromOutside(), olderThan(before)))
+    .where(
+      and(
+        eq(schema.auditLog.userId, userId),
+        fromOutside(),
+        olderThan(before),
+        input.app ? eq(schema.auditLog.actorClient, input.app) : undefined,
+      ),
+    )
     .orderBy(desc(schema.auditLog.createdAt), desc(schema.auditLog.id))
     .limit(limit + 1);
 

@@ -949,6 +949,8 @@ export const auditLog = sqliteTable(
     index("audit_user_idx").on(t.userId, t.createdAt),
     // Activity reads everything but the grades, which outnumber the rest many times over.
     index("audit_activity_idx").on(t.userId, t.createdAt).where(sql`entity <> 'review'`),
+    // An app's page reads only that app's rows.
+    index("audit_app_idx").on(t.userId, t.actorClient, t.createdAt),
   ],
 );
 

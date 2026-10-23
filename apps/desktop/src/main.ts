@@ -235,6 +235,7 @@ function runCommand(command: MenuCommand) {
     return;
   }
   openMain();
+  // The preload holds it until the page listens.
   main?.webContents.once("did-finish-load", () => main?.webContents.send("menu:command", command));
 }
 

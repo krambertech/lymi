@@ -8,6 +8,28 @@ ipcRenderer.on("window:full-screen", (_event, on: boolean) => {
   else delete document.documentElement.dataset.fullScreen;
 });
 
+/**
+ * A message the app sends while the page is still starting, such as a menu command that opened
+ * the window, waits here until the page listens, and then reaches it once.
+ */
+const waiting = new Map<string, string[]>();
+const listening = new Map<string, (value: string) => void>();
+for (const channel of ["menu:command", "app:navigate"]) {
+  ipcRenderer.on(channel, (_event, value: string) => {
+    const listener = listening.get(channel);
+    if (listener) listener(value);
+    else waiting.set(channel, [...(waiting.get(channel) ?? []), value]);
+  });
+}
+function held(channel: string, listener: (value: string) => void) {
+  listening.set(channel, listener);
+  for (const value of waiting.get(channel) ?? []) listener(value);
+  waiting.delete(channel);
+  return () => {
+    if (listening.get(channel) === listener) listening.delete(channel);
+  };
+}
+
 // Methods are only ever added, never renamed or removed: the web updates long before an installed app.
 contextBridge.exposeInMainWorld("lymiDesktop", {
   version: 1,
@@ -20,20 +42,8 @@ contextBridge.exposeInMainWorld("lymiDesktop", {
   setPreference: (key: string, value: unknown) => ipcRenderer.invoke("prefs:set", key, value),
   allowAccessibility: () => ipcRenderer.send("prefs:accessibility"),
   setRecordingShortcut: (on: boolean) => ipcRenderer.send("prefs:recording", on),
-  onNavigate: (listener: (path: string) => void) => {
-    const handler = (_event: unknown, path: string) => listener(path);
-    ipcRenderer.on("app:navigate", handler);
-    return () => {
-      ipcRenderer.off("app:navigate", handler);
-    };
-  },
-  onMenuCommand: (listener: (command: string) => void) => {
-    const handler = (_event: unknown, command: string) => listener(command);
-    ipcRenderer.on("menu:command", handler);
-    return () => {
-      ipcRenderer.off("menu:command", handler);
-    };
-  },
+  onNavigate: (listener: (path: string) => void) => held("app:navigate", listener),
+  onMenuCommand: (listener: (command: string) => void) => held("menu:command", listener),
   onPanelShown: (listener: (shown: { selection: string | null }) => void) => {
     const handler = (_event: unknown, shown: { selection: string | null }) => listener(shown);
     ipcRenderer.on("panel:shown", handler);

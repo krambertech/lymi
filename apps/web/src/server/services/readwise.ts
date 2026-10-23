@@ -125,9 +125,19 @@ export async function getReadwise(ctx: ServiceContext): Promise<ReadwiseView | n
   };
 }
 
+/** A call to Readwise during connect; an outage or rate limit is the learner's to retry. */
+async function reaching<T>(work: Promise<T>): Promise<T> {
+  try {
+    return await work;
+  } catch (error) {
+    if (error instanceof ServiceError) throw error;
+    throw new ServiceError("unavailable", "Readwise didn't answer. Try again in a minute.");
+  }
+}
+
 async function readToken(deps: ReadwiseDeps, token: string): Promise<string> {
   const clean = token.trim();
-  if (!(await deps.api.accepts(clean))) {
+  if (!(await reaching(deps.api.accepts(clean)))) {
     throw new ServiceError(
       "invalid",
       "Readwise didn't accept that token",
@@ -179,8 +189,8 @@ export async function connectReadwise(
       .where(eq(schema.readwiseConnections.userId, ctx.userId));
   } else {
     const [summaries, recent, learned] = await Promise.all([
-      deps.api.books(accepted),
-      deps.api.recentHighlights(accepted),
+      reaching(deps.api.books(accepted)),
+      reaching(deps.api.recentHighlights(accepted)),
       learnedLanguages(ctx),
     ]);
     const texts = new Map<string, string[]>();

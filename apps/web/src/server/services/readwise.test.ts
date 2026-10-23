@@ -2,7 +2,7 @@ import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
-import { type ReadwiseApi, ReadwiseRefused } from "../readwise/api";
+import { type ReadwiseApi, ReadwiseRefused, ReadwiseUnavailable } from "../readwise/api";
 import { createFakeReadwiseApi, DEV_READWISE_TOKEN } from "../readwise/dev-fake";
 import type { AnalyticsEvent } from "./analytics";
 import type { ServiceContext } from "./context";
@@ -63,6 +63,20 @@ describe("connecting Readwise", () => {
     await expect(connectReadwise(ctx, depsWith(), "not-a-token")).rejects.toMatchObject({
       code: "invalid",
       reason: "readwise_refused",
+    });
+    expect(await getReadwise(ctx)).toBeNull();
+  });
+
+  it("answers unavailable when Readwise is down, and saves nothing", async () => {
+    const ctx = await reader("rw-down");
+    const down: ReadwiseApi = {
+      ...createFakeReadwiseApi(),
+      accepts: async () => {
+        throw new ReadwiseUnavailable(502);
+      },
+    };
+    await expect(connectReadwise(ctx, depsWith(down), DEV_READWISE_TOKEN)).rejects.toMatchObject({
+      code: "unavailable",
     });
     expect(await getReadwise(ctx)).toBeNull();
   });

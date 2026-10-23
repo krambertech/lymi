@@ -1831,6 +1831,12 @@ msgstr "Couldn’t save your grade for “{term}”. The card is no longer in yo
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Couldn’t save your name. Check your connection and try again."
+
+msgid "Couldn’t save your name. Try again."
+msgstr "Couldn’t save your name. Try again."
+
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
 
@@ -2770,6 +2776,9 @@ msgstr "Keep the stress under 200 characters."
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
 
+msgid "Keep your name under {NAME_MAX} characters."
+msgstr "Keep your name under {NAME_MAX} characters."
+
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
@@ -3102,6 +3111,10 @@ msgstr "Moved to another deck"
 msgid "Moving a card keeps its progress."
 msgstr "Moving a card keeps its progress."
 
+msgid "Name"
+msgstr "Name"
+
+msgctxt "person"
 msgid "Name"
 msgstr "Name"
 
@@ -4984,6 +4997,9 @@ msgstr "Write a hook."
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
 
+msgid "Write your name."
+msgstr "Write your name."
+
 msgid "Writing"
 msgstr "Writing"
 
@@ -5139,6 +5155,9 @@ msgstr "Your Lymi confirmation code"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Your name"
 
 msgid "Your own material, whatever it is."
 msgstr "Your own material, whatever it is."

@@ -3,11 +3,12 @@ import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { AccountSection } from "../components/account-section";
+import { AccountSection, useRename } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
+import { SaveStatus } from "../components/save-status";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
@@ -27,6 +28,7 @@ function SettingsRoute() {
   // Only to say what a library file leaves out, so it loads with the rest of the screen.
   const decks = useQuery(decksQuery);
   const qc = useQueryClient();
+  const rename = useRename();
   const language = useMutation({
     mutationFn: (appLanguage: AppLanguage) => api.updateSettings({ appLanguage }),
     // The interface switches on the tap and rolls back if the server refuses.
@@ -64,7 +66,10 @@ function SettingsRoute() {
       language={settings.isSuccess ? (settings.data.appLanguage ?? pickLocale()) : undefined}
       onLanguage={language.mutate}
       languageError={language.isError}
-      account={<AccountSection name={me.data?.name} email={me.data?.email} />}
+      account={
+        <AccountSection name={me.data?.name} email={me.data?.email} onRename={rename.save} />
+      }
+      status={<SaveStatus {...rename.status} />}
       onExportLibrary={() => setExporting(true)}
       deleteAccountLink={<Link to="/settings/delete-account" />}
       importLink={(source, className, children) => (

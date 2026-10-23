@@ -21,6 +21,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
+| Account name | [account-name.md](features/account-name.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
 | Import from Anki | [import.md](features/import.md) |
 | Import from Pleco | [import-pleco.md](features/import-pleco.md) |

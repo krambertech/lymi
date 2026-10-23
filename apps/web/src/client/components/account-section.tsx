@@ -1,10 +1,11 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { inspectImage } from "@lymi/core";
+import { inspectImage, NameInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { ApiError } from "../lib/api";
+import { ApiError, api } from "../lib/api";
 import {
   type Avatar as AvatarState,
   avatarImageQuery,
@@ -13,6 +14,7 @@ import {
   uploadAvatar,
   useLearnerAvatar,
 } from "../lib/avatar";
+import { meQuery } from "../lib/queries";
 import { Avatar } from "./avatar";
 import { AvatarEditor, type PickedImage } from "./avatar-editor";
 import { SettingsGroup } from "./settings-group";
@@ -23,12 +25,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 import { toast } from "./ui/toast";
 
 /** Photos larger than this are refused before decoding; the cropped square is far smaller. */
 const MAX_PICK_BYTES = 25 * 1024 * 1024;
 const MAX_PICK_PIXELS = 50_000_000;
 const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,image/avif";
+const NAME_MAX = NameInput.shape.name.maxLength ?? undefined;
+/** The share of the limit past which the field says how much room is left. */
+const NEARLY_FULL = 0.9;
 
 interface GroupProps {
   name: string | undefined;
@@ -40,13 +47,24 @@ interface GroupProps {
   onChoose?: (() => void) | undefined;
   onRemove?: (() => void) | undefined;
   busy?: boolean | undefined;
+  /** Saves a changed name. Without it the name is only shown. */
+  onRename?: ((name: string) => void) | undefined;
 }
 
 /**
  * The learner as the app knows them. The photo is its own control: with nothing of the
  * learner's own to remove it opens the picker at once, and once there is, a short menu.
  */
-export function AccountGroup({ name, email, photo, source, onChoose, onRemove, busy }: GroupProps) {
+export function AccountGroup({
+  name,
+  email,
+  photo,
+  source,
+  onChoose,
+  onRemove,
+  busy,
+  onRename,
+}: GroupProps) {
   const { t } = useLingui();
   const avatar = (
     <Avatar name={name} src={photo?.src} pending={photo?.pending || !name} size={72} />
@@ -94,8 +112,14 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
         ) : (
           face({ onClick: onChoose })
         )}
-        <div className="grid min-w-0 gap-0.5">
-          {name ? (
+        <div className={clsx("grid min-w-0", onRename ? "max-w-sm flex-1 gap-1.5" : "gap-0.5")}>
+          {onRename ? (
+            name ? (
+              <NameField name={name} onSave={onRename} />
+            ) : (
+              <Skeleton className="h-16 w-full" />
+            )
+          ) : name ? (
             <span className="truncate text-md font-medium text-text">{name}</span>
           ) : (
             <Skeleton className="h-5 w-32" />
@@ -111,15 +135,122 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
   );
 }
 
+/**
+ * The learner's name, saved when the field is left as every Settings text field is
+ * (forms.md); leaving the screen with the caret still in it saves too.
+ */
+function NameField({ name, onSave }: { name: string; onSave: (name: string) => void }) {
+  const { t } = useLingui();
+  const input = useRef<HTMLInputElement>(null);
+  const [draft, setDraft] = useState(name);
+  const [invalid, setInvalid] = useState<string | undefined>();
+  /** The last name handed to `onSave`, so the unmount after a blur does not send it again. */
+  const sent = useRef(name);
+
+  // A save lands, or another device renamed the learner; a field being typed in keeps its draft.
+  useEffect(() => {
+    if (document.activeElement !== input.current) setDraft(name);
+  }, [name]);
+
+  const commit = (value: string, leaving = false) => {
+    const parsed = NameInput.safeParse({ name: value });
+    if (!parsed.success) {
+      return value.trim() ? t`Keep your name under ${NAME_MAX} characters.` : t`Write your name.`;
+    }
+    const next = parsed.data.name;
+    if (next !== name && !(leaving && next === sent.current)) {
+      sent.current = next;
+      onSave(next);
+    }
+    return undefined;
+  };
+
+  const latest = useRef({ draft, commit });
+  latest.current = { draft, commit };
+  useEffect(() => () => void latest.current.commit(latest.current.draft, true), []);
+
+  const left = NAME_MAX ? NAME_MAX - draft.length : 0;
+  return (
+    <Field>
+      <FieldLabel
+        aside={
+          NAME_MAX && draft.length >= NAME_MAX * NEARLY_FULL ? (
+            <span role="status">
+              {t`${plural(left, { one: "# character left", other: "# characters left" })}`}
+            </span>
+          ) : undefined
+        }
+      >
+        {t({ message: "Name", context: "person" })}
+      </FieldLabel>
+      <Input
+        ref={input}
+        value={draft}
+        onChange={(e) => {
+          setDraft(e.target.value);
+          if (invalid) setInvalid(undefined);
+        }}
+        onBlur={() => setInvalid(commit(draft))}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.nativeEvent.isComposing) e.currentTarget.blur();
+          if (e.key === "Escape") {
+            setDraft(name);
+            setInvalid(undefined);
+          }
+        }}
+        placeholder={t`Your name`}
+        autoComplete="name"
+        maxLength={NAME_MAX}
+      />
+      <FieldError>{invalid}</FieldError>
+    </Field>
+  );
+}
+
+/** Renames the learner; every screen reads the name from `meQuery`, so writing it updates them all. */
+export function useRename() {
+  const { t } = useLingui();
+  const qc = useQueryClient();
+  const [saved, setSaved] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const rename = useMutation({
+    mutationFn: (name: string) => api.rename(name),
+    onMutate: () => {
+      window.clearTimeout(timer.current);
+      setSaved(false);
+    },
+    onSuccess: (me) => {
+      qc.setQueryData(meQuery.queryKey, me);
+      setSaved(true);
+      timer.current = window.setTimeout(() => setSaved(false), 2500);
+    },
+  });
+
+  const error = !rename.isError
+    ? undefined
+    : rename.error instanceof ApiError && rename.error.status === 0
+      ? t`Couldn’t save your name. Check your connection and try again.`
+      : t`Couldn’t save your name. Try again.`;
+
+  return {
+    save: rename.mutate,
+    status: { saving: rename.isPending, saved, error },
+  };
+}
+
 const PHOTO_TOAST = "photo";
 
-/** The Account group with the photo wired up: pick, crop, save, and remove with Undo. */
+/** The Account group wired up: the name when `onRename` is given, and the photo's pick, crop, save, and remove with Undo. */
 export function AccountSection({
   name,
   email,
+  onRename,
 }: {
   name: string | undefined;
   email: string | undefined;
+  onRename?: ((name: string) => void) | undefined;
 }) {
   const { t } = useLingui();
   const qc = useQueryClient();
@@ -255,6 +386,7 @@ export function AccountSection({
         onChoose={avatar.isSuccess ? () => input.current?.click() : undefined}
         onRemove={() => remove.mutate()}
         busy={remove.isPending || restore.isPending}
+        onRename={onRename}
       />
       <input
         ref={input}

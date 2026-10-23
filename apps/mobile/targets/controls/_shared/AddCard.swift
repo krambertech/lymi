@@ -3,8 +3,6 @@ import Foundation
 import Security
 
 #if !LYMI_CONTROLS
-  import UIKit
-
   /// Share to Lymi's copy of the session and decks, which the app keeps current:
   /// `apps/mobile/src/share/sync.tsx`, read as `apps/mobile/targets/share/Shared.swift` reads it.
   struct CaptureState: Decodable {
@@ -165,7 +163,7 @@ import Security
   /// Adds a card in the background, so Shortcuts, Siri, Spotlight, the Action button and a
   /// shortcut in the share sheet save a term without opening the app. Signed out or offline, it
   /// continues in Add a word, whose outbox keeps the card until Lymi can be reached.
-  struct AddCardIntent: AppIntent {
+  struct AddCardIntent: AppIntent, ForegroundContinuableIntent {
     static let title: LocalizedStringResource = "Add a card"
     static let description = IntentDescription(
       "Adds a card without opening Lymi. Leave the deck empty and Lymi picks your deck for the term’s language."
@@ -173,7 +171,11 @@ import Security
     // The app's session is readable only once the phone is unlocked.
     static let authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
-    @Parameter(title: "Term", requestValueDialog: "What’s the term?")
+    // A term is kept as typed, as Add a word keeps it.
+    @Parameter(
+      title: "Term",
+      inputOptions: String.IntentInputOptions(capitalizationType: .none, autocorrect: false),
+      requestValueDialog: "What’s the term?")
     var term: String
 
     @Parameter(title: "Meaning")
@@ -237,7 +239,7 @@ import Security
     /// Opens Add a word with the term, where sign-in and the offline outbox take over.
     private func continueInApp(_ text: String, _ dialog: IntentDialog) -> Error {
       needsToContinueInForegroundError(dialog) {
-        UIApplication.shared.open(EntryLink.url("capture", from: "shortcut", term: text))
+        await openInApp(EntryLink.url("capture", from: "shortcut", term: text))
       }
     }
   }

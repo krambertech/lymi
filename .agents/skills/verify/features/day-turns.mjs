@@ -31,9 +31,7 @@ export default async function drive({ page, step, api, expect }) {
   await step("The run reads one more day, and the server agrees", async () => {
     const run = before.current + 1;
     await expect(page.getByText(new RegExp(`^${run}\\s*days in a row$`))).toBeVisible();
-    await expect
-      .poll(async () => (await api("/api/stats/streak")).current)
-      .toBe(run);
+    await expect.poll(async () => (await api("/api/stats/streak")).current).toBe(run);
     const after = await api("/api/stats/streak");
     expect(["goal_met", "exhausted"]).toContain(after.today.outcome);
     return { current: after.current, today: after.today };

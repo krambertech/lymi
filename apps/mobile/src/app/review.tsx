@@ -1845,7 +1845,7 @@ function Completion({
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const { goal, streak, lights, flame, out, progress, fed, summary } = useDay();
+  const { goal, streak: dayStreak, lights, flame, out, progress, fed, summary } = useDay();
   const start = useStreakStart(summary?.longest ?? 0);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
@@ -1940,7 +1940,7 @@ function Completion({
   const warm$ = useAnimatedStyle(() => ({
     opacity: turned ? Math.min(1, Math.max(0, 1 - (clock.value - AT.tick - 300) / 1100)) : 0,
   }));
-  const run = ticked ? streak : streak - 1;
+  const streak = ticked ? dayStreak : dayStreak - 1;
   const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
@@ -2037,12 +2037,12 @@ function Completion({
               <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
                 <Flame height={20} state={ticked ? flame : "lit"} />
               </Animated.View>
-              {run > 0 ? (
+              {streak > 0 ? (
                 <>
                   {/* The new run rolls up warm, then cools to its ink. */}
-                  <Animated.View key={run} style={ticked ? tick$ : undefined}>
+                  <Animated.View key={streak} style={ticked ? tick$ : undefined}>
                     <Text className="text-md font-semibold text-text" style={styles.figures}>
-                      {run}
+                      {streak}
                     </Text>
                     {ticked && (
                       <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
@@ -2050,13 +2050,13 @@ function Completion({
                           className="text-md font-semibold text-amber-text"
                           style={styles.figures}
                         >
-                          {run}
+                          {streak}
                         </Text>
                       </Animated.View>
                     )}
                   </Animated.View>
                   <Text className="text-md text-text-2">
-                    {t`${plural(run, { one: "day in a row", other: "days in a row" })}`}
+                    {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
                   </Text>
                 </>
               ) : (

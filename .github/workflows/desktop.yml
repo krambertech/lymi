@@ -12,7 +12,6 @@ on:
   workflow_dispatch:
 
 env:
-  WRANGLER: wrangler@4.149.0
   CLOUDFLARE_ACCOUNT_ID: ce6da857aeb521aa2730848a194b8866
 
 jobs:
@@ -53,9 +52,10 @@ jobs:
           APPLE_API_KEY: ${{ secrets.APPLE_API_KEY != '' }}
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID != '' }}
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER != '' }}
-          CLOUDFLARE_R2_TOKEN: ${{ secrets.CLOUDFLARE_R2_TOKEN != '' }}
+          CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID != '' }}
+          CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY != '' }}
         run: |
-          for name in MAC_CERTIFICATE_P12 MAC_CERTIFICATE_PASSWORD APPLE_API_KEY APPLE_API_KEY_ID APPLE_API_ISSUER CLOUDFLARE_R2_TOKEN; do
+          for name in MAC_CERTIFICATE_P12 MAC_CERTIFICATE_PASSWORD APPLE_API_KEY APPLE_API_KEY_ID APPLE_API_ISSUER CLOUDFLARE_R2_ACCESS_KEY_ID CLOUDFLARE_R2_SECRET_ACCESS_KEY; do
             if [ "${!name}" != "true" ]; then
               echo "::notice::No release: the $name secret is missing. apps/desktop/README.md lists the setup."
               echo "ready=false" >> "$GITHUB_OUTPUT"
@@ -146,9 +146,14 @@ jobs:
         if: steps.ready.outputs.ready == 'true'
         working-directory: apps/desktop/out/make
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
         run: |
-          put() { pnpm dlx "$WRANGLER" r2 object put "lymi-downloads/$1" --file "$2" --remote "${@:3}"; }
+          put() {
+            aws s3 cp "$2" "s3://lymi-downloads/$1" \
+              --endpoint-url "https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+              --region auto --only-show-errors "${@:3}"
+          }
           for arch in arm64 x64; do
             zip=$(ls zip/darwin/$arch/*.zip)
             put "darwin/$arch/$(basename "$zip")" "$zip" --content-type application/zip

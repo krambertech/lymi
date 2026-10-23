@@ -39,7 +39,7 @@ pnpm --filter @lymi/desktop launch-check "$PWD/apps/desktop/out/Lymi-darwin-arm6
 
 The Desktop workflow (`.github/workflows/desktop.yml`) runs the launch check on a pull request that changes this folder, and releases on the merge to `main`: both chips built, the apps and DMGs signed and notarized, both apps launched, all four checked by Gatekeeper and uploaded to the `lymi-downloads` bucket behind `downloads.lymi.app`. Installed apps read `darwin/<arch>/RELEASES.json` at launch and hourly, download in the background and install on quit; the tray menu offers Restart to update meanwhile. The download button links to `darwin/arm64/Lymi.dmg`, and Intel's to `darwin/x64/Lymi.dmg`.
 
-The release needs six repository secrets, set once. Without them it skips with a notice.
+The release needs seven repository secrets, set once. Without them it skips with a notice.
 
 1. **The Developer ID certificate**, which only the Apple account holder can make. In Xcode, Settings → Accounts → Manage Certificates → + → Developer ID Application. In Keychain Access, export it with its private key as a `.p12` with a password, then:
 
@@ -65,10 +65,18 @@ The release needs six repository secrets, set once. Without them it skips with a
    gh secret set APPLE_API_ISSUER
    ```
 
-3. **The upload token.** In Cloudflare, R2 → Manage API tokens → Create Account API token, with Object Read & Write on `lymi-downloads` only. Set its token value:
+3. **The upload credentials.** In Cloudflare, R2 → Manage API tokens → Create Account API token, with Object Read & Write on `lymi-downloads` only. Copy its S3 Access Key ID and Secret Access Key into these secrets:
 
    ```bash
-   gh secret set CLOUDFLARE_R2_TOKEN
+   gh secret set CLOUDFLARE_R2_ACCESS_KEY_ID
    ```
 
-The certificate lasts five years. The version is `1.0.` and the workflow's run number, so every release is newer than the one installed.
+   ```bash
+   gh secret set CLOUDFLARE_R2_SECRET_ACCESS_KEY
+   ```
+
+Bucket-scoped Object Read & Write permissions work through [R2’s S3 API](https://developers.cloudflare.com/r2/api/tokens/), so the workflow uploads with the AWS CLI instead of Wrangler’s REST API.
+
+Replace the signing certificate before the expiry shown in Keychain Access.
+
+The version is `1.0.` and the workflow's run number, so every release is newer than the one installed.

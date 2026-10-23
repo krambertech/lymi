@@ -1049,15 +1049,10 @@ export const ReadwisePatchInput = z.object({
       z.object({
         id: z.string().min(1),
         followed: z.boolean().optional(),
-        language: z
-          .string()
-          .min(1)
-          .max(12)
-          .optional()
-          .meta({
-            description:
-              "For a book Lymi could not place: a primary subtag one of the learner's decks teaches",
-          }),
+        language: z.string().min(1).max(12).optional().meta({
+          description:
+            "For a book Lymi could not place: a primary subtag one of the learner's decks teaches",
+        }),
       }),
     )
     .max(1000)

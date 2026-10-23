@@ -31,6 +31,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "play",
   "important",
   "edit",
+  "enrich",
   "move_section",
   "move_deck",
   "archive",

@@ -13,6 +13,9 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{seen}”"
 msgstr "“{seen}”"
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "“{term}” has nothing left to fill in."
+
 msgid "“{term}” is already in {deck}"
 msgstr "“{term}” is already in {deck}"
 
@@ -1565,6 +1568,12 @@ msgstr "Couldn’t download the file. Check your connection and try again."
 msgid "Couldn’t draft a hook. Try again in a moment."
 msgstr "Couldn’t draft a hook. Try again in a moment."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
+
+msgid "Couldn’t enrich this card."
+msgstr "Couldn’t enrich this card."
+
 msgid "Couldn’t finish the import"
 msgstr "Couldn’t finish the import"
 
@@ -2003,11 +2012,20 @@ msgctxt "language"
 msgid "English"
 msgstr "English"
 
+msgid "Enrich"
+msgstr "Enrich"
+
 msgid "Enriched"
 msgstr "Enriched"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
+
+msgid "Enriched this card"
+msgstr "Enriched this card"
+
+msgid "Enriching this card"
+msgstr "Enriching this card"
 
 msgid "Enter a full email address, like anna@example.com."
 msgstr "Enter a full email address, like anna@example.com."
@@ -3467,6 +3485,9 @@ msgstr "Restored the section {name} in {deck}"
 
 msgid "Restored the series {name}"
 msgstr "Restored the series {name}"
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "Review"
 msgstr "Review"

@@ -13,6 +13,9 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{seen}”"
 msgstr "«{seen}»"
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "В «{term}» нечего дополнять."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже есть в колоде {deck}"
 
@@ -1565,6 +1568,12 @@ msgstr "Не удалось скачать файл. Проверь соедин
 msgid "Couldn’t draft a hook. Try again in a moment."
 msgstr "Не удалось подготовить зацепку. Попробуй ещё раз чуть позже."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Не удалось дополнить «{term}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t enrich this card."
+msgstr "Не удалось дополнить эту карточку."
+
 msgid "Couldn’t finish the import"
 msgstr "Не удалось завершить импорт"
 
@@ -2003,11 +2012,20 @@ msgctxt "language"
 msgid "English"
 msgstr "Английский"
 
+msgid "Enrich"
+msgstr "Дополнить"
+
 msgid "Enriched"
 msgstr "Дополнено ИИ"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Дополнена # карточка} few {Дополнено # карточки} many {Дополнено # карточек} other {Дополнено # карточки}} в колоде «{deck}»"
+
+msgid "Enriched this card"
+msgstr "Карточка дополнена"
+
+msgid "Enriching this card"
+msgstr "Дополняем эту карточку"
 
 msgid "Enter a full email address, like anna@example.com."
 msgstr "Введи полный адрес, например anna@example.com."
@@ -3467,6 +3485,9 @@ msgstr "Восстановлен раздел «{name}» в колоде «{deck
 
 msgid "Restored the series {name}"
 msgstr "Восстановлена серия «{name}»"
+
+msgid "Retry"
+msgstr "Повторить"
 
 msgid "Review"
 msgstr "Повторение"

@@ -81,6 +81,7 @@ import { EndEmbers, LightPool } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
+import { canEnrich, useEnrichCard } from "../card/enrich";
 import {
   useDay,
   useDecks,
@@ -274,6 +275,7 @@ function Run({
   const { t } = useLingui();
   const decksQuery = useDecks();
   const decks = decksQuery.data;
+  const enrich = useEnrichCard();
   const seriesList = useSeriesList(!!series);
   const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
@@ -326,7 +328,7 @@ function Run({
   const undone = useRef(new Set<string>());
   const started = useRef(false);
 
-  // Edit card saves over the review; the review goes on with the corrected card.
+  // Edit card saves over the review, as Enrich does once its text lands; the review goes on with the corrected card.
   useEffect(
     () =>
       onCardEdited((written) => {
@@ -982,6 +984,16 @@ function Run({
                     params: { card: card.id, deck: card.deckId },
                   });
                 };
+                setMenuOpen(false);
+              }}
+            />
+          )}
+          {canEnrich(card, deckRow) && (
+            <SheetRow
+              icon="ai"
+              label={t`Enrich`}
+              onPress={() => {
+                chosen.current = () => void enrich(card);
                 setMenuOpen(false);
               }}
             />

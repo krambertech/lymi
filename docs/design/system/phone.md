@@ -128,6 +128,8 @@ Add stays dim until there is a term. The sheet stays for the next card: a toast 
 
 Edit card is the same form over a card that exists, with close and an amber ✓ in place of Add, and the picture, how it's asked and the tags as chips that open the same sheets; the card's own picture can be described again, replaced or cleared; ✓ or Return in the last field saves, and close or a swipe down leaves the card as it was. It opens from ⋯ on the card page and from the card's menu in a review, and a tap on any field of the card page opens it with the keyboard on that field, or on Asked or Tags with that sheet open. A field the AI wrote keeps the AI's mark until it is changed, and is the learner's once saved. Only a deck's owner sees Edit card; a member reads the card.
 
+Enrich is in the same ⋯, the card's long-press menu and its menu in a review, under the web's rules ([library-decks-and-cards.md](../library-decks-and-cards.md)), except that iOS's menu has no dimmed row, so a card the AI is filling leaves it out. The card page shimmers each field the AI will write and says once by VoiceOver when it starts and when the text lands; a review shows the filled fields once they land, as it shows an edit.
+
 Archive is in the same ⋯ and the same menu. On the card page archiving goes back to the deck with Undo in a toast; in a review the card leaves at once, with Undo in a toast over the grades. Archived, the last row of Library, lists archived decks and cards with Restore, and a restored row keeps its place with Undo until the page is left.
 
 ## Smart add

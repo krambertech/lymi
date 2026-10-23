@@ -6,7 +6,7 @@ import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { decks } from "../design/mock";
-import { CardForm, type CardFormOutcome } from "./card-form";
+import { CardForm, type CardFormDraft, type CardFormOutcome, draftHasWork } from "./card-form";
 import { TooltipProvider } from "./ui/tooltip";
 
 i18n.load("en", messages);
@@ -81,4 +81,26 @@ test("a duplicate keeps the hook on the form", async () => {
   await expect
     .element(page.getByRole("textbox", { name: "Memory hook" }))
     .toHaveValue("Mellow apple");
+});
+
+test("a discarded draft holding only a hook counts as work to bring back", () => {
+  const empty: CardFormDraft = {
+    deckId: deck.id,
+    term: "",
+    meaning: "",
+    pronunciation: "",
+    example: "",
+    notes: "",
+    hook: "",
+    source: "",
+    tags: [],
+    language: null,
+    reviewModes: null,
+    picture: { kind: "none" },
+    description: "",
+    sectionId: null,
+    languageChosen: false,
+  };
+  expect(draftHasWork(empty)).toBe(false);
+  expect(draftHasWork({ ...empty, hook: "Mellow apple" })).toBe(true);
 });

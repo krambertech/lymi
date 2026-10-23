@@ -85,6 +85,18 @@ export interface CardFormDraft extends CardFormValues {
   languageChosen: boolean;
 }
 
+/** Whether a draft holds anything the learner typed or chose for this card, so discarding it offers Undo. */
+export const draftHasWork = (d: CardFormDraft) =>
+  !!(
+    d.term ||
+    d.meaning ||
+    d.example ||
+    d.notes ||
+    d.pronunciation ||
+    d.hook ||
+    d.picture.kind !== "none"
+  );
+
 interface CardFormBase {
   /** Only decks the learner owns take a card. */
   decks: DeckSummary[] | undefined;

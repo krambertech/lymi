@@ -701,28 +701,26 @@ export function ReviewCard({
   const extrasLines = (
     <>
       {card.example && (
-        <motion.div variants={answerLine} className="grid gap-1">
-          <p
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+        <motion.p
+          variants={answerLine}
+          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+          dir={textDirection(card.language)}
+        >
+          <ExampleText
+            text={card.example}
             lang={card.language ?? undefined}
-            dir={textDirection(card.language)}
-          >
-            <ExampleText
-              text={card.example}
-              lang={card.language ?? undefined}
-              known={knownReadings}
-            />
-          </p>
+            known={knownReadings}
+          />
           {translation && (
-            // In the meaning language, like the meaning, so it takes its direction from its own text.
-            <p
-              className="hyphenate whitespace-pre-line text-base leading-relaxed text-muted [overflow-wrap:anywhere]"
-              dir="auto"
-            >
-              ({translation})
-            </p>
+            <>
+              {" "}
+              {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
+              <span lang={i18n.locale} dir="auto" className="text-muted">
+                ({translation})
+              </span>
+            </>
           )}
-        </motion.div>
+        </motion.p>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">

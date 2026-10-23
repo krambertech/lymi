@@ -48,6 +48,8 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
   async run(event: WorkflowEvent<EnrichRunParams>, step: WorkflowStep) {
     const params = event.payload;
     const db = createDb(this.env.DB);
+    // An edit's run asks only for a translation, so a fill another run has under way is not its to settle.
+    const fills = params.trigger !== "edit";
     try {
       const analytics = productAnalytics(
         this.env,
@@ -59,7 +61,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       // The key went away between the add and this run, so nothing was ever asked.
       if (!provider) {
         await step.do("unconfigured", STEP, async () => {
-          await settleEnrichment(db, params.userId, params.cardIds);
+          if (fills) await settleEnrichment(db, params.userId, params.cardIds);
           await settleTranslations(db, params.userId, params.cardIds);
         });
         return;
@@ -156,7 +158,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       // exhausted its retries ends the run, and a card left shimmering would shimmer forever.
       await step
         .do("settle", SETTLE_STEP, async () => {
-          await failEnrichment(db, params.userId, params.cardIds);
+          if (fills) await failEnrichment(db, params.userId, params.cardIds);
           await failTranslations(db, params.userId, params.cardIds);
         })
         .catch(() => {});

@@ -107,7 +107,26 @@ export async function translateExamples(
     schema: TRANSLATION_REPLY_SCHEMA,
   });
   const translations = readTranslations(reply);
-  const writes = asked.map((card) => {
+  // Read the examples again: readings or stress added during the call leave the same sentence,
+  // which the translation still fits, while any other edit makes the guard below drop it.
+  const examples = new Map(
+    (
+      await selectIn(
+        asked.map((card) => card.id),
+        (ids) =>
+          db
+            .select({ id: schema.cards.id, example: schema.cards.example })
+            .from(schema.cards)
+            .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, ids))),
+      )
+    ).map((card) => [card.id, card.example]),
+  );
+  const writes = asked.map((asking) => {
+    const current = examples.get(asking.id);
+    const card =
+      current && exampleFingerprint(current) === exampleFingerprint(asking.example ?? "")
+        ? { ...asking, example: current }
+        : asking;
     const text = translations.get(card.id);
     // The model declined: the example stays untranslated, and nothing waits on it.
     if (!text) {

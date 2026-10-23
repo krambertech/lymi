@@ -253,6 +253,52 @@ describe("translating examples", () => {
     ]);
   });
 
+  it("lands a translation once stress is added to the same sentence while it is written", async () => {
+    const russian = await createDeck(ctx, { name: "Русский 2", defaultLanguage: "ru" });
+    const [outcome] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: russian.id, term: "замок 2", example: "Это мой замок." })],
+      queue,
+    );
+    if (outcome?.status !== "added") throw new Error("card not added");
+    const card = outcome.card;
+    await settleEnrichment(db, ctx.userId, [card.id]);
+    const slow = translator(
+      () => "This is my castle.",
+      async () => {
+        await updateCard(ctx, card.id, { example: "Это мой за\u0301мок." }, queue);
+      },
+    );
+    expect(await translateExamples(ai(), [card.id], slow)).toEqual({ translated: 1 });
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "Это мой за\u0301мок.",
+      exampleTranslation: "This is my castle.",
+      exampleTranslationStatus: null,
+      exampleTranslationStale: false,
+    });
+  });
+
+  it("leaves a fill under way alone when an edit's run cannot start", async () => {
+    const [outcome] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId, term: "essen 17", example: "Ich esse Brot." })],
+      queue,
+    );
+    if (outcome?.status !== "added") throw new Error("card not added");
+    const card = outcome.card;
+    await translateExamples(ai(), [card.id], translator(english));
+    const refusing: EnrichmentQueue = {
+      create: async () => {
+        throw new Error("queue down");
+      },
+    };
+    await updateCard(ctx, card.id, { example: "Ich aß Brot." }, refusing);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      enrichmentStatus: "working",
+      exampleTranslationStatus: "failed",
+    });
+  });
+
   it("never lets a translation the learner typed meanwhile be overwritten", async () => {
     const card = await add({ term: "essen 7", example: "Ich esse Brot." });
     const slow = translator(english, async () => {

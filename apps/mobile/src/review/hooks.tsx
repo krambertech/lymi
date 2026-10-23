@@ -39,17 +39,21 @@ const arrive = (ms: number, y: number, delay = 0) =>
     .delay(delay)
     .reduceMotion(ALWAYS);
 
+/** What Peek at your hook takes at the card's foot: its 32 pt button over a 20 pt margin. */
+export const PEEK_ROOM = 52;
+
 /**
  * The quiet control at the foot of an unrevealed card that peeks at its hook, as quiet as Show hook
  * after the reveal, since recall comes first. A tap on it never turns the card, and once the hook
- * shows it goes, since there is nothing more to take.
+ * shows it goes, since there is nothing more to take. It floats over the foot, whose room the card
+ * keeps until the reveal, so the cue stays put as it goes.
  */
 export function PeekButton({ onPeek }: { onPeek: () => void }) {
   const { t } = useLingui();
   return (
     <Animated.View
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
-      className="items-center px-5 pb-5"
+      className="absolute inset-x-0 bottom-0 items-center px-5 pb-5"
     >
       <Button size="sm" variant="ghost" icon="hook" label={t`Peek at your hook`} onPress={onPeek} />
     </Animated.View>

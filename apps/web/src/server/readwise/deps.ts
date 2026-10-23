@@ -15,7 +15,7 @@ function readwiseApi(env: Bindings): ReadwiseApi {
   const pick = (token: string) => (token === DEV_READWISE_TOKEN ? fake : real);
   return {
     accepts: (token) => pick(token).accepts(token),
-    books: (token) => pick(token).books(token),
+    books: (token, updatedAfter) => pick(token).books(token, updatedAfter),
     recentHighlights: (token) => pick(token).recentHighlights(token),
     exportPage: (token, input) => pick(token).exportPage(token, input),
   };

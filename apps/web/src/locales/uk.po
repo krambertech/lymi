@@ -92,6 +92,10 @@ msgstr "{0, plural, one {# картка вже є у твоїх колодах, 
 msgid "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
 msgstr "{0, plural, one {# картка має тип image occlusion або не має терміна, тож її пропущено.} few {# картки мають тип image occlusion або не мають терміна, тож їх пропущено.} many {# карток мають тип image occlusion або не мають терміна, тож їх пропущено.} other {# картки мають тип image occlusion або не мають терміна, тож їх пропущено.}}"
 
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# card left} other {# cards left}}"
+msgstr "{0, plural, one {ще # картка} few {ще # картки} many {ще # карток} other {ще # картки}}"
+
 #. placeholder {0}: counts.duplicates
 msgid "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
 msgstr "{0, plural, one {# картка вже була у твоїх колодах, її пропущено.} few {# картки вже були у твоїх колодах, їх пропущено.} many {# карток уже були у твоїх колодах, їх пропущено.} other {# картки вже були у твоїх колодах, їх пропущено.}}"
@@ -152,17 +156,13 @@ msgstr "{0, plural, one {# файл} few {# файли} many {# файлів} ot
 msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 msgstr "{0, plural, one {# забута сьогодні.} few {# забуті сьогодні.} many {# забутих сьогодні.} other {# забутої сьогодні.}}"
 
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
-msgstr "{0, plural, one {Ще # картка — і на сьогодні все} few {Ще # картки — і на сьогодні все} many {Ще # карток — і на сьогодні все} other {Ще # картки — і на сьогодні все}}"
+#. placeholder {0}: book.highlights
+msgid "{0, plural, one {# highlight} other {# highlights}}"
+msgstr "{0, plural, one {# виділення} few {# виділення} many {# виділень} other {# виділення}}"
 
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
 msgstr "{0, plural, one {ще # картка в цій колоді} few {ще # картки в цій колоді} many {ще # карток у цій колоді} other {ще # картки в цій колоді}}"
-
-#. placeholder {0}: screen.nudge.count
-msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
-msgstr "{0, plural, one {Ще # повторення до денної мети} few {Ще # повторення до денної мети} many {Ще # повторень до денної мети} other {Ще # повторення до денної мети}}"
 
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is image occlusion or has no term, so it’s skipped.} other {# notes are image occlusion or have no term, so they’re skipped.}}"
@@ -235,6 +235,10 @@ msgstr "{0, plural, one {# тег} few {# теги} many {# тегів} other {#
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
 msgstr "{0, plural, one {# термін трапляється більше одного разу. Імпортуються всі картки.} few {# терміни трапляються більше одного разу. Імпортуються всі картки.} many {# термінів трапляються більше одного разу. Імпортуються всі картки.} other {# терміна трапляються більше одного разу. Імпортуються всі картки.}}"
 
+#. placeholder {0}: note.count
+msgid "{0, plural, one {# to goal} other {# to goal}}"
+msgstr "{0, plural, one {ще # до мети} few {ще # до мети} many {ще # до мети} other {ще # до мети}}"
+
 #. placeholder {0}: TAG_LIMITS.count
 msgid "{0, plural, one {A card holds up to # tag.} other {A card holds up to # tags.}}"
 msgstr "{0, plural, one {У картці може бути до # тегу.} few {У картці може бути до # тегів.} many {У картці може бути до # тегів.} other {У картці може бути до # тегу.}}"
@@ -301,6 +305,10 @@ msgstr "{0, plural, one {Імпортовано # картку} few {Імпор�
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Найбільше днів поспіль: #.} few {Найбільше днів поспіль: #.} many {Найбільше днів поспіль: #.} other {Найбільше днів поспіль: #.}}"
 
+#. placeholder {0}: unplaced.length
+msgid "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
+msgstr "{0, plural, one {Lymi не зміг визначити, якою мовою ця книжка. Вибери мову, щоб додати її виділення.} few {Lymi не зміг визначити, якою мовою ці книжки. Вибери мову, щоб додати їхні виділення.} many {Lymi не зміг визначити, якою мовою ці книжки. Вибери мову, щоб додати їхні виділення.} other {Lymi не зміг визначити, якою мовою ці книжки. Вибери мову, щоб додати їхні виділення.}}"
+
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Готово до імпорту: # картка} few {Готово до імпорту: # картки} many {Готово до імпорту: # карток} other {Готово до імпорту: # картки}}"
@@ -365,6 +373,11 @@ msgstr "{0, plural, one {Перевірено # вид} few {Перевірен�
 #. placeholder {0}: summary.decks.length
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, one {Усі колоди: #} few {Усі колоди: #} many {Усі колоди: #} other {Усі колоди: #}}"
+
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: book.highlights
+msgid "{0} · {1, plural, one {# highlight} other {# highlights}}"
+msgstr "{0} · {1, plural, one {# виділення} few {# виділення} many {# виділень} other {# виділення}}"
 
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: isolate(card.deckName)
@@ -629,6 +642,9 @@ msgstr "{found, plural, one {термін знайдено} few {терміни 
 
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {На # картці} few {На # картках} many {На # картках} other {На # картках}} вже було 20 тегів, тож тег туди не додано."
+
+msgid "{goal, plural, one {of # review today} other {of # reviews today}}"
+msgstr "{goal, plural, one {з # повторення сьогодні} few {з # повторень сьогодні} many {з # повторень сьогодні} other {з # повторення сьогодні}}"
 
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
@@ -1543,6 +1559,9 @@ msgstr "Вибери колоду"
 
 msgid "Choose a deck."
 msgstr "Вибери колоду."
+
+msgid "Choose a language"
+msgstr "Вибери мову"
 
 msgid "Choose a recall grade"
 msgstr "Вибрати оцінку повторення"
@@ -3632,6 +3651,9 @@ msgstr "Або встав це посилання в браузер:"
 
 msgid "Or start an empty deck"
 msgstr "Або почни з порожньої колоди"
+
+msgid "other decks"
+msgstr "інші колоди"
 
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на <0>hello@lymi.app</0>, щоб видалити його."

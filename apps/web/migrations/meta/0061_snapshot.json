@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "28ecee00-f309-4734-96d5-3b066deb8df4",
+  "id": "5b0e80eb-e14e-4231-8e0d-a2781f998c7f",
   "prevId": "b44164be-bbe5-4c56-bf28-59b7820febe2",
   "tables": {
     "account_deletions": {
@@ -3054,6 +3054,22 @@
           "notNull": true,
           "autoincrement": false
         },
+        "pending": {
+          "name": "pending",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "ever_followed": {
+          "name": "ever_followed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
         "highlights": {
           "name": "highlights",
           "type": "integer",
@@ -3152,11 +3168,32 @@
           "notNull": true,
           "autoincrement": false
         },
+        "pull_cursor": {
+          "name": "pull_cursor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pull_cursor_from": {
+          "name": "pull_cursor_from",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "next_pull_at": {
           "name": "next_pull_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "pulling_until": {
+          "name": "pulling_until",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "last_pull_at": {

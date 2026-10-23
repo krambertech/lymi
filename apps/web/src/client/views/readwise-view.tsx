@@ -36,6 +36,8 @@ interface Props {
   connecting: boolean;
   connectError: string | null;
   onFollow: (bookId: string, followed: boolean) => void;
+  /** For a book Lymi could not place: the language its highlights are in. */
+  onLanguage: (bookId: string, language: string) => void;
   onDeck: (language: string, deckId: string) => void;
   saveError: string | null;
   onPull: () => void;
@@ -319,24 +321,25 @@ function Decks({ connection, decks, onDeck, saveError }: Props & { connection: R
   );
 }
 
-function Books({ connection, onFollow }: Props & { connection: Readwise }) {
+function Books({ connection, onFollow, onLanguage }: Props & { connection: Readwise }) {
   const { t } = useLingui();
   const nameOf = useLanguageName();
   const learned = new Set(connection.languages.map((l) => l.language));
   const yours = connection.books.filter((b) => b.language && learned.has(b.language));
-  const others = connection.books.length - yours.length;
+  const unplaced = connection.books.filter((b) => !b.language);
+  const others = connection.books.length - yours.length - unplaced.length;
   return (
     <SettingsGroup
       title={t`Books`}
       description={t`New highlights in the books you turn on become cards. A new book in one of your languages is turned on by itself.`}
     >
-      {yours.length === 0 ? (
+      {yours.length === 0 && unplaced.length === 0 ? (
         <p className="max-w-[60ch] text-sm text-muted">
           <Trans>
             No books in a language you’re learning yet. One appears here when you highlight in it.
           </Trans>
         </p>
-      ) : (
+      ) : yours.length === 0 ? null : (
         <ul className="grid">
           {yours.map((book) => {
             const language = nameOf(book.language ?? "");
@@ -370,6 +373,54 @@ function Books({ connection, onFollow }: Props & { connection: Readwise }) {
             );
           })}
         </ul>
+      )}
+      {unplaced.length > 0 && learned.size > 0 && (
+        <div className="grid gap-1">
+          <p className="max-w-[60ch] text-sm text-text-2">
+            <Plural
+              value={unplaced.length}
+              one="Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights."
+              other="Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights."
+            />
+          </p>
+          <ul className="grid">
+            {unplaced.map((book) => (
+              <li key={book.id} className="border-b border-edge py-3 last:border-b-0">
+                <Field orientation="horizontal" className="flex-wrap gap-x-4 gap-y-2">
+                  <FieldContent className="min-w-0 flex-1 gap-0.5">
+                    <FieldLabel className="truncate text-base text-text">
+                      {book.title || t`Untitled`}
+                    </FieldLabel>
+                    <FieldDescription className="truncate">
+                      {book.author ? (
+                        <Trans>
+                          {isolate(book.author)} ·{" "}
+                          <Plural value={book.highlights} one="# highlight" other="# highlights" />
+                        </Trans>
+                      ) : (
+                        <Plural value={book.highlights} one="# highlight" other="# highlights" />
+                      )}
+                    </FieldDescription>
+                  </FieldContent>
+                  <div className="w-full sm:w-56">
+                    <Select
+                      value={null}
+                      onValueChange={(v) => {
+                        if (v) onLanguage(book.id, v as string);
+                      }}
+                      items={[...learned].map((l) => ({ value: l, label: nameOf(l) }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t`Choose a language`} />
+                      </SelectTrigger>
+                      <SelectContent />
+                    </Select>
+                  </div>
+                </Field>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       {others > 0 && (
         <p className="text-sm text-muted">

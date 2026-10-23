@@ -1441,18 +1441,21 @@ export function ReviewComplete({
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.
   const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  const goal = (streak ?? week)?.today.goal;
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers
-    .filter((offer) => !(offer.kind === "continue" && screen.continueLeads))
-    .map((offer) => ({
-      key: offer.kind,
-      icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
-      label:
-        offer.kind === "forgotten"
-          ? t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
-          : t`Continue`,
-      onClick: () => onOffer?.(offer),
-    }));
+  const note = proceed?.note;
+  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  const ways = screen.offers.flatMap((offer) =>
+    offer.kind === "forgotten"
+      ? [
+          {
+            key: offer.kind,
+            label: t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
+            onClick: () => onOffer?.(offer),
+          },
+        ]
+      : [],
+  );
   const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(actionsAt + RISE_MS, embers.length ? AT.embers + embersEnd(embers) : 0);
 
@@ -1550,7 +1553,12 @@ export function ReviewComplete({
               <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
             </span>
             <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              <Plural value={attempts} one="review today" other="reviews today" />
+              {/* While the goal is open the count says it, so Continue's count explains itself. */}
+              {!screen.satisfied && goal ? (
+                <Plural value={goal} one="of # review today" other="of # reviews today" />
+              ) : (
+                <Plural value={attempts} one="review today" other="reviews today" />
+              )}
             </span>
           </p>
         ) : (
@@ -1594,33 +1602,11 @@ export function ReviewComplete({
           </div>
         )}
 
-        {/* While Continue leads, what is left of the day sits under its lights. */}
-        {screen.nudge && (
-          <p
-            className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
-            style={at(AT.run + 120)}
-          >
-            {screen.nudge.kind === "goal" ? (
-              <Plural
-                value={screen.nudge.count}
-                one="# more review to your daily goal"
-                other="# more reviews to your daily goal"
-              />
-            ) : (
-              <Plural
-                value={screen.nudge.count}
-                one="# more card and you’re done for today"
-                other="# more cards and you’re done for today"
-              />
-            )}
-          </p>
-        )}
-
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
         <div
           className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
         >
-          {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is always last and primary. */}
           {ways.map((way, i) => (
             <Button
               key={way.key}
@@ -1629,7 +1615,7 @@ export function ReviewComplete({
               className="seq w-full"
               style={at(AT.actions + i * AT.actionStep)}
             >
-              {way.icon}
+              <StateIcon state="forgot" className="size-4" />
               {way.label}
             </Button>
           ))}
@@ -1637,22 +1623,28 @@ export function ReviewComplete({
             {!counted ? (
               <>
                 {addCards}
-                {done("secondary")}
-              </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {done("secondary")}
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => onOffer?.(proceed)}
-                  className="w-full"
-                >
-                  <Trans>Continue</Trans>
-                </Button>
+                {done("primary")}
               </>
             ) : (
-              done("primary")
+              <>
+                {proceed && (
+                  <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
+                    <Trans>Continue</Trans>
+                    {note && (
+                      <span className="font-normal tabular-nums text-muted">
+                        {note.kind === "goal" ? (
+                          <Plural value={note.count} one="# to goal" other="# to goal" />
+                        ) : note.kind === "cards" ? (
+                          <Plural value={note.count} one="# card left" other="# cards left" />
+                        ) : (
+                          <Trans>other decks</Trans>
+                        )}
+                      </span>
+                    )}
+                  </Button>
+                )}
+                {done("primary")}
+              </>
             )}
           </div>
         </div>

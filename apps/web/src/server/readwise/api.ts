@@ -74,14 +74,14 @@ export class ReadwiseUnavailable extends Error {
 export interface ReadwiseApi {
   /** True for a token Readwise accepts. */
   accepts(token: string): Promise<boolean>;
-  /** The learner's books and articles, newest first. */
-  books(token: string): Promise<ReadwiseBookSummary[]>;
+  /** The learner's books and articles, or only those updated after `updatedAfter`. */
+  books(token: string, updatedAfter?: Date): Promise<ReadwiseBookSummary[]>;
   /** Their latest highlights across every book, to tell each book's language. */
   recentHighlights(token: string): Promise<{ bookId: string; text: string }[]>;
-  /** One page of highlights updated after `updatedAfter`, grouped by book. */
+  /** One page of highlights updated after `updatedAfter`, grouped by book, of `bookIds` when given. */
   exportPage(
     token: string,
-    input: { updatedAfter: Date; cursor?: string | undefined },
+    input: { updatedAfter: Date; cursor?: string | undefined; bookIds?: string[] | undefined },
   ): Promise<{ books: ReadwiseExportBook[]; cursor: string | null }>;
 }
 
@@ -108,16 +108,19 @@ export function createReadwiseApi(fetcher: typeof fetch = fetch): ReadwiseApi {
         throw error;
       }
     },
-    async books(token) {
-      return List(ListBook).parse(await get(token, "/books/?page_size=1000")).results;
+    async books(token, updatedAfter) {
+      const query = new URLSearchParams({ page_size: "1000" });
+      if (updatedAfter) query.set("updated__gt", updatedAfter.toISOString());
+      return List(ListBook).parse(await get(token, `/books/?${query}`)).results;
     },
     async recentHighlights(token) {
       const page = List(ListHighlight).parse(await get(token, "/highlights/?page_size=1000"));
       return page.results.map((h) => ({ bookId: h.book_id, text: h.text }));
     },
-    async exportPage(token, { updatedAfter, cursor }) {
+    async exportPage(token, { updatedAfter, cursor, bookIds }) {
       const query = new URLSearchParams({ updatedAfter: updatedAfter.toISOString() });
       if (cursor) query.set("pageCursor", cursor);
+      if (bookIds?.length) query.set("ids", bookIds.join(","));
       const page = ExportPage.parse(await get(token, `/export/?${query}`));
       return {
         books: page.results,

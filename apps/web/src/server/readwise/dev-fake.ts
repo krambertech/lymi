@@ -46,8 +46,8 @@ export function createFakeReadwiseApi(): ReadwiseApi {
       })),
     recentHighlights: async () =>
       BOOKS.flatMap((b) => b.highlights.map(([text]) => ({ bookId: b.id, text }))),
-    exportPage: async () => ({
-      books: BOOKS.map(
+    exportPage: async (_token, { bookIds }) => ({
+      books: BOOKS.filter((b) => !bookIds?.length || bookIds.includes(b.id)).map(
         (b): ReadwiseExportBook => ({
           user_book_id: b.id,
           title: b.title,

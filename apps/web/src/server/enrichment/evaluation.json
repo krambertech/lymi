@@ -243,6 +243,157 @@
       "samples": [],
       "cases": [
         {
+          "id": "ru-en-04",
+          "term": "замок",
+          "meaning": "castle",
+          "expect": { "pronunciation": { "oneOf": ["за́мок"] } }
+        },
+        {
+          "id": "ru-en-05",
+          "term": "замок",
+          "meaning": "lock",
+          "expect": { "pronunciation": { "oneOf": ["замо́к"] } }
+        },
+        {
+          "id": "ru-en-06",
+          "term": "мука",
+          "meaning": "flour",
+          "expect": { "pronunciation": { "oneOf": ["мука́"] } }
+        },
+        {
+          "id": "ru-en-07",
+          "term": "мука",
+          "meaning": "torment",
+          "expect": { "pronunciation": { "oneOf": ["му́ка"] } }
+        },
+        {
+          "id": "ru-en-08",
+          "term": "плачу",
+          "meaning": "I pay",
+          "expect": { "pronunciation": { "oneOf": ["плачу́"] } }
+        },
+        {
+          "id": "ru-en-09",
+          "term": "плачу",
+          "meaning": "I cry",
+          "expect": { "pronunciation": { "oneOf": ["пла́чу"] } }
+        },
+        {
+          "id": "ru-en-10",
+          "term": "стоит",
+          "meaning": "it costs",
+          "expect": { "pronunciation": { "oneOf": ["сто́ит"] } }
+        },
+        {
+          "id": "ru-en-11",
+          "term": "стоит",
+          "meaning": "it stands",
+          "expect": { "pronunciation": { "oneOf": ["стои́т"] } }
+        },
+        {
+          "id": "ru-en-12",
+          "term": "духи",
+          "meaning": "perfume",
+          "expect": { "pronunciation": { "oneOf": ["духи́"] } }
+        },
+        {
+          "id": "ru-en-13",
+          "term": "духи",
+          "meaning": "spirits; ghosts",
+          "expect": { "pronunciation": { "oneOf": ["ду́хи"] } }
+        },
+        {
+          "id": "ru-en-14",
+          "term": "полки",
+          "meaning": "shelves",
+          "expect": { "pronunciation": { "oneOf": ["по́лки"] } }
+        },
+        {
+          "id": "ru-en-15",
+          "term": "полки",
+          "meaning": "regiments",
+          "expect": { "pronunciation": { "oneOf": ["полки́"] } }
+        },
+        {
+          "id": "ru-en-16",
+          "term": "еж",
+          "expect": { "meaning": { "oneOf": ["hedgehog"] }, "pronunciation": { "oneOf": ["ёж"] } }
+        },
+        {
+          "id": "ru-en-17",
+          "term": "все",
+          "meaning": "everything",
+          "expect": { "pronunciation": { "oneOf": ["всё"] } }
+        },
+        {
+          "id": "ru-en-18",
+          "term": "все",
+          "meaning": "everyone",
+          "expect": { "pronunciation": "empty" }
+        },
+        {
+          "id": "ru-en-19",
+          "term": "ёлка",
+          "expect": { "meaning": "filled", "pronunciation": "empty" }
+        },
+        {
+          "id": "ru-en-20",
+          "term": "дом",
+          "expect": {
+            "meaning": { "oneOf": ["house", "home", "house; home", "home; house"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "ru-en-21",
+          "term": "окно",
+          "expect": { "meaning": { "oneOf": ["window"] }, "pronunciation": { "oneOf": ["окно́"] } }
+        },
+        {
+          "id": "ru-en-22",
+          "term": "добрый день",
+          "expect": {
+            "meaning": { "includes": ["good afternoon"] },
+            "pronunciation": { "oneOf": ["до́брый день"] }
+          }
+        },
+        {
+          "id": "ru-en-23",
+          "term": "работать",
+          "example": "Я работаю в банке.",
+          "expect": {
+            "meaning": { "includes": ["work"] },
+            "example": { "oneOf": ["Я рабо́таю в ба́нке."] }
+          }
+        },
+        {
+          "id": "ru-en-24",
+          "term": "читать",
+          "example": "Мы читаем книгу вечером.",
+          "expect": {
+            "meaning": { "includes": ["read"] },
+            "example": { "oneOf": ["Мы чита́ем кни́гу ве́чером."] }
+          }
+        },
+        {
+          "id": "ru-en-25",
+          "term": "звонить",
+          "example": "Он звонит маме каждый день.",
+          "expect": {
+            "meaning": { "includes": ["call"] },
+            "example": { "oneOf": ["Он звони́т ма́ме ка́ждый день."] }
+          }
+        },
+        {
+          "id": "ru-en-26",
+          "term": "белка",
+          "example": "В парке живёт белка.",
+          "expect": {
+            "meaning": { "oneOf": ["squirrel"] },
+            "example": { "oneOf": ["В па́рке живёт бе́лка."] }
+          }
+        },
+        {
           "id": "ru-en-01",
           "term": "молоко",
           "expect": {
@@ -265,6 +416,115 @@
             "meaning": { "oneOf": ["How are you?", "How are things?", "How's it going?"] },
             "example": "empty"
           }
+        },
+        {
+          "id": "ru-en-27",
+          "term": "дома",
+          "meaning": "at home",
+          "expect": { "pronunciation": { "oneOf": ["до́ма"] } }
+        },
+        {
+          "id": "ru-en-28",
+          "term": "дома",
+          "meaning": "houses",
+          "expect": { "pronunciation": { "oneOf": ["дома́"] } }
+        }
+      ]
+    },
+    {
+      "id": "ru-en-notes",
+      "name": "Russian A2 · Words",
+      "language": "ru",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "ru-notes-01",
+          "term": "город",
+          "expect": {
+            "meaning": { "oneOf": ["city", "town", "city; town", "town; city"] },
+            "pronunciation": { "oneOf": ["го́род"] },
+            "notes": { "includes": ["города́"] }
+          }
+        },
+        {
+          "id": "ru-notes-02",
+          "term": "жить",
+          "expect": {
+            "meaning": { "includes": ["live"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["жила́"] }
+          }
+        },
+        {
+          "id": "ru-notes-03",
+          "term": "делать",
+          "expect": {
+            "meaning": { "includes": ["do"] },
+            "pronunciation": { "oneOf": ["де́лать"] },
+            "notes": { "includes": ["сде"] }
+          }
+        },
+        {
+          "id": "ru-notes-04",
+          "term": "говорить",
+          "expect": {
+            "meaning": { "includes": ["speak"] },
+            "pronunciation": { "oneOf": ["говори́ть"] },
+            "notes": { "includes": ["сказа"] }
+          }
+        },
+        {
+          "id": "ru-notes-05",
+          "term": "ночь",
+          "expect": {
+            "meaning": { "oneOf": ["night"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["feminine"] }
+          }
+        },
+        {
+          "id": "ru-notes-06",
+          "term": "время",
+          "expect": {
+            "meaning": { "includes": ["time"] },
+            "pronunciation": { "oneOf": ["вре́мя"] },
+            "notes": { "includes": ["neuter"] }
+          }
+        },
+        {
+          "id": "ru-notes-07",
+          "term": "кофе",
+          "expect": {
+            "meaning": { "oneOf": ["coffee"] },
+            "pronunciation": { "oneOf": ["ко́фе"] },
+            "notes": { "includes": ["masculine"] }
+          }
+        },
+        {
+          "id": "ru-notes-08",
+          "term": "ребёнок",
+          "expect": {
+            "meaning": { "oneOf": ["child", "baby", "child; baby"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["де́ти"] }
+          }
+        },
+        {
+          "id": "ru-notes-09",
+          "term": "рука",
+          "expect": {
+            "meaning": { "includes": ["hand"] },
+            "pronunciation": { "oneOf": ["рука́"] },
+            "notes": { "includes": ["ру́ки"] }
+          }
+        },
+        {
+          "id": "ru-notes-10",
+          "term": "замок",
+          "meaning": "castle",
+          "expect": { "pronunciation": { "oneOf": ["за́мок"] }, "notes": { "includes": ["замо́к"] } }
         }
       ]
     },

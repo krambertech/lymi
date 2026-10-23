@@ -514,6 +514,9 @@ msgstr "Добавить {name} в Lymi"
 msgid "Add {title}"
 msgstr "Добавить «{title}»"
 
+msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+msgstr "Добавляй карточку из любого приложения сочетанием ⌃⌥L, а Lymi всегда под рукой в строке меню."
+
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Добавь фото, PDF или транскрипт и отметь нужные слова."
 
@@ -1368,6 +1371,12 @@ msgstr "Сделать дважды — то же самое, что сдела�
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не сноси забор, пока не поймёшь, зачем его поставили"
 
+msgid "Download for Mac"
+msgstr "Скачать для Mac"
+
+msgid "Download Lymi for Mac"
+msgstr "Скачать Lymi для Mac"
+
 msgid "Drinking at home in your underwear"
 msgstr "Выпивать дома в нижнем белье"
 
@@ -2126,6 +2135,12 @@ msgstr "Повреждается у локтя; слабый хват и оне�
 msgid "Instructions"
 msgstr "Инструкции"
 
+msgid "Intel Mac?"
+msgstr "Mac с Intel?"
+
+msgid "Intel Mac? Download for Intel"
+msgstr "Mac с Intel? Скачать версию для Intel"
+
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC не публикует свои вопросы. Это тренировочные вопросы по каждой главе официального пособия."
 
@@ -2466,6 +2481,12 @@ msgstr "Lymi для изучения языков"
 msgid "Lymi for language learning · Keep the words from every lesson"
 msgstr "Lymi для изучения языков · Запоминай слова с каждого урока"
 
+msgid "Lymi for Mac"
+msgstr "Lymi для Mac"
+
+msgid "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+msgstr "Lymi для Mac добавляет карточку из любого приложения сочетанием ⌃⌥L и держит Lymi под рукой в строке меню. Для macOS 13 или новее."
+
 msgid "Lymi for medical students · Flashcards with spaced repetition"
 msgstr "Lymi для студентов-медиков · Карточки с интервальным повторением"
 
@@ -2534,6 +2555,9 @@ msgstr "Ma tulen kohe! Уже иду!"
 
 msgid "ma-infinitive"
 msgstr "ma-инфинитив"
+
+msgid "macOS 13 or later"
+msgstr "macOS 13 или новее"
 
 msgid "Made by Lymi"
 msgstr "От Lymi"
@@ -3545,6 +3569,9 @@ msgstr "навыка проверяют: чтение, аудирование, �
 msgid "Skip to the document"
 msgstr "Перейти к документу"
 
+msgid "Skip to the download"
+msgstr "Перейти к загрузке"
+
 msgid "Skip to the updates"
 msgstr "Перейти к обновлениям"
 
@@ -4006,6 +4033,9 @@ msgstr "Вопросы и ответы взяты из каталога BAMF о�
 
 msgid "The questions, with answers"
 msgstr "Вопросы с ответами"
+
+msgid "The quick-add panel with “la biblioteca” typed for the deck Lezione 12, below the Lymi lantern in the menu bar."
+msgstr "Панель быстрого добавления с «la biblioteca» для колоды Lezione 12, а над ней фонарь Lymi в строке меню."
 
 msgid "The ranges you’re expected to know cold."
 msgstr "Диапазоны, которые нужно знать наизусть."

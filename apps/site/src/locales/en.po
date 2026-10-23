@@ -514,6 +514,9 @@ msgstr "Add {name} to Lymi"
 msgid "Add {title}"
 msgstr "Add {title}"
 
+msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+msgstr "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Add a photo, PDF or transcript, and tick the words you want."
 
@@ -1368,6 +1371,12 @@ msgstr "Doing it twice has the same effect as doing it once"
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
 
+msgid "Download for Mac"
+msgstr "Download for Mac"
+
+msgid "Download Lymi for Mac"
+msgstr "Download Lymi for Mac"
+
 msgid "Drinking at home in your underwear"
 msgstr "Drinking at home in your underwear"
 
@@ -2126,6 +2135,12 @@ msgstr "Injured at the elbow; weak grip and numb little finger"
 msgid "Instructions"
 msgstr "Instructions"
 
+msgid "Intel Mac?"
+msgstr "Intel Mac?"
+
+msgid "Intel Mac? Download for Intel"
+msgstr "Intel Mac? Download for Intel"
+
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 
@@ -2466,6 +2481,12 @@ msgstr "Lymi for language learning"
 msgid "Lymi for language learning · Keep the words from every lesson"
 msgstr "Lymi for language learning · Keep the words from every lesson"
 
+msgid "Lymi for Mac"
+msgstr "Lymi for Mac"
+
+msgid "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+msgstr "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+
 msgid "Lymi for medical students · Flashcards with spaced repetition"
 msgstr "Lymi for medical students · Flashcards with spaced repetition"
 
@@ -2534,6 +2555,9 @@ msgstr "Ma tulen kohe! I’m coming right away!"
 
 msgid "ma-infinitive"
 msgstr "ma-infinitive"
+
+msgid "macOS 13 or later"
+msgstr "macOS 13 or later"
 
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
@@ -3545,6 +3569,9 @@ msgstr "skills tested: reading, listening, writing and speaking"
 msgid "Skip to the document"
 msgstr "Skip to the document"
 
+msgid "Skip to the download"
+msgstr "Skip to the download"
+
 msgid "Skip to the updates"
 msgstr "Skip to the updates"
 
@@ -4006,6 +4033,9 @@ msgstr "The questions and answers are BAMF’s, from its catalogue of 7 May 2025
 
 msgid "The questions, with answers"
 msgstr "The questions, with answers"
+
+msgid "The quick-add panel with “la biblioteca” typed for the deck Lezione 12, below the Lymi lantern in the menu bar."
+msgstr "The quick-add panel with “la biblioteca” typed for the deck Lezione 12, below the Lymi lantern in the menu bar."
 
 msgid "The ranges you’re expected to know cold."
 msgstr "The ranges you’re expected to know cold."

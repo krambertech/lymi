@@ -11,12 +11,20 @@ export const UPDATE_REQUIRED = "update_required";
 export const PHONE_PLATFORMS = ["ios", "android"] as const;
 export type PhonePlatform = (typeof PHONE_PLATFORMS)[number];
 
-/** What the header carries: the platform, the app's version, its native build and its update. No personal data. */
+/** A request the phone makes without the app open: a Shortcut adding a card in the background. */
+export const PHONE_ENTRIES = ["shortcut"] as const;
+export type PhoneEntry = (typeof PHONE_ENTRIES)[number];
+
+/**
+ * What the header carries: the platform, the app's version, its native build, its update and, for
+ * a request made without the app open, its entry point. No personal data.
+ */
 export interface PhoneClient {
   platform: PhonePlatform;
   version: string;
   build?: string | undefined;
   update?: string | undefined;
+  entry?: PhoneEntry | undefined;
 }
 
 const VERSION = /^\d{1,4}(\.\d{1,4}){0,2}$/;
@@ -45,11 +53,13 @@ export function parseClientHeader(header: string | null | undefined): PhoneClien
   if (!version || !VERSION.test(version)) return null;
   const build = fields.get("build");
   const update = fields.get("update");
+  const entry = fields.get("entry");
   return {
     platform: platform as PhonePlatform,
     version,
     ...(build && TOKEN.test(build) ? { build } : {}),
     ...(update && TOKEN.test(update) ? { update } : {}),
+    ...(PHONE_ENTRIES.includes(entry as PhoneEntry) ? { entry: entry as PhoneEntry } : {}),
   };
 }
 

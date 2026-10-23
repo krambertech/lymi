@@ -52,7 +52,7 @@ import AppIntents
   }
 
   /// Siri's phrases and Spotlight's shortcuts. A phrase cannot carry free text such as a term,
-  /// so "Add a word" opens empty from Siri; Shortcuts can pass the term.
+  /// so "Add a word" opens empty from Siri and "Add a card" asks for it; Shortcuts can pass it.
   struct LymiShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
       AppShortcut(
@@ -64,6 +64,16 @@ import AppIntents
         ],
         shortTitle: "Add a word",
         systemImageName: "plus"
+      )
+      AppShortcut(
+        intent: AddCardIntent(),
+        phrases: [
+          "Add a card to \(.applicationName)",
+          "Add a card in \(.applicationName)",
+          "Save a card in \(.applicationName)",
+        ],
+        shortTitle: "Add a card",
+        systemImageName: "plus.rectangle.on.rectangle"
       )
       AppShortcut(
         intent: ReviewIntent(),

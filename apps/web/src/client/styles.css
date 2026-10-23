@@ -274,6 +274,20 @@
     outline-offset: -1px;
   }
 }
+/* What floats inside a plate over text that scrolls under it: plate-2, let through a little over a light blur. */
+@utility frost {
+  background-color: color-mix(in oklab, var(--plate-2) 65%, transparent);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: var(--plate-2);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--plate-2);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
 /* A photo's edge, drawn inside its bounds so it costs no layout. */
 @utility image-edge {
   outline: 1px solid var(--image-edge);

@@ -6,27 +6,20 @@ import { motion } from "motion/react";
 import { type ReactNode, useState } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 
-/** The panel's box, shared by the live offer and the hidden copy that measures its room. */
+/** The panel's box, one line tall, shared by the live offer and the hidden copy that measures its room. */
 export const HOOK_OFFER_BOX =
-  "flex w-full min-w-0 items-center gap-3 rounded-md bg-plate-2 px-3 py-3 text-start @3xl:px-4";
+  "frost flex h-11 w-full min-w-0 items-center gap-2.5 rounded-md ps-3.5 pe-3 text-start";
 
 /** What the panel says, without its motion: the live offer and the measuring copy both hold it. */
 export function HookOfferFace({ icon }: { icon?: ReactNode }) {
   return (
     <>
-      {icon ?? (
-        <span
-          aria-hidden="true"
-          className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text-2"
-        >
-          <Anchor className="size-[18px]" strokeWidth={1.75} />
-        </span>
-      )}
-      <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="line-clamp-2 text-md font-medium text-text">
-          <Trans>Try a memory hook</Trans>
-        </span>
-        <span className="line-clamp-2 text-sm text-muted">
+      {icon ?? <Anchor className="size-4 shrink-0 text-text-2" aria-hidden="true" />}
+      <span className="min-w-0 flex-1 truncate text-base font-medium text-text">
+        <Trans>Try a memory hook</Trans>
+        {/* What a hook is stays in the name, so the panel keeps to one line. */}
+        <span className="sr-only">
+          {" "}
           <Trans>A short phrase that helps you remember it</Trans>
         </span>
       </span>
@@ -80,20 +73,20 @@ export function HookOffer({ delay, animate, parked, onOpen, onShown }: HookOffer
       }}
       className={cn(
         HOOK_OFFER_BOX,
-        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-hover active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
-        idle && "pointer-events-none",
+        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-hover/80 active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
+        idle ? "pointer-events-none" : "pointer-events-auto",
       )}
     >
       <HookOfferFace
         icon={
           <motion.span
             aria-hidden="true"
-            className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text-2"
+            className="grid shrink-0 text-text-2"
             initial={{ scale: travel ? 0.85 : 1 }}
             animate={{ scale: 1 }}
             transition={{ delay: delay + 0.04, duration: travel ? 0.24 : 0, ease: EASE_OUT }}
           >
-            <Anchor className="size-[18px]" strokeWidth={1.75} />
+            <Anchor className="size-4" />
           </motion.span>
         }
       />

@@ -864,8 +864,15 @@ export function ReviewCard({
         className,
       )}
     >
-      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge. */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]">
+      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge; under the offer the text shows through its frost, cut off at its foot. */}
+      <div
+        className={clsx(
+          "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain",
+          offer && revealed
+            ? "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
+            : "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]",
+        )}
+      >
         <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
           {!revealed && (
             <button
@@ -1081,10 +1088,12 @@ export function ReviewCard({
             {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
+        {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
+        {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
-      {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
+      {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
-        <div className="shrink-0 px-2 pb-2">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2">
           <HookOffer
             {...offer}
             onShown={() => {

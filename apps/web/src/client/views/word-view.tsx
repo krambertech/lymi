@@ -40,6 +40,7 @@ import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
+import { ExampleAudioButton } from "../components/example-audio";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
 import { ReviewTimeline } from "../components/review-timeline";
@@ -735,6 +736,7 @@ export function WordView({
                     lang={card.language ?? undefined}
                     known={knownReadings}
                   />
+                  <ExampleAudioButton card={card} surface="card" />
                 </p>
                 {translating && !translation ? (
                   <p className="flex items-center text-base leading-relaxed" aria-hidden="true">

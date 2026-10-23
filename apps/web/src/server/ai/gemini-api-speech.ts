@@ -76,7 +76,11 @@ export function createGeminiApiSpeechProvider(
             },
             body: JSON.stringify({
               contents: [
-                { parts: [{ text: `${pronunciationPrompt(locale)}\n\nText: ${input.text}` }] },
+                {
+                  parts: [
+                    { text: `${pronunciationPrompt(locale, input.kind)}\n\nText: ${input.text}` },
+                  ],
+                },
               ],
               generationConfig: {
                 responseModalities: ["AUDIO"],

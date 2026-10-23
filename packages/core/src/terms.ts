@@ -1,5 +1,5 @@
 import { languageKey, saysReading, speechInputs, stressRules } from "./languages";
-import { kanaReading, markedTerm, stripReadings } from "./reading";
+import { exampleSegments, kanaReading, markedTerm, stripReadings } from "./reading";
 import { foldApostrophes, stripStress } from "./stress";
 
 /**
@@ -107,6 +107,37 @@ export function spokenText(card: {
   pronunciation?: string | null | undefined;
 }): string {
   return (saysReading(card.language) && (kanaReading(card) ?? markedTerm(card))) || card.term;
+}
+
+/** The most an example's speech may run to, so a passage is never voiced as one clip. */
+export const SPOKEN_EXAMPLE_MAX = 500;
+
+/**
+ * What a voice says for an example: each reading in place of its kanji where the language is spoken
+ * from its readings, `毎朝[まいあさ]パンを食[た]べます。` → `まいあさパンをたべます。`, and the
+ * written text elsewhere, so a bracket is never read aloud. Stress marks stay, as for the term.
+ */
+export function spokenExample(card: {
+  example?: string | null | undefined;
+  language?: string | null | undefined;
+}): string {
+  const example = card.example?.trim();
+  if (!example) return "";
+  if (!saysReading(card.language)) return stripReadings(example, card.language).trim();
+  return exampleSegments(example, card.language)
+    .map((segment) => segment.reading ?? segment.text)
+    .join("")
+    .trim();
+}
+
+/** Whether a card's example can be read aloud: a language card with a short enough example. */
+export function canSpeakExample(card: {
+  example?: string | null | undefined;
+  language?: string | null | undefined;
+}): boolean {
+  if (!card.language) return false;
+  const spoken = spokenExample(card);
+  return !!spoken && [...spoken].length <= SPOKEN_EXAMPLE_MAX;
 }
 
 /** What an in-memory player's clip was made from, so it is discarded when any of it changes. */

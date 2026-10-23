@@ -203,7 +203,7 @@ async function generatedPronunciation(
   );
 }
 
-async function boundedAudio(response: Response): Promise<Uint8Array> {
+export async function boundedAudio(response: Response): Promise<Uint8Array> {
   if (!response.body) throw new AudioResponseError("Speech provider returned no audio");
 
   const contentLength = response.headers.get("content-length");
@@ -253,7 +253,7 @@ class AudioResponseError extends Error {
   }
 }
 
-function providerStatus(error: unknown): number | null {
+export function providerStatus(error: unknown): number | null {
   if (!error || typeof error !== "object" || !("status" in error)) return null;
   return typeof error.status === "number" ? error.status : null;
 }

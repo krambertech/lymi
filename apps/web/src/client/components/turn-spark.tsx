@@ -54,6 +54,8 @@ export function TurnSpark({ lantern, room }: Props) {
 
     const draw = (now: number) => {
       const t = now - start;
+      // Asked for first, so a frame that finds a target not yet laid out still waits for the next.
+      if (t < AT.tick + 1300) frame = requestAnimationFrame(draw);
       const box = el.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
       if (el.width !== Math.round(box.width * dpr)) el.width = Math.round(box.width * dpr);
@@ -139,7 +141,6 @@ export function TurnSpark({ lantern, room }: Props) {
       }
       ctx.globalAlpha = 1;
       ctx.shadowBlur = 0;
-      if (t < AT.tick + 1300) frame = requestAnimationFrame(draw);
     };
     frame = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(frame);

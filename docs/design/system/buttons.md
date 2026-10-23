@@ -1,6 +1,6 @@
 # Buttons
 
-`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live.
+`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live, and the public site's copy in `apps/site/src/components/Button.tsx` draws the same variants with the same light and lift.
 
 ## Which control
 

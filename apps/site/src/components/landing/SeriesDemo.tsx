@@ -97,7 +97,7 @@ export function SeriesDemo() {
                   </div>
                   {state === "ready" && (
                     <motion.span
-                      className="shrink-0 rounded-md bg-amber px-3 py-1.5 text-sm font-medium text-amber-ink"
+                      className="key-light shrink-0 rounded-md bg-amber px-3 py-1.5 text-sm font-medium text-amber-ink"
                       initial={still ? false : { opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={move}

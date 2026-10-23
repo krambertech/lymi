@@ -625,6 +625,7 @@ export function ReviewCard({
         <motion.p
           variants={answerLine}
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+          lang={card.language ?? undefined}
           dir={textDirection(card.language)}
         >
           <ExampleText

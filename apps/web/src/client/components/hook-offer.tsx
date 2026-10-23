@@ -73,7 +73,7 @@ export function HookOffer({ delay, animate, parked, onOpen, onShown }: HookOffer
       }}
       className={cn(
         HOOK_OFFER_BOX,
-        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-hover/80 active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
+        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-hover active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
         idle ? "pointer-events-none" : "pointer-events-auto",
       )}
     >

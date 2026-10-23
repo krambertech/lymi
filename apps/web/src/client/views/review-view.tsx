@@ -568,6 +568,7 @@ export function ReviewCard({
 
   const hasOffer = !!offer;
   const offerRoom = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
@@ -866,10 +867,12 @@ export function ReviewCard({
     >
       {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge; under the offer the text shows through its frost, cut off at its foot. */}
       <div
+        ref={scrollerRef}
         className={clsx(
           "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain",
+          // Scroll padding as tall as the offer, so a focused control never scrolls in under it.
           offer && revealed
-            ? "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
+            ? "scroll-pb-13 [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
             : "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]",
         )}
       >
@@ -1093,7 +1096,11 @@ export function ReviewCard({
       </div>
       {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2"
+          // A sibling of the scroller, so a wheel over it is handed on to the card under it.
+          onWheel={(e) => scrollerRef.current?.scrollBy({ top: e.deltaY, left: 0 })}
+        >
           <HookOffer
             {...offer}
             onShown={() => {

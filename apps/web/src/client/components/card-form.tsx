@@ -614,7 +614,10 @@ export function CardForm(props: CardFormProps) {
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
       maxLength?: number | null;
-      /** A strip joined to the bottom of the field's box, which squares the box's lower corners. */
+      /**
+       * A strip joined to the bottom of the field's box. The box is drawn whenever the key is set,
+       * even while the strip is null, so the input under the caret is never swapped for another.
+       */
       chin?: ReactNode;
       /** A line that belongs to the field, under its input. */
       below?: ReactNode;
@@ -629,7 +632,7 @@ export function CardForm(props: CardFormProps) {
       <Field key={key} data-extra={key}>
         <FieldLabel aside={roomLeft(value, limit, options.length)}>{label}</FieldLabel>
         {options.description}
-        {options.long && options.chin ? (
+        {options.long && options.chin !== undefined ? (
           // One box: the field and its chin hover and take focus together, with a seam between them.
           <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-2 hoverable:hover:edge-2 has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
             <Textarea
@@ -773,7 +776,7 @@ export function CardForm(props: CardFormProps) {
         long: true,
         length: shownLength(example),
         maxLength: cardLimits.example,
-        chin: (example.trim() || translation) && translationChin,
+        chin: example.trim() || translation ? translationChin : null,
         below: translationNotes,
       }),
     pronunciation: () =>

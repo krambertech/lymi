@@ -1,9 +1,12 @@
 /* Siri phrases for Lymi’s App Shortcuts; keep ${applicationName}. uk.lproj and ru.lproj hold the translations. */
+"Add a card in ${applicationName}" = "Add a card in ${applicationName}";
+"Add a card to ${applicationName}" = "Add a card to ${applicationName}";
 "Add a word in ${applicationName}" = "Add a word in ${applicationName}";
 "Add a word to ${applicationName}" = "Add a word to ${applicationName}";
 "How many cards are due in ${applicationName}" = "How many cards are due in ${applicationName}";
 "New word in ${applicationName}" = "New word in ${applicationName}";
 "Review in ${applicationName}" = "Review in ${applicationName}";
 "Review my cards in ${applicationName}" = "Review my cards in ${applicationName}";
+"Save a card in ${applicationName}" = "Save a card in ${applicationName}";
 "Start a review in ${applicationName}" = "Start a review in ${applicationName}";
 "What’s due in ${applicationName}" = "What’s due in ${applicationName}";

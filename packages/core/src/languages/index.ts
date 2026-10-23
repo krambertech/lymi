@@ -114,10 +114,10 @@ export function stressRules(language: string | null | undefined): StressRules | 
   return (support?.engine === "stress" && support.stress) || null;
 }
 
-/** Whether this language's examples carry inline readings Lymi parses, so the AI may add them. */
+/** Whether this language's examples carry inline readings Lymi parses, or stress marks, so the AI may add them. */
 export function examplesCarryReadings(language: string | null | undefined): boolean {
   const engine = readingEngine(language);
-  return engine !== null && EXAMPLE_NOTATION[engine] !== null;
+  return engine === "stress" || (engine !== null && EXAMPLE_NOTATION[engine] !== null);
 }
 
 /** The script whose face draws this language's text, or null when Onest draws it. */

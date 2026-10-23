@@ -16,7 +16,7 @@ import {
 } from "./jyutping";
 import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
-import { markedForm, stressKey } from "./stress";
+import { addsStress, markedForm, missingStress, stressKey } from "./stress";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -525,8 +525,10 @@ export function hasReadings(text: string, language: string | null | undefined): 
   return exampleSegments(text, language).some((segment) => segment.reading !== undefined);
 }
 
-/** Whether text has kanji or hanzi that no inline reading covers. */
+/** Whether text has kanji or hanzi that no inline reading covers, or a word of two or more syllables with no stress shown. */
 export function missingReadings(text: string, language: string | null | undefined): boolean {
+  const rules = stressRules(language);
+  if (rules) return missingStress(text, rules);
   return exampleSegments(text, language).some(
     (segment) => segment.reading === undefined && [...segment.text].some(isBase),
   );
@@ -560,6 +562,7 @@ export function addsReadingsOnly(
   after: string,
   language: string | null | undefined,
 ): boolean {
+  if (stressRules(language)) return addsStress(before, after);
   return (
     after !== before && stripReadings(after, language) === before && hasReadings(after, language)
   );

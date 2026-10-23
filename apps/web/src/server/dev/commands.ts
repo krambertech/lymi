@@ -4,6 +4,7 @@ import {
   asClaude,
   type DevCounts,
   enrichSampleCards,
+  goalAhead,
   ownerAddsCards,
   reachGoal,
   recallCards,
@@ -105,6 +106,22 @@ export const commands: DevCommand[] = [
       return graded
         ? `Graded ${graded} more. Today's goal is met.`
         : "Today's goal was already met.";
+    },
+  },
+  {
+    id: "goal-ahead",
+    group: "Simulate",
+    title: "Leave {count} reviews to today's goal",
+    count: { default: 2, max: 50 },
+    keywords: "streak replay celebration spark again",
+    blocked: noCards,
+    run: async (ctx, { count }) => {
+      const { attempts, goal } = await goalAhead(ctx, count);
+      const away = goal - attempts;
+      const reviews = away === 1 ? "1 review" : `${away} reviews`;
+      return away < count
+        ? `Today's goal is now ${goal}, the most it can be, ${reviews} away.`
+        : `Today's goal is now ${goal}, ${reviews} away.`;
     },
   },
   {

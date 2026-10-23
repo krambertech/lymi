@@ -65,7 +65,7 @@ beforeEach(() => {
   window.lymiDesktop = {
     version: 1,
     ...app,
-    onPanelShown: (listener) => {
+    onPanelShown: (listener: (value: PanelShown) => void) => {
       shown = listener;
       return () => {};
     },

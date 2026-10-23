@@ -126,3 +126,24 @@ name: Example translation and audio
     timeout: 20000
 - assertNotVisible: ".*\\(${IT_TRANSLATION}\\).*"
 - takeScreenshot: 11-card-page-saved
+# Typing an empty example key by key keeps the field focused as its chin appears, and the chin
+# takes typing the same way: the example's input never moves to a new parent.
+- tapOn: "Library"
+- waitForAnimationToEnd
+- tapOn: "Add"
+- tapOn: "Add a card"
+- extendedWaitUntil:
+    visible: "Term.*"
+    timeout: 20000
+- inputText: "das Wasser"
+- tapOn: "^Example$"
+- inputText: "Ich trinke Wasser."
+# Maestro reads no focus from these inputs on iOS, so more keys with no tap prove the field kept it.
+- inputText: " Gern"
+- assertVisible: "Ich trinke Wasser\\. Gern"
+- takeScreenshot: 12-example-typed-key-by-key
+- tapOn: "Translation.*"
+- inputText: "I drink water."
+- inputText: " Gladly"
+- assertVisible: "I drink water\\. Gladly"
+- takeScreenshot: 13-translation-typed-key-by-key

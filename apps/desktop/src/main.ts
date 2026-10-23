@@ -69,9 +69,9 @@ function openMain(path = "/today") {
     width: 1280,
     height: 840,
     minWidth: 380,
-    // No title bar: the traffic lights sit at the top of the product's rail, as in other Mac apps.
+    // No title bar: the traffic lights stand where the product's Lymi tile was, centred 40 px down.
     titleBarStyle: "hidden",
-    trafficLightPosition: { x: 20, y: 20 },
+    trafficLightPosition: { x: 20, y: 33 },
     show: false,
     webPreferences: webPreferences(),
   });

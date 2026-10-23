@@ -3,7 +3,9 @@ packages:
   - packages/*
 
 # Skia's postinstall copies its prebuilt iOS frameworks out of their npm package; CocoaPods needs them.
+# PostHog's postinstall downloads the CLI binary that uploads the web build's source maps.
 onlyBuiltDependencies:
+  - "@posthog/cli"
   - "@shopify/react-native-skia"
 
 # Expo's Babel preset and the worklets plugin import Babel 7 without declaring it; the web apps run Babel 8.

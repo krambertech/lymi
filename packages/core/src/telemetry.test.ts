@@ -51,6 +51,49 @@ it("retains compiled stack locations while discarding private error context", ()
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });
 
+it("keeps the chunk ID the web build injected for its source maps", () => {
+  const sanitized = exceptionProperties({
+    $exception_list: [
+      {
+        type: "TypeError",
+        value: "private card",
+        stacktrace: {
+          frames: [
+            {
+              filename: "https://my.lymi.app/assets/index-abcd.js",
+              function: "saveCard",
+              lineno: 67,
+              colno: 41493,
+              chunk_id: "7f3e8a52-1c4b-5d6e-9f01-23456789abcd",
+            },
+            {
+              platform: "node:javascript",
+              filename: "index.js",
+              function: "readPublicDeck",
+              lineno: 9,
+              chunk_id: "2b4c",
+            },
+          ],
+        },
+      },
+    ],
+  });
+  expect(sanitized.$exception_list).toMatchObject([
+    {
+      stacktrace: {
+        frames: [
+          {
+            platform: "web:javascript",
+            filename: "https://my.lymi.app/assets/index-abcd.js",
+            chunk_id: "7f3e8a52-1c4b-5d6e-9f01-23456789abcd",
+          },
+          { platform: "node:javascript", filename: "index.js", chunk_id: "2b4c" },
+        ],
+      },
+    },
+  ]);
+});
+
 it("keeps a Hermes frame's bundle name and chunk ID for the phone's source maps", () => {
   const sanitized = exceptionProperties({
     $exception_list: [

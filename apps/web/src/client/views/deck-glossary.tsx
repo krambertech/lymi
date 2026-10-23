@@ -23,6 +23,7 @@ import {
   rowState,
   splitForms,
 } from "@lymi/client/deck-list";
+import { type SectionActionId, sectionActions } from "@lymi/client/section-actions";
 import { isolate, unisolate } from "@lymi/core";
 import { clsx } from "clsx";
 import {
@@ -39,6 +40,7 @@ import {
 } from "lucide-react";
 import {
   type ButtonHTMLAttributes,
+  Fragment,
   memo,
   type ReactNode,
   useCallback,
@@ -83,6 +85,8 @@ export interface SectionEditing {
   onAddCard: (section: Section) => void;
   /** Deck settings, where sections are ordered and archived. */
   onManage: () => void;
+  /** More than one section, so there is an order to change. */
+  several: boolean;
   /** A drop of cards on a section, or on the cards without one. */
   onDropCards: (cardIds: string[], section: Section | null) => void;
 }
@@ -421,12 +425,29 @@ function SectionHeading({
 }) {
   const { t, i18n } = useLingui();
   const locked = !!section && section.status !== "open";
-  // A card started early in a section that is not open is still in review, so it counts here too.
-  const reviewable = !!onReview && !!section && section.due > 0;
   const sectionName = section?.name ?? "";
-  const startable = section?.status === "locked" && !!onStart;
+  const handled: Record<SectionActionId, boolean> = {
+    start_section: !!onStart,
+    review: !!onReview,
+    add_card: !!editing,
+    rename_section: !!editing,
+    reorder_sections: !!editing,
+  };
+  const actions = section
+    ? sectionActions(section, { owner: !!editing, several: !!editing?.several })
+        .map((group) => group.filter((id) => handled[id]))
+        .filter((group) => group.length > 0)
+    : [];
+  const startable = actions.some((group) => group.includes("start_section"));
+  const run: Record<SectionActionId, (section: Section) => void> = {
+    start_section: (section) => onStart?.(section),
+    review: (section) => onReview?.(section),
+    add_card: (section) => editing?.onAddCard(section),
+    rename_section: (section) => editing?.onRename(section),
+    reorder_sections: () => editing?.onManage(),
+  };
   // One control at the end keeps the menu on the title's first line, so Start anyway joins the menu when there is one.
-  const menu = !!section && (!!editing || reviewable);
+  const menu = actions.flat().some((id) => id !== "start_section");
   return (
     <div className="flex min-h-11 items-start gap-2 px-1 pt-6 pb-2">
       <span className="flex h-8 shrink-0 items-center">
@@ -462,12 +483,12 @@ function SectionHeading({
           </span>
         )}
       </div>
-      {startable && !menu && (
+      {section && startable && !menu && (
         <Button
           size="sm"
           variant="ghost"
           className="shrink-0 text-text-2"
-          onClick={() => onStart(section)}
+          onClick={() => run.start_section(section)}
         >
           <Trans>Start anyway</Trans>
         </Button>
@@ -486,43 +507,45 @@ function SectionHeading({
             }
           />
           <DropdownMenuContent aria-label={t`Options for ${sectionName}`} align="end">
-            {startable && (
-              <>
-                <DropdownMenuItem onClick={() => onStart(section)}>
-                  <LockOpen />
-                  <Trans>Start anyway</Trans>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
-            {reviewable && (
-              <DropdownMenuItem onClick={() => onReview(section)}>
-                <Play />
-                <Trans>Review this section</Trans>
-              </DropdownMenuItem>
-            )}
-            {reviewable && editing && <DropdownMenuSeparator />}
-            {editing && (
-              <>
-                <DropdownMenuItem onClick={() => editing.onAddCard(section)}>
-                  <Plus />
-                  <Trans>Add card here</Trans>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => editing.onRename(section)}>
-                  <PencilLine />
-                  <Trans>Rename</Trans>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={editing.onManage}>
-                  <Settings2 />
-                  <Trans>Arrange sections</Trans>
-                </DropdownMenuItem>
-              </>
-            )}
+            {actions.map((group, i) => (
+              <Fragment key={group[0]}>
+                {i > 0 && <DropdownMenuSeparator />}
+                {group.map((id) => (
+                  <SectionAction key={id} id={id} section={section} run={run} />
+                ))}
+              </Fragment>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       )}
     </div>
+  );
+}
+
+const SECTION_ACTION: Record<SectionActionId, { icon: ReactNode; label: ReactNode }> = {
+  start_section: { icon: <LockOpen />, label: <Trans>Start anyway</Trans> },
+  review: { icon: <Play />, label: <Trans>Review this section</Trans> },
+  add_card: { icon: <Plus />, label: <Trans>Add card here</Trans> },
+  rename_section: { icon: <PencilLine />, label: <Trans>Rename</Trans> },
+  reorder_sections: { icon: <Settings2 />, label: <Trans>Arrange sections</Trans> },
+};
+
+/** One row of a section's menu, drawn from the list both apps share. */
+function SectionAction({
+  id,
+  section,
+  run,
+}: {
+  id: SectionActionId;
+  section: Section;
+  run: Record<SectionActionId, (section: Section) => void>;
+}) {
+  const { icon, label } = SECTION_ACTION[id];
+  return (
+    <DropdownMenuItem onClick={() => run[id](section)}>
+      {icon}
+      {label}
+    </DropdownMenuItem>
   );
 }
 

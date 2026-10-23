@@ -728,6 +728,7 @@ export function WordView({
             {card.example && (
               <div className="grid gap-1">
                 <p
+                  lang={card.language ?? undefined}
                   dir={textDirection(card.language)}
                   className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
                 >

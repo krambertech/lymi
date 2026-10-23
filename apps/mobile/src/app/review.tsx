@@ -30,6 +30,7 @@ import {
   type Rating,
   ROUNDS,
   type Round,
+  shownTranslation,
   termShowsPronunciation,
 } from "@lymi/core";
 import {
@@ -97,6 +98,7 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
+import { type ExampleAudio, ExampleAudioButton, useExampleAudio } from "../review/example-audio";
 import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
 import { modeLabel } from "../review/modes";
 import {
@@ -399,6 +401,8 @@ function Run({
   const pronounce = usePronunciation(current?.card ?? null, (outcome, { preloaded, waitMs }) =>
     captureEvent("pronunciation_played", { outcome, revealed, preloaded, wait_ms: waitMs }),
   );
+  // The example shows only after the reveal, so it can only be heard then.
+  const exampleSound = useExampleAudio(revealed ? (current?.card ?? null) : null, "review");
 
   // A review starts with one firm tap as its first card arrives.
   useEffect(() => {
@@ -943,6 +947,7 @@ function Run({
                 onGrade={onGrade}
                 onUndo={lastGraded ? undo : undefined}
                 pronounce={pronounce}
+                exampleSound={exampleSound}
               />
             )}
           </CardStack>
@@ -1118,6 +1123,7 @@ function Turn({
   onGrade,
   onUndo,
   pronounce,
+  exampleSound,
 }: {
   /** On the top step, how the card moves; the step underneath stays still. */
   top?: TopCard;
@@ -1146,10 +1152,12 @@ function Turn({
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
   pronounce?: Pronunciation | null;
+  exampleSound?: ExampleAudio | null;
 }) {
   const card = (
     <CardPlate
       pronounce={pronounce ?? null}
+      exampleSound={exampleSound ?? null}
       item={item}
       deck={deck}
       forgotten={forgotten}
@@ -1260,6 +1268,7 @@ function Picture({ card, maxHeight = 280 }: { card: QueueItem["card"]; maxHeight
  */
 function CardPlate({
   pronounce,
+  exampleSound,
   item: { card, fsrsState, mode },
   deck,
   forgotten,
@@ -1278,6 +1287,8 @@ function CardPlate({
 }: {
   /** The pronunciation on the top card; none underneath. */
   pronounce: Pronunciation | null;
+  /** The example's speaker on the top card once revealed; none underneath. */
+  exampleSound: ExampleAudio | null;
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
@@ -1326,10 +1337,12 @@ function CardPlate({
   const tail = [picture ? i18n._(modeLabel(mode)) : null, languageCode].filter(
     (part): part is string => !!part,
   );
+  const translation = shownTranslation(card);
   // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.exampleTranslationSource === "ai" && !!translation) ||
     (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none.
@@ -1383,12 +1396,15 @@ function CardPlate({
         accessibilityActions={[
           ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
           ...(revealed && onMenu ? [{ name: "menu", label: t`Card options` }] : []),
+          // The revealed card is one element to VoiceOver, so its speaker is offered as an action.
+          ...(revealed && exampleSound ? [{ name: "example", label: t`Play example` }] : []),
           ...(onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []),
         ]}
         onAccessibilityAction={(e) => {
           const action = e.nativeEvent.actionName;
           if (action === "peek") onPeek?.();
           if (action === "menu") onMenu?.();
+          if (action === "example") exampleSound?.play();
           if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
@@ -1551,13 +1567,18 @@ function CardPlate({
                         </Animated.View>
                       )}
                       {card.example && (
-                        <Animated.View entering={arrive()}>
+                        <Animated.View entering={arrive()} className="gap-1">
                           <ExampleText
                             text={card.example}
                             known={known}
                             className="text-md text-text-2"
                             lang={card.language}
+                            control={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                           />
+                          {/* In the meaning language, so it takes its direction from its own text. */}
+                          {translation && (
+                            <Text className="text-base text-muted">({translation})</Text>
+                          )}
                         </Animated.View>
                       )}
                       {card.notes && (

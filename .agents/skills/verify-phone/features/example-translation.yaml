@@ -1,0 +1,128 @@
+# Example translation and audio: the translation under the example after the reveal and on the
+# card page, the example's speaker, a stale translation, and the AI's translation cleared from the
+# editor by a new example and back for the old one.
+appId: app.lymi
+name: Example translation and audio
+---
+- runFlow: _open.yaml
+# Review leaves the translation out until the answer shows.
+- tapOn: "Library"
+- waitForAnimationToEnd
+- tapOn: "${DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TERM}. Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*\\(${TRANSLATION}\\).*"
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*\\(${TRANSLATION}\\).*"
+- takeScreenshot: 01-review-translation
+# The revealed card is one VoiceOver element, so its speaker is pressed on the card page instead.
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "${TERM}.*"
+    timeout: 20000
+- tapOn: "${TERM}.*"
+- extendedWaitUntil:
+    visible: ".*\\(${TRANSLATION}\\).*"
+    timeout: 20000
+# A local Worker has no speech key, so the press is answered 503 and a toast says so.
+- tapOn: "Play example"
+- extendedWaitUntil:
+    visible: ".*Couldn’t play the example. Try again in a moment.*"
+    timeout: 20000
+- takeScreenshot: 02-card-page-example-failed
+- tapOn: "Library"
+- waitForAnimationToEnd
+# A Japanese example keeps its readings, with the translation under it.
+- scrollUntilVisible:
+    element: "${JA_DECK}.*"
+    centerElement: true
+- tapOn: "${JA_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${JA_TERM}.*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${JA_SPOKEN}.*"
+- assertVisible: ".*\\(${JA_TRANSLATION}\\).*"
+- takeScreenshot: 03-review-japanese
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "${JA_TERM}.*"
+    timeout: 20000
+- tapOn: "${JA_TERM}.*"
+- extendedWaitUntil:
+    visible: ".*\\(${JA_TRANSLATION}\\).*"
+    timeout: 20000
+- assertVisible: "Play example"
+- takeScreenshot: 04-card-page-japanese
+- tapOn: "Library"
+- waitForAnimationToEnd
+# A Ukrainian translation, and one written for an earlier example, which only the owner sees.
+- scrollUntilVisible:
+    element: "${WORDS}.*"
+    centerElement: true
+- tapOn: "${WORDS}.*"
+- tapOn: "${UK_TERM}.*"
+- extendedWaitUntil:
+    visible: ".*\\(${UK_TRANSLATION}\\).*"
+    timeout: 20000
+- takeScreenshot: 05-card-page-ukrainian
+# Back by Library, since the card page also names its deck in Details.
+- tapOn: "Library"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: "${WORDS}.*"
+    centerElement: true
+- tapOn: "${WORDS}.*"
+- tapOn: "${STALE_TERM}.*"
+- extendedWaitUntil:
+    visible: ".*Translated from an earlier example. Edit it to match.*"
+    timeout: 20000
+- takeScreenshot: 06-card-page-stale
+- tapOn: "^Example.*"
+- extendedWaitUntil:
+    visible: "Translation"
+    timeout: 20000
+- assertVisible: "${STALE_TRANSLATION}"
+- assertVisible: "Translated from an earlier example."
+- takeScreenshot: 07-editor-stale
+- tapOn: "Cancel"
+- tapOn: "Library"
+- waitForAnimationToEnd
+# The AI's translation is badged, and a new example clears it from the editor for the AI to write again.
+- scrollUntilVisible:
+    element: "${IT_DECK}.*"
+    centerElement: true
+- tapOn: "${IT_DECK}.*"
+- tapOn: "${IT_TERM}.*"
+- extendedWaitUntil:
+    visible: ".*\\(${IT_TRANSLATION}\\).*"
+    timeout: 20000
+- takeScreenshot: 08-card-page-ai
+- tapOn: "^Example.*"
+- extendedWaitUntil:
+    visible: "${IT_TRANSLATION}"
+    timeout: 20000
+- tapOn: "Dov.*il pane\\?"
+- eraseText: 1
+- inputText: " oggi?"
+- assertNotVisible: "${IT_TRANSLATION}"
+- assertVisible: "Translation Leave it empty and the AI translates it"
+- takeScreenshot: 09-editor-new-example
+- eraseText: 6
+- inputText: "?"
+- assertVisible: "${IT_TRANSLATION}"
+- takeScreenshot: 10-editor-example-typed-back
+- eraseText: 1
+- inputText: " oggi?"
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: ".*Dov.*il pane oggi\\?.*"
+    timeout: 20000
+- assertNotVisible: ".*\\(${IT_TRANSLATION}\\).*"
+- takeScreenshot: 11-card-page-saved

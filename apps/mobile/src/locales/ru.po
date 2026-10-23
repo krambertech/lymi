@@ -932,6 +932,9 @@ msgstr "ИИ заполняет только пустые поля и никог
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
 
+msgid "AI translation"
+msgstr "Перевод от AI"
+
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
 
@@ -1656,6 +1659,9 @@ msgstr "Не удалось открыть эту колоду"
 msgid "Couldn’t open this link"
 msgstr "Не удалось открыть эту ссылку"
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не удалось воспроизвести пример. Попробуй ещё раз чуть позже."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз чуть позже."
 
@@ -1734,6 +1740,9 @@ msgstr "Не удалось начать раздел"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Не удалось отменить оценку для «{term}». Она засчитана."
+
+msgid "Couldn’t translate the example."
+msgstr "Не удалось перевести пример."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не удалось выключить ссылку для присоединения. Попробуй ещё раз."
@@ -2648,6 +2657,9 @@ msgstr "Оставь пустым, и Lymi напишет его"
 msgid "Leave it empty and the AI fills it in"
 msgstr "Оставь пустым, и AI дополнит"
 
+msgid "Leave it empty and the AI translates it"
+msgstr "Оставь пустым, и AI переведёт"
+
 msgid "Leave out"
 msgstr "Пропустить"
 
@@ -3269,6 +3281,9 @@ msgstr "Картинка изменена"
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
 
+msgid "Play example"
+msgstr "Воспроизвести пример"
+
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
 
@@ -3437,6 +3452,9 @@ msgstr "Изменить порядок разделов"
 
 msgid "Reorder series"
 msgstr "Изменить порядок серий"
+
+msgid "Replay example"
+msgstr "Воспроизвести пример ещё раз"
 
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
@@ -4222,6 +4240,9 @@ msgstr "Сегодня, {day}: нечего повторять"
 msgid "Today’s goal"
 msgstr "Цель на сегодня"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
+
 msgid "tomorrow"
 msgstr "завтра"
 
@@ -4246,6 +4267,21 @@ msgstr "{count, plural, one {# карточка убрана из раздела
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
+
+msgid "Translated from an earlier example."
+msgstr "Переведено с прежней версии примера."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Переведено с прежней версии примера. Исправь перевод, чтобы он совпадал."
+
+msgid "Translation"
+msgstr "Перевод"
+
+msgid "Translation by you"
+msgstr "Твой перевод"
+
+msgid "Translation from lesson"
+msgstr "Перевод с урока"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -4403,6 +4439,9 @@ msgstr "Для чего она"
 
 msgid "What stays for others"
 msgstr "Что останется другим"
+
+msgid "What the example means"
+msgstr "Что значит пример"
 
 msgid "What this is about"
 msgstr "О чём это"

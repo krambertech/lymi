@@ -11,13 +11,15 @@ import { usePalette } from "../theme/palette";
 import { inputCap, textStart } from "../theme/type";
 import { FieldChip } from "../ui/field-chip";
 import type { IconName } from "../ui/icons";
-import { Icon } from "../ui/primitives";
+import { Icon, Text } from "../ui/primitives";
 import { markChipUsed, useRecentFirst } from "./chip-order";
 import { FieldName } from "./composer-field";
 import { FORM_FIELDS, type FormField, type FormValues } from "./form";
 
 /** Always on the form; the rest show once they hold something or a chip adds them. */
 const CORE: readonly FormField[] = ["term", "meaning"];
+/** The translation has no chip: it stands under the example once the example has text. */
+const UNDER_EXAMPLE: FormField = "exampleTranslation";
 
 // A field a chip adds arrives as a plate does, once the fields after it have made room. motion.md.
 const { duration, easing } = timed(PLATE_ARRIVE);
@@ -69,6 +71,13 @@ export const FORM_FIELD: Record<
     limit: cardLimits.example,
     learned: true,
   },
+  exampleTranslation: {
+    label: msg`Translation`,
+    icon: "example",
+    hint: msg`What the example means`,
+    limit: cardLimits.exampleTranslation,
+    learned: false,
+  },
   notes: {
     label: msg`Notes`,
     icon: "notes",
@@ -111,16 +120,21 @@ export function fieldLabel(field: FormField, language: string | null | undefined
  * A field once shown stays until `settle`, even emptied to be rewritten, so it never vanishes from
  * under the keyboard.
  */
-export function useFormFields(values: FormValues, first?: FormField) {
+export function useFormFields(values: FormValues, opened?: FormField) {
+  const first = opened === UNDER_EXAMPLE ? "example" : opened;
   const [added, setAdded] = useState<ReadonlySet<FormField>>(() => new Set(first ? [first] : []));
   const [adding, setAdding] = useState<FormField | null>(null);
   const order = useRef<FormField[]>(first && !CORE.includes(first) ? [first] : []);
+  const ordered = (f: FormField) => !CORE.includes(f) && f !== UNDER_EXAMPLE;
   for (const f of FORM_FIELDS) {
-    if (!CORE.includes(f) && values[f].trim() && !order.current.includes(f)) order.current.push(f);
+    if (ordered(f) && values[f].trim() && !order.current.includes(f)) order.current.push(f);
   }
-  for (const f of added) if (!CORE.includes(f) && !order.current.includes(f)) order.current.push(f);
-  const shown = [...CORE, ...order.current];
-  const missing = FORM_FIELDS.filter((f) => !shown.includes(f));
+  for (const f of added) if (ordered(f) && !order.current.includes(f)) order.current.push(f);
+  const translated = !!(values.example.trim() || values.exampleTranslation.trim());
+  const shown = [...CORE, ...order.current].flatMap((f) =>
+    f === "example" && translated ? [f, UNDER_EXAMPLE] : [f],
+  );
+  const missing = FORM_FIELDS.filter((f) => f !== UNDER_EXAMPLE && !shown.includes(f));
   return {
     shown,
     missing,
@@ -154,6 +168,7 @@ export function CardFields({
   onSubmit,
   placeholder,
   ai,
+  below,
   footer,
   reveal,
   language,
@@ -173,6 +188,8 @@ export function CardFields({
   placeholder?: Partial<Record<FormField, string>>;
   /** Fields the AI wrote, marked beside their name. */
   ai?: (field: FormField) => boolean;
+  /** A quiet line under a field, such as a translation written for an earlier example. */
+  below?: Partial<Record<FormField, string>>;
   /** Under the fields: an error, or what the last add did. */
   footer?: ReactNode;
   /** Brings the field being added or typed in into view within the form's scroll. */
@@ -250,6 +267,7 @@ export function CardFields({
               ]}
               maxFontSizeMultiplier={inputCap(term ? 28 : 17)}
             />
+            {below?.[f] && <Text className="text-sm text-muted">{below[f]}</Text>}
           </Animated.View>
         );
       })}

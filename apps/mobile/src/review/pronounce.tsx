@@ -26,9 +26,9 @@ import { IconButton, Text } from "../ui/primitives";
 const LOAD_LIMIT_MS = 12_000;
 const TIP_MS = 4000;
 
-type ExpoAudio = typeof import("expo-audio");
+export type ExpoAudio = typeof import("expo-audio");
 // A build from before the audio module has no pronunciation rather than a broken review.
-const audio: ExpoAudio | null = requireOptionalNativeModule("ExpoAudio")
+export const audio: ExpoAudio | null = requireOptionalNativeModule("ExpoAudio")
   ? (require("expo-audio") as ExpoAudio)
   : null;
 
@@ -224,11 +224,28 @@ export type Pronunciation = NonNullable<ReturnType<typeof useAudioPronunciation>
 
 export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   const { t } = useLingui();
+  return (
+    <SpeakerButton
+      sound={pronounce}
+      labels={{ play: t`Play pronunciation`, replay: t`Replay pronunciation` }}
+    />
+  );
+}
+
+/** A speaker for any sound the card plays on a press; `quiet` steps a second one back from the term's. */
+export function SpeakerButton({
+  sound: { error, state, play },
+  labels,
+  quiet = false,
+}: {
+  sound: Pick<Pronunciation, "error" | "state" | "play">;
+  labels: { play: string; replay: string };
+  quiet?: boolean;
+}) {
   const reduce = useReduceMotion();
   const tips = useContext(TipContext);
   const anchor = useRef<View>(null);
   const shake = useSharedValue(0);
-  const { error, state, play } = pronounce;
 
   useEffect(() => {
     if (!error) return;
@@ -250,8 +267,8 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
       <Animated.View ref={anchor} style={style}>
         <IconButton
           icon="pronunciation"
-          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-          variant={error ? "danger" : "secondary"}
+          label={state === "playing" ? labels.replay : labels.play}
+          variant={error ? "danger" : quiet ? "ghost" : "secondary"}
           size="sm"
           round
           // A miss reveals the card, so the speaker reaches 56 pt rather than the usual 44.

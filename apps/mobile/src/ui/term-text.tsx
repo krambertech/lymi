@@ -7,9 +7,11 @@ import {
   termReading,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
-import { StyleSheet } from "react-native";
-import { textStart } from "../theme/type";
+import { StyleSheet, useWindowDimensions } from "react-native";
+import { useResolveClassNames } from "uniwind";
+import { fitType, textStart } from "../theme/type";
 import { Furigana } from "./furigana";
+import { INLINE_ROOM, InlineControl, RunControl } from "./inline-control";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
@@ -58,21 +60,43 @@ export function TermText({
 export function ExampleText({
   text,
   known,
+  control,
   ...props
-}: Omit<ComponentProps<typeof Furigana>, "segments"> & {
+}: Omit<ComponentProps<typeof Furigana>, "segments" | "after"> & {
   text: string;
   known?: KnownReadings | undefined;
+  /** A 32 pt button after the last word, such as the example's speaker, centred on its line. */
+  control?: ReactNode;
 }) {
   const { lang } = props;
   const segments = useMemo(
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
   );
+  const { fontScale } = useWindowDimensions();
+  const flat = StyleSheet.flatten([useResolveClassNames(props.className ?? ""), props.style]);
+  const size = flat.fontSize ?? 17;
+  const drawn = fitType(size, fontScale, props.maxFontSizeMultiplier).drawn;
+  const ruby = segments.some((segment) => segment.reading !== undefined);
+  const after =
+    control &&
+    (ruby ? (
+      <RunControl line={Math.round(((flat.lineHeight ?? size * 1.2) * drawn) / size)}>
+        {control}
+      </RunControl>
+    ) : (
+      <InlineControl>{control}</InlineControl>
+    ));
   return (
     <Furigana
       segments={segments}
       {...props}
-      style={[StyleSheet.flatten(props.style), textStart(lang)]}
+      after={after}
+      style={[
+        StyleSheet.flatten(props.style),
+        textStart(lang),
+        control && !ruby ? INLINE_ROOM : null,
+      ]}
     />
   );
 }

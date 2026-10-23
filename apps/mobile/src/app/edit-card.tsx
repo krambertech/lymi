@@ -1,7 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, apiUrl, type Card, errorMessage } from "@lymi/client/api";
+import { deckCardsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { fitsExample, isolate, modeKey, type ReviewModeKey } from "@lymi/core";
+import { exampleShown, fitsExample, isolate, modeKey, type ReviewModeKey } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -20,6 +21,7 @@ import {
   type FormValues,
   formValues,
   pictureWrite,
+  translationAfterExample,
 } from "../capture/form";
 import type { Picture } from "../capture/model";
 import { MODE_LABELS, ModesChoices } from "../capture/modes";
@@ -132,7 +134,10 @@ export default function EditCard() {
       open("picture");
       return;
     }
-    const changes = { ...editPatch(live, typed), ...choicesPatch(card, modes, tags) };
+    const changes = {
+      ...editPatch(live, typed, card.exampleTranslationSource === "ai"),
+      ...choicesPatch(card, modes, tags),
+    };
     // Only a changed example counts, so one saved before the limit still saves as it is.
     if (changes.example !== undefined && !fitsExample(changes.example)) {
       Alert.alert(t`Keep the example under 250 characters.`);
@@ -147,8 +152,13 @@ export default function EditCard() {
     let written: Card | null = null;
     try {
       if (Object.keys(changes).length > 0) {
-        written = (await writes.updateCard(card, changes)).card;
-        cardEdited(written);
+        const saved = (await writes.updateCard(card, changes)).card;
+        written = saved;
+        cardEdited(saved);
+        // The server's card says what the AI is still writing, such as a translation, so the list polls until it lands.
+        qc.setQueryData(deckCardsQuery(params.deck).queryKey, (rows) =>
+          rows?.map((r) => (r.card.id === saved.id ? { ...r, card: saved } : r)),
+        );
       }
       const pictured = await savePicture(written ?? card, picture);
       if (pictured) {
@@ -166,6 +176,30 @@ export default function EditCard() {
       );
     }
   };
+  const change = (f: FormField, v: string) =>
+    setTyped((d) => {
+      const next = { ...d, [f]: v };
+      if (f !== "example") return next;
+      const translation = translationAfterExample(
+        card,
+        v,
+        next.exampleTranslation ?? live.exampleTranslation,
+      );
+      if (translation === "") next.exampleTranslation = "";
+      // Typed back to the example it was written for, the card's own translation shows again.
+      else if (translation !== undefined) delete next.exampleTranslation;
+      return next;
+    });
+  const exampleChanged = exampleShown(values.example) !== exampleShown(card.example ?? "");
+  const aiTranslates =
+    !!deck?.enrichFields.includes("exampleTranslation") &&
+    !values.exampleTranslation.trim() &&
+    exampleChanged &&
+    (card.exampleTranslation === null || card.exampleTranslationSource === "ai");
+  const translationStale =
+    card.exampleTranslationStale &&
+    !exampleChanged &&
+    values.exampleTranslation === (card.exampleTranslation ?? "");
   // Marked until changed, as a field the learner rewrites becomes theirs.
   const ai = (f: FormField) =>
     f !== "term" && f !== "source" && card[`${f}Source`] === "ai" && typed[f] === undefined;
@@ -231,13 +265,23 @@ export default function EditCard() {
               reveal={form.reveal}
               language={card.language}
               values={values}
-              onChange={(f, v) => setTyped((d) => ({ ...d, [f]: v }))}
+              onChange={change}
               shown={fields.shown}
               adding={fields.adding}
               focus={focus}
               termRef={fieldRef}
               onSubmit={() => void save()}
               ai={ai}
+              placeholder={
+                aiTranslates
+                  ? { exampleTranslation: t`Leave it empty and the AI translates it` }
+                  : undefined
+              }
+              below={
+                translationStale
+                  ? { exampleTranslation: t`Translated from an earlier example.` }
+                  : undefined
+              }
             />
           </ScrollView>
           <View className="px-4 pt-1 pb-2">

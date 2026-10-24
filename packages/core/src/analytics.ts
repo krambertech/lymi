@@ -349,6 +349,10 @@ export const analyticsEvents = {
     searched: z.boolean(),
   }),
   origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
+  mac_download_started: Attribution.partial().extend({
+    chip: z.enum(["apple_silicon", "intel"]),
+    from: path.optional().catch(undefined),
+  }),
   context_menu_action: z.object({
     menu: z.enum(CONTEXT_MENU_SURFACES),
     action: z.enum(CONTEXT_MENU_ACTIONS),
@@ -552,6 +556,7 @@ export const analyticsProducers = {
   add_to_lymi_clicked: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
+  mac_download_started: ["worker"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
@@ -601,7 +606,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
     if (/^\/explore\/[a-z0-9-]+(?:\/[a-z0-9-]+)?$/.test(clean)) return path.slice(0, 200);
     if (
-      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
+      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|download(?:\/mac(?:-intel)?)?|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
       )
     )

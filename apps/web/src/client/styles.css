@@ -79,6 +79,8 @@
 
 @layer base {
   html {
+    /* The top inset every screen clears: the status bar on a phone, the Mac app's title bar. */
+    --inset-top: env(safe-area-inset-top, 0px);
     height: 100%;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -107,27 +109,29 @@
     display: flex;
     flex-direction: column;
   }
-  /* The Mac app's main window has no title bar. Its traffic lights stand where the Lymi tile
-     was, centred 40 px down on the rail's row and on the narrow bar's, and a strip along the top
-     edge moves the window. The quick-add panel keeps neither. */
-  html[data-shell="mac"]:not([data-surface="panel"]) {
-    --rail-lockup-top: 20px;
+  /* The Mac app's main window draws its own 40 px title bar, the same on every screen: it holds
+     only the traffic lights, centred in it 20 px in, and the whole bar moves the window. Every
+     screen starts below it, where the rail's Lymi row and the screen's title sit level. Full
+     screen hides the lights, so the bar goes too. The quick-add panel has none. */
+  html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) {
+    --mac-bar: 2.5rem;
+    --inset-top: var(--mac-bar);
+    --rail-lockup-top: 0.25rem;
+    --rail-lockup-gap: 1rem;
+    --page-top: 0.25rem;
   }
-  html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) [data-brand-tile] {
-    visibility: hidden;
-  }
-  /* Dialogs, sheets and toasts take clicks even where they cross the strip. */
+  /* Dialogs, sheets and toasts take clicks even where they cross the bar. */
   html[data-shell="mac"] [role="dialog"],
   html[data-shell="mac"] [role="alertdialog"],
   html[data-shell="mac"] [data-slot="toast"] {
     -webkit-app-region: no-drag;
     app-region: no-drag;
   }
-  html[data-shell="mac"]:not([data-surface="panel"]) body::before {
+  html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) body::before {
     content: "";
     position: fixed;
     inset: 0 0 auto;
-    height: 18px;
+    height: var(--mac-bar);
     z-index: var(--z-sticky);
     -webkit-app-region: drag;
     app-region: drag;
@@ -344,6 +348,8 @@
   inherits: true;
 }
 @custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+/* Inside the Mac app's windows, which set `data-shell` before first paint. */
+@custom-variant mac (&:where([data-shell="mac"] *));
 
 /*
  * The state variants generated shadcn components are written against, from `shadcn/tailwind.css`.
@@ -403,7 +409,7 @@
 
 /* Safe areas for the standalone PWA. */
 .pt-safe {
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--inset-top);
 }
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);

@@ -25,7 +25,12 @@ export interface DesktopBridge {
   onNavigate(listener: (path: string) => void): () => void;
   /** A command from the Mac's menu bar. */
   onMenuCommand(listener: (command: MenuCommand) => void): () => void;
+  /** Signs in through the system browser, straight to the provider's page. Added in version 2. */
+  signIn?(provider: SignInProvider): void;
 }
+
+/** The providers that refuse an app's window, so the Mac app signs in with them in the browser. */
+export type SignInProvider = "apple" | "google";
 
 export interface PanelShown {
   selection: string | null;
@@ -86,6 +91,7 @@ export interface ToApp {
   "app:open": [path: string];
   "prefs:accessibility": [];
   "prefs:recording": [on: boolean];
+  "app:sign-in": [provider: SignInProvider];
 }
 export interface AskApp {
   "prefs:get": { args: []; result: MacPreferences | null };

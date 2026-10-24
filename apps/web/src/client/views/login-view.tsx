@@ -96,7 +96,8 @@ export function LoginView({
       }
       homeHref={publicSiteUrl()}
     >
-      <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
+      {/* In the Mac app's sign-in window the window is the surface, so the form drops its plate. */}
+      <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10 mac:bg-transparent mac:p-1 mac:[box-shadow:none]">
         {app ? (
           <div className="flex flex-col items-center text-center">
             <AppMark app={app} className="size-12" />
@@ -155,7 +156,7 @@ export function LoginView({
                   loading={pending === "apple"}
                   disabled={Boolean(pending && pending !== "apple")}
                   onClick={onApple}
-                  className="mt-7 w-full edge-2 font-medium"
+                  className="mt-7 w-full edge-2 font-medium mac:mt-5"
                 >
                   <AppleMark data-icon="inline-start" className="size-5" />
                   <Trans>Continue with Apple</Trans>
@@ -175,7 +176,7 @@ export function LoginView({
                 </Button>
                 <div
                   aria-hidden="true"
-                  className="my-6 flex items-center gap-3 text-sm text-muted before:h-px before:flex-1 before:bg-edge before:content-[''] after:h-px after:flex-1 after:bg-edge after:content-['']"
+                  className="my-6 mac:my-4 flex items-center gap-3 text-sm text-muted before:h-px before:flex-1 before:bg-edge before:content-[''] after:h-px after:flex-1 after:bg-edge after:content-['']"
                 >
                   <Trans context="Between two ways to sign in">or</Trans>
                 </div>
@@ -242,7 +243,7 @@ export function LoginView({
                 size="lg"
                 loading={pending === "form"}
                 disabled={pending === "apple" || pending === "google"}
-                className="mt-6 w-full"
+                className="mt-6 w-full mac:mt-5"
               >
                 {mode === "sign-up" ? (
                   <Trans>Create account</Trans>
@@ -254,7 +255,7 @@ export function LoginView({
               </Button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-muted">
+            <p className="mt-6 text-center text-sm text-muted mac:mt-4">
               {mode === "sign-in" ? (
                 <>
                   <Trans>New to Lymi?</Trans>{" "}
@@ -280,9 +281,10 @@ export function LoginView({
  * panel rather than inside it, so it reads as the terms of the door rather than a second
  * thing to press.
  */
+/** Said on the web, where a newcomer may not know Lymi yet; the Mac app was installed on purpose. */
 function AccessNote() {
   return (
-    <p className="mt-6 text-center text-sm text-muted">
+    <p className="mt-6 text-center text-sm text-muted mac:hidden">
       <Trans>Lymi is in public beta.</Trans>{" "}
       <a
         href={publicSiteUrl()}

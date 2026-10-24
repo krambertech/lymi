@@ -15,7 +15,8 @@
     "test": "vitest run",
     "package": "pnpm build && electron-forge package",
     "make": "pnpm build && electron-forge make",
-    "launch-check": "node scripts/launch-check.js"
+    "launch-check": "node scripts/launch-check.js",
+    "dmg-background": "node scripts/dmg-background.js"
   },
   "devDependencies": {
     "@electron-forge/cli": "8.0.1",

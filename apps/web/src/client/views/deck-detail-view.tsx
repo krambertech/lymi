@@ -1321,7 +1321,7 @@ export function DeckDetailView({
               searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
               // Pinned over a strip of the page's own ground, so rows never show beside it.
               selected &&
-                "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+                "sticky top-(--inset-top) z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
             {selected ? (
@@ -1433,7 +1433,7 @@ export function DeckDetailView({
 
       {/* Beside the list: sticky, with its own scroll, so J and K walk the list while the page follows. */}
       {open && beside && (
-        <aside className="sticky top-0 max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
+        <aside className="sticky top-(--inset-top) max-h-[calc(100dvh-var(--inset-top))] w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
           {word}
         </aside>
       )}

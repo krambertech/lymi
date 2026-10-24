@@ -2,8 +2,8 @@
 .deck-cover {
   /* Its lightness and chroma are in @lymi/design/tray.css, which the phone reads too. */
   --ground: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
-  /* Up under the status bar; the element's own top padding adds the inset back. */
-  margin-top: calc(env(safe-area-inset-top) * -1);
+  /* Up under the status bar or the Mac's title bar; the element's own top padding adds it back. */
+  margin-top: calc(var(--inset-top) * -1);
   overflow: clip;
   background: var(--ground);
 }

@@ -381,6 +381,14 @@ export const analyticsEvents = {
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
   }),
+  example_translated: z.object({
+    outcome: z.enum(["translated", "empty", "failed"]),
+    count,
+    trigger: z.enum(["add", "card", "edit"]),
+    superseded: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+    languages: languageList.optional(),
+  }),
   deck_style_learned: z.object({
     outcome: z.enum(["learned", "empty", "failed"]),
     cards: count,
@@ -394,6 +402,7 @@ export const analyticsEvents = {
     count,
     meaning: count,
     example: count,
+    example_translation: count.optional(),
     notes: count,
     pronunciation: count,
     languages: languageList.optional(),
@@ -401,6 +410,7 @@ export const analyticsEvents = {
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
     example: z.boolean(),
+    example_translation: z.boolean().optional(),
     notes: z.boolean(),
     pronunciation: z.boolean(),
     has_instructions: z.boolean(),
@@ -427,6 +437,7 @@ export const analyticsEvents = {
     $ai_session_id: z.null(),
     $ai_span_name: z.enum([
       "enrich",
+      "example_translation",
       "deck_style",
       "hook",
       "import_languages",
@@ -563,6 +574,7 @@ export const analyticsProducers = {
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],

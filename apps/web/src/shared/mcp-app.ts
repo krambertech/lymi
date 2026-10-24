@@ -17,6 +17,8 @@ export interface ViewCard {
   meaning: string | null;
   pronunciation: string | null;
   example: string | null;
+  exampleTranslation: string | null;
+  exampleTranslationStale: boolean;
   notes: string | null;
   hook: string | null;
   language: string | null;
@@ -24,6 +26,7 @@ export interface ViewCard {
   image: { description: string | null } | null;
   meaningSource: ViewFieldSource | null;
   exampleSource: ViewFieldSource | null;
+  exampleTranslationSource: ViewFieldSource | null;
   pronunciationSource: ViewFieldSource | null;
   notesSource: ViewFieldSource | null;
   hookSource: ViewFieldSource | null;

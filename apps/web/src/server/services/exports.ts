@@ -17,6 +17,7 @@ import {
   modesFromDirections,
   newId,
   type Rating,
+  translationStale,
 } from "@lymi/core";
 import { and, asc, desc, eq, getTableColumns, isNotNull, lt, sql } from "@lymi/core/db";
 import type { Card, CardImage, Deck, Export } from "@lymi/core/schema";
@@ -330,6 +331,9 @@ function fileCard(
     notesSource: card.notesSource,
     hook: card.hook,
     hookSource: card.hookSource,
+    exampleTranslation: card.exampleTranslation,
+    exampleTranslationSource: card.exampleTranslationSource,
+    exampleTranslationStale: translationStale(card),
     reviewModes: card.directions ? effectiveModes(card.directions, card.reviewModeKeys) : null,
     picture:
       image && picture

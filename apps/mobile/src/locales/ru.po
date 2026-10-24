@@ -2091,6 +2091,9 @@ msgstr "Твой пример"
 msgid "Example from lesson"
 msgstr "Пример с урока"
 
+msgid "Example translation"
+msgstr "Перевод примера"
+
 msgid "Explore"
 msgstr "Каталог"
 
@@ -2604,6 +2607,9 @@ msgstr "Оставь Tab и New line. Если в карточке есть пе
 
 msgid "Keep the decks"
 msgstr "Оставить колоды"
+
+msgid "Keep the example under 250 characters."
+msgstr "Пример должен быть короче 250 символов."
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Сообщение должно быть короче {FEEDBACK_MESSAGE_MAX} символов."

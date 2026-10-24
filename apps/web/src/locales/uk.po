@@ -908,6 +908,9 @@ msgstr "Додай фото чи PDF уроку або встав його те�
 msgid "Add a picture"
 msgstr "Додати зображення"
 
+msgid "Add a translation"
+msgstr "Додай переклад"
+
 msgid "Add card"
 msgstr "Додати картку"
 
@@ -1031,6 +1034,9 @@ msgstr "AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI example and translation"
+msgstr "Приклад і переклад від AI"
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
 
@@ -1051,6 +1057,12 @@ msgstr "Нотатки від AI"
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
+
+msgid "AI translates it after you save"
+msgstr "AI перекладе після збереження"
+
+msgid "AI translation"
+msgstr "Переклад від AI"
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI враховує твій вибір, коли заповнює порожні поля."
@@ -1861,6 +1873,9 @@ msgstr "Не вдалося надіслати запрошення. Забаг�
 msgid "Couldn’t send your feedback"
 msgstr "Не вдалося надіслати повідомлення"
 
+msgid "Couldn’t translate the example."
+msgstr "Не вдалося перекласти приклад."
+
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не вдалося вимкнути посилання для приєднання. Спробуй ще раз."
 
@@ -2246,6 +2261,12 @@ msgstr "Усе, щоб знову імпортувати в Lymi: картки, 
 msgid "Example"
 msgstr "Приклад"
 
+msgid "Example and translation by you"
+msgstr "Твої приклад і переклад"
+
+msgid "Example and translation from lesson"
+msgstr "Приклад і переклад з уроку"
+
 msgid "Example by you"
 msgstr "Твій приклад"
 
@@ -2254,6 +2275,9 @@ msgstr "Новий приклад: «{value}»"
 
 msgid "Example from lesson"
 msgstr "Приклад з уроку"
+
+msgid "Example translation"
+msgstr "Переклад прикладу"
 
 msgid "Explore"
 msgstr "Каталог"
@@ -2761,8 +2785,8 @@ msgstr "Продовжити вчити"
 msgid "Keep the description under 300 characters."
 msgstr "Опис має бути коротшим за 300 символів."
 
-msgid "Keep the example under 2000 characters."
-msgstr "Приклад має бути коротшим за 2000 символів."
+msgid "Keep the example under 250 characters."
+msgstr "Приклад має бути коротшим за 250 символів."
 
 msgid "Keep the hook under 200 characters."
 msgstr "Зачіпка має бути коротшою за 200 символів."
@@ -2799,6 +2823,9 @@ msgstr "Наголос має бути коротшим за 200 символі�
 
 msgid "Keep the term under 500 characters."
 msgstr "Термін має бути коротшим за 500 символів."
+
+msgid "Keep the translation under 250 characters."
+msgstr "Переклад має бути коротшим за 250 символів."
 
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
@@ -4604,6 +4631,9 @@ msgstr "Колода зникне з Бібліотеки, а її картки 
 msgid "the example"
 msgstr "приклад"
 
+msgid "the example’s translation"
+msgstr "переклад прикладу"
+
 msgid "the language"
 msgstr "мову"
 
@@ -4875,6 +4905,24 @@ msgstr "TOPIK I"
 msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Усього"
+
+msgid "Translated from an earlier example."
+msgstr "Перекладено з попередньої версії прикладу."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Перекладено з попередньої версії прикладу. Зміни переклад, щоб він збігався."
+
+msgid "Translation"
+msgstr "Переклад"
+
+msgid "Translation by you"
+msgstr "Твій переклад"
+
+msgid "Translation changed to “{value}”"
+msgstr "Новий переклад: «{value}»"
+
+msgid "Translation from lesson"
+msgstr "Переклад з уроку"
 
 msgctxt "deck tag"
 msgid "Travel"

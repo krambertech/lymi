@@ -3,6 +3,7 @@ import {
   DailyGoal,
   dayWindow,
   emptyState,
+  exampleFingerprint,
   localDate,
   type Rating,
   SLIPPING_FORGOTTEN_DAYS,
@@ -187,6 +188,7 @@ export async function seedPersona(
           term: c.term,
           ...(c.meaning !== undefined && { meaning: c.meaning }),
           ...(c.example !== undefined && { example: c.example }),
+          ...(c.exampleTranslation !== undefined && { exampleTranslation: c.exampleTranslation }),
           ...(c.pronunciation !== undefined && { pronunciation: c.pronunciation }),
           ...(c.notes !== undefined && { notes: c.notes }),
           ...(c.language !== undefined && { language: c.language }),
@@ -938,13 +940,20 @@ export async function enrichSampleCards(ctx: ServiceContext, count: number): Pro
   await runBatched(
     ctx.db,
     cards.flatMap((card) => {
-      const example = card.language?.startsWith("it")
-        ? `Dov'è ${card.term}?`
-        : `An example sentence with “${card.term}”.`;
+      const italian = card.language?.startsWith("it");
+      const example = italian ? `Dov'è ${card.term}?` : `An example sentence with “${card.term}”.`;
+      // The other sample is already English, so it has nothing to translate.
+      const translation = italian
+        ? {
+            exampleTranslation: `Where is ${card.term}?`,
+            exampleTranslationSource: "ai" as const,
+            exampleTranslationOf: exampleFingerprint(example),
+          }
+        : {};
       return [
         ctx.db
           .update(schema.cards)
-          .set({ example, exampleSource: "ai", updatedAt: now })
+          .set({ example, exampleSource: "ai", ...translation, updatedAt: now })
           .where(eq(schema.cards.id, card.id)),
         auditStatement(ai, {
           entity: "card",

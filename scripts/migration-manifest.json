@@ -251,6 +251,14 @@
     {
       "name": "0062_famous_wolf_cub.sql",
       "sha256": "266ce1cb06f1aa56c51dfbc9107087d475dd91b23c68020a85165be34aaf1a59"
+    },
+    {
+      "name": "0063_tired_hawkeye.sql",
+      "sha256": "3b80fbcf2709add59bab682b8a06a55ee1b00e2aaac8adaa30223206875c0fa5"
+    },
+    {
+      "name": "0064_guard_studied_decks.sql",
+      "sha256": "6e4744d2330de2ca0d552e2ea6cdbbdccad95ae0514d26af9bdbf68f1dd56cdb"
     }
   ]
 }

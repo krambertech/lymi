@@ -51,6 +51,8 @@ export interface TransactionalEmailParams {
   code?: string;
   feedback?: FeedbackEmailData;
   invitation?: DeckInvitationEmailData;
+  /** The goodbye to an Apple account whose grant Lymi has not revoked yet. */
+  removeApple?: boolean;
 }
 
 export interface TransactionalEmailInput extends TransactionalEmailParams {
@@ -305,7 +307,7 @@ function compose(
     case "account-deleted": {
       const subject = i18n._(msg`Your Lymi account was deleted`);
       const text = i18n._(
-        msg`Your cards, reviews and settings are gone. Decks other people study stay for them.`,
+        msg`Your cards, reviews and settings are gone. People who studied your decks keep their own copies.`,
       );
       return {
         subject,
@@ -314,6 +316,16 @@ function compose(
         hero: lantern,
         blocks: [
           { type: "text", text },
+          ...(params.removeApple
+            ? [
+                {
+                  type: "text" as const,
+                  text: i18n._(
+                    msg`You signed in with Apple. If Lymi still shows under Sign in with Apple in your Apple Account settings, remove it there.`,
+                  ),
+                },
+              ]
+            : []),
           { type: "text", text: i18n._(msg`You won’t get any more emails from Lymi.`) },
           {
             type: "note",
@@ -550,6 +562,7 @@ export async function sendTransactionalEmail(
       ...(input.code ? { code: input.code } : {}),
       ...(input.feedback ? { feedback: input.feedback } : {}),
       ...(input.invitation ? { invitation: input.invitation } : {}),
+      ...(input.removeApple ? { removeApple: true } : {}),
     },
     originsOf(env),
   );

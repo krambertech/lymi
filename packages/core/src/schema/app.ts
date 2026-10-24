@@ -991,6 +991,62 @@ export const accountDeletions = sqliteTable("account_deletions", {
 });
 
 /**
+ * A deleted account's deck that each member is getting as a private copy, which the cron works
+ * through a few members at a time. The deck waits under the former owner until the last copy.
+ */
+export const formerDeckCopies = sqliteTable("former_deck_copies", {
+  deckId: text("deck_id")
+    .primaryKey()
+    .references(() => decks.id, { onDelete: "cascade" }),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+/** Which new row copies which old one, for the length of one member's copy batch. */
+export const deckCopyIds = sqliteTable(
+  "deck_copy_ids",
+  {
+    oldId: text("old_id").notNull(),
+    userId: text("user_id").notNull(),
+    newId: text("new_id").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.oldId, t.userId] })],
+);
+
+export const APPLE_REVOCATION_STATUSES = ["pending", "revoked", "failed", "skipped"] as const;
+export const APPLE_REVOCATION_REASONS = [
+  "no_key",
+  "no_token",
+  "exchange",
+  "revoke",
+  "lost",
+] as const;
+
+/**
+ * A deleted account's Sign in with Apple grant, from the delete until Apple confirms it revoked,
+ * so a revoke that failed or never ran is retried or left on record. Not a foreign key, since the
+ * user row goes in the same batch. Holds no address or name.
+ */
+export const appleRevocations = sqliteTable(
+  "apple_revocations",
+  {
+    /** The deleted user's id, as in `account_deletions`. */
+    id: text("id").primaryKey(),
+    status: text("status", { enum: APPLE_REVOCATION_STATUSES }).notNull(),
+    /** Why the last attempt did not revoke, or why none could be made. */
+    reason: text("reason", { enum: APPLE_REVOCATION_REASONS }),
+    /** Whose client id the token was issued to: the phone app's or the web's Services ID. */
+    client: text("client", { enum: ["app", "web"] }).notNull(),
+    /** Apple's refresh token, sealed with the Sign in with Apple key; cleared once settled. */
+    token: text("token"),
+    attempts: integer("attempts").notNull().default(0),
+    nextAttemptAt: integer("next_attempt_at", { mode: "timestamp_ms" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+    settledAt: integer("settled_at", { mode: "timestamp_ms" }),
+  },
+  (t) => [index("apple_revocations_due_idx").on(t.status, t.nextAttemptAt)],
+);
+
+/**
  * Deleted cards whose audio folder in R2 still needs clearing, which the cron works through. Not a
  * foreign key, since the card row is gone by the time the sweep runs.
  */

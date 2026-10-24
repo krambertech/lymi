@@ -31,5 +31,5 @@ export const EMAIL_SAMPLES: Record<TransactionalEmailKind, TransactionalEmailPar
     },
   },
   "delete-account-code": { code: "205918" },
-  "account-deleted": {},
+  "account-deleted": { removeApple: true },
 };

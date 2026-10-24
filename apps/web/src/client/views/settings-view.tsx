@@ -161,7 +161,7 @@ export function SettingsView({
         <SettingsGroup
           id="delete-account"
           title={t`Delete account`}
-          description={t`Delete your account, private cards and review history. Members keep shared decks.`}
+          description={t`Delete your account, private cards and review history. Members keep their own copy of shared decks.`}
         >
           <Button variant="danger" className="justify-self-start" render={deleteAccountLink}>
             <Trash2 data-icon="inline-start" aria-hidden="true" />

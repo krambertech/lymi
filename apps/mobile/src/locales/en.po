@@ -1907,6 +1907,9 @@ msgstr "Decks from Lymi. Add one to study it in your language."
 msgid "Decks in a series are reviewed together."
 msgstr "Decks in a series are reviewed together."
 
+msgid "Decks other people study"
+msgstr "Decks other people study"
+
 msgid "Decks to review"
 msgstr "Decks to review"
 
@@ -2010,6 +2013,9 @@ msgstr "Each block is one day you reviewed."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Each card is asked both ways, each way on its own schedule."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Each section opens once you know most of the one before it."
@@ -3291,9 +3297,6 @@ msgstr "Other"
 msgid "other decks"
 msgstr "other decks"
 
-msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
-msgstr "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
-
 msgid "Other subjects"
 msgstr "Other subjects"
 
@@ -3338,9 +3341,6 @@ msgstr "Peek at your hook"
 
 msgid "People"
 msgstr "People"
-
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
 
 msgctxt "language"
 msgid "Persian"
@@ -3420,6 +3420,9 @@ msgstr "Pronunciation by you"
 
 msgid "Pronunciation from lesson"
 msgstr "Pronunciation from lesson"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Published decks leave Explore, so nobody new can add them."
 
 msgid "Publishing and deck reports"
 msgstr "Publishing and deck reports"
@@ -4278,6 +4281,9 @@ msgstr "This import needs a connection"
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "This invitation was sent to {invited}. Sign in with that address to join."
 
+msgid "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 
@@ -4580,9 +4586,6 @@ msgstr "What it means"
 
 msgid "What it’s for"
 msgstr "What it’s for"
-
-msgid "What stays for others"
-msgstr "What stays for others"
 
 msgid "What this is about"
 msgstr "What this is about"

@@ -540,6 +540,13 @@ export const analyticsEvents = {
     client: z.enum(["web", "phone"]),
     confirmed_with: z.enum(["email", "apple"]),
     kept_decks: count,
+    published_decks: count.optional(),
+  }),
+  former_deck_copied: z.object({ cards: count }),
+  apple_revocation_attempted: z.object({
+    outcome: z.enum(["revoked", "retrying", "failed", "skipped"]),
+    reason: z.enum(["no_key", "no_token", "exchange", "revoke", "lost"]).optional(),
+    attempt: z.number().int().min(0),
   }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
@@ -623,6 +630,8 @@ export const analyticsProducers = {
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],
   account_deleted: ["worker"],
+  former_deck_copied: ["worker"],
+  apple_revocation_attempted: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(

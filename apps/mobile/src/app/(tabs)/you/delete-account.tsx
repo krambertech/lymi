@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, refusalCode } from "@lymi/client/api";
+import { api } from "@lymi/client/api";
 import { deletionQuery } from "@lymi/client/queries";
 import { dropQueued } from "@lymi/client/queued";
 import type { AccountDeletionOut } from "@lymi/core";
@@ -32,26 +32,21 @@ export default function DeleteAccount() {
   const [exporting, setExporting] = useState(false);
   return (
     <Screen title={t`Delete account`} back={{ label: t`You`, to: "/you" }}>
-      {summary.data ? (
-        summary.data.blocked === "publisher" ? (
-          <Publisher />
-        ) : (
-          <>
-            <WhatGoes summary={summary.data} />
-            {summary.data.sharedDecks.length > 0 && <WhatStays decks={summary.data.sharedDecks} />}
-            <View>
-              <SectionTitle>{t`Keep a copy`}</SectionTitle>
-              <Rows>
-                <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
-              </Rows>
-              <Note>{t`Lymi keeps nothing once the account is gone.`}</Note>
-            </View>
-            <Confirm
-              apple={summary.data.confirmWith === "apple"}
-              onPublisher={() => void summary.refetch()}
-            />
-          </>
-        )
+      {summary.data?.blocked === "publisher" ? (
+        <Publisher />
+      ) : summary.data ? (
+        <>
+          <WhatGoes summary={summary.data} />
+          {summary.data.sharedDecks.length > 0 && <WhatStays decks={summary.data.sharedDecks} />}
+          <View>
+            <SectionTitle>{t`Keep a copy`}</SectionTitle>
+            <Rows>
+              <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
+            </Rows>
+            <Note>{t`Lymi keeps nothing once the account is gone.`}</Note>
+          </View>
+          <Confirm apple={summary.data.confirmWith === "apple"} />
+        </>
       ) : summary.isError ? (
         <LoadFailed
           query={summary}
@@ -73,13 +68,14 @@ function Note({ children }: { children: ReactNode }) {
   return <Text className="px-1 pt-2 text-base text-muted">{children}</Text>;
 }
 
+/** Lymi's own publisher accounts hold the decks in Explore, so the server refuses them. */
 function Publisher() {
   const { t } = useLingui();
   return (
     <View className="gap-4">
       <Plate className="px-4 py-3.5">
         <Text className="text-md text-text">
-          {t`Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it.`}
+          {t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`}
         </Text>
       </Plate>
       <Button
@@ -125,7 +121,7 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
   const { t } = useLingui();
   return (
     <View>
-      <SectionTitle>{t`What stays for others`}</SectionTitle>
+      <SectionTitle>{t`Decks other people study`}</SectionTitle>
       <Plate className="px-4">
         {decks.map((deck, index) => (
           <View
@@ -142,14 +138,17 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
         ))}
       </Plate>
       <Note>
-        {t`People study these decks, so they stay until the last of them leaves. Nobody can change them after you go.`}
+        {t`Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
       </Note>
+      {decks.some((deck) => deck.published) && (
+        <Note>{t`Published decks leave Explore, so nobody new can add them.`}</Note>
+      )}
     </View>
   );
 }
 
 /** Sends the code, then the code step rises as a sheet that rides the keyboard. */
-function Confirm({ apple, onPublisher }: { apple: boolean; onPublisher: () => void }) {
+function Confirm({ apple }: { apple: boolean }) {
   const { t } = useLingui();
   const router = useRouter();
   const appleAvailable = useAppleAvailable();
@@ -169,9 +168,6 @@ function Confirm({ apple, onPublisher }: { apple: boolean; onPublisher: () => vo
       await authClient.signOut().catch(() => undefined);
       dropQueued();
     },
-    onError: (error) => {
-      if (refusalCode(error) === "publisher") onPublisher();
-    },
   });
   const nativeApple = apple && appleAvailable;
   const code = useSendCode({
@@ -180,7 +176,6 @@ function Confirm({ apple, onPublisher }: { apple: boolean; onPublisher: () => vo
         pathname: "/you/delete-code",
         params: { ...(sentTo ? { sentTo } : {}), ...(apple ? { apple: "1" } : {}) },
       }),
-    onPublisher,
   });
   return (
     <View className="gap-3">

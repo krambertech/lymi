@@ -347,8 +347,9 @@ function PrivacyPolicyContent() {
         <Trans>
           We use <strong>PostHog</strong>’s EU service to understand how Lymi is used. Events pass
           through our own servers first, which remove anything not on a fixed list and add the
-          country of the request. PostHog does not look up your location, record sessions or capture
-          clicks automatically.
+          country the request came from, as Cloudflare works it out from your IP address. That
+          country is the only location we record. PostHog does not look up your location, record
+          sessions or capture clicks automatically.
         </Trans>
       </p>
       <p>

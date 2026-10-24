@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
 import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { ReviewAid, ReviewModeKey } from "./types";
+import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -111,6 +111,7 @@ const step = z.enum([
   "kind",
   "language",
   "goal",
+  "ai",
   "start",
   "setup",
   "deck",
@@ -339,6 +340,14 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  site_link_followed: z.object({
+    place: z.enum(["use_cases_menu", "explore_menu", "phone_menu", "footer"]),
+    // A public site path without its locale prefix, never a query or a hash.
+    target: z
+      .string()
+      .regex(/^\/[a-z0-9/-]*$/)
+      .max(120),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -421,6 +430,10 @@ export const analyticsEvents = {
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
+  ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
+  ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -571,6 +584,7 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  site_link_followed: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],
@@ -585,6 +599,10 @@ export const analyticsProducers = {
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
+  ai_consent_shown: ["phone"],
+  ai_consent_granted: ["worker"],
+  ai_consent_declined: ["worker"],
+  ai_consent_withdrawn: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

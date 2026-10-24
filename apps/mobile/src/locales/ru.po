@@ -848,6 +848,9 @@ msgstr "Добавить карточку"
 msgid "Add a lesson"
 msgstr "Добавить урок"
 
+msgid "Add a term and AI fills in missing meanings, examples and more."
+msgstr "Добавь термин, и AI заполнит недостающие значения, примеры и другие поля."
+
 msgid "Add a translation"
 msgstr "Добавь перевод"
 
@@ -958,6 +961,9 @@ msgstr "ИИ заполняет только пустые поля и никог
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI services"
+msgstr "AI-сервисы"
 
 msgid "AI translates it after you save"
 msgstr "AI переведёт после сохранения"
@@ -1756,6 +1762,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t save. Check your connection and try again."
+msgstr "Не удалось сохранить. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t search cards"
 msgstr "Не удалось найти карточки"
 
@@ -1961,6 +1970,9 @@ msgstr "Готово"
 
 msgid "Draft"
 msgstr "Черновик"
+
+msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgstr "Подсказку составляет AI. Включи AI-сервисы в разделе Ты, чтобы составить её."
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."
@@ -2200,6 +2212,9 @@ msgstr "Филиппинский"
 msgid "Fill in the rest with AI"
 msgstr "Дополнить остальное с AI"
 
+msgid "Fill in your cards"
+msgstr "Дополняй карточки"
+
 msgid "Filter"
 msgstr "Фильтр"
 
@@ -2360,6 +2375,9 @@ msgstr "Есть изображение"
 
 msgid "Have an account?"
 msgstr "Уже есть аккаунт?"
+
+msgid "Hear pronunciation"
+msgstr "Слушай произношение"
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2731,6 +2749,9 @@ msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
 
+msgid "Listen to terms and examples read aloud."
+msgstr "Слушай, как звучат термины и примеры."
+
 msgid "Lists and searches decks and cards. A key never grades reviews."
 msgstr "Просматривает списки и ищет колоды и карточки. Ключ никогда не ставит оценок за повторение."
 
@@ -3096,6 +3117,9 @@ msgstr "Пока не в повторениях"
 msgid "Not joined yet · invited {invited}"
 msgstr "Ещё не в колоде · приглашение от {invited}"
 
+msgid "Not now"
+msgstr "Не сейчас"
+
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -3156,8 +3180,14 @@ msgstr "Ничего не добавлено, а файл удалён."
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr "Уведомления для Lymi выключены. Включи их в Настройках, чтобы получать напоминание."
 
+msgid "Off"
+msgstr "Выключено"
+
 msgid "Often forgotten"
 msgstr "Часто забываются"
+
+msgid "On"
+msgstr "Включено"
 
 msgid "On quizlet.com, open your set, open its … menu and choose Export."
 msgstr "На quizlet.com открой свой набор, открой меню … и выбери Export."
@@ -3218,6 +3248,9 @@ msgstr "Открой письмо Noji на этом телефоне в теч�
 
 msgid "Open Settings"
 msgstr "Открыть Настройки"
+
+msgid "Open You"
+msgstr "Открыть Ты"
 
 msgid "Options for {email}"
 msgstr "Действия для {email}"
@@ -3740,6 +3773,9 @@ msgstr "Увидеть термин и вспомнить значение"
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Что и кому отправляется — в нашей политике конфиденциальности."
+
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Выдели слово или фразу, а затем отправь в Lymi через «Поделиться»."
 
@@ -3880,6 +3916,12 @@ msgstr "Словенский"
 
 msgid "Smart add"
 msgstr "Умное добавление"
+
+msgid "Smart add finds terms in your photos, PDFs and notes."
+msgstr "Умное добавление находит термины в твоих фото, PDF-файлах и заметках."
+
+msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
+msgstr "Умное добавление читает урок с помощью AI. Включи AI, чтобы найти термины."
 
 msgid "So you know which key to revoke later."
 msgstr "Чтобы потом знать, какой ключ отозвать."
@@ -4119,6 +4161,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для этих функций нужный текст карточек и материалы уроков отправляются сторонним AI-сервисам."
+
 msgid "They already have a pending invitation."
 msgstr "У этого человека уже есть приглашение без ответа."
 
@@ -4145,6 +4190,9 @@ msgstr "Для истории этой карточки нужно соедин�
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
+
+msgid "This choice applies on mobile and web. Change it any time in You → AI services."
+msgstr "Этот выбор действует в мобильном приложении и веб-версии. Изменить его можно в любой момент: Ты → AI-сервисы."
 
 msgid "This code has expired. Send a new one."
 msgstr "Срок действия кода истёк. Отправь новый."
@@ -4238,6 +4286,9 @@ msgstr "Эта ссылка для присоединения больше не 
 
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
+
+msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+msgstr "Эта настройка действует для твоего аккаунта на всех устройствах. Если выключить, Lymi больше не будет отправлять новый контент AI-сервисам. Текст карточек и сохранённое аудио останутся."
 
 msgid "This shelf has no decks now"
 msgstr "На этой полке сейчас нет колод"
@@ -4363,11 +4414,20 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Турецкий"
 
+msgid "Turn lessons into cards"
+msgstr "Превращай уроки в карточки"
+
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
+
+msgid "Turn on AI"
+msgstr "Включить AI"
+
+msgid "Turn on AI services in You to hear this word."
+msgstr "Включи AI-сервисы в разделе Ты, чтобы услышать это слово."
 
 msgid "Turn your notes into cards"
 msgstr "Преврати заметки в карточки"
@@ -4428,6 +4488,12 @@ msgstr "Загрузка"
 msgctxt "deck tag"
 msgid "US civics test"
 msgstr "Тест на гражданство США"
+
+msgid "Use AI in Lymi?"
+msgstr "Использовать AI в Lymi?"
+
+msgid "Use AI services"
+msgstr "Использовать AI-сервисы"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."

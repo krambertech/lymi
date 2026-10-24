@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { refusedForAiConsent } from "@lymi/client/ai-consent";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hookable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -72,9 +73,13 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
       } else {
         setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
       }
-    } catch {
+    } catch (failure) {
       captureAnalytics("hook_drafted", { outcome: "failed", wait_ms: waited() });
-      setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+      setDraftNote(
+        refusedForAiConsent(failure)
+          ? t`AI services are off for your account. Turn them on in Settings to draft hooks.`
+          : t`Couldn’t draft a hook. Try again in a moment.`,
+      );
     } finally {
       setDrafting(false);
     }

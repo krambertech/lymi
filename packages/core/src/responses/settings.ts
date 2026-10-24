@@ -7,6 +7,11 @@ export const SettingsOut = z
     userId: z.string(),
     analyticsConsent: z.boolean().nullable(),
     analyticsConsentUpdatedAt: Timestamp.nullable(),
+    aiConsent: z.boolean().nullable().meta({
+      description:
+        "Whether Lymi may send the learner's cards, lesson material and words to be spoken to AI services. Null until they answer: the phone app asks first, and other callers proceed unless it is false.",
+    }),
+    aiConsentUpdatedAt: Timestamp.nullable(),
     appLanguage: AppLanguage.nullable().meta({
       ...OPEN,
       description:

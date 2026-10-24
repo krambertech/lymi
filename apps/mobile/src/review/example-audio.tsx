@@ -7,6 +7,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSessionHeaders } from "../auth/client";
+import { useAiConsent } from "../privacy/ai-consent";
 import { captureEvent } from "../telemetry/posthog";
 import { audio, type ExpoAudio, SpeakerButton, useSoundError } from "./pronounce";
 
@@ -17,6 +18,8 @@ const EXTENSION: Record<string, string> = { "audio/wav": "wav", "audio/x-wav": "
 
 type Card = {
   id: string;
+  /** The card's owner, whose choice decides whether its example is voiced. */
+  userId?: string | undefined;
   updatedAt?: Date | string | undefined;
   example?: string | null | undefined;
   language?: string | null | undefined;
@@ -40,6 +43,7 @@ function useAudioExample(
   const [loading, setLoading] = useState(false);
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const consent = useAiConsent("speech");
   const url = card && canSpeakExample(card) ? api.exampleAudioUrl(card.id, card.updatedAt) : null;
   // The example on screen now, which a load that settles late checks before it plays.
   const shown = useRef(url);
@@ -97,7 +101,7 @@ function useAudioExample(
 
   // The learner left the screen or moved to another card while it loaded, so it never plays over them.
   const left = () => !mounted.current || shown.current !== url;
-  const play = async () => {
+  const play = async (askedForAi = false) => {
     if (loading) return;
     setError(null);
     const kept = loaded.current === url;
@@ -116,6 +120,12 @@ function useAudioExample(
         setLoading(false);
         setError(t`Today’s new example audio is used up. Examples you’ve played still play.`);
         report("limited");
+        return;
+      }
+      // A clip not made yet waits for the owner's yes, which only the learner's own card can ask for.
+      if (response.status === 404 && !askedForAi && card.userId === consent.userId) {
+        setLoading(false);
+        if (!consent.allowed && (await consent.ask()) && !left()) await play(true);
         return;
       }
       if (!response.ok) throw new Error(`example audio ${response.status}`);
@@ -142,7 +152,7 @@ function useAudioExample(
     : loading || asked
       ? "loading"
       : "idle";
-  return { play: () => void play(), state, error };
+  return { play: () => void play(), state, error, sheet: consent.sheet };
 }
 
 const noExample = (_card: Card | null, _surface: Surface) => null;

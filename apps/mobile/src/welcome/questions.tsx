@@ -47,7 +47,7 @@ export function Arrive({ children }: { children: ReactNode }) {
   );
 }
 
-export function QuestionHeading({ title, lede }: { title: string; lede: string }) {
+export function QuestionHeading({ title, lede }: { title: string; lede?: string }) {
   return (
     <View className="gap-2 pb-5">
       <Text
@@ -57,7 +57,7 @@ export function QuestionHeading({ title, lede }: { title: string; lede: string }
       >
         {title}
       </Text>
-      <Text className="text-md text-text-2">{lede}</Text>
+      {lede && <Text className="text-md text-text-2">{lede}</Text>}
     </View>
   );
 }

@@ -13,11 +13,12 @@ import {
 } from "@lymi/core/catalog";
 import { listPublicCatalog, listPublicDeckSlugs } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
-import type { AstroGlobal } from "astro";
+import type { APIContext, AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
 import { LANGUAGE_PAGES } from "./language-pages";
+import { menuShelves } from "./menu-shelves";
 import { type Locale, locales } from "./routes";
 import type { SitemapShelf } from "./sitemap";
 
@@ -52,6 +53,27 @@ export async function resolveExplorePage(
     });
   }
   return { locale, decks };
+}
+
+/**
+ * The Explore menu's shelves as JSON, for `?locale=` or English. Prerendered pages carry the nav,
+ * so it reads the live catalogue here and is cached like Explore.
+ */
+export async function menuShelvesResponse(context: APIContext): Promise<Response> {
+  const asked = context.url.searchParams.get("locale");
+  const locale: Locale = locales.find((each) => each === asked) ?? "en";
+  const shelves = menuShelves(await listPublicCatalog(drizzle(env.DB), locale), locale);
+  const etag = catalogEtag({
+    content: catalogContentHash([], shelves),
+    locale,
+    version: env.CF_VERSION_METADATA?.id,
+    page: "menu-shelves",
+  });
+  const headers = { "cache-control": DECK_CACHE_CONTROL, etag };
+  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, { status: 304, headers });
+  }
+  return Response.json(shelves, { headers });
 }
 
 export interface ShelfPage {

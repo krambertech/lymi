@@ -247,6 +247,10 @@
     {
       "name": "0061_aromatic_black_bird.sql",
       "sha256": "e141795ca5a195046a1288d722ad902fe07ff952285c2274fdf5d7f36ecc4cd9"
+    },
+    {
+      "name": "0062_famous_wolf_cub.sql",
+      "sha256": "266ce1cb06f1aa56c51dfbc9107087d475dd91b23c68020a85165be34aaf1a59"
     }
   ]
 }

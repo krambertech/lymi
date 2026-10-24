@@ -1,6 +1,6 @@
 # Chips and marks
 
-Small labels that describe: a card's state, where a field came from, how many cards are due, a key to press. None of them is a button, and none is amber except the due count.
+Descriptive chips and marks say a card's state, where a field came from, how many cards are due, or a key to press. These components are not buttons, and none is amber except the due count. Controls that look like chips have their own semantics and components below.
 
 ## Which one
 
@@ -58,6 +58,12 @@ case "failed":
 ## Kbd
 
 `Kbd` in `components/kbd.tsx` shows a key. Tones: `default` on a plate, `on-primary` inside an amber button, `on-ink` on the toast. `Button`'s `kbd` prop picks the tone for you; use `Kbd` directly only in copy or a shortcut list. A keyboard hint never shows on touch.
+
+## Chips that act
+
+A descriptive `Chip` never acquires an `onClick`. A filter chip is a control that changes or clears a filter; a card-form chip reveals a field or opens a choice; a shelf chip is a link. Keep the corresponding button, picker-trigger or link semantics and an accessible name for the action. Their sizes and states do not extend `Chip`'s closed set.
+
+On the web, card-form chips use `FieldChipButton` and the matching picker triggers in `card-form-pickers.tsx`, inside `FieldChipRow`. They have a neutral `plate-2` fill, an icon and a field name or chosen value, with a 32 px visible height and a hit area that reaches 44 px. A chosen value strengthens the text rather than turning the control into a selected filter. The interaction is in [forms.md](forms.md#optional-card-fields).
 
 ## The chosen chip
 

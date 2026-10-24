@@ -1,0 +1,64 @@
+# AI consent: the first add with AI on asks, Not now saves the card as typed, turning AI on asks again, and You holds the switch.
+appId: app.lymi
+name: AI consent
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "Add a card"
+- extendedWaitUntil:
+    visible: "Add to .*"
+    timeout: 20000
+- tapOn:
+    text: "Continue"
+    optional: true
+# Capture remembers the AI switch, so turn it on only when it is off.
+- runFlow:
+    when:
+      visible: "Meaning What it means"
+    commands:
+      - tapOn: "Fill in the rest with AI"
+- assertVisible: "Meaning Leave it empty.*"
+- tapOn: "Term.*"
+- inputText: "${DECLINED}"
+- tapOn: "Add to ${DECK}"
+- extendedWaitUntil:
+    visible: "Use AI with your cards?"
+    timeout: 10000
+- assertVisible: "Filling in cards"
+- assertVisible: "Pronunciation"
+- takeScreenshot: 01-ask
+- tapOn: "Not now"
+- extendedWaitUntil:
+    visible: "Added “${DECLINED}” to ${DECK}"
+    timeout: 20000
+# A no turns the chip off, and turning it back on asks again.
+- assertVisible: "Meaning What it means"
+- takeScreenshot: 02-declined
+- tapOn: "Fill in the rest with AI"
+- extendedWaitUntil:
+    visible: "Use AI with your cards?"
+    timeout: 10000
+- tapOn: "Allow"
+- extendedWaitUntil:
+    visible: "Meaning Leave it empty.*"
+    timeout: 10000
+- tapOn: "Term.*"
+- inputText: "${ALLOWED}"
+- tapOn: "Add to ${DECK}"
+- extendedWaitUntil:
+    visible: "Added “${ALLOWED}” to ${DECK}"
+    timeout: 20000
+- assertNotVisible: "Use AI with your cards?"
+- takeScreenshot: 03-allowed
+- tapOn: "^Done$"
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "AI services.*"
+    direction: DOWN
+- assertVisible: "AI services.*Allowed.*"
+- takeScreenshot: 04-you
+- tapOn: "AI services.*"
+- extendedWaitUntil:
+    visible: "Use AI with your cards"
+    timeout: 10000
+- takeScreenshot: 05-switch

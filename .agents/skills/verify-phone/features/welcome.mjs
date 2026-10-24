@@ -20,11 +20,17 @@ export async function check({ api, poll }) {
     const settings = await api("/api/settings");
     if (!settings.onboardedAt) throw new Error("Welcome was not saved");
     if (settings.dailyGoal !== 50) throw new Error(`Daily goal is ${settings.dailyGoal}, not 50`);
+    if (settings.aiConsent !== true) throw new Error(`AI choice is ${settings.aiConsent}, not true`);
     const decks = await api("/api/decks");
     if (!decks.some((d) => d.name === "Everyday Finnish"))
       throw new Error(`Everyday Finnish is not in Library: ${decks.map((d) => d.name)}`);
     const { counts } = await api("/api/dev/state");
     if (counts.reviews !== 1) throw new Error(`Expected 1 stored review, found ${counts.reviews}`);
-    return { onboardedAt: settings.onboardedAt, dailyGoal: settings.dailyGoal, counts };
+    return {
+      onboardedAt: settings.onboardedAt,
+      dailyGoal: settings.dailyGoal,
+      aiConsent: settings.aiConsent,
+      counts,
+    };
   });
 }

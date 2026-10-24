@@ -26,22 +26,29 @@ name: Welcome
 - tapOn: "Keen.*"
 - takeScreenshot: 04-goal
 - tapOn: "Continue"
+# A new account is asked before Lymi sends anything to AI services. ADR 0038.
+- extendedWaitUntil:
+    visible: "Let AI do the typing"
+    timeout: 10000
+- assertVisible: "Filling in cards"
+- takeScreenshot: 05-ai
+- tapOn: "Allow"
 - extendedWaitUntil:
     visible: "How do you want to start?"
     timeout: 10000
 - assertVisible: "Ready-made decks in ${LANGUAGE}"
 - tapOn: "${DECK}.*"
-- takeScreenshot: 05-start
+- takeScreenshot: 06-start
 - tapOn: "Add and review"
 - extendedWaitUntil:
     visible: ".*Tap to reveal"
     timeout: 30000
-- takeScreenshot: 06-first-review
+- takeScreenshot: 07-first-review
 # The card's centre can be its pronunciation button, so reveal by tapping low on the card.
 - tapOn:
     point: "50%,80%"
 - tapOn: "^Good.*"
 - assertVisible: "1/.*"
-- takeScreenshot: 07-graded
+- takeScreenshot: 08-graded
 # Signed out again, so a learner persona's flow after this one signs in as that persona.
 - runFlow: _signed-out.yaml

@@ -152,7 +152,7 @@ export const useExampleAudio = player
   : noExample;
 export type ExampleAudio = NonNullable<ReturnType<typeof useAudioExample>>;
 
-/** The example's speaker, after its last word: quieter than the term's. */
+/** The example's speaker at the card page's row end: quieter than the term's. */
 export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
   const { t } = useLingui();
   return (

@@ -4173,6 +4173,9 @@ msgstr "This import needs a connection"
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "This invitation was sent to {invited}. Sign in with that address to join."
 
+msgid "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 
@@ -4484,6 +4487,9 @@ msgstr "Work and study"
 
 msgid "Write a hook."
 msgstr "Write a hook."
+
+msgid "Write to Lymi"
+msgstr "Write to Lymi"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."

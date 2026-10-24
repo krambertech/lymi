@@ -24,14 +24,13 @@ export type AvatarOut = z.infer<typeof AvatarOut>;
 /** What deleting the account takes, read before the learner asks for a code. */
 export const AccountDeletionOut = z
   .object({
-    /** Always null since publishers delete in the app too; phone 0.0.3 still reads it. */
     blocked: z
       .enum(["publisher"])
       .nullable()
       .meta({
         ...OPEN,
         description:
-          "Always null: every account can be deleted here. Kept for phone releases that show `publisher` as a reason to write to Lymi.",
+          "Why the account cannot be deleted here, or null. `publisher`: one of Lymi's own publisher accounts, on `PUBLISHER_EMAILS`, which holds the decks in Explore.",
       }),
     confirmWith: z.enum(["email", "apple"]).meta({
       ...OPEN,

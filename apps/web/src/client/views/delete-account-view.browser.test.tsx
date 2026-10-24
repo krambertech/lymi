@@ -76,6 +76,13 @@ test("deletes only with a six-digit code", async () => {
   expect(onDelete).toHaveBeenCalledWith("123456");
 });
 
+test("offers no delete to a Lymi publisher account", async () => {
+  await renderView({ summary: summary({ blocked: "publisher" }) });
+  await expect.element(page.getByText("This is a Lymi publisher account")).toBeVisible();
+  await expect.element(page.getByRole("link", { name: "hello@lymi.app" })).toBeVisible();
+  await expect.element(page.getByRole("button", { name: "Send code" })).not.toBeInTheDocument();
+});
+
 test("says members keep a copy of a shared deck and how to take it away", async () => {
   await renderView({
     summary: summary({

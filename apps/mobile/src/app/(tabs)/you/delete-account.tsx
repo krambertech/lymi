@@ -7,7 +7,7 @@ import type { AccountDeletionOut } from "@lymi/core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import {
   appleSignInCancelled,
   requestAppleCredential,
@@ -32,7 +32,9 @@ export default function DeleteAccount() {
   const [exporting, setExporting] = useState(false);
   return (
     <Screen title={t`Delete account`} back={{ label: t`You`, to: "/you" }}>
-      {summary.data ? (
+      {summary.data?.blocked === "publisher" ? (
+        <Publisher />
+      ) : summary.data ? (
         <>
           <WhatGoes summary={summary.data} />
           {summary.data.sharedDecks.length > 0 && <WhatStays decks={summary.data.sharedDecks} />}
@@ -64,6 +66,25 @@ export default function DeleteAccount() {
 
 function Note({ children }: { children: ReactNode }) {
   return <Text className="px-1 pt-2 text-base text-muted">{children}</Text>;
+}
+
+/** Lymi's own publisher accounts hold the decks in Explore, so the server refuses them. */
+function Publisher() {
+  const { t } = useLingui();
+  return (
+    <View className="gap-4">
+      <Plate className="px-4 py-3.5">
+        <Text className="text-md text-text">
+          {t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`}
+        </Text>
+      </Plate>
+      <Button
+        label={t`Write to Lymi`}
+        icon="email"
+        onPress={() => void Linking.openURL("mailto:hello@lymi.app")}
+      />
+    </View>
+  );
 }
 
 function WhatGoes({ summary }: { summary: AccountDeletionOut }) {

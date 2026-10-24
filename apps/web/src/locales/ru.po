@@ -2689,6 +2689,9 @@ msgstr "Возможно, её архивировали или тебя из н�
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Возможно, её сняли с публикации. Другие колоды можно найти в Каталоге."
 
+msgid "It publishes the decks in Explore, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "Он публикует колоды в Каталоге, поэтому его нельзя удалить здесь. Напиши на <0>hello@lymi.app</0>, чтобы его удалить."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Импорт не подтвердили за три дня, поэтому Lymi удалил файл. Выбери файл снова, чтобы начать заново."
 
@@ -4744,6 +4747,9 @@ msgstr "Это приглашение работает только для эт�
 
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
+
+msgid "This is a Lymi publisher account"
+msgstr "Это аккаунт издателя Lymi"
 
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так она будет выглядеть в Lymi. Измени поля, если что-то стоит не на своём месте."

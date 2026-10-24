@@ -2689,6 +2689,9 @@ msgstr "It may have been archived, or you were removed from it."
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "It may have been withdrawn. Find other decks in Explore."
 
+msgid "It publishes the decks in Explore, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "It publishes the decks in Explore, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 
@@ -4744,6 +4747,9 @@ msgstr "This invitation only works for this email address. If you weren’t expe
 
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "This invitation was sent to {invited}. Sign in with that address to join."
+
+msgid "This is a Lymi publisher account"
+msgstr "This is a Lymi publisher account"
 
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "This is how it will look in Lymi. Change fields if a part is in the wrong place."

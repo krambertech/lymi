@@ -67,6 +67,18 @@ export function DeleteAccountView({
           <Skeleton className="h-5 w-1/2 rounded-md" />
           <Skeleton className="mt-4 h-24 w-full rounded-lg" />
         </div>
+      ) : summary.blocked === "publisher" ? (
+        <SettingsGroup title={t`This is a Lymi publisher account`}>
+          <p className="max-w-[60ch] text-base text-text-2">
+            <Trans>
+              It publishes the decks in Explore, so it can’t be deleted here. Write to{" "}
+              <a className="font-medium text-text underline" href="mailto:hello@lymi.app">
+                hello@lymi.app
+              </a>{" "}
+              to delete it.
+            </Trans>
+          </p>
+        </SettingsGroup>
       ) : (
         <>
           <WhatGoes summary={summary} />

@@ -30,6 +30,7 @@ const deps = (appleClients: AppleClients | null): DeletionDeps => ({
   verifyApple: async () => true,
   endSessions: async () => {},
   appleClients,
+  publishers: new Set(),
 });
 
 type Reply = Response | "network";

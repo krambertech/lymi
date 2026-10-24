@@ -41,6 +41,7 @@ const deps: DeletionDeps = {
     ended.push(userId);
   },
   appleClients: null,
+  publishers: new Set(),
 };
 
 beforeAll(async () => {
@@ -93,7 +94,7 @@ describe("deleting an account", () => {
     await deckWithCard(olga, "tere");
     const { deck: shared } = await deckWithCard(olga, "aitäh", ivan);
 
-    expect(await deletionSummary(olga)).toEqual({
+    expect(await deletionSummary(olga, new Set())).toEqual({
       blocked: null,
       confirmWith: "email",
       decks: 2,
@@ -302,7 +303,7 @@ describe("deleting an account", () => {
     const member = await learner(db, "kalev", "Kalev");
     const { deck } = await deckWithCard(owner, "kass", member);
     await archiveDeck(owner, deck.id);
-    expect((await deletionSummary(owner)).sharedDecks).toEqual([]);
+    expect((await deletionSummary(owner, new Set())).sharedDecks).toEqual([]);
 
     await deleteAccount(owner, { code: await codeFor(owner, "rutt@lymi.test") }, deps);
     expect(await count("decks", "id", deck.id)).toBe(0);
@@ -396,7 +397,7 @@ describe("deleting an account", () => {
     }
     await join(learnerCtx, deck.id, { meaningLanguage: "uk" });
 
-    const summary = await deletionSummary(lymi);
+    const summary = await deletionSummary(lymi, new Set());
     expect(summary.blocked).toBeNull();
     expect(summary.sharedDecks).toEqual([
       { id: deck.id, name: "Estonian", members: 1, published: true },
@@ -415,6 +416,20 @@ describe("deleting an account", () => {
       .bind(learnerCtx.userId)
       .first();
     expect(copy).toEqual({ deck: "Естонська", term: "Tere!", key: "tere!", meaning: "привіт" });
+  });
+
+  it("refuses one of Lymi's own publisher accounts while it is on the list", async () => {
+    const lymi = await learner(db, "lymi-books", "Lymi");
+    const publishers = new Set(["lymi-books@lymi.test"]);
+    expect((await deletionSummary(lymi, publishers)).blocked).toBe("publisher");
+    await expect(
+      sendDeletionCode(lymi, { ...env, PUBLISHER_EMAILS: "lymi-books@lymi.test" }, undefined),
+    ).rejects.toMatchObject({ reason: "publisher" });
+    const code = await codeFor(lymi, "lymi-books@lymi.test");
+    await expect(deleteAccount(lymi, { code }, { ...deps, publishers })).rejects.toMatchObject({
+      reason: "publisher",
+    });
+    expect(await count("user", "id", lymi.userId)).toBe(1);
   });
 
   it("deletes an account that approved a localization of someone else's deck", async () => {
@@ -595,7 +610,7 @@ describe("deleting an account", () => {
 
     it("asks the phone for Apple's sheet", async () => {
       const ctx = await appleLearner("kaja", "apple-kaja");
-      expect((await deletionSummary(ctx)).confirmWith).toBe("apple");
+      expect((await deletionSummary(ctx, new Set())).confirmWith).toBe("apple");
     });
 
     it("refuses another Apple ID, an unverified token, or no Apple configuration", async () => {

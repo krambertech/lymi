@@ -19,7 +19,7 @@ import {
 } from "@lymi/core/db";
 import type { AppleClients } from "../apple-revoke";
 import { type Db, schema } from "../db";
-import type { Bindings } from "../env";
+import { type Bindings, publisherEmails } from "../env";
 import { appleRevocationRow } from "./apple-revocations";
 import { auditStatement } from "./audit";
 import { runBatch } from "./batch";
@@ -29,6 +29,7 @@ import {
   sendTransactionalEmail,
   type TransactionalEmailLanguage,
 } from "./email";
+import { isPublisher } from "./publishers";
 
 /**
  * The account that holds decks other people still study after their owner deleted theirs. It
@@ -107,9 +108,12 @@ async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
 }
 
 /** What deleting the account takes, so the confirmation can say it before anything is sent. */
-export async function deletionSummary(ctx: ServiceContext): Promise<AccountDeletionOut> {
+export async function deletionSummary(
+  ctx: ServiceContext,
+  publishers: Set<string>,
+): Promise<AccountDeletionOut> {
   const { db, userId } = ctx;
-  const [[decks], [cards], [reviews], shared, apple] = await Promise.all([
+  const [[decks], [cards], [reviews], shared, apple, publisher] = await Promise.all([
     db.select({ n: count() }).from(schema.decks).where(eq(schema.decks.userId, userId)),
     db
       .select({ n: count() })
@@ -119,9 +123,10 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
     db.select({ n: count() }).from(schema.reviews).where(eq(schema.reviews.userId, userId)),
     sharedDecks(ctx),
     hasApple(ctx),
+    isPublisher(ctx, publishers),
   ]);
   return {
-    blocked: null,
+    blocked: publisher ? "publisher" : null,
     confirmWith: apple ? "apple" : "email",
     decks: decks?.n ?? 0,
     cards: cards?.n ?? 0,
@@ -130,13 +135,32 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
   };
 }
 
+/**
+ * Lymi's own publisher accounts hold the decks in Explore and the editions people pin, so they
+ * are taken off `PUBLISHER_EMAILS` before they can be deleted.
+ */
+async function refuseLymiPublisher(ctx: ServiceContext, publishers: Set<string>) {
+  if (await isPublisher(ctx, publishers)) {
+    throw new ServiceError(
+      "conflict",
+      "This is one of Lymi's publisher accounts, so it can't be deleted here.",
+      undefined,
+      "publisher",
+    );
+  }
+}
+
 /** Starts a delete: emails a fresh six-digit code to the account's address, replacing any earlier one. */
 export async function sendDeletionCode(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace },
+  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & {
+    SESSIONS?: KVNamespace;
+    PUBLISHER_EMAILS?: string | undefined;
+  },
   request: Request | undefined,
 ): Promise<DeletionCodeOut> {
   const { db, userId } = ctx;
+  await refuseLymiPublisher(ctx, publisherEmails(env));
   const [account] = await db
     .select({ email: schema.user.email })
     .from(schema.user)
@@ -289,6 +313,8 @@ export interface DeletionDeps {
   endSessions: (userId: string) => Promise<void>;
   /** The Sign in with Apple key, which revoking the account's Apple grant needs; null without it. */
   appleClients: AppleClients | null;
+  /** `PUBLISHER_EMAILS`: Lymi's own publishers, which are refused. */
+  publishers: Set<string>;
 }
 
 /** What is left to do once the rows are gone: storage the database cannot cascade into. */
@@ -324,6 +350,7 @@ export async function deleteAccount(
   if (ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can delete their account, from the app.");
   }
+  await refuseLymiPublisher(ctx, deps.publishers);
   const confirmedWith = "apple" in input ? "apple" : "email";
   if ("apple" in input) await checkApple(ctx, input.apple, deps.verifyApple);
   else await checkCode(ctx, input.code);
@@ -334,7 +361,7 @@ export async function deleteAccount(
     .where(eq(schema.user.id, userId));
   if (!account) throw new ServiceError("not_found", "No such learner.");
 
-  const summary = await deletionSummary(ctx);
+  const summary = await deletionSummary(ctx, deps.publishers);
   const language = await accountEmailLanguage(db, userId, deps.request);
   const kept = summary.sharedDecks.length;
   // The decks `sharedDecks` lists, as a subquery: binding one id each would pass D1's 100

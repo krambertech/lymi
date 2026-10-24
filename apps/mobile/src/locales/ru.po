@@ -4173,6 +4173,9 @@ msgstr "Для этого импорта нужно соединение"
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
 
+msgid "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "Это аккаунт издателя Lymi. Он публикует колоды в Каталоге, поэтому его нельзя удалить здесь. Напиши на hello@lymi.app, чтобы его удалить."
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так она будет выглядеть в Lymi. Измени поля, если что-то стоит не на своём месте."
 
@@ -4484,6 +4487,9 @@ msgstr "Работа и учёба"
 
 msgid "Write a hook."
 msgstr "Напиши зацепку."
+
+msgid "Write to Lymi"
+msgstr "Написать в Lymi"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."

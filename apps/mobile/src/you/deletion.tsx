@@ -19,6 +19,8 @@ export function useSendCode({ onSent }: { onSent: (sentTo: string | null) => voi
     switch (refusalCode(send.error)) {
       case "code_sent":
         return null;
+      case "publisher":
+        return t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`;
       case "code_limit":
         return t`You’ve asked for several codes today. Try again tomorrow.`;
       default:

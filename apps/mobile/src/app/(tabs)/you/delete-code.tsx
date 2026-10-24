@@ -40,6 +40,8 @@ export default function DeleteCode() {
         return t`That code isn’t right. Check the email and try again.`;
       case "code_expired":
         return t`This code has expired. Send a new one.`;
+      case "publisher":
+        return t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`;
       default:
         return t`Couldn’t delete your account. Check your connection and try again.`;
     }

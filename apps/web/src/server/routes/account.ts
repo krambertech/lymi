@@ -10,6 +10,7 @@ import { Hono } from "hono";
 import { appleIdTokenVerifier } from "../apple-id-token";
 import { type AppleClients, appleClientsOf } from "../apple-revoke";
 import type { Db } from "../db";
+import { publisherEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { erasePostHogPerson } from "../posthog";
@@ -41,7 +42,7 @@ account.get(
     description: `${LEARNER_ONLY} Counts what goes, names the decks the people studying them will keep as copies, and says how the delete is confirmed.`,
     ok: { schema: AccountDeletionOut, description: "What a delete would take" },
   }),
-  async (c) => c.json(await deletionSummary(ctxOf(c))),
+  async (c) => c.json(await deletionSummary(ctxOf(c), publisherEmails(c.env))),
 );
 
 account.post(
@@ -50,7 +51,7 @@ account.post(
     tags: ["Account"],
     summary: "Email a code to delete the account",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day.`,
+    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day; 409 \`publisher\` for one of Lymi's own publisher accounts.`,
     ok: { schema: DeletionCodeOut, description: "Where the code went" },
     errors: [409, 503],
   }),
@@ -63,9 +64,9 @@ account.delete(
     tags: ["Account"],
     summary: "Delete the account",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Final. Deletes the account and everything it holds, signs it out everywhere and emails the address that it happened. Each person who studies one of its unarchived decks gets a private copy, and published decks leave Explore. Confirm with the emailed \`code\`, or with a fresh Sign in with Apple for an account that uses one. 400 \`code_wrong\` or \`code_expired\`; 403 \`apple_mismatch\`.`,
+    description: `${LEARNER_ONLY} Final. Deletes the account and everything it holds, signs it out everywhere and emails the address that it happened. Each person who studies one of its unarchived decks gets a private copy, and published decks leave Explore. Confirm with the emailed \`code\`, or with a fresh Sign in with Apple for an account that uses one. 400 \`code_wrong\` or \`code_expired\`; 403 \`apple_mismatch\`; 409 \`publisher\` for one of Lymi's own publisher accounts.`,
     ok: { schema: OkOut, description: "Deleted" },
-    errors: [400],
+    errors: [400, 409],
   }),
   body(AccountDeletionInput, "confirmation"),
   async (c) => {
@@ -86,6 +87,7 @@ account.delete(
       verifyApple: verify ? (token, nonce) => verify(token, nonce) : null,
       endSessions,
       appleClients,
+      publishers: publisherEmails(c.env),
     });
     // PostHog's copy goes with the person, so the count lives in the Worker's own dataset.
     track(c.env.EVENTS, {

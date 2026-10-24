@@ -91,7 +91,9 @@ export async function main(argv = process.argv.slice(2), env = process.env, log 
     const reports = await call("GET", `/api/moderation/reports?status=${args.status}`);
     log(reports.length ? reports.map(describeReport).join("\n\n") : `No ${args.status} reports.`);
   } else if (args.command === "show") {
-    log(describeReport(await call("GET", `/api/moderation/reports/${encodeURIComponent(args.id)}`)));
+    log(
+      describeReport(await call("GET", `/api/moderation/reports/${encodeURIComponent(args.id)}`)),
+    );
   } else {
     const report = await call(
       "POST",

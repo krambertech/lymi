@@ -55,5 +55,8 @@ test("resolves through the operator route with the key", async () => {
 });
 
 test("needs a key", async () => {
-  await assert.rejects(main(["list"], {}, () => {}), /LYMI_API_KEY/);
+  await assert.rejects(
+    main(["list"], {}, () => {}),
+    /LYMI_API_KEY/,
+  );
 });

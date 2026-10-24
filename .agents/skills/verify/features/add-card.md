@@ -18,6 +18,6 @@ The sheet closes, **Notifications** says **Added “la nebbia”**, and the card
 
 - Pick a term the persona does not have: `sbrigarsi` is already in Lezione 12, so adding it again keeps the sheet open on the duplicate notice.
 - `GET /api/decks/<id>` carries no counts; read `total` from the `/api/decks` list.
-- The optional fields are chips in one row that scrolls sideways, the same on a desktop and a phone; a chip off the end of the row needs the row scrolled before it can be pressed.
+- The optional fields are chips that wrap onto a second line in the desktop dialog and run in one sideways-scrolling row on a phone, where a chip off the end needs the row scrolled before it can be pressed.
 - Tags is a combobox trigger rather than a button, so find it by its label.
 - A review of chosen cards (`/review?deck=…&cards=[…]`) draws nothing for a card never reviewed, so reach a new card through the deck's own review.

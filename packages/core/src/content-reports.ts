@@ -62,7 +62,7 @@ export const ModerationReportOut = z
       .object({ id: z.string().nullable(), name: z.string(), email: z.string() })
       .nullable(),
     owner: z.object({ id: z.string().nullable(), name: z.string(), email: z.string() }).nullable(),
-    deck: z.object({ id: z.string(), name: z.string(), members: z.number().int() }),
+    deck: z.object({ id: z.string().nullable(), name: z.string(), members: z.number().int() }),
     card: z
       .object({
         id: z.string().nullable(),

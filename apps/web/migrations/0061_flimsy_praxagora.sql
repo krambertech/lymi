@@ -2,7 +2,7 @@ CREATE TABLE `content_reports` (
 	`id` text PRIMARY KEY NOT NULL,
 	`reporter_id` text,
 	`owner_id` text,
-	`deck_id` text NOT NULL,
+	`deck_id` text,
 	`card_id` text,
 	`target` text NOT NULL,
 	`via` text NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `content_reports` (
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	FOREIGN KEY (`reporter_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE set null,
 	FOREIGN KEY (`owner_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE set null,
-	FOREIGN KEY (`deck_id`) REFERENCES `decks`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`deck_id`) REFERENCES `decks`(`id`) ON UPDATE no action ON DELETE set null,
 	FOREIGN KEY (`card_id`) REFERENCES `cards`(`id`) ON UPDATE no action ON DELETE set null
 );
 --> statement-breakpoint

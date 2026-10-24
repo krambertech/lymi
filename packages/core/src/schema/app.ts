@@ -1096,9 +1096,8 @@ export const contentReports = sqliteTable(
     reporterId: text("reporter_id").references(() => user.id, { onDelete: "set null" }),
     /** The deck's owner when it was reported. Null once their account is deleted. */
     ownerId: text("owner_id").references(() => user.id, { onDelete: "set null" }),
-    deckId: text("deck_id")
-      .notNull()
-      .references(() => decks.id, { onDelete: "cascade" }),
+    /** Null once the deck is erased, as account deletion can; the snapshot keeps what it held. */
+    deckId: text("deck_id").references(() => decks.id, { onDelete: "set null" }),
     /** Null for a report on the whole deck, or once the card is erased. */
     cardId: text("card_id").references(() => cards.id, { onDelete: "set null" }),
     /** Whether the card was the subject, kept apart from `cardId` so an erased card stays a card report. */

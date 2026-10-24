@@ -52,7 +52,11 @@ export async function reportContent(
   }
 
   const [open] = await ctx.db
-    .select({ id: schema.contentReports.id })
+    .select({
+      id: schema.contentReports.id,
+      reason: schema.contentReports.reason,
+      note: schema.contentReports.note,
+    })
     .from(schema.contentReports)
     .where(
       and(
@@ -64,7 +68,18 @@ export async function reportContent(
         isNull(schema.contentReports.resolvedAt),
       ),
     );
-  if (open) return { id: open.id };
+  if (open) {
+    // A second word on something already reported joins the open report, without a second email.
+    const again = input.note?.trim() || null;
+    if (again || input.reason !== open.reason) {
+      const added = `Again, as ${input.reason}${again ? `: ${again}` : "."}`;
+      await ctx.db
+        .update(schema.contentReports)
+        .set({ note: open.note ? `${open.note}\n\n${added}` : added })
+        .where(eq(schema.contentReports.id, open.id));
+    }
+    return { id: open.id };
+  }
 
   const zone = (await getSettings(ctx)).reviewTimezone ?? "UTC";
   const localDate = dateFormatter(zone).format(new Date());
@@ -259,7 +274,7 @@ async function presentReport(db: Db, id: string): Promise<ModerationReportOut> {
   const [row] = await db
     .select({ report: schema.contentReports, deckName: schema.decks.name })
     .from(schema.contentReports)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.contentReports.deckId))
+    .leftJoin(schema.decks, eq(schema.decks.id, schema.contentReports.deckId))
     .where(eq(schema.contentReports.id, id));
   if (!row) throw notFound("Report");
   const { report } = row;
@@ -272,12 +287,14 @@ async function presentReport(db: Db, id: string): Promise<ModerationReportOut> {
           .from(schema.user)
           .where(inArray(schema.user.id, people))
       : [],
-    db
-      .select({ n: count() })
-      .from(schema.deckMembers)
-      .where(
-        and(eq(schema.deckMembers.deckId, report.deckId), isNull(schema.deckMembers.removedAt)),
-      ),
+    report.deckId
+      ? db
+          .select({ n: count() })
+          .from(schema.deckMembers)
+          .where(
+            and(eq(schema.deckMembers.deckId, report.deckId), isNull(schema.deckMembers.removedAt)),
+          )
+      : [{ n: 0 }],
     report.ownerId
       ? db
           .select({ n: count() })
@@ -300,7 +317,11 @@ async function presentReport(db: Db, id: string): Promise<ModerationReportOut> {
     via: report.via,
     reporter: person(report.reporterId),
     owner: person(report.ownerId),
-    deck: { id: report.deckId, name: snapshot.deckName ?? row.deckName, members: members?.n ?? 0 },
+    deck: {
+      id: report.deckId,
+      name: snapshot.deckName ?? row.deckName ?? "",
+      members: members?.n ?? 0,
+    },
     card: snapshot.card ? { id: report.cardId, ...snapshot.card } : null,
     ownerReports: ownerReports?.n ?? 1,
   };
@@ -332,6 +353,20 @@ export async function resolveContentReport(
   if (action !== "dismiss" && !report.ownerId) {
     throw new ServiceError("invalid", "The owner has deleted their account");
   }
+  if (action === "archive_deck" && !report.deckId) {
+    throw new ServiceError("invalid", "The deck no longer exists");
+  }
+  // Explore's decks belong to a publisher: archiving one, or all of them, is a publishing decision.
+  if (
+    (action === "archive_deck" || action === "suspend_sharing") &&
+    report.ownerId &&
+    (await publishes(ctx.db, report.ownerId))
+  ) {
+    throw new ServiceError(
+      "invalid",
+      "The owner publishes to Explore. Fix or withdraw the deck with the publishing key instead.",
+    );
+  }
 
   const owner: ServiceContext = {
     db: ctx.db,
@@ -339,7 +374,7 @@ export async function resolveContentReport(
     actor: "system",
   };
   if (action === "archive_card" && report.cardId) await archiveCard(owner, report.cardId);
-  if (action === "archive_deck") await archiveDeck(owner, report.deckId);
+  if (action === "archive_deck" && report.deckId) await archiveDeck(owner, report.deckId);
   if (action === "suspend_sharing") await suspendSharing(owner, report.id);
 
   const now = new Date();
@@ -350,7 +385,7 @@ export async function resolveContentReport(
       : action === "dismiss"
         ? eq(schema.contentReports.id, id)
         : action === "archive_deck"
-          ? eq(schema.contentReports.deckId, report.deckId)
+          ? eq(schema.contentReports.deckId, report.deckId ?? "")
           : eq(schema.contentReports.ownerId, report.ownerId ?? "");
   const settled = await ctx.db
     .update(schema.contentReports)
@@ -384,7 +419,7 @@ async function suspendSharing(owner: ServiceContext, reportId: string) {
     .from(schema.contentReports)
     .where(eq(schema.contentReports.id, reportId));
   const shared = new Set(await sharedDecksOf(owner.db, owner.userId));
-  if (report) shared.add(report.deckId);
+  if (report?.deckId) shared.add(report.deckId);
   for (const deckId of shared) await archiveDeck(owner, deckId);
 }
 
@@ -404,4 +439,15 @@ async function sharedDecksOf(db: Db, userId: string): Promise<string[]> {
       ),
     );
   return rows.map((row) => row.id);
+}
+
+/** Whether the account has ever published a deck to Explore. */
+async function publishes(db: Db, userId: string) {
+  const [row] = await db
+    .select({ id: schema.deckPublications.id })
+    .from(schema.deckPublications)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+    .where(eq(schema.decks.userId, userId))
+    .limit(1);
+  return !!row;
 }

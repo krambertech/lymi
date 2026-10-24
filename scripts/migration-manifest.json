@@ -245,8 +245,8 @@
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
     },
     {
-      "name": "0061_public_wrecker.sql",
-      "sha256": "68bc59f563dd8e205d534a3d1c4d2dd952efff61e3d8223044006c839ee0de50"
+      "name": "0061_flimsy_praxagora.sql",
+      "sha256": "bfa51af508aa0be000368d81d930e236ef9f16ef449aff88b0b7f0b2cbfc57f0"
     }
   ]
 }

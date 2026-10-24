@@ -88,9 +88,32 @@ describe("reporting", () => {
     const target = { kind: "deck" as const, deckId: deck.id };
     const first = await reportContent(member, env, { target, reason: "spam" });
     clearLocalEmailOutbox();
-    const again = await reportContent(member, env, { target, reason: "other" });
+    const again = await reportContent(member, env, {
+      target,
+      reason: "other",
+      note: "It links to a shop.",
+    });
     expect(again.id).toBe(first.id);
     expect(latestLocalEmail("hello@lymi.app")).toBeNull();
+    // The second word is kept on the open report rather than dropped.
+    expect((await getContentReport(operator, operators, first.id)).note).toBe(
+      "Again, as other: It links to a shop.",
+    );
+  });
+
+  it("keeps a report and what it reported after its deck is erased", async () => {
+    const { member, deck } = await sharedDeck();
+    const { id } = await reportContent(member, env, {
+      target: { kind: "deck", deckId: deck.id },
+      reason: "offensive",
+    });
+    await db.delete(schema.decks).where(eq(schema.decks.id, deck.id));
+    expect(await getContentReport(operator, operators, id)).toMatchObject({
+      deck: { id: null, name: "Eesti slang", members: 0 },
+    });
+    await expect(
+      resolveContentReport(operator, operators, id, "archive_deck"),
+    ).rejects.toMatchObject({ code: "invalid" });
   });
 
   it("takes a report from a join page before joining", async () => {
@@ -183,6 +206,31 @@ describe("moderation", () => {
     await archiveCard(owner, card.id);
     await restoreCard(owner, card.id);
     expect((await getCard(owner, card.id)).archivedAt).toBeNull();
+  });
+
+  it("leaves a publisher's decks to publishing: no deck archive or suspension", async () => {
+    const { member, deck } = await sharedDeck();
+    await db.insert(schema.deckPublications).values({
+      id: `pub-${deck.id}`,
+      deckId: deck.id,
+      slug: `slang-${deck.id}`.toLowerCase(),
+      status: "published",
+      summary: "Slang",
+      meaningLanguage: "en",
+      publisher: "Lymi",
+      sources: [],
+      publishedAt: new Date(),
+    });
+    const { id } = await reportContent(member, env, {
+      target: { kind: "deck", deckId: deck.id },
+      reason: "offensive",
+    });
+    for (const action of ["archive_deck", "suspend_sharing"] as const) {
+      await expect(resolveContentReport(operator, operators, id, action)).rejects.toMatchObject({
+        code: "invalid",
+      });
+    }
+    expect((await listDecks(member)).map((d) => d.id)).toContain(deck.id);
   });
 
   it("suspends an owner from sharing: shared decks go, nothing reopens", async () => {

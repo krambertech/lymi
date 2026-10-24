@@ -70,7 +70,7 @@ export function describeReport(report) {
     `${report.id}  ${report.status === "open" ? "OPEN" : `resolved: ${report.action}`}  ${report.createdAt}`,
     `  Reason: ${REASONS[report.reason] ?? report.reason}`,
     ...(report.note ? [`  Note: ${report.note}`] : []),
-    `  Deck: ${report.deck.name} (${report.deck.id}), ${report.deck.members} members`,
+    `  Deck: ${report.deck.name} (${report.deck.id ?? "erased"}), ${report.deck.members} members`,
     ...(card
       ? [
           `  Card: ${card.term}${card.id ? ` (${card.id})` : " (erased)"}`,

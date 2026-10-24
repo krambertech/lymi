@@ -127,7 +127,7 @@ pnpm moderate show <report-id>
 pnpm moderate resolve <report-id> archive_card --apply
 ```
 
-Settling a report settles the other open reports about the same card, deck or owner. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
+Settling a report settles the other open reports about the same card, deck or owner. `archive_deck` and `suspend_sharing` are refused when the owner publishes to Explore: fix or withdraw a published deck with the publishing key instead. A learner who reports the same thing again while it is open adds their reason and note to the open report, with no second email, so read the note again before settling. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
 
 ## The stress backfill
 

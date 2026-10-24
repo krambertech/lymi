@@ -31,7 +31,8 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 | A card term or example, with its language's reading, stress and direction | `TermText`, `ExampleText` | `term-text.tsx` | [type.md](type.md#languages-readings-and-stress) |
 | A label | `Chip`, `StateChip`, `SourceChip`, `DueCount`, `Kbd`, `StateIcon` | `chip.tsx` and others | [chips-and-marks.md](chips-and-marks.md) |
 | A notice inside a screen, or a few sentences behind an info button | `Notice` (`neutral`, `warning`), `InfoTip` | `notice.tsx`, `info-tip.tsx` | [colour.md](colour.md#amber-means-act) for the warning |
-| Nothing to show yet | `FirstRunGuide`, `StartPanel`, `EmptySection`, `NoResults`, `ErrorState`, `Skeleton` | `empty-state.tsx` and others | [empty-states.md](empty-states.md) |
+| Today before the first review | `FirstRunGuide` (web), `StartGuide` (phone) | `first-run.tsx`; phone: `apps/mobile/src/welcome/start-guide.tsx` | [empty-states.md](empty-states.md#first-run-guide) |
+| Nothing to show yet | `StartPanel`, `EmptySection`, `NoResults`, `ErrorState`, `Skeleton` | `empty-state.tsx` and others | [empty-states.md](empty-states.md) |
 | A row that goes somewhere | `NextSteps`, `NextStep`, `Go`, `NewCardsRow` | `next-steps.tsx` | [buttons.md](buttons.md#which-control) |
 | A figure | `StatPlate` (with `ghost`), `Progress`, `SectionProgress`, `SectionRing`, `TrendLine`, `DayGrid`, `RunStrip` | | |
 | A table | `Table`, `Th`, `Td` | `table.tsx` | |

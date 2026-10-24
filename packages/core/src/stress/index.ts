@@ -121,8 +121,8 @@ export interface WordStress {
   acuteOnDotted: boolean;
 }
 
-/** A word, with a hyphen between letters keeping it one word, as `words` does for the term. */
-const WORD = /[\p{L}\p{M}]+(?:[-‐‑][\p{L}\p{M}]+)*/gu;
+/** A word, with a hyphen or apostrophe between letters keeping it one word, as `words` does for the term. */
+const WORD = /[\p{L}\p{M}]+(?:[-\u2010\u2011'\u2018\u2019`][\p{L}\p{M}]+)*/gu;
 
 /** Each Cyrillic word of a sentence with its syllables and marks, so a check can say which word lacks its stress. */
 export function wordStress(text: string, rules: StressRules): WordStress[] {

@@ -205,7 +205,7 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
           </>
         ) : (
           <DropdownMenuGroup>
-            <DropdownMenuLabel>
+            <DropdownMenuLabel inset>
               <Trans>Filter by</Trans>
             </DropdownMenuLabel>
             {fields.map(({ field }) => {

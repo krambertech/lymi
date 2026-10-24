@@ -4,6 +4,9 @@
   --ground: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
   /* Up under the status bar or the Mac's title bar; the element's own top padding adds it back. */
   margin-top: calc(var(--inset-top) * -1);
+  /* Over the shell's top strip, which is earlier in the page at the same level, so the ground shows there. */
+  position: relative;
+  z-index: var(--z-sticky);
   overflow: clip;
   background: var(--ground);
 }

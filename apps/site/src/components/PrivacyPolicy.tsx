@@ -24,8 +24,8 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          We don’t sell your data, show ads, or track you across other companies’ apps and
-          websites. We send data to the providers below only to run the feature you are using.
+          We don’t sell your data, show ads, or track you across other companies’ apps and websites.
+          We send data to the providers below only to run the feature you are using.
         </Trans>
       </p>
 
@@ -77,15 +77,15 @@ function PrivacyPolicyContent() {
         <Trans>
           We store the decks, series and sections you create or join, and every card in them: term,
           meaning, pronunciation, example, notes, memory hook, tags, source, language, picture and
-          audio. We also store each review and grade, the schedule, your daily goal, streak and
-          rest days, your time zone, settings, what you told us you are learning when you started,
-          and an Activity record of changes.
+          audio. We also store each review and grade, the schedule, your daily goal, streak and rest
+          days, your time zone, settings, what you told us you are learning when you started, and an
+          Activity record of changes.
         </Trans>
       </p>
       <p>
         <Trans>
-          Review history is append-only while the account exists, so the schedule stays honest.
-          Undo adds a record instead of rewriting the review.
+          Review history is append-only while the account exists, so the schedule stays honest. Undo
+          adds a record instead of rewriting the review.
         </Trans>
       </p>
       <p>
@@ -165,8 +165,9 @@ function PrivacyPolicyContent() {
             <strong>Smart add (Anthropic)</strong> reads the photos, PDFs and text you give it, with
             the names, descriptions and languages of up to 12 of your decks and a few recent terms
             and meanings from each. Photos are converted to WebP first, which removes metadata.
-            Cloudflare Workers AI then checks the terms it found, and, if you ask, compares them with
-            your answer. Lymi does not store the files: only the cards you choose to add are saved.
+            Cloudflare Workers AI then checks the terms it found, and, if you ask, compares them
+            with your answer. Lymi does not store the files: only the cards you choose to add are
+            saved.
           </Trans>
         </li>
         <li>
@@ -191,9 +192,7 @@ function PrivacyPolicyContent() {
         </Trans>
       </p>
       <p>
-        <Trans>
-          Lymi never records your voice. The app doesn’t use the microphone.
-        </Trans>
+        <Trans>Lymi never records your voice. The app doesn’t use the microphone.</Trans>
       </p>
 
       <h2>
@@ -226,15 +225,16 @@ function PrivacyPolicyContent() {
         <Trans>
           We send email only about your account: confirming an address, resetting a password,
           telling you an address already has an account, deck invitations, the code that confirms
-          deleting your account, and the confirmation that it was deleted. There is no newsletter. <strong>Resend</strong> delivers our email and receives
-          the recipient, subject and message; <strong>Cloudflare Email Service</strong> delivers it
-          when Resend isn’t available. Resend tells us when an email bounces or is marked as spam.
+          deleting your account, and the confirmation that it was deleted. There is no newsletter.{" "}
+          <strong>Resend</strong> delivers our email and receives the recipient, subject and
+          message; <strong>Cloudflare Email Service</strong> delivers it when Resend isn’t
+          available. Resend tells us when an email bounces or is marked as spam.
         </Trans>
       </p>
       <p>
         <Trans>
-          When you send feedback from the app, it reaches our inbox with your name and email
-          address so we can reply.
+          When you send feedback from the app, it reaches our inbox with your name and email address
+          so we can reply.
         </Trans>
       </p>
 
@@ -244,8 +244,8 @@ function PrivacyPolicyContent() {
       <p>
         <Trans>
           If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s
-          identity, the permissions you approve and its access tokens. An access token lasts an
-          hour and a refresh token 30 days. A connected app can read your decks, cards, settings,
+          identity, the permissions you approve and its access tokens. An access token lasts an hour
+          and a refresh token 30 days. A connected app can read your decks, cards, settings,
           insights and streak, and with write permission it can add, edit, archive and enrich cards
           and organise decks. It can never grade a review, manage keys or connected apps, change
           analytics or delete your account.
@@ -335,8 +335,8 @@ function PrivacyPolicyContent() {
       </h3>
       <p>
         <Trans>
-          lymi.app sets no cookies. It remembers your theme and the language of code samples in
-          your browser’s storage. We do not use advertising cookies anywhere.
+          lymi.app sets no cookies. It remembers your theme and the language of code samples in your
+          browser’s storage. We do not use advertising cookies anywhere.
         </Trans>
       </p>
 
@@ -364,18 +364,17 @@ function PrivacyPolicyContent() {
         <Trans>
           In the web and iPhone apps we link product events to your account’s opaque identifier.
           Events carry the kind of screen (never its exact address), fixed action labels, counts,
-          review grades, app language, app version, your device’s operating system and country. For AI features they
-          carry the model, token count and cost, never the text. We do not send card content, email
-          addresses, names or credentials.
+          review grades, app language, app version, your device’s operating system and country. For
+          AI features they carry the model, token count and cost, never the text. We do not send
+          card content, email addresses, names or credentials.
         </Trans>
       </p>
       <p>
         <Trans>
           We do this on the basis of our legitimate interest in understanding and improving Lymi. To
-          object, email{" "}
-          <a href="mailto:hello@lymi.app?subject=Lymi%20analytics">hello@lymi.app</a> and we will
-          stop product analytics for your account, including from connected apps and background
-          work.
+          object, email <a href="mailto:hello@lymi.app?subject=Lymi%20analytics">hello@lymi.app</a>{" "}
+          and we will stop product analytics for your account, including from connected apps and
+          background work.
         </Trans>
       </p>
       <p>
@@ -408,8 +407,8 @@ function PrivacyPolicyContent() {
         </li>
         <li>
           <Trans>
-            <strong>OpenAI</strong> provides enrichment, deck style, memory hook drafts, deck
-            choice and some pronunciation audio.
+            <strong>OpenAI</strong> provides enrichment, deck style, memory hook drafts, deck choice
+            and some pronunciation audio.
           </Trans>
         </li>
         <li>
@@ -463,9 +462,9 @@ function PrivacyPolicyContent() {
       </ul>
       <p>
         <Trans>
-          Some of these providers process data outside Estonia and the European Economic Area.
-          Where required, we rely on the transfer safeguards each provider offers, such as the
-          European Commission’s standard contractual clauses.
+          Some of these providers process data outside Estonia and the European Economic Area. Where
+          required, we rely on the transfer safeguards each provider offers, such as the European
+          Commission’s standard contractual clauses.
         </Trans>
       </p>
 
@@ -551,20 +550,20 @@ function PrivacyPolicyContent() {
       <p>
         <Trans>
           We delete your profile and photo, sign-in records and sessions, decks and cards that only
-          you use, pictures and audio, reviews and schedule, settings, reminders, connected apps
-          and your Activity. Your API keys stop working at once. We ask PostHog to delete your analytics profile and its
-          events. If you confirm with Sign in with Apple, we also revoke Lymi’s access to your Apple
-          account; otherwise you can remove Lymi from your Apple or Google account settings. We
-          send one last email to confirm the deletion.
+          you use, pictures and audio, reviews and schedule, settings, reminders, connected apps and
+          your Activity. Your API keys stop working at once. We ask PostHog to delete your analytics
+          profile and its events. If you confirm with Sign in with Apple, we also revoke Lymi’s
+          access to your Apple account; otherwise you can remove Lymi from your Apple or Google
+          account settings. We send one last email to confirm the deletion.
         </Trans>
       </p>
       <p>
         <Trans>
           A deck other people study stays for them, without your name. It is deleted once its last
           member leaves. We keep a record that an account was deleted, with counts but no name or
-          email address. Owners of decks you joined keep a note in their Activity that you left,
-          and an owner who invited you by email keeps that invitation in their history. An account
-          that publishes decks in Explore can’t be deleted in the app; email us instead.
+          email address. Owners of decks you joined keep a note in their Activity that you left, and
+          an owner who invited you by email keeps that invitation in their history. An account that
+          publishes decks in Explore can’t be deleted in the app; email us instead.
         </Trans>
       </p>
 

@@ -86,8 +86,9 @@ export function ConnectedAppsSection() {
 
       <p className="text-sm text-muted">
         <Trans>
-          Read Lymi’s <DocLink href={localizedSiteUrl("/privacy", i18n.locale)}>privacy policy</DocLink> or get help
-          from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
+          Read Lymi’s{" "}
+          <DocLink href={localizedSiteUrl("/privacy", i18n.locale)}>privacy policy</DocLink> or get
+          help from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
         </Trans>
       </p>
     </SettingsGroup>

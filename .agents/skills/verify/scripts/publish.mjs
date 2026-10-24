@@ -16,11 +16,12 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
+import { mediaFolder, mediaUrl, parseRepository } from "../../../../scripts/pr-media.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 export const marker = "<!-- lymi-verify -->";
-// A comment holds at most 65,536 characters; past this the comment keeps one screenshot a feature.
-const LIMIT = 60_000;
+// A comment holds at most 65,536 characters, counted after pr:media turns each ./name into a full link.
+export const LIMIT = 65_536;
 
 const HELP = `Usage: node .agents/skills/verify/scripts/publish.mjs --pr <n> [options]
 
@@ -137,6 +138,34 @@ export function render({ features, sha, compact = false }) {
   return lines.join("\n");
 }
 
+/** The body's length once pr:media has replaced each `./name` with its commit-pinned link. */
+export function postedLength(body, { repo, folder }) {
+  const commit = "0".repeat(40);
+  return body.replace(
+    /\]\(\.\/([^)]+\.png)\)/g,
+    (_, name) => `](${mediaUrl(repo, commit, `${folder}/${name}`)})`,
+  ).length;
+}
+
+/** The full comment when it fits once posted, else one screenshot a feature. */
+export function fitComment({ features, sha, repo, folder }) {
+  for (const compact of [false, true]) {
+    const body = render({ features, sha, compact });
+    if (postedLength(body, { repo, folder }) <= LIMIT) return body;
+  }
+  throw new Error(
+    `${features.length} features are too many for one comment; publish fewer at a time`,
+  );
+}
+
+/** The full commit a run is published for, so a short --sha still matches the pull request's head. */
+export function resolveSha(
+  value,
+  rev = (ref) => git(["rev-parse", "--verify", `${ref}^{commit}`]),
+) {
+  return rev(value ?? "HEAD");
+}
+
 /** A preview link's key must never reach a comment. */
 export function leaksKey(body) {
   return /[?&]key=/.test(body);
@@ -200,15 +229,19 @@ function main() {
     process.exitCode = values.help ? 0 : 1;
     return;
   }
-  const sha = values.sha ?? git(["rev-parse", "HEAD"]);
+  const sha = resolveSha(values.sha);
   const features = collect(join(values.out ?? defaultRoot(), `pr-${values.pr}`), sha);
   if (features.length === 0) {
     throw new Error(
       `No evidence for pull request ${values.pr} at ${sha.slice(0, 8)}; drive it with run.mjs --pr ${values.pr} first`,
     );
   }
-  let body = render({ features, sha });
-  if (body.length > LIMIT) body = render({ features, sha, compact: true });
+  const body = fitComment({
+    features,
+    sha,
+    repo: parseRepository(git(["remote", "get-url", "origin"])),
+    folder: mediaFolder(git(["branch", "--show-current"])),
+  });
   if (leaksKey(body)) throw new Error("The comment would carry a preview key; nothing was posted");
   if (values["dry-run"]) {
     process.stdout.write(`${body}\n`);

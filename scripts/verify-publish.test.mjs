@@ -5,10 +5,14 @@ import { join } from "node:path";
 import test from "node:test";
 import {
   collect,
+  fitComment,
+  LIMIT,
   leaksKey,
   marker,
   overall,
+  postedLength,
   render,
+  resolveSha,
   upsert,
 } from "../.agents/skills/verify/scripts/publish.mjs";
 
@@ -157,4 +161,31 @@ test("the first run creates the comment", () => {
   const { api, calls } = fakeGh([{ id: 1, user: { login: "someone" }, body: `${marker}\nx` }]);
   assert.equal(upsert({ repo: "o/r", pr: "7", bodyFile: "/tmp/b.md", api }).action, "created");
   assert.deepEqual(calls.at(-1), ["api", "repos/o/r/issues/7/comments", "-F", "body=@/tmp/b.md"]);
+});
+
+test("the size check counts each screenshot's full link, so a body that fits only before upload goes compact", () => {
+  const media = { repo: "krambertech/lymi", folder: "kateryna/some-branch" };
+  const shots = Array.from({ length: 30 }, (_, i) => `${String(i + 1).padStart(2, "0")}-step.png`);
+  const features = Array.from({ length: 16 }, (_, i) => ({
+    feature: `feature-${i}`,
+    title: `Feature ${i}`,
+    where: "local",
+    ok: true,
+    steps: shots.map(() => ({ action: "step", ok: true })),
+    problems: [],
+    markdown: "# ok\n",
+    screenshots: shots,
+  }));
+  const full = render({ features, sha });
+  assert.ok(full.length <= LIMIT, "the full body fits before upload");
+  assert.ok(postedLength(full, media) > LIMIT, "and not once its links are written out");
+  const posted = fitComment({ features, sha, ...media });
+  assert.equal([...posted.matchAll(/\]\(\.\//g)].length, features.length);
+  assert.ok(postedLength(posted, media) <= LIMIT);
+});
+
+test("a short --sha resolves to the full commit the pull request's head is compared with", () => {
+  const rev = (ref) => (ref === "f82f0b4a" || ref === "HEAD" ? sha : null);
+  assert.equal(resolveSha("f82f0b4a", rev), sha);
+  assert.equal(resolveSha(undefined, rev), sha);
 });

@@ -12,7 +12,7 @@ export const ukrainian = {
   enrich: {
     guide: {
       example:
-        "One short sentence in Ukrainian, never Russian, with U+0301 over the stressed vowel of each word of two or more syllables, as in the pronunciation, and none over a word of one syllable: Я живу́ в Ки́єві. Mark the stress of the form the sentence uses, which may move from the term's: рука́, but ру́ки.",
+        "One short sentence in Ukrainian, never Russian, with U+0301 over the stressed vowel of each word of two or more syllables, as in the pronunciation, and none over a word of one syllable: Я живу́ в Ки́єві. Mark the stress of the form the sentence uses, which may move from the term's: рука́, but ру́ки. Check the words most often misstressed: мене́, тебе́, нема́є, допомо́га, удо́ма, дити́на, подя́кувати.",
       notes:
         "Mark stress on every form, as in the example. Verb: Perfective: *купи́ти* (or Imperfective: on a perfective term), Present: *купу́ю, купу́єш* (a perfective: Future: *куплю́, ку́пиш*). Noun: Gender where the ending hides it (*ніч*, Gender: feminine), and Plural or Genitive when irregular or the stress moves (Plural: *ру́ки*). Usage: the case or preposition a verb takes if it isn't the accusative (+ dative: *дя́кувати*), a word spelled the same with the stress elsewhere (*за́мок*, a castle), or a Russian look-alike (*неді́ля* is Sunday, not a week).",
     },

@@ -697,6 +697,42 @@
             "meaning": { "oneOf": ["squirrel"] },
             "example": { "oneOf": ["У па́рку живе́ бі́лка."] }
           }
+        },
+        {
+          "id": "uk-en-26",
+          "term": "час",
+          "example": "У мене немає часу.",
+          "expect": {
+            "meaning": { "includes": ["time"] },
+            "example": { "oneOf": ["У мене́ нема́є ча́су."] }
+          }
+        },
+        {
+          "id": "uk-en-27",
+          "term": "допомога",
+          "example": "Дякую за допомогу.",
+          "expect": {
+            "meaning": { "includes": ["help"] },
+            "example": { "oneOf": ["Дя́кую за допомо́гу."] }
+          }
+        },
+        {
+          "id": "uk-en-28",
+          "term": "удома",
+          "example": "Мій брат удома.",
+          "expect": {
+            "meaning": { "includes": ["home"] },
+            "example": { "oneOf": ["Мій брат удо́ма."] }
+          }
+        },
+        {
+          "id": "uk-en-29",
+          "term": "книга",
+          "example": "У тебе п'ять книг.",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "example": { "oneOf": ["У тебе́ п'ять книг."] }
+          }
         }
       ]
     },
@@ -788,7 +824,7 @@
           "expect": {
             "meaning": { "includes": ["thank"] },
             "pronunciation": { "oneOf": ["дя́кувати"] },
-            "notes": { "includes": ["dative"] }
+            "notes": { "includes": ["dative", "подя́кувати"] }
           }
         }
       ]

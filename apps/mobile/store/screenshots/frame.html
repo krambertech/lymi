@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* One store screenshot. render.mjs sets the query: style, theme, src, caption, crop. */
+  @font-face {
+    font-family: "Onest";
+    src: url("../../../../node_modules/.pnpm/@fontsource-variable+onest@5.3.1/node_modules/@fontsource-variable/onest/files/onest-latin-wght-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: "Onest";
+    src: url("../../../../node_modules/.pnpm/@fontsource-variable+onest@5.3.1/node_modules/@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  }
+  :root {
+    --w: 1320px;
+    --h: 2868px;
+    --canvas: oklch(0.975 0.004 80);
+    --text: oklch(0.2 0.016 55);
+    --text-2: oklch(0.38 0.016 55);
+    --edge: oklch(0.2 0.03 60 / 0.1);
+    --pool: oklch(0.9 0.09 78 / 0.5);
+    --bezel: oklch(0.16 0.008 62);
+  }
+  /* Google Play allows at most 1:2, so its size is wider than an iPhone screen. */
+  [data-size="play"] { --w: 1440px; --h: 2880px; }
+  [data-size="feature"] { --w: 1024px; --h: 500px; }
+  [data-theme="dark"] {
+    --canvas: oklch(0.17 0.008 62);
+    --text: oklch(0.95 0.01 85);
+    --text-2: oklch(0.8 0.014 75);
+    --edge: oklch(1 0 0 / 0.07);
+    --pool: oklch(0.78 0.15 74 / 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: "Onest", system-ui, sans-serif;
+    position: relative;
+  }
+  .caption {
+    position: absolute;
+    inset-inline: 110px;
+    font-weight: 600;
+    font-size: 116px;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .shot { position: absolute; display: block; }
+
+  /* A: flat canvas in the screen's own theme, the screen with a hairline edge. */
+  [data-style="canvas"] .caption { top: 220px; }
+  [data-style="canvas"] .shot {
+    width: 990px;
+    inset-inline-start: calc((var(--w) - 990px) / 2);
+    top: 650px;
+    border-radius: 104px;
+    box-shadow: 0 0 0 4px var(--edge);
+  }
+
+  /* B: the lit room, the lantern over the caption and the screen in a dark bezel. */
+  [data-style="room"] { --canvas: oklch(0.17 0.008 62); --text: oklch(0.95 0.01 85); }
+  [data-style="room"] body::before {
+    content: "";
+    position: absolute;
+    inset: -400px -200px auto;
+    height: 1400px;
+    background: radial-gradient(closest-side, oklch(0.78 0.15 74 / 0.22), transparent);
+  }
+  [data-style="room"] .mark { position: absolute; width: 150px; inset-inline-start: calc((var(--w) - 150px) / 2); top: 170px; }
+  [data-style="room"] .caption { top: 380px; text-align: center; }
+  [data-style="room"] .device {
+    position: absolute;
+    width: 1040px;
+    inset-inline-start: calc((var(--w) - 1040px) / 2);
+    top: 820px;
+    padding: 26px;
+    border-radius: 150px;
+    background: var(--bezel);
+    box-shadow: 0 0 0 4px oklch(1 0 0 / 0.1);
+  }
+  [data-style="room"] .device .shot { position: static; width: 100%; border-radius: 124px; }
+
+  /* C: a close-up, the screen enlarged and cropped to what the caption names. */
+  [data-style="close"] .caption { top: 200px; }
+  [data-style="close"] .crop {
+    position: absolute;
+    inset-inline: 0;
+    top: 620px;
+    bottom: 0;
+    overflow: hidden;
+  }
+  [data-style="close"] .shot { width: 100%; inset-inline-start: 0; }
+
+  /* Play's feature graphic: the lantern and the name in the lit room. */
+  [data-style="feature"] { --canvas: oklch(0.17 0.008 62); }
+  [data-style="feature"] body::before {
+    content: "";
+    position: absolute;
+    inset: -300px auto -300px -200px;
+    width: 900px;
+    background: radial-gradient(closest-side, oklch(0.78 0.15 74 / 0.26), transparent);
+  }
+  [data-style="feature"] .lockup { position: absolute; height: 190px; inset-inline-start: 110px; top: 105px; }
+  [data-style="feature"] .caption { inset-inline: 110px 60px; top: 330px; font-size: 56px; font-weight: 500; color: oklch(0.8 0.014 75); }
+</style>
+</head>
+<body>
+<img class="mark" alt="" src="../../../site/public/brand/lantern-dark-flat.svg" hidden>
+<img class="lockup" alt="Lymi" src="../../../site/public/brand/lockup-dark.svg" hidden>
+<p class="caption"></p>
+<div class="device" hidden></div>
+<div class="crop" hidden></div>
+<img class="shot" alt="">
+<script>
+  const q = new URLSearchParams(location.search);
+  const style = q.get("style") ?? "canvas";
+  document.documentElement.lang = q.get("lang") ?? "en";
+  document.documentElement.dataset.style = style;
+  document.documentElement.dataset.theme = q.get("theme") ?? "light";
+  document.documentElement.dataset.size = q.get("size") ?? "iphone";
+  const caption = document.querySelector(".caption");
+  caption.textContent = q.get("caption") ?? "";
+  // A long translation shrinks until it fits three lines above the screen; render.mjs calls it once Onest has loaded.
+  window.fit = () => {
+    if (style === "feature") return;
+    let size = 116;
+    while (caption.getBoundingClientRect().height > size * 1.08 * 3 + 1 && size > 80) {
+      size -= 4;
+      caption.style.fontSize = `${size}px`;
+    }
+  };
+  const shot = document.querySelector(".shot");
+  if (style === "feature") {
+    shot.remove();
+    document.querySelector(".lockup").hidden = false;
+  } else shot.src = q.get("src");
+  if (style === "room") {
+    document.querySelector(".mark").hidden = false;
+    const device = document.querySelector(".device");
+    device.hidden = false;
+    device.append(shot);
+  }
+  if (style === "close") {
+    const crop = document.querySelector(".crop");
+    crop.hidden = false;
+    crop.append(shot);
+    // crop is the share of the screen's height hidden above the frame.
+    shot.style.top = `${-Number(q.get("crop") ?? 0) * innerWidth * (2868 / 1320)}px`;
+  }
+</script>
+</body>
+</html>

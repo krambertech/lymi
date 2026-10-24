@@ -1,0 +1,76 @@
+{
+  "style": "canvas",
+  "feature": {
+    "en": "Keep what you learn",
+    "uk": "Запам’ятовуй надовго",
+    "ru": "Запоминай надолго"
+  },
+  "shots": [
+    {
+      "id": "01-today",
+      "src": "01-today.png",
+      "theme": "light",
+      "crop": 0.065,
+      "caption": {
+        "en": "Cards come back right before you'd forget",
+        "uk": "Картки повертаються саме вчасно",
+        "ru": "Карточки возвращаются как раз вовремя"
+      }
+    },
+    {
+      "id": "02-review",
+      "src": "02-review.png",
+      "theme": "light",
+      "crop": 0.065,
+      "caption": {
+        "en": "Think, turn, grade. Nothing to type.",
+        "uk": "Пригадай, переверни, оціни",
+        "ru": "Вспомни, переверни, оцени"
+      }
+    },
+    {
+      "id": "03-ai",
+      "src": "03-ai.png",
+      "theme": "light",
+      "crop": 0.065,
+      "caption": {
+        "en": "AI fills the gaps, and marks what it wrote",
+        "uk": "AI доповнює картку й позначає, що написав",
+        "ru": "AI дополняет карточку и отмечает, что написал"
+      }
+    },
+    {
+      "id": "04-japanese",
+      "src": "04-japanese.png",
+      "theme": "light",
+      "crop": 0.065,
+      "caption": {
+        "en": "Any language, in any script",
+        "uk": "Будь-яка мова, будь-яке письмо",
+        "ru": "Любой язык, любое письмо"
+      }
+    },
+    {
+      "id": "05-library",
+      "src": "05-library.png",
+      "theme": "light",
+      "crop": 0.065,
+      "caption": {
+        "en": "A deck for every lesson",
+        "uk": "Окрема колода для кожного уроку",
+        "ru": "Отдельная колода для каждого урока"
+      }
+    },
+    {
+      "id": "06-streak",
+      "src": "06-streak.png",
+      "theme": "dark",
+      "crop": 0.065,
+      "caption": {
+        "en": "The flame grows with every review",
+        "uk": "Полум’я росте з кожним повторенням",
+        "ru": "Пламя растёт с каждым повторением"
+      }
+    }
+  ]
+}

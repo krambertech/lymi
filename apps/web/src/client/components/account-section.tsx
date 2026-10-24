@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { inspectImage, NameInput } from "@lymi/core";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useIsMutating, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -40,6 +40,7 @@ const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,image/avif";
 const NAME_MAX = NameInput.shape.name.maxLength ?? undefined;
 /** The share of the limit past which the field says how much room is left. */
 const NEARLY_FULL = 0.9;
+const RENAME = ["rename"];
 
 interface GroupProps {
   name: string | undefined;
@@ -197,6 +198,8 @@ function NameForm({
   const desktop = useDesktop();
   const [draft, setDraft] = useState(initial);
   const [invalid, setInvalid] = useState<string | undefined>();
+  // A rename still out makes the stored name stale, so saving it again must still send it.
+  const renaming = useIsMutating({ mutationKey: RENAME }) > 0;
   const left = NAME_MAX ? NAME_MAX - draft.length : 0;
   return (
     <form
@@ -212,7 +215,7 @@ function NameForm({
           );
           return;
         }
-        if (parsed.data.name === initial) onCancel();
+        if (parsed.data.name === initial && !renaming) onCancel();
         else onSubmit(parsed.data.name);
       }}
     >
@@ -278,6 +281,7 @@ export function AccountSection({
 
   // Every screen reads the name from `meQuery`, so writing it updates the rail and menu too.
   const rename = useMutation({
+    mutationKey: RENAME,
     mutationFn: (next: string) => api.rename(next),
     onSuccess: (me) => {
       qc.setQueryData(meQuery.queryKey, me);

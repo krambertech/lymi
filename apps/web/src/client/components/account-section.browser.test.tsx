@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -10,7 +11,12 @@ import { AccountGroup, NameDialog } from "./account-section";
 i18n.load("en", messages);
 i18n.activate("en");
 
-const wrap = (node: ReactNode) => render(<I18nProvider i18n={i18n}>{node}</I18nProvider>);
+const wrap = (node: ReactNode, client = new QueryClient()) =>
+  render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>{node}</I18nProvider>
+    </QueryClientProvider>,
+  );
 
 const renderDialog = (
   over: { onSubmit?: (name: string) => void; onOpenChange?: (open: boolean) => void } = {},
@@ -85,4 +91,20 @@ test("shows why a save failed beside the buttons", async () => {
   await expect
     .element(page.getByRole("dialog").getByText("Couldn’t save your name. Try again."))
     .toBeVisible();
+});
+
+test("while a rename is still out, saving the stored name sends it", async () => {
+  const onSubmit = vi.fn();
+  const client = new QueryClient();
+  // An earlier rename has not landed, so the stored name is still "Kateryna".
+  void client
+    .getMutationCache()
+    .build(client, { mutationKey: ["rename"], mutationFn: () => new Promise(() => {}) })
+    .execute(undefined);
+  await wrap(
+    <NameDialog open onOpenChange={vi.fn()} name="Kateryna" onSubmit={onSubmit} />,
+    client,
+  );
+  await save().click();
+  expect(onSubmit).toHaveBeenCalledExactlyOnceWith("Kateryna");
 });

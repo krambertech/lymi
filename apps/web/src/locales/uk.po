@@ -2120,6 +2120,9 @@ msgstr "Підготувати зачіпку"
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
 
+msgid "Drafting…"
+msgstr "Готуємо…"
+
 msgid "Drag decks here to add them to this series."
 msgstr "Перетягни сюди колоди, щоб додати їх у цю серію."
 

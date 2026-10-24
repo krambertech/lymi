@@ -68,7 +68,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Applied migrations never change | `pnpm check:migrations` |
 | Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |
 
-**Friction log.** When the repository trips you in a way the next agent would hit too, such as a stale generated file, a misleading check message or an unwritten setup step, file it with [the agent friction form](.github/ISSUE_TEMPLATE/agent-friction.yml) instead of keeping it in private memory; from `gh`, use the form's three questions as `###` headings and the `agent friction` label. One-off nits and your own slips do not belong there. When a second issue reports the same gotcha, turn it into a check, a hook or a line in this guide, and close both with that change.
+**Friction log.** When the repository trips you in a way the next agent would hit too, such as a stale generated file, a misleading check message or an unwritten setup step, record it in the log rather than in private memory; one-off nits and your own slips do not belong there. First search the open ones with `gh issue list --label "agent friction" --search "<keywords>"`, and if one matches, comment on it with your occurrence. Otherwise file [the agent friction form](.github/ISSUE_TEMPLATE/agent-friction.yml); from `gh`, use its three questions as `###` headings and the `agent friction` label. An issue with a second occurrence becomes a check, a hook or a line in this guide, and that change closes it.
 
 ## Concise writing
 

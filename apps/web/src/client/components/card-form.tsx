@@ -624,6 +624,7 @@ export function CardForm(props: CardFormProps) {
       lines?: "one" | "several";
       enterAdds?: boolean;
       description?: ReactNode;
+      placeholder?: string;
       /** The length the limit counts, where it is not every character typed. */
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
@@ -652,6 +653,7 @@ export function CardForm(props: CardFormProps) {
             <Textarea
               maxLength={maxLength}
               value={value}
+              placeholder={options.placeholder}
               rows={options.lines === "one" ? 1 : 2}
               className={cn(
                 options.lines === "one" ? ONE_LINE : "min-h-[68px]",
@@ -666,6 +668,7 @@ export function CardForm(props: CardFormProps) {
           <Textarea
             maxLength={maxLength}
             value={value}
+            placeholder={options.placeholder}
             rows={options.lines === "one" ? 1 : 2}
             className={options.lines === "one" ? ONE_LINE : "min-h-[68px]"}
             onChange={(e) => change(e.target.value)}
@@ -675,6 +678,7 @@ export function CardForm(props: CardFormProps) {
           <Input
             maxLength={maxLength}
             value={value}
+            placeholder={options.placeholder}
             autoComplete="off"
             onChange={(e) => change(e.target.value)}
           />
@@ -821,9 +825,7 @@ export function CardForm(props: CardFormProps) {
       textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
         lines: "one",
         enterAdds: true,
-        description: (
-          <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
-        ),
+        placeholder: t`A sound-alike, or something to picture`,
       }),
     picture: () => (
       <div key="picture" data-extra="picture" className="grid gap-1.5">

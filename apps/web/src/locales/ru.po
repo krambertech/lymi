@@ -848,9 +848,6 @@ msgstr "День отдыха сохраняет дни подряд, когда
 msgid "A short phrase that helps you remember it"
 msgstr "Короткая фраза, которая поможет запомнить"
 
-msgid "A short phrase that helps you remember it."
-msgstr "Короткая фраза, которая поможет запомнить."
-
 msgid "A sound-alike, or something to picture"
 msgstr "Созвучное слово или то, что можно представить"
 

@@ -848,9 +848,6 @@ msgstr "A rest day keeps the streak through one missed day a week."
 msgid "A short phrase that helps you remember it"
 msgstr "A short phrase that helps you remember it"
 
-msgid "A short phrase that helps you remember it."
-msgstr "A short phrase that helps you remember it."
-
 msgid "A sound-alike, or something to picture"
 msgstr "A sound-alike, or something to picture"
 

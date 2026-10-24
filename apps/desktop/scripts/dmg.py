@@ -16,4 +16,4 @@ include_icon_view_settings = True
 arrange_by = None
 icon_size = 112
 text_size = 13
-icon_locations = {"Lymi.app": (180, 196), "Applications": (460, 196)}
+icon_locations = {"Lymi.app": (180, 214), "Applications": (460, 214)}

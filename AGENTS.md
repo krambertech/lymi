@@ -63,6 +63,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
 | New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
 | Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |
+| Agent docs name only paths, `pnpm` scripts and skills that exist, every product route has a verify entry or a stated reason, and this file stays under its size budget | `pnpm check:agent-docs` |
 | Files under `apps/web/src/client` are kebab-case | Biome `useFilenamingConvention` |
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |

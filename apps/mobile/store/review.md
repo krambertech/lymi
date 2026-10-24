@@ -30,10 +30,10 @@ App Store Connect, Apps, Lymi, the version being submitted, App Review Informati
 - Notes: the text below, with the content safeguards paragraph pasted in
 
 ```text
-Lymi is a flashcard app for language learners.
+Lymi is a flashcard app for learning from your own material, including course concepts, facts for an exam and vocabulary.
 
 SIGNING IN
-Choose email on the first screen, enter the email and password above and sign in. This account needs no code. Sign in with Apple and Google also work with your own accounts.
+Choose Sign in with email on the first screen, enter the email and password above and sign in. This account needs no code. Sign in with Apple and Google also work with your own accounts.
 
 WHAT TO TRY
 Today shows the cards due; start a review there and grade each card. Library holds the decks; open one to see its cards. The + button adds a card: type a term and AI fills in the meaning. Smart add turns a photo of a lesson page into cards.
@@ -61,5 +61,5 @@ Play Console, Lymi, Policy and programs, App content, App access, Manage.
 - Add instructions: name `Review account`, the username and password, and under any other information:
 
 ```text
-Choose email on the first screen, enter the email and password and sign in. This account needs no code. To delete an account: You tab > Delete account. An email account confirms with a 6-digit code sent to its address, so please don't delete this one.
+Choose Sign in with email on the first screen, enter the email and password and sign in. This account needs no code. To delete an account: You tab > Delete account. An email account confirms with a 6-digit code sent to its address, so please don't delete this one.
 ```

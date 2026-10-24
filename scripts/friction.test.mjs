@@ -5,7 +5,7 @@ import { frictionBody, main, parseArgs } from "./friction.mjs";
 const repository = "krambertech/lymi";
 const categories = [
   { id: "C-ideas", slug: "ideas" },
-  { id: "C-friction", slug: "agent-friction" },
+  { id: "C-devex", slug: "developer-experience" },
 ];
 
 function fakeGh(responses = {}, nodes = categories) {
@@ -30,7 +30,7 @@ const discussion = (overrides = {}) => ({
       url: "https://github.com/krambertech/lymi/discussions/12",
       viewerCanUpvote: true,
       viewerHasUpvoted: false,
-      category: { slug: "agent-friction" },
+      category: { slug: "developer-experience" },
       ...overrides,
     },
   },
@@ -66,7 +66,7 @@ test("says to create the category when it is missing", async () => {
   const gh = fakeGh({}, [{ id: "C-ideas", slug: "ideas" }]);
   await assert.rejects(
     main(["search", "route"], { graphql: gh.graphql, repository }),
-    /no discussion category with the slug agent-friction; create an "Agent friction" category/,
+    /no discussion category with the slug developer-experience; create an "Developer experience" category/,
   );
 });
 
@@ -80,7 +80,7 @@ test("searches open discussions and keeps only friction, counting marked comment
             title: "verify:changed typechecks against a stale route tree",
             url: "https://github.com/krambertech/lymi/discussions/12",
             upvoteCount: 1,
-            category: { slug: "agent-friction" },
+            category: { slug: "developer-experience" },
             comments: {
               nodes: [{ body: "**Occurred again.** worktree from June" }, { body: "Agreed." }],
             },
@@ -113,7 +113,7 @@ test("reports no match so the agent files a new one", async () => {
   );
 });
 
-test("files in the friction category with the form's body", async () => {
+test("files in the Developer experience category with the form's body", async () => {
   const gh = fakeGh({
     createDiscussion: { createDiscussion: { discussion: { number: 12, url: "https://x/12" } } },
   });
@@ -134,7 +134,7 @@ test("files in the friction category with the form's body", async () => {
   assert.equal(said, "Filed #12: https://x/12");
   assert.deepEqual(gh.calls[1].variables.input, {
     repositoryId: "R-lymi",
-    categoryId: "C-friction",
+    categoryId: "C-devex",
     title: "Stale route tree",
     body: frictionBody({ happened: "a", expected: "b", prevention: "c" }),
   });
@@ -172,10 +172,10 @@ test("still comments when the account has already upvoted", async () => {
   );
 });
 
-test("refuses to record on a discussion outside the friction category", async () => {
+test("refuses to record on a discussion outside the Developer experience category", async () => {
   const gh = fakeGh({ "discussion(": discussion({ category: { slug: "ideas" } }) });
   await assert.rejects(
     main(["plus", "12", "--note", "x"], { graphql: gh.graphql, repository }),
-    /not an agent friction discussion/,
+    /not in the Developer experience discussions/,
   );
 });

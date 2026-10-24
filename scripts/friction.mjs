@@ -5,7 +5,7 @@ import { pathToFileURL } from "node:url";
 import { parseArgs as parseNodeArgs } from "node:util";
 import { parseRepository } from "./pr-media.mjs";
 
-export const CATEGORY = "agent-friction";
+export const CATEGORY = "developer-experience";
 const OCCURRENCE = "**Occurred again.**";
 const QUESTIONS = {
   happened: "What happened",
@@ -18,7 +18,7 @@ const USAGE = `Usage:
   pnpm friction file --title <title> --happened <text> --expected <text> --prevention <text>
   pnpm friction plus <number> --note <text>
 
-Searches, files and records occurrences in the repository's Agent friction discussions.`;
+Searches, files and records occurrences in the repository's Developer experience discussions.`;
 
 export function parseArgs(argv) {
   const [command, ...rest] = argv;
@@ -77,7 +77,7 @@ export async function findCategory(graphql, repository) {
   );
   if (!category) {
     throw new Error(
-      `${repository} has no discussion category with the slug ${CATEGORY}; create an "Agent friction" category in its Discussions settings`,
+      `${repository} has no discussion category with the slug ${CATEGORY}; create an "Developer experience" category in its Discussions settings`,
     );
   }
   return { repositoryId: data.repository.id, categoryId: category.id };
@@ -138,7 +138,7 @@ export async function plus(graphql, repository, { number, note }) {
   );
   const discussion = data.repository.discussion;
   if (discussion?.category.slug !== CATEGORY)
-    throw new Error(`#${number} is not an agent friction discussion`);
+    throw new Error(`#${number} is not in the Developer experience discussions`);
   // Every agent signs in as the same account, which GitHub lets upvote once, so the comment is what counts.
   if (discussion.viewerCanUpvote && !discussion.viewerHasUpvoted) {
     await graphql(

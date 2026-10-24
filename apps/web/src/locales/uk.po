@@ -1037,6 +1037,9 @@ msgstr "Приклад від AI"
 msgid "AI example and translation"
 msgstr "Приклад і переклад від AI"
 
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI доповнює картки, знаходить терміни в матеріалах уроків і озвучує терміни й приклади."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
 
@@ -1057,6 +1060,15 @@ msgstr "Нотатки від AI"
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
+
+msgid "AI services"
+msgstr "AI-сервіси"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI-сервіси вимкнено для твого акаунта. Увімкни їх у Налаштуваннях, щоб AI складав підказки."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI-сервіси вимкнено для твого акаунта. Увімкни їх у Налаштуваннях, щоб читати уроки."
 
 msgid "AI translates it after you save"
 msgstr "AI перекладе після збереження"
@@ -1822,6 +1834,9 @@ msgstr "Не вдалося перемістити {0, plural, one {# картк
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Не вдалося відкрити файл. Вибери зображення JPEG, PNG або WebP."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не вдалося відтворити приклад. Спробуй ще раз за мить."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не вдалося відтворити вимову. Спробуй ще раз за мить."
 
@@ -1845,6 +1860,9 @@ msgstr "Не вдалося зберегти «{failedTerm}». Перевір з
 
 msgid "Couldn’t save that. Try again."
 msgstr "Не вдалося зберегти. Спробуйте ще раз."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Не вдалося зберегти вибір. Перевір з’єднання і спробуй ще раз."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
@@ -3479,11 +3497,17 @@ msgstr "Сповіщення заблоковано. Дозволь їх у на
 msgid "Now in {elsewhere}"
 msgstr "Зараз у «{elsewhere}»"
 
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Вимкнено в мобільному застосунку й у вебверсії. Наявний текст карток і збережене аудіо залишаються."
+
 msgid "Often forgotten"
 msgstr "Часто забуваються"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоні або щось не виходить? Прочитай посібник"
+
+msgid "On for mobile and web."
+msgstr "Увімкнено в мобільному застосунку й у вебверсії."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com відкрий свій набір, відкрий меню <0>…</0> і вибери <1>Export</1>."
@@ -3746,6 +3770,9 @@ msgstr "Для зображень потрібне з’єднання. Дода
 msgid "Pictures of the pages"
 msgstr "Знімки сторінок"
 
+msgid "Play example"
+msgstr "Відтворити приклад"
+
 msgid "Play pronunciation"
 msgstr "Відтворити вимову"
 
@@ -3973,6 +4000,9 @@ msgstr "«{from}» перейменовано на «{spelled}»"
 
 msgid "Replace the picture"
 msgstr "Замінити зображення"
+
+msgid "Replay example"
+msgstr "Відтворити приклад ще раз"
 
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
@@ -4246,6 +4276,9 @@ msgstr "Побачити зображення й згадати значення
 
 msgid "See the term, recall what it means."
 msgstr "Побачити термін і згадати його значення."
+
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Що й кому надсилається — у нашій політиці конфіденційності."
 
 msgid "See your decks and cards"
 msgstr "Переглядати свої колоди й картки"
@@ -4746,6 +4779,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для цих функцій потрібний текст карток і матеріали уроків надсилаються стороннім AI-сервісам."
+
 msgid "They already have a pending invitation."
 msgstr "У цієї людини вже є запрошення без відповіді."
 
@@ -4929,6 +4965,9 @@ msgstr "Сьогодні, {day}: нічого повторювати"
 msgid "Today’s goal"
 msgstr "Мета на сьогодні"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Нові озвучення прикладів на сьогодні закінчилися. Уже прослухані приклади відтворюються й далі."
+
 msgid "Tomorrow"
 msgstr "Завтра"
 
@@ -5068,6 +5107,9 @@ msgstr "Використовуй мовний тег на кшталт ca, pt-BR
 
 msgid "Use a public http or https link to a picture."
 msgstr "Використай публічне посилання на зображення через http або https."
+
+msgid "Use AI services"
+msgstr "Використовувати AI-сервіси"
 
 msgid "Use another account"
 msgstr "Увійти в інший акаунт"

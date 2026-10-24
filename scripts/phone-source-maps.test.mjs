@@ -7,7 +7,11 @@ import { join } from "node:path";
 import test from "node:test";
 
 const require = createRequire(import.meta.url);
-const { bundleScript } = require("../apps/mobile/plugins/with-source-maps.cjs");
+const {
+  appBuildGradle,
+  bundleScript,
+  gradleProperties,
+} = require("../apps/mobile/plugins/with-source-maps.cjs");
 const original =
   "`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`";
 
@@ -59,6 +63,19 @@ test("the embedded bundle uploads only during an EAS Release build", () => {
 
 test("a changed native bundle phase fails instead of omitting source maps", () => {
   assert.throws(() => bundleScript("echo unexpected"), /bundle command missing/);
+});
+
+test("an Android release bundle uploads through PostHog's Gradle script only on EAS", () => {
+  const gradle = appBuildGradle("android {\n}\n");
+  assert.equal(appBuildGradle(gradle), gradle);
+  const block = gradle.slice(gradle.indexOf('if (System.getenv("EAS_BUILD") == "true")'));
+  assert.ok(block.startsWith("if"), "the upload must sit behind the EAS_BUILD gate");
+  assert.match(block, /'tooling', 'posthog\.gradle'/);
+  assert.match(block, /require POSTHOG_CLI_API_KEY/);
+  assert.deepEqual(
+    gradleProperties([{ type: "property", key: "posthog.hermesReleaseMode", value: "symbol-set" }]),
+    [{ type: "property", key: "posthog.hermesReleaseMode", value: "event" }],
+  );
 });
 
 test("native and OTA uploads use the same CLI and event release coordinates", () => {

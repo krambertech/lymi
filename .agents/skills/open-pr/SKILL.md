@@ -15,6 +15,7 @@ Review-ready means the PR contains only the intended diff, required checks pass,
 - Preserve unrelated work and isolate the intended change on a focused branch. Include uncommitted changes that clearly belong to the requested PR; ask only when ownership is ambiguous.
 - Update the existing PR for the branch when one exists instead of creating a duplicate.
 - Follow the repository's recovery workflow for branches based on the pre-migration history.
+- Base the PR on `main` unless the change needs the code of another open PR. Then make it a layer of a native stack with `gh stack`, following the stacked section of the Git workflow; never pass `--base <branch>` to `gh pr create`.
 
 Continue only when the intended PR diff is isolated and understood.
 
@@ -31,7 +32,7 @@ Continue only when the final diff is reviewable and every available required loc
 
 ## Open or update the PR
 
-- Commit the intended change, push its branch, then create or update the PR against `main` from the filled template.
+- Commit the intended change, push its branch, then create or update the PR against `main` from the filled template. For a stacked layer, `gh stack submit` pushes and opens the PR; then set its title and body from the template with `gh pr edit`.
 - Attach every required image in the same operation when possible, then read the PR back and confirm its base, title, body, displayed diff, uploaded image references, and URL.
 - If a required screenshot cannot be saved or attached, keep the PR in the **blocked** state, hand the files or exact failure to the user, and say that the visual evidence is not attached.
 

@@ -848,6 +848,12 @@ msgstr "Додати картку"
 msgid "Add a lesson"
 msgstr "Додати урок"
 
+msgid "Add a term and AI fills in missing meanings, examples and more."
+msgstr "Додай термін, і AI заповнить відсутні значення, приклади тощо."
+
+msgid "Add a translation"
+msgstr "Додай переклад"
+
 msgid "Add a word"
 msgstr "Додати слово"
 
@@ -929,6 +935,9 @@ msgstr "Чернетка AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI example and translation"
+msgstr "Приклад і переклад від AI"
+
 msgid "AI fills"
 msgstr "AI заповнює"
 
@@ -952,6 +961,15 @@ msgstr "ШІ заповнює лише порожні поля і ніколи �
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
+
+msgid "AI services"
+msgstr "AI-сервіси"
+
+msgid "AI translates it after you save"
+msgstr "AI перекладе після збереження"
+
+msgid "AI translation"
+msgstr "Переклад від AI"
 
 msgid "AI wrote part of this card"
 msgstr "Частину цієї картки написав AI"
@@ -1686,6 +1704,9 @@ msgstr "Не вдалося відкрити цю колоду"
 msgid "Couldn’t open this link"
 msgstr "Не вдалося відкрити це посилання"
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не вдалося відтворити приклад. Спробуй ще раз за мить."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не вдалося відтворити вимову. Спробуй ще раз за мить."
 
@@ -1744,6 +1765,9 @@ msgstr "Не вдалося зберегти оцінку для «{term}». Ц�
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не вдалося зберегти ім’я. Перевір з’єднання й спробуй ще раз."
 
+msgid "Couldn’t save. Check your connection and try again."
+msgstr "Не вдалося зберегти. Перевір з’єднання і спробуй ще раз."
+
 msgid "Couldn’t search cards"
 msgstr "Не вдалося знайти картки"
 
@@ -1767,6 +1791,9 @@ msgstr "Не вдалося почати розділ"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Не вдалося скасувати оцінку для «{term}». Вона зараховується."
+
+msgid "Couldn’t translate the example."
+msgstr "Не вдалося перекласти приклад."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не вдалося вимкнути посилання для приєднання. Спробуй ще раз."
@@ -1950,6 +1977,9 @@ msgstr "Готово"
 msgid "Draft"
 msgstr "Чернетка"
 
+msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgstr "Підказку складає AI. Увімкни AI-сервіси в розділі Ти, щоб скласти її."
+
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетягніть серію за ручку. У Бібліотеці серії стоять у цьому порядку."
 
@@ -2091,6 +2121,12 @@ msgstr "Усе, щоб знову імпортувати в Lymi: картки, 
 msgid "Example"
 msgstr "Приклад"
 
+msgid "Example and translation by you"
+msgstr "Твої приклад і переклад"
+
+msgid "Example and translation from lesson"
+msgstr "Приклад і переклад з уроку"
+
 msgid "Example by you"
 msgstr "Твій приклад"
 
@@ -2181,6 +2217,9 @@ msgstr "Філіппінська"
 
 msgid "Fill in the rest with AI"
 msgstr "Доповнити решту з AI"
+
+msgid "Fill in your cards"
+msgstr "Доповнюй картки"
 
 msgid "Filter"
 msgstr "Фільтр"
@@ -2348,6 +2387,9 @@ msgstr "Ненависть або образи"
 
 msgid "Have an account?"
 msgstr "Уже маєш акаунт?"
+
+msgid "Hear pronunciation"
+msgstr "Слухай вимову"
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2719,6 +2761,9 @@ msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
 
+msgid "Listen to terms and examples read aloud."
+msgstr "Слухай, як звучать терміни й приклади."
+
 msgid "Lists and searches decks and cards. A key never grades reviews."
 msgstr "Переглядає списки та шукає колоди й картки. Ключ ніколи не ставить оцінок за повторення."
 
@@ -3084,6 +3129,9 @@ msgstr "Ще не в повтореннях"
 msgid "Not joined yet · invited {invited}"
 msgstr "Ще не в колоді · запрошення від {invited}"
 
+msgid "Not now"
+msgstr "Не зараз"
+
 msgid "Not reviewed yet"
 msgstr "Ще не повторювались"
 
@@ -3147,8 +3195,14 @@ msgstr "Нічого не додано, а файл видалено."
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr "Сповіщення для Lymi вимкнено. Увімкни їх у Параметрах, щоб отримувати нагадування."
 
+msgid "Off"
+msgstr "Вимкнено"
+
 msgid "Often forgotten"
 msgstr "Часто забуваються"
+
+msgid "On"
+msgstr "Увімкнено"
 
 msgid "On quizlet.com, open your set, open its … menu and choose Export."
 msgstr "На quizlet.com відкрий свій набір, відкрий меню … і вибери Export."
@@ -3209,6 +3263,9 @@ msgstr "Відкрий лист від Noji на цьому телефоні п�
 
 msgid "Open Settings"
 msgstr "Відкрити Параметри"
+
+msgid "Open You"
+msgstr "Відкрити Ти"
 
 msgid "Optional. Anything that helps us understand."
 msgstr "Необов’язково. Усе, що допоможе нам зрозуміти."
@@ -3322,6 +3379,9 @@ msgstr "Зображення змінено"
 
 msgid "Pictures of the pages"
 msgstr "Знімки сторінок"
+
+msgid "Play example"
+msgstr "Відтворити приклад"
 
 msgid "Play pronunciation"
 msgstr "Відтворити вимову"
@@ -3494,6 +3554,9 @@ msgstr "Змінити порядок розділів"
 
 msgid "Reorder series"
 msgstr "Змінити порядок серій"
+
+msgid "Replay example"
+msgstr "Відтворити приклад ще раз"
 
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
@@ -3740,6 +3803,9 @@ msgstr "Побачити термін і згадати значення"
 msgid "See the term, recall what it means."
 msgstr "Побачити термін і згадати його значення."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Що й кому надсилається — у нашій політиці конфіденційності."
+
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Виділи слово або фразу, а тоді надішли в Lymi через «Поділитися»."
 
@@ -3886,6 +3952,12 @@ msgstr "Словенська"
 
 msgid "Smart add"
 msgstr "Розумне додавання"
+
+msgid "Smart add finds terms in your photos, PDFs and notes."
+msgstr "Розумне додавання знаходить терміни у твоїх фото, PDF-файлах і нотатках."
+
+msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
+msgstr "Розумне додавання читає урок за допомогою AI. Увімкни AI, щоб знайти терміни."
 
 msgid "So you know which key to revoke later."
 msgstr "Щоб потім знати, який ключ відкликати."
@@ -4132,6 +4204,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для цих функцій потрібний текст карток і матеріали уроків надсилаються стороннім AI-сервісам."
+
 msgid "They already have a pending invitation."
 msgstr "У цієї людини вже є запрошення без відповіді."
 
@@ -4158,6 +4233,9 @@ msgstr "Для історії цієї картки потрібне з’єдн
 
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
+
+msgid "This choice applies on mobile and web. Change it any time in You → AI services."
+msgstr "Цей вибір діє в мобільному застосунку й у вебверсії. Змінити його можна будь-коли: Ти → AI-сервіси."
 
 msgid "This code has expired. Send a new one."
 msgstr "Термін дії коду минув. Надішли новий."
@@ -4252,6 +4330,9 @@ msgstr "Це посилання перестало працювати. Попр�
 msgid "This series is no longer here."
 msgstr "Цієї серії вже немає."
 
+msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+msgstr "Це налаштування діє для твого акаунта на всіх пристроях. Якщо вимкнути, Lymi більше не надсилатиме новий вміст AI-сервісам. Наявний текст карток і збережене аудіо залишаться."
+
 msgid "This shelf has no decks now"
 msgstr "На цій полиці зараз немає колод"
 
@@ -4310,6 +4391,9 @@ msgstr "Сьогодні, {day}: нічого повторювати"
 msgid "Today’s goal"
 msgstr "Мета на сьогодні"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Нові озвучення прикладів на сьогодні закінчилися. Уже прослухані приклади відтворюються й далі."
+
 msgid "tomorrow"
 msgstr "завтра"
 
@@ -4334,6 +4418,21 @@ msgstr "{count, plural, one {# картку вийнято з розділу} fe
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
+
+msgid "Translated from an earlier example."
+msgstr "Перекладено з попередньої версії прикладу."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Перекладено з попередньої версії прикладу. Зміни переклад, щоб він збігався."
+
+msgid "Translation"
+msgstr "Переклад"
+
+msgid "Translation by you"
+msgstr "Твій переклад"
+
+msgid "Translation from lesson"
+msgstr "Переклад з уроку"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -4361,11 +4460,20 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Турецька"
 
+msgid "Turn lessons into cards"
+msgstr "Перетворюй уроки на картки"
+
 msgid "Turn off link"
 msgstr "Вимкнути посилання"
 
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"
+
+msgid "Turn on AI"
+msgstr "Увімкнути AI"
+
+msgid "Turn on AI services in You to hear this word."
+msgstr "Увімкни AI-сервіси в розділі Ти, щоб почути це слово."
 
 msgid "Turn your notes into cards"
 msgstr "Перетвори нотатки на картки"
@@ -4426,6 +4534,12 @@ msgstr "Завантаження"
 msgctxt "deck tag"
 msgid "US civics test"
 msgstr "Тест на громадянство США"
+
+msgid "Use AI in Lymi?"
+msgstr "Використовувати AI в Lymi?"
+
+msgid "Use AI services"
+msgstr "Використовувати AI-сервіси"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."

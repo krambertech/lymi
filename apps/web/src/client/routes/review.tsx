@@ -61,6 +61,7 @@ import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
 import { lastInputWasKey } from "../lib/last-input";
+import { playAlone } from "../lib/now-playing";
 import {
   decksQuery,
   drawQuery,
@@ -675,9 +676,12 @@ function Review() {
 
   const watchAudio = useCallback(
     (audio: HTMLAudioElement) => {
-      audio.addEventListener("ended", () => {
-        if (playingAudio.current === audio) stopAudio();
-      });
+      // The example's clip pauses this one when it starts, which ends it the same way.
+      for (const done of ["ended", "pause"]) {
+        audio.addEventListener(done, () => {
+          if (playingAudio.current === audio) stopAudio();
+        });
+      }
       return audio;
     },
     [stopAudio],
@@ -739,7 +743,7 @@ function Review() {
     else setAudioState("loading");
     playingAudio.current = audio;
     try {
-      await audio.play();
+      await playAlone(audio);
       if (playingAudio.current === audio) {
         loadedAudio.current = { source, audio };
         setAudioState("playing");

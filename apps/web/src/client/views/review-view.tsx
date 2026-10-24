@@ -23,22 +23,11 @@ import {
   streakFlameFor,
 } from "@lymi/design";
 import { clsx } from "clsx";
-import {
-  BookMarked,
-  Library,
-  Loader2,
-  Lock,
-  type LucideIcon,
-  Pointer,
-  Signpost,
-  Volume2,
-  X,
-} from "lucide-react";
+import { BookMarked, Library, Lock, type LucideIcon, Pointer, Signpost, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
   motion,
-  useAnimate,
   useIsPresent,
   useMotionValue,
   useTransform,
@@ -54,12 +43,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { AudioButton, AudioPlace } from "../components/audio-button";
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
+import { ExampleAudioButton, ExamplePlace } from "../components/example-audio";
 import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
@@ -194,68 +185,6 @@ export function ReviewHeader({
         <X />
       </IconButton>
     </header>
-  );
-}
-
-interface AudioButtonProps {
-  state: "idle" | "loading" | "playing";
-  error: string | null;
-  onPlay: () => void;
-  className?: string | undefined;
-}
-
-/**
- * Pronunciation, at the end of the word. A failure turns the button red, shakes it once and says
- * why in a tip over it; the button stays red until the next try.
- *
- * The word joiner keeps the button on the line with the word's last letters, and the line-tall box
- * centres it on that line. Its name is in the app language, not the card's.
- */
-function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
-  const { t, i18n } = useLingui();
-  const button = useRef<HTMLButtonElement>(null);
-  const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const reduce = useReduceMotion();
-  const shaken = useRef(error);
-
-  // Shake once per new failure, never for an error the button was drawn with.
-  useEffect(() => {
-    if (error === shaken.current) return;
-    shaken.current = error;
-    if (!error || reduce || !scope.current) return;
-    animate(scope.current, { x: [0, -4, 4, -3, 3, -1, 0] }, { duration: 0.4, ease: "easeInOut" });
-  }, [error, reduce, animate, scope]);
-
-  return (
-    <span className="whitespace-nowrap" lang={i18n.locale}>
-      {"\u2060"}
-      <span ref={scope} className="ms-3 inline-flex h-[1lh] items-center align-top">
-        <IconButton
-          ref={button}
-          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-          size="sm"
-          variant={error ? "danger" : "secondary"}
-          round
-          // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
-          className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
-          aria-disabled={state === "loading"}
-          // The review lets the grade keys through from here, since a click leaves focus on it.
-          data-audio=""
-          onClick={(e) => {
-            e.stopPropagation();
-            onPlay();
-          }}
-        >
-          {/* A clip voiced before is preloaded, so a load here is speech being made. */}
-          {state === "loading" ? (
-            <Loader2 className="animate-spin" aria-hidden="true" />
-          ) : (
-            <Volume2 aria-hidden="true" />
-          )}
-        </IconButton>
-      </span>
-      <ErrorTip anchor={button} message={error} />
-    </span>
   );
 }
 
@@ -691,17 +620,9 @@ export function ReviewCard({
       />
     );
   // The measuring copy holds the button's place without a second live button.
-  const audioPlace = () =>
-    onPlayAudio && (
-      <span className="whitespace-nowrap">
-        {"\u2060"}
-        <span className="ms-3 inline-flex h-[1lh] items-center align-top">
-          <span className="size-8" />
-        </span>
-      </span>
-    );
+  const audioPlace = () => onPlayAudio && <AudioPlace />;
 
-  const extrasLines = (
+  const extrasLines = (measure: boolean) => (
     <>
       {card.example && (
         <motion.div variants={answerLine}>
@@ -710,6 +631,13 @@ export function ReviewCard({
             language={card.language}
             known={knownReadings}
             translation={translation}
+            after={
+              measure ? (
+                <ExamplePlace card={card} />
+              ) : (
+                <ExampleAudioButton card={card} surface="review" />
+              )
+            }
             className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
         </motion.div>
@@ -833,7 +761,7 @@ export function ReviewCard({
             ))}
           {hasExtras && (
             <div ref={extrasRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
-              {extrasLines}
+              {extrasLines(measure)}
             </div>
           )}
           {chips && (

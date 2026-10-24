@@ -48,6 +48,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, the example's translation, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text, except that it rewrites its own example translation for a changed example. ADR 0033. _Avoid_: Prepare, generate, suggest
 
+**AI services**: The third-party services Lymi sends a learner's content to: OpenAI for enrichment and hook drafts, Anthropic and Cloudflare for Smart add, and Google, OpenAI or ElevenLabs for generated pronunciation. The account holds one choice about all of them; the phone app asks for it before the first AI action and sends nothing until the learner allows it, and a no stops the web too. ADR 0039. _Avoid_: AI consent, data sharing, permissions (in copy)
+
 **Extract**: The AI choosing which terms in material the learner brought deserve a card: a lesson read by Smart add, or a passage the learner highlighted while reading. It decides a new card's term, and enrichment then fills the card's fields. An assistant connected over MCP extracts with its own model and adds the cards itself. _Avoid_: Suggest, propose, detect, pick (the learner picks on Smart add's list)
 
 ### Remembering

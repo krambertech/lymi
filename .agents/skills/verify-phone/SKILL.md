@@ -37,6 +37,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Import and export | [import-export.md](features/import-export.md) |
 | API keys and connected apps | [keys-and-apps.md](features/keys-and-apps.md) |
 | Smart add | [smart-add.md](features/smart-add.md) |
+| AI consent: the ask before the first AI action, and You → AI services | [ai-consent.md](features/ai-consent.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
 | Chinese: pinyin over each hanzi in review, simplified and traditional | [chinese.md](features/chinese.md) |
 | Cantonese: Jyutping over each character in review, 𨋢 included, and its example fade | [cantonese.md](features/cantonese.md) |
@@ -44,6 +45,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Ukrainian: stress in place on the cue, і included, and the field named Stress | [ukrainian.md](features/ukrainian.md) |
 | Tamil: each word's reading over it in review, and fading over Known words in examples | [tamil.md](features/tamil.md) |
 | Right to left: an Arabic deck's cue, example, rows and toast in their own direction | [right-to-left.md](features/right-to-left.md) |
+| Example translation and audio: the translation after the reveal and on the card page, the example's speaker, a stale or failed translation, and the editor | [example-translation.md](features/example-translation.md) |
 
 ## Launch
 

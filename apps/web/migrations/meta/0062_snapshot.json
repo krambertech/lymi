@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "869ff52f-0860-4d29-bb22-a2b22bd9047d",
+  "id": "2461218c-8a0f-4299-80d1-83d4513a7a32",
   "prevId": "7b488785-1628-4543-a0db-18c8e3df3d28",
   "tables": {
     "account_deletions": {
@@ -1325,208 +1325,6 @@
             "id"
           ],
           "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "content_reports": {
-      "name": "content_reports",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "reporter_id": {
-          "name": "reporter_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "deck_id": {
-          "name": "deck_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "card_id": {
-          "name": "card_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "target": {
-          "name": "target",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "via": {
-          "name": "via",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "reason": {
-          "name": "reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "note": {
-          "name": "note",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "snapshot": {
-          "name": "snapshot",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "local_date": {
-          "name": "local_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "resolved_at": {
-          "name": "resolved_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "action": {
-          "name": "action",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch() * 1000)"
-        }
-      },
-      "indexes": {
-        "content_reports_open_idx": {
-          "name": "content_reports_open_idx",
-          "columns": [
-            "resolved_at",
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "content_reports_reporter_day_idx": {
-          "name": "content_reports_reporter_day_idx",
-          "columns": [
-            "reporter_id",
-            "local_date"
-          ],
-          "isUnique": false
-        },
-        "content_reports_deck_idx": {
-          "name": "content_reports_deck_idx",
-          "columns": [
-            "deck_id",
-            "action"
-          ],
-          "isUnique": false
-        },
-        "content_reports_card_idx": {
-          "name": "content_reports_card_idx",
-          "columns": [
-            "card_id",
-            "action"
-          ],
-          "isUnique": false
-        },
-        "content_reports_owner_idx": {
-          "name": "content_reports_owner_idx",
-          "columns": [
-            "owner_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "content_reports_reporter_id_user_id_fk": {
-          "name": "content_reports_reporter_id_user_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "user",
-          "columnsFrom": [
-            "reporter_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_owner_id_user_id_fk": {
-          "name": "content_reports_owner_id_user_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "user",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_deck_id_decks_id_fk": {
-          "name": "content_reports_deck_id_decks_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "decks",
-          "columnsFrom": [
-            "deck_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_card_id_cards_id_fk": {
-          "name": "content_reports_card_id_cards_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "cards",
-          "columnsFrom": [
-            "card_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
           "onUpdate": "no action"
         }
       },
@@ -4152,65 +3950,6 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "sharing_suspensions": {
-      "name": "sharing_suspensions",
-      "columns": {
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "report_id": {
-          "name": "report_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch() * 1000)"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sharing_suspensions_user_id_user_id_fk": {
-          "name": "sharing_suspensions_user_id_user_id_fk",
-          "tableFrom": "sharing_suspensions",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "sharing_suspensions_report_id_content_reports_id_fk": {
-          "name": "sharing_suspensions_report_id_content_reports_id_fk",
-          "tableFrom": "sharing_suspensions",
-          "tableTo": "content_reports",
-          "columnsFrom": [
-            "report_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "tags": {
       "name": "tags",
       "columns": {
@@ -4404,6 +4143,20 @@
         },
         "analytics_consent_updated_at": {
           "name": "analytics_consent_updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent": {
+          "name": "ai_consent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent_updated_at": {
+          "name": "ai_consent_updated_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,

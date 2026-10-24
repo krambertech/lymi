@@ -27,8 +27,8 @@ describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 17,
-      hash: "29b5efb831923d90",
+      ENRICHMENT_PROMPT_VERSION: 18,
+      hash: "b5ab6173e090dae1",
     });
   });
 
@@ -82,8 +82,7 @@ describe("languageGuide", () => {
     expect(languageGuide(null)).toBeUndefined();
   });
 
-  // Ukrainian's general guide keeps its own line until its prompt module and recorded run replace it.
-  it.each(LANGUAGE_FORMATS.filter((format) => format.tag !== "uk"))(
+  it.each(LANGUAGE_FORMATS)(
     "takes $tag's pronunciation and example lines from its format",
     (format) => {
       const guide = languageGuide(format.tag) ?? "";
@@ -93,12 +92,6 @@ describe("languageGuide", () => {
       expect(guide.includes(format.example?.sample ?? "\0")).toBe(format.example !== null);
     },
   );
-
-  it("keeps Ukrainian's accent line, so the model reads what the last recorded run read", () => {
-    expect(languageGuide("uk")).toContain(
-      "pronunciation: The term in Cyrillic with an accent mark on the stressed vowel (молоко́)",
-    );
-  });
 
   it("romanizes the pronunciation of a language without a record, and Serbian in its Latin spelling", () => {
     expect(languageGuide("ar")).toContain("kitāb");

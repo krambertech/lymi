@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { LessonAccessOut } from "@lymi/core";
-import { isolate } from "@lymi/core";
+import { AI_CONSENT_REQUIRED, isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
@@ -205,7 +205,14 @@ function SmartAdd({
       setStep("input");
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // The footer says the limit is reached; an error line under it would only repeat it.
-      setError(refusalCode(failure) === "daily_limit" ? undefined : errorMessage(failure));
+      const code = refusalCode(failure);
+      setError(
+        code === "daily_limit"
+          ? undefined
+          : code === AI_CONSENT_REQUIRED
+            ? t`AI services are off for your account. Turn them on in Settings to read lessons.`
+            : errorMessage(failure),
+      );
     }
   };
 

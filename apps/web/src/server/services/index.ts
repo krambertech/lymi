@@ -11,6 +11,7 @@ export * from "./cards";
 export * from "./connected-apps";
 export * from "./context";
 export * from "./deck-choice";
+export * from "./deck-copies";
 export * from "./deck-style";
 export * from "./decks";
 export * from "./draw";

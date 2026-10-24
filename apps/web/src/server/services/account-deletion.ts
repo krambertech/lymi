@@ -71,13 +71,20 @@ function enqueueAudioPurge(db: Db, where: SQL | undefined, now: Date) {
     .onConflictDoNothing();
 }
 
-/** Owned decks other people study now: they stay for those people when the owner leaves Lymi. */
+/**
+ * Owned decks other people study now, which each of them keeps as a private copy. An archived
+ * deck goes for everyone, so archiving it first is how the owner takes it from its members.
+ */
 function sharedDecks({ db, userId }: ServiceContext) {
   return db
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
       members: count(schema.deckMembers.id),
+      published: sql<boolean>`exists (select 1 from deck_publications
+        where deck_publications.deck_id = decks.id and deck_publications.status = 'published')`.mapWith(
+        Boolean,
+      ),
     })
     .from(schema.decks)
     .innerJoin(
@@ -88,38 +95,8 @@ function sharedDecks({ db, userId }: ServiceContext) {
         ne(schema.deckMembers.userId, userId),
       ),
     )
-    .where(eq(schema.decks.userId, userId))
+    .where(and(eq(schema.decks.userId, userId), isNull(schema.decks.archivedAt)))
     .groupBy(schema.decks.id);
-}
-
-/**
- * An account that owns a published deck, published an edition or approved a localization. The
- * first is guarded by migration 0028; the others are foreign keys without a delete rule.
- */
-async function isPublisher({ db, userId }: ServiceContext): Promise<boolean> {
-  const approved = [
-    schema.seriesLocalizations,
-    schema.deckLocalizations,
-    schema.sectionLocalizations,
-    schema.cardLocalizations,
-  ].map((table) =>
-    db.select({ id: table.approvedBy }).from(table).where(eq(table.approvedBy, userId)).limit(1),
-  );
-  const found = await Promise.all([
-    db
-      .select({ id: schema.deckPublications.id })
-      .from(schema.deckPublications)
-      .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
-      .where(eq(schema.decks.userId, userId))
-      .limit(1),
-    db
-      .select({ id: schema.deckEditions.id })
-      .from(schema.deckEditions)
-      .where(eq(schema.deckEditions.publishedBy, userId))
-      .limit(1),
-    ...approved,
-  ]);
-  return found.some((rows) => rows.length > 0);
 }
 
 async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
@@ -133,7 +110,7 @@ async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
 /** What deleting the account takes, so the confirmation can say it before anything is sent. */
 export async function deletionSummary(ctx: ServiceContext): Promise<AccountDeletionOut> {
   const { db, userId } = ctx;
-  const [[decks], [cards], [reviews], shared, publisher, apple] = await Promise.all([
+  const [[decks], [cards], [reviews], shared, apple] = await Promise.all([
     db.select({ n: count() }).from(schema.decks).where(eq(schema.decks.userId, userId)),
     db
       .select({ n: count() })
@@ -142,26 +119,16 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
       .where(eq(schema.decks.userId, userId)),
     db.select({ n: count() }).from(schema.reviews).where(eq(schema.reviews.userId, userId)),
     sharedDecks(ctx),
-    isPublisher(ctx),
     hasApple(ctx),
   ]);
   return {
-    blocked: publisher ? "publisher" : null,
+    blocked: null,
     confirmWith: apple ? "apple" : "email",
     decks: decks?.n ?? 0,
     cards: cards?.n ?? 0,
     reviews: reviews?.n ?? 0,
     sharedDecks: shared,
   };
-}
-
-function refusePublisher(): never {
-  throw new ServiceError(
-    "conflict",
-    "This account publishes decks, so it can’t be deleted here. Write to hello@lymi.app.",
-    undefined,
-    "publisher",
-  );
 }
 
 /** Starts a delete: emails a fresh six-digit code to the account's address, replacing any earlier one. */
@@ -171,7 +138,6 @@ export async function sendDeletionCode(
   request: Request | undefined,
 ): Promise<DeletionCodeOut> {
   const { db, userId } = ctx;
-  if (await isPublisher(ctx)) refusePublisher();
   const [account] = await db
     .select({ email: schema.user.email })
     .from(schema.user)
@@ -331,7 +297,9 @@ export interface DeletionLeftovers {
   email: string;
   language: TransactionalEmailLanguage;
   confirmedWith: "email" | "apple";
+  /** Decks other people studied, which each of them gets as a copy, and how many were published. */
   keptDecks: number;
+  publishedDecks: number;
   privateImages: string[];
   /** The cards' current clips; the cron clears the rest of each card's audio folder. */
   audioKeys: string[];
@@ -345,8 +313,8 @@ export interface DeletionLeftovers {
 
 /**
  * Deletes the learner's account and everything it holds, once they have proved it is them. Decks
- * other people study stay for those people under the former owner. Storage outside D1 is the
- * caller's to clear with the leftovers. Publisher accounts are refused (migration 0028).
+ * other people study wait under the former owner while `copyFormerDecks` gives each of them a
+ * private copy. Storage outside D1 is the caller's to clear with the leftovers.
  */
 export async function deleteAccount(
   ctx: ServiceContext,
@@ -357,7 +325,6 @@ export async function deleteAccount(
   if (ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can delete their account, from the app.");
   }
-  if (await isPublisher(ctx)) refusePublisher();
   const confirmedWith = "apple" in input ? "apple" : "email";
   if ("apple" in input) await checkApple(ctx, input.apple, deps.verifyApple);
   else await checkCode(ctx, input.code);
@@ -387,6 +354,9 @@ export async function deleteAccount(
       and(
         eq(schema.cardImages.userId, userId),
         kept.length > 0 ? notInArray(schema.cardImages.cardId, keptCards) : undefined,
+        // A member's copy shares the picture's object with the deck it came from.
+        sql`not exists (select 1 from card_images as other
+          where other.object_key = card_images.object_key and other.user_id <> ${userId})`,
       ),
     );
   // The cards that go with the account; a kept deck's cards keep their audio.
@@ -446,37 +416,6 @@ export async function deleteAccount(
             .insert(schema.user)
             .values({ id: FORMER_OWNER_ID, name: "", email: "former-owner@lymi.invalid" })
             .onConflictDoNothing(),
-          // The learner's tags cascade with them, so a kept card's tags move to the former
-          // owner's tag of the same name, which holds each name once.
-          db
-            .insert(schema.tags)
-            .select(
-              sql`select lower(hex(randomblob(10))), ${FORMER_OWNER_ID}, mine.name,
-                mine.normalized_name, ${now.getTime()}, ${now.getTime()}
-              from tags as mine
-              where mine.user_id = ${userId}
-                and mine.id in (select tag_id from card_tags where card_id in ${keptCards})`,
-            )
-            .onConflictDoNothing(),
-          db
-            .update(schema.cardTags)
-            .set({
-              tagId: sql`(select former.id from tags as former
-                join tags as mine on mine.normalized_name = former.normalized_name
-                where former.user_id = ${FORMER_OWNER_ID} and mine.id = card_tags.tag_id)`,
-            })
-            .where(
-              and(
-                inArray(schema.cardTags.cardId, keptCards),
-                inArray(
-                  schema.cardTags.tagId,
-                  db
-                    .select({ id: schema.tags.id })
-                    .from(schema.tags)
-                    .where(eq(schema.tags.userId, userId)),
-                ),
-              ),
-            ),
           // Nobody can change a kept deck, invite to it or join it again.
           db
             .update(schema.deckInvitations)
@@ -506,8 +445,29 @@ export async function deleteAccount(
               updatedAt: now,
             })
             .where(inArray(schema.decks.id, kept)),
+          // The public page and its editions belong to the person leaving; members keep the
+          // edition they pinned through the copy.
+          db.delete(schema.deckPublications).where(inArray(schema.deckPublications.deckId, kept)),
+          db.delete(schema.deckEditions).where(inArray(schema.deckEditions.deckId, kept)),
+          db
+            .insert(schema.formerDeckCopies)
+            .values(kept.map((deckId) => ({ deckId, createdAt: now })))
+            .onConflictDoNothing(),
         ]
       : []),
+    // A publisher's sign-off on someone else's edition stays signed off, without their name.
+    db
+      .update(schema.deckEditions)
+      .set({ publishedBy: null })
+      .where(eq(schema.deckEditions.publishedBy, userId)),
+    ...[
+      schema.seriesLocalizations,
+      schema.deckLocalizations,
+      schema.sectionLocalizations,
+      schema.cardLocalizations,
+    ].map((table) =>
+      db.update(table).set({ approvedBy: null }).where(eq(table.approvedBy, userId)),
+    ),
     // An open invitation to the address would otherwise show as pending to a deck's owner.
     db
       .update(schema.deckInvitations)
@@ -561,6 +521,7 @@ export async function deleteAccount(
     language,
     confirmedWith,
     keptDecks: kept.length,
+    publishedDecks: summary.sharedDecks.filter((deck) => deck.published).length,
     privateImages: [
       ...images.map((image) => image.key),
       ...[avatar?.custom, avatar?.google].filter((key): key is string => Boolean(key)),
@@ -574,9 +535,9 @@ export async function deleteAccount(
 }
 
 /**
- * Deletes kept decks whose last member has left, with their pictures, and queues their audio, so
- * what a deleted learner wrote lasts only while someone studies it. A deck whose pictures R2
- * refused waits for the next run.
+ * Deletes a former owner's deck once no member is left, either because each has their copy or,
+ * for a deck kept before copies existed, because the last one left. Pictures a copy shares stay,
+ * and the cards' audio is queued. A deck whose pictures R2 refused waits for the next run.
  */
 export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
   const decks = await db
@@ -605,7 +566,15 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
       .select({ key: schema.cardImages.objectKey })
       .from(schema.cardImages)
       .innerJoin(schema.cards, eq(schema.cards.id, schema.cardImages.cardId))
-      .where(eq(schema.cards.deckId, id));
+      .where(
+        and(
+          eq(schema.cards.deckId, id),
+          // Members' copies share these objects.
+          sql`not exists (select 1 from card_images as other
+            join cards as theirs on theirs.id = other.card_id
+            where other.object_key = card_images.object_key and theirs.deck_id <> ${id})`,
+        ),
+      );
     try {
       for (let i = 0; i < pictures.length; i += 1000) {
         await images.delete(pictures.slice(i, i + 1000).map((picture) => picture.key));

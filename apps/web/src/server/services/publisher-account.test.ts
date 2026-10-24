@@ -5,13 +5,13 @@ import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { deletePersonaAccount } from "./dev";
-import { addPublishedDeck, publishDeck, withdrawDeck } from "./publications";
+import { addPublishedDeck, publishDeck } from "./publications";
 import { gradeCard } from "./review";
 import { learner, testDb } from "./test-db";
 
 /**
- * Deleting a deck's owner cascades into every member's progress, so the database refuses to
- * delete an account that owns a published deck, however the delete arrives. Migration 0028.
+ * Deleting an account past every service, as `wrangler d1 execute` would. Migration 0063 dropped
+ * the 0028 guard, since `deleteAccount` now copies a published deck for its members first.
  */
 let db: Db;
 let raw: D1Database;
@@ -66,35 +66,7 @@ async function count(table: string, column: string, value: string) {
 }
 
 describe("deleting an account", () => {
-  it("is refused while it owns a published deck, and the deck and its learners stay", async () => {
-    const lymi = await publisher("lymi-published");
-    const deck = await studiedDeck(lymi, "lymi-published@lymi.test", "published-guard");
-    const annaStates = await count("card_states", "user_id", anna.userId);
-    const annaReviews = await count("reviews", "user_id", anna.userId);
-
-    await expect(deleteUser(lymi.userId)).rejects.toThrow(/owns a published deck/);
-
-    expect(await count("user", "id", lymi.userId)).toBe(1);
-    expect(await count("decks", "id", deck.id)).toBe(1);
-    expect(await count("cards", "deck_id", deck.id)).toBe(1);
-    expect(await count("deck_members", "deck_id", deck.id)).toBe(1);
-    expect(await count("card_states", "user_id", anna.userId)).toBe(annaStates);
-    expect(await count("reviews", "user_id", anna.userId)).toBe(annaReviews);
-  });
-
-  it("is refused while it owns a withdrawn deck, whose members keep studying it", async () => {
-    const lymi = await publisher("lymi-withdrawn");
-    const deck = await studiedDeck(lymi, "lymi-withdrawn@lymi.test", "withdrawn-guard");
-    await withdrawDeck(lymi, deck.id);
-
-    await expect(deleteUser(lymi.userId)).rejects.toThrow(/owns a published deck/);
-
-    expect(await count("user", "id", lymi.userId)).toBe(1);
-    expect(await count("decks", "id", deck.id)).toBe(1);
-    expect(await count("deck_members", "deck_id", deck.id)).toBe(1);
-  });
-
-  it("goes through for an account that owns no published deck, even one studying one", async () => {
+  it("goes through for an account studying a published deck", async () => {
     const lymi = await publisher("lymi-studied");
     await studiedDeck(lymi, "lymi-studied@lymi.test", "studied-guard");
     const marko = await learner(db, "marko", "Marko");

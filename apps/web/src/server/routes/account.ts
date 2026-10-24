@@ -14,6 +14,7 @@ import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { erasePostHogPerson } from "../posthog";
 import {
+  copyFormerDecks,
   type DeletionLeftovers,
   deleteAccount,
   deleteExportFiles,
@@ -92,6 +93,7 @@ account.delete(
       client,
       confirmed_with: leftovers.confirmedWith,
       kept_decks: leftovers.keptDecks,
+      published_decks: leftovers.publishedDecks,
     });
     c.executionCtx.waitUntil(
       clearLeftovers(c.env, ctx.db, ctx.userId, leftovers, {
@@ -138,6 +140,8 @@ async function clearLeftovers(
     ...leftovers.imports.map((row) => deleteImportFiles(env.IMPORTS, row)),
     ...leftovers.exports.map((row) => deleteExportFiles(env.EXPORTS, row)),
     erasePostHogPerson(env, userId),
+    // The cron finishes the copies; this makes the first ones without waiting for it.
+    leftovers.keptDecks > 0 ? copyFormerDecks(db, env.EVENTS) : Promise.resolve(),
     appleOutcome.then((outcome) =>
       extra.send({
         kind: "account-deleted",

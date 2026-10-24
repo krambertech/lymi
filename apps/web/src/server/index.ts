@@ -1,15 +1,16 @@
 import { createSpeechProviders } from "./ai";
 import { handleFetch } from "./app";
+import { appleClientsOf } from "./apple-revoke";
 import { runCanary } from "./canary";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { leadInDependencies } from "./lead-ins";
 import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
-import { appleClientsOf } from "./apple-revoke";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { retryAppleRevocations } from "./services/apple-revocations";
 import { purgeCardAudio } from "./services/audio";
+import { copyFormerDecks } from "./services/deck-copies";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
@@ -53,7 +54,12 @@ export default {
       }),
     );
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
-    run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
+    run(
+      "former-decks",
+      copyFormerDecks(createDb(env.DB), env.EVENTS).then(() =>
+        dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES),
+      ),
+    );
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     run(
       "apple-revocations",
@@ -61,7 +67,8 @@ export default {
         clients: appleClientsOf(env),
         events: env.EVENTS,
       }).then(({ failed }) => {
-        if (failed > 0) throw new Error(`${failed} deleted accounts' Apple grants were not revoked`);
+        if (failed > 0)
+          throw new Error(`${failed} deleted accounts' Apple grants were not revoked`);
       }),
     );
     // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.

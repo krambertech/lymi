@@ -247,6 +247,14 @@
     {
       "name": "0061_dry_microchip.sql",
       "sha256": "17cac101f5b52aedc32d5b25ab4b7c1dee8b6d675747278f522eeea0102ebfb5"
+    },
+    {
+      "name": "0062_empty_squadron_supreme.sql",
+      "sha256": "b12d9c2d8d44462efd27342a312afbd5eb93ce6f333d66a722d5007eb8bbec28"
+    },
+    {
+      "name": "0063_drop_publisher_delete_guard.sql",
+      "sha256": "c06787646a14d982b9b396591420cbe92b7252ed7e421c8b9d12d8434441b117"
     }
   ]
 }

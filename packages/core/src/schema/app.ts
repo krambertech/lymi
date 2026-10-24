@@ -973,7 +973,29 @@ export const accountDeletions = sqliteTable("account_deletions", {
     .default(sql`(unixepoch() * 1000)`),
 });
 
-export const APPLE_REVOCATION_STATUSES = ["pending", "revoked", "failed", "skipped"] as const;
+/**
+ * A deleted account's deck that each member is getting as a private copy, which the cron works
+ * through a few members at a time. The deck waits under the former owner until the last copy.
+ */
+export const formerDeckCopies = sqliteTable("former_deck_copies", {
+  deckId: text("deck_id")
+    .primaryKey()
+    .references(() => decks.id, { onDelete: "cascade" }),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+/** Which new row copies which old one, for the length of one member's copy batch. */
+export const deckCopyIds = sqliteTable(
+  "deck_copy_ids",
+  {
+    oldId: text("old_id").notNull(),
+    userId: text("user_id").notNull(),
+    newId: text("new_id").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.oldId, t.userId] })],
+);
+
+export const APPLE_REVOCATION_STATUSES =["pending", "revoked", "failed", "skipped"] as const;
 export const APPLE_REVOCATION_REASONS = [
   "no_key",
   "no_token",

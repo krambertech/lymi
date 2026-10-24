@@ -71,7 +71,7 @@ The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch und
 
 ## Evidence
 
-Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step as ok or FAIL with the error, and every console error and 5xx response. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
+Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step with its error, and every console error and 5xx response. A step is FAIL when the page or the API answered with something else, and TIMEOUT when Playwright waited out its limit for a page, control or element; load from other sessions can cause a TIMEOUT, so rerun that feature alone before calling it a bug. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
 
 Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs; [Proof matches the change](../../../AGENTS.md#before-you-push) says when a run is the proof and what else it needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
 

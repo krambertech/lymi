@@ -20,6 +20,10 @@ An export is the one row whose action sits on the row: **Download**, while the f
 
 Rows that wrote cards **expand in place** to the cards they wrote, so a write can be read without leaving the screen. A card opens where every card opens: the word in its deck, which holds its fields, its history and Archive. A group holding more cards than the expansion shows ends with a row that opens the deck. Everything else opens where the work is: an import row opens its import, a deck row opens the deck.
 
+## One app at a time
+
+`/activity?app=` lists one caller's writes, by the app or key the audit rows name, with **Show everything** beside a line naming the app. An app's page opens it from its own Activity ([app pages](app-pages.md)).
+
 ## Grouping
 
 Twelve cards from one app in one afternoon is one row, not twelve. Writes group by day, actor, app, what they did, and the deck they landed in; the row carries the count and the time of the most recent write in the group. A group never spans two days, so a day heading is always true.

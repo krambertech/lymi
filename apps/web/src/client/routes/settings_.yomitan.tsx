@@ -1,0 +1,79 @@
+import { useLingui } from "@lingui/react/macro";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { toast } from "../components/ui/toast";
+import { api, errorMessage } from "../lib/api";
+import { useDocumentTitle } from "../lib/document-title";
+import { productUrl, publicSiteUrl } from "../lib/origins";
+import { keysQuery } from "../lib/queries";
+import { YOMITAN_KEY_NAME, yomitanKey } from "../lib/yomitan";
+import { YomitanView } from "../views/yomitan-view";
+
+export const Route = createFileRoute("/settings_/yomitan")({
+  component: YomitanRoute,
+});
+
+function YomitanRoute() {
+  const { t } = useLingui();
+  useDocumentTitle(t`Yomitan`);
+  const qc = useQueryClient();
+  const keys = useQuery(keysQuery);
+  // An old key that failed to revoke, kept until it leaves the key list so its note stays up.
+  const [stuck, setStuck] = useState<string | null>(null);
+  const current = keys.isSuccess ? yomitanKey(keys.data?.filter((k) => k.id !== stuck)) : undefined;
+  // A new key replaces the one this page shows, so a key thought leaked stops working.
+  const make = useMutation({
+    mutationFn: async (replacing: string | null) => {
+      const made = await api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" });
+      // The new key is shown once whatever happens to the old one, which can be revoked by hand.
+      if (replacing) await api.revokeKey(replacing).catch(() => setStuck(replacing));
+      return made;
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
+  });
+  const revoke = useMutation({
+    mutationFn: (id: string) => api.revokeKey(id),
+    onSuccess: (_, id) => {
+      // Revoking the key just made only takes back that key; revoking the one in use disconnects.
+      if (id === current?.id && !make.data) toast.add({ title: t`Yomitan is disconnected` });
+      make.reset();
+      void qc.invalidateQueries({ queryKey: keysQuery.queryKey });
+    },
+  });
+  const address = productUrl("/api/anki-connect");
+  const copyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      toast.add({ title: t`Address copied` });
+    } catch {
+      toast.add({ title: t`Couldn’t copy the address. Copy it under How it connects.` });
+    }
+  };
+  const failed = make.error ?? revoke.error ?? (keys.isError ? keys.error : null);
+  const error = failed
+    ? errorMessage(failed)
+    : stuck && keys.data?.some((k) => k.id === stuck)
+      ? t`Couldn’t revoke the old key. Revoke it under API keys in Settings.`
+      : null;
+
+  return (
+    <YomitanView
+      address={address}
+      guide={publicSiteUrl("/docs/yomitan")}
+      current={current}
+      fresh={
+        make.data
+          ? { id: make.data.id, key: make.data.key, name: make.data.name ?? YOMITAN_KEY_NAME }
+          : null
+      }
+      onMake={() => make.mutate(current?.id ?? null)}
+      making={make.isPending}
+      onDone={() => make.reset()}
+      onRevoke={(id) => revoke.mutate(id)}
+      revoking={revoke.isPending}
+      onCopyAddress={() => void copyAddress()}
+      error={error}
+    />
+  );
+}

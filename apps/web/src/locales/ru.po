@@ -172,6 +172,10 @@ msgstr "{0, plural, one {# запись} few {# записи} many {# запис
 msgid "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
 msgstr "{0, plural, one {# часто забывается.} few {# часто забываются.} many {# часто забываются.} other {# часто забывается.}}"
 
+#. placeholder {0}: pull.skipped
+msgid "{0, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
+msgstr "{0, plural, one {# отрывок без слова в заметке.} few {# отрывка без слова в заметках.} many {# отрывков без слова в заметках.} other {# отрывка без слова в заметках.}}"
+
 #. placeholder {0}: counts.reviews
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
 msgstr "{0, plural, one {Импортировано # прошлое повторение.} few {Импортировано # прошлых повторения.} many {Импортировано # прошлых повторений.} other {Импортировано # прошлого повторения.}}"
@@ -378,6 +382,11 @@ msgstr "{0} · {1}"
 #. placeholder {0}: isolate(item.fileName)
 msgid "{0} · {date}"
 msgstr "{0} · {date}"
+
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: highlights(book.highlights)
+msgid "{0} · {language} · {1}"
+msgstr "{0} · {language} · {1}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -646,8 +655,15 @@ msgstr "{label}, заблокировано"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
+#. placeholder {0}: highlights(book.highlights)
+msgid "{language} · {0}"
+msgstr "{language} · {0}"
+
 msgid "{language} · {cards}"
 msgstr "{language} · {cards}"
+
+msgid "{language} highlights go to"
+msgstr "{language}: выделения идут в"
 
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {остался # символ} few {осталось # символа} many {осталось # символов} other {осталось # символа}}"
@@ -673,6 +689,9 @@ msgstr "{months, plural, one {# месяц} few {# месяца} many {# мес�
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {Через # месяц} few {Через # месяца} many {Через # месяцев} other {Через # месяца}}"
 
+msgid "{n, plural, one {# highlight} other {# highlights}}"
+msgstr "{n, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
+
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
@@ -696,6 +715,9 @@ msgstr "Можно начинать {nextName}"
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {В # карточке нет строки ---, поэтому она импортируется с термином и без значения.} few {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} many {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} other {В # карточки нет строки ---, поэтому они импортируются с термином и без значения.}}"
+
+msgid "{others, plural, one {# other book isn’t in a language you’re learning.} other {# other books aren’t in a language you’re learning.}}"
+msgstr "{others, plural, one {Ещё # книга — на языке, который ты не учишь.} few {Ещё # книги — на языках, которые ты не учишь.} many {Ещё # книг — на языках, которые ты не учишь.} other {Ещё # книги — на языках, которые ты не учишь.}}"
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Предыдущий раздел тоже начнётся, чтобы разделы шли по порядку.} few {# предыдущих раздела тоже начнутся, чтобы разделы шли по порядку.} many {# предыдущих разделов тоже начнутся, чтобы разделы шли по порядку.} other {# предыдущего раздела тоже начнутся, чтобы разделы шли по порядку.}}"
@@ -833,11 +855,17 @@ msgstr "Файл Lymi из другого аккаунта Lymi"
 msgid "A new deck"
 msgstr "Новая колода"
 
+msgid "A new key replaces this one, and this one stops working."
+msgstr "Новый ключ заменит этот, и этот перестанет работать."
+
 msgid "A PDF of the lesson"
 msgstr "PDF урока"
 
 msgid "A PDF, or drop it here"
 msgstr "PDF, или перетащи его сюда"
+
+msgid "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
+msgstr "Всплывающий словарь для Chrome, Edge и Firefox. Наведи курсор на слово на любой странице, удерживая Shift, и нажми +, чтобы добавить его как карточку вместе с чтением, значением и предложением, в котором оно встретилось."
 
 msgid "A reset link works once, within an hour."
 msgstr "Ссылка действует один час и только один раз."
@@ -920,6 +948,9 @@ msgstr "Добавить карточки"
 msgid "Add cards and review them to see your progress here."
 msgstr "Добавь карточки и повторяй их, чтобы видеть здесь свой прогресс."
 
+msgid "Add cards from what you read in other apps."
+msgstr "Добавляй карточки из того, что читаешь в других приложениях."
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Добавь карточки с последнего урока, а потом повторяй их здесь."
 
@@ -928,6 +959,9 @@ msgstr "Добавь карточки из следующего урока"
 
 msgid "Add cards with the API"
 msgstr "Добавляй карточки через API"
+
+msgid "Add from other apps"
+msgstr "Добавить из других приложений"
 
 msgid "Add hook"
 msgstr "Добавить зацепку"
@@ -1015,6 +1049,9 @@ msgstr "Добавлено сегодня"
 
 msgid "Adding…"
 msgstr "Добавляем…"
+
+msgid "Address copied"
+msgstr "Адрес скопирован"
 
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "После подключения отправь урок своему AI-помощнику и попроси создать карточки."
@@ -1141,6 +1178,9 @@ msgstr "Пакет Anki"
 msgid "anki quizlet pleco"
 msgstr "anki quizlet pleco импорт"
 
+msgid "AnkiConnect server address"
+msgstr "Адрес сервера AnkiConnect"
+
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
@@ -1185,11 +1225,17 @@ msgstr "любые"
 msgid "Anything"
 msgstr "Что угодно"
 
+msgid "API key"
+msgstr "Ключ API"
+
 msgid "API key for {name}"
 msgstr "Ключ API для {name}"
 
 msgid "API keys"
 msgstr "Ключи API"
+
+msgid "Apps that add cards"
+msgstr "Приложения, которые добавляют карточки"
 
 msgid "Apps you can import from"
 msgstr "Приложения, из которых можно импортировать"
@@ -1469,6 +1515,9 @@ msgstr "Изменения отменены"
 msgid "Check {address}. A message is on the way with the next step."
 msgstr "Проверь {address}. Письмо со следующим шагом уже в пути."
 
+msgid "Check now"
+msgstr "Проверить сейчас"
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Проверь, что ссылка скопирована полностью, или попроси новую."
 
@@ -1493,6 +1542,12 @@ msgstr "Проверь почту"
 msgid "Checked"
 msgstr "Проверено"
 
+msgid "Checked at {when}"
+msgstr "Проверено в {when}"
+
+msgid "Checked at {when} · next around {next}"
+msgstr "Проверено в {when} · следующая проверка около {next}"
+
 msgid "Checking your account…"
 msgstr "Проверяем ваш аккаунт…"
 
@@ -1504,6 +1559,9 @@ msgstr "Проверяю…"
 
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Выбери <0>Anki Deck Package</0> и отметь <1>Include Scheduling Information</1> и <2>Include Media</2>."
+
+msgid "Choose <0>Get Access Token</0>, then copy it."
+msgstr "Выбери <0>Get Access Token</0> и скопируй его."
 
 msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
 msgstr "Выбери <0>Файл Lymi</0>, а когда он будет готов, скачай его."
@@ -1522,6 +1580,9 @@ msgstr "Выбери колоду"
 
 msgid "Choose a deck."
 msgstr "Выбери колоду."
+
+msgid "Choose a language"
+msgstr "Выбери язык"
 
 msgid "Choose a recall grade"
 msgstr "Выбрать оценку повторения"
@@ -1674,11 +1735,20 @@ msgstr "Подключи Lymi, вставь урок и попроси сдел�
 msgid "Connect your AI assistant"
 msgstr "Подключи своего AI-ассистента"
 
+msgid "Connected"
+msgstr "Подключено"
+
 msgid "connected {connected}"
 msgstr "подключено {connected}"
 
 msgid "Connected apps"
 msgstr "Подключённые приложения"
+
+msgid "Connected. Last checked at {when}."
+msgstr "Подключено. Последняя проверка в {when}."
+
+msgid "Connected. Lymi checks every hour."
+msgstr "Подключено. Lymi проверяет каждый час."
 
 msgid "Consistency"
 msgstr "Регулярность"
@@ -1710,6 +1780,12 @@ msgstr "Скопируется при сохранении"
 
 msgid "Copy"
 msgstr "Копировать"
+
+msgid "Copy address"
+msgstr "Копировать адрес"
+
+msgid "Copy Lymi’s address and make a key for Yomitan."
+msgstr "Скопируй адрес Lymi и создай ключ для Yomitan."
 
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Скопируй набор в Quizlet ещё раз через Export и вставь его."
@@ -1745,6 +1821,9 @@ msgstr "Не удалось проверить это устройство. Об
 
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Не удалось подключиться к Lymi. Попробуй ещё раз через минуту."
+
+msgid "Couldn’t copy the address. Copy it under How it connects."
+msgstr "Не удалось скопировать адрес. Скопируй его в разделе «Как это подключается»."
 
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Не удалось удалить аккаунт. Проверь соединение и попробуй снова."
@@ -1818,11 +1897,17 @@ msgstr "Не удалось загрузить полку"
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
 
+msgid "Couldn’t load what {app} did. Check your connection and try again."
+msgstr "Не удалось загрузить, что сделал {app}. Проверь соединение и попробуй снова."
+
 msgid "Couldn’t load what your account holds"
 msgstr "Не удалось загрузить данные аккаунта"
 
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
+
+msgid "Couldn’t load your Readwise connection. Check your connection and try again."
+msgstr "Не удалось загрузить подключение к Readwise. Проверь соединение и попробуй снова."
 
 #. placeholder {0}: cardIds.length
 msgid "Couldn’t move {0, plural, one {# card} other {# cards}}."
@@ -1840,6 +1925,12 @@ msgstr "Не удалось воспроизвести произношение.
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не удалось связаться с Lymi. Проверь соединение и попробуй снова."
 
+msgid "Couldn’t reach Readwise. Check your connection and try again."
+msgstr "Не удалось связаться с Readwise. Проверь соединение и попробуй снова."
+
+msgid "Couldn’t reach Readwise. Try again in a minute."
+msgstr "Не удалось связаться с Readwise. Попробуй ещё раз через минуту."
+
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не удалось связаться с сервисом входа. Проверь соединение и попробуй снова."
 
@@ -1852,8 +1943,14 @@ msgstr "Не удалось прочитать этот текст"
 msgid "Couldn’t remove the member. Try again."
 msgstr "Не удалось исключить участника. Попробуй ещё раз."
 
+msgid "Couldn’t revoke the old key. Revoke it under API keys in Settings."
+msgstr "Не удалось отозвать старый ключ. Отзови его в разделе «Ключи API» в настройках."
+
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save that change. Check your connection and try again."
+msgstr "Не удалось сохранить изменение. Проверь соединение и попробуй снова."
 
 msgid "Couldn’t save that. Try again."
 msgstr "Не удалось сохранить. Попробуйте ещё раз."
@@ -2085,6 +2182,12 @@ msgstr "Описание"
 msgid "Disconnect"
 msgstr "Отключить"
 
+msgid "Disconnect Readwise"
+msgstr "Отключить Readwise"
+
+msgid "Disconnect Yomitan"
+msgstr "Отключить Yomitan"
+
 msgid "Dismiss"
 msgstr "Закрыть"
 
@@ -2295,6 +2398,9 @@ msgstr "Все разделы открыты, так что любая карт�
 msgid "Everyone studying this deck. You see whether they joined, not their reviews."
 msgstr "Все, кто учит эту колоду. Ты видишь, присоединились ли они, но не их повторения."
 
+msgid "Everything {app} did, in Activity"
+msgstr "Всё, что сделал {app}, в Активности"
+
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Всё, чтобы снова импортировать в Lymi: карточки, изображения, расписание и историю повторений. Файл .zip."
 
@@ -2431,6 +2537,9 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для начинающих"
 
+msgid "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
+msgstr "Для каждого словаря выбери колоду Lymi и тип заметки <0>Lymi card</0>."
+
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "Для скриптов и curl. Для AI-приложений используй «Подключённые приложения»."
 
@@ -2544,6 +2653,9 @@ msgstr "Вернись в приложение. Эту вкладку можно
 msgid "Hide password"
 msgstr "Скрыть пароль"
 
+msgid "Highlights from Kindle, Kobo, Apple Books and Readwise Reader"
+msgstr "Выделения из Kindle, Kobo, Apple Books и Readwise Reader"
+
 msgid "History"
 msgstr "История"
 
@@ -2565,6 +2677,9 @@ msgstr "Зацепка с урока"
 
 msgid "Hook saved"
 msgstr "Зацепка сохранена"
+
+msgid "How it connects"
+msgstr "Как это подключается"
 
 msgid "how it is asked"
 msgstr "как задаётся"
@@ -2707,6 +2822,9 @@ msgstr "В другом аккаунте открой меню колоды и �
 msgid "In use"
 msgstr "Используются"
 
+msgid "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+msgstr "В настройках Yomitan включи <0>Anki</0> и вставь оба."
+
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Включает твоё расписание и историю повторений. Экспорт не меняет колоду."
 
@@ -2740,6 +2858,9 @@ msgstr "{name} приглашён в «{deck}»"
 
 msgid "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 msgstr "Оно называет себя «{claimed}», но Lymi не может это подтвердить. Проверен только адрес выше."
+
+msgid "It can add cards. Lymi shows it once."
+msgstr "Он может добавлять карточки. Lymi покажет его только один раз."
 
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "Оно может читать твои карточки, а также добавлять, редактировать и архивировать их."
@@ -2878,6 +2999,17 @@ msgstr "Перевод должен быть короче 250 символов."
 
 msgid "Keep your name under {NAME_MAX} characters."
 msgstr "Имя должно быть короче {NAME_MAX} символов."
+
+#. placeholder {0}: shortDate(i18n, key.createdAt)
+#. placeholder {1}: lastUsed(i18n, key.lastRequest)
+msgid "Key made {0} · {1}"
+msgstr "Ключ создан {0} · {1}"
+
+msgid "Key made {made} · {used}"
+msgstr "Ключ создан {made} · {used}"
+
+msgid "Key made {made}. Paste it into Yomitan’s Anki settings."
+msgstr "Ключ создан {made}. Вставь его в настройки Anki в Yomitan."
 
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
@@ -3021,8 +3153,21 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, браузер и язык приложения."
 
+msgid "Lymi can no longer read your saved token. Paste it again below."
+msgstr "Lymi больше не может прочитать сохранённый токен. Вставь его ещё раз ниже."
+
+#. placeholder {0}: connection.tokenHint
+msgid "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi проверяет Readwise каждый час с твоим токеном, который заканчивается на <0>{0}</0>. Выделенное слово становится карточкой, как и отрывок со словом в заметке."
+
+msgid "Lymi checks Readwise every hour with your token. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi проверяет Readwise каждый час с твоим токеном. Выделенное слово становится карточкой, как и отрывок со словом в заметке."
+
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi не удалось определить язык по карточкам. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi couldn’t tell its language. Choose one to bring in its highlights."
+msgstr "Lymi не смог определить её язык. Выбери язык, чтобы добавить её выделения."
 
 msgid "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
 msgstr "Lymi не распознаёт это приложение. Разрешай доступ, только если доверяешь адресу выше."
@@ -3036,6 +3181,9 @@ msgstr "Lymi для Mac {version}"
 msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
 msgstr "Lymi для Mac откроется и выполнит вход. Когда это произойдёт, вкладку можно закрыть."
 
+msgid "Lymi forgets your Readwise token and stops checking. Cards already added stay."
+msgstr "Lymi забудет твой токен Readwise и перестанет проверять. Уже добавленные карточки останутся."
+
 msgid "Lymi home"
 msgstr "Главная Lymi"
 
@@ -3048,8 +3196,14 @@ msgstr "Lymi в открытой бете."
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пишет первые колоды. А пока создай свою в Библиотеке."
 
+msgid "Lymi needs your Readwise token again"
+msgstr "Lymi снова нужен твой токен Readwise"
+
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
+msgstr "Lymi отзовёт ключ Yomitan, и Yomitan больше не сможет добавлять карточки или искать дубликаты. Добавленные им карточки останутся."
 
 msgid "Lymi shows it to you and to people in decks you share."
 msgstr "Его видишь ты и люди в твоих общих колодах."
@@ -3077,6 +3231,9 @@ msgstr "Главная навигация"
 
 msgid "Make a deck in Lymi first. Enter opens Library."
 msgstr "Сначала создайте колоду в Lymi. Enter открывает Библиотеку."
+
+msgid "Make a key for Yomitan"
+msgstr "Создать ключ для Yomitan"
 
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
@@ -3274,6 +3431,9 @@ msgstr "Новые карточки в этой колоде получат эт
 msgid "New deck"
 msgstr "Новая колода"
 
+msgid "New highlights in the books you turn on become cards."
+msgstr "Новые выделения во включённых книгах становятся карточками."
+
 msgid "New key"
 msgstr "Новый ключ"
 
@@ -3285,6 +3445,9 @@ msgstr "Новые режимы применяются к карточкам, к
 
 msgid "New password"
 msgstr "Новый пароль"
+
+msgid "New Readwise token"
+msgstr "Новый токен Readwise"
 
 msgid "New section"
 msgstr "Новый раздел"
@@ -3322,6 +3485,9 @@ msgstr "Нет подключённых приложений"
 
 msgid "No archived sections."
 msgstr "Архивных разделов нет."
+
+msgid "No books in a language you’re learning yet. One appears here when you highlight in it."
+msgstr "Пока нет книг на языке, который ты учишь. Книга появится здесь, как только ты что-то в ней выделишь."
 
 msgid "No card of this kind has a term."
 msgstr "Ни у одной карточки этого вида нет термина."
@@ -3429,8 +3595,17 @@ msgstr "Пока колода в архиве, к ней никто не мож�
 msgid "Nobody new can add it."
 msgstr "Новые люди уже не могут её добавить."
 
+msgid "None of your decks has a language yet. Give a deck one, and highlights in it can come in."
+msgstr "Ни у одной твоей колоды пока нет языка. Задай колоде язык, и выделения на нём смогут попадать в неё."
+
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
+
+msgid "Not checked yet. Lymi checks every hour."
+msgstr "Ещё не проверено. Lymi проверяет каждый час."
+
+msgid "Not connected"
+msgstr "Не подключено"
 
 msgid "Not in review yet"
 msgstr "Пока не в повторениях"
@@ -3449,6 +3624,9 @@ msgstr "Не указано"
 
 msgid "Not started"
 msgstr "Ещё не начато"
+
+msgid "Not used yet"
+msgstr "Ещё не использован"
 
 msgid "Note"
 msgstr "Примечание"
@@ -3485,6 +3663,12 @@ msgstr "Сегодня нечего повторять."
 
 msgid "Nothing forgotten today"
 msgstr "Сегодня ничего не забыто"
+
+msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
+msgstr "От {app} пока ничего нет. Здесь появится то, что он добавляет, изменяет или архивирует."
+
+msgid "Nothing from this app yet. What it adds, edits or archives shows here."
+msgstr "От этого приложения пока ничего нет. Здесь появится то, что оно добавляет, изменяет или архивирует."
 
 msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
 msgstr "Ничего не удаляется. Восстановить его можно в меню колоды, в пункте «Архивные разделы»."
@@ -3562,6 +3746,9 @@ msgstr "Продолжайте, только если вы только что �
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
 
+msgid "Only one app’s writes"
+msgstr "Только изменения одного приложения"
+
 msgid "Only people you invite can join. Current members stay."
 msgstr "Присоединиться могут только те, кого ты пригласишь. Текущие участники остаются."
 
@@ -3570,6 +3757,9 @@ msgstr "Менять это может только владелец колод�
 
 msgid "Only this deck’s cards change. Other decks keep the tag as it is."
 msgstr "Изменятся только карточки этой колоды. В других колодах тег останется как есть."
+
+msgid "Only what {app} did"
+msgstr "Только то, что сделал {app}"
 
 msgid "Only you see these."
 msgstr "Их видишь только ты."
@@ -3584,6 +3774,9 @@ msgstr "Открыть"
 #. placeholder {1}: isolate(row.existing.deckName)
 msgid "Open “{0}” in {1}"
 msgstr "Открыть «{0}» в колоде {1}"
+
+msgid "Open <0>readwise.io/access_token</0> and sign in."
+msgstr "Открой <0>readwise.io/access_token</0> и войди."
 
 msgid "Open at login"
 msgstr "Открывать при входе"
@@ -3715,6 +3908,9 @@ msgstr "Вставь набор, который ты создал в Quizlet. Т
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Вставь транскрипт, свои заметки или текст урока"
 
+msgid "Paste it in Lymi and connect."
+msgstr "Вставь его в Lymi и подключи."
+
 msgid "Paste notes or a transcript"
 msgstr "Вставь заметки или транскрипт"
 
@@ -3801,6 +3997,9 @@ msgstr "Воспроизвести произношение"
 
 msgid "Policies and support"
 msgstr "Правила и поддержка"
+
+msgid "Pop-up dictionary that adds the words you look up"
+msgstr "Всплывающий словарь, который добавляет слова, которые ты ищешь"
 
 msgid "Position your photo"
 msgstr "Расположи фото"
@@ -3894,6 +4093,9 @@ msgstr "«Чтение» просматривает колоды и карточ
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Прочитай <0>политику конфиденциальности</0> Lymi или обратись в <1>службу поддержки</1>."
 
+msgid "Read the {app} guide"
+msgstr "Открыть руководство для {app}"
+
 msgid "Read the guide"
 msgstr "Прочитать руководство"
 
@@ -3917,6 +4119,24 @@ msgstr "Читаю текст"
 
 msgid "Reading your file"
 msgstr "Читаем твой файл"
+
+msgid "Readwise"
+msgstr "Readwise"
+
+msgid "Readwise didn’t accept that token. Copy it again from readwise.io/access_token."
+msgstr "Readwise не принял этот токен. Скопируй его ещё раз на readwise.io/access_token."
+
+msgid "Readwise is disconnected"
+msgstr "Readwise отключён"
+
+msgid "Readwise no longer accepts your token"
+msgstr "Readwise больше не принимает твой токен"
+
+msgid "Readwise no longer accepts your token. Paste a new one below."
+msgstr "Readwise больше не принимает твой токен. Вставь новый ниже."
+
+msgid "Readwise token"
+msgstr "Токен Readwise"
 
 msgid "Ready to import"
 msgstr "Готов к импорту"
@@ -4023,6 +4243,9 @@ msgstr "Переименовать…"
 
 msgid "Renamed “{from}” to “{spelled}”"
 msgstr "«{from}» переименован в «{spelled}»"
+
+msgid "Replace the key"
+msgstr "Заменить ключ"
 
 msgid "Replace the picture"
 msgstr "Заменить изображение"
@@ -4392,6 +4615,9 @@ msgstr "Показать все"
 
 msgid "Show another"
 msgstr "Показать другую"
+
+msgid "Show everything"
+msgstr "Показать всё"
 
 msgid "Show hook"
 msgstr "Показать зацепку"
@@ -4991,6 +5217,12 @@ msgstr "Цель на сегодня"
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
 
+msgid "Token needed"
+msgstr "Нужен токен"
+
+msgid "Token refused"
+msgstr "Токен не принят"
+
 msgid "Tomorrow"
 msgstr "Завтра"
 
@@ -5081,6 +5313,9 @@ msgstr "Ссылка для присоединения к «{deck}» выклю�
 msgid "Turned on the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» включена"
 
+msgid "Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards."
+msgstr "Превращает слова, которые ты выделяешь в Kindle, Kobo, Apple Books и Readwise Reader, в карточки."
+
 msgid "Type a name above, then press Enter to tag this card."
 msgstr "Введи название выше и нажми Enter, чтобы добавить тег к карточке."
 
@@ -5099,6 +5334,9 @@ msgstr "Снять отметку «важная»"
 msgctxt "chosen cards"
 msgid "Unmark important"
 msgstr "Снять отметку «важные»"
+
+msgid "Untitled"
+msgstr "Без названия"
 
 msgid "Untitled key"
 msgstr "Ключ без названия"
@@ -5151,6 +5389,9 @@ msgstr "Использовать эти поля"
 
 msgid "Use these languages"
 msgstr "Использовать эти языки"
+
+msgid "Use this token"
+msgstr "Использовать этот токен"
 
 msgid "Use up to 20 tags of 40 characters or fewer."
 msgstr "Используй до 20 тегов, каждый до 40 символов."
@@ -5292,6 +5533,15 @@ msgstr "Вчера был день отдыха"
 
 msgid "Yesterday was a rest day. Every grade counts toward today’s goal."
 msgstr "Вчера был день отдыха. Каждая оценка засчитывается в сегодняшнюю цель."
+
+msgid "Yomitan"
+msgstr "Yomitan"
+
+msgid "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+msgstr "Yomitan добавляет карточки в Lymi так же, как в Anki. Каждое слово, которое ты ищешь, он отправляет, чтобы проверить на дубликат, и Lymi ничего из этой проверки не сохраняет."
+
+msgid "Yomitan is disconnected"
+msgstr "Yomitan отключён"
 
 msgid "you"
 msgstr "ты"

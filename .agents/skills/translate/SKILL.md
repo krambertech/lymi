@@ -62,6 +62,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | archive (verb) | архівувати | архивировать |
 | restore | відновити | восстановить |
 | enrich | доповнити | дополнить |
+| highlight (from reading) | виділення | выделение |
 | field source | джерело поля | источник поля |
 | app language | мова застосунку | язык приложения |
 | meaning language | мова значень | язык значений |

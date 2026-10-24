@@ -739,6 +739,9 @@ export type CardsInput = z.infer<typeof CardsInput>;
 export const ActivityQuery = z.object({
   cursor: z.string().min(1).optional(),
   limit: z.coerce.number().int().min(1).max(200).optional(),
+  app: z.string().min(1).max(500).optional().meta({
+    description: "Only the writes of one connected app, API key or source, such as `readwise`",
+  }),
 });
 export type ActivityQuery = z.infer<typeof ActivityQuery>;
 
@@ -1089,6 +1092,54 @@ export const ApiKeyInput = z.object({
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;
 
+export const ReadwiseTokenInput = z.object({
+  token: z.string().trim().min(1, "Paste your Readwise token.").max(200),
+});
+export type ReadwiseTokenInput = z.infer<typeof ReadwiseTokenInput>;
+
+export const ReadwisePatchInput = z.object({
+  books: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        followed: z.boolean().optional(),
+        language: z.string().min(1).max(12).optional().meta({
+          description:
+            "For a book Lymi could not place: a primary subtag one of the learner's decks teaches",
+        }),
+      }),
+    )
+    .max(1000)
+    .optional(),
+  decks: z
+    .record(z.string().min(1).max(12), z.string().min(1))
+    .optional()
+    .meta({ description: "A deck per language, keyed by primary subtag" }),
+});
+export type ReadwisePatchInput = z.infer<typeof ReadwisePatchInput>;
+
 export const apiKeyLimits = {
   name: ApiKeyInput.shape.name.maxLength,
 } satisfies Record<string, number | null>;
+
+/**
+ * One call in the AnkiConnect protocol, which Yomitan and other reading tools speak. Lymi answers
+ * it at `/api/anki-connect`, with a Lymi key in `key`. `multi` nests further calls in `params`.
+ */
+export const AnkiConnectCall = z.object({
+  action: z.string(),
+  version: z.number().int().optional(),
+  params: z.record(z.string(), z.unknown()).optional(),
+  key: z.string().optional(),
+});
+export type AnkiConnectCall = z.infer<typeof AnkiConnectCall>;
+
+/** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
+export const AnkiConnectNote = z.object({
+  deckName: z.string(),
+  modelName: z.string(),
+  fields: z.record(z.string(), z.string()),
+  tags: z.array(z.string()).optional(),
+  options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
+});
+export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;

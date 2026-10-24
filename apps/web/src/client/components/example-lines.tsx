@@ -10,6 +10,8 @@ interface Props {
   translation?: string | null | undefined;
   /** Follows the translation, such as the AI's badge when the AI wrote only the translation. */
   badge?: ReactNode;
+  /** Right after the example's last word, before its translation, such as its play control. */
+  after?: ReactNode;
   className?: string | undefined;
 }
 
@@ -17,7 +19,15 @@ interface Props {
  * An example and its translation in parentheses, run on after it in `muted`. A translation that
  * reads in the other direction gets its own line, because a run-on would start at the wrong edge.
  */
-export function ExampleLines({ example, language, known, translation, badge, className }: Props) {
+export function ExampleLines({
+  example,
+  language,
+  known,
+  translation,
+  badge,
+  after,
+  className,
+}: Props) {
   const { i18n } = useLingui();
   const lang = language ?? undefined;
   const runsOn = textDirection(language) === textDirection(i18n.locale);
@@ -30,6 +40,7 @@ export function ExampleLines({ example, language, known, translation, badge, cla
   const sentence = (
     <p lang={lang} dir={textDirection(language)} className={className}>
       <ExampleText text={example} lang={lang} known={known} />
+      {after}
       {runsOn && translated && <> {translated}</>}
     </p>
   );

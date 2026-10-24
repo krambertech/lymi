@@ -1,11 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { BookOpen, KeyRound } from "lucide-react";
+import { BookA, Copy, KeyRound } from "lucide-react";
 import { FreshKey, lastUsed, shortDate } from "../components/api-keys-section";
+import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { InlineError } from "../components/inline-error";
-import { Screen } from "../components/layout/screen";
-import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
 import type { ApiKeySummary } from "../lib/api";
 
@@ -21,93 +20,184 @@ interface Props {
   making: boolean;
   onDone: () => void;
   onRevoke: (id: string) => void;
+  revoking: boolean;
+  onCopyAddress: () => void;
   error: string | null;
 }
 
 /**
- * Yomitan talks to Lymi as it would to Anki, so setting it up is pasting two things into its
- * Anki settings. This page hands over both, and the guide says where they go.
+ * Yomitan talks to Lymi as it would to Anki, so connecting it is pasting Lymi's address and a key
+ * into its Anki settings. Its page is on the template every app shares. docs/design/app-pages.md.
  */
 export function YomitanView(props: Props) {
   const { t } = useLingui();
+  const { current } = props;
+  const status = useStatus(current);
   return (
-    <Screen title={t`Yomitan`} width="md" back={{ label: t`Settings`, to: "/settings" }}>
-      <p className="max-w-[60ch] pb-6 text-base text-text-2">
+    <AppPage
+      appKey="yomitan"
+      name="Yomitan"
+      mark={<YomitanMark />}
+      status={status}
+      does={t`A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in.`}
+      action={
+        current && (
+          <Button size="sm" onClick={props.onCopyAddress}>
+            <Copy data-icon="inline-start" aria-hidden="true" />
+            <Trans>Copy address</Trans>
+          </Button>
+        )
+      }
+    >
+      {current === undefined ? (
+        <Skeleton className="h-40 w-full rounded-xl" />
+      ) : current === null ? (
+        <Connect {...props} />
+      ) : (
+        <>
+          <Settings {...props} current={current} />
+          {/* An API key's writes are audited under its id, so a replaced key's stay in Activity only. */}
+          <AppActivity appKey="yomitan" app={current.id} name="Yomitan" />
+          <Connect {...props} />
+          <AppStop
+            consequence={t`Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay.`}
+            label={t`Disconnect Yomitan`}
+            keep={t`Stay connected`}
+            onStop={() => props.onRevoke(current.id)}
+            stopping={props.revoking}
+          />
+        </>
+      )}
+    </AppPage>
+  );
+}
+
+/** Yomitan's icon is GPL-3.0 artwork with no separate licence, so a dictionary stands in for it. */
+function YomitanMark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="edge grid size-14 shrink-0 place-items-center rounded-lg bg-plate text-text"
+    >
+      <BookA className="size-7" strokeWidth={1.75} />
+    </span>
+  );
+}
+
+function useStatus(current: ApiKeySummary | null | undefined) {
+  const { t, i18n } = useLingui();
+  if (current === undefined) return undefined;
+  if (current === null) return { label: t`Not connected`, tone: "muted" as const };
+  const made = shortDate(i18n, current.createdAt);
+  if (!current.lastRequest) {
+    return {
+      label: t`Not used yet`,
+      tone: "muted" as const,
+      detail: t`Key made ${made}. Paste it into Yomitan’s Anki settings.`,
+    };
+  }
+  const used = lastUsed(i18n, current.lastRequest);
+  return {
+    label: t`Connected`,
+    tone: "good" as const,
+    detail: (
+      <Trans>
+        Key made {made} · {used}
+      </Trans>
+    ),
+  };
+}
+
+/** Settings: the key Yomitan holds, and the way to replace it. */
+function Settings(props: Props & { current: ApiKeySummary }) {
+  const { t } = useLingui();
+  return (
+    <AppSection title={t`Settings`}>
+      <div className="edge grid justify-items-start gap-3 rounded-xl bg-plate px-4 py-4">
+        {props.fresh ? (
+          <FreshKey
+            name={props.fresh.name}
+            value={props.fresh.key}
+            onDone={props.onDone}
+            onRevoke={() => props.fresh && props.onRevoke(props.fresh.id)}
+            inPlate
+          />
+        ) : (
+          <>
+            <div className="grid gap-0.5">
+              <span className="text-md font-medium text-text">
+                <Trans>API key</Trans>
+              </span>
+              <span className="text-sm text-muted text-pretty">
+                <Trans>A new key replaces this one, and this one stops working.</Trans>
+              </span>
+            </div>
+            <Button variant="secondary" loading={props.making} onClick={props.onMake}>
+              <KeyRound data-icon="inline-start" aria-hidden="true" />
+              <Trans>Replace the key</Trans>
+            </Button>
+          </>
+        )}
+        <KeyError error={props.error} />
+      </div>
+    </AppSection>
+  );
+}
+
+/** How it connects: the steps, Lymi's address, and the first key until there is one. */
+function Connect(props: Props) {
+  const { t } = useLingui();
+  return (
+    <AppConnect
+      name="Yomitan"
+      intro={
         <Trans>
-          A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and
-          press + to add it as a card, with its reading, its meaning and the sentence you read it
-          in.
+          Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check
+          for a duplicate, and Lymi keeps nothing from a check.
         </Trans>
-      </p>
-
-      <SettingsGroup
-        title={t`Setup guide`}
-        description={t`Where to paste the address and key in Yomitan, and how to choose a deck for each language.`}
-      >
-        <Button className="w-fit" render={<a href={props.guide} />}>
-          <BookOpen data-icon="inline-start" aria-hidden="true" />
-          <Trans>Open the setup guide</Trans>
-        </Button>
-      </SettingsGroup>
-
-      <SettingsGroup
-        title={t`Address and key`}
-        description={t`Paste both into Yomitan’s Anki settings.`}
-      >
+      }
+      steps={[
+        <Trans key="copy">Copy Lymi’s address and make a key for Yomitan.</Trans>,
+        <Trans key="paste">
+          In Yomitan’s settings, turn on <span className="font-medium text-text">Anki</span> and
+          paste both.
+        </Trans>,
+        <Trans key="deck">
+          For each dictionary, choose a Lymi deck and the note type{" "}
+          <span className="font-medium text-text">Lymi card</span>.
+        </Trans>,
+      ]}
+      guide={props.guide}
+    >
+      <div className="grid gap-4 border-t border-edge pt-4">
         <div className="grid gap-1.5">
           <span className="text-sm font-medium text-text-2">
             <Trans>AnkiConnect server address</Trans>
           </span>
           <CopyField value={props.address} label={t`AnkiConnect server address`} singleLine />
         </div>
-
-        <div className="grid gap-1.5">
-          <span className="text-sm font-medium text-text-2">
-            <Trans>API key</Trans>
-          </span>
-          {props.fresh ? (
-            <FreshKey
-              name={props.fresh.name}
-              value={props.fresh.key}
-              onDone={props.onDone}
-              onRevoke={() => props.fresh && props.onRevoke(props.fresh.id)}
-            />
-          ) : (
-            <KeyState {...props} />
-          )}
-          {props.error && (
-            <p className="text-sm" role="alert">
-              <InlineError>{props.error}</InlineError>
+        {props.current === null && (
+          <div className="grid justify-items-start gap-2">
+            <Button variant="primary" loading={props.making} onClick={props.onMake}>
+              <KeyRound data-icon="inline-start" aria-hidden="true" />
+              <Trans>Make a key for Yomitan</Trans>
+            </Button>
+            <p className="text-sm text-muted">
+              <Trans>It can add cards. Lymi shows it once.</Trans>
             </p>
-          )}
-        </div>
-      </SettingsGroup>
-    </Screen>
+            <KeyError error={props.error} />
+          </div>
+        )}
+      </div>
+    </AppConnect>
   );
 }
 
-function KeyState({ current, onMake, making }: Props) {
-  const { i18n } = useLingui();
-  if (current === undefined) return <Skeleton className="h-10 w-64" />;
+function KeyError({ error }: { error: string | null }) {
+  if (!error) return null;
   return (
-    <div className="grid justify-items-start gap-2">
-      {current && (
-        <p className="text-sm text-muted tabular-nums">
-          <Trans>
-            Key made {shortDate(i18n, current.createdAt)} · {lastUsed(i18n, current.lastRequest)}. A
-            new key replaces it, and this one stops working.
-          </Trans>
-        </p>
-      )}
-      <Button variant={current ? "secondary" : "primary"} loading={making} onClick={onMake}>
-        <KeyRound data-icon="inline-start" aria-hidden="true" />
-        {current ? <Trans>Replace the key</Trans> : <Trans>Make a key for Yomitan</Trans>}
-      </Button>
-      {!current && (
-        <p className="text-sm text-muted">
-          <Trans>It can add cards. Lymi shows it once.</Trans>
-        </p>
-      )}
-    </div>
+    <p className="text-sm" role="alert">
+      <InlineError>{error}</InlineError>
+    </p>
   );
 }

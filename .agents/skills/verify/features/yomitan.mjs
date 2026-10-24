@@ -105,6 +105,12 @@ export default async function drive({ page, step, api, expect }) {
     async () => {
       const { entries } = await api("/api/activity");
       expect(entries[0]).toMatchObject({ kind: "cards_added", app: "Yomitan" });
+      await page.reload();
+      await expect(page.getByText("Connected", { exact: true })).toBeVisible();
+      await expect(page.getByRole("button", { name: /^Added 1 card to 日本語/ })).toBeVisible();
+      await expect(
+        page.getByRole("link", { name: "Everything Yomitan did, in Activity" }),
+      ).toBeVisible();
       await page.goBack();
       await expect(page.getByRole("link", { name: /^Yomitan/ })).toContainText("used");
       return { activity: entries[0] };

@@ -855,6 +855,9 @@ msgstr "Файл Lymi з іншого акаунта Lymi"
 msgid "A new deck"
 msgstr "Нова колода"
 
+msgid "A new key replaces this one, and this one stops working."
+msgstr "Новий ключ замінить цей, і цей перестане працювати."
+
 msgid "A PDF of the lesson"
 msgstr "PDF уроку"
 
@@ -1047,8 +1050,8 @@ msgstr "Додано сьогодні"
 msgid "Adding…"
 msgstr "Додаємо…"
 
-msgid "Address and key"
-msgstr "Адреса і ключ"
+msgid "Address copied"
+msgstr "Адресу скопійовано"
 
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "Після підключення надішли урок своєму AI-помічнику й попроси створити картки."
@@ -1778,6 +1781,12 @@ msgstr "Скопіюється, коли збережеш"
 msgid "Copy"
 msgstr "Копіювати"
 
+msgid "Copy address"
+msgstr "Копіювати адресу"
+
+msgid "Copy Lymi’s address and make a key for Yomitan."
+msgstr "Скопіюй адресу Lymi і створи ключ для Yomitan."
+
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Скопіюй набір у Quizlet ще раз через Export і встав його."
 
@@ -1812,6 +1821,9 @@ msgstr "Не вдалося перевірити цей пристрій. Оно
 
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Не вдалося підключитися до Lymi. Спробуй ще раз за хвилину."
+
+msgid "Couldn’t copy the address. Copy it under How it connects."
+msgstr "Не вдалося скопіювати адресу. Скопіюй її в розділі «Як це підключається»."
 
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Не вдалося видалити акаунт. Перевір з’єднання й повтори спробу."
@@ -2167,6 +2179,9 @@ msgstr "Відключити"
 msgid "Disconnect Readwise"
 msgstr "Відключити Readwise"
 
+msgid "Disconnect Yomitan"
+msgstr "Відключити Yomitan"
+
 msgid "Dismiss"
 msgstr "Закрити"
 
@@ -2506,6 +2521,9 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для початківців"
 
+msgid "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
+msgstr "Для кожного словника вибери колоду Lymi і тип нотатки <0>Lymi card</0>."
+
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "Для скриптів і curl. Для AI-застосунків використовуй «Підключені застосунки»."
 
@@ -2788,6 +2806,9 @@ msgstr "В іншому акаунті відкрий меню колоди й �
 msgid "In use"
 msgstr "Використовуються"
 
+msgid "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+msgstr "У налаштуваннях Yomitan увімкни <0>Anki</0> і встав обидва."
+
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Містить твій розклад та історію повторень. Експорт не змінює колоду."
 
@@ -2965,10 +2986,11 @@ msgstr "Переклад має бути коротшим за 250 символ�
 msgid "Key made {0} · {1}"
 msgstr "Ключ створено {0} · {1}"
 
-#. placeholder {0}: shortDate(i18n, current.createdAt)
-#. placeholder {1}: lastUsed(i18n, current.lastRequest)
-msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
-msgstr "Ключ створено {0} · {1}. Новий ключ замінить його, і цей перестане працювати."
+msgid "Key made {made} · {used}"
+msgstr "Ключ створено {made} · {used}"
+
+msgid "Key made {made}. Paste it into Yomitan’s Anki settings."
+msgstr "Ключ створено {made}. Встав його в налаштування Anki у Yomitan."
 
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
@@ -3154,6 +3176,9 @@ msgstr "Lymi пише перші колоди. А поки що створи в�
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
+
+msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
+msgstr "Lymi відкличе ключ Yomitan, тож Yomitan більше не зможе додавати картки чи шукати дублікати. Додані ним картки залишаться."
 
 msgid "Lymi starts when you sign in to your Mac, ready for quick add."
 msgstr "Lymi запускається, щойно ви входите на Mac, і готовий до швидкого додавання."
@@ -3568,6 +3593,9 @@ msgstr "Не вказано"
 msgid "Not started"
 msgstr "Ще не почато"
 
+msgid "Not used yet"
+msgstr "Ще не використано"
+
 msgid "Note"
 msgstr "Примітка"
 
@@ -3763,9 +3791,6 @@ msgstr "Відкрити Системні параметри"
 msgid "Open the invitation"
 msgstr "Відкрити запрошення"
 
-msgid "Open the setup guide"
-msgstr "Відкрити інструкцію"
-
 msgid "Open this page from Lymi for Mac to sign in there."
 msgstr "Відкрийте цю сторінку з Lymi для Mac, щоб увійти в нього."
 
@@ -3850,9 +3875,6 @@ msgstr "Встав набір, який ти створив у Quizlet. Терм
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Встав транскрипт, свої нотатки або текст уроку"
-
-msgid "Paste both into Yomitan’s Anki settings."
-msgstr "Встав обидва значення в налаштування Anki в Yomitan."
 
 msgid "Paste it in Lymi and connect."
 msgstr "Встав його в Lymi й підключи."
@@ -4540,9 +4562,6 @@ msgstr "Назва набору"
 
 msgid "Settings"
 msgstr "Налаштування"
-
-msgid "Setup guide"
-msgstr "Інструкція з налаштування"
 
 msgid "Sexual content"
 msgstr "Сексуальний вміст"
@@ -5441,9 +5460,6 @@ msgstr "Коли більшість розділу засвоєно, насту�
 msgid "Where the cards go"
 msgstr "Куди підуть картки"
 
-msgid "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
-msgstr "Куди вставити адресу й ключ у Yomitan і як вибрати колоду для кожної мови."
-
 msgid "Which days you reviewed"
 msgstr "Дні, коли були повторення"
 
@@ -5482,6 +5498,12 @@ msgstr "Учора був день відпочинку. Кожна оцінка
 
 msgid "Yomitan"
 msgstr "Yomitan"
+
+msgid "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+msgstr "Yomitan додає картки в Lymi так само, як в Anki. Кожне слово, яке ти шукаєш, він надсилає, щоб перевірити на дублікат, і Lymi нічого з цієї перевірки не зберігає."
+
+msgid "Yomitan is disconnected"
+msgstr "Yomitan відключено"
 
 msgid "you"
 msgstr "ти"

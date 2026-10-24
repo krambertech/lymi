@@ -855,6 +855,9 @@ msgstr "A Lymi file from another Lymi account"
 msgid "A new deck"
 msgstr "A new deck"
 
+msgid "A new key replaces this one, and this one stops working."
+msgstr "A new key replaces this one, and this one stops working."
+
 msgid "A PDF of the lesson"
 msgstr "A PDF of the lesson"
 
@@ -1047,8 +1050,8 @@ msgstr "Added today"
 msgid "Adding…"
 msgstr "Adding…"
 
-msgid "Address and key"
-msgstr "Address and key"
+msgid "Address copied"
+msgstr "Address copied"
 
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "After connecting, paste a lesson into your assistant and ask it to make cards."
@@ -1778,6 +1781,12 @@ msgstr "Copied when you save"
 msgid "Copy"
 msgstr "Copy"
 
+msgid "Copy address"
+msgstr "Copy address"
+
+msgid "Copy Lymi’s address and make a key for Yomitan."
+msgstr "Copy Lymi’s address and make a key for Yomitan."
+
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Copy the set again from Quizlet with Export, then paste it."
 
@@ -1812,6 +1821,9 @@ msgstr "Couldn’t check this device. Reload to try again."
 
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Couldn’t connect to Lymi. Try again in a moment."
+
+msgid "Couldn’t copy the address. Copy it under How it connects."
+msgstr "Couldn’t copy the address. Copy it under How it connects."
 
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Couldn’t delete your account. Check your connection and try again."
@@ -2167,6 +2179,9 @@ msgstr "Disconnect"
 msgid "Disconnect Readwise"
 msgstr "Disconnect Readwise"
 
+msgid "Disconnect Yomitan"
+msgstr "Disconnect Yomitan"
+
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -2506,6 +2521,9 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
 
+msgid "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
+msgstr "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
+
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "For scripts and curl. For AI apps, use Connected apps instead."
 
@@ -2788,6 +2806,9 @@ msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or 
 msgid "In use"
 msgstr "In use"
 
+msgid "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+msgstr "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Includes your schedule and review history. Exporting doesn’t change the deck."
 
@@ -2965,10 +2986,11 @@ msgstr "Keep the translation under 250 characters."
 msgid "Key made {0} · {1}"
 msgstr "Key made {0} · {1}"
 
-#. placeholder {0}: shortDate(i18n, current.createdAt)
-#. placeholder {1}: lastUsed(i18n, current.lastRequest)
-msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
-msgstr "Key made {0} · {1}. A new key replaces it, and this one stops working."
+msgid "Key made {made} · {used}"
+msgstr "Key made {made} · {used}"
+
+msgid "Key made {made}. Paste it into Yomitan’s Anki settings."
+msgstr "Key made {made}. Paste it into Yomitan’s Anki settings."
 
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -3154,6 +3176,9 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
+msgstr "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
 
 msgid "Lymi starts when you sign in to your Mac, ready for quick add."
 msgstr "Lymi starts when you sign in to your Mac, ready for quick add."
@@ -3568,6 +3593,9 @@ msgstr "Not set"
 msgid "Not started"
 msgstr "Not started"
 
+msgid "Not used yet"
+msgstr "Not used yet"
+
 msgid "Note"
 msgstr "Note"
 
@@ -3763,9 +3791,6 @@ msgstr "Open System Settings"
 msgid "Open the invitation"
 msgstr "Open the invitation"
 
-msgid "Open the setup guide"
-msgstr "Open the setup guide"
-
 msgid "Open this page from Lymi for Mac to sign in there."
 msgstr "Open this page from Lymi for Mac to sign in there."
 
@@ -3850,9 +3875,6 @@ msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pict
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Paste a transcript, your notes or the lesson’s text"
-
-msgid "Paste both into Yomitan’s Anki settings."
-msgstr "Paste both into Yomitan’s Anki settings."
 
 msgid "Paste it in Lymi and connect."
 msgstr "Paste it in Lymi and connect."
@@ -4540,9 +4562,6 @@ msgstr "Set name"
 
 msgid "Settings"
 msgstr "Settings"
-
-msgid "Setup guide"
-msgstr "Setup guide"
 
 msgid "Sexual content"
 msgstr "Sexual content"
@@ -5441,9 +5460,6 @@ msgstr "When most of a section is known, the next one is ready and you choose wh
 msgid "Where the cards go"
 msgstr "Where the cards go"
 
-msgid "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
-msgstr "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
-
 msgid "Which days you reviewed"
 msgstr "Which days you reviewed"
 
@@ -5482,6 +5498,12 @@ msgstr "Yesterday was a rest day. Every grade counts toward today’s goal."
 
 msgid "Yomitan"
 msgstr "Yomitan"
+
+msgid "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+msgstr "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+
+msgid "Yomitan is disconnected"
+msgstr "Yomitan is disconnected"
 
 msgid "you"
 msgstr "you"

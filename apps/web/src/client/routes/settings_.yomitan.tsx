@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "../components/ui/toast";
 import { api, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { productUrl, publicSiteUrl } from "../lib/origins";
@@ -33,11 +34,22 @@ function YomitanRoute() {
   });
   const revoke = useMutation({
     mutationFn: (id: string) => api.revokeKey(id),
-    onSuccess: () => {
+    onSuccess: (_, id) => {
+      // Revoking the key just made only takes back that key; revoking the one in use disconnects.
+      if (id === current?.id && !make.data) toast.add({ title: t`Yomitan is disconnected` });
       make.reset();
       void qc.invalidateQueries({ queryKey: keysQuery.queryKey });
     },
   });
+  const address = productUrl("/api/anki-connect");
+  const copyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      toast.add({ title: t`Address copied` });
+    } catch {
+      toast.add({ title: t`Couldn’t copy the address. Copy it under How it connects.` });
+    }
+  };
   const failed = make.error ?? revoke.error ?? (keys.isError ? keys.error : null);
   const error = failed
     ? errorMessage(failed)
@@ -47,7 +59,7 @@ function YomitanRoute() {
 
   return (
     <YomitanView
-      address={productUrl("/api/anki-connect")}
+      address={address}
       guide={publicSiteUrl("/docs/yomitan")}
       current={current}
       fresh={
@@ -59,6 +71,8 @@ function YomitanRoute() {
       making={make.isPending}
       onDone={() => make.reset()}
       onRevoke={(id) => revoke.mutate(id)}
+      revoking={revoke.isPending}
+      onCopyAddress={() => void copyAddress()}
       error={error}
     />
   );

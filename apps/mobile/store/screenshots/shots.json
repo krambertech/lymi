@@ -10,66 +10,90 @@
       "id": "01-today",
       "src": "01-today.png",
       "theme": "light",
-      "crop": 0.065,
+      "word": {
+        "en": "9 cards",
+        "uk": "9 карток",
+        "ru": "9 карточек"
+      },
       "caption": {
-        "en": "Cards come back right before you'd forget",
-        "uk": "Картки повертаються саме вчасно",
-        "ru": "Карточки возвращаются как раз вовремя"
+        "en": "Words come back just before they slip",
+        "uk": "Слова повертаються, щойно почнуть забуватися",
+        "ru": "Слова возвращаются, как только начнут забываться"
       }
     },
     {
       "id": "02-review",
       "src": "02-review.png",
       "theme": "light",
-      "crop": 0.065,
+      "word": {
+        "en": "la lampada",
+        "uk": "saudade",
+        "ru": "le scale"
+      },
       "caption": {
-        "en": "Think, turn, grade. Nothing to type.",
-        "uk": "Пригадай, переверни, оціни",
-        "ru": "Вспомни, переверни, оцени"
+        "en": "Remember it, then flip. No typing.",
+        "uk": "Пригадай і переверни. Друкувати не треба.",
+        "ru": "Вспомни и переверни. Печатать не нужно."
       }
     },
     {
       "id": "03-ai",
       "src": "03-ai.png",
       "theme": "light",
-      "crop": 0.065,
+      "word": {
+        "en": "affollato",
+        "uk": "affollato",
+        "ru": "affollato"
+      },
       "caption": {
-        "en": "AI fills the gaps, and marks what it wrote",
-        "uk": "AI доповнює картку й позначає, що написав",
-        "ru": "AI дополняет карточку и отмечает, что написал"
+        "en": "AI adds the example, and says so",
+        "uk": "AI дописує приклад і позначає, що це він",
+        "ru": "AI дописывает пример и отмечает, что это он"
       }
     },
     {
       "id": "04-japanese",
       "src": "04-japanese.png",
       "theme": "light",
-      "crop": 0.065,
+      "word": {
+        "en": "天気",
+        "uk": "天気",
+        "ru": "天気"
+      },
       "caption": {
-        "en": "Any language, in any script",
-        "uk": "Будь-яка мова, будь-яке письмо",
-        "ru": "Любой язык, любое письмо"
+        "en": "Furigana stays until you know the word",
+        "uk": "Фуріґана — доки слово не стане знайомим",
+        "ru": "Фуригана — пока слово не станет знакомым"
       }
     },
     {
       "id": "05-library",
       "src": "05-library.png",
       "theme": "light",
-      "crop": 0.065,
+      "word": {
+        "en": "Lezione 12",
+        "uk": "Lezione 12",
+        "ru": "Lezione 12"
+      },
       "caption": {
-        "en": "A deck for every lesson",
-        "uk": "Окрема колода для кожного уроку",
-        "ru": "Отдельная колода для каждого урока"
+        "en": "Each lesson gets its own deck",
+        "uk": "Кожен урок — окрема колода",
+        "ru": "Каждый урок — отдельная колода"
       }
     },
     {
       "id": "06-streak",
       "src": "06-streak.png",
       "theme": "dark",
-      "crop": 0.065,
+      "word": {
+        "en": "5 days",
+        "uk": "5 днів",
+        "ru": "5 дней"
+      },
       "caption": {
-        "en": "The flame grows with every review",
-        "uk": "Полум’я росте з кожним повторенням",
-        "ru": "Пламя растёт с каждым повторением"
+        "en": "Skip a day and the flame stays lit",
+        "uk": "Пропустиш день — вогник не згасне",
+        "ru": "Пропустишь день — огонёк не погаснет"
       }
     }
   ]

@@ -32,7 +32,7 @@ async function render(params, viewport, out) {
 }
 
 for (const locale of locales) {
-  for (const shot of shots) {
+  for (const [index, shot] of shots.entries()) {
     const caption = shot.caption[locale];
     if (!caption) continue;
     const params = {
@@ -41,7 +41,8 @@ for (const locale of locales) {
       theme: shot.theme,
       src: pathToFileURL(join(here, "raw", locale, shot.src)).href,
       caption,
-      crop: String(shot.crop ?? 0),
+      index: String(index),
+      word: shot.word?.[locale] ?? "",
     };
     const out = (size) => join(here, "out", style, locale, size, `${shot.id}.jpg`);
     // App Store Connect's large and medium Dynamic Island classes.

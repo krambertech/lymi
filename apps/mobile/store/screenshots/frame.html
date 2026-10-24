@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <style>
-  /* One store screenshot. render.mjs sets the query: style, theme, src, caption, crop. */
+  /* One store screenshot. render.mjs sets the query: style, theme, size, index, src, caption, word. */
   @font-face {
     font-family: "Onest";
     src: url("../../../../node_modules/.pnpm/@fontsource-variable+onest@5.3.1/node_modules/@fontsource-variable/onest/files/onest-latin-wght-normal.woff2") format("woff2");
@@ -24,8 +24,7 @@
     --text-2: oklch(0.38 0.016 55);
     --edge: oklch(0.2 0.03 60 / 0.1);
     --pool: oklch(0.9 0.09 78 / 0.5);
-    --bezel: oklch(0.16 0.008 62);
-  }
+    }
   /* Google Play allows at most 1:2, so its size is wider than an iPhone screen. */
   [data-size="play"] { --w: 1440px; --h: 2880px; }
   [data-size="feature"] { --w: 1024px; --h: 500px; }
@@ -53,11 +52,10 @@
     letter-spacing: -0.025em;
     text-wrap: balance;
   }
-  .shot { position: absolute; display: block; }
-
-  /* A: flat canvas in the screen's own theme, the screen with a hairline edge. */
-  [data-style="canvas"] .caption { top: 220px; }
-  [data-style="canvas"] .shot {
+  /* Canvas: flat ground in the screen's own theme, the screen with a hairline edge. */
+  .shot {
+    position: absolute;
+    display: block;
     width: 990px;
     inset-inline-start: calc((var(--w) - 990px) / 2);
     top: 650px;
@@ -65,41 +63,24 @@
     box-shadow: 0 0 0 4px var(--edge);
   }
 
-  /* B: the lit room, the lantern over the caption and the screen in a dark bezel. */
-  [data-style="room"] { --canvas: oklch(0.17 0.008 62); --text: oklch(0.95 0.01 85); }
-  [data-style="room"] body::before {
-    content: "";
-    position: absolute;
-    inset: -400px -200px auto;
-    height: 1400px;
-    background: radial-gradient(closest-side, oklch(0.78 0.15 74 / 0.22), transparent);
-  }
-  [data-style="room"] .mark { position: absolute; width: 150px; inset-inline-start: calc((var(--w) - 150px) / 2); top: 170px; }
-  [data-style="room"] .caption { top: 380px; text-align: center; }
-  [data-style="room"] .device {
-    position: absolute;
-    width: 1040px;
-    inset-inline-start: calc((var(--w) - 1040px) / 2);
-    top: 820px;
-    padding: 26px;
-    border-radius: 150px;
-    background: var(--bezel);
-    box-shadow: 0 0 0 4px oklch(1 0 0 / 0.1);
-  }
-  [data-style="room"] .device .shot { position: static; width: 100%; border-radius: 124px; }
+  /* Dusk: the set steps from morning to night, one ground per shot. */
+  [data-style="dusk"][data-index="0"] { --canvas: oklch(0.975 0.004 80); }
+  [data-style="dusk"][data-index="1"] { --canvas: oklch(0.95 0.035 82); }
+  [data-style="dusk"][data-index="2"] { --canvas: oklch(0.89 0.08 78); }
+  [data-style="dusk"][data-index="3"] { --canvas: oklch(0.8 0.15 72); --text: oklch(0.25 0.05 60); }
+  [data-style="dusk"][data-index="4"] { --canvas: oklch(0.32 0.04 55); --text: oklch(0.95 0.01 85); --edge: oklch(1 0 0 / 0.1); }
+  [data-style="dusk"][data-index="5"] { --canvas: oklch(0.17 0.008 62); --text: oklch(0.95 0.01 85); }
 
-  /* C: a close-up, the screen enlarged and cropped to what the caption names. */
-  [data-style="close"] .caption { top: 200px; }
-  [data-style="close"] .crop {
-    position: absolute;
-    inset-inline: 0;
-    top: 620px;
-    bottom: 0;
-    overflow: hidden;
-  }
-  [data-style="close"] .shot { width: 100%; inset-inline-start: 0; }
+  /* Amber: every day shot on the flame's amber, the night shot in the room. */
+  [data-style="amber"][data-theme="light"] { --canvas: oklch(0.8 0.15 72); --text: oklch(0.25 0.05 60); --edge: oklch(0.25 0.05 60 / 0.16); }
 
-  /* Play's feature graphic: the lantern and the name in the lit room. */
+  /* Word: the card's term set large over the caption, where a shot has one. */
+  .word { position: absolute; inset-inline: 110px; top: 150px; font-weight: 600; font-size: 280px; line-height: 1; letter-spacing: -0.035em; white-space: nowrap; color: oklch(0.64 0.16 56); }
+  [data-theme="dark"] .word { color: oklch(0.84 0.13 78); }
+  [data-style="word"].has-word .caption { top: 500px; font-size: 84px; color: var(--text-2); }
+  [data-style="word"].has-word .shot { width: 900px; inset-inline-start: calc((var(--w) - 900px) / 2); top: 880px; border-radius: 95px; }
+
+  /* Play's feature graphic: the lockup in the lit room. */
   [data-style="feature"] { --canvas: oklch(0.17 0.008 62); }
   [data-style="feature"] body::before {
     content: "";
@@ -113,11 +94,9 @@
 </style>
 </head>
 <body>
-<img class="mark" alt="" src="../../../site/public/brand/lantern-dark-flat.svg" hidden>
 <img class="lockup" alt="Lymi" src="../../../site/public/brand/lockup-dark.svg" hidden>
 <p class="caption"></p>
-<div class="device" hidden></div>
-<div class="crop" hidden></div>
+<p class="word" hidden></p>
 <img class="shot" alt="">
 <script>
   const q = new URLSearchParams(location.search);
@@ -131,8 +110,14 @@
   // A long translation shrinks until it fits three lines above the screen; render.mjs calls it once Onest has loaded.
   window.fit = () => {
     if (style === "feature") return;
-    let size = 116;
-    while (caption.getBoundingClientRect().height > size * 1.08 * 3 + 1 && size > 80) {
+    const line = document.querySelector(".word");
+    let wordSize = 280;
+    while (!line.hidden && line.scrollWidth > line.clientWidth && wordSize > 120) {
+      wordSize -= 10;
+      line.style.fontSize = `${wordSize}px`;
+    }
+    let size = Number.parseFloat(getComputedStyle(caption).fontSize);
+    while (caption.getBoundingClientRect().height > size * 1.08 * 3 + 1 && size > 60) {
       size -= 4;
       caption.style.fontSize = `${size}px`;
     }
@@ -142,18 +127,13 @@
     shot.remove();
     document.querySelector(".lockup").hidden = false;
   } else shot.src = q.get("src");
-  if (style === "room") {
-    document.querySelector(".mark").hidden = false;
-    const device = document.querySelector(".device");
-    device.hidden = false;
-    device.append(shot);
-  }
-  if (style === "close") {
-    const crop = document.querySelector(".crop");
-    crop.hidden = false;
-    crop.append(shot);
-    // crop is the share of the screen's height hidden above the frame.
-    shot.style.top = `${-Number(q.get("crop") ?? 0) * innerWidth * (2868 / 1320)}px`;
+  document.documentElement.dataset.index = q.get("index") ?? "0";
+  const word = q.get("word");
+  if (style === "word" && word) {
+    document.documentElement.classList.add("has-word");
+    const line = document.querySelector(".word");
+    line.textContent = word;
+    line.hidden = false;
   }
 </script>
 </body>

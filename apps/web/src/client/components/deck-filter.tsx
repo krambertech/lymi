@@ -6,9 +6,10 @@ import {
   type FilterContext,
   type FilterField,
   type FilterKey,
-  keeps,
+  filterFields,
   ON,
   toggleValue,
+  valueCounts,
 } from "@lymi/client/deck-filters";
 import { type DeckFilters, deckTags, noFilters } from "@lymi/client/deck-list";
 import { isolate, unisolate } from "@lymi/core";
@@ -24,7 +25,15 @@ import {
   Tag,
   X,
 } from "lucide-react";
-import { type KeyboardEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  type Ref,
+  type RefObject,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { bidi } from "../lib/bidi";
 import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
@@ -141,7 +150,7 @@ function OnCount({ count }: { count: number }) {
   );
 }
 
-/** A value's name with how many cards it keeps. */
+/** A value's name with how many cards it keeps; the row's name says they are cards. */
 function ValueLabel({ name, count }: { name: string; count: number }) {
   const { i18n } = useLingui();
   return (
@@ -150,6 +159,12 @@ function ValueLabel({ name, count }: { name: string; count: number }) {
       <span className="ms-auto ps-3 text-sm text-muted tabular-nums">{i18n.number(count)}</span>
     </>
   );
+}
+
+/** "Lesson 4, 2 cards", so a screen reader never runs the count into the name. */
+function valueRowLabel(name: string, count: number) {
+  const label = unisolate(name);
+  return plural(count, { one: `${label}, # card`, other: `${label}, # cards` });
 }
 
 /** A field's values: rows that tick, or for a one-of field a set with Any first. */
@@ -163,6 +178,13 @@ function FieldValues({
   const { t } = useLingui();
   const { valueName } = useFilterNames(ctx);
   const chosen = field.get(filters);
+  const valuesKey = values.join("\u0000");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the key stands for the values
+  const counts = useMemo(
+    () => valueCounts(ctx, filters, field.key, values),
+    [ctx, filters, field.key, valuesKey],
+  );
+  const count = (value: string | null) => counts.get(value) ?? 0;
   const report = () => captureAnalytics("deck_filter_added", { kind: analyticsKind[field.key] });
 
   if (field.pick === "one") {
@@ -174,15 +196,21 @@ function FieldValues({
           setFilters(field.set(filters, value === ANY ? [] : [value]));
         }}
       >
-        <DropdownMenuRadioItem value={ANY} closeOnClick={false}>
-          <ValueLabel name={t`Any time`} count={keeps(ctx, filters, field.key, null)} />
+        <DropdownMenuRadioItem
+          value={ANY}
+          closeOnClick={false}
+          aria-label={valueRowLabel(t`Any time`, count(null))}
+        >
+          <ValueLabel name={t`Any time`} count={count(null)} />
         </DropdownMenuRadioItem>
         {values.map((value) => (
-          <DropdownMenuRadioItem key={value} value={value} closeOnClick={false}>
-            <ValueLabel
-              name={valueName(field.key, value)}
-              count={keeps(ctx, filters, field.key, value)}
-            />
+          <DropdownMenuRadioItem
+            key={value}
+            value={value}
+            closeOnClick={false}
+            aria-label={valueRowLabel(valueName(field.key, value), count(value))}
+          >
+            <ValueLabel name={valueName(field.key, value)} count={count(value)} />
           </DropdownMenuRadioItem>
         ))}
       </DropdownMenuRadioGroup>
@@ -199,6 +227,7 @@ function FieldValues({
             if (on) report();
             setFilters(toggleValue(filters, field.key, value, on));
           }}
+          aria-label={valueRowLabel(valueName(field.key, value), count(value))}
         >
           {field.key === "state" && (
             <StateIcon
@@ -206,10 +235,7 @@ function FieldValues({
               className={menuMarkColour[value as keyof typeof menuMarkColour]}
             />
           )}
-          <ValueLabel
-            name={valueName(field.key, value)}
-            count={keeps(ctx, filters, field.key, value)}
-          />
+          <ValueLabel name={valueName(field.key, value)} count={count(value)} />
         </DropdownMenuCheckboxItem>
       ))}
     </>
@@ -219,7 +245,12 @@ function FieldValues({
 const isRtl = (el: Element) => getComputedStyle(el).direction === "rtl";
 
 /** Filter: the fields, then one field's values. The button counts the fields that are on. */
-export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
+export function FilterMenu({
+  filters,
+  setFilters,
+  ctx,
+  triggerRef,
+}: FilterProps & { triggerRef?: Ref<HTMLButtonElement> | undefined }) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
   const [picking, setPicking] = useState<FilterKey | null>(null);
@@ -230,6 +261,10 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
   const chosen = picking ? fields.find((f) => f.field.key === picking) : undefined;
   const { fieldName } = useFilterNames(ctx);
   const on = activeFields(filters).length;
+  const importantCount = useMemo(
+    () => (open ? (valueCounts(ctx, filters, "important", [ON]).get(ON) ?? 0) : 0),
+    [open, ctx, filters],
+  );
 
   useLayoutEffect(() => {
     if (!focusAfter.current) return;
@@ -277,6 +312,7 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
       <DropdownMenuTrigger
         render={
           <Button
+            ref={triggerRef}
             size="sm"
             aria-label={
               on > 0
@@ -305,7 +341,7 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
             <DropdownMenuItem
               closeOnClick={false}
               onClick={(e) => back(e.detail === 0)}
-              aria-label={t`Back to all filters`}
+              aria-label={t`Back to all filters, ${{ field: fieldName[chosen.field.key] }}`}
               className="text-text-2"
             >
               <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
@@ -329,6 +365,7 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
             {fields.map(({ field }) => {
               const values = field.get(filters);
               const Icon = fieldIcon[field.key];
+              const flagged = field.pick === "flag" ? importantCount : 0;
               // A flag has one value, so its row ticks at the end rather than opening a list of one.
               if (field.pick === "flag") {
                 return (
@@ -337,16 +374,14 @@ export function FilterMenu({ filters, setFilters, ctx }: FilterProps) {
                     data-field={field.key}
                     icon={<Icon className="text-text-2" aria-hidden="true" />}
                     checked={values.length > 0}
+                    aria-label={valueRowLabel(fieldName[field.key], flagged)}
                     onCheckedChange={(next) => {
                       if (next)
                         captureAnalytics("deck_filter_added", { kind: analyticsKind[field.key] });
                       setFilters(toggleValue(filters, field.key, ON, next));
                     }}
                   >
-                    <ValueLabel
-                      name={fieldName[field.key]}
-                      count={keeps(ctx, filters, field.key, ON)}
-                    />
+                    <ValueLabel name={fieldName[field.key]} count={flagged} />
                   </DropdownMenuCheckboxItem>
                 );
               }
@@ -386,7 +421,16 @@ function ConditionChip({
   filters,
   setFilters,
   ctx,
-}: FilterProps & { field: FilterField; values: string[] }) {
+  open,
+  onOpenChange,
+  fallbackFocus,
+}: FilterProps & {
+  field: FilterField;
+  values: string[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  fallbackFocus?: RefObject<HTMLElement | null> | undefined;
+}) {
   const { t } = useLingui();
   const { fieldName, valueNames, chipLabel } = useFilterNames(ctx);
   const name = fieldName[field.key];
@@ -417,7 +461,7 @@ function ConditionChip({
   }
   return (
     <span className="inline-flex h-8 max-w-full items-stretch rounded-full bg-plate-2 text-sm">
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={onOpenChange}>
         <DropdownMenuTrigger
           render={
             <button
@@ -426,17 +470,26 @@ function ConditionChip({
             >
               <Icon className="size-3.5 shrink-0 text-muted" aria-hidden="true" />
               <span className="min-w-0 truncate">
-                <Trans>
-                  {{ field: name }}:{" "}
-                  <span className="font-medium text-text">
-                    {ph({ values: isolate(unisolate(chosen)) })}
-                  </span>
-                </Trans>
+                {values.length > 0 ? (
+                  <Trans>
+                    {{ field: name }}:{" "}
+                    <span className="font-medium text-text">
+                      {ph({ values: isolate(unisolate(chosen)) })}
+                    </span>
+                  </Trans>
+                ) : (
+                  name
+                )}
               </span>
             </button>
           }
         />
-        <DropdownMenuContent aria-label={name} className="data-side:w-56">
+        <DropdownMenuContent
+          aria-label={name}
+          className="data-side:w-56"
+          // A chip emptied from its own menu leaves as the menu closes, so focus goes back to Filter.
+          finalFocus={() => (values.length > 0 ? true : (fallbackFocus?.current ?? true))}
+        >
           <DropdownMenuGroup>
             <DropdownMenuLabel inset>{name}</DropdownMenuLabel>
             <FieldValues
@@ -454,13 +507,28 @@ function ConditionChip({
   );
 }
 
-/** The fields that are on, one chip each, with Clear filters once there are two. */
-export function FilterChips({ filters, setFilters, ctx }: FilterProps) {
+/**
+ * The fields that are on, one chip each, with Clear filters once there are two. A chip whose menu
+ * is open stays while its last value is unticked, so the menu never vanishes under the pointer.
+ */
+export function FilterChips({
+  filters,
+  setFilters,
+  ctx,
+  fallbackFocus,
+}: FilterProps & { fallbackFocus?: RefObject<HTMLElement | null> | undefined }) {
+  const [openKey, setOpenKey] = useState<FilterKey | null>(null);
   const active = activeFields(filters);
-  if (active.length === 0) return null;
+  const shown =
+    openKey && !active.some((a) => a.field.key === openKey)
+      ? filterFields
+          .filter((f) => f.key === openKey || active.some((a) => a.field.key === f.key))
+          .map((field) => ({ field, values: field.get(filters) }))
+      : active;
+  if (shown.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {active.map(({ field, values }) => (
+      {shown.map(({ field, values }) => (
         <ConditionChip
           key={field.key}
           field={field}
@@ -468,6 +536,11 @@ export function FilterChips({ filters, setFilters, ctx }: FilterProps) {
           filters={filters}
           setFilters={setFilters}
           ctx={ctx}
+          open={openKey === field.key}
+          onOpenChange={(next) =>
+            setOpenKey((current) => (next ? field.key : current === field.key ? null : current))
+          }
+          fallbackFocus={fallbackFocus}
         />
       ))}
       {active.length > 1 && (

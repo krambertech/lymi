@@ -399,6 +399,8 @@ function ListTools({
   searchRef: RefObject<HTMLInputElement | null>;
 }) {
   const { t } = useLingui();
+  // Where focus lands when a chip's menu empties it and the chip leaves.
+  const filterButton = useRef<HTMLButtonElement>(null);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`Due date`,
@@ -409,7 +411,12 @@ function ListTools({
   return (
     <div className="grid gap-2.5">
       <div className="flex items-center gap-2">
-        <FilterMenu filters={filters} setFilters={setFilters} ctx={filterCtx} />
+        <FilterMenu
+          filters={filters}
+          setFilters={setFilters}
+          ctx={filterCtx}
+          triggerRef={filterButton}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -451,7 +458,12 @@ function ListTools({
           />
         </div>
       </div>
-      <FilterChips filters={filters} setFilters={setFilters} ctx={filterCtx} />
+      <FilterChips
+        filters={filters}
+        setFilters={setFilters}
+        ctx={filterCtx}
+        fallbackFocus={filterButton}
+      />
     </div>
   );
 }

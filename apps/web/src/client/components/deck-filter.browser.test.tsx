@@ -2,7 +2,7 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import type { FilterContext } from "@lymi/client/deck-filters";
 import { type DeckFilters, filterRows, noFilters } from "@lymi/client/deck-list";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { expect, inject, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -30,13 +30,19 @@ const rows = deckCards.map((row, i) => ({
 /** The filter beside the count of rows it leaves, as the deck page wires it. */
 function Harness() {
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
+  const filterButton = useRef<HTMLButtonElement>(null);
   const now = Date.now();
   const ctx: FilterContext = { rows, sections, now };
   const shown = filterRows(rows, filters, "", now, sections);
   return (
     <I18nProvider i18n={i18n}>
-      <FilterMenu filters={filters} setFilters={setFilters} ctx={ctx} />
-      <FilterChips filters={filters} setFilters={setFilters} ctx={ctx} />
+      <FilterMenu filters={filters} setFilters={setFilters} ctx={ctx} triggerRef={filterButton} />
+      <FilterChips
+        filters={filters}
+        setFilters={setFilters}
+        ctx={ctx}
+        fallbackFocus={filterButton}
+      />
       <output data-testid="count">{shown.length}</output>
     </I18nProvider>
   );
@@ -87,7 +93,7 @@ test("a field opens its values with what each keeps, several stay on, and the ch
   expect(count()).toBe("5");
 
   // Back to the fields, where the field now counts what is on.
-  await values.getByRole("menuitem", { name: "Back to all filters" }).click();
+  await values.getByRole("menuitem", { name: "Back to all filters, State" }).click();
   await expect
     .element(menu().getByRole("menuitem", { name: "State, 2 chosen", exact: true }))
     .toBeVisible();
@@ -153,6 +159,37 @@ test("a one-of field offers Any first, a chip reopens its field, and ✕ takes i
   await page.getByRole("button", { name: "Clear filters", exact: true }).click();
   expect(count()).toBe("7");
   expect(page.getByRole("button", { name: /^Remove filter/ }).elements()).toHaveLength(0);
+});
+
+test("a value row's name counts its cards", async () => {
+  await render(<Harness />);
+  await open("Filter");
+  await menu().getByRole("menuitem", { name: "State" }).click();
+  await expect
+    .element(menu().getByRole("menuitemcheckbox", { name: "New, 2 cards", exact: true }))
+    .toBeVisible();
+  await close();
+});
+
+test("unticking a chip's last value keeps its menu open, then hands focus to Filter", async () => {
+  await render(<Harness />);
+  await open("Filter");
+  await menu().getByRole("menuitem", { name: "Section" }).click();
+  await menu()
+    .getByRole("menuitemcheckbox", { name: /^Lesson 14/ })
+    .click();
+  await close();
+
+  await open("Section: Lesson 14");
+  await menu()
+    .getByRole("menuitemcheckbox", { name: /^Lesson 14/ })
+    .click();
+  expect(count()).toBe("7");
+  // The menu is still there to tick another section in.
+  await expect.element(menu().getByRole("menuitemcheckbox", { name: /^Lesson 13/ })).toBeVisible();
+  await close();
+  expect(page.getByRole("button", { name: /^Section/ }).elements()).toHaveLength(0);
+  await expect.element(page.getByRole("button", { name: "Filter", exact: true })).toHaveFocus();
 });
 
 test("the arrow keys step into a field and back out to it", async () => {

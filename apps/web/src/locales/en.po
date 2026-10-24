@@ -493,6 +493,9 @@ msgstr "{categoryCount, plural, other {Your # Pleco categories become tags, such
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 
+msgid "{count, plural, one {{label}, # card} other {{label}, # cards}}"
+msgstr "{count, plural, one {{label}, # card} other {{label}, # cards}}"
+
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
 
@@ -1331,8 +1334,8 @@ msgstr "back later today"
 msgid "back the same day"
 msgstr "back the same day"
 
-msgid "Back to all filters"
-msgstr "Back to all filters"
+msgid "Back to all filters, {field}"
+msgstr "Back to all filters, {field}"
 
 msgid "Back to Explore"
 msgstr "Back to Explore"

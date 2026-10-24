@@ -1,5 +1,12 @@
 import type { Section } from "./api";
-import { type DeckFilters, type DeckRow, deckTags, filterRows, type StateKey } from "./deck-list";
+import {
+  type DeckFilters,
+  type DeckRow,
+  deckTags,
+  filterRows,
+  noFilters,
+  type StateKey,
+} from "./deck-list";
 
 /*
  * The deck list's filters as a list of fields, so a menu or a sheet can draw every field the same
@@ -113,15 +120,28 @@ export function toggleValue(
 }
 
 /**
- * How many cards the list would show with this field narrowed to one value, or left open when the
- * value is null, and the rest as they are.
+ * How many cards the list would show with this field narrowed to each value, and under `null` with
+ * the field left open, the other fields as they are. The rows that pass the other fields and the
+ * search are found once, so each value is checked only against them and only for its own field.
  */
-export function keeps(
+export function valueCounts(
   ctx: FilterContext,
   filters: DeckFilters,
   key: FilterKey,
-  value: string | null,
-) {
-  const narrowed = filterField(key).set(filters, value === null ? [] : [value]);
-  return filterRows([...ctx.rows], narrowed, ctx.query ?? "", ctx.now, ctx.sections).length;
+  values: readonly string[],
+): Map<string | null, number> {
+  const field = filterField(key);
+  const base = filterRows(
+    [...ctx.rows],
+    field.set(filters, []),
+    ctx.query ?? "",
+    ctx.now,
+    ctx.sections,
+  );
+  const counts = new Map<string | null, number>([[null, base.length]]);
+  for (const value of values) {
+    const only = field.set(noFilters, [value]);
+    counts.set(value, filterRows(base, only, "", ctx.now, ctx.sections).length);
+  }
+  return counts;
 }

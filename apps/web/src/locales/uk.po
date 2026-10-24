@@ -493,6 +493,9 @@ msgstr "{categoryCount, plural, one {Твоя # категорія Pleco ста�
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Вибрати картки} one {Вибрано: #} few {Вибрано: #} many {Вибрано: #} other {Вибрано: #}}"
 
+msgid "{count, plural, one {{label}, # card} other {{label}, # cards}}"
+msgstr "{count, plural, one {{label}, # картка} few {{label}, # картки} many {{label}, # карток} other {{label}, # картки}}"
+
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# нова} few {# нові} many {# нових} other {# нової}}"
 
@@ -1331,8 +1334,8 @@ msgstr "знову пізніше сьогодні"
 msgid "back the same day"
 msgstr "знову того ж дня"
 
-msgid "Back to all filters"
-msgstr "Назад до всіх фільтрів"
+msgid "Back to all filters, {field}"
+msgstr "Назад до всіх фільтрів, {field}"
 
 msgid "Back to Explore"
 msgstr "Назад до Каталогу"

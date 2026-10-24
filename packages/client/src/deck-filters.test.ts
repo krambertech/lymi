@@ -4,9 +4,10 @@ import {
   activeFields,
   availableFields,
   type FilterContext,
-  keeps,
+  type FilterKey,
   ON,
   toggleValue,
+  valueCounts,
 } from "./deck-filters";
 import { type DeckFilters, type DeckRow, noFilters } from "./deck-list";
 
@@ -91,19 +92,29 @@ describe("toggleValue", () => {
   });
 });
 
-describe("keeps", () => {
+describe("valueCounts", () => {
+  const count = (filters: DeckFilters, key: FilterKey, value: string | null, c = ctx) =>
+    valueCounts(c, filters, key, value === null ? [] : [value]).get(value);
+
   it("counts the cards one value would show with the other fields as they are", () => {
-    expect(keeps(ctx, noFilters, "state", "known")).toBe(2);
-    expect(keeps(ctx, noFilters, "tags", "verbs")).toBe(2);
-    expect(keeps(ctx, noFilters, "important", ON)).toBe(1);
+    expect(count(noFilters, "state", "known")).toBe(2);
+    expect(count(noFilters, "tags", "verbs")).toBe(2);
+    expect(count(noFilters, "important", ON)).toBe(1);
     const inS5: DeckFilters = { ...noFilters, sections: ["s5"] };
-    expect(keeps(ctx, inS5, "state", "known")).toBe(1);
+    expect(count(inS5, "state", "known")).toBe(1);
     // The field's own current values are replaced, not combined, so the count is for that value alone.
     const known: DeckFilters = { ...noFilters, states: ["known"] };
-    expect(keeps(ctx, known, "state", "new")).toBe(1);
+    expect(count(known, "state", "new")).toBe(1);
+  });
+
+  it("counts every value of a field at once, and the field left open under null", () => {
+    const counts = valueCounts(ctx, noFilters, "state", ["new", "learning", "known"]);
+    expect([...counts.values()].slice(1).reduce((a, b) => a + b)).toBe(counts.get(null));
+    const known: DeckFilters = { ...noFilters, states: ["known"] };
+    expect(valueCounts(ctx, known, "state", []).get(null)).toBe(ctx.rows.length);
   });
 
   it("honours the list's search, so a count never promises a card the list hides", () => {
-    expect(keeps({ ...ctx, query: "dueIn" }, noFilters, "state", "known")).toBe(1);
+    expect(count(noFilters, "state", "known", { ...ctx, query: "dueIn" })).toBe(1);
   });
 });

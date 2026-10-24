@@ -52,7 +52,7 @@ test("a learner reviews the started cards chosen from a tag", async ({ page }, t
     await page.goto(`/library/${deckId}`);
     await page.getByRole("button", { name: "Filter", exact: true }).click();
     await page.getByRole("menuitem", { name: "Tags", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "food 3", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: "food, 3 cards", exact: true }).click();
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();

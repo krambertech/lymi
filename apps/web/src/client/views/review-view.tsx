@@ -51,6 +51,7 @@ import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import { ExampleAudioButton, ExamplePlace } from "../components/example-audio";
+import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import {
@@ -75,7 +76,7 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
-import { ExampleText, TermText } from "../components/term-text";
+import { TermText } from "../components/term-text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -622,32 +623,22 @@ export function ReviewCard({
   const extrasLines = (measure: boolean) => (
     <>
       {card.example && (
-        <motion.p
-          variants={answerLine}
-          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-          lang={card.language ?? undefined}
-          dir={textDirection(card.language)}
-        >
-          <ExampleText
-            text={card.example}
-            lang={card.language ?? undefined}
+        <motion.div variants={answerLine}>
+          <ExampleLines
+            example={card.example}
+            language={card.language}
             known={knownReadings}
+            translation={translation}
+            after={
+              measure ? (
+                <ExamplePlace card={card} />
+              ) : (
+                <ExampleAudioButton card={card} surface="review" />
+              )
+            }
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
-          {measure ? (
-            <ExamplePlace card={card} />
-          ) : (
-            <ExampleAudioButton card={card} surface="review" />
-          )}
-          {translation && (
-            <>
-              {" "}
-              {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
-              <span lang={i18n.locale} dir="auto" className="text-muted">
-                ({translation})
-              </span>
-            </>
-          )}
-        </motion.p>
+        </motion.div>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">

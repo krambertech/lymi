@@ -116,6 +116,8 @@ export type ImportedCard = {
   origin?: string | undefined;
   /** What the picture shows, so picture modes are asked from the start. */
   pictureDescription?: string | undefined;
+  /** The translation was written for an earlier example, from a Lymi zip. */
+  translationStale?: boolean | undefined;
   /** The card's memory hook and who wrote it, from a Lymi zip. */
   hook?: { text: string; source: FieldSource } | undefined;
 };

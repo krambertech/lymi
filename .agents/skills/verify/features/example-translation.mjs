@@ -54,6 +54,9 @@ export default async function drive({ page, step, api, expect }) {
     await expect(sheet.getByRole("textbox", { name: "Translation", exact: true })).toHaveValue(
       "The dog is sleeping.",
     );
+    await expect(
+      sheet.getByText("Translated from an earlier example.", { exact: true }),
+    ).toBeVisible();
     await sheet.getByRole("button", { name: /^Save/ }).click();
     await expect(sheet).toBeHidden();
     await expect(

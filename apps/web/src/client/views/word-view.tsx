@@ -14,7 +14,6 @@ import {
   type KnownReadings,
   type ReviewMode,
   termShowsPronunciation,
-  textDirection,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
@@ -42,11 +41,12 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { ExampleAudioButton } from "../components/example-audio";
+import { ExampleLines } from "../components/example-lines";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
 import { ReviewTimeline } from "../components/review-timeline";
 import { Skeleton } from "../components/skeleton";
-import { ExampleText, TermText } from "../components/term-text";
+import { TermText } from "../components/term-text";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
@@ -504,6 +504,7 @@ export function WordView({
   const translating = card.exampleTranslationStatus === "working";
   // A translation of an earlier example is the owner's to fix, so only they still see it.
   const translation = (owner || !card.exampleTranslationStale) && card.exampleTranslation?.trim();
+  const translationByAi = !!translation && card.exampleTranslationSource === "ai";
 
   // A shimmer says nothing out loud, so the card says it: once when the AI starts on it, once
   // when the text lands. Held per card, so moving to another word does not announce its neighbour.
@@ -713,42 +714,34 @@ export function WordView({
           <ReadField
             label={t`Example`}
             aside={
-              card.example && (
-                <>
-                  {card.exampleSource === "ai" && (
-                    <SourceChip source="ai" field="example" size="xs" />
-                  )}
-                  {translation && card.exampleTranslationSource === "ai" && (
-                    <SourceChip source="ai" field="exampleTranslation" size="xs" />
-                  )}
-                </>
+              card.example &&
+              card.exampleSource === "ai" && (
+                <SourceChip
+                  source="ai"
+                  field={translationByAi ? "exampleAndTranslation" : "example"}
+                  size="xs"
+                />
               )
             }
             working={waiting("example")}
           >
             {card.example && (
               <div className="grid gap-1">
-                <p
-                  lang={card.language ?? undefined}
-                  dir={textDirection(card.language)}
+                <ExampleLines
+                  example={card.example}
+                  language={card.language}
+                  known={knownReadings}
+                  translation={translation || null}
+                  // A badge by the label would claim the example; only the translation is the AI's.
+                  badge={
+                    translationByAi &&
+                    card.exampleSource !== "ai" && (
+                      <SourceChip source="ai" field="exampleTranslation" size="xs" />
+                    )
+                  }
                   className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
-                >
-                  <ExampleText
-                    text={card.example}
-                    lang={card.language ?? undefined}
-                    known={knownReadings}
-                  />
-                  <ExampleAudioButton card={card} surface="card" />
-                  {translation && (
-                    <>
-                      {" "}
-                      {/* In the meaning language, like the meaning, so it takes its language and direction from it. */}
-                      <span lang={i18n.locale} dir="auto" className="text-muted">
-                        ({translation})
-                      </span>
-                    </>
-                  )}
-                </p>
+                  after={<ExampleAudioButton card={card} surface="card" />}
+                />
                 {translating && !translation && (
                   <div className="flex items-center text-base leading-relaxed" aria-hidden="true">
                     <Skeleton className="h-3 w-2/3 rounded-sm" />

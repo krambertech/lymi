@@ -83,6 +83,7 @@ type SourceField =
   | "meaning"
   | "example"
   | "exampleTranslation"
+  | "exampleAndTranslation"
   | "notes"
   | "pronunciation"
   | "hook";
@@ -109,6 +110,11 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
     lesson: msg`Translation from lesson`,
     ai: msg`AI translation`,
     manual: msg`Translation by you`,
+  },
+  exampleAndTranslation: {
+    lesson: msg`Example and translation from lesson`,
+    ai: msg`AI example and translation`,
+    manual: msg`Example and translation by you`,
   },
   notes: {
     lesson: msg`Notes from lesson`,

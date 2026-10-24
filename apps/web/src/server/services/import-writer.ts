@@ -3,6 +3,7 @@ import {
   type Directions,
   directionsFromModes,
   duplicateKey,
+  EARLIER_EXAMPLE,
   emptyImportCounts,
   exampleFingerprint,
   IMAGE_LIMITS,
@@ -674,7 +675,7 @@ export async function writeChunk<Note>(
         meaning: fields.meaning ?? null,
         pronunciation: fields.pronunciation ?? null,
         example: fields.example ?? null,
-        ...translationOf(fields),
+        ...translationOf(fields, item.card.translationStale),
         notes: fields.notes ?? null,
         hook: item.card.hook?.text ?? null,
         hookSource: item.card.hook?.source ?? null,
@@ -702,7 +703,7 @@ export async function writeChunk<Note>(
       meaning: fields.meaning ?? null,
       pronunciation: fields.pronunciation ?? null,
       example: fields.example ?? null,
-      ...translationOf(fields),
+      ...translationOf(fields, item.card.translationStale),
       exampleTranslationSource: fields.exampleTranslation
         ? (item.card.fieldSources?.exampleTranslation ?? "manual")
         : null,
@@ -1072,11 +1073,16 @@ export async function ownedImport(ctx: ServiceContext, id: string): Promise<Impo
   return row;
 }
 
-/** An imported translation with the fingerprint of the example it came with. */
-function translationOf(fields: ImportedFields) {
+/** An imported translation with the fingerprint of the example it came with, or of none when the file says it was stale. */
+function translationOf(fields: ImportedFields, stale = false) {
   const text = fields.example && fields.exampleTranslation;
   return {
     exampleTranslation: text || null,
-    exampleTranslationOf: text && fields.example ? exampleFingerprint(fields.example) : null,
+    exampleTranslationOf:
+      text && fields.example
+        ? stale
+          ? EARLIER_EXAMPLE
+          : exampleFingerprint(fields.example)
+        : null,
   };
 }

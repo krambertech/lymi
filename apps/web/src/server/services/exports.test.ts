@@ -9,6 +9,7 @@ import {
   type ImportChoicesInput,
   LymiFileManifest,
   type ReviewMode,
+  translationStale,
 } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -634,6 +635,46 @@ describe("a recording on export", () => {
       ["桜", null],
       ["箸", `lymi-${hashi}-recording.mp3`],
     ]);
+  }, 60_000);
+
+  it("keeps a translation written for an earlier example marked on the way back in", async () => {
+    const owner = await fresh("Owner");
+    const deck = await createDeck(owner, { name: "Deutsch", defaultLanguage: "de" });
+    const outcomes = await addCards(owner, [
+      {
+        deckId: deck.id,
+        term: "die Mappe",
+        example: "Die Mappe liegt auf dem Tisch.",
+        exampleTranslation: "The folder is on the table.",
+      },
+      {
+        deckId: deck.id,
+        term: "der Hund",
+        example: "Der Hund schläft.",
+        exampleTranslation: "The dog is sleeping.",
+      },
+    ]);
+    const [mappe] = outcomes.map((outcome) => {
+      if (outcome.status !== "added") throw new Error("card not added");
+      return outcome.card.id;
+    }) as [string, string];
+    // A new example by the learner leaves their translation as it was, for the old one.
+    await db
+      .update(schema.cards)
+      .set({ example: "Ich habe die Mappe im Zug vergessen." })
+      .where(eq(schema.cards.id, mappe));
+
+    const { bytes } = await runExport(owner, { format: "lymi", deckId: deck.id });
+    const copy = await fresh("Copy");
+    await runImport(copy, "deutsch.zip", bytes);
+    const copied = await db.select().from(schema.cards).where(eq(schema.cards.userId, copy.userId));
+    const stale = (term: string) => {
+      const card = copied.find((c) => c.term === term);
+      if (!card) throw new Error(`${term} not imported`);
+      return [card.exampleTranslation, translationStale(card)];
+    };
+    expect(stale("die Mappe")).toEqual(["The folder is on the table.", true]);
+    expect(stale("der Hund")).toEqual(["The dog is sleeping.", false]);
   }, 60_000);
 });
 

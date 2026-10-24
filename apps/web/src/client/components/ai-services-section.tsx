@@ -44,7 +44,7 @@ export function AiServicesSection() {
               <FieldDescription>
                 {on
                   ? t`Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken.`
-                  : t`Off. Cards stay as you type them, and only your own recordings play.`}
+                  : t`Off. Cards stay as you type them, and words without a saved clip aren’t spoken.`}
               </FieldDescription>
             </FieldContent>
             <Switch

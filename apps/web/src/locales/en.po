@@ -3455,8 +3455,8 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
 
-msgid "Off. Cards stay as you type them, and only your own recordings play."
-msgstr "Off. Cards stay as you type them, and only your own recordings play."
+msgid "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
+msgstr "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
 
 msgid "Often forgotten"
 msgstr "Often forgotten"

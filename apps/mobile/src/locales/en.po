@@ -4113,11 +4113,11 @@ msgstr "The series is deleted for good."
 msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
 msgstr "The series is deleted for good. Its decks can stay in Library or be archived with it."
 
-msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken."
-msgstr "The term goes to Google, OpenAI or ElevenLabs to be spoken."
+msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning."
+msgstr "The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning."
 
-msgid "The term, meaning, example and notes go to OpenAI."
-msgstr "The term, meaning, example and notes go to OpenAI."
+msgid "The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in."
+msgstr "The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in."
 
 msgid "The upload stopped partway"
 msgstr "The upload stopped partway"

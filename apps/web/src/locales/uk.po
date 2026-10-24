@@ -3455,8 +3455,8 @@ msgstr "Сповіщення заблоковано. Дозволь їх у на
 msgid "Now in {elsewhere}"
 msgstr "Зараз у «{elsewhere}»"
 
-msgid "Off. Cards stay as you type them, and only your own recordings play."
-msgstr "Вимкнено. Картки лишаються такими, як ти їх вводиш, і звучать лише твої власні записи вимови."
+msgid "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
+msgstr "Вимкнено. Картки лишаються такими, як ти їх вводиш, а слова без збереженого запису не озвучуються."
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"

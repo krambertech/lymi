@@ -39,7 +39,7 @@ export function AiServices() {
       <ServiceLine
         icon="manual"
         label={t`Filling in cards`}
-        line={t`The term, meaning, example and notes go to OpenAI.`}
+        line={t`The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in.`}
       />
       <ServiceLine
         icon="camera"
@@ -49,7 +49,7 @@ export function AiServices() {
       <ServiceLine
         icon="pronunciation"
         label={t`Pronunciation`}
-        line={t`The term goes to Google, OpenAI or ElevenLabs to be spoken.`}
+        line={t`The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning.`}
       />
     </SheetGroup>
   );
@@ -86,9 +86,12 @@ export function useAiConsent(place: AiConsentPlace) {
       open={open}
       onAnswer={async (allowed) => {
         // A failed yes keeps the sheet up with its error; a failed no changes nothing on the server.
-        if (allowed) await saveAiChoice(qc, true, place);
-        else void saveAiChoice(qc, false, place).catch(() => undefined);
-        answer.current = allowed;
+        // The server keeps the newest answer, so what it saved decides, not the tap.
+        if (allowed) answer.current = (await saveAiChoice(qc, true, place)).aiConsent === true;
+        else {
+          answer.current = false;
+          void saveAiChoice(qc, false, place).catch(() => undefined);
+        }
         setOpen(false);
       }}
       onClose={() => setOpen(false)}

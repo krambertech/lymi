@@ -88,9 +88,14 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       const first = await learn("style first", { firstOnly: true });
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
-          await step.do(`cards ${index}`, STEP, () =>
-            analytics.run(() => enrichCards(ctx, ids, provider, params.trigger)),
-          );
+          await step.do(`cards ${index}`, STEP, async () => {
+            // A learner who turns AI off mid-run sends no further chunk.
+            if (await aiWithdrawn(db, params.userId)) {
+              await settleEnrichment(db, params.userId, ids);
+              return;
+            }
+            await analytics.run(() => enrichCards(ctx, ids, provider, params.trigger));
+          });
         } catch (err) {
           // Inside the step, because code outside one runs again when the engine replays.
           await step.do(`fail ${index}`, STEP, async () => {

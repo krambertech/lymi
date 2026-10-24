@@ -4113,11 +4113,11 @@ msgstr "Серия будет удалена навсегда."
 msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
 msgstr "Серия будет удалена навсегда. Её колоды могут остаться в Библиотеке или уйти в архив вместе с ней."
 
-msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken."
-msgstr "Термин отправляется в Google, OpenAI или ElevenLabs для произношения."
+msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning."
+msgstr "Термин отправляется в Google, OpenAI или ElevenLabs для произношения. Для японского Google и Cloudflare также читают его чтение и значение."
 
-msgid "The term, meaning, example and notes go to OpenAI."
-msgstr "Термин, значение, пример и заметки отправляются в OpenAI."
+msgid "The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in."
+msgstr "Термин, значение, пример и заметки отправляются в OpenAI, который также составляет подсказки и определяет язык слова из другого приложения или импортированной колоды."
 
 msgid "The upload stopped partway"
 msgstr "Загрузка остановилась на полпути"

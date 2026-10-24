@@ -4,7 +4,12 @@
 import { handle } from "@astrojs/cloudflare/handler";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { movedDeckPath, productAddPath } from "./lib/deck-page";
-import { downloadCapture, downloadCaptureRequest, macDownload } from "./lib/mac-download";
+import {
+  countsAsDownload,
+  downloadCapture,
+  downloadCaptureRequest,
+  macDownload,
+} from "./lib/mac-download";
 import { productUrl, signUpRedirect, signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
@@ -46,9 +51,8 @@ export default {
     const download = macDownload(url.pathname);
     if (download) {
       const capture =
-        request.method === "GET" && downloadCapture(request, { timezone: request.cf?.timezone });
-      // Only production counts, as the site's pages only send from lymi.app.
-      if (capture && url.hostname === "lymi.app") {
+        countsAsDownload(request) && downloadCapture(request, { timezone: request.cf?.timezone });
+      if (capture) {
         const edge = { country: request.cf?.country, ip: request.headers.get("cf-connecting-ip") };
         ctx.waitUntil(proxyPostHog(downloadCaptureRequest(request, capture), edge));
       }

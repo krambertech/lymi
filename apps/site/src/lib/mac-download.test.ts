@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { downloadCapture, downloadCaptureRequest, macDownload } from "./mac-download";
+import {
+  downloadCapture,
+  downloadCaptureRequest,
+  macDownload,
+  macDownloadHref,
+} from "./mac-download";
 
 function download(path: string, headers: Record<string, string> = {}) {
   return new Request(`https://lymi.app${path}`, { headers });
@@ -20,6 +25,13 @@ describe("macDownload", () => {
     );
     expect(macDownload("/download")).toBeUndefined();
     expect(macDownload("/download/windows")).toBeUndefined();
+  });
+});
+
+describe("macDownloadHref", () => {
+  it("names the page's language only when it is not English", () => {
+    expect(macDownloadHref("/download/mac", "en")).toBe("/download/mac");
+    expect(macDownloadHref("/download/mac-intel", "uk")).toBe("/download/mac-intel?locale=uk");
   });
 });
 
@@ -66,6 +78,17 @@ describe("downloadCapture", () => {
     expect(event.properties.referrer).toBe("example.com");
     expect(JSON.stringify(event)).not.toContain("secret");
     expect(JSON.stringify(event)).not.toContain("private");
+  });
+
+  it("takes the language from the page's link before the Referer", () => {
+    const linked = capture(download("/download/mac?locale=ru"));
+    expect(linked.properties.ui_locale).toBe("ru");
+    const referred = capture(
+      download("/download/mac", { referer: "https://lymi.app/uk/explore/some/deep/path" }),
+    );
+    expect(referred.properties.from).toBe("/other");
+    expect(referred.properties.ui_locale).toBe("uk");
+    expect(capture(download("/download/mac?locale=de")).properties.ui_locale).toBe("en");
   });
 
   it("sends nothing for an address that is not a download", () => {

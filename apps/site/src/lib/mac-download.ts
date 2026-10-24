@@ -7,6 +7,7 @@ import {
 } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
+import { countsAsPageView } from "./deck-page";
 
 /** Each chip's newest build; the release job overwrites the file, so the address never changes. */
 export const MAC_DOWNLOADS = {
@@ -26,15 +27,25 @@ export function macDownload(pathname: string) {
   return Object.hasOwn(MAC_DOWNLOADS, path) ? MAC_DOWNLOADS[path as MacDownloadPath] : undefined;
 }
 
-/** The page on this site the visitor came from, if any. */
-function sitePage(url: URL, referrer: string | null): string | undefined {
+/** The download link with the page's language, which the count reads before the Referer. */
+export function macDownloadHref(path: MacDownloadPath, locale: string): string {
+  return locale === "en" ? path : `${path}?locale=${locale}`;
+}
+
+/** The address of the page on this site the visitor came from, if any. */
+function sitePath(url: URL, referrer: string | null): string | undefined {
   if (!referrer) return;
   try {
     const from = new URL(referrer);
-    return from.origin === url.origin ? analyticsPath(from.pathname, "public") : undefined;
+    return from.origin === url.origin ? from.pathname : undefined;
   } catch {
     return;
   }
+}
+
+/** A person following the link, not a link preview, a crawler or a prefetch. */
+export function countsAsDownload(request: Request): boolean {
+  return new URL(request.url).hostname === "lymi.app" && countsAsPageView(request);
 }
 
 /**
@@ -49,7 +60,8 @@ export function downloadCapture(
   const download = macDownload(url.pathname);
   if (!download) return;
   const referrer = request.headers.get("referer");
-  const from = sitePage(url, referrer);
+  const path = sitePath(url, referrer);
+  const from = path && analyticsPath(path, "public");
   const touch = firstTouch(url.toString(), referrer ?? "", "public");
   const properties = eventProperties(
     "mac_download_started",
@@ -57,14 +69,17 @@ export function downloadCapture(
     "worker",
   );
   if (!properties) return;
-  const locale = from?.match(/^\/(uk|ru)(?=\/|$)/)?.[1] ?? "en";
+  const locale =
+    AnalyticsLocale.safeParse(url.searchParams.get("locale")).data ??
+    AnalyticsLocale.safeParse(path?.match(/^\/(uk|ru)(?=\/|$)/)?.[1]).data ??
+    "en";
   return JSON.stringify({
     api_key: POSTHOG_PROJECT_TOKEN,
     event: "mac_download_started",
     distinct_id: "$posthog_cookieless",
     properties: {
       ...properties,
-      ui_locale: AnalyticsLocale.parse(locale),
+      ui_locale: locale,
       surface: "public",
       schema_version: ANALYTICS_SCHEMA_VERSION,
       $cookieless_mode: true,

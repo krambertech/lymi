@@ -15,6 +15,7 @@ import {
   type CardFormDraft,
   type CardFormOutcome,
   type CardFormValues,
+  draftHasWork,
 } from "./card-form";
 import { EditCardSheet } from "./edit-card-sheet";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
@@ -32,11 +33,6 @@ interface Props {
   /** A word needs a deck to land in, so the first run offers to make one. */
   onCreateDeck?: (() => void) | undefined;
 }
-
-/** Whether a draft holds anything the learner typed or chose for this card. */
-const hasWork = (d: CardFormDraft | null) =>
-  !!d &&
-  !!(d.term || d.meaning || d.example || d.notes || d.pronunciation || d.picture.kind !== "none");
 
 /** Quick capture: term, meaning and deck, with the rest of the card one tap away. */
 export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCreateDeck }: Props) {
@@ -59,7 +55,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
     // A brought-back draft is for the one reopening Undo makes, not every opening after it.
     setRestored(null);
     onOpenChange(false);
-    if (!keepWork || !hasWork(work) || !work) return;
+    if (!keepWork || !work || !draftHasWork(work)) return;
     toast.add({
       id: "card-discarded",
       title: t`Card discarded`,

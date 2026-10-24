@@ -92,6 +92,18 @@ export interface CardFormDraft extends CardFormValues {
   languageChosen: boolean;
 }
 
+/** Whether a draft holds anything the learner typed or chose for this card, so discarding it offers Undo. */
+export const draftHasWork = (d: CardFormDraft) =>
+  !!(
+    d.term ||
+    d.meaning ||
+    d.example ||
+    d.notes ||
+    d.pronunciation ||
+    d.hook ||
+    d.picture.kind !== "none"
+  );
+
 interface CardFormBase {
   /** Only decks the learner owns take a card. */
   decks: DeckSummary[] | undefined;
@@ -346,6 +358,7 @@ export function CardForm(props: CardFormProps) {
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
+  // Adding keeps the hook at the row's end, since a hook is mostly for a card that keeps failing.
   const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hook"];
   // The deck's cards as the deck page last read them; without them the AI's fields lead.
   // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
@@ -558,7 +571,7 @@ export function CardForm(props: CardFormProps) {
         maxLength={cardLimits.meaning ?? undefined}
         value={meaning}
         rows={1}
-        className="min-h-11 py-2.5 leading-normal md:min-h-10"
+        className={ONE_LINE}
         onChange={(e) => {
           setMeaning(e.target.value);
           clear("meaning");
@@ -607,9 +620,11 @@ export function CardForm(props: CardFormProps) {
     set: (value: string) => void,
     limit: number | null,
     options: {
-      long?: boolean;
+      /** A text area that starts one line tall, or several for notes; it grows as it wraps. */
+      lines?: "one" | "several";
       enterAdds?: boolean;
       description?: ReactNode;
+      placeholder?: string;
       /** The length the limit counts, where it is not every character typed. */
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
@@ -632,24 +647,30 @@ export function CardForm(props: CardFormProps) {
       <Field key={key} data-extra={key}>
         <FieldLabel aside={roomLeft(value, limit, options.length)}>{label}</FieldLabel>
         {options.description}
-        {options.long && options.chin !== undefined ? (
+        {options.lines && options.chin !== undefined ? (
           // One box: the field and its chin hover and take focus together, with a seam between them.
           <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-2 hoverable:hover:edge-2 has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
             <Textarea
               maxLength={maxLength}
               value={value}
-              rows={2}
-              className="min-h-[68px] rounded-none bg-transparent shadow-none! outline-none"
+              placeholder={options.placeholder}
+              rows={options.lines === "one" ? 1 : 2}
+              className={cn(
+                options.lines === "one" ? ONE_LINE : "min-h-[68px]",
+                "rounded-none bg-transparent shadow-none! outline-none",
+              )}
               onChange={(e) => change(e.target.value)}
+              onKeyDown={options.enterAdds ? submitOnEnter : undefined}
             />
             {options.chin}
           </div>
-        ) : options.long ? (
+        ) : options.lines ? (
           <Textarea
             maxLength={maxLength}
             value={value}
-            rows={2}
-            className={options.enterAdds ? undefined : "min-h-[68px]"}
+            placeholder={options.placeholder}
+            rows={options.lines === "one" ? 1 : 2}
+            className={options.lines === "one" ? ONE_LINE : "min-h-[68px]"}
             onChange={(e) => change(e.target.value)}
             onKeyDown={options.enterAdds ? submitOnEnter : undefined}
           />
@@ -657,6 +678,7 @@ export function CardForm(props: CardFormProps) {
           <Input
             maxLength={maxLength}
             value={value}
+            placeholder={options.placeholder}
             autoComplete="off"
             onChange={(e) => change(e.target.value)}
           />
@@ -772,10 +794,11 @@ export function CardForm(props: CardFormProps) {
   );
 
   const extraField: Record<Extra, () => ReactNode> = {
-    notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
+    notes: () =>
+      textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { lines: "several" }),
     example: () =>
       textField("example", t`Example`, example, changeExample, EXAMPLE_LENGTH, {
-        long: true,
+        lines: "one",
         length: shownLength(example),
         maxLength: cardLimits.example,
         chin: example.trim() || translation ? translationChin : null,
@@ -798,13 +821,11 @@ export function CardForm(props: CardFormProps) {
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
     hook: () =>
-      // Two lines, so a long hook can be read on a phone; it is one phrase, so Enter is done with it.
+      // One phrase, so Enter is done with it; it wraps so a long hook can be read whole.
       textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
-        long: true,
+        lines: "one",
         enterAdds: true,
-        description: (
-          <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
-        ),
+        placeholder: t`A sound-alike, or something to picture`,
       }),
     picture: () => (
       <div key="picture" data-extra="picture" className="grid gap-1.5">
@@ -912,6 +933,7 @@ export function CardForm(props: CardFormProps) {
           pictureDescribed={hasPicture && !!description.trim()}
           invalid={!!invalid.reviewModes}
         />
+        {adding && chipFor("hook")}
       </FieldChipRow>
       {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
       <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>
@@ -975,6 +997,8 @@ export function CardForm(props: CardFormProps) {
 }
 
 const ECHO_MS = 600;
+/** A text area as tall as an input until its text wraps. */
+const ONE_LINE = "min-h-11 py-2.5 leading-normal md:min-h-10";
 
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {

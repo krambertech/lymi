@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { CircleAlert } from "lucide-react";
 import type { Readwise } from "../lib/api";
-import { readwiseQuery } from "../lib/queries";
+import { keysQuery, readwiseQuery } from "../lib/queries";
+import { yomitanKey } from "../lib/yomitan";
+import { lastUsed, shortDate } from "./api-keys-section";
 import { Go } from "./next-steps";
 import { SettingsGroup } from "./settings-group";
 import { Skeleton } from "./skeleton";
@@ -31,6 +33,15 @@ export function OtherAppsSection() {
               ) : (
                 <Status connection={state.data?.connection ?? null} />
               )}
+            </span>
+            <Go />
+          </Link>
+        </li>
+        <li className="group/row border-edge [&:not(:first-child)]:border-t">
+          <Link to="/settings/yomitan" className={ROW}>
+            <span className="grid min-w-0 flex-1 gap-0.5">
+              <span className="text-md font-medium">Yomitan</span>
+              <YomitanStatus />
             </span>
             <Go />
           </Link>
@@ -69,6 +80,27 @@ function Status({ connection }: { connection: Readwise | null }) {
   return (
     <span className="text-sm text-muted">
       <Trans>Connected. Last checked at {when}.</Trans>
+    </span>
+  );
+}
+
+function YomitanStatus() {
+  const { i18n } = useLingui();
+  const keys = useQuery(keysQuery);
+  if (keys.isPending) return <Skeleton className="h-4 w-48" />;
+  const key = yomitanKey(keys.data);
+  if (!key) {
+    return (
+      <span className="text-sm text-muted text-pretty">
+        <Trans>Pop-up dictionary that adds the words you look up</Trans>
+      </span>
+    );
+  }
+  return (
+    <span className="text-sm text-muted tabular-nums">
+      <Trans>
+        Key made {shortDate(i18n, key.createdAt)} · {lastUsed(i18n, key.lastRequest)}
+      </Trans>
     </span>
   );
 }

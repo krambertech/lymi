@@ -861,6 +861,9 @@ msgstr "PDF урока"
 msgid "A PDF, or drop it here"
 msgstr "PDF, или перетащи его сюда"
 
+msgid "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
+msgstr "Всплывающий словарь для Chrome, Edge и Firefox. Наведи курсор на слово на любой странице, удерживая Shift, и нажми +, чтобы добавить его как карточку вместе с чтением, значением и предложением, в котором оно встретилось."
+
 msgid "A reset link works once, within an hour."
 msgstr "Ссылка действует один час и только один раз."
 
@@ -1044,6 +1047,9 @@ msgstr "Добавлено сегодня"
 msgid "Adding…"
 msgstr "Добавляем…"
 
+msgid "Address and key"
+msgstr "Адрес и ключ"
+
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "После подключения отправь урок своему AI-помощнику и попроси создать карточки."
 
@@ -1169,6 +1175,9 @@ msgstr "Пакет Anki"
 msgid "anki quizlet pleco"
 msgstr "anki quizlet pleco импорт"
 
+msgid "AnkiConnect server address"
+msgstr "Адрес сервера AnkiConnect"
+
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
@@ -1212,6 +1221,9 @@ msgstr "любые"
 
 msgid "Anything"
 msgstr "Что угодно"
+
+msgid "API key"
+msgstr "Ключ API"
 
 msgid "API key for {name}"
 msgstr "Ключ API для {name}"
@@ -1918,6 +1930,9 @@ msgstr "Не удалось прочитать этот текст"
 
 msgid "Couldn’t remove the member. Try again."
 msgstr "Не удалось исключить участника. Попробуй ещё раз."
+
+msgid "Couldn’t revoke the old key. Revoke it under API keys in Settings."
+msgstr "Не удалось отозвать старый ключ. Отзови его в разделе «Ключи API» в настройках."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
@@ -2807,6 +2822,9 @@ msgstr "{name} приглашён в «{deck}»"
 msgid "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 msgstr "Оно называет себя «{claimed}», но Lymi не может это подтвердить. Проверен только адрес выше."
 
+msgid "It can add cards. Lymi shows it once."
+msgstr "Он может добавлять карточки. Lymi покажет его только один раз."
+
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "Оно может читать твои карточки, а также добавлять, редактировать и архивировать их."
 
@@ -2941,6 +2959,16 @@ msgstr "Термин должен быть короче 500 символов."
 
 msgid "Keep the translation under 250 characters."
 msgstr "Перевод должен быть короче 250 символов."
+
+#. placeholder {0}: shortDate(i18n, key.createdAt)
+#. placeholder {1}: lastUsed(i18n, key.lastRequest)
+msgid "Key made {0} · {1}"
+msgstr "Ключ создан {0} · {1}"
+
+#. placeholder {0}: shortDate(i18n, current.createdAt)
+#. placeholder {1}: lastUsed(i18n, current.lastRequest)
+msgid "Key made {0} · {1}. A new key replaces it, and this one stops working."
+msgstr "Ключ создан {0} · {1}. Новый ключ заменит его, и этот перестанет работать."
 
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
@@ -3150,6 +3178,9 @@ msgstr "Главная навигация"
 
 msgid "Make a deck in Lymi first. Enter opens Library."
 msgstr "Сначала создайте колоду в Lymi. Enter открывает Библиотеку."
+
+msgid "Make a key for Yomitan"
+msgstr "Создать ключ для Yomitan"
 
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
@@ -3732,6 +3763,9 @@ msgstr "Открыть Системные настройки"
 msgid "Open the invitation"
 msgstr "Открыть приглашение"
 
+msgid "Open the setup guide"
+msgstr "Открыть инструкцию"
+
 msgid "Open this page from Lymi for Mac to sign in there."
 msgstr "Откройте эту страницу из Lymi для Mac, чтобы войти в него."
 
@@ -3816,6 +3850,9 @@ msgstr "Вставь набор, который ты создал в Quizlet. Т
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Вставь транскрипт, свои заметки или текст урока"
+
+msgid "Paste both into Yomitan’s Anki settings."
+msgstr "Вставь оба значения в настройки Anki в Yomitan."
 
 msgid "Paste it in Lymi and connect."
 msgstr "Вставь его в Lymi и подключи."
@@ -3906,6 +3943,9 @@ msgstr "Воспроизвести произношение"
 
 msgid "Policies and support"
 msgstr "Правила и поддержка"
+
+msgid "Pop-up dictionary that adds the words you look up"
+msgstr "Всплывающий словарь, который добавляет слова, которые ты ищешь"
 
 msgid "Position your photo"
 msgstr "Расположи фото"
@@ -4149,6 +4189,9 @@ msgstr "Переименовать…"
 
 msgid "Renamed “{from}” to “{spelled}”"
 msgstr "«{from}» переименован в «{spelled}»"
+
+msgid "Replace the key"
+msgstr "Заменить ключ"
 
 msgid "Replace the picture"
 msgstr "Заменить изображение"
@@ -4497,6 +4540,9 @@ msgstr "Название набора"
 
 msgid "Settings"
 msgstr "Настройки"
+
+msgid "Setup guide"
+msgstr "Инструкция по настройке"
 
 msgid "Sexual content"
 msgstr "Сексуальный контент"
@@ -5395,6 +5441,9 @@ msgstr "Когда большая часть раздела выучена, сл
 msgid "Where the cards go"
 msgstr "Куда пойдут карточки"
 
+msgid "Where to paste the address and key in Yomitan, and how to choose a deck for each language."
+msgstr "Куда вставить адрес и ключ в Yomitan и как выбрать колоду для каждого языка."
+
 msgid "Which days you reviewed"
 msgstr "Дни, когда были повторения"
 
@@ -5430,6 +5479,9 @@ msgstr "Вчера был день отдыха"
 
 msgid "Yesterday was a rest day. Every grade counts toward today’s goal."
 msgstr "Вчера был день отдыха. Каждая оценка засчитывается в сегодняшнюю цель."
+
+msgid "Yomitan"
+msgstr "Yomitan"
 
 msgid "you"
 msgstr "ты"

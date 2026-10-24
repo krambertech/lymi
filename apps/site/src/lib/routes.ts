@@ -73,6 +73,7 @@ export const englishOnlyPaths = [
   "/docs/mcp/gemini",
   "/docs/mcp/cursor",
   "/docs/mcp/grok",
+  "/docs/yomitan",
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",

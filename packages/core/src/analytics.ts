@@ -106,6 +106,7 @@ const source = z.enum([
   "lesson",
   "api",
   "readwise",
+  "anki_connect",
   "unknown",
 ]);
 const step = z.enum([
@@ -468,6 +469,9 @@ export const analyticsEvents = {
     skipped: count,
     duplicates: count,
   }),
+  anki_connect_refused: z.object({
+    reason: z.enum(["deck", "note_type", "language", "term", "read_only"]),
+  }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -655,6 +659,7 @@ export const analyticsProducers = {
   readwise_connected: ["worker"],
   readwise_disconnected: ["worker"],
   readwise_pulled: ["worker"],
+  anki_connect_refused: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

@@ -30,6 +30,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
 | Import an HSK-shaped Chinese Anki deck | [import-chinese.md](features/import-chinese.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
+| Yomitan through AnkiConnect | [yomitan.md](features/yomitan.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Chinese cards | [chinese.md](features/chinese.md) |
 | Cantonese cards | [cantonese.md](features/cantonese.md) |

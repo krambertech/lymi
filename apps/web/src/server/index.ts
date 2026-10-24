@@ -10,6 +10,7 @@ import { dispatchReviewReminders } from "./push-delivery";
 import { readwiseDeps } from "./readwise/deps";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { retryAppleRevocations } from "./services/apple-revocations";
+import { sweepAnkiConnectUploads } from "./services/anki-connect";
 import { purgeCardAudio } from "./services/audio";
 import { purgeExpiredAuthRows } from "./services/auth-retention";
 import { copyFormerDecks } from "./services/deck-copies";
@@ -63,6 +64,7 @@ export default {
         if (failed > 0) throw new Error(`${failed} copies of a former owner's deck failed`);
       }),
     );
+    run("anki-connect-uploads", sweepAnkiConnectUploads(env.IMPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     run(

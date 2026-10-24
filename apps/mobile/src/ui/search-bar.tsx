@@ -88,6 +88,9 @@ export function SearchBar({
           autoFocus
           value={value}
           onChangeText={onChange}
+          onFocus={() => {
+            closed.current = false;
+          }}
           onBlur={() => {
             if (!value.trim()) close();
           }}

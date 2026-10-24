@@ -1767,6 +1767,10 @@ msgstr "Карточки, которые возвращаются, когда т
 msgid "Flour"
 msgstr "Мука"
 
+msgctxt "мука́, for baking"
+msgid "Flour"
+msgstr "Мука (для выпечки)"
+
 msgid "Follow with RSS"
 msgstr "Следить через RSS"
 
@@ -2024,6 +2028,9 @@ msgstr "Ёжик"
 
 msgid "Hello"
 msgstr "Привет"
+
+msgid "Hello (formal)"
+msgstr "Здравствуйте (вежливо)"
 
 msgid "Hello!"
 msgstr "Привет!"

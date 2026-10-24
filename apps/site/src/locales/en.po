@@ -1767,6 +1767,10 @@ msgstr "Flashcards that come back right before you'd forget."
 msgid "Flour"
 msgstr "Flour"
 
+msgctxt "мука́, for baking"
+msgid "Flour"
+msgstr "Flour"
+
 msgid "Follow with RSS"
 msgstr "Follow with RSS"
 
@@ -2024,6 +2028,9 @@ msgstr "Hedgehog"
 
 msgid "Hello"
 msgstr "Hello"
+
+msgid "Hello (formal)"
+msgstr "Hello (formal)"
 
 msgid "Hello!"
 msgstr "Hello!"

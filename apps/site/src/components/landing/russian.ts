@@ -78,7 +78,11 @@ export const RUSSIAN_PAIRS: StressPair[] = [
     word: "мука",
     forms: [
       { marked: "му́ка", meaning: msg`Torment`, audio: "/audio/russian/muka-torment.mp3" },
-      { marked: "мука́", meaning: msg`Flour`, audio: "/audio/russian/muka.mp3" },
+      {
+        marked: "мука́",
+        meaning: msg({ message: "Flour", context: "мука́, for baking" }),
+        audio: "/audio/russian/muka.mp3",
+      },
     ],
   },
   {
@@ -129,7 +133,7 @@ export const RUSSIAN_VOICE_WORDS: VoiceWord[] = [
   { id: "zamok-lock", term: "замо́к", meaning: msg`Lock` },
   { id: "spasibo", term: "спаси́бо", meaning: msg`Thank you` },
   { id: "pozhaluysta", term: "пожа́луйста", meaning: msg`Please` },
-  { id: "zdravstvuyte", term: "здра́вствуйте", meaning: msg`Hello` },
+  { id: "zdravstvuyte", term: "здра́вствуйте", meaning: msg`Hello (formal)` },
   { id: "moloko", term: "молоко́", meaning: msg`Milk` },
 ];
 

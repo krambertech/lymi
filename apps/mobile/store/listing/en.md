@@ -7,7 +7,7 @@ Primary language on both stores. Copy each block without the fence.
 ### Name (30)
 
 ```text
-Lymi: Language Flashcards
+Lymi: Flashcards
 ```
 
 ### Subtitle (30)
@@ -25,7 +25,7 @@ Photograph your lesson's pages and Lymi turns them into cards. AI fills in each 
 ### Keywords (100 bytes)
 
 ```text
-vocabulary,spaced repetition,srs,fsrs,kana,memorize,study,japanese,spanish,chinese,kanji,cards
+vocabulary,spaced repetition,srs,fsrs,kana,memorize,study,japanese,spanish,chinese,kanji,language
 ```
 
 ### Description (4000)
@@ -87,7 +87,7 @@ Not shown for the first version. Template for later releases, one short line per
 ### App name (30)
 
 ```text
-Lymi: Language Flashcards
+Lymi: Flashcards
 ```
 
 ### Short description (80)

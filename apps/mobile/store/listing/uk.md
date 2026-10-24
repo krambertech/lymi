@@ -7,7 +7,7 @@ Written from the English, not translated line by line. In-app names follow the a
 ### Name (30)
 
 ```text
-Lymi: флеш-картки для мов
+Lymi: флеш-картки
 ```
 
 ### Subtitle (30)
@@ -25,7 +25,7 @@ Lymi: флеш-картки для мов
 ### Keywords (100 bytes)
 
 ```text
-лексика,словник,srs,fsrs,повторення,японська,запам'ятати
+мови,словник,srs,fsrs,повторення,японська,запам'ятати
 ```
 
 ### Description (4000)
@@ -81,7 +81,7 @@ Not shown for the first version. Template:
 ### App name (30)
 
 ```text
-Lymi: флеш-картки для мов
+Lymi: флеш-картки
 ```
 
 ### Short description (80)

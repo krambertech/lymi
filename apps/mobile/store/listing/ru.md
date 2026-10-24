@@ -7,7 +7,7 @@ Written from the English, not adapted from the Ukrainian. In-app names follow th
 ### Name (30)
 
 ```text
-Lymi: флеш-карточки для языков
+Lymi: флеш-карточки
 ```
 
 ### Subtitle (30)
@@ -25,7 +25,7 @@ Lymi: флеш-карточки для языков
 ### Keywords (100 bytes)
 
 ```text
-лексика,словарь,srs,fsrs,повторение,японский,запомнить
+языки,словарь,srs,fsrs,повторение,японский,запомнить
 ```
 
 ### Description (4000)
@@ -81,7 +81,7 @@ Not shown for the first version. Template:
 ### App name (30)
 
 ```text
-Lymi: флеш-карточки для языков
+Lymi: флеш-карточки
 ```
 
 ### Short description (80)

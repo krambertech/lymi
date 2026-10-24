@@ -4,11 +4,10 @@ What App Store Connect and Play Console need by hand for the first submission, i
 
 ## Before either store
 
-1. Decide the name. The listing uses `Lymi: Language Flashcards`; change it in all three `listing/` files if it changes.
-2. Raise `expo.version` in `apps/mobile/app.json` to `1.0.0`, the version the stores will show, and follow the contract steps in `docs/phone-release.md` for a new version.
-3. Ship a binary with this pull request's privacy manifest, the AI consent prompt (#973) and content reports (#971). Each changes the native fingerprint or the review notes, so the build under review must postdate all three.
-4. Make the review account as [`review.md`](review.md) describes.
-5. Run `node apps/mobile/store/screenshots/render.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
+1. Raise `expo.version` in `apps/mobile/app.json` to `1.0.0`, the version the stores will show, and follow the contract steps in `docs/phone-release.md` for a new version.
+2. Ship a binary with this pull request's privacy manifest, the AI consent prompt (#973) and content reports (#971). Each changes the native fingerprint or the review notes, so the build under review must postdate all three.
+3. Make the review account as [`review.md`](review.md) describes.
+4. Run `node apps/mobile/store/screenshots/render.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
 
 ## App Store Connect
 
@@ -28,7 +27,7 @@ All under App Store Connect, Apps, Lymi.
    - Support URL `https://lymi.app/support`, Marketing URL `https://lymi.app`.
    - What's New stays empty on the first version.
 7. **The version page**, once:
-   - Build: the TestFlight build from step 3 of [Before either store](#before-either-store).
+   - Build: the TestFlight build from step 2 of [Before either store](#before-either-store).
    - Copyright: `2026 Kateryna Porshnieva`.
    - App Review Information: from [`review.md`](review.md).
    - Version Release: **Manually release this version**, so you choose the day.

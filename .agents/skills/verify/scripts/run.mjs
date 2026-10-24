@@ -87,6 +87,12 @@ function failure(error) {
   return redact(stripVTControlCharacters(error.message)).split("\n").slice(0, 6).join("\n");
 }
 
+/** Playwright waited out its limit for a page, control or element, which a loaded machine can cause too. */
+function timedOut(error) {
+  if (error.name === "TimeoutError") return true;
+  return /^Error: element\(s\) not found$/m.test(stripVTControlCharacters(error.message));
+}
+
 function slug(text) {
   return text
     .toLowerCase()
@@ -134,6 +140,7 @@ async function driveFeature(browser, name) {
       record.stored = (await run()) ?? null;
     } catch (error) {
       record.ok = false;
+      record.timedOut = timedOut(error);
       record.error = failure(error);
     }
     await page.screenshot({ path: join(dir, `${prefix}.png`) }).catch(() => {});
@@ -169,32 +176,45 @@ async function driveFeature(browser, name) {
     await feature.default({ page, base, step, api, expect: patient });
   } catch (error) {
     if (!error.recorded)
-      steps.push({ action: "set up", ok: false, error: failure(error), files: [] });
+      steps.push({
+        action: "set up",
+        ok: false,
+        timedOut: timedOut(error),
+        error: failure(error),
+        files: [],
+      });
   } finally {
     await context.close();
   }
 
   const ok = steps.length > 0 && steps.every((s) => s.ok);
+  const timeout = steps.some((s) => s.timedOut);
   const lines = [
-    `# ${feature.title ?? name}: ${ok ? "PASS" : "FAIL"}`,
+    `# ${feature.title ?? name}: ${ok ? "PASS" : timeout ? "TIMEOUT" : "FAIL"}`,
     "",
     `${base} as ${persona}, ${values.phone ? "393 px touch" : "1280 px pointer"}, ${new Date().toISOString()}`,
     "",
     ...checks.map((c) => `- Doctor ${c.name}: ${c.ok ? "ok" : "FAIL"}, ${c.detail}`),
     "",
     ...steps.flatMap((s, i) => [
-      `${i + 1}. ${s.ok ? "ok" : "FAIL"} ${s.action}${s.files.length ? ` (${s.files.filter(Boolean).join(", ")})` : ""}`,
+      `${i + 1}. ${s.ok ? "ok" : s.timedOut ? "TIMEOUT" : "FAIL"} ${s.action}${s.files.length ? ` (${s.files.filter(Boolean).join(", ")})` : ""}`,
       ...(s.error
         ? ["", "   ```text", ...s.error.split("\n").map((l) => `   ${l}`), "   ```"]
         : []),
     ]),
     "",
+    ...(timeout
+      ? [
+          "TIMEOUT means Playwright waited out its limit for something that never came, which other sessions loading the machine can cause. Rerun this feature alone; a second TIMEOUT means it is likely missing.",
+          "",
+        ]
+      : []),
     problems.length ? "Console and network:" : "No console errors or server failures.",
     ...problems.map((p) => `- ${p}`),
     "",
   ];
   writeFileSync(join(dir, "verdict.md"), lines.join("\n"));
-  process.stdout.write(`${ok ? "PASS" : "FAIL"} ${name}  ${dir}\n`);
+  process.stdout.write(`${ok ? "PASS" : timeout ? "TIMEOUT" : "FAIL"} ${name}  ${dir}\n`);
   return ok;
 }
 

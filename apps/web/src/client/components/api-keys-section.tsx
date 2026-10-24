@@ -76,7 +76,7 @@ export function ApiKeysSection() {
       {keys.isPending && <Skeleton className="h-14 w-full" />}
 
       {rest.length > 0 && (
-        <ul className="grid">
+        <ul className="edge grid rounded-xl bg-plate">
           {rest.map((k) => (
             <KeyRow
               key={k.id}
@@ -252,8 +252,9 @@ function KeyRow({
   const confirm = useConfirmStep();
 
   return (
-    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
-      <div className="min-w-0 flex-1">
+    <li className="flex min-h-16 flex-wrap items-center gap-x-3 gap-y-1 border-edge px-4 py-3 [&:not(:first-child)]:border-t">
+      {/* Wide enough to keep the name when Revoke's confirm takes the row; the buttons wrap below. */}
+      <div className="min-w-48 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate text-base font-medium">{item.name ?? t`Untitled key`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>

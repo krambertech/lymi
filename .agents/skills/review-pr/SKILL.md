@@ -28,7 +28,7 @@ Look for:
 - Docs, comments, specimens and the other client that describe or share the changed behaviour (`REVIEW.md T2`, `P1`).
 - Other open pull requests that collide with this one, such as the same migration number (`REVIEW.md D10`).
 
-Write each candidate as: the location (`path:line` at the head commit), the defect, the consequence for the learner or the failing input, the smallest fix, and its source. The source is a `REVIEW.md` entry, a named `AGENTS.md` section, `CONTEXT.md`, a `docs/design/system` file, or "correctness" for a plain bug whose failing input you can name. Drop a candidate with no source and no failing input.
+Write each candidate as: the location (file and line at the head commit), the defect, the consequence for the learner or the failing input, the smallest fix, and its source. The source is a `REVIEW.md` entry, a named `AGENTS.md` section, `CONTEXT.md`, a `docs/design/system` file, or "correctness" for a plain bug whose failing input you can name. Drop a candidate with no source and no failing input.
 
 ## Validate before reporting
 

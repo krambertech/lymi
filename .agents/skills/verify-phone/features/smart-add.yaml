@@ -18,7 +18,7 @@ name: Smart add
 - tapOn: "Find terms"
 # The persona has not answered, so the phone asks before the lesson leaves it. ADR 0039.
 - extendedWaitUntil:
-    visible: "Let AI help with your cards?"
+    visible: "Use AI in Lymi?"
     timeout: 10000
 - takeScreenshot: 01-ask
 - tapOn: "Turn on AI"

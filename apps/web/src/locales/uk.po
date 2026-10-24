@@ -1037,8 +1037,8 @@ msgstr "Приклад від AI"
 msgid "AI example and translation"
 msgstr "Приклад і переклад від AI"
 
-msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
-msgstr "AI доповнює твої картки, читає сторінки уроків у Розумному додаванні та вимовляє твої слова. Які сервіси він використовує, сказано в політиці конфіденційності."
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI доповнює картки, знаходить терміни в матеріалах уроків і озвучує терміни й приклади."
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
@@ -3482,8 +3482,8 @@ msgstr "Сповіщення заблоковано. Дозволь їх у на
 msgid "Now in {elsewhere}"
 msgstr "Зараз у «{elsewhere}»"
 
-msgid "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
-msgstr "Вимкнено. Картки лишаються такими, як ти їх вводиш, а слова без збереженого запису не озвучуються."
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Вимкнено в мобільному застосунку й у вебверсії. Наявний текст карток і збережене аудіо залишаються."
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
@@ -3491,11 +3491,11 @@ msgstr "Часто забуваються"
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоні або щось не виходить? Прочитай посібник"
 
+msgid "On for mobile and web."
+msgstr "Увімкнено в мобільному застосунку й у вебверсії."
+
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com відкрий свій набір, відкрий меню <0>…</0> і вибери <1>Export</1>."
-
-msgid "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
-msgstr "Увімкнено. Lymi надсилає твої картки, сторінки уроків і слова для вимови стороннім AI-сервісам."
 
 msgid "One after another, automatically"
 msgstr "По черзі, автоматично"
@@ -4240,6 +4240,9 @@ msgstr "Побачити зображення й згадати значення
 msgid "See the term, recall what it means."
 msgstr "Побачити термін і згадати його значення."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Що й кому надсилається — у нашій політиці конфіденційності."
+
 msgid "See your decks and cards"
 msgstr "Переглядати свої колоди й картки"
 
@@ -4726,6 +4729,9 @@ msgstr "Тема"
 
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
+
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для цих функцій потрібний текст карток і матеріали уроків надсилаються стороннім AI-сервісам."
 
 msgid "They already have a pending invitation."
 msgstr "У цієї людини вже є запрошення без відповіді."

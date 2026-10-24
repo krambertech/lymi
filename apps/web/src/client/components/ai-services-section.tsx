@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { aiChoice, saveAiChoice } from "@lymi/client/ai-consent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Sparkle } from "lucide-react";
+import { localizedSiteUrl } from "../lib/origins";
 import { settingsQuery } from "../lib/queries";
 import { InlineError } from "./inline-error";
 import { SettingsGroup } from "./settings-group";
@@ -10,7 +11,7 @@ import { Switch } from "./ui/switch";
 
 /** The account's one AI switch. The web runs AI until the learner says no; the phone waits for a yes. ADR 0039. */
 export function AiServicesSection() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const qc = useQueryClient();
   const settings = useQuery(settingsQuery);
   const save = useMutation({
@@ -22,7 +23,11 @@ export function AiServicesSection() {
     <SettingsGroup
       id="ai"
       title={t`AI services`}
-      description={t`AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy.`}
+      description={
+        <Trans>
+          AI fills in your cards, finds terms in lesson material and reads terms and examples aloud.
+        </Trans>
+      }
     >
       <div className="grid">
         <div className="edge grid rounded-md bg-plate">
@@ -43,8 +48,8 @@ export function AiServicesSection() {
               </FieldLabel>
               <FieldDescription>
                 {on
-                  ? t`On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services.`
-                  : t`Off. Cards stay as you type them, and words without a saved clip aren’t spoken.`}
+                  ? t`On for mobile and web.`
+                  : t`Off for mobile and web. Existing card text and saved audio stay.`}
               </FieldDescription>
             </FieldContent>
             <Switch
@@ -60,6 +65,17 @@ export function AiServicesSection() {
           </InlineError>
         )}
       </div>
+      <p className="max-w-[60ch] text-sm text-muted">
+        <Trans>
+          These features send relevant card text and lesson material to third-party AI services.
+        </Trans>{" "}
+        <a
+          className="font-medium text-amber-text underline underline-offset-2"
+          href={localizedSiteUrl("/privacy", i18n.locale)}
+        >
+          <Trans>See what’s shared and with whom in our privacy policy.</Trans>
+        </a>
+      </p>
     </SettingsGroup>
   );
 }

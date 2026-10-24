@@ -1,6 +1,6 @@
 # AI consent
 
-The phone sends nothing to AI services until the learner allows it ([ADR 0039](../../../../docs/adr/0039-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). One sheet, **Let AI help with your cards?**, says what each feature does and sends, at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card without a stored clip. Welcome asks as a step before its start choice.
+The phone sends nothing to AI services until the learner allows it ([ADR 0039](../../../../docs/adr/0039-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). One sheet, **Use AI in Lymi?**, says what each feature does and sends, at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card without a stored clip. Welcome asks as a step before its start choice.
 
 ## Reach
 

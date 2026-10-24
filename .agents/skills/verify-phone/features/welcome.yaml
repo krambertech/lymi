@@ -28,9 +28,9 @@ name: Welcome
 - tapOn: "Continue"
 # A new account is asked before Lymi sends anything to AI services. ADR 0039.
 - extendedWaitUntil:
-    visible: "Let AI do the typing"
+    visible: "Use AI in Lymi?"
     timeout: 10000
-- assertVisible: "Cards filled in for you.*"
+- assertVisible: "Fill in your cards.*"
 - takeScreenshot: 05-ai
 - tapOn: "Turn on AI"
 - extendedWaitUntil:

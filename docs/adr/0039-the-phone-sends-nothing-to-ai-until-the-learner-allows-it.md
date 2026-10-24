@@ -13,7 +13,7 @@ Apple's guideline 5.1.2(i) requires apps to say where personal data is shared, n
 
 ## Considered options
 
-- **One switch for every AI call:** accepted. One answer is simpler to explain and to enforce, and each ask lists what each feature does for the learner and what it sends.
+- **One switch for every AI call:** accepted. One answer is simpler to explain and to enforce, and each ask lists what each feature does, discloses that relevant card text and lesson material go to third-party AI services, and links to the privacy policy for the content and recipients.
 - **Name each provider in the ask:** rejected. The ask says the content goes to third-party AI services and links the privacy policy, which names the current providers, so a change of provider changes the policy rather than a build.
 - **A switch per feature:** rejected. Four answers to give and keep in step, for a learner who mostly wants AI either on or off.
 - **Leave speech out:** rejected. A term is rarely personal, but the rule reads card text as content and a reviewer can test it.

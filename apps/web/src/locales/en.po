@@ -1037,8 +1037,8 @@ msgstr "AI example"
 msgid "AI example and translation"
 msgstr "AI example and translation"
 
-msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
-msgstr "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."
@@ -3482,8 +3482,8 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
 
-msgid "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
-msgstr "Off. Cards stay as you type them, and words without a saved clip aren’t spoken."
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Off for mobile and web. Existing card text and saved audio stay."
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
@@ -3491,11 +3491,11 @@ msgstr "Often forgotten"
 msgid "On a phone, or stuck? Read the guide"
 msgstr "On a phone, or stuck? Read the guide"
 
+msgid "On for mobile and web."
+msgstr "On for mobile and web."
+
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
-
-msgid "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
-msgstr "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
 
 msgid "One after another, automatically"
 msgstr "One after another, automatically"
@@ -4240,6 +4240,9 @@ msgstr "See the picture, recall the meaning"
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "See what’s shared and with whom in our privacy policy."
+
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
 
@@ -4726,6 +4729,9 @@ msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
+
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "These features send relevant card text and lesson material to third-party AI services."
 
 msgid "They already have a pending invitation."
 msgstr "They already have a pending invitation."

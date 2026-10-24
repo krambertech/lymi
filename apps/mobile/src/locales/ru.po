@@ -848,14 +848,14 @@ msgstr "Добавить карточку"
 msgid "Add a lesson"
 msgstr "Добавить урок"
 
+msgid "Add a term and AI fills in missing meanings, examples and more."
+msgstr "Добавь термин, и AI заполнит недостающие значения, примеры и другие поля."
+
 msgid "Add a translation"
 msgstr "Добавь перевод"
 
 msgid "Add a word"
 msgstr "Добавить слово"
-
-msgid "Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services."
-msgstr "Добавь слово, и AI напишет его значение, пример и произношение. Для этого Lymi отправляет то, что ты добавляешь, сторонним AI-сервисам."
 
 msgid "Add and review"
 msgstr "Добавить и повторить"
@@ -970,9 +970,6 @@ msgstr "AI переведёт после сохранения"
 
 msgid "AI translation"
 msgstr "Перевод от AI"
-
-msgid "AI writes the meaning, an example and notes. Sends the card’s text."
-msgstr "AI пишет значение, пример и заметки. Отправляется текст карточки."
 
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
@@ -1296,9 +1293,6 @@ msgstr "карточки"
 
 msgid "Cards"
 msgstr "Карточки"
-
-msgid "Cards filled in for you"
-msgstr "Карточки, дополненные за тебя"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Карточки с уроков Марко по вторникам."
@@ -2115,9 +2109,6 @@ msgstr "Все полки"
 msgid "Every term worth a card is already in your decks."
 msgstr "Все термины, достойные карточки, уже есть в твоих колодах."
 
-msgid "Every word spoken"
-msgstr "Каждое слово озвучено"
-
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Всё, чтобы снова импортировать в Lymi: карточки, изображения, расписание и историю повторений. Файл .zip."
 
@@ -2220,6 +2211,9 @@ msgstr "Филиппинский"
 
 msgid "Fill in the rest with AI"
 msgstr "Дополнить остальное с AI"
+
+msgid "Fill in your cards"
+msgstr "Дополняй карточки"
 
 msgid "Filter"
 msgstr "Фильтр"
@@ -2382,8 +2376,8 @@ msgstr "Есть изображение"
 msgid "Have an account?"
 msgstr "Уже есть аккаунт?"
 
-msgid "Hear how each term sounds. Sends the term."
-msgstr "Слушай, как звучит каждый термин. Отправляется термин."
+msgid "Hear pronunciation"
+msgstr "Слушай произношение"
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2739,17 +2733,8 @@ msgstr "Урок"
 msgid "Lesson 15"
 msgstr "Урок 15"
 
-msgid "Lesson pages into cards"
-msgstr "Страницы уроков — в карточки"
-
 msgid "Lesson text"
 msgstr "Текст урока"
-
-msgid "Let AI do the typing"
-msgstr "Пусть AI пишет за тебя"
-
-msgid "Let AI help with your cards?"
-msgstr "Пусть AI помогает с карточками?"
 
 msgid "Lets a script read or add to your decks."
 msgstr "Ключ позволяет скрипту читать колоды или добавлять в них."
@@ -2763,6 +2748,9 @@ msgstr "Светлая"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
+
+msgid "Listen to terms and examples read aloud."
+msgstr "Слушай, как звучат термины и примеры."
 
 msgid "Lists and searches decks and cards. A key never grades reviews."
 msgstr "Просматривает списки и ищет колоды и карточки. Ключ никогда не ставит оценок за повторение."
@@ -2818,9 +2806,6 @@ msgstr "После удаления аккаунта Lymi ничего не хр
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
-
-msgid "Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards."
-msgstr "Lymi отправляет то, что ты добавляешь, сторонним AI-сервисам, перечисленным в политике конфиденциальности. Если выключить, ничего нового отправляться не будет, а то, что AI уже написал, останется на карточках."
 
 msgid "Lymi was closed before the text arrived. Paste the set again to start over."
 msgstr "Lymi закрыли, пока текст ещё отправлялся. Вставь набор ещё раз, чтобы начать сначала."
@@ -3788,6 +3773,9 @@ msgstr "Увидеть термин и вспомнить значение"
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Что и кому отправляется — в нашей политике конфиденциальности."
+
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Выдели слово или фразу, а затем отправь в Lymi через «Поделиться»."
 
@@ -3929,8 +3917,8 @@ msgstr "Словенский"
 msgid "Smart add"
 msgstr "Умное добавление"
 
-msgid "Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes."
-msgstr "Умное добавление находит слова на фото или в заметках. Отправляются твои фото, PDF и заметки."
+msgid "Smart add finds terms in your photos, PDFs and notes."
+msgstr "Умное добавление находит термины в твоих фото, PDF-файлах и заметках."
 
 msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
 msgstr "Умное добавление читает урок с помощью AI. Включи AI, чтобы найти термины."
@@ -4173,6 +4161,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для этих функций нужный текст карточек и материалы уроков отправляются сторонним AI-сервисам."
+
 msgid "They already have a pending invitation."
 msgstr "У этого человека уже есть приглашение без ответа."
 
@@ -4199,6 +4190,9 @@ msgstr "Для истории этой карточки нужно соедин�
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
+
+msgid "This choice applies on mobile and web. Change it any time in You → AI services."
+msgstr "Этот выбор действует в мобильном приложении и веб-версии. Изменить его можно в любой момент: Ты → AI-сервисы."
 
 msgid "This code has expired. Send a new one."
 msgstr "Срок действия кода истёк. Отправь новый."
@@ -4293,6 +4287,9 @@ msgstr "Эта ссылка для присоединения больше не 
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
 
+msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+msgstr "Эта настройка действует для твоего аккаунта на всех устройствах. Если выключить, Lymi больше не будет отправлять новый контент AI-сервисам. Текст карточек и сохранённое аудио останутся."
+
 msgid "This shelf has no decks now"
 msgstr "На этой полке сейчас нет колод"
 
@@ -4313,9 +4310,6 @@ msgstr "Эти термины уже есть в твоих колодах"
 
 msgid "Time"
 msgstr "Время"
-
-msgid "To do this, Lymi sends what you add to third-party AI services. You can change it any time in You."
-msgstr "Для этого Lymi отправляет то, что ты добавляешь, сторонним AI-сервисам. Изменить это можно в любой момент в разделе Ты."
 
 msgid "To export every deck at once, open Settings and choose Export everything instead."
 msgstr "Чтобы экспортировать все колоды сразу, открой Settings и выбери Export everything."
@@ -4420,6 +4414,9 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Турецкий"
 
+msgid "Turn lessons into cards"
+msgstr "Превращай уроки в карточки"
+
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
@@ -4492,8 +4489,11 @@ msgctxt "deck tag"
 msgid "US civics test"
 msgstr "Тест на гражданство США"
 
-msgid "Use AI with your cards"
-msgstr "Использовать AI с карточками"
+msgid "Use AI in Lymi?"
+msgstr "Использовать AI в Lymi?"
+
+msgid "Use AI services"
+msgstr "Использовать AI-сервисы"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -4599,9 +4599,6 @@ msgstr "Кто может присоединиться"
 msgid "Who’s in this deck needs a connection"
 msgstr "Чтобы увидеть, кто в этой колоде, нужно соединение"
 
-msgid "Without it, you write every field yourself and new words aren’t spoken."
-msgstr "Без него каждое поле заполняешь ты, а новые слова не озвучиваются."
-
 msgid "Words and phrases in a language you’re learning."
 msgstr "Слова и фразы языка, который учишь."
 
@@ -4650,9 +4647,6 @@ msgstr "Ты здесь"
 
 msgid "You are still in the deck."
 msgstr "Ты всё ещё в колоде."
-
-msgid "You can change this any time in You."
-msgstr "Изменить это можно в любой момент в разделе Ты."
 
 msgid "You can close Lymi now. Your decks appear in Library when the import finishes."
 msgstr "Теперь можно закрыть Lymi. Колоды появятся в Библиотеке, когда импорт завершится."

@@ -3,9 +3,9 @@ import { type AiConsentPlace, aiChoice, saveAiChoice } from "@lymi/client/ai-con
 import { settingsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
-import { type ReactNode, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { View } from "react-native";
-import { siteUrl } from "../auth/client";
+import { localizedSiteUrl } from "../auth/client";
 import { captureEvent } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
 import type { IconName } from "../ui/icons";
@@ -31,35 +31,44 @@ function ServiceLine({ icon, label, line }: { icon: IconName; label: string; lin
   );
 }
 
-/**
- * What AI does for the learner and what each part sends, the same wherever they are asked. Which
- * services receive it is in the privacy policy, so a change of provider changes no build. ADR 0039.
- */
+// Every AI choice uses the same feature descriptions. ADR 0039.
 export function AiServices() {
   const { t } = useLingui();
   return (
     <SheetGroup>
       <ServiceLine
         icon="manual"
-        label={t`Cards filled in for you`}
-        line={t`AI writes the meaning, an example and notes. Sends the card’s text.`}
+        label={t`Fill in your cards`}
+        line={t`Add a term and AI fills in missing meanings, examples and more.`}
       />
       <ServiceLine
         icon="camera"
-        label={t`Lesson pages into cards`}
-        line={t`Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes.`}
+        label={t`Turn lessons into cards`}
+        line={t`Smart add finds terms in your photos, PDFs and notes.`}
       />
       <ServiceLine
         icon="pronunciation"
-        label={t`Every word spoken`}
-        line={t`Hear how each term sounds. Sends the term.`}
+        label={t`Hear pronunciation`}
+        line={t`Listen to terms and examples read aloud.`}
       />
     </SheetGroup>
   );
 }
 
-export function openPrivacyPolicy() {
-  void openBrowserAsync(siteUrl("/privacy"));
+export function AiDisclosure() {
+  const { t, i18n } = useLingui();
+  return (
+    <SheetNote>
+      {t`These features send relevant card text and lesson material to third-party AI services.`}{" "}
+      <Text
+        className="text-sm font-medium text-amber-text"
+        accessibilityRole="link"
+        onPress={() => void openBrowserAsync(localizedSiteUrl("/privacy", i18n.locale))}
+      >
+        {t`See what’s shared and with whom in our privacy policy.`}
+      </Text>
+    </SheetNote>
+  );
 }
 
 /**
@@ -146,18 +155,16 @@ function AiConsentSheet({
         if (!next) onClose();
       }}
       onDismiss={onDismiss}
-      title={t`Let AI help with your cards?`}
-      description={t`To do this, Lymi sends what you add to third-party AI services. You can change it any time in You.`}
+      title={t`Use AI in Lymi?`}
     >
       <AiServices />
+      <AiDisclosure />
       {failed && <SheetError>{t`Couldn’t save. Check your connection and try again.`}</SheetError>}
       <ConsentButtons
         busy={busy}
         onAllow={() => void answer(true)}
         onLater={() => void answer(false)}
-      >
-        {t`Without it, you write every field yourself and new words aren’t spoken.`}
-      </ConsentButtons>
+      />
     </Sheet>
   );
 }
@@ -167,12 +174,10 @@ export function ConsentButtons({
   busy,
   onAllow,
   onLater,
-  children,
 }: {
   busy: boolean;
   onAllow: () => void;
   onLater: () => void;
-  children: ReactNode;
 }) {
   const { t } = useLingui();
   return (
@@ -180,10 +185,7 @@ export function ConsentButtons({
       <Button label={t`Turn on AI`} variant="primary" size="lg" loading={busy} onPress={onAllow} />
       <Button label={t`Not now`} variant="ghost" size="lg" disabled={busy} onPress={onLater} />
       <Text className="pt-1 text-center text-sm text-muted">
-        {children}{" "}
-        <Text className="text-sm font-medium text-amber-text" onPress={openPrivacyPolicy}>
-          {t`Privacy policy`}
-        </Text>
+        {t`This choice applies on mobile and web. Change it any time in You → AI services.`}
       </Text>
     </View>
   );
@@ -213,13 +215,13 @@ export function AiServicesRow() {
         <SheetGroup>
           <RowFace
             icon="ai"
-            label={t`Use AI with your cards`}
+            label={t`Use AI services`}
             control={
               <Switch
                 checked={on}
                 disabled={!settings.isSuccess}
                 onCheckedChange={(allowed) => save.mutate(allowed)}
-                accessibilityLabel={t`Use AI with your cards`}
+                accessibilityLabel={t`Use AI services`}
               />
             }
           />
@@ -228,8 +230,9 @@ export function AiServicesRow() {
           <SheetError>{t`Couldn’t save. Check your connection and try again.`}</SheetError>
         )}
         <AiServices />
+        <AiDisclosure />
         <SheetNote>
-          {t`Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards.`}
+          {t`This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay.`}
         </SheetNote>
       </Sheet>
     </>

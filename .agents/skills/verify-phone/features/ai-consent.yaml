@@ -22,10 +22,10 @@ name: AI consent
 - inputText: "${DECLINED}"
 - tapOn: "Add to ${DECK}"
 - extendedWaitUntil:
-    visible: "Let AI help with your cards?"
+    visible: "Use AI in Lymi?"
     timeout: 10000
-- assertVisible: "Cards filled in for you.*"
-- assertVisible: "Every word spoken.*"
+- assertVisible: "Fill in your cards.*"
+- assertVisible: "Hear pronunciation.*"
 - takeScreenshot: 01-ask
 - tapOn: "Not now"
 - extendedWaitUntil:
@@ -36,7 +36,7 @@ name: AI consent
 - takeScreenshot: 02-declined
 - tapOn: "Fill in the rest with AI"
 - extendedWaitUntil:
-    visible: "Let AI help with your cards?"
+    visible: "Use AI in Lymi?"
     timeout: 10000
 - tapOn: "Turn on AI"
 - extendedWaitUntil:
@@ -48,7 +48,7 @@ name: AI consent
 - extendedWaitUntil:
     visible: "Added “${ALLOWED}” to ${DECK}"
     timeout: 20000
-- assertNotVisible: "Let AI help with your cards?"
+- assertNotVisible: "Use AI in Lymi?"
 - takeScreenshot: 03-allowed
 - tapOn: "^Done$"
 - tapOn: "You"
@@ -59,6 +59,6 @@ name: AI consent
 - takeScreenshot: 04-you
 - tapOn: "AI services.*"
 - extendedWaitUntil:
-    visible: "Use AI with your cards"
+    visible: "Use AI services"
     timeout: 10000
 - takeScreenshot: 05-switch

@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pool } from "../auth/door-parts";
 import { languageName } from "../data/languages";
 import { useAddDeck, useAddFailure } from "../explore/catalogue";
-import { AiServices, ConsentButtons } from "../privacy/ai-consent";
+import { AiDisclosure, AiServices, ConsentButtons } from "../privacy/ai-consent";
 import { captureEvent } from "../telemetry/posthog";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
@@ -348,11 +348,9 @@ export default function Onboarding() {
           )}
           {step === "ai" && (
             <View className="gap-5">
-              <QuestionHeading
-                title={t`Let AI do the typing`}
-                lede={t`Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services.`}
-              />
+              <QuestionHeading title={t`Use AI in Lymi?`} />
               <AiServices />
+              <AiDisclosure />
             </View>
           )}
           {step === "start" && (
@@ -391,9 +389,7 @@ export default function Onboarding() {
             busy={allowing}
             onAllow={() => void allowAi()}
             onLater={() => move("start")}
-          >
-            {t`You can change this any time in You.`}
-          </ConsentButtons>
+          />
         ) : (
           <Button label={label} variant="primary" size="lg" loading={busy} onPress={next} />
         )}

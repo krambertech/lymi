@@ -12,7 +12,7 @@ Settings → **AI services**, the group after Daily reminder.
 
 ## End state
 
-Off, the switch's description says **Off. Cards stay as you type them, and words without a saved clip aren’t spoken.** and `/api/settings` reports `aiConsent: false`, also after a reload. On again, it says what goes to third-party AI services and `/api/settings` reports `aiConsent: true`.
+Off, the switch's description says **Off for mobile and web. Existing card text and saved audio stay.** and `/api/settings` reports `aiConsent: false`, also after a reload. On again, it says **On for mobile and web.** and the group links to the privacy policy for what goes to third-party AI services and `/api/settings` reports `aiConsent: true`.
 
 ## Gotchas
 

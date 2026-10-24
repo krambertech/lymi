@@ -848,14 +848,14 @@ msgstr "Add a card"
 msgid "Add a lesson"
 msgstr "Add a lesson"
 
+msgid "Add a term and AI fills in missing meanings, examples and more."
+msgstr "Add a term and AI fills in missing meanings, examples and more."
+
 msgid "Add a translation"
 msgstr "Add a translation"
 
 msgid "Add a word"
 msgstr "Add a word"
-
-msgid "Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services."
-msgstr "Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services."
 
 msgid "Add and review"
 msgstr "Add and review"
@@ -970,9 +970,6 @@ msgstr "AI translates it after you save"
 
 msgid "AI translation"
 msgstr "AI translation"
-
-msgid "AI writes the meaning, an example and notes. Sends the card’s text."
-msgstr "AI writes the meaning, an example and notes. Sends the card’s text."
 
 msgid "AI wrote part of this card"
 msgstr "AI wrote part of this card"
@@ -1296,9 +1293,6 @@ msgstr "cards"
 
 msgid "Cards"
 msgstr "Cards"
-
-msgid "Cards filled in for you"
-msgstr "Cards filled in for you"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
@@ -2115,9 +2109,6 @@ msgstr "Every shelf"
 msgid "Every term worth a card is already in your decks."
 msgstr "Every term worth a card is already in your decks."
 
-msgid "Every word spoken"
-msgstr "Every word spoken"
-
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 
@@ -2220,6 +2211,9 @@ msgstr "Filipino"
 
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
+
+msgid "Fill in your cards"
+msgstr "Fill in your cards"
 
 msgid "Filter"
 msgstr "Filter"
@@ -2382,8 +2376,8 @@ msgstr "Has a picture"
 msgid "Have an account?"
 msgstr "Have an account?"
 
-msgid "Hear how each term sounds. Sends the term."
-msgstr "Hear how each term sounds. Sends the term."
+msgid "Hear pronunciation"
+msgstr "Hear pronunciation"
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2739,17 +2733,8 @@ msgstr "Lesson"
 msgid "Lesson 15"
 msgstr "Lesson 15"
 
-msgid "Lesson pages into cards"
-msgstr "Lesson pages into cards"
-
 msgid "Lesson text"
 msgstr "Lesson text"
-
-msgid "Let AI do the typing"
-msgstr "Let AI do the typing"
-
-msgid "Let AI help with your cards?"
-msgstr "Let AI help with your cards?"
 
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
@@ -2763,6 +2748,9 @@ msgstr "Light"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
+
+msgid "Listen to terms and examples read aloud."
+msgstr "Listen to terms and examples read aloud."
 
 msgid "Lists and searches decks and cards. A key never grades reviews."
 msgstr "Lists and searches decks and cards. A key never grades reviews."
@@ -2818,9 +2806,6 @@ msgstr "Lymi keeps nothing once the account is gone."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
-
-msgid "Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards."
-msgstr "Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards."
 
 msgid "Lymi was closed before the text arrived. Paste the set again to start over."
 msgstr "Lymi was closed before the text arrived. Paste the set again to start over."
@@ -3788,6 +3773,9 @@ msgstr "See the term, recall what it means"
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "See what’s shared and with whom in our privacy policy."
+
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Select a word or phrase, then share it to Lymi."
 
@@ -3929,8 +3917,8 @@ msgstr "Slovenian"
 msgid "Smart add"
 msgstr "Smart add"
 
-msgid "Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes."
-msgstr "Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes."
+msgid "Smart add finds terms in your photos, PDFs and notes."
+msgstr "Smart add finds terms in your photos, PDFs and notes."
 
 msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
 msgstr "Smart add reads your lesson with AI. Turn on AI to find the terms."
@@ -4173,6 +4161,9 @@ msgstr "Theme"
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "These features send relevant card text and lesson material to third-party AI services."
+
 msgid "They already have a pending invitation."
 msgstr "They already have a pending invitation."
 
@@ -4199,6 +4190,9 @@ msgstr "This card’s history needs a connection"
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
+
+msgid "This choice applies on mobile and web. Change it any time in You → AI services."
+msgstr "This choice applies on mobile and web. Change it any time in You → AI services."
 
 msgid "This code has expired. Send a new one."
 msgstr "This code has expired. Send a new one."
@@ -4293,6 +4287,9 @@ msgstr "This join link stopped working. Ask the owner for a new one."
 msgid "This series is no longer here."
 msgstr "This series is no longer here."
 
+msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+msgstr "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+
 msgid "This shelf has no decks now"
 msgstr "This shelf has no decks now"
 
@@ -4313,9 +4310,6 @@ msgstr "Those terms are already in your decks"
 
 msgid "Time"
 msgstr "Time"
-
-msgid "To do this, Lymi sends what you add to third-party AI services. You can change it any time in You."
-msgstr "To do this, Lymi sends what you add to third-party AI services. You can change it any time in You."
 
 msgid "To export every deck at once, open Settings and choose Export everything instead."
 msgstr "To export every deck at once, open Settings and choose Export everything instead."
@@ -4420,6 +4414,9 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Turkish"
 
+msgid "Turn lessons into cards"
+msgstr "Turn lessons into cards"
+
 msgid "Turn off link"
 msgstr "Turn off link"
 
@@ -4492,8 +4489,11 @@ msgctxt "deck tag"
 msgid "US civics test"
 msgstr "US civics test"
 
-msgid "Use AI with your cards"
-msgstr "Use AI with your cards"
+msgid "Use AI in Lymi?"
+msgstr "Use AI in Lymi?"
+
+msgid "Use AI services"
+msgstr "Use AI services"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -4599,9 +4599,6 @@ msgstr "Who can join"
 msgid "Who’s in this deck needs a connection"
 msgstr "Who’s in this deck needs a connection"
 
-msgid "Without it, you write every field yourself and new words aren’t spoken."
-msgstr "Without it, you write every field yourself and new words aren’t spoken."
-
 msgid "Words and phrases in a language you’re learning."
 msgstr "Words and phrases in a language you’re learning."
 
@@ -4650,9 +4647,6 @@ msgstr "You are here"
 
 msgid "You are still in the deck."
 msgstr "You are still in the deck."
-
-msgid "You can change this any time in You."
-msgstr "You can change this any time in You."
 
 msgid "You can close Lymi now. Your decks appear in Library when the import finishes."
 msgstr "You can close Lymi now. Your decks appear in Library when the import finishes."

@@ -130,7 +130,8 @@ function PrivacyPolicyContent() {
           <Trans>
             Pronunciation sends the term, its reading or an example sentence and language to a
             speech provider. Japanese pronunciation may also send the term, reading and meaning to
-            Google to prepare pronunciation context. Generated audio is saved for reuse.
+            Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is
+            saved for reuse.
           </Trans>
         </li>
       </ul>

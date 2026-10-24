@@ -3235,8 +3235,8 @@ msgstr "Произношение"
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз."
 
-msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google to prepare pronunciation context. Generated audio is saved for reuse."
-msgstr "Озвучивание отправляет термин, его чтение или предложение примера и язык поставщику речи. Для японского произношения термин, чтение и значение также могут передаваться Google для подготовки контекста произношения. Созданное аудио сохраняется для повторного использования."
+msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
+msgstr "Озвучивание отправляет термин, его чтение или предложение примера и язык поставщику речи. Для японского произношения термин, чтение и значение также могут передаваться Google и Cloudflare Workers AI для подготовки контекста произношения. Созданное аудио сохраняется для повторного использования."
 
 msgid "Providers may process data outside the European Economic Area, including in the United States. Where required, transfers rely on an adequacy decision or contractual safeguards such as the European Commission’s standard contractual clauses. Contact us for information about the safeguards that apply to your data and how to obtain a copy."
 msgstr "Поставщики могут обрабатывать данные за пределами Европейской экономической зоны, в том числе в США. Когда это необходимо, передача основана на решении о достаточном уровне защиты или договорных гарантиях, например стандартных договорных положениях Европейской комиссии. Обратись к нам, чтобы узнать, какие гарантии действуют для твоих данных и как получить их копию."

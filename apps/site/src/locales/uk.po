@@ -1088,7 +1088,7 @@ msgid "Choose your state to see the deck with its 10 questions."
 msgstr "Обери свою землю, щоб побачити колоду з її 10 питаннями."
 
 msgid "Choosing a deck or detecting a language can send shared text, its page title and deck languages, or an imported deck’s name and sample terms, to OpenAI."
-msgstr "Вибір колоди або визначення мови може передавати поширений текст, назву його сторінки й мови колод або назву імпортованої колоди та приклади термінів до OpenAI."
+msgstr "Вибір колоди або визначення мови може передавати надісланий до Lymi текст, назву його сторінки й мови колод або назву імпортованої колоди та приклади термінів до OpenAI."
 
 msgid "Chopsticks"
 msgstr "Палички для їжі"
@@ -3235,8 +3235,8 @@ msgstr "Вимова"
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Не вдалося відтворити вимову. Спробуй ще раз."
 
-msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google to prepare pronunciation context. Generated audio is saved for reuse."
-msgstr "Озвучення надсилає термін, його читання або речення прикладу та мову постачальнику мовлення. Для японської вимови термін, читання й значення також можуть передаватися Google, щоб підготувати контекст вимови. Створене аудіо зберігається для повторного використання."
+msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
+msgstr "Озвучення надсилає термін, його читання або речення прикладу та мову постачальнику мовлення. Для японської вимови термін, читання й значення також можуть передаватися Google і Cloudflare Workers AI, щоб підготувати контекст вимови. Створене аудіо зберігається для повторного використання."
 
 msgid "Providers may process data outside the European Economic Area, including in the United States. Where required, transfers rely on an adequacy decision or contractual safeguards such as the European Commission’s standard contractual clauses. Contact us for information about the safeguards that apply to your data and how to obtain a copy."
 msgstr "Постачальники можуть обробляти дані за межами Європейської економічної зони, зокрема в США. Коли це необхідно, передавання ґрунтується на рішенні про належний рівень захисту або договірних гарантіях, як-от стандартні договірні положення Європейської комісії. Звернися до нас, щоб дізнатися, які гарантії діють для твоїх даних і як отримати їхню копію."

@@ -1,5 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
+import babel from "@rolldown/plugin-babel";
 import { defineConfig } from "vitest/config";
 import { unstable_readConfig } from "wrangler";
 import { testGateway } from "./src/test/ai-gateway";
@@ -16,21 +18,40 @@ const audio = () =>
   new Response(new Uint8Array([0xff, 0xf3]), { headers: { "Content-Type": "audio/mpeg" } });
 const gemini = (part: Record<string, unknown>, finishReason?: string) =>
   json({ candidates: [{ finishReason, content: { parts: [part] } }] });
+const redirect = (location: string) =>
+  new Response(null, { status: 302, headers: { Location: location } });
+const picture = () =>
+  new Response(new Uint8Array([0x52, 0x49, 0x46, 0x46]), {
+    headers: { "Content-Type": "image/webp" },
+  });
+
+/** Other services the Worker calls, outside the AI Gateway. */
+const services: Record<string, () => Response> = {
+  "GET https://client.example/metadata.json": () => redirect("https://elsewhere.example/"),
+  "GET https://images.example/start.png": () => redirect("/picture.png"),
+  "GET https://images.example/picture.png": picture,
+  "GET https://lh3.googleusercontent.com/a/photo=s512-c": () => redirect("/a/final"),
+  "GET https://lh3.googleusercontent.com/a/final": picture,
+  "POST https://oauth2.googleapis.com/token": () =>
+    json({ access_token: "google-token", expires_in: 3600 }),
+  "POST https://api.resend.com/emails": () => json({ id: "email" }),
+  "POST https://eu.posthog.com/api/projects/1/persons/bulk_delete/": () => json({}),
+  "POST https://eu.i.posthog.com/e/": () => json({ status: 1 }),
+  "POST https://appleid.apple.com/auth/token": () => json({ refresh_token: "refresh" }),
+  "POST https://appleid.apple.com/auth/revoke": () => new Response(null),
+};
+
 const events = (...data: unknown[]) =>
   new Response(data.map((event) => `data: ${JSON.stringify(event)}\n\n`).join(""), {
     headers: { "Content-Type": "text/event-stream" },
   });
 
-/** Every provider the Worker calls, answered just well enough for its adapter to succeed. */
+/** Every service the Worker calls, answered just well enough for its caller to succeed. */
 async function upstream(request: Request): Promise<Response> {
   const url = request.url;
-  if (url === "https://client.example/metadata.json") {
-    return new Response(null, { status: 302, headers: { Location: "https://elsewhere.example/" } });
-  }
+  const service = services[`${request.method} ${url}`];
+  if (service) return service();
   if (request.method !== "POST") return new Response("Unexpected request", { status: 405 });
-  if (url === "https://oauth2.googleapis.com/token") {
-    return json({ access_token: "google-token", expires_in: 3600 });
-  }
   if (!url.startsWith(`${gateway}/`)) return new Response("Unexpected host", { status: 404 });
   const path = url.slice(gateway.length);
   if (path === "/openai/chat/completions") {
@@ -60,6 +81,9 @@ async function upstream(request: Request): Promise<Response> {
 /** The outgoing fetches, run in workerd against `upstream`. docs/testing.md. */
 export default defineConfig({
   plugins: [
+    // The services reach server modules that carry Lingui macros, as vite.config.ts compiles them.
+    lingui({ failOnCompileError: true, failOnMissing: true }),
+    babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     cloudflareTest({
       miniflare: {
         compatibilityDate: compatibility_date,

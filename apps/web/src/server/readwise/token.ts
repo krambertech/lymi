@@ -1,4 +1,4 @@
-// A Readwise token is sealed under a key derived from the auth secret; rotating it reads as a refused token.
+// A Readwise token is sealed under a key derived from the auth secret; after a rotation the learner pastes it again.
 
 const encoder = new TextEncoder();
 

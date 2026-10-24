@@ -1,9 +1,11 @@
+import { AI_CONSENT_VERSION } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import { type ReadwiseApi, ReadwiseRefused, ReadwiseUnavailable } from "../readwise/api";
 import { createFakeReadwiseApi, DEV_READWISE_TOKEN } from "../readwise/dev-fake";
+import { updateAiConsent } from "./ai-consent";
 import type { AnalyticsEvent } from "./analytics";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -197,6 +199,20 @@ describe("a pull", () => {
     expect(captured).toContainEqual(
       expect.objectContaining({ name: "readwise_connected", reconnected: true }),
     );
+  });
+
+  it("asks for the token again, without blaming Readwise, once the auth secret has changed", async () => {
+    const ctx = await reader("rw-rotated");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    const rotated = { ...depsWith(), secret: "another-secret-of-sufficient-length" };
+    const view = await pullReadwiseNow(ctx, rotated);
+    expect(view.status).toBe("unreadable");
+    expect(captured).toContainEqual(
+      expect.objectContaining({ name: "readwise_pulled", outcome: "unreadable" }),
+    );
+
+    const again = await connectReadwise(ctx, rotated, DEV_READWISE_TOKEN);
+    expect(again.status).toBe("active");
   });
 });
 
@@ -427,6 +443,30 @@ describe("the hourly pull", () => {
     expect(result.failed).toBe(0);
     expect(await cardsOf(due.userId)).toHaveLength(3);
     expect(await cardsOf(later.userId)).toHaveLength(0);
+  });
+});
+
+describe("a learner who turned AI off", () => {
+  it("never sends highlights to the model, so books wait for their language", async () => {
+    const ctx = await reader("rw-no-ai");
+    await updateAiConsent(ctx, {
+      allowed: false,
+      version: AI_CONSENT_VERSION,
+      updated_at: Date.now(),
+    });
+    const complete = vi.fn(languages.complete);
+    const deps = { ...depsWith(), languages: { ...languages, complete } };
+
+    const view = await connectReadwise(ctx, deps, DEV_READWISE_TOKEN);
+    expect(view.books.every((b) => b.language === null && !b.followed)).toBe(true);
+    await pullDueReadwise(
+      db,
+      () => ({ deps, analytics: undefined }),
+      new Date(Date.now() + 2 * 60 * 60 * 1000),
+    );
+
+    expect(complete).not.toHaveBeenCalled();
+    expect(await cardsOf(ctx.userId)).toHaveLength(0);
   });
 });
 

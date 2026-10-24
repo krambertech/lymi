@@ -463,7 +463,7 @@ export const analyticsEvents = {
   readwise_disconnected: z.object({}),
   readwise_pulled: z.object({
     trigger: z.enum(["schedule", "manual"]),
-    outcome: z.enum(["done", "refused", "limited", "failed"]),
+    outcome: z.enum(["done", "refused", "unreadable", "limited", "failed"]),
     highlights: count,
     cards: count,
     skipped: count,

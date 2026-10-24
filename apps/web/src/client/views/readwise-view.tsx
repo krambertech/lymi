@@ -130,6 +130,13 @@ function useStatus(connection: Readwise | null | undefined) {
   const { t, i18n } = useLingui();
   if (connection === undefined) return undefined;
   if (connection === null) return { label: t`Not connected`, tone: "muted" as const };
+  if (connection.status === "unreadable") {
+    return {
+      label: t`Token needed`,
+      tone: "danger" as const,
+      detail: t`Lymi can no longer read your saved token. Paste it again below.`,
+    };
+  }
   if (connection.status === "refused") {
     return {
       label: t`Token refused`,
@@ -230,7 +237,7 @@ function TokenForm({
 function Connect(props: Props) {
   const { t } = useLingui();
   const { connection } = props;
-  const needsToken = !connection || connection.status === "refused";
+  const needsToken = !connection || connection.status !== "active";
   return (
     <AppConnect
       name="Readwise"

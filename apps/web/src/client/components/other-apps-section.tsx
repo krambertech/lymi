@@ -60,6 +60,14 @@ function Status({ connection }: { connection: Readwise | null }) {
       </span>
     );
   }
+  if (connection.status === "unreadable") {
+    return (
+      <span className="flex items-center gap-1 text-sm text-danger">
+        <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
+        <Trans>Lymi needs your Readwise token again</Trans>
+      </span>
+    );
+  }
   if (connection.status === "refused") {
     return (
       <span className="flex items-center gap-1 text-sm text-danger">

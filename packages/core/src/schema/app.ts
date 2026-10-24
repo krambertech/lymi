@@ -1232,8 +1232,11 @@ export const readwiseConnections = sqliteTable("readwise_connections", {
   tokenCipher: text("token_cipher").notNull(),
   /** The token's last four characters, so Settings can show which one is in use. */
   tokenHint: text("token_hint").notNull(),
-  /** `refused` once Readwise turns the token down; pulls stop until a new one is pasted. */
-  status: text("status", { enum: ["active", "refused"] }).notNull(),
+  /**
+   * `refused` once Readwise turns the token down, `unreadable` once Lymi can't open it after the auth
+   * secret changed; either way pulls stop until a token is pasted again.
+   */
+  status: text("status", { enum: ["active", "refused", "unreadable"] }).notNull(),
   /** Each language's deck, keyed by primary subtag, such as `{ "et": "<deck id>" }`. */
   decks: text("decks", { mode: "json" }).$type<Record<string, string>>().notNull(),
   /** Highlights updated after this are what the next pull asks for. */

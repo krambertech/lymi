@@ -4,7 +4,7 @@ import { request } from "./request";
 /** The learner's Readwise connection, without the token itself. */
 export type Readwise = {
   tokenHint: string;
-  status: "active" | "refused";
+  status: "active" | "refused" | "unreadable";
   lastPull: { at: string; highlights: number; cards: number; skipped: number } | null;
   languages: { language: string; deckId: string | null }[];
   books: {

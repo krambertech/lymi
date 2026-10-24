@@ -3153,6 +3153,9 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, браузер і мову застосунку."
 
+msgid "Lymi can no longer read your saved token. Paste it again below."
+msgstr "Lymi більше не може прочитати збережений токен. Встав його ще раз нижче."
+
 #. placeholder {0}: connection.tokenHint
 msgid "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
 msgstr "Lymi перевіряє Readwise щогодини з твоїм токеном, що закінчується на <0>{0}</0>. Виділене слово стає карткою, так само як уривок зі словом у нотатці."
@@ -3192,6 +3195,9 @@ msgstr "Lymi у відкритій беті."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пише перші колоди. А поки що створи власну в Бібліотеці."
+
+msgid "Lymi needs your Readwise token again"
+msgstr "Lymi знову потрібен твій токен Readwise"
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
@@ -5210,6 +5216,9 @@ msgstr "Мета на сьогодні"
 
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Нові озвучення прикладів на сьогодні закінчилися. Уже прослухані приклади відтворюються й далі."
+
+msgid "Token needed"
+msgstr "Потрібен токен"
 
 msgid "Token refused"
 msgstr "Токен не прийнято"

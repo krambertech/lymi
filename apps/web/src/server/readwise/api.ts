@@ -48,6 +48,14 @@ export type ReadwiseHighlight = z.infer<typeof Highlight>;
 export type ReadwiseExportBook = z.infer<typeof ExportBook>;
 export type ReadwiseBookSummary = z.infer<typeof ListBook>;
 
+/** Lymi can't open the token it saved, because the secret it was sealed under changed. */
+export class ReadwiseTokenUnreadable extends Error {
+  constructor() {
+    super("The saved Readwise token can't be opened");
+    this.name = "ReadwiseTokenUnreadable";
+  }
+}
+
 /** Readwise turned the token down: it was revoked, mistyped or its subscription ended. */
 export class ReadwiseRefused extends Error {
   constructor() {

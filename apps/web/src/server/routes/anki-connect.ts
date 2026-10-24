@@ -4,6 +4,7 @@ import { ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { principalForKey } from "../principal";
 import {
+  ANKI_CONNECT_CLIENT,
   answerCall,
   answerOpenCall,
   isOpenCall,
@@ -53,7 +54,8 @@ ankiConnect.post("/", describe({ hide: true, open: true }), async (c) => {
   c.set("user", principal.user);
   c.set("actor", principal.actor);
   c.set("scope", principal.scope);
-  c.set("client", principal.client);
+  // One client for every AnkiConnect key, so Yomitan's page keeps its Activity after a key is replaced.
+  c.set("client", ANKI_CONNECT_CLIENT);
   c.set("clientName", principal.clientName);
   const answer = await answerCall(ctxOf(c), call, {
     scope: principal.scope,

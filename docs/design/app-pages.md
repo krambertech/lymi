@@ -13,4 +13,4 @@ Under the header come four parts, each on plates and in this order:
 
 Before an app is connected, the page holds only the header and How it connects, with the field to connect in it.
 
-Yomitan's page shows the key Yomitan holds: its Settings replace the key, its Activity is that key's writes, and Stop revokes it. Until Yomitan's icon licence is settled, a dictionary glyph stands in for its mark.
+Yomitan's page shows the key Yomitan holds: its Settings replace the key, its Activity is every AnkiConnect write, so it survives a replaced key, and Stop revokes it. Until Yomitan's icon licence is settled, a dictionary glyph stands in for its mark.

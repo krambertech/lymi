@@ -7,6 +7,7 @@ import { CopyField } from "../components/copy-field";
 import { InlineError } from "../components/inline-error";
 import { Skeleton } from "../components/skeleton";
 import type { ApiKeySummary } from "../lib/api";
+import { YOMITAN_ACTIVITY_APP } from "../lib/yomitan";
 
 interface Props {
   /** Lymi's AnkiConnect address, which Yomitan calls its server. */
@@ -56,8 +57,7 @@ export function YomitanView(props: Props) {
       ) : (
         <>
           <Settings {...props} current={current} />
-          {/* An API key's writes are audited under its id, so a replaced key's stay in Activity only. */}
-          <AppActivity appKey="yomitan" app={current.id} name="Yomitan" />
+          <AppActivity appKey="yomitan" app={YOMITAN_ACTIVITY_APP} name="Yomitan" />
           <Connect {...props} />
           <AppStop
             consequence={t`Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay.`}

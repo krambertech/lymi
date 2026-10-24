@@ -4,8 +4,9 @@ import { Timestamp } from "./common";
 export const ReadwiseOut = z
   .object({
     tokenHint: z.string().meta({ description: "The token's last four characters" }),
-    status: z.enum(["active", "refused"]).meta({
-      description: "refused once Readwise turns the token down; pulls stop until a new one is sent",
+    status: z.enum(["active", "refused", "unreadable"]).meta({
+      description:
+        "refused once Readwise turns the token down, unreadable once Lymi can no longer open the saved token; pulls stop until a token is sent again",
     }),
     lastPull: z
       .object({

@@ -91,4 +91,26 @@ describe("/api/anki-connect", () => {
       cards: [{ term: "散歩" }],
     });
   });
+
+  it("keeps an earlier key's adds in Yomitan's Activity after the key is replaced", async () => {
+    const made = await app.fetch("/api/keys", {
+      ...json({ name: "Yomitan", scope: "write" }),
+      as: learner,
+    });
+    const { id: oldId, key: old } = ApiKeyCreatedOut.parse(await made.json());
+    const note = {
+      deckName: "日本語",
+      modelName: "Lymi card",
+      fields: { Term: "台風", Reading: "たいふう", Meaning: "typhoon" },
+    };
+    await post({ action: "addNote", version: 2, key: old, params: { note } });
+    const revoked = await app.fetch(`/api/keys/${oldId}`, { method: "DELETE", as: learner });
+    expect(revoked.ok).toBe(true);
+
+    const activity = await app.fetch("/api/activity?app=anki-connect", { as: learner });
+    const { entries } = (await activity.json()) as { entries: { cards: { term: string }[] }[] };
+    expect(entries.flatMap((e) => e.cards.map((c) => c.term))).toEqual(
+      expect.arrayContaining(["台風", "散歩"]),
+    );
+  });
 });

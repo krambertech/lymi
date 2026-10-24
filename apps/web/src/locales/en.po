@@ -3153,6 +3153,9 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
 
+msgid "Lymi can no longer read your saved token. Paste it again below."
+msgstr "Lymi can no longer read your saved token. Paste it again below."
+
 #. placeholder {0}: connection.tokenHint
 msgid "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
 msgstr "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
@@ -3192,6 +3195,9 @@ msgstr "Lymi is in public beta."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi is writing the first decks. Until then, make your own in Library."
+
+msgid "Lymi needs your Readwise token again"
+msgstr "Lymi needs your Readwise token again"
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
@@ -5210,6 +5216,9 @@ msgstr "Today’s goal"
 
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Today’s new example audio is used up. Examples you’ve played still play."
+
+msgid "Token needed"
+msgstr "Token needed"
 
 msgid "Token refused"
 msgstr "Token refused"

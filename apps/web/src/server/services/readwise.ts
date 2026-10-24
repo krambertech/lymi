@@ -8,9 +8,11 @@ import {
   type ReadwiseExportBook,
   ReadwiseLimited,
   ReadwiseRefused,
+  ReadwiseTokenUnreadable,
 } from "../readwise/api";
 import { termOf } from "../readwise/terms";
 import { openToken, sealToken } from "../readwise/token";
+import { aiAllowedFor } from "./ai-consent";
 import { track } from "./analytics";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { addCards, type ServerCardInput } from "./cards";
@@ -150,8 +152,12 @@ async function readToken(deps: ReadwiseDeps, token: string): Promise<string> {
   return clean;
 }
 
-/** Each book's language, read from its highlights' text in one model call. */
+/**
+ * Each book's language, from its highlights' script or, when the learner allows AI (ADR 0039), one
+ * model call. A book neither places waits in the list with a language picker.
+ */
 async function bookLanguages(
+  ctx: ServiceContext,
   deps: ReadwiseDeps,
   books: { id: string; title: string; texts: string[] }[],
 ): Promise<Map<string, string>> {
@@ -159,7 +165,7 @@ async function bookLanguages(
     books
       .filter((b) => b.texts.length > 0)
       .map((b) => ({ key: b.id, name: b.title, terms: b.texts.slice(0, SAMPLE) })),
-    deps.languages,
+    (await aiAllowedFor(ctx)) ? deps.languages : null,
   );
   return new Map(Object.entries(found));
 }
@@ -198,6 +204,7 @@ export async function connectReadwise(
     const texts = new Map<string, string[]>();
     for (const h of recent) texts.set(h.bookId, [...(texts.get(h.bookId) ?? []), h.text]);
     const languages = await bookLanguages(
+      ctx,
       deps,
       summaries.map((b) => ({ id: b.id, title: b.title ?? "", texts: texts.get(b.id) ?? [] })),
     );
@@ -359,7 +366,7 @@ export async function disconnectReadwise(ctx: ServiceContext): Promise<void> {
 }
 
 export type PullResult = {
-  outcome: "done" | "refused" | "limited" | "failed";
+  outcome: "done" | "refused" | "unreadable" | "limited" | "failed";
   highlights: number;
   cards: number;
   skipped: number;
@@ -400,7 +407,7 @@ async function pull(
   started: Date,
 ): Promise<{ result: PullResult; cursor: string | null }> {
   const token = await openToken(deps.secret, row.tokenCipher);
-  if (!token) throw new ReadwiseRefused();
+  if (!token) throw new ReadwiseTokenUnreadable();
   const [read, changed] = await Promise.all([
     readPages(deps, token, { since: row.pulledThrough, cursor: row.pullCursor }),
     deps.api.books(token, row.pulledThrough),
@@ -419,6 +426,7 @@ async function pull(
     (b) => !b.is_deleted && (known.get(b.user_book_id)?.language ?? null) === null,
   );
   const languages = await bookLanguages(
+    ctx,
     deps,
     unread.map((b) => ({
       id: b.user_book_id,
@@ -602,6 +610,9 @@ async function runPull(
     if (error instanceof ReadwiseRefused) {
       result = { outcome: "refused", ...none };
       await write({ status: "refused" });
+    } else if (error instanceof ReadwiseTokenUnreadable) {
+      result = { outcome: "unreadable", ...none };
+      await write({ status: "unreadable" });
     } else if (error instanceof ReadwiseLimited) {
       result = { outcome: "limited", ...none };
       await write({ nextPullAt: new Date(started.getTime() + error.retryAfter * 1000) });
@@ -666,6 +677,10 @@ export async function pullDueReadwise(
       ),
     )
     .limit(PULLS_PER_RUN);
+  // A full tick means more connections are due than one run pulls, so hourly pulls start to slip.
+  if (due.length === PULLS_PER_RUN) {
+    console.warn(JSON.stringify({ job: "readwise", atCap: PULLS_PER_RUN }));
+  }
   let pulled = 0;
   let failed = 0;
   for (const row of due) {

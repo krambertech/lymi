@@ -1,121 +1,88 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import type { ReactNode } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { AccountGroup } from "./account-section";
+import { AccountGroup, NameDialog } from "./account-section";
 
 i18n.load("en", messages);
 i18n.activate("en");
 
-const renderGroup = (onRename: (name: string) => void) =>
-  render(
-    <QueryClientProvider client={new QueryClient()}>
-      <I18nProvider i18n={i18n}>
-        <AccountGroup name="Kateryna" email="learner@lymi.local" onRename={onRename} />
-      </I18nProvider>
-    </QueryClientProvider>,
+const wrap = (node: ReactNode) => render(<I18nProvider i18n={i18n}>{node}</I18nProvider>);
+
+const renderDialog = (
+  over: { onSubmit?: (name: string) => void; onOpenChange?: (open: boolean) => void } = {},
+  error?: string,
+) =>
+  wrap(
+    <NameDialog
+      open
+      onOpenChange={over.onOpenChange ?? vi.fn()}
+      name="Kateryna"
+      onSubmit={over.onSubmit ?? vi.fn()}
+      error={error}
+    />,
   );
 
 const field = () => page.getByRole("textbox", { name: "Name", exact: true });
+const save = () => page.getByRole("button", { name: "Save", exact: true });
 
-test("saves the trimmed name when the field is left", async () => {
-  const onRename = vi.fn();
-  await renderGroup(onRename);
+test("the name's edit button opens the dialog", async () => {
+  const onEditName = vi.fn();
+  await wrap(<AccountGroup name="Kateryna" email="learner@lymi.local" onEditName={onEditName} />);
+  await page.getByRole("button", { name: "Edit name" }).click();
+  expect(onEditName).toHaveBeenCalledOnce();
+});
+
+test("without a way to edit, the name is only shown", async () => {
+  await wrap(<AccountGroup name="Kateryna" email="learner@lymi.local" />);
+  await expect.element(page.getByText("Kateryna")).toBeVisible();
+  await expect.element(page.getByRole("button", { name: "Edit name" })).not.toBeInTheDocument();
+});
+
+test("saves the trimmed name", async () => {
+  const onSubmit = vi.fn();
+  await renderDialog({ onSubmit });
   await expect.element(field()).toHaveValue("Kateryna");
   await userEvent.clear(field());
   await userEvent.type(field(), "  Olena Kovalenko  ");
-  await userEvent.tab();
-  expect(onRename).toHaveBeenCalledExactlyOnceWith("Olena Kovalenko");
+  await save().click();
+  expect(onSubmit).toHaveBeenCalledExactlyOnceWith("Olena Kovalenko");
 });
 
-test("Enter saves, and an unchanged name is not sent", async () => {
-  const onRename = vi.fn();
-  await renderGroup(onRename);
+test("an unchanged name closes the dialog without sending", async () => {
+  const onSubmit = vi.fn();
+  const onOpenChange = vi.fn();
+  await renderDialog({ onSubmit, onOpenChange });
   await userEvent.click(field());
   await userEvent.keyboard("{Enter}");
-  expect(onRename).not.toHaveBeenCalled();
-  await userEvent.type(field(), " P.");
-  await userEvent.keyboard("{Enter}");
-  expect(onRename).toHaveBeenCalledExactlyOnceWith("Kateryna P.");
+  expect(onSubmit).not.toHaveBeenCalled();
+  expect(onOpenChange).toHaveBeenCalledWith(false);
 });
 
 test("refuses an empty name under the field and sends nothing", async () => {
-  const onRename = vi.fn();
-  await renderGroup(onRename);
+  const onSubmit = vi.fn();
+  await renderDialog({ onSubmit });
   await userEvent.clear(field());
-  await userEvent.tab();
+  await save().click();
   await expect.element(page.getByText("Write your name.")).toBeVisible();
   await expect.element(field()).toHaveAttribute("aria-invalid", "true");
-  expect(onRename).not.toHaveBeenCalled();
-});
-
-test("Escape puts the saved name back", async () => {
-  const onRename = vi.fn();
-  await renderGroup(onRename);
-  await userEvent.clear(field());
-  await userEvent.type(field(), "Someone else");
-  await userEvent.keyboard("{Escape}");
-  await expect.element(field()).toHaveValue("Kateryna");
-  await userEvent.tab();
-  expect(onRename).not.toHaveBeenCalled();
+  expect(onSubmit).not.toHaveBeenCalled();
 });
 
 test("stops at the schema's limit and says how much room is left", async () => {
-  await renderGroup(vi.fn());
+  await renderDialog();
   await userEvent.clear(field());
   await userEvent.type(field(), "a".repeat(85));
   await expect.element(field()).toHaveValue("a".repeat(80));
   await expect.element(page.getByText("0 characters left")).toBeVisible();
 });
 
-test("leaving the screen with a changed name saves it once", async () => {
-  const onRename = vi.fn();
-  function Toggle() {
-    const [shown, setShown] = useState(true);
-    return (
-      <>
-        <button type="button" onClick={() => setShown(false)}>
-          Leave
-        </button>
-        {shown && <AccountGroup name="Kateryna" email="learner@lymi.local" onRename={onRename} />}
-      </>
-    );
-  }
-  await render(
-    <QueryClientProvider client={new QueryClient()}>
-      <I18nProvider i18n={i18n}>
-        <Toggle />
-      </I18nProvider>
-    </QueryClientProvider>,
-  );
-  await userEvent.type(field(), " P.");
-  await page.getByRole("button", { name: "Leave" }).click();
-  expect(onRename).toHaveBeenCalledExactlyOnceWith("Kateryna P.");
-});
-
-test("going back to the stored name while a save is out sends it", async () => {
-  const onRename = vi.fn();
-  const client = new QueryClient();
-  await render(
-    <QueryClientProvider client={client}>
-      <I18nProvider i18n={i18n}>
-        <AccountGroup name="Kateryna" email="learner@lymi.local" onRename={onRename} />
-      </I18nProvider>
-    </QueryClientProvider>,
-  );
-  await userEvent.type(field(), " P.");
-  await userEvent.tab();
-  // The rename to "Kateryna P." has not landed, so the stored name is still "Kateryna".
-  void client
-    .getMutationCache()
-    .build(client, { mutationKey: ["rename"], mutationFn: () => new Promise(() => {}) })
-    .execute(undefined);
-  await userEvent.clear(field());
-  await userEvent.type(field(), "Kateryna");
-  await userEvent.tab();
-  expect(onRename.mock.calls).toEqual([["Kateryna P."], ["Kateryna"]]);
+test("shows why a save failed beside the buttons", async () => {
+  await renderDialog({}, "Couldn’t save your name. Try again.");
+  await expect
+    .element(page.getByRole("dialog").getByText("Couldn’t save your name. Try again."))
+    .toBeVisible();
 });

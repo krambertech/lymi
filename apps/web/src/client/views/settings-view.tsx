@@ -25,10 +25,8 @@ export interface SettingsProps {
   languageError?: boolean | undefined;
   theme: ThemeChoice;
   onTheme: (t: ThemeChoice) => void;
-  /** The Account group with a working name and photo. Without it, the group only shows who is signed in. */
+  /** The Account group with a working photo. Without it, the group only shows who is signed in. */
   account?: ReactNode | undefined;
-  /** Beside the title: whether the last text change saved. */
-  status?: ReactNode | undefined;
   /** The groups that need the network: reminders, connected apps, API keys. */
   children?: ReactNode | undefined;
   /** A link to one app's import page. */
@@ -64,7 +62,6 @@ export function SettingsView({
   theme,
   onTheme,
   account,
-  status,
   children,
   importLink,
   onExportLibrary,
@@ -72,7 +69,7 @@ export function SettingsView({
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
-    <Screen title={t`Settings`} width="md" back={{ label: t`Today`, to: "/today" }} status={status}>
+    <Screen title={t`Settings`} width="md" back={{ label: t`Today`, to: "/today" }}>
       {account ?? <AccountGroup name={me?.name} email={me?.email} />}
 
       <SettingsGroup

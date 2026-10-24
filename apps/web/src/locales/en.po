@@ -2132,11 +2132,18 @@ msgstr "Earlier shelves"
 msgid "Easy"
 msgstr "Easy"
 
+msgctxt "name"
+msgid "Edit"
+msgstr "Edit"
+
 msgid "Edit card"
 msgstr "Edit card"
 
 msgid "Edit hook"
 msgstr "Edit hook"
+
+msgid "Edit name"
+msgstr "Edit name"
 
 msgid "Edit series"
 msgstr "Edit series"
@@ -2944,6 +2951,9 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi shows it to you and to people in decks you share."
+msgstr "Lymi shows it to you and to people in decks you share."
 
 msgid "Made the deck {deck}"
 msgstr "Made the deck {deck}"

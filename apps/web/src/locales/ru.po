@@ -2132,11 +2132,18 @@ msgstr "Предыдущие полки"
 msgid "Easy"
 msgstr "Легко"
 
+msgctxt "name"
+msgid "Edit"
+msgstr "Изменить"
+
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
 msgid "Edit hook"
 msgstr "Изменить зацепку"
+
+msgid "Edit name"
+msgstr "Изменить имя"
 
 msgid "Edit series"
 msgstr "Изменить серию"
@@ -2944,6 +2951,9 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi shows it to you and to people in decks you share."
+msgstr "Его видишь ты и люди в твоих общих колодах."
 
 msgid "Made the deck {deck}"
 msgstr "Создана колода «{deck}»"

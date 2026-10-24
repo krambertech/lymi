@@ -10,6 +10,7 @@ import {
 import { clsx } from "clsx";
 import {
   Archive,
+  Check,
   ChevronRight,
   Link2Off,
   LogOut,
@@ -39,7 +40,6 @@ import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { NavLink } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
-import { SaveStatus } from "../components/save-status";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
@@ -196,7 +196,22 @@ export function DeckSettingsView({
           : // Inert until the deck is known, so an early tap never lands on the wrong screen.
             { label: t`Deck` }
       }
-      status={reading ? undefined : <SaveStatus saving={saving} saved={saved} error={error} />}
+      status={
+        reading ? undefined : (
+          <p className="min-h-5 text-sm text-muted" role="status">
+            {error ? (
+              <InlineError>{error}</InlineError>
+            ) : saving ? (
+              t`Saving…`
+            ) : saved ? (
+              <span className="enter-fade inline-flex items-center gap-1.5">
+                <Check className="size-4" aria-hidden="true" />
+                <Trans>Saved</Trans>
+              </span>
+            ) : null}
+          </p>
+        )
+      }
     >
       {!deck && (
         <div className="grid gap-3 pt-2">

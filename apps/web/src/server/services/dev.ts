@@ -4,10 +4,12 @@ import {
   dayWindow,
   emptyState,
   exampleFingerprint,
+  localDate,
   type Rating,
   SLIPPING_FORGOTTEN_DAYS,
   schedule,
   serializeState,
+  startOfLocalDay,
 } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
@@ -18,7 +20,7 @@ import { auditStatement } from "./audit";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { addCards } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
-import { dateFormatter } from "./days";
+import { addDays, dateFormatter } from "./days";
 import { archiveDeck, asked, createDeck, listDecks } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
 import { setImportantMany } from "./important";
@@ -467,15 +469,18 @@ async function backdate({ db }: ServiceContext, introducedAt: Map<string, Date>)
  * grades are not audited, because Activity is for what integrations did.
  */
 async function simulateReviews(
-  { db, userId }: ServiceContext,
+  ctx: ServiceContext,
   introducedAt: Map<string, Date>,
   { reviewDays, reviewsPerDay }: Pick<Persona, "reviewDays" | "reviewsPerDay">,
   now: Date,
   seed: number,
 ) {
+  const { db, userId } = ctx;
   const most = reviewsPerDay?.max ?? MAX_REVIEWS_PER_DAY;
   const least = reviewsPerDay?.min ?? MIN_REVIEWS_PER_DAY;
   if (reviewDays.length === 0 || introducedAt.size === 0) return;
+  const zone = await reviewZone(ctx);
+  const today = localDate(now, zone);
   const states = await db
     .select()
     .from(schema.cardStates)
@@ -490,10 +495,15 @@ async function simulateReviews(
   }));
   const reviews: (typeof schema.reviews.$inferInsert)[] = [];
 
-  // Reviews land at the same clock time as the seed, half an hour earlier, so each one sits
-  // in the local day it belongs to whatever the learner's timezone.
+  // Reviews land at the seed's clock time less half an hour, held inside the local day they stand
+  // for: just after midnight the half hour would push them into the day before.
   for (const daysAgo of [...new Set(reviewDays)].sort((a, b) => b - a)) {
-    const at = new Date(now.getTime() - daysAgo * DAY - 30 * 60_000);
+    const date = addDays(today, -daysAgo);
+    const start = startOfLocalDay(date, zone).getTime();
+    const end = startOfLocalDay(addDays(date, 1), zone).getTime();
+    const at = new Date(
+      Math.min(Math.max(now.getTime() - daysAgo * DAY - 30 * 60_000, start), end - 60_000),
+    );
     const existing = live.filter(
       (e) => (introducedAt.get(e.row.cardId)?.getTime() ?? 0) <= at.getTime(),
     );
@@ -581,13 +591,13 @@ export async function markEnriched(
 /**
  * Make exactly `count` cards due now, or every card. Cards with the most history come due
  * first, so the queue shows real intervals rather than a row of new cards. Everything else
- * that was due moves to tomorrow or later.
+ * due today moves to tomorrow or later.
  */
-export async function setDue(
-  { db, userId }: ServiceContext,
-  count: number | "all",
-): Promise<number> {
+export async function setDue(ctx: ServiceContext, count: number | "all"): Promise<number> {
+  const { db, userId } = ctx;
   const now = new Date();
+  // The draw counts a card due before the day ends, so later today is still due.
+  const { end } = dayWindow(now, await reviewZone(ctx));
   const states = await db
     .select({
       id: schema.cardStates.id,
@@ -626,7 +636,7 @@ export async function setDue(
     if (wanted) {
       chosen.add(s.cardId);
       dueIds.push(s.id);
-    } else if (s.due.getTime() <= now.getTime()) {
+    } else if (s.due.getTime() < end.getTime()) {
       laterIds.push(s.id);
     }
   }
@@ -645,7 +655,10 @@ export async function setDue(
     statements.push(
       db
         .update(schema.cardStates)
-        .set({ due: new Date(now.getTime() + DAY + i * 3_600_000), updatedAt: now })
+        .set({
+          due: new Date(Math.max(now.getTime() + DAY, end.getTime()) + i * 3_600_000),
+          updatedAt: now,
+        })
         .where(eq(schema.cardStates.id, id)),
     );
   });

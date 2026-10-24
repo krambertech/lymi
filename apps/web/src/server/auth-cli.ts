@@ -9,6 +9,7 @@
  */
 import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
+import { electron } from "@better-auth/electron";
 import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
@@ -32,6 +33,7 @@ const options = {
     }) as unknown as BetterAuthPlugin,
     cimd({ fetchClientMetadataResource: fetch }),
     expo(),
+    electron(),
     emailOTP({ sendVerificationOTP: async () => {} }),
   ],
 } satisfies BetterAuthOptions;

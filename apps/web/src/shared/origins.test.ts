@@ -14,6 +14,12 @@ describe("safeProductReturnPath", () => {
     );
   });
 
+  it("lets sign-in return to the Mac app's hand-off page, and no other desktop page", () => {
+    const handOff = "/desktop/sign-in?client_id=electron&code_challenge=abc&state=xyz";
+    expect(safeProductReturnPath(handOff)).toBe(handOff);
+    expect(safeProductReturnPath("/desktop/add")).toBe("/today");
+  });
+
   it.each([
     "https://elsewhere.example/today",
     "/join",

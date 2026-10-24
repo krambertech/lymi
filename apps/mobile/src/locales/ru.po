@@ -3322,6 +3322,9 @@ msgstr "Нажми Copy text и вставь текст сюда."
 msgid "Previous month"
 msgstr "Предыдущий месяц"
 
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
+
 msgid "Private"
 msgstr "Приватная"
 

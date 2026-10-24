@@ -43,7 +43,7 @@ import { lastDeckId, rememberDeck } from "../lib/last-deck";
 import { cardSearchQuery, cardTermQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";
-import { getTheme, setTheme } from "../lib/theme";
+import { toggleTheme } from "../lib/theme";
 import { Kbd } from "./kbd";
 import { ShortcutsDialog } from "./shortcuts-dialog";
 import {
@@ -387,12 +387,8 @@ export function CommandMenu({
         return onCreateDeck();
       case "import":
         return navigate({ to: "/import" });
-      case "theme": {
-        const dark =
-          getTheme() === "dark" ||
-          (getTheme() === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
-        return setTheme(dark ? "light" : "dark");
-      }
+      case "theme":
+        return toggleTheme();
       case "shortcuts":
         return setShortcuts(true);
     }

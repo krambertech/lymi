@@ -1,21 +1,22 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, apiUrl, type CardEvent, type CardState, errorMessage } from "@lymi/client/api";
+import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
-import { cardHistoryQuery, deckCardsQuery } from "@lymi/client/queries";
+import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, isolate, termShowsPronunciation } from "@lymi/core";
+import { deserializeState, type EnrichedField, isolate, termShowsPronunciation } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ComponentProps, type ReactNode, useEffect, useMemo, useState } from "react";
-import { Image, View } from "react-native";
+import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { AccessibilityInfo, Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
 import { fieldLabel } from "../../../../capture/card-fields";
 import type { FormField } from "../../../../capture/form";
 import { useArchiveCard } from "../../../../card/card-menu";
+import { canEnrich, useEnrichCard } from "../../../../card/enrich";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { useMoveToSection } from "../../../../deck/move-to-section";
@@ -105,9 +106,9 @@ export default function CardPage() {
       : undefined;
   const pronounce = usePronunciation(card ?? null);
   const exampleSound = useExampleAudio(card ?? null, "card");
-  const qc = useQueryClient();
   const moveToSection = useMoveToSection(deckId);
   const archiveCard = useArchiveCard();
+  const { enrich, sheet: enrichSheet } = useEnrichCard();
   // Back to the deck first, so a slow write never pops a screen the learner has moved to.
   const archive = (c: { id: string; term: string }) => {
     router.back();
@@ -126,6 +127,21 @@ export default function CardPage() {
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
   const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
+  // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the run settles.
+  const status = card?.enrichmentStatus;
+  const filling = status === "working";
+  const announced = useRef(false);
+  useEffect(() => {
+    if (filling) {
+      announced.current = true;
+      AccessibilityInfo.announceForAccessibility(t`Enriching this card`);
+    } else if (announced.current) {
+      announced.current = false;
+      AccessibilityInfo.announceForAccessibility(
+        status === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
+      );
+    }
+  }, [filling, status, t]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -157,11 +173,18 @@ export default function CardPage() {
     : row.state
       ? [row.state]
       : [];
+  // Each field the AI will write holds its space until the text lands.
+  const waiting = (field: EnrichedField) =>
+    filling && !card[field] && (card.enrichmentFields?.includes(field) ?? true);
   const asked = states.map((st) => i18n._(modeLabel(st.mode))).join(", ");
   // Facts about the card, each named, so nothing has to be guessed from a line of dots.
   const details: { label: string; value: ReactNode; onPress?: (() => void) | undefined }[] = [
     { label: t`Deck`, value: deck?.name ?? "" },
-    ...(card.language ? [{ label: t`Language`, value: languageName(card.language) }] : []),
+    ...(card.language
+      ? [{ label: t`Language`, value: languageName(card.language) }]
+      : waiting("language")
+        ? [{ label: t`Language`, value: <Skeleton width={64} height={12} /> }]
+        : []),
     ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
     ...(asked ? [{ label: t`Asked`, value: asked, onPress: choose("modes") }] : []),
     ...(card.tags.length
@@ -208,18 +231,6 @@ export default function CardPage() {
   ].sort((a, b) => b.at.getTime() - a.at.getTime());
   const shown = older ? items : items.slice(0, HISTORY_ROWS);
 
-  // Enrich on the card writes the translation that failed; the card comes back working.
-  const enrich = async () => {
-    try {
-      const next = await api.enrichCard(card.id);
-      qc.setQueryData(deckCardsQuery(deckId).queryKey, (rows) =>
-        rows?.map((r) => (r.card.id === next.id ? { ...r, card: next } : r)),
-      );
-    } catch (e) {
-      toast.add({ error: true, title: errorMessage(e) });
-      void qc.invalidateQueries({ queryKey: deckCardsQuery(deckId).queryKey });
-    }
-  };
   const translating = card.exampleTranslationStatus === "working";
   // A translation of an earlier example is the owner's to fix, so only they still see it.
   const translation =
@@ -229,7 +240,7 @@ export default function CardPage() {
 
   // The card's fields and its details read the same way: a name over its value, a hairline between.
   const fields = [
-    card.pronunciation && (
+    card.pronunciation ? (
       <Field
         key="pronunciation"
         label={i18n._(fieldLabel("pronunciation", card.language))}
@@ -240,6 +251,12 @@ export default function CardPage() {
           {card.pronunciation}
         </Text>
       </Field>
+    ) : (
+      waiting("pronunciation") && (
+        <Field key="pronunciation" label={i18n._(fieldLabel("pronunciation", card.language))}>
+          <Working lines={1} />
+        </Field>
+      )
     ),
     <Field
       key="meaning"
@@ -248,11 +265,15 @@ export default function CardPage() {
       field="meaning"
       onPress={edit("meaning")}
     >
-      <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
-        {card.meaning || t`No meaning yet`}
-      </Text>
+      {waiting("meaning") ? (
+        <Working />
+      ) : (
+        <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
+          {card.meaning || t`No meaning yet`}
+        </Text>
+      )}
     </Field>,
-    card.example && (
+    card.example ? (
       <Field
         key="example"
         label={t`Example`}
@@ -263,13 +284,16 @@ export default function CardPage() {
         }
         onPress={edit("example")}
         end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
+        // A failed run names itself once, under the fields, so its translation does not say it again.
         below={
           owner &&
-          card.exampleTranslationStatus === "failed" && (
+          card.exampleTranslationStatus === "failed" &&
+          card.enrichmentStatus !== "failed" && (
             <View className="flex-row flex-wrap items-center gap-x-2">
               <Text className="text-sm text-muted">{t`Couldn’t translate the example.`}</Text>
               <Press
-                onPress={() => void enrich()}
+                // Enrich on the card writes the translation that failed; the card comes back working.
+                onPress={() => void enrich(card)}
                 accessibilityRole="button"
                 className="min-h-11 justify-center"
               >
@@ -297,11 +321,23 @@ export default function CardPage() {
           </Text>
         )}
       </Field>
+    ) : (
+      waiting("example") && (
+        <Field key="example" label={t`Example`}>
+          <Working />
+        </Field>
+      )
     ),
-    card.notes && (
+    card.notes ? (
       <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"} onPress={edit("notes")}>
         <CardNotes source={card.notes} className="text-md text-text" />
       </Field>
+    ) : (
+      waiting("notes") && (
+        <Field key="notes" label={t`Notes`}>
+          <Working />
+        </Field>
+      )
     ),
     card.hook && (
       <Field
@@ -478,6 +514,15 @@ export default function CardPage() {
                     icon: "important" as const,
                     onSelect: () => void writes.setImportant(card, !card.important),
                   },
+                  ...(canEnrich(card, deck)
+                    ? [
+                        {
+                          label: t`Enrich`,
+                          icon: "ai" as const,
+                          onSelect: () => void enrich(card),
+                        },
+                      ]
+                    : []),
                   ...(owner
                     ? [
                         {
@@ -532,6 +577,19 @@ export default function CardPage() {
           </View>
         ))}
       </Plate>
+      {/* One quiet line, only here: a field that says "No meaning yet" is already saying enough. */}
+      {owner && card.enrichmentStatus === "failed" && (
+        <View className="-mt-2 flex-row flex-wrap items-center gap-x-2 px-1">
+          <Text className="text-sm text-muted">{t`Couldn’t enrich this card.`}</Text>
+          <Press
+            onPress={() => void enrich(card)}
+            accessibilityRole="button"
+            className="min-h-11 justify-center"
+          >
+            <Text className="text-sm font-medium text-text-2 underline">{t`Try again`}</Text>
+          </Press>
+        </View>
+      )}
       {block(
         t`Details`,
         // Facts about the card, not part of it: the label and its value on one line, as Settings lays them.
@@ -577,6 +635,7 @@ export default function CardPage() {
       {block(t`History`, log)}
       {pronounce?.sheet}
       {exampleSound?.sheet}
+      {owner && enrichSheet}
     </Screen>
   );
 }
@@ -633,6 +692,20 @@ function Field({
     <View>
       {row}
       <View className="-mt-2 px-5 pb-1.5">{below}</View>
+    </View>
+  );
+}
+
+/** Lines held for text the AI is still writing; VoiceOver hears the page's announcement instead. */
+function Working({ lines = 2 }: { lines?: 1 | 2 }) {
+  return (
+    <View
+      className="gap-2 py-1"
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
+      <Skeleton width={lines === 1 ? 112 : "100%"} height={12} />
+      {lines === 2 && <Skeleton width="60%" height={12} />}
     </View>
   );
 }

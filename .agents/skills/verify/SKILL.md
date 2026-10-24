@@ -9,7 +9,7 @@ A change is verified when the feature it touches has been driven in a running pr
 
 ## Pick the features
 
-[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request.
+[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request. Every product route needs an entry that names its path, such as `/library/<deck id>`, or a reason in `UNMAPPED_ROUTES` in [`check-agent-docs.mjs`](../../../scripts/check-agent-docs.mjs), and `pnpm check:agent-docs` fails on a route with neither.
 
 | Feature | Entry |
 | --- | --- |
@@ -20,6 +20,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
+| Select cards | [select-cards.md](features/select-cards.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
@@ -44,6 +45,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |
+| First run for a Ukrainian beginner | [first-run-ukrainian.md](features/first-run-ukrainian.md) |
 | AI services | [ai-services.md](features/ai-services.md) |
 
 ## Launch
@@ -72,7 +74,7 @@ The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch und
 
 Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step as ok or FAIL with the error, and every console error and 5xx response. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
 
-Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
+Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs; [Proof matches the change](../../../AGENTS.md#before-you-push) says when a run is the proof and what else it needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
 
 ## Cleanup
 

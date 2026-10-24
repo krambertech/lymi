@@ -977,6 +977,7 @@ export const AI_CONSENT_PLACES = [
   "smart_add",
   "speech",
   "hook",
+  "enrich",
   "settings",
 ] as const;
 export const AiConsentInput = z.object({

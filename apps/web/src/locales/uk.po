@@ -2031,8 +2031,8 @@ msgstr "Колоди"
 msgid "Decks from Anki, Mochi or Noji, with their review history."
 msgstr "Колоди з Anki, Mochi чи Noji разом з історією повторень."
 
-msgid "Decks other people keep"
-msgstr "Колоди, які залишаться в інших"
+msgid "Decks other people study"
+msgstr "Колоди, які вивчають інші"
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -2049,8 +2049,8 @@ msgstr "Видалити акаунт"
 msgid "Delete series"
 msgstr "Видалити серію"
 
-msgid "Delete your account, private cards and review history. Members keep shared decks."
-msgstr "Видали свій акаунт, особисті картки та історію повторень. Спільні колоди залишаться в учасників."
+msgid "Delete your account, private cards and review history. Members keep their own copy of shared decks."
+msgstr "Видали свій акаунт, особисті картки та історію повторень. Учасники збережуть власну копію спільних колод."
 
 msgid "Deleted"
 msgstr "Видалено"
@@ -2176,6 +2176,9 @@ msgstr "Кожен блок — день із повтореннями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Кожен, хто вивчає ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Кожен розділ відкривається, щойно засвоєно більшість попереднього."
@@ -2740,6 +2743,9 @@ msgstr "Можливо, її архівували або тебе з неї пр
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Можливо, її зняли з публікації. Інші колоди шукай у Каталозі."
 
+msgid "It publishes the decks in Explore, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "Він публікує колоди в Каталозі, тож його не можна видалити тут. Напиши на <0>hello@lymi.app</0>, щоб його видалити."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Його не підтвердили протягом трьох днів, тому Lymi видалив файл. Вибери файл ще раз, щоб почати заново."
 
@@ -3095,9 +3101,6 @@ msgstr "Значення з уроку"
 
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медична французька для медсестер. Бери медичне значення."
-
-msgid "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
-msgstr "Колоди залишаться в учасників, доки вони з них не вийдуть. Після видалення твого акаунту ніхто не зможе редагувати картки."
 
 msgid "Memory hook"
 msgstr "Зачіпка"
@@ -3647,9 +3650,6 @@ msgstr "Або почни з порожньої колоди"
 msgid "other decks"
 msgstr "інші колоди"
 
-msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
-msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на <0>hello@lymi.app</0>, щоб видалити його."
-
 msgid "Other subjects"
 msgstr "Інші теми"
 
@@ -3837,6 +3837,9 @@ msgstr "Вимова з уроку"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "опубліковані колоди"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубліковані колоди зникнуть із Каталогу, тож ніхто новий не зможе їх додати."
 
 msgid "Quick add"
 msgstr "Швидке додавання"
@@ -4791,9 +4794,6 @@ msgstr "Людина втратить доступ до колоди й не з�
 msgid "They’re already in this deck."
 msgstr "Ця людина вже в колоді."
 
-msgid "This account publishes decks"
-msgstr "Цей акаунт публікує колоди"
-
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
@@ -4862,6 +4862,9 @@ msgstr "Це запрошення працює лише для цієї адре
 
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Це запрошення надіслано на {invited}. Увійди з цією адресою, щоб приєднатися."
+
+msgid "This is a Lymi publisher account"
+msgstr "Це акаунт видавця Lymi"
 
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так вона виглядатиме в Lymi. Зміни поля, якщо щось стоїть не на своєму місці."
@@ -5339,6 +5342,9 @@ msgstr "Ти повторюєш у власному ритмі, а {ownerName} �
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ти входиш через Apple, тож після видалення акаунта прибери Lymi з розділу «Вхід з Apple» у налаштуваннях облікового запису Apple."
 
+msgid "You signed in with Apple. If Lymi still shows under Sign in with Apple in your Apple Account settings, remove it there."
+msgstr "Твій акаунт Lymi був пов’язаний з Apple. Якщо Lymi досі є в розділі «Вхід з Apple» у налаштуваннях облікового запису Apple, прибери його там."
+
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 
@@ -5378,8 +5384,8 @@ msgstr "Дані твого акаунту"
 msgid "Your assistant is connected"
 msgstr "Асистента підключено"
 
-msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
-msgstr "Твої картки, повторення й налаштування видалено. Колоди, які вивчають інші люди, залишаються для них."
+msgid "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."
+msgstr "Твої картки, повторення й налаштування видалено. Ті, хто вивчав твої колоди, зберігають власні копії."
 
 msgid "Your code to delete your Lymi account"
 msgstr "Твій код для видалення акаунта Lymi"

@@ -13,13 +13,14 @@ import {
   isNull,
   ne,
   notExists,
-  notInArray,
   or,
   type SQL,
   sql,
 } from "@lymi/core/db";
+import type { AppleClients } from "../apple-revoke";
 import { type Db, schema } from "../db";
-import type { Bindings } from "../env";
+import { type Bindings, publisherEmails } from "../env";
+import { appleRevocationRow } from "./apple-revocations";
 import { auditStatement } from "./audit";
 import { runBatch } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
@@ -28,6 +29,7 @@ import {
   sendTransactionalEmail,
   type TransactionalEmailLanguage,
 } from "./email";
+import { isPublisher } from "./publishers";
 
 /**
  * The account that holds decks other people still study after their owner deleted theirs. It
@@ -69,13 +71,20 @@ function enqueueAudioPurge(db: Db, where: SQL | undefined, now: Date) {
     .onConflictDoNothing();
 }
 
-/** Owned decks other people study now: they stay for those people when the owner leaves Lymi. */
+/**
+ * Owned decks other people study now, which each of them keeps as a private copy. An archived
+ * deck goes for everyone, so archiving it first is how the owner takes it from its members.
+ */
 function sharedDecks({ db, userId }: ServiceContext) {
   return db
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
       members: count(schema.deckMembers.id),
+      published: sql<boolean>`exists (select 1 from deck_publications
+        where deck_publications.deck_id = decks.id and deck_publications.status = 'published')`.mapWith(
+        Boolean,
+      ),
     })
     .from(schema.decks)
     .innerJoin(
@@ -86,38 +95,8 @@ function sharedDecks({ db, userId }: ServiceContext) {
         ne(schema.deckMembers.userId, userId),
       ),
     )
-    .where(eq(schema.decks.userId, userId))
+    .where(and(eq(schema.decks.userId, userId), isNull(schema.decks.archivedAt)))
     .groupBy(schema.decks.id);
-}
-
-/**
- * An account that owns a published deck, published an edition or approved a localization. The
- * first is guarded by migration 0028; the others are foreign keys without a delete rule.
- */
-async function isPublisher({ db, userId }: ServiceContext): Promise<boolean> {
-  const approved = [
-    schema.seriesLocalizations,
-    schema.deckLocalizations,
-    schema.sectionLocalizations,
-    schema.cardLocalizations,
-  ].map((table) =>
-    db.select({ id: table.approvedBy }).from(table).where(eq(table.approvedBy, userId)).limit(1),
-  );
-  const found = await Promise.all([
-    db
-      .select({ id: schema.deckPublications.id })
-      .from(schema.deckPublications)
-      .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
-      .where(eq(schema.decks.userId, userId))
-      .limit(1),
-    db
-      .select({ id: schema.deckEditions.id })
-      .from(schema.deckEditions)
-      .where(eq(schema.deckEditions.publishedBy, userId))
-      .limit(1),
-    ...approved,
-  ]);
-  return found.some((rows) => rows.length > 0);
 }
 
 async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
@@ -129,9 +108,12 @@ async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
 }
 
 /** What deleting the account takes, so the confirmation can say it before anything is sent. */
-export async function deletionSummary(ctx: ServiceContext): Promise<AccountDeletionOut> {
+export async function deletionSummary(
+  ctx: ServiceContext,
+  publishers: Set<string>,
+): Promise<AccountDeletionOut> {
   const { db, userId } = ctx;
-  const [[decks], [cards], [reviews], shared, publisher, apple] = await Promise.all([
+  const [[decks], [cards], [reviews], shared, apple, publisher] = await Promise.all([
     db.select({ n: count() }).from(schema.decks).where(eq(schema.decks.userId, userId)),
     db
       .select({ n: count() })
@@ -140,8 +122,8 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
       .where(eq(schema.decks.userId, userId)),
     db.select({ n: count() }).from(schema.reviews).where(eq(schema.reviews.userId, userId)),
     sharedDecks(ctx),
-    isPublisher(ctx),
     hasApple(ctx),
+    isPublisher(ctx, publishers),
   ]);
   return {
     blocked: publisher ? "publisher" : null,
@@ -153,23 +135,32 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
   };
 }
 
-function refusePublisher(): never {
-  throw new ServiceError(
-    "conflict",
-    "This account publishes decks, so it can’t be deleted here. Write to hello@lymi.app.",
-    undefined,
-    "publisher",
-  );
+/**
+ * Lymi's own publisher accounts hold the decks in Explore and the editions people pin, so they
+ * are taken off `PUBLISHER_EMAILS` before they can be deleted.
+ */
+async function refuseLymiPublisher(ctx: ServiceContext, publishers: Set<string>) {
+  if (await isPublisher(ctx, publishers)) {
+    throw new ServiceError(
+      "conflict",
+      "This is one of Lymi's publisher accounts, so it can't be deleted here.",
+      undefined,
+      "publisher",
+    );
+  }
 }
 
 /** Starts a delete: emails a fresh six-digit code to the account's address, replacing any earlier one. */
 export async function sendDeletionCode(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace },
+  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & {
+    SESSIONS?: KVNamespace;
+    PUBLISHER_EMAILS?: string | undefined;
+  },
   request: Request | undefined,
 ): Promise<DeletionCodeOut> {
   const { db, userId } = ctx;
-  if (await isPublisher(ctx)) refusePublisher();
+  await refuseLymiPublisher(ctx, publisherEmails(env));
   const [account] = await db
     .select({ email: schema.user.email })
     .from(schema.user)
@@ -320,6 +311,10 @@ export interface DeletionDeps {
   verifyApple: ((token: string, nonce: string) => Promise<boolean>) | null;
   /** Ends every session before the rows go, since KV keeps copies the cascade cannot reach. */
   endSessions: (userId: string) => Promise<void>;
+  /** The Sign in with Apple key, which revoking the account's Apple grant needs; null without it. */
+  appleClients: AppleClients | null;
+  /** `PUBLISHER_EMAILS`: Lymi's own publishers, which are refused. */
+  publishers: Set<string>;
 }
 
 /** What is left to do once the rows are gone: storage the database cannot cascade into. */
@@ -327,7 +322,9 @@ export interface DeletionLeftovers {
   email: string;
   language: TransactionalEmailLanguage;
   confirmedWith: "email" | "apple";
+  /** Decks other people studied, which each of them gets as a copy, and the account's live published decks. */
   keptDecks: number;
+  publishedDecks: number;
   privateImages: string[];
   /** The cards' current clips; the cron clears the rest of each card's audio folder. */
   audioKeys: string[];
@@ -335,12 +332,14 @@ export interface DeletionLeftovers {
   exports: { objectKey: string | null }[];
   /** False when ending the sessions failed after the delete, so the caller tries again. */
   sessionsEnded: boolean;
+  /** The Apple grant's record: pending until revoked, skipped when it could not be tried. Null without Apple. */
+  appleRevocation: Pick<typeof schema.appleRevocations.$inferSelect, "status" | "reason"> | null;
 }
 
 /**
  * Deletes the learner's account and everything it holds, once they have proved it is them. Decks
- * other people study stay for those people under the former owner. Storage outside D1 is the
- * caller's to clear with the leftovers. Publisher accounts are refused (migration 0028).
+ * other people study wait under the former owner while `copyFormerDecks` gives each of them a
+ * private copy. Storage outside D1 is the caller's to clear with the leftovers.
  */
 export async function deleteAccount(
   ctx: ServiceContext,
@@ -351,7 +350,7 @@ export async function deleteAccount(
   if (ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can delete their account, from the app.");
   }
-  if (await isPublisher(ctx)) refusePublisher();
+  await refuseLymiPublisher(ctx, deps.publishers);
   const confirmedWith = "apple" in input ? "apple" : "email";
   if ("apple" in input) await checkApple(ctx, input.apple, deps.verifyApple);
   else await checkCode(ctx, input.code);
@@ -362,13 +361,21 @@ export async function deleteAccount(
     .where(eq(schema.user.id, userId));
   if (!account) throw new ServiceError("not_found", "No such learner.");
 
-  const summary = await deletionSummary(ctx);
+  const summary = await deletionSummary(ctx, deps.publishers);
   const language = await accountEmailLanguage(db, userId, deps.request);
-  const kept = summary.sharedDecks.map((deck) => deck.id);
-  const keptCards = db
-    .select({ id: schema.cards.id })
-    .from(schema.cards)
-    .where(inArray(schema.cards.deckId, kept));
+  const kept = summary.sharedDecks.length;
+  // The decks `sharedDecks` lists, as a subquery: binding one id each would pass D1's 100
+  // parameters for an owner of many studied decks. It reads nothing once the decks move.
+  const studied = sql`(select decks.id from decks where decks.user_id = ${userId}
+    and decks.archived_at is null and exists (select 1 from deck_members
+      where deck_members.deck_id = decks.id and deck_members.removed_at is null
+        and deck_members.user_id <> ${userId}))`;
+  const studiedCards = sql`(select cards.id from cards where cards.deck_id in ${studied})`;
+  const [published] = await db
+    .select({ n: count() })
+    .from(schema.deckPublications)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+    .where(and(eq(schema.decks.userId, userId), eq(schema.deckPublications.status, "published")));
 
   const [avatar] = await db
     .select({ custom: schema.userAvatars.customKey, google: schema.userAvatars.googleKey })
@@ -380,7 +387,10 @@ export async function deleteAccount(
     .where(
       and(
         eq(schema.cardImages.userId, userId),
-        kept.length > 0 ? notInArray(schema.cardImages.cardId, keptCards) : undefined,
+        sql`${schema.cardImages.cardId} not in ${studiedCards}`,
+        // A member's copy shares the picture's object with the deck it came from.
+        sql`not exists (select 1 from card_images as other
+          where other.object_key = card_images.object_key and other.user_id <> ${userId})`,
       ),
     );
   // The cards that go with the account; a kept deck's cards keep their audio.
@@ -395,7 +405,7 @@ export async function deleteAccount(
           .where(eq(schema.decks.userId, userId)),
       ),
     ),
-    kept.length > 0 ? notInArray(schema.cards.deckId, kept) : undefined,
+    sql`${schema.cards.deckId} not in ${studied}`,
   );
   const audio = await db
     .select({ key: schema.cards.audioKey })
@@ -424,64 +434,51 @@ export async function deleteAccount(
   );
 
   const now = new Date();
+  const apple = await appleRevocationRow(
+    db,
+    userId,
+    deps.appleClients,
+    "apple" in input ? input.apple.authorizationCode : undefined,
+    now,
+  );
   await runBatch(db, [
     ...leaves,
-    ...(kept.length > 0
+    ...(kept > 0
       ? [
           // Migration 0051 seeds it, which holds its address; this restores it if it went.
           db
             .insert(schema.user)
             .values({ id: FORMER_OWNER_ID, name: "", email: "former-owner@lymi.invalid" })
             .onConflictDoNothing(),
-          // The learner's tags cascade with them, so a kept card's tags move to the former
-          // owner's tag of the same name, which holds each name once.
           db
-            .insert(schema.tags)
-            .select(
-              sql`select lower(hex(randomblob(10))), ${FORMER_OWNER_ID}, mine.name,
-                mine.normalized_name, ${now.getTime()}, ${now.getTime()}
-              from tags as mine
-              where mine.user_id = ${userId}
-                and mine.id in (select tag_id from card_tags where card_id in ${keptCards})`,
-            )
+            .insert(schema.formerDeckCopies)
+            .select(sql`select decks.id, ${now.getTime()} from decks where decks.id in ${studied}`)
             .onConflictDoNothing(),
-          db
-            .update(schema.cardTags)
-            .set({
-              tagId: sql`(select former.id from tags as former
-                join tags as mine on mine.normalized_name = former.normalized_name
-                where former.user_id = ${FORMER_OWNER_ID} and mine.id = card_tags.tag_id)`,
-            })
-            .where(
-              and(
-                inArray(schema.cardTags.cardId, keptCards),
-                inArray(
-                  schema.cardTags.tagId,
-                  db
-                    .select({ id: schema.tags.id })
-                    .from(schema.tags)
-                    .where(eq(schema.tags.userId, userId)),
-                ),
-              ),
-            ),
           // Nobody can change a kept deck, invite to it or join it again.
           db
             .update(schema.deckInvitations)
             .set({ revokedAt: now, updatedAt: now })
             .where(
               and(
-                inArray(schema.deckInvitations.deckId, kept),
+                sql`${schema.deckInvitations.deckId} in ${studied}`,
                 isNull(schema.deckInvitations.revokedAt),
               ),
             ),
+          // The public page and its editions belong to the person leaving; members keep the
+          // edition they pinned through the copy.
+          db
+            .delete(schema.deckPublications)
+            .where(sql`${schema.deckPublications.deckId} in ${studied}`),
+          db.delete(schema.deckEditions).where(sql`${schema.deckEditions.deckId} in ${studied}`),
           db
             .update(schema.cardImages)
             .set({ userId: FORMER_OWNER_ID, updatedAt: now })
-            .where(inArray(schema.cardImages.cardId, keptCards)),
+            .where(sql`${schema.cardImages.cardId} in ${studiedCards}`),
           db
             .update(schema.cards)
             .set({ userId: FORMER_OWNER_ID, hookDraft: null, updatedAt: now })
-            .where(inArray(schema.cards.deckId, kept)),
+            .where(sql`${schema.cards.deckId} in ${studied}`),
+          // Last, since `studied` reads the decks by their owner.
           db
             .update(schema.decks)
             .set({
@@ -492,21 +489,34 @@ export async function deleteAccount(
               enrichStyleAt: null,
               updatedAt: now,
             })
-            .where(inArray(schema.decks.id, kept)),
+            .where(sql`${schema.decks.id} in ${studied}`),
         ]
       : []),
-    // An open invitation to the address would otherwise show as pending to a deck's owner.
+    // A publisher's sign-off on someone else's edition stays signed off, without their name.
     db
-      .update(schema.deckInvitations)
-      .set({ revokedAt: now, updatedAt: now })
+      .update(schema.deckEditions)
+      .set({ publishedBy: null })
+      .where(eq(schema.deckEditions.publishedBy, userId)),
+    ...[
+      schema.seriesLocalizations,
+      schema.deckLocalizations,
+      schema.sectionLocalizations,
+      schema.cardLocalizations,
+    ].map((table) =>
+      db.update(table).set({ approvedBy: null }).where(eq(table.approvedBy, userId)),
+    ),
+    // Invitations to the address hold it in other owners' decks, and an open one would show as
+    // pending; membership is kept on `deck_members`, so none is needed once the account is gone.
+    db
+      .delete(schema.deckInvitations)
       .where(
         and(
           eq(schema.deckInvitations.kind, "named"),
           eq(schema.deckInvitations.email, account.email.toLowerCase()),
-          isNull(schema.deckInvitations.revokedAt),
-          isNull(schema.deckInvitations.acceptedAt),
         ),
       ),
+    // API keys name their account without a foreign key, so they do not cascade.
+    db.delete(schema.apikey).where(eq(schema.apikey.referenceId, userId)),
     db.delete(schema.verification).where(
       // The day's code counter lives two days, so today's and yesterday's may both be there.
       inArray(schema.verification.identifier, [
@@ -525,8 +535,9 @@ export async function deleteAccount(
       decks: summary.decks,
       cards: summary.cards,
       reviews: summary.reviews,
-      keptDecks: kept.length,
+      keptDecks: kept,
     }),
+    ...(apple ? [db.insert(schema.appleRevocations).values(apple)] : []),
     enqueueAudioPurge(db, going, now),
     db.delete(schema.user).where(eq(schema.user.id, userId)),
   ]);
@@ -546,7 +557,8 @@ export async function deleteAccount(
     email: account.email,
     language,
     confirmedWith,
-    keptDecks: kept.length,
+    keptDecks: kept,
+    publishedDecks: published?.n ?? 0,
     privateImages: [
       ...images.map((image) => image.key),
       ...[avatar?.custom, avatar?.google].filter((key): key is string => Boolean(key)),
@@ -555,13 +567,14 @@ export async function deleteAccount(
     imports,
     exports,
     sessionsEnded,
+    appleRevocation: apple ? { status: apple.status, reason: apple.reason ?? null } : null,
   };
 }
 
 /**
- * Deletes kept decks whose last member has left, with their pictures, and queues their audio, so
- * what a deleted learner wrote lasts only while someone studies it. A deck whose pictures R2
- * refused waits for the next run.
+ * Deletes a former owner's deck once no member is left, either because each has their copy or,
+ * for a deck kept before copies existed, because the last one left. Pictures a copy shares stay,
+ * and the cards' audio is queued. A deck whose pictures R2 refused waits for the next run.
  */
 export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
   const decks = await db
@@ -590,7 +603,15 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
       .select({ key: schema.cardImages.objectKey })
       .from(schema.cardImages)
       .innerJoin(schema.cards, eq(schema.cards.id, schema.cardImages.cardId))
-      .where(eq(schema.cards.deckId, id));
+      .where(
+        and(
+          eq(schema.cards.deckId, id),
+          // Members' copies share these objects.
+          sql`not exists (select 1 from card_images as other
+            join cards as theirs on theirs.id = other.card_id
+            where other.object_key = card_images.object_key and theirs.deck_id <> ${id})`,
+        ),
+      );
     try {
       for (let i = 0; i < pictures.length; i += 1000) {
         await images.delete(pictures.slice(i, i + 1000).map((picture) => picture.key));

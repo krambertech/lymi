@@ -18,6 +18,8 @@ To prove a product change works, drive the features it touches with [the verify 
 
 **Instrumentation is part of done.** For each behavior change, state the product question it should answer and add or reuse an event at its owning interaction or committed outcome. Document the event meaning, allowed properties and producer; preserve existing chart contracts, exclude private content, and verify failure and duplicate paths. Record instrumentation and its validation in the pull request. If the change needs no event, explain why.
 
+**Proof matches the change.** A logic fix needs a test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and before-and-after screenshots. A server fix needs that test plus a request transcript: the request and the response it now gets. Ask of every proof whether it could pass while the original task stays broken; if it could, it proves nothing. The pull request names which proof it gives.
+
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
 
 ```bash
@@ -46,6 +48,8 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
+**Friction log.** When a repository gotcha would slow down the next agent or developer too, such as a stale generated file, a misleading check message or an unwritten setup step, post it as a friction in the Developer experience discussions rather than keep it in private memory; one-off nits and your own slips do not belong there. Search first with `pnpm friction search <words>`, then `pnpm friction plus <number> --note …` on a match or `pnpm friction file` for a new one, which fills [the form](.github/DISCUSSION_TEMPLATE/developer-experience.yml)'s three questions. A post with a second occurrence goes through GitHub's "Create issue from discussion" to become a check, a hook or a line in this guide.
+
 ## Enforced rules
 
 Each rule below fails a check instead of waiting for review, and the check's message names the fix.
@@ -60,9 +64,11 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Language behaviour comes from `packages/core/src/languages`: no other code compares a supported tag with `languageKey(…)`, `.language` or `lang`, switches on it, or lists it in a literal set; files not yet moved are excluded in `biome.json` | `biome-plugins/language-tags.grit` |
 | A screen draws a card's term with `TermText` and its example with `ExampleText`, never `termReading` or `parseReadings` itself | `biome-plugins/term-text.grit` |
 | Learner text interpolated into `t`, `msg` or `<Trans>` is isolated, as `${{ term: isolate(term) }}`, so a right-to-left term never reorders the sentence | `biome-plugins/isolate-learner-text.grit` |
+| An outgoing fetch never passes `redirect: "error"`, which Workers refuses at runtime; use `redirect: "manual"` and check the `Location` | `biome-plugins/no-redirect-error.grit` and `pnpm test:workers` |
 | Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
 | New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
 | Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |
+| Agent docs name only paths, `pnpm` scripts and skills that exist, every product route has a verify entry or a stated reason, and this file stays under its size budget | `pnpm check:agent-docs` |
 | Files under `apps/web/src/client` are kebab-case | Biome `useFilenamingConvention` |
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |

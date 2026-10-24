@@ -192,6 +192,8 @@ function FanCard({
             lang={card.language}
             hidden={card.state === "known" && !back}
           />
+        ) : cue === "term" && card.stress && (card.state !== "known" || back) ? (
+          card.stress
         ) : (
           cueText
         )}
@@ -245,7 +247,7 @@ function FanCard({
           {card.furigana ? (
             <Furigana term={card.term} reading={card.furigana} lang={card.language} />
           ) : (
-            card.term
+            (card.stress ?? card.term)
           )}
         </p>
         {termDetails}

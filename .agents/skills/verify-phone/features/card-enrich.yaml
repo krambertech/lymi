@@ -1,0 +1,33 @@
+# Enrich from the card page's ⋯, and no Enrich in the card's long-press menu.
+appId: app.lymi
+name: Enrich a card
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- tapOn: "Card options"
+- extendedWaitUntil:
+    visible: "Enrich"
+    timeout: 10000
+- assertVisible: "Edit card"
+- takeScreenshot: 01-card-menu
+- tapOn: "Enrich"
+- extendedWaitUntil:
+    visible: "Couldn’t enrich “${TERM}”.*"
+    timeout: 20000
+- takeScreenshot: 02-request-failed
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "${TERM}, .*"
+    centerElement: true
+- longPressOn: "${TERM}, .*"
+- extendedWaitUntil:
+    visible: "Edit card"
+    timeout: 10000
+- assertNotVisible: "Enrich"
+- takeScreenshot: 03-long-press-menu

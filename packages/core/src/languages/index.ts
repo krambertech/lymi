@@ -42,6 +42,7 @@ export type {
 export const SUPPORTED_LANGUAGES = {
   ja: japanese,
   zh: chinese,
+  uk: ukrainian,
 } as const satisfies Record<SupportedTag, LanguageSupport>;
 
 /** Every record, including one whose language has not yet joined SupportedTag. */
@@ -49,7 +50,6 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ru: russian,
   ta: tamil,
-  uk: ukrainian,
   yue: cantonese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 

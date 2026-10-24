@@ -68,6 +68,12 @@ describe("analytics privacy contract", () => {
       badge: "estonia",
     });
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "worker")).toBeNull();
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/exams/jlpt" }, "browser"),
+    ).toEqual({ place: "footer", target: "/exams/jlpt" });
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
+    ).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.
     expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
       backlog: "1-20",

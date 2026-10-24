@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "449e127d-d561-4f81-a7d6-fd45c1b7d443",
+  "id": "208260c9-52e2-4cc9-8f09-24ea96bc45ee",
   "prevId": "2461218c-8a0f-4299-80d1-83d4513a7a32",
   "tables": {
     "account_deletions": {
@@ -119,6 +119,89 @@
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "apple_revocations": {
+      "name": "apple_revocations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "client": {
+          "name": "client",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "attempts": {
+          "name": "attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "next_attempt_at": {
+          "name": "next_attempt_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "settled_at": {
+          "name": "settled_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "apple_revocations_due_idx": {
+          "name": "apple_revocations_due_idx",
+          "columns": [
+            "status",
+            "next_attempt_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -1332,198 +1415,42 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "content_reports": {
-      "name": "content_reports",
+    "deck_copy_ids": {
+      "name": "deck_copy_ids",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "reporter_id": {
-          "name": "reporter_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "deck_id": {
-          "name": "deck_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "card_id": {
-          "name": "card_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "target": {
-          "name": "target",
+        "old_id": {
+          "name": "old_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "reason": {
-          "name": "reason",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "note": {
-          "name": "note",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "snapshot": {
-          "name": "snapshot",
+        "new_id": {
+          "name": "new_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "local_date": {
-          "name": "local_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "resolved_at": {
-          "name": "resolved_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "action": {
-          "name": "action",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch() * 1000)"
         }
       },
-      "indexes": {
-        "content_reports_open_idx": {
-          "name": "content_reports_open_idx",
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "deck_copy_ids_old_id_user_id_pk": {
           "columns": [
-            "resolved_at",
-            "created_at"
+            "old_id",
+            "user_id"
           ],
-          "isUnique": false
-        },
-        "content_reports_reporter_day_idx": {
-          "name": "content_reports_reporter_day_idx",
-          "columns": [
-            "reporter_id",
-            "local_date"
-          ],
-          "isUnique": false
-        },
-        "content_reports_deck_idx": {
-          "name": "content_reports_deck_idx",
-          "columns": [
-            "deck_id",
-            "action"
-          ],
-          "isUnique": false
-        },
-        "content_reports_card_idx": {
-          "name": "content_reports_card_idx",
-          "columns": [
-            "card_id",
-            "action"
-          ],
-          "isUnique": false
-        },
-        "content_reports_owner_idx": {
-          "name": "content_reports_owner_idx",
-          "columns": [
-            "owner_id"
-          ],
-          "isUnique": false
+          "name": "deck_copy_ids_old_id_user_id_pk"
         }
       },
-      "foreignKeys": {
-        "content_reports_reporter_id_user_id_fk": {
-          "name": "content_reports_reporter_id_user_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "user",
-          "columnsFrom": [
-            "reporter_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_owner_id_user_id_fk": {
-          "name": "content_reports_owner_id_user_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "user",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_deck_id_decks_id_fk": {
-          "name": "content_reports_deck_id_decks_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "decks",
-          "columnsFrom": [
-            "deck_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "content_reports_card_id_cards_id_fk": {
-          "name": "content_reports_card_id_cards_id_fk",
-          "tableFrom": "content_reports",
-          "tableTo": "cards",
-          "columnsFrom": [
-            "card_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
@@ -2764,6 +2691,44 @@
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "former_deck_copies": {
+      "name": "former_deck_copies",
+      "columns": {
+        "deck_id": {
+          "name": "deck_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "former_deck_copies_deck_id_decks_id_fk": {
+          "name": "former_deck_copies_deck_id_decks_id_fk",
+          "tableFrom": "former_deck_copies",
+          "tableTo": "decks",
+          "columnsFrom": [
+            "deck_id"
           ],
           "columnsTo": [
             "id"
@@ -4138,65 +4103,6 @@
             "id"
           ],
           "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "sharing_suspensions": {
-      "name": "sharing_suspensions",
-      "columns": {
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "report_id": {
-          "name": "report_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch() * 1000)"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sharing_suspensions_user_id_user_id_fk": {
-          "name": "sharing_suspensions_user_id_user_id_fk",
-          "tableFrom": "sharing_suspensions",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "sharing_suspensions_report_id_content_reports_id_fk": {
-          "name": "sharing_suspensions_report_id_content_reports_id_fk",
-          "tableFrom": "sharing_suspensions",
-          "tableTo": "content_reports",
-          "columnsFrom": [
-            "report_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
           "onUpdate": "no action"
         }
       },

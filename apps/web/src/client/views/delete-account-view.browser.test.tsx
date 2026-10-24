@@ -19,7 +19,7 @@ const summary = (over: Partial<AccountDeletionOut> = {}): AccountDeletionOut => 
   decks: 4,
   cards: 47,
   reviews: 180,
-  sharedDecks: [{ id: "d1", name: "Estonian A2", members: 3 }],
+  sharedDecks: [{ id: "d1", name: "Estonian A2", members: 3, published: false }],
   ...over,
 });
 
@@ -76,10 +76,16 @@ test("deletes only with a six-digit code", async () => {
   expect(onDelete).toHaveBeenCalledWith("123456");
 });
 
-test("offers no delete to a publisher", async () => {
-  await renderView({ summary: summary({ blocked: "publisher" }) });
-  await expect.element(page.getByRole("link", { name: "hello@lymi.app" })).toBeVisible();
-  await expect.element(page.getByRole("button", { name: "Send code" })).not.toBeInTheDocument();
+test("says members keep a copy of a shared deck and how to take it away", async () => {
+  await renderView({
+    summary: summary({
+      sharedDecks: [{ id: "d1", name: "Verbs", members: 3, published: true }],
+    }),
+  });
+  await expect.element(page.getByText(/keeps their own copy/)).toBeVisible();
+  await expect.element(page.getByText(/archive it first/)).toBeVisible();
+  await expect.element(page.getByText(/leave Explore/)).toBeVisible();
+  await expect.element(page.getByRole("button", { name: "Send code" })).toBeVisible();
 });
 
 test("tells an Apple account to remove the Apple grant afterwards", async () => {

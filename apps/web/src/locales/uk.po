@@ -1992,8 +1992,8 @@ msgstr "Колоди"
 msgid "Decks from Anki, Mochi or Noji, with their review history."
 msgstr "Колоди з Anki, Mochi чи Noji разом з історією повторень."
 
-msgid "Decks other people keep"
-msgstr "Колоди, які залишаться в інших"
+msgid "Decks other people study"
+msgstr "Колоди, які вивчають інші"
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -2137,6 +2137,9 @@ msgstr "Кожен блок — день із повтореннями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Кожен, хто вивчає ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Кожен розділ відкривається, щойно засвоєно більшість попереднього."
@@ -3039,9 +3042,6 @@ msgstr "Значення з уроку"
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медична французька для медсестер. Бери медичне значення."
 
-msgid "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
-msgstr "Колоди залишаться в учасників, доки вони з них не вийдуть. Після видалення твого акаунту ніхто не зможе редагувати картки."
-
 msgid "Memory hook"
 msgstr "Зачіпка"
 
@@ -3578,9 +3578,6 @@ msgstr "Або почни з порожньої колоди"
 msgid "other decks"
 msgstr "інші колоди"
 
-msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
-msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на <0>hello@lymi.app</0>, щоб видалити його."
-
 msgid "Other subjects"
 msgstr "Інші теми"
 
@@ -3762,6 +3759,9 @@ msgstr "Вимова з уроку"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "опубліковані колоди"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубліковані колоди зникнуть із Каталогу, тож ніхто новий не зможе їх додати."
 
 msgid "Quick add"
 msgstr "Швидке додавання"
@@ -4676,9 +4676,6 @@ msgstr "Людина втратить доступ до колоди й не з�
 msgid "They’re already in this deck."
 msgstr "Ця людина вже в колоді."
 
-msgid "This account publishes decks"
-msgstr "Цей акаунт публікує колоди"
-
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
@@ -5227,8 +5224,8 @@ msgstr "Дані твого акаунту"
 msgid "Your assistant is connected"
 msgstr "Асистента підключено"
 
-msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
-msgstr "Твої картки, повторення й налаштування видалено. Колоди, які вивчають інші люди, залишаються для них."
+msgid "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."
+msgstr "Твої картки, повторення й налаштування видалено. Ті, хто вивчав твої колоди, зберігають власні копії."
 
 msgid "Your code to delete your Lymi account"
 msgstr "Твій код для видалення акаунта Lymi"

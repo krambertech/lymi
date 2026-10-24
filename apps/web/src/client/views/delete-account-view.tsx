@@ -67,18 +67,6 @@ export function DeleteAccountView({
           <Skeleton className="h-5 w-1/2 rounded-md" />
           <Skeleton className="mt-4 h-24 w-full rounded-lg" />
         </div>
-      ) : summary.blocked === "publisher" ? (
-        <SettingsGroup title={t`This account publishes decks`}>
-          <p className="max-w-[60ch] text-base text-text-2">
-            <Trans>
-              Other people study what this account published, so it can’t be deleted here. Write to{" "}
-              <a className="font-medium text-text underline" href="mailto:hello@lymi.app">
-                hello@lymi.app
-              </a>{" "}
-              to delete it.
-            </Trans>
-          </p>
-        </SettingsGroup>
       ) : (
         <>
           <WhatGoes summary={summary} />
@@ -147,8 +135,8 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
   const { t } = useLingui();
   return (
     <SettingsGroup
-      title={t`Decks other people keep`}
-      description={t`Members keep these decks until they leave. After you delete your account, nobody can edit the cards.`}
+      title={t`Decks other people study`}
+      description={t`Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
     >
       <ul className="grid">
         {decks.map((deck) => (
@@ -165,6 +153,11 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
           </li>
         ))}
       </ul>
+      {decks.some((deck) => deck.published) && (
+        <p className="max-w-[60ch] text-sm text-muted">
+          <Trans>Published decks leave Explore, so nobody new can add them.</Trans>
+        </p>
+      )}
     </SettingsGroup>
   );
 }

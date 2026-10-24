@@ -995,7 +995,7 @@ export const deckCopyIds = sqliteTable(
   (t) => [primaryKey({ columns: [t.oldId, t.userId] })],
 );
 
-export const APPLE_REVOCATION_STATUSES =["pending", "revoked", "failed", "skipped"] as const;
+export const APPLE_REVOCATION_STATUSES = ["pending", "revoked", "failed", "skipped"] as const;
 export const APPLE_REVOCATION_REASONS = [
   "no_key",
   "no_token",

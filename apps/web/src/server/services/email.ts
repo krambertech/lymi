@@ -307,7 +307,7 @@ function compose(
     case "account-deleted": {
       const subject = i18n._(msg`Your Lymi account was deleted`);
       const text = i18n._(
-        msg`Your cards, reviews and settings are gone. Decks other people study stay for them.`,
+        msg`Your cards, reviews and settings are gone. People who studied your decks keep their own copies.`,
       );
       return {
         subject,

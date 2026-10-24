@@ -25,19 +25,10 @@ function DeleteAccountRoute() {
   const navigate = useNavigate();
   const [exporting, setExporting] = useState(false);
 
-  const send = useMutation({
-    mutationFn: api.sendDeletionCode,
-    onError: (error) => {
-      // A deck published since the page loaded: the summary says so instead of the form.
-      if (refusalCode(error) === "publisher") void summary.refetch();
-    },
-  });
+  const send = useMutation({ mutationFn: api.sendDeletionCode });
 
   const remove = useMutation({
     mutationFn: (code: string) => api.deleteAccount({ code }),
-    onError: (error) => {
-      if (refusalCode(error) === "publisher") void summary.refetch();
-    },
     onSuccess: async () => {
       // The server already ended every session; this clears the cookie and the stored language.
       await signOut().catch(() => undefined);
@@ -55,8 +46,6 @@ function DeleteAccountRoute() {
         return t`A code is already on its way. Wait a minute before asking for another.`;
       case "code_limit":
         return t`You’ve asked for several codes today. Try again tomorrow.`;
-      case "publisher":
-        return null;
       default:
         return t`Couldn’t send the code. Check your connection and try again.`;
     }
@@ -68,8 +57,6 @@ function DeleteAccountRoute() {
         return t`That code isn’t right. Check the email and try again.`;
       case "code_expired":
         return t`This code has expired. Send a new one.`;
-      case "publisher":
-        return null;
       default:
         return t`Couldn’t delete your account. Check your connection and try again.`;
     }

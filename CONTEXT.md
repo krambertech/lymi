@@ -106,7 +106,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Delete**: Removing a series for good. A series is a grouping and holds no writing of its own, so nothing a learner made is lost and there is nothing to restore. Besides **Delete account**, the only delete the app has; never use the word for a card, deck or section.
 
-**Delete account**: Ending the learner's Lymi account and erasing what it holds, for good: their decks, cards, reviews and settings. It is confirmed with a code sent to their email, or with Sign in with Apple, and nothing restores it. A deck other people study stays for them under its **former owner** until the last of them leaves, and nobody can change it again. An account that publishes decks cannot be deleted from the app. _Avoid_: Close, deactivate, remove, archive (for the account)
+**Delete account**: Ending the learner's Lymi account and erasing what it holds, for good: their decks, cards, reviews and settings. It is confirmed with a code sent to their email, or with Sign in with Apple, and nothing restores it. Each person who studies one of their unarchived decks, shared or published, keeps a private copy of it with their own progress and without the owner's name; an archived deck goes for everyone, so archiving first is how an owner takes a deck away. Until a member's copy is made, the deck waits under its **former owner**, and nobody can change it. A publisher deletes the same way, and their decks leave Explore. _Avoid_: Close, deactivate, remove, archive (for the account)
 
 ### Sharing
 

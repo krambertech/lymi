@@ -5,28 +5,19 @@ import { FieldError } from "../ui/field";
 import { Text } from "../ui/primitives";
 
 /** Asks for the emailed code. A code still on its way counts as sent, so its sheet opens again. */
-export function useSendCode({
-  onSent,
-  onPublisher,
-}: {
-  onSent: (sentTo: string | null) => void;
-  onPublisher?: () => void;
-}) {
+export function useSendCode({ onSent }: { onSent: (sentTo: string | null) => void }) {
   const { t } = useLingui();
   const send = useMutation({
     mutationFn: api.sendDeletionCode,
     onSuccess: (data) => onSent(data.sentTo),
     onError: (error) => {
-      const reason = refusalCode(error);
-      if (reason === "code_sent") onSent(null);
-      if (reason === "publisher") onPublisher?.();
+      if (refusalCode(error) === "code_sent") onSent(null);
     },
   });
   const error = (() => {
     if (!send.isError) return null;
     switch (refusalCode(send.error)) {
       case "code_sent":
-      case "publisher":
         return null;
       case "code_limit":
         return t`You’ve asked for several codes today. Try again tomorrow.`;

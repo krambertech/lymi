@@ -1871,6 +1871,9 @@ msgstr "Колоди від Lymi. Додай одну — вивчай її св
 msgid "Decks in a series are reviewed together."
 msgstr "Колоди однієї серії повторюються разом."
 
+msgid "Decks other people study"
+msgstr "Колоди, які вивчають інші"
+
 msgid "Decks to review"
 msgstr "Колоди до повторення"
 
@@ -1971,6 +1974,9 @@ msgstr "Кожен блок — день із повтореннями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Кожен, хто вивчає ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Кожен розділ відкривається, щойно засвоєно більшість попереднього."
@@ -3210,9 +3216,6 @@ msgstr "Інше"
 msgid "other decks"
 msgstr "інші колоди"
 
-msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
-msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на hello@lymi.app, щоб видалити його."
-
 msgid "Other subjects"
 msgstr "Інші теми"
 
@@ -3257,9 +3260,6 @@ msgstr "Підглянути зачіпку"
 
 msgid "People"
 msgstr "Люди"
-
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "Ці колоди вивчають інші люди, тож вони залишаться, доки з них не вийде останній. Після видалення твого акаунта їх ніхто не зможе змінити."
 
 msgctxt "language"
 msgid "Persian"
@@ -3333,6 +3333,9 @@ msgstr "Твоя вимова"
 
 msgid "Pronunciation from lesson"
 msgstr "Вимова з уроку"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубліковані колоди зникнуть із Каталогу, тож ніхто новий не зможе їх додати."
 
 msgid "Publishing and deck reports"
 msgstr "Публікація та звіти про колоди"
@@ -4437,9 +4440,6 @@ msgstr "Що це означає"
 msgid "What it’s for"
 msgstr "Для чого вона"
 
-msgid "What stays for others"
-msgstr "Що залишиться іншим"
-
 msgid "What this is about"
 msgstr "Про що це"
 
@@ -4484,9 +4484,6 @@ msgstr "Робота й навчання"
 
 msgid "Write a hook."
 msgstr "Напиши зачіпку."
-
-msgid "Write to Lymi"
-msgstr "Написати в Lymi"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."

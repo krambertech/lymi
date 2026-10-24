@@ -10,6 +10,7 @@ import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { retryAppleRevocations } from "./services/apple-revocations";
 import { purgeCardAudio } from "./services/audio";
+import { purgeExpiredAuthRows } from "./services/auth-retention";
 import { copyFormerDecks } from "./services/deck-copies";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
@@ -72,6 +73,7 @@ export default {
           throw new Error(`${failed} deleted accounts' Apple grants were not revoked`);
       }),
     );
+    run("purge-expired-auth", purgeExpiredAuthRows(createDb(env.DB), at));
     // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.
     if (at.getUTCMinutes() < 15) {
       const db = createDb(env.DB);

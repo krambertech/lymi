@@ -1469,9 +1469,9 @@ export function DeckDetailView({
         )}
       </Screen>
 
-      {/* Beside the list: sticky, with its own scroll, so J and K walk the list while the page follows. */}
+      {/* Beside the list: sticky with its own scroll so J and K walk the list, and risen over the top inset so the Mac's title bar sits on its plate. */}
       {open && beside && (
-        <aside className="sticky top-(--inset-top) max-h-[calc(100dvh-var(--inset-top))] w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
+        <aside className="sticky top-0 z-(--z-sticky) -mt-(--inset-top) max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-[calc(var(--inset-top)+1.5rem)] pb-10">
           {word}
         </aside>
       )}

@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage } from "@lymi/client/api";
+import { deckTagsQuery } from "@lymi/client/queries";
 import { type DeckPatch, writes } from "@lymi/client/writes";
 import {
   DECK_ENRICH_FIELDS,
@@ -12,7 +13,7 @@ import {
   isolate,
   LANGUAGE_TAGS,
 } from "@lymi/core";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
@@ -63,6 +64,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const owner = deck.role === "owner";
   const router = useRouter();
   const sectionCount = useSections(owner ? deck.id : undefined).data?.sections.length ?? 0;
+  const tagCount = useQuery({ ...deckTagsQuery(deck.id), enabled: owner }).data?.tags.length;
 
   const save = async (patch: DeckPatch) => {
     setSaved("saving");
@@ -419,6 +421,18 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   : t`None`
               }
               onPress={() => router.push(`/library/sections?id=${deck.id}` as Href)}
+            />
+            <Row
+              icon="tags"
+              label={t`Tags`}
+              value={
+                tagCount === undefined
+                  ? undefined
+                  : tagCount > 0
+                    ? plural(tagCount, { one: "# tag", other: "# tags" })
+                    : t`None`
+              }
+              onPress={() => router.push(`/library/tags?id=${deck.id}` as Href)}
             />
           </Rows>
           <Rows>

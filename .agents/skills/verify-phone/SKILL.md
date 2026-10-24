@@ -30,6 +30,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Enrich a card | [card-enrich.md](features/card-enrich.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
+| Deck tags: rename, merge, archive, restore | [deck-tags.md](features/deck-tags.md) |
 | Making and archiving sections | [sections.md](features/sections.md) |
 | Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |

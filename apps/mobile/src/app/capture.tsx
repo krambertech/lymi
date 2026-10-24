@@ -258,6 +258,9 @@ function Composer() {
                   onSubmit={() => void add()}
                   placeholder={{
                     meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
+                    ...(enrich && deck.enrichFields.includes("exampleTranslation")
+                      ? { exampleTranslation: t`AI translates it after you save` }
+                      : {}),
                   }}
                   footer={
                     error && (

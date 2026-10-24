@@ -482,7 +482,8 @@ describe("importing an HSK-shaped Anki deck", () => {
     const bank = await card(ctx, "银行");
     expect(bank.pronunciation).toBe("yínháng");
     expect(stripPinyin(bank.example ?? "")).toBe("我去银行。");
-    expect(bank.notes?.startsWith("銀行\nnoun\n我去銀行。\n")).toBe(true);
+    expect(bank.notes).toBe("銀行\nnoun\n我去銀行。");
+    expect(bank.exampleTranslation).toBe("I am going to the bank.");
     expect(events).toContainEqual(
       expect.objectContaining({ name: "import_finished", source: "anki", readings_converted: 1 }),
     );
@@ -556,8 +557,11 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     });
 
     const hashi = await card(ctx, "箸");
-    expect(hashi.notes).toBe("I eat with chopsticks.\nCounted with 膳\nはꜜし [1]");
-    expect((await card(ctx, "桜")).notes).toBe("The cherry blossoms bloomed.\nさくら [0]");
+    expect(hashi.notes).toBe("Counted with 膳\nはꜜし [1]");
+    expect(hashi.exampleTranslation).toBe("I eat with chopsticks.");
+    const sakura = await card(ctx, "桜");
+    expect(sakura.notes).toBe("さくら [0]");
+    expect(sakura.exampleTranslation).toBe("The cherry blossoms bloomed.");
     const neko = await card(ctx, "猫");
     expect(neko.notes).toBeNull();
     expect(await recorded(neko.id)).toEqual({ key: null, source: null });

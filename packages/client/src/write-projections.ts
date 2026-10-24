@@ -4,6 +4,7 @@ import {
   deckPurpose,
   directionsFromModes,
   drawableCount,
+  exampleShown,
   modeKey,
   modeOf,
   modesFromDirections,
@@ -103,6 +104,13 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     meaning: input.meaning ?? null,
     pronunciation: input.pronunciation ?? null,
     example: input.example ?? null,
+    exampleTranslation: input.example ? (input.exampleTranslation ?? null) : null,
+    exampleTranslationSource:
+      input.example && input.exampleTranslation
+        ? (input.exampleTranslationSource ?? "manual")
+        : null,
+    exampleTranslationStale: false,
+    exampleTranslationStatus: null,
     notes: input.notes ?? null,
     hook: input.hook || null,
     hookSource: input.hook ? (input.hookSource ?? "manual") : null,
@@ -168,6 +176,7 @@ export function patchCard(card: Card, patch: CardPatch): Card {
     if (value !== undefined) (next as Record<string, unknown>)[field] = value;
   }
   if (reviewModes !== undefined) next.reviewModes = reviewModes;
+  Object.assign(next, translationAfter(card, patch));
   if (patch.term !== undefined || patch.language !== undefined) {
     next.normalizedTerm = termKey(next.language, next.term);
   }
@@ -607,4 +616,38 @@ export function showWrite(qc: QueryClient, w: Write) {
       qc.setQueryData(["decks", id, "sections"], { sections: [], progress: null });
     }
   }
+}
+
+/**
+ * The translation as the server leaves it after an edit: the learner's own as sent, none with no
+ * example, and for a changed example none in place of the AI's and a stale one in place of a person's.
+ */
+function translationAfter(card: Card, patch: CardPatch): Partial<Card> {
+  const example = patch.example === undefined ? card.example : patch.example || null;
+  if (!example) {
+    return {
+      exampleTranslation: null,
+      exampleTranslationSource: null,
+      exampleTranslationStale: false,
+      exampleTranslationStatus: null,
+    };
+  }
+  if (patch.exampleTranslation !== undefined) {
+    const text = patch.exampleTranslation;
+    return {
+      exampleTranslation: text,
+      exampleTranslationSource: text ? (patch.exampleTranslationSource ?? "manual") : null,
+      exampleTranslationStale: false,
+      exampleTranslationStatus: null,
+    };
+  }
+  if (exampleShown(example) === exampleShown(card.example ?? "")) return {};
+  if (card.exampleTranslationSource !== "ai" && card.exampleTranslation !== null) {
+    return { exampleTranslationStale: !!card.exampleTranslation };
+  }
+  return {
+    exampleTranslation: null,
+    exampleTranslationSource: null,
+    exampleTranslationStale: false,
+  };
 }

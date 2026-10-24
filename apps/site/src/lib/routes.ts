@@ -21,6 +21,7 @@ export const localizedPages = {
   einbuergerungstest: "/exams/einbuergerungstest",
   privacy: "/privacy",
   changelog: "/changelog",
+  download: "/download",
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 

@@ -12,7 +12,7 @@ An Anki package shaped like the HSK decks Chinese learners bring: its pinyin fie
 
 ## End state
 
-**Imported 9 cards** and **6 recordings were imported.** show. The HSK deck's language is `zh`; 银行's Reading is `yínháng` and its notes start `銀行`, `noun`, `我去銀行。`; 东西's Reading `dong1 xi5` is stored as `dōng xi`; 行's is `xíng / háng`; 你好 has no notes. The deck page draws pinyin over each character. Until Chinese examples draw pinyin (`examplesCarryReadings`), 银行's example is `我去银行。` and `Wǒ qù yínháng.` is a notes line; after, the example is `我[Wǒ]去[qù]银行[yín háng]。`.
+**Imported 9 cards** and **6 recordings were imported.** show. The HSK deck's language is `zh`; 银行's Reading is `yínháng`, its notes start `銀行`, `noun`, `我去銀行。` and its example's translation is `I am going to the bank.`; 东西's Reading `dong1 xi5` is stored as `dōng xi`; 行's is `xíng / háng`; 你好 has no notes. The deck page draws pinyin over each character. Until Chinese examples draw pinyin (`examplesCarryReadings`), 银行's example is `我去银行。` and `Wǒ qù yínháng.` is a notes line; after, the example is `我[Wǒ]去[qù]银行[yín háng]。`.
 
 ## Gotchas
 

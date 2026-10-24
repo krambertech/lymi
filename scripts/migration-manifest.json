@@ -245,7 +245,11 @@
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
     },
     {
-      "name": "0061_flimsy_praxagora.sql",
+      "name": "0061_aromatic_black_bird.sql",
+      "sha256": "e141795ca5a195046a1288d722ad902fe07ff952285c2274fdf5d7f36ecc4cd9"
+    },
+    {
+      "name": "0062_lethal_liz_osborn.sql",
       "sha256": "bfa51af508aa0be000368d81d930e236ef9f16ef449aff88b0b7f0b2cbfc57f0"
     }
   ]

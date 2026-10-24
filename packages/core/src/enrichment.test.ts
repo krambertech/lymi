@@ -20,8 +20,8 @@ describe("a language below the evaluation's bar", () => {
   });
 
   it("leaves a deck whose owner never chose on meaning and example, without the row's starting fields", () => {
-    expect(defaultEnrichFields("xa")).toEqual(["meaning", "example"]);
-    expect(deckEnrichFields(null, "xa")).toEqual(["meaning", "example"]);
+    expect(defaultEnrichFields("xa")).toEqual(["meaning", "example", "exampleTranslation"]);
+    expect(deckEnrichFields(null, "xa")).toEqual(["meaning", "example", "exampleTranslation"]);
     expect(deckEnrichFields([], "xa")).toEqual([]);
   });
 });
@@ -29,6 +29,11 @@ describe("a language below the evaluation's bar", () => {
 describe("a deck whose owner never chose", () => {
   it("lets the AI write a Cantonese Reading under yue as under zh-yue", () => {
     for (const tag of ["yue", "yue-HK", "zh-yue"])
-      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "pronunciation"]);
+      expect(defaultEnrichFields(tag)).toEqual([
+        "meaning",
+        "example",
+        "exampleTranslation",
+        "pronunciation",
+      ]);
   });
 });

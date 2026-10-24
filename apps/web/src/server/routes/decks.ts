@@ -26,6 +26,7 @@ import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
+import { clientSupports, EXAMPLE_TRANSLATION_SINCE } from "../phone-clients";
 import { ownerAnalytics } from "../posthog";
 import {
   approveEdition,
@@ -97,7 +98,14 @@ decks.post(
     errors: [400],
   }),
   body(NewDeckInput, "deck"),
-  async (c) => c.json(await createDeck(ctxOf(c), c.req.valid("json")), 201),
+  async (c) => {
+    const input = c.req.valid("json");
+    // A release that never listed the translation gets it wherever it chose AI examples.
+    if (input.enrichFields?.includes("example") && !clientSupports(c, EXAMPLE_TRANSLATION_SINCE)) {
+      input.enrichFields = [...input.enrichFields, "exampleTranslation"];
+    }
+    return c.json(await createDeck(ctxOf(c), input), 201);
+  },
 );
 
 decks.get(
@@ -121,7 +129,18 @@ decks.patch(
     errors: [400, 404],
   }),
   body(DeckInput.partial(), "deck"),
-  async (c) => c.json(await updateDeck(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const input = c.req.valid("json");
+    // A release that never listed the translation keeps it as the deck had it.
+    if (input.enrichFields && !clientSupports(c, EXAMPLE_TRANSLATION_SINCE)) {
+      const deck = await getDeck(ctx, c.req.param("id"));
+      if (deck.enrichFields?.includes("exampleTranslation")) {
+        input.enrichFields = [...input.enrichFields, "exampleTranslation"];
+      }
+    }
+    return c.json(await updateDeck(ctx, c.req.param("id"), input));
+  },
 );
 
 decks.post(

@@ -336,6 +336,7 @@ function trackEnrichmentChoice(
     name: "deck_enrichment_changed",
     meaning: fields.includes("meaning"),
     example: fields.includes("example"),
+    example_translation: fields.includes("exampleTranslation"),
     notes: fields.includes("notes"),
     pronunciation: fields.includes("pronunciation"),
     has_instructions: !!instructions?.trim(),

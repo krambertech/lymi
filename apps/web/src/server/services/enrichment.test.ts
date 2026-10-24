@@ -64,18 +64,60 @@ describe("emptyFields", () => {
 describe("deck enrichment fields", () => {
   it("starts a deck from its language, and keeps an owner's choice", () => {
     expect(defaultEnrichFields(null)).toEqual(["meaning"]);
-    expect(defaultEnrichFields("it")).toEqual(["meaning", "example"]);
-    expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
-    expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
-    expect(defaultEnrichFields("vi")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("da")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    expect(defaultEnrichFields("it")).toEqual(["meaning", "example", "exampleTranslation"]);
+    expect(defaultEnrichFields("et")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
+    expect(defaultEnrichFields("zh-Hans")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("ko-KR")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("vi")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("ka")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("da")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+      "pronunciation",
+    ]);
     for (const tag of ["fr", "es", "pt", "pt-BR", "hu", "cs"])
-      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example"]);
+      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "exampleTranslation"]);
     for (const tag of ["fi", "lv", "lt", "nb", "no", "nn", "sv", "is", "pl", "nl", "de"])
-      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "notes"]);
-    expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
+      expect(defaultEnrichFields(tag)).toEqual([
+        "meaning",
+        "example",
+        "exampleTranslation",
+        "notes",
+      ]);
+    expect(deckEnrichFields(null, "et")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
   });
@@ -83,7 +125,12 @@ describe("deck enrichment fields", () => {
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {
     expect(defaultEnrichFields("de", "subject")).toEqual(["meaning"]);
     expect(defaultEnrichFields("ja", "other")).toEqual(["meaning"]);
-    expect(defaultEnrichFields("et", "language")).toEqual(["meaning", "example", "notes"]);
+    expect(defaultEnrichFields("et", "language")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
     expect(deckEnrichFields(null, "de", "subject")).toEqual(["meaning"]);
     expect(deckEnrichFields(["meaning", "example"], "de", "subject")).toEqual([
       "meaning",
@@ -1207,7 +1254,11 @@ describe("requestEnrichment", () => {
 
   it("refuses a card with no empty field rather than accepting it silently", async () => {
     const { ctx, card } = await bareCard("ask-4");
-    await updateCard(ctx, card.id, CardPatch.parse(full));
+    await updateCard(
+      ctx,
+      card.id,
+      CardPatch.parse({ ...full, exampleTranslation: "Hurry up, the train is leaving!" }),
+    );
     expect(needsEnrichment(await showCard(ctx, card.id), DECK_ENRICH_FIELDS)).toBe(false);
     const queue: EnrichmentQueue = { create: vi.fn() };
     expect(await code(requestEnrichment(ctx, card.id, queue))).toBe("invalid");

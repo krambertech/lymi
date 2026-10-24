@@ -175,6 +175,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const fieldLabels: Record<DeckEnrichField, string> = {
     meaning: t`Meaning`,
     example: t`Example`,
+    exampleTranslation: t`Example translation`,
     notes: t`Notes`,
     pronunciation: t`Pronunciation`,
   };

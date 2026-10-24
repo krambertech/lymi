@@ -4,6 +4,7 @@ import {
   ENRICHED_FIELDS,
   type EnrichedField,
   fieldsToFill,
+  fitsExample,
   LanguageTag,
   missingReadings,
   newId,
@@ -34,17 +35,21 @@ import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
+import { failTranslations } from "./example-translation";
 import { getSettings } from "./settings";
 
 /** The deck's own cards each call shows the model, so it follows the deck's pattern. */
 export const SAMPLES_PER_DECK = 5;
 
-/** What a background enrichment run works on. One run per add, or per Enrich on one card. */
+/**
+ * What a background enrichment run works on. One run per add, per Enrich on one card, or per edit
+ * that leaves an example to translate.
+ */
 export type EnrichRunParams = {
   userId: string;
   cardIds: string[];
   /** Missing on a run queued before Enrich on one card was told apart. */
-  trigger?: "add" | "card" | undefined;
+  trigger?: "add" | "card" | "edit" | undefined;
 };
 
 /** Enrichment acts as the AI, so every fill lands in Activity under that actor. */
@@ -93,6 +98,8 @@ export function enrichmentWrite(
   for (const field of TEXT_FIELDS) {
     const value = filled[field]?.trim();
     if (!value || !open.has(field)) continue;
+    // An example longer than one shown is not one the learner could save, so it is left empty.
+    if (field === "example" && !fitsExample(value)) continue;
     write[field] = value;
     write[SOURCE_COLUMN[field]] = "ai";
   }
@@ -160,7 +167,10 @@ function sampleText(card: Card, field: TextField): string | undefined {
  * fields the deck lets the AI fill are shown, because the rest will not be written anyway.
  */
 async function samplesFor(db: Db, deck: DeckRow, exclude: readonly string[]): Promise<Sample[]> {
-  const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
+  // The example's translation is its own call's, so this prompt never reads one.
+  const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose).filter(
+    (field): field is TextField => field in SOURCE_COLUMN,
+  );
   const rows = await db
     .select()
     .from(schema.cards)
@@ -243,7 +253,7 @@ export async function enrichCards(
   ctx: ServiceContext,
   cardIds: readonly string[],
   provider: TextProvider,
-  trigger?: EnrichRunParams["trigger"],
+  trigger?: Exclude<EnrichRunParams["trigger"], "edit">,
 ): Promise<{ enriched: number }> {
   const { db, userId } = ctx;
   const before = await workingCards(db, userId, cardIds);
@@ -476,7 +486,8 @@ export async function runState(
 
 /**
  * Hand one run to the workflow. True when it took it; false when it refused, in which case
- * the cards end at `failed` rather than shimmering for a run that will never start.
+ * the cards and their translations end at `failed` rather than shimmering for a run that will
+ * never start.
  */
 export async function queueEnrichment(
   db: Db,
@@ -492,7 +503,9 @@ export async function queueEnrichment(
   } catch {
     // The same add sent twice at once can race for the run's name; the one that lost is answered.
     if ((await runState(queue, id)) === "live") return true;
-    await failEnrichment(db, userId, cardIds);
+    // An edit's run was only to translate; a fill under way belongs to another run.
+    if (trigger !== "edit") await failEnrichment(db, userId, cardIds);
+    await failTranslations(db, userId, cardIds);
     return false;
   }
 }

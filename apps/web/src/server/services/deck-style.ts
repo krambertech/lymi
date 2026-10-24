@@ -92,6 +92,8 @@ const correctedSource = sql<string | null>`case ${corrected.field}
 function ownCorrections(userId: string, deckId: string): SQL {
   return and(
     eq(corrected.userId, userId),
+    // A translation says how the AI translates, never how the deck's cards are written.
+    ne(corrected.field, "exampleTranslation"),
     eq(schema.cards.userId, userId),
     eq(schema.cards.deckId, deckId),
     isNull(schema.cards.archivedAt),
@@ -251,7 +253,9 @@ export async function learnDeckStyles(
     const corrections = await correctionsFor(db, userId, deck.id);
     const { meaningLanguage } = await getSettings(ctx);
     const guide = languageGuide(deck.defaultLanguage);
-    const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
+    const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose).filter(
+      (field) => field !== "exampleTranslation",
+    );
     const input = styleInput({
       meaningLanguage,
       deck: {

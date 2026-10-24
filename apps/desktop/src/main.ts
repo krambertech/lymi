@@ -31,6 +31,7 @@ import { readPreferences, writePreferences } from "./preferences.js";
 import { canCopySelection, selectedText } from "./selection.js";
 import { DEFAULT_SHORTCUT, type Preferences, usableShortcut } from "./settings.js";
 import { completeSignIn, requestSignIn } from "./sign-in.js";
+import { restartToUpdate, watchForUpdates } from "./updates.js";
 
 // A packaged build always talks to production; only a development run may point elsewhere.
 const PRODUCT_URL = productOrigin(app.isPackaged, process.env.LYMI_URL);
@@ -54,6 +55,7 @@ let prefs: Preferences;
 let due: number | null = null;
 let signedIn = true;
 let copying: Promise<void> | null = null;
+let updateReady = false;
 
 const isProduct = (url: string | undefined) => isProductOf(url, PRODUCT_URL);
 const fromProduct = (event: IpcMainEvent | IpcMainInvokeEvent) => isProduct(event.senderFrame?.url);
@@ -237,6 +239,7 @@ function renderTray() {
       { type: "separator" },
       { label: "Settings…", click: () => runCommand("settings") },
       { type: "separator" },
+      ...(updateReady ? [{ label: "Restart to update", click: restartToUpdate }] : []),
       { label: "Quit Lymi", role: "quit" },
     ]),
   );
@@ -422,6 +425,10 @@ async function start() {
   void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
+  watchForUpdates(() => {
+    updateReady = true;
+    renderTray();
+  });
   // Signing in or out in a window adds or removes the session cookie, and the tray and the panel
   // follow. The daily refresh rewrites it in place, an overwrite then an insert, and changes nothing.
   let hasSession = (await ses.cookies.get({ url: PRODUCT_URL })).some(

@@ -2097,6 +2097,9 @@ msgstr "Твій приклад"
 msgid "Example from lesson"
 msgstr "Приклад з уроку"
 
+msgid "Example translation"
+msgstr "Переклад прикладу"
+
 msgid "Explore"
 msgstr "Каталог"
 
@@ -2616,6 +2619,9 @@ msgstr "Залиш Tab і New line. Якщо в картці є переноси
 
 msgid "Keep the decks"
 msgstr "Залишити колоди"
+
+msgid "Keep the example under 250 characters."
+msgstr "Приклад має бути коротшим за 250 символів."
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
@@ -3333,6 +3339,9 @@ msgstr "Натисни Copy text і встав текст сюди."
 
 msgid "Previous month"
 msgstr "Попередній місяць"
+
+msgid "Privacy policy"
+msgstr "Політика конфіденційності"
 
 msgid "Private"
 msgstr "Приватна"

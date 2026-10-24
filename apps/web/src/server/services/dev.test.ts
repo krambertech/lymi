@@ -1,7 +1,7 @@
 import { and, eq } from "@lymi/core/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
-import { personas } from "../dev/personas";
+import { type Persona, personas } from "../dev/personas";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import {
@@ -159,5 +159,50 @@ describe("simulate actions", () => {
 
     expect(await setDue(ctx, 5)).toBe(5);
     expect((await devCounts(ctx)).due).toBe(5);
+  });
+});
+
+describe("seeding just after midnight", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("keeps each review day on its own date and makes exactly the cards asked for due", async () => {
+    const ctx = await account();
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.parse("2026-10-24T00:03:00Z"));
+    const persona: Persona = {
+      id: "midnight",
+      name: "Midnight",
+      description: "Seeded three minutes into the day.",
+      group: "Everyday",
+      appLanguage: "en",
+      reviewDays: [6, 4, 2, 1],
+      reviewsPerDay: { min: 6, max: 12 },
+      dueNow: 3,
+      decks: [
+        {
+          name: "Clock",
+          defaultLanguage: "it",
+          introducedDaysAgo: 8,
+          cards: Array.from({ length: 12 }, (_, i) => ({
+            term: `parola ${i}`,
+            meaning: `word ${i}`,
+          })),
+        },
+      ],
+    };
+
+    expect((await seedPersona(ctx, persona)).due).toBe(3);
+    const days = await db
+      .selectDistinct({ at: schema.reviews.reviewedAt })
+      .from(schema.reviews)
+      .where(eq(schema.reviews.userId, ctx.userId));
+    expect([...new Set(days.map((d) => d.at.toISOString().slice(0, 10)))].sort()).toEqual([
+      "2026-10-18",
+      "2026-10-20",
+      "2026-10-22",
+      "2026-10-23",
+    ]);
   });
 });

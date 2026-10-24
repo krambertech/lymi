@@ -5,6 +5,7 @@ export * from "./client-version";
 export * from "./content-reports";
 export * from "./draw";
 export * from "./enrichment";
+export * from "./example";
 export * from "./export";
 export * from "./feedback";
 export * from "./fsrs";

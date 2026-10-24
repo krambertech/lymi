@@ -2,9 +2,14 @@ export const prerender = true;
 
 export function GET() {
   return new Response(
-    ["User-agent: *", "Disallow: /api/", "", "Sitemap: https://lymi.app/sitemap.xml", ""].join(
-      "\n",
-    ),
+    [
+      "User-agent: *",
+      "Disallow: /api/",
+      "Disallow: /download/mac",
+      "",
+      "Sitemap: https://lymi.app/sitemap.xml",
+      "",
+    ].join("\n"),
     { headers: { "content-type": "text/plain; charset=utf-8" } },
   );
 }

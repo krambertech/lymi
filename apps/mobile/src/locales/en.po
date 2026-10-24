@@ -2097,6 +2097,9 @@ msgstr "Example by you"
 msgid "Example from lesson"
 msgstr "Example from lesson"
 
+msgid "Example translation"
+msgstr "Example translation"
+
 msgid "Explore"
 msgstr "Explore"
 
@@ -2616,6 +2619,9 @@ msgstr "Keep Tab and New line. If a card has line breaks, set a custom row separ
 
 msgid "Keep the decks"
 msgstr "Keep the decks"
+
+msgid "Keep the example under 250 characters."
+msgstr "Keep the example under 250 characters."
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
@@ -3333,6 +3339,9 @@ msgstr "Press Copy text, then paste it here."
 
 msgid "Previous month"
 msgstr "Previous month"
+
+msgid "Privacy policy"
+msgstr "Privacy policy"
 
 msgid "Private"
 msgstr "Private"

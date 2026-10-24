@@ -332,10 +332,12 @@ test("the enforced-rules table and this gate's own files are guardrails", () => 
     guardrails([
       added(".github/workflows/guardrail-review.yml", "# @ts-nocheck"),
       "scripts/guardrail-review.mjs",
+      added("scripts/guardrail-review.test.mjs", "// biome-ignore lint/x"),
     ]),
     [
       "This gate's own `.github/workflows/guardrail-review.yml`",
       "This gate's own `scripts/guardrail-review.mjs`",
+      "This gate's own `scripts/guardrail-review.test.mjs`",
     ],
   );
 });

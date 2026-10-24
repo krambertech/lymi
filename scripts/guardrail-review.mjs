@@ -11,6 +11,7 @@ import { pathToFileURL } from "node:url";
 export const GATE_FILES = [
   ".github/workflows/guardrail-review.yml",
   "scripts/guardrail-review.mjs",
+  "scripts/guardrail-review.test.mjs",
 ];
 export const APPROVE_COMMAND = "/approve-guardrails";
 

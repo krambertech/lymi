@@ -13,8 +13,8 @@ import { ukrainian } from "./ukrainian";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Russian, Tamil, Ukrainian and Cantonese, whose modules are evaluated before they join SupportedTag. */
-type PromptTag = SupportedTag | "ru" | "ta" | "uk" | "yue";
+/** Every supported language, and Russian, Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
+type PromptTag = SupportedTag | "ru" | "ta" | "yue";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,

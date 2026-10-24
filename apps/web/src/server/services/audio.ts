@@ -1,4 +1,10 @@
-import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, spokenText } from "@lymi/core";
+import {
+  canSpeakTerm,
+  LanguageTag,
+  languageSupport,
+  SPOKEN_TERM_MAX,
+  spokenText,
+} from "@lymi/core";
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider, SpeechUsage } from "../ai";
@@ -77,7 +83,18 @@ export async function pronunciationAudio(
       : undefined;
   if (input && deps.storedOnly && !spoken)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
-  return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
+  if (spoken) return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
+  const context = languageSupport(language.data)?.speech.context;
+  // A fixed context costs nothing to settle, so it skips the lease a written lead-in takes.
+  return generatedPronunciation(
+    ctx,
+    card,
+    deps,
+    providers,
+    language.data,
+    context ? { identity: "context", previousText: context } : undefined,
+    true,
+  );
 }
 
 async function generatedPronunciation(

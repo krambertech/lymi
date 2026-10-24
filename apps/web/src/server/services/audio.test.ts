@@ -287,6 +287,7 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "руки́",
       language: "uk",
+      previousText: "Українською:",
       usage: expect.any(Function),
     });
     const plural = await pronunciationAudio(
@@ -1159,5 +1160,38 @@ describe("Japanese preceding context", () => {
       language: "ja",
       usage: expect.any(Function),
     });
+  });
+});
+
+describe("Ukrainian context", () => {
+  it("says «Українською:» silently before the term, and the old clip without it is spoken again", async () => {
+    const { bucket } = contextBucket();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const row = card({ term: "паляниця", language: "uk", pronunciation: "паляни́ця" });
+    const plain = await pronunciationAudio(context(row), row.id, {
+      bucket,
+      providers: () => [{ ...provider("openai", speech), locale: "uk-UA" }],
+    });
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "паляни́ця",
+      language: "uk",
+      usage: expect.any(Function),
+    });
+
+    const deps = {
+      bucket,
+      providers: () => [{ ...provider("elevenlabs", speech), locale: "uk-UA" }],
+    };
+    const first = await pronunciationAudio(context({ ...row, audioKey: plain.key }), row.id, deps);
+    expect(first.key).not.toBe(plain.key);
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "паляни́ця",
+      language: "uk",
+      previousText: "Українською:",
+      usage: expect.any(Function),
+    });
+    const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, deps);
+    expect(replay.key).toBe(first.key);
+    expect(speech).toHaveBeenCalledTimes(2);
   });
 });

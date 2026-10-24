@@ -345,6 +345,9 @@ msgstr "Блестящий первый раунд редко удаётся п�
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig бывает и кафе, и вечер, и человек."
 
+msgid "A card shows its stress mark until you know the word, then the word as Ukrainians write it. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
+msgstr "Пока ты не знаешь слово, карточка показывает его с ударением, а потом — так, как пишут украинцы. Каждый раз, когда ты вспоминаешь слово, Lymi ждёт чуть дольше, прежде чем показать его снова. На обороте карточки ударение видно всегда."
+
 msgid "A card shows pinyin over its word until the card is Known. In the examples on your cards, pinyin leaves each character you’ve learned, and stays where a character sounds different."
 msgstr "Карточка показывает пиньинь над своим словом, пока она не выучена. В примерах на твоих карточках пиньинь исчезает с каждого иероглифа, который ты уже знаешь, и остаётся там, где иероглиф читается иначе."
 
@@ -402,6 +405,9 @@ msgstr "Бесплатное приложение с флеш-карточкам
 msgid "A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole."
 msgstr "Бесплатное приложение с флеш-карточками для китайского языка. Пиньинь стоит над каждым словом, пока ты его не выучишь, у каждого чтения иероглифа своя карточка, а карточки из Pleco и бесплатные колоды HSK 1 и HSK 2 переносятся целиком."
 
+msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
+msgstr "Бесплатное приложение для изучения украинского на карточках. Ударение отмечено, пока ты не знаешь слово, у слов, которые различаются только ударением, отдельные карточки, а озвучивает их носитель языка. Начни с алфавита, потом A1 и A2."
+
 msgid "A full flashcard in seconds."
 msgstr "Готовая флеш-карточка за несколько секунд."
 
@@ -432,6 +438,9 @@ msgstr "Мажорный аккорд с малой септимой, постр
 
 msgid "A native Mandarin AI voice reads every card. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Каждую карточку читает AI-голос носителя китайского. Нажми на слово, чтобы его услышать. Если у карточки есть своя запись, звучит она."
+
+msgid "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
+msgstr "Каждую карточку читает AI-голос носителя украинского и ударяет тот слог, который отмечен, поэтому <0>за́мок</0> и <1>замо́к</1> звучат по-разному. Если у карточки есть своя запись, звучит она."
 
 msgid "A new format applies from 11 April 2026. The level stays A2."
 msgstr "С 11 апреля 2026 года действует новый формат. Уровень остаётся A2."
@@ -474,6 +483,9 @@ msgstr "Ссора"
 
 msgid "A question you got wrong"
 msgstr "Вопрос с ошибкой"
+
+msgid "A round loaf of bread"
+msgstr "Круглый хлеб"
 
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
@@ -556,6 +568,9 @@ msgstr "Добавь слово с сегодняшнего урока, и AI д
 msgid "Add a word from today’s lesson. AI fills in the pinyin, an example and a hook to help you remember it. It fills only what you left empty and marks what it wrote."
 msgstr "Добавь слово с сегодняшнего урока. AI допишет пиньинь, пример и зацепку, чтобы легче запомнить. Он заполняет только пустые поля и помечает, что написал сам."
 
+msgid "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
+msgstr "Добавь слово с сегодняшнего урока. AI отметит ударение, напишет пример на украинском с ударениями в каждом слове и подскажет, когда слово похоже на русское, но значит другое. Он заполняет только пустые поля и отмечает то, что написал сам."
+
 msgid "Add both decks"
 msgstr "Добавь обе колоды"
 
@@ -586,6 +601,9 @@ msgstr "Добавь колоду"
 msgid "Add the new words from today’s lesson to my Chinese deck."
 msgstr "Добавь новые слова с сегодняшнего урока в мою колоду по китайскому."
 
+msgid "Add the new words from today’s lesson to my Ukrainian deck."
+msgstr "Добавь новые слова с сегодняшнего урока в мою колоду по украинскому."
+
 msgid "Add to Lymi"
 msgstr "Добавить в Lymi"
 
@@ -615,6 +633,9 @@ msgstr "Добавил 7 карточек в Estonian. <0>Palun</0> пропус
 
 msgid "Added 7 cards with pinyin. I skipped <0>地铁</0>, which you already have."
 msgstr "Готово: 7 карточек с пиньинем. <0>地铁</0> пропущено, это слово у тебя уже есть."
+
+msgid "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
+msgstr "Добавил 7 карточек с ударениями. Пропустил <0>квито́к</0>, он у тебя уже есть."
 
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Добавил 8 карточек в колоду «Испанский». Пропустил «ojalá»: такая карточка у тебя уже есть."
@@ -664,6 +685,9 @@ msgstr "Все колоды: {shelfName}"
 msgid "All 300 general questions of the Einbürgerungstest and the 10 for your state, in German as on the test, with English next to each. Free flashcards from the BAMF catalogue."
 msgstr "Einbürgerungstest и Leben in Deutschland на русском: все 300 общих вопросов и 10 вопросов твоей земли, на немецком, как на тесте, с переводом рядом. Бесплатные карточки по каталогу BAMF для теста на гражданство Германии."
 
+msgid "All 33 letters and the apostrophe, then first words to read."
+msgstr "Все 33 буквы и апостроф, а потом первые слова для чтения."
+
 msgid "All Chinese decks"
 msgstr "Все колоды по китайскому"
 
@@ -693,6 +717,9 @@ msgstr "Все, одинаково часто"
 
 msgid "All shelves"
 msgstr "Все полки"
+
+msgid "All Ukrainian decks"
+msgstr "Все колоды по украинскому"
 
 msgid "All updates"
 msgstr "Все обновления"
@@ -784,6 +811,9 @@ msgstr "Ключи API хранятся, пока ты их не отзовёш�
 
 msgid "API reference"
 msgstr "Справочник API"
+
+msgid "Apple"
+msgstr "Яблоко"
 
 msgid "Archive card"
 msgstr "Архивировать карточку"
@@ -890,6 +920,9 @@ msgstr "Биология"
 msgid "Biology · new"
 msgstr "Биология · новая"
 
+msgid "Book"
+msgstr "Книга"
+
 msgid "Breadcrumb"
 msgstr "Навигационная цепочка"
 
@@ -925,6 +958,9 @@ msgstr "Подключи свой AI."
 
 msgid "Bring your Pleco flashcards."
 msgstr "Перенеси карточки из Pleco."
+
+msgid "Brothers"
+msgstr "Братья"
 
 msgid "Browse all decks"
 msgstr "Смотреть все колоды"
@@ -1049,6 +1085,9 @@ msgstr "Карточки сохранят даты повторения, кот�
 
 msgid "Cards outside a section"
 msgstr "Карточки без раздела"
+
+msgid "Castle"
+msgstr "Замок (крепость)"
 
 msgid "CCSE Spanish nationality test"
 msgstr "Экзамен CCSE на гражданство Испании"
@@ -1195,6 +1234,9 @@ msgstr "Подключить ассистента"
 msgid "Connect ChatGPT, Claude or another assistant. Send it today’s notes and it adds the new words with pinyin. Or ask how many cards are waiting tonight."
 msgstr "Подключи ChatGPT, Claude или другого ассистента. Отправь ему сегодняшние заметки, и он добавит новые слова с пиньинем. Или спроси, сколько карточек ждёт сегодня."
 
+msgid "Connect ChatGPT, Claude or another assistant. Send it today’s notes and it adds the new words with their stress. Or ask how many cards are waiting tonight."
+msgstr "Подключи ChatGPT, Claude или другого ассистента. Отправь ему сегодняшние заметки — и он добавит новые слова с ударениями. Или спроси, сколько карточек ждёт тебя вечером."
+
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s notes and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Подключи Claude, ChatGPT или другого ассистента один раз. Отправь ему фото сегодняшнего конспекта, и он добавит новые слова. Или спроси, что ждёт тебя вечером."
 
@@ -1306,6 +1348,9 @@ msgstr "ДЕНЬ 30"
 msgid "days in a row"
 msgstr "дней подряд"
 
+msgid "Dear (feminine)"
+msgstr "Дорогая"
+
 msgid "Dear; expensive"
 msgstr "Милый; дорогой"
 
@@ -1377,6 +1422,9 @@ msgstr "Соответствуют ли слова экзаменам Goethe?"
 msgid "Docs"
 msgstr "Документация"
 
+msgid "Doctor"
+msgstr "Врач"
+
 msgid "Doctors, banks and the library all ask for it."
 msgstr "Его спрашивают и врач, и банк, и библиотека."
 
@@ -1397,6 +1445,9 @@ msgstr "Lymi показывает пиньинь?"
 
 msgid "Does Lymi show romaji?"
 msgstr "Показывает ли Lymi ромадзи?"
+
+msgid "Does Lymi show where the stress falls?"
+msgstr "Показывает ли Lymi, где ударение?"
 
 msgid "Does Lymi teach the three forms?"
 msgstr "Учит ли Lymi три основные формы?"
@@ -1463,6 +1514,9 @@ msgstr "Каждый вопрос возвращается прямо перед
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Каждое государство теперь само правило своей землёй: так начался современный <0>суверенитет</0>."
+
+msgid "Each stress is its own word. за́мок, a castle, and замо́к, a lock, are two cards, each with its own stress and its own sound."
+msgstr "Каждое ударение — отдельное слово. за́мок (крепость) и замо́к (на двери) — две карточки, у каждой своё ударение и своё звучание."
 
 msgid "Each time you remember a word, Lymi waits a little longer before showing it again. A few minutes a day is enough, and the words you learned months ago stay with you."
 msgstr "Каждый раз, когда ты вспоминаешь слово, Lymi ждёт чуть дольше, прежде чем показать его снова. Хватает нескольких минут в день, и слова, выученные несколько месяцев назад, остаются с тобой."
@@ -1835,6 +1889,9 @@ msgstr "Бесплатные колоды по китайскому с голо�
 msgid "Free decks for the first two HSK levels. Take HSK 1, then HSK 2. Each day adds a few new words to your reviews."
 msgstr "Бесплатные колоды для первых двух уровней HSK. Сначала HSK 1, потом HSK 2. Каждый день к повторениям добавляется несколько новых слов."
 
+msgid "Free decks from the letters to everyday words. Read the alphabet, then take A1 and A2. Each day adds a few new words to your reviews."
+msgstr "Бесплатные колоды от букв до повседневных слов. Прочитай алфавит, дальше — A1 и A2. Каждый день к повторениям добавляется несколько новых слов."
+
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Бесплатные колоды, которые проходишь одну за другой. Каждый день несколько новых слов вперемешку с повторениями."
 
@@ -1849,6 +1906,9 @@ msgstr "Бесплатные японские колоды с чтением и 
 
 msgid "free of charge"
 msgstr "бесплатно"
+
+msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
+msgstr "Бесплатные колоды по украинскому с голосом на каждой карточке. Добавь любую одним касанием. Скоро будет больше."
 
 msgid "Free, works offline, and yours"
 msgstr "Бесплатно, офлайн и твоё"
@@ -1993,8 +2053,16 @@ msgstr "Head ööd! Спокойной ночи."
 msgid "health insurance company"
 msgstr "медицинская страховая компания"
 
+#. placeholder {0}: f.marked
+#. placeholder {1}: i18n._(f.meaning)
+msgid "Hear {0}, {1}"
+msgstr "Послушать {0}, {1}"
+
 msgid "Hear how it’s really said."
 msgstr "Услышь, как это звучит на самом деле."
+
+msgid "Hear where the stress falls."
+msgstr "Услышь, где ударение."
 
 msgid "Heart"
 msgstr "Сердце"
@@ -2271,6 +2339,9 @@ msgstr "Всё образуется"
 msgid "It works the same for a lesson on italki, on Preply or with a tutor you meet in person."
 msgstr "Так же для урока на italki, на Preply или с репетитором вживую."
 
+msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
+msgstr "Он пишет на украинском, а читает голос носителя украинского. Когда слово похоже на русское, но значит другое, об этом скажут заметки карточки: неді́ля — это воскресенье, а не неделя."
+
 msgid "It’s fine; I’m OK"
 msgstr "Всё в порядке; я в норме"
 
@@ -2333,6 +2404,9 @@ msgstr "JLPT N5 и N4: лексика для каждого уровня"
 msgid "Join link"
 msgstr "Ссылка для присоединения"
 
+msgid "Journey"
+msgstr "Путешествие"
+
 msgid "Just the right amount: not too much, not too little"
 msgstr "Ровно столько, сколько нужно: не слишком много и не слишком мало"
 
@@ -2359,6 +2433,9 @@ msgstr "Сохраняй новые слова с уроков на italki, Prep
 
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Сохраняй слова и фразы с уроков, занятий с репетитором и из книг. Сфотографируй заметки, и ассистент сделает из них карточки, которые Lymi вернёт, прежде чем ты их забудешь."
+
+msgid "Keep the words from your lessons and your books in one place. Each card marks its stress until you know the word, and a native voice says it."
+msgstr "Держи слова из уроков и книг в одном месте. Карточка показывает ударение, пока ты не знаешь слово, а произносит его голос носителя языка."
 
 msgid "Keep the words from your lessons, your books and Pleco in one place. Each card shows pinyin over its word until you know it."
 msgstr "Держи слова из уроков, книг и Pleco в одном месте. Каждая карточка показывает пиньинь над словом, пока ты его не выучишь."
@@ -2472,6 +2549,9 @@ msgstr "Учи японские слова за несколько минут в
 msgid "Learn the questions once. Keep them until exam day."
 msgstr "Выучи вопросы один раз. Помни их до экзамена."
 
+msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
+msgstr "Украинские слова на флеш-карточках · Lymi"
+
 msgid "Learned once, never revisited"
 msgstr "Без повторений"
 
@@ -2524,6 +2604,9 @@ msgstr "Буквально — «лошадь лошадь тигр тигр»."
 
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Дословно — «это идёт». Так говорят официанты, принимая заказ."
+
+msgid "Lock"
+msgstr "Замок (на двери)"
 
 msgid "Long time no see"
 msgstr "Давно не виделись"
@@ -2765,6 +2848,9 @@ msgstr "Больше, чем перевод."
 msgid "More updates"
 msgstr "Другие обновления"
 
+msgid "Morning"
+msgstr "Утро"
+
 msgid "Most land plants have one."
 msgstr "Она есть у большинства наземных растений."
 
@@ -2911,6 +2997,9 @@ msgstr "Именительный"
 msgid "Not “I want well”. It’s how you accept a coffee."
 msgstr "Дословно «хочу хорошо», а значит «да, с удовольствием» — например, в ответ на кофе."
 
+msgid "Not a week, as Russian <0>неде́ля</0> is."
+msgstr "Не неделя, как русское <0>неде́ля</0>."
+
 msgid "Not for most certifications yet. Your assistant can turn your study guide into a deck in a few minutes, and a deck from Anki or Mochi imports with its review history."
 msgstr "Для большинства сертификаций пока нет. Ассистент может за несколько минут превратить твоё пособие в колоду, а колода из Anki или Mochi импортируется вместе с историей повторений."
 
@@ -3002,11 +3091,17 @@ msgstr "Одна колода для всей группы."
 msgid "One kanji, seven sounds."
 msgstr "Один кандзи, семь звучаний."
 
+msgid "One spelling, two words."
+msgstr "Одно написание, два слова."
+
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному направлению за раз: китайское слово — вспомни значение, или значение — вспомни китайское. Вспоминаешь ответ, переворачиваешь карточку и оцениваешь, насколько легко вспомнилось. Ничего набирать не нужно."
 
 msgid "One way at a time: the Japanese for its meaning, or the meaning for the Japanese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному направлению за раз: японское слово — вспомни значение, или значение — вспомни японское. Вспоминаешь ответ, переворачиваешь карточку и оцениваешь, насколько легко вспомнилось. Ничего набирать не нужно."
+
+msgid "One way at a time: the Ukrainian for its meaning, or the meaning for the Ukrainian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
+msgstr "По одному направлению за раз: украинское слово по значению или значение по украинскому слову. Ты вспоминаешь ответ, переворачиваешь карточку и говоришь, насколько хорошо знал. Ничего не нужно набирать."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одно слово, чтобы попросить, что-то подать и ответить на благодарность."
@@ -3034,6 +3129,9 @@ msgstr "Открой «Сегодня» на телефоне или ноутб�
 
 msgid "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
 msgstr "Открой «Сегодня» на телефоне или ноутбуке. Lymi показывает каждое слово снова прямо перед тем, как ты бы его забыл, так что следующий урок начинается там, где закончился предыдущий."
+
+msgid "Opinion; thought"
+msgstr "Мнение; мысль"
 
 msgid "opportunity cost"
 msgstr "альтернативная стоимость"
@@ -3454,6 +3552,9 @@ msgstr "Правильный ответ"
 msgid "right away"
 msgstr "сразу"
 
+msgid "Road"
+msgstr "Дорога"
+
 msgid "Room"
 msgstr "Комната"
 
@@ -3794,6 +3895,15 @@ msgstr "Начни с HSK 1. Двигайся дальше."
 msgid "Start with kana"
 msgstr "Начать с каны"
 
+msgid "Start with the alphabet"
+msgstr "Начать с алфавита"
+
+msgid "Start with the alphabet tonight."
+msgstr "Начни с алфавита уже сегодня."
+
+msgid "Start with the alphabet. Keep going."
+msgstr "Начни с алфавита. Иди дальше."
+
 msgid "Start with today’s notes."
 msgstr "Начни с сегодняшних заметок."
 
@@ -3823,6 +3933,9 @@ msgstr "Держаться за что-то лишь из-за уже вложе
 
 msgid "Stop pronunciation"
 msgstr "Остановить воспроизведение"
+
+msgid "Stress"
+msgstr "Ударение"
 
 msgid "Stubborn grit"
 msgstr "Упрямая стойкость"
@@ -4055,6 +4168,9 @@ msgstr "Лицевой нерв: мимические мышцы и вкус н�
 msgid "The flashcard app that gets Chinese."
 msgstr "Флеш-карточки, которые понимают китайский."
 
+msgid "The flashcard app that gets Ukrainian."
+msgstr "Флеш-карточки, которые понимают украинский."
+
 msgid "The flashcard app that speaks Estonian."
 msgstr "Флеш-карточки, которые говорят по-эстонски."
 
@@ -4105,6 +4221,9 @@ msgstr "Самая длинная цепочка зависимых задач; 
 
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "Фонарь и логотип Lymi над английской надписью «Keep what you learn»."
+
+msgid "The mark leaves as you learn."
+msgstr "Ударение исчезает, пока ты учишься."
 
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, в которой клетка хранит и переносит энергию"
@@ -4268,6 +4387,9 @@ msgstr "Китайский, группа по четвергам"
 msgid "ticket"
 msgstr "билет"
 
+msgid "Ticket"
+msgstr "Билет"
+
 msgid "tip"
 msgstr "чаевые"
 
@@ -4406,6 +4528,9 @@ msgstr "Прекращать; останавливаться"
 msgid "To study"
 msgstr "Учиться"
 
+msgid "To take"
+msgstr "Брать"
+
 msgid "To take a taxi"
 msgstr "Взять такси"
 
@@ -4452,6 +4577,9 @@ msgstr "пробка"
 msgid "Train"
 msgstr "Поезд"
 
+msgid "Train station"
+msgstr "Вокзал"
+
 msgid "Transcript · Spanish lesson"
 msgstr "Транскрипт · урок испанского"
 
@@ -4461,6 +4589,9 @@ msgstr "путешествия"
 msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
+
+msgid "Travel, health and opinions, once A1 feels easy."
+msgstr "Путешествия, здоровье и мнения — когда A1 уже легко."
 
 msgid "Travel, health and opinions, once HSK 1 feels easy."
 msgstr "Путешествия, здоровье и мнения — когда HSK 1 уже даётся легко."
@@ -4491,6 +4622,9 @@ msgstr "Сначала вспомни значение, а потом смотр
 
 msgid "Tuesday Japanese class"
 msgstr "Японский, группа по вторникам"
+
+msgid "Tuesday Ukrainian class"
+msgstr "Украинский, группа по вторникам"
 
 msgid "Turn a few cards over"
 msgstr "Переверни несколько карточек"
@@ -4573,11 +4707,17 @@ msgstr "Граждане США"
 msgid "Ukraine"
 msgstr "Украина"
 
+msgid "Ukrainian"
+msgstr "Украинский"
+
 msgid "Ukrainian driving theory (ПДР)"
 msgstr "Теория ПДР Украины"
 
 msgid "Ukrainian driving theory: the rules and every sign"
 msgstr "Теория ПДР Украины: правила и все знаки"
+
+msgid "Ukrainian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
+msgstr "В украинском <0>за́мок</0>, крепость, и <1>замо́к</1>, на двери, пишутся одинаково. Различает их только ударение. Lymi держит каждое слово на отдельной карточке, со своим ударением и своим звучанием."
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"
@@ -4684,6 +4824,9 @@ msgstr "Сайт"
 
 msgid "Websites"
 msgstr "Сайты"
+
+msgid "What about words spelled the same?"
+msgstr "А как со словами, которые пишутся одинаково?"
 
 msgid "What an object’s shape tells you to do with it"
 msgstr "Как форма предмета подсказывает, что с ним делать"
@@ -4850,6 +4993,9 @@ msgstr "Виджеты"
 msgid "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
 msgstr "Виджеты и Пункт управления получают только количества: сколько карточек ждёт, дни подряд и цель. Никогда не текст карточек."
 
+msgid "Will the AI slip into Russian?"
+msgstr "AI не перейдёт на русский?"
+
 msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to an AI speech provider, chosen by the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
 msgstr "Когда AI-сервисы включены и ты впервые воспроизводишь карточку, мы отправляем текст для озвучивания (термин или его чтение) и его язык провайдеру AI-речи, которого выбираем в зависимости от языка. Значение, пример и заметки мы не отправляем. Аудио мы храним, чтобы воспроизводить его снова, и удаляем вместе с карточкой."
 
@@ -4922,6 +5068,9 @@ msgstr "Да, со знаками тонов. Карточка показыва�
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Да. У карточки может быть одно изображение, например схема или слайд, и повторение может спрашивать по изображению вместо слов."
 
+msgid "Yes. A card shows its word with a stress mark until the card is Known, then the word as Ukrainians write it. Turning a card over always shows the mark, and the examples on your cards keep theirs."
+msgstr "Да. Пока карточка не выучена, слово на ней показано с ударением, а потом — так, как пишут украинцы. На обороте карточки ударение видно всегда, а примеры на твоих карточках сохраняют свои ударения."
+
 msgid "Yes. Adding the decks and reviewing them is free."
 msgstr "Да. Добавлять колоды и повторять их — бесплатно."
 
@@ -4933,6 +5082,9 @@ msgstr "Да. Карточки сохраняют пиньинь, расписа
 
 msgid "Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind."
 msgstr "Да. Карточки сохраняют чтения, расписание и записи слов. Записи предложений не переносятся."
+
+msgid "Yes. Cards keep their schedule and their word recordings."
+msgstr "Да. Карточки сохраняют своё расписание и записи слов."
 
 msgid "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
 msgstr "Да. Каждую карточку озвучивает AI-голос носителя эстонского. Нажми «воспроизвести» на любой карточке, чтобы услышать."
@@ -5053,6 +5205,9 @@ msgstr "Сообщение репетитора"
 
 msgid "Your words, not a course."
 msgstr "Твои слова, а не чужой курс."
+
+msgid "Українська · new"
+msgstr "Українська · новая"
 
 msgid "中文 · new"
 msgstr "中文 · новая"

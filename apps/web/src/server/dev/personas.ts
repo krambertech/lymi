@@ -556,6 +556,37 @@ const HSK2_ZH = chinese([
   { term: "已经", pronunciation: "yǐjīng", meaning: "already" },
 ]);
 
+/** Ukrainian decks under production's slugs, published Core Ukrainian Words first, so Welcome reorders them. */
+const ukrainian = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "uk", meaningSource: "lesson" as const }));
+
+const CORE_UK = ukrainian([
+  { term: "також", pronunciation: "тако́ж", meaning: "also" },
+  { term: "часто", pronunciation: "ча́сто", meaning: "often" },
+]);
+
+const ALPHABET_UK = ukrainian([
+  { term: "Ї ї", meaning: "yi" },
+  { term: "Є є", meaning: "ye" },
+  { term: "ні", meaning: "no" },
+]);
+
+const A1_UK = ukrainian([
+  { term: "дякую", pronunciation: "дя́кую", meaning: "thank you" },
+  { term: "замок", pronunciation: "замо́к", meaning: "lock" },
+  {
+    term: "неділя",
+    pronunciation: "неді́ля",
+    meaning: "Sunday",
+    example: "У неді́лю ми відпочива́ємо.",
+  },
+]);
+
+const A2_UK = ukrainian([
+  { term: "подорож", pronunciation: "по́дорож", meaning: "journey" },
+  { term: "квиток", pronunciation: "квито́к", meaning: "ticket" },
+]);
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -756,7 +787,7 @@ export const personas: Persona[] = [
     group: "Together",
     name: "Lymi",
     description:
-      "The publisher account. Estonian, Finnish, driving, Japanese and Chinese decks; one in English and Ukrainian editions.",
+      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese and Ukrainian decks; one in English and Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -940,6 +971,66 @@ export const personas: Persona[] = [
           summary: "Words for HSK 1.",
           category: "languages",
           tags: ["exam-hsk-1", "beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Ukrainian Words",
+        description: "Everyday words worth knowing first.",
+        defaultLanguage: "uk",
+        introducedDaysAgo: 4,
+        cards: CORE_UK,
+        publication: {
+          slug: "core-ukrainian-words",
+          summary: "Everyday words worth knowing first.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Ukrainian A2 Vocabulary",
+        description: "Words for A2.",
+        defaultLanguage: "uk",
+        introducedDaysAgo: 3,
+        cards: A2_UK,
+        publication: {
+          slug: "ukrainian-a2-vocabulary",
+          summary: "Words for A2.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Ukrainian A1 Vocabulary",
+        description: "Words for A1.",
+        defaultLanguage: "uk",
+        introducedDaysAgo: 2,
+        cards: A1_UK,
+        publication: {
+          slug: "ukrainian-a1-vocabulary",
+          summary: "Words for A1.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Read the Ukrainian Alphabet",
+        description: "Every letter with its sound.",
+        defaultLanguage: "uk",
+        introducedDaysAgo: 1,
+        cards: ALPHABET_UK,
+        publication: {
+          slug: "ukrainian-alphabet",
+          summary: "Every letter with its sound.",
+          category: "languages",
+          tags: ["beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
         },

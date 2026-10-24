@@ -56,7 +56,7 @@ The AI may add readings to an example someone else wrote only when the text is o
 
 - **Term**: the word as natives write it, with no stress marks; ’, ʼ and ' are one apostrophe.
 - **Stress**: the term with U+0301 over the stressed vowel of each word of two or more syllables, stored as the pronunciation: дорога read доро́га (road) or дорога́ (dear), брати read бра́ти (to take) or брати́ (brothers). Empty when every word has one syllable: дім, п'ять. Nothing is restored, since ї's dots are part of the letter.
-- **Notes**: a verb's aspect pair, *роби́ти / зроби́ти*, and a case other than the accusative, *дя́кувати* + dative; a noun's gender when the ending hides it and an irregular plural, *дити́на · ді́ти*; the forms that show a stress moving, *рука́ · ру́ки*; the homograph with its stress elsewhere; and a word that looks Russian but means something else, *неді́ля*, Sunday, not a week.
+- **Notes**: stress on every form. A verb's "Perfective: *купи́ти*" and a case other than the accusative, "+ dative: *дя́кувати*"; a noun's gender when the ending hides it and a plural that is irregular or moves the stress, "Plural: *ру́ки*"; the homograph, "Stressed elsewhere: *за́мок*, a castle"; and a word that looks Russian but means something else, *неді́ля*, Sunday, not a week.
 - **Example**: one short sentence in Ukrainian, never Russian, marked as a Russian example is: Я живу́ в Ки́єві.
 
 The AI may add stress marks to a Russian or Ukrainian example someone else wrote only when removing them gives the text back; it never rewrites it.
@@ -87,7 +87,6 @@ Notes labels are written here in English; a card writes them in its meaning lang
 - **Icelandic** notes give Gender, Genitive and Plural, and a strong verb's Past and Participle; þ, ð, æ and ö stay as written.
 - **Polish** notes give "Perfective: *zrobić*", "Present: *robię, robisz*", a gender the ending hides, a genitive that changes the stem and an irregular or masculine-personal plural, "Plural: *studenci*"; for a Ukrainian or Russian reader, a false friend, *dywan*, a carpet. A word not stressed on the second-to-last syllable gets the term with a grave accent on that vowel as its pronunciation: mùzyka, never an acute, which turns o into the letter ó.
 - **Czech** keeps háček, čárka and ů; notes give "Perfective: *udělat*", "Present: *dělám*", a hidden gender, the Genitive and an irregular "Plural: *lidé*".
-- **Ukrainian** (`uk`): the pronunciation is the term with its stress marked; notes mark stress on every form: "Perfective: *купи́ти*", "Present: *купу́ю, купу́єш*", a plural that moves the stress, a case other than the accusative, and a Russian look-alike.
 
 - **German** notes give a noun's Plural, a strong verb's Present only when the vowel changes, Past and "Perfect: *ist gefahren*", a separable prefix, *ein|kaufen*, and a fixed preposition with its case; the term keeps its article, and duplicates still compare it.
 - **French** pronunciation is IPA, with each liaison in a phrase marked ‿; notes give a gender the article hides, an irregular Plural, an adjective's irregular "Feminine: *belle*", a verb's irregular Present, its Participle, and a "With *être*" line.

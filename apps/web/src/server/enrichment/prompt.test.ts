@@ -27,8 +27,8 @@ describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 17,
-      hash: "29b5efb831923d90",
+      ENRICHMENT_PROMPT_VERSION: 18,
+      hash: "a323eeb8609f9e9d",
     });
   });
 

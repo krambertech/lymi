@@ -3734,6 +3734,9 @@ msgstr "Previous month"
 msgid "Privacy"
 msgstr "Privacy"
 
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
 msgid "Private"
 msgstr "Private"
 
@@ -5048,6 +5051,9 @@ msgstr "What is Lymi?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
+
+msgid "What Lymi keeps, who helps provide it, and the choices you have."
+msgstr "What Lymi keeps, who helps provide it, and the choices you have."
 
 msgid "What the decks are about"
 msgstr "What the decks are about"

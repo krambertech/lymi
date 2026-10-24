@@ -3316,6 +3316,9 @@ msgstr "Натисни Copy text і встав текст сюди."
 msgid "Previous month"
 msgstr "Попередній місяць"
 
+msgid "Privacy policy"
+msgstr "Політика конфіденційності"
+
 msgid "Private"
 msgstr "Приватна"
 

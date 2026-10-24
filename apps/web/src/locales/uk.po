@@ -3734,6 +3734,9 @@ msgstr "Попередній місяць"
 msgid "Privacy"
 msgstr "Конфіденційність"
 
+msgid "Privacy policy"
+msgstr "Політика конфіденційності"
+
 msgid "Private"
 msgstr "Приватна"
 
@@ -5048,6 +5051,9 @@ msgstr "Що таке Lymi?"
 
 msgid "What it’s for"
 msgstr "Для чого вона"
+
+msgid "What Lymi keeps, who helps provide it, and the choices you have."
+msgstr "Що зберігає Lymi, хто допомагає його надавати і який вибір є в тебе."
 
 msgid "What the decks are about"
 msgstr "Тема колод"

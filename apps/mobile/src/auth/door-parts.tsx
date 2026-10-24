@@ -2,6 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
+import { openBrowserAsync } from "expo-web-browser";
 import { type ReactNode, useEffect, useRef } from "react";
 import { type TextInput, View, type ViewStyle } from "react-native";
 import Animated, {
@@ -21,7 +22,7 @@ import { AppleMark } from "../ui/apple-mark";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
 import { Button, Icon, Press, Text } from "../ui/primitives";
-import { API_URL } from "./client";
+import { API_URL, localizedSiteUrl } from "./client";
 import { devSignIn, type SignIn, type Step } from "./use-sign-in";
 
 type EmailStep = Exclude<Step, "doors">;
@@ -148,6 +149,24 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
         <Button label={t`Create an account`} size="lg" onPress={() => open("sign-up")} />
       </Animated.View>
     </View>
+  );
+}
+
+/** The privacy policy, reachable before there is an account, in the app's language. */
+export function PrivacyLink() {
+  const { t, i18n } = useLingui();
+  const arrive = useArrival();
+  return (
+    <Animated.View entering={arrive(460)} className="items-center">
+      <Press
+        onPress={() => void openBrowserAsync(localizedSiteUrl("/privacy", i18n.locale))}
+        haptic={false}
+        className="min-h-11 justify-center px-2"
+        accessibilityRole="link"
+      >
+        <Text className="text-sm text-muted">{t`Privacy policy`}</Text>
+      </Press>
+    </Animated.View>
   );
 }
 

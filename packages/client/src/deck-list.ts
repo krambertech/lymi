@@ -24,9 +24,17 @@ export interface DeckFilters {
   sections: string[];
   /** Tag keys, from `tagKey`; a card carrying any of them matches. */
   tags: string[];
+  /** Only cards the learner marked important. */
+  important: boolean;
 }
 
-export const noFilters: DeckFilters = { states: [], due: null, sections: [], tags: [] };
+export const noFilters: DeckFilters = {
+  states: [],
+  due: null,
+  sections: [],
+  tags: [],
+  important: false,
+};
 
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
@@ -84,7 +92,11 @@ export function chosenReview(
 
 export function activeFilterCount(filters: DeckFilters): number {
   return (
-    filters.states.length + (filters.due ? 1 : 0) + filters.sections.length + filters.tags.length
+    filters.states.length +
+    (filters.due ? 1 : 0) +
+    filters.sections.length +
+    filters.tags.length +
+    (filters.important ? 1 : 0)
   );
 }
 
@@ -127,6 +139,7 @@ export function filterRows(
       return false;
     if (filters.tags.length && !row.card.tags.some((tag) => filters.tags.includes(tagKey(tag))))
       return false;
+    if (filters.important && !row.card.important) return false;
     if (filters.due) {
       if (rowState(row) === "new" || !(dueAt(row) < limit)) return false;
     }

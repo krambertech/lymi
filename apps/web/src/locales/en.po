@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid ", back to all filters"
+msgstr ", back to all filters"
+
 msgid ", not open yet"
 msgstr ", not open yet"
 
@@ -619,6 +622,9 @@ msgstr "{due, plural, one {Review # due} other {Review # due}}"
 msgid "{field} becomes"
 msgstr "{field} becomes"
 
+msgid "{field}: {values}"
+msgstr "{field}: {values}"
+
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {term found} other {terms found}}"
 
@@ -1151,9 +1157,6 @@ msgstr "Answer: {back}"
 
 msgid "Answer: {back}. You can add a memory hook."
 msgstr "Answer: {back}. You can add a memory hook."
-
-msgid "Any time"
-msgstr "Any time"
 
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
@@ -2144,12 +2147,6 @@ msgstr "Due now"
 msgid "due this week"
 msgstr "due this week"
 
-msgid "Due this week"
-msgstr "Due this week"
-
-msgid "Due today"
-msgstr "Due today"
-
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
 
@@ -2365,6 +2362,12 @@ msgstr "Fill in selected text"
 
 msgid "Filter"
 msgstr "Filter"
+
+msgid "Filter by"
+msgstr "Filter by"
+
+msgid "Filter, {on} on"
+msgstr "Filter, {on} on"
 
 msgid "Find a tag"
 msgstr "Find a tag"
@@ -4498,9 +4501,6 @@ msgstr "System"
 
 msgid "Tab"
 msgstr "Tab"
-
-msgid "Tag: {tagName}"
-msgstr "Tag: {tagName}"
 
 msgid "Tags"
 msgstr "Tags"

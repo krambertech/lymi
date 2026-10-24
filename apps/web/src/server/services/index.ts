@@ -9,6 +9,7 @@ export * from "./card-search";
 export * from "./card-view";
 export * from "./cards";
 export * from "./connected-apps";
+export * from "./content-reports";
 export * from "./context";
 export * from "./deck-choice";
 export * from "./deck-copies";

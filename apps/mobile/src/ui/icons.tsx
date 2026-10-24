@@ -32,6 +32,7 @@ import {
   Eye,
   EyeOff,
   FileUp,
+  Flag,
   FolderInput,
   GripVertical,
   Image as ImageIcon,
@@ -209,6 +210,7 @@ const ICONS = {
   delete: Trash2,
   filter: ListFilter,
   share: Share,
+  report: Flag,
   copy: Copy,
   privacy: ShieldCheck,
 } as const;

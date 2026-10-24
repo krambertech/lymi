@@ -13,13 +13,20 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT, isolate, type KnownReadings, unisolate } from "@lymi/core";
+import {
+  CHOSEN_LIMIT,
+  type ContentReportTarget,
+  isolate,
+  type KnownReadings,
+  unisolate,
+} from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
   ArrowUpDown,
   ChevronDown,
   Download,
+  Flag,
   FolderInput,
   KeyRound,
   Layers,
@@ -62,6 +69,7 @@ import { Screen, ScreenBar } from "../components/layout/screen";
 import { NavLink, useStaticNav } from "../components/nav-link";
 import { NextStep, NextSteps } from "../components/next-steps";
 import { PublisherMark } from "../components/publisher-mark";
+import { ReportDialog } from "../components/report-dialog";
 import { SectionProgress } from "../components/section-progress";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
@@ -821,6 +829,15 @@ export function DeckDetailView({
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
   const st = useStaticNav();
+  // A member reports the deck or one of its cards; the subject stays while the dialog closes.
+  const [reporting, setReporting] = useState(false);
+  const [reported, setReported] = useState<ContentReportTarget | null>(null);
+  const [reportedName, setReportedName] = useState("");
+  const report = (target: NonNullable<typeof reported>, name: string) => {
+    setReported(target);
+    setReportedName(name);
+    setReporting(true);
+  };
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const tags = useMemo(() => deckTags(cards ?? []), [cards]);
@@ -1023,6 +1040,11 @@ export function DeckDetailView({
         // Beside the list nothing hands focus back, so the row that opened the card takes it.
         requestAnimationFrame(() => cardRow(id)?.focus());
       }}
+      onReport={
+        member
+          ? () => report({ kind: "card", cardId: shownWord.card.id }, shownWord.card.term)
+          : undefined
+      }
       owner={
         owner && {
           onEdit: () => owner.onEditCard(shownWord.card),
@@ -1117,6 +1139,13 @@ export function DeckDetailView({
             <Trans>Export</Trans>
           </DropdownMenuItem>
         )}
+        {member && deck && <DropdownMenuSeparator />}
+        {member && deck && (
+          <DropdownMenuItem onClick={() => report({ kind: "deck", deckId: deck.id }, deck.name)}>
+            <Flag />
+            <Trans>Report deck</Trans>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         {member ? (
           <DropdownMenuItem variant="danger" onClick={member.onLeave}>
@@ -1131,6 +1160,14 @@ export function DeckDetailView({
         )}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+  const reportDialog = reported && (
+    <ReportDialog
+      open={reporting}
+      onOpenChange={setReporting}
+      target={reported}
+      name={reportedName}
+    />
   );
 
   const backToLibrary = { label: t`Library`, to: "/library" };
@@ -1199,6 +1236,7 @@ export function DeckDetailView({
             )}
             {addButton}
             {deckMenu}
+            {reportDialog}
           </>
         }
         bar={
@@ -1321,7 +1359,7 @@ export function DeckDetailView({
               searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
               // Pinned over a strip of the page's own ground, so rows never show beside it.
               selected &&
-                "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+                "sticky top-(--inset-top) z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
             {selected ? (
@@ -1433,7 +1471,7 @@ export function DeckDetailView({
 
       {/* Beside the list: sticky, with its own scroll, so J and K walk the list while the page follows. */}
       {open && beside && (
-        <aside className="sticky top-0 max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
+        <aside className="sticky top-(--inset-top) max-h-[calc(100dvh-var(--inset-top))] w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
           {word}
         </aside>
       )}

@@ -21,6 +21,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Add a card | [add-card.md](features/add-card.md) |
 | Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
 | Library and the deck page | [library.md](features/library.md) |
+| Search | [search.md](features/search.md) |
 | Deck filters | [deck-filters.md](features/deck-filters.md) |
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
@@ -33,6 +34,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Making and archiving sections | [sections.md](features/sections.md) |
 | Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
+| Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
 | Welcome, and arriving from a deck link or a join link | [welcome.md](features/welcome.md) |
 | Import and export | [import-export.md](features/import-export.md) |

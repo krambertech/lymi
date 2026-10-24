@@ -456,6 +456,13 @@
       "when": 1792837074232,
       "tag": "0064_guard_studied_decks",
       "breakpoints": true
+    },
+    {
+      "idx": 65,
+      "version": "6",
+      "when": 1792855561021,
+      "tag": "0065_fresh_talon",
+      "breakpoints": true
     }
   ]
 }

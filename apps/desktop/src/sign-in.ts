@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from "node:crypto";
+import type { SignInProvider } from "@lymi/client/desktop";
 import type { Session } from "electron";
 import { app, shell } from "electron";
 import { cookieOf, parseCallback } from "./callback.js";
@@ -8,8 +9,11 @@ const verifiers = new Map<string, string>();
 
 const base64Url = (bytes: Buffer) => bytes.toString("base64url");
 
-/** Opens the product's hand-off page in the system browser, where Google and passkeys work. */
-export async function requestSignIn(productUrl: string) {
+/**
+ * Opens the product's hand-off page in the system browser, where Google and passkeys work. With a
+ * provider, a signed-out browser goes straight to that provider's page rather than Lymi's login.
+ */
+export async function requestSignIn(productUrl: string, provider?: SignInProvider | null) {
   const state = base64Url(randomBytes(12));
   const verifier = base64Url(randomBytes(32));
   verifiers.set(state, verifier);
@@ -17,6 +21,7 @@ export async function requestSignIn(productUrl: string) {
   url.searchParams.set("client_id", "electron");
   url.searchParams.set("code_challenge", base64Url(createHash("sha256").update(verifier).digest()));
   url.searchParams.set("state", state);
+  if (provider) url.searchParams.set("provider", provider);
   // A script driving local dev opens the page itself. README.md.
   if (url.hostname === "localhost") console.log(`sign-in ${url}`);
   if (process.env.LYMI_DEV_BROWSER !== "off")

@@ -31,6 +31,7 @@ import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
+import { contentReports, moderation } from "./routes/content-reports";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
 import { emailEvents } from "./routes/email-events";
@@ -361,6 +362,8 @@ app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 app.route("/api/feedback", feedback);
+app.route("/api/content-reports", contentReports);
+app.route("/api/moderation", moderation);
 app.route("/api/activity", activity);
 app.route("/api/explore", explore);
 

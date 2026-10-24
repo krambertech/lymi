@@ -1,7 +1,8 @@
 import { createHash, randomBytes } from "node:crypto";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { DESKTOP_APP_SCHEME } from "../shared/origins";
-import { createAuth } from "./auth";
+import { createAuth, macSignIn } from "./auth";
+import * as posthog from "./posthog";
 import { json, type Session, type TestApp, testApp } from "./test-app";
 
 /**
@@ -30,7 +31,13 @@ async function handOff(as: Session | undefined, challenge: string, state: string
 }
 
 const trade = (token: string, state: string, verifier: string) =>
-  app.fetch("/api/auth/electron/token", json({ token, state, code_verifier: verifier }));
+  app.fetch(
+    "/api/auth/electron/token",
+    json(
+      { token, state, code_verifier: verifier },
+      { headers: { "user-agent": "Lymi for Mac/1.0.42" } },
+    ),
+  );
 
 describe("signing the Mac app in", () => {
   it("trades a signed-in learner's code for a session once, with the right verifier", async () => {
@@ -47,6 +54,32 @@ describe("signing the Mac app in", () => {
     expect(await traded.json()).toMatchObject({ user: { email: learner.email } });
 
     expect((await trade(code, state, verifier)).status).toBe(404);
+  });
+
+  it("counts the traded session as a Mac sign-in through the browser", async () => {
+    const delivered = vi.spyOn(posthog, "trackProductEvent").mockResolvedValue();
+    const { verifier, challenge, state } = pkce();
+    const handed = await handOff(learner, challenge, state);
+    const { electron_authorization_code: code } = (await handed.json()) as {
+      electron_authorization_code: string;
+    };
+    expect((await trade(code, state, verifier)).status).toBe(200);
+    const signedIn = delivered.mock.calls.filter((call) => call[2].name === "signed_in");
+    expect(signedIn.map((call) => call[2])).toEqual([
+      { name: "signed_in", client: "mac", via: "browser" },
+    ]);
+    delivered.mockRestore();
+  });
+
+  it("tells the Mac app's window from a browser by its user agent", () => {
+    const chrome =
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+    const window =
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Lymi/1.0.42 Chrome/140.0.0.0 Electron/45.0.0 Safari/537.36";
+    expect(macSignIn("Lymi for Mac/1.0.42")).toBe("browser");
+    expect(macSignIn(window)).toBe("window");
+    expect(macSignIn(chrome)).toBeNull();
+    expect(macSignIn(null)).toBeNull();
   });
 
   it("refuses a code traded with another verifier or state", async () => {

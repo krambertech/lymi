@@ -1474,6 +1474,9 @@ msgstr "Choose what each side of a Noji card becomes on a Lymi card. One side is
 msgid "Choose what the deck is for."
 msgstr "Choose what the deck is for."
 
+msgid "Choose what’s wrong with it."
+msgstr "Choose what’s wrong with it."
+
 msgid "Choosing the terms worth a card"
 msgstr "Choosing the terms worth a card"
 
@@ -1804,6 +1807,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t send your report"
+msgstr "Couldn’t send your report"
 
 msgid "Couldn’t skip for now. Check your connection and try again."
 msgstr "Couldn’t skip for now. Check your connection and try again."
@@ -2416,11 +2422,17 @@ msgstr "Greek"
 msgid "Handwritten"
 msgstr "Handwritten"
 
+msgid "Harassment or bullying"
+msgstr "Harassment or bullying"
+
 msgid "Hard"
 msgstr "Hard"
 
 msgid "Has a picture"
 msgstr "Has a picture"
+
+msgid "Hateful or offensive"
+msgstr "Hateful or offensive"
 
 msgid "Have an account?"
 msgstr "Have an account?"
@@ -3211,6 +3223,9 @@ msgstr "Not set"
 msgid "Not started"
 msgstr "Not started"
 
+msgid "Note"
+msgstr "Note"
+
 msgid "Notes"
 msgstr "Notes"
 
@@ -3333,6 +3348,9 @@ msgstr "Open Settings"
 
 msgid "Open You"
 msgstr "Open You"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Optional. Anything that helps us understand."
 
 msgid "Options for {email}"
 msgstr "Options for {email}"
@@ -3631,6 +3649,15 @@ msgstr "Replay example"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+msgid "Report card"
+msgstr "Report card"
+
+msgid "Report deck"
+msgstr "Report deck"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Report sent. We’ll look within a day."
+
 msgid "Reset filters"
 msgstr "Reset filters"
 
@@ -3897,6 +3924,9 @@ msgstr "Send code"
 msgid "Send feedback"
 msgstr "Send feedback"
 
+msgid "Send report"
+msgstr "Send report"
+
 msgid "Send reset link"
 msgstr "Send reset link"
 
@@ -3924,6 +3954,9 @@ msgstr "Set name"
 
 msgid "Several pages at once"
 msgstr "Several pages at once"
+
+msgid "Sexual content"
+msgstr "Sexual content"
 
 msgid "Share"
 msgstr "Share"
@@ -4038,6 +4071,9 @@ msgstr "Sort"
 msgid "Source"
 msgstr "Source"
 
+msgid "Spam or a scam"
+msgstr "Spam or a scam"
+
 msgctxt "language"
 msgid "Spanish"
 msgstr "Spanish"
@@ -4150,6 +4186,10 @@ msgstr "Technology"
 
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
+
+#. placeholder {0}: isolate(name)
+msgid "Tell Lymi what’s wrong with “{0}”. We read every report within a day, and the owner isn’t told who sent it."
+msgstr "Tell Lymi what’s wrong with “{0}”. We read every report within a day, and the owner isn’t told who sent it."
 
 msgid "Term"
 msgstr "Term"
@@ -4513,6 +4553,9 @@ msgstr "Try again"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Try again on a steadier connection and keep Lymi open until the upload finishes."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Try again, or write to <0>hello@lymi.app</0>."
+
 msgid "Try another word, or part of one."
 msgstr "Try another word, or part of one."
 
@@ -4675,6 +4718,9 @@ msgstr "What you learn, in order"
 msgid "What you’re learning"
 msgstr "What you’re learning"
 
+msgid "What’s wrong"
+msgstr "What’s wrong"
+
 msgid "When it’s back"
 msgstr "When it’s back"
 
@@ -4756,6 +4802,9 @@ msgstr "You can close Lymi now. Your decks appear in Library when the import fin
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "You can download it until {until}. Then it’s deleted."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."

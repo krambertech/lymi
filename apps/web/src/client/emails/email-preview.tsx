@@ -81,6 +81,11 @@ const KINDS: { group: string; kinds: { kind: string; name: string; when: string 
         when: "A learner sends feedback. It goes to hello@lymi.app, answerable to them.",
       },
       {
+        kind: "content-report",
+        name: "Content report",
+        when: "A learner reports a deck or card someone else wrote. It goes to hello@lymi.app.",
+      },
+      {
         kind: "test",
         name: "Test email",
         when: "An operator sends the production smoke test.",

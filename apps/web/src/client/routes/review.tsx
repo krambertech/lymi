@@ -52,6 +52,7 @@ import { EditCardSheet } from "../components/edit-card-sheet";
 import { GRADES } from "../components/grade";
 import { HookEditor } from "../components/hook-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
+import { ReportDialog } from "../components/report-dialog";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, type Card, deviceTimezone, errorMessage, type QueueItem, scopeKey } from "../lib/api";
@@ -992,6 +993,7 @@ function Review() {
   }
   const offer = cardOffer.key === showing && cardOffer.offer;
   const owned = currentDeck?.role === "owner";
+  const [reporting, setReporting] = useState(false);
   // Writing a hook parks the offer, and the panel fades, so it never stands beside the editor.
   // Where focus goes as the menu closes: the grades, unless the chosen row opened something that
   // takes focus itself, such as the hook editor, the card editor or the card's place.
@@ -1111,6 +1113,7 @@ function Review() {
         openPlace();
       }}
       onArchive={() => void archiveCurrent()}
+      onReport={currentDeck && !owned ? () => setReporting(true) : undefined}
     />
   );
 
@@ -1321,6 +1324,14 @@ function Review() {
             titleId={placeTitleId}
             onPlayAudio={canPlayPronunciation(current.card) ? playAudio : undefined}
             onClose={closePlace}
+            onReport={
+              !owned
+                ? () => {
+                    closePlace();
+                    setReporting(true);
+                  }
+                : undefined
+            }
             owner={
               owned
                 ? {
@@ -1342,6 +1353,14 @@ function Review() {
             }
           />
         </CardPlace>
+      )}
+      {current && currentDeck && !owned && (
+        <ReportDialog
+          open={reporting}
+          onOpenChange={setReporting}
+          target={{ kind: "card", cardId: current.card.id }}
+          name={current.card.term}
+        />
       )}
       <EditCardSheet
         card={editing}

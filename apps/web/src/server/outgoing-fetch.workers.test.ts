@@ -7,7 +7,7 @@ import { synthesizeGoogleSpeech } from "./ai/google-cloud-tts";
 import { createLeadInWriter } from "./ai/lead-in-writer";
 import { createOpenAiSpeechProvider } from "./ai/openai-speech";
 import { createOpenAiTextProvider } from "./ai/openai-text";
-import { revokeAppleGrant } from "./apple-revoke";
+import { exchangeAppleCode, revokeAppleToken } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import { sendWithResend } from "./email/resend";
 import { createLessonReader, pingLessonReader } from "./lessons/reader";
@@ -149,7 +149,7 @@ describe("outgoing fetches in the Workers runtime", () => {
     expect(response.status).toBe(200);
   });
 
-  it("Apple grant revocation, with its ES256 client secret", async () => {
+  it("Apple code exchange and grant revocation, with their ES256 client secret", async () => {
     const keys = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, true, [
       "sign",
       "verify",
@@ -160,6 +160,8 @@ describe("outgoing fetches in the Workers runtime", () => {
       keyId: "KEY",
       privateKey: await pkcs8Pem(keys.privateKey),
     };
-    await expect(revokeAppleGrant(key, "code")).resolves.toBe(true);
+    const exchanged = await exchangeAppleCode(key, "code");
+    expect(exchanged).toEqual({ ok: true, token: "refresh" });
+    await expect(revokeAppleToken(key, "refresh")).resolves.toEqual({ ok: true });
   });
 });

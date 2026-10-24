@@ -259,6 +259,10 @@
     {
       "name": "0064_guard_studied_decks.sql",
       "sha256": "6e4744d2330de2ca0d552e2ea6cdbbdccad95ae0514d26af9bdbf68f1dd56cdb"
+    },
+    {
+      "name": "0065_fresh_talon.sql",
+      "sha256": "d6bccf81926876832b549c25281ee50f09d5ba82faf61ae153020e8411bc6eca"
     }
   ]
 }

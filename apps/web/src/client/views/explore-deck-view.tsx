@@ -205,7 +205,7 @@ export function ExploreDeckView({
   // The deck's colour runs under its whole header, back included. docs/design/explore.md.
   const cover = (bar: ReactNode) => (
     <div className="deck-cover" data-hue={trayHue(deck.slug)}>
-      <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-[calc(env(safe-area-inset-top)+2rem)] @3xl/shell:pb-11">
+      <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(var(--inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-[calc(var(--inset-top)+2rem)] @3xl/shell:pb-11">
         {bar}
         <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">
           {/* Centred while it stacks under the hand, level with the column once they sit side by side. */}

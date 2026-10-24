@@ -120,6 +120,7 @@ import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
+import { reportHref } from "../sharing/report";
 import { captureEvent } from "../telemetry/posthog";
 import { useReviewSession } from "../telemetry/review-session";
 import { haptics } from "../theme/haptics";
@@ -1019,6 +1020,19 @@ function Run({
             }}
           />
         </SheetGroup>
+        {deckRow && !owned && (
+          <SheetGroup>
+            <SheetRow
+              icon="report"
+              label={t`Report card`}
+              opens
+              onPress={() => {
+                chosen.current = () => router.push(reportHref("card", card.id, card.term));
+                setMenuOpen(false);
+              }}
+            />
+          </SheetGroup>
+        )}
         {owned && (
           <SheetGroup>
             <SheetRow

@@ -848,9 +848,6 @@ msgstr "A rest day keeps the streak through one missed day a week."
 msgid "A short phrase that helps you remember it"
 msgstr "A short phrase that helps you remember it"
 
-msgid "A short phrase that helps you remember it."
-msgstr "A short phrase that helps you remember it."
-
 msgid "A sound-alike, or something to picture"
 msgstr "A sound-alike, or something to picture"
 
@@ -1590,6 +1587,9 @@ msgstr "Choose what each side of a Noji card becomes on a Lymi card. One side is
 msgid "Choose what the deck is for."
 msgstr "Choose what the deck is for."
 
+msgid "Choose what’s wrong with it."
+msgstr "Choose what’s wrong with it."
+
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
@@ -1879,6 +1879,12 @@ msgstr "Couldn’t save your grade for “{term}”. The card is no longer in yo
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Couldn’t save your name. Check your connection and try again."
+
+msgid "Couldn’t save your name. Try again."
+msgstr "Couldn’t save your name. Try again."
+
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
 
@@ -1890,6 +1896,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t send your report"
+msgstr "Couldn’t send your report"
 
 msgid "Couldn’t translate the example."
 msgstr "Couldn’t translate the example."
@@ -2117,6 +2126,9 @@ msgstr "Draft a hook"
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
 
+msgid "Drafting…"
+msgstr "Drafting…"
+
 msgid "Drag decks here to add them to this series."
 msgstr "Drag decks here to add them to this series."
 
@@ -2186,11 +2198,18 @@ msgstr "Earlier shelves"
 msgid "Easy"
 msgstr "Easy"
 
+msgctxt "name"
+msgid "Edit"
+msgstr "Edit"
+
 msgid "Edit card"
 msgstr "Edit card"
 
 msgid "Edit hook"
 msgstr "Edit hook"
+
+msgid "Edit name"
+msgstr "Edit name"
 
 msgid "Edit series"
 msgstr "Edit series"
@@ -2507,11 +2526,17 @@ msgstr "Grammar"
 msgid "Handwritten"
 msgstr "Handwritten"
 
+msgid "Harassment or bullying"
+msgstr "Harassment or bullying"
+
 msgid "Hard"
 msgstr "Hard"
 
 msgid "Has a picture"
 msgstr "Has a picture"
+
+msgid "Hateful or offensive"
+msgstr "Hateful or offensive"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
@@ -2851,6 +2876,9 @@ msgstr "Keep the term under 500 characters."
 msgid "Keep the translation under 250 characters."
 msgstr "Keep the translation under 250 characters."
 
+msgid "Keep your name under {NAME_MAX} characters."
+msgstr "Keep your name under {NAME_MAX} characters."
+
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
@@ -3022,6 +3050,9 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi shows it to you and to people in decks you share."
+msgstr "Lymi shows it to you and to people in decks you share."
 
 msgid "Lymi starts when you sign in to your Mac, ready for quick add."
 msgstr "Lymi starts when you sign in to your Mac, ready for quick add."
@@ -3198,6 +3229,10 @@ msgstr "Moved to another deck"
 msgid "Moving a card keeps its progress."
 msgstr "Moving a card keeps its progress."
 
+msgid "Name"
+msgstr "Name"
+
+msgctxt "person"
 msgid "Name"
 msgstr "Name"
 
@@ -3415,6 +3450,9 @@ msgstr "Not set"
 msgid "Not started"
 msgstr "Not started"
 
+msgid "Note"
+msgstr "Note"
+
 msgid "Notes"
 msgstr "Notes"
 
@@ -3603,6 +3641,9 @@ msgstr "Opens quick add over any app."
 
 msgid "Optional"
 msgstr "Optional"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Optional. Anything that helps us understand."
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: isolate(member.name)
@@ -3992,8 +4033,24 @@ msgstr "Replay example"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+#. placeholder {0}: isolate(name)
+msgid "Report “{0}”"
+msgstr "Report “{0}”"
+
 msgid "Report a problem or share an idea. We’ll reply by email."
 msgstr "Report a problem or share an idea. We’ll reply by email."
+
+msgid "Report card"
+msgstr "Report card"
+
+msgid "Report deck"
+msgstr "Report deck"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Report sent. We’ll look within a day."
+
+msgid "Reporting this deck"
+msgstr "Reporting this deck"
 
 msgid "Reset your Lymi password"
 msgstr "Reset your Lymi password"
@@ -4288,6 +4345,9 @@ msgstr "Send invitation"
 msgid "Send it again"
 msgstr "Send it again"
 
+msgid "Send report"
+msgstr "Send report"
+
 msgid "Send reset link"
 msgstr "Send reset link"
 
@@ -4311,6 +4371,9 @@ msgstr "Set name"
 
 msgid "Settings"
 msgstr "Settings"
+
+msgid "Sexual content"
+msgstr "Sexual content"
 
 msgid "Share link"
 msgstr "Share link"
@@ -4437,6 +4500,9 @@ msgstr "Sort: {0}"
 msgid "Source"
 msgstr "Source"
 
+msgid "Spam or a scam"
+msgstr "Spam or a scam"
+
 msgid "Spreadsheet"
 msgstr "Spreadsheet"
 
@@ -4553,6 +4619,9 @@ msgstr "Tap to reveal the answer"
 
 msgid "Technology"
 msgstr "Technology"
+
+msgid "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
+msgstr "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
 
 msgid "Term"
 msgstr "Term"
@@ -4988,6 +5057,9 @@ msgstr "Try again"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Try again on a steadier connection and keep Lymi open until the upload finishes."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Try again, or write to <0>hello@lymi.app</0>."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Try to remember, then reveal the answer"
 
@@ -5104,6 +5176,9 @@ msgstr "View card"
 msgid "Visibility"
 msgstr "Visibility"
 
+msgid "We read every report within a day. The owner isn’t told who sent it."
+msgstr "We read every report within a day. The owner isn’t told who sent it."
+
 msgid "We signed out your other devices."
 msgstr "We signed out your other devices."
 
@@ -5170,6 +5245,9 @@ msgstr "What’s in this deck. Members see it too."
 msgid "What’s new"
 msgstr "What’s new"
 
+msgid "What’s wrong"
+msgstr "What’s wrong"
+
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
 
@@ -5196,6 +5274,9 @@ msgstr "Write a hook."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
+
+msgid "Write your name."
+msgstr "Write your name."
 
 msgid "Writing"
 msgstr "Writing"
@@ -5244,6 +5325,9 @@ msgstr "You can close this tab."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "You can download it until {until}. Then it’s deleted."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
@@ -5355,6 +5439,9 @@ msgstr "Your Lymi confirmation code"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Your name"
 
 msgid "Your own material, whatever it is."
 msgstr "Your own material, whatever it is."

@@ -389,10 +389,11 @@ export function createAuth(
           // learner in; the join or add page then says why.
           after: async (session, context) => {
             const headers = headersOf(context);
+            const mac = macSignIn(headers?.get("user-agent") ?? null);
             await trackProductEvent(
               env,
               session.userId,
-              { name: "signed_in" },
+              { name: "signed_in", ...(mac && { client: "mac", via: mac }) },
               waitUntil,
               analyticsContextFor(db, session.userId, headers),
             );
@@ -600,4 +601,14 @@ function headersOf(context: GenericEndpointContext | null): Headers | undefined 
  */
 function asPlugin(plugin: unknown): BetterAuthPlugin {
   return plugin as BetterAuthPlugin;
+}
+
+/**
+ * How a session was made for the Mac app, by its user agent: the app's token trade after the
+ * browser's hand-off names itself, and its window is Electron's browser under Lymi's name.
+ */
+export function macSignIn(userAgent: string | null): "browser" | "window" | null {
+  if (!userAgent) return null;
+  if (userAgent.startsWith("Lymi for Mac/")) return "browser";
+  return /\bLymi\/\S+ .*\bElectron\//.test(userAgent) ? "window" : null;
 }

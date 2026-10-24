@@ -12,6 +12,7 @@ import {
   Archive,
   Check,
   ChevronRight,
+  Flag,
   Link2Off,
   LogOut,
   MailX,
@@ -40,6 +41,7 @@ import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { NavLink } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
+import { ReportDialog } from "../components/report-dialog";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
@@ -369,6 +371,7 @@ function DeckAbout({
   onLeave?: (() => void) | undefined;
 }) {
   const { t, i18n } = useLingui();
+  const [reporting, setReporting] = useState(false);
   const ownerName = deck.owner.name;
   const direction =
     example?.meaning && deck.directions === "recognition"
@@ -436,6 +439,27 @@ function DeckAbout({
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
         </dl>
+      </SettingsGroup>
+
+      <SettingsGroup
+        title={t`Reporting this deck`}
+        description={
+          <Trans>
+            Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who
+            reported it.
+          </Trans>
+        }
+      >
+        <Button className="justify-self-start" onClick={() => setReporting(true)}>
+          <Flag data-icon="inline-start" aria-hidden="true" />
+          <Trans>Report deck</Trans>
+        </Button>
+        <ReportDialog
+          open={reporting}
+          onOpenChange={setReporting}
+          target={{ kind: "deck", deckId: deck.id }}
+          name={deck.name}
+        />
       </SettingsGroup>
 
       <SettingsGroup

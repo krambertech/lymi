@@ -1,7 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync, symlinkSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 // Built by `pnpm build`, which `package` and `make` run first.
@@ -11,19 +9,19 @@ import { DOWNLOADS } from "./dist/downloads.js";
 const signing = process.env.LYMI_SIGN === "1";
 
 /**
- * The download: Lymi.app beside a link to Applications, to drag across. Built with `hdiutil`
- * because Forge's DMG maker needs native modules that pnpm does not build.
+ * The download: a window with Lymi.app beside a link to Applications over a background that says
+ * what to do. Built with dmgbuild, which lays out the window without driving Finder, because
+ * Forge's DMG maker needs native modules that pnpm does not build. README.md.
  */
 function makeDmg(arch, version) {
-  const stage = mkdtempSync(join(tmpdir(), "lymi-dmg-"));
-  execFileSync("ditto", [resolve(`out/Lymi-darwin-${arch}/Lymi.app`), join(stage, "Lymi.app")]);
-  symlinkSync("/Applications", join(stage, "Applications"));
   const dmg = resolve(`out/make/Lymi-${version}-${arch}.dmg`);
-  execFileSync("hdiutil", [
-    "create",
-    ...["-volname", "Lymi", "-srcfolder", stage, "-format", "ULFO", "-ov", dmg],
+  execFileSync(process.env.DMGBUILD ?? "dmgbuild", [
+    ...["-s", resolve("scripts/dmg.py")],
+    ...["-D", `app=${resolve(`out/Lymi-darwin-${arch}/Lymi.app`)}`],
+    ...["-D", `background=${resolve("assets/dmg-background.tiff")}`],
+    "Lymi",
+    dmg,
   ]);
-  rmSync(stage, { recursive: true });
   if (signing) execFileSync("codesign", ["--sign", "Developer ID Application", dmg]);
   return dmg;
 }

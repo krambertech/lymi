@@ -5,7 +5,16 @@ name: Series
 - runFlow: _open.yaml
 - tapOn: "Library"
 - extendedWaitUntil:
-    visible: "${SERIES}"
+    visible: "New deck"
+    timeout: 20000
+# The series is made after launch, so a Library restored from the last run's cache is pulled to refresh.
+- swipe:
+    start: 50%, 30%
+    end: 50%, 75%
+# The new series is last, below the fold or under the tab bar, so its menu is brought to the middle.
+- scrollUntilVisible:
+    element: "Options for ${SERIES}"
+    centerElement: true
     timeout: 20000
 - takeScreenshot: 01-library
 - tapOn: "Options for ${SERIES}"

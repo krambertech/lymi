@@ -130,8 +130,13 @@ dev.get(
     return c.json({
       ...message,
       from: `${EMAIL_FROM.name} <${EMAIL_FROM.email}>`,
-      replyTo: kind === "feedback" ? EMAIL_SAMPLES.feedback.feedback?.from : OPERATOR_INBOX,
-      to: kind === "feedback" ? OPERATOR_INBOX : "anna@example.com",
+      replyTo:
+        kind === "feedback"
+          ? EMAIL_SAMPLES.feedback.feedback?.from
+          : kind === "content-report"
+            ? EMAIL_SAMPLES["content-report"].contentReport?.reporter
+            : OPERATOR_INBOX,
+      to: kind === "feedback" || kind === "content-report" ? OPERATOR_INBOX : "anna@example.com",
     });
   },
 );

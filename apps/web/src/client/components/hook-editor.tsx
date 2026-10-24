@@ -3,7 +3,7 @@ import { refusedForAiConsent } from "@lymi/client/ai-consent";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hookable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Anchor, Sparkle } from "lucide-react";
+import { Anchor, Loader2, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
@@ -11,7 +11,6 @@ import { composing } from "../lib/composing";
 import { settingsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
-import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
 
@@ -150,80 +149,80 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   return (
     <form
       noValidate
-      className="@container relative z-20 grid gap-1 rounded-md bg-plate-2 ps-3 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
+      className="@container relative z-20 grid gap-1 rounded-md bg-plate-2 ps-4 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
       onSubmit={(e) => {
         e.preventDefault();
         if (!pending) void save();
       }}
     >
-      <div className="flex items-start gap-1">
-        <label className="flex min-w-0 flex-1 items-start gap-2 pe-1.5">
-          <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
-          <span className="sr-only">{t`Memory hook`}</span>
-          <textarea
-            ref={field}
-            rows={1}
-            value={text}
-            maxLength={CARD_LIMITS.hook}
-            placeholder={t`A sound-alike, or something to picture`}
-            aria-invalid={!!problem || undefined}
-            onChange={(e) => {
-              setText(e.target.value);
-              setProblem(null);
-              setDraftNote(null);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                // The review leaves on Escape; here it only closes the editor.
-                e.preventDefault();
-                e.stopPropagation();
-                onCancel();
-                return;
-              }
-              // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
-              if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
+      <label className="flex min-w-0 items-start gap-2 pe-2.5">
+        <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+        <span className="sr-only">{t`Memory hook`}</span>
+        <textarea
+          ref={field}
+          rows={1}
+          value={text}
+          maxLength={CARD_LIMITS.hook}
+          placeholder={t`A sound-alike, or something to picture`}
+          aria-invalid={!!problem || undefined}
+          onChange={(e) => {
+            setText(e.target.value);
+            setProblem(null);
+            setDraftNote(null);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              // The review leaves on Escape; here it only closes the editor.
               e.preventDefault();
-              e.currentTarget.form?.requestSubmit();
-            }}
-            autoComplete="off"
-            enterKeyHint="done"
-            className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
-          />
-        </label>
-        {/* The AI's mark beside the field while it holds the draft as written. */}
-        {untouched && (
-          <span className="mt-0.5 shrink-0">
-            <SourceChip source="ai" field="hook" size="xs" />
-          </span>
-        )}
-      </div>
+              e.stopPropagation();
+              onCancel();
+              return;
+            }
+            // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
+            if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
+            e.preventDefault();
+            e.currentTarget.form?.requestSubmit();
+          }}
+          autoComplete="off"
+          enterKeyHint="done"
+          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
+        />
+      </label>
       {/* Like a composer: the field's helper at the start, the answer to it at the end. */}
       <div className="flex flex-wrap items-center gap-1">
         <p
           role="status"
-          // A narrow card puts the status on its own line above the actions; a note wraps rather than lose its end.
-          className={`order-first min-w-0 basis-full ps-6 text-xs text-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
+          // A narrow card puts the status on its own line under the text, a wide one right after Draft; a note wraps rather than lose its end.
+          className={`order-first min-w-0 basis-full ps-6 text-xs text-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:ps-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
         >
-          {problem ? (
-            <InlineError>{problem}</InlineError>
-          ) : drafting ? (
-            <Trans>Drafting a hook…</Trans>
-          ) : draftNote ? (
-            draftNote
-          ) : null}
+          {problem ? <InlineError>{problem}</InlineError> : draftNote ? draftNote : null}
         </p>
         {draftable && (
           <Button
             size="sm"
             variant="ghost"
-            aria-label={untouched ? t`Another draft` : t`Draft a hook`}
-            loading={drafting}
+            aria-label={
+              drafting ? t`Drafting a hook…` : untouched ? t`Another draft` : t`Draft a hook`
+            }
+            // Not `loading`, which centres its spinner: the sparkle's own place keeps it under the anchor.
+            aria-busy={drafting || undefined}
             aria-disabled={drafting}
-            className="@md:-order-1"
+            // Sits 6 px in like Save, which puts its icon under the anchor.
+            className="-ms-2.5 @md:-order-1"
             onClick={() => void draft()}
           >
-            <Sparkle data-icon="inline-start" aria-hidden="true" />
-            {untouched ? <Trans>Another draft</Trans> : <Trans>Draft</Trans>}
+            {drafting ? (
+              <Loader2 data-icon="inline-start" className="animate-spin" aria-hidden="true" />
+            ) : (
+              <Sparkle data-icon="inline-start" aria-hidden="true" />
+            )}
+            {drafting ? (
+              <Trans>Drafting…</Trans>
+            ) : untouched ? (
+              <Trans>Another draft</Trans>
+            ) : (
+              <Trans>Draft</Trans>
+            )}
           </Button>
         )}
         <Button size="sm" variant="ghost" className="ms-auto" onClick={onCancel}>

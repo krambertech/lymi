@@ -109,6 +109,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(menu.getByRole("menuitem")).toHaveText([
       "About this deck",
       "Select cards",
+      "Report deck",
       "Leave deck",
     ]);
     // A member selects to review chosen cards; changing them stays the owner's.
@@ -122,13 +123,13 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await classmate.keyboard.press("Escape");
     await toolbar.getByRole("button", { name: "Stop selecting" }).click();
 
-    // The important mark is the member's own, so it is the one item their card menu holds.
+    // The important mark is the member's own, and reporting is the one other thing they can do.
     await classmate.getByText("tere hommikust", { exact: true }).click();
     await expect(classmate.getByRole("button", { name: "Edit card" })).toHaveCount(0);
     await classmate.getByRole("button", { name: "Card options" }).click();
     await expect(
       classmate.getByRole("menu", { name: "Card options" }).getByRole("menuitem"),
-    ).toHaveText(["Mark important"]);
+    ).toHaveText(["Mark important", "Report card"]);
     await classmate.keyboard.press("Escape");
     await classmate.keyboard.press("Escape");
 

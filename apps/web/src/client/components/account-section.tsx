@@ -1,10 +1,11 @@
-import { useLingui } from "@lingui/react/macro";
-import { inspectImage } from "@lymi/core";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { plural } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { inspectImage, NameInput } from "@lymi/core";
+import { useIsMutating, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { ApiError } from "../lib/api";
+import { ApiError, api } from "../lib/api";
 import {
   type Avatar as AvatarState,
   avatarImageQuery,
@@ -13,22 +14,33 @@ import {
   uploadAvatar,
   useLearnerAvatar,
 } from "../lib/avatar";
+import { useDesktop } from "../lib/device";
+import { meQuery } from "../lib/queries";
 import { Avatar } from "./avatar";
 import { AvatarEditor, type PickedImage } from "./avatar-editor";
+import { Button } from "./button";
+import { InlineError } from "./inline-error";
 import { SettingsGroup } from "./settings-group";
 import { Skeleton } from "./skeleton";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 import { toast } from "./ui/toast";
 
 /** Photos larger than this are refused before decoding; the cropped square is far smaller. */
 const MAX_PICK_BYTES = 25 * 1024 * 1024;
 const MAX_PICK_PIXELS = 50_000_000;
 const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,image/avif";
+const NAME_MAX = NameInput.shape.name.maxLength ?? undefined;
+/** The share of the limit past which the field says how much room is left. */
+const NEARLY_FULL = 0.9;
+const RENAME = ["rename"];
 
 interface GroupProps {
   name: string | undefined;
@@ -40,13 +52,25 @@ interface GroupProps {
   onChoose?: (() => void) | undefined;
   onRemove?: (() => void) | undefined;
   busy?: boolean | undefined;
+  /** Opens the name dialog. Without it the name is only shown. */
+  onEditName?: (() => void) | undefined;
 }
 
 /**
  * The learner as the app knows them. The photo is its own control: with nothing of the
- * learner's own to remove it opens the picker at once, and once there is, a short menu.
+ * learner's own to remove it opens the picker at once, and once there is, a short menu. A name
+ * changes rarely, so it reads as text and Edit opens a dialog.
  */
-export function AccountGroup({ name, email, photo, source, onChoose, onRemove, busy }: GroupProps) {
+export function AccountGroup({
+  name,
+  email,
+  photo,
+  source,
+  onChoose,
+  onRemove,
+  busy,
+  onEditName,
+}: GroupProps) {
   const { t } = useLingui();
   const avatar = (
     <Avatar name={name} src={photo?.src} pending={photo?.pending || !name} size={72} />
@@ -106,14 +130,140 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
             <Skeleton className="h-4 w-48" />
           )}
         </div>
+        {onEditName && name && (
+          <Button size="sm" className="ms-auto" aria-label={t`Edit name`} onClick={onEditName}>
+            {t({ message: "Edit", context: "name" })}
+          </Button>
+        )}
       </div>
     </SettingsGroup>
   );
 }
 
+interface NameDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  name: string;
+  onSubmit: (name: string) => void;
+  pending?: boolean | undefined;
+  error?: string | undefined;
+}
+
+/** Changes the name the app shows, and that people in a shared deck see. */
+export function NameDialog({
+  open,
+  onOpenChange,
+  name,
+  onSubmit,
+  pending,
+  error,
+}: NameDialogProps) {
+  const { t } = useLingui();
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t`Edit name`}</DialogTitle>
+          <DialogDescription>
+            <Trans>Lymi shows it to you and to people in decks you share.</Trans>
+          </DialogDescription>
+        </DialogHeader>
+        <NameForm
+          key={open ? "open" : "closed"}
+          initial={name}
+          onCancel={() => onOpenChange(false)}
+          onSubmit={onSubmit}
+          pending={pending}
+          error={error}
+        />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function NameForm({
+  initial,
+  onCancel,
+  onSubmit,
+  pending,
+  error,
+}: {
+  initial: string;
+  onCancel: () => void;
+  onSubmit: (name: string) => void;
+  pending?: boolean | undefined;
+  error?: string | undefined;
+}) {
+  const { t } = useLingui();
+  const desktop = useDesktop();
+  const [draft, setDraft] = useState(initial);
+  const [invalid, setInvalid] = useState<string | undefined>();
+  // A rename still out makes the stored name stale, so saving it again must still send it.
+  const renaming = useIsMutating({ mutationKey: RENAME }) > 0;
+  const left = NAME_MAX ? NAME_MAX - draft.length : 0;
+  return (
+    <form
+      className="grid gap-5"
+      noValidate
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (pending) return;
+        const parsed = NameInput.safeParse({ name: draft });
+        if (!parsed.success) {
+          setInvalid(
+            draft.trim() ? t`Keep your name under ${NAME_MAX} characters.` : t`Write your name.`,
+          );
+          return;
+        }
+        if (parsed.data.name === initial && !renaming) onCancel();
+        else onSubmit(parsed.data.name);
+      }}
+    >
+      <Field>
+        <FieldLabel
+          aside={
+            NAME_MAX && draft.length >= NAME_MAX * NEARLY_FULL ? (
+              <span role="status">
+                {t`${plural(left, { one: "# character left", other: "# characters left" })}`}
+              </span>
+            ) : undefined
+          }
+        >
+          {t({ message: "Name", context: "person" })}
+        </FieldLabel>
+        <Input
+          // On touch the drawer settles first and the keyboard waits for a tap on the field.
+          autoFocus={desktop}
+          value={draft}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            setInvalid(undefined);
+          }}
+          placeholder={t`Your name`}
+          autoComplete="name"
+          enterKeyHint="done"
+          maxLength={NAME_MAX}
+        />
+        <FieldError>{invalid}</FieldError>
+      </Field>
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <p className="min-w-0 flex-1 text-sm" role="status">
+          {error && <InlineError>{error}</InlineError>}
+        </p>
+        <Button variant="ghost" onClick={onCancel}>
+          <Trans>Cancel</Trans>
+        </Button>
+        <Button variant="primary" type="submit" loading={pending}>
+          <Trans>Save</Trans>
+        </Button>
+      </div>
+    </form>
+  );
+}
+
 const PHOTO_TOAST = "photo";
 
-/** The Account group with the photo wired up: pick, crop, save, and remove with Undo. */
+/** The Account group wired up: the name's dialog, and the photo's pick, crop, save, and remove with Undo. */
 export function AccountSection({
   name,
   email,
@@ -127,6 +277,17 @@ export function AccountSection({
   const photo = useLearnerAvatar();
   const input = useRef<HTMLInputElement>(null);
   const [picked, setPicked] = useState<PickedImage | null>(null);
+  const [naming, setNaming] = useState(false);
+
+  // Every screen reads the name from `meQuery`, so writing it updates the rail and menu too.
+  const rename = useMutation({
+    mutationKey: RENAME,
+    mutationFn: (next: string) => api.rename(next),
+    onSuccess: (me) => {
+      qc.setQueryData(meQuery.queryKey, me);
+      setNaming(false);
+    },
+  });
 
   useEffect(() => () => closePicked(picked), [picked]);
 
@@ -255,7 +416,27 @@ export function AccountSection({
         onChoose={avatar.isSuccess ? () => input.current?.click() : undefined}
         onRemove={() => remove.mutate()}
         busy={remove.isPending || restore.isPending}
+        onEditName={() => setNaming(true)}
       />
+      {name && (
+        <NameDialog
+          open={naming}
+          onOpenChange={(open) => {
+            setNaming(open);
+            if (!open) rename.reset();
+          }}
+          name={name}
+          onSubmit={rename.mutate}
+          pending={rename.isPending}
+          error={
+            !rename.isError
+              ? undefined
+              : rename.error instanceof ApiError && rename.error.status === 0
+                ? t`Couldn’t save your name. Check your connection and try again.`
+                : t`Couldn’t save your name. Try again.`
+          }
+        />
+      )}
       <input
         ref={input}
         type="file"

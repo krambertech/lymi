@@ -13,6 +13,9 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{seen}”"
 msgstr "“{seen}”"
 
+msgid "“{takenName}” is already a tag on this deck. To combine the two, use Merge into… instead."
+msgstr "“{takenName}” is already a tag on this deck. To combine the two, use Merge into… instead."
+
 msgid "“{term}” is already in {deck}"
 msgstr "“{term}” is already in {deck}"
 
@@ -2612,6 +2615,9 @@ msgstr "Keep a copy"
 msgid "Keep adding"
 msgstr "Keep adding"
 
+msgid "Keep both"
+msgstr "Keep both"
+
 msgid "Keep invitation"
 msgstr "Keep invitation"
 
@@ -2854,6 +2860,9 @@ msgstr "Memory hook: {text}"
 msgid "Merge"
 msgstr "Merge"
 
+msgid "Merge “{fromName}” into “{intoName}”?"
+msgstr "Merge “{fromName}” into “{intoName}”?"
+
 msgid "Merge “{tagName}” into"
 msgstr "Merge “{tagName}” into"
 
@@ -3077,8 +3086,8 @@ msgstr "No series"
 msgid "No strong hook for this one. Try again, or write your own."
 msgstr "No strong hook for this one. Try again, or write your own."
 
-msgid "No tag matches “{query}”."
-msgstr "No tag matches “{query}”."
+msgid "No tags match “{query}”"
+msgstr "No tags match “{query}”"
 
 msgid "No tags yet"
 msgstr "No tags yet"
@@ -4198,6 +4207,9 @@ msgstr "This deck isn’t in your Library"
 msgid "This deck needs a connection"
 msgstr "This deck needs a connection"
 
+msgid "This deck’s cards tagged “{fromName}” take “{intoName}” instead. You can’t undo a merge."
+msgstr "This deck’s cards tagged “{fromName}” take “{intoName}” instead. You can’t undo a merge."
+
 msgid "This file expired after a day. Export again to get a new one."
 msgstr "This file expired after a day. Export again to get a new one."
 
@@ -4582,9 +4594,6 @@ msgstr "Yesterday was a rest day. Reach today’s goal to keep it going."
 
 msgid "You"
 msgstr "You"
-
-msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
-msgstr "You already have “{otherName}”, so the two merge into one tag on these cards."
 
 msgid "You are already in this deck."
 msgstr "You are already in this deck."

@@ -13,6 +13,9 @@ msgstr "«{label}» уже є в «{deckName}», тож копію, додану
 msgid "“{seen}”"
 msgstr "«{seen}»"
 
+msgid "“{takenName}” is already a tag on this deck. To combine the two, use Merge into… instead."
+msgstr "«{takenName}» уже є серед тегів цієї колоди. Щоб об’єднати їх, вибери «Об’єднати з…»."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже є в колоді {deck}"
 
@@ -2612,6 +2615,9 @@ msgstr "Збережи копію"
 msgid "Keep adding"
 msgstr "Додавати далі"
 
+msgid "Keep both"
+msgstr "Залишити обидва"
+
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
 
@@ -2854,6 +2860,9 @@ msgstr "Зачіпка: {text}"
 msgid "Merge"
 msgstr "Об’єднати"
 
+msgid "Merge “{fromName}” into “{intoName}”?"
+msgstr "Об’єднати «{fromName}» з «{intoName}»?"
+
 msgid "Merge “{tagName}” into"
 msgstr "Об’єднати «{tagName}» з"
 
@@ -3077,8 +3086,8 @@ msgstr "Без серії"
 msgid "No strong hook for this one. Try again, or write your own."
 msgstr "Для цієї картки немає вдалої зачіпки. Спробуй ще раз або напиши свою."
 
-msgid "No tag matches “{query}”."
-msgstr "Немає тегу, що відповідає «{query}»."
+msgid "No tags match “{query}”"
+msgstr "Немає тегів за запитом «{query}»"
 
 msgid "No tags yet"
 msgstr "Тегів ще немає"
@@ -4198,6 +4207,9 @@ msgstr "Цієї колоди немає в Бібліотеці"
 msgid "This deck needs a connection"
 msgstr "Для цієї колоди потрібне з’єднання"
 
+msgid "This deck’s cards tagged “{fromName}” take “{intoName}” instead. You can’t undo a merge."
+msgstr "Картки цієї колоди з тегом «{fromName}» отримають «{intoName}» замість нього. Об’єднання не можна скасувати."
+
 msgid "This file expired after a day. Export again to get a new one."
 msgstr "Термін дії файлу минув через день. Експортуй ще раз, щоб отримати новий."
 
@@ -4582,9 +4594,6 @@ msgstr "Учора був день відпочинку. Досягни сьог
 
 msgid "You"
 msgstr "Ти"
-
-msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
-msgstr "У тебе вже є «{otherName}», тож на цих картках два теги об’єднаються в один."
 
 msgid "You are already in this deck."
 msgstr "Ти вже в цій колоді."

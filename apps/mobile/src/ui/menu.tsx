@@ -91,7 +91,6 @@ export function SearchField({
   fill = "plate",
   placeholder,
   stay = false,
-  focus: takesFocus = true,
 }: {
   label: string;
   query: string;
@@ -102,12 +101,10 @@ export function SearchField({
   placeholder?: string;
   /** Return keeps the keyboard up, for a field that takes one entry after another. */
   stay?: boolean;
-  /** Takes focus as it appears, as in a sheet; a field on a page waits for a tap. */
-  focus?: boolean;
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const focus = useSheetFocus({ on: takesFocus });
+  const focus = useSheetFocus();
   return (
     <View
       className={`h-11 flex-row items-center gap-2 rounded-xl px-3.5 ${fill === "group" ? "bg-glass-group" : "bg-glass-plate"}`}

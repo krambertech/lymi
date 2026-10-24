@@ -13,6 +13,9 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{seen}”"
 msgstr "«{seen}»"
 
+msgid "“{takenName}” is already a tag on this deck. To combine the two, use Merge into… instead."
+msgstr "«{takenName}» уже есть среди тегов этой колоды. Чтобы объединить их, выбери «Объединить с…»."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже есть в колоде {deck}"
 
@@ -2612,6 +2615,9 @@ msgstr "Сохрани копию"
 msgid "Keep adding"
 msgstr "Продолжить"
 
+msgid "Keep both"
+msgstr "Оставить оба"
+
 msgid "Keep invitation"
 msgstr "Оставить приглашение"
 
@@ -2854,6 +2860,9 @@ msgstr "Зацепка: {text}"
 msgid "Merge"
 msgstr "Объединить"
 
+msgid "Merge “{fromName}” into “{intoName}”?"
+msgstr "Объединить «{fromName}» с «{intoName}»?"
+
 msgid "Merge “{tagName}” into"
 msgstr "Объединить «{tagName}» с"
 
@@ -3077,8 +3086,8 @@ msgstr "Без серии"
 msgid "No strong hook for this one. Try again, or write your own."
 msgstr "Для этой карточки нет удачной зацепки. Попробуй ещё раз или напиши свою."
 
-msgid "No tag matches “{query}”."
-msgstr "Нет тега, подходящего под «{query}»."
+msgid "No tags match “{query}”"
+msgstr "Нет тегов по запросу «{query}»"
 
 msgid "No tags yet"
 msgstr "Тегов пока нет"
@@ -4198,6 +4207,9 @@ msgstr "Этой колоды нет в Библиотеке"
 msgid "This deck needs a connection"
 msgstr "Для этой колоды нужно соединение"
 
+msgid "This deck’s cards tagged “{fromName}” take “{intoName}” instead. You can’t undo a merge."
+msgstr "Карточки этой колоды с тегом «{fromName}» получат «{intoName}» вместо него. Объединение нельзя отменить."
+
 msgid "This file expired after a day. Export again to get a new one."
 msgstr "Срок действия файла истёк через день. Экспортируй ещё раз, чтобы получить новый."
 
@@ -4582,9 +4594,6 @@ msgstr "Вчера был день отдыха. Достигни сегодня
 
 msgid "You"
 msgstr "Ты"
-
-msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
-msgstr "У тебя уже есть «{otherName}», поэтому на этих карточках два тега объединятся в один."
 
 msgid "You are already in this deck."
 msgstr "Ты уже в этой колоде."

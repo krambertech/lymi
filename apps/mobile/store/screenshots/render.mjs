@@ -42,7 +42,6 @@ for (const locale of locales) {
       src: pathToFileURL(join(here, "raw", locale, shot.src)).href,
       caption,
       index: String(index),
-      word: shot.word?.[locale] ?? "",
     };
     const out = (size) => join(here, "out", style, locale, size, `${shot.id}.jpg`);
     // App Store Connect's large and medium Dynamic Island classes.

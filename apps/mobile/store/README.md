@@ -16,6 +16,6 @@ Public text calls Lymi a flashcard app; screen names and product words follow [`
 node apps/mobile/store/screenshots/render.mjs
 ```
 
-It writes `screenshots/out/<style>/<language>/` in three sizes: `6.9` (1320 × 2868) and `6.3` (1206 × 2622) for App Store Connect's two iPhone slots, and `play` (1440 × 2880) for Google Play, which allows at most 1:2. It also writes Play's feature graphic per language to `out/play-feature/`. `out/` is not committed. Captions and the order of shots are in [`shots.json`](screenshots/shots.json); `shots.json` also names the default style; `render.mjs dusk`, `amber` or `word` renders another from the same captures.
+It writes `screenshots/out/<style>/<language>/` in three sizes: `6.9` (1320 × 2868) and `6.3` (1206 × 2622) for App Store Connect's two iPhone slots, and `play` (1440 × 2880) for Google Play, which allows at most 1:2. It also writes Play's feature graphic per language to `out/play-feature/`. `out/` is not committed. Captions and the order of shots are in [`shots.json`](screenshots/shots.json); `shots.json` also names the default style; `render.mjs glow` renders the other style from the same captures.
 
 The captures in `raw/<language>/` come from an iPhone 17 Pro Max Simulator with the `learner` persona, status bar at 9:41, the app language set to the capture's language and the persona's own cards given meanings in it. `04-japanese` is the `japanese` persona's 天気. Retake them when a captured screen changes visibly, from your own Simulator as [`docs/local-dev.md`](../../../docs/local-dev.md) describes.

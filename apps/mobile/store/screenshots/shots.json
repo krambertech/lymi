@@ -1,5 +1,5 @@
 {
-  "style": "canvas",
+  "style": "panorama",
   "feature": {
     "en": "Keep what you learn",
     "uk": "Запам’ятовуй надовго",
@@ -10,90 +10,60 @@
       "id": "01-today",
       "src": "01-today.png",
       "theme": "light",
-      "word": {
-        "en": "9 cards",
-        "uk": "9 карток",
-        "ru": "9 карточек"
-      },
       "caption": {
-        "en": "Words come back just before they slip",
-        "uk": "Слова повертаються, щойно почнуть забуватися",
-        "ru": "Слова возвращаются, как только начнут забываться"
+        "en": "Review each word right before you'd forget it",
+        "uk": "Повторюй слово якраз перед тим, як забудеш",
+        "ru": "Повторяй слово как раз перед тем, как забудешь"
       }
     },
     {
       "id": "02-review",
       "src": "02-review.png",
       "theme": "light",
-      "word": {
-        "en": "la lampada",
-        "uk": "saudade",
-        "ru": "le scale"
-      },
       "caption": {
-        "en": "Remember it, then flip. No typing.",
-        "uk": "Пригадай і переверни. Друкувати не треба.",
-        "ru": "Вспомни и переверни. Печатать не нужно."
+        "en": "See the word, recall it, flip the card",
+        "uk": "Глянь на слово, пригадай, переверни картку",
+        "ru": "Взгляни на слово, вспомни, переверни карточку"
       }
     },
     {
       "id": "03-ai",
       "src": "03-ai.png",
       "theme": "light",
-      "word": {
-        "en": "affollato",
-        "uk": "affollato",
-        "ru": "affollato"
-      },
       "caption": {
-        "en": "AI adds the example, and says so",
-        "uk": "AI дописує приклад і позначає, що це він",
-        "ru": "AI дописывает пример и отмечает, что это он"
+        "en": "Type a word. AI adds the meaning and an example.",
+        "uk": "Введи слово — AI додасть значення й приклад",
+        "ru": "Введи слово — AI добавит значение и пример"
       }
     },
     {
       "id": "04-japanese",
       "src": "04-japanese.png",
       "theme": "light",
-      "word": {
-        "en": "天気",
-        "uk": "天気",
-        "ru": "天気"
-      },
       "caption": {
-        "en": "Furigana stays until you know the word",
-        "uk": "Фуріґана — доки слово не стане знайомим",
-        "ru": "Фуригана — пока слово не станет знакомым"
+        "en": "Learning Japanese? The reading sits over the kanji",
+        "uk": "Вчиш японську? Читання — просто над кандзі",
+        "ru": "Учишь японский? Чтение — прямо над кандзи"
       }
     },
     {
       "id": "05-library",
       "src": "05-library.png",
       "theme": "light",
-      "word": {
-        "en": "Lezione 12",
-        "uk": "Lezione 12",
-        "ru": "Lezione 12"
-      },
       "caption": {
-        "en": "Each lesson gets its own deck",
-        "uk": "Кожен урок — окрема колода",
-        "ru": "Каждый урок — отдельная колода"
+        "en": "One deck for each lesson",
+        "uk": "Окрема колода для кожного уроку",
+        "ru": "Отдельная колода для каждого урока"
       }
     },
     {
       "id": "06-streak",
       "src": "06-streak.png",
       "theme": "dark",
-      "word": {
-        "en": "5 days",
-        "uk": "5 днів",
-        "ru": "5 дней"
-      },
       "caption": {
-        "en": "Skip a day and the flame stays lit",
-        "uk": "Пропустиш день — вогник не згасне",
-        "ru": "Пропустишь день — огонёк не погаснет"
+        "en": "A few minutes a day keeps the flame lit",
+        "uk": "Кілька хвилин щодня — і вогник горить",
+        "ru": "Пара минут в день — и огонёк горит"
       }
     }
   ]

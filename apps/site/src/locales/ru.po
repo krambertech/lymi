@@ -183,47 +183,11 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
 
-msgid "<0>AI service providers</0> process content on our behalf for the features under AI features and Pronunciation audio."
-msgstr "<0>Провайдеры AI-сервисов</0> обрабатывают содержимое от нашего имени для функций, описанных в разделах «Функции AI» и «Аудио произношения»."
-
-msgid "<0>Apple</0> provides Sign in with Apple."
-msgstr "<0>Apple</0> обеспечивает вход через Apple."
-
-msgid "<0>Apps you connect</0> receive what their permissions allow, and <1>people you share a deck with</1> see what is described under Shared decks."
-msgstr "<0>Приложения, которые ты подключаешь</0>, получают то, что позволяют их разрешения, а <1>люди, с которыми ты делишься колодой</1>, видят то, что описано в разделе «Общие колоды»."
-
-msgid "<0>Choosing a deck</0>: when you share text to Lymi from another app and its language is unclear, the text, the title of the page it came from and the languages of your decks are sent to pick the deck. When an imported deck’s language is unclear, its name and up to 12 of its terms are sent."
-msgstr "<0>Выбор колоды</0>: когда ты делишься текстом с Lymi из другого приложения и его язык непонятен, мы отправляем этот текст, название страницы, откуда он взят, и языки твоих колод, чтобы выбрать колоду. Когда непонятен язык импортированной колоды, мы отправляем её название и до 12 её терминов."
-
-msgid "<0>Cloudflare</0> hosts the website and apps, the database and file storage, protects the network, routes AI requests, converts pictures, keeps operational logs and delivers email when Resend can’t."
-msgstr "<0>Cloudflare</0> размещает сайт и приложения, базу данных и хранилище файлов, защищает сеть, передаёт запросы к AI, конвертирует изображения, хранит служебные журналы и доставляет почту, когда Resend не может."
-
-msgid "<0>Deck style</0>: after every eight or so new cards or corrections in a deck, up to 60 of its cards and up to 20 of your rewrites of AI text are sent so future meanings match how you write them."
-msgstr "<0>Стиль колоды</0>: примерно после каждых восьми новых карточек или исправлений в колоде мы отправляем до 60 её карточек и до 20 твоих переписанных вариантов текста от AI, чтобы новые значения соответствовали тому, как ты их пишешь."
-
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
 
-msgid "<0>Email and password</0>: we store the address and a hash of the password, never the password itself. A new account is confirmed with a link that lasts 24 hours or, in the iPhone app, a 6-digit code that lasts 15 minutes. A password-reset link lasts one hour."
-msgstr "<0>Почта и пароль</0>: мы храним адрес и хеш пароля, а не сам пароль. Новый аккаунт подтверждается ссылкой, которая действует 24 часа, или в приложении для iPhone 6-значным кодом, который действует 15 минут. Ссылка для смены пароля действует один час."
-
-msgid "<0>Enrichment</0> fills a new card’s empty fields when you add it in Lymi, and when you ask for it. It receives the card’s term, language, meaning, example and the first 600 characters of its notes, with the deck’s name, description, purpose, your instructions for the deck and up to five recent cards from it. Cards added with an API key or a connected assistant are enriched only when that request asks for it. In each deck you choose which fields AI may fill; the iPhone app’s add screen can turn AI off for a card."
-msgstr "<0>Дополнение</0> заполняет пустые поля новой карточки, когда ты добавляешь её в Lymi, а также когда ты об этом просишь. Оно получает термин, язык, значение, пример и первые 600 символов заметок карточки, а также название, описание и цель колоды, твои инструкции для неё и до пяти её последних карточек. Карточки, добавленные через ключ API или подключённого ассистента, дополняются, только если об этом просит сам запрос. В каждой колоде ты выбираешь, какие поля может заполнять AI; на экране добавления в приложении для iPhone AI можно выключить для карточки."
-
-msgid "<0>Expo</0> delivers updates to the iPhone app; each time the app opens it checks for one, which shares the app version and your IP address with Expo."
-msgstr "<0>Expo</0> доставляет обновления приложения для iPhone; каждый раз, когда приложение открывается, оно проверяет наличие обновления, и Expo видит версию приложения и твой IP-адрес."
-
-msgid "<0>Google</0> provides Sign in with Google."
-msgstr "<0>Google</0> обеспечивает вход через Google."
-
-msgid "<0>Japanese pronunciation</0>: the first time a Japanese card is played, its term, reading and meaning may be sent to write a short lead-in sentence that makes the reading clear."
-msgstr "<0>Японское произношение</0>: когда японскую карточку воспроизводят впервые, её термин, чтение и значение могут отправить, чтобы написать короткое вводное предложение, из которого понятно чтение."
-
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт.</1>"
-
-msgid "<0>Memory hook drafts</0> run only when you ask for one. They receive the card’s term, meaning and pronunciation and up to eight other meanings from the deck."
-msgstr "<0>Черновики зацепок</0> создаются только по твоей просьбе. Они получают термин, значение и произношение карточки и до восьми других значений из колоды."
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативная стоимость</0> <1>= чем жертвуешь</1>"
@@ -231,29 +195,11 @@ msgstr "<0>альтернативная стоимость</0> <1>= чем же�
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходит через мембрану туда, где больше растворённого вещества."
 
-msgid "<0>PostHog</0> provides product analytics and error reports in its EU cloud."
-msgstr "<0>PostHog</0> обеспечивает продуктовую аналитику и отчёты об ошибках в своём облаке в ЕС."
-
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
-msgid "<0>Resend</0> delivers our email."
-msgstr "<0>Resend</0> доставляет нашу почту."
-
-msgid "<0>Sign in with Apple</0> gives us your Apple account identifier, your email address (or a private relay address if you choose to hide yours) and, the first time, the name you agree to share. Without a name, we use the part of the email address before the “@”. We store the identity token Apple returns."
-msgstr "<0>Вход через Apple</0> даёт нам идентификатор твоего аккаунта Apple, адрес почты (или адрес-ретранслятор, если ты решишь скрыть свой) и в первый раз — имя, которым ты согласишься поделиться. Если имени нет, мы берём часть адреса почты до «@». Мы храним токен идентификации, который возвращает Apple."
-
-msgid "<0>Sign in with Google</0> gives us your name, email address, profile photo and Google account identifier, along with the tokens Google returns. We copy the profile photo once to use as your picture in Lymi."
-msgstr "<0>Вход через Google</0> даёт нам твоё имя, адрес почты, фото профиля и идентификатор аккаунта Google вместе с токенами, которые возвращает Google. Мы один раз копируем фото профиля, чтобы показывать его как твоё фото в Lymi."
-
-msgid "<0>Smart add</0> reads the photos, PDFs and text you give it, with the names, descriptions and languages of up to 12 of your decks and a few recent terms and meanings from each. Photos are converted to WebP first, which removes metadata. A second AI model then checks the terms it found, and, if you ask, compares them with your answer. Lymi does not store the files: only the cards you choose to add are saved."
-msgstr "<0>Умное добавление</0> читает фото, PDF и текст, которые ты ему даёшь, а также названия, описания и языки до 12 твоих колод и несколько последних терминов и значений из каждой. Сначала фото конвертируются в WebP, что удаляет метаданные. Затем другая модель AI проверяет найденные термины, а если ты попросишь, сравнивает их с твоим ответом. Lymi не хранит файлы: сохраняются только карточки, которые ты решишь добавить."
-
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родственник древнерусского «сябр», то есть друг. Белорусы до сих пор говорят «сябар»."
-
-msgid "<0>Your browser’s push service</0> carries web reminders."
-msgstr "<0>Служба push-уведомлений твоего браузера</0> доставляет напоминания в браузере."
 
 msgid "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a different train."
 msgstr "<0>乗る</0> — сесть, <1>換える</1> — заменить: ты садишься на другой поезд."
@@ -369,8 +315,8 @@ msgstr "Колода для каждого уровня. 60% баллов для
 msgid "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
 msgstr "Колода из четырёх разделов. Раздел «Приветствия» пройден, «Числа и время» выучен на 82%, поэтому следующим открывается «Еда и напитки». «Как добраться» пока закрыт."
 
-msgid "A deck other people study stays for them, without your name. It is deleted once its last member leaves. We keep a record that an account was deleted, with counts but no name or email address. Owners of decks you joined keep a note in their Activity that you left, and an owner who invited you by email keeps that invitation in their history. An account that publishes decks in Explore can’t be deleted in the app; email us instead."
-msgstr "Колода, которую изучают другие люди, остаётся у них, но без твоего имени. Её удаляют, когда из неё выходит последний участник. Мы храним запись о том, что аккаунт удалён, с количествами, но без имени и адреса почты. Владельцы колод, к которым ты присоединился, видят в своей Активности, что ты вышел, а владелец, который пригласил тебя по почте, хранит это приглашение в своей истории. Аккаунт, который публикует колоды в Каталоге, нельзя удалить в приложении — напиши нам."
+msgid "A deck other people still study remains without your account name until its last member leaves. Its content, including personal information you wrote into cards, remains visible to those members. Other owners may retain invitation and Activity records concerning you. Publisher accounts require a deletion request by email. Contact us if retained shared content contains personal information you want erased."
+msgstr "Колода, которую ещё изучают другие, остаётся без имени твоего аккаунта, пока не выйдет последний участник. Её содержимое, включая персональную информацию, которую ты вписал в карточки, остаётся видимым этим участникам. Другие владельцы могут хранить записи приглашений и Активности, касающиеся тебя. Для удаления аккаунта издателя нужен запрос по электронной почте. Обратись к нам, если сохранённый общий контент содержит персональную информацию, которую ты хочешь стереть."
 
 msgid "A deck, not a quiz."
 msgstr "Колода, а не викторина."
@@ -386,9 +332,6 @@ msgstr "Несколько минут в день"
 
 msgid "A few weeks in"
 msgstr "Через несколько недель"
-
-msgid "A file you import is kept only while it is processed, and for at most three days if an import is left unfinished. An export is kept for 24 hours so you can download it, then deleted."
-msgstr "Импортированный файл хранится только на время обработки, а если импорт не завершён — не больше трёх дней. Экспорт хранится 24 часа, чтобы ты успел его скачать, а затем удаляется."
 
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "Препарат первой линии при диабете 2 типа; снижает выработку глюкозы печенью"
@@ -490,9 +433,6 @@ msgstr "Круглый хлеб"
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
 
-msgid "A sign-in cookie keeps you signed in on my.lymi.app for 30 days. Two short-lived cookies carry a sign-up or a deck invitation through sign-in and expire after 25 hours. They are never sent to lymi.app."
-msgstr "Cookie входа держит тебя в системе на my.lymi.app 30 дней. Два кратковременных cookie переносят регистрацию или приглашение в колоду через вход и исчезают через 25 часов. Они никогда не отправляются на lymi.app."
-
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "Стандарт, позволяющий войти один раз и передать эту личность другим сервисам"
 
@@ -529,8 +469,11 @@ msgstr "Об этих колодах"
 msgid "Accents that land between the beats"
 msgstr "Акценты, которые приходятся между основными долями"
 
-msgid "Account and learning data, session records and Activity stay while your account exists."
-msgstr "Данные аккаунта и обучения, записи сеансов и Активность хранятся, пока существует аккаунт."
+msgid "Account and learning data stay while your account exists. Archiving a card or deck hides it; it does not erase it. Import files are removed after processing or within three days if unfinished; exports expire after 24 hours. Authentication records expire or are revoked, and web reminder subscriptions are removed when turned off or reported invalid."
+msgstr "Данные аккаунта и обучения хранятся, пока существует аккаунт. Архивирование карточки или колоды скрывает её, но не стирает. Файлы импорта удаляются после обработки или в течение трёх дней, если она не завершена; файлы экспорта действуют 24 часа. Записи аутентификации имеют срок действия или отзываются, а подписки на веб-напоминания удаляются после отключения или сообщения об их недействительности."
+
+msgid "Account data: your email address, name, photo, sign-in records and settings. Apple or Google provides the identity information you agree to share, including an account identifier; Apple may provide a private relay email address. With email sign-in we store a password hash, not your password. IP addresses, device information and authentication tokens help keep your account secure. An account is needed to save and sync your learning."
+msgstr "Данные аккаунта: электронный адрес, имя, фото, записи входа и настройки. Apple или Google передаёт данные, которыми ты соглашаешься поделиться, включая идентификатор аккаунта; Apple может предоставить частный ретрансляционный адрес. Для входа с электронной почтой мы храним хеш пароля, а не сам пароль. IP-адреса, сведения об устройстве и токены аутентификации помогают защищать аккаунт. Он нужен, чтобы сохранять и синхронизировать обучение."
 
 msgid "Accounting"
 msgstr "Бухгалтерия"
@@ -667,11 +610,11 @@ msgstr "Когда узнаёшь что-то новое, начинаешь з�
 msgid "AI"
 msgstr "AI"
 
+msgid "AI and pronunciation"
+msgstr "AI и произношение"
+
 msgid "AI assistants"
 msgstr "AI-ассистенты"
-
-msgid "AI features"
-msgstr "Функции AI"
 
 msgid "Airport"
 msgstr "Аэропорт"
@@ -752,9 +695,6 @@ msgstr "Файл .ofc из Noji"
 msgid "An amateur"
 msgstr "Дилетант"
 
-msgid "An API key is stored as a hash with its name, permission and when it was last used. Activity records whether each change came from you, an API key, a connected app, AI or the system. Disconnecting an app or revoking a key stops future access, but doesn’t erase what the app already received."
-msgstr "Ключ API хранится как хеш вместе с названием, разрешением и временем последнего использования. Активность фиксирует, от кого пришло каждое изменение: от тебя, ключа API, подключённого приложения, AI или системы. Отключение приложения или отзыв ключа прекращает дальнейший доступ, но не стирает то, что приложение уже получило."
-
 msgid "An example deck"
 msgstr "Пример колоды"
 
@@ -766,9 +706,6 @@ msgstr "Идея, которая кажется гениальной тольк�
 
 msgid "An idea that only sounds good after a few drinks"
 msgstr "Идея, которая кажется гениальной только после пары рюмок"
-
-msgid "Analytics and error reports"
-msgstr "Аналитика и отчёты об ошибках"
 
 msgid "Anatomy"
 msgstr "Анатомия"
@@ -806,14 +743,14 @@ msgstr "Всё, что зацепило и хочется запомнить."
 msgid "Anyway; long story short"
 msgstr "Короче; в общем"
 
-msgid "API keys stay until you revoke them or they expire. Connected-app tokens and approvals stay until they expire, you disconnect the app or you delete your account."
-msgstr "Ключи API хранятся, пока ты их не отзовёшь или не истечёт их срок. Токены и разрешения подключённых приложений хранятся, пока не истечёт их срок, ты не отключишь приложение или не удалишь аккаунт."
-
 msgid "API reference"
 msgstr "Справочник API"
 
 msgid "Apple"
 msgstr "Яблоко"
+
+msgid "Apps you connect through MCP, and scripts using your API keys, can access data within the permissions you approve. Their providers receive the data returned to them and handle it under their own policies. Disconnecting an app or revoking a key does not erase copies already received; an app’s current access token can remain valid until it expires."
+msgstr "Приложения, которые ты подключаешь через MCP, и скрипты с твоими API-ключами получают доступ к данным в пределах выданных разрешений. Их поставщики получают данные в ответах и обрабатывают их по собственным правилам. Отключение приложения или отзыв ключа не удаляет уже полученные копии; текущий токен доступа приложения может действовать до истечения своего срока."
 
 msgid "Archive card"
 msgstr "Архивировать карточку"
@@ -965,9 +902,6 @@ msgstr "Братья"
 msgid "Browse all decks"
 msgstr "Смотреть все колоды"
 
-msgid "Browser storage holds grades and edits made offline, a copy of your recent data for up to 7 days, recent card pictures and audio, and your preferences. Signing out clears it, except a few preferences such as your theme and app language, and saved audio."
-msgstr "Хранилище браузера содержит оценки и изменения, сделанные офлайн, копию твоих последних данных до 7 дней, недавние изображения карточек и аудио и твои настройки. Выход очищает его, кроме нескольких настроек, например темы и языка приложения, и сохранённого аудио."
-
 msgid "Build a course in sections and share it with your class."
 msgstr "Собери курс из разделов и поделись им с группой."
 
@@ -1068,8 +1002,8 @@ msgstr "Тест на гражданство Канады"
 msgid "Canadian citizenship test: practice questions on every chapter"
 msgstr "Тест на гражданство Канады: тренировочные вопросы по каждой главе"
 
-msgid "Card pictures are converted to WebP, which removes metadata, and kept in private storage that only signed-in requests can reach. If you add a picture from a link, we fetch it once and keep only the website’s name."
-msgstr "Изображения карточек конвертируются в WebP, что удаляет метаданные, и хранятся в закрытом хранилище, к которому есть доступ только у запросов после входа. Если ты добавляешь изображение по ссылке, мы скачиваем его один раз и храним только название сайта."
+msgid "Card enrichment, example translations, memory hooks and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
+msgstr "Дополнение карточек, перевод примеров, подсказки для запоминания и стиль колоды используют поля карточек, подходящие карточки из колоды, её описание и инструкции, а также твои исправления AI-текста. Дополнение может запускаться при добавлении карточек или по твоему запросу; стиль колоды обновляется в фоне. Эти текстовые функции используют OpenAI."
 
 msgid "Cards"
 msgstr "Карточки"
@@ -1117,9 +1051,6 @@ msgstr "Что нового"
 msgid "Changelog · Lymi"
 msgstr "Что нового в Lymi"
 
-msgid "Changes and contact"
-msgstr "Изменения и контакты"
-
 msgid "Check the cards in Lymi"
 msgstr "Проверь карточки в Lymi"
 
@@ -1155,6 +1086,9 @@ msgstr "Выбрать свою землю"
 
 msgid "Choose your state to see the deck with its 10 questions."
 msgstr "Выбери свою землю, чтобы увидеть колоду с её 10 вопросами."
+
+msgid "Choosing a deck or detecting a language can send shared text, its page title and deck languages, or an imported deck’s name and sample terms, to OpenAI."
+msgstr "Выбор колоды или определение языка может передавать отправленный в Lymi текст, заголовок его страницы и языки колод либо название импортированной колоды и примеры терминов в OpenAI."
 
 msgid "Chopsticks"
 msgstr "Палочки для еды"
@@ -1207,8 +1141,8 @@ msgstr "Закрыть меню"
 msgid "Cloud"
 msgstr "Облако"
 
-msgid "Cloudflare keeps operational logs, and Resend and Cloudflare keep email delivery logs, for the periods their services set. We keep no separate long-term copy."
-msgstr "Cloudflare хранит служебные журналы, а Resend и Cloudflare — журналы доставки почты в течение сроков, которые устанавливают их сервисы. Отдельной долгосрочной копии мы не храним."
+msgid "Cloudflare hosts and protects Lymi, stores data and files, routes AI requests and provides some AI and email services. Apple and Google handle their sign-in options. Resend delivers email, PostHog provides analytics and error reports, and Expo delivers phone-app updates and receives connection information such as the app version and IP address. AI providers, connected apps and deck members receive the data described above. We may also disclose information when required by law or necessary to protect legal rights."
+msgstr "Cloudflare размещает и защищает Lymi, хранит данные и файлы, передаёт AI-запросы и предоставляет некоторые AI- и почтовые услуги. Apple и Google обеспечивают соответствующие способы входа. Resend доставляет почту, PostHog предоставляет аналитику и отчёты об ошибках, а Expo доставляет обновления приложения на телефоне и получает сведения о соединении, например версию приложения и IP-адрес. AI-поставщики, подключённые приложения и участники колод получают описанные выше данные. Мы также можем раскрывать информацию по требованию закона или для защиты законных прав."
 
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Коллеги говорят это в коридоре, в письмах и в конце дня."
@@ -1255,9 +1189,6 @@ msgstr "Подключи AI-ассистента"
 msgid "Connect your own tools."
 msgstr "Подключай свои инструменты."
 
-msgid "Connected assistants and API keys"
-msgstr "Подключённые ассистенты и ключи API"
-
 msgid "Connecting an assistant"
 msgstr "Как подключить ассистента"
 
@@ -1267,6 +1198,9 @@ msgstr "Продолжить с Apple"
 msgctxt "deck tag"
 msgid "Conversation"
 msgstr "Разговорная речь"
+
+msgid "Cookies, device storage and analytics"
+msgstr "Файлы cookie, хранилище устройства и аналитика"
 
 msgid "Cooking"
 msgstr "Кулинария"
@@ -1357,9 +1291,6 @@ msgstr "Милый; дорогой"
 msgid "Decks"
 msgstr "Колоды"
 
-msgid "Decks in Explore are published by Lymi’s own library account. Their pages show the publisher’s name and count views per day and language, never per person."
-msgstr "Колоды в Каталоге публикует собственный библиотечный аккаунт Lymi. На их страницах видно имя издателя, а просмотры считаются по дням и языкам, никогда по людям."
-
 msgid "Decks to start with, in order"
 msgstr "Колоды для начала, по порядку"
 
@@ -1381,9 +1312,6 @@ msgstr "Пражская дефенестрация"
 
 msgid "Delete account"
 msgstr "Удалить аккаунт"
-
-msgid "Deleting your account"
-msgstr "Удаление аккаунта"
 
 msgid "Design"
 msgstr "Дизайн"
@@ -1521,9 +1449,6 @@ msgstr "Каждое ударение — отдельное слово. за́�
 msgid "Each time you remember a word, Lymi waits a little longer before showing it again. A few minutes a day is enough, and the words you learned months ago stay with you."
 msgstr "Каждый раз, когда ты вспоминаешь слово, Lymi ждёт чуть дольше, прежде чем показать его снова. Хватает нескольких минут в день, и слова, выученные несколько месяцев назад, остаются с тобой."
 
-msgid "Each time you sign in we create a session record with your IP address and your browser or device description. A session lasts 30 days and renews while you use Lymi. To limit repeated sign-in, sign-up and reset attempts, we count them by email address and IP address for up to an hour."
-msgstr "Каждый раз, когда ты входишь, мы создаём запись сеанса с твоим IP-адресом и описанием браузера или устройства. Сеанс действует 30 дней и продлевается, пока ты пользуешься Lymi. Чтобы ограничить повторные попытки входа, регистрации и смены пароля, мы считаем их по адресу почты и IP-адресу в течение часа."
-
 msgid "Earlier shelves"
 msgstr "Предыдущие полки"
 
@@ -1572,12 +1497,6 @@ msgstr "Einbürgerungstest и Leben in Deutschland: вопросы и ответ
 msgid "Either. Each deck is one or the other, and Lymi never converts between them. The free HSK decks are simplified."
 msgstr "Любые. Каждая колода — либо упрощённые, либо традиционные, и Lymi никогда не переводит одни в другие. Бесплатные колоды HSK — с упрощёнными."
 
-msgid "Email"
-msgstr "Почта"
-
-msgid "Email addresses from the private beta’s access requests stay until you ask us to remove them."
-msgstr "Адреса почты из запросов на доступ во время закрытой беты хранятся, пока ты не попросишь их удалить."
-
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилась в 1648 году <0>Вестфальским миром</0>."
 
@@ -1592,9 +1511,6 @@ msgstr "Приятного аппетита!"
 
 msgid "Enjoying the moment"
 msgstr "Наслаждение моментом"
-
-msgid "Error reports also go to PostHog, including after you object to analytics, because they are how we find and fix failures. A report contains the error type and technical stack frames, with the message and other context removed. A report from our servers includes your account identifier when the error happened in a signed-in request."
-msgstr "Отчёты об ошибках тоже поступают в PostHog, даже после того, как ты возразишь против аналитики, потому что именно так мы находим и исправляем сбои. Отчёт содержит тип ошибки и технические кадры стека, без сообщения и другого контекста. Отчёт с наших серверов содержит идентификатор твоего аккаунта, если ошибка произошла в запросе после входа."
 
 msgid "Español"
 msgstr "Español"
@@ -2022,9 +1938,6 @@ msgstr "До свидания"
 msgid "Got it."
 msgstr "Понятно."
 
-msgid "Grades and edits made offline wait in the app’s storage until they reach Lymi. A copy of your recent data is kept for up to 30 days so the app opens offline."
-msgstr "Оценки и изменения, сделанные офлайн, ждут в хранилище приложения, пока не дойдут до Lymi. Копия твоих последних данных хранится до 30 дней, чтобы приложение открывалось офлайн."
-
 msgid "Gram-positive cocci in clusters; coagulase-positive"
 msgstr "Грамположительные кокки, образующие скопления; коагулазоположительный"
 
@@ -2127,8 +2040,8 @@ msgstr "Насколько вероятны такие крайние данны
 msgid "How long a task can slip without delaying the project"
 msgstr "Насколько задача может сдвинуться, не задержав проект"
 
-msgid "How long we keep data"
-msgstr "Как долго мы храним данные"
+msgid "How Lymi uses personal data, who receives it, and your choices."
+msgstr "Как Lymi использует персональные данные, кто их получает и какой у тебя есть выбор."
 
 msgid "How many are waiting for me tonight?"
 msgstr "Сколько карточек ждёт меня сегодня?"
@@ -2216,9 +2129,6 @@ msgstr "Если бы"
 msgid "If only; maybe; I wish"
 msgstr "Если бы; может быть; вот бы"
 
-msgid "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change AI services or analytics, or delete your account."
-msgstr "Если ты подключаешь ассистента, например Claude или ChatGPT, через MCP, мы храним данные о приложении, разрешения, которые ты одобряешь, и его токены доступа. Токен доступа действует час, а токен обновления — 30 дней. Подключённое приложение может читать твои колоды, карточки, настройки, обзор и дни подряд, а с разрешением на запись — добавлять, редактировать, архивировать и дополнять карточки и упорядочивать колоды. Оно никогда не может поставить оценку повторению, управлять ключами или подключёнными приложениями, изменить AI-сервисы или аналитику либо удалить твой аккаунт."
-
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Условный график памяти за тридцать дней. Без повторений знание постепенно угасает. После повторений на 3-й, 8-й и 19-й день оно восстанавливается, а с более длинными перерывами угасает медленнее."
 
@@ -2231,9 +2141,6 @@ msgstr "Импорт"
 msgid "Import an Anki package with its cards, tags, pictures and review history. Years of reviews carry on where they stopped, so nothing you already know starts over."
 msgstr "Импортируй пакет Anki с карточками, тегами, изображениями и историей повторений. Годы повторений продолжаются с того же места, так что ничего из уже выученного не начинается заново."
 
-msgid "Import files stay at most three days, exports 24 hours, and Smart add material is never stored."
-msgstr "Импортированные файлы хранятся не больше трёх дней, экспорты — 24 часа, а материалы для умного добавления не хранятся вообще."
-
 msgid "Import from Anki"
 msgstr "Импорт из Anki"
 
@@ -2243,23 +2150,14 @@ msgstr "Импортируй свои флеш-карточки из Anki или
 msgid "Important"
 msgstr "Важная"
 
-msgid "Imports and exports"
-msgstr "Импорт и экспорт"
-
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В испанском баре кофе просят «поставить»."
-
-msgid "In a browser, turning reminders on stores a push address and encryption keys created by your browser, with your reminder time and time zone. The reminder goes through your browser’s push service and says how many cards are due, never their text. In the iPhone app, reminders are scheduled on the phone itself and no push service is involved."
-msgstr "В браузере, когда ты включаешь напоминания, мы храним push-адрес и ключи шифрования, созданные браузером, а также время напоминания и часовой пояс. Напоминание проходит через службу push-уведомлений браузера и сообщает, сколько карточек ждёт, но никогда не их текст. В приложении для iPhone напоминания планируются на самом телефоне, без службы push-уведомлений."
 
 msgid "In Chinese, one character can have more than one sound. <0>行</0> is háng in <1>银行</1>, a bank, and xíng in <2>不行</2>, no good. Lymi treats each sound as its own word, with its own card and its own pinyin."
 msgstr "В китайском у одного иероглифа может быть несколько чтений. <0>行</0> — это háng в <1>银行</1>, «банк», и xíng в <2>不行</2>, «не годится». Lymi считает каждое чтение отдельным словом, со своей карточкой и своим пиньинем."
 
 msgid "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 msgstr "В примерах фуригана остаётся над словами, которые ты ещё учишь, и исчезает над теми, что уже знаешь."
-
-msgid "In Lymi you can edit cards and settings, export your library, turn AI services off or choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
-msgstr "В Lymi ты можешь редактировать карточки и настройки, экспортировать библиотеку, выключить AI-сервисы или выбрать, какие поля заполняет AI, выключать напоминания, отзывать ключи API, отключать приложения и удалить аккаунт. Архивирование карточки или колоды скрывает её, и это можно отменить; это не удаление."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
@@ -2269,9 +2167,6 @@ msgstr "В итоге"
 
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
-
-msgid "In the web and iPhone apps we link product events to your account’s opaque identifier. Events carry the kind of screen (never its exact address), fixed action labels, counts, review grades, app language, app version, your device’s operating system and country. For AI features they carry the model, token count and cost, never the text. We do not send card content, email addresses, names or credentials."
-msgstr "В веб-приложении и приложении для iPhone мы связываем продуктовые события с непрозрачным идентификатором твоего аккаунта. События содержат тип экрана (никогда не точный адрес), фиксированные названия действий, количества, оценки повторений, язык приложения, его версию, операционную систему устройства и страну. Для функций AI они содержат модель, количество токенов и стоимость, но никогда не текст. Мы не отправляем содержимое карточек, адреса почты, имена или учётные данные."
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Повреждается у локтя; слабый хват и онемение мизинца"
@@ -2284,9 +2179,6 @@ msgstr "Mac с Intel?"
 
 msgid "Intel Mac? Download for Intel"
 msgstr "Mac с Intel? Скачать версию для Intel"
-
-msgid "iPhone app"
-msgstr "Приложение для iPhone"
 
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC не публикует свои вопросы. Это тренировочные вопросы по каждой главе официального пособия."
@@ -2504,6 +2396,9 @@ msgstr "Выученные"
 msgid "Korean"
 msgstr "Корейский"
 
+msgid "Krambertech OÜ, an Estonian company, provides Lymi and is responsible for your personal data. Contact <0>hello@lymi.app</0> with questions or privacy requests."
+msgstr "Lymi предоставляет эстонская компания Krambertech OÜ, которая отвечает за твои персональные данные. Вопросы и запросы о конфиденциальности отправляй на <0>hello@lymi.app</0>."
+
 msgid "Lab values"
 msgstr "Лабораторные нормы"
 
@@ -2565,6 +2460,9 @@ msgstr "В изучении"
 msgid "Learning {name} with Lymi"
 msgstr "{name} в Lymi"
 
+msgid "Learning data: your cards, decks, lesson material, pictures, recordings, reviews and progress, including preferences and Activity records. We use these to store your content, schedule reviews, sync devices and provide the features you use. Photos you upload are converted to remove embedded metadata. Camera and photo-library access is used only when you choose to add a photo or read lesson pages. Lymi does not record your voice."
+msgstr "Учебные данные: карточки, колоды, материалы уроков, изображения, записи произношения, повторения и прогресс, а также предпочтения и записи Активности. Они нужны, чтобы хранить твой контент, планировать повторения, синхронизировать устройства и предоставлять выбранные функции. Загруженные фото преобразуются, чтобы убрать встроенные метаданные. Камера и фототека используются только когда ты добавляешь фото или читаешь страницы урока. Lymi не записывает твой голос."
+
 msgid "Learning is more fun together."
 msgstr "Вместе учиться веселее."
 
@@ -2574,6 +2472,9 @@ msgstr "Тест Leben in Deutschland"
 
 msgid "Lecture 4 · Cell transport"
 msgstr "Лекция 4 · Транспорт в клетке"
+
+msgid "Legal bases"
+msgstr "Правовые основания"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -2686,17 +2587,11 @@ msgstr "Lymi — приложение с флеш-карточками: оно �
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi бесплатный, а первая карточка займёт минуту."
 
-msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
-msgstr "Lymi предоставляет Krambertech OÜ, эстонское частное общество с ограниченной ответственностью. В этой политике «Lymi», «мы» и «нас» означают Krambertech OÜ. Связаться с нами можно по адресу <0>hello@lymi.app</0>."
-
 msgid "Lymi is writing the first decks now. In the meantime you can make your own and share it with anyone."
 msgstr "Lymi сейчас пишет первые колоды. А пока сделай свою и поделись ею с кем угодно."
 
 msgid "Lymi mixes their questions into one daily review."
 msgstr "Lymi смешивает их вопросы в одно ежедневное повторение."
-
-msgid "Lymi never records your voice. The app doesn’t use the microphone."
-msgstr "Lymi никогда не записывает твой голос. Приложение не использует микрофон."
 
 msgid "Lymi schedules every card around it."
 msgstr "На этом принципе Lymi строит расписание повторений."
@@ -2704,14 +2599,14 @@ msgstr "На этом принципе Lymi строит расписание п
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
 msgstr "Lymi планирует повторения по FSRS — этот алгоритм есть и в Anki, так что ритм будет знакомым. Меняется всё вокруг: карточку можно добавить за несколько секунд, а ассистент добавит целый урок. Колоды из Anki переносятся вместе с карточками, тегами, изображениями и историей повторений, так что выученное не начинается заново."
 
+msgid "Lymi uses OpenAI, Anthropic, Google and Cloudflare Workers AI for AI features, and Google, OpenAI and ElevenLabs for speech. The provider depends on the feature and language. Requests go through Cloudflare AI Gateway with prompt and reply logging and caching disabled. Providers may retain requests under their API terms, including for abuse prevention. We do not add your account name, email address or credentials to AI prompts, but content you provide can itself contain personal information."
+msgstr "Lymi использует OpenAI, Anthropic, Google и Cloudflare Workers AI для AI-функций, а Google, OpenAI и ElevenLabs — для озвучивания. Поставщик зависит от функции и языка. Запросы проходят через Cloudflare AI Gateway с отключённым журналированием и кешированием запросов и ответов. Поставщики могут хранить запросы по условиям своих API, в том числе для предотвращения злоупотреблений. Мы не добавляем имя, электронный адрес или учётные данные в AI-запросы, но предоставленный тобой контент сам может содержать персональную информацию."
+
 msgid "Lymi with AI assistants"
 msgstr "Lymi с AI-ассистентами"
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi подходит для всего, что хочешь запомнить."
-
-msgid "lymi.app sets no cookies. It remembers your theme and the language of code samples in your browser’s storage. We do not use advertising cookies anywhere."
-msgstr "lymi.app не устанавливает cookie. Он запоминает тему и язык примеров кода в хранилище браузера. Рекламные cookie мы не используем нигде."
 
 msgid "Lymi’s AI · meanings and examples"
 msgstr "AI Lymi · значения и примеры"
@@ -2799,6 +2694,9 @@ msgstr "Медицина и сестринское дело"
 
 msgid "Medicine asks you to remember more than any other course. Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
 msgstr "Медицина требует помнить больше, чем любой другой курс. Lymi возвращает каждый факт прямо перед тем, как ты его забудешь, так что нескольких минут в день хватит, чтобы донести его до экзаменов и до отделения. Бесплатно, и твои колоды из Anki переедут вместе с тобой."
+
+msgid "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
+msgstr "Участники общей колоды видят имя владельца и содержимое колоды. Владелец видит имена участников, их роли и время присоединения, но не электронные адреса или прогресс повторений. Если тебя приглашают по электронной почте, мы получаем адрес от приглашающего и храним запись приглашения. Опубликованные колоды и имя издателя доступны на публичных страницах."
 
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each grade to decide when the card returns."
 msgstr "Память слабеет. Если вспомнить что-то вовремя, оно закрепляется, и следующий перерыв может быть длиннее. По каждой оценке Lymi решает, когда вернуть карточку."
@@ -3067,9 +2965,6 @@ msgstr "Ладно"
 msgid "Older"
 msgstr "Раньше"
 
-msgid "On lymi.app we count visits without cookies or any identifier stored on your device: PostHog derives a visitor code from the day, your IP address and browser, then discards the address, so a visit can’t be linked to another day’s. Links on lymi.app add the referring website and campaign labels to the address they open, so sign-up can record where a visit began."
-msgstr "На lymi.app мы считаем посещения без cookie и без идентификатора на твоём устройстве: PostHog создаёт код посетителя из даты, твоего IP-адреса и браузера, а затем отбрасывает адрес, поэтому посещение нельзя связать с посещением другого дня. Ссылки на lymi.app добавляют к открываемому адресу сайт, с которого ты пришёл, и метки кампании, чтобы при регистрации было видно, откуда началось посещение."
-
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Как только колода попадает в твой Lymi, он возвращает каждую карточку прямо перед тем, как ты её забудешь, — несколько минут в день."
 
@@ -3292,6 +3187,9 @@ msgstr "Популярное"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Отправь ссылку для присоединения в чат группы. Каждый, кто присоединится, получает новую карточку, как только ты её добавишь, а расписание повторений у каждого своё. Когда группа набрана, выключи ссылку."
 
+msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials. We do not use session replay or automatic click recording."
+msgstr "Облако PostHog в ЕС получает события использования, чтобы помогать нам улучшать Lymi. В приложениях они связаны с идентификатором аккаунта и содержат действия, количества, оценки повторений, сведения о приложении и устройстве, страну, определённую по IP-адресу, и технические данные использования AI, например модель и стоимость. События не содержат текста карточек, AI-запросов, имён, электронных адресов или учётных данных. Мы не используем запись сеансов или автоматическую запись нажатий."
+
 msgid "Practice questions on the California Driver’s Handbook, one rule to a card."
 msgstr "Тренировочные вопросы по California Driver’s Handbook — одно правило на карточку."
 
@@ -3322,6 +3220,9 @@ msgstr "Политика конфиденциальности"
 msgid "Privacy policy · Lymi"
 msgstr "Политика конфиденциальности · Lymi"
 
+msgid "Product analytics are based on our legitimate interest in improving Lymi. To object, email <0>hello@lymi.app</0>; we will turn them off for your account, including connected apps and background work."
+msgstr "Продуктовая аналитика основана на нашем законном интересе в улучшении Lymi. Чтобы возразить против неё, напиши на <0>hello@lymi.app</0>; мы отключим её для твоего аккаунта, включая подключённые приложения и фоновую работу."
+
 msgid "Programming"
 msgstr "Программирование"
 
@@ -3331,11 +3232,14 @@ msgstr "Управление проектами"
 msgid "Pronunciation"
 msgstr "Произношение"
 
-msgid "Pronunciation audio"
-msgstr "Аудио произношения"
-
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз."
+
+msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
+msgstr "Озвучивание отправляет термин, его чтение или предложение примера и язык поставщику речи. Для японского произношения термин, чтение и значение также могут передаваться Google и Cloudflare Workers AI для подготовки контекста произношения. Созданное аудио сохраняется для повторного использования."
+
+msgid "Providers may process data outside the European Economic Area, including in the United States. Where required, transfers rely on an adequacy decision or contractual safeguards such as the European Commission’s standard contractual clauses. Contact us for information about the safeguards that apply to your data and how to obtain a copy."
+msgstr "Поставщики могут обрабатывать данные за пределами Европейской экономической зоны, в том числе в США. Когда это необходимо, передача основана на решении о достаточном уровне защиты или договорных гарантиях, например стандартных договорных положениях Европейской комиссии. Обратись к нам, чтобы узнать, какие гарантии действуют для твоих данных и как получить их копию."
 
 msgid "Psychology"
 msgstr "Психология"
@@ -3480,6 +3384,9 @@ msgstr "Целевая точка восстановления: сколько �
 msgid "Recovery time objective: how long a service can be down"
 msgstr "Целевое время восстановления: сколько сервис может не работать"
 
+msgid "Registered address: Harju maakond, Tallinn, Põhja-Tallinna linnaosa, 3. liin 6-5, 11712, Estonia."
+msgstr "Юридический адрес: Harju maakond, Tallinn, Põhja-Tallinna linnaosa, 3. liin 6-5, 11712, Эстония."
+
 msgid "Related decks"
 msgstr "Похожие колоды"
 
@@ -3489,8 +3396,8 @@ msgstr "Если помнишь карточку, Lymi дольше ждёт, п
 msgid "Remember first, then check."
 msgstr "Сначала вспомни, потом проверь."
 
-msgid "Reminders"
-msgstr "Напоминания"
+msgid "Reminders are optional. Web reminders use your browser’s push service, which receives a delivery address and the reminder, including the number of cards due. Phone reminders are scheduled on your device."
+msgstr "Напоминания необязательны. Веб-напоминания используют push-сервис браузера, который получает адрес доставки и напоминание, включая число карточек к повторению. На телефоне напоминания планируются на самом устройстве."
 
 msgid "Repetition that works."
 msgstr "Повторение, которое работает."
@@ -3503,6 +3410,9 @@ msgstr "Ресурсы"
 
 msgid "Restaurant"
 msgstr "Ресторан"
+
+msgid "Retention and account deletion"
+msgstr "Хранение и удаление аккаунта"
 
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Открой значение и оцени, насколько хорошо ты его помнишь."
@@ -3518,9 +3428,6 @@ msgstr "Повторяй несколько минут в день."
 
 msgid "Review and add cards without a connection. Everything syncs when you’re back online."
 msgstr "Повторяй и добавляй карточки без интернета. Всё синхронизируется, как только ты снова будешь онлайн."
-
-msgid "Review history is append-only while the account exists, so the schedule stays honest. Undo adds a record instead of rewriting the review."
-msgstr "Пока существует аккаунт, историю повторений можно только дополнять, поэтому расписание остаётся честным. Отмена добавляет новую запись, а не переписывает повторение."
 
 msgid "Review less, remember longer."
 msgstr "Повторяй меньше, помни дольше."
@@ -3627,8 +3534,8 @@ msgstr "Разделы: {list}."
 msgid "Security"
 msgstr "Безопасность"
 
-msgid "Security and children"
-msgstr "Безопасность и дети"
+msgid "Security, children and changes"
+msgstr "Безопасность, дети и изменения"
 
 msgid "Security+ · new"
 msgstr "Security+ · новая"
@@ -3696,8 +3603,8 @@ msgstr "Отправь заметки"
 msgid "Send your notes to Claude, ChatGPT, Gemini or Grok and get cards."
 msgstr "Отправь заметки в Claude, ChatGPT, Gemini или Grok — и получи карточки."
 
-msgid "Separately, we count requests and actions by type and measure response times, without any account identifier, card content or exact address. Our hosting provider processes request metadata, security signals and error logs to run and protect Lymi; query strings are removed from those logs."
-msgstr "Отдельно мы считаем запросы и действия по типам и измеряем время ответа — без идентификатора аккаунта, содержимого карточек или точного адреса. Наш хостинг-провайдер обрабатывает метаданные запросов, сигналы безопасности и журналы ошибок, чтобы Lymi работал и был защищён; строки запроса из этих журналов удаляются."
+msgid "Service providers and international transfers"
+msgstr "Поставщики услуг и международная передача"
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Семь карточек: четыре по финскому, две шахматные и одна из той статьи об обработке сигналов."
@@ -3708,8 +3615,8 @@ msgstr "Одна колода на всю группу."
 msgid "Share one link."
 msgstr "Одна ссылка для всех."
 
-msgid "Shared decks"
-msgstr "Общие колоды"
+msgid "Sharing and connected apps"
+msgstr "Общие колоды и подключённые приложения"
 
 msgid "Shelves"
 msgstr "Полки"
@@ -3751,9 +3658,6 @@ msgstr "Войди через Google или почту, и колода появ
 msgid "Signals"
 msgstr "Обработка сигналов"
 
-msgid "Signing out deletes your data from the phone, the offline queue, widgets and scheduled reminders. Your theme, app language and reminder time stay."
-msgstr "Выход удаляет с телефона твои данные, очередь офлайн-изменений, данные виджетов и запланированные напоминания. Тема, язык приложения и время напоминания остаются."
-
 msgid "Simplified deck"
 msgstr "Колода с упрощёнными"
 
@@ -3793,6 +3697,9 @@ msgstr "Умное добавление"
 msgid "Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its picture."
 msgstr "Умное добавление в бета-версии, поэтому читает до 5 уроков в день. Схему можно добавить на карточку как картинку."
 
+msgid "Smart add sends the photos, PDFs or text you provide, with relevant deck context, to Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested, compares them with your answer. We save the cards you choose, not the original lesson files."
+msgstr "Умное добавление отправляет предоставленные тобой фото, PDF или текст с подходящим контекстом колод в Anthropic для чтения. Cloudflare Workers AI проверяет найденные термины и по запросу сравнивает их с твоим ответом. Мы сохраняем выбранные тобой карточки, а не исходные файлы урока."
+
 msgid "So-so"
 msgstr "Так себе"
 
@@ -3805,14 +3712,8 @@ msgstr "Итак; ну что ж"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
 
-msgid "Some features send card content to AI service providers that process it on our behalf. Every request goes through a gateway we have set not to log or cache prompts and replies. We never send your name, email address or account details. Each provider handles the request under its API terms, which can include keeping it for a limited time to detect abuse. What AI writes is saved on the card and marked as AI-written."
-msgstr "Некоторые функции отправляют содержимое карточек провайдерам AI-сервисов, которые обрабатывают его от нашего имени. Каждый запрос проходит через шлюз, который мы настроили не записывать и не кешировать запросы и ответы. Мы никогда не отправляем твоё имя, адрес почты или данные аккаунта. Каждый провайдер обрабатывает запрос по своим условиям API, которые могут предусматривать хранение в течение ограниченного времени для выявления злоупотреблений. То, что пишет AI, сохраняется на карточке и помечается как написанное AI."
-
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Некоторые кандзи в китайском шрифте выглядят иначе. Lymi показывает твои карточки в японском написании, как в японских книгах."
-
-msgid "Some of these providers process data outside Estonia and the European Economic Area. Where required, we rely on the transfer safeguards each provider offers, such as the European Commission’s standard contractual clauses."
-msgstr "Некоторые из этих провайдеров обрабатывают данные за пределами Эстонии и Европейской экономической зоны. Там, где это требуется, мы опираемся на гарантии передачи, которые предлагает каждый провайдер, например стандартные договорные условия Европейской комиссии."
 
 msgid "Something else"
 msgstr "Другое"
@@ -3988,6 +3889,9 @@ msgstr "Suomi · глагол"
 msgid "Support"
 msgstr "Поддержка"
 
+msgid "Support and email: we keep the information you send us so we can respond. We send account and service emails, including sign-in help, deck invitations and deletion confirmations. Resend delivers our email and receives the recipient, subject and message; Cloudflare Email Service is the fallback. Delivery reports help us handle bounced mail and spam complaints."
+msgstr "Поддержка и почта: мы храним присланную тобой информацию, чтобы ответить. Мы отправляем служебные письма, включая помощь со входом, приглашения в колоды и подтверждения удаления аккаунта. Resend доставляет нашу почту и получает получателя, тему и текст письма; Cloudflare Email Service служит запасным сервисом. Отчёты о доставке помогают обрабатывать возвраты писем и жалобы на спам."
+
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
 
@@ -4102,17 +4006,11 @@ msgstr "Колоды A1, A2 и B1 сверены со словарями Goethe-
 msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word lists for their level. They follow those levels; they are not official or complete exam lists."
 msgstr "Колоды A1, A2 и B1 сверены со словарями Goethe-Zertifikat своего уровня. Они соответствуют этим уровням, но не являются официальными или полными экзаменационными списками."
 
-msgid "The assistant’s provider receives whatever our tools return to it and handles your conversation under its own terms and privacy policy. Lymi receives lesson material from a conversation only if the assistant puts it into a card."
-msgstr "Провайдер ассистента получает всё, что возвращают ему наши инструменты, и обрабатывает твой разговор по собственным условиям и политике конфиденциальности. Lymi получает материалы урока из разговора, только если ассистент вносит их в карточку."
-
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "В sõpra b превращается в p: ma ootan sõpra — я жду друга."
 
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Подрумянивание, которое придаёт вкус жареному, печёному и тостам"
-
-msgid "The camera and photo library are used only when you add a picture to a card, a profile photo, or pages to Smart add."
-msgstr "Камера и фотобиблиотека используются только тогда, когда ты добавляешь изображение к карточке, фото профиля или страницы для умного добавления."
 
 msgid "The cards from this page will land here."
 msgstr "Карточки с этой страницы появятся здесь."
@@ -4192,9 +4090,6 @@ msgstr "Девочка"
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловеградецкий и Пардубицкий края."
 
-msgid "The iPhone and Android apps ask before the first time they send anything to an AI service, and send nothing until you allow it. On the web, AI services are on unless you turn them off. The choice belongs to your account: turn AI services off in You › AI services in the app or Settings › AI services on the web, and nothing new is sent from any app, API key or connected assistant. Text AI already wrote stays on your cards. Without AI services you can still add cards and review as usual, and a word is spoken only if it already has audio. A shared or published deck’s pronunciation follows its owner’s choice."
-msgstr "Приложения для iPhone и Android спрашивают, прежде чем впервые что-то отправить AI-сервису, и ничего не отправляют, пока ты не разрешишь. В вебе AI-сервисы включены, пока ты их не выключишь. Выбор принадлежит твоему аккаунту: выключи AI-сервисы в Ты › AI-сервисы в приложении или в Настройки › AI-сервисы в вебе, и ничего нового не будет отправляться ни из одного приложения, ключа API или подключённого ассистента. Текст, который AI уже написал, остаётся на твоих карточках. Без AI-сервисов ты по-прежнему можешь добавлять карточки и повторять, а слово озвучивается, только если для него уже есть аудио. Произношение общей или опубликованной колоды зависит от выбора её владельца."
-
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "С 2010 года JLPT не публикует официального списка слов, поэтому колоды N5 и N4 составлены по распространённым учебным спискам своего уровня. Ни одна из них не является официальным списком."
 
@@ -4255,6 +4150,9 @@ msgstr "Результат зависит от того, что было на в
 msgid "The part of a cell that releases energy from food"
 msgstr "Часть клетки, которая высвобождает энергию из пищи"
 
+msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
+msgstr "Приложение на телефоне запрашивает разрешение, прежде чем отправлять твой собственный контент в AI. В веб-приложении, через API-ключи и подключённые приложения AI работает, пока выбор для аккаунта не сделан. Отключить AI-сервисы можно в разделе Ты на телефоне или в Настройках в веб-приложении. Явное отключение останавливает новую AI-обработку твоего контента во всём Lymi, включая фоновую работу и подключённые приложения. Сохранённые текст и аудио остаются, а добавлять карточки вручную и повторять их можно и дальше. Для аудио общих и опубликованных карточек действует выбор владельца."
+
 msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
 msgstr "Фраза, которую репетитор написал в чате, слово из романа, которое пришлось искать дважды. Сохрани его за несколько секунд, послушай произношение, и Lymi вернёт его как раз тогда, когда оно начнёт забываться."
 
@@ -4305,9 +4203,6 @@ msgstr "Та же тема на других языках"
 
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."
-
-msgid "The share extension reads only the text you share (up to 500 characters) and the title of the page it came from. It ignores links."
-msgstr "Расширение для отправки читает только текст, которым ты делишься (до 500 символов), и название страницы, откуда он взят. Ссылки оно игнорирует."
 
 msgid "The small things that matter once you’re a few weeks in."
 msgstr "Мелочи, которые становятся важными уже через несколько недель учёбы."
@@ -4372,8 +4267,8 @@ msgstr "Эта колода больше не опубликована."
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Это действующий формат HSK 2.0. Программа, опубликованная в 2025 году, увеличивает уровень 1 до 300 слов, а уровень 2 — до 500."
 
-msgid "This policy covers the Lymi website, the web app and the iPhone app: what we receive, why, who helps us provide the service, how long we keep it, and the choices you have."
-msgstr "Эта политика относится к сайту Lymi, веб-приложению и приложению для iPhone: что мы получаем, зачем, кто помогает нам предоставлять сервис, как долго мы храним данные и какой выбор есть у тебя."
+msgid "This policy covers Lymi’s website, apps, API and connected assistants."
+msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Вот три, которые дважды не вспомнились: диффузия, митохондрия и рибосома."
@@ -4395,9 +4290,6 @@ msgstr "чаевые"
 
 msgid "To agree"
 msgstr "Соглашаться"
-
-msgid "To answer support and privacy requests, and to meet legal obligations."
-msgstr "Чтобы отвечать на запросы в поддержку и по вопросам конфиденциальности и выполнять юридические обязанности."
 
 msgid "To be"
 msgstr "Быть"
@@ -4474,9 +4366,6 @@ msgstr "Рано вставать"
 msgid "To go"
 msgstr "Идти"
 
-msgid "To keep Lymi secure and working: authenticating requests, enforcing permissions, preventing abuse and fixing errors. This is our legitimate interest."
-msgstr "Чтобы Lymi был защищён и работал: проверять запросы, соблюдать разрешения, предотвращать злоупотребления и исправлять ошибки. Это наш законный интерес."
-
 msgid "To like"
 msgstr "Нравиться"
 
@@ -4507,9 +4396,6 @@ msgstr "Скучать по кому-то или чему-то"
 msgid "To not be able to be bothered"
 msgstr "Лень; неохота ничего делать"
 
-msgid "To provide your account and the features you use. This is needed to perform our agreement with you."
-msgstr "Чтобы предоставлять твой аккаунт и функции, которыми ты пользуешься. Это нужно для исполнения нашего соглашения с тобой."
-
 msgid "To pull"
 msgstr "Тянуть"
 
@@ -4533,9 +4419,6 @@ msgstr "Брать"
 
 msgid "To take a taxi"
 msgstr "Взять такси"
-
-msgid "To understand how Lymi is used and improve it, as described under Analytics. This is our legitimate interest, and you can object."
-msgstr "Чтобы понимать, как люди пользуются Lymi, и улучшать его, как описано в разделе об аналитике. Это наш законный интерес, и ты можешь возразить."
 
 msgid "To usually do something"
 msgstr "Обычно что-то делать"
@@ -4786,41 +4669,26 @@ msgstr "Вода"
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Движение воды через мембрану в сторону, где больше растворённого вещества"
 
-msgid "We delete your profile and photo, sign-in records and sessions, decks and cards that only you use, pictures and audio, reviews and schedule, settings, reminders, connected apps and your Activity. Your API keys stop working at once. We ask PostHog to delete your analytics profile and its events. If you confirm with Sign in with Apple, we also revoke Lymi’s access to your Apple account; otherwise you can remove Lymi from your Apple or Google account settings. We send one last email to confirm the deletion."
-msgstr "Мы удаляем твой профиль и фото, записи входа и сеансы, колоды и карточки, которыми пользуешься только ты, изображения и аудио, повторения и расписание, настройки, напоминания, подключённые приложения и твою Активность. Твои ключи API сразу перестают работать. Мы просим PostHog удалить твой аналитический профиль и его события. Если ты подтверждаешь через вход с Apple, мы также отзываем доступ Lymi к твоему аккаунту Apple; иначе ты можешь убрать Lymi в настройках аккаунта Apple или Google. Мы отправляем последнее письмо, чтобы подтвердить удаление."
+msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
+msgstr "Мы не продаём твои персональные данные, не показываем рекламу и не отслеживаем тебя в приложениях и на сайтах других компаний. Описанные ниже данные нужны, чтобы предоставлять, защищать и улучшать Lymi."
 
-msgid "We do this on the basis of our legitimate interest in understanding and improving Lymi. To object, email <0>hello@lymi.app</0> and we will stop product analytics for your account, including from connected apps and background work."
-msgstr "Мы делаем это на основании нашего законного интереса понимать и улучшать Lymi. Чтобы возразить, напиши на <0>hello@lymi.app</0>, и мы прекратим продуктовую аналитику для твоего аккаунта, в том числе от подключённых приложений и фоновых процессов."
+msgid "We process account and learning data to perform our agreement with you and provide the features you use. Security, error diagnosis, support and limited product analytics serve our legitimate interests in operating and improving Lymi. We process data to meet legal obligations where they apply. Where we rely on consent, you can withdraw it without affecting earlier lawful processing. Optional features need only the data relevant to them."
+msgstr "Мы обрабатываем данные аккаунта и обучения, чтобы выполнять наше соглашение с тобой и предоставлять функции, которыми ты пользуешься. Безопасность, диагностика ошибок, поддержка и ограниченная продуктовая аналитика служат нашим законным интересам в работе и улучшении Lymi. При необходимости мы обрабатываем данные для исполнения законных обязанностей. Там, где основанием служит согласие, ты можешь отозвать его без влияния на предыдущую законную обработку. Необязательным функциям нужны только связанные с ними данные."
 
-msgid "We don’t sell your data, show ads, or track you across other companies’ apps and websites. We send data to the providers below only to run the feature you are using."
-msgstr "Мы не продаём твои данные, не показываем рекламу и не следим за тобой в приложениях и на сайтах других компаний. Мы отправляем данные провайдерам, перечисленным ниже, только для работы функции, которой ты пользуешься."
+msgid "We update this policy when our practices change. The date above shows the latest revision. We provide additional notice when required by law."
+msgstr "Мы обновляем эту политику, когда меняется наша работа с данными. Дата вверху показывает последнюю редакцию. Когда этого требует закон, мы уведомляем дополнительно."
 
-msgid "We send email only about your account: confirming an address, resetting a password, telling you an address already has an account, deck invitations, the code that confirms deleting your account, and the confirmation that it was deleted. There is no newsletter. <0>Resend</0> delivers our email and receives the recipient, subject and message; <1>Cloudflare Email Service</1> delivers it when Resend isn’t available. Resend tells us when an email bounces or is marked as spam."
-msgstr "Мы отправляем письма только по поводу твоего аккаунта: подтверждение адреса, смена пароля, уведомление, что для адреса уже есть аккаунт, приглашения в колоды, код для подтверждения удаления аккаунта и подтверждение, что он удалён. Рассылки нет. <0>Resend</0> доставляет нашу почту и получает получателя, тему и текст письма; <1>Cloudflare Email Service</1> доставляет её, когда Resend недоступен. Resend сообщает нам, когда письмо не доставлено или помечено как спам."
+msgid "We use access controls and encrypted connections to protect data. No online service can guarantee absolute security. Lymi is not directed to children below the age at which they can lawfully use it. If you believe a child has provided personal data without the permission required by law, contact us."
+msgstr "Мы используем контроль доступа и зашифрованные соединения для защиты данных. Ни один онлайн-сервис не может гарантировать абсолютную безопасность. Lymi не предназначен для детей, которые ещё не достигли возраста, с которого могут законно им пользоваться. Если ты считаешь, что ребёнок предоставил персональные данные без разрешения, требуемого законом, обратись к нам."
 
-msgid "We store the decks, series and sections you create or join, and every card in them: term, meaning, pronunciation, example, notes, memory hook, tags, source, language, picture and audio. We also store each review and grade, the schedule, your daily goal, streak and rest days, your time zone, settings, what you told us you are learning when you started, and an Activity record of changes."
-msgstr "Мы храним колоды, серии и разделы, которые ты создаёшь или к которым присоединяешься, и каждую карточку в них: термин, значение, произношение, пример, заметки, зацепку, теги, источник, язык, изображение и аудио. Ещё мы храним каждое повторение и оценку, расписание, дневную цель, дни подряд и дни отдыха, часовой пояс, настройки, то, что ты рассказал нам о своём обучении в начале, и Активность — запись изменений."
-
-msgid "We update this policy when Lymi or the law changes, and change the date above. When a change materially affects your rights, we will tell you in Lymi or by email. Questions and privacy requests go to <0>hello@lymi.app</0>."
-msgstr "Мы обновляем эту политику, когда меняется Lymi или закон, и меняем дату вверху. Когда изменение существенно влияет на твои права, мы сообщим тебе в Lymi или письмом. Вопросы и запросы о конфиденциальности отправляй на <0>hello@lymi.app</0>."
-
-msgid "We use <0>PostHog</0>’s EU service to understand how Lymi is used. Events pass through our own servers first, which remove anything not on a fixed list and add the country the request came from, as Cloudflare works it out from your IP address. That country is the only location we record. PostHog does not look up your location, record sessions or capture clicks automatically."
-msgstr "Мы используем сервис <0>PostHog</0> в ЕС, чтобы понимать, как люди пользуются Lymi. События сначала проходят через наши серверы, которые убирают всё, чего нет в фиксированном списке, и добавляют страну, из которой пришёл запрос; Cloudflare определяет её по твоему IP-адресу. Эта страна — единственное местоположение, которое мы записываем. PostHog не определяет твоё местоположение, не записывает сеансы и не фиксирует нажатия автоматически."
-
-msgid "We use access controls, encrypted connections and our providers’ security controls to protect data, but no online service can guarantee absolute security. Keep API keys and connection tokens to yourself. Lymi is not directed to children who cannot lawfully consent to this processing."
-msgstr "Мы защищаем данные с помощью контроля доступа, зашифрованных соединений и средств безопасности наших провайдеров, но ни один онлайн-сервис не может гарантировать абсолютную безопасность. Никому не передавай ключи API и токены подключения. Lymi не предназначен для детей, которые не могут законно согласиться на такую обработку."
+msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
+msgstr "Мы используем файлы cookie и хранилище устройства для входа, предпочтений, работы офлайн и синхронизации незавершённых изменений и повторений. Публичный сайт хранит предпочтения в браузере, но не использует аналитические cookie. Выход очищает кешированные приложением данные аккаунта, хотя некоторые предпочтения и кешированное аудио могут остаться."
 
 msgid "Weather"
 msgstr "Погода"
 
-msgid "Web app"
-msgstr "Веб-приложение"
-
-msgid "Web reminder subscriptions stay until you turn reminders off or the push service reports them expired."
-msgstr "Подписки на напоминания в браузере хранятся, пока ты не выключишь напоминания или служба push-уведомлений не сообщит, что срок подписки истёк."
-
-msgid "Website"
-msgstr "Сайт"
+msgid "Website visits are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
+msgstr "Посещения сайта подсчитываются без постоянного идентификатора устройства: используется ежедневный код посетителя, полученный из IP-адреса и данных браузера. Сведения об источнике перехода и кампании могут передаваться по ссылкам до регистрации. Отчёты об ошибках содержат очищенные технические данные, страну и идентификатор аккаунта или приложения; они отправляются и после возражения против продуктовой аналитики. Журналы хостинга и обобщённые показатели быстродействия также помогают поддерживать работу и безопасность Lymi."
 
 msgid "Websites"
 msgstr "Сайты"
@@ -4861,17 +4729,14 @@ msgstr "А если он ошибётся?"
 msgid "What it’s for"
 msgstr "Для чего она"
 
-msgid "What Lymi stores, which providers receive it and why, how long it is kept, and how to delete your account."
-msgstr "Что хранит Lymi, каким провайдерам и зачем это передаётся, как долго хранится и как удалить аккаунт."
-
 msgid "What stays for others"
 msgstr "Что останется другим"
 
-msgid "What stays on your device"
-msgstr "Что хранится на твоём устройстве"
-
 msgid "What the test looks like"
 msgstr "Как устроен тест"
+
+msgid "What we collect and why"
+msgstr "Какие данные мы собираем и зачем"
 
 msgid "What you can see"
 msgstr "Что ты видишь"
@@ -4903,9 +4768,6 @@ msgstr "Новые возможности Lymi и то, что стало луч
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"
 
-msgid "When AI services are on, these features send:"
-msgstr "Когда AI-сервисы включены, эти функции отправляют:"
-
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."
 
@@ -4914,12 +4776,6 @@ msgstr "Когда его карточка в повторениях стано�
 
 msgid "When the output depends on the history of the input"
 msgstr "Когда результат зависит от того, что было на входе раньше"
-
-msgid "When you send feedback from the app, it reaches our inbox with your name and email address so we can reply."
-msgstr "Когда ты отправляешь отзыв из приложения, он приходит нам на почту с твоим именем и адресом, чтобы мы могли ответить."
-
-msgid "When you share a deck, its members see your name, the deck and its cards. You see each member’s name, role and when they joined, but not their email address or progress; each person’s reviews stay their own. When you invite someone by email, we store their address, show it to you until they accept, and send them an email with your name, the deck’s name, its language and its number of cards."
-msgstr "Когда ты делишься колодой, её участники видят твоё имя, колоду и её карточки. Ты видишь имя, роль каждого участника и когда он присоединился, но не его адрес почты или прогресс: повторения каждого остаются его собственными. Когда ты приглашаешь кого-то по почте, мы храним его адрес, показываем его тебе, пока приглашение не принято, и отправляем письмо с твоим именем, названием колоды, её языком и количеством карточек."
 
 msgid "Where cards can show up"
 msgstr "Где могут появляться карточки"
@@ -4975,29 +4831,17 @@ msgstr "Кто отвечает за данные"
 msgid "Who knows?"
 msgstr "Кто его знает?"
 
-msgid "Who receives data"
-msgstr "Кто получает данные"
-
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Кто из европейцев первым добрался до Канады?"
 
 msgid "Whose notes"
 msgstr "Чьи заметки"
 
-msgid "Why we use data"
-msgstr "Зачем мы используем данные"
-
 msgid "Widgets"
 msgstr "Виджеты"
 
-msgid "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
-msgstr "Виджеты и Пункт управления получают только количества: сколько карточек ждёт, дни подряд и цель. Никогда не текст карточек."
-
 msgid "Will the AI slip into Russian?"
 msgstr "AI не перейдёт на русский?"
-
-msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to an AI speech provider, chosen by the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
-msgstr "Когда AI-сервисы включены и ты впервые воспроизводишь карточку, мы отправляем текст для озвучивания (термин или его чтение) и его язык провайдеру AI-речи, которого выбираем в зависимости от языка. Значение, пример и заметки мы не отправляем. Аудио мы храним, чтобы воспроизводить его снова, и удаляем вместе с карточкой."
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
@@ -5128,17 +4972,14 @@ msgstr "Вчера был день отдыха."
 msgid "You"
 msgstr "Ты"
 
-msgid "You can change the name and photo on your account. Photos are converted to WebP, which removes metadata such as location, and stored privately."
-msgstr "Ты можешь изменить имя и фото своего аккаунта. Фото конвертируются в WebP, что удаляет метаданные, например местоположение, и хранятся закрыто."
-
-msgid "You can delete your account yourself: on the iPhone, in You › Delete account; on the web, in Settings › Delete account. You confirm with a code we email you or, on the iPhone, with Sign in with Apple. Deletion happens at once and can’t be undone, so export your library first if you want to keep it."
-msgstr "Ты можешь удалить аккаунт сам: на iPhone — в Ты › Удалить аккаунт, в вебе — в Настройки › Удалить аккаунт. Ты подтверждаешь это кодом, который мы отправляем по почте, или на iPhone — входом через Apple. Удаление происходит сразу, и его нельзя отменить, поэтому сначала экспортируй библиотеку, если хочешь её сохранить."
+msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
+msgstr "Удалить аккаунт можно в разделе Ты › Удалить аккаунт на телефоне или Настройки › Удалить аккаунт в веб-приложении после подтверждения личности. Отменить удаление невозможно. Аккаунт и личные учебные записи стираются, а очистка файлов и запросы на стирание связанной аналитики выполняются отдельно. Журналы поставщиков, резервные копии и переписка с поддержкой могут храниться в течение соответствующих сроков; удаление не означает мгновенного стирания каждой копии."
 
 msgid "You can do it!"
 msgstr "У тебя получится!"
 
-msgid "You have the right to access, correct, delete and move your data, and to object to or restrict how we use it. For anything you can’t do in Lymi, email <0>hello@lymi.app</0> from your account address. We may ask you to confirm your identity first, and we will answer within the time data-protection law sets. You can also complain to the Estonian Data Protection Inspectorate or your local supervisory authority."
-msgstr "У тебя есть право на доступ к своим данным, их исправление, удаление и перенос, а также право возразить против того, как мы их используем, или ограничить это. Для всего, что нельзя сделать в Lymi, напиши на <0>hello@lymi.app</0> с адреса своего аккаунта. Мы можем сначала попросить подтвердить личность и ответим в срок, установленный законом о защите данных. Ты также можешь подать жалобу в Инспекцию по защите данных Эстонии или в надзорный орган своей страны."
+msgid "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
+msgstr "Ты можешь редактировать контент и настройки, экспортировать библиотеку, управлять AI-сервисами и напоминаниями, отзывать ключи и отключать приложения. Ты также можешь запросить доступ, исправление, стирание, ограничение обработки или перенос персональных данных либо возразить против обработки на основании законных интересов. Эти права зависят от обстоятельств и применимого закона. Напиши на <0>hello@lymi.app</0>; перед выполнением запроса мы можем проверить твою личность. Ты можешь подать жалобу в <1>Инспекцию по защите данных Эстонии</1> или местный надзорный орган."
 
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "Ты знаешь <0>{term}</0>. Его пиньинь исчезает из примеров на всех твоих карточках."
@@ -5161,9 +5002,6 @@ msgstr "Начинаешь с раздела <0>{first}</0>. Когда выуч
 msgid "You’re welcome"
 msgstr "Не за что"
 
-msgid "Your account"
-msgstr "Твой аккаунт"
-
 msgid "Your assistant can also tell you what’s due before the next lesson, or which words you keep getting wrong, so you can ask your tutor about them."
 msgstr "Ассистент также подскажет, что нужно повторить до следующего урока или какие слова ты постоянно забываешь, чтобы ты спросил о них репетитора."
 
@@ -5179,14 +5017,8 @@ msgstr "Ассистент выбирает термины, оставляет �
 msgid "Your assistant reads the file, picks out the terms and adds them in one go. Later it can tell you which ones you keep missing."
 msgstr "Ассистент читает файл, выбирает термины и добавляет их за раз. Позже он подскажет, какие из них ты постоянно забываешь."
 
-msgid "Your cards and learning"
-msgstr "Твои карточки и обучение"
-
 msgid "Your cards, as you learn them"
 msgstr "Твои карточки по мере изучения"
-
-msgid "Your choices and rights"
-msgstr "Твой выбор и права"
 
 msgid "Your data is yours"
 msgstr "Твои данные — твои"
@@ -5194,8 +5026,8 @@ msgstr "Твои данные — твои"
 msgid "Your own app"
 msgstr "Своё приложение"
 
-msgid "Your sign-in is kept in the iOS Keychain. It is shared, through Lymi’s own keychain group, with Lymi’s share extension and Shortcuts action so they can add cards for you."
-msgstr "Твой вход хранится в Связке ключей iOS. Через собственную группу ключей Lymi он доступен расширению для отправки и действию Shortcuts от Lymi, чтобы они могли добавлять карточки за тебя."
+msgid "Your rights and choices"
+msgstr "Твои права и выбор"
 
 msgid "Your state"
 msgstr "Твоя земля"

@@ -154,6 +154,8 @@ Every run writes a final summary with its selected browser and component coverag
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 
+Comment `/review` on a pull request for an agent review in [`claude-review.yml`](../.github/workflows/claude-review.yml): it follows [the review-pr skill](../.agents/skills/review-pr/SKILL.md) and [`REVIEW.md`](../REVIEW.md) at the head commit, with the skill and guide read from `main`, and accepts only the repository owner and only branches in this repository. It reacts 👀 when it starts and comments with the run link when it does not finish. It bills Kateryna's Claude subscription, which the parallel agent sessions share, so it runs only when asked; a newer `/review` on the same pull request cancels the one in progress. A fresh local session runs the same skill before merge without CI.
+
 Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, and the file, line and title of every failing test. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
 
 A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. Successful shards retain no browser artifacts.

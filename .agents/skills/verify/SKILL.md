@@ -79,6 +79,10 @@ Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<
 
 The runner closes the browser it opened. Stop the server with `node .agents/skills/verify/scripts/server.mjs stop`, which ends only the process group `start` recorded; a server another worktree or the launch configuration started stays up. Keep the evidence. A failing step is a finding to report or fix, never a reason to delete its files.
 
+## Nightly on main
+
+[`verify-nightly.yml`](../../../.github/workflows/verify-nightly.yml) drives every feature in the map on `main` each night against `server.mjs start` on a runner, retrying a failing feature once. A feature that fails both times has exactly one open issue labelled `verify: nightly`, naming the failing step, its error, the commit and the evidence artifact; later failures edit that issue, with a comment only when the failing step changes, and a night it passes again comments and closes it. A night that cannot install, start the server or drive at all opens or updates one **Nightly verify could not start** issue instead and leaves the feature issues alone. Dispatch the workflow with `features` to drive some features now.
+
 ## Publish the verdict
 
 ```bash

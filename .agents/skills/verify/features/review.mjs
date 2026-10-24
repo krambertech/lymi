@@ -1,7 +1,7 @@
 export const title = "Review";
 export const start = "/today";
 
-/** Wait for the grade outbox to reach the server: the review count is the stored proof. */
+/** Wait for the grade outbox to reach the server; the stored review count is the proof. */
 async function reviewsReach(api, expect, count) {
   await expect.poll(async () => (await api("/api/dev/state")).counts.reviews).toBe(count);
   return (await api("/api/dev/state")).counts;

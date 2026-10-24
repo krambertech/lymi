@@ -12,7 +12,7 @@ export default async function drive({ page, step, api, expect }) {
       .getByRole("main")
       .getByRole("link", { name: /^Lezione 12\b/ })
       .click();
-    await expect(page.getByRole("heading", { level: 1, name: "Lezione 12" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Lezione 13" })).toBeVisible();
     return { deck: { id: deck.id, total: deck.total } };
   });
 

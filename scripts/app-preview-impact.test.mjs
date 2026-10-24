@@ -12,6 +12,13 @@ test("requires a preview for the product and its build inputs", () => {
   assert.equal(requiresAppPreview([".github/workflows/ci.yml"]), true);
 });
 
+test("requires a preview for a verify recipe or its runner, which CI drives on it", () => {
+  assert.equal(requiresAppPreview([".agents/skills/verify/features/review.mjs"]), true);
+  assert.equal(requiresAppPreview([".agents/skills/verify/scripts/run.mjs"]), true);
+  assert.equal(requiresAppPreview([".agents/skills/verify/features/review.md"]), false);
+  assert.equal(requiresAppPreview([".agents/skills/verify/SKILL.md"]), false);
+});
+
 test("skips site-only, documentation, design-source, and agent-only changes", () => {
   assert.equal(requiresAppPreview(["apps/site/src/pages/index.astro"]), false);
   assert.equal(requiresAppPreview(["DESIGN.md"]), false);

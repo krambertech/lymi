@@ -14,6 +14,6 @@
 
 ## Verification
 
-<!-- List only checks actually run and their result. Report skipped checks directly. For a product change, name the features driven with the verify skill and the evidence folder. An independent reviewer adds the live verdict (PASS, PASS+NOTES or FAIL) against the head SHA; a phone change says whether it was driven on the Mac. -->
+<!-- List only checks actually run and their result. Report skipped checks directly. For a product change, name the features driven with the verify skill and the evidence folder. CI's verify comment carries the live verdict (PASS, PASS+NOTES or FAIL) at the head SHA; a phone change says whether it was driven on the Mac. -->
 
 <!-- Add Why, Risks, or Follow-ups only when material. Keep each optional section to one short paragraph or up to three bullets. Omit passing logs, implementation inventories, empty sections, decorative emoji, and generated-by footers. -->

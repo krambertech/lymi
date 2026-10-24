@@ -41,6 +41,8 @@ jobs:
       run_app_preview: ${{ steps.coverage.outputs.run_app_preview }}
       run_site_preview: ${{ steps.coverage.outputs.run_site_preview }}
       reason: ${{ steps.coverage.outputs.reason }}
+      verify_features: ${{ steps.verify.outputs.verify_features }}
+      verify_reason: ${{ steps.verify.outputs.verify_reason }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -66,6 +68,14 @@ jobs:
           else
             node scripts/ci-plan.mjs < /dev/null
           fi
+
+      - name: Select verify features
+        id: verify
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | node scripts/verify-impact.mjs | tee -a "$GITHUB_STEP_SUMMARY"
 
   quality:
     needs: plan
@@ -359,6 +369,9 @@ jobs:
     environment:
       name: app-preview
       url: ${{ steps.infrastructure.outputs.entry_url }}
+    outputs:
+      url: ${{ steps.preview.outputs.url }}
+      version_id: ${{ steps.preview.outputs.version_id }}
     steps:
       - uses: actions/checkout@v5
 
@@ -454,3 +467,149 @@ jobs:
         env:
           PREVIEW_ENTRY_URL: ${{ steps.infrastructure.outputs.entry_url }}
         run: node scripts/check-app-preview.mjs
+
+  # Drives the features the diff reaches on the app preview; the verify skill owns the verdict and the rules.
+  verify:
+    name: verify on app preview
+    needs: [plan, app_preview]
+    if: needs.app_preview.result == 'success' && needs.plan.outputs.verify_features != ''
+    runs-on: ubuntu-latest
+    # A safety net: every feature in the map takes about fifteen minutes on a preview.
+    timeout-minutes: 45
+    # Reads only, since it runs the pull request's recipes; the comment job below holds the write token.
+    permissions:
+      contents: read
+      deployments: read
+    outputs:
+      artifact_url: ${{ steps.evidence.outputs.artifact-url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps --only-shell chromium
+
+      # The link's key is masked before anything prints it and stays in a file, never in a step's env.
+      - name: Find the app preview link
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/verify-ci.mjs preview --sha "$HEAD_SHA" --entry-file "$RUNNER_TEMP/preview-entry"
+
+      - name: Drive the features the diff reaches
+        id: drive
+        env:
+          FEATURES: ${{ needs.plan.outputs.verify_features }}
+          REASON: ${{ needs.plan.outputs.verify_reason }}
+          PREVIEW_URL: ${{ needs.app_preview.outputs.url }}
+          PREVIEW_VERSION_ID: ${{ needs.app_preview.outputs.version_id }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: >-
+          node scripts/verify-ci.mjs drive $FEATURES
+          --url "$PREVIEW_URL" --entry-file "$RUNNER_TEMP/preview-entry"
+          --version "$PREVIEW_VERSION_ID" --sha "$HEAD_SHA" --pr "$PR_NUMBER"
+          --out "$RUNNER_TEMP/evidence" --reason "$REASON"
+
+      - name: Upload evidence
+        id: evidence
+        if: ${{ !cancelled() && steps.drive.outputs.evidence_clean == 'true' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: verify-evidence-pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/evidence
+          retention-days: 30
+
+      - name: Upload verdict
+        if: ${{ !cancelled() && steps.drive.outputs.verdict != '' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: verify-verdict
+          path: ${{ runner.temp }}/evidence/verdict.json
+          retention-days: 7
+
+      - name: Fail on a FAIL verdict
+        if: steps.drive.outputs.verdict == 'FAIL' || steps.drive.outputs.evidence_clean == 'false'
+        run: exit 1
+
+  verify_announce:
+    name: verify announcement
+    needs: [plan, app_preview]
+    if: needs.app_preview.result == 'success' && needs.plan.outputs.verify_features != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+
+      # The script needs no dependencies, and caching a pnpm store that was never created fails the job.
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+
+      - name: Say the preview is being driven
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FEATURES: ${{ needs.plan.outputs.verify_features }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node scripts/verify-ci.mjs comment --phase running --features "$FEATURES" --sha "$HEAD_SHA" --pr "$PR_NUMBER"
+
+  verify_comment:
+    name: verify verdict
+    needs: [plan, app_preview, verify, verify_announce]
+    if: >-
+      !cancelled() &&
+      needs.plan.result == 'success' &&
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+
+      # The script needs no dependencies, and caching a pnpm store that was never created fails the job.
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+
+      - name: Collect the verdict
+        if: needs.verify.result == 'success' || needs.verify.result == 'failure'
+        continue-on-error: true
+        uses: actions/download-artifact@v6
+        with:
+          name: verify-verdict
+          path: ${{ runner.temp }}/verdict
+
+      - name: Keep the verify comment current
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FEATURES: ${{ needs.plan.outputs.verify_features }}
+          REASON: ${{ needs.plan.outputs.verify_reason }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          PREVIEW_RESULT: ${{ needs.app_preview.result }}
+          VERIFY_RESULT: ${{ needs.verify.result }}
+          ARTIFACT_URL: ${{ needs.verify.outputs.artifact_url }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: >-
+          node scripts/verify-ci.mjs comment
+          --features "$FEATURES" --reason "$REASON" --sha "$HEAD_SHA" --pr "$PR_NUMBER"
+          --verdict "$RUNNER_TEMP/verdict/verdict.json" --artifact-url "$ARTIFACT_URL"

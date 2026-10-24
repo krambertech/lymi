@@ -6,6 +6,8 @@ const appPreviewPrefixes = [
   "packages/core/",
   "packages/design/",
   "scripts/",
+  // CI drives the verify recipes on the preview, so a recipe change needs one to prove itself.
+  ".agents/skills/verify/scripts/",
 ];
 
 const appPreviewFiles = new Set([
@@ -23,6 +25,7 @@ export function requiresAppPreview(paths) {
   return paths.some((path) => {
     if (appPreviewFiles.has(path)) return true;
     if (isTestFile(path)) return false;
+    if (path.startsWith(".agents/skills/verify/features/")) return path.endsWith(".mjs");
     return appPreviewPrefixes.some((prefix) => path.startsWith(prefix));
   });
 }

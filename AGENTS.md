@@ -64,6 +64,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
 | Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |
 | Files under `apps/web/src/client` are kebab-case | Biome `useFilenamingConvention` |
+| Every verify recipe has a row naming the paths that reach it, so CI drives it on the pull requests it affects | `scripts/verify-impact.test.mjs` |
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |
 | Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |

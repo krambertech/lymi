@@ -11,6 +11,7 @@ import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
 import { languagePrompts } from "../languages";
+import { requireAi } from "./ai-consent";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { getSettings } from "./settings";
@@ -39,7 +40,7 @@ const MAX_WORDS = 6;
 export { hookable } from "@lymi/core";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HOOK_PROMPT_VERSION = 6;
+export const HOOK_PROMPT_VERSION = 7;
 
 export const HOOK_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",
@@ -228,6 +229,7 @@ export async function hookDraftFor(
   if (card.userId !== ctx.userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
+  await requireAi(ctx);
   const { meaningLanguage } = await getSettings(ctx);
   const subject = {
     term: card.term,

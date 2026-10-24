@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage, ImportSource } from "@lymi/core";
-import { Download, Trash2 } from "lucide-react";
+import { Download, ShieldCheck, Trash2 } from "lucide-react";
 import type { ReactElement, ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
@@ -15,6 +15,7 @@ import { Skeleton } from "../components/skeleton";
 import { Field, FieldLabel } from "../components/ui/field";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "../components/ui/select";
 import type { Me } from "../lib/api";
+import { localizedSiteUrl } from "../lib/origins";
 import type { ThemeChoice } from "../lib/theme";
 
 export interface SettingsProps {
@@ -139,6 +140,21 @@ export function SettingsView({
         description={t`Import decks from another app. Pictures, tags and review history come with them. Your other app is unchanged.`}
       >
         <ImportSources sourceLink={importLink} />
+      </SettingsGroup>
+
+      <SettingsGroup
+        id="privacy"
+        title={t`Privacy`}
+        description={t`What Lymi keeps, who helps provide it, and the choices you have.`}
+      >
+        <Button
+          variant="secondary"
+          className="justify-self-start"
+          render={<a href={localizedSiteUrl("/privacy", i18n.locale)} />}
+        >
+          <ShieldCheck data-icon="inline-start" aria-hidden="true" />
+          <Trans>Privacy policy</Trans>
+        </Button>
       </SettingsGroup>
 
       {deleteAccountLink && (

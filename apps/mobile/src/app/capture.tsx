@@ -3,7 +3,7 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { isolate } from "@lymi/core";
+import { fitsExample, isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -24,6 +24,7 @@ import { tagsSummary } from "../capture/tags";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useOwnedDecks, useSections } from "../data/queries";
 import { formatList } from "../i18n/list";
+import { useAiConsent } from "../privacy/ai-consent";
 import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { FieldError } from "../ui/field";
@@ -83,6 +84,9 @@ function Composer() {
   const deckSaid = said(t`Deck`, deckName);
   const list = formatList(tags.map(isolate), i18n.locale);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
+  const consent = useAiConsent("add");
+  // A no from the learner turns the chip off; an unanswered choice keeps it on and asks at Add.
+  const aiOn = enrich && consent.choice !== false;
   // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
   const { term: named } = useLocalSearchParams<{ term?: string }>();
   const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY, term: named?.trim() ?? "" }));
@@ -117,6 +121,11 @@ function Composer() {
       return;
     }
     if (!deck || pending) return;
+    // Refused here rather than by the server, so a card queued offline is never refused later.
+    if (!fitsExample(draft.example.trim())) {
+      setError(t`Keep the example under 250 characters.`);
+      return;
+    }
     // The server refuses a description that names the answer, so it is fixed before the card exists.
     if (describesAnswer({ term: text, meaning: draft.meaning.trim() }, picture)) {
       open("picture");
@@ -128,6 +137,7 @@ function Composer() {
     setPending(true);
     setError(null);
     try {
+      const filled = aiOn && (consent.allowed || (await consent.ask()));
       const { outcome, queued } = await writes.addCard({
         ...addInput({
           deckId: deck.id,
@@ -136,7 +146,7 @@ function Composer() {
           reviewModes: modes,
           tags,
         }),
-        enrich,
+        enrich: filled,
       });
       haptics.added();
       if (outcome.status === "skipped") {
@@ -252,7 +262,10 @@ function Composer() {
                   submitFrom="meaning"
                   onSubmit={() => void add()}
                   placeholder={{
-                    meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
+                    meaning: aiOn ? t`Leave it empty and the AI fills it in` : t`What it means`,
+                    ...(aiOn && deck.enrichFields.includes("exampleTranslation")
+                      ? { exampleTranslation: t`AI translates it after you save` }
+                      : {}),
                   }}
                   footer={
                     error && (
@@ -274,15 +287,16 @@ function Composer() {
                     <FieldChip
                       icon="ai"
                       tone="ai"
-                      on={enrich}
-                      checked={enrich}
+                      on={aiOn}
+                      checked={aiOn}
                       accessibilityLabel={t`Fill in the rest with AI`}
-                      onPress={() => {
-                        setEnrich(!enrich);
-                        captureStore.set(CAPTURE_KEYS.enrich, !enrich);
+                      onPress={async () => {
+                        if (!aiOn && consent.choice === false && !(await consent.ask())) return;
+                        setEnrich(!aiOn);
+                        captureStore.set(CAPTURE_KEYS.enrich, !aiOn);
                       }}
                     >
-                      {enrich ? t`AI fills in` : t`AI off`}
+                      {aiOn ? t`AI fills in` : t`AI off`}
                     </FieldChip>
                   </ChipIn>
                   {recentFirst([
@@ -394,6 +408,7 @@ function Composer() {
           )}
         </OnGlass>
       </KeyboardRoom>
+      {consent.sheet}
       {/* Filled from its first frame, since iOS sizes the sheet to what it holds as it rises. */}
       <Sheet
         {...sheet}

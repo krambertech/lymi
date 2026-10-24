@@ -24,7 +24,7 @@ afterAll(async () => {
 describe("a deck's enrichment settings", () => {
   it("start from the deck's language until the owner chooses", async () => {
     const deck = await createDeck(owner, { name: "Eesti", defaultLanguage: "et" });
-    expect(deck.enrichFields).toEqual(["meaning", "example", "notes"]);
+    expect(deck.enrichFields).toEqual(["meaning", "example", "exampleTranslation", "notes"]);
     const chosen = await updateDeck(owner, deck.id, { enrichFields: ["meaning"] });
     expect(chosen.enrichFields).toEqual(["meaning"]);
     // A chosen list stays the owner's when the language changes.
@@ -136,6 +136,7 @@ describe("a deck's enrichment settings", () => {
         name: "deck_enrichment_changed",
         meaning: true,
         example: false,
+        example_translation: false,
         notes: true,
         pronunciation: false,
         has_instructions: true,

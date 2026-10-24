@@ -6,7 +6,7 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
-import { runsEverything, selectComponentInstances } from "./test-plan.mjs";
+import { requiresWorkersTests, runsEverything, selectComponentInstances } from "./test-plan.mjs";
 
 const routeTree = "apps/web/src/client/routeTree.gen.ts";
 
@@ -50,6 +50,9 @@ export function planSteps({ base, paths, hasRouteTree }) {
     vitest("@lymi/web"),
     vitest("@lymi/site"),
     vitest("@lymi/mobile"),
+    ...(requiresWorkersTests(paths)
+      ? [{ label: "Workers-runtime tests", args: ["--filter", "@lymi/web", "test:workers"] }]
+      : []),
     ...(paths.some((path) => path.startsWith("scripts/"))
       ? [{ label: "script tests", command: "node", args: ["--test", "scripts/*.test.mjs"] }]
       : []),

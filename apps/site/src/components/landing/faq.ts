@@ -104,6 +104,35 @@ export const CHINESE_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const UKRAINIAN_QUESTIONS: Question[] = [
+  {
+    id: "stress",
+    question: msg`Does Lymi show where the stress falls?`,
+    answer: msg`Yes. A card shows its word with a stress mark until the card is Known, then the word as Ukrainians write it. Turning a card over always shows the mark, and the examples on your cards keep theirs.`,
+  },
+  {
+    id: "homographs",
+    question: msg`What about words spelled the same?`,
+    answer: msg`Each stress is its own word. за́мок, a castle, and замо́к, a lock, are two cards, each with its own stress and its own sound.`,
+  },
+  {
+    id: "russian",
+    question: msg`Will the AI slip into Russian?`,
+    answer: msg`It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week.`,
+  },
+  {
+    id: "review",
+    question: msg`What does a card ask me?`,
+    answer: msg`One way at a time: the Ukrainian for its meaning, or the meaning for the Ukrainian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Cards keep their schedule and their word recordings.`,
+  },
+  ...COMMON,
+];
+
 export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "kana",

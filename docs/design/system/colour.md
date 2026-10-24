@@ -77,6 +77,7 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 
 8. A warning that an action is out of reach for now, as `Notice tone="warning"`: an `amber-mark` icon and ink text on `amber-soft`, above the controls it disables. It asks the learner to come back, so it is the one notice that is not neutral.
 9. The phone's chosen tab: its filled icon in `amber-mark` and its label in `amber-text`. It is the one selected state that is amber, because native tab bars tint the tab the learner is on and ink alone barely parts it from the muted rest; the web's rail keeps its ink row ([phone.md](phone.md)).
+10. On the phone, an example being read aloud in review: its text takes `amber-text` while loading and playing, then returns to its reading colour. This is feedback for the learner's press on the example, which has no separate speaker there; the web keeps its quiet speaker ([phone.md](phone.md#review)).
 
 A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 

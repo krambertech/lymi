@@ -1,6 +1,12 @@
 import { expoClient } from "@better-auth/expo/client";
 import { requireUpdate } from "@lymi/client/update-required";
-import { CLIENT_HEADER, formatClientHeader, type PhoneClient, UpdateRequiredOut } from "@lymi/core";
+import {
+  AppLanguage,
+  CLIENT_HEADER,
+  formatClientHeader,
+  type PhoneClient,
+  UpdateRequiredOut,
+} from "@lymi/core";
 import { emailOTPClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import Constants from "expo-constants";
@@ -17,6 +23,10 @@ export const SITE_URL = process.env.EXPO_PUBLIC_SITE_URL ?? "https://lymi.app";
 
 /** A page of the public site, such as `/docs/api`. */
 export const siteUrl = (path: string) => `${SITE_URL}${path}`;
+
+/** A public page in the app's language, since lymi.app serves `/uk/` and `/ru/` editions of it. */
+export const localizedSiteUrl = (path: string, locale: string) =>
+  siteUrl(AppLanguage.safeParse(locale).success && locale !== "en" ? `/${locale}${path}` : path);
 
 /** The scheme in app.json, which the Worker trusts as the phone's origin. */
 const SCHEME = "lymi";

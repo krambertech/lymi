@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* One store screenshot. render.mjs sets the query: style, theme, size, index, src, caption. */
+  @font-face {
+    font-family: "Onest";
+    src: url("../../../../node_modules/.pnpm/@fontsource-variable+onest@5.3.1/node_modules/@fontsource-variable/onest/files/onest-latin-wght-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: "Onest";
+    src: url("../../../../node_modules/.pnpm/@fontsource-variable+onest@5.3.1/node_modules/@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  }
+  :root {
+    --w: 1320px;
+    --h: 2868px;
+    --canvas: oklch(0.975 0.004 80);
+    --text: oklch(0.2 0.016 55);
+    --text-2: oklch(0.38 0.016 55);
+    --edge: oklch(0.2 0.03 60 / 0.1);
+    --pool: oklch(0.9 0.09 78 / 0.5);
+    }
+  /* Google Play allows at most 1:2, so its size is wider than an iPhone screen. */
+  [data-size="play"] { --w: 1440px; --h: 2880px; }
+  [data-size="feature"] { --w: 1024px; --h: 500px; }
+  [data-theme="dark"] {
+    --canvas: oklch(0.17 0.008 62);
+    --text: oklch(0.95 0.01 85);
+    --text-2: oklch(0.8 0.014 75);
+    --edge: oklch(1 0 0 / 0.07);
+    --pool: oklch(0.78 0.15 74 / 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: "Onest", system-ui, sans-serif;
+    position: relative;
+  }
+  .caption {
+    position: absolute;
+    top: 300px;
+    inset-inline: 140px;
+    font-weight: 600;
+    font-size: 116px;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  /* Canvas: flat ground in the screen's own theme, the screen with a hairline edge. */
+  .shot {
+    position: absolute;
+    display: block;
+    width: 940px;
+    inset-inline-start: calc((var(--w) - 940px) / 2);
+    top: 760px;
+    border-radius: 99px;
+    box-shadow: 0 0 0 4px var(--edge);
+  }
+
+  /* Panorama: one gradient runs across the whole set, so the shots join up when swiped. */
+  [data-style="panorama"] body {
+    background: linear-gradient(90deg in oklch, oklch(0.97 0.02 85), oklch(0.91 0.07 74) 30%, oklch(0.83 0.13 68) 52%, oklch(0.5 0.09 48) 76%, oklch(0.2 0.02 60) 96%);
+    background-size: calc(var(--w) * 6) 100%;
+    background-position: calc(var(--w) * var(--i) * -1) 0;
+  }
+  [data-style="panorama"][data-index="4"],
+  [data-style="panorama"][data-index="5"] { --text: oklch(0.96 0.01 85); --edge: oklch(1 0 0 / 0.12); }
+
+  /* Glow: a soft round light behind each screen. */
+  [data-style="glow"] body::before {
+    content: "";
+    position: absolute;
+    inset: 420px -320px -160px;
+    background: radial-gradient(circle closest-side, oklch(0.8 0.15 70 / 0.95), oklch(0.87 0.11 76 / 0.5) 55%, transparent);
+  }
+  [data-style="glow"][data-theme="dark"] body::before {
+    background: radial-gradient(circle closest-side, oklch(0.72 0.15 66 / 0.7), oklch(0.6 0.12 60 / 0.25) 55%, transparent);
+  }
+
+  /* Play's feature graphic: the lockup in the lit room. */
+  [data-style="feature"] { --canvas: oklch(0.17 0.008 62); }
+  [data-style="feature"] body::before {
+    content: "";
+    position: absolute;
+    inset: -300px auto -300px -200px;
+    width: 900px;
+    background: radial-gradient(closest-side, oklch(0.78 0.15 74 / 0.26), transparent);
+  }
+  [data-style="feature"] .lockup { position: absolute; height: 190px; inset-inline-start: 110px; top: 105px; }
+  [data-style="feature"] .caption { inset-inline: 110px 60px; top: 330px; font-size: 56px; font-weight: 500; color: oklch(0.8 0.014 75); }
+</style>
+</head>
+<body>
+<img class="lockup" alt="Lymi" src="../../../site/public/brand/lockup-dark.svg" hidden>
+<p class="caption"></p>
+<img class="shot" alt="">
+<script>
+  const q = new URLSearchParams(location.search);
+  const style = q.get("style") ?? "canvas";
+  document.documentElement.lang = q.get("lang") ?? "en";
+  document.documentElement.dataset.style = style;
+  document.documentElement.dataset.theme = q.get("theme") ?? "light";
+  document.documentElement.dataset.size = q.get("size") ?? "iphone";
+  const caption = document.querySelector(".caption");
+  caption.textContent = q.get("caption") ?? "";
+  // A long translation shrinks until it fits three lines above the screen; render.mjs calls it once Onest has loaded.
+  window.fit = () => {
+    if (style === "feature") return;
+    let size = Number.parseFloat(getComputedStyle(caption).fontSize);
+    while (caption.getBoundingClientRect().height > size * 1.08 * 3 + 1 && size > 60) {
+      size -= 4;
+      caption.style.fontSize = `${size}px`;
+    }
+  };
+  const shot = document.querySelector(".shot");
+  if (style === "feature") {
+    shot.remove();
+    document.querySelector(".lockup").hidden = false;
+  } else shot.src = q.get("src");
+  document.documentElement.dataset.index = q.get("index") ?? "0";
+  document.documentElement.style.setProperty("--i", q.get("index") ?? "0");
+</script>
+</body>
+</html>

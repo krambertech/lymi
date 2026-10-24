@@ -195,6 +195,18 @@ export const cards = sqliteTable(
     exampleSource: text("example_source", { enum: ["lesson", "ai", "manual"] }),
     pronunciationSource: text("pronunciation_source", { enum: ["lesson", "ai", "manual"] }),
     notesSource: text("notes_source", { enum: ["lesson", "ai", "manual"] }),
+    /**
+     * The example in the meaning language. Not an edition field: an edition holds its own, so
+     * writing one leaves `revision` alone. Empty is a deliberate clear the AI never refills.
+     */
+    exampleTranslation: text("example_translation"),
+    exampleTranslationSource: text("example_translation_source", {
+      enum: ["lesson", "ai", "manual"],
+    }),
+    /** `exampleFingerprint` of the example the translation was written for, so a changed example shows. */
+    exampleTranslationOf: text("example_translation_of"),
+    /** Set while the AI is translating the example, and cleared once it settles. */
+    exampleTranslationStatus: text("example_translation_status", { enum: ["working", "failed"] }),
     /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
     hook: text("hook"),
     hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
@@ -311,6 +323,9 @@ export const userSettings = sqliteTable("user_settings", {
   appLanguage: text("app_language"),
   analyticsConsent: integer("analytics_consent", { mode: "boolean" }),
   analyticsConsentUpdatedAt: integer("analytics_consent_updated_at", { mode: "timestamp_ms" }),
+  /** Whether Lymi may send the learner's content to AI services. Null until they answer; the phone treats it as no. */
+  aiConsent: integer("ai_consent", { mode: "boolean" }),
+  aiConsentUpdatedAt: integer("ai_consent_updated_at", { mode: "timestamp_ms" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
@@ -637,6 +652,8 @@ export const cardLocalizations = sqliteTable(
     pronunciation: text("pronunciation"),
     example: text("example"),
     notes: text("notes"),
+    /** The example in this edition's language. Shown only while the row is current, never the original's. */
+    exampleTranslation: text("example_translation"),
     ...localization,
   },
   (t) => [

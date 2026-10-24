@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
-import { decksQuery } from "@lymi/client/queries";
+import { aiChoice } from "@lymi/client/ai-consent";
+import { decksQuery, settingsQuery } from "@lymi/client/queries";
 import { isolate } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import Constants from "expo-constants";
@@ -72,6 +73,8 @@ function write(state: ShareState) {
 export function ShareSync({ signedIn }: { signedIn: boolean }) {
   const strings = useShareStrings();
   const decks = useQuery({ ...decksQuery, enabled: signedIn });
+  // The sheet can't ask, so without the learner's yes it starts with AI off; the server agrees.
+  const aiAllowed = aiChoice(useQuery({ ...settingsQuery, enabled: signedIn }).data) === true;
   const [active, setActive] = useState(0);
   const [deckId, setDeckId] = useState(() => captureStore.getString(CAPTURE_KEYS.deck) ?? null);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
@@ -110,7 +113,7 @@ export function ShareSync({ signedIn }: { signedIn: boolean }) {
       apiUrl: API_URL,
       decks: JSON.parse(decksKey) as ShareState["decks"],
       deckId,
-      enrich,
+      enrich: enrich && aiAllowed,
       strings: JSON.parse(stringsKey) as Record<string, string>,
     };
     if (!signedIn) {
@@ -125,7 +128,7 @@ export function ShareSync({ signedIn }: { signedIn: boolean }) {
     return () => {
       live = false;
     };
-  }, [signedIn, loaded, decksKey, stringsKey, deckId, enrich, active]);
+  }, [signedIn, loaded, decksKey, stringsKey, deckId, enrich, aiAllowed, active]);
 
   return null;
 }

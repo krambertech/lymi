@@ -9,6 +9,7 @@ pnpm verify:changed   # push gate: static checks on everything, tests for what c
 pnpm verify           # full gate: check, build, typecheck, every test on every instance
 pnpm test:watch       # save gate: the unit project and desktop Chromium in watch mode
 pnpm test             # unit tests and the CI impact rules
+pnpm test:workers     # outgoing fetches in workerd against a stubbed upstream
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
 pnpm test:e2e:chromium # Chromium desktop only
 pnpm test:e2e:ui      # Playwright's interactive UI
@@ -55,10 +56,13 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 | Biome, interface strings, migration safety, TypeScript | — | all | all | all |
 | Production build and deployment boundaries | — | on handover | yes | yes |
 | Unit, service and route tests | changed graph | changed graph | all | all |
+| Workers-runtime tests | — | when server or core changed | when server or core changed | all |
 | Component tests, desktop Chromium | changed graph | changed graph | all | all |
 | Component tests, touch Chromium and WebKit | — | — | when the diff reaches the primitives | all |
 | Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
 | Deployment package dry runs | — | — | production-affecting diffs | both |
+
+The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `scripts/launch-check.js` passes once a product page has the bridge.
 
 - **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
@@ -173,6 +177,12 @@ The product project also sets `POSTHOG_CLI_API_KEY` as a secret build variable: 
 Committed migrations are immutable production history. `pnpm db:generate` creates the SQL and Drizzle snapshots and updates `scripts/migration-manifest.json`; do not edit those generated files by hand. `pnpm check:migrations` runs Drizzle's migration consistency check, verifies the immutable filenames and checksums, and generates into a temporary directory to catch a schema change whose migration was forgotten. Generate a new migration after syncing with `origin/main`; never reuse a number from another branch.
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
+
+## Workers-runtime tests
+
+`apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: on 2026-10-17 `redirect: "error"` passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.
+
+Add a case there, and an answer to the stub, for any new outgoing fetch or any new use of an API only Workers provides. `biome-plugins/no-redirect-error.grit` catches the one option known to break; this project catches the next one. `scripts/test-plan.mjs` runs it in `pnpm verify:changed` and on pull requests that reach `apps/web/src/server/` or `packages/core/`, and `pnpm verify` and every push to `main` run it always.
 
 ## Route tests through the Worker's fetch handler
 

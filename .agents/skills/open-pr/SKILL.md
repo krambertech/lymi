@@ -15,12 +15,14 @@ Review-ready means the PR contains only the intended diff, required checks pass,
 - Preserve unrelated work and isolate the intended change on a focused branch. Include uncommitted changes that clearly belong to the requested PR; ask only when ownership is ambiguous.
 - Update the existing PR for the branch when one exists instead of creating a duplicate.
 - Follow the repository's recovery workflow for branches based on the pre-migration history.
+- Base the PR on `main` unless the change needs the code of another open PR. Then make it a layer of a native stack with `gh stack`, following the stacked section of the Git workflow; never pass `--base <branch>` to `gh pr create`.
 
 Continue only when the intended PR diff is isolated and understood.
 
 ## Prepare the change
 
 - Review the complete diff against the request and repository invariants. Remove scope creep, debug remnants, and accidental generated changes.
+- Gather the proof this kind of change needs under [Proof matches the change](../../../AGENTS.md#before-you-push).
 - Run `pnpm verify:changed` plus any focused, E2E, visual, migration, or integration verification required by the change. Fix failures before opening the PR.
 - For a product change, drive every feature the diff reaches with the [verify skill](../verify/SKILL.md) and name its evidence folder under Verification. This is the author's run; the live verdict comes later from an independent reviewer on the app preview.
 - Derive a Conventional Commit title from the actual change and the Git workflow.
@@ -31,7 +33,7 @@ Continue only when the final diff is reviewable and every available required loc
 
 ## Open or update the PR
 
-- Commit the intended change, push its branch, then create or update the PR against `main` from the filled template.
+- Commit the intended change, push its branch, then create or update the PR against `main` from the filled template. For a stacked layer, `gh stack submit` pushes and opens the PR; then set its title and body from the template with `gh pr edit`.
 - Attach every required image in the same operation when possible, then read the PR back and confirm its base, title, body, displayed diff, uploaded image references, and URL.
 - If a required screenshot cannot be saved or attached, keep the PR in the **blocked** state, hand the files or exact failure to the user, and say that the visual evidence is not attached.
 

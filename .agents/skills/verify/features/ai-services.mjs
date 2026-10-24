@@ -28,7 +28,7 @@ export default async function drive({ page, step, api, expect }) {
   await step("Turn AI services on again", async () => {
     await toggle.click();
     await expect(toggle).toBeChecked();
-    await expect(group).toContainText("Cards go to OpenAI");
+    await expect(group).toContainText("On. Lymi sends your cards");
     await expect.poll(async () => (await api("/api/settings")).aiConsent).toBe(true);
   });
 }

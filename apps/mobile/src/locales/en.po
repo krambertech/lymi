@@ -851,8 +851,8 @@ msgstr "Add a lesson"
 msgid "Add a word"
 msgstr "Add a word"
 
-msgid "Add a word and AI writes its meaning, an example and how it sounds. Before it does, Lymi needs your permission to send these to AI services."
-msgstr "Add a word and AI writes its meaning, an example and how it sounds. Before it does, Lymi needs your permission to send these to AI services."
+msgid "Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services."
+msgstr "Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services."
 
 msgid "Add and review"
 msgstr "Add and review"
@@ -959,6 +959,9 @@ msgstr "AI pronunciation"
 msgid "AI services"
 msgstr "AI services"
 
+msgid "AI writes the meaning, an example and notes. Sends the card’s text."
+msgstr "AI writes the meaning, an example and notes. Sends the card’s text."
+
 msgid "AI wrote part of this card"
 msgstr "AI wrote part of this card"
 
@@ -979,15 +982,6 @@ msgstr "All your decks and their history, not decks shared with you."
 
 msgid "All your decks, with schedules and review history."
 msgstr "All your decks, with schedules and review history."
-
-msgid "Allow"
-msgstr "Allow"
-
-msgid "Allow AI services in You to hear this word."
-msgstr "Allow AI services in You to hear this word."
-
-msgid "Allowed"
-msgstr "Allowed"
 
 msgctxt "deck tag"
 msgid "Alphabet"
@@ -1290,6 +1284,9 @@ msgstr "cards"
 
 msgid "Cards"
 msgstr "Cards"
+
+msgid "Cards filled in for you"
+msgstr "Cards filled in for you"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
@@ -1962,8 +1959,8 @@ msgstr "Done"
 msgid "Draft"
 msgstr "Draft"
 
-msgid "Drafting a hook uses AI. Allow AI services in You to draft one."
-msgstr "Drafting a hook uses AI. Allow AI services in You to draft one."
+msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgstr "Drafting a hook uses AI. Turn on AI services in You to draft one."
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Drag a series by its handle. Library shows them in this order."
@@ -2100,6 +2097,9 @@ msgstr "Every shelf"
 msgid "Every term worth a card is already in your decks."
 msgstr "Every term worth a card is already in your decks."
 
+msgid "Every word spoken"
+msgstr "Every word spoken"
+
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 
@@ -2193,9 +2193,6 @@ msgstr "Filipino"
 
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
-
-msgid "Filling in cards"
-msgstr "Filling in cards"
 
 msgid "Filter"
 msgstr "Filter"
@@ -2357,6 +2354,9 @@ msgstr "Has a picture"
 
 msgid "Have an account?"
 msgstr "Have an account?"
+
+msgid "Hear how each term sounds. Sends the term."
+msgstr "Hear how each term sounds. Sends the term."
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2709,11 +2709,17 @@ msgstr "Lesson"
 msgid "Lesson 15"
 msgstr "Lesson 15"
 
+msgid "Lesson pages into cards"
+msgstr "Lesson pages into cards"
+
 msgid "Lesson text"
 msgstr "Lesson text"
 
 msgid "Let AI do the typing"
 msgstr "Let AI do the typing"
+
+msgid "Let AI help with your cards?"
+msgstr "Let AI help with your cards?"
 
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
@@ -2783,8 +2789,8 @@ msgstr "Lymi keeps nothing once the account is gone."
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 
-msgid "Lymi sends what you add to these services. You can change this any time in You."
-msgstr "Lymi sends what you add to these services. You can change this any time in You."
+msgid "Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards."
+msgstr "Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards."
 
 msgid "Lymi was closed before the text arrived. Paste the set again to start over."
 msgstr "Lymi was closed before the text arrived. Paste the set again to start over."
@@ -3164,6 +3170,9 @@ msgstr "Off"
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
+
+msgid "On"
+msgstr "On"
 
 msgid "On quizlet.com, open your set, open its … menu and choose Export."
 msgstr "On quizlet.com, open your set, open its … menu and choose Export."
@@ -3884,8 +3893,11 @@ msgstr "Slovenian"
 msgid "Smart add"
 msgstr "Smart add"
 
-msgid "Smart add reads your lesson with AI. Allow it to find the terms."
-msgstr "Smart add reads your lesson with AI. Allow it to find the terms."
+msgid "Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes."
+msgstr "Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes."
+
+msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
+msgstr "Smart add reads your lesson with AI. Turn on AI to find the terms."
 
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
@@ -4113,12 +4125,6 @@ msgstr "The series is deleted for good."
 msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
 msgstr "The series is deleted for good. Its decks can stay in Library or be archived with it."
 
-msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning."
-msgstr "The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning."
-
-msgid "The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in."
-msgstr "The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in."
-
 msgid "The upload stopped partway"
 msgstr "The upload stopped partway"
 
@@ -4272,6 +4278,9 @@ msgstr "Those terms are already in your decks"
 msgid "Time"
 msgstr "Time"
 
+msgid "To do this, Lymi sends what you add to third-party AI services. You can change it any time in You."
+msgstr "To do this, Lymi sends what you add to third-party AI services. You can change it any time in You."
+
 msgid "To export every deck at once, open Settings and choose Export everything instead."
 msgstr "To export every deck at once, open Settings and choose Export everything instead."
 
@@ -4363,6 +4372,12 @@ msgstr "Turn off link"
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
 
+msgid "Turn on AI"
+msgstr "Turn on AI"
+
+msgid "Turn on AI services in You to hear this word."
+msgstr "Turn on AI services in You to hear this word."
+
 msgid "Turn your notes into cards"
 msgstr "Turn your notes into cards"
 
@@ -4371,9 +4386,6 @@ msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
-
-msgid "Turning it off stops anything new from being sent. What AI already wrote stays on your cards."
-msgstr "Turning it off stops anything new from being sent. What AI already wrote stays on your cards."
 
 msgid "Type them here, or send a lesson from your AI assistant."
 msgstr "Type them here, or send a lesson from your AI assistant."
@@ -4428,9 +4440,6 @@ msgstr "US civics test"
 
 msgid "Use AI with your cards"
 msgstr "Use AI with your cards"
-
-msgid "Use AI with your cards?"
-msgstr "Use AI with your cards?"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -4536,8 +4545,8 @@ msgstr "Who can join"
 msgid "Who’s in this deck needs a connection"
 msgstr "Who’s in this deck needs a connection"
 
-msgid "Without it, you add and review cards as usual."
-msgstr "Without it, you add and review cards as usual."
+msgid "Without it, you write every field yourself and new words aren’t spoken."
+msgstr "Without it, you write every field yourself and new words aren’t spoken."
 
 msgid "Words and phrases in a language you’re learning."
 msgstr "Words and phrases in a language you’re learning."
@@ -4698,9 +4707,6 @@ msgstr "Your own material, whatever it is."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."
-
-msgid "Your photos, PDFs and notes go to Anthropic and Cloudflare."
-msgstr "Your photos, PDFs and notes go to Anthropic and Cloudflare."
 
 msgid "Your set’s text"
 msgstr "Your set’s text"

@@ -13,11 +13,12 @@ Apple's guideline 5.1.2(i) requires apps to say where personal data is shared, n
 
 ## Considered options
 
-- **One switch for every AI call:** accepted. One answer is simpler to explain and to enforce, and each ask lists what each feature sends and where.
+- **One switch for every AI call:** accepted. One answer is simpler to explain and to enforce, and each ask lists what each feature does for the learner and what it sends.
+- **Name each provider in the ask:** rejected. The ask says the content goes to third-party AI services and links the privacy policy, which names the current providers, so a change of provider changes the policy rather than a build.
 - **A switch per feature:** rejected. Four answers to give and keep in step, for a learner who mostly wants AI either on or off.
 - **Leave speech out:** rejected. A term is rarely personal, but the rule reads card text as content and a reviewer can test it.
 - **Grandfather existing accounts:** rejected. Opt-out is what the rule forbids, so existing accounts are asked at their next AI action like new ones.
-- **The system alert:** rejected for a Lymi sheet, which has room to name each service; prototype at https://claude.ai/artifact/WxGg4XwBPiRyEgzerzaGZV.
+- **The system alert:** rejected for a Lymi sheet, which has room to say what each feature does and sends; prototype at https://claude.ai/artifact/WxGg4XwBPiRyEgzerzaGZV.
 
 ## Consequences
 

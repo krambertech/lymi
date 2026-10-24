@@ -22,7 +22,7 @@ export function AiServicesSection() {
     <SettingsGroup
       id="ai"
       title={t`AI services`}
-      description={t`AI fills in your cards, reads lesson pages in Smart add and says your words aloud.`}
+      description={t`AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy.`}
     >
       <div className="grid">
         <div className="edge grid rounded-md bg-plate">
@@ -43,7 +43,7 @@ export function AiServicesSection() {
               </FieldLabel>
               <FieldDescription>
                 {on
-                  ? t`Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken.`
+                  ? t`On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services.`
                   : t`Off. Cards stay as you type them, and words without a saved clip aren’t spoken.`}
               </FieldDescription>
             </FieldContent>

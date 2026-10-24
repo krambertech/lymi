@@ -258,7 +258,7 @@ export function HookSheet({
     if (!editing || drafting) return;
     // This sheet can't hold the ask over itself, so it says where AI is allowed.
     if (aiChoice(settings.data) !== true) {
-      setDraftNote(t`Drafting a hook uses AI. Allow AI services in You to draft one.`);
+      setDraftNote(t`Drafting a hook uses AI. Turn on AI services in You to draft one.`);
       return;
     }
     const asked = opening.current;

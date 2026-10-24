@@ -1031,8 +1031,8 @@ msgstr "AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
-msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
-msgstr "AI доповнює твої картки, читає сторінки уроків у Розумному додаванні та вимовляє твої слова."
+msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
+msgstr "AI доповнює твої картки, читає сторінки уроків у Розумному додаванні та вимовляє твої слова. Які сервіси він використовує, сказано в політиці конфіденційності."
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
@@ -1416,9 +1416,6 @@ msgstr "Картки з вівторкових уроків Марко."
 
 msgid "Cards from this deck"
 msgstr "Картки з цієї колоди"
-
-msgid "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
-msgstr "Картки надсилаються в OpenAI, сторінки уроків — в Anthropic і Cloudflare, а слова для вимови — в Google, OpenAI або ElevenLabs."
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Картки збережуть дати повторення, які мали в {app}."
@@ -3466,6 +3463,9 @@ msgstr "На телефоні або щось не виходить? Прочи�
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com відкрий свій набір, відкрий меню <0>…</0> і вибери <1>Export</1>."
+
+msgid "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
+msgstr "Увімкнено. Lymi надсилає твої картки, сторінки уроків і слова для вимови стороннім AI-сервісам."
 
 msgid "One after another, automatically"
 msgstr "По черзі, автоматично"

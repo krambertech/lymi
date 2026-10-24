@@ -72,7 +72,7 @@ function usePlayAny() {
     // A list has no room for the ask, so it points to where the learner can allow AI.
     if (card.userId === consent.userId && !card.audioKey && !consent.allowed) {
       toast.add({
-        title: t`Allow AI services in You to hear this word.`,
+        title: t`Turn on AI services in You to hear this word.`,
         action: { label: t`Open You`, onPress: () => router.navigate("/you") },
       });
       return;

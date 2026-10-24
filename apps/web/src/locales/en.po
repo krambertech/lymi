@@ -1031,8 +1031,8 @@ msgstr "AI"
 msgid "AI example"
 msgstr "AI example"
 
-msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
-msgstr "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
+msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
+msgstr "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
 
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."
@@ -1416,9 +1416,6 @@ msgstr "Cards from Marco’s Tuesday lessons."
 
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
-
-msgid "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
-msgstr "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Cards keep the due dates they had in {app}."
@@ -3466,6 +3463,9 @@ msgstr "On a phone, or stuck? Read the guide"
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
+
+msgid "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
+msgstr "On. Lymi sends your cards, lesson pages and words to be spoken to third-party AI services."
 
 msgid "One after another, automatically"
 msgstr "One after another, automatically"

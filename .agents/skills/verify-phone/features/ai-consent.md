@@ -1,6 +1,6 @@
 # AI consent
 
-The phone sends nothing to AI services until the learner allows it ([ADR 0038](../../../../docs/adr/0038-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). One sheet, **Use AI with your cards?**, names what each feature sends and where, at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card without a stored clip. Welcome asks as a step before its start choice.
+The phone sends nothing to AI services until the learner allows it ([ADR 0038](../../../../docs/adr/0038-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). One sheet, **Let AI help with your cards?**, says what each feature does and sends, at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card without a stored clip. Welcome asks as a step before its start choice.
 
 ## Reach
 
@@ -8,11 +8,11 @@ Add a word from Today's top bar, with the AI chip on; You → **AI services** fo
 
 ## Drive
 
-[`ai-consent.yaml`](ai-consent.yaml), as `learner`, whose choice a reset leaves unanswered: add `la tempesta` with AI on and answer **Not now**, turn the AI chip back on and **Allow**, add `il fulmine`, then open You → **AI services**.
+[`ai-consent.yaml`](ai-consent.yaml), as `learner`, whose choice a reset leaves unanswered: add `la tempesta` with AI on and answer **Not now**, turn the AI chip back on and **Turn on AI**, add `il fulmine`, then open You → **AI services**.
 
 ## End state
 
-After Not now the card is added and the chip reads **AI off**; after Allow the next add asks nothing. You's row reads **Allowed** and its sheet holds the switch. `/api/settings` reports `aiConsent: true` and both cards are stored.
+After Not now the card is added and the chip reads **AI off**; after Turn on AI the next add asks nothing. You's row reads **On** and its sheet holds the switch. `/api/settings` reports `aiConsent: true` and both cards are stored.
 
 ## Gotchas
 

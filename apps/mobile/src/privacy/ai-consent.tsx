@@ -31,25 +31,28 @@ function ServiceLine({ icon, label, line }: { icon: IconName; label: string; lin
   );
 }
 
-/** What each feature sends and where, the same wherever the learner is asked. */
+/**
+ * What AI does for the learner and what each part sends, the same wherever they are asked. Which
+ * services receive it is in the privacy policy, so a change of provider changes no build. ADR 0038.
+ */
 export function AiServices() {
   const { t } = useLingui();
   return (
     <SheetGroup>
       <ServiceLine
         icon="manual"
-        label={t`Filling in cards`}
-        line={t`The term, meaning, example and notes go to OpenAI, which also drafts hooks and tells which language a shared word or an imported deck is in.`}
+        label={t`Cards filled in for you`}
+        line={t`AI writes the meaning, an example and notes. Sends the card’s text.`}
       />
       <ServiceLine
         icon="camera"
-        label={t`Smart add`}
-        line={t`Your photos, PDFs and notes go to Anthropic and Cloudflare.`}
+        label={t`Lesson pages into cards`}
+        line={t`Smart add finds the words in a photo or your notes. Sends your photos, PDFs and notes.`}
       />
       <ServiceLine
         icon="pronunciation"
-        label={t`Pronunciation`}
-        line={t`The term goes to Google, OpenAI or ElevenLabs to be spoken. For Japanese, Google and Cloudflare also read its reading and meaning.`}
+        label={t`Every word spoken`}
+        line={t`Hear how each term sounds. Sends the term.`}
       />
     </SheetGroup>
   );
@@ -61,7 +64,7 @@ export function openPrivacyPolicy() {
 
 /**
  * The account's answer and a way to ask for it. `ask` opens the sheet and settles once it has gone:
- * true after Allow, false after Not now or a swipe. Render `sheet` in the screen that asks.
+ * true after Turn on AI, false after Not now or a swipe. Render `sheet` in the screen that asks.
  */
 export function useAiConsent(place: AiConsentPlace) {
   const qc = useQueryClient();
@@ -143,8 +146,8 @@ function AiConsentSheet({
         if (!next) onClose();
       }}
       onDismiss={onDismiss}
-      title={t`Use AI with your cards?`}
-      description={t`Lymi sends what you add to these services. You can change this any time in You.`}
+      title={t`Let AI help with your cards?`}
+      description={t`To do this, Lymi sends what you add to third-party AI services. You can change it any time in You.`}
     >
       <AiServices />
       {failed && <SheetError>{t`Couldn’t save. Check your connection and try again.`}</SheetError>}
@@ -153,13 +156,13 @@ function AiConsentSheet({
         onAllow={() => void answer(true)}
         onLater={() => void answer(false)}
       >
-        {t`Without it, you add and review cards as usual.`}
+        {t`Without it, you write every field yourself and new words aren’t spoken.`}
       </ConsentButtons>
     </Sheet>
   );
 }
 
-/** Allow and Not now, with the line under them; Welcome's step uses the same. */
+/** Turn on AI and Not now, with the line under them; Welcome's step uses the same. */
 export function ConsentButtons({
   busy,
   onAllow,
@@ -174,7 +177,7 @@ export function ConsentButtons({
   const { t } = useLingui();
   return (
     <View className="gap-1 pt-1">
-      <Button label={t`Allow`} variant="primary" size="lg" loading={busy} onPress={onAllow} />
+      <Button label={t`Turn on AI`} variant="primary" size="lg" loading={busy} onPress={onAllow} />
       <Button label={t`Not now`} variant="ghost" size="lg" disabled={busy} onPress={onLater} />
       <Text className="pt-1 text-center text-sm text-muted">
         {children}{" "}
@@ -203,7 +206,7 @@ export function AiServicesRow() {
       <Row
         icon="ai"
         label={t`AI services`}
-        value={on ? t`Allowed` : t`Off`}
+        value={on ? t`On` : t`Off`}
         onPress={() => setOpen(true)}
       />
       <Sheet open={open} onOpenChange={setOpen} title={t`AI services`}>
@@ -226,7 +229,7 @@ export function AiServicesRow() {
         )}
         <AiServices />
         <SheetNote>
-          {t`Turning it off stops anything new from being sent. What AI already wrote stays on your cards.`}
+          {t`Lymi sends what you add to third-party AI services, named in the privacy policy. Turning this off stops anything new from being sent; what AI already wrote stays on your cards.`}
         </SheetNote>
       </Sheet>
     </>

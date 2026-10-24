@@ -213,7 +213,7 @@ export default function SmartAdd() {
     if (atLimit) return;
     // The pages leave the phone only once the learner has allowed it.
     if (!consent.allowed && !(await consent.ask())) {
-      setError(t`Smart add reads your lesson with AI. Allow it to find the terms.`);
+      setError(t`Smart add reads your lesson with AI. Turn on AI to find the terms.`);
       return;
     }
     setError(undefined);

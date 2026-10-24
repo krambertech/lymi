@@ -350,7 +350,7 @@ export default function Onboarding() {
             <View className="gap-5">
               <QuestionHeading
                 title={t`Let AI do the typing`}
-                lede={t`Add a word and AI writes its meaning, an example and how it sounds. Before it does, Lymi needs your permission to send these to AI services.`}
+                lede={t`Add a word and AI writes its meaning, an example and how it sounds. To do this, Lymi sends what you add to third-party AI services.`}
               />
               <AiServices />
             </View>

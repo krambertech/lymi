@@ -23,6 +23,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
+| Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Import from Anki | [import.md](features/import.md) |
 | Import from Pleco | [import-pleco.md](features/import-pleco.md) |
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |

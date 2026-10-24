@@ -15,6 +15,7 @@ import {
   settleTranslations,
   translateExamples,
 } from "../services";
+import { aiWithdrawn } from "../services/ai-consent";
 import { textCallReporter, track } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
 import { CARDS_PER_CALL, chunked } from "./prompt";
@@ -58,8 +59,9 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         analyticsContextFor(db, params.userId),
       );
       const provider = createTextProvider(this.env, textCallReporter(analytics, "enrich"));
-      // The key went away between the add and this run, so nothing was ever asked.
-      if (!provider) {
+      // The key went away between the add and this run, or the learner turned AI off since.
+      const withdrawn = await step.do("consent", STEP, () => aiWithdrawn(db, params.userId));
+      if (!provider || withdrawn) {
         await step.do("unconfigured", STEP, async () => {
           if (fills) await settleEnrichment(db, params.userId, params.cardIds);
           await settleTranslations(db, params.userId, params.cardIds);
@@ -98,9 +100,13 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       const translate = async (index: number, ids: string[]) => {
         if (!translator) return;
         try {
-          await step.do(`translate ${index}`, STEP, () =>
-            analytics.run(() => translateExamples(ctx, ids, translator, trigger)),
-          );
+          await step.do(`translate ${index}`, STEP, async () => {
+            if (await aiWithdrawn(db, params.userId)) {
+              await settleTranslations(db, params.userId, ids);
+              return;
+            }
+            await analytics.run(() => translateExamples(ctx, ids, translator, trigger));
+          });
         } catch (err) {
           await step.do(`translate fail ${index}`, STEP, async () => {
             const failed = await failTranslations(db, params.userId, ids);
@@ -130,9 +136,15 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       const first = await learn("style first", { firstOnly: true });
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
-          await step.do(`cards ${index}`, STEP, () =>
-            analytics.run(() => enrichCards(ctx, ids, provider, fillTrigger)),
-          );
+          await step.do(`cards ${index}`, STEP, async () => {
+            // A learner who turns AI off mid-run sends no further chunk.
+            if (await aiWithdrawn(db, params.userId)) {
+              await settleEnrichment(db, params.userId, ids);
+              await settleTranslations(db, params.userId, ids);
+              return;
+            }
+            await analytics.run(() => enrichCards(ctx, ids, provider, fillTrigger));
+          });
         } catch (err) {
           // Inside the step, because code outside one runs again when the engine replays.
           await step.do(`fail ${index}`, STEP, async () => {

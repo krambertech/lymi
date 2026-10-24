@@ -37,6 +37,7 @@ import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { aiAllowedFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
@@ -136,6 +137,9 @@ export async function addCards(
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
+  // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
+  const enrichAllowed =
+    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && (await aiAllowedFor(ctx));
 
   // A create sent again with its id returns the card the first one made, before any check that
   // could now refuse it: its deck may have been archived since the first one landed.
@@ -320,7 +324,7 @@ export async function addCards(
     if (card.reviewModeKeys) filled.add("review_modes");
     const deckFields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
     const filling = fieldsToFill(card, deckFields);
-    const enriches = !!enrichment && wantsEnrichment(input, actor);
+    const enriches = enrichAllowed && wantsEnrichment(input, actor);
     if (enriches && filling.length > 0) {
       card.enrichmentStatus = "working";
       card.enrichmentFields = filling;
@@ -735,6 +739,7 @@ export async function requestEnrichment(
   const { db, userId } = ctx;
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
+  await requireAi(ctx);
   const [deck] = await db
     .select({
       enrichFields: schema.decks.enrichFields,
@@ -974,8 +979,9 @@ async function editLookups(
         .where(and(inArray(schema.sections.id, ids), isNull(schema.sections.archivedAt))),
     ),
   ]);
-  // Only an edit that changes an example can leave one to translate.
-  const translating = enrichment && edits.some((edit) => edit.example !== undefined);
+  // Only an edit that changes an example can leave one to translate, and only with the learner's yes.
+  const translating =
+    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiAllowedFor(ctx));
   const fieldDecks = translating
     ? [...new Set([...[...cards.values()].map((card) => card.deckId), ...deckIds])]
     : [];

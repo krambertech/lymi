@@ -31,7 +31,7 @@ Unexpected errors still reach PostHog Error Tracking: HTTP and MCP failures, exh
 | [Cloudflare Worker issue](#cloudflare-worker-issue) | Cloudflare | Any real-time issue on `lymi` or `lymi-site` |
 | [Cloudflare incident](#cloudflare-incident) | Cloudflare | A major or critical Cloudflare incident |
 | [Errors in production](#errors-in-production) | PostHog | Any `$exception` in an hour |
-| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation` and `lead_in` |
+| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation`, `example_audio` and `lead_in` |
 | [Nobody reviewed yesterday](#nobody-reviewed-yesterday) | PostHog | Zero `review_graded` in a day, checked at 09:00 Tallinn |
 
 Cloudflare alerts are under Observability → Alerts and re-send at most hourly while firing. PostHog alerts are on [the alerts page](https://eu.posthog.com/project/292417/alerts) and read the insights tagged `ops`. The three `lymi_health` alerts use these queries, with Cloudflare supplying the time range:
@@ -98,7 +98,7 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 
 ## AI calls are failing
 
-`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation and its Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
 
 ## Nobody reviewed yesterday
 

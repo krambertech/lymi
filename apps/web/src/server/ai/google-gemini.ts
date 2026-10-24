@@ -39,7 +39,7 @@ export function createGoogleGeminiProvider(
         request: dependencies.request ?? fetch,
         accessToken: dependencies.accessToken,
         body: {
-          input: { text: input.text, prompt: pronunciationPrompt(locale) },
+          input: { text: input.text, prompt: pronunciationPrompt(locale, input.kind) },
           voice: { languageCode: locale, name: voice, modelName: model },
           audioConfig: { audioEncoding: "MP3" },
         },
@@ -53,8 +53,16 @@ export function createGoogleGeminiProvider(
   };
 }
 
-export function pronunciationPrompt(locale: string): string {
+export function pronunciationPrompt(locale: string, kind?: "example"): string {
   const language = languageNames.of(locale) ?? locale;
+  if (kind === "example") {
+    return (
+      `You are a native ${language} speaker reading an example sentence aloud for a learner. ` +
+      `Read the text once, clearly and at a natural, slightly unhurried pace, with ${language} ` +
+      "sounds, stress and sentence intonation. Do not translate it, spell it out, repeat it, or " +
+      "add any other words or sounds."
+    );
+  }
   return (
     `You are a native ${language} speaker saying a word or phrase for a learner. ` +
     `Say the text once, clearly and at a natural pace, with ${language} sounds, stress and ` +

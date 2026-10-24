@@ -1,8 +1,8 @@
 {
-  "id": "bf171ed3-f90f-4c50-984b-390c4585e082",
-  "prevId": "b27d76a2-991d-482d-855f-82965f8a1fe9",
   "version": "6",
   "dialect": "sqlite",
+  "id": "208260c9-52e2-4cc9-8f09-24ea96bc45ee",
+  "prevId": "2461218c-8a0f-4299-80d1-83d4513a7a32",
   "tables": {
     "account_deletions": {
       "name": "account_deletions",
@@ -108,15 +108,15 @@
         "analytics_review_starts_user_id_user_id_fk": {
           "name": "analytics_review_starts_user_id_user_id_fk",
           "tableFrom": "analytics_review_starts",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -296,23 +296,23 @@
             "user_id",
             "created_at"
           ],
-          "where": "entity <> 'review'",
-          "isUnique": false
+          "isUnique": false,
+          "where": "entity <> 'review'"
         }
       },
       "foreignKeys": {
         "audit_log_user_id_user_id_fk": {
           "name": "audit_log_user_id_user_id_fk",
           "tableFrom": "audit_log",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -445,28 +445,28 @@
         "card_corrections_card_id_cards_id_fk": {
           "name": "card_corrections_card_id_cards_id_fk",
           "tableFrom": "card_corrections",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "card_corrections_user_id_user_id_fk": {
           "name": "card_corrections_user_id_user_id_fk",
           "tableFrom": "card_corrections",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -599,8 +599,8 @@
           "columns": [
             "card_id"
           ],
-          "where": "status = 'active'",
-          "isUnique": true
+          "isUnique": true,
+          "where": "status = 'active'"
         },
         "card_images_card_idx": {
           "name": "card_images_card_idx",
@@ -615,28 +615,28 @@
         "card_images_card_id_cards_id_fk": {
           "name": "card_images_card_id_cards_id_fk",
           "tableFrom": "card_images",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "card_images_user_id_user_id_fk": {
           "name": "card_images_user_id_user_id_fk",
           "tableFrom": "card_images",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -784,28 +784,28 @@
         "card_localizations_card_id_cards_id_fk": {
           "name": "card_localizations_card_id_cards_id_fk",
           "tableFrom": "card_localizations",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "card_localizations_approved_by_user_id_fk": {
           "name": "card_localizations_approved_by_user_id_fk",
           "tableFrom": "card_localizations",
+          "tableTo": "user",
           "columnsFrom": [
             "approved_by"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -928,28 +928,28 @@
         "card_states_card_id_cards_id_fk": {
           "name": "card_states_card_id_cards_id_fk",
           "tableFrom": "card_states",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "card_states_user_id_user_id_fk": {
           "name": "card_states_user_id_user_id_fk",
           "tableFrom": "card_states",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1001,28 +1001,28 @@
         "card_tags_card_id_cards_id_fk": {
           "name": "card_tags_card_id_cards_id_fk",
           "tableFrom": "card_tags",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "card_tags_tag_id_tags_id_fk": {
           "name": "card_tags_tag_id_tags_id_fk",
           "tableFrom": "card_tags",
+          "tableTo": "tags",
           "columnsFrom": [
             "tag_id"
           ],
-          "tableTo": "tags",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -1374,41 +1374,41 @@
         "cards_user_id_user_id_fk": {
           "name": "cards_user_id_user_id_fk",
           "tableFrom": "cards",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "cards_deck_id_decks_id_fk": {
           "name": "cards_deck_id_decks_id_fk",
           "tableFrom": "cards",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "cards_section_id_sections_id_fk": {
           "name": "cards_section_id_sections_id_fk",
           "tableFrom": "cards",
+          "tableTo": "sections",
           "columnsFrom": [
             "section_id"
           ],
-          "tableTo": "sections",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1554,28 +1554,28 @@
         "deck_editions_deck_id_decks_id_fk": {
           "name": "deck_editions_deck_id_decks_id_fk",
           "tableFrom": "deck_editions",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "deck_editions_published_by_user_id_fk": {
           "name": "deck_editions_published_by_user_id_fk",
           "tableFrom": "deck_editions",
+          "tableTo": "user",
           "columnsFrom": [
             "published_by"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1665,8 +1665,8 @@
           "columns": [
             "deck_id"
           ],
-          "where": "kind = 'link' and revoked_at is null",
-          "isUnique": true
+          "isUnique": true,
+          "where": "kind = 'link' and revoked_at is null"
         },
         "deck_invitations_active_named_idx": {
           "name": "deck_invitations_active_named_idx",
@@ -1674,8 +1674,8 @@
             "deck_id",
             "email"
           ],
-          "where": "kind = 'named' and revoked_at is null and accepted_at is null",
-          "isUnique": true
+          "isUnique": true,
+          "where": "kind = 'named' and revoked_at is null and accepted_at is null"
         },
         "deck_invitations_deck_idx": {
           "name": "deck_invitations_deck_idx",
@@ -1690,15 +1690,15 @@
         "deck_invitations_deck_id_decks_id_fk": {
           "name": "deck_invitations_deck_id_decks_id_fk",
           "tableFrom": "deck_invitations",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1817,28 +1817,28 @@
         "deck_localizations_deck_id_decks_id_fk": {
           "name": "deck_localizations_deck_id_decks_id_fk",
           "tableFrom": "deck_localizations",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "deck_localizations_approved_by_user_id_fk": {
           "name": "deck_localizations_approved_by_user_id_fk",
           "tableFrom": "deck_localizations",
+          "tableTo": "user",
           "columnsFrom": [
             "approved_by"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1959,28 +1959,28 @@
         "deck_members_deck_id_decks_id_fk": {
           "name": "deck_members_deck_id_decks_id_fk",
           "tableFrom": "deck_members",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "deck_members_user_id_user_id_fk": {
           "name": "deck_members_user_id_user_id_fk",
           "tableFrom": "deck_members",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2024,15 +2024,15 @@
         "deck_page_views_deck_id_decks_id_fk": {
           "name": "deck_page_views_deck_id_decks_id_fk",
           "tableFrom": "deck_page_views",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -2203,15 +2203,15 @@
         "deck_publications_deck_id_decks_id_fk": {
           "name": "deck_publications_deck_id_decks_id_fk",
           "tableFrom": "deck_publications",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2407,28 +2407,28 @@
         "decks_user_id_user_id_fk": {
           "name": "decks_user_id_user_id_fk",
           "tableFrom": "decks",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "decks_series_id_series_id_fk": {
           "name": "decks_series_id_series_id_fk",
           "tableFrom": "decks",
+          "tableTo": "series",
           "columnsFrom": [
             "series_id"
           ],
-          "tableTo": "series",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2577,15 +2577,15 @@
         "exports_user_id_user_id_fk": {
           "name": "exports_user_id_user_id_fk",
           "tableFrom": "exports",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2688,15 +2688,15 @@
         "feedback_user_id_user_id_fk": {
           "name": "feedback_user_id_user_id_fk",
           "tableFrom": "feedback",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2726,15 +2726,15 @@
         "former_deck_copies_deck_id_decks_id_fk": {
           "name": "former_deck_copies_deck_id_decks_id_fk",
           "tableFrom": "former_deck_copies",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -2794,28 +2794,28 @@
         "important_cards_card_id_cards_id_fk": {
           "name": "important_cards_card_id_cards_id_fk",
           "tableFrom": "important_cards",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "important_cards_user_id_user_id_fk": {
           "name": "important_cards_user_id_user_id_fk",
           "tableFrom": "important_cards",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3008,15 +3008,15 @@
         "imports_user_id_user_id_fk": {
           "name": "imports_user_id_user_id_fk",
           "tableFrom": "imports",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3070,15 +3070,15 @@
         "lesson_reads_user_id_user_id_fk": {
           "name": "lesson_reads_user_id_user_id_fk",
           "tableFrom": "lesson_reads",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3189,15 +3189,15 @@
         "push_subscriptions_user_id_user_id_fk": {
           "name": "push_subscriptions_user_id_user_id_fk",
           "tableFrom": "push_subscriptions",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3288,15 +3288,15 @@
         "review_days_user_id_user_id_fk": {
           "name": "review_days_user_id_user_id_fk",
           "tableFrom": "review_days",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3333,28 +3333,28 @@
         "review_undos_review_id_reviews_id_fk": {
           "name": "review_undos_review_id_reviews_id_fk",
           "tableFrom": "review_undos",
+          "tableTo": "reviews",
           "columnsFrom": [
             "review_id"
           ],
-          "tableTo": "reviews",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "review_undos_user_id_user_id_fk": {
           "name": "review_undos_user_id_user_id_fk",
           "tableFrom": "review_undos",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3528,54 +3528,54 @@
         "reviews_user_id_user_id_fk": {
           "name": "reviews_user_id_user_id_fk",
           "tableFrom": "reviews",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "reviews_card_id_cards_id_fk": {
           "name": "reviews_card_id_cards_id_fk",
           "tableFrom": "reviews",
+          "tableTo": "cards",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "cards",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "reviews_card_state_id_card_states_id_fk": {
           "name": "reviews_card_state_id_card_states_id_fk",
           "tableFrom": "reviews",
+          "tableTo": "card_states",
           "columnsFrom": [
             "card_state_id"
           ],
-          "tableTo": "card_states",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "reviews_review_day_id_review_days_id_fk": {
           "name": "reviews_review_day_id_review_days_id_fk",
           "tableFrom": "reviews",
+          "tableTo": "review_days",
           "columnsFrom": [
             "review_day_id"
           ],
-          "tableTo": "review_days",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3680,28 +3680,28 @@
         "section_localizations_section_id_sections_id_fk": {
           "name": "section_localizations_section_id_sections_id_fk",
           "tableFrom": "section_localizations",
+          "tableTo": "sections",
           "columnsFrom": [
             "section_id"
           ],
-          "tableTo": "sections",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "section_localizations_approved_by_user_id_fk": {
           "name": "section_localizations_approved_by_user_id_fk",
           "tableFrom": "section_localizations",
+          "tableTo": "user",
           "columnsFrom": [
             "approved_by"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3768,28 +3768,28 @@
         "section_starts_section_id_sections_id_fk": {
           "name": "section_starts_section_id_sections_id_fk",
           "tableFrom": "section_starts",
+          "tableTo": "sections",
           "columnsFrom": [
             "section_id"
           ],
-          "tableTo": "sections",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "section_starts_user_id_user_id_fk": {
           "name": "section_starts_user_id_user_id_fk",
           "tableFrom": "section_starts",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3875,15 +3875,15 @@
         "sections_deck_id_decks_id_fk": {
           "name": "sections_deck_id_decks_id_fk",
           "tableFrom": "sections",
+          "tableTo": "decks",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "decks",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -3969,15 +3969,15 @@
         "series_user_id_user_id_fk": {
           "name": "series_user_id_user_id_fk",
           "tableFrom": "series",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4082,28 +4082,28 @@
         "series_localizations_series_id_series_id_fk": {
           "name": "series_localizations_series_id_series_id_fk",
           "tableFrom": "series_localizations",
+          "tableTo": "series",
           "columnsFrom": [
             "series_id"
           ],
-          "tableTo": "series",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "series_localizations_approved_by_user_id_fk": {
           "name": "series_localizations_approved_by_user_id_fk",
           "tableFrom": "series_localizations",
+          "tableTo": "user",
           "columnsFrom": [
             "approved_by"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4172,15 +4172,15 @@
         "tags_user_id_user_id_fk": {
           "name": "tags_user_id_user_id_fk",
           "tableFrom": "tags",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4262,15 +4262,15 @@
         "user_avatars_user_id_user_id_fk": {
           "name": "user_avatars_user_id_user_id_fk",
           "tableFrom": "user_avatars",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4303,6 +4303,20 @@
         },
         "analytics_consent_updated_at": {
           "name": "analytics_consent_updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent": {
+          "name": "ai_consent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent_updated_at": {
+          "name": "ai_consent_updated_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -4396,15 +4410,15 @@
         "user_settings_user_id_user_id_fk": {
           "name": "user_settings_user_id_user_id_fk",
           "tableFrom": "user_settings",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4520,15 +4534,15 @@
         "account_user_id_user_id_fk": {
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -4943,54 +4957,54 @@
         "oauth_access_token_client_id_oauth_client_client_id_fk": {
           "name": "oauth_access_token_client_id_oauth_client_client_id_fk",
           "tableFrom": "oauth_access_token",
+          "tableTo": "oauth_client",
           "columnsFrom": [
             "client_id"
           ],
-          "tableTo": "oauth_client",
           "columnsTo": [
             "client_id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "oauth_access_token_session_id_session_id_fk": {
           "name": "oauth_access_token_session_id_session_id_fk",
           "tableFrom": "oauth_access_token",
+          "tableTo": "session",
           "columnsFrom": [
             "session_id"
           ],
-          "tableTo": "session",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "set null"
+          "onDelete": "set null",
+          "onUpdate": "no action"
         },
         "oauth_access_token_user_id_user_id_fk": {
           "name": "oauth_access_token_user_id_user_id_fk",
           "tableFrom": "oauth_access_token",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "oauth_access_token_refresh_id_oauth_refresh_token_id_fk": {
           "name": "oauth_access_token_refresh_id_oauth_refresh_token_id_fk",
           "tableFrom": "oauth_access_token",
+          "tableTo": "oauth_refresh_token",
           "columnsFrom": [
             "refresh_id"
           ],
-          "tableTo": "oauth_refresh_token",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -5276,15 +5290,15 @@
         "oauth_client_user_id_user_id_fk": {
           "name": "oauth_client_user_id_user_id_fk",
           "tableFrom": "oauth_client",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -5382,28 +5396,28 @@
         "oauth_client_resource_client_id_oauth_client_client_id_fk": {
           "name": "oauth_client_resource_client_id_oauth_client_client_id_fk",
           "tableFrom": "oauth_client_resource",
+          "tableTo": "oauth_client",
           "columnsFrom": [
             "client_id"
           ],
-          "tableTo": "oauth_client",
           "columnsTo": [
             "client_id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "oauth_client_resource_resource_id_oauth_resource_identifier_fk": {
           "name": "oauth_client_resource_resource_id_oauth_resource_identifier_fk",
           "tableFrom": "oauth_client_resource",
+          "tableTo": "oauth_resource",
           "columnsFrom": [
             "resource_id"
           ],
-          "tableTo": "oauth_resource",
           "columnsTo": [
             "identifier"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -5497,28 +5511,28 @@
         "oauth_consent_client_id_oauth_client_client_id_fk": {
           "name": "oauth_consent_client_id_oauth_client_client_id_fk",
           "tableFrom": "oauth_consent",
+          "tableTo": "oauth_client",
           "columnsFrom": [
             "client_id"
           ],
-          "tableTo": "oauth_client",
           "columnsTo": [
             "client_id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "oauth_consent_user_id_user_id_fk": {
           "name": "oauth_consent_user_id_user_id_fk",
           "tableFrom": "oauth_consent",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -5696,41 +5710,41 @@
         "oauth_refresh_token_client_id_oauth_client_client_id_fk": {
           "name": "oauth_refresh_token_client_id_oauth_client_client_id_fk",
           "tableFrom": "oauth_refresh_token",
+          "tableTo": "oauth_client",
           "columnsFrom": [
             "client_id"
           ],
-          "tableTo": "oauth_client",
           "columnsTo": [
             "client_id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "oauth_refresh_token_session_id_session_id_fk": {
           "name": "oauth_refresh_token_session_id_session_id_fk",
           "tableFrom": "oauth_refresh_token",
+          "tableTo": "session",
           "columnsFrom": [
             "session_id"
           ],
-          "tableTo": "session",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "set null"
+          "onDelete": "set null",
+          "onUpdate": "no action"
         },
         "oauth_refresh_token_user_id_user_id_fk": {
           "name": "oauth_refresh_token_user_id_user_id_fk",
           "tableFrom": "oauth_refresh_token",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -5944,15 +5958,15 @@
         "session_user_id_user_id_fk": {
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -6095,9 +6109,9 @@
   "views": {},
   "enums": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
+    "tables": {},
+    "columns": {}
   },
   "internal": {
     "indexes": {}

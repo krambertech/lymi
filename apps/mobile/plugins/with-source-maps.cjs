@@ -1,4 +1,5 @@
 const { withXcodeProjectBeta } = require("@bacons/apple-targets/build/with-bacons-xcode");
+const { withAppBuildGradle, withGradleProperties } = require("expo/config-plugins");
 const { modifyExistingXcodeBuildScript } = require("posthog-react-native/expo");
 
 function bundleScript(original) {
@@ -19,7 +20,45 @@ ${original}
 fi`;
 }
 
-module.exports = (config) =>
+const GRADLE_MARKER = "// Phone source maps: docs/phone-release.md";
+
+// PostHog's Gradle script uploads each release bundle's Hermes map; the gate runs at build time, as on iOS.
+const gradleBlock = `${GRADLE_MARKER}
+if (System.getenv("EAS_BUILD") == "true") {
+    apply from: new File(["node", "--print", "require('path').join(require('path').dirname(require.resolve('posthog-react-native')), '..', 'tooling', 'posthog.gradle')"].execute(null, rootDir).text.trim())
+    gradle.taskGraph.whenReady { graph ->
+        def bundles = graph.allTasks.any { it.name ==~ /(createBundle|bundle)\\w*JsAndAssets/ && !it.name.contains("Debug") }
+        if (bundles && !System.getenv("POSTHOG_CLI_API_KEY")) {
+            throw new GradleException("Phone source maps require POSTHOG_CLI_API_KEY in the EAS environment")
+        }
+    }
+}
+`;
+
+function appBuildGradle(contents) {
+  if (contents.includes(GRADLE_MARKER)) return contents;
+  return `${contents.trimEnd()}\n\n${gradleBlock}`;
+}
+
+const gradleProperties = (properties) => [
+  ...properties.filter((item) => item.key !== "posthog.hermesReleaseMode"),
+  { type: "property", key: "posthog.hermesReleaseMode", value: "event" },
+];
+
+function withAndroidSourceMaps(config) {
+  const gradle = withAppBuildGradle(config, (c) => {
+    if (c.modResults.language !== "groovy")
+      throw new Error("Phone source maps: app build.gradle is not Groovy");
+    c.modResults.contents = appBuildGradle(c.modResults.contents);
+    return c;
+  });
+  return withGradleProperties(gradle, (c) => {
+    c.modResults = gradleProperties(c.modResults);
+    return c;
+  });
+}
+
+const withIosSourceMaps = (config) =>
   withXcodeProjectBeta(config, (c) => {
     const target = c.modResults.rootObject.props.targets.find(
       (target) => target.props.productType === "com.apple.product-type.application",
@@ -39,4 +78,7 @@ module.exports = (config) =>
     return c;
   });
 
+module.exports = (config) => withAndroidSourceMaps(withIosSourceMaps(config));
 module.exports.bundleScript = bundleScript;
+module.exports.appBuildGradle = appBuildGradle;
+module.exports.gradleProperties = gradleProperties;

@@ -12,7 +12,7 @@ import { learner, testDb } from "./test-db";
 /**
  * Deleting an account past every service, as `wrangler d1 execute` would. The database refuses
  * while the account owns a deck other people study, since only `deleteAccount` copies it for
- * them first. Migration 0063.
+ * them first. Migration 0064.
  */
 let db: Db;
 let raw: D1Database;

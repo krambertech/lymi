@@ -24,6 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
@@ -67,6 +68,8 @@ export type ImportRunParams = {
   userId: string;
   actor: Actor;
   phase: "inspect" | "write";
+  /** Started from the phone app, so its AI waits for the learner's yes. */
+  fromPhone?: boolean | undefined;
   /** A write run that carries on from an earlier one: the next chunk, its pictures and totals. */
   resume?: ImportResume | undefined;
 };
@@ -254,7 +257,13 @@ export async function completeImportUpload(
     .update(schema.imports)
     .set({ status: "inspecting", uploadId: null, parts: null, updatedAt: new Date() })
     .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "uploading")));
-  await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "inspect" });
+  await start({
+    importId: id,
+    userId: ctx.userId,
+    actor: ctx.actor,
+    phase: "inspect",
+    fromPhone: ctx.fromPhone,
+  });
   return getImport(ctx, id);
 }
 
@@ -334,7 +343,7 @@ export async function inspectImport(
     summary.decks
       .filter((d) => named.get(d.key) === null && summary.languages?.[d.key] === undefined)
       .map((d) => ({ key: d.key, name: d.name, terms: [...(terms.get(d.key) ?? [])] })),
-    provider,
+    provider && (await aiAllowedFor(ctx)) ? provider : null,
   );
   const fallback = await usualLanguage(ctx);
   // A deck the cards join keeps its own language; one that isn't the learner's is ignored.
@@ -773,5 +782,5 @@ export function runContext(
   analytics?: AnalyticsWriter,
 ): ServiceContext {
   if (!params.userId) throw notFound("Import");
-  return { db, userId: params.userId, actor: params.actor, analytics };
+  return { db, userId: params.userId, actor: params.actor, analytics, fromPhone: params.fromPhone };
 }

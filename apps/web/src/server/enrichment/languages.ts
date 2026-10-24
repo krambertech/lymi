@@ -48,12 +48,6 @@ const GUIDES: Record<string, FieldGuide> = {
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
-  uk: {
-    notes:
-      "Mark the stress on every form, as in the pronunciation. Verb: Perfective: *купи́ти* (or Imperfective: on a perfective term), Present: *купу́ю, купу́єш* (a perfective: Future: *ку́плю, ку́пиш*). Noun: Gender where the ending hides it, Genitive and Plural when the stress moves or the stem changes (Plural: *міста́*). Usage: a case other than the accusative (+ dative: *дя́кувати*), or a Russian look-alike (*неді́ля* is Sunday, not a week).",
-    pronunciation:
-      "The term in Cyrillic with an accent mark on the stressed vowel (молоко́), for each word of two or more syllables. Not IPA.",
-  },
   pl: {
     notes:
       "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), *na* vs *w*, or, for a reader in Ukrainian or Russian, a false friend (False friend: *dywan*, a carpet, not a sofa).",

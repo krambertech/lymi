@@ -1,7 +1,7 @@
 name: Phone rollout
 
-# A promoted update reaches 10% of App Store installs first, and everyone a day later unless Phone
-# rollback reverted it. docs/phone-release.md.
+# A promoted update reaches 10% of store installs first, and everyone a day later unless Phone
+# rollback reverted it. Each platform's rollout finishes on its own clock. docs/phone-release.md.
 on:
   schedule:
     - cron: "0 */6 * * *"
@@ -19,6 +19,7 @@ jobs:
       contents: read
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      PHONE_PLATFORMS: ${{ vars.PHONE_PLATFORMS }}
     steps:
       - uses: actions/checkout@v5
 

@@ -3,6 +3,7 @@ import { and, count, desc, eq, isNotNull, isNull, max } from "@lymi/core/db";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
+import { aiAllowedFor } from "./ai-consent";
 import type { ServiceContext } from "./context";
 
 /** A deck the learner can add to, with the language its cards are in. */
@@ -113,6 +114,8 @@ export async function chooseDeck(
   const languages = [...new Set(decks.map((d) => d.language))];
   // One language among the decks gives nothing to choose by.
   if (languages.length < 2) return { deckId: null, language: null };
-  const language = await termLanguage(input.term, input.source, languages, provider);
+  // Without the learner's yes only the script decides.
+  const model = (await aiAllowedFor(ctx)) ? provider : null;
+  const language = await termLanguage(input.term, input.source, languages, model);
   return { deckId: deckFor(decks, language), language };
 }

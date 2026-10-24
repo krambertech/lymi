@@ -18,6 +18,7 @@ export * from "./draw";
 export * from "./editions";
 export * from "./email";
 export * from "./enrichment";
+export * from "./example-audio";
 export * from "./example-translation";
 export * from "./explore";
 export * from "./exports";

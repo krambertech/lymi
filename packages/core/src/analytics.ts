@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
 import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { ReviewAid, ReviewModeKey } from "./types";
+import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -111,6 +111,7 @@ const step = z.enum([
   "kind",
   "language",
   "goal",
+  "ai",
   "start",
   "setup",
   "deck",
@@ -421,6 +422,10 @@ export const analyticsEvents = {
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
+  ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
+  ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -444,6 +449,7 @@ export const analyticsEvents = {
       "deck_choice",
       "lesson_read",
       "pronunciation",
+      "example_audio",
       "lead_in",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
@@ -491,6 +497,11 @@ export const analyticsEvents = {
     revealed: z.boolean(),
     // Optional because earlier phone releases send neither.
     preloaded: z.boolean().optional(),
+    wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+  }),
+  example_audio_played: z.object({
+    outcome: z.enum(["played", "failed", "limited"]),
+    surface: z.enum(["review", "card"]),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
   }),
   lead_in_decided: z.object({
@@ -586,6 +597,10 @@ export const analyticsProducers = {
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
+  ai_consent_shown: ["phone"],
+  ai_consent_granted: ["worker"],
+  ai_consent_declined: ["worker"],
+  ai_consent_withdrawn: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],
@@ -596,6 +611,7 @@ export const analyticsProducers = {
   section_go_to: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
+  example_audio_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser", "phone"],

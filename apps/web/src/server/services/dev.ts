@@ -121,7 +121,7 @@ export async function deletePersonaAccount(db: Db, email: string): Promise<void>
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
     .where(eq(schema.user.email, email));
-  // A persona's decks go first, past the guard on decks other people study (migration 0063).
+  // A persona's decks go first, past the guard on decks other people study (migration 0064).
   await db.batch([
     db.delete(schema.deckPublications).where(inArray(schema.deckPublications.deckId, owned)),
     db.delete(schema.decks).where(inArray(schema.decks.id, owned)),

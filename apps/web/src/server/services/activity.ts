@@ -95,6 +95,7 @@ const SENTENCES: Sentences = {
   account: {
     "onboarding.finish": null,
     "analytics.consent": null,
+    "ai.consent": null,
     "analytics.review_start": null,
     rename: null,
     "avatar.upload": null,

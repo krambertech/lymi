@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "b27d76a2-991d-482d-855f-82965f8a1fe9",
+  "id": "2461218c-8a0f-4299-80d1-83d4513a7a32",
   "prevId": "7b488785-1628-4543-a0db-18c8e3df3d28",
   "tables": {
     "account_deletions": {
@@ -119,89 +119,6 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "apple_revocations": {
-      "name": "apple_revocations",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "reason": {
-          "name": "reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "client": {
-          "name": "client",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "token": {
-          "name": "token",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "attempts": {
-          "name": "attempts",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": 0
-        },
-        "next_attempt_at": {
-          "name": "next_attempt_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "settled_at": {
-          "name": "settled_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "apple_revocations_due_idx": {
-          "name": "apple_revocations_due_idx",
-          "columns": [
-            "status",
-            "next_attempt_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -1412,45 +1329,6 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "deck_copy_ids": {
-      "name": "deck_copy_ids",
-      "columns": {
-        "old_id": {
-          "name": "old_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "new_id": {
-          "name": "new_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "deck_copy_ids_old_id_user_id_pk": {
-          "columns": [
-            "old_id",
-            "user_id"
-          ],
-          "name": "deck_copy_ids_old_id_user_id_pk"
-        }
-      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
@@ -2691,44 +2569,6 @@
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "former_deck_copies": {
-      "name": "former_deck_copies",
-      "columns": {
-        "deck_id": {
-          "name": "deck_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "former_deck_copies_deck_id_decks_id_fk": {
-          "name": "former_deck_copies_deck_id_decks_id_fk",
-          "tableFrom": "former_deck_copies",
-          "tableTo": "decks",
-          "columnsFrom": [
-            "deck_id"
           ],
           "columnsTo": [
             "id"
@@ -4303,6 +4143,20 @@
         },
         "analytics_consent_updated_at": {
           "name": "analytics_consent_updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent": {
+          "name": "ai_consent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_consent_updated_at": {
+          "name": "ai_consent_updated_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,

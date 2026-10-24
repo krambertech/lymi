@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { languageKey } from "./languages";
 import {
   canPlayPronunciation,
+  canSpeakExample,
   canSpeakTerm,
   duplicateKey,
   headword,
@@ -9,8 +10,10 @@ import {
   pronunciationInputKey,
   revealedAnswer,
   revealsAnswer,
+  SPOKEN_EXAMPLE_MAX,
   SPOKEN_TERM_MAX,
   sameReading,
+  spokenExample,
   spokenText,
   standsAlone,
   termKey,
@@ -201,5 +204,34 @@ describe("pronunciationInputKey", () => {
         pronunciationInputKey({ ...row, meaning: "updated meaning" }),
       );
     }
+  });
+});
+
+describe("spokenExample", () => {
+  it("speaks a Japanese example from its readings, never its brackets", () => {
+    expect(spokenExample({ example: "毎朝[まいあさ]パンを食[た]べます。", language: "ja" })).toBe(
+      "まいあさパンをたべます。",
+    );
+  });
+
+  it("speaks a Chinese, Cantonese or Tamil example as written", () => {
+    expect(spokenExample({ example: "我[wǒ]去[qù]银行[yínháng]。", language: "zh" })).toBe(
+      "我去银行。",
+    );
+    expect(spokenExample({ example: "我[ngo5]去[heoi3]。", language: "yue" })).toBe("我去。");
+    expect(spokenExample({ example: "நான் பாடல் கேட்டேன்.", language: "ta" })).toBe("நான் பாடல் கேட்டேன்.");
+  });
+
+  it("keeps a Russian example's stress marks, as the term's speech does", () => {
+    expect(spokenExample({ example: "Это мой за́мок.", language: "ru" })).toBe("Это мой за́мок.");
+  });
+
+  it("can be said only on a language card with a short enough example", () => {
+    expect(canSpeakExample({ example: "Ich esse Brot.", language: "de" })).toBe(true);
+    expect(canSpeakExample({ example: "Ich esse Brot.", language: null })).toBe(false);
+    expect(canSpeakExample({ example: "  ", language: "de" })).toBe(false);
+    expect(canSpeakExample({ example: "a".repeat(SPOKEN_EXAMPLE_MAX + 1), language: "de" })).toBe(
+      false,
+    );
   });
 });

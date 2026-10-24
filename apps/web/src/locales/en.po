@@ -1037,6 +1037,9 @@ msgstr "AI example"
 msgid "AI example and translation"
 msgstr "AI example and translation"
 
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."
 
@@ -1057,6 +1060,15 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI services"
+msgstr "AI services"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI services are off for your account. Turn them on in Settings to draft hooks."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI services are off for your account. Turn them on in Settings to read lessons."
 
 msgid "AI translates it after you save"
 msgstr "AI translates it after you save"
@@ -1819,6 +1831,9 @@ msgstr "Couldn’t move {0, plural, one {# card} other {# cards}}."
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Couldn’t play the example. Try again in a moment."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
@@ -1842,6 +1857,9 @@ msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again.
 
 msgid "Couldn’t save that. Try again."
 msgstr "Couldn’t save that. Try again."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Couldn’t save the choice. Check your connection and try again."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -3467,11 +3485,17 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
 
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Off for mobile and web. Existing card text and saved audio stay."
+
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "On a phone, or stuck? Read the guide"
+
+msgid "On for mobile and web."
+msgstr "On for mobile and web."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
@@ -3728,6 +3752,9 @@ msgstr "Pictures need a connection. Add it once you’re back online."
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
 
+msgid "Play example"
+msgstr "Play example"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
@@ -3958,6 +3985,9 @@ msgstr "Renamed “{from}” to “{spelled}”"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"
+
+msgid "Replay example"
+msgstr "Replay example"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -4212,6 +4242,9 @@ msgstr "See the picture, recall the meaning"
 
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
+
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "See what’s shared and with whom in our privacy policy."
 
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
@@ -4700,6 +4733,9 @@ msgstr "Theme"
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "These features send relevant card text and lesson material to third-party AI services."
+
 msgid "They already have a pending invitation."
 msgstr "They already have a pending invitation."
 
@@ -4883,6 +4919,9 @@ msgstr "Today, {day}: nothing due"
 msgid "Today’s goal"
 msgstr "Today’s goal"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Today’s new example audio is used up. Examples you’ve played still play."
+
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
@@ -5019,6 +5058,9 @@ msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 
 msgid "Use a public http or https link to a picture."
 msgstr "Use a public http or https link to a picture."
+
+msgid "Use AI services"
+msgstr "Use AI services"
 
 msgid "Use another account"
 msgstr "Use another account"

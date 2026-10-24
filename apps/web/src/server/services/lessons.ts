@@ -27,6 +27,7 @@ import {
   type LessonUsage,
 } from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
+import { requireAi } from "./ai-consent";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import type { ServiceContext } from "./context";
 import { notFound, ServiceError } from "./context";
@@ -87,6 +88,7 @@ export async function assertCanCheckAnswers(
   ctx: ServiceContext,
   operators: Set<string>,
 ): Promise<void> {
+  await requireAi(ctx);
   if (await isOperator(ctx, operators)) return;
   const [recent] = await ctx.db
     .select({ id: schema.lessonReads.id })
@@ -214,6 +216,7 @@ export async function assertCanReadLessons(
   deps: Pick<LessonDeps, "reader" | "operators">,
 ): Promise<LessonReader> {
   if (!deps.reader) throw new ServiceError("unavailable", "Reading lessons is not configured.");
+  await requireAi(ctx);
   const { daily } = await lessonAccess(ctx, deps.operators);
   if (daily && daily.used >= daily.limit) limitReached(ctx);
   return deps.reader;

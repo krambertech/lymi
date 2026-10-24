@@ -967,6 +967,25 @@ export const AnalyticsConsentInput = z.object({
   updated_at: z.number().int().positive(),
 });
 export type AnalyticsConsentInput = z.infer<typeof AnalyticsConsentInput>;
+export const AI_CONSENT_VERSION = 1;
+/** The reason an AI request refused for want of the learner's yes carries. */
+export const AI_CONSENT_REQUIRED = "ai_consent_required";
+/** Where the learner answered, for analytics only. */
+export const AI_CONSENT_PLACES = [
+  "welcome",
+  "add",
+  "smart_add",
+  "speech",
+  "hook",
+  "settings",
+] as const;
+export const AiConsentInput = z.object({
+  allowed: z.boolean(),
+  version: z.literal(AI_CONSENT_VERSION),
+  updated_at: z.number().int().positive(),
+  place: z.enum(AI_CONSENT_PLACES).optional(),
+});
+export type AiConsentInput = z.infer<typeof AiConsentInput>;
 
 /** The learner's name, as the app shows it. */
 export const NameInput = z.object({

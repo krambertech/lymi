@@ -30,7 +30,7 @@ name: Welcome
 - extendedWaitUntil:
     visible: "Let AI do the typing"
     timeout: 10000
-- assertVisible: "Filling in cards"
+- assertVisible: "Filling in cards.*"
 - takeScreenshot: 05-ai
 - tapOn: "Allow"
 - extendedWaitUntil:

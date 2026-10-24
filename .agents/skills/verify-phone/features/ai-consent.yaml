@@ -24,8 +24,8 @@ name: AI consent
 - extendedWaitUntil:
     visible: "Use AI with your cards?"
     timeout: 10000
-- assertVisible: "Filling in cards"
-- assertVisible: "Pronunciation"
+- assertVisible: "Filling in cards.*"
+- assertVisible: "Pronunciation.*"
 - takeScreenshot: 01-ask
 - tapOn: "Not now"
 - extendedWaitUntil:

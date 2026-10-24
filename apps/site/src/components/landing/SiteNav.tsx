@@ -138,10 +138,13 @@ function NavMenu({ label, active, place, panelClass, onIntent, children }: NavMe
         ref={trigger}
         type="button"
         aria-expanded={open}
-        aria-controls={panelId}
+        aria-controls={open ? panelId : undefined}
         onPointerEnter={onIntent}
         onFocus={onIntent}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          onIntent?.();
+          setOpen((o) => !o);
+        }}
         className={buttonClass(
           "ghost",
           "sm",
@@ -463,6 +466,18 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
               <p className={headingClass}>
                 <Trans>Explore</Trans>
               </p>
+              {/* Placeholders hold the shelves' room while they load, so the links below barely move. */}
+              {shelves === undefined && (
+                <div className="mt-2.5 flex flex-wrap gap-1.5 px-3" aria-hidden="true">
+                  {Array.from({ length: PHONE_SHELVES }, (_, at) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: placeholder chips have nothing else to key on
+                    <span
+                      key={at}
+                      className="h-[calc(1lh+0.5rem)] w-24 rounded-full bg-plate-2 text-sm"
+                    />
+                  ))}
+                </div>
+              )}
               {shelves && (
                 <div className="mt-2.5 flex flex-wrap gap-1.5 px-3">
                   {shelves.languages.slice(0, PHONE_SHELVES).map((shelf) => (

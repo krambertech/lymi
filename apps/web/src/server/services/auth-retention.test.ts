@@ -71,7 +71,9 @@ describe("purgeExpiredAuthRows", () => {
   it("keeps the OAuth refresh token whose session it deletes", async () => {
     const { userId } = await learner(db, "retention-oauth", "Connected");
     const sessionId = await session(userId, hours(-48));
-    await db.insert(schema.oauthClient).values({ id: newId(), clientId: "codex", redirectUris: [] });
+    await db
+      .insert(schema.oauthClient)
+      .values({ id: newId(), clientId: "codex", redirectUris: [] });
     const refreshId = newId();
     await db.insert(schema.oauthRefreshToken).values({
       id: refreshId,

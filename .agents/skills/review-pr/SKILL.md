@@ -9,9 +9,9 @@ Produce one review of the change at one head commit. A review is read-only: it n
 
 ## Resolve the target
 
-- For a pull request, read `gh pr view <number> --json number,title,body,headRefOid,baseRefName,files,closingIssuesReferences` and `gh pr diff <number>`. For a local branch, use `git diff origin/main...HEAD`. Record the head commit; the review is about that commit only.
+- For a pull request, read `gh pr view <number> --json number,title,body,headRefOid,baseRefName,files,closingIssuesReferences` and `gh pr diff <number>`. For a local branch, use `git diff origin/main...HEAD`. Record the head commit; the review is about that commit only. In CI the prompt gives the head commit and its checkout: review that commit even if a push lands meanwhile, taking the diff from `git -C pr diff origin/main...HEAD`.
 - Read the linked issue when there is one: it is the intended behaviour.
-- When this pull request already has a review from you (a comment that starts with `**Claude review**`), read it and the commits since its head. Each earlier finding is now fixed, still open, or answered by a reply that settles it; report that, and raise nothing again that a reply already settled.
+- When this pull request already has a review from you (a comment by `github-actions[bot]` that starts with `**Claude review**`), read it and the commits since its head. Each earlier finding is now fixed, still open, or answered by a reply that settles it; report that, and raise nothing again that a reply already settled.
 
 ## Ground the review
 
@@ -69,4 +69,4 @@ Not checked: <coverage cells, behaviour that needs the running app, files skippe
 Human look: <why, or "not needed">
 ```
 
-In CI, post inline comments with `mcp__github_inline_comment__create_inline_comment` and the summary with `gh pr comment`. A finding whose line is not in the diff goes in the summary only. Locally, print the review and post nothing unless asked.
+In CI, post inline comments with `mcp__github_inline_comment__create_inline_comment`, its `commit_id` set to the head commit, and the summary with `gh pr comment`. A finding whose line is not in the diff goes in the summary only. Locally, print the review and post nothing unless asked.

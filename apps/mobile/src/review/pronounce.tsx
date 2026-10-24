@@ -19,6 +19,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 import { useSessionHeaders } from "../auth/client";
+import { useAiConsent } from "../privacy/ai-consent";
 import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
 import { IconButton, Text } from "../ui/primitives";
 
@@ -39,6 +40,8 @@ void audio
 
 type Card = {
   id: string;
+  /** The card's owner, whose choice decides whether its words are voiced. */
+  userId?: string | undefined;
   updatedAt?: Date | string | undefined;
   term: string;
   pronunciation?: string | null | undefined;
@@ -118,7 +121,23 @@ function useAudioPronunciation(
     return () => clearTimeout(timer);
   }, [asked, playing, t]);
 
+  const consent = useAiConsent("speech");
+  // Only the learner's own card waits for their yes, and only for a clip not voiced yet.
+  const waitsForYes =
+    !!card && card.userId === consent.userId && !card.audioKey && !consent.allowed;
+
   const play = () => {
+    if (!speakable || !headers || !card) return;
+    if (waitsForYes) {
+      void consent.ask().then((allowed) => {
+        if (allowed) start();
+      });
+      return;
+    }
+    start();
+  };
+
+  const start = () => {
     if (!speakable || !headers || !card) return;
     setError(null);
     const uri = api.audioUrl(card.id, card.updatedAt);
@@ -139,7 +158,7 @@ function useAudioPronunciation(
 
   // The player's own state, since a replay starts while the last play's `didJustFinish` still holds.
   const state: "idle" | "loading" | "playing" = playing ? "playing" : asked ? "loading" : "idle";
-  return speakable ? { play, state, error } : null;
+  return speakable ? { play, state, error, sheet: consent.sheet } : null;
 }
 
 const noPronunciation = (_card: Card | null, _onSettled?: PlaySettled) => null;

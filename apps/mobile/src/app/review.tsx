@@ -1053,6 +1053,8 @@ function Run({
           void qc.invalidateQueries({ queryKey: ["decks"] });
         }}
       />
+      {pronounce?.sheet}
+      {exampleSound?.sheet}
     </Cover>
   );
 }

@@ -2,6 +2,7 @@ import { canSpeakExample, LanguageTag, SPOKEN_EXAMPLE_MAX, spokenExample } from 
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider, SpeechUsage } from "../ai";
 import type { ExampleAllowance } from "../example-audio-rate-limit";
+import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
 import { audit } from "./audit";
@@ -16,11 +17,13 @@ const EXAMPLE_AUDIO_VERSION = 1;
 export async function exampleAudio(
   ctx: ServiceContext,
   cardId: string,
-  deps: AudioDependencies,
+  sent: AudioDependencies,
   allowance: ExampleAllowance,
 ): Promise<{ clip: R2ObjectBody } | { retryAfter: number }> {
   const card = await getCard(ctx, cardId);
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
+  // The sentence is its owner's, so the owner's choice decides whether it is voiced. ADR 0039.
+  const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
   const language = LanguageTag.safeParse(card.language);
   if (!language.success || !canSpeakExample(card)) {
     throw new ServiceError(

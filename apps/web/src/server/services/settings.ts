@@ -29,6 +29,8 @@ export function defaultSettings(userId: string): UserSettings {
     userId,
     analyticsConsent: null,
     analyticsConsentUpdatedAt: null,
+    aiConsent: null,
+    aiConsentUpdatedAt: null,
     appLanguage: null,
     meaningLanguage: "en",
     dailyGoal: 50,

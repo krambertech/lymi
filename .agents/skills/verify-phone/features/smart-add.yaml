@@ -16,6 +16,12 @@ name: Smart add
 - takeScreenshot: 01-text
 - tapOn: "Done"
 - tapOn: "Find terms"
+# The persona has not answered, so the phone asks before the lesson leaves it. ADR 0039.
+- extendedWaitUntil:
+    visible: "Use AI in Lymi?"
+    timeout: 10000
+- takeScreenshot: 01-ask
+- tapOn: "Turn on AI"
 - extendedWaitUntil:
     visible: ".*terms? found"
     timeout: 20000

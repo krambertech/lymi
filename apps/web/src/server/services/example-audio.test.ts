@@ -2,9 +2,12 @@ import type { Card } from "@lymi/core/schema";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
 import type { Db } from "../db";
+import { aiAllowedForOwner } from "./ai-consent";
 import type { ServiceContext } from "./context";
 import { ServiceError } from "./context";
 import { exampleAudio } from "./example-audio";
+
+vi.mock("./ai-consent", () => ({ aiAllowedForOwner: vi.fn(async () => true) }));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -200,6 +203,19 @@ describe("example audio", () => {
     });
     expect(speech).not.toHaveBeenCalled();
     expect(allowance.spend).not.toHaveBeenCalled();
+  });
+
+  it("never voices an example whose owner has not allowed AI", async () => {
+    const { bucket } = memoryBucket();
+    const speech = vi.fn(async () => sound());
+    const allowance = free();
+    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+    const deps = { bucket, providers: () => [provider("google-gemini", speech)] };
+    await expect(exampleAudio(context(card()), "card-1", deps, allowance)).rejects.toMatchObject({
+      code: "not_found",
+    });
+    expect(vi.mocked(aiAllowedForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
+    expect(speech).not.toHaveBeenCalled();
   });
 
   it("asks no provider once the learner's new clips for the day are spent", async () => {

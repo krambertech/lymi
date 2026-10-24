@@ -43,6 +43,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |
+| AI services | [ai-services.md](features/ai-services.md) |
 
 ## Launch
 

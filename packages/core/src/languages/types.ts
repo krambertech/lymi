@@ -1,11 +1,11 @@
 /** A tag Lymi treats in full. A tag joins only in the last delivery slice for its language. */
-export type SupportedTag = "ja" | "zh";
+export type SupportedTag = "ja" | "zh" | "uk";
 
 /**
  * A tag with a record in the index: each supported tag, and one whose language is still landing.
  * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
  */
-export type RecordTag = SupportedTag | "ru" | "ta" | "uk" | "yue";
+export type RecordTag = SupportedTag | "ru" | "ta" | "yue";
 
 /** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
 export type Script = "Jpan" | "Hans" | "Hant" | "Taml";
@@ -81,6 +81,8 @@ export interface LanguageSupport {
     saysReading: boolean;
     /** A lead-in written from the reading and meaning may go before the term. docs/lead-ins.md. */
     leadIn: boolean;
+    /** Words sent silently before every term, so the voice hears the language and not a neighbour's. */
+    context?: string;
     /** The published voice locale for a script where it differs from the language's default. */
     locales?: Partial<Record<Script, string>>;
   };

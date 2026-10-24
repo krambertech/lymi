@@ -18,7 +18,7 @@ Today's code:
 - The `ru` and `uk` guides in `apps/web/src/server/enrichment/languages.ts` ask for the term with an accent on each word of two or more syllables, not IPA, and in notes the aspect pair, a case other than the accusative, gender when the ending hides it, and an irregular plural (Russian adds the genitive plural). `evaluation.json` has three Russian cases and no Ukrainian ones.
 - `spokenText` in `apps/web/src/server/services/audio.ts` speaks the term, never the pronunciation, and the clip cache is keyed by the spoken text, so за́мок and замо́к share one clip. Both languages go to a native ElevenLabs v4 voice first (`speech-voices.ts`: Denis, Alex Nekrasov), then Gemini-TTS, OpenAI and Chirp 3 HD. No provider documents whether it reads U+0301 as stress (searched 2026-10-19).
 - The web's Onest Cyrillic subset already covers U+0301 and ґ (`apps/web/src/client/styles.css`).
-- No Russian or Ukrainian vocabulary deck is published; Ukrainian has driving theory and road signs only.
+- No Russian vocabulary deck is published. Ukrainian has its alphabet, A1, A2, core words and conversation decks, and Welcome offers the first four through `BEGINNER_DECKS` in `packages/client/src/welcome.ts`.
 
 ## Decision (leaning)
 

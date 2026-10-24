@@ -22,6 +22,7 @@ Drawn in a 120 unit box. Top to bottom: a bail tall enough to read as a handle r
 
 - The metal is `metal`, which is the text colour of the room: ink by day, white at night. Never grey.
 - The glass is one **opaque** colour, `glass`, not a tint over a hole. A translucent glass needs a backer in the room's colour, and then the mark drags a pale slab onto any surface that is not the page background. Every metal part overlaps the glass edges, so nothing can spill outside the frame.
+- The flame keeps two shapes and two tones, `amber` and `flame-core`, and takes its depth from light rather than shading: the amber runs from `flame-heart` by the core to `flame-rim` at the edge, and a faint, feathered copy of the core spills into it. No highlight, no outline, no third shape. `FLAME_DEPTH` in `@lymi/design` holds the numbers; the streak's flame on the phone leaves out the spill, which cannot be seen at its size.
 - When the flame is out, the glass is `glass-unlit` and an ember in `edge-2` sits where the flame was.
 - There is one drawing for every size. The rods and the flame are what keep the drawing legible when it is tiny; a simplified cut that drops them collapses into a mushroom by 24 px. The browser tab uses the same drawing with the viewBox squared around its own bounds.
 

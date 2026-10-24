@@ -75,6 +75,9 @@
   --amber-tint: oklch(0.8 0.15 72 / 0.26);
   --amber-tint-ink: var(--amber-ink);
   --flame-core: oklch(0.97 0.08 92);
+  /* The flame's depth: its amber a touch lighter by the core and a touch deeper at the rim. */
+  --flame-heart: oklch(0.85 0.15 78);
+  --flame-rim: oklch(0.76 0.16 64);
   /* The lantern's glass. Opaque, so the mark carries its own interior onto any
      surface instead of painting a hole in the room behind it. */
   --glass: oklch(0.932 0.044 76);
@@ -156,6 +159,8 @@
   --amber-tint: oklch(0.82 0.15 74 / 0.16);
   --amber-tint-ink: var(--amber-text);
   --flame-core: oklch(0.97 0.08 92);
+  --flame-heart: oklch(0.87 0.15 80);
+  --flame-rim: oklch(0.78 0.16 66);
   --glass: oklch(0.315 0.048 62);
   --glass-unlit: oklch(0.265 0.01 64);
   --metal: var(--text);

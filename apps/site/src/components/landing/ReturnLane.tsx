@@ -3,7 +3,7 @@ import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
 import { useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
-import { FLAME_PARTS } from "../lantern-geometry";
+import { FlameParts } from "../lantern-geometry";
 import { usePlayback, useStill } from "./playback";
 
 /** Six reviews of one card: the gap grows each time it's remembered. */
@@ -28,7 +28,7 @@ function FlameMark({ className }: { className: string }) {
       aria-hidden="true"
       className={className}
     >
-      {FLAME_PARTS()}
+      <FlameParts />
     </svg>
   );
 }

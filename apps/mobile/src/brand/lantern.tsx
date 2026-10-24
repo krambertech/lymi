@@ -4,6 +4,7 @@ import {
   FLAME_BREATH,
   FLAME_CORE,
   FLAME_CORE_BASE,
+  FLAME_DEPTH,
   FLAME_MOTION,
   FLAME_OUTER,
   FLAME_SIZE,
@@ -77,6 +78,8 @@ const CORE = path(FLAME_CORE.d);
 const UNLIT = path(EMBER.d);
 const FRAME = LANTERN_FRAME.map((s) => ({ ...s, path: s.d ? path(s.d) : undefined }));
 const HALO = { x: 60, y: 80, r: 26 };
+const { body, spill: coreSpill } = FLAME_DEPTH;
+const CORE_SPILL = [{ scaleX: coreSpill.scaleX }, { scaleY: coreSpill.scaleY }];
 
 interface Props {
   size: number;
@@ -284,8 +287,26 @@ export function Lantern({
                 <BlurMask blur={4} style="normal" />
               </Path>
             )}
-            <Path path={OUTER} color={p.amber} />
+            <Path path={OUTER}>
+              <RadialGradient
+                c={vec(body.cx, body.cy)}
+                r={body.rx}
+                colors={[p["flame-heart"], p.amber, p["flame-rim"]]}
+                positions={[...body.stops]}
+                transform={[{ scaleY: body.ry / body.rx }]}
+                origin={vec(body.cx, body.cy)}
+              />
+            </Path>
             <Group transform={coreTransform} origin={vec(60, FLAME_CORE_BASE)}>
+              <Group
+                transform={CORE_SPILL}
+                origin={vec(60, FLAME_CORE_BASE)}
+                opacity={coreSpill.opacity}
+              >
+                <Path path={CORE} color={p["flame-core"]}>
+                  <BlurMask blur={coreSpill.blur} style="normal" />
+                </Path>
+              </Group>
               <Path path={CORE} color={p["flame-core"]} />
             </Group>
           </Group>

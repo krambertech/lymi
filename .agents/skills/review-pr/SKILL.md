@@ -51,7 +51,7 @@ Otherwise say no human look is needed beyond the usual merge.
 
 Rank confirmed findings most severe first. Each one is an inline comment on its line, following `AGENTS.md`'s pull request review comment rules: one issue, the defect first, then the consequence and the smallest fix, in two or three sentences, ending with its source in brackets, such as `[REVIEW.md D1]`.
 
-Then one summary comment. With no findings, it is one line:
+Then one summary comment. Name each item under Not checked and Human look in a few words, without the reasoning. With no findings, it is one line:
 
 ```text
 **Claude review** at `<short sha>`: All clear. Not checked: <what>. Human look: <why, or "not needed">.

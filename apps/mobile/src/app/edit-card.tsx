@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, apiUrl, type Card, errorMessage } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
-import { isolate, modeKey, type ReviewModeKey } from "@lymi/core";
+import { fitsExample, isolate, modeKey, type ReviewModeKey } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -133,6 +133,11 @@ export default function EditCard() {
       return;
     }
     const changes = { ...editPatch(live, typed), ...choicesPatch(card, modes, tags) };
+    // Only a changed example counts, so one saved before the limit still saves as it is.
+    if (changes.example !== undefined && !fitsExample(changes.example)) {
+      Alert.alert(t`Keep the example under 250 characters.`);
+      return;
+    }
     const pictureChanged = pictureWrite(card, picture) !== null;
     if (Object.keys(changes).length === 0 && !pictureChanged) {
       router.back();

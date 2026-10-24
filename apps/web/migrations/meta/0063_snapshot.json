@@ -1,6 +1,6 @@
 {
-  "id": "5b740f44-946e-4ac7-837f-1dc361f5f27e",
-  "prevId": "a25d9daa-54d9-48c4-9411-2289cec3628f",
+  "id": "bf171ed3-f90f-4c50-984b-390c4585e082",
+  "prevId": "b27d76a2-991d-482d-855f-82965f8a1fe9",
   "version": "6",
   "dialect": "sqlite",
   "tables": {
@@ -695,6 +695,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "example_translation": {
+          "name": "example_translation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "language": {
           "name": "language",
           "type": "text",
@@ -1149,6 +1156,34 @@
         },
         "notes_source": {
           "name": "notes_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation": {
+          "name": "example_translation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_source": {
+          "name": "example_translation_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_of": {
+          "name": "example_translation_of",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_status": {
+          "name": "example_translation_status",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

@@ -1,4 +1,4 @@
-import { enrichmentStalled, type ReviewMode, termKey } from "@lymi/core";
+import { enrichmentStalled, type ReviewMode, termKey, translationStale } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import type { Card, CardImage, CardLocalization } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -25,12 +25,13 @@ export interface CardImageView {
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
 export type CardView = Omit<
   Card,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey"
+  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
   /** The viewer's own mark, never the owner's. */
   important: boolean;
+  exampleTranslationStale: boolean;
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -57,12 +58,19 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     revision,
     hookDraft: _draft,
     audioApprovedKey: _approved,
+    exampleTranslationOf: _of,
     ...rest
   } = card;
   return {
     ...rest,
     // A card waiting long past any run has lost its run: it reads as failed, so Enrich is offered.
     enrichmentStatus: enrichmentStalled(card) ? "failed" : card.enrichmentStatus,
+    exampleTranslationStatus:
+      card.exampleTranslationStatus === "working" &&
+      enrichmentStalled({ enrichmentStatus: "working", updatedAt: card.updatedAt })
+        ? "failed"
+        : card.exampleTranslationStatus,
+    exampleTranslationStale: translationStale(card),
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,
@@ -200,6 +208,16 @@ export async function presentCards(
     // another edition gets none.
     const read = seenIn(placed, editions);
     const seen = text ? { ...read, hook: null, hookSource: null } : read;
+    // A reader of another edition sees that edition's translation while it is current, never the original's.
+    if (editions.pinned.has(card.deckId)) {
+      const current = text && text.sourceRevision >= card.revision;
+      Object.assign(seen, {
+        exampleTranslation: (current && text.exampleTranslation) || null,
+        exampleTranslationSource: null,
+        exampleTranslationOf: null,
+        exampleTranslationStatus: null,
+      });
+    }
     return view(seen, images.get(card.id), important.has(card.id));
   });
 }

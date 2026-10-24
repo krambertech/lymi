@@ -245,12 +245,12 @@
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
     },
     {
-      "name": "0061_dry_microchip.sql",
-      "sha256": "17cac101f5b52aedc32d5b25ab4b7c1dee8b6d675747278f522eeea0102ebfb5"
+      "name": "0061_aromatic_black_bird.sql",
+      "sha256": "e141795ca5a195046a1288d722ad902fe07ff952285c2274fdf5d7f36ecc4cd9"
     },
     {
-      "name": "0062_empty_squadron_supreme.sql",
-      "sha256": "b12d9c2d8d44462efd27342a312afbd5eb93ce6f333d66a722d5007eb8bbec28"
+      "name": "0062_military_squadron_supreme.sql",
+      "sha256": "3b80fbcf2709add59bab682b8a06a55ee1b00e2aaac8adaa30223206875c0fa5"
     },
     {
       "name": "0063_guard_studied_decks.sql",

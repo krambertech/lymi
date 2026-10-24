@@ -44,7 +44,17 @@ export type AnkiCardInput = {
   sound: string | null;
 };
 
-const FIELDS = ["Term", "Meaning", "Pronunciation", "Example", "Notes", "Picture", "Audio"];
+// A field added later goes last, so notes an earlier export wrote keep their fields in order.
+const FIELDS = [
+  "Term",
+  "Meaning",
+  "Pronunciation",
+  "Example",
+  "Notes",
+  "Picture",
+  "Audio",
+  "Example translation",
+];
 
 const BACK = (answer: string) =>
   [
@@ -55,6 +65,7 @@ const BACK = (answer: string) =>
     `<div class="answer">{{${answer}}}</div>`,
     '{{#Pronunciation}}<div class="pronunciation">{{Pronunciation}}</div>{{/Pronunciation}}',
     '{{#Example}}<div class="example">{{furigana:Example}}</div>{{/Example}}',
+    '{{#Example translation}}<div class="example-translation">({{Example translation}})</div>{{/Example translation}}',
     '{{#Notes}}<div class="notes">{{Notes}}</div>{{/Notes}}',
     '{{#Picture}}<div class="picture">{{Picture}}</div>{{/Picture}}',
     "{{Audio}}",
@@ -92,6 +103,7 @@ const CSS = `.card {
 .nightMode.card { color: white; background-color: #1f1c19; }
 .answer { font-size: 26px; }
 .pronunciation, .example, .notes { margin-top: 12px; font-size: 18px; opacity: 0.8; }
+.example-translation { margin-top: 4px; font-size: 16px; opacity: 0.6; }
 .picture img { max-width: 100%; max-height: 50vh; margin-top: 12px; }
 `;
 
@@ -428,6 +440,7 @@ export class AnkiCollection {
       ankiField(card.notes),
       picture ? `<img src="${ankiField(picture)}">` : "",
       sound ? `[sound:${sound}]` : "",
+      card.example ? ankiField(card.exampleTranslation ?? null) : "",
     ];
     const noteId = this.noteIds.next(card.createdAt);
     this.notes.insert(noteId, [

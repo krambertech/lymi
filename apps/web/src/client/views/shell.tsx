@@ -211,10 +211,15 @@ export function AppShell({
       {sidebar && <div className="sticky top-0 h-dvh shrink-0 self-start">{sidebar}</div>}
       <main
         className={clsx(
-          "@container flex min-w-0 flex-1 flex-col pt-safe px-safe",
+          "@container flex min-w-0 flex-1 flex-col px-safe",
           fill && "min-h-0 overflow-y-auto",
         )}
       >
+        {/* The top inset as a strip that stays put, so on the Mac nothing scrolls up into the title bar. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none sticky top-0 z-(--z-sticky) h-(--inset-top) shrink-0 mac:bg-canvas"
+        />
         {children}
       </main>
       {nav && (

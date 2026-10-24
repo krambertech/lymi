@@ -7,7 +7,7 @@ export const japanese = {
   enrich: {
     guide: {
       notes:
-        "Verb or adjective: its type and polite form on one line (*ichidan verb · 食べます*, *i-adjective · 高いです*), and its transitive or intransitive pair if it has one (*開ける / 開く*).",
+        "Never the reading, which is the pronunciation, and never romaji. Verb or adjective: its type alone on the first line (Godan verb, Ichidan verb, Irregular verb, I-adjective, Na-adjective), then Polite: *食べます*, and Transitive: *開ける* or Intransitive: *開く* when it has a pair. Noun: Counter: *一枚* when it takes a special one, and With する: *勉強する* for a suru noun. Usage: a particle trap (Wait for someone: 友達*を*待つ, not に), or for a word of two or more kanji, what each means (Characters: 果 fruit, 物 thing).",
     },
     example: `Japanese deck, no samples, meaningLanguage en. Card "食べる", example "毎朝パンを食べます。", addReadings, mayFill: meaning.
 {"meaning": "to eat", "example": "毎朝[まいあさ]パンを食[た]べます。", "notes": null, "pronunciation": null, "language": null}

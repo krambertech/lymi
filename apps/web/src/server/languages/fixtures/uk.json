@@ -1,0 +1,510 @@
+{
+  "about": "Invented cases for the uk module's lesson, hook and check slots, led by the stress homographs and the words that look Russian; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Ukrainian reader, reviews these with ukrainian.ts.",
+  "lesson": [
+    {
+      "term": "замок",
+      "printed": "зáмок",
+      "reading": "за́мок"
+    },
+    {
+      "term": "замок",
+      "printed": "замóк",
+      "reading": "замо́к"
+    },
+    {
+      "term": "руки",
+      "printed": "рýки",
+      "reading": "ру́ки"
+    },
+    {
+      "term": "руки",
+      "printed": "руки́",
+      "reading": "руки́"
+    },
+    {
+      "term": "брати",
+      "printed": "брáти",
+      "reading": "бра́ти"
+    },
+    {
+      "term": "брати",
+      "printed": "брати́",
+      "reading": "брати́"
+    },
+    {
+      "term": "дорога",
+      "printed": "дорóга",
+      "reading": "доро́га"
+    },
+    {
+      "term": "дорога",
+      "printed": "дорогá",
+      "reading": "дорога́"
+    },
+    {
+      "term": "викликати",
+      "printed": "ви́кликати",
+      "reading": "ви́кликати"
+    },
+    {
+      "term": "викликати",
+      "printed": "виклика́ти",
+      "reading": "виклика́ти"
+    },
+    {
+      "term": "неділя",
+      "printed": "недíля",
+      "reading": "неді́ля"
+    },
+    {
+      "term": "луна",
+      "printed": "лунá",
+      "reading": "луна́"
+    },
+    {
+      "term": "питати",
+      "printed": "питáти",
+      "reading": "пита́ти"
+    },
+    {
+      "term": "молоко",
+      "printed": "молокó",
+      "reading": "молоко́"
+    },
+    {
+      "term": "м'ясо",
+      "printed": "м'я́со",
+      "reading": "м'я́со"
+    },
+    {
+      "term": "об’єкт",
+      "printed": "об’є́кт",
+      "reading": "об’є́кт"
+    },
+    {
+      "term": "їжак",
+      "printed": "їжáк",
+      "reading": "їжа́к"
+    },
+    {
+      "term": "Київ",
+      "printed": "Ки́їв",
+      "reading": "Ки́їв"
+    },
+    {
+      "term": "дитина",
+      "printed": "дити́на",
+      "reading": "дити́на"
+    },
+    {
+      "term": "добрий день",
+      "printed": "дóбрий день",
+      "reading": "до́брий день"
+    },
+    {
+      "term": "кіно",
+      "printed": "кінó",
+      "reading": "кіно́"
+    },
+    {
+      "term": "дякую",
+      "printed": "дя́кую",
+      "reading": "дя́кую"
+    }
+  ],
+  "hook": [
+    {
+      "term": "неділя",
+      "meaning": "Sunday",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "неді́ля"
+    },
+    {
+      "term": "час",
+      "meaning": "time",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "луна",
+      "meaning": "echo",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "луна́"
+    },
+    {
+      "term": "питати",
+      "meaning": "to ask",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "пита́ти"
+    },
+    {
+      "term": "замок",
+      "meaning": "lock",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "замо́к"
+    },
+    {
+      "term": "замок",
+      "meaning": "castle",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "за́мок"
+    },
+    {
+      "term": "дорога",
+      "meaning": "road",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "доро́га"
+    },
+    {
+      "term": "брати",
+      "meaning": "to take",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "бра́ти"
+    },
+    {
+      "term": "рука",
+      "meaning": "hand",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "рука́"
+    },
+    {
+      "term": "телефон",
+      "meaning": "telephone",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "телефо́н"
+    },
+    {
+      "term": "театр",
+      "meaning": "theatre",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "теа́тр"
+    },
+    {
+      "term": "молоко",
+      "meaning": "milk",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "молоко́"
+    },
+    {
+      "term": "яблуко",
+      "meaning": "apple",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "я́блуко"
+    },
+    {
+      "term": "собака",
+      "meaning": "dog",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "соба́ка"
+    },
+    {
+      "term": "вікно",
+      "meaning": "window",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "вікно́"
+    },
+    {
+      "term": "працювати",
+      "meaning": "to work",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "працюва́ти"
+    },
+    {
+      "term": "кіт",
+      "meaning": "cat",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "дім",
+      "meaning": "house",
+      "asked": ["meaning_to_term"]
+    },
+    {
+      "term": "ялинка",
+      "meaning": "fir tree",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "яли́нка"
+    },
+    {
+      "term": "неділя",
+      "meaning": "воскресенье",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "неді́ля"
+    },
+    {
+      "term": "подруга",
+      "meaning": "подруга",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "по́друга"
+    },
+    {
+      "term": "м'ясо",
+      "meaning": "мясо",
+      "asked": ["meaning_to_term"],
+      "pronunciation": "м'я́со"
+    }
+  ],
+  "checks": [
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "за́мок",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замо́к",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замок",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "замóк",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "руки",
+      "text": "ру́ки",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "руки",
+      "text": "руки́",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "брати",
+      "text": "брати́",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "дорога",
+      "text": "дорога́",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "неділя",
+      "text": "неді́ля",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "неділя",
+      "text": "неде́ля",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "м’ясо",
+      "text": "м'я́со",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "об'єкт",
+      "text": "об'є́кт",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "ежик",
+      "text": "ё́жик",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "ялинка",
+      "text": "ёлка",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "дім",
+      "text": "дім",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "добрий день",
+      "text": "до́брий день",
+      "pass": true
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "добрий день",
+      "text": "добрий де́нь",
+      "pass": false
+    },
+    {
+      "rule": "the term with its stress marked",
+      "field": "pronunciation",
+      "term": "замок",
+      "text": "[zɑˈmɔk]",
+      "pass": false
+    },
+    {
+      "rule": "one mark per word",
+      "field": "pronunciation",
+      "term": "викликати",
+      "text": "ви́кли́кати",
+      "pass": false
+    },
+    {
+      "rule": "one mark per word",
+      "field": "pronunciation",
+      "term": "викликати",
+      "text": "ви́кликати",
+      "pass": true
+    },
+    {
+      "rule": "no mark on one syllable",
+      "field": "pronunciation",
+      "term": "дім",
+      "text": "ді́м",
+      "pass": false
+    },
+    {
+      "rule": "no mark on one syllable",
+      "field": "pronunciation",
+      "term": "добрий день",
+      "text": "до́брий день",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Ключ не підхо́дить до замка́.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Ключ не підходить до замка́.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "М’я́со на столі́.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "П'ять котів.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "П'ять коті́в.",
+      "pass": true
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Я люблю́ молоко.",
+      "pass": false
+    },
+    {
+      "rule": "stress on every word of two or more syllables",
+      "field": "example",
+      "text": "Це мій дім.",
+      "pass": true
+    },
+    {
+      "rule": "one mark per word",
+      "field": "example",
+      "text": "Ми ку́пи́ли хліб.",
+      "pass": false
+    },
+    {
+      "rule": "one mark per word",
+      "field": "example",
+      "text": "Ми купи́ли хліб.",
+      "pass": true
+    },
+    {
+      "rule": "no mark on one syllable",
+      "field": "example",
+      "text": "Це мі́й дім.",
+      "pass": false
+    },
+    {
+      "rule": "no mark on one syllable",
+      "field": "example",
+      "text": "Це мій дім.",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я працю́ю в ба́нку.",
+      "example": "Я працюю в банку.",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я працю́ю в ба́нку!",
+      "example": "Я працюю в банку.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я рабо́таю в ба́нку.",
+      "example": "Я працюю в банку.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я працюю в банку.",
+      "example": "Я працюю в банку.",
+      "pass": false
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я працю́ю в ба́нку.",
+      "example": "Я працю́ю в банку.",
+      "pass": true
+    },
+    {
+      "rule": "text unchanged under marks",
+      "field": "example",
+      "text": "Я працюю в ба́нку.",
+      "example": "Я працю́ю в банку.",
+      "pass": false
+    }
+  ]
+}

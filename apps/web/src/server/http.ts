@@ -40,6 +40,7 @@ export function ctxOf(c: Context<AppEnv>): ServiceContext {
       : undefined,
     client: c.get("client"),
     clientName: c.get("clientName"),
+    fromPhone: c.get("phone") !== undefined,
   };
 }
 

@@ -91,8 +91,12 @@ const SPEECH_VENDORS = {
   elevenlabs: "elevenlabs",
 } as const satisfies Record<SpeechCall["provider"], string>;
 
-/** Reports a pronunciation call in the same LLM analytics shape, priced by what its vendor bills. */
-export function trackSpeechCall(dataset: AnalyticsWriter | undefined, call: SpeechCall): void {
+/** Reports a speech call in the same LLM analytics shape, priced by what its vendor bills. */
+export function trackSpeechCall(
+  dataset: AnalyticsWriter | undefined,
+  call: SpeechCall,
+  span: "pronunciation" | "example_audio" = "pronunciation",
+): void {
   // A failed call is not billed, except a Gemini reply whose audio was then refused.
   const cost =
     call.error && call.outputTokens === undefined ? undefined : speechCallCost(call.model, call);
@@ -104,7 +108,7 @@ export function trackSpeechCall(dataset: AnalyticsWriter | undefined, call: Spee
     name: "$ai_generation",
     $ai_trace_id: crypto.randomUUID(),
     $ai_session_id: null,
-    $ai_span_name: "pronunciation",
+    $ai_span_name: span,
     $ai_provider: SPEECH_VENDORS[call.provider],
     $ai_model: call.model,
     ...(input !== undefined ? { $ai_input_tokens: input } : {}),

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { choicesPatch, EMPTY_FORM, editPatch, pictureWrite } from "./form";
+import {
+  choicesPatch,
+  EMPTY_FORM,
+  editPatch,
+  keptTranslationStale,
+  pictureWrite,
+  translationAfterExample,
+} from "./form";
 
 const opened = { ...EMPTY_FORM, term: "sbrigarsi", meaning: "", notes: "" };
 
@@ -30,6 +37,90 @@ describe("saving Edit card", () => {
     expect(editPatch({ ...opened, meaning: "to hurry up" }, { meaning: "to hurry up " })).toEqual(
       {},
     );
+  });
+});
+
+describe("an example's translation in Edit card", () => {
+  const translated = {
+    ...opened,
+    example: "Ich esse Brot.",
+    exampleTranslation: "I eat bread.",
+  };
+  const card = {
+    example: "Ich esse Brot.",
+    exampleTranslation: "I eat bread.",
+    exampleTranslationSource: "ai" as const,
+  };
+
+  it("makes a rewritten translation the learner's", () => {
+    expect(editPatch(translated, { exampleTranslation: "I'm eating bread." }, true)).toEqual({
+      exampleTranslation: "I'm eating bread.",
+      exampleTranslationSource: "manual",
+    });
+  });
+
+  it("leaves the AI to translate a new example rather than clearing its translation", () => {
+    expect(
+      editPatch(translated, { example: "Ich trinke Tee.", exampleTranslation: "" }, true),
+    ).toEqual({ example: "Ich trinke Tee.", exampleSource: "manual" });
+  });
+
+  it("clears a person's translation emptied beside a new example", () => {
+    expect(editPatch(translated, { example: "Ich trinke Tee.", exampleTranslation: "" })).toEqual({
+      example: "Ich trinke Tee.",
+      exampleSource: "manual",
+      exampleTranslation: "",
+    });
+  });
+
+  it("keeps no translation without an example", () => {
+    expect(editPatch(opened, { exampleTranslation: "I eat bread." })).toEqual({});
+  });
+
+  it("clears the AI's translation from the form for a new example and restores it for the old one", () => {
+    expect(translationAfterExample(card, "Ich trinke Tee.", "I eat bread.")).toBe("");
+    expect(translationAfterExample(card, "Ich esse Brot. ", "")).toBe("I eat bread.");
+    // Readings added to the same sentence leave its translation current.
+    expect(translationAfterExample(card, "Ich esse Brot[bro:t].", "I eat bread.")).toBeUndefined();
+    expect(translationAfterExample(card, "Ich trinke Tee.", "I drink tea.")).toBeUndefined();
+    expect(
+      translationAfterExample(
+        { ...card, exampleTranslationSource: "manual" },
+        "Ich trinke Tee.",
+        "I eat bread.",
+      ),
+    ).toBeUndefined();
+  });
+
+  it("says as the example changes that the learner's translation would be kept for the old one", () => {
+    const theirs = {
+      ...card,
+      exampleTranslationSource: "manual" as const,
+      exampleTranslationStale: false,
+    };
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "I eat bread.")).toBe(true);
+    // Typed back, or with only a reading added, the translation fits again.
+    expect(keptTranslationStale(theirs, "Ich esse Brot.", "I eat bread.")).toBe(false);
+    expect(keptTranslationStale(theirs, "Ich esse Brot[bro:t].", "I eat bread.")).toBe(false);
+    // A new translation, or none, is not the old one.
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "I drink tea.")).toBe(false);
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "")).toBe(false);
+    // The AI writes its own again, so nothing is kept.
+    expect(
+      keptTranslationStale(
+        { ...theirs, exampleTranslationSource: "ai" },
+        "Ich trinke Tee.",
+        "I eat bread.",
+      ),
+    ).toBe(false);
+    // Already stale, it stays marked under its unchanged example.
+    expect(
+      keptTranslationStale(
+        { ...theirs, exampleTranslationStale: true },
+        "Ich esse Brot.",
+        "I eat bread.",
+      ),
+    ).toBe(true);
   });
 });
 

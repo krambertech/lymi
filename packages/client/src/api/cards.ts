@@ -7,6 +7,8 @@ import type {
   CardInput,
   CardPatch,
   CardsInput,
+  DeckChoiceInput,
+  DeckChoiceOut,
   Direction,
   HookDraftOut,
   ImportantCardsOut,
@@ -25,12 +27,14 @@ export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
 export type Card = Omit<
   CardRow,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey"
+  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
   /** The learner's own mark, never another member's. */
   important: boolean;
+  /** The translation was written for an earlier example; review leaves it out. */
+  exampleTranslationStale: boolean;
 };
 /** `direction` is the legacy name of a text mode, and null for a picture mode. */
 export type CardState = Omit<CardStateRow, "mode" | "direction"> & {
@@ -94,15 +98,22 @@ export const cardsApi = {
   },
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
-  addCard: (body: CardInput) => {
+  /** `from` labels analytics only: the Mac app's quick-add panel. */
+  addCard: (body: CardInput, from?: "desktop_panel") => {
     const json = JSON.stringify(body);
     // Kept alive, the add still lands when the page reloads or navigates away mid-send.
-    return request<AddCardOutcome>("/api/cards", {
+    return request<AddCardOutcome>(`/api/cards${from ? `?from=${from}` : ""}`, {
       method: "POST",
       body: json,
       keepalive: fitsKeepalive(json),
     });
   },
+  /** The learner's deck in the term's language; null keeps the caller's choice. Writes nothing. */
+  chooseDeck: (body: DeckChoiceInput) =>
+    request<DeckChoiceOut>("/api/cards/deck-choice", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   /** Many cards in one write; each is added or skipped on its own. */
   addCards: (body: CardsInput, from?: "lesson") =>
     request<{ results: AddCardOutcome[] }>(`/api/cards/batch${from ? `?from=${from}` : ""}`, {
@@ -125,6 +136,14 @@ export const cardsApi = {
       updatedAt instanceof Date ? updatedAt.getTime() : updatedAt ? Date.parse(updatedAt) : 0;
     return apiUrl(
       `/api/audio/${encodeURIComponent(cardId)}?v=1-${Number.isFinite(version) ? version : 0}`,
+    );
+  },
+  /** The card's example read aloud, made on the first play; an edit's new `updatedAt` asks again. */
+  exampleAudioUrl: (cardId: string, updatedAt?: Date | string) => {
+    const version =
+      updatedAt instanceof Date ? updatedAt.getTime() : updatedAt ? Date.parse(updatedAt) : 0;
+    return apiUrl(
+      `/api/audio/${encodeURIComponent(cardId)}/example?v=1-${Number.isFinite(version) ? version : 0}`,
     );
   },
   /** A clip already voiced, or a 404: a preload never spends on speech. */

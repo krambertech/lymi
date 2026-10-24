@@ -2,7 +2,13 @@ import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
 import { useKnownReadings } from "@lymi/client/known-readings";
-import { drawsTermReading, hasReadings, stripReadings, termShowsPronunciation } from "@lymi/core";
+import {
+  drawsTermReading,
+  hasReadings,
+  shownTranslation,
+  stripReadings,
+  termShowsPronunciation,
+} from "@lymi/core";
 import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
@@ -31,13 +37,22 @@ export function peekHeight(card: Card, width: number, scale: number) {
   const drawn = drawsTermReading({ ...card, term: word });
   const shown = termShowsPronunciation({ ...card, term: word });
   const example = card.example && (hasReadings(card.example, card.language) ? 23 + 12 : 23);
+  const translation = shownTranslation(card);
   const text =
     lines(word, 34 * scale, inner, 2) * (drawn ? 41 + 21 : 41) +
     (forms ? 4 + 23 : 0) +
     lines(card.meaning || "", 20 * scale, inner, 3) * 26 +
     (card.pronunciation && !shown ? 8 + 23 : 0) +
+    // The translation runs on after the example, so the two wrap as one paragraph.
     (card.example && example
-      ? 8 + lines(stripReadings(card.example, card.language), 17 * scale, inner, 2) * example
+      ? 8 +
+        lines(
+          stripReadings(card.example, card.language) + (translation ? ` (${translation})` : ""),
+          17 * scale,
+          inner,
+          translation ? 3 : 2,
+        ) *
+          example
       : 0);
   return Math.min(Math.round(FRAME + text * scale), 420);
 }
@@ -69,6 +84,7 @@ export function CardPeek({
   const { word, forms } = splitForms(card.term);
   const reading = useMemo(() => termShowsPronunciation({ ...card, term: word }), [card, word]);
   const { width, scale } = usePeekSize();
+  const translation = shownTranslation(card);
   return (
     <View
       className="flex-1 gap-4 bg-plate px-5 pb-5 pt-4"
@@ -120,8 +136,11 @@ export function CardPeek({
             text={card.example}
             known={known}
             className="text-md text-text-2"
-            lines={2}
+            lines={translation ? 3 : 2}
             lang={card.language}
+            translation={
+              translation ? { text: translation, className: "text-md text-muted" } : null
+            }
           />
         )}
       </View>

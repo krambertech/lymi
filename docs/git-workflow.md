@@ -46,6 +46,35 @@ Fixup commits are acceptable while a pull request is in progress because GitHub 
 
 Merge with **Squash and merge** after CI passes and review threads are resolved. Confirm that the generated commit title matches the pull request title. GitHub uses the pull request description as the commit body and deletes the branch after merging.
 
+## Stack pull requests that depend on each other
+
+Open one pull request on `main` by default. Stack only when a change needs the code of another open pull request, such as an editor built on a schema change still in review.
+
+**Use GitHub's native stacks through the `gh stack` extension, never a pull request based on another branch by hand.** After a squash merge below it, a hand-made stack leaves the branch above carrying commits that are already on `main`; a native stack rebases it for you. Install the extension once:
+
+```bash
+gh extension install github/gh-stack
+```
+
+Start a stack from `origin/main`, commit each layer on its own branch, then push every branch and open the linked pull requests:
+
+```bash
+git fetch origin
+gh stack init kateryna/card-schema
+# commit the first layer
+gh stack add kateryna/card-editor
+# commit the second layer
+gh stack submit
+```
+
+To build on a pull request that is already open, check out its branch and run `gh stack init <its-branch> <new-branch>`. Each layer is a full pull request: a Conventional Commit title, the template body, its own verification, and green CI. GitHub judges required checks and reviews against `main`.
+
+Keep a stack current with `gh stack sync` instead of `git rebase origin/main`. It fetches, rebases every layer in order, and pushes with `--force-with-lease`. When a conflict stops it, every branch goes back to where it was; run `gh stack rebase`, resolve each layer, and continue with `gh stack rebase --continue`.
+
+Merge from the bottom. Merging a layer on GitHub merges every layer beneath it in the same step, so merge the bottom layer alone while the layers above are still in review. GitHub then rebases the remaining layers onto `main`; run `gh stack sync --prune` to catch up locally and delete the merged branches.
+
+Change a migration in the layer that adds it. CI takes a layer's base as already applied, so a later layer that edits a lower layer's migration can fail `pnpm check:migrations`.
+
 ## Branches from before the history migration
 
 The repository adopted this linear history on 2026-09-06. A branch based on the earlier graph cannot use an ordinary rebase because Git may replay changes that are already on `main`. Start a fresh branch from `origin/main` and transplant only the branch's unique commits or net diff. The recovery tag `archive/pre-linear-history-2026-09-06` retains the previous `main` history.

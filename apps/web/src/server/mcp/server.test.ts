@@ -97,6 +97,10 @@ const card: CardView = {
   meaning: "to hurry up",
   pronunciation: null,
   example: null,
+  exampleTranslation: null,
+  exampleTranslationSource: null,
+  exampleTranslationStale: false,
+  exampleTranslationStatus: null,
   notes: null,
   hook: null,
   hookSource: null,
@@ -286,6 +290,8 @@ describe("Lymi MCP server", () => {
       dailyGoal: 50,
       analyticsConsent: null,
       analyticsConsentUpdatedAt: null,
+      aiConsent: null,
+      aiConsentUpdatedAt: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -358,6 +364,8 @@ describe("Lymi MCP server", () => {
       dailyGoal: 50,
       analyticsConsent: null,
       analyticsConsentUpdatedAt: null,
+      aiConsent: null,
+      aiConsentUpdatedAt: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -414,6 +422,8 @@ describe("Lymi MCP server", () => {
       dailyGoal: 50,
       analyticsConsent: null,
       analyticsConsentUpdatedAt: null,
+      aiConsent: null,
+      aiConsentUpdatedAt: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -664,7 +674,9 @@ describe("Lymi MCP server", () => {
 
     const full = await client.callTool({ name: "update_cards", arguments: { cards } });
     expect(full.isError).toBeFalsy();
-    expect(services.updateCards).toHaveBeenCalledWith(expect.anything(), cards);
+    expect(services.updateCards).toHaveBeenCalledWith(expect.anything(), cards, {
+      enrichment: undefined,
+    });
     expect(full.structuredContent).toMatchObject({
       updated: 1,
       failed: 1,
@@ -701,7 +713,12 @@ describe("Lymi MCP server", () => {
     });
 
     expect(res.isError).toBeFalsy();
-    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { source: "" });
+    expect(services.updateCard).toHaveBeenCalledWith(
+      expect.anything(),
+      "card-1",
+      { source: "" },
+      undefined,
+    );
     expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
   });
 
@@ -1045,11 +1062,12 @@ describe("Lymi MCP server", () => {
       },
     });
     expect(edit.isError).toBeFalsy();
-    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", {
-      meaning: "to rush",
-      example: "Sbrigati!",
-      exampleSource: "lesson",
-    });
+    expect(services.updateCard).toHaveBeenCalledWith(
+      expect.anything(),
+      "card-1",
+      { meaning: "to rush", example: "Sbrigati!", exampleSource: "lesson" },
+      undefined,
+    );
 
     for (const [name, args] of [
       ["update_card", { cardId: "card-1", meaning: "x", meaningSource: "ai" }],
@@ -1096,7 +1114,12 @@ describe("Lymi MCP server", () => {
       arguments: { cardId: "card-1", notes },
     });
     expect(edit.isError).toBeFalsy();
-    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { notes });
+    expect(services.updateCard).toHaveBeenCalledWith(
+      expect.anything(),
+      "card-1",
+      { notes },
+      undefined,
+    );
     expect((edit.structuredContent as { notes: string }).notes).toBe(notes);
   });
 

@@ -10,7 +10,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/operations.md](docs/operations.md): the production alerts and what to do when one fires
 - [docs/lead-ins.md](docs/lead-ins.md): how Japanese speech decides and writes the words before a term, and how to add a language
-- [docs/phone-release.md](docs/phone-release.md): how the phone app ships over the air and to TestFlight, and its one-time setup
+- [docs/phone-release.md](docs/phone-release.md): how the phone app ships over the air, to TestFlight and to Google Play, and its one-time setup
 - [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/proposals](docs/proposals/README.md): product directions under consideration or delivery, never current product truth
@@ -42,6 +42,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
 apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+apps/desktop      Mac app: Electron shell around the product (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
 packages/design   Tokens, the lantern's geometry, flame rules and motion. Shared by the web, the site and the phone.

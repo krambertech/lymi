@@ -1,4 +1,5 @@
 import type {
+  AiConsentInput,
   AnalyticsConsentInput,
   AppLanguage,
   LearningKind,
@@ -11,6 +12,9 @@ export type Settings = {
   userId: string;
   analyticsConsent: boolean | null;
   analyticsConsentUpdatedAt: string | null;
+  /** Null until answered; the phone sends nothing to AI until it is true. */
+  aiConsent?: boolean | null | undefined;
+  aiConsentUpdatedAt?: string | null | undefined;
   appLanguage: AppLanguage | null;
   meaningLanguage: string;
   dailyGoal: number;
@@ -30,6 +34,8 @@ export const settingsApi = {
       method: "PUT",
       body: JSON.stringify(body),
     }),
+  updateAiConsent: (body: AiConsentInput) =>
+    request<Settings>("/api/settings/ai-consent", { method: "PUT", body: JSON.stringify(body) }),
   settings: () => request<Settings>("/api/settings"),
   updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),

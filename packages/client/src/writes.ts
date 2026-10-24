@@ -29,7 +29,7 @@ const VERSION = 1;
 export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
 export type Write =
-  | { kind: "card.add"; input: CardInput & { id: string } }
+  | { kind: "card.add"; input: CardInput & { id: string }; from?: "desktop_panel" }
   | { kind: "card.update"; id: string; patch: CardPatch }
   | { kind: "card.archive"; id: string }
   | { kind: "card.restore"; id: string }
@@ -204,7 +204,7 @@ function createdBy(w: Write): string | null {
 function send(w: Write): Promise<Result> {
   switch (w.kind) {
     case "card.add":
-      return api.addCard(w.input);
+      return api.addCard(w.input, w.from);
     case "card.update":
       return api.updateCard(w.id, w.patch);
     case "card.archive":
@@ -506,7 +506,11 @@ const offline = () => typeof navigator !== "undefined" && navigator.onLine === f
  * A refusal still throws, as the plain API would.
  */
 export const writes = {
-  async addCard(sent: CardInput): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
+  /** `from` rides in the queued write, so an add replayed later is still labelled where it began. */
+  async addCard(
+    sent: CardInput,
+    from?: "desktop_panel",
+  ): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
     const input = storedInput(sent);
     // Offline, the cache is the best word on duplicates until the server has the final one.
     const duplicate = offline() ? localDuplicate(input) : null;
@@ -519,7 +523,11 @@ export const writes = {
       };
       return { outcome, queued: false };
     }
-    const w = { kind: "card.add" as const, input: { ...input, id: input.id ?? newId() } };
+    const w = {
+      kind: "card.add" as const,
+      input: { ...input, id: input.id ?? newId() },
+      ...(from ? { from } : {}),
+    };
     const lookup = client ? cacheLookup(client) : null;
     const card = lookup ? localCard(w, lookup) : null;
     const written = await make<AddCardOutcome>(w, input.term);

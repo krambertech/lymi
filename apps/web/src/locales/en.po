@@ -908,6 +908,9 @@ msgstr "Add a photo or PDF of the lesson, or paste its text."
 msgid "Add a picture"
 msgstr "Add a picture"
 
+msgid "Add a translation"
+msgstr "Add a translation"
+
 msgid "Add card"
 msgstr "Add card"
 
@@ -995,6 +998,9 @@ msgstr "Added “{quoted}” to {deckName}"
 msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
 msgstr "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
 
+msgid "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
+msgstr "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
+
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
 
@@ -1028,6 +1034,12 @@ msgstr "AI"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI example and translation"
+msgstr "AI example and translation"
+
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."
 
@@ -1048,6 +1060,21 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI services"
+msgstr "AI services"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI services are off for your account. Turn them on in Settings to draft hooks."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI services are off for your account. Turn them on in Settings to read lessons."
+
+msgid "AI translates it after you save"
+msgstr "AI translates it after you save"
+
+msgid "AI translation"
+msgstr "AI translation"
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI uses this choice when filling empty fields."
@@ -1119,6 +1146,9 @@ msgstr "anki quizlet pleco"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
+
+msgid "Another app already uses that shortcut. Try a different one."
+msgstr "Another app already uses that shortcut. Try a different one."
 
 msgid "Another draft"
 msgstr "Another draft"
@@ -1466,6 +1496,9 @@ msgstr "Check your inbox"
 msgid "Checked"
 msgstr "Checked"
 
+msgid "Checking your account…"
+msgstr "Checking your account…"
+
 msgid "Checking your decks for duplicates"
 msgstr "Checking your decks for duplicates"
 
@@ -1653,6 +1686,9 @@ msgstr "Consistency"
 msgid "Continue"
 msgstr "Continue"
 
+msgid "Continue as {email}"
+msgstr "Continue as {email}"
+
 msgid "Continue to {appName}"
 msgstr "Continue to {appName}"
 
@@ -1795,6 +1831,9 @@ msgstr "Couldn’t move {0, plural, one {# card} other {# cards}}."
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Couldn’t play the example. Try again in a moment."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
@@ -1815,6 +1854,12 @@ msgstr "Couldn’t remove the member. Try again."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
+
+msgid "Couldn’t save that. Try again."
+msgstr "Couldn’t save that. Try again."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Couldn’t save the choice. Check your connection and try again."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -1845,6 +1890,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t translate the example."
+msgstr "Couldn’t translate the example."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Couldn’t turn off the join link. Try again."
@@ -1963,6 +2011,9 @@ msgstr "Deck options"
 
 msgid "Deck settings"
 msgstr "Deck settings"
+
+msgid "Deck: {deckName}"
+msgstr "Deck: {deckName}"
 
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "decks"
@@ -2096,6 +2147,9 @@ msgstr "Due"
 msgid "Due by deck"
 msgstr "Due by deck"
 
+msgid "Due count beside the lantern"
+msgstr "Due count beside the lantern"
+
 msgid "Due date"
 msgstr "Due date"
 
@@ -2225,6 +2279,12 @@ msgstr "Everything, to import into Lymi again: cards, pictures, schedules and re
 msgid "Example"
 msgstr "Example"
 
+msgid "Example and translation by you"
+msgstr "Example and translation by you"
+
+msgid "Example and translation from lesson"
+msgstr "Example and translation from lesson"
+
 msgid "Example by you"
 msgstr "Example by you"
 
@@ -2233,6 +2293,9 @@ msgstr "Example changed to “{value}”"
 
 msgid "Example from lesson"
 msgstr "Example from lesson"
+
+msgid "Example translation"
+msgstr "Example translation"
 
 msgid "Explore"
 msgstr "Explore"
@@ -2311,6 +2374,9 @@ msgstr "Fields of {0}"
 
 msgid "File"
 msgstr "File"
+
+msgid "Fill in selected text"
+msgstr "Fill in selected text"
 
 msgid "Filter"
 msgstr "Filter"
@@ -2484,6 +2550,9 @@ msgstr "How it's asked: {0}"
 
 msgid "How it’s going"
 msgstr "How it’s going"
+
+msgid "How many cards are due, next to the lantern in the menu bar."
+msgstr "How many cards are due, next to the lantern in the menu bar."
 
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
@@ -2734,8 +2803,8 @@ msgstr "Keep studying"
 msgid "Keep the description under 300 characters."
 msgstr "Keep the description under 300 characters."
 
-msgid "Keep the example under 2000 characters."
-msgstr "Keep the example under 2000 characters."
+msgid "Keep the example under 250 characters."
+msgstr "Keep the example under 250 characters."
 
 msgid "Keep the hook under 200 characters."
 msgstr "Keep the hook under 200 characters."
@@ -2772,6 +2841,9 @@ msgstr "Keep the stress under 200 characters."
 
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
+
+msgid "Keep the translation under 250 characters."
+msgstr "Keep the translation under 250 characters."
 
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -2924,6 +2996,12 @@ msgstr "Lymi doesn’t recognise this app. Allow it only if you trust the addres
 msgid "Lymi file"
 msgstr "Lymi file"
 
+msgid "Lymi for Mac {version}"
+msgstr "Lymi for Mac {version}"
+
+msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
+msgstr "Lymi for Mac opens and signs you in. You can close this tab once it has."
+
 msgid "Lymi home"
 msgstr "Lymi home"
 
@@ -2939,6 +3017,15 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 
+msgid "Lymi starts when you sign in to your Mac, ready for quick add."
+msgstr "Lymi starts when you sign in to your Mac, ready for quick add."
+
+msgid "Lymi stays in the Dock instead, so it is always one click away."
+msgstr "Lymi stays in the Dock instead, so it is always one click away."
+
+msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
+msgstr "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
+
 msgid "Made the deck {deck}"
 msgstr "Made the deck {deck}"
 
@@ -2950,6 +3037,9 @@ msgstr "Made the series {name}"
 
 msgid "Main"
 msgstr "Main"
+
+msgid "Make a deck in Lymi first. Enter opens Library."
+msgstr "Make a deck in Lymi first. Enter opens Library."
 
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
@@ -3392,11 +3482,17 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
 
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Off for mobile and web. Existing card text and saved audio stay."
+
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "On a phone, or stuck? Read the guide"
+
+msgid "On for mobile and web."
+msgstr "On for mobile and web."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
@@ -3418,6 +3514,9 @@ msgstr "One page at a time"
 
 msgid "One side only"
 msgstr "One side only"
+
+msgid "Only continue if you just chose Sign in in Lymi for Mac."
+msgstr "Only continue if you just chose Sign in in Lymi for Mac."
 
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
@@ -3445,6 +3544,9 @@ msgstr "Open"
 msgid "Open “{0}” in {1}"
 msgstr "Open “{0}” in {1}"
 
+msgid "Open at login"
+msgstr "Open at login"
+
 msgid "Open deck"
 msgstr "Open deck"
 
@@ -3466,17 +3568,35 @@ msgstr "Open Library"
 msgid "Open Lymi"
 msgstr "Open Lymi"
 
+msgid "Open Lymi for Mac"
+msgstr "Open Lymi for Mac"
+
+msgid "Open Lymi for Mac again"
+msgstr "Open Lymi for Mac again"
+
 msgid "Open Lymi from the new icon."
 msgstr "Open Lymi from the new icon."
 
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
+msgid "Open Lymi to sign in"
+msgstr "Open Lymi to sign in"
+
+msgid "Open System Settings"
+msgstr "Open System Settings"
+
 msgid "Open the invitation"
 msgstr "Open the invitation"
 
+msgid "Open this page from Lymi for Mac to sign in there."
+msgstr "Open this page from Lymi for Mac to sign in there."
+
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
+
+msgid "Opens quick add over any app."
+msgstr "Opens quick add over any app."
 
 msgid "Optional"
 msgstr "Optional"
@@ -3632,6 +3752,9 @@ msgstr "Pictures need a connection. Add it once you’re back online."
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
 
+msgid "Play example"
+msgstr "Play example"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
@@ -3650,6 +3773,12 @@ msgstr "Press <0>Export now</0>, save the file, then choose it here."
 msgid "Press Export, save the file, then choose it here."
 msgstr "Press Export, save the file, then choose it here."
 
+msgid "Press keys"
+msgstr "Press keys"
+
+msgid "Press the new shortcut with ⌘ or ⌃. Esc keeps the old one."
+msgstr "Press the new shortcut with ⌘ or ⌃. Esc keeps the old one."
+
 msgid "Previous card"
 msgstr "Previous card"
 
@@ -3658,6 +3787,9 @@ msgstr "Previous month"
 
 msgid "Privacy"
 msgstr "Privacy"
+
+msgid "Privacy policy"
+msgstr "Privacy policy"
 
 msgid "Private"
 msgstr "Private"
@@ -3687,6 +3819,15 @@ msgstr "Pronunciation from lesson"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "published decks"
+
+msgid "Quick add"
+msgstr "Quick add"
+
+msgid "Quick add shortcut: {keys}. Change"
+msgstr "Quick add shortcut: {keys}. Change"
+
+msgid "Quick add starts with the text you selected in the app in front."
+msgstr "Quick add starts with the text you selected in the app in front."
 
 msgid "Quickstart"
 msgstr "Quickstart"
@@ -3841,6 +3982,9 @@ msgstr "Renamed “{from}” to “{spelled}”"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"
+
+msgid "Replay example"
+msgstr "Replay example"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -4016,6 +4160,9 @@ msgstr "Saved on this device until Lymi can be reached."
 msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
 msgstr "Saved on this device. Pictures need a connection, so add it once you’re back online."
 
+msgid "Saved on this Mac only, so each Mac keeps its own."
+msgstr "Saved on this Mac only, so each Mac keeps its own."
+
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -4092,6 +4239,9 @@ msgstr "See the picture, recall the meaning"
 
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
+
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "See what’s shared and with whom in our privacy policy."
 
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
@@ -4180,6 +4330,9 @@ msgstr "Show another"
 msgid "Show hook"
 msgstr "Show hook"
 
+msgid "Show in the menu bar"
+msgstr "Show in the menu bar"
+
 msgid "Show more"
 msgstr "Show more"
 
@@ -4205,11 +4358,17 @@ msgstr "Sign in"
 msgid "Sign in as you anywhere else"
 msgstr "Sign in as you anywhere else"
 
+msgid "Sign in to add cards"
+msgstr "Sign in to add cards"
+
 msgid "Sign in to continue."
 msgstr "Sign in to continue."
 
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
+
+msgid "Sign in to Lymi for Mac"
+msgstr "Sign in to Lymi for Mac"
 
 msgid "Sign in with your new password."
 msgstr "Sign in with your new password."
@@ -4505,6 +4664,9 @@ msgstr "The deck leaves Library and its cards stop coming up in review. Restore 
 msgid "the example"
 msgstr "the example"
 
+msgid "the example’s translation"
+msgstr "the example’s translation"
+
 msgid "the language"
 msgstr "the language"
 
@@ -4513,6 +4675,9 @@ msgstr "The language of the app and AI-written meanings."
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
+
+msgid "The lantern opens Lymi, quick add and review from the top of the screen."
+msgstr "The lantern opens Lymi, quick add and review from the top of the screen."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
@@ -4564,6 +4729,9 @@ msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
+
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "These features send relevant card text and lesson material to third-party AI services."
 
 msgid "They already have a pending invitation."
 msgstr "They already have a pending invitation."
@@ -4685,8 +4853,14 @@ msgstr "This join link stopped working. Ask the owner for a new one."
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
 
+msgid "This Mac"
+msgstr "This Mac"
+
 msgid "This shelf has no page"
 msgstr "This shelf has no page"
+
+msgid "This sign-in link has expired. Start again from Lymi for Mac."
+msgstr "This sign-in link has expired. Start again from Lymi for Mac."
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
@@ -4742,6 +4916,9 @@ msgstr "Today, {day}: nothing due"
 msgid "Today’s goal"
 msgstr "Today’s goal"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Today’s new example audio is used up. Examples you’ve played still play."
+
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
@@ -4767,6 +4944,24 @@ msgstr "TOPIK I"
 msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Total"
+
+msgid "Translated from an earlier example."
+msgstr "Translated from an earlier example."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Translated from an earlier example. Edit it to match."
+
+msgid "Translation"
+msgstr "Translation"
+
+msgid "Translation by you"
+msgstr "Translation by you"
+
+msgid "Translation changed to “{value}”"
+msgstr "Translation changed to “{value}”"
+
+msgid "Translation from lesson"
+msgstr "Translation from lesson"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -4861,6 +5056,12 @@ msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 msgid "Use a public http or https link to a picture."
 msgstr "Use a public http or https link to a picture."
 
+msgid "Use AI services"
+msgstr "Use AI services"
+
+msgid "Use another account"
+msgstr "Use another account"
+
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 
@@ -4940,6 +5141,9 @@ msgstr "What is Lymi?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
+
+msgid "What Lymi keeps, who helps provide it, and the choices you have."
+msgstr "What Lymi keeps, who helps provide it, and the choices you have."
 
 msgid "What the decks are about"
 msgstr "What the decks are about"

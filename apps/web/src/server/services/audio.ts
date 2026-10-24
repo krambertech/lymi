@@ -1,10 +1,17 @@
-import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, spokenText } from "@lymi/core";
+import {
+  canSpeakTerm,
+  LanguageTag,
+  languageSupport,
+  SPOKEN_TERM_MAX,
+  spokenText,
+} from "@lymi/core";
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider, SpeechUsage } from "../ai";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
+import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
 import { getCard } from "./cards";
@@ -33,16 +40,18 @@ export interface AudioDependencies {
 export async function pronunciationAudio(
   ctx: ServiceContext,
   cardId: string,
-  deps: AudioDependencies,
+  sent: AudioDependencies,
 ): Promise<R2ObjectBody> {
   const card = await getCard(ctx, cardId);
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
   // A recording is never replaced, whatever the term, language or provider. CONTEXT.md, Recording.
   if (card.audioSource === "recorded" && card.audioKey) {
-    const recorded = await deps.bucket.get(card.audioKey);
+    const recorded = await sent.bucket.get(card.audioKey);
     if (recorded) return recorded;
     throw new ServiceError("unavailable", "The recorded pronunciation is temporarily unavailable");
   }
+  // The card's words are its owner's, so the owner's choice decides whether they are voiced.
+  const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
   const language = LanguageTag.safeParse(card.language);
   if (!language.success) {
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
@@ -74,7 +83,18 @@ export async function pronunciationAudio(
       : undefined;
   if (input && deps.storedOnly && !spoken)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
-  return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
+  if (spoken) return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
+  const context = languageSupport(language.data)?.speech.context;
+  // A fixed context costs nothing to settle, so it skips the lease a written lead-in takes.
+  return generatedPronunciation(
+    ctx,
+    card,
+    deps,
+    providers,
+    language.data,
+    context ? { identity: "context", previousText: context } : undefined,
+    true,
+  );
 }
 
 async function generatedPronunciation(
@@ -203,7 +223,7 @@ async function generatedPronunciation(
   );
 }
 
-async function boundedAudio(response: Response): Promise<Uint8Array> {
+export async function boundedAudio(response: Response): Promise<Uint8Array> {
   if (!response.body) throw new AudioResponseError("Speech provider returned no audio");
 
   const contentLength = response.headers.get("content-length");
@@ -253,7 +273,7 @@ class AudioResponseError extends Error {
   }
 }
 
-function providerStatus(error: unknown): number | null {
+export function providerStatus(error: unknown): number | null {
   if (!error || typeof error !== "object" || !("status" in error)) return null;
   return typeof error.status === "number" ? error.status : null;
 }

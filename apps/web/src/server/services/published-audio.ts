@@ -1,6 +1,6 @@
 import { canSpeakTerm, LanguageTag } from "@lymi/core";
 import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/server";
-import { and, eq, inArray, isNull, selectIn } from "@lymi/core/db";
+import { and, eq, inArray, isNull, or, selectIn } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { AnalyticsWriter } from "./analytics";
 import { type AudioDependencies, pronunciationAudio } from "./audio";
@@ -95,7 +95,15 @@ export async function voicePublishedDecks(
       })
       .from(schema.cards)
       .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-      .where(and(inArray(schema.cards.id, slice), isNull(schema.cards.audioKey))),
+      .leftJoin(schema.userSettings, eq(schema.userSettings.userId, schema.decks.userId))
+      .where(
+        and(
+          inArray(schema.cards.id, slice),
+          isNull(schema.cards.audioKey),
+          // A publisher who turned AI off keeps only the clips already made.
+          or(isNull(schema.userSettings.aiConsent), eq(schema.userSettings.aiConsent, true)),
+        ),
+      ),
   );
   // A language no provider covers, or a term the audio path refuses, would fail every time.
   const pending = rows.filter(

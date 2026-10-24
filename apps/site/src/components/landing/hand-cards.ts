@@ -22,7 +22,9 @@ export interface HandCard {
   reading?: string;
   /** A kana reading drawn over the term's kanji as furigana, in place of a reading line. */
   furigana?: string;
-  /** Marked on the face; a Known card's furigana waits for the turn, as review draws it. */
+  /** The term with U+0301 over its stressed vowel, drawn in its place until the card is Known. */
+  stress?: string;
+  /** Marked on the face; a Known card's furigana or stress waits for the turn, as review draws it. */
   state?: "new" | "learning" | "known";
   pronunciation?: string;
   meaning: string | MessageDescriptor;

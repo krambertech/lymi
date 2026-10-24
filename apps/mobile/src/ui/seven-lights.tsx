@@ -5,9 +5,11 @@ import { LIGHT_STEP_MS, type LightLevel, lightLevel, lightReference } from "@lym
 import { useEffect } from "react";
 import { View, type ViewStyle } from "react-native";
 import Animated, {
+  type AnimatedRef,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
+  withSequence,
   withTiming,
 } from "react-native-reanimated";
 import { useReduceMotion } from "../theme/motion";
@@ -31,6 +33,8 @@ export function SevenLights({
   goals,
   size = "lg",
   sequence,
+  turn,
+  todayRef,
 }: {
   /** Each day's review-local YYYY-MM-DD, oldest first; a blank date has no letter. */
   dates: string[];
@@ -46,6 +50,13 @@ export function SevenLights({
   size?: "sm" | "lg";
   /** At the end of a review the lights switch on one after another, from this many ms. */
   sequence?: number;
+  /**
+   * When the day has just turned, today's light first shows the reviews it held before this one
+   * (`from`), then fills at `at`, when the spark lands in it.
+   */
+  turn?: { at: number; from: number };
+  /** Today's glass, for the spark to find it. */
+  todayRef?: AnimatedRef<View>;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -72,6 +83,7 @@ export function SevenLights({
           goals ? goals[i] : goal,
           satisfied ? satisfied[i] : i === today && todayDone,
         );
+        const landing = i === today && turn && sequence !== undefined ? turn : undefined;
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: a day's place in the week is its identity.
           <View key={i} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
@@ -82,6 +94,9 @@ export function SevenLights({
               today={i === today}
               resting={!!rest?.[i]}
               delay={sequence === undefined ? undefined : sequence + i * LIGHT_STEP_MS}
+              held={landing && lightLevel(landing.from, reference, goals ? goals[i] : goal, false)}
+              fillAt={landing?.at}
+              glassRef={i === today ? todayRef : undefined}
             />
             <Text className={`text-xs ${i === today ? "font-medium text-text-2" : "text-faint"}`}>
               {letters[i]}
@@ -100,6 +115,9 @@ function Glass({
   today,
   resting,
   delay,
+  held: heldLevel,
+  fillAt,
+  glassRef,
 }: {
   level: LightLevel;
   lg: boolean;
@@ -107,16 +125,38 @@ function Glass({
   today: boolean;
   resting: boolean;
   delay?: number | undefined;
+  /** The level it rises to first, and when it fills from there to `level`. */
+  held?: LightLevel | undefined;
+  fillAt?: number | undefined;
+  glassRef?: AnimatedRef<View> | undefined;
 }) {
   const reduce = useReduceMotion();
   const h = useSharedValue(delay === undefined ? l / 3 : 0);
+  const pulse = useSharedValue(1);
   useEffect(() => {
     const to = l / 3;
     if (reduce) h.value = to;
-    else if (delay !== undefined) h.value = withDelay(delay, withTiming(to, { duration: 300 }));
+    else if (delay !== undefined && heldLevel !== undefined && fillAt !== undefined) {
+      h.value = withSequence(
+        withDelay(delay, withTiming(heldLevel / 3, { duration: 300 })),
+        withDelay(Math.max(0, fillAt - delay - 300), withTiming(to, { duration: 260 })),
+      );
+      pulse.value = withDelay(
+        fillAt,
+        withSequence(withTiming(1.08, { duration: 100 }), withTiming(1, { duration: 330 })),
+      );
+    } else if (delay !== undefined) h.value = withDelay(delay, withTiming(to, { duration: 300 }));
     else h.value = withTiming(to, { duration: 700 });
-  }, [l, delay, reduce, h]);
-  const rise = useAnimatedStyle(() => ({ transform: [{ scaleY: h.value }] }));
+  }, [l, delay, heldLevel, fillAt, reduce, h, pulse]);
+  const final = fill(p, l === 0 ? 1 : l);
+  const held = heldLevel === undefined ? final : fill(p, heldLevel === 0 ? 1 : heldLevel);
+  const step = (heldLevel ?? 0) / 3;
+  const rise = useAnimatedStyle(() => ({
+    transform: [{ scaleY: h.value }],
+    // Until the spark lands the light keeps the colour it had before this review.
+    backgroundColor: h.value > step + 0.01 ? final : held,
+  }));
+  const swell = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
   const top = lg ? 6 : 4;
   const bottom = lg ? 8 : 5;
   const box: ViewStyle = {
@@ -133,7 +173,7 @@ function Glass({
     borderColor: resting ? p.amber : today && l === 0 ? p["edge-2"] : p.edge,
   };
   return (
-    <View style={box}>
+    <Animated.View ref={glassRef} style={[box, swell]}>
       {/* Tinted like the month's rest band, so the two read as one mark. */}
       {resting && <View className="absolute inset-0" style={{ backgroundColor: `${p.amber}12` }} />}
       <Animated.View
@@ -142,7 +182,6 @@ function Glass({
             position: "absolute",
             inset: 0,
             transformOrigin: "50% 100%",
-            backgroundColor: fill(p, l === 0 ? 1 : l),
             experimental_backgroundImage: `linear-gradient(to bottom, ${p["lit-sheen"]}, ${clear(p["lit-sheen"])} 70%)`,
             // Light caught along the top edge. A border, because a shadow on a clipped child breaks its corners.
             borderTopWidth: 1,
@@ -151,6 +190,6 @@ function Glass({
           rise,
         ]}
       />
-    </View>
+    </Animated.View>
   );
 }

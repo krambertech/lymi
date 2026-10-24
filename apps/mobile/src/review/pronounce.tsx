@@ -19,6 +19,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 import { useSessionHeaders } from "../auth/client";
+import { useAiConsent } from "../privacy/ai-consent";
 import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
 import { IconButton, Text } from "../ui/primitives";
 
@@ -26,9 +27,9 @@ import { IconButton, Text } from "../ui/primitives";
 const LOAD_LIMIT_MS = 12_000;
 const TIP_MS = 4000;
 
-type ExpoAudio = typeof import("expo-audio");
+export type ExpoAudio = typeof import("expo-audio");
 // A build from before the audio module has no pronunciation rather than a broken review.
-const audio: ExpoAudio | null = requireOptionalNativeModule("ExpoAudio")
+export const audio: ExpoAudio | null = requireOptionalNativeModule("ExpoAudio")
   ? (require("expo-audio") as ExpoAudio)
   : null;
 
@@ -39,6 +40,8 @@ void audio
 
 type Card = {
   id: string;
+  /** The card's owner, whose choice decides whether its words are voiced. */
+  userId?: string | undefined;
   updatedAt?: Date | string | undefined;
   term: string;
   pronunciation?: string | null | undefined;
@@ -118,7 +121,23 @@ function useAudioPronunciation(
     return () => clearTimeout(timer);
   }, [asked, playing, t]);
 
+  const consent = useAiConsent("speech");
+  // Only the learner's own card waits for their yes, and only for a clip not voiced yet.
+  const waitsForYes =
+    !!card && card.userId === consent.userId && !card.audioKey && !consent.allowed;
+
   const play = () => {
+    if (!speakable || !headers || !card) return;
+    if (waitsForYes) {
+      void consent.ask().then((allowed) => {
+        if (allowed) start();
+      });
+      return;
+    }
+    start();
+  };
+
+  const start = () => {
     if (!speakable || !headers || !card) return;
     setError(null);
     const uri = api.audioUrl(card.id, card.updatedAt);
@@ -139,7 +158,7 @@ function useAudioPronunciation(
 
   // The player's own state, since a replay starts while the last play's `didJustFinish` still holds.
   const state: "idle" | "loading" | "playing" = playing ? "playing" : asked ? "loading" : "idle";
-  return speakable ? { play, state, error } : null;
+  return speakable ? { play, state, error, sheet: consent.sheet } : null;
 }
 
 const noPronunciation = (_card: Card | null, _onSettled?: PlaySettled) => null;
@@ -224,11 +243,20 @@ export type Pronunciation = NonNullable<ReturnType<typeof useAudioPronunciation>
 
 export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   const { t } = useLingui();
+  return (
+    <SpeakerButton
+      sound={pronounce}
+      labels={{ play: t`Play pronunciation`, replay: t`Replay pronunciation` }}
+    />
+  );
+}
+
+/** A failed play said over what was pressed, on the card's tip layer, with one shake. */
+export function useSoundError(error: string | null) {
   const reduce = useReduceMotion();
   const tips = useContext(TipContext);
   const anchor = useRef<View>(null);
   const shake = useSharedValue(0);
-  const { error, state, play } = pronounce;
 
   useEffect(() => {
     if (!error) return;
@@ -243,6 +271,21 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     }
   }, [error, reduce, shake, tips]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
+  return { anchor, style, tips };
+}
+
+/** A speaker for any sound the card plays on a press; `quiet` steps a second one back from the term's. */
+export function SpeakerButton({
+  sound: { error, state, play },
+  labels,
+  quiet = false,
+}: {
+  sound: Pick<Pronunciation, "error" | "state" | "play">;
+  labels: { play: string; replay: string };
+  quiet?: boolean;
+}) {
+  const reduce = useReduceMotion();
+  const { anchor, style, tips } = useSoundError(error);
 
   return (
     // Its box sits inside the text's line height, so the line never moves when it appears.
@@ -250,8 +293,8 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
       <Animated.View ref={anchor} style={style}>
         <IconButton
           icon="pronunciation"
-          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-          variant={error ? "danger" : "secondary"}
+          label={state === "playing" ? labels.replay : labels.play}
+          variant={error ? "danger" : quiet ? "ghost" : "secondary"}
           size="sm"
           round
           // A miss reveals the card, so the speaker reaches 56 pt rather than the usual 44.

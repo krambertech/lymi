@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { EXAMPLE_LENGTH, fitsExample } from "./example";
 import { moraCount } from "./reading";
 import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
@@ -36,7 +37,15 @@ export const ImportFailure = z.enum([
 export type ImportFailure = z.infer<typeof ImportFailure>;
 
 /** What one source field becomes on a Lymi card. */
-export const FieldRole = z.enum(["term", "meaning", "pronunciation", "example", "notes", "skip"]);
+export const FieldRole = z.enum([
+  "term",
+  "meaning",
+  "pronunciation",
+  "example",
+  "exampleTranslation",
+  "notes",
+  "skip",
+]);
 export type FieldRole = z.infer<typeof FieldRole>;
 
 /** The text fields an imported card fills. */
@@ -45,6 +54,7 @@ export type ImportedFields = {
   meaning?: string | undefined;
   pronunciation?: string | undefined;
   example?: string | undefined;
+  exampleTranslation?: string | undefined;
   notes?: string | undefined;
 };
 
@@ -97,6 +107,7 @@ export type ImportedCard = {
     | {
         meaning: FieldSource | null;
         example: FieldSource | null;
+        exampleTranslation?: FieldSource | null | undefined;
         pronunciation?: FieldSource | null | undefined;
         notes?: FieldSource | null | undefined;
       }
@@ -105,6 +116,8 @@ export type ImportedCard = {
   origin?: string | undefined;
   /** What the picture shows, so picture modes are asked from the start. */
   pictureDescription?: string | undefined;
+  /** The translation was written for an earlier example, from a Lymi zip. */
+  translationStale?: boolean | undefined;
   /** The card's memory hook and who wrote it, from a Lymi zip. */
   hook?: { text: string; source: FieldSource } | undefined;
 };
@@ -115,6 +128,7 @@ export const IMPORT_LIMITS = {
   meaning: 2000,
   pronunciation: 200,
   example: 2000,
+  exampleTranslation: EXAMPLE_LENGTH,
   notes: 2000,
   hook: 200,
   tags: 20,
@@ -436,8 +450,9 @@ export function fitText(text: string, limit: number): { text: string; shortened:
 
 /**
  * Fields fitted to Lymi's limits. A meaning past its limit keeps what fits and moves the
- * whole text to the top of the notes; any other field past its limit is cut. `shortened`
- * says whether anything was cut or moved.
+ * whole text to the top of the notes. An example longer than one shown, or its translation,
+ * moves to the end of the notes with the other, so a passage is kept rather than cut. Any other
+ * field past its limit is cut. `shortened` says whether anything was cut or moved.
  */
 export function fitFields(fields: ImportedFields): { fields: ImportedFields; shortened: boolean } {
   let shortened = false;
@@ -454,11 +469,26 @@ export function fitFields(fields: ImportedFields): { fields: ImportedFields; sho
     meaning = cut(meaning, IMPORT_LIMITS.meaning);
     shortened = true;
   }
+  let example = fields.example || undefined;
+  // A translation belongs to its example, so one without an example is a line of notes.
+  let translation = fields.exampleTranslation || undefined;
+  if (
+    (example && !fitsExample(example)) ||
+    (translation && length(translation) > IMPORT_LIMITS.exampleTranslation) ||
+    (translation && !example)
+  ) {
+    const moved = [example, translation].filter(Boolean).join("\n");
+    notes = notes ? `${notes}\n\n${moved}` : moved;
+    example = undefined;
+    translation = undefined;
+    shortened = true;
+  }
   const fitted: ImportedFields = {
     term: bounded(fields.term, IMPORT_LIMITS.term) ?? "",
     meaning,
     pronunciation: bounded(fields.pronunciation, IMPORT_LIMITS.pronunciation),
-    example: bounded(fields.example, IMPORT_LIMITS.example),
+    example: bounded(example, IMPORT_LIMITS.example),
+    exampleTranslation: translation,
     notes: bounded(notes, IMPORT_LIMITS.notes),
   };
   return { fields: fitted, shortened };
@@ -503,7 +533,7 @@ const TERM_PATTERN =
   /\b(front|word|term|expression|vocab(ulary)?|kanji|question|target|phrase)\b|単語/i;
 const SKIP_PATTERN =
   /\b(audio|sound|image|picture|photo|add reverse|sort|freq(uency)?|rank(ing)?)\b/i;
-/** A translation of the example sentence, such as Kaishi's "Sentence Meaning": one line of notes. */
+/** A translation of the example sentence, such as Kaishi's "Sentence Meaning": the example's translation. */
 const TRANSLATION_PATTERN =
   /\b(sentence|example|context)s?\b.*\b(meaning|translation|english|gloss|definition)$/i;
 /** Switches such as Lapis's `IsSentenceCard`, which choose a template rather than hold text. */
@@ -560,7 +590,8 @@ function fieldRole(name: string, chinese: boolean): FieldRole | undefined {
     if (isPitchField(name)) return "notes";
     return /\bnotes?$/i.test(words) ? "notes" : "skip";
   }
-  if (TRANSLATION_PATTERN.test(words) || SENTENCE_PINYIN_PATTERN.test(words)) return "notes";
+  if (TRANSLATION_PATTERN.test(words)) return "exampleTranslation";
+  if (SENTENCE_PINYIN_PATTERN.test(words)) return "notes";
   // "SentenceHanzi" is a sentence and "Simplified" the term itself.
   const rest = chinese ? scriptRest(name) : null;
   if (rest === "") return "term";
@@ -580,7 +611,7 @@ export function isPitchField(name: string): boolean {
   );
 }
 
-/** A field translating the example sentence, which becomes one line of notes. */
+/** A field translating the example sentence, kept on one line as the example's translation. */
 export function isTranslationField(name: string): boolean {
   return TRANSLATION_PATTERN.test(fieldWords(name));
 }
@@ -670,6 +701,7 @@ export function guessFieldRoles(names: readonly string[]): FieldRole[] {
   }
   claim("pronunciation");
   claim("example");
+  claim("exampleTranslation");
   return roles.map((role) => role ?? "notes");
 }
 
@@ -890,6 +922,7 @@ export const ImportPreviewOut = ImportCounts.extend({
           meaning: z.string().nullable(),
           pronunciation: z.string().nullable(),
           example: z.string().nullable(),
+          exampleTranslation: z.string().nullable().optional(),
           notes: z.string().nullable(),
           tags: z.array(z.string()),
           modes: z.array(ReviewModeKey),

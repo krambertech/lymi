@@ -3,7 +3,7 @@ import { z } from "zod";
 import { languageGuide } from "./languages";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const ENRICHMENT_PROMPT_VERSION = 15;
+export const ENRICHMENT_PROMPT_VERSION = 18;
 
 /** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
 export const LANGUAGE_MAX = 12;
@@ -24,7 +24,7 @@ A JSON object:
 - cards: the cards to fill. Each has an id, its deck, its term, any text it already has, and mayFill: the empty fields you may fill. A card may also have addReadings: its example lacks the readings its language guide asks for.
 
 ## What to fill
-- Fill only the fields in mayFill. Return null for every other field, except example on a card with addReadings.
+- Fill only the fields in mayFill. Return null for every other field, even language when the card already shows one, except example on a card with addReadings.
 - Always fill language and meaning when they are in mayFill. Skip meaning only if you do not know the term.
 - Fill example, notes and pronunciation only when they help with this card.
 - If the deck has samples, copy their habits: fill a field if most samples fill it, and leave it null if most leave it empty.
@@ -44,7 +44,7 @@ The instructions and the style can change what you write and how. They can't cha
 
 ## Fields
 meaning: the answer the learner tries to remember. Plain text, in meaningLanguage.
-- Word or phrase: a translation of one to three words, not a definition. If the term has two or three common meanings, separate them with "; ".
+- Word or phrase: a translation of one to three words, not a definition. If the term has two or three common meanings, separate them with "; ", never " / " or " · ".
 - Sentence: a natural translation.
 - Concept, a term already in meaningLanguage, or any card in a subject deck: a short explanation, under 12 words.
 - No quotation marks. No full stop after a short translation. Don't repeat the term.
@@ -55,13 +55,16 @@ example: the term used in a sentence. Plain text, in the term's language.
 - A card with addReadings: return its example exactly as it is, with readings added as the language guide says. Change nothing else, not even punctuation or spaces.
 
 notes: extra help to remember or use the term. Markdown, in meaningLanguage.
-- Only what the language guide asks for, a common mistake, or a word that is easy to confuse with this one.
-- At most four short lines. Without a guide, most cards need no notes.
+- One fact per line, each a label and a form: Plural: *die Städte*. Write the label in meaningLanguage, even where the guide writes it in English. A label alone can name the word's type: Ichidan verb.
+- Forms first, in the order the language guide gives: only forms the term doesn't show, and only those a learner can't build from the rules. Then at most one usage line: the case or preposition the word takes, a look-alike to tell apart, a register or regional word, or a meaning that surprises.
+- A sentence or set phrase: first the variant the learner will need, if any (Polite: …, Casual: …, Answer: …), then the one word or grammar point worth taking from it.
+- Usually two to four lines, never more than six. Null when nothing is irregular. Without a guide, most cards need no notes.
+- Never the term's reading, an example sentence, or a translation of the example: those belong in other fields or nowhere.
 - Formatting:
   - *italic* for words in the language being learned.
-  - **bold** for the one thing to notice, like an irregular form.
-  - "- " at the start of a line for a list of forms or words.
-  - Nothing else: no headings, tables, links, code, emoji or HTML.
+  - **bold** for the one form to notice, like an irregular one.
+  - A short gloss after a form goes after a comma: Plural: *die Bänke*, benches.
+  - Nothing else: no lists, headings, tables, links, code, emoji or HTML.
 
 pronunciation: how to say or read the term. Plain text.
 - Use what the language guide says. Otherwise use IPA with the stress mark, without slashes or brackets.
@@ -74,19 +77,19 @@ If a term lists several forms separated by " · ", it is one word. Fill the fiel
 Learn the reasoning. Don't copy the text.
 
 1. Estonian deck, meaningLanguage ru. The samples have meaning and notes, and leave example empty. Card "tulema", mayFill: meaning, example, notes.
-{"meaning": "приходить", "example": null, "notes": "*tulema · tulla · tulen*", "pronunciation": null, "language": null}
-Why: the samples leave example empty, and the Estonian guide asks for the three forms in notes.
+{"meaning": "приходить", "example": null, "notes": "Формы: *tulema · tulla · tulen*", "pronunciation": null, "language": null}
+Why: the samples leave example empty. The Estonian guide asks for the three forms on one line, and the label is in meaningLanguage.
 
 2. Same deck. Card "Ma ei leia oma võtmeid.", mayFill: meaning, example, notes.
-{"meaning": "Я не могу найти свои ключи.", "example": null, "notes": "- найти — *leidma · leida · leian*\\n- ключ — *võti · võtme · võtit*\\nпосле *ei* объект в партитиве: ***võtmeid***", "pronunciation": null, "language": null}
-Why: a sentence gets a translation and no example. The notes give the forms of its main words and the one grammar point to notice.
+{"meaning": "Я не могу найти свои ключи.", "example": null, "notes": "Найти: *leidma · leida · leian*\\nКлюч: *võti · võtme · võtit*\\nПартитив после *ei*: ***võtmeid***", "pronunciation": null, "language": null}
+Why: a sentence gets a translation and no example. The notes give the forms of its main words, one per line, then the one grammar point to notice.
 
 3. Italian deck, no samples, meaningLanguage en. Card "sbrigarsi", mayFill: meaning, example, language.
 {"meaning": "to hurry up", "example": "Sbrigati, il treno parte!", "notes": null, "pronunciation": null, "language": "it"}
 
 4. German deck, no samples, meaningLanguage en. Card "die Bank", mayFill: meaning, example, notes.
-{"meaning": "bench; bank", "example": "Wir sitzen auf der Bank im Park.", "notes": "- plural: *die Bänke* (bench), *die Banken* (bank)", "pronunciation": null, "language": null}
-Why: the word has two common meanings, and each has a different plural.
+{"meaning": "bench; bank", "example": "Wir sitzen auf der Bank im Park.", "notes": "Plural: *die Bänke*, benches\\nPlural: *die Banken*, banks", "pronunciation": null, "language": null}
+Why: the word has two common meanings, split by "; ", and each has its own plural, on its own line.
 
 5. Deck "Cell biology", purpose subject, meaningLanguage en. Card "mitochondrion", mayFill: meaning, language.
 {"meaning": "the organelle that makes most of a cell's energy", "example": null, "notes": null, "pronunciation": null, "language": "en"}

@@ -56,9 +56,10 @@ interface NextProps {
 }
 
 /**
- * The pill at the foot of an unrevealed card that takes the next step; the card stacks it over
- * its reveal button, so a tap on it never turns the card. Once every step is taken it stays as
- * an invisible, inert placeholder, so the cue keeps its room and glides rather than jumps.
+ * The quiet control at the foot of an unrevealed card that takes the next step, as quiet as Show
+ * hook, since recall comes first; the card stacks it over its reveal button, so a tap on it never
+ * turns the card. Once every step is taken it stays as an invisible, inert placeholder, so the cue
+ * keeps its room and glides rather than jumps.
  */
 export function RecallAidNext({ steps, taken, onTake }: NextProps) {
   const { i18n } = useLingui();
@@ -73,7 +74,14 @@ export function RecallAidNext({ steps, taken, onTake }: NextProps) {
       aria-hidden={spent || undefined}
     >
       {/* Wider than it looks, so a tap that just misses it peeks rather than reveals. */}
-      <Button kbd={AID_KEY.label} data-aid="" className="before:-inset-x-3!" onClick={onTake}>
+      <Button
+        variant="ghost"
+        size="sm"
+        kbd={AID_KEY.label}
+        data-aid=""
+        className="before:-inset-x-3!"
+        onClick={onTake}
+      >
         <Icon data-icon="inline-start" aria-hidden="true" />
         {i18n._(take)}
       </Button>

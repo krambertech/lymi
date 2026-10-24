@@ -126,6 +126,7 @@ export function SevenLights({
           >
             {/* The glass is always drawn; the light inside it rises with the day. */}
             <i
+              data-today-light={isToday || undefined}
               className={clsx(
                 "relative block max-w-full overflow-hidden",
                 // Tinted like the month's rest band, so the two read as one mark.

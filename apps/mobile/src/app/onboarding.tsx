@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { aiChoice, saveAiChoice } from "@lymi/client/ai-consent";
 import { api, errorMessage, type Settings } from "@lymi/client/api";
 import { decksQuery, exploreQuery, settingsQuery } from "@lymi/client/queries";
 import { catalogLanguages, startDecks } from "@lymi/client/welcome";
@@ -20,6 +21,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pool } from "../auth/door-parts";
 import { languageName } from "../data/languages";
 import { useAddDeck, useAddFailure } from "../explore/catalogue";
+import { AiDisclosure, AiServices, ConsentButtons } from "../privacy/ai-consent";
+import { captureEvent } from "../telemetry/posthog";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
 import { useSystemBack } from "../ui/system-back";
@@ -37,7 +40,7 @@ import {
 } from "../welcome/questions";
 import { endWelcome, finishStep, trackGuide, viewStep } from "../welcome/tracking";
 
-type Step = "hello" | "kind" | "language" | "goal" | "start";
+type Step = "hello" | "kind" | "language" | "goal" | "ai" | "start";
 
 const SKIP: OnboardingInput = { learningKind: null, learningLanguage: null, dailyGoal: null };
 
@@ -67,8 +70,13 @@ export default function Onboarding() {
   const [error, setError] = useState<string | null>(null);
   const scroll = useRef<ScrollView>(null);
   const step = trail.at(-1) ?? "hello";
+  const aiChoiceNow = aiChoice(settings.data);
+  const [allowing, setAllowing] = useState(false);
 
   useEffect(() => viewStep(step), [step]);
+  useEffect(() => {
+    if (step === "ai") captureEvent("ai_consent_shown", { place: "welcome" });
+  }, [step]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: the step is the trigger.
   useEffect(() => {
     scroll.current?.scrollTo({ y: 0, animated: false });
@@ -213,6 +221,20 @@ export default function Onboarding() {
     endWelcome();
   };
 
+  // Not now leaves the choice unanswered, so the first AI action asks again.
+  const allowAi = async () => {
+    setError(null);
+    setAllowing(true);
+    try {
+      await saveAiChoice(qc, true, "welcome");
+      move("start");
+    } catch {
+      setError(t`Couldn’t save. Check your connection and try again.`);
+    } finally {
+      setAllowing(false);
+    }
+  };
+
   const skip = async () => {
     setError(null);
     try {
@@ -236,7 +258,8 @@ export default function Onboarding() {
       if (!language) return setMissing(t`Choose the language you’re learning.`);
       return move("goal");
     }
-    if (step === "goal") return shortcut ? void startJoined() : move("start");
+    if (step === "goal")
+      return shortcut ? void startJoined() : move(aiChoiceNow === true ? "start" : "ai");
     if (!start) return setMissing(t`Choose a deck or a way to bring your own.`);
     void finish(start);
   };
@@ -323,6 +346,13 @@ export default function Onboarding() {
               <GoalChoices value={goal} onChange={setGoal} />
             </>
           )}
+          {step === "ai" && (
+            <View className="gap-5">
+              <QuestionHeading title={t`Use AI in Lymi?`} />
+              <AiServices />
+              <AiDisclosure />
+            </View>
+          )}
           {step === "start" && (
             <>
               <QuestionHeading
@@ -354,7 +384,15 @@ export default function Onboarding() {
             {missing ?? error}
           </Text>
         )}
-        <Button label={label} variant="primary" size="lg" loading={busy} onPress={next} />
+        {step === "ai" ? (
+          <ConsentButtons
+            busy={allowing}
+            onAllow={() => void allowAi()}
+            onLater={() => move("start")}
+          />
+        ) : (
+          <Button label={label} variant="primary" size="lg" loading={busy} onPress={next} />
+        )}
       </View>
     </View>
   );

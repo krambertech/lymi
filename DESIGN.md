@@ -300,7 +300,7 @@ The frontmatter above is generated from `packages/design/tokens.css` by `node sc
 Each rule links to the file that holds its detail and its exceptions.
 
 1. **Tokens, never values.** Colour through the semantic utilities (`bg-plate`, `text-muted`), type through the scale (`text-lg`), radius through `rounded-*`. A raw hex or a stock Tailwind colour breaks dark mode, which is its own warm palette rather than an inversion. [colour.md](docs/design/system/colour.md)
-2. **Amber means act.** It is the flame, the one primary button, capture, a due count, a day reviewed, the Easy grade's icon, the star of an important card, and the phone's chosen tab. Nothing else is amber, including any other selected state. [colour.md](docs/design/system/colour.md#amber-means-act)
+2. **Amber means act.** It is the flame, the one primary button, capture, a due count, a day reviewed, the Easy grade's icon, the star of an important card, the phone's chosen tab, and the phone review's example while its requested audio loads or plays. Nothing else is amber, including any other selected state. [colour.md](docs/design/system/colour.md#amber-means-act)
 3. **Surfaces are quiet.** By day depth is one hairline edge; at night `edge` lifts a plate off the room. Texture goes only where something is lit or holds a level, and a set never sits in a tray. Never a hand-made drop shadow or a decorative gradient. [surfaces.md](docs/design/system/surfaces.md)
 4. **One primary per view.** Two primaries means the screen has no hierarchy. `secondary` is the default variant. [buttons.md](docs/design/system/buttons.md)
 5. **A closed set is closed.** Every variant, size and tone a component takes is listed in its file. An unlisted one is a bug, not an option, and a `className` that resizes or recolours a component is the same bug.
@@ -322,7 +322,7 @@ Read the file for what you are building. Each is short enough to read whole.
 | Anything: which component exists | [components.md](docs/design/system/components.md) |
 | Colour, amber, card states, the AI badge | [colour.md](docs/design/system/colour.md) |
 | Backgrounds, elevation and hover, edges, sets, radius, glow, the deck tray | [surfaces.md](docs/design/system/surfaces.md) |
-| Type sizes, weights, monospace | [type.md](docs/design/system/type.md) |
+| Type sizes, weights, script faces, readings, stress, text direction, monospace | [type.md](docs/design/system/type.md) |
 | Buttons and links | [buttons.md](docs/design/system/buttons.md) |
 | Forms and choice controls | [forms.md](docs/design/system/forms.md) |
 | Dialogs, sheets, places, menus, tooltips, toasts | [overlays.md](docs/design/system/overlays.md) |
@@ -346,5 +346,5 @@ Read the file for what you are building. Each is short enough to read whole.
 - [Imports and exports](docs/design/imports.md)
 - [Activity](docs/design/activity.md)
 - [Explore](docs/design/explore.md)
-- [Welcome](docs/design/onboarding.md)
+- [Getting started](docs/design/onboarding.md)
 - [The changelog](docs/design/changelog.md)

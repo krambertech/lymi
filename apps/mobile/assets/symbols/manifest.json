@@ -92,6 +92,7 @@
   "filter": "list-filter.mjs",
   "share": "share.mjs",
   "copy": "copy.mjs",
+  "privacy": "shield-check.mjs",
   "controlAdd": "packages/design/src/lantern.ts",
   "controlReview": "packages/design/src/lantern.ts"
 }

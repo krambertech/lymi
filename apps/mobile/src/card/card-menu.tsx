@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import { useDecks, useSections } from "../data/queries";
 import { useMoveToDeck } from "../deck/card-batch";
 import { useMoveToSection } from "../deck/move-to-section";
+import { useAiConsent } from "../privacy/ai-consent";
 import { usePronunciation } from "../review/pronounce";
 import type { RowMenuItem } from "../ui/row-menu";
 import { toast } from "../ui/toast-host";
-import { canEnrich, useEnrichCard } from "./enrich";
 
 /** Refetches every list that counts a card, after it is archived or restored. */
 export function useRefreshCards() {
@@ -53,6 +53,9 @@ export function useArchiveCard() {
 
 /** Plays any card's pronunciation from a list, through one player; a failure says why in a toast. */
 function usePlayAny() {
+  const { t } = useLingui();
+  const router = useRouter();
+  const consent = useAiConsent("speech");
   const [asked, setAsked] = useState<{ card: Card } | null>(null);
   const pronounce = usePronunciation(asked?.card ?? null);
   const play = pronounce?.play;
@@ -65,7 +68,17 @@ function usePlayAny() {
   useEffect(() => {
     if (error) toast.add({ error: true, title: error });
   }, [error]);
-  return (card: Card) => setAsked({ card });
+  return (card: Card) => {
+    // A list has no room for the ask, so it points to where the learner can allow AI.
+    if (card.userId === consent.userId && !card.audioKey && !consent.allowed) {
+      toast.add({
+        title: t`Turn on AI services in You to hear this word.`,
+        action: { label: t`Open You`, onPress: () => router.navigate("/you") },
+      });
+      return;
+    }
+    setAsked({ card });
+  };
 }
 
 interface CardMenuOptions {
@@ -78,16 +91,14 @@ interface CardMenuOptions {
 }
 
 /**
- * A card's long-press menu, in the order its page's ⋯ has: play, important, edit, enrich and move,
- * then archive on its own.
+ * A card's long-press menu, in the order its page's ⋯ has: play, important, edit and move, then
+ * archive on its own.
  */
 export function useCardMenu({ owner, moveToSection, moveToDeck }: CardMenuOptions) {
   const { t } = useLingui();
   const router = useRouter();
   const play = usePlayAny();
   const archive = useArchiveCard();
-  const enrich = useEnrichCard();
-  const decks = useDecks().data;
   return (card: Card): RowMenuItem[][] => {
     const owns = owner(card);
     const toSection = owns ? moveToSection?.(card) : null;
@@ -121,19 +132,6 @@ export function useCardMenu({ owner, moveToSection, moveToDeck }: CardMenuOption
                     pathname: "/edit-card",
                     params: { card: card.id, deck: card.deckId, field: "term" },
                   }),
-              },
-            ]
-          : []),
-        ...(canEnrich(
-          card,
-          decks?.find((d) => d.id === card.deckId),
-        )
-          ? [
-              {
-                id: "enrich" as const,
-                label: t`Enrich`,
-                icon: "ai" as const,
-                onSelect: () => void enrich(card),
               },
             ]
           : []),

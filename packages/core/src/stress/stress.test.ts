@@ -74,6 +74,9 @@ describe("wordStress", () => {
     ]);
     expect(wordStress("ё́лка", RU)[0]?.acuteOnDotted).toBe(true);
     expect(wordStress("что́-то", RU)).toHaveLength(1);
+    expect(wordStress("об’є́кт", { vowels: "аеєиіїоуюя" })).toEqual([
+      { word: "об’є́кт", syllables: 2, acutes: 1, dotted: false, acuteOnDotted: false },
+    ]);
   });
 });
 

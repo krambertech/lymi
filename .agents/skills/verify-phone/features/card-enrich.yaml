@@ -1,4 +1,4 @@
-# Enrich from the card page's ⋯ and from a card's long-press menu.
+# Enrich from the card page's ⋯, and no Enrich in the card's long-press menu.
 appId: app.lymi
 name: Enrich a card
 ---
@@ -23,16 +23,11 @@ name: Enrich a card
     visible: "Search this deck"
     timeout: 20000
 - scrollUntilVisible:
-    element: "${OTHER_TERM}, .*"
+    element: "${TERM}, .*"
     centerElement: true
-- longPressOn: "${OTHER_TERM}, .*"
+- longPressOn: "${TERM}, .*"
 - extendedWaitUntil:
-    visible: "Enrich"
+    visible: "Edit card"
     timeout: 10000
-- assertVisible: "Edit card"
+- assertNotVisible: "Enrich"
 - takeScreenshot: 03-long-press-menu
-- tapOn: "Enrich"
-- extendedWaitUntil:
-    visible: "Couldn’t enrich “${OTHER_TERM}”.*"
-    timeout: 20000
-- takeScreenshot: 04-long-press-failed

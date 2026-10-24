@@ -68,6 +68,12 @@ describe("analytics privacy contract", () => {
       badge: "estonia",
     });
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "worker")).toBeNull();
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/exams/jlpt" }, "browser"),
+    ).toEqual({ place: "footer", target: "/exams/jlpt" });
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
+    ).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.
     expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
       backlog: "1-20",
@@ -230,6 +236,9 @@ describe("analytics privacy contract", () => {
     );
     expect(analyticsPath("/uk/changelog/rest-days", "public")).toBe("/uk/changelog/rest-days");
     expect(analyticsPath("/changelog/rss.xml", "public")).toBe("/other");
+    expect(analyticsPath("/uk/download", "public")).toBe("/uk/download");
+    expect(analyticsPath("/download/mac-intel", "public")).toBe("/download/mac-intel");
+    expect(analyticsPath("/download/windows", "public")).toBe("/other");
     expect(analyticsPath("/unknown/private", "public")).toBe("/other");
   });
   it("keeps only bounded campaign labels and the referrer hostname", () => {

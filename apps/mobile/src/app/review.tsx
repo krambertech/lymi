@@ -30,6 +30,7 @@ import {
   type Rating,
   ROUNDS,
   type Round,
+  shownTranslation,
   termShowsPronunciation,
 } from "@lymi/core";
 import {
@@ -61,6 +62,7 @@ import {
 } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  type AnimatedRef,
   Easing,
   FadeIn,
   FadeOut,
@@ -77,11 +79,10 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
-import { EndEmbers, LightPool } from "../brand/ending";
+import { EndEmbers, LightPool, TurnSpark } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
-import { canEnrich, useEnrichCard } from "../card/enrich";
 import {
   useDay,
   useDecks,
@@ -98,6 +99,7 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
+import { type ExampleAudio, ExamplePress, useExampleAudio } from "../review/example-audio";
 import {
   HookLine,
   HookOffer,
@@ -283,7 +285,6 @@ function Run({
   const { t } = useLingui();
   const decksQuery = useDecks();
   const decks = decksQuery.data;
-  const enrich = useEnrichCard();
   const seriesList = useSeriesList(!!series);
   const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
@@ -336,7 +337,7 @@ function Run({
   const undone = useRef(new Set<string>());
   const started = useRef(false);
 
-  // Edit card saves over the review, as Enrich does once its text lands; the review goes on with the corrected card.
+  // Edit card saves over the review; the review goes on with the corrected card.
   useEffect(
     () =>
       onCardEdited((written) => {
@@ -409,6 +410,8 @@ function Run({
   const pronounce = usePronunciation(current?.card ?? null, (outcome, { preloaded, waitMs }) =>
     captureEvent("pronunciation_played", { outcome, revealed, preloaded, wait_ms: waitMs }),
   );
+  // The example shows only after the reveal, so it can only be heard then.
+  const exampleSound = useExampleAudio(revealed ? (current?.card ?? null) : null, "review");
 
   // A review starts with one firm tap as its first card arrives.
   useEffect(() => {
@@ -692,6 +695,16 @@ function Run({
       </Cover>
     );
   }
+  // While the end waits for the last grade to land, the header holds still, so the lantern leaves from it.
+  if (stopped && !result && progress) {
+    return (
+      <Cover style={pull.style}>
+        <View className="flex-1" style={{ paddingTop: insets.top + 4 }}>
+          <Header done={progress.done} total={progress.total} onClose={onClose} />
+        </View>
+      </Cover>
+    );
+  }
   if (!leg || (stopped && !result) || (!current && !stopped)) {
     return (
       <Cover style={pull.style}>
@@ -953,6 +966,7 @@ function Run({
                 onGrade={onGrade}
                 onUndo={lastGraded ? undo : undefined}
                 pronounce={pronounce}
+                exampleSound={exampleSound}
               />
             )}
           </CardStack>
@@ -992,16 +1006,6 @@ function Run({
                     params: { card: card.id, deck: card.deckId },
                   });
                 };
-                setMenuOpen(false);
-              }}
-            />
-          )}
-          {canEnrich(card, deckRow) && (
-            <SheetRow
-              icon="ai"
-              label={t`Enrich`}
-              onPress={() => {
-                chosen.current = () => void enrich(card);
                 setMenuOpen(false);
               }}
             />
@@ -1049,6 +1053,8 @@ function Run({
           void qc.invalidateQueries({ queryKey: ["decks"] });
         }}
       />
+      {pronounce?.sheet}
+      {exampleSound?.sheet}
     </Cover>
   );
 }
@@ -1138,6 +1144,7 @@ function Turn({
   onGrade,
   onUndo,
   pronounce,
+  exampleSound,
 }: {
   /** On the top step, how the card moves; the step underneath stays still. */
   top?: TopCard;
@@ -1166,10 +1173,12 @@ function Turn({
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
   pronounce?: Pronunciation | null;
+  exampleSound?: ExampleAudio | null;
 }) {
   const card = (
     <CardPlate
       pronounce={pronounce ?? null}
+      exampleSound={exampleSound ?? null}
       item={item}
       deck={deck}
       forgotten={forgotten}
@@ -1280,6 +1289,7 @@ function Picture({ card, maxHeight = 280 }: { card: QueueItem["card"]; maxHeight
  */
 function CardPlate({
   pronounce,
+  exampleSound,
   item: { card, fsrsState, mode },
   deck,
   forgotten,
@@ -1298,6 +1308,8 @@ function CardPlate({
 }: {
   /** The pronunciation on the top card; none underneath. */
   pronounce: Pronunciation | null;
+  /** The example's speaker on the top card once revealed; none underneath. */
+  exampleSound: ExampleAudio | null;
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
@@ -1346,10 +1358,12 @@ function CardPlate({
   const tail = [picture ? i18n._(modeLabel(mode)) : null, languageCode].filter(
     (part): part is string => !!part,
   );
+  const translation = shownTranslation(card);
   // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.exampleTranslationSource === "ai" && !!translation) ||
     (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none.
@@ -1403,12 +1417,15 @@ function CardPlate({
         accessibilityActions={[
           ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
           ...(revealed && onMenu ? [{ name: "menu", label: t`Card options` }] : []),
+          // The revealed card is one element to VoiceOver, so a tap on its example is offered as an action.
+          ...(revealed && exampleSound ? [{ name: "example", label: t`Play example` }] : []),
           ...(onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []),
         ]}
         onAccessibilityAction={(e) => {
           const action = e.nativeEvent.actionName;
           if (action === "peek") onPeek?.();
           if (action === "menu") onMenu?.();
+          if (action === "example") exampleSound?.play();
           if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
@@ -1587,12 +1604,26 @@ function CardPlate({
                       )}
                       {card.example && (
                         <Animated.View entering={arrive()}>
-                          <ExampleText
-                            text={card.example}
-                            known={known}
-                            className="text-md text-text-2"
-                            lang={card.language}
-                          />
+                          <ExamplePress sound={exampleSound} onLongPress={hold}>
+                            {(state) => (
+                              <ExampleText
+                                text={card.example ?? ""}
+                                known={known}
+                                // Lit while it is read aloud, the way the term's speaker lights.
+                                className={
+                                  state === "idle"
+                                    ? "text-md text-text-2"
+                                    : "text-md text-amber-text"
+                                }
+                                lang={card.language}
+                                translation={
+                                  translation
+                                    ? { text: translation, className: "text-md text-muted" }
+                                    : null
+                                }
+                              />
+                            )}
+                          </ExamplePress>
                         </Animated.View>
                       )}
                       {card.notes && (
@@ -1856,10 +1887,12 @@ function Completion({
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const { goal, streak, lights, flame, out, progress, fed, summary } = useDay();
+  const { goal, streak: dayStreak, lights, flame, out, progress, fed, summary } = useDay();
   const start = useStreakStart(summary?.longest ?? 0);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
   const counted = screen.heading !== "nothing_due";
   const heading = {
     goal_reached: t`Daily goal reached`,
@@ -1893,16 +1926,27 @@ function Completion({
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
     AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur)),
+    turned ? AT.tick + RUN_CATCH_MS : 0,
   );
 
   const clock = useSharedValue(reduce ? end : 0);
   // The ways on cannot be pressed until they have arrived, so the tap that finishes the sequence never presses one.
   const [settled, setSettled] = useState(reduce);
+  // Until the spark reaches it, the run shows the streak as it stood before this review.
+  const [ticked, setTicked] = useState(!turned);
+  // The spark draws past the moment the ways on can be pressed, until its last fleck has gone.
+  const [sparked, setSparked] = useState(!turned);
   const finish = () => {
     clock.value = end;
     setSettled(true);
+    setTicked(true);
+    setSparked(true);
     void stopHaptics();
   };
+  const room = useAnimatedRef<View>();
+  const lanternPlace = useAnimatedRef<View>();
+  const todayLight = useAnimatedRef<View>();
+  const runFlame = useAnimatedRef<View>();
 
   useEffect(() => {
     void playHaptics(endHaptics(embers, screen.streak, reduce));
@@ -1912,11 +1956,17 @@ function Completion({
     if (reduce) {
       clock.value = end;
       setSettled(true);
+      setTicked(true);
+      setSparked(true);
       return;
     }
     clock.value = withTiming(end, { duration: end, easing: Easing.linear, reduceMotion: ALWAYS });
-    const timer = setTimeout(() => setSettled(true), actionsAt + RISE.ms);
-    return () => clearTimeout(timer);
+    const timers = [
+      setTimeout(() => setSettled(true), actionsAt + RISE.ms),
+      setTimeout(() => setTicked(true), AT.tick),
+      setTimeout(() => setSparked(true), AT.tick + SPARK_LIFE_MS),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, [reduce, clock, end, actionsAt]);
 
   const heading$ = useRise(clock, AT.heading);
@@ -1924,6 +1974,20 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
+  const catch$ = useAnimatedStyle(() => {
+    const u = clock.value - AT.tick;
+    if (!turned || u <= 0) return { transform: [{ scale: 1 }] };
+    return { transform: [{ scale: 1 + 0.3 * Math.exp(-u / 240) * Math.min(1, u / 90) }] };
+  });
+  const tick$ = useAnimatedStyle(() => {
+    if (!turned) return { opacity: 1, transform: [] };
+    const k = beat(clock.value, AT.tick, 460);
+    return { opacity: k, transform: [{ translateY: (1 - k) * 12 }, { scale: 1 + 0.18 * (1 - k) }] };
+  });
+  const warm$ = useAnimatedStyle(() => ({
+    opacity: turned ? Math.min(1, Math.max(0, 1 - (clock.value - AT.tick - 300) / 1100)) : 0,
+  }));
+  const streak = ticked ? dayStreak : dayStreak - 1;
   const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
@@ -1931,6 +1995,7 @@ function Completion({
 
   return (
     <Animated.View
+      ref={room}
       // Under reduced motion the whole screen crossfades in with its final numbers in place.
       entering={reduce ? CROSSFADE : undefined}
       onTouchStart={settled ? undefined : finish}
@@ -1948,7 +2013,7 @@ function Completion({
         showsVerticalScrollIndicator={false}
       >
         <View className="flex-1 items-center justify-center gap-6 px-6">
-          <Flight clock={clock} still={reduce}>
+          <Flight clock={clock} still={reduce} place={lanternPlace}>
             <LightPool
               size={END_LANTERN}
               clock={clock}
@@ -2011,15 +2076,32 @@ function Completion({
                 goals={lights.goals}
                 goal={goal}
                 sequence={settled ? undefined : AT.lights}
+                turn={turned && !settled ? { at: AT.land, from } : undefined}
+                todayRef={todayLight}
               />
             </Animated.View>
             <Animated.View style={run$} className="flex-row items-center gap-2">
-              <Flame height={20} state={flame} />
+              <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
+                <Flame height={20} state={ticked ? flame : "lit"} />
+              </Animated.View>
               {streak > 0 ? (
                 <>
-                  <Text className="text-md font-semibold text-text" style={styles.figures}>
-                    {streak}
-                  </Text>
+                  {/* The new run rolls up warm, then cools to its ink. */}
+                  <Animated.View key={streak} style={ticked ? tick$ : undefined}>
+                    <Text className="text-md font-semibold text-text" style={styles.figures}>
+                      {streak}
+                    </Text>
+                    {ticked && (
+                      <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
+                        <Text
+                          className="text-md font-semibold text-amber-text"
+                          style={styles.figures}
+                        >
+                          {streak}
+                        </Text>
+                      </Animated.View>
+                    )}
+                  </Animated.View>
                   <Text className="text-md text-text-2">
                     {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
                   </Text>
@@ -2067,6 +2149,15 @@ function Completion({
           </Animated.View>
         </ToastFloor>
       </ScrollView>
+      {turned && !sparked && (
+        <TurnSpark
+          clock={clock}
+          room={room}
+          lantern={lanternPlace}
+          today={todayLight}
+          run={runFlame}
+        />
+      )}
     </Animated.View>
   );
 }
@@ -2078,16 +2169,19 @@ function Completion({
 function Flight({
   clock,
   still,
+  place,
   children,
 }: {
   clock: SharedValue<number>;
   still: boolean;
+  /** Where it lands, which the spark also leaves from. */
+  place: AnimatedRef<View>;
   children: ReactNode;
 }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   // The place it lands, read on the UI thread each frame, so a layout that settles late never misplaces the start.
-  const place = useAnimatedRef<Animated.View>();
+
   const half = HEADER_LANTERN.size / 2;
   const fromX = I18nManager.isRTL
     ? width - HEADER_LANTERN.inset - half
@@ -2176,9 +2270,14 @@ function RollingCount({
 
 /** The count that ends a review, the largest thing on the phone; it keeps a 1.2 line box. */
 const COUNT_SIZE = 80;
+/** How long the spark's flecks and the run's sparks outlast the run's tick; the web's `TurnSpark` stops then too. */
+const SPARK_LIFE_MS = 1300;
+/** How long the run's catch plays after the spark reaches it, warmth included. */
+const RUN_CATCH_MS = 1400;
 
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
+  catch: { transformOrigin: "50% 100%" },
 });

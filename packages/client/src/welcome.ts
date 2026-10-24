@@ -27,6 +27,12 @@ export const BEGINNER_DECKS: Readonly<Record<SupportedTag, readonly string[]>> =
     "travel-japanese",
   ],
   zh: ["chinese-hsk-1-vocabulary", "chinese-hsk-2-vocabulary"],
+  uk: [
+    "ukrainian-alphabet",
+    "ukrainian-a1-vocabulary",
+    "ukrainian-a2-vocabulary",
+    "core-ukrainian-words",
+  ],
 };
 
 /** Minutes are a rough guide: about twenty seconds a review, rounded to a figure that reads as one. */

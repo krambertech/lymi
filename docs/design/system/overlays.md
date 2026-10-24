@@ -100,12 +100,12 @@ An icon control names itself in a tooltip, never a native `title`, whose delay, 
 
 ## Toasts
 
-A toast says what just happened. It is shadcn's Base UI toast with Lymi's colours: the text colour as its fill, a title, at most one action (usually Undo, which stands in for a confirmation dialog), a close button, and an icon for an error. It quotes at most 60 characters of a learner's text, cut at a word, so a long term never turns a toast into a page.
+A toast says what just happened. It is shadcn's Base UI toast with Lymi's colours: the text colour as its fill, a title, at most one action (usually Undo, which stands in for a confirmation dialog), a close button, and an icon for an error. Its title and action use `text-base`, with a compact content inset rather than a larger type size or a taller panel. It quotes at most 60 characters of a learner's text, cut at a word, so a long term never turns a toast into a page.
 
 - Position: on a phone above the pill nav; from 640 px in the bottom-end corner. During a review, which has no pill nav, above the grade strip, so an error never covers the grades it is about.
 - Stack: up to three, the newest in front and each older one 12 px higher and 10% smaller, so a second archive never takes the first one's Undo away. Pointing at the stack or moving focus into it spreads the toasts into a column 12 px apart.
 - Edge: toasts share one colour, so each carries an inset hairline in the room's colour at 25% to show where it ends. It is the toast's only edge.
-- Time: each leaves after five seconds, but every timer holds while the stack is open or the window is in the background.
+- Time: ten seconds with an action, five without, so Undo stays reachable with a screen reader or a switch. Every timer holds while the stack is open or the window is in the background.
 - Dismiss: a swipe down or to the side, or Escape once focus is inside.
 - Announcement: an error is announced at once; every other toast waits for a pause.
 

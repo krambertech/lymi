@@ -249,9 +249,12 @@ describe("anki adapter", () => {
 
     it("leaves out notes lines that repeat the term or the example", async () => {
       const { cards } = await hsk();
-      expect(byTerm(cards, "很").fields).toMatchObject({
+      expect(byTerm(cards, "很").fields).toEqual({
+        term: "很",
+        meaning: "very",
+        pronunciation: "hěn",
         example: "我[Wǒ]很[hěn]好[hǎo]。",
-        notes: "I am very well.",
+        exampleTranslation: "I am very well.",
       });
       expect(byTerm(cards, "學習").fields).toMatchObject({
         example: "我學習中文。",
@@ -263,19 +266,20 @@ describe("anki adapter", () => {
       const { cards } = await hsk();
       expect(byTerm(cards, "银行").fields).toMatchObject({
         example: "我[Wǒ]去[qù]银行[yín háng]。",
-        notes: "銀行\nnoun\n我去銀行。\nI am going to the bank.",
+        exampleTranslation: "I am going to the bank.",
+        notes: "銀行\nnoun\n我去銀行。",
       });
       expect(byTerm(cards, "一点儿").fields.example).toBe(
         "我[Wǒ]会[huì]说[shuō]一点儿[yì diǎnr]中文[Zhōng wén]。",
       );
       expect(byTerm(cards, "东西").fields).toMatchObject({
         example: "这个[Zhè ge]东西[dōng xi]很[hěn]好[hǎo]。",
-        notes: "This thing is good.",
+        exampleTranslation: "This thing is good.",
       });
       expect(byTerm(cards, "学习").fields).toMatchObject({
         example: "他每天学习3个小时。",
-        notes:
-          "學習\n他每天學習3個小時。\nTā měitiān xuéxí sān gè xiǎoshí.\nHe studies for three hours a day.",
+        exampleTranslation: "He studies for three hours a day.",
+        notes: "學習\n他每天學習3個小時。\nTā měitiān xuéxí sān gè xiǎoshí.",
       });
     });
 
@@ -283,11 +287,13 @@ describe("anki adapter", () => {
       const { cards } = await hsk(false);
       expect(byTerm(cards, "银行").fields).toMatchObject({
         example: "我去银行。",
-        notes: "銀行\nnoun\n我去銀行。\nWǒ qù yínháng.\nI am going to the bank.",
+        exampleTranslation: "I am going to the bank.",
+        notes: "銀行\nnoun\n我去銀行。\nWǒ qù yínháng.",
       });
       expect(byTerm(cards, "很").fields).toMatchObject({
         example: "我很好。",
-        notes: "Wǒ hěn hǎo.\nI am very well.",
+        exampleTranslation: "I am very well.",
+        notes: "Wǒ hěn hǎo.",
       });
     });
 
@@ -310,7 +316,8 @@ describe("anki adapter", () => {
       expect(byTerm(cards, "银行").fields).toMatchObject({
         pronunciation: "yínháng",
         example: "我去银行。",
-        notes: "銀行\nnoun\n我去銀行。\nWǒ qù yínháng.\nI am going to the bank.",
+        exampleTranslation: "I am going to the bank.",
+        notes: "銀行\nnoun\n我去銀行。\nWǒ qù yínháng.",
       });
     });
   });

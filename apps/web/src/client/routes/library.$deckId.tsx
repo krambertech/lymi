@@ -21,6 +21,7 @@ import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { ApiError, api, type Card, errorMessage, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
+import { playAlone } from "../lib/now-playing";
 import { publicSiteUrl } from "../lib/origins";
 import {
   connectedAppsQuery,
@@ -166,7 +167,7 @@ function DeckPage() {
     });
   const playAudio = (card: Card) => {
     toast.close("audio");
-    new Audio(api.audioUrl(card.id, card.updatedAt)).play().catch(() =>
+    playAlone(new Audio(api.audioUrl(card.id, card.updatedAt))).catch(() =>
       toast.add({
         id: "audio",
         type: "error",

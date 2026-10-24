@@ -8,20 +8,17 @@ test("the privacy policy names email delivery in every supported language", asyn
     {
       path: "/privacy",
       locale: "en",
-      disclosure:
-        "When Lymi sends an email, Resend receives the recipient address, sender, subject and message body.",
+      disclosure: "delivers our email and receives the recipient, subject and message",
     },
     {
       path: "/uk/privacy",
       locale: "uk",
-      disclosure:
-        "Коли Lymi надсилає лист, Resend отримує адресу одержувача, відправника, тему й текст листа.",
+      disclosure: "доставляє нашу пошту й отримує одержувача, тему й текст листа",
     },
     {
       path: "/ru/privacy",
       locale: "ru",
-      disclosure:
-        "Когда Lymi отправляет письмо, Resend получает адрес получателя, отправителя, тему и текст письма.",
+      disclosure: "доставляет нашу почту и получает получателя, тему и текст письма",
     },
   ] as const;
 

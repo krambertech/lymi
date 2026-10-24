@@ -11,9 +11,13 @@ import {
   type DeckEnrichField,
   deckEnrichFields,
   duplicateKey,
+  EXAMPLE_LENGTH,
   emptyFields,
   enrichmentStalled,
+  exampleFingerprint,
+  exampleShown,
   fieldsToFill,
+  fitsExample,
   foldApostrophes,
   type NormalizedField,
   needsEnrichment,
@@ -26,12 +30,14 @@ import {
   stripReadings,
   TEXT_MODES,
   termKey,
+  wantsTranslation,
 } from "@lymi/core";
 import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { aiAllowedFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
@@ -59,6 +65,7 @@ export type AddCardOutcome =
 type Sources = {
   meaningSource?: FieldSource | null | undefined;
   exampleSource?: FieldSource | null | undefined;
+  exampleTranslationSource?: FieldSource | null | undefined;
   pronunciationSource?: FieldSource | null | undefined;
   notesSource?: FieldSource | null | undefined;
   hookSource?: FieldSource | null | undefined;
@@ -91,6 +98,8 @@ export type AddCardsOptions = {
   allowCrossDeckDuplicates?: boolean;
   /** Smart add's pick list, so `cards_added` tells its cards from typed ones. */
   fromLesson?: boolean;
+  /** The Mac app's quick-add panel, so `cards_added` tells its cards from the app's own. */
+  entry?: "desktop_panel" | undefined;
 };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
@@ -128,6 +137,9 @@ export async function addCards(
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
+  // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
+  const enrichAllowed =
+    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && (await aiAllowedFor(ctx));
 
   // A create sent again with its id returns the card the first one made, before any check that
   // could now refuse it: its deck may have been archived since the first one landed.
@@ -265,6 +277,15 @@ export async function addCards(
       meaning: input.meaning ?? null,
       pronunciation: input.pronunciation ?? null,
       example: input.example ?? null,
+      // A translation belongs to its example, so one sent without an example is dropped.
+      exampleTranslation: input.example ? (input.exampleTranslation ?? null) : null,
+      exampleTranslationSource:
+        input.example && input.exampleTranslation
+          ? (input.exampleTranslationSource ?? "manual")
+          : null,
+      exampleTranslationOf:
+        input.example && input.exampleTranslation ? exampleFingerprint(input.example) : null,
+      exampleTranslationStatus: null,
       notes: input.notes ?? null,
       hook: input.hook || null,
       language,
@@ -301,14 +322,24 @@ export async function addCards(
     if (card.tags.length) filled.add("tags");
     if (card.sectionId) filled.add("section");
     if (card.reviewModeKeys) filled.add("review_modes");
-    const filling = fieldsToFill(
-      card,
-      deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
-    );
-    if (enrichment && wantsEnrichment(input, actor) && filling.length > 0) {
+    const deckFields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
+    const filling = fieldsToFill(card, deckFields);
+    const enriches = enrichAllowed && wantsEnrichment(input, actor);
+    if (enriches && filling.length > 0) {
       card.enrichmentStatus = "working";
       card.enrichmentFields = filling;
       enriching.push(id);
+    }
+    // An example the run writes is translated too, once it lands.
+    const exampleComing = !!card.example || filling.includes("example");
+    if (
+      enriches &&
+      exampleComing &&
+      card.exampleTranslation === null &&
+      deckFields.includes("exampleTranslation")
+    ) {
+      card.exampleTranslationStatus = "working";
+      if (!enriching.includes(id)) enriching.push(id);
     }
     groups.push([
       db.insert(schema.cards).values(card),
@@ -353,6 +384,7 @@ export async function addCards(
       source,
       ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
       ...(converted > 0 ? { normalized: converted } : {}),
+      ...(options.entry ? { entry: options.entry } : {}),
     });
   }
   // The run is named after the add's first card, so the same add sent again finds it. A replay
@@ -374,7 +406,8 @@ export async function addCards(
   ) {
     for (const outcome of outcomes) {
       if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
-        outcome.card.enrichmentStatus = "failed";
+        if (outcome.card.enrichmentStatus) outcome.card.enrichmentStatus = "failed";
+        if (outcome.card.exampleTranslationStatus) outcome.card.exampleTranslationStatus = "failed";
       }
     }
   }
@@ -534,6 +567,8 @@ type CardWrite = {
   language?: string | null | undefined;
   /** Fields the write converted to how Lymi stores them. */
   normalized?: NormalizedField[] | undefined;
+  /** The write left the card's example waiting on a translation, which runs once it lands. */
+  translate?: boolean | undefined;
 };
 
 type Correction = typeof schema.cardCorrections.$inferInsert;
@@ -566,13 +601,22 @@ const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
 /** Reports the writes that landed, one archive event per origin and one correction event for all. */
 function reportWrites(ctx: ServiceContext, writes: CardWrite[], failed: ReadonlySet<string>) {
   const archived = new Map<CardOrigin, { count: number; ai_written: number }>();
-  const corrected = { count: 0, meaning: 0, example: 0, notes: 0, pronunciation: 0 };
+  const corrected = {
+    count: 0,
+    meaning: 0,
+    example: 0,
+    example_translation: 0,
+    notes: 0,
+    pronunciation: 0,
+  };
   const languages = [];
   for (const write of writes) {
     if (failed.has(write.id) || !write.corrections?.length) continue;
     corrected.count += 1;
     languages.push(write.language);
-    for (const { field } of write.corrections) corrected[field] += 1;
+    for (const { field } of write.corrections) {
+      corrected[field === "exampleTranslation" ? "example_translation" : field] += 1;
+    }
   }
   const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
   if (channel && corrected.count > 0) {
@@ -617,6 +661,7 @@ const aiWrote = (card: Card) =>
   [
     card.meaningSource,
     card.exampleSource,
+    card.exampleTranslationSource,
     card.notesSource,
     card.pronunciationSource,
     card.hookSource,
@@ -694,6 +739,7 @@ export async function requestEnrichment(
   const { db, userId } = ctx;
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
+  await requireAi(ctx);
   const [deck] = await db
     .select({
       enrichFields: schema.decks.enrichFields,
@@ -703,7 +749,13 @@ export async function requestEnrichment(
     .from(schema.decks)
     .where(eq(schema.decks.id, card.deckId));
   const fields = deckEnrichFields(deck?.enrichFields, deck?.language, deck?.purpose);
-  if (!needsEnrichment(card, fields)) {
+  const fills = needsEnrichment(card, fields);
+  // A cleared translation counts as empty here, so asking is how a learner gets one back.
+  const translates = wantsTranslation(
+    { example: card.example, exampleTranslation: card.exampleTranslation?.trim() || null },
+    fields,
+  );
+  if (!fills && !translates) {
     throw new ServiceError("invalid", "This card has nothing left for the AI to fill in");
   }
   if (!enrichment) {
@@ -711,7 +763,10 @@ export async function requestEnrichment(
   }
   // A run already outstanding is the answer, so asking twice does not queue twice. A card
   // waiting long past any run has lost its run, so asking starts a new one.
-  if (card.enrichmentStatus === "working" && !enrichmentStalled(card)) {
+  const outstanding = (status: string | null) =>
+    status === "working" &&
+    !enrichmentStalled({ enrichmentStatus: status, updatedAt: card.updatedAt });
+  if (outstanding(card.enrichmentStatus) || outstanding(card.exampleTranslationStatus)) {
     return presentCard(db, card, userId);
   }
   // `updatedAt` moves because the card did, and because the screen stops waiting on a card
@@ -724,8 +779,15 @@ export async function requestEnrichment(
       .map((field) => [field, null]),
   );
   const working = {
-    enrichmentStatus: "working" as const,
-    enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields),
+    ...(fills
+      ? {
+          enrichmentStatus: "working" as const,
+          enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields),
+        }
+      : {}),
+    ...(translates
+      ? { exampleTranslation: null, exampleTranslationStatus: "working" as const }
+      : {}),
     updatedAt: new Date(),
   };
   await db
@@ -739,7 +801,12 @@ export async function requestEnrichment(
       ...card,
       ...working,
       ...reopened,
-      ...(queued ? {} : { enrichmentStatus: "failed" as const }),
+      ...(queued
+        ? {}
+        : {
+            ...(fills ? { enrichmentStatus: "failed" as const } : {}),
+            ...(translates ? { exampleTranslationStatus: "failed" as const } : {}),
+          }),
     },
     userId,
   );
@@ -794,14 +861,34 @@ function sourceAfter(text: string | null | undefined, stated: FieldSource | null
   return text ? ("manual" as const) : null;
 }
 
-export async function updateCard(ctx: ServiceContext, id: string, patch: ServerCardPatch) {
+/** Given an enrichment queue, an edit that leaves an example to translate queues it. ADR 0038. */
+export async function updateCard(
+  ctx: ServiceContext,
+  id: string,
+  patch: ServerCardPatch,
+  enrichment?: EnrichmentQueue | null,
+) {
   const edit = { ...patch, cardId: id };
-  const lookups = await editLookups(ctx, [edit]);
+  const lookups = await editLookups(ctx, [edit], enrichment);
   const now = new Date();
   const write = editWrite(ctx, lookups, edit, now);
   await runBatch(ctx.db, batchOf(ctx.db, [write], now));
   reportWrites(ctx, [write], new Set());
+  await queueTranslations(ctx, [write], new Set(), enrichment);
   return showCard(ctx, id);
+}
+
+/** One run for every landed edit that left an example to translate. */
+async function queueTranslations(
+  ctx: ServiceContext,
+  writes: readonly CardWrite[],
+  failed: ReadonlySet<string>,
+  enrichment: EnrichmentQueue | null | undefined,
+) {
+  const ids = writes.filter((write) => write.translate && !failed.has(write.id)).map((w) => w.id);
+  if (enrichment && ids.length > 0) {
+    await queueEnrichment(ctx.db, ctx.userId, ids, enrichment, "edit");
+  }
 }
 
 export type EditCardOutcome =
@@ -817,11 +904,14 @@ export async function updateCards(
   ctx: ServiceContext,
   edits: CardEditInput[],
   /** Tags the edits take off that are archived rather than dropped, for Restore. */
-  options: { archiveTags?: readonly string[] } = {},
+  options: {
+    archiveTags?: readonly string[];
+    enrichment?: EnrichmentQueue | null | undefined;
+  } = {},
 ): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
   if (edits.length === 0) return [];
-  const lookups = await editLookups(ctx, edits);
+  const lookups = await editLookups(ctx, edits, options.enrichment);
   const now = new Date();
   const writes: CardWrite[] = [];
   const refusals = edits.map((edit) =>
@@ -831,6 +921,7 @@ export async function updateCards(
   );
   const failed = await runCardWrites(db, writes, now);
   reportWrites(ctx, writes, failed);
+  await queueTranslations(ctx, writes, failed, options.enrichment);
   const written = await visibleCards(
     ctx,
     writes.filter((write) => !failed.has(write.id)).map((write) => write.id),
@@ -855,10 +946,16 @@ type EditLookups = {
   cards: Map<string, Card>;
   ownedDecks: Set<string>;
   sectionDecks: Map<string, string>;
+  /** What the AI may fill on each deck an edit touches, read only when a translation can be queued. */
+  deckFields: Map<string, DeckEnrichField[]>;
 };
 
 /** Every card, target deck and section a set of edits names, read once for the whole set. */
-async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promise<EditLookups> {
+async function editLookups(
+  ctx: ServiceContext,
+  edits: ServerCardEdit[],
+  enrichment?: EnrichmentQueue | null,
+): Promise<EditLookups> {
   const { db, userId } = ctx;
   const deckIds = [...new Set(edits.flatMap((edit) => (edit.deckId ? [edit.deckId] : [])))];
   const sectionIds = [
@@ -882,10 +979,33 @@ async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promis
         .where(and(inArray(schema.sections.id, ids), isNull(schema.sections.archivedAt))),
     ),
   ]);
+  // Only an edit that changes an example can leave one to translate, and only with the learner's yes.
+  const translating =
+    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiAllowedFor(ctx));
+  const fieldDecks = translating
+    ? [...new Set([...[...cards.values()].map((card) => card.deckId), ...deckIds])]
+    : [];
+  const deckRows = await selectIn(fieldDecks, (ids) =>
+    db
+      .select({
+        id: schema.decks.id,
+        enrichFields: schema.decks.enrichFields,
+        defaultLanguage: schema.decks.defaultLanguage,
+        purpose: schema.decks.purpose,
+      })
+      .from(schema.decks)
+      .where(and(inArray(schema.decks.id, ids), eq(schema.decks.userId, userId))),
+  );
   return {
     cards,
     ownedDecks: new Set(decks.map((deck) => deck.id)),
     sectionDecks: new Map(sections.map((section) => [section.id, section.deckId])),
+    deckFields: new Map(
+      deckRows.map((deck) => [
+        deck.id,
+        deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
+      ]),
+    ),
   };
 }
 
@@ -909,6 +1029,70 @@ function correctionsOf(
   });
 }
 
+/** What an edit does to the example's translation, by the rules in ADR 0038. */
+function translationAfter(
+  ctx: ServiceContext,
+  lookups: EditLookups,
+  current: Card,
+  patch: ServerCardPatch,
+  deckId: string,
+): {
+  set: Partial<
+    Pick<
+      Card,
+      | "exampleTranslation"
+      | "exampleTranslationSource"
+      | "exampleTranslationOf"
+      | "exampleTranslationStatus"
+    >
+  >;
+  translate: boolean;
+} {
+  const example = patch.example === undefined ? current.example : patch.example || null;
+  if (!example) {
+    return {
+      set: {
+        exampleTranslation: null,
+        exampleTranslationSource: null,
+        exampleTranslationOf: null,
+        exampleTranslationStatus: null,
+      },
+      translate: false,
+    };
+  }
+  if (patch.exampleTranslation !== undefined) {
+    const text = patch.exampleTranslation;
+    return {
+      set: {
+        exampleTranslation: text,
+        exampleTranslationSource: text
+          ? (sourceAfter(text, patch.exampleTranslationSource) ?? null)
+          : null,
+        exampleTranslationOf: text ? exampleFingerprint(example) : null,
+        exampleTranslationStatus: null,
+      },
+      translate: false,
+    };
+  }
+  const changed = exampleShown(example) !== exampleShown(current.example ?? "");
+  if (!changed) return { set: {}, translate: false };
+  const byAi = current.exampleTranslationSource === "ai";
+  // A person's translation, or one cleared on purpose, waits for them.
+  if (!byAi && current.exampleTranslation !== null) return { set: {}, translate: false };
+  // Refreshing the AI's own text is upkeep, from any channel; a first translation is the app's to ask for.
+  const fields = lookups.deckFields.get(deckId) ?? [];
+  const translate = fields.includes("exampleTranslation") && (byAi || ctx.actor === "user");
+  return {
+    set: {
+      exampleTranslation: null,
+      exampleTranslationSource: null,
+      exampleTranslationOf: null,
+      exampleTranslationStatus: translate ? "working" : null,
+    },
+    translate,
+  };
+}
+
 /** One card's edit and its audit row, or the ServiceError that refuses it. */
 function editWrite(
   ctx: ServiceContext,
@@ -926,6 +1110,13 @@ function editWrite(
     pronunciation: sent.pronunciation === undefined ? current.pronunciation : sent.pronunciation,
   });
   const patch = { ...sent };
+  if (
+    patch.example !== undefined &&
+    patch.example !== (current.example ?? "") &&
+    !fitsExample(patch.example)
+  ) {
+    throw new ServiceError("invalid", `Keep the example under ${EXAMPLE_LENGTH} characters.`);
+  }
   if (text.normalized.includes("term")) patch.term = text.fields.term;
   if (text.normalized.includes("pronunciation")) patch.pronunciation = text.fields.pronunciation;
   if (patch.deckId && patch.deckId !== current.deckId && !lookups.ownedDecks.has(patch.deckId)) {
@@ -958,7 +1149,8 @@ function editWrite(
         speechInputs(current.language).some(
           (field) => patch[field] !== undefined && patch[field] !== current[field],
         );
-  const { reviewModes, directions: _legacy, ...fields } = patch;
+  // The translation's source is written with its text, in `translationAfter`, never on its own.
+  const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {
@@ -974,6 +1166,7 @@ function editWrite(
         ? ("ai" as const)
         : sourceAfter(patch.hook, patch.hookSource),
   };
+  const translation = translationAfter(ctx, lookups, current, patch, deckId);
   // A draft fits the text it was drafted for, so a new term or meaning sends the next one back to the AI.
   const draftStale =
     (patch.term !== undefined && patch.term !== current.term) ||
@@ -988,6 +1181,7 @@ function editWrite(
       ...fields,
       hook,
       ...sources,
+      ...translation.set,
       ...(modes ?? {}),
       ...section,
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
@@ -1005,7 +1199,14 @@ function editWrite(
     ],
     states: modes !== undefined || patch.deckId !== undefined,
     tags: patch.tags,
-    corrections: correctionsOf(ctx, current, patch, sources, now),
+    corrections: correctionsOf(
+      ctx,
+      current,
+      patch,
+      { ...sources, exampleTranslationSource: translation.set.exampleTranslationSource },
+      now,
+    ),
+    translate: translation.translate,
     language: patch.language === undefined ? current.language : patch.language,
     normalized: text.normalized,
     reports:

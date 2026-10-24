@@ -2,7 +2,7 @@ import type { Actor, PhoneClient, Scope } from "@lymi/core";
 import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
 import { FIRST_TOUCH_KEYS } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
-import { Hono } from "hono";
+import { Hono, type MiddlewareHandler } from "hono";
 import { routePath } from "hono/route";
 import { appSiteAssociation, assetLinks } from "./app-site-association";
 import { type Auth, createAuth, type SessionUser } from "./auth";
@@ -17,7 +17,11 @@ import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
 import { requireStrongPassword } from "./password-rules";
-import { leaveOutExampleReadings, requireSupportedPhone } from "./phone-clients";
+import {
+  leaveOutExampleReadings,
+  leaveOutTranslationField,
+  requireSupportedPhone,
+} from "./phone-clients";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { account } from "./routes/account";
@@ -189,6 +193,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 // A phone release too old for this API is told to update before anything else answers it.
 app.use("/api/*", requireSupportedPhone);
 app.use("/api/*", leaveOutExampleReadings);
+app.use("/api/*", leaveOutTranslationField);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
 app.use("/api/auth/*", limitCredentialRequests);
@@ -267,12 +272,14 @@ app.route("/api/email/events", emailEvents);
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
 // under /api gets one.
-app.use("/api/settings/analytics-consent", async (c, next) => {
+const productOriginOnly: MiddlewareHandler<AppEnv> = async (c, next) => {
   const origin = c.req.header("origin");
   if (origin && origin !== canonicalOrigins(c.env).product)
     return c.json({ error: "This origin cannot change privacy preferences" }, 403);
   return next();
-});
+};
+app.use("/api/settings/analytics-consent", productOriginOnly);
+app.use("/api/settings/ai-consent", productOriginOnly);
 app.use("/api/*", authenticate);
 
 app.get(

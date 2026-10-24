@@ -102,7 +102,13 @@ const SOURCE: Record<FieldSource, { icon: IconName; tone: ChipTone; mark: Messag
   manual: { icon: "manual", tone: "default", mark: msg`You` },
 };
 
-type SourceField = "meaning" | "example" | "exampleTranslation" | "pronunciation" | "hook";
+type SourceField =
+  | "meaning"
+  | "example"
+  | "exampleTranslation"
+  | "exampleAndTranslation"
+  | "pronunciation"
+  | "hook";
 
 // Whole sentences per field, so each language can inflect the field word on its own.
 const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
@@ -113,6 +119,11 @@ const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDes
     lesson: msg`Translation from lesson`,
     ai: msg`AI translation`,
     manual: msg`Translation by you`,
+  },
+  exampleAndTranslation: {
+    lesson: msg`Example and translation from lesson`,
+    ai: msg`AI example and translation`,
+    manual: msg`Example and translation by you`,
   },
   pronunciation: {
     lesson: msg`Pronunciation from lesson`,

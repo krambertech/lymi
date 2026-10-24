@@ -911,6 +911,9 @@ msgstr "AI draft"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI example and translation"
+msgstr "AI example and translation"
+
 msgid "AI fills"
 msgstr "AI fills"
 
@@ -2072,6 +2075,12 @@ msgstr "Everything, to import into Lymi again: cards, pictures, schedules and re
 
 msgid "Example"
 msgstr "Example"
+
+msgid "Example and translation by you"
+msgstr "Example and translation by you"
+
+msgid "Example and translation from lesson"
+msgstr "Example and translation from lesson"
 
 msgid "Example by you"
 msgstr "Example by you"

@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import {
   drawsReadings,
   exampleSegments,
@@ -5,13 +6,15 @@ import {
   markedTerm,
   markKnownReadings,
   termReading,
+  textDirection,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { useResolveClassNames } from "uniwind";
 import { fitType, textStart } from "../theme/type";
 import { Furigana } from "./furigana";
 import { INLINE_ROOM, InlineControl, RunControl } from "./inline-control";
+import { Text } from "./primitives";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
@@ -61,14 +64,22 @@ export function ExampleText({
   text,
   known,
   control,
+  translation,
   ...props
-}: Omit<ComponentProps<typeof Furigana>, "segments" | "after"> & {
+}: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
-  /** A 32 pt button after the last word, such as the example's speaker, centred on its line. */
+  /** A control after the last word, such as the AI's badge on a translation, centred on its line. */
   control?: ReactNode;
+  /**
+   * The example's translation in parentheses, run on after it in its own classes, or on its own
+   * line when it reads in the other direction, since a run-on would start at the wrong edge.
+   */
+  translation?: { text: string; className: string } | null | undefined;
 }) {
+  const { i18n } = useLingui();
   const { lang } = props;
+  const runsOn = textDirection(lang) === textDirection(i18n.locale);
   const segments = useMemo(
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
@@ -78,8 +89,11 @@ export function ExampleText({
   const size = flat.fontSize ?? 17;
   const drawn = fitType(size, fontScale, props.maxFontSizeMultiplier).drawn;
   const ruby = segments.some((segment) => segment.reading !== undefined);
+  // A translation on its own line carries the control at its end instead.
+  const own = !!translation && !runsOn;
   const after =
     control &&
+    !own &&
     (ruby ? (
       <RunControl line={Math.round(((flat.lineHeight ?? size * 1.2) * drawn) / size)}>
         {control}
@@ -87,16 +101,34 @@ export function ExampleText({
     ) : (
       <InlineControl>{control}</InlineControl>
     ));
-  return (
+  const sentence = (
     <Furigana
       segments={segments}
       {...props}
+      tail={
+        translation && runsOn
+          ? { text: ` (${translation.text})`, className: translation.className, lang: i18n.locale }
+          : undefined
+      }
       after={after}
       style={[
         StyleSheet.flatten(props.style),
         textStart(lang),
-        control && !ruby ? INLINE_ROOM : null,
+        control && !own && !ruby ? INLINE_ROOM : null,
       ]}
     />
+  );
+  if (!own || !translation) return sentence;
+  return (
+    <View className="gap-1">
+      {sentence}
+      <Text
+        className={translation.className}
+        lang={i18n.locale}
+        style={control ? INLINE_ROOM : undefined}
+      >
+        ({translation.text}){control && <InlineControl>{control}</InlineControl>}
+      </Text>
+    </View>
   );
 }

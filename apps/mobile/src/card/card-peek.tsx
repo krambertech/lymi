@@ -43,10 +43,17 @@ export function peekHeight(card: Card, width: number, scale: number) {
     (forms ? 4 + 23 : 0) +
     lines(card.meaning || "", 20 * scale, inner, 3) * 26 +
     (card.pronunciation && !shown ? 8 + 23 : 0) +
+    // The translation runs on after the example, so the two wrap as one paragraph.
     (card.example && example
-      ? 8 + lines(stripReadings(card.example, card.language), 17 * scale, inner, 2) * example
-      : 0) +
-    (translation ? 4 + lines(translation, 15 * scale, inner, 2) * 21 : 0);
+      ? 8 +
+        lines(
+          stripReadings(card.example, card.language) + (translation ? ` (${translation})` : ""),
+          17 * scale,
+          inner,
+          translation ? 3 : 2,
+        ) *
+          example
+      : 0);
   return Math.min(Math.round(FRAME + text * scale), 420);
 }
 
@@ -125,20 +132,16 @@ export function CardPeek({
           </Text>
         )}
         {card.example && (
-          <View className="gap-1">
-            <ExampleText
-              text={card.example}
-              known={known}
-              className="text-md text-text-2"
-              lines={2}
-              lang={card.language}
-            />
-            {translation && (
-              <Text className="text-base text-muted" numberOfLines={2}>
-                ({translation})
-              </Text>
-            )}
-          </View>
+          <ExampleText
+            text={card.example}
+            known={known}
+            className="text-md text-text-2"
+            lines={translation ? 3 : 2}
+            lang={card.language}
+            translation={
+              translation ? { text: translation, className: "text-md text-muted" } : null
+            }
+          />
         )}
       </View>
     </View>

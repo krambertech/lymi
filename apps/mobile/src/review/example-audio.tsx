@@ -3,10 +3,12 @@ import { api } from "@lymi/client/api";
 import { canSpeakExample } from "@lymi/core";
 import { fetch } from "expo/fetch";
 import { File, Paths } from "expo-file-system";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Pressable } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSessionHeaders } from "../auth/client";
 import { captureEvent } from "../telemetry/posthog";
-import { audio, type ExpoAudio, SpeakerButton } from "./pronounce";
+import { audio, type ExpoAudio, SpeakerButton, useSoundError } from "./pronounce";
 
 /** Past this from a clip in hand to no sound, the play counts as failed. */
 const START_LIMIT_MS = 12_000;
@@ -159,5 +161,37 @@ export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
       labels={{ play: t`Play example`, replay: t`Replay example` }}
       quiet
     />
+  );
+}
+
+/**
+ * The example as its own play control in review: a tap reads it aloud, so the card carries no
+ * second speaker. A hold still opens the card's menu, and VoiceOver plays it as the card's action.
+ */
+export function ExamplePress({
+  sound,
+  onLongPress,
+  children,
+}: {
+  sound: ExampleAudio | null;
+  onLongPress?: (() => void) | undefined;
+  children: (state: ExampleAudio["state"]) => ReactNode;
+}) {
+  const { anchor, style, tips } = useSoundError(sound?.error ?? null);
+  if (!sound) return children("idle");
+  return (
+    <Animated.View ref={anchor} style={style}>
+      <Pressable
+        accessible={false}
+        onPress={() => {
+          tips?.hide();
+          sound.play();
+        }}
+        onLongPress={onLongPress}
+        delayLongPress={400}
+      >
+        {children(sound.state)}
+      </Pressable>
+    </Animated.View>
   );
 }

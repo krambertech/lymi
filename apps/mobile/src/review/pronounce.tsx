@@ -232,16 +232,8 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   );
 }
 
-/** A speaker for any sound the card plays on a press; `quiet` steps a second one back from the term's. */
-export function SpeakerButton({
-  sound: { error, state, play },
-  labels,
-  quiet = false,
-}: {
-  sound: Pick<Pronunciation, "error" | "state" | "play">;
-  labels: { play: string; replay: string };
-  quiet?: boolean;
-}) {
+/** A failed play said over what was pressed, on the card's tip layer, with one shake. */
+export function useSoundError(error: string | null) {
   const reduce = useReduceMotion();
   const tips = useContext(TipContext);
   const anchor = useRef<View>(null);
@@ -260,6 +252,21 @@ export function SpeakerButton({
     }
   }, [error, reduce, shake, tips]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
+  return { anchor, style, tips };
+}
+
+/** A speaker for any sound the card plays on a press; `quiet` steps a second one back from the term's. */
+export function SpeakerButton({
+  sound: { error, state, play },
+  labels,
+  quiet = false,
+}: {
+  sound: Pick<Pronunciation, "error" | "state" | "play">;
+  labels: { play: string; replay: string };
+  quiet?: boolean;
+}) {
+  const reduce = useReduceMotion();
+  const { anchor, style, tips } = useSoundError(error);
 
   return (
     // Its box sits inside the text's line height, so the line never moves when it appears.

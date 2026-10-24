@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { choicesPatch, EMPTY_FORM, editPatch, pictureWrite, translationAfterExample } from "./form";
+import {
+  choicesPatch,
+  EMPTY_FORM,
+  editPatch,
+  keptTranslationStale,
+  pictureWrite,
+  translationAfterExample,
+} from "./form";
 
 const opened = { ...EMPTY_FORM, term: "sbrigarsi", meaning: "", notes: "" };
 
@@ -83,6 +90,37 @@ describe("an example's translation in Edit card", () => {
         "I eat bread.",
       ),
     ).toBeUndefined();
+  });
+
+  it("says as the example changes that the learner's translation would be kept for the old one", () => {
+    const theirs = {
+      ...card,
+      exampleTranslationSource: "manual" as const,
+      exampleTranslationStale: false,
+    };
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "I eat bread.")).toBe(true);
+    // Typed back, or with only a reading added, the translation fits again.
+    expect(keptTranslationStale(theirs, "Ich esse Brot.", "I eat bread.")).toBe(false);
+    expect(keptTranslationStale(theirs, "Ich esse Brot[bro:t].", "I eat bread.")).toBe(false);
+    // A new translation, or none, is not the old one.
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "I drink tea.")).toBe(false);
+    expect(keptTranslationStale(theirs, "Ich trinke Tee.", "")).toBe(false);
+    // The AI writes its own again, so nothing is kept.
+    expect(
+      keptTranslationStale(
+        { ...theirs, exampleTranslationSource: "ai" },
+        "Ich trinke Tee.",
+        "I eat bread.",
+      ),
+    ).toBe(false);
+    // Already stale, it stays marked under its unchanged example.
+    expect(
+      keptTranslationStale(
+        { ...theirs, exampleTranslationStale: true },
+        "Ich esse Brot.",
+        "I eat bread.",
+      ),
+    ).toBe(true);
   });
 });
 

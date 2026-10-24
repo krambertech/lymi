@@ -1,4 +1,4 @@
-# Example translation and audio: the translation under the example after the reveal and on the
+# Example translation and audio: the translation after the example once revealed and on the
 # card page, the example's speaker, a stale translation, and the AI's translation cleared from the
 # editor by a new example and back for the old one.
 appId: app.lymi
@@ -28,15 +28,16 @@ name: Example translation and audio
 - extendedWaitUntil:
     visible: ".*\\(${TRANSLATION}\\).*"
     timeout: 20000
-# A local Worker has no speech key, so the press is answered 503 and a toast says so.
+# With a speech key the clip plays for a second; a local Worker without one answers 503 and a toast says so.
 - tapOn: "Play example"
 - extendedWaitUntil:
     visible: ".*Couldn’t play the example. Try again in a moment.*"
-    timeout: 20000
-- takeScreenshot: 02-card-page-example-failed
+    timeout: 10000
+    optional: true
+- takeScreenshot: 02-card-page-example
 - tapOn: "Library"
 - waitForAnimationToEnd
-# A Japanese example keeps its readings, with the translation under it.
+# A Japanese example keeps its readings, with the translation after it.
 - scrollUntilVisible:
     element: "${JA_DECK}.*"
     centerElement: true

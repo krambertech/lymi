@@ -97,6 +97,24 @@ export function translationAfterExample(
   return undefined;
 }
 
+/**
+ * True when a save would keep the translation as written for an earlier example: the learner's own
+ * under a changed example, or one already stale under its example. The AI's is written again instead.
+ */
+export function keptTranslationStale(
+  card: Pick<
+    Card,
+    "example" | "exampleTranslation" | "exampleTranslationSource" | "exampleTranslationStale"
+  >,
+  example: string,
+  translation: string,
+): boolean {
+  if (!example.trim() || !translation.trim() || translation !== (card.exampleTranslation ?? ""))
+    return false;
+  const changed = exampleShown(example) !== exampleShown(card.example ?? "");
+  return changed ? card.exampleTranslationSource !== "ai" : card.exampleTranslationStale;
+}
+
 const same = (a: readonly string[] | null, b: readonly string[] | null) =>
   a === b || (!!a && !!b && a.length === b.length && a.every((v, i) => v === b[i]));
 

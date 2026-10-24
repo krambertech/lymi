@@ -20,6 +20,7 @@ import {
   type FormField,
   type FormValues,
   formValues,
+  keptTranslationStale,
   pictureWrite,
   translationAfterExample,
 } from "../capture/form";
@@ -196,10 +197,7 @@ export default function EditCard() {
     !values.exampleTranslation.trim() &&
     exampleChanged &&
     (card.exampleTranslation === null || card.exampleTranslationSource === "ai");
-  const translationStale =
-    card.exampleTranslationStale &&
-    !exampleChanged &&
-    values.exampleTranslation === (card.exampleTranslation ?? "");
+  const translationStale = keptTranslationStale(card, values.example, values.exampleTranslation);
   // Marked until changed, as a field the learner rewrites becomes theirs.
   const ai = (f: FormField) =>
     f !== "term" && f !== "source" && card[`${f}Source`] === "ai" && typed[f] === undefined;

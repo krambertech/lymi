@@ -9,7 +9,7 @@ import { deserializeState, isolate, termShowsPronunciation } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ComponentProps, type ReactNode, useEffect, useMemo, useState } from "react";
 import { Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
@@ -255,9 +255,9 @@ export default function CardPage() {
       <Field
         key="example"
         label={t`Example`}
-        ai={exampleAi || translationAi}
-        // One badge for both, which names the whole field when the AI wrote both.
-        field={exampleAi ? (translationAi ? undefined : "example") : "exampleTranslation"}
+        ai={exampleAi}
+        // One badge names both when the AI wrote both; one by the label never claims the learner's example.
+        field={translationAi ? "exampleAndTranslation" : "example"}
         onPress={edit("example")}
         end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
         below={
@@ -281,16 +281,16 @@ export default function CardPage() {
           known={known}
           className="text-md text-text"
           lang={card.language}
+          translation={translation ? { text: translation, className: "text-md text-muted" } : null}
+          control={
+            translationAi &&
+            !exampleAi && <SourceChip source="ai" field="exampleTranslation" badge />
+          }
         />
-        {translating && !translation ? (
+        {translating && !translation && (
           <View className="h-5 justify-center" accessibilityElementsHidden>
             <Skeleton width="66%" height={12} />
           </View>
-        ) : (
-          translation && (
-            // In the meaning language, so it takes its direction from its own text.
-            <Text className="text-base text-text-2">({translation})</Text>
-          )
         )}
         {owner && translation && card.exampleTranslationStale && (
           <Text className="text-sm text-muted">
@@ -579,7 +579,7 @@ function Field({
 }: {
   label: string;
   ai?: boolean;
-  field?: "meaning" | "example" | "exampleTranslation" | "pronunciation" | "hook";
+  field?: ComponentProps<typeof SourceChip>["field"];
   /** A control at the row's end, such as the example's play. */
   end?: ReactNode;
   /** Under the field and apart from its edit button, such as a retry. */

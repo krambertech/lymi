@@ -39,6 +39,7 @@
     "db:migrate": "pnpm --filter @lymi/web db:migrate",
     "db:migrate:prod": "pnpm --filter @lymi/web db:migrate:prod",
     "icons": "sh scripts/icons.sh",
+    "moderate": "node scripts/moderate.mjs",
     "i18n:extract": "pnpm -r --filter @lymi/web --filter @lymi/site --filter @lymi/mobile i18n:extract",
     "i18n:check": "pnpm i18n:extract && git diff --exit-code --stat -- 'apps/*/src/locales/*.po'",
     "local": "node scripts/local.mjs",

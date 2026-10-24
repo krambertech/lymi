@@ -1,6 +1,6 @@
 # Operations
 
-Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Every alert links to its section below: what it means, then what to check first. [The stack](stack.md#analytics-workers-analytics-engine-and-posthog-eu) says why monitoring is split this way.
+Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Content reports from learners go to hello@lymi.app and are handled under [A content report arrives](#a-content-report-arrives); [app-review.md](app-review.md) is what App Review and Google Play are told about it. Every alert links to its section below: what it means, then what to check first. [The stack](stack.md#analytics-workers-analytics-engine-and-posthog-eu) says why monitoring is split this way.
 
 ## What watches production
 
@@ -105,6 +105,29 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
 
 Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
+
+## A content report arrives
+
+A learner reported a deck or card someone else wrote ([Report](../CONTEXT.md)). The email to hello@lymi.app carries the content as it read when reported, the reason, the reporter's note and the report's id, and replying reaches the reporter. Lymi tells reporters and [App Review](app-review.md) that every report is read within a day, so act the same day.
+
+```bash
+pnpm moderate show <report-id>
+```
+
+`pnpm moderate list` shows every open report, oldest first; a report whose email never arrived is still there. Each command needs `LYMI_API_KEY`, a write-scoped key on an account in `OPERATOR_EMAILS`. Then settle it with one of:
+
+| Action | When | What happens |
+| --- | --- | --- |
+| `dismiss` | Nothing breaks the rules | The report closes; nothing changes |
+| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it |
+| `archive_deck` | The deck itself is the problem | The deck leaves every member's Library, its join link and invitations stop working, and its owner cannot restore it |
+| `suspend_sharing` | The owner shares abuse, or keeps coming back | Every deck they share is archived for good, and they can no longer turn on a join link or invite anyone |
+
+```bash
+pnpm moderate resolve <report-id> archive_card --apply
+```
+
+Settling a report settles the other open reports about the same card, deck or owner. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
 
 ## The stress backfill
 

@@ -2126,6 +2126,9 @@ msgstr "Подготовить зацепку"
 msgid "Drafting a hook…"
 msgstr "Готовим зацепку…"
 
+msgid "Drafting…"
+msgstr "Готовим…"
+
 msgid "Drag decks here to add them to this series."
 msgstr "Перетащи сюда колоды, чтобы добавить их в серию."
 

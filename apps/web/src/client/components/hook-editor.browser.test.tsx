@@ -98,7 +98,7 @@ test("Draft a hook puts the AI's hook in the field to edit, and saving it as wri
   await page.getByRole("button", { name: "Draft a hook" }).click();
   const field = page.getByRole("textbox", { name: "Memory hook" });
   await expect.element(field).toHaveValue("A fire BRIGAde scrambling out");
-  await expect.element(page.getByText("AI hook")).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "Another draft" })).toBeVisible();
   await page.getByRole("button", { name: "Save" }).click();
   await expect.poll(() => saved.mock.calls.length).toBe(1);
   expect(update.mock.calls[0]?.[1]).toMatchObject({ hook: "A fire BRIGAde scrambling out" });
@@ -138,6 +138,9 @@ test("words typed while a draft is on its way stay, and the late draft gives way
   vi.spyOn(api, "draftHook").mockReturnValue(new Promise((resolve) => (land = resolve)));
   await render(<Editor />);
   await page.getByRole("button", { name: "Draft a hook" }).click();
+  // The button itself says it is drafting; no second line repeats it.
+  await expect.element(page.getByRole("button", { name: "Drafting a hook…" })).toBeVisible();
+  await expect.element(page.getByText("Drafting a hook…")).not.toBeInTheDocument();
   const field = page.getByRole("textbox", { name: "Memory hook" });
   await userEvent.type(field, "My own");
   land({ hook: "A fire BRIGAde scrambling out" });
@@ -159,7 +162,7 @@ test("pressing Draft again while it works sends no second ask", async () => {
   await render(<Editor />);
   const button = page.getByRole("button", { name: "Draft a hook" });
   await button.click();
-  await button.click({ force: true });
+  await page.getByRole("button", { name: "Drafting a hook…" }).click({ force: true });
   land({ hook: "A fire BRIGAde scrambling out" });
   await expect
     .element(page.getByRole("textbox", { name: "Memory hook" }))

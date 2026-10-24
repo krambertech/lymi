@@ -2126,6 +2126,9 @@ msgstr "Draft a hook"
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
 
+msgid "Drafting…"
+msgstr "Drafting…"
+
 msgid "Drag decks here to add them to this series."
 msgstr "Drag decks here to add them to this series."
 

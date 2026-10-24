@@ -17,6 +17,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Review | [review.md](features/review.md) |
 | The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
+| Memory hook | [memory-hook.md](features/memory-hook.md) |
 | Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |

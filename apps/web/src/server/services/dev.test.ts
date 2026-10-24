@@ -120,6 +120,36 @@ describe("simulate actions", () => {
     expect(after.today.outcome).toBe("open");
   });
 
+  it("reseeding drops a Readwise connection, whose decks the reseed replaces", async () => {
+    const ctx = await account();
+    const deck = await createDeck(ctx, { name: "Casa", language: "it" });
+    await db.insert(schema.readwiseConnections).values({
+      userId: ctx.userId,
+      tokenCipher: "sealed",
+      tokenHint: "0000",
+      status: "active",
+      decks: { it: deck.id },
+      pulledThrough: new Date(),
+      nextPullAt: new Date(),
+    });
+    await db.insert(schema.readwiseBooks).values({
+      userId: ctx.userId,
+      bookId: "1",
+      title: "Una stagione a Torino",
+      followed: true,
+    });
+
+    await seedPersona(ctx, personas.find((p) => p.id === "fresh") as (typeof personas)[number]);
+    const where = (t: typeof schema.readwiseBooks | typeof schema.readwiseConnections) =>
+      eq(t.userId, ctx.userId);
+    expect(
+      await db.select().from(schema.readwiseConnections).where(where(schema.readwiseConnections)),
+    ).toEqual([]);
+    expect(await db.select().from(schema.readwiseBooks).where(where(schema.readwiseBooks))).toEqual(
+      [],
+    );
+  });
+
   it("makes cards often forgotten without touching the streak or cards reviewed today", async () => {
     const ctx = await withHistory(5);
     const reviewed = await db

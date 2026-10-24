@@ -84,6 +84,7 @@ import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
 import { ExampleText, TermText } from "../components/term-text";
+import { TurnSpark } from "../components/turn-spark";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -1426,21 +1427,26 @@ export function ReviewComplete({
   const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
+  const [ticked, setTicked] = useState(reduce);
   const [skipped, setSkipped] = useState(false);
   const lanternPlace = useRef<HTMLDivElement>(null);
+  const room = useRef<HTMLDivElement>(null);
   const instant = reduce || skipped;
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
 
   const counted = screen.heading !== "nothing_due";
   const week = landed ? streak : streakBefore;
+  const runWeek = ticked ? streak : streakBefore;
   const days = week ? lastDays(week) : undefined;
-  const flame = week ? streakFlameFor(week) : "lit";
+  const flame = runWeek ? streakFlameFor(runWeek) : "lit";
   const lit = !lanternFor(streak).out;
   const embers = useMemo(
     () => (lit && !reduce ? endEmbers(screen.embers) : []),
     [lit, reduce, screen.embers],
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.
-  const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  const run = screen.streak ? runWeek?.current : (streak ?? week)?.current;
   const goal = (streak ?? week)?.today.goal;
   const proceed = screen.offers.find((o) => o.kind === "continue");
   const note = proceed?.note;
@@ -1465,10 +1471,16 @@ export function ReviewComplete({
   useEffect(() => {
     if (instant) {
       setLanded(true);
+      setTicked(true);
       return;
     }
-    const timer = window.setTimeout(() => setLanded(true), AT.land);
-    return () => window.clearTimeout(timer);
+    const timers = [
+      window.setTimeout(() => setLanded(true), AT.land),
+      window.setTimeout(() => setTicked(true), AT.tick),
+    ];
+    return () => {
+      for (const timer of timers) window.clearTimeout(timer);
+    };
   }, [instant]);
   // The sequence is a moment, never a wait: the first tap or key finishes it.
   useEffect(() => {
@@ -1490,7 +1502,11 @@ export function ReviewComplete({
       className={clsx("isolate flex flex-1 flex-col", skipped && "seq-skip")}
     >
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
-      <div className="m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8">
+      <div
+        ref={room}
+        className="relative m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8"
+      >
+        {turned && !skipped && <TurnSpark lantern={lanternPlace} room={room} />}
         {lit && (
           <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
         )}
@@ -1577,17 +1593,16 @@ export function ReviewComplete({
               dates={days.dates}
               size="lg"
               sequence={AT.lights}
-              flare={landed && !reduce && screen.streak}
+              flare={landed && turned}
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
-              <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
+                <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              </span>
               {run ? (
                 <>
                   <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
-                    <span
-                      key={run}
-                      className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
-                    >
+                    <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
                       {run}
                     </span>
                   </span>

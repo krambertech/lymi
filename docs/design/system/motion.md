@@ -94,7 +94,7 @@ Easy locked after a peek does not move, shake or change when pressed. A tap, a c
 
 ## The end of a review
 
-The end of a review is the other choreographed moment, and the one place the interface celebrates, because it is where the day lands. It plays as one sequence over about two seconds:
+The end of a review is the other choreographed moment, and the one place the interface celebrates, because it is where the day lands. It plays as one sequence over about three seconds:
 
 | At | What happens |
 | --- | --- |
@@ -103,10 +103,13 @@ The end of a review is the other choreographed moment, and the one place the int
 | 640 ms | The heading rises out of a blur. |
 | 820 ms | The count rises and rolls up from where the last end left the day. |
 | 1.18 s | The seven lights switch on, 70 ms apart. |
-| 1.78 s | When the day has just turned, today's light fills with a brief flare of the glow, and the run ticks. |
+| 1.5 s | When the day has just turned, a spark leaves the flame with a short trail and drops into today's light over 600 ms. |
 | 2 s | The ways on arrive, 90 ms apart. |
+| 2.1 s | The spark lands: today's light fills from where the day stood, flares with the lantern's glow, swells to 1.08 and throws ten flecks that tumble and fall away. |
+| 2.26 s | A smaller spark hops from today's light on to the run's flame over 440 ms. |
+| 2.7 s | The run's flame catches, swelling past its full size and back with three sparks off its tip, and the run rolls up by one, amber for a moment before it cools to its ink. |
 
-The first tap or key finishes the sequence at once, so it is never a wait. Choosing Continue or Review forgotten carries the lantern back to the header.
+The spark is the goal's one celebration: it plays once a day, on the review that turns the day, and joins the lantern, today's light and the run so the moment reads as one cause and effect. Its flecks are lit only for their first 200 ms and flat after, so the glow stays with the lantern. `END_OF_REVIEW`, `sparkAt` and `lightBurst` in `@lymi/design` hold the timings and the shapes both apps draw. The end shows once the last grade has reached the server, and the draw has been checked when the day ran out; until then the header holds where it was, so the wait never draws a loading card and the lantern leaves from its place. The first tap or key finishes the sequence at once, so it is never a wait. Choosing Continue or Review forgotten carries the lantern back to the header.
 
 ## Numbers
 
@@ -139,7 +142,7 @@ The auth screens have one moving part, `Connection`. The app that asked and the 
 Every animation ships a reduced version. Under `prefers-reduced-motion`:
 
 - reveal, completion, a card, a toast, the spinner and the phone drawer crossfade with no travel, and the grade strip closes at once;
-- the lantern does not travel at the end of a review, there are no embers or breathing, and the screen crossfades with its final numbers in place;
+- the lantern does not travel at the end of a review, there are no embers, spark, flecks or breathing, and the screen crossfades with its final numbers in place, today's light full and the run at its new number;
 - the flame holds still and takes each new size at once, with no breath and no spark;
 - the wick's rule appears as a hairline, and a rolling number shows its new value at once;
 - the pointing hand appears without tapping;

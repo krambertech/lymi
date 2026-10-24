@@ -3316,6 +3316,9 @@ msgstr "Press Copy text, then paste it here."
 msgid "Previous month"
 msgstr "Previous month"
 
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
 msgid "Private"
 msgstr "Private"
 

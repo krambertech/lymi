@@ -49,6 +49,14 @@ export function getTheme(): ThemeChoice {
   return read();
 }
 
+/** Light to dark or back, from whichever the screen shows now. */
+export function toggleTheme() {
+  const dark =
+    getTheme() === "dark" ||
+    (getTheme() === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+  setTheme(dark ? "light" : "dark");
+}
+
 /** Run once before first paint (also inlined in index.html to avoid a flash). */
 export function initTheme() {
   applyTheme(read());

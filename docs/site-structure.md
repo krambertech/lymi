@@ -22,7 +22,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | `lymi.app/download` | `apps/site` | Prerendered download page for the Mac app, linked from the footer: the app icon, what it adds, **Download for Mac** for Apple silicon and a line for macOS 13 or later with a link for an Intel Mac. Safari reports every Mac as Intel, so the page never guesses the chip. Under it, three install steps: open the DMG, drag Lymi to Applications, sign in. |
 | `lymi.app/download/mac`, `/download/mac-intel` | `apps/site` Worker | A 302 to `downloads.lymi.app/darwin/arm64/Lymi.dmg` or `/darwin/x64/Lymi.dmg`, the newest build the release job uploads under a fixed name, so a shared link never goes stale. The Worker counts each one as `mac_download_started` ([analytics](analytics.md)). |
 | `lymi.app/explore/<slug>` | `apps/site` Worker | A published deck, rendered per request from D1, with no Get started in its bar because adding it is the way in: its name, publisher and **Add to Lymi**, which links to `my.lymi.app/add/<slug>`, over a spread of its cards; its sections as a contents list in order, with every card in a view that opens over the page and at `#cards`; how adding and reviewing work beside a hand of five cards drawn from the deck revision, dealt by the server, each turned once, after which the lantern lights and asks the visitor to keep going in Lymi, with nothing saved. Its sources stay in the page's structured data rather than on the page. An unknown slug is 404, a withdrawn or archived deck 410. ADR 0016. |
-| `lymi.app/uk/*`, `lymi.app/ru/*` | `apps/site` | Ukrainian and Russian editions of every public page except privacy, terms, support and documentation. |
+| `lymi.app/uk/*`, `lymi.app/ru/*` | `apps/site` | Ukrainian and Russian editions of every public page except terms, support and documentation. |
 | `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |
 | `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |
 | `lymi.app/llms.txt` | `apps/site` | Plain-text description of Lymi for an assistant reading the site, with the pages worth following. |
@@ -43,7 +43,7 @@ The public landing page's Open Lymi link always goes to the product root and let
 
 ## Public page languages
 
-Every public marketing page ships in English, Ukrainian and Russian. English lives at the path, and the other editions live under `/uk/` and `/ru/`, rendered by the same island with the page locale. Privacy, terms, support and the documentation stay in English on purpose.
+Every public marketing page and the privacy policy ship in English, Ukrainian and Russian. English lives at the path, and the other editions live under `/uk/` and `/ru/`, rendered by the same island with the page locale. The web and phone apps open the privacy policy in the app language. Terms, support and the documentation stay in English on purpose.
 
 `apps/site/src/lib/routes.ts` lists the translated pages, the English-only paths, the pages built from content and the pages rendered per request. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `/sitemap.xml` is a prerendered index of `/sitemap-pages.xml`, built from that list, and `/sitemap-decks.xml`, which lists every published deck in each locale at request time.
 

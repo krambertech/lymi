@@ -107,6 +107,39 @@
     display: flex;
     flex-direction: column;
   }
+  /* The Mac app's main window has no title bar. Its traffic lights stand where the Lymi tile
+     was, centred 40 px down on the rail's row and on the narrow bar's, and a strip along the top
+     edge moves the window. The quick-add panel keeps neither. */
+  html[data-shell="mac"]:not([data-surface="panel"]) {
+    --rail-lockup-top: 20px;
+  }
+  html[data-shell="mac"]:not([data-surface="panel"], [data-full-screen]) [data-brand-tile] {
+    visibility: hidden;
+  }
+  /* Dialogs, sheets and toasts take clicks even where they cross the strip. */
+  html[data-shell="mac"] [role="dialog"],
+  html[data-shell="mac"] [role="alertdialog"],
+  html[data-shell="mac"] [data-slot="toast"] {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+  }
+  html[data-shell="mac"]:not([data-surface="panel"]) body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: 18px;
+    z-index: var(--z-sticky);
+    -webkit-app-region: drag;
+    app-region: drag;
+  }
+  /* The Mac app's panel: the window is the plate, sized to it, and never scrolls. */
+  html[data-surface="panel"],
+  html[data-surface="panel"] body,
+  html[data-surface="panel"] #root {
+    min-height: 0;
+    overflow: hidden;
+    background: var(--plate);
+  }
   h1,
   h2,
   h3 {

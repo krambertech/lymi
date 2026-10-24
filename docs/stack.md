@@ -92,6 +92,12 @@ The phone reaches iOS's entry points through Swift it owns: Share to Lymi and th
 
 Apps built with the iOS 27 SDK must adopt the scene life cycle or iOS stops them at launch. `plugins/with-scene-delegate.cjs` gives SDK 57's template SDK 58's scene delegate, Expo's `ExpoAppSceneDelegate`, which starts React Native in the scene's window and forwards links, user activities and quick actions to the app delegate; it also hands a launching quick action to `expo-quick-actions`, which reads one only from launch options. Upgrading to SDK 58 for its template lost because it also moves React Native from 0.86 to 0.88; the plugin goes with that upgrade.
 
+### Mac app: an Electron shell around the product
+
+`apps/desktop` is an Electron app that loads `my.lymi.app` in its window, so a web deploy updates it without a release. It adds only what a browser cannot: a menu bar lantern with the due count, a global shortcut that opens a quick-add panel (a macOS `panel` window, rendering a route of `apps/web`), and launch at login. It ships as a notarized download outside the Mac App Store, packaged by Electron Forge and updated from a static feed on R2, and every merge that changes it releases it. Decided 23 October 2026; the shape is in [the proposal](proposals/mac-desktop-app.md).
+
+Tauri lost. It is lighter, but its plugin ecosystem is smaller, its native side is Rust, which nothing else in Lymi is, and it draws with each OS's own web engine, so the Mac and a later Windows build would render the web app in two engines. Electron weighs more and ships one Chromium everywhere, and its native side is TypeScript. A SwiftUI app around a `WKWebView` lost for the same reasons in a smaller way: Swift to maintain for one learner's Mac, and Safari's engine rather than the Chromium the web is tested in.
+
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in packages/design
 
 Tailwind v4 reads design tokens as CSS variables in OKLCH, defined in `packages/design/tokens.css` and imported by the web's and the site's `styles.css`; DESIGN.md's frontmatter and the phone's hex values are generated from them. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.

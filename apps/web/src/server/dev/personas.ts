@@ -587,6 +587,27 @@ const A2_UK = ukrainian([
   { term: "квиток", pronunciation: "квито́к", meaning: "ticket" },
 ]);
 
+/** Russian decks under the slugs Lymi will publish them as, Core Russian Words first, so Welcome reorders them. */
+const russian = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "ru", meaningSource: "lesson" as const }));
+
+const CORE_RU = russian([
+  { term: "только", pronunciation: "то́лько", meaning: "only" },
+  { term: "если", pronunciation: "е́сли", meaning: "if" },
+]);
+
+const ALPHABET_RU = russian([
+  { term: "Ё ё", meaning: "yo" },
+  { term: "Ы ы", meaning: "y" },
+  { term: "да", meaning: "yes" },
+]);
+
+const A1_RU = russian([
+  { term: "спасибо", pronunciation: "спаси́бо", meaning: "thank you" },
+  { term: "замок", pronunciation: "замо́к", meaning: "lock" },
+  { term: "молоко", pronunciation: "молоко́", meaning: "milk", example: "Я пью молоко́ у́тром." },
+]);
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -787,7 +808,7 @@ export const personas: Persona[] = [
     group: "Together",
     name: "Lymi",
     description:
-      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese and Ukrainian decks; one in English and Ukrainian editions.",
+      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese, Ukrainian and Russian decks; one in English and Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -1028,6 +1049,51 @@ export const personas: Persona[] = [
         cards: ALPHABET_UK,
         publication: {
           slug: "ukrainian-alphabet",
+          summary: "Every letter with its sound.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Russian Words",
+        description: "The small words every sentence is built from.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 4,
+        cards: CORE_RU,
+        publication: {
+          slug: "core-russian-words",
+          summary: "The small words every sentence is built from.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Russian A1 Vocabulary",
+        description: "Words for A1.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 2,
+        cards: A1_RU,
+        publication: {
+          slug: "russian-a1-vocabulary",
+          summary: "Words for A1.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Read the Russian Alphabet",
+        description: "Every letter with its sound.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 1,
+        cards: ALPHABET_RU,
+        publication: {
+          slug: "russian-alphabet",
           summary: "Every letter with its sound.",
           category: "languages",
           tags: ["beginner"],

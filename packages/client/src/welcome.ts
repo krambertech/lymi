@@ -33,6 +33,7 @@ export const BEGINNER_DECKS: Readonly<Record<SupportedTag, readonly string[]>> =
     "ukrainian-a2-vocabulary",
     "core-ukrainian-words",
   ],
+  ru: ["russian-alphabet", "russian-a1-vocabulary", "core-russian-words"],
 };
 
 /** Minutes are a rough guide: about twenty seconds a review, rounded to a figure that reads as one. */

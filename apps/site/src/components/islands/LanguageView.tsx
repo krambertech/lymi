@@ -6,6 +6,7 @@ import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { ChineseView } from "../landing/ChineseView";
 import { JapaneseView } from "../landing/JapaneseView";
+import { RussianView } from "../landing/RussianView";
 import { UkrainianView } from "../landing/UkrainianView";
 import { Queries } from "./Queries";
 
@@ -20,6 +21,7 @@ const VIEWS = {
   ja: JapaneseView,
   zh: ChineseView,
   uk: UkrainianView,
+  ru: RussianView,
 } satisfies Record<SupportedTag, ComponentType<ViewProps>>;
 
 interface Props extends ViewProps {

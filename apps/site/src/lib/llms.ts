@@ -50,6 +50,8 @@ export function llmsTxt(): string {
     `- [Chinese](${SITE}/languages/chinese): learning Mandarin with pinyin over each word until you know it and over example characters you haven't learned, separate cards for each reading of a character, Pleco imports, free HSK decks and your own AI assistant.`,
     `- [Estonian](${SITE}/languages/estonian): learning Estonian with a native Estonian voice on every card, each word's three forms, free decks from everyday phrases to the 1000 most common words, and class decks to share.`,
     `- [Japanese](${SITE}/languages/japanese): learning Japanese from kana to N4 with furigana over the kanji, a voice that reads each word, ready-made decks and your own AI assistant.`,
+    `- [Russian](${SITE}/languages/russian): learning Russian with the stress marked on every card until you know the word, a native Russian voice that stresses the marked syllable, examples with their stress, and free decks from the alphabet to B1.`,
+    `- [Ukrainian](${SITE}/languages/ukrainian): learning Ukrainian with the stress marked until you know the word, a native Ukrainian voice, an AI that writes Ukrainian rather than Russian, and free decks from the alphabet to A2.`,
     `- [Documentation](${SITE}/docs): guides, the MCP setup, the API reference and the import guides.`,
     `- [Changelog](${SITE}/changelog): new features and improvements in Lymi.`,
     `- [Privacy](${SITE}/privacy): what Lymi stores and who can read it.`,

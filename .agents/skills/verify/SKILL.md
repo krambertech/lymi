@@ -23,6 +23,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Select cards | [select-cards.md](features/select-cards.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
+| Account name | [account-name.md](features/account-name.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
 | Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Import from Anki | [import.md](features/import.md) |

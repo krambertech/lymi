@@ -1879,6 +1879,12 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Не удалось сохранить оценку для «{term}». Эта карточка ещё вернётся."
 
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
+
+msgid "Couldn’t save your name. Try again."
+msgstr "Не удалось сохранить имя. Попробуй ещё раз."
+
 msgid "Couldn’t save. Try again."
 msgstr "Не удалось сохранить. Попробуй ещё раз."
 
@@ -2189,11 +2195,18 @@ msgstr "Предыдущие полки"
 msgid "Easy"
 msgstr "Легко"
 
+msgctxt "name"
+msgid "Edit"
+msgstr "Изменить"
+
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
 msgid "Edit hook"
 msgstr "Изменить зацепку"
+
+msgid "Edit name"
+msgstr "Изменить имя"
 
 msgid "Edit series"
 msgstr "Изменить серию"
@@ -2860,6 +2873,9 @@ msgstr "Термин должен быть короче 500 символов."
 msgid "Keep the translation under 250 characters."
 msgstr "Перевод должен быть короче 250 символов."
 
+msgid "Keep your name under {NAME_MAX} characters."
+msgstr "Имя должно быть короче {NAME_MAX} символов."
+
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
 
@@ -3031,6 +3047,9 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi shows it to you and to people in decks you share."
+msgstr "Его видишь ты и люди в твоих общих колодах."
 
 msgid "Lymi starts when you sign in to your Mac, ready for quick add."
 msgstr "Lymi запускается, как только вы входите на Mac, и готов к быстрому добавлению."
@@ -3209,6 +3228,10 @@ msgstr "При перемещении прогресс карточки сохр
 
 msgid "Name"
 msgstr "Название"
+
+msgctxt "person"
+msgid "Name"
+msgstr "Имя"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назови ключ, чтобы потом знать, какой именно отозвать."
@@ -5249,6 +5272,9 @@ msgstr "Напиши зацепку."
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."
 
+msgid "Write your name."
+msgstr "Напиши своё имя."
+
 msgid "Writing"
 msgstr "Записывается"
 
@@ -5410,6 +5436,9 @@ msgstr "Твой код подтверждения Lymi"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоё сообщение сохранено. Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Твоё имя"
 
 msgid "Your own material, whatever it is."
 msgstr "Твои собственные материалы, какие угодно."

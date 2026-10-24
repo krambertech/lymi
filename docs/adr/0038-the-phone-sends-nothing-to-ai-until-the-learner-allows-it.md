@@ -5,7 +5,7 @@ date: 2026-10-24
 
 # The phone sends nothing to AI until the learner allows it
 
-Each account holds one answer, `user_settings.ai_consent`, to whether Lymi may send the learner's content to third-party AI services: card text to OpenAI for enrichment, hook drafts, deck choice and import language guesses; lesson photos, PDFs and pasted notes to Anthropic and the extracted terms to Cloudflare Workers AI for Smart add; and a term to Google, OpenAI or ElevenLabs for generated pronunciation, with Gemini writing a Japanese lead-in. Null means unanswered. A request from the phone app (`x-lymi-client`) sends nothing until the answer is true; the web, the API and MCP carry on until it is false. The server enforces it in the services, so no client, old phone build, Shortcut or share extension can send content without it.
+Each account holds one answer, `user_settings.ai_consent`, to whether Lymi may send the learner's content to third-party AI services: card text for enrichment, hook drafts, deck choice and import language guesses; lesson photos, PDFs and pasted notes for Smart add; and a term for generated pronunciation. The privacy policy names the current providers; the interface never does, so changing one needs no copy change. Null means unanswered. A request from the phone app (`x-lymi-client`) sends nothing until the answer is true; the web, the API and MCP carry on until it is false. The server enforces it in the services, so no client, old phone build, Shortcut or share extension can send content without it.
 
 ## Context
 

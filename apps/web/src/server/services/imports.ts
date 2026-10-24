@@ -77,28 +77,12 @@ export type ImportResume = {
   pictures: MediaTotals;
   /** Pictures and recordings handled so far; absent in a run handed over before it was kept. */
   handled?: number | undefined;
+  /** This run's number in the write, from 1; absent in a run handed over before it was kept. */
+  run?: number | undefined;
 };
 
 /** Pictures stored per Workflow step. */
 export const PICTURES_PER_STEP = 50;
-
-/**
- * Steps one write run takes before it hands over to a new run. Lymi is on Cloudflare's paid
- * plan, which caps an instance at 10,000 steps; a collection with many pictures can pass that,
- * so a run stops short and the next run starts where it stopped.
- */
-export const STEPS_PER_RUN = 9000;
-
-/** What a write run does next, from where it is and how many steps it has taken. */
-export function nextWriteStep(
-  state: { chunk: number; chunks: number; pending: number; steps: number },
-  budget = STEPS_PER_RUN,
-): "pictures" | "cards" | "finish" | "hand over" {
-  if (state.pending === 0 && state.chunk >= state.chunks) return "finish";
-  // Room is kept for the hand-over itself and for a failure step.
-  if (state.steps + 2 >= budget) return "hand over";
-  return state.pending > 0 ? "pictures" : "cards";
-}
 
 function adapterFor(source: string): SourceAdapter<unknown> {
   const adapter = ADAPTERS.find((a) => a.source === source);
@@ -552,12 +536,13 @@ export async function attachImportPictures(
   return attached;
 }
 
-/** Marks the import done with its picture totals, and deletes the file. */
+/** Marks the import done with its picture totals and the runs it took, and deletes the file. */
 export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
   uploads: R2Bucket,
+  runs = 1,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "importing") return;
@@ -602,6 +587,7 @@ export async function finishImport(
       ? { readings_converted: counts.readingsConverted }
       : {}),
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
+    write_runs: runs,
   });
   await deleteImportFiles(uploads, row);
 }

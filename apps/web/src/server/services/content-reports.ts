@@ -1,5 +1,6 @@
 import {
   CONTENT_REPORT_DAILY_LIMIT,
+  CONTENT_REPORT_NOTE_MAX,
   type ContentReportAction,
   type ContentReportInput,
   type ModerationReportOut,
@@ -18,6 +19,9 @@ import { OPERATOR_INBOX, sendTransactionalEmail } from "./email";
 import { isJoinToken } from "./invitations";
 import { deckAccess, memberOf } from "./members";
 import { getSettings } from "./settings";
+
+/** How long an open report's note may grow as repeats add to it. */
+const REPORT_NOTE_TOTAL = 4 * CONTENT_REPORT_NOTE_MAX;
 
 type ReportEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL" | "SESSIONS">;
 
@@ -39,7 +43,7 @@ interface Subject {
 /**
  * A learner's report of a deck or card someone else wrote. The row is the record and the email is
  * the alert, so a failed send loses nothing: the operator's list still shows it. Reporting the same
- * thing again while it is open changes nothing and sends nothing.
+ * thing again while it is open adds any new reason or note to that report and sends nothing.
  */
 export async function reportContent(
   ctx: ServiceContext,
@@ -71,11 +75,16 @@ export async function reportContent(
   if (open) {
     // A second word on something already reported joins the open report, without a second email.
     const again = input.note?.trim() || null;
-    if (again || input.reason !== open.reason) {
-      const added = `Again, as ${input.reason}${again ? `: ${again}` : "."}`;
+    const added = `Again, as ${input.reason}${again ? `: ${again}` : "."}`;
+    const note = open.note ? `${open.note}\n\n${added}` : added;
+    // A double tap or a word already there adds nothing, and the note stops growing at its cap.
+    const repeated =
+      (input.reason === open.reason && (!again || again === open.note)) ||
+      (open.note ?? "").includes(added);
+    if (!repeated && note.length <= REPORT_NOTE_TOTAL) {
       await ctx.db
         .update(schema.contentReports)
-        .set({ note: open.note ? `${open.note}\n\n${added}` : added })
+        .set({ note })
         .where(eq(schema.contentReports.id, open.id));
     }
     return { id: open.id };

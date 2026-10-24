@@ -96,6 +96,8 @@ describe("reporting", () => {
     expect(again.id).toBe(first.id);
     expect(latestLocalEmail("hello@lymi.app")).toBeNull();
     // The second word is kept on the open report rather than dropped.
+    // A double tap adds the same word once.
+    await reportContent(member, env, { target, reason: "other", note: "It links to a shop." });
     expect((await getContentReport(operator, operators, first.id)).note).toBe(
       "Again, as other: It links to a shop.",
     );

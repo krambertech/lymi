@@ -92,7 +92,8 @@ export async function writeImport(
   const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
   const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
   const resumed = params.resume;
-  const runNumber = resumed ? (resumed.run ?? 2) : 1;
+  // Unknown for a run handed over before runs were counted, and for every run after it.
+  const runNumber = resumed ? resumed.run : 1;
   const pictures = {
     stored: resumed?.pictures.stored ?? 0,
     skipped: resumed?.pictures.skipped ?? 0,
@@ -109,7 +110,7 @@ export async function writeImport(
     );
     if (next === "finish") break;
     if (next === "hand over") {
-      const resume = { chunk, pending, pictures, handled, run: runNumber + 1 };
+      const resume = { chunk, pending, pictures, handled, run: runNumber && runNumber + 1 };
       await counted("hand over", () => run.handOver(resume));
       return "handed over";
     }

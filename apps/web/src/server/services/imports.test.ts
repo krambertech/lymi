@@ -1776,4 +1776,34 @@ describe("a write handed over to fresh runs", () => {
     const finished = events.filter((e) => e.name === "import_finished");
     expect(finished).toEqual([expect.objectContaining({ outcome: "done", write_runs: runs })]);
   }, 120_000);
+
+  it("leaves write_runs out when a run was handed over before runs were counted", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} };
+    const ctx = { ...(await fresh()), analytics };
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(2));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const budget = new CallBudget();
+    const resume = { chunk: 0, pending: [], pictures: { stored: 0, skipped: 0 }, handled: 0 };
+    const params: ImportRunParams = {
+      importId: id,
+      userId: ctx.userId,
+      actor: ctx.actor,
+      phase: "write",
+      resume,
+    };
+    const outcome = await writeImport(params, {
+      ctx,
+      uploads: env.IMPORTS,
+      storage: { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      budget,
+      step: instance(),
+      handOver: async () => {},
+    });
+    expect(outcome).toBe("done");
+    const finished = events.find((e) => e.name === "import_finished");
+    expect(finished).toMatchObject({ outcome: "done", card_count: 2 });
+    expect(finished).not.toHaveProperty("write_runs");
+  });
 });

@@ -536,13 +536,13 @@ export async function attachImportPictures(
   return attached;
 }
 
-/** Marks the import done with its picture totals and the runs it took, and deletes the file. */
+/** Marks the import done with its picture totals and the runs it took, when known, and deletes the file. */
 export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
   uploads: R2Bucket,
-  runs = 1,
+  runs?: number,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "importing") return;
@@ -587,7 +587,7 @@ export async function finishImport(
       ? { readings_converted: counts.readingsConverted }
       : {}),
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
-    write_runs: runs,
+    ...(runs !== undefined ? { write_runs: runs } : {}),
   });
   await deleteImportFiles(uploads, row);
 }

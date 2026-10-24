@@ -1831,6 +1831,9 @@ msgstr "Не удалось переместить {0, plural, one {# карто
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Не удалось открыть файл. Выбери изображение JPEG, PNG или WebP."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не удалось воспроизвести пример. Попробуй ещё раз чуть позже."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз чуть позже."
 
@@ -3749,6 +3752,9 @@ msgstr "Для изображений нужно соединение. Доба�
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
 
+msgid "Play example"
+msgstr "Воспроизвести пример"
+
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
 
@@ -3976,6 +3982,9 @@ msgstr "«{from}» переименован в «{spelled}»"
 
 msgid "Replace the picture"
 msgstr "Заменить изображение"
+
+msgid "Replay example"
+msgstr "Воспроизвести пример ещё раз"
 
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
@@ -4900,6 +4909,9 @@ msgstr "Сегодня, {day}: нечего повторять"
 
 msgid "Today’s goal"
 msgstr "Цель на сегодня"
+
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
 
 msgid "Tomorrow"
 msgstr "Завтра"

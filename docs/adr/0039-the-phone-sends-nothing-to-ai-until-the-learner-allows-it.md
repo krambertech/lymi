@@ -22,7 +22,7 @@ Apple's guideline 5.1.2(i) requires apps to say where personal data is shared, n
 
 ## Consequences
 
-- The phone asks with one sheet at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card without a stored clip. Welcome has the same ask as a step before its start choice. Allow saves true and carries on; Not now saves false and the action carries on without AI. Welcome's Not now saves nothing, so the first AI action still asks.
+- The phone asks with one sheet at the first AI action: saving a card with AI on, Find terms in Smart add, and the speaker on the learner's own card or its example without a stored clip. Welcome has the same ask as a step before its start choice. Allow saves true and carries on; Not now saves false and the action carries on without AI. Welcome's Not now saves nothing, so the first AI action still asks.
 - You → AI services and the web's Settings hold the switch. Turning it off stops new requests; text AI already wrote stays, and clips already stored still play.
 - Without a yes the phone saves cards as typed, Smart add explains instead of reading, hook drafts and the list menu's play point to You, and the share extension and Shortcut start with AI off.
 - A shared or published deck's words belong to its owner, so generated pronunciation follows the owner's answer, and the hourly cron skips publishers who said no.

@@ -37,8 +37,8 @@ interface Props {
   className?: string;
   style?: TextStyle | (TextStyle | null | undefined)[];
   maxFontSizeMultiplier?: number;
-  /** Text that flows after the runs and wraps with them, in its own classes: a term's other forms. */
-  tail?: { text: string; className: string } | undefined;
+  /** Text that flows after the runs and wraps with them, in its own classes with its size: a term's other forms or an example's translation. */
+  tail?: { text: string; className: string; lang?: string | undefined } | undefined;
   /** Kept beside the last run, past any cut: the speaker, or an important card's ★. */
   after?: ReactNode;
   /** At most this many lines; the rest gives way to an ellipsis. */
@@ -69,7 +69,7 @@ export function Furigana(props: Props) {
     >
       {segments.map((segment) => segment.text).join("")}
       {tail && (
-        <Text className={tail.className} lang={lang}>
+        <Text className={tail.className} lang={tail.lang ?? lang}>
           {tail.text}
         </Text>
       )}

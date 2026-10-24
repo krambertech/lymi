@@ -848,6 +848,9 @@ msgstr "Add a card"
 msgid "Add a lesson"
 msgstr "Add a lesson"
 
+msgid "Add a translation"
+msgstr "Add a translation"
+
 msgid "Add a word"
 msgstr "Add a word"
 
@@ -932,6 +935,9 @@ msgstr "AI draft"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI example and translation"
+msgstr "AI example and translation"
+
 msgid "AI fills"
 msgstr "AI fills"
 
@@ -958,6 +964,12 @@ msgstr "AI pronunciation"
 
 msgid "AI services"
 msgstr "AI services"
+
+msgid "AI translates it after you save"
+msgstr "AI translates it after you save"
+
+msgid "AI translation"
+msgstr "AI translation"
 
 msgid "AI writes the meaning, an example and notes. Sends the card’s text."
 msgstr "AI writes the meaning, an example and notes. Sends the card’s text."
@@ -1695,6 +1707,9 @@ msgstr "Couldn’t open this deck"
 msgid "Couldn’t open this link"
 msgstr "Couldn’t open this link"
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Couldn’t play the example. Try again in a moment."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
@@ -1776,6 +1791,9 @@ msgstr "Couldn’t start the section"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Couldn’t take back your grade for “{term}”. It still counts."
+
+msgid "Couldn’t translate the example."
+msgstr "Couldn’t translate the example."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Couldn’t turn off the join link. Try again."
@@ -2105,6 +2123,12 @@ msgstr "Everything, to import into Lymi again: cards, pictures, schedules and re
 
 msgid "Example"
 msgstr "Example"
+
+msgid "Example and translation by you"
+msgstr "Example and translation by you"
+
+msgid "Example and translation from lesson"
+msgstr "Example and translation from lesson"
 
 msgid "Example by you"
 msgstr "Example by you"
@@ -3353,6 +3377,9 @@ msgstr "Picture changed"
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
 
+msgid "Play example"
+msgstr "Play example"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
@@ -3524,6 +3551,9 @@ msgstr "Reorder sections"
 
 msgid "Reorder series"
 msgstr "Reorder series"
+
+msgid "Replay example"
+msgstr "Replay example"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -4324,6 +4354,9 @@ msgstr "Today, {day}: nothing due"
 msgid "Today’s goal"
 msgstr "Today’s goal"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Today’s new example audio is used up. Examples you’ve played still play."
+
 msgid "tomorrow"
 msgstr "tomorrow"
 
@@ -4348,6 +4381,21 @@ msgstr "Took {count, plural, one {# card} other {# cards}} out of their sections
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
+
+msgid "Translated from an earlier example."
+msgstr "Translated from an earlier example."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Translated from an earlier example. Edit it to match."
+
+msgid "Translation"
+msgstr "Translation"
+
+msgid "Translation by you"
+msgstr "Translation by you"
+
+msgid "Translation from lesson"
+msgstr "Translation from lesson"
 
 msgctxt "deck tag"
 msgid "Travel"

@@ -44,6 +44,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Ukrainian: stress in place on the cue, і included, and the field named Stress | [ukrainian.md](features/ukrainian.md) |
 | Tamil: each word's reading over it in review, and fading over Known words in examples | [tamil.md](features/tamil.md) |
 | Right to left: an Arabic deck's cue, example, rows and toast in their own direction | [right-to-left.md](features/right-to-left.md) |
+| Example translation and audio: the translation after the reveal and on the card page, the example's speaker, a stale or failed translation, and the editor | [example-translation.md](features/example-translation.md) |
 
 ## Launch
 

@@ -449,6 +449,7 @@ export const analyticsEvents = {
       "deck_choice",
       "lesson_read",
       "pronunciation",
+      "example_audio",
       "lead_in",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
@@ -496,6 +497,11 @@ export const analyticsEvents = {
     revealed: z.boolean(),
     // Optional because earlier phone releases send neither.
     preloaded: z.boolean().optional(),
+    wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+  }),
+  example_audio_played: z.object({
+    outcome: z.enum(["played", "failed", "limited"]),
+    surface: z.enum(["review", "card"]),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
   }),
   lead_in_decided: z.object({
@@ -598,6 +604,7 @@ export const analyticsProducers = {
   section_go_to: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
+  example_audio_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser", "phone"],

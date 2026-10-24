@@ -138,6 +138,14 @@ export const cardsApi = {
       `/api/audio/${encodeURIComponent(cardId)}?v=1-${Number.isFinite(version) ? version : 0}`,
     );
   },
+  /** The card's example read aloud, made on the first play; an edit's new `updatedAt` asks again. */
+  exampleAudioUrl: (cardId: string, updatedAt?: Date | string) => {
+    const version =
+      updatedAt instanceof Date ? updatedAt.getTime() : updatedAt ? Date.parse(updatedAt) : 0;
+    return apiUrl(
+      `/api/audio/${encodeURIComponent(cardId)}/example?v=1-${Number.isFinite(version) ? version : 0}`,
+    );
+  },
   /** A clip already voiced, or a 404: a preload never spends on speech. */
   storedAudioUrl: (cardId: string, updatedAt?: Date | string): string =>
     `${cardsApi.audioUrl(cardId, updatedAt)}&stored=1`,

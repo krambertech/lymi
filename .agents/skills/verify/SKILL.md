@@ -37,6 +37,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Ukrainian cards | [ukrainian.md](features/ukrainian.md) |
 | Tamil cards | [tamil.md](features/tamil.md) |
 | Right-to-left cards: Arabic direction, mixed runs, inputs and isolated toasts | [right-to-left.md](features/right-to-left.md) |
+| Example audio | [example-audio.md](features/example-audio.md) |
 | Example translation | [example-translation.md](features/example-translation.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
 | First run | [first-run.md](features/first-run.md) |

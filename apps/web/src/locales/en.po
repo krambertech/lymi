@@ -1831,6 +1831,9 @@ msgstr "Couldn’t move {0, plural, one {# card} other {# cards}}."
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Couldn’t play the example. Try again in a moment."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
@@ -3749,6 +3752,9 @@ msgstr "Pictures need a connection. Add it once you’re back online."
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
 
+msgid "Play example"
+msgstr "Play example"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
@@ -3976,6 +3982,9 @@ msgstr "Renamed “{from}” to “{spelled}”"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"
+
+msgid "Replay example"
+msgstr "Replay example"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -4900,6 +4909,9 @@ msgstr "Today, {day}: nothing due"
 
 msgid "Today’s goal"
 msgstr "Today’s goal"
+
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Today’s new example audio is used up. Examples you’ve played still play."
 
 msgid "Tomorrow"
 msgstr "Tomorrow"

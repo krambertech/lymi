@@ -9,7 +9,7 @@ A change is verified when the feature it touches has been driven in a running pr
 
 ## Pick the features
 
-[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request.
+[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request. Every product route needs an entry that names its path, such as `/library/<deck id>`, or a reason in `UNMAPPED_ROUTES` in [`check-agent-docs.mjs`](../../../scripts/check-agent-docs.mjs), and `pnpm check:agent-docs` fails on a route with neither.
 
 | Feature | Entry |
 | --- | --- |
@@ -20,6 +20,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
+| Select cards | [select-cards.md](features/select-cards.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |

@@ -67,6 +67,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |
 | Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |
+| A Claude session never runs a command under "Leave alone" below and is told what to run instead | `.claude/hooks/pre-bash-guard.mjs`, a Claude Code hook |
 
 ## Concise writing
 
@@ -89,3 +90,10 @@ Write for the next decision, not as a record of the work session. State each out
 ## Leave alone
 
 `pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored — keep it that way.
+
+Agents also never run these; each line names what to run instead:
+
+- `wrangler deploy` or `wrangler d1 migrations apply --remote`: run `pnpm deploy:check` to check a build and `pnpm deploy:health` to see what is live.
+- A bare `git stash`, `git stash pop`, or `git stash apply`, `drop` or `clear` without an entry: every worktree shares one stash stack, so make a WIP commit, or `git stash push -u -m "<unique tag>"` and later `git stash apply <sha>`.
+- `npx expo run:ios` or `pnpm ios`: run `pnpm exec stim ios` from `apps/mobile`; only the smoke journey's Release build with `--configuration Release --device <udid>` runs through Expo.
+- `pnpm verify` or the whole `pnpm test:e2e`: run `pnpm verify:changed` and `pnpm test:e2e:chromium`; when "Before you push" calls for the full run, prefix it with `LYMI_FULL_SUITE=1`.

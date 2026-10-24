@@ -50,7 +50,7 @@ export function planSteps({ base, paths, hasRouteTree }) {
     vitest("@lymi/web"),
     vitest("@lymi/site"),
     vitest("@lymi/mobile"),
-    ...(paths.some((path) => path.startsWith("scripts/"))
+    ...(paths.some((path) => path.startsWith("scripts/") || path.startsWith(".claude/hooks/"))
       ? [{ label: "script tests", command: "node", args: ["--test", "scripts/*.test.mjs"] }]
       : []),
   ];

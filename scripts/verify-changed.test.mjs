@@ -61,6 +61,15 @@ test("a script change also runs the script tests", () => {
   assert.deepEqual(last.args, ["--test", "scripts/*.test.mjs"]);
 });
 
+test("a Claude hook change runs the script tests that cover it", () => {
+  const steps = planSteps({
+    base,
+    paths: [".claude/hooks/pre-bash-guard.mjs"],
+    hasRouteTree: true,
+  });
+  assert.deepEqual(steps.at(-1).args, ["--test", "scripts/*.test.mjs"]);
+});
+
 test("no change plans no steps", () => {
   assert.deepEqual(planSteps({ base, paths: [], hasRouteTree: true }), []);
 });

@@ -13,7 +13,7 @@ import { Switch } from "./ui/switch";
 export function AiServicesSection() {
   const { t, i18n } = useLingui();
   const qc = useQueryClient();
-  const settings = useQuery(settingsQuery);
+  const settings = useQuery({ ...settingsQuery, refetchOnMount: "always" });
   const save = useMutation({
     mutationFn: (allowed: boolean) => saveAiChoice(qc, allowed, "settings"),
   });

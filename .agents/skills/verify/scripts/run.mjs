@@ -194,6 +194,17 @@ async function driveFeature(browser, name) {
     "",
   ];
   writeFileSync(join(dir, "verdict.md"), lines.join("\n"));
+  // publish.mjs and the nightly run read this.
+  const verdict = {
+    feature: name,
+    title: feature.title ?? name,
+    persona,
+    ok,
+    doctor: checks.map(({ name: check, ok: passed, detail }) => ({ check, ok: passed, detail })),
+    steps: steps.map(({ action, ok: passed, error }) => ({ action, ok: passed, error })),
+    problems,
+  };
+  writeFileSync(join(dir, "verdict.json"), `${JSON.stringify(verdict, null, 2)}\n`);
   process.stdout.write(`${ok ? "PASS" : "FAIL"} ${name}  ${dir}\n`);
   return ok;
 }

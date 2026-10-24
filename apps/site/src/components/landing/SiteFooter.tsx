@@ -52,9 +52,6 @@ function AllLink({ href, children }: { href: string; children: ReactNode }) {
   );
 }
 
-// Pages prerender where the clock reads 1970, so the year comes from the build.
-const BUILD_YEAR = import.meta.env.BUILD_DAY.slice(0, 4);
-
 /** The language links lead to the same page in each locale. */
 type Props = { openAppUrl: string } & LanguageTarget;
 
@@ -158,7 +155,8 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
       </div>
       <div className="mx-auto mt-12 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-edge pt-5 text-xs text-muted">
         <p className="flex flex-wrap gap-x-4 gap-y-1">
-          <span>© {BUILD_YEAR} Lymi</span>
+          {/* Pages prerender where the clock reads 1970, so the year comes from the build. */}
+          <span>© {import.meta.env.BUILD_DAY?.slice(0, 4)} Lymi</span>
           <a href={localizedPath("privacy", i18n.locale)} className={linkClass}>
             <Trans>Privacy</Trans>
           </a>

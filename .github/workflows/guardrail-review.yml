@@ -1,8 +1,8 @@
 name: Guardrail review
 
-# A pull request that changes a guardrail waits for the reviewer's approval of its head commit; docs/testing.md.
-# pull_request_target runs this file and the detector from the base branch, so a pull request cannot loosen
-# the gate that judges it. Nothing from the pull request runs: its head is fetched only as data to diff.
+# A pull request that may loosen a guardrail waits for the reviewer's approval of its head commit; docs/testing.md.
+# pull_request_target runs this file from the default branch, so a push cannot loosen the gate that judges it.
+# Nothing from the pull request runs: its head is fetched only as data to diff.
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]

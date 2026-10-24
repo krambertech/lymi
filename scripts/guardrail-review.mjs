@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-// Names the guardrails a pull request changes, and in CI fails until the reviewer approves its head commit.
-// Usage: node scripts/guardrail-review.mjs lists what the branch changes against origin/main; docs/testing.md.
+// Names each change that may loosen a guardrail, and in CI fails until the reviewer approves the head commit.
+// Usage: node scripts/guardrail-review.mjs lists what the branch loosens against origin/main; docs/testing.md.
 
 import { execFileSync } from "node:child_process";
 import { appendFileSync } from "node:fs";
@@ -21,8 +21,12 @@ const RUN_FILE = /\.(?:[cm]?[jt]sx?|sh|py|grit)$/;
 // Generated files carry their tool's suppressions, and prose only quotes them.
 const UNSCANNED = /(?:^|\/)(?:worker-configuration\.d\.ts|migrations\/)|\.gen\.|\.md$/;
 const DIRECTIVE =
-  /(?:\/\/|\/\*|<!--)\s*(biome-ignore(?:-all|-start|-end)?|@ts-expect-error|@ts-ignore|@ts-nocheck|(?:es|ox)lint-disable(?:-next-line|-line)?)(?![\w-])(.*)$/;
+  /(?:\/\/|\/\*|<!--)\s*(biome-ignore(?:-all|-start|-end)?|@ts-expect-error|@ts-ignore|@ts-nocheck|(?:es|ox)lint-disable(?:-next-line|-line)?|check-styling: allow)(?![\w-])(.*)$/;
 const PLACEHOLDER = /^(?:<[^>]*>|explanation|reason|todo|fixme|tbd|n\/?a)$/i;
+const LEVELS = { off: 0, info: 1, warn: 2, error: 3 };
+// Keys that only shape formatting; any other unmodelled key in biome.json is held.
+const BIOME_COSMETIC = new Set(["$schema", "formatter", "javascript", "json", "css", "assist"]);
+const UNSURE = "the gate cannot tell whether that loosens it";
 
 export function parseDiff(text) {
   const files = [];
@@ -30,9 +34,14 @@ export function parseDiff(text) {
   let line = 0;
   for (const row of text.split("\n")) {
     if (row.startsWith("diff --git ")) {
-      file = { path: / b\/(.*)$/.exec(row)?.[1], added: [] };
+      file = { path: / b\/(.*)$/.exec(row)?.[1], status: "modified", added: [] };
       files.push(file);
-    } else if (!file || row.startsWith("--- ")) {
+    } else if (!file) {
+    } else if (row.startsWith("new file mode")) {
+      file.status = "added";
+    } else if (row.startsWith("deleted file mode")) {
+      file.status = "deleted";
+    } else if (row.startsWith("--- ")) {
     } else if (row.startsWith("+++ ")) {
       file.path = stripPrefix(row.slice(4)) ?? file.path;
     } else if (row.startsWith("@@")) {
@@ -61,7 +70,7 @@ export function unexplainedSuppression(text) {
 
   const rest = tail.replace(/\s*(?:\*\/\s*\}?|-->)\s*$/, "");
   let reason;
-  if (directive.startsWith("biome-ignore")) {
+  if (directive.startsWith("biome-ignore") || directive === "check-styling: allow") {
     const colon = rest.indexOf(":");
     reason = colon === -1 ? "" : rest.slice(colon + 1);
   } else if (directive.includes("lint-disable")) {
@@ -182,19 +191,139 @@ export function guardrailScripts(tree) {
   return { scripts, files };
 }
 
-function biomeSections(config) {
-  const overrides = Array.isArray(config.overrides) ? config.overrides : [];
-  const scoped = (key) =>
-    overrides.filter((entry) => entry[key]).map((entry) => [entry.includes, entry[key]]);
+function level(setting) {
+  if (typeof setting === "boolean") return setting ? LEVELS.error : LEVELS.off;
+  return LEVELS[typeof setting === "object" ? setting?.level : setting];
+}
+
+function options(setting) {
+  if (typeof setting !== "object" || setting === null) return "{}";
+  return JSON.stringify({ ...setting, level: undefined, fix: undefined });
+}
+
+function splitIncludes(includes) {
+  const list = Array.isArray(includes) ? includes : [];
+  const targets = list.filter((entry) => !entry.startsWith("!")).sort();
   return {
-    "Lint plugins or the files they cover": [config.plugins, scoped("plugins")],
-    "Lint rules or the files they cover": [
-      config.linter?.enabled,
-      config.linter?.rules,
-      scoped("linter"),
-    ],
-    "Files excluded from lint": [config.files?.includes, config.linter?.includes],
+    targets,
+    scope: targets.join(", ") || "every file",
+    excludes: list.filter((entry) => entry.startsWith("!")),
   };
+}
+
+/** Each rule, plugin and linter switch in biome.json, keyed by what it is and the files it targets. */
+function biomeUnits(config) {
+  const units = new Map();
+  const add = (kind, name, includes, setting) => {
+    const { targets, scope, excludes } = splitIncludes(includes);
+    units.set(`${kind} ${name} | ${scope}`, { kind, name, targets, scope, excludes, setting });
+  };
+  const addRules = (rules, includes) => {
+    for (const [group, value] of Object.entries(rules ?? {})) {
+      if (typeof value !== "object" || value === null) add("rule", group, includes, value);
+      else
+        for (const [rule, setting] of Object.entries(value))
+          add("rule", `${group}/${rule}`, includes, setting);
+    }
+  };
+
+  add("linter", "the linter", undefined, config.linter?.enabled ?? true);
+  addRules(config.linter?.rules);
+  for (const plugin of config.plugins ?? []) add("plugin", plugin, undefined, true);
+  for (const entry of Array.isArray(config.overrides) ? config.overrides : []) {
+    for (const plugin of entry.plugins ?? []) add("plugin", plugin, entry.includes, true);
+    addRules(entry.linter?.rules, entry.includes);
+    if (entry.linter?.enabled !== undefined) {
+      add("linter", "the linter", entry.includes, entry.linter.enabled);
+    }
+  }
+  return units;
+}
+
+/** Whether another unit covers the same files and more, with no new exclusion and no lower level. */
+function widened(unit, units) {
+  return [...units.values()].some(
+    (other) =>
+      other.kind === unit.kind &&
+      other.name === unit.name &&
+      unit.targets.length > 0 &&
+      unit.targets.every((target) => other.targets.includes(target)) &&
+      other.excludes.every((entry) => unit.excludes.includes(entry)) &&
+      options(other.setting) === options(unit.setting) &&
+      (level(other.setting) ?? -1) >= (level(unit.setting) ?? Number.POSITIVE_INFINITY),
+  );
+}
+
+function biomeOther(config) {
+  const rest = Object.fromEntries(
+    Object.entries(config).filter(
+      ([key]) => !BIOME_COSMETIC.has(key) && !["overrides", "plugins"].includes(key),
+    ),
+  );
+  rest.files = { ...rest.files, includes: undefined };
+  rest.linter = { ...rest.linter, includes: undefined, rules: undefined, enabled: undefined };
+  return rest;
+}
+
+function biomeLoosening(before, after) {
+  const found = [];
+  for (const key of ["files", "linter"]) {
+    const old = before[key]?.includes;
+    const now = after[key]?.includes;
+    if (old === undefined && now === undefined) continue;
+    const oldList = old ?? ["**"];
+    const nowList = now ?? ["**"];
+    for (const entry of nowList.filter((item) => item.startsWith("!") && !oldList.includes(item))) {
+      found.push(`Adds the lint exclusion \`${entry}\` to \`${key}.includes\` in \`biome.json\``);
+    }
+    for (const entry of oldList.filter(
+      (item) => !item.startsWith("!") && !nowList.includes(item),
+    )) {
+      found.push(
+        `Drops \`${entry}\` from \`${key}.includes\` in \`biome.json\`, so less is linted`,
+      );
+    }
+  }
+
+  const old = biomeUnits(before);
+  const now = biomeUnits(after);
+  for (const [key, unit] of old) {
+    const next = now.get(key);
+    const where = `\`${unit.name}\` for \`${unit.scope}\` in \`biome.json\``;
+    if (!next) {
+      if (!(unit.kind === "rule" && level(unit.setting) === LEVELS.off) && !widened(unit, now)) {
+        found.push(`Removes or rescopes ${where}`);
+      }
+      continue;
+    }
+    for (const entry of next.excludes.filter((item) => !unit.excludes.includes(item))) {
+      found.push(`Adds the exclusion \`${entry}\` to ${where}`);
+    }
+    if (JSON.stringify(unit.setting) === JSON.stringify(next.setting)) continue;
+    const from = level(unit.setting);
+    const to = level(next.setting);
+    if (from === undefined || to === undefined || options(unit.setting) !== options(next.setting)) {
+      found.push(`Changes ${where}; ${UNSURE}`);
+    } else if (to < from) {
+      found.push(`Relaxes ${where}`);
+    }
+  }
+  for (const [key, unit] of now) {
+    if (old.has(key)) continue;
+    if (level(unit.setting) === LEVELS.off) {
+      found.push(`Turns off \`${unit.name}\` for \`${unit.scope}\` in \`biome.json\``);
+    }
+  }
+
+  const otherBefore = biomeOther(before);
+  const otherAfter = biomeOther(after);
+  const keys = [...new Set([...Object.keys(otherBefore), ...Object.keys(otherAfter)])].filter(
+    (key) => JSON.stringify(otherBefore[key]) !== JSON.stringify(otherAfter[key]),
+  );
+  if (keys.length > 0) {
+    found.push(`Changes \`${keys.join("`, `")}\` in \`biome.json\`; ${UNSURE}`);
+  }
+  return found;
 }
 
 function biomePlugins(config) {
@@ -206,70 +335,90 @@ function biomePlugins(config) {
     .map((plugin) => posix.normalize(plugin));
 }
 
+function commandSteps(command) {
+  return command.split("&&").map((step) => step.trim().replace(/\s+/g, " "));
+}
+
+function tableRows(section) {
+  return (section ?? "")
+    .split("\n")
+    .filter((row) => row.trim().startsWith("|") && !/^\|[\s|:-]+\|$/.test(row.trim()));
+}
+
 /**
- * Lists each guardrail a diff changes. `changes` is `parseDiff` output; `base` and `head` read the trees
- * on either side, each as `{ read(path) => text | undefined, list() => paths }`.
+ * Lists each change in a diff that may loosen a guardrail; additions and removed exclusions pass. `changes`
+ * is `parseDiff` output; `base` and `head` read either tree as `{ read(path) => text | undefined, list() => paths }`.
  */
 export function guardrailChanges({ changes, base, head }) {
   const found = [];
-  const changed = new Set(changes.map((change) => change.path));
+  const byPath = new Map(changes.map((change) => [change.path, change]));
 
   for (const change of changes) {
     if (UNSCANNED.test(change.path) || GATE_FILES.includes(change.path)) continue;
     for (const { line, text } of change.added) {
       const directive = unexplainedSuppression(text);
       if (directive) {
-        found.push(`\`${directive}\` without a reason at \`${change.path}:${line}\``);
+        found.push(`Adds \`${directive}\` without a reason at \`${change.path}:${line}\``);
       }
     }
   }
 
   for (const path of GATE_FILES) {
-    if (changed.has(path)) found.push(`This gate's own \`${path}\``);
+    if (byPath.has(path)) found.push(`Changes this gate's own \`${path}\``);
   }
 
   const baseBiome = parseJson(base.read("biome.json"));
   const headBiome = parseJson(head.read("biome.json"));
-  const plugins = new Set([...biomePlugins(baseBiome), ...biomePlugins(headBiome)]);
-  const reported = new Set();
-  for (const path of [...changed].sort()) {
-    if (path.startsWith("biome-plugins/") || plugins.has(path)) {
-      reported.add(path);
-      found.push(`Lint plugin \`${path}\``);
-    }
-  }
-
-  if (changed.has("biome.json")) {
+  if (byPath.has("biome.json")) {
     if (!baseBiome || !headBiome) {
-      found.push("`biome.json`, which no longer parses or exists on one side");
+      found.push(`Leaves \`biome.json\` missing or unparseable on one side; ${UNSURE}`);
     } else {
-      const before = biomeSections(baseBiome);
-      const after = biomeSections(headBiome);
-      for (const section of Object.keys(before)) {
-        if (JSON.stringify(before[section]) !== JSON.stringify(after[section])) {
-          found.push(`${section} in \`biome.json\``);
-        }
-      }
+      found.push(...biomeLoosening(baseBiome, headBiome));
     }
   }
 
   const before = guardrailScripts(base);
   const after = guardrailScripts(head);
-  for (const key of new Set([...before.scripts.keys(), ...after.scripts.keys()])) {
-    const { path, name } = before.scripts.get(key) ?? after.scripts.get(key);
-    if (before.scripts.get(key)?.command !== after.scripts.get(key)?.command) {
-      found.push(`Check script \`${name}\` in \`${path}\``);
+  for (const [key, script] of before.scripts) {
+    const next = after.scripts.get(key);
+    const where = `\`${script.name}\` in \`${script.path}\``;
+    if (!next) {
+      // A script still defined but no longer reached is named by the step or row that dropped it.
+      if (parseJson(head.read(script.path))?.scripts?.[script.name] === undefined) {
+        found.push(`Removes the check script ${where}`);
+      }
+      continue;
     }
-  }
-  const runFiles = new Map([...before.files, ...after.files]);
-  for (const path of [...changed].sort()) {
-    if (runFiles.has(path) && !GATE_FILES.includes(path) && !reported.has(path)) {
-      found.push(`\`${path}\`, ${runFiles.get(path)}`);
+    const kept = commandSteps(next.command);
+    for (const step of commandSteps(script.command).filter((item) => !kept.includes(item))) {
+      found.push(`Drops or rewrites \`${step}\` in ${where}`);
     }
   }
 
-  if (enforcedRules(base.read("AGENTS.md")) !== enforcedRules(head.read("AGENTS.md"))) {
-    found.push("The enforced-rules table in `AGENTS.md`");
+  const plugins = new Set([...biomePlugins(baseBiome), ...biomePlugins(headBiome)]);
+  const runFiles = new Map([...before.files, ...after.files]);
+  for (const { path, status } of [...changes].sort((a, b) => a.path.localeCompare(b.path))) {
+    if (GATE_FILES.includes(path) || status === "added") continue;
+    let named;
+    if (path.startsWith("biome-plugins/") || plugins.has(path))
+      named = `the lint plugin \`${path}\``;
+    else if (runFiles.has(path)) named = `\`${path}\`, ${runFiles.get(path)}`;
+    if (!named) continue;
+    found.push(status === "deleted" ? `Deletes ${named}` : `Changes ${named}; ${UNSURE}`);
+  }
+
+  const baseTable = enforcedRules(base.read("AGENTS.md"));
+  const headTable = enforcedRules(head.read("AGENTS.md"));
+  if (baseTable !== undefined && headTable === undefined) {
+    found.push("Removes the enforced-rules table from `AGENTS.md`");
+  } else {
+    const kept = tableRows(headTable);
+    for (const row of tableRows(baseTable).filter((item) => !kept.includes(item))) {
+      const rule = row.split("|")[1]?.trim() ?? row;
+      found.push(
+        `Removes or rewords the enforced-rules row \`${rule.slice(0, 80)}\` in \`AGENTS.md\``,
+      );
+    }
   }
 
   return [...new Set(found)];
@@ -293,7 +442,7 @@ export function approvedAt(reviews, { reviewer, headSha }) {
 export function renderSummary({ guardrails, approved, reviewer, headSha }) {
   const short = headSha.slice(0, 7);
   if (guardrails.length === 0) {
-    return "## Guardrail review\n\nThis pull request changes no guardrail.\n";
+    return "## Guardrail review\n\nThis pull request loosens no guardrail.\n";
   }
   const status = approved
     ? `@${reviewer} approved head \`${short}\`. A later push needs approval again.`
@@ -301,7 +450,7 @@ export function renderSummary({ guardrails, approved, reviewer, headSha }) {
   return [
     "## Guardrail review",
     "",
-    "This pull request changes guardrails:",
+    "This pull request may loosen guardrails:",
     "",
     ...guardrails.map((guardrail) => `- ${guardrail}`),
     "",
@@ -360,8 +509,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   if (!inCi) {
     console.log(
       guardrails.length === 0
-        ? "This branch changes no guardrail."
-        : `This branch changes guardrails, so its pull request waits for review:\n${guardrails.map((guardrail) => `- ${guardrail}`).join("\n")}`,
+        ? "This branch loosens no guardrail."
+        : `This branch may loosen guardrails, so its pull request waits for review:\n${guardrails.map((guardrail) => `- ${guardrail}`).join("\n")}`,
     );
   } else {
     const reviewer = env.GUARDRAIL_REVIEWER;

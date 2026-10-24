@@ -4987,11 +4987,11 @@ msgstr "Используй языковой тег вроде ca, pt-BR или z
 msgid "Use a public http or https link to a picture."
 msgstr "Используй публичную ссылку на изображение через http или https."
 
-msgid "Use another account"
-msgstr "Войти в другой аккаунт"
-
 msgid "Use AI services"
 msgstr "Использовать AI-сервисы"
+
+msgid "Use another account"
+msgstr "Войти в другой аккаунт"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."

@@ -4987,11 +4987,11 @@ msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 msgid "Use a public http or https link to a picture."
 msgstr "Use a public http or https link to a picture."
 
-msgid "Use another account"
-msgstr "Use another account"
-
 msgid "Use AI services"
 msgstr "Use AI services"
+
+msgid "Use another account"
+msgstr "Use another account"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."

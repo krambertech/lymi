@@ -90,7 +90,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Connected app**: An MCP client the learner let in on the consent screen, listed in Settings. The grant behind it is an OAuth consent; "connected app" is what the learner is shown, because the client is the thing they recognise. _Avoid_: Integration (that is the actor), authorized client, OAuth client (in the interface)
 
-**Disconnect**: Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again. _Avoid_: Revoke (that is for API keys), remove, delete
+**Disconnect**: Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again. For Readwise, Lymi forgets the token the learner pasted and stops pulling; the cards it added stay. _Avoid_: Revoke (that is for API keys), remove, delete
+
+**Highlight**: A word or passage the learner marked while reading, which Lymi pulls from Readwise every hour. It becomes a card in the deck for its book's language, or nothing; it is never kept on its own. A highlight of a few words is the term; a passage needs the word in its note until Lymi extracts from passages. _Avoid_: Clipping, annotation, quote
 
 **Import**: One file brought in from another app, such as an Anki package, a Mochi export or a Lymi file from another account. It is listed in Activity with its source, counts and warnings, and archiving it archives every card it added and each deck it made that is left empty; restore brings back exactly those. Each imported card keeps the source's id for it, so importing the same file again updates rather than duplicates. A recall from the source's log is history: it shows in Insights and never counts toward a daily goal or the streak. _Avoid_: Migration, sync, upload (for the thing itself)
 

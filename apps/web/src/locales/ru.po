@@ -156,6 +156,10 @@ msgstr "{0, plural, one {# файл} few {# файла} many {# файлов} ot
 msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 msgstr "{0, plural, one {# забыта сегодня.} few {# забыты сегодня.} many {# забыто сегодня.} other {# забыто сегодня.}}"
 
+#. placeholder {0}: book.highlights
+msgid "{0, plural, one {# highlight} other {# highlights}}"
+msgstr "{0, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
+
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
 msgstr "{0, plural, one {ещё # карточка в этой колоде} few {ещё # карточки в этой колоде} many {ещё # карточек в этой колоде} other {ещё # карточки в этой колоде}}"
@@ -301,6 +305,10 @@ msgstr "{0, plural, one {Импортирована # карточка} few {И�
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Больше всего дней подряд: #.} few {Больше всего дней подряд: #.} many {Больше всего дней подряд: #.} other {Больше всего дней подряд: #.}}"
 
+#. placeholder {0}: unplaced.length
+msgid "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
+msgstr "{0, plural, one {Lymi не смог определить, на каком языке эта книга. Выбери язык, чтобы добавить её выделения.} few {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.} many {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.} other {Lymi не смог определить, на каком языке эти книги. Выбери язык, чтобы добавить их выделения.}}"
+
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Готово к импорту: # карточка} few {Готово к импорту: # карточки} many {Готово к импорту: # карточек} other {Готово к импорту: # карточки}}"
@@ -366,6 +374,11 @@ msgstr "{0, plural, one {Проверен # вид} few {Проверено # в
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, one {Все колоды: #} few {Все колоды: #} many {Все колоды: #} other {Все колоды: #}}"
 
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: book.highlights
+msgid "{0} · {1, plural, one {# highlight} other {# highlights}}"
+msgstr "{0} · {1, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
+
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: isolate(card.deckName)
 #. placeholder {0}: isolate(item.fileName)
@@ -378,6 +391,11 @@ msgstr "{0} · {1}"
 #. placeholder {0}: isolate(item.fileName)
 msgid "{0} · {date}"
 msgstr "{0} · {date}"
+
+#. placeholder {0}: isolate(book.author)
+#. placeholder {1}: book.highlights
+msgid "{0} · {language} · {1, plural, one {# highlight} other {# highlights}}"
+msgstr "{0} · {language} · {1, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -646,6 +664,10 @@ msgstr "{label}, заблокировано"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
+#. placeholder {0}: book.highlights
+msgid "{language} · {0, plural, one {# highlight} other {# highlights}}"
+msgstr "{language} · {0, plural, one {# выделение} few {# выделения} many {# выделений} other {# выделения}}"
+
 msgid "{language} · {cards}"
 msgstr "{language} · {cards}"
 
@@ -697,6 +719,9 @@ msgstr "Можно начинать {nextName}"
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {В # карточке нет строки ---, поэтому она импортируется с термином и без значения.} few {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} many {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} other {В # карточки нет строки ---, поэтому они импортируются с термином и без значения.}}"
 
+msgid "{others, plural, one {# other book isn’t in a language you’re learning.} other {# other books aren’t in a language you’re learning.}}"
+msgstr "{others, plural, one {Ещё # книга — на языке, который ты не учишь.} few {Ещё # книги — на языках, которые ты не учишь.} many {Ещё # книг — на языках, которые ты не учишь.} other {Ещё # книги — на языках, которые ты не учишь.}}"
+
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Предыдущий раздел тоже начнётся, чтобы разделы шли по порядку.} few {# предыдущих раздела тоже начнутся, чтобы разделы шли по порядку.} many {# предыдущих разделов тоже начнутся, чтобы разделы шли по порядку.} other {# предыдущего раздела тоже начнутся, чтобы разделы шли по порядку.}}"
 
@@ -726,6 +751,9 @@ msgstr "{saved, plural, one {# карточка отмечена важной} f
 
 msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 msgstr "{saved, plural, one {Снята отметка «важная» с # карточки} few {Снята отметка «важная» с # карточек} many {Снята отметка «важная» с # карточек} other {Снята отметка «важная» с # карточки}}"
+
+msgid "{skipped, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
+msgstr "{skipped, plural, one {# отрывок без слова в заметке.} few {# отрывка без слова в заметках.} many {# отрывков без слова в заметках.} other {# отрывка без слова в заметках.}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -817,6 +845,9 @@ msgstr "день"
 msgid "a field"
 msgstr "поле"
 
+msgid "A highlight of a word or a short phrase."
+msgstr "Выделенное слово или короткая фраза."
+
 msgid "A key never grades reviews."
 msgstr "Ключ никогда не ставит оценок за повторение."
 
@@ -826,6 +857,9 @@ msgstr "Язык"
 
 msgid "A link to a picture online."
 msgstr "Ссылка на изображение в сети."
+
+msgid "A longer passage with the word written in its note. The passage becomes the card’s example."
+msgstr "Отрывок подлиннее, в заметке к которому написано слово. Отрывок станет примером на карточке."
 
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi из другого аккаунта Lymi"
@@ -920,6 +954,9 @@ msgstr "Добавить карточки"
 msgid "Add cards and review them to see your progress here."
 msgstr "Добавь карточки и повторяй их, чтобы видеть здесь свой прогресс."
 
+msgid "Add cards from what you read in other apps."
+msgstr "Добавляй карточки из того, что читаешь в других приложениях."
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Добавь карточки с последнего урока, а потом повторяй их здесь."
 
@@ -928,6 +965,9 @@ msgstr "Добавь карточки из следующего урока"
 
 msgid "Add cards with the API"
 msgstr "Добавляй карточки через API"
+
+msgid "Add from other apps"
+msgstr "Добавить из других приложений"
 
 msgid "Add hook"
 msgstr "Добавить зацепку"
@@ -1191,6 +1231,9 @@ msgstr "Ключ API для {name}"
 msgid "API keys"
 msgstr "Ключи API"
 
+msgid "Apps that add cards"
+msgstr "Приложения, которые добавляют карточки"
+
 msgid "Apps you can import from"
 msgstr "Приложения, из которых можно импортировать"
 
@@ -1340,6 +1383,9 @@ msgstr "Между строками"
 msgid "Between term and definition"
 msgstr "Между термином и определением"
 
+msgid "Books"
+msgstr "Книги"
+
 msgid "Both of the above, one card at a time."
 msgstr "Оба варианта, по одной карточке за раз."
 
@@ -1469,6 +1515,9 @@ msgstr "Изменения отменены"
 msgid "Check {address}. A message is on the way with the next step."
 msgstr "Проверь {address}. Письмо со следующим шагом уже в пути."
 
+msgid "Check now"
+msgstr "Проверить сейчас"
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Проверь, что ссылка скопирована полностью, или попроси новую."
 
@@ -1492,6 +1541,12 @@ msgstr "Проверь почту"
 
 msgid "Checked"
 msgstr "Проверено"
+
+msgid "Checked at {when}. {cards, plural, one {# new card} other {# new cards}} from {highlights, plural, one {# highlight} other {# highlights}}."
+msgstr "Проверено в {when}. {cards, plural, one {# новая карточка} few {# новые карточки} many {# новых карточек} other {# новой карточки}} из {highlights, plural, one {# выделения} few {# выделений} many {# выделений} other {# выделения}}."
+
+msgid "Checked at {when}. No new highlights."
+msgstr "Проверено в {when}. Новых выделений нет."
 
 msgid "Checking your account…"
 msgstr "Проверяем ваш аккаунт…"
@@ -1522,6 +1577,9 @@ msgstr "Выбери колоду"
 
 msgid "Choose a deck."
 msgstr "Выбери колоду."
+
+msgid "Choose a language"
+msgstr "Выбери язык"
 
 msgid "Choose a recall grade"
 msgstr "Выбрать оценку повторения"
@@ -1671,6 +1729,9 @@ msgstr "Подключи ChatGPT или Claude, чтобы они превращ
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Подключи Lymi, вставь урок и попроси сделать карточки"
 
+msgid "Connect Readwise"
+msgstr "Подключить Readwise"
+
 msgid "Connect your AI assistant"
 msgstr "Подключи своего AI-ассистента"
 
@@ -1679,6 +1740,15 @@ msgstr "подключено {connected}"
 
 msgid "Connected apps"
 msgstr "Подключённые приложения"
+
+msgid "Connected. Last checked at {when}."
+msgstr "Подключено. Последняя проверка в {when}."
+
+msgid "Connected. Lymi checks every hour."
+msgstr "Подключено. Lymi проверяет каждый час."
+
+msgid "Connection"
+msgstr "Подключение"
 
 msgid "Consistency"
 msgstr "Регулярность"
@@ -1710,6 +1780,9 @@ msgstr "Скопируется при сохранении"
 
 msgid "Copy"
 msgstr "Копировать"
+
+msgid "Copy it from <0>readwise.io/access_token</0>."
+msgstr "Скопируй его на <0>readwise.io/access_token</0>."
 
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Скопируй набор в Quizlet ещё раз через Export и вставь его."
@@ -1824,6 +1897,9 @@ msgstr "Не удалось загрузить данные аккаунта"
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
 
+msgid "Couldn’t load your Readwise connection. Check your connection and try again."
+msgstr "Не удалось загрузить подключение к Readwise. Проверь соединение и попробуй снова."
+
 #. placeholder {0}: cardIds.length
 msgid "Couldn’t move {0, plural, one {# card} other {# cards}}."
 msgstr "Не удалось переместить {0, plural, one {# карточку} few {# карточки} many {# карточек} other {# карточки}}."
@@ -1840,6 +1916,12 @@ msgstr "Не удалось воспроизвести произношение.
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не удалось связаться с Lymi. Проверь соединение и попробуй снова."
 
+msgid "Couldn’t reach Readwise. Check your connection and try again."
+msgstr "Не удалось связаться с Readwise. Проверь соединение и попробуй снова."
+
+msgid "Couldn’t reach Readwise. Try again in a minute."
+msgstr "Не удалось связаться с Readwise. Попробуй ещё раз через минуту."
+
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не удалось связаться с сервисом входа. Проверь соединение и попробуй снова."
 
@@ -1854,6 +1936,9 @@ msgstr "Не удалось исключить участника. Попроб�
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save that change. Check your connection and try again."
+msgstr "Не удалось сохранить изменение. Проверь соединение и попробуй снова."
 
 msgid "Couldn’t save that. Try again."
 msgstr "Не удалось сохранить. Попробуйте ещё раз."
@@ -2079,6 +2164,9 @@ msgstr "Описание"
 msgid "Disconnect"
 msgstr "Отключить"
 
+msgid "Disconnect Readwise"
+msgstr "Отключить Readwise"
+
 msgid "Dismiss"
 msgstr "Закрыть"
 
@@ -2179,6 +2267,9 @@ msgstr "Каждый, кто изучает эти колоды, получит 
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
+
+msgid "Each word you highlight in a book in a language you’re learning becomes a card. Lymi checks Readwise every hour."
+msgstr "Каждое слово, которое ты выделяешь в книге на изучаемом языке, становится карточкой. Lymi проверяет Readwise каждый час."
 
 msgid "Earlier months"
 msgstr "Предыдущие месяцы"
@@ -2528,6 +2619,9 @@ msgstr "Вернись в приложение. Эту вкладку можно
 msgid "Hide password"
 msgstr "Скрыть пароль"
 
+msgid "Highlights from Kindle, Kobo, Apple Books and Readwise Reader"
+msgstr "Выделения из Kindle, Kobo, Apple Books и Readwise Reader"
+
 msgid "History"
 msgstr "История"
 
@@ -2867,6 +2961,9 @@ msgstr "Сочетания клавиш"
 msgid "keys"
 msgstr "клавиши"
 
+msgid "Kindle, Kobo, Apple Books and Readwise Reader all count, once Readwise has them."
+msgstr "Подходят Kindle, Kobo, Apple Books и Readwise Reader — как только выделения попадут в Readwise."
+
 msgid "known"
 msgstr "выучено"
 
@@ -3016,6 +3113,9 @@ msgstr "Lymi для Mac {version}"
 
 msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
 msgstr "Lymi для Mac откроется и выполнит вход. Когда это произойдёт, вкладку можно закрыть."
+
+msgid "Lymi forgets your Readwise token and stops checking. Cards already added stay."
+msgstr "Lymi забудет твой токен Readwise и перестанет проверять. Уже добавленные карточки останутся."
 
 msgid "Lymi home"
 msgstr "Главная Lymi"
@@ -3248,6 +3348,9 @@ msgstr "Новые карточки в этой колоде получат эт
 msgid "New deck"
 msgstr "Новая колода"
 
+msgid "New highlights in the books you turn on become cards. A new book in one of your languages is turned on by itself."
+msgstr "Новые выделения во включённых книгах становятся карточками. Новая книга на одном из твоих языков включается сама."
+
 msgid "New key"
 msgstr "Новый ключ"
 
@@ -3259,6 +3362,9 @@ msgstr "Новые режимы применяются к карточкам, к
 
 msgid "New password"
 msgstr "Новый пароль"
+
+msgid "New Readwise token"
+msgstr "Новый токен Readwise"
 
 msgid "New section"
 msgstr "Новый раздел"
@@ -3296,6 +3402,9 @@ msgstr "Нет подключённых приложений"
 
 msgid "No archived sections."
 msgstr "Архивных разделов нет."
+
+msgid "No books in a language you’re learning yet. One appears here when you highlight in it."
+msgstr "Пока нет книг на языке, который ты учишь. Книга появится здесь, как только ты что-то в ней выделишь."
 
 msgid "No card of this kind has a term."
 msgstr "Ни у одной карточки этого вида нет термина."
@@ -3403,8 +3512,14 @@ msgstr "Пока колода в архиве, к ней никто не мож�
 msgid "Nobody new can add it."
 msgstr "Новые люди уже не могут её добавить."
 
+msgid "None of your decks has a language yet. Give a deck one, and highlights in it can come in."
+msgstr "Ни у одной твоей колоды пока нет языка. Задай колоде язык, и выделения на нём смогут попадать в неё."
+
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
+
+msgid "Not checked yet. Lymi checks every hour."
+msgstr "Ещё не проверено. Lymi проверяет каждый час."
 
 msgid "Not in review yet"
 msgstr "Пока не в повторениях"
@@ -3891,6 +4006,24 @@ msgstr "Читаю текст"
 
 msgid "Reading your file"
 msgstr "Читаем твой файл"
+
+msgid "Readwise"
+msgstr "Readwise"
+
+msgid "Readwise didn’t accept that token. Copy it again from readwise.io/access_token."
+msgstr "Readwise не принял этот токен. Скопируй его ещё раз на readwise.io/access_token."
+
+msgid "Readwise is disconnected"
+msgstr "Readwise отключён"
+
+msgid "Readwise no longer accepts this token. Paste a new one to carry on."
+msgstr "Readwise больше не принимает этот токен. Вставь новый, чтобы продолжить."
+
+msgid "Readwise no longer accepts your token"
+msgstr "Readwise больше не принимает твой токен"
+
+msgid "Readwise token"
+msgstr "Токен Readwise"
 
 msgid "Ready to import"
 msgstr "Готов к импорту"
@@ -4965,6 +5098,9 @@ msgstr "Цель на сегодня"
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
 
+msgid "Token ending in <0>{hint}</0>"
+msgstr "Токен заканчивается на <0>{hint}</0>"
+
 msgid "Tomorrow"
 msgstr "Завтра"
 
@@ -5074,6 +5210,9 @@ msgctxt "chosen cards"
 msgid "Unmark important"
 msgstr "Снять отметку «важные»"
 
+msgid "Untitled"
+msgstr "Без названия"
+
 msgid "Untitled key"
 msgstr "Ключ без названия"
 
@@ -5125,6 +5264,9 @@ msgstr "Использовать эти поля"
 
 msgid "Use these languages"
 msgstr "Использовать эти языки"
+
+msgid "Use this token"
+msgstr "Использовать этот токен"
 
 msgid "Use up to 20 tags of 40 characters or fewer."
 msgstr "Используй до 20 тегов, каждый до 40 символов."
@@ -5182,6 +5324,9 @@ msgstr "Добро пожаловать в Lymi"
 msgid "Welcome, {first}"
 msgstr "Добро пожаловать, {first}"
 
+msgid "What becomes a card"
+msgstr "Что становится карточкой"
+
 msgid "What happens to its cards"
 msgstr "Что будет с его карточками"
 
@@ -5224,6 +5369,9 @@ msgstr "Что не так"
 
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
+
+msgid "Where each language’s highlights go."
+msgstr "Куда попадают выделения на каждом языке."
 
 msgid "Where the cards go"
 msgstr "Куда пойдут карточки"

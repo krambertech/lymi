@@ -105,6 +105,7 @@ const source = z.enum([
   "typed",
   "lesson",
   "api",
+  "readwise",
   "unknown",
 ]);
 const step = z.enum([
@@ -451,6 +452,22 @@ export const analyticsEvents = {
   ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  readwise_connected: z.object({
+    /** Books and articles in the learner's Readwise, and how many Lymi follows. */
+    books: count,
+    followed: count,
+    languages: count,
+    reconnected: z.boolean(),
+  }),
+  readwise_disconnected: z.object({}),
+  readwise_pulled: z.object({
+    trigger: z.enum(["schedule", "manual"]),
+    outcome: z.enum(["done", "refused", "limited", "failed"]),
+    highlights: count,
+    cards: count,
+    skipped: count,
+    duplicates: count,
+  }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -473,6 +490,7 @@ export const analyticsEvents = {
       "import_languages",
       "deck_choice",
       "lesson_read",
+      "readwise_languages",
       "pronunciation",
       "example_audio",
       "lead_in",
@@ -629,6 +647,9 @@ export const analyticsProducers = {
   ai_consent_granted: ["worker"],
   ai_consent_declined: ["worker"],
   ai_consent_withdrawn: ["worker"],
+  readwise_connected: ["worker"],
+  readwise_disconnected: ["worker"],
+  readwise_pulled: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

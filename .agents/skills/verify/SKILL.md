@@ -73,19 +73,24 @@ The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch und
 
 Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step as ok or FAIL with the error, and every console error and 5xx response. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
 
-Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs; [Proof matches the change](../../../AGENTS.md#before-you-push) says when a run is the proof and what else it needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
+Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Publish it to the pull request, below, and link that comment from the Verification section; [Proof matches the change](../../../AGENTS.md#before-you-push) says when a run is the proof and what else it needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
 
 ## Cleanup
 
 The runner closes the browser it opened. Stop the server with `node .agents/skills/verify/scripts/server.mjs stop`, which ends only the process group `start` recorded; a server another worktree or the launch configuration started stays up. Keep the evidence. A failing step is a finding to report or fix, never a reason to delete its files.
 
+## Publish the verdict
+
+```bash
+node .agents/skills/verify/scripts/publish.mjs --pr <n>
+```
+
+After driving every feature the diff reaches at the pull request's head with `--pr <n>`, publish posts one comment on the pull request: the verdict at the head commit, a row per feature and where it ran, the failing step and its error for each FAIL, and each feature's `verdict.md` and screenshots folded under it. **PASS** means every step passed with no console error or 5xx, **PASS+NOTES** that it passed but a feature logged one, and **FAIL** that a step failed. The screenshots go up through [`pnpm pr:media`](../open-pr/references/screenshots.md#cloud-session-pnpm-prmedia), which works in local and cloud sessions alike; past GitHub's comment size the comment keeps one screenshot a feature, the failing step's or the last. ARIA snapshots and stored state stay in the evidence folder. Publish refuses evidence from any commit but the head and any comment that would carry a preview key, and a later run edits the same comment instead of adding one; `--dry-run` prints it instead.
+
 ## Review a pull request
 
-An independent reviewer gives every product pull request a live verdict before it merges. Green CI is not a verdict, and neither is a run by the author.
+Read the verify comment rather than producing a verdict. It counts only at the head commit and only for every feature the diff can reach: a push that changes the patch voids it, and a merge of `main` that leaves the diff the same keeps it. A pull request that changes no product behavior has no verify comment and says so. Green CI is not a verdict.
 
-1. Pick the map entries for every feature the diff can reach. A pull request that changes no product behavior gets no live verdict and says so.
-2. Read the head commit's app preview from its CI run: the **app preview** job logs the preview link (`APP_PREVIEW_ENTRY_URL`, also the `app-preview` deployment's link) and the Worker version (`PREVIEW_VERSION_ID`). A job from an older commit is the wrong build; wait for the head's.
-3. Drive them on the preview, `run.mjs <features> --url <preview origin> --entry <preview link> --version <id> --sha <head> --pr <n>`, and on `main` in a local worktree with `server.mjs start`, so a failure the pull request did not cause shows up on both.
-4. Post the verdict on the pull request against the head SHA: **PASS** when every step passed on the preview with no unexpected console error or 5xx, **PASS+NOTES** when it passed but the run surfaced something worth a look, such as a console error or a difference from `main`, and **FAIL** when a step failed on the preview and passed on `main`. A step that fails on both is a finding about `main`, reported separately. Name the features, the evidence folder and, for anything but PASS, the failing step and its error.
+To check a FAIL or a PASS you doubt, drive the features on the head commit's app preview: `run.mjs <features> --url <preview origin> --entry <preview link> --version <id> --sha <head> --pr <n>`, with the link from the pull request's `app-preview` deployment and the Worker version its **app preview** job logs as `PREVIEW_VERSION_ID`. Drive them on `main` too with `server.mjs start`: a step that fails on both is a finding about `main`, reported separately. Publish your run the same way; it posts under your account, beside the author's.
 
-A push that changes the patch voids the verdict; a merge of `main` that leaves the diff the same keeps it. The preview link carries a key: the runner drops query strings from every URL it writes, and nothing else should paste the link into a comment. A cloud session needs network access to `workers.dev` to reach a preview. The preview's personas are reset by each run, so never drive a preview while someone is trying it by hand. Phone pull requests get a run on the Mac or a verdict saying they were not driven.
+The preview link carries a key: the runner drops query strings from every URL it writes, publish refuses a comment that holds one, and nothing else should paste the link into a comment. A cloud session needs network access to `workers.dev` to reach a preview. The preview's personas are reset by each run, so never drive a preview while someone is trying it by hand. Phone pull requests get a run on the Mac or a verdict saying they were not driven.

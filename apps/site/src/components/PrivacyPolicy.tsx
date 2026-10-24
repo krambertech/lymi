@@ -120,11 +120,11 @@ function PrivacyPolicyContent() {
       </h2>
       <p>
         <Trans>
-          Some features send card content to an AI model provider. Every request goes through
-          Cloudflare AI Gateway, which we have set not to log or cache prompts and replies. We never
-          send your name, email address or account details. Each provider handles the request under
-          its API terms, which can include keeping it for a limited time to detect abuse. What AI
-          writes is saved on the card and marked as AI-written.
+          Some features send card content to AI service providers that process it on our behalf.
+          Every request goes through a gateway we have set not to log or cache prompts and replies.
+          We never send your name, email address or account details. Each provider handles the
+          request under its API terms, which can include keeping it for a limited time to detect
+          abuse. What AI writes is saved on the card and marked as AI-written.
         </Trans>
       </p>
       <p>
@@ -144,51 +144,50 @@ function PrivacyPolicyContent() {
       <ul>
         <li>
           <Trans>
-            <strong>Enrichment (OpenAI)</strong> fills a new card’s empty fields when you add it in
-            Lymi, and when you ask for it. It receives the card’s term, language, meaning, example
-            and the first 600 characters of its notes, with the deck’s name, description, purpose,
-            your instructions for the deck and up to five recent cards from it. Cards added with an
-            API key or a connected assistant are enriched only when that request asks for it. In
-            each deck you choose which fields AI may fill; the iPhone app’s add screen can turn AI
-            off for a card.
+            <strong>Enrichment</strong> fills a new card’s empty fields when you add it in Lymi, and
+            when you ask for it. It receives the card’s term, language, meaning, example and the
+            first 600 characters of its notes, with the deck’s name, description, purpose, your
+            instructions for the deck and up to five recent cards from it. Cards added with an API
+            key or a connected assistant are enriched only when that request asks for it. In each
+            deck you choose which fields AI may fill; the iPhone app’s add screen can turn AI off
+            for a card.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Deck style (OpenAI)</strong>: after every eight or so new cards or corrections
-            in a deck, up to 60 of its cards and up to 20 of your rewrites of AI text are sent so
-            future meanings match how you write them.
+            <strong>Deck style</strong>: after every eight or so new cards or corrections in a deck,
+            up to 60 of its cards and up to 20 of your rewrites of AI text are sent so future
+            meanings match how you write them.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Memory hook drafts (OpenAI)</strong> run only when you ask for one. They receive
-            the card’s term, meaning and pronunciation and up to eight other meanings from the deck.
+            <strong>Memory hook drafts</strong> run only when you ask for one. They receive the
+            card’s term, meaning and pronunciation and up to eight other meanings from the deck.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Choosing a deck (OpenAI)</strong>: when you share text to Lymi from another app
-            and its language is unclear, the text, the title of the page it came from and the
-            languages of your decks are sent to pick the deck. When an imported deck’s language is
-            unclear, its name and up to 12 of its terms are sent.
+            <strong>Choosing a deck</strong>: when you share text to Lymi from another app and its
+            language is unclear, the text, the title of the page it came from and the languages of
+            your decks are sent to pick the deck. When an imported deck’s language is unclear, its
+            name and up to 12 of its terms are sent.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Smart add (Anthropic)</strong> reads the photos, PDFs and text you give it, with
-            the names, descriptions and languages of up to 12 of your decks and a few recent terms
-            and meanings from each. Photos are converted to WebP first, which removes metadata.
-            Cloudflare Workers AI then checks the terms it found, and, if you ask, compares them
-            with your answer. Lymi does not store the files: only the cards you choose to add are
-            saved.
+            <strong>Smart add</strong> reads the photos, PDFs and text you give it, with the names,
+            descriptions and languages of up to 12 of your decks and a few recent terms and meanings
+            from each. Photos are converted to WebP first, which removes metadata. A second AI model
+            then checks the terms it found, and, if you ask, compares them with your answer. Lymi
+            does not store the files: only the cards you choose to add are saved.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Japanese pronunciation (Cloudflare Workers AI and Google Gemini)</strong>: the
-            first time a Japanese card is played, its term, reading and meaning may be sent to write
-            a short lead-in sentence that makes the reading clear.
+            <strong>Japanese pronunciation</strong>: the first time a Japanese card is played, its
+            term, reading and meaning may be sent to write a short lead-in sentence that makes the
+            reading clear.
           </Trans>
         </li>
       </ul>
@@ -199,10 +198,9 @@ function PrivacyPolicyContent() {
       <p>
         <Trans>
           With AI services on, the first time you play a card we send the text to be spoken (the
-          term, or its reading) and its language to one speech provider: <strong>ElevenLabs</strong>
-          , <strong>Google</strong> (Gemini or Cloud Text-to-Speech) or <strong>OpenAI</strong>,
-          depending on the language. We don’t send the meaning, example or notes. We keep the audio
-          to play it again and delete it with the card.
+          term, or its reading) and its language to an AI speech provider, chosen by the language.
+          We don’t send the meaning, example or notes. We keep the audio to play it again and delete
+          it with the card.
         </Trans>
       </p>
       <p>
@@ -416,30 +414,19 @@ function PrivacyPolicyContent() {
         <li>
           <Trans>
             <strong>Cloudflare</strong> hosts the website and apps, the database and file storage,
-            protects the network, routes AI requests, runs Workers AI, converts pictures, keeps
-            operational logs and delivers email when Resend can’t.
+            protects the network, routes AI requests, converts pictures, keeps operational logs and
+            delivers email when Resend can’t.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>OpenAI</strong> provides enrichment, deck style, memory hook drafts, deck choice
-            and some pronunciation audio.
+            <strong>AI service providers</strong> process content on our behalf for the features
+            under AI features and Pronunciation audio.
           </Trans>
         </li>
         <li>
           <Trans>
-            <strong>Anthropic</strong> reads the material you give Smart add.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>Google</strong> provides Sign in with Google, some pronunciation audio and
-            Japanese lead-in sentences.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>ElevenLabs</strong> provides pronunciation audio for some languages.
+            <strong>Google</strong> provides Sign in with Google.
           </Trans>
         </li>
         <li>

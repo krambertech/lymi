@@ -183,8 +183,8 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
 
-msgid "<0>Anthropic</0> reads the material you give Smart add."
-msgstr "<0>Anthropic</0> читает материалы, которые ты даёшь умному добавлению."
+msgid "<0>AI service providers</0> process content on our behalf for the features under AI features and Pronunciation audio."
+msgstr "<0>Провайдеры AI-сервисов</0> обрабатывают содержимое от нашего имени для функций, описанных в разделах «Функции AI» и «Аудио произношения»."
 
 msgid "<0>Apple</0> provides Sign in with Apple."
 msgstr "<0>Apple</0> обеспечивает вход через Apple."
@@ -192,44 +192,38 @@ msgstr "<0>Apple</0> обеспечивает вход через Apple."
 msgid "<0>Apps you connect</0> receive what their permissions allow, and <1>people you share a deck with</1> see what is described under Shared decks."
 msgstr "<0>Приложения, которые ты подключаешь</0>, получают то, что позволяют их разрешения, а <1>люди, с которыми ты делишься колодой</1>, видят то, что описано в разделе «Общие колоды»."
 
-msgid "<0>Choosing a deck (OpenAI)</0>: when you share text to Lymi from another app and its language is unclear, the text, the title of the page it came from and the languages of your decks are sent to pick the deck. When an imported deck’s language is unclear, its name and up to 12 of its terms are sent."
-msgstr "<0>Выбор колоды (OpenAI)</0>: когда ты делишься текстом с Lymi из другого приложения и его язык непонятен, мы отправляем этот текст, название страницы, откуда он взят, и языки твоих колод, чтобы выбрать колоду. Когда непонятен язык импортированной колоды, мы отправляем её название и до 12 её терминов."
+msgid "<0>Choosing a deck</0>: when you share text to Lymi from another app and its language is unclear, the text, the title of the page it came from and the languages of your decks are sent to pick the deck. When an imported deck’s language is unclear, its name and up to 12 of its terms are sent."
+msgstr "<0>Выбор колоды</0>: когда ты делишься текстом с Lymi из другого приложения и его язык непонятен, мы отправляем этот текст, название страницы, откуда он взят, и языки твоих колод, чтобы выбрать колоду. Когда непонятен язык импортированной колоды, мы отправляем её название и до 12 её терминов."
 
-msgid "<0>Cloudflare</0> hosts the website and apps, the database and file storage, protects the network, routes AI requests, runs Workers AI, converts pictures, keeps operational logs and delivers email when Resend can’t."
-msgstr "<0>Cloudflare</0> размещает сайт и приложения, базу данных и хранилище файлов, защищает сеть, передаёт запросы к AI, запускает Workers AI, конвертирует изображения, хранит служебные журналы и доставляет почту, когда Resend не может."
+msgid "<0>Cloudflare</0> hosts the website and apps, the database and file storage, protects the network, routes AI requests, converts pictures, keeps operational logs and delivers email when Resend can’t."
+msgstr "<0>Cloudflare</0> размещает сайт и приложения, базу данных и хранилище файлов, защищает сеть, передаёт запросы к AI, конвертирует изображения, хранит служебные журналы и доставляет почту, когда Resend не может."
 
-msgid "<0>Deck style (OpenAI)</0>: after every eight or so new cards or corrections in a deck, up to 60 of its cards and up to 20 of your rewrites of AI text are sent so future meanings match how you write them."
-msgstr "<0>Стиль колоды (OpenAI)</0>: примерно после каждых восьми новых карточек или исправлений в колоде мы отправляем до 60 её карточек и до 20 твоих переписанных вариантов текста от AI, чтобы новые значения соответствовали тому, как ты их пишешь."
+msgid "<0>Deck style</0>: after every eight or so new cards or corrections in a deck, up to 60 of its cards and up to 20 of your rewrites of AI text are sent so future meanings match how you write them."
+msgstr "<0>Стиль колоды</0>: примерно после каждых восьми новых карточек или исправлений в колоде мы отправляем до 60 её карточек и до 20 твоих переписанных вариантов текста от AI, чтобы новые значения соответствовали тому, как ты их пишешь."
 
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
 
-msgid "<0>ElevenLabs</0> provides pronunciation audio for some languages."
-msgstr "<0>ElevenLabs</0> создаёт аудио произношения для некоторых языков."
-
 msgid "<0>Email and password</0>: we store the address and a hash of the password, never the password itself. A new account is confirmed with a link that lasts 24 hours or, in the iPhone app, a 6-digit code that lasts 15 minutes. A password-reset link lasts one hour."
 msgstr "<0>Почта и пароль</0>: мы храним адрес и хеш пароля, а не сам пароль. Новый аккаунт подтверждается ссылкой, которая действует 24 часа, или в приложении для iPhone 6-значным кодом, который действует 15 минут. Ссылка для смены пароля действует один час."
 
-msgid "<0>Enrichment (OpenAI)</0> fills a new card’s empty fields when you add it in Lymi, and when you ask for it. It receives the card’s term, language, meaning, example and the first 600 characters of its notes, with the deck’s name, description, purpose, your instructions for the deck and up to five recent cards from it. Cards added with an API key or a connected assistant are enriched only when that request asks for it. In each deck you choose which fields AI may fill; the iPhone app’s add screen can turn AI off for a card."
-msgstr "<0>Дополнение (OpenAI)</0> заполняет пустые поля новой карточки, когда ты добавляешь её в Lymi, а также когда ты об этом просишь. Оно получает термин, язык, значение, пример и первые 600 символов заметок карточки, а также название, описание и цель колоды, твои инструкции для неё и до пяти её последних карточек. Карточки, добавленные через ключ API или подключённого ассистента, дополняются, только если об этом просит сам запрос. В каждой колоде ты выбираешь, какие поля может заполнять AI; на экране добавления в приложении для iPhone AI можно выключить для карточки."
+msgid "<0>Enrichment</0> fills a new card’s empty fields when you add it in Lymi, and when you ask for it. It receives the card’s term, language, meaning, example and the first 600 characters of its notes, with the deck’s name, description, purpose, your instructions for the deck and up to five recent cards from it. Cards added with an API key or a connected assistant are enriched only when that request asks for it. In each deck you choose which fields AI may fill; the iPhone app’s add screen can turn AI off for a card."
+msgstr "<0>Дополнение</0> заполняет пустые поля новой карточки, когда ты добавляешь её в Lymi, а также когда ты об этом просишь. Оно получает термин, язык, значение, пример и первые 600 символов заметок карточки, а также название, описание и цель колоды, твои инструкции для неё и до пяти её последних карточек. Карточки, добавленные через ключ API или подключённого ассистента, дополняются, только если об этом просит сам запрос. В каждой колоде ты выбираешь, какие поля может заполнять AI; на экране добавления в приложении для iPhone AI можно выключить для карточки."
 
 msgid "<0>Expo</0> delivers updates to the iPhone app; each time the app opens it checks for one, which shares the app version and your IP address with Expo."
 msgstr "<0>Expo</0> доставляет обновления приложения для iPhone; каждый раз, когда приложение открывается, оно проверяет наличие обновления, и Expo видит версию приложения и твой IP-адрес."
 
-msgid "<0>Google</0> provides Sign in with Google, some pronunciation audio and Japanese lead-in sentences."
-msgstr "<0>Google</0> обеспечивает вход через Google, часть аудио произношения и вводные предложения для японского."
+msgid "<0>Google</0> provides Sign in with Google."
+msgstr "<0>Google</0> обеспечивает вход через Google."
 
-msgid "<0>Japanese pronunciation (Cloudflare Workers AI and Google Gemini)</0>: the first time a Japanese card is played, its term, reading and meaning may be sent to write a short lead-in sentence that makes the reading clear."
-msgstr "<0>Японское произношение (Cloudflare Workers AI и Google Gemini)</0>: когда японскую карточку воспроизводят впервые, её термин, чтение и значение могут отправить, чтобы написать короткое вводное предложение, из которого понятно чтение."
+msgid "<0>Japanese pronunciation</0>: the first time a Japanese card is played, its term, reading and meaning may be sent to write a short lead-in sentence that makes the reading clear."
+msgstr "<0>Японское произношение</0>: когда японскую карточку воспроизводят впервые, её термин, чтение и значение могут отправить, чтобы написать короткое вводное предложение, из которого понятно чтение."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт.</1>"
 
-msgid "<0>Memory hook drafts (OpenAI)</0> run only when you ask for one. They receive the card’s term, meaning and pronunciation and up to eight other meanings from the deck."
-msgstr "<0>Черновики зацепок (OpenAI)</0> создаются только по твоей просьбе. Они получают термин, значение и произношение карточки и до восьми других значений из колоды."
-
-msgid "<0>OpenAI</0> provides enrichment, deck style, memory hook drafts, deck choice and some pronunciation audio."
-msgstr "<0>OpenAI</0> обеспечивает дополнение, стиль колоды, черновики зацепок, выбор колоды и часть аудио произношения."
+msgid "<0>Memory hook drafts</0> run only when you ask for one. They receive the card’s term, meaning and pronunciation and up to eight other meanings from the deck."
+msgstr "<0>Черновики зацепок</0> создаются только по твоей просьбе. Они получают термин, значение и произношение карточки и до восьми других значений из колоды."
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативная стоимость</0> <1>= чем жертвуешь</1>"
@@ -252,8 +246,8 @@ msgstr "<0>Вход через Apple</0> даёт нам идентификат�
 msgid "<0>Sign in with Google</0> gives us your name, email address, profile photo and Google account identifier, along with the tokens Google returns. We copy the profile photo once to use as your picture in Lymi."
 msgstr "<0>Вход через Google</0> даёт нам твоё имя, адрес почты, фото профиля и идентификатор аккаунта Google вместе с токенами, которые возвращает Google. Мы один раз копируем фото профиля, чтобы показывать его как твоё фото в Lymi."
 
-msgid "<0>Smart add (Anthropic)</0> reads the photos, PDFs and text you give it, with the names, descriptions and languages of up to 12 of your decks and a few recent terms and meanings from each. Photos are converted to WebP first, which removes metadata. Cloudflare Workers AI then checks the terms it found, and, if you ask, compares them with your answer. Lymi does not store the files: only the cards you choose to add are saved."
-msgstr "<0>Умное добавление (Anthropic)</0> читает фото, PDF и текст, которые ты ему даёшь, а также названия, описания и языки до 12 твоих колод и несколько последних терминов и значений из каждой. Сначала фото конвертируются в WebP, что удаляет метаданные. Затем Cloudflare Workers AI проверяет найденные термины, а если ты попросишь, сравнивает их с твоим ответом. Lymi не хранит файлы: сохраняются только карточки, которые ты решишь добавить."
+msgid "<0>Smart add</0> reads the photos, PDFs and text you give it, with the names, descriptions and languages of up to 12 of your decks and a few recent terms and meanings from each. Photos are converted to WebP first, which removes metadata. A second AI model then checks the terms it found, and, if you ask, compares them with your answer. Lymi does not store the files: only the cards you choose to add are saved."
+msgstr "<0>Умное добавление</0> читает фото, PDF и текст, которые ты ему даёшь, а также названия, описания и языки до 12 твоих колод и несколько последних терминов и значений из каждой. Сначала фото конвертируются в WebP, что удаляет метаданные. Затем другая модель AI проверяет найденные термины, а если ты попросишь, сравнивает их с твоим ответом. Lymi не хранит файлы: сохраняются только карточки, которые ты решишь добавить."
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родственник древнерусского «сябр», то есть друг. Белорусы до сих пор говорят «сябар»."
@@ -3635,8 +3629,8 @@ msgstr "Итак; ну что ж"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
 
-msgid "Some features send card content to an AI model provider. Every request goes through Cloudflare AI Gateway, which we have set not to log or cache prompts and replies. We never send your name, email address or account details. Each provider handles the request under its API terms, which can include keeping it for a limited time to detect abuse. What AI writes is saved on the card and marked as AI-written."
-msgstr "Некоторые функции отправляют содержимое карточек провайдеру моделей AI. Каждый запрос проходит через Cloudflare AI Gateway, который мы настроили не записывать и не кешировать запросы и ответы. Мы никогда не отправляем твоё имя, адрес почты или данные аккаунта. Каждый провайдер обрабатывает запрос по своим условиям API, которые могут предусматривать хранение в течение ограниченного времени для выявления злоупотреблений. То, что пишет AI, сохраняется на карточке и помечается как написанное AI."
+msgid "Some features send card content to AI service providers that process it on our behalf. Every request goes through a gateway we have set not to log or cache prompts and replies. We never send your name, email address or account details. Each provider handles the request under its API terms, which can include keeping it for a limited time to detect abuse. What AI writes is saved on the card and marked as AI-written."
+msgstr "Некоторые функции отправляют содержимое карточек провайдерам AI-сервисов, которые обрабатывают его от нашего имени. Каждый запрос проходит через шлюз, который мы настроили не записывать и не кешировать запросы и ответы. Мы никогда не отправляем твоё имя, адрес почты или данные аккаунта. Каждый провайдер обрабатывает запрос по своим условиям API, которые могут предусматривать хранение в течение ограниченного времени для выявления злоупотреблений. То, что пишет AI, сохраняется на карточке и помечается как написанное AI."
 
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Некоторые кандзи в китайском шрифте выглядят иначе. Lymi показывает твои карточки в японском написании, как в японских книгах."
@@ -4769,8 +4763,8 @@ msgstr "Виджеты"
 msgid "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
 msgstr "Виджеты и Пункт управления получают только количества: сколько карточек ждёт, дни подряд и цель. Никогда не текст карточек."
 
-msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
-msgstr "Когда AI-сервисы включены и ты впервые воспроизводишь карточку, мы отправляем текст для озвучивания (термин или его чтение) и его язык одному провайдеру речи: <0>ElevenLabs</0>, <1>Google</1> (Gemini или Cloud Text-to-Speech) либо <2>OpenAI</2>, в зависимости от языка. Значение, пример и заметки мы не отправляем. Аудио мы храним, чтобы воспроизводить его снова, и удаляем вместе с карточкой."
+msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to an AI speech provider, chosen by the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
+msgstr "Когда AI-сервисы включены и ты впервые воспроизводишь карточку, мы отправляем текст для озвучивания (термин или его чтение) и его язык провайдеру AI-речи, которого выбираем в зависимости от языка. Значение, пример и заметки мы не отправляем. Аудио мы храним, чтобы воспроизводить его снова, и удаляем вместе с карточкой."
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."

@@ -541,6 +541,9 @@ msgstr "Add {name} to Lymi"
 msgid "Add {title}"
 msgstr "Add {title}"
 
+msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+msgstr "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Add a photo, PDF or transcript, and tick the words you want."
 
@@ -1401,6 +1404,15 @@ msgstr "Doing it twice has the same effect as doing it once"
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
 
+msgid "Download for Mac"
+msgstr "Download for Mac"
+
+msgid "Download Lymi for Mac"
+msgstr "Download Lymi for Mac"
+
+msgid "Drag Lymi to Applications"
+msgstr "Drag Lymi to Applications"
+
 msgid "Drinking at home in your underwear"
 msgstr "Drinking at home in your underwear"
 
@@ -2056,6 +2068,9 @@ msgstr "How the Einbürgerungstest works, with a deck for each state"
 msgid "How to connect"
 msgstr "How to connect"
 
+msgid "How to install"
+msgstr "How to install"
+
 msgid "How well-timed reviews change recall"
 msgstr "How well-timed reviews change recall"
 
@@ -2174,6 +2189,12 @@ msgstr "Injured at the elbow; weak grip and numb little finger"
 msgid "Instructions"
 msgstr "Instructions"
 
+msgid "Intel Mac?"
+msgstr "Intel Mac?"
+
+msgid "Intel Mac? Download for Intel"
+msgstr "Intel Mac? Download for Intel"
+
 msgid "iPhone app"
 msgstr "iPhone app"
 
@@ -2230,6 +2251,9 @@ msgstr "It works the same for a lesson on italki, on Preply or with a tutor you 
 
 msgid "It’s fine; I’m OK"
 msgstr "It’s fine; I’m OK"
+
+msgid "It’s in your Downloads folder."
+msgstr "It’s in your Downloads folder."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "It’s made for tutors and small classes. There are no rosters, assignments or grades."
@@ -2514,6 +2538,12 @@ msgstr "Lymi for language learning"
 msgid "Lymi for language learning · Keep the words from every lesson"
 msgstr "Lymi for language learning · Keep the words from every lesson"
 
+msgid "Lymi for Mac"
+msgstr "Lymi for Mac"
+
+msgid "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+msgstr "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+
 msgid "Lymi for medical students · Flashcards with spaced repetition"
 msgstr "Lymi for medical students · Flashcards with spaced repetition"
 
@@ -2585,6 +2615,9 @@ msgstr "Ma tulen kohe! I’m coming right away!"
 
 msgid "ma-infinitive"
 msgstr "ma-infinitive"
+
+msgid "macOS 13 or later"
+msgstr "macOS 13 or later"
 
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
@@ -2957,6 +2990,9 @@ msgstr "Only you, unless you share the deck. Cards made from your study material
 
 msgid "Open Lymi"
 msgstr "Open Lymi"
+
+msgid "Open Lymi.dmg"
+msgstr "Open Lymi.dmg"
 
 msgid "Open menu"
 msgstr "Open menu"
@@ -3569,6 +3605,10 @@ msgstr "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 b
 msgid "Sign in"
 msgstr "Sign in"
 
+msgctxt "download step"
+msgid "Sign in"
+msgstr "Sign in"
+
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Sign in and let it add cards. Then send it your notes."
 
@@ -3598,6 +3638,9 @@ msgstr "skills tested: reading, listening, writing and speaking"
 
 msgid "Skip to the document"
 msgstr "Skip to the document"
+
+msgid "Skip to the download"
+msgstr "Skip to the download"
 
 msgid "Skip to the updates"
 msgstr "Skip to the updates"
@@ -4144,6 +4187,12 @@ msgstr "The whole official bank for the test of Czech life and institutions, in 
 
 msgid "The words and phrases from each unit of the course."
 msgstr "The words and phrases from each unit of the course."
+
+msgid "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
+msgstr "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
+
+msgid "Then press ⌃⌥L in any app to add a card."
+msgstr "Then press ⌃⌥L in any app to add a card."
 
 msgid "Then review them in Lymi."
 msgstr "Then review them in Lymi."

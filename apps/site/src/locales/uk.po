@@ -541,6 +541,9 @@ msgstr "Додати {name} в Lymi"
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
+msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
+msgstr "Додавай картку з будь-якого застосунку клавішами ⌃⌥L, а Lymi завжди під рукою у смузі меню."
+
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Додай фото, PDF або транскрипт і познач потрібні слова."
 
@@ -1401,6 +1404,15 @@ msgstr "Зробити двічі — те саме, що зробити оди�
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
 
+msgid "Download for Mac"
+msgstr "Завантажити для Mac"
+
+msgid "Download Lymi for Mac"
+msgstr "Завантажити Lymi для Mac"
+
+msgid "Drag Lymi to Applications"
+msgstr "Перетягни Lymi до «Програм»"
+
 msgid "Drinking at home in your underwear"
 msgstr "Випивати вдома в спідньому"
 
@@ -2056,6 +2068,9 @@ msgstr "Як влаштований Einbürgerungstest, і колода для �
 msgid "How to connect"
 msgstr "Як підключити"
 
+msgid "How to install"
+msgstr "Як встановити"
+
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
 
@@ -2174,6 +2189,12 @@ msgstr "Ушкоджується біля ліктя; слабкий хват і
 msgid "Instructions"
 msgstr "Інструкції"
 
+msgid "Intel Mac?"
+msgstr "Mac з Intel?"
+
+msgid "Intel Mac? Download for Intel"
+msgstr "Mac з Intel? Завантажити версію для Intel"
+
 msgid "iPhone app"
 msgstr "Застосунок для iPhone"
 
@@ -2230,6 +2251,9 @@ msgstr "Так само для уроку на italki, на Preply чи з ре�
 
 msgid "It’s fine; I’m OK"
 msgstr "Усе гаразд; зі мною все добре"
+
+msgid "It’s in your Downloads folder."
+msgstr "Він у теці «Завантаження»."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "Lymi зроблено для репетиторів і невеликих груп. Тут немає журналів, завдань чи оцінок."
@@ -2514,6 +2538,12 @@ msgstr "Lymi для вивчення мов"
 msgid "Lymi for language learning · Keep the words from every lesson"
 msgstr "Lymi для вивчення мов · Запам’ятовуй слова з кожного уроку"
 
+msgid "Lymi for Mac"
+msgstr "Lymi для Mac"
+
+msgid "Lymi for Mac adds a card from any app with ⌃⌥L and keeps Lymi a click away in the menu bar. For macOS 13 or later."
+msgstr "Lymi для Mac додає картку з будь-якого застосунку клавішами ⌃⌥L і тримає Lymi під рукою у смузі меню. Для macOS 13 або новішої."
+
 msgid "Lymi for medical students · Flashcards with spaced repetition"
 msgstr "Lymi для студентів-медиків · Картки з інтервальним повторенням"
 
@@ -2585,6 +2615,9 @@ msgstr "Ma tulen kohe! Уже йду!"
 
 msgid "ma-infinitive"
 msgstr "ma-інфінітив"
+
+msgid "macOS 13 or later"
+msgstr "macOS 13 або новіша"
 
 msgid "Made by Lymi"
 msgstr "Від Lymi"
@@ -2957,6 +2990,9 @@ msgstr "Лише ти, якщо не поділишся колодою. Карт
 
 msgid "Open Lymi"
 msgstr "Відкрити Lymi"
+
+msgid "Open Lymi.dmg"
+msgstr "Відкрий Lymi.dmg"
 
 msgid "Open menu"
 msgstr "Відкрити меню"
@@ -3569,6 +3605,10 @@ msgstr "Зображення знаків з Wikimedia Commons: суспільн
 msgid "Sign in"
 msgstr "Увійти"
 
+msgctxt "download step"
+msgid "Sign in"
+msgstr "Увійди"
+
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Увійди й дозволь асистентові додавати картки. Потім надішли йому нотатки."
 
@@ -3598,6 +3638,9 @@ msgstr "навички, які перевіряють: читання, ауді�
 
 msgid "Skip to the document"
 msgstr "Перейти до документа"
+
+msgid "Skip to the download"
+msgstr "Перейти до завантаження"
 
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
@@ -4144,6 +4187,12 @@ msgstr "Уся офіційна база тесту з чеських реалі
 
 msgid "The words and phrases from each unit of the course."
 msgstr "Слова й фрази з кожної теми курсу."
+
+msgid "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
+msgstr "Потім відкрий його. macOS один раз запитає, чи відкривати застосунок з інтернету. Вибери «Відкрити»."
+
+msgid "Then press ⌃⌥L in any app to add a card."
+msgstr "Потім натисни ⌃⌥L у будь-якому застосунку, щоб додати картку."
 
 msgid "Then review them in Lymi."
 msgstr "Потім повторюй їх у Lymi."

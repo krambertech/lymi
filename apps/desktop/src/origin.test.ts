@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { isLoopback, isProduct, leaving, productOrigin, productUrl } from "./origin.js";
+import {
+  isLoopback,
+  isProduct,
+  leaving,
+  productOrigin,
+  productUrl,
+  signInProvider,
+} from "./origin.js";
 
 const PRODUCT = "https://my.lymi.app";
 
@@ -41,5 +48,14 @@ describe("the window's origin boundary", () => {
     expect(leaving("mailto:hello@lymi.app", PRODUCT)).toBe("browser");
     expect(leaving("file:///etc/passwd", PRODUCT)).toBe("drop");
     expect(leaving("x-apple.systempreferences:com.apple.preference", PRODUCT)).toBe("drop");
+  });
+
+  it("names the provider a sign-in link opens, so the browser goes straight to it", () => {
+    expect(signInProvider("https://accounts.google.com/o/oauth2/v2/auth?client_id=x")).toBe(
+      "google",
+    );
+    expect(signInProvider("https://appleid.apple.com/auth/authorize")).toBe("apple");
+    expect(signInProvider("https://accounts.google.com.evil.example/")).toBeNull();
+    expect(signInProvider("not a url")).toBeNull();
   });
 });

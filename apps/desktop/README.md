@@ -20,7 +20,7 @@ LYMI_URL=http://localhost:5263 LYMI_DEV_PERSONA=learner pnpm --filter @lymi/desk
 
 `pnpm install` skips Electron's binary download, so `dev` fetches it first. `pnpm --filter @lymi/desktop test` runs the unit tests for the app's own rules. The menu bar icon is `assets/tray.svg`, the lantern mark; `pnpm --filter @lymi/desktop tray-icon` renders its template PNGs (needs `rsvg-convert`). The app icon is `assets/icon.svg`, the product's icon on Apple's rounded-square grid; `pnpm --filter @lymi/desktop app-icon` renders `icon.png`, which the Dock shows in development, and `icon.icns` for packaging. Unpackaged, the menu bar's first menu still reads Electron, because macOS takes it from Electron's own bundle; a packaged Lymi.app fixes that.
 
-Without a persona the app starts signed out, and **Sign in…** in the tray menu opens `/desktop/sign-in` in the default browser. Unpackaged, macOS registers the generic Electron.app for `app.lymi.desktop` links, so the browser's hand-back reaches the running copy. A sign-in started before a restart cannot finish after it, because the PKCE verifier lives in memory; start it again. A dev profile lives in `~/Library/Application Support/Lymi`; delete its `Partitions/lymi` to start signed out again.
+Without a persona the app starts signed out, and its window is the 440 by 720 sign-in window; Apple and Google there, and the panel's sign-in, open `/desktop/sign-in` in the default browser. Unpackaged, macOS registers the generic Electron.app for `app.lymi.desktop` links, so the browser's hand-back reaches the running copy. A sign-in started before a restart cannot finish after it, because the PKCE verifier lives in memory; start it again. A dev profile lives in `~/Library/Application Support/Lymi`; delete its `Partitions/lymi` to start signed out again.
 
 ## Drive it from a script
 
@@ -33,7 +33,7 @@ pnpm --filter @lymi/desktop package
 pnpm --filter @lymi/desktop launch-check "$PWD/apps/desktop/out/Lymi-darwin-arm64/Lymi.app"
 ```
 
-`package` builds an unsigned `Lymi.app` for this Mac's chip in `out/`, signed ad hoc so Apple silicon runs it. `launch-check` starts it with its own temporary profile, beside any other copy, and passes once a product page has the bridge. `make --arch=arm64,x64` also writes the update zips, their `RELEASES.json` feeds and a DMG for each chip in `out/make`. Electron Forge refuses pnpm without an explicit hoist pattern, so `pnpm-workspace.yaml` spells out pnpm's default.
+`package` builds an unsigned `Lymi.app` for this Mac's chip in `out/`, signed ad hoc so Apple silicon runs it. `make` also needs [dmgbuild](https://pypi.org/project/dmgbuild/) on the `PATH` or named by `DMGBUILD`, as CI installs it: `python3 -m venv ~/.dmgbuild && ~/.dmgbuild/bin/pip install dmgbuild==1.6.7`. Its settings are `scripts/dmg.py`; the window's background, `assets/dmg-background.tiff`, is rendered from Lymi's tokens by `pnpm --filter @lymi/desktop dmg-background` (needs Playwright's Chromium). `launch-check` starts it with its own temporary profile, beside any other copy, and passes once a product page has the bridge. `make --arch=arm64,x64` also writes the update zips, their `RELEASES.json` feeds and a DMG for each chip in `out/make`. Electron Forge refuses pnpm without an explicit hoist pattern, so `pnpm-workspace.yaml` spells out pnpm's default.
 
 ## Releases
 

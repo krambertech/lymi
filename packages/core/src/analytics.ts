@@ -250,7 +250,11 @@ export const analyticsEvents = {
     kind: z.enum(["language", "test", "subject", "other", "skipped", "joined", "today"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
-  signed_in: z.object({}),
+  signed_in: z.object({
+    /** A Mac app session, and whether it came through the browser's hand-off or the app's window. */
+    client: z.literal("mac").optional(),
+    via: z.enum(["browser", "window"]).optional(),
+  }),
   review_graded: z.object({
     mode: ReviewModeKey,
     grade: z.number().int().min(1).max(4),

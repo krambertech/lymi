@@ -185,7 +185,7 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
       ref={bar}
       aria-label={t`Shelves`}
       className={cn(
-        "sticky top-[env(safe-area-inset-top,0px)] z-(--z-sticky) -mx-5 bg-canvas px-5 transition-shadow duration-150 @3xl/shell:mx-0 @3xl/shell:px-0",
+        "sticky top-(--inset-top) z-(--z-sticky) -mx-5 bg-canvas px-5 transition-shadow duration-150 @3xl/shell:mx-0 @3xl/shell:px-0",
         stuck && "shadow-[0_1px_0_var(--edge)]",
       )}
     >

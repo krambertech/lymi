@@ -51,7 +51,7 @@ export function JoinView({
   const { t } = useLingui();
   return (
     <div className="@container min-h-dvh flex-1 bg-canvas text-text">
-      <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-5 pt-[calc(1.25rem+env(safe-area-inset-top))] pb-[calc(1.5rem+env(safe-area-inset-bottom))] @4xl:px-10 @4xl:pt-[calc(2rem+env(safe-area-inset-top))]">
+      <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-5 pt-[calc(1.25rem+var(--inset-top))] pb-[calc(1.5rem+env(safe-area-inset-bottom))] @4xl:px-10 @4xl:pt-[calc(2rem+var(--inset-top))]">
         <header className="flex justify-center @4xl:justify-start">
           <a href={publicSiteUrl()} aria-label={t`Lymi home`} className="rounded-sm p-1.5">
             <Lockup size={22} flicker />

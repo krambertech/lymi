@@ -912,7 +912,11 @@ export function CardForm(props: CardFormProps) {
       {meaningField}
       {deckField}
       {shown.flatMap((key) => [extraField[key](), key === previewAfter && readingPreview])}
-      <FieldChipRow label={t`More about this card`} className={chips ? "-mx-4 px-4" : "-mx-5 px-5"}>
+      {/* A dialog has the room to wrap, so every chip is in sight without a sideways scroll. */}
+      <FieldChipRow
+        label={t`More about this card`}
+        className={chips ? "-mx-4 px-4" : "-mx-5 flex-wrap px-5"}
+      >
         {sections && sections.length > 0 && (
           <SectionChip sections={sections} value={section} onChange={setSection} />
         )}
@@ -997,8 +1001,9 @@ export function CardForm(props: CardFormProps) {
 }
 
 const ECHO_MS = 600;
-/** A text area as tall as an input until its text wraps. */
-const ONE_LINE = "min-h-11 py-2.5 leading-normal md:min-h-10";
+/** A text area as tall as an input until its text wraps: its padding comes from the line height. */
+const ONE_LINE =
+  "min-h-11 py-[calc(1.375rem-0.5lh)] leading-normal md:min-h-10 md:py-[calc(1.25rem-0.5lh)]";
 
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {

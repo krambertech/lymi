@@ -908,6 +908,9 @@ msgstr "Добавь фото или PDF урока или вставь его �
 msgid "Add a picture"
 msgstr "Добавить изображение"
 
+msgid "Add a translation"
+msgstr "Добавь перевод"
+
 msgid "Add card"
 msgstr "Добавить карточку"
 
@@ -995,6 +998,9 @@ msgstr "Добавлено «{quoted}» в колоду {deckName}"
 msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
 msgstr "Добавлено «{quoted}» в колоду {deckName}. Карточка сохранена на этом устройстве, пока Lymi недоступен."
 
+msgid "Added “{quoted}” to {deckName}. It’s saved on this Mac until Lymi can be reached."
+msgstr "Добавлено «{quoted}» в колоду {deckName}. Карточка сохранена на этом Mac, пока Lymi недоступен."
+
 msgid "Added “{term}”"
 msgstr "Добавлено «{term}»"
 
@@ -1028,6 +1034,12 @@ msgstr "AI"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI example and translation"
+msgstr "Пример и перевод от AI"
+
+msgid "AI fills in your cards, finds terms in lesson material and reads terms and examples aloud."
+msgstr "AI дополняет карточки, находит термины в материалах уроков и озвучивает термины и примеры."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заполняет только пустые поля и не меняет твой текст."
 
@@ -1048,6 +1060,21 @@ msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI services"
+msgstr "AI-сервисы"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI-сервисы отключены для твоего аккаунта. Включи их в Настройках, чтобы AI составлял подсказки."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI-сервисы отключены для твоего аккаунта. Включи их в Настройках, чтобы читать уроки."
+
+msgid "AI translates it after you save"
+msgstr "AI переведёт после сохранения"
+
+msgid "AI translation"
+msgstr "Перевод от AI"
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI учитывает твой выбор при заполнении пустых полей."
@@ -1119,6 +1146,9 @@ msgstr "anki quizlet pleco импорт"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
+
+msgid "Another app already uses that shortcut. Try a different one."
+msgstr "Это сочетание уже занято другой программой. Попробуйте другое."
 
 msgid "Another draft"
 msgstr "Другой черновик"
@@ -1466,6 +1496,9 @@ msgstr "Проверь почту"
 msgid "Checked"
 msgstr "Проверено"
 
+msgid "Checking your account…"
+msgstr "Проверяем ваш аккаунт…"
+
 msgid "Checking your decks for duplicates"
 msgstr "Проверяю повторы в твоих колодах"
 
@@ -1653,6 +1686,9 @@ msgstr "Регулярность"
 msgid "Continue"
 msgstr "Продолжить"
 
+msgid "Continue as {email}"
+msgstr "Продолжить как {email}"
+
 msgid "Continue to {appName}"
 msgstr "Продолжить в {appName}"
 
@@ -1795,6 +1831,9 @@ msgstr "Не удалось переместить {0, plural, one {# карто
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Не удалось открыть файл. Выбери изображение JPEG, PNG или WebP."
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не удалось воспроизвести пример. Попробуй ещё раз чуть позже."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз чуть позже."
 
@@ -1815,6 +1854,12 @@ msgstr "Не удалось исключить участника. Попроб�
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save that. Try again."
+msgstr "Не удалось сохранить. Попробуйте ещё раз."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Не удалось сохранить выбор. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
@@ -1845,6 +1890,9 @@ msgstr "Не удалось отправить приглашение. Слиш�
 
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
+
+msgid "Couldn’t translate the example."
+msgstr "Не удалось перевести пример."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не удалось выключить ссылку для присоединения. Попробуй ещё раз."
@@ -1964,6 +2012,9 @@ msgstr "Параметры колоды"
 msgid "Deck settings"
 msgstr "Настройки колоды"
 
+msgid "Deck: {deckName}"
+msgstr "Колода: {deckName}"
+
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "decks"
 msgstr "колоды"
@@ -1974,8 +2025,8 @@ msgstr "Колоды"
 msgid "Decks from Anki, Mochi or Noji, with their review history."
 msgstr "Колоды из Anki, Mochi или Noji вместе с историей повторений."
 
-msgid "Decks other people keep"
-msgstr "Колоды, которые останутся у других"
+msgid "Decks other people study"
+msgstr "Колоды, которые изучают другие"
 
 msgid "Decks to review"
 msgstr "Колоды к повторению"
@@ -1992,8 +2043,8 @@ msgstr "Удалить аккаунт"
 msgid "Delete series"
 msgstr "Удалить серию"
 
-msgid "Delete your account, private cards and review history. Members keep shared decks."
-msgstr "Удали свой аккаунт, личные карточки и историю повторений. Общие колоды останутся у участников."
+msgid "Delete your account, private cards and review history. Members keep their own copy of shared decks."
+msgstr "Удали свой аккаунт, личные карточки и историю повторений. Участники сохранят собственную копию общих колод."
 
 msgid "Deleted"
 msgstr "Удалён"
@@ -2096,6 +2147,9 @@ msgstr "Когда повторять"
 msgid "Due by deck"
 msgstr "К повторению по колодам"
 
+msgid "Due count beside the lantern"
+msgstr "Число карточек рядом с фонарём"
+
 msgid "Due date"
 msgstr "Дата повторения"
 
@@ -2116,6 +2170,9 @@ msgstr "Каждый блок — день с повторениями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Каждую карточку спрашивают в обе стороны, каждую сторону по своему расписанию."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Каждый, кто изучает эти колоды, получит собственную копию со своим прогрессом, но без твоего имени. Чтобы забрать колоду у других, сначала архивируй её. Архивированные колоды удалятся вместе с аккаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
@@ -2225,6 +2282,12 @@ msgstr "Всё, чтобы снова импортировать в Lymi: кар
 msgid "Example"
 msgstr "Пример"
 
+msgid "Example and translation by you"
+msgstr "Твои пример и перевод"
+
+msgid "Example and translation from lesson"
+msgstr "Пример и перевод с урока"
+
 msgid "Example by you"
 msgstr "Твой пример"
 
@@ -2233,6 +2296,9 @@ msgstr "Новый пример: «{value}»"
 
 msgid "Example from lesson"
 msgstr "Пример с урока"
+
+msgid "Example translation"
+msgstr "Перевод примера"
 
 msgid "Explore"
 msgstr "Каталог"
@@ -2311,6 +2377,9 @@ msgstr "Поля «{0}»"
 
 msgid "File"
 msgstr "Файл"
+
+msgid "Fill in selected text"
+msgstr "Вставлять выделенный текст"
 
 msgid "Filter"
 msgstr "Фильтр"
@@ -2484,6 +2553,9 @@ msgstr "Как задаётся: {0}"
 
 msgid "How it’s going"
 msgstr "Как идёт учёба"
+
+msgid "How many cards are due, next to the lantern in the menu bar."
+msgstr "Сколько карточек ждёт повторения, рядом с фонарём в строке меню."
 
 msgid "How many cards come back this week"
 msgstr "Сколько карточек вернётся на этой неделе"
@@ -2659,6 +2731,9 @@ msgstr "Возможно, её архивировали или тебя из н�
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Возможно, её сняли с публикации. Другие колоды можно найти в Каталоге."
 
+msgid "It publishes the decks in Explore, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "Он публикует колоды в Каталоге, поэтому его нельзя удалить здесь. Напиши на <0>hello@lymi.app</0>, чтобы его удалить."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Импорт не подтвердили за три дня, поэтому Lymi удалил файл. Выбери файл снова, чтобы начать заново."
 
@@ -2734,8 +2809,8 @@ msgstr "Продолжить учить"
 msgid "Keep the description under 300 characters."
 msgstr "Описание должно быть короче 300 символов."
 
-msgid "Keep the example under 2000 characters."
-msgstr "Пример должен быть короче 2000 символов."
+msgid "Keep the example under 250 characters."
+msgstr "Пример должен быть короче 250 символов."
 
 msgid "Keep the hook under 200 characters."
 msgstr "Зацепка должна быть короче 200 символов."
@@ -2772,6 +2847,9 @@ msgstr "Ударение должно быть короче 200 символов
 
 msgid "Keep the term under 500 characters."
 msgstr "Термин должен быть короче 500 символов."
+
+msgid "Keep the translation under 250 characters."
+msgstr "Перевод должен быть короче 250 символов."
 
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
@@ -2924,6 +3002,12 @@ msgstr "Lymi не распознаёт это приложение. Разреш
 msgid "Lymi file"
 msgstr "Файл Lymi"
 
+msgid "Lymi for Mac {version}"
+msgstr "Lymi для Mac {version}"
+
+msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
+msgstr "Lymi для Mac откроется и выполнит вход. Когда это произойдёт, вкладку можно закрыть."
+
 msgid "Lymi home"
 msgstr "Главная Lymi"
 
@@ -2939,6 +3023,15 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
 
+msgid "Lymi starts when you sign in to your Mac, ready for quick add."
+msgstr "Lymi запускается, как только вы входите на Mac, и готов к быстрому добавлению."
+
+msgid "Lymi stays in the Dock instead, so it is always one click away."
+msgstr "Вместо этого Lymi остаётся в Dock, так что он всегда в одном клике."
+
+msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
+msgstr "Сначала разрешите Lymi в macOS: «Конфиденциальность и безопасность», «Универсальный доступ»."
+
 msgid "Made the deck {deck}"
 msgstr "Создана колода «{deck}»"
 
@@ -2950,6 +3043,9 @@ msgstr "Создана серия «{name}»"
 
 msgid "Main"
 msgstr "Главная навигация"
+
+msgid "Make a deck in Lymi first. Enter opens Library."
+msgstr "Сначала создайте колоду в Lymi. Enter открывает Библиотеку."
 
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
@@ -2993,9 +3089,6 @@ msgstr "Значение с урока"
 
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медицинский французский для медсестёр. Бери медицинское значение."
-
-msgid "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
-msgstr "Колоды останутся у участников, пока они из них не выйдут. После удаления твоего аккаунта никто не сможет редактировать карточки."
 
 msgid "Memory hook"
 msgstr "Зацепка"
@@ -3392,11 +3485,17 @@ msgstr "Уведомления заблокированы. Разреши их �
 msgid "Now in {elsewhere}"
 msgstr "Сейчас в «{elsewhere}»"
 
+msgid "Off for mobile and web. Existing card text and saved audio stay."
+msgstr "Выключено в мобильном приложении и веб-версии. Текст карточек и сохранённое аудио остаются."
+
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоне или что-то не получается? Прочитай руководство"
+
+msgid "On for mobile and web."
+msgstr "Включено в мобильном приложении и веб-версии."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com открой свой набор, открой меню <0>…</0> и выбери <1>Export</1>."
@@ -3418,6 +3517,9 @@ msgstr "По одной странице"
 
 msgid "One side only"
 msgstr "Только одна сторона"
+
+msgid "Only continue if you just chose Sign in in Lymi for Mac."
+msgstr "Продолжайте, только если вы только что выбрали «Войти» в Lymi для Mac."
 
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
@@ -3445,6 +3547,9 @@ msgstr "Открыть"
 msgid "Open “{0}” in {1}"
 msgstr "Открыть «{0}» в колоде {1}"
 
+msgid "Open at login"
+msgstr "Открывать при входе"
+
 msgid "Open deck"
 msgstr "Открыть колоду"
 
@@ -3466,17 +3571,35 @@ msgstr "Открыть Библиотеку"
 msgid "Open Lymi"
 msgstr "Открыть Lymi"
 
+msgid "Open Lymi for Mac"
+msgstr "Открыть Lymi для Mac"
+
+msgid "Open Lymi for Mac again"
+msgstr "Открыть Lymi для Mac ещё раз"
+
 msgid "Open Lymi from the new icon."
 msgstr "Открой Lymi с новой иконки."
 
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
 
+msgid "Open Lymi to sign in"
+msgstr "Откройте Lymi, чтобы войти"
+
+msgid "Open System Settings"
+msgstr "Открыть Системные настройки"
+
 msgid "Open the invitation"
 msgstr "Открыть приглашение"
 
+msgid "Open this page from Lymi for Mac to sign in there."
+msgstr "Откройте эту страницу из Lymi для Mac, чтобы войти в него."
+
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."
+
+msgid "Opens quick add over any app."
+msgstr "Открывает быстрое добавление поверх любой программы."
 
 msgid "Optional"
 msgstr "Необязательно"
@@ -3508,9 +3631,6 @@ msgstr "Или начни с пустой колоды"
 
 msgid "other decks"
 msgstr "другие колоды"
-
-msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
-msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на <0>hello@lymi.app</0>, чтобы удалить его."
 
 msgid "Other subjects"
 msgstr "Другие темы"
@@ -3632,6 +3752,9 @@ msgstr "Для изображений нужно соединение. Доба�
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
 
+msgid "Play example"
+msgstr "Воспроизвести пример"
+
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
 
@@ -3650,6 +3773,12 @@ msgstr "Нажми <0>Export now</0>, сохрани файл и выбери е
 msgid "Press Export, save the file, then choose it here."
 msgstr "Нажми Export, сохрани файл и выбери его здесь."
 
+msgid "Press keys"
+msgstr "Нажмите клавиши"
+
+msgid "Press the new shortcut with ⌘ or ⌃. Esc keeps the old one."
+msgstr "Нажмите новое сочетание с ⌘ или ⌃. Esc оставляет старое."
+
 msgid "Previous card"
 msgstr "Предыдущая карточка"
 
@@ -3658,6 +3787,9 @@ msgstr "Предыдущий месяц"
 
 msgid "Privacy"
 msgstr "Конфиденциальность"
+
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
 
 msgid "Private"
 msgstr "Приватная"
@@ -3687,6 +3819,18 @@ msgstr "Произношение с урока"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "published decks"
 msgstr "опубликованные колоды"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубликованные колоды исчезнут из Каталога, поэтому никто новый не сможет их добавить."
+
+msgid "Quick add"
+msgstr "Быстрое добавление"
+
+msgid "Quick add shortcut: {keys}. Change"
+msgstr "Клавиши быстрого добавления: {keys}. Изменить"
+
+msgid "Quick add starts with the text you selected in the app in front."
+msgstr "Быстрое добавление начинается с текста, выделенного в программе на переднем плане."
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
@@ -3841,6 +3985,9 @@ msgstr "«{from}» переименован в «{spelled}»"
 
 msgid "Replace the picture"
 msgstr "Заменить изображение"
+
+msgid "Replay example"
+msgstr "Воспроизвести пример ещё раз"
 
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
@@ -4016,6 +4163,9 @@ msgstr "Сохранено на этом устройстве, пока Lymi н�
 msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
 msgstr "Сохранено на этом устройстве. Для изображений нужно соединение, так что добавь его, когда снова будешь онлайн."
 
+msgid "Saved on this Mac only, so each Mac keeps its own."
+msgstr "Хранится только на этом Mac, у каждого Mac свои."
+
 msgid "Saving…"
 msgstr "Сохранение…"
 
@@ -4092,6 +4242,9 @@ msgstr "Увидеть изображение и вспомнить значен
 
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
+
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Что и кому отправляется — в нашей политике конфиденциальности."
 
 msgid "See your decks and cards"
 msgstr "Просматривать свои колоды и карточки"
@@ -4180,6 +4333,9 @@ msgstr "Показать другую"
 msgid "Show hook"
 msgstr "Показать зацепку"
 
+msgid "Show in the menu bar"
+msgstr "Показывать в строке меню"
+
 msgid "Show more"
 msgstr "Показать больше"
 
@@ -4205,11 +4361,17 @@ msgstr "Войти"
 msgid "Sign in as you anywhere else"
 msgstr "Войти как ты в других местах"
 
+msgid "Sign in to add cards"
+msgstr "Войдите, чтобы добавлять карточки"
+
 msgid "Sign in to continue."
 msgstr "Войди, чтобы продолжить."
 
 msgid "Sign in to Lymi"
 msgstr "Войти в Lymi"
+
+msgid "Sign in to Lymi for Mac"
+msgstr "Вход в Lymi для Mac"
 
 msgid "Sign in with your new password."
 msgstr "Войди с новым паролем."
@@ -4505,6 +4667,9 @@ msgstr "Колода исчезнет из Библиотеки, и её кар�
 msgid "the example"
 msgstr "пример"
 
+msgid "the example’s translation"
+msgstr "перевод примера"
+
 msgid "the language"
 msgstr "язык"
 
@@ -4513,6 +4678,9 @@ msgstr "Язык приложения и значений, которые пиш
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "Язык терминов этой колоды. Новые карточки получают его сразу, и он нужен для произношения и дополнения от AI. Значения пишутся на языке приложения."
+
+msgid "The lantern opens Lymi, quick add and review from the top of the screen."
+msgstr "Фонарь открывает Lymi, быстрое добавление и повторение с верха экрана."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Ссылка перестанет работать навсегда. Те, кто присоединился, останутся в колоде, а при повторном открытии доступа появится новая ссылка."
@@ -4565,6 +4733,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для этих функций нужный текст карточек и материалы уроков отправляются сторонним AI-сервисам."
+
 msgid "They already have a pending invitation."
 msgstr "У этого человека уже есть приглашение без ответа."
 
@@ -4576,9 +4747,6 @@ msgstr "Человек потеряет доступ к колоде и не с�
 
 msgid "They’re already in this deck."
 msgstr "Этот человек уже в колоде."
-
-msgid "This account publishes decks"
-msgstr "Этот аккаунт публикует колоды"
 
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
@@ -4649,6 +4817,9 @@ msgstr "Это приглашение работает только для эт�
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
 
+msgid "This is a Lymi publisher account"
+msgstr "Это аккаунт издателя Lymi"
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так она будет выглядеть в Lymi. Измени поля, если что-то стоит не на своём месте."
 
@@ -4685,8 +4856,14 @@ msgstr "Эта ссылка для присоединения больше не 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "В этой ссылке нет приложения, которое отправило запрос. Начни снова из приложения."
 
+msgid "This Mac"
+msgstr "Этот Mac"
+
 msgid "This shelf has no page"
 msgstr "У этой полки нет страницы"
+
+msgid "This sign-in link has expired. Start again from Lymi for Mac."
+msgstr "Ссылка для входа устарела. Начните заново в Lymi для Mac."
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для большинства файлов это занимает несколько секунд. В колоды пока ничего не добавлено."
@@ -4742,6 +4919,9 @@ msgstr "Сегодня, {day}: нечего повторять"
 msgid "Today’s goal"
 msgstr "Цель на сегодня"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
+
 msgid "Tomorrow"
 msgstr "Завтра"
 
@@ -4767,6 +4947,24 @@ msgstr "TOPIK I"
 msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Всего"
+
+msgid "Translated from an earlier example."
+msgstr "Переведено с прежней версии примера."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Переведено с прежней версии примера. Исправь перевод, чтобы он совпадал."
+
+msgid "Translation"
+msgstr "Перевод"
+
+msgid "Translation by you"
+msgstr "Твой перевод"
+
+msgid "Translation changed to “{value}”"
+msgstr "Новый перевод: «{value}»"
+
+msgid "Translation from lesson"
+msgstr "Перевод с урока"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -4861,6 +5059,12 @@ msgstr "Используй языковой тег вроде ca, pt-BR или z
 msgid "Use a public http or https link to a picture."
 msgstr "Используй публичную ссылку на изображение через http или https."
 
+msgid "Use AI services"
+msgstr "Использовать AI-сервисы"
+
+msgid "Use another account"
+msgstr "Войти в другой аккаунт"
+
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
 
@@ -4940,6 +5144,9 @@ msgstr "Что такое Lymi?"
 
 msgid "What it’s for"
 msgstr "Для чего она"
+
+msgid "What Lymi keeps, who helps provide it, and the choices you have."
+msgstr "Что хранит Lymi, кто помогает его предоставлять и какой выбор есть у тебя."
 
 msgid "What the decks are about"
 msgstr "Тема колод"
@@ -5077,6 +5284,9 @@ msgstr "Ты повторяешь в своём ритме, а {ownerName} не 
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ты входишь через Apple, поэтому после удаления аккаунта убери Lymi из раздела «Вход с Apple» в настройках аккаунта Apple."
 
+msgid "You signed in with Apple. If Lymi still shows under Sign in with Apple in your Apple Account settings, remove it there."
+msgstr "Твой аккаунт Lymi был связан с Apple. Если Lymi всё ещё есть в разделе «Вход с Apple» в настройках аккаунта Apple, убери его там."
+
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ты начинаешь с первого раздела. Следующий откроется, когда выучишь этот."
 
@@ -5116,8 +5326,8 @@ msgstr "Данные твоего аккаунта"
 msgid "Your assistant is connected"
 msgstr "Ассистент подключён"
 
-msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
-msgstr "Твои карточки, повторения и настройки удалены. Колоды, которые изучают другие люди, остаются у них."
+msgid "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."
+msgstr "Твои карточки, повторения и настройки удалены. Те, кто изучал твои колоды, сохраняют собственные копии."
 
 msgid "Your code to delete your Lymi account"
 msgstr "Твой код для удаления аккаунта Lymi"

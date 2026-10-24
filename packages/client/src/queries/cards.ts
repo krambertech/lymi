@@ -11,13 +11,14 @@ export const deckCardsQuery = (deckId: string) =>
     queryFn: () =>
       fresh(["decks", deckId, "cards"], () => api.deckCards(deckId), { deckId, empty: [] }),
     staleTime: 0,
-    // While the AI is filling a card, keep asking so its shimmer resolves without a reload.
+    // While the AI is filling or translating a card, keep asking so its shimmer resolves without a reload.
     // A run settles itself, so a card still working long after its add is a server that stopped
     // answering rather than one still thinking: stop asking rather than poll for ever.
     refetchInterval: (query) =>
       query.state.data?.some(
         (row) =>
-          row.card.enrichmentStatus === "working" &&
+          (row.card.enrichmentStatus === "working" ||
+            row.card.exampleTranslationStatus === "working") &&
           Date.now() - new Date(row.card.updatedAt).getTime() < ENRICHMENT_PATIENCE,
       )
         ? 2000

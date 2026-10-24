@@ -242,6 +242,7 @@ describe("field sources", () => {
         count: 1,
         meaning: 0,
         example: 1,
+        example_translation: 0,
         notes: 0,
         pronunciation: 0,
         languages: ["it"],
@@ -252,6 +253,7 @@ describe("field sources", () => {
         count: 1,
         meaning: 0,
         example: 0,
+        example_translation: 0,
         notes: 0,
         pronunciation: 1,
         languages: ["it"],
@@ -659,6 +661,22 @@ describe("text stored as Lymi keeps it", () => {
       .map(([event]) => event)
       .filter((event) => event.name === "cards_added");
     expect(added).toEqual([{ name: "cards_added", source: "ai_mcp", count: 2, normalized: 1 }]);
+  });
+
+  it("labels an add from the Mac app's quick-add panel", async () => {
+    const base = await learner(db, "desktop-panel-1", "Kateryna");
+    const capture = vi.fn();
+    const ctx = { ...base, analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(ctx, { name: "Italian", defaultLanguage: "it" });
+    await addCards(ctx, [{ deckId: deck.id, term: "biblioteca" }], null, {
+      entry: "desktop_panel",
+    });
+    const added = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "cards_added");
+    expect(added).toEqual([
+      { name: "cards_added", source: "typed", count: 1, fields: [], entry: "desktop_panel" },
+    ]);
   });
 
   it("leaves a bracketed term as sent when it was sent another pronunciation", async () => {

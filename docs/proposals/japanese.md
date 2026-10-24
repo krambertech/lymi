@@ -59,6 +59,8 @@ Sources: [ElevenLabs API pricing](https://elevenlabs.io/pricing/api), [Gemini pr
 
 ### Proposed example audio
 
+Delivered on the web with [issue #943](https://github.com/krambertech/lymi/issues/943) for every language card, not Japanese alone; [the stack](../stack.md#audio-first-play-then-r2) holds what shipped. Two choices differ from the proposal below: the 100 new clips a day are counted per learner who presses play rather than per owner, and each clip is keyed on what is said, so no pointer on the card is needed to detach it. The phone control follows in its own issue.
+
 Add a separate play control beside the example when the answer is revealed, on the web and phone. An example never starts automatically, never reveals itself through audio before recall, and never borrows the term's speaker control. The first slice is authenticated playback only; public generation and advance generation are excluded. A cached clip may play offline when the existing client audio cache already holds it; first-time synthesis waits for a connection.
 
 Use `parseReadings()` in `packages/core/src/reading.ts` as the shared parser and join each segment's reading when present, otherwise its written text. `毎朝[まいあさ]パンを食[た]べます。` becomes `まいあさパンをたべます。`; do not merely strip the readings, speak both forms, or read the brackets. Preserve punctuation and Japanese particles in sentence context. If a kanji span lacks a reading, generation remains an inference; playback does not silently enrich or edit the example. Keep the written Japanese separately as silent context for providers that support it.

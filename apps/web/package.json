@@ -13,6 +13,7 @@
     "deploy:check": "wrangler deploy --dry-run -c dist/lymi/wrangler.json",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
+    "test:workers": "vitest run --config vitest.workers.config.ts",
     "cf-typegen": "wrangler types",
     "db:generate": "drizzle-kit generate && node ../../scripts/check-migrations.mjs --write",
     "db:check": "drizzle-kit check",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@babel/core": "8.0.7",
     "@cloudflare/vite-plugin": "^1.63.1",
+    "@cloudflare/vitest-plugin": "^1.4.0",
     "@lingui/babel-plugin-lingui-macro": "6.9.1",
     "@lingui/cli": "6.9.1",
     "@lingui/format-po": "6.9.1",
@@ -67,6 +69,7 @@
     "@better-auth/api-key": "1.7.7",
     "@better-auth/cimd": "1.7.7",
     "@better-auth/core": "1.7.7",
+    "@better-auth/electron": "1.7.7",
     "@better-auth/expo": "1.7.7",
     "@better-auth/mcp": "1.7.7",
     "@better-auth/oauth-provider": "1.7.7",

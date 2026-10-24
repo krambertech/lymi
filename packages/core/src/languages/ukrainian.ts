@@ -23,5 +23,6 @@ export const ukrainian = {
     duplicates: "term-and-reading",
   },
   // The listening test (PR #864) heard this voice stress 8 of 8 marked words, and plain text can't tell за́мок from замо́к.
-  speech: { saysReading: true, leadIn: false },
+  // Without the context, voices read и as Russian и in бра́ти, паляни́ця and кни́жка; PR #910.
+  speech: { saysReading: true, leadIn: false, context: "Українською:" },
 } as const satisfies LanguageSupport;

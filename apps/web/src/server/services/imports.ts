@@ -24,6 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
@@ -67,6 +68,8 @@ export type ImportRunParams = {
   userId: string;
   actor: Actor;
   phase: "inspect" | "write";
+  /** Started from the phone app, so its AI waits for the learner's yes. */
+  fromPhone?: boolean | undefined;
   /** A write run that carries on from an earlier one: the next chunk, its pictures and totals. */
   resume?: ImportResume | undefined;
 };
@@ -77,28 +80,12 @@ export type ImportResume = {
   pictures: MediaTotals;
   /** Pictures and recordings handled so far; absent in a run handed over before it was kept. */
   handled?: number | undefined;
+  /** This run's number in the write, from 1; absent in a run handed over before it was kept. */
+  run?: number | undefined;
 };
 
 /** Pictures stored per Workflow step. */
 export const PICTURES_PER_STEP = 50;
-
-/**
- * Steps one write run takes before it hands over to a new run. Lymi is on Cloudflare's paid
- * plan, which caps an instance at 10,000 steps; a collection with many pictures can pass that,
- * so a run stops short and the next run starts where it stopped.
- */
-export const STEPS_PER_RUN = 9000;
-
-/** What a write run does next, from where it is and how many steps it has taken. */
-export function nextWriteStep(
-  state: { chunk: number; chunks: number; pending: number; steps: number },
-  budget = STEPS_PER_RUN,
-): "pictures" | "cards" | "finish" | "hand over" {
-  if (state.pending === 0 && state.chunk >= state.chunks) return "finish";
-  // Room is kept for the hand-over itself and for a failure step.
-  if (state.steps + 2 >= budget) return "hand over";
-  return state.pending > 0 ? "pictures" : "cards";
-}
 
 function adapterFor(source: string): SourceAdapter<unknown> {
   const adapter = ADAPTERS.find((a) => a.source === source);
@@ -254,7 +241,13 @@ export async function completeImportUpload(
     .update(schema.imports)
     .set({ status: "inspecting", uploadId: null, parts: null, updatedAt: new Date() })
     .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "uploading")));
-  await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "inspect" });
+  await start({
+    importId: id,
+    userId: ctx.userId,
+    actor: ctx.actor,
+    phase: "inspect",
+    fromPhone: ctx.fromPhone,
+  });
   return getImport(ctx, id);
 }
 
@@ -334,7 +327,7 @@ export async function inspectImport(
     summary.decks
       .filter((d) => named.get(d.key) === null && summary.languages?.[d.key] === undefined)
       .map((d) => ({ key: d.key, name: d.name, terms: [...(terms.get(d.key) ?? [])] })),
-    provider,
+    provider && (await aiAllowedFor(ctx)) ? provider : null,
   );
   const fallback = await usualLanguage(ctx);
   // A deck the cards join keeps its own language; one that isn't the learner's is ignored.
@@ -552,12 +545,13 @@ export async function attachImportPictures(
   return attached;
 }
 
-/** Marks the import done with its picture totals, and deletes the file. */
+/** Marks the import done with its picture totals and the runs it took, when known, and deletes the file. */
 export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
   uploads: R2Bucket,
+  runs?: number,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "importing") return;
@@ -602,6 +596,7 @@ export async function finishImport(
       ? { readings_converted: counts.readingsConverted }
       : {}),
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
+    ...(runs !== undefined ? { write_runs: runs } : {}),
   });
   await deleteImportFiles(uploads, row);
 }
@@ -773,5 +768,5 @@ export function runContext(
   analytics?: AnalyticsWriter,
 ): ServiceContext {
   if (!params.userId) throw notFound("Import");
-  return { db, userId: params.userId, actor: params.actor, analytics };
+  return { db, userId: params.userId, actor: params.actor, analytics, fromPhone: params.fromPhone };
 }

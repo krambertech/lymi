@@ -16,6 +16,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Sign in with Apple | [sign-in.md](features/sign-in.md) |
 | Today | [today.md](features/today.md) |
 | Review | [review.md](features/review.md) |
+| The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Archive in review | [review-archive.md](features/review-archive.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
@@ -26,6 +27,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Language | [language.md](features/language.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
+| Enrich a card | [card-enrich.md](features/card-enrich.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Deck tags: rename, merge, archive, restore | [deck-tags.md](features/deck-tags.md) |
 | Making and archiving sections | [sections.md](features/sections.md) |
@@ -36,6 +38,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Import and export | [import-export.md](features/import-export.md) |
 | API keys and connected apps | [keys-and-apps.md](features/keys-and-apps.md) |
 | Smart add | [smart-add.md](features/smart-add.md) |
+| AI consent: the ask before the first AI action, and You → AI services | [ai-consent.md](features/ai-consent.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
 | Chinese: pinyin over each hanzi in review, simplified and traditional | [chinese.md](features/chinese.md) |
 | Cantonese: Jyutping over each character in review, 𨋢 included, and its example fade | [cantonese.md](features/cantonese.md) |
@@ -43,6 +46,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Ukrainian: stress in place on the cue, і included, and the field named Stress | [ukrainian.md](features/ukrainian.md) |
 | Tamil: each word's reading over it in review, and fading over Known words in examples | [tamil.md](features/tamil.md) |
 | Right to left: an Arabic deck's cue, example, rows and toast in their own direction | [right-to-left.md](features/right-to-left.md) |
+| Example translation and audio: the translation after the reveal and on the card page, the example's speaker, a stale or failed translation, and the editor | [example-translation.md](features/example-translation.md) |
 
 ## Launch
 

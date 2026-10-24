@@ -29,6 +29,12 @@ export const LANGUAGE_PAGES = {
     title: msg`Learn Chinese vocabulary with flashcards · Lymi`,
     blurb: msg`A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole.`,
   },
+  uk: {
+    page: "ukrainian",
+    label: msg`Ukrainian`,
+    title: msg`Learn Ukrainian vocabulary with flashcards · Lymi`,
+    blurb: msg`A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2.`,
+  },
 } as const satisfies Record<SupportedTag, LanguagePageRow>;
 
 export type LanguagePageName = (typeof LANGUAGE_PAGES)[SupportedTag]["page"];

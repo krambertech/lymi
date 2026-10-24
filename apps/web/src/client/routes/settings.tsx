@@ -4,10 +4,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AccountSection } from "../components/account-section";
+import { AiServicesSection } from "../components/ai-services-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
+import { ThisMacSection } from "../components/this-mac-section";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
@@ -78,7 +80,9 @@ function SettingsRoute() {
         setThemeState(t);
       }}
     >
+      <ThisMacSection />
       <NotificationsSection />
+      <AiServicesSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
       <ExportSheet

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { emberCount, endEmbers } from "./ending";
+import { END_OF_REVIEW, emberCount, endEmbers, fleckAt, lightBurst, sparkAt } from "./ending";
 
 describe("emberCount", () => {
   it("rises for any review, grows with the share of the goal added, and stops at twice the goal", () => {
@@ -22,5 +22,34 @@ describe("endEmbers", () => {
     expect(embers).toHaveLength(20);
     for (const e of embers) expect(e.y).toBeLessThan(0);
     expect(Math.max(...embers.map((e) => e.at))).toBeLessThanOrEqual(1400);
+  });
+});
+
+describe("the spark", () => {
+  it("leaves the flame for today's light before the hop, and the run ticks after the ways on", () => {
+    const at = END_OF_REVIEW;
+    expect(at.spark).toBeGreaterThan(at.lights);
+    expect(at.land).toBeGreaterThan(at.spark);
+    expect(at.hop).toBeGreaterThan(at.land);
+    expect(at.tick).toBeGreaterThan(at.hop);
+  });
+
+  it("starts at one point and ends at the other", () => {
+    const from = { x: 10, y: 20 };
+    const to = { x: 200, y: 400 };
+    expect(sparkAt(0, from, to, 90)).toEqual(from);
+    expect(sparkAt(1, from, to, 90)).toEqual(to);
+  });
+});
+
+describe("lightBurst", () => {
+  it("throws every fleck upward, and each one is gone once its life is spent", () => {
+    const burst = lightBurst(10);
+    expect(burst).toHaveLength(10);
+    for (const f of burst) {
+      expect(f.vy).toBeLessThan(0);
+      expect(fleckAt(f, f.at + f.life / 2).opacity).toBeGreaterThan(0);
+      expect(fleckAt(f, f.at + f.life).opacity).toBe(0);
+    }
   });
 });

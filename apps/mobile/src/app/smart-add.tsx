@@ -18,6 +18,7 @@ import { Alert, ScrollView, type TextInput, View } from "react-native";
 import Animated, { FadeOut, Keyframe } from "react-native-reanimated";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useOwnedDecks } from "../data/queries";
+import { useAiConsent } from "../privacy/ai-consent";
 import {
   canScan,
   chooseFiles,
@@ -96,6 +97,7 @@ export default function SmartAdd() {
   const stop = useRef<AbortController | null>(null);
   const scroll = useRef<ScrollView>(null);
   const textRef = useRef<TextInput>(null);
+  const consent = useAiConsent("smart_add");
   // Read fresh each time Smart add opens: the web or another read may have used today's lessons.
   const access = useQuery({
     queryKey: LESSON_ACCESS,
@@ -209,6 +211,11 @@ export default function SmartAdd() {
       return;
     }
     if (atLimit) return;
+    // The pages leave the phone only once the learner has allowed it.
+    if (!consent.allowed && !(await consent.ask())) {
+      setError(t`Smart add reads your lesson with AI. Turn on AI to find the terms.`);
+      return;
+    }
     setError(undefined);
     setTerms([]);
     setQuestions([]);
@@ -535,6 +542,7 @@ export default function SmartAdd() {
           )}
         </Animated.View>
         {/* Inside the scroll view: a form sheet lays out at most a header and one scroll view. */}
+        {consent.sheet}
         <TermSheet
           term={editing}
           edit={editing ? edits.get(editing.id) : undefined}

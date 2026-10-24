@@ -1,5 +1,6 @@
 import { I18nProvider } from "@lingui/react";
 import { useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { pageI18n } from "../lib/i18n";
 import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
 
@@ -13,13 +14,16 @@ const languages = [
 export type LanguageTarget = { page: LocalizedPage } | { paths: Record<Locale, string> };
 
 /** Language names stay in their own language so every visitor can find theirs. */
-export function LanguageLinks(target: LanguageTarget) {
+export function LanguageLinks({
+  className = "mx-auto mt-6 max-w-[1040px]",
+  ...target
+}: LanguageTarget & { className?: string | undefined }) {
   const { t, i18n } = useLingui();
 
   return (
     <nav
       aria-label={t`Language`}
-      className="mx-auto mt-6 flex max-w-[1040px] flex-wrap gap-4 text-xs text-muted"
+      className={clsx("flex flex-wrap gap-4 text-xs text-muted", className)}
     >
       {languages.map(({ locale, label }) => {
         return (

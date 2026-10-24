@@ -1,6 +1,6 @@
 # Type
 
-One family, Onest, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. The word on the card is the largest thing on any screen.
+Onest is the interface family, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. Scripts it does not cover use the language-specific system faces below. The term on the card is the largest thing on any screen.
 
 ## The scale
 
@@ -45,6 +45,22 @@ The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px fro
 ## Long words
 
 A term or meaning long enough to wrap carries the `hyphenate` utility (`hyphens: auto` with at least three letters each side of the break) and the text's own `lang`, so a German compound breaks at a joint rather than anywhere. A cue or target too long for its review card steps down the scale at most twice before the card scrolls.
+
+## Languages, readings and stress
+
+Content carries its own language, independent of the app language. Pass the card's language to its term, reading and example; a section name uses the section's name language. The `--face-<script>` tokens in `packages/design/tokens.css` and their `:lang()` rules choose system faces for scripts Onest does not cover, so shared kanji take Japanese forms on a Japanese card and Chinese forms on a Chinese one. Never name a fallback face in a screen; [phone.md](phone.md#components) owns the native rendering differences.
+
+Use `TermText` for a card's term and `ExampleText` for its example, both in `components/term-text.tsx` and the phone's `ui/term-text.tsx`. They draw the language's reading above the text, stress in place, or plain text; a screen never parses or draws those marks itself. [CONTEXT.md](../../../CONTEXT.md#content) owns what Reading and Stress mean and when review shows them.
+
+Readings are secondary text at weight 400, with no tracking. Kana readings are half the text's size, at least 10 px; readings in letters are 0.4 of it, at least 10 px and at most the 15.5 px lede, with space between syllables. Jyutping tone numbers are raised without growing the line. Hiding a reading keeps its room, including when Known readings fade from an example, so reveal changes what can be read without reflowing the line. Stress marks replace the plain term in place instead of taking a separate line. Native wrapping, Dynamic Type and screen-reader behavior belong in [phone.md](phone.md#components).
+
+## Text direction
+
+The interface's direction and the content's direction are separate. Logical spacing follows the interface; a term or example takes `textDirection(language)` from `@lymi/core`, while free text such as a meaning or a deck name uses `dir="auto"`. A language tag's explicit script wins, so a language written in both scripts is not forced right to left by its primary tag. `TermText` and `ExampleText` set their own language and direction; a block aligns to its content's start, while an inline value stays in the row's layout.
+
+Isolate learner text inside an interface sentence with `isolate()` from `@lymi/core`, including names in confirmations, notices and toasts. Keep Lingui's message stable with a labelled placeholder, such as ``t`Archive “${{ name: isolate(name) }}”?` ``. On the web, `<Trans>` uses `BidiTrans` at the root; a custom rendering of a translated string uses `bidi()` from `lib/bidi.tsx`, which turns the isolated runs into `<bdi>` because WebKit does not reliably honor the invisible characters alone. Accessible names and hints take plain text without isolation characters.
+
+On the phone, `Text` takes `lang` for writing direction and script faces; a standalone block uses `textStart(language)` from `theme/type.ts` to align to its content's start. A row keeps the app's alignment. Input behavior is in [forms.md](forms.md#text-language-and-direction).
 
 ## Monospace
 

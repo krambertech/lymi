@@ -31,7 +31,7 @@ Unexpected errors still reach PostHog Error Tracking: HTTP and MCP failures, exh
 | [Cloudflare Worker issue](#cloudflare-worker-issue) | Cloudflare | Any real-time issue on `lymi` or `lymi-site` |
 | [Cloudflare incident](#cloudflare-incident) | Cloudflare | A major or critical Cloudflare incident |
 | [Errors in production](#errors-in-production) | PostHog | Any `$exception` in an hour |
-| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation` and `lead_in` |
+| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour, leaving out `$ai_span_name` `pronunciation`, `example_audio` and `lead_in` |
 | [Nobody reviewed yesterday](#nobody-reviewed-yesterday) | PostHog | Zero `review_graded` in a day, checked at 09:00 Tallinn |
 
 Cloudflare alerts are under Observability → Alerts and re-send at most hourly while firing. PostHog alerts are on [the alerts page](https://eu.posthog.com/project/292417/alerts) and read the insights tagged `ops`. The three `lymi_health` alerts use these queries, with Cloudflare supplying the time range:
@@ -98,13 +98,17 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 
 ## AI calls are failing
 
-`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation and its Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
 
 ## Nobody reviewed yesterday
 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
 
 Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
+
+## A deleted account's Apple grant was not revoked
+
+The `apple-revocations` cron job failed, or `apple_revocation_attempted` shows `outcome=failed`. Apple requires the grant to end with the account, and `apple_revocations` keeps one row per deleted Apple account with its `status`, `reason`, `client` and `attempts`, and no address or name. `revoke` means Apple refused eight revokes over about a day and a half, so check the Sign in with Apple key secrets and Apple's status. `exchange` means Apple refused the phone's one-use code, and `lost` means the code expired before it was traded or a sealed token no longer opens after a key change. The person was told in the goodbye email to remove Lymi under Sign in with Apple, so a failed row needs no contact; read the rows with `wrangler d1 execute lymi --remote --command "select status, reason, client, attempts, created_at from apple_revocations where status = 'failed'"`.
 
 ## The stress backfill
 

@@ -4,10 +4,10 @@ import { Trans } from "@lingui/react/macro";
 import { pageI18n } from "../lib/i18n";
 
 export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
-export const PRIVACY_DESCRIPTION = msg`How Lymi handles account, learning, integration and service data.`;
+export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
-export const PRIVACY_LEAD = msg`This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have.`;
-export const PRIVACY_UPDATED = msg`17 October 2026`;
+export const PRIVACY_LEAD = msg`This policy covers Lymi’s website, apps, API and connected assistants.`;
+export const PRIVACY_UPDATED = msg`24 October 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -17,343 +17,264 @@ function PrivacyPolicyContent() {
       </h2>
       <p>
         <Trans>
-          Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy,
-          “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at{" "}
-          <a href="mailto:hello@lymi.app">hello@lymi.app</a>.
+          Krambertech OÜ, an Estonian company, provides Lymi and is responsible for your personal
+          data. Contact <a href="mailto:hello@lymi.app">hello@lymi.app</a> with questions or privacy
+          requests.
         </Trans>
       </p>
-
+      <p>
+        <Trans>
+          Registered address: Harju maakond, Tallinn, Põhja-Tallinna linnaosa, 3. liin 6-5, 11712,
+          Estonia.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          We don’t sell your personal data, show ads or track you across other companies’ apps and
+          websites. We use the data below to provide, protect and improve Lymi.
+        </Trans>
+      </p>
       <h2>
-        <Trans>Data Lymi receives</Trans>
+        <Trans>What we collect and why</Trans>
       </h2>
-      <h3>
-        <Trans>Access requests from the private beta</Trans>
-      </h3>
       <p>
         <Trans>
-          While Lymi was private, we stored the email address of anyone who asked for access, where
-          on the site they asked, and when. We no longer collect these, and anyone can sign up.
-        </Trans>
-      </p>
-
-      <h3>
-        <Trans>Account and sign-in data</Trans>
-      </h3>
-      <p>
-        <Trans>
-          Google sign-in gives Lymi your name, email address, profile image if available, and
-          identifiers needed to connect the Google account to Lymi. We also keep session records,
-          which can include an IP address, browser information and sign-in tokens.
+          Account data: your email address, name, photo, sign-in records and settings. Apple or
+          Google provides the identity information you agree to share, including an account
+          identifier; Apple may provide a private relay email address. With email sign-in we store a
+          password hash, not your password. IP addresses, device information and authentication
+          tokens help keep your account secure. An account is needed to save and sync your learning.
         </Trans>
       </p>
       <p>
         <Trans>
-          If you sign in with an email address and a password, we store the address and a hash of
-          the password, never the password itself. We also store short-lived records for confirming
-          an address and resetting a password, and counts of recent sign-in, sign-up, resend and
-          reset attempts by address and IP address, so those requests can be rate limited.
-        </Trans>
-      </p>
-
-      <h3>
-        <Trans>Learning data</Trans>
-      </h3>
-      <p>
-        <Trans>
-          We store the decks and cards you create or join. A card can include a term, meaning,
-          pronunciation, example, notes, tags, language, source, learning direction and generated
-          audio. We also store archive state, review history, scheduling state, goals, streaks, time
-          zone, preferences and an activity record of changes.
+          Learning data: your cards, decks, lesson material, pictures, recordings, reviews and
+          progress, including preferences and Activity records. We use these to store your content,
+          schedule reviews, sync devices and provide the features you use. Photos you upload are
+          converted to remove embedded metadata. Camera and photo-library access is used only when
+          you choose to add a photo or read lesson pages. Lymi does not record your voice.
         </Trans>
       </p>
       <p>
         <Trans>
-          Review history is append-only while the account exists so the schedule and learning record
-          stay honest. Undo creates a separate record rather than rewriting the original review.
-        </Trans>
-      </p>
-
-      <h3>
-        <Trans>API and connected-app data</Trans>
-      </h3>
-      <p>
-        <Trans>
-          If you create an API key, we store the key record, its name, permissions, usage counters
-          and dates. If you connect an app through MCP, we store the app identity, the permissions
-          you grant, consent records and access or refresh tokens. Lymi records whether a change
-          came from you, an API key, a connected app, AI or the system.
+          Support and email: we keep the information you send us so we can respond. We send account
+          and service emails, including sign-in help, deck invitations and deletion confirmations.
+          Resend delivers our email and receives the recipient, subject and message; Cloudflare
+          Email Service is the fallback. Delivery reports help us handle bounced mail and spam
+          complaints.
         </Trans>
       </p>
       <p>
         <Trans>
-          A connected assistant may read lesson material in the conversation where you use it. Lymi
-          does not receive that raw lesson material unless the assistant sends it in a card field
-          such as the term, meaning, example, notes or source. The assistant provider handles the
-          conversation under its own terms and privacy policy.
+          Reminders are optional. Web reminders use your browser’s push service, which receives a
+          delivery address and the reminder, including the number of cards due. Phone reminders are
+          scheduled on your device.
         </Trans>
       </p>
-
-      <h3>
-        <Trans>Audio, reminders and account email</Trans>
-      </h3>
-      <p>
-        <Trans>
-          When pronunciation audio is first requested, Lymi sends the card term and language to a
-          speech provider. It stores the resulting audio so it can be reused. We do not send the
-          rest of the card for speech generation.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          If you enable review reminders, we store a push endpoint, browser-generated encryption
-          keys, your reminder time and time zone, and delivery state. Reminder notifications contain
-          a due-card count, not card text.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          When Lymi sends an email, Resend receives the recipient address, sender, subject and
-          message body. Resend handles delivery, bounces and suppression of addresses that should
-          not receive another message, and tells us when an email bounces or is marked as spam.
-          While Lymi moves its email to Resend, Cloudflare Email Service may deliver it instead and
-          receives the same information.
-        </Trans>
-      </p>
-
-      <h3>
-        <Trans>Service data</Trans>
-      </h3>
-      <p>
-        <Trans>
-          Our hosting provider processes request metadata, security signals, timings and error logs
-          needed to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid
-          putting card content, email addresses, access tokens and other private content in logs.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          We count requests and product actions by type and measure response times. These metrics
-          contain no account identifiers, card content or exact requested URLs.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          We use PostHog’s EU service to understand how Lymi is used. On the public site we count
-          visits without cookies or any identifier stored on your device: PostHog derives a visitor
-          code from the day, your IP address and browser, then discards the address, so a visit
-          cannot be linked to another day’s. In the app, we link product activity to your opaque
-          account identifier. We send page categories, published deck slugs, fixed action labels,
-          counts, review grades, app language, the referring website, limited campaign details and
-          the country of the visit, which our hosting provider determines. When you sign up, your
-          account records where your visit began. We do not send card content, email addresses,
-          names, credentials or private requested URLs, and we do not record sessions. We do this on
-          the basis of our legitimate interest in understanding and improving Lymi. To object, email{" "}
-          <a href="mailto:hello@lymi.app?subject=Lymi%20analytics">hello@lymi.app</a> and we will
-          stop product analytics for your account.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          We also use filtered error monitoring: error reports contain the error type and technical
-          stack frames, with messages and other context removed.
-        </Trans>
-      </p>
-
       <h2>
-        <Trans>Why we use data</Trans>
+        <Trans>Sharing and connected apps</Trans>
       </h2>
+      <p>
+        <Trans>
+          Members of a shared deck see its owner’s name and the deck’s content. The owner sees
+          members’ names, roles and when they joined, but not their email addresses or review
+          progress. If someone invites you by email, we receive your address from them and keep an
+          invitation record. Published decks and their publisher’s name are visible on public pages.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          Apps you connect through MCP, and scripts using your API keys, can access data within the
+          permissions you approve. Their providers receive the data returned to them and handle it
+          under their own policies. Disconnecting an app or revoking a key does not erase copies
+          already received; an app’s current access token can remain valid until it expires.
+        </Trans>
+      </p>
+      <h2>
+        <Trans>AI and pronunciation</Trans>
+      </h2>
+      <p>
+        <Trans>
+          Lymi uses OpenAI, Anthropic, Google and Cloudflare Workers AI for AI features, and Google,
+          OpenAI and ElevenLabs for speech. The provider depends on the feature and language.
+          Requests go through Cloudflare AI Gateway with prompt and reply logging and caching
+          disabled. Providers may retain requests under their API terms, including for abuse
+          prevention. We do not add your account name, email address or credentials to AI prompts,
+          but content you provide can itself contain personal information.
+        </Trans>
+      </p>
       <ul>
         <li>
           <Trans>
-            To provide accounts, decks, cards, review scheduling, audio, reminders, account email,
-            API access and connected apps.
+            Card enrichment, example translations, memory hooks and deck style use card fields,
+            relevant cards from the deck, deck details and instructions, and corrections you make to
+            AI text. Enrichment can run when you add cards or request it; deck style is updated in
+            the background. These text features use OpenAI.
           </Trans>
         </li>
         <li>
           <Trans>
-            To authenticate requests, enforce permissions, prevent abuse and investigate failures.
+            Smart add sends the photos, PDFs or text you provide, with relevant deck context, to
+            Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested,
+            compares them with your answer. We save the cards you choose, not the original lesson
+            files.
           </Trans>
         </li>
         <li>
-          <Trans>To answer support requests and act on privacy requests.</Trans>
+          <Trans>
+            Choosing a deck or detecting a language can send shared text, its page title and deck
+            languages, or an imported deck’s name and sample terms, to OpenAI.
+          </Trans>
         </li>
         <li>
           <Trans>
-            To meet legal obligations and protect the rights and safety of Lymi and its users.
+            Pronunciation sends the term, its reading or an example sentence and language to a
+            speech provider. Japanese pronunciation may also send the term, reading and meaning to
+            Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is
+            saved for reuse.
           </Trans>
         </li>
       </ul>
       <p>
         <Trans>
-          Depending on the activity and applicable law, we process data to perform our agreement
-          with you, with your consent, for legitimate interests such as security, service
-          reliability and understanding how Lymi is used, or to meet a legal obligation. You can
-          object to product analytics by emailing us, and withdraw optional consent, such as
-          reminders, at any time.
+          The phone app asks permission before sending your own content to AI. On the web, and
+          through API keys or connected apps, AI runs while the account choice is unanswered. You
+          can turn AI services off in You on the phone or Settings on the web. An explicit off stops
+          new AI processing for your content across Lymi, including background work and connected
+          apps. Saved text and audio remain, and you can still add cards manually and review. Audio
+          for shared and published cards follows the owner’s choice.
         </Trans>
       </p>
-
       <h2>
-        <Trans>Service providers and other recipients</Trans>
-      </h2>
-      <ul>
-        <li>
-          <Trans>
-            <strong>Cloudflare</strong> provides the website, application, database, object storage,
-            session storage, network protection, aggregate usage metrics and operational logs, and
-            delivers email until Lymi’s move to Resend is complete.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>Resend</strong> delivers Lymi’s email. It receives each email’s recipient,
-            subject and body.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>Google</strong> provides Google sign-in and may provide speech generation when
-            configured as the fallback provider.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>PostHog</strong> provides product analytics and error tracking in its EU cloud.
-            It receives the limited product and error data described above.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>OpenAI</strong> may provide speech generation. A configured Cloudflare AI
-            Gateway may relay that request.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>Your connected apps</strong> receive only the data allowed by the permissions
-            you approve. Disconnecting an app stops future access but does not erase data the app
-            already received.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            <strong>Your browser’s push service</strong> receives an encrypted reminder when you
-            enable notifications.
-          </Trans>
-        </li>
-      </ul>
-      <p>
-        <Trans>
-          These providers may process data in countries outside Estonia or the European Economic
-          Area. Where required, we rely on the transfer safeguards made available for the relevant
-          service.
-        </Trans>
-      </p>
-
-      <h2>
-        <Trans>How long we keep data</Trans>
-      </h2>
-      <ul>
-        <li>
-          <Trans>Access requests from the private beta stay until you ask us to remove them.</Trans>
-        </li>
-        <li>
-          <Trans>
-            Account and learning data stay while your account is active and are removed when we
-            complete an account-deletion request, except where law requires a longer period.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            Sessions normally expire after 30 days and may be refreshed while you remain active.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            API keys stay until you revoke them or they expire. Connected-app tokens and consent
-            stay until expiry, revocation, disconnection or account deletion.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            Push subscriptions stay until you disable reminders, the push service reports the
-            subscription expired, or the account is deleted.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            Generated audio stays with the related card or account until it is removed under the
-            service’s storage lifecycle.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
-            Cloudflare keeps operational logs, and Resend and Cloudflare keep email-delivery logs,
-            under the active service configuration. Lymi does not maintain a separate long-term copy
-            of those logs.
-          </Trans>
-        </li>
-      </ul>
-
-      <h2>
-        <Trans>Your choices and rights</Trans>
+        <Trans>Cookies, device storage and analytics</Trans>
       </h2>
       <p>
         <Trans>
-          You can edit card content and settings, archive and restore cards or decks, revoke API
-          keys, disconnect apps, and turn reminders off in Lymi. Archive is reversible and is not
-          deletion.
+          We use cookies and device storage for sign-in, preferences, offline use and syncing
+          unfinished edits and reviews. The public website uses browser storage for preferences, but
+          no analytics cookies. Signing out clears account data cached by the app, although some
+          preferences and cached audio can remain.
         </Trans>
       </p>
       <p>
         <Trans>
-          Account-wide access, export, correction and deletion are not self-service yet. Email{" "}
-          <a href="mailto:hello@lymi.app?subject=Lymi%20privacy%20request">hello@lymi.app</a> from
-          your account address and describe what you need. We may ask you to verify your identity
-          before acting. We will respond as required by applicable data-protection law. You may also
-          complain to the Estonian Data Protection Inspectorate or your local supervisory authority.
+          PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are
+          linked to your account identifier and include actions, counts, review grades, app and
+          device information, country derived from the IP address, and technical AI usage such as
+          model and cost. Events exclude card text, prompts, names, email addresses and credentials.
+          We do not use session replay or automatic click recording.
         </Trans>
       </p>
-
+      <p>
+        <Trans>
+          Website visits are counted without a persistent device identifier, using a daily visitor
+          code derived from the IP address and browser. Referral and campaign information can follow
+          links into sign-up. Error reports contain scrubbed technical details, country and an
+          account or app identifier; they continue if you object to product analytics. Hosting logs
+          and aggregate performance measures also help keep Lymi working and secure.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          Product analytics are based on our legitimate interest in improving Lymi. To object, email{" "}
+          <a href="mailto:hello@lymi.app?subject=Lymi%20analytics">hello@lymi.app</a>; we will turn
+          them off for your account, including connected apps and background work.
+        </Trans>
+      </p>
       <h2>
-        <Trans>Cookies and local storage</Trans>
+        <Trans>Service providers and international transfers</Trans>
       </h2>
       <p>
         <Trans>
-          Lymi uses an authentication cookie to keep you signed in. The public site and app also use
-          local browser storage for preferences and offline product behavior. We do not use
-          advertising cookies.
+          Cloudflare hosts and protects Lymi, stores data and files, routes AI requests and provides
+          some AI and email services. Apple and Google handle their sign-in options. Resend delivers
+          email, PostHog provides analytics and error reports, and Expo delivers phone-app updates
+          and receives connection information such as the app version and IP address. AI providers,
+          connected apps and deck members receive the data described above. We may also disclose
+          information when required by law or necessary to protect legal rights.
         </Trans>
       </p>
       <p>
         <Trans>
-          Analytics use no cookies and store nothing on your device. To tell sign-up where a visit
-          began, links on lymi.app may add the referring website and campaign labels to the address
-          they open. An objection also covers product analytics from connected apps and background
-          work.
+          Providers may process data outside the European Economic Area, including in the United
+          States. Where required, transfers rely on an adequacy decision or contractual safeguards
+          such as the European Commission’s standard contractual clauses. Contact us for information
+          about the safeguards that apply to your data and how to obtain a copy.
         </Trans>
       </p>
-
       <h2>
-        <Trans>Security and children</Trans>
+        <Trans>Legal bases</Trans>
       </h2>
       <p>
         <Trans>
-          We use access controls, encrypted transport and provider security controls to protect
-          data, but no online service can guarantee absolute security. Do not share API keys,
-          connection tokens or other credentials. Lymi is not directed to children who cannot
-          lawfully consent to this processing.
+          We process account and learning data to perform our agreement with you and provide the
+          features you use. Security, error diagnosis, support and limited product analytics serve
+          our legitimate interests in operating and improving Lymi. We process data to meet legal
+          obligations where they apply. Where we rely on consent, you can withdraw it without
+          affecting earlier lawful processing. Optional features need only the data relevant to
+          them.
         </Trans>
       </p>
-
       <h2>
-        <Trans>Changes and contact</Trans>
+        <Trans>Retention and account deletion</Trans>
       </h2>
       <p>
         <Trans>
-          We may update this policy when Lymi or the law changes. We will update the date above and
-          give additional notice when a change materially affects your rights. Questions and privacy
-          requests can be sent to <a href="mailto:hello@lymi.app">hello@lymi.app</a>.
+          Account and learning data stay while your account exists. Archiving a card or deck hides
+          it; it does not erase it. Import files are removed after processing or within three days
+          if unfinished; exports expire after 24 hours. Authentication records expire or are
+          revoked, and web reminder subscriptions are removed when turned off or reported invalid.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          You can delete your account in You › Delete account on the phone or Settings › Delete
+          account on the web, after confirming your identity. Deletion cannot be undone. Your
+          account and private learning records are erased, and file cleanup and requests to erase
+          account-linked analytics run separately. Provider logs, backups and support correspondence
+          can remain under their applicable retention periods; deletion is not an instant purge of
+          every copy.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          A deck other people still study remains without your account name until its last member
+          leaves. Its content, including personal information you wrote into cards, remains visible
+          to those members. Other owners may retain invitation and Activity records concerning you.
+          Publisher accounts require a deletion request by email. Contact us if retained shared
+          content contains personal information you want erased.
+        </Trans>
+      </p>
+      <h2>
+        <Trans>Your rights and choices</Trans>
+      </h2>
+      <p>
+        <Trans>
+          You can edit your content and settings, export your library, control AI services and
+          reminders, revoke keys and disconnect apps. You can also request access, correction,
+          erasure, restriction or portability of personal data, or object to processing based on
+          legitimate interests. These rights depend on the circumstances and applicable law. Email{" "}
+          <a href="mailto:hello@lymi.app?subject=Lymi%20privacy%20request">hello@lymi.app</a>; we
+          may verify your identity before acting. You can complain to the{" "}
+          <a href="https://www.aki.ee/en">Estonian Data Protection Inspectorate</a> or your local
+          supervisory authority.
+        </Trans>
+      </p>
+      <h2>
+        <Trans>Security, children and changes</Trans>
+      </h2>
+      <p>
+        <Trans>
+          We use access controls and encrypted connections to protect data. No online service can
+          guarantee absolute security. Lymi is not directed to children below the age at which they
+          can lawfully use it. If you believe a child has provided personal data without the
+          permission required by law, contact us.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          We update this policy when our practices change. The date above shows the latest revision.
+          We provide additional notice when required by law.
         </Trans>
       </p>
     </>

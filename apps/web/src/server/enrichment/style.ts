@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ENRICHMENT_INSTRUCTIONS } from "./prompt";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const STYLE_PROMPT_VERSION = 2;
+export const STYLE_PROMPT_VERSION = 3;
 
 /** A topic needs more proof than a habit, because a wrong one skews every card. */
 export const TOPIC_MIN_CARDS = 12;

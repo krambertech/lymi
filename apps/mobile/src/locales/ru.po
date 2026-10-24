@@ -16,6 +16,9 @@ msgstr "«{seen}»"
 msgid "“{takenName}” is already a tag on this deck. To combine the two, use Merge into… instead."
 msgstr "«{takenName}» уже есть среди тегов этой колоды. Чтобы объединить их, выбери «Объединить с…»."
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "В «{term}» нечего дополнять."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже есть в колоде {deck}"
 
@@ -857,6 +860,12 @@ msgstr "Добавить карточку"
 msgid "Add a lesson"
 msgstr "Добавить урок"
 
+msgid "Add a term and AI fills in missing meanings, examples and more."
+msgstr "Добавь термин, и AI заполнит недостающие значения, примеры и другие поля."
+
+msgid "Add a translation"
+msgstr "Добавь перевод"
+
 msgid "Add a word"
 msgstr "Добавить слово"
 
@@ -938,6 +947,9 @@ msgstr "Черновик AI"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI example and translation"
+msgstr "Пример и перевод от AI"
+
 msgid "AI fills"
 msgstr "AI заполняет"
 
@@ -961,6 +973,15 @@ msgstr "ИИ заполняет только пустые поля и никог
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI services"
+msgstr "AI-сервисы"
+
+msgid "AI translates it after you save"
+msgstr "AI переведёт после сохранения"
+
+msgid "AI translation"
+msgstr "Перевод от AI"
 
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
@@ -1608,6 +1629,12 @@ msgstr "Не удалось скачать файл. Проверь соедин
 msgid "Couldn’t draft a hook. Try again in a moment."
 msgstr "Не удалось подготовить зацепку. Попробуй ещё раз чуть позже."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Не удалось дополнить «{term}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t enrich this card."
+msgstr "Не удалось дополнить эту карточку."
+
 msgid "Couldn’t finish the import"
 msgstr "Не удалось завершить импорт"
 
@@ -1702,6 +1729,9 @@ msgstr "Не удалось открыть эту колоду"
 msgid "Couldn’t open this link"
 msgstr "Не удалось открыть эту ссылку"
 
+msgid "Couldn’t play the example. Try again in a moment."
+msgstr "Не удалось воспроизвести пример. Попробуй ещё раз чуть позже."
+
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз чуть позже."
 
@@ -1760,6 +1790,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t save. Check your connection and try again."
+msgstr "Не удалось сохранить. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t search cards"
 msgstr "Не удалось найти карточки"
 
@@ -1780,6 +1813,9 @@ msgstr "Не удалось начать раздел"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Не удалось отменить оценку для «{term}». Она засчитана."
+
+msgid "Couldn’t translate the example."
+msgstr "Не удалось перевести пример."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не удалось выключить ссылку для присоединения. Попробуй ещё раз."
@@ -1890,6 +1926,9 @@ msgstr "Колоды от Lymi. Добавь одну — учи её на св�
 msgid "Decks in a series are reviewed together."
 msgstr "Колоды одной серии повторяются вместе."
 
+msgid "Decks other people study"
+msgstr "Колоды, которые изучают другие"
+
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
@@ -1963,6 +2002,9 @@ msgstr "Готово"
 msgid "Draft"
 msgstr "Черновик"
 
+msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgstr "Подсказку составляет AI. Включи AI-сервисы в разделе Ты, чтобы составить её."
+
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."
 
@@ -1990,6 +2032,9 @@ msgstr "Каждый блок — день с повторениями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Каждую карточку спрашивают в обе стороны, каждую сторону по своему расписанию."
+
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Каждый, кто изучает эти колоды, получит собственную копию со своим прогрессом, но без твоего имени. Чтобы забрать колоду у других, сначала архивируй её. Архивированные колоды удалятся вместе с аккаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
@@ -2049,11 +2094,20 @@ msgctxt "language"
 msgid "English"
 msgstr "Английский"
 
+msgid "Enrich"
+msgstr "Дополнить"
+
 msgid "Enriched"
 msgstr "Дополнено ИИ"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Дополнена # карточка} few {Дополнено # карточки} many {Дополнено # карточек} other {Дополнено # карточки}} в колоде «{deck}»"
+
+msgid "Enriched this card"
+msgstr "Карточка дополнена"
+
+msgid "Enriching this card"
+msgstr "Дополняем эту карточку"
 
 msgid "Enter a full email address, like anna@example.com."
 msgstr "Введи полный адрес, например anna@example.com."
@@ -2104,11 +2158,20 @@ msgstr "Всё, чтобы снова импортировать в Lymi: кар
 msgid "Example"
 msgstr "Пример"
 
+msgid "Example and translation by you"
+msgstr "Твои пример и перевод"
+
+msgid "Example and translation from lesson"
+msgstr "Пример и перевод с урока"
+
 msgid "Example by you"
 msgstr "Твой пример"
 
 msgid "Example from lesson"
 msgstr "Пример с урока"
+
+msgid "Example translation"
+msgstr "Перевод примера"
 
 msgid "Explore"
 msgstr "Каталог"
@@ -2191,6 +2254,9 @@ msgstr "Филиппинский"
 
 msgid "Fill in the rest with AI"
 msgstr "Дополнить остальное с AI"
+
+msgid "Fill in your cards"
+msgstr "Дополняй карточки"
 
 msgid "Filter"
 msgstr "Фильтр"
@@ -2358,6 +2424,9 @@ msgstr "Есть изображение"
 
 msgid "Have an account?"
 msgstr "Уже есть аккаунт?"
+
+msgid "Hear pronunciation"
+msgstr "Слушай произношение"
 
 msgctxt "language"
 msgid "Hebrew"
@@ -2639,6 +2708,9 @@ msgstr "Оставь Tab и New line. Если в карточке есть пе
 msgid "Keep the decks"
 msgstr "Оставить колоды"
 
+msgid "Keep the example under 250 characters."
+msgstr "Пример должен быть короче 250 символов."
+
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Сообщение должно быть короче {FEEDBACK_MESSAGE_MAX} символов."
 
@@ -2734,6 +2806,9 @@ msgstr "Светлая"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
+
+msgid "Listen to terms and examples read aloud."
+msgstr "Слушай, как звучат термины и примеры."
 
 msgid "Lists and searches decks and cards. A key never grades reviews."
 msgstr "Просматривает списки и ищет колоды и карточки. Ключ никогда не ставит оценок за повторение."
@@ -3121,6 +3196,9 @@ msgstr "Пока не в повторениях"
 msgid "Not joined yet · invited {invited}"
 msgstr "Ещё не в колоде · приглашение от {invited}"
 
+msgid "Not now"
+msgstr "Не сейчас"
+
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -3181,8 +3259,14 @@ msgstr "Ничего не добавлено, а файл удалён."
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr "Уведомления для Lymi выключены. Включи их в Настройках, чтобы получать напоминание."
 
+msgid "Off"
+msgstr "Выключено"
+
 msgid "Often forgotten"
 msgstr "Часто забываются"
+
+msgid "On"
+msgstr "Включено"
 
 msgid "On quizlet.com, open your set, open its … menu and choose Export."
 msgstr "На quizlet.com открой свой набор, открой меню … и выбери Export."
@@ -3247,6 +3331,9 @@ msgstr "Открой письмо Noji на этом телефоне в теч�
 msgid "Open Settings"
 msgstr "Открыть Настройки"
 
+msgid "Open You"
+msgstr "Открыть Ты"
+
 msgid "Options for {email}"
 msgstr "Действия для {email}"
 
@@ -3267,9 +3354,6 @@ msgstr "Другое"
 
 msgid "other decks"
 msgstr "другие колоды"
-
-msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
-msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на hello@lymi.app, чтобы удалить его."
 
 msgid "Other subjects"
 msgstr "Другие темы"
@@ -3316,9 +3400,6 @@ msgstr "Заглянуть в зацепку"
 msgid "People"
 msgstr "Люди"
 
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После удаления твоего аккаунта их никто не сможет изменить."
-
 msgctxt "language"
 msgid "Persian"
 msgstr "Персидский"
@@ -3357,6 +3438,9 @@ msgstr "Картинка изменена"
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
 
+msgid "Play example"
+msgstr "Воспроизвести пример"
+
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
 
@@ -3373,6 +3457,9 @@ msgstr "Нажми Copy text и вставь текст сюда."
 
 msgid "Previous month"
 msgstr "Предыдущий месяц"
+
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
 
 msgid "Private"
 msgstr "Приватная"
@@ -3391,6 +3478,9 @@ msgstr "Твоё произношение"
 
 msgid "Pronunciation from lesson"
 msgstr "Произношение с урока"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубликованные колоды исчезнут из Каталога, поэтому никто новый не сможет их добавить."
 
 msgid "Publishing and deck reports"
 msgstr "Публикация и отчёты о колодах"
@@ -3535,6 +3625,9 @@ msgstr "Изменить порядок разделов"
 msgid "Reorder series"
 msgstr "Изменить порядок серий"
 
+msgid "Replay example"
+msgstr "Воспроизвести пример ещё раз"
+
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
@@ -3570,6 +3663,9 @@ msgstr "Восстановлен раздел «{name}» в колоде «{deck
 
 msgid "Restored the series {name}"
 msgstr "Восстановлена серия «{name}»"
+
+msgid "Retry"
+msgstr "Повторить"
 
 msgid "Review"
 msgstr "Повторение"
@@ -3768,6 +3864,9 @@ msgstr "Увидеть термин и вспомнить значение"
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
 
+msgid "See what’s shared and with whom in our privacy policy."
+msgstr "Что и кому отправляется — в нашей политике конфиденциальности."
+
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Выдели слово или фразу, а затем отправь в Lymi через «Поделиться»."
 
@@ -3908,6 +4007,12 @@ msgstr "Словенский"
 
 msgid "Smart add"
 msgstr "Умное добавление"
+
+msgid "Smart add finds terms in your photos, PDFs and notes."
+msgstr "Умное добавление находит термины в твоих фото, PDF-файлах и заметках."
+
+msgid "Smart add reads your lesson with AI. Turn on AI to find the terms."
+msgstr "Умное добавление читает урок с помощью AI. Включи AI, чтобы найти термины."
 
 msgid "So you know which key to revoke later."
 msgstr "Чтобы потом знать, какой ключ отозвать."
@@ -4156,6 +4261,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
 
+msgid "These features send relevant card text and lesson material to third-party AI services."
+msgstr "Для этих функций нужный текст карточек и материалы уроков отправляются сторонним AI-сервисам."
+
 msgid "They already have a pending invitation."
 msgstr "У этого человека уже есть приглашение без ответа."
 
@@ -4182,6 +4290,9 @@ msgstr "Для истории этой карточки нужно соедин�
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
+
+msgid "This choice applies on mobile and web. Change it any time in You → AI services."
+msgstr "Этот выбор действует в мобильном приложении и веб-версии. Изменить его можно в любой момент: Ты → AI-сервисы."
 
 msgid "This code has expired. Send a new one."
 msgstr "Срок действия кода истёк. Отправь новый."
@@ -4249,6 +4360,9 @@ msgstr "Для этого импорта нужно соединение"
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
 
+msgid "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "Это аккаунт издателя Lymi. Он публикует колоды в Каталоге, поэтому его нельзя удалить здесь. Напиши на hello@lymi.app, чтобы его удалить."
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так она будет выглядеть в Lymi. Измени поля, если что-то стоит не на своём месте."
 
@@ -4278,6 +4392,9 @@ msgstr "Эта ссылка для присоединения больше не 
 
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
+
+msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
+msgstr "Эта настройка действует для твоего аккаунта на всех устройствах. Если выключить, Lymi больше не будет отправлять новый контент AI-сервисам. Текст карточек и сохранённое аудио останутся."
 
 msgid "This shelf has no decks now"
 msgstr "На этой полке сейчас нет колод"
@@ -4337,6 +4454,9 @@ msgstr "Сегодня, {day}: нечего повторять"
 msgid "Today’s goal"
 msgstr "Цель на сегодня"
 
+msgid "Today’s new example audio is used up. Examples you’ve played still play."
+msgstr "Новые озвучки примеров на сегодня закончились. Уже прослушанные примеры по-прежнему воспроизводятся."
+
 msgid "tomorrow"
 msgstr "завтра"
 
@@ -4362,6 +4482,21 @@ msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
 
+msgid "Translated from an earlier example."
+msgstr "Переведено с прежней версии примера."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Переведено с прежней версии примера. Исправь перевод, чтобы он совпадал."
+
+msgid "Translation"
+msgstr "Перевод"
+
+msgid "Translation by you"
+msgstr "Твой перевод"
+
+msgid "Translation from lesson"
+msgstr "Перевод с урока"
+
 msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
@@ -4385,11 +4520,20 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Турецкий"
 
+msgid "Turn lessons into cards"
+msgstr "Превращай уроки в карточки"
+
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
+
+msgid "Turn on AI"
+msgstr "Включить AI"
+
+msgid "Turn on AI services in You to hear this word."
+msgstr "Включи AI-сервисы в разделе Ты, чтобы услышать это слово."
 
 msgid "Turn your notes into cards"
 msgstr "Преврати заметки в карточки"
@@ -4450,6 +4594,12 @@ msgstr "Загрузка"
 msgctxt "deck tag"
 msgid "US civics test"
 msgstr "Тест на гражданство США"
+
+msgid "Use AI in Lymi?"
+msgstr "Использовать AI в Lymi?"
+
+msgid "Use AI services"
+msgstr "Использовать AI-сервисы"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -4515,9 +4665,6 @@ msgstr "Что это значит"
 
 msgid "What it’s for"
 msgstr "Для чего она"
-
-msgid "What stays for others"
-msgstr "Что останется другим"
 
 msgid "What this is about"
 msgstr "О чём это"

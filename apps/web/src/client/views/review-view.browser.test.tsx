@@ -84,7 +84,8 @@ test("the learner's own text and no source carry no chip", async () => {
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
   expect(card.textContent).not.toContain("by you");
   expect(card.textContent).not.toContain("AI");
-  expect(card.querySelectorAll(".rounded-full")).toHaveLength(1);
+  // The state chip alone; round speakers are buttons, not chips.
+  expect(card.querySelectorAll(".rounded-full:not(button)")).toHaveLength(1);
 });
 
 test("a revealed card names its section in place of its source", async () => {

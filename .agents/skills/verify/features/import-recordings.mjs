@@ -46,7 +46,10 @@ export default async function drive({ page, step, api, expect }) {
     const cards = await api(`/api/decks/${deck.id}/cards`);
     const list = cards.items ?? cards.cards ?? cards;
     const hashi = list.find((c) => (c.card ?? c).term === "箸");
-    expect((hashi.card ?? hashi).notes).toBe("I eat with chopsticks.\nCounted with 膳\nはꜜし [1]");
+    expect(hashi.card ?? hashi).toMatchObject({
+      notes: "Counted with 膳\nはꜜし [1]",
+      exampleTranslation: "I eat with chopsticks.",
+    });
     return { deck: deck.id, notes: list.map((c) => [(c.card ?? c).term, (c.card ?? c).notes]) };
   });
 
@@ -77,6 +80,11 @@ export default async function drive({ page, step, api, expect }) {
     await page.getByRole("main").getByRole("button", { name: "Review", exact: true }).click();
     const card = page.getByLabel(/ card for /);
     await expect(card).toBeVisible();
+    // 猫's clip is the unplayable one, so it has no recording; the draw may put it first.
+    for (let i = 0; i < 3 && /猫/.test((await card.getAttribute("aria-label")) ?? ""); i++) {
+      await page.keyboard.press("Space");
+      await page.getByRole("button", { name: /^Good/ }).click();
+    }
     const term = await card.getAttribute("aria-label");
     // The card in front never settles for Playwright's pointer checks, so play it by keyboard.
     await page

@@ -84,7 +84,11 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await expect(enrich).toBeVisible();
 
     const res = await page.request.patch(`/api/cards/${cardId}`, {
-      data: { example: "Sbrigati, il treno parte!", pronunciation: "zbri\u02c8garsi" },
+      data: {
+        example: "Sbrigati, il treno parte!",
+        exampleTranslation: "Hurry up, the train is leaving!",
+        pronunciation: "zbri\u02c8garsi",
+      },
     });
     expect(res.ok()).toBeTruthy();
     // A reload puts the menu away without a gesture that differs between the drawer and the pointer menu.

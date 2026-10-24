@@ -6,7 +6,7 @@ import { CircleAlert, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api, errorMessage } from "../lib/api";
-import { publicSiteUrl } from "../lib/origins";
+import { localizedSiteUrl, publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery } from "../lib/queries";
 import { useConfirmStep } from "../lib/use-confirm-step";
 import { AppMark, identifyApp } from "./app-mark";
@@ -22,7 +22,7 @@ import { Skeleton } from "./skeleton";
  * this is where it is taken back: the app, what it may do, and the host that identifies it.
  */
 export function ConnectedAppsSection() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const qc = useQueryClient();
   const apps = useQuery(connectedAppsQuery);
   const disconnect = useMutation({
@@ -86,8 +86,9 @@ export function ConnectedAppsSection() {
 
       <p className="text-sm text-muted">
         <Trans>
-          Read Lymi’s <DocLink href={publicSiteUrl("/privacy")}>privacy policy</DocLink> or get help
-          from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
+          Read Lymi’s{" "}
+          <DocLink href={localizedSiteUrl("/privacy", i18n.locale)}>privacy policy</DocLink> or get
+          help from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
         </Trans>
       </p>
     </SettingsGroup>

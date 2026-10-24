@@ -1,0 +1,22 @@
+body:
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+      description: The command, file or doc involved and what it did.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What the agent expected
+      description: What the agent assumed, and what it read or saw that led it there.
+    validations:
+      required: true
+  - type: textarea
+    id: prevention
+    attributes:
+      label: What would have prevented it
+      description: A check, a hook, a clearer error or a guide line, and where it belongs.
+    validations:
+      required: true

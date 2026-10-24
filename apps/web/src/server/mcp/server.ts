@@ -128,7 +128,7 @@ const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each 
 
 Start with list_decks. It names the decks, their languages and the language meanings are written in. Its languages map says how each deck language writes a card's pronunciation and example; write those fields in that format.
 
-When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
+When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. An example stays in the language being learned; a translation of it in the material goes in exampleTranslation, never in the example or the notes. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. A Japanese term whose kana reading differs from the existing card's is a different word and gets its own card, as long as both have a reading. A Japanese term sent with its reading inline, 食[た]べる, is stored as 食べる with the reading たべる, and the result lists the converted fields in normalized. Re-sending the same batch is safe.
 
@@ -353,7 +353,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ cardId, ...patch }) =>
       run("update_card", async () => {
         requireWrite(principal);
-        return result(cardOut(await updateCard(ctx, cardId, patch)));
+        return result(cardOut(await updateCard(ctx, cardId, patch, principal.enrichment)));
       }),
   );
 
@@ -370,7 +370,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ cards, response }) =>
       run("update_cards", async () => {
         requireWrite(principal);
-        const outcomes = await updateCards(ctx, cards);
+        const outcomes = await updateCards(ctx, cards, { enrichment: principal.enrichment });
         return result({
           updated: outcomes.filter((o) => o.status === "updated").length,
           failed: outcomes.filter((o) => o.status === "error").length,
@@ -1165,6 +1165,13 @@ const CardOut = z.object({
   meaning: z.string().nullable(),
   pronunciation: z.string().nullable(),
   example: z.string().nullable(),
+  exampleTranslation: z
+    .string()
+    .nullable()
+    .describe("The example in the learner's meaning language, shown after the answer"),
+  exampleTranslationStale: z
+    .boolean()
+    .describe("True when the translation was written for an earlier example"),
   notes: z.string().nullable().describe("Markdown source in the notes subset"),
   hook: z
     .string()
@@ -1194,6 +1201,7 @@ const CardOut = z.object({
   imageVersion: z.string().nullable(),
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
+  exampleTranslationSource: FieldSource.nullable(),
   pronunciationSource: FieldSource.nullable(),
   notesSource: FieldSource.nullable(),
   hookSource: FieldSource.nullable(),
@@ -1225,6 +1233,8 @@ function cardOut(card: CardView): CardOut {
     meaning: card.meaning,
     pronunciation: card.pronunciation,
     example: card.example,
+    exampleTranslation: card.exampleTranslation,
+    exampleTranslationStale: card.exampleTranslationStale,
     notes: card.notes,
     hook: card.hook,
     language: card.language,
@@ -1244,6 +1254,7 @@ function cardOut(card: CardView): CardOut {
     imageVersion: card.imageVersion,
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
+    exampleTranslationSource: card.exampleTranslationSource,
     pronunciationSource: card.pronunciationSource,
     notesSource: card.notesSource,
     hookSource: card.hookSource,

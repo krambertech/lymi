@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
 import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { ReviewAid, ReviewModeKey } from "./types";
+import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -111,6 +111,7 @@ const step = z.enum([
   "kind",
   "language",
   "goal",
+  "ai",
   "start",
   "setup",
   "deck",
@@ -300,6 +301,8 @@ export const analyticsEvents = {
     fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
     /** Of `count`, the cards whose text was converted to how Lymi stores it. */
     normalized: count.optional(),
+    /** Where in the app the add began, when not a screen of the app itself. */
+    entry: z.enum(["desktop_panel"]).optional(),
   }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
@@ -324,6 +327,8 @@ export const analyticsEvents = {
     pictures: count.optional(),
     pictures_skipped: count.optional(),
     write_seconds: count.optional(),
+    /** Workflow runs the write took, each handing the rest to the next before its call budget ran out. */
+    write_runs: count.optional(),
     /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
     readings_converted: count.optional(),
   }),
@@ -337,6 +342,14 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  site_link_followed: z.object({
+    place: z.enum(["use_cases_menu", "explore_menu", "phone_menu", "footer"]),
+    // A public site path without its locale prefix, never a query or a hash.
+    target: z
+      .string()
+      .regex(/^\/[a-z0-9/-]*$/)
+      .max(120),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -347,6 +360,10 @@ export const analyticsEvents = {
     searched: z.boolean(),
   }),
   origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
+  mac_download_started: Attribution.partial().extend({
+    chip: z.enum(["apple_silicon", "intel"]),
+    from: path.optional().catch(undefined),
+  }),
   context_menu_action: z.object({
     menu: z.enum(CONTEXT_MENU_SURFACES),
     action: z.enum(CONTEXT_MENU_ACTIONS),
@@ -375,6 +392,14 @@ export const analyticsEvents = {
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
   }),
+  example_translated: z.object({
+    outcome: z.enum(["translated", "empty", "failed"]),
+    count,
+    trigger: z.enum(["add", "card", "edit"]),
+    superseded: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+    languages: languageList.optional(),
+  }),
   deck_style_learned: z.object({
     outcome: z.enum(["learned", "empty", "failed"]),
     cards: count,
@@ -388,6 +413,7 @@ export const analyticsEvents = {
     count,
     meaning: count,
     example: count,
+    example_translation: count.optional(),
     notes: count,
     pronunciation: count,
     languages: languageList.optional(),
@@ -395,6 +421,7 @@ export const analyticsEvents = {
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
     example: z.boolean(),
+    example_translation: z.boolean().optional(),
     notes: z.boolean(),
     pronunciation: z.boolean(),
     has_instructions: z.boolean(),
@@ -405,6 +432,10 @@ export const analyticsEvents = {
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
+  ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
+  ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -421,12 +452,14 @@ export const analyticsEvents = {
     $ai_session_id: z.null(),
     $ai_span_name: z.enum([
       "enrich",
+      "example_translation",
       "deck_style",
       "hook",
       "import_languages",
       "deck_choice",
       "lesson_read",
       "pronunciation",
+      "example_audio",
       "lead_in",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
@@ -476,6 +509,11 @@ export const analyticsEvents = {
     preloaded: z.boolean().optional(),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
   }),
+  example_audio_played: z.object({
+    outcome: z.enum(["played", "failed", "limited"]),
+    surface: z.enum(["review", "card"]),
+    wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+  }),
   lead_in_decided: z.object({
     language: z.string().regex(/^[a-z]{2,3}$/),
     outcome: z.enum(["unambiguous", "written", "no_fragment", "refused", "failed"]),
@@ -502,6 +540,13 @@ export const analyticsEvents = {
     client: z.enum(["web", "phone"]),
     confirmed_with: z.enum(["email", "apple"]),
     kept_decks: count,
+    published_decks: count.optional(),
+  }),
+  former_deck_copied: z.object({ cards: count }),
+  apple_revocation_attempted: z.object({
+    outcome: z.enum(["revoked", "retrying", "failed", "skipped"]),
+    reason: z.enum(["no_key", "no_token", "exchange", "revoke", "lost"]).optional(),
+    attempt: z.number().int().min(0),
   }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
@@ -548,18 +593,25 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  site_link_followed: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
+  mac_download_started: ["worker"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
+  ai_consent_shown: ["phone"],
+  ai_consent_granted: ["worker"],
+  ai_consent_declined: ["worker"],
+  ai_consent_withdrawn: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],
@@ -570,6 +622,7 @@ export const analyticsProducers = {
   section_go_to: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
+  example_audio_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser", "phone"],
@@ -577,6 +630,8 @@ export const analyticsProducers = {
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],
   account_deleted: ["worker"],
+  former_deck_copied: ["worker"],
+  apple_revocation_attempted: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(
@@ -599,7 +654,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
     if (/^\/explore\/[a-z0-9-]+(?:\/[a-z0-9-]+)?$/.test(clean)) return path.slice(0, 200);
     if (
-      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
+      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|download(?:\/mac(?:-intel)?)?|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
       )
     )
@@ -621,6 +676,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/desktop",
     // Phone screens without a web page of their own.
     "/you",
     "/capture",

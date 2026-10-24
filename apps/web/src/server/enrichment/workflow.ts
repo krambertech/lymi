@@ -12,6 +12,7 @@ import {
   learnDeckStyles,
   settleEnrichment,
 } from "../services";
+import { aiWithdrawn } from "../services/ai-consent";
 import { textCallReporter, track } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
 import { CARDS_PER_CALL, chunked } from "./prompt";
@@ -53,8 +54,9 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         analyticsContextFor(db, params.userId),
       );
       const provider = createTextProvider(this.env, textCallReporter(analytics, "enrich"));
-      // The key went away between the add and this run, so nothing was ever asked.
-      if (!provider) {
+      // The key went away between the add and this run, or the learner turned AI off since.
+      const withdrawn = await step.do("consent", STEP, () => aiWithdrawn(db, params.userId));
+      if (!provider || withdrawn) {
         await step.do("unconfigured", STEP, () =>
           settleEnrichment(db, params.userId, params.cardIds),
         );

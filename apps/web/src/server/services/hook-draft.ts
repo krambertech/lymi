@@ -11,6 +11,7 @@ import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
 import { languagePrompts } from "../languages";
+import { requireAi } from "./ai-consent";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { getSettings } from "./settings";
@@ -228,6 +229,7 @@ export async function hookDraftFor(
   if (card.userId !== ctx.userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
+  await requireAi(ctx);
   const { meaningLanguage } = await getSettings(ctx);
   const subject = {
     term: card.term,

@@ -16,6 +16,8 @@ export interface ServiceContext {
   client?: string | undefined;
   /** What that caller is called, kept on the row so a revoked key stays named in the log. */
   clientName?: string | undefined;
+  /** The request came from the phone app, which sends nothing to AI until the learner allows it. */
+  fromPhone?: boolean | undefined;
 }
 
 /** A failure the caller turns into an HTTP status or a tool error. */

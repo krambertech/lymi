@@ -2,7 +2,7 @@ import type { Actor, PhoneClient, Scope } from "@lymi/core";
 import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
 import { FIRST_TOUCH_KEYS } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
-import { Hono } from "hono";
+import { Hono, type MiddlewareHandler } from "hono";
 import { routePath } from "hono/route";
 import { appSiteAssociation, assetLinks } from "./app-site-association";
 import { type Auth, createAuth, type SessionUser } from "./auth";
@@ -267,12 +267,14 @@ app.route("/api/email/events", emailEvents);
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
 // under /api gets one.
-app.use("/api/settings/analytics-consent", async (c, next) => {
+const productOriginOnly: MiddlewareHandler<AppEnv> = async (c, next) => {
   const origin = c.req.header("origin");
   if (origin && origin !== canonicalOrigins(c.env).product)
     return c.json({ error: "This origin cannot change privacy preferences" }, 403);
   return next();
-});
+};
+app.use("/api/settings/analytics-consent", productOriginOnly);
+app.use("/api/settings/ai-consent", productOriginOnly);
 app.use("/api/*", authenticate);
 
 app.get(

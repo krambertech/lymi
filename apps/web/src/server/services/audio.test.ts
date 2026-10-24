@@ -3,8 +3,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
 import { LeadInError, type LeadInRequest } from "../ai/lead-in-writer";
 import type { Db } from "../db";
+import { aiAllowedForOwner } from "./ai-consent";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
+
+vi.mock("./ai-consent", () => ({ aiAllowedForOwner: vi.fn(async () => true) }));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -570,6 +573,35 @@ describe("pronunciation audio", () => {
       storedOnly: true,
     });
     expect(preloaded.key).toBe(played.key);
+    expect(speech).toHaveBeenCalledOnce();
+  });
+
+  it("never voices a card whose owner has not allowed AI, and still plays a clip already made", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const providers = () => [provider("google-gemini", speech)];
+    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+
+    await expect(
+      pronunciationAudio(context(card()), "card-1", { bucket, providers }),
+    ).rejects.toMatchObject({ code: "not_found" });
+    expect(speech).not.toHaveBeenCalled();
+    expect(vi.mocked(aiAllowedForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
+
+    const played = await pronunciationAudio(context(card()), "card-1", { bucket, providers });
+    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+    const replayed = await pronunciationAudio(context(card({ audioKey: played.key })), "card-1", {
+      bucket,
+      providers,
+    });
+    expect(replayed.key).toBe(played.key);
     expect(speech).toHaveBeenCalledOnce();
   });
 

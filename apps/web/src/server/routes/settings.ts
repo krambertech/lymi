@@ -1,4 +1,5 @@
 import {
+  AiConsentInput,
   AnalyticsConsentInput,
   DeviceTimezoneInput,
   OnboardingInput,
@@ -16,6 +17,7 @@ import {
   setReviewTimezone,
   updateSettings,
 } from "../services";
+import { updateAiConsent } from "../services/ai-consent";
 import { updateAnalyticsConsent } from "../services/settings";
 
 export const settings = new Hono<AppEnv>();
@@ -115,4 +117,20 @@ settings.put(
   }),
   body(AnalyticsConsentInput, "privacy preference"),
   async (c) => c.json(await updateAnalyticsConsent(ctxOf(c), c.req.valid("json"))),
+);
+
+settings.put(
+  "/ai-consent",
+  describe({
+    tags: ["Settings"],
+    summary: "Choose whether Lymi uses AI",
+    learnerOnly: true,
+    description:
+      "Saves whether Lymi may send the learner's cards, lesson material and words to be spoken to AI services. " +
+      "False stops every new AI request for the account; the phone app also waits for true. A newer `updated_at` wins. Only the learner's session can change it.",
+    ok: { schema: SettingsOut, description: "Settings after the choice" },
+    errors: [400],
+  }),
+  body(AiConsentInput, "AI choice"),
+  async (c) => c.json(await updateAiConsent(ctxOf(c), c.req.valid("json"))),
 );

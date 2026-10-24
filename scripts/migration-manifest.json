@@ -243,6 +243,10 @@
     {
       "name": "0060_jazzy_wild_child.sql",
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
+    },
+    {
+      "name": "0061_acoustic_tana_nile.sql",
+      "sha256": "266ce1cb06f1aa56c51dfbc9107087d475dd91b23c68020a85165be34aaf1a59"
     }
   ]
 }

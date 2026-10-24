@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
 import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { ReviewAid, ReviewModeKey } from "./types";
+import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -407,6 +407,10 @@ export const analyticsEvents = {
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
+  ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
+  ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -562,6 +566,10 @@ export const analyticsProducers = {
   ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
+  ai_consent_shown: ["phone"],
+  ai_consent_granted: ["worker"],
+  ai_consent_declined: ["worker"],
+  ai_consent_withdrawn: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

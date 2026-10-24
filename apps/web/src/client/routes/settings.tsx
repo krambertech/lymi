@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AccountSection } from "../components/account-section";
+import { AiServicesSection } from "../components/ai-services-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
@@ -81,6 +82,7 @@ function SettingsRoute() {
     >
       <ThisMacSection />
       <NotificationsSection />
+      <AiServicesSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
       <ExportSheet

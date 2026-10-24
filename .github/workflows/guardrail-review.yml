@@ -4,6 +4,9 @@ name: Guardrail review
 # pull_request_target runs this file from the default branch, so a push cannot loosen the gate that judges it.
 # Nothing from the pull request runs: its head is fetched only as data to diff.
 on:
+  # Demo only: pull_request_target runs from main, which does not have this workflow yet.
+  pull_request:
+    types: [opened, synchronize, reopened]
   pull_request_target:
     types: [opened, synchronize, reopened]
   pull_request_review:

@@ -309,6 +309,8 @@ All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 
 
 The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
 
+Expired auth rows go on a schedule, not only with their account. Each cron run (`services/auth-retention.ts`) deletes up to 500 `verification` rows past `expires_at` and up to 500 `session` rows more than a day past `expires_at`, which takes the IP address and user agent with them. The session's day of grace exists because deleting a session sets `session_id` to null on its OAuth access tokens, and the provider checks a token's session only when it has one, so an unbound token would answer again until its own hour ran out. Refresh tokens keep their row either way: the provider already drops an expired session from a refresh. KV copies of sessions expire on their own TTL and are not touched.
+
 ### Review days
 
 A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. A rest day has no column: the streak summary derives it on every read. The rules are in [the daily review goal proposal](proposals/daily-review-goal-and-rolling-queue.md) and live in `services/review-days.ts`.

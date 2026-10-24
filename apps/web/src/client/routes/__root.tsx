@@ -31,6 +31,7 @@ import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
+import { desktop, isDesktopSurface } from "../lib/desktop";
 import { appleKeyboard } from "../lib/device";
 import { isGuiding } from "../lib/first-run";
 import {
@@ -47,6 +48,7 @@ import { decksQuery, meQuery, seriesQuery, settingsQuery, streakQuery } from "..
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
+import { toggleTheme } from "../lib/theme";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
 
@@ -91,11 +93,14 @@ function Root() {
               viewportClassName={pathname.startsWith("/review") ? REVIEW_TOAST_INSET : undefined}
             />
             {/* Personas and seeds mean nothing on the design system and email pages. */}
-            {DevPanel && !pathname.startsWith("/design") && pathname !== "/emails" && (
-              <Suspense fallback={null}>
-                <DevPanel />
-              </Suspense>
-            )}
+            {DevPanel &&
+              !pathname.startsWith("/design") &&
+              pathname !== "/emails" &&
+              !isDesktopSurface(pathname) && (
+                <Suspense fallback={null}>
+                  <DevPanel />
+                </Suspense>
+              )}
           </SignOutProvider>
         </AddCardProvider>
       </TooltipProvider>
@@ -118,6 +123,8 @@ function Shell() {
   const [commandOpen, setCommandOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
+  // The Mac app's panel is signed in like the app but draws only itself and answers its own 401.
+  const panel = isDesktopSurface(location.pathname);
   const onReview = location.pathname.startsWith("/review");
   // The screen on show, not the one loading: leaving Welcome would otherwise draw the rail around its last question.
   const shown = useRouterState({
@@ -126,20 +133,21 @@ function Shell() {
   // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
   const closed = shown.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
+  // The Mac app's panel loads hidden at every login, so it is no visit, no day opened and no rail.
   useEffect(() => {
-    capturePageview(location.pathname);
-  }, [location.pathname]);
+    if (!panel) capturePageview(location.pathname);
+  }, [location.pathname, panel]);
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
-  const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
+  const series = useQuery({ ...seriesQuery, enabled: !bare && !panel && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const smartAccess = useQuery({
     queryKey: ["lesson-reads", "access"],
     queryFn: api.lessonAccess,
-    enabled: !bare && me.isSuccess,
+    enabled: !bare && !panel && me.isSuccess,
     staleTime: Number.POSITIVE_INFINITY,
   });
   const leave = useSignOut();
-  useSettleToday(!bare && me.isSuccess);
+  useSettleToday(!bare && !panel && me.isSuccess);
   useRouteFocus();
 
   const appLanguage = settings.data?.appLanguage;
@@ -180,7 +188,7 @@ function Shell() {
   ]);
 
   useEffect(() => {
-    if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {
+    if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare && !panel) {
       const returnTo = `${window.location.pathname}${window.location.search}`;
       // The Worker already sends a signed-out Explore visit to the site; this covers a shell the
       // service worker served.
@@ -190,7 +198,7 @@ function Shell() {
       }
       navigate({ to: "/login", search: { returnTo } });
     }
-  }, [me.isError, me.error, bare, navigate]);
+  }, [me.isError, me.error, bare, panel, navigate]);
 
   // Queued writes and grades replay after sign-in, when the connection returns, and when the app
   // comes back to the front; the lists refetch once something landed.
@@ -254,7 +262,7 @@ function Shell() {
 
   // Global shortcuts: N adds, R reviews. Ignored while typing.
   useEffect(() => {
-    if (bare) return;
+    if (bare || panel) return;
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       if (
@@ -278,13 +286,13 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, onReview, bare, add, activeDeckId]);
+  }, [navigate, onReview, bare, panel, add, activeDeckId]);
 
   // ⌘K on a Mac, Ctrl K elsewhere, opens the command menu from any field. Not over another
   // dialog, where it would stack a second modal on a half-written form, and not where the shell
   // is closed on purpose (review, Welcome). Ctrl K on a Mac stays the field's "delete to end".
   useEffect(() => {
-    if (bare || closed) return;
+    if (bare || closed || panel) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.altKey || e.shiftKey) return;
       if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
@@ -296,7 +304,7 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [bare, closed, commandOpen]);
+  }, [bare, closed, panel, commandOpen]);
 
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;
@@ -307,6 +315,57 @@ function Shell() {
   const onSmartAdd = smartAccess.data?.allowed
     ? () => openSmart(ownedActive ? activeDeckId : undefined)
     : undefined;
+  // The Mac app moves an open window to a product path instead of reloading it.
+  useEffect(() => desktop()?.onNavigate((path) => navigate({ href: path })), [navigate]);
+
+  // The Mac app's menu bar runs the same commands as the command menu.
+  useEffect(
+    () =>
+      desktop()?.onMenuCommand((command) => {
+        switch (command) {
+          case "add_card":
+            return openCard(activeDeckId);
+          case "new_deck":
+            return openDeck();
+          case "smart_add":
+            return onSmartAdd?.();
+          case "import":
+            return navigate({ to: "/import" });
+          case "command_menu":
+            return setCommandOpen(true);
+          case "theme":
+            return toggleTheme();
+          case "today":
+            return navigate({ to: "/today" });
+          case "library":
+            return navigate({ to: "/library" });
+          case "insights":
+            return navigate({ to: "/insights" });
+          case "explore":
+            return navigate({ to: "/explore" });
+          case "activity":
+            return navigate({ to: "/activity" });
+          case "review":
+            return navigate({ to: "/review" });
+          case "round_new":
+            return navigate({ to: "/review", search: { round: "new" } });
+          case "round_forgotten":
+            return navigate({ to: "/review", search: { round: "forgotten" } });
+          case "round_slipping":
+            return navigate({ to: "/review", search: { round: "slipping" } });
+          case "back":
+            return window.history.back();
+          case "forward":
+            return window.history.forward();
+          case "settings":
+            return navigate({ to: "/settings", hash: "this-mac" });
+          default:
+            // A command the menu sends and this page does not answer fails to compile here.
+            return command satisfies never;
+        }
+      }),
+    [openCard, openDeck, onSmartAdd, navigate, activeDeckId],
+  );
   const { signOut, busy: signingOut } = leave;
   const assistant = useAssistantOffer(signedIn);
   // Today's first run offers assistants itself, so the rail does not say it twice.
@@ -340,7 +399,7 @@ function Shell() {
     ],
   );
 
-  if (bare) return <Outlet />;
+  if (bare || panel) return <Outlet />;
 
   return (
     <LearnerAvatarProvider enabled={me.isSuccess}>

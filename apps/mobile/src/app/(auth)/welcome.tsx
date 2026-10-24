@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDoor } from "../../auth/door";
-import { Brand, DevSignIn, DoorButtons, Pool } from "../../auth/door-parts";
+import { Brand, DevSignIn, DoorButtons, Pool, PrivacyLink } from "../../auth/door-parts";
 import type { Step } from "../../auth/use-sign-in";
 
 /**
@@ -25,6 +25,7 @@ export default function Welcome() {
       </View>
       <View className="gap-1 px-5" style={{ paddingBottom: insets.bottom + 8 }}>
         <DoorButtons door={door} open={open} />
+        <PrivacyLink />
         <DevSignIn />
       </View>
     </View>

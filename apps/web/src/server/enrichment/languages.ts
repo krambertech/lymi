@@ -3,130 +3,181 @@ import { type FieldGuide, LANGUAGE_PROMPTS, languagePrompts } from "../languages
 
 const FILIPINO: FieldGuide = {
   notes:
-    "Verb: the root and the focus its affix marks, actor (*-um-*, *mag-*), object (*-in*, *i-*) or place (*-an*), then the completed · ongoing · future forms (*kumain · kumakain · kakain*, root *kain*, actor focus).",
+    "Verb: Root: *kain*, then Focus: actor (*-um-*, *mag-*), object (*-in*, *i-*) or place (*-an*), then Aspects: *kumain · kumakain · kakain*, completed · ongoing · future.",
 };
 
 const NORWEGIAN: FieldGuide = {
   notes:
-    "Noun: the gender, then the definite singular and the plural, in Bokmål, the standard a plain no tag means (*en bil, bilen, biler*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*kjøre · kjører · kjørte · har kjørt*). A word told apart from another only by its pitch accent: say which tone it has and what the other means (*hender*, tone 2: happens; tone 1: hands).",
+    "In Bokmål, the standard a plain no tag means. Noun: Gender: en, ei or et where the term lacks its article (*ei/en jente*), Definite: *jenta*, Plural: *jenter*. Verb: Present: *kjører*, Past: *kjørte*, Perfect: *har kjørt*. Usage: a word told apart from another only by its pitch accent, with its tone and what the other tone means (Tone 2: *hender*, happens; tone 1: hands), or the word that differs from Swedish or Danish.",
   pronunciation:
     "Leave pronunciation null, unless the word isn't said as Norwegian spelling suggests.",
 };
 
 /**
  * How to write cards in one language, field by field, keyed by primary language subtag. The
- * deck's samples and instructions override it. Keep each rule short and plain. A supported
- * language's guide lives in its module under server/languages.
+ * deck's samples and instructions override it. Labels in notes are written in English here and
+ * in the meaning language on the card. Keep each rule short and plain. A supported language's
+ * guide lives in its module under server/languages.
  */
 const GUIDES: Record<string, FieldGuide> = {
   et: {
     notes:
-      "Give the three forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*maja · maja · maja*). Verb: ma-infinitive · da-infinitive · present tense, first person (*tulema · tulla · tulen*). Add one short line only if needed: the case a verb takes (*aitama* + partitive), a short illative that is hard to guess (*maja → majja*), or a similar word to tell apart (*pikk* for people, *kõrge* for buildings). For a sentence: list its main words with their forms, and say which case or form matters and why, like the partitive object after *ei*.",
+      "If the term doesn't show its forms, the first line gives all three: Forms: *tulema · tulla · tulen* for a verb (ma-infinitive · da-infinitive · present, first person), *vesi · vee · vett* for a noun or adjective (nominative · genitive · partitive). Then, only where hard to guess: Past: *tulin*, Illative: *majja* for a short illative, Imperative: *tule!*. Usage: the case a verb takes (+ partitive: *kardan koera*) or a look-alike (*pikk* for people, *kõrge* for buildings). For a sentence: a line per main word with its forms (Find: *leidma · leida · leian*), then the case or form to notice and why.",
     pronunciation: "Estonian is read as it is written. Leave pronunciation null.",
   },
   fi: {
     notes:
-      "Give the main forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular · partitive plural, so consonant gradation shows (*katu · kadun · katua · katuja*). Verb: first infinitive · present tense, first person · past tense, first person (*tulla · tulen · tulin*). Add one short line only for the case a verb takes (*pitää* + elative: *pitää jostakin*). For a sentence: say which case matters and why.",
+      "Noun or adjective: Genitive: *kadun*, Partitive: *katua*, Partitive plural: *katuja*, so consonant gradation shows. Verb: Present: *tulen*, Past: *tulin*, first person. Usage: the case a verb takes (+ elative: *pitää jostakin*). For a sentence: the case that matters and why.",
     pronunciation: "Finnish is read as it is written. Leave pronunciation null.",
   },
   de: {
     meaning: "The term for a noun has its article. Don't repeat the article in the meaning.",
     notes:
-      "Noun: the plural (*die Hunde*), if the term doesn't show it. Strong or irregular verb: infinitive · third person present if the vowel changes · past · perfect (*fahren · fährt · fuhr · ist gefahren*). Verb with a fixed preposition or case: give it (*warten auf* + accusative). Separable verb: mark the prefix (*an|rufen*).",
+      "Noun: Plural: *die Hunde*, if the term doesn't show it. Strong or irregular verb: Present: *er fährt* only when the vowel changes, Past: *fuhr*, Perfect: *ist gefahren*, always with ist or hat. Separable verb whose term doesn't mark it: Separable: *an|rufen*. Usage: a fixed preposition and its case (+ auf + accusative: *warten auf*) or a look-alike.",
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow German spelling rules.",
   },
   nl: {
     notes:
-      "Noun: the article and plural (*de hond, honden*; *het huis, huizen*). Strong or irregular verb: infinitive · past singular · past participle, with *is* when the perfect takes *zijn* (*komen · kwam · is gekomen*). Separable verb: mark the prefix (*op|bellen*).",
+      "Noun: Article: *het huis* where the term lacks it, Plural: *huizen*. Strong or irregular verb: Past: *kwam*, Perfect: *is gekomen*, with *is* when it takes zijn. Separable verb whose term doesn't mark it: Separable: *op|bellen*. Usage: a fixed phrase or a false friend.",
     pronunciation: "Leave pronunciation null, unless the word doesn't follow Dutch spelling rules.",
   },
   sv: {
     notes:
-      "Noun: en or ett, the definite singular and the plural (*en bil, bilen, bilar*). Verb: infinitive · present · past · supine (*skriva · skriver · skrev · skrivit*). A word told apart from another only by its pitch accent: say which accent it has and what the other means (*anden*, accent 2: the spirit; accent 1: the duck).",
+      "Noun: Article: *ett hus* where the term lacks it, Definite: *huset*, Plural: *hus*. Verb: Present: *skriver*, Past: *skrev*, Supine: *skrivit*. Usage: a word told apart from another only by its pitch accent, with its accent and what the other accent means (Accent 2: *anden*, the spirit; accent 1: the duck), or a near-synonym (*gå* on foot, *åka* by vehicle).",
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
   uk: {
     notes:
-      "Verb: the aspect pair, imperfective / perfective (*робити / зробити*), and the case or preposition it takes if it isn't the accusative. Noun: the gender only if the ending doesn't show it, and an irregular plural.",
+      "Mark the stress on every form, as in the pronunciation. Verb: Perfective: *купи́ти* (or Imperfective: on a perfective term), Present: *купу́ю, купу́єш* (a perfective: Future: *ку́плю, ку́пиш*). Noun: Gender where the ending hides it, Genitive and Plural when the stress moves or the stem changes (Plural: *міста́*). Usage: a case other than the accusative (+ dative: *дя́кувати*), or a Russian look-alike (*неді́ля* is Sunday, not a week).",
     pronunciation:
       "The term in Cyrillic with an accent mark on the stressed vowel (молоко́), for each word of two or more syllables. Not IPA.",
   },
   pl: {
     notes:
-      "Verb: the aspect pair, imperfective / perfective (*robić / zrobić*), and the case it takes if it isn't the accusative (*bać się* + genitive). Noun: the gender if the ending doesn't show it, and the genitive singular and nominative plural where they are irregular, including a masculine-personal plural (*student, studenta, studenci*). A word that looks like a Ukrainian or Russian word but means something else: say so (*dywan* is a carpet, not a sofa).",
+      "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), *na* vs *w*, or, for a reader in Ukrainian or Russian, a false friend (False friend: *dywan*, a carpet, not a sofa).",
     pronunciation:
-      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule.",
+      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule: then the term with a grave accent on the stressed vowel (mùzyka), because an acute would turn o into the letter ó.",
+  },
+  cs: {
+    notes:
+      "Verb: Perfective: *udělat* (or Imperfective: on a perfective term), Present: *dělám*. Noun: Gender where the ending hides it, Genitive: *domu*, Plural where irregular (*člověk*, Plural: *lidé*). Usage: the case a verb takes, or a pair like *doma / domů*. Keep háček and čárka, and ů apart from ú, as written.",
+    pronunciation:
+      "Czech is read as it is written, stressed on the first syllable. Leave pronunciation null.",
+  },
+  sr: {
+    example: "One short sentence in Cyrillic, in the ekavian standard.",
+    notes:
+      "Forms in Cyrillic. Verb: Perfective: *купити* (or Imperfective: on a perfective term), Present: *купим, купиш*. Noun: Gender where the ending hides it, Genitive or Plural when the stem changes. Usage: the case a verb takes, or the Croatian word where it differs (In Croatian: *kruh*).",
+    pronunciation:
+      "The term in Serbian Latin script, letter for letter (купити → kupiti, ћевапи → ćevapi). Not IPA.",
+  },
+  fr: {
+    notes:
+      "Noun: Gender where the article hides it (*l'arbre*, Gender: masculine), and an irregular Plural: *les yeux*. Adjective: Feminine: *belle* and Plural: *beaux*, when irregular. Verb: Present: *je viens, nous venons* when irregular, Participle: *venu*, and a With *être* line when it takes être in the passé composé. Usage: a construction learners miss (+ de: *avoir besoin de*).",
+  },
+  es: {
+    notes:
+      "Verb: Present: *tengo, tienes*, the yo and tú forms, so a stem change shows, when irregular or stem-changing, and Preterite: *tuve* when irregular. Noun: Gender where the ending hides it (*el mapa*, Gender: masculine). Usage: ser or estar, the word Spain and Latin America say differently (In Latin America: *carro*), or a construction (*me gusta*).",
+    example: "Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).",
+    pronunciation: "Spanish is read as it is written. Leave pronunciation null.",
   },
   it: {
     meaning:
       "The term for a noun has its article, to show gender. Don't repeat the article in the meaning.",
     notes:
-      "Noun: an irregular plural (*l'uovo, le uova*). Verb: its irregular forms (*venire: vengo, venuto*), and *essere* if it uses it in compound tenses.",
+      "Verb: Present: *vengo, vieni* when irregular, Participle: *venuto* when irregular, and Past with *essere*: *sono venuto* when it takes essere. Noun: an irregular Plural: *le uova*. Usage: a look-alike or a usage point.",
     example: "Keep every written accent (*città*, *perché*).",
-    pronunciation: "Leave pronunciation null, unless the stress isn't where the spelling suggests.",
-  },
-  es: {
-    notes:
-      "Verb: stem changes or irregular forms (*poder: puedo*; *tener: tengo, tuve*). Noun: the gender if the ending doesn't show it (*el mapa*).",
-    example: "Keep every written accent, ñ and ü (*árbol*, *niño*, *pingüino*).",
-    pronunciation: "Spanish is read as it is written. Leave pronunciation null.",
-  },
-  fr: {
-    notes:
-      "Noun: the gender if the article doesn't show it (*l'arbre*, masculine), and an irregular plural. Adjective: an irregular feminine or plural (*beau, belle, beaux*). Verb: its irregular forms (*venir: je viens, venu*), and *être* if it uses it in the passé composé.",
+    pronunciation:
+      "Leave pronunciation null, unless the stress falls before the second-to-last syllable: then the term with a grave accent on the stressed vowel (telèfono).",
   },
   pt: {
     notes:
-      "Verb: its irregular forms (*fazer: faço, fiz, feito*). Noun: the gender if the ending doesn't show it (*o mapa*). A word Brazil and Portugal say differently: give the other one (*ônibus*, Brazil; *autocarro*, Portugal). Write each in the spelling of the deck's variety.",
+      "Verb: Present: *faço, faz* when irregular, Past: *fiz*, Participle: *feito* when irregular. Noun: Gender only where the ending hides it (*o mapa*), and an irregular Plural. Usage: where Brazil and Portugal use different words (*ônibus* and *autocarro*, *trem* and *comboio*), always the other variety's word, so a Brazilian deck gets In Portugal: *autocarro* and a Portuguese deck gets In Brazil: *ônibus*, even when nothing else is irregular. Otherwise a near-synonym (*tomar* vs *beber*). Write each word in its own variety's spelling.",
+  },
+  ro: {
+    notes:
+      "Noun, listed without its article: Gender, Definite: *ușa*, Plural: *uși*, on every noun. Verb, listed with *a*: Present: *fac, faci*, Participle: *făcut*. Adjective: Feminine and Plural when irregular. Usage: a near-synonym (*vechi* for things, *bătrân* for people).",
+    example: "Write ș and ț with a comma below, never a cedilla, and keep ă, â and î.",
+    pronunciation:
+      "The term with an acute on the stressed vowel of each word of two or more syllables (a fáce, úșă). Not IPA.",
+  },
+  el: {
+    meaning:
+      "The term for a noun has its article; don't repeat it in the meaning. A verb is listed in the first person present: translate it as the infinitive (πίνω: to drink).",
+    notes:
+      "Noun: Plural: *τα σπίτια*, and Genitive: *του σπιτιού* when the stress moves. Verb: Past: *ήπια*, Future: *θα πιω*. Usage: a construction (*μου αρέσει*) or *όχι* vs *δεν*.",
+    pronunciation:
+      "A simple romanization as the word is said, with an acute on the stressed vowel (πίνω píno, σπίτι spíti, ευχαριστώ efcharistó). Not IPA.",
+  },
+  tr: {
+    notes:
+      "Verb, listed in -mek or -mak: Present: *gidiyorum*, Aorist: *gider*, Past: *gitti*. Noun: Accusative: *kitabı*, Plural: *kitaplar*, which show vowel harmony and consonant softening. Usage: the case the verb takes (+ dative: *eve gitmek*).",
+    pronunciation: "Turkish is read as it is written. Leave pronunciation null.",
+  },
+  ar: {
+    example: "One short sentence in Modern Standard Arabic, fully vowelled.",
+    notes:
+      "Modern Standard Arabic, each form fully vowelled with its romanization after it. Noun: Plural: *كُتُب* (*kutub*), and Feminine or Masculine where the ending hides it. Verb, listed in the past, third person masculine: Present: *يَكْتُبُ* (*yaktubu*), and Verbal noun when common. Usage: the root with one or two common words (Root *ك ت ب*, writing: *مَكْتَب* office), or the spoken word where it differs completely.",
+    pronunciation:
+      "A romanization: a macron over each long vowel, and ʿ ʾ ḥ ṣ ḍ ṭ ẓ gh for the sounds English lacks (كِتَاب kitāb). Not IPA.",
+  },
+  he: {
+    example: "One short sentence in unpointed Hebrew, without niqqud.",
+    notes:
+      "Forms unpointed, each with its romanization after it. Noun: Masculine or Feminine, Plural: *ספרים* (*sfarim*). Verb, listed in the infinitive: Binyan: pa'al, Present: *כותב, כותבת* (*kotev, kotevet*). Usage: the root with a word that shares it (Root *ס-פ-ר*: *סיפור* story).",
+    pronunciation:
+      "A romanization as the word is said, with an acute on the stressed vowel (ספר séfer, בית báyit, תודה todá). Not IPA.",
+  },
+  hi: {
+    example: "One short sentence in Devanagari.",
+    notes:
+      "Forms in Devanagari, each with its romanization after it. Noun: Masculine or Feminine on every noun, and Plural when it changes. Verb: Past: *किया* (*kiyā*) when irregular, and Takes *ने* for a transitive verb, whose subject takes ने in the perfective. Usage: the form a woman says, or the Urdu or Sanskrit doublet and its register.",
+    pronunciation:
+      "A romanization: a macron over each long vowel and ṃ for a nasal vowel (घर ghar, करना karnā, मैं maiṃ). Not IPA.",
   },
   en: {
     notes:
-      "Irregular verb: base · past · past participle (*go · went · gone*). Phrasal verb: whether the object can go between the verb and the particle. Noun: an irregular plural.",
-    pronunciation: "IPA, because English spelling doesn't show how a word sounds.",
+      "Irregular verb: Past: *went*, Participle: *gone*, unless the term shows them (*go · went · gone*). Noun: Plural: *children* when irregular, and Uncountable for an uncountable noun. Usage: the preposition it takes (+ on: *depend on*), whether a phrasal verb's object can go between the verb and the particle, or a false friend for the reader (*magazine*, a journal, not a shop).",
+    pronunciation:
+      "IPA, because English spelling doesn't show how a word sounds. General British or American, as the deck's samples use.",
   },
   ko: {
     notes:
-      "Verb or adjective: its polite present form (*가다 → 가요*). A word built from Chinese characters (Sino-Korean): each root's hanja and Korean reading, with one or two common words that share the root (*學 학: 학생, 학년*). A native Korean word has no roots line.",
+      "Verb or adjective: Polite: *가요*, and Irregular: ㅂ when it is irregular. Usage: the honorific word for elders (For elders: *드시다*), or for a word built from Chinese characters (Sino-Korean), each root's hanja and Korean reading with one or two common words that share it (Hanja: 學 학, as in *학생*, *학년*). A native Korean word has no hanja line.",
   },
   hu: {
     notes:
-      "Noun: an irregular plural or accusative (*ló, lovak, lovat*). Verb: the third person singular present, indefinite and definite (*olvas · olvassa*), and say so if it is an -ik verb (*eszik*). Suffixes follow vowel harmony: give the form this word takes where it is not the usual one (*tűz → tüzet*). Keep long vowels (á é í ó ö ő ú ü ű) as written.",
+      "Noun: Plural and Accusative on every noun, so the linking vowel and any stem change show (*ló*: Plural: *lovak*, Accusative: *lovat*; *tűz*: Accusative: *tüzet*; *kenyér*: Accusative: *kenyeret*). Verb: Present: *olvas · olvassa* on every verb, third person singular, indefinite and definite (*kér · kéri*). An -ik verb (*eszik*) gets a first line of its own: -ik verb. Keep long vowels (á é í ó ö ő ú ü ű) as written.",
     pronunciation:
       "Hungarian is read as it is written, stressed on the first syllable. Leave pronunciation null.",
   },
-  cs: {
-    notes:
-      "Verb: the aspect pair, imperfective / perfective (*dělat / udělat*). Noun: the gender if the ending doesn't show it, and an irregular genitive or plural (*člověk, lidé*; *dům, domu*). Keep háček and čárka, and ů apart from ú, as written.",
-    pronunciation:
-      "Czech is read as it is written, stressed on the first syllable. Leave pronunciation null.",
-  },
   lv: {
     notes:
-      "Noun: the genitive singular, and the gender if the ending doesn't show it (*suns, suņa*; *sirds*, feminine). Verb: infinitive · present · past, first person singular (*iet · eju · gāju*).",
+      "Noun: Genitive: *suņa*, and Gender where the ending hides it (*sirds*, Gender: feminine). Verb: Present: *eju*, Past: *gāju*, first person singular.",
     pronunciation:
       "Latvian is read as it is written, stressed on the first syllable. Leave pronunciation null.",
   },
   lt: {
     notes:
-      "Noun: nominative · genitive singular (*namas · namo*), and the gender if the ending doesn't show it. Verb: infinitive · present · past, third person (*eiti · eina · ėjo*).",
+      "Noun: Genitive: *namo*, and Gender where the ending hides it. Verb: Present: *eina*, Past: *ėjo*, third person.",
   },
   nb: NORWEGIAN,
   no: NORWEGIAN,
   nn: {
     notes:
-      "Noun: the gender, then the definite singular and the plural, in Nynorsk (*ein bil, bilen, bilar*; *ei jente, jenta, jenter*). Verb: infinitive · present · past · perfect (*køyre · køyrer · køyrde · har køyrt*).",
+      "In Nynorsk. Noun: Gender: ein, ei or eit where the term lacks its article, Definite: *jenta*, Plural: *jenter*. Verb: Present: *køyrer*, Past: *køyrde*, Perfect: *har køyrt*.",
     pronunciation:
       "Leave pronunciation null, unless the word isn't said as Norwegian spelling suggests.",
   },
   da: {
     notes:
-      "Noun: en or et, the definite singular and the plural (*en bil, bilen, biler*; *et hus, huset, huse*). Verb: infinitive · present · past · perfect (*køre · kører · kørte · har kørt*).",
+      "Noun: Article: *et hus* where the term lacks it, Definite: *huset*, Plural: *huse*. Verb: Present: *kører*, Past: *kørte*, Perfect: *har kørt*. Usage: a near-synonym (*gå* on foot, *køre* by vehicle).",
   },
   is: {
     notes:
-      "Noun: the gender, then nominative · genitive singular · nominative plural (*hestur, hests, hestar*, masculine). Strong verb: infinitive · past singular · past participle (*fara · fór · farið*). Keep þ, ð, æ and ö as written.",
+      "Noun: Gender, Genitive: *hests*, Plural: *hestar*. Strong verb: Past: *fór*, Participle: *farið*. Keep þ, ð, æ and ö as written.",
     pronunciation:
       "Leave pronunciation null, unless the word isn't said as Icelandic spelling suggests.",
   },
@@ -135,15 +186,15 @@ const GUIDES: Record<string, FieldGuide> = {
   vi: {
     example: "Write every word with its tone marks.",
     notes:
-      "Noun: its usual classifier (*con chó*, *cái bàn*). A word that differs between the north and the south: give the other one (*bát*, north; *chén*, south).",
+      "Noun: Classifier: *con chó*. Usage: the other region's word where north and south differ (In the south: *chén*; In the north: *bát*).",
   },
   ka: {
     notes:
-      "Verb: the verbal noun it is listed under, then the present and the aorist, third person singular (*წერა: წერს · დაწერა*). Noun: its stem only if it drops a vowel (*ფანჯარა → ფანჯრის*).",
+      "Verb, listed as its verbal noun: Present: *წერს*, Aorist: *დაწერა*, third person singular. Noun: Genitive: *ფანჯრის* only when the stem drops a vowel. Usage: the postposition it takes, or a usage point.",
   },
   hy: {
     notes:
-      "Noun: an irregular plural (*մարդ → մարդիկ*). Verb: the present, first person singular (*գրել → գրում եմ*), and an irregular aorist.",
+      "Noun: an irregular Plural: *մարդիկ*. Verb: Present: *գրում եմ*, first person singular, and an irregular Aorist.",
   },
 };
 

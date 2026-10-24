@@ -7,6 +7,8 @@ import type {
   CardInput,
   CardPatch,
   CardsInput,
+  DeckChoiceInput,
+  DeckChoiceOut,
   Direction,
   HookDraftOut,
   ImportantCardsOut,
@@ -96,15 +98,22 @@ export const cardsApi = {
   },
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
-  addCard: (body: CardInput) => {
+  /** `from` labels analytics only: the Mac app's quick-add panel. */
+  addCard: (body: CardInput, from?: "desktop_panel") => {
     const json = JSON.stringify(body);
     // Kept alive, the add still lands when the page reloads or navigates away mid-send.
-    return request<AddCardOutcome>("/api/cards", {
+    return request<AddCardOutcome>(`/api/cards${from ? `?from=${from}` : ""}`, {
       method: "POST",
       body: json,
       keepalive: fitsKeepalive(json),
     });
   },
+  /** The learner's deck in the term's language; null keeps the caller's choice. Writes nothing. */
+  chooseDeck: (body: DeckChoiceInput) =>
+    request<DeckChoiceOut>("/api/cards/deck-choice", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   /** Many cards in one write; each is added or skipped on its own. */
   addCards: (body: CardsInput, from?: "lesson") =>
     request<{ results: AddCardOutcome[] }>(`/api/cards/batch${from ? `?from=${from}` : ""}`, {

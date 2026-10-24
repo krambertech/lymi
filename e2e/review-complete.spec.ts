@@ -11,6 +11,9 @@ async function setGoal(page: Page, goal: number) {
   expect(settings.ok()).toBeTruthy();
 }
 
+/** Continue's name starts with its label; what it holds follows it. */
+const continueButton = (page: Page) => page.getByRole("button", { name: /^Continue/ });
+
 async function addDeck(page: Page, name: string) {
   const deck = await page.request.post("/api/decks", { data: { name, defaultLanguage: "it" } });
   expect(deck.ok()).toBeTruthy();
@@ -88,12 +91,12 @@ test("the goal review stops once at the goal, and Continue runs to the end of th
   });
 
   await test.step("Continue counts what is left of the day and runs to its end", async () => {
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await continueButton(page).click();
     await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
     for (let n = 0; n < 3; n++) await grade(page, "Good");
     await expect(heading(page, "You’re done for today")).toBeVisible();
     await expect(page.getByText(/^7\s*reviews today$/)).toBeVisible();
-    await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeHidden();
+    await expect(continueButton(page)).toBeHidden();
   });
 
   await test.step("Done leaves for Today", async () => {
@@ -126,11 +129,9 @@ test("leaving mid-review ends on the success screen, and Continue picks the revi
   await test.step("leaving after grades says what they added and leads back in", async () => {
     await page.getByRole("button", { name: "Leave review" }).click();
     await expect(heading(page, "Review done")).toBeVisible();
-    await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
-    await expect(
-      page.getByText("3 more reviews to your daily goal", { exact: true }),
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await expect(page.getByText(/^2\s*of 5 reviews today$/)).toBeVisible();
+    await expect(continueButton(page)).toContainText("3 to goal");
+    await continueButton(page).click();
     await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
   });
 
@@ -145,7 +146,7 @@ test("leaving mid-review ends on the success screen, and Continue picks the revi
   });
 
   await test.step("leaving again before a grade says nothing new", async () => {
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await continueButton(page).click();
     await currentCard(page);
     await page.keyboard.press("Escape");
     await expect(page).toHaveURL(/\/today$/);
@@ -182,7 +183,7 @@ test("the end works from the keyboard and without motion, and Continue ends with
 
   await test.step("Continue holds only what is left, and then is not offered", async () => {
     await page.keyboard.press("Tab");
-    const proceed = page.getByRole("button", { name: "Continue", exact: true });
+    const proceed = continueButton(page);
     await expect(proceed).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
@@ -257,14 +258,12 @@ test("a round from Today below the goal leads on to the goal review", async ({
     await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
     await gradeWithKey(page, "3", "1 of 1");
     await expect(heading(page, "Round done")).toBeVisible();
-    await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
-    await expect(
-      page.getByText("3 more reviews to your daily goal", { exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText(/^2\s*of 5 reviews today$/)).toBeVisible();
+    await expect(continueButton(page)).toContainText("3 to goal");
   });
 
   await test.step("Continue picks up the goal's own track and stops at it", async () => {
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await continueButton(page).click();
     await expect(page).toHaveURL(/\/review$/);
     await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
     await gradeWithKey(page, "3", "3 of 5");
@@ -298,8 +297,9 @@ test("a round that crosses the goal keeps going and says the goal is reached", a
     await gradeWithKey(page, "3", "1 of 3");
     await page.getByRole("button", { name: "Leave review" }).click();
     await expect(heading(page, "Review done")).toBeVisible();
-    await expect(page.getByText("1 more review to your daily goal", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    // A round's own count is not known at its end, so Continue says nothing it cannot stand behind.
+    await expect(continueButton(page)).toHaveText("Continue");
+    await continueButton(page).click();
     await expect(page.getByText("1 of 3", { exact: true })).toBeVisible();
   });
 
@@ -312,7 +312,7 @@ test("a round that crosses the goal keeps going and says the goal is reached", a
   await expect(heading(page, "Daily goal reached")).toBeVisible();
   await expect(page.getByText(/^6\s*reviews today$/)).toBeVisible();
   await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
-  await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeVisible();
+  await expect(continueButton(page)).toBeVisible();
 });
 
 test("a deck runs past the goal to its end, and its end says the goal is reached", async ({
@@ -337,7 +337,7 @@ test("a deck runs past the goal to its end, and its end says the goal is reached
   await expect(heading(page, "Daily goal reached")).toBeVisible();
   await expect(page.getByText(/^3\s*reviews today$/)).toBeVisible();
   await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
-  await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeVisible();
+  await expect(continueButton(page)).toBeVisible();
 });
 
 test("a deck that runs out below the goal names itself and leads on to the rest of the day", async ({
@@ -359,11 +359,9 @@ test("a deck that runs out below the goal names itself and leads on to the rest 
   await page.keyboard.press("3");
   await expect(heading(page, "Nothing left in Spanish")).toBeVisible();
   await expect(page.getByText("Start your streak", { exact: true })).toBeVisible();
-  await expect(
-    page.getByText("3 more cards and you’re done for today", { exact: true }),
-  ).toBeVisible();
+  await expect(continueButton(page)).toContainText("other decks");
 
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await continueButton(page).click();
   await expect(page).toHaveURL(/\/review$/);
   await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
   expect(await page.getByLabel(/ card for /).getAttribute("aria-label")).toMatch(/card for Chess/);

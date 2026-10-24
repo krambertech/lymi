@@ -36,6 +36,7 @@ import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
 import { useTagCards } from "../../../deck/tag-cards";
 import { ExportSheet } from "../../../export/export-sheet";
+import { useNewSection } from "../../../sections/name-sheet";
 import {
   ReadyNote,
   SectionHeading,
@@ -128,19 +129,20 @@ export default function Deck() {
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
+  const newSection = useNewSection(id);
   const moveToDeck = useMoveToDeck(id);
   const batch = useCardBatch(id);
   const tagCards = useTagCards(id);
   const cardMenu = useCardMenu({
     owner: () => owner,
-    moveToSection: moveToSection.canMove ? (c) => () => moveToSection.open([c.id]) : undefined,
+    moveToSection: (c) => () => moveToSection.open([c.id]),
     moveToDeck: moveToDeck.canMove ? (c) => () => moveToDeck.open([c.id]) : undefined,
   });
   // Rows keep one menu function, so a render of the page redraws only rows whose card changed.
   const latestMenu = useRef(cardMenu);
   latestMenu.current = cardMenu;
   const menu = useCallback((card: DeckRow["card"]) => latestMenu.current(card), []);
-  const menuShape = `${owner} ${moveToSection.canMove} ${moveToDeck.canMove}`;
+  const menuShape = `${owner} ${moveToDeck.canMove}`;
   const lift = useRoom() === "dark";
   const reduce = useReduceMotion();
   const selection = selected;
@@ -238,15 +240,11 @@ export default function Deck() {
                   icon: "tags" as const,
                   onSelect: () => tagCards.open([...selection], done),
                 },
-                ...(moveToSection.canMove
-                  ? [
-                      {
-                        label: t`Move to section`,
-                        icon: "section" as const,
-                        onSelect: () => moveToSection.open([...selection], done),
-                      },
-                    ]
-                  : []),
+                {
+                  label: t`Move to section`,
+                  icon: "section" as const,
+                  onSelect: () => moveToSection.open([...selection], done),
+                },
                 ...(moveToDeck.canMove
                   ? [
                       {
@@ -432,6 +430,11 @@ export default function Deck() {
                           onSelect: () => setMoving(true),
                         },
                         {
+                          label: t`New section`,
+                          icon: "section" as const,
+                          onSelect: () => newSection.open(),
+                        },
+                        {
                           label: t`Export deck`,
                           icon: "export" as const,
                           onSelect: () => setExporting(true),
@@ -583,6 +586,7 @@ export default function Deck() {
         />
       )}
       {owner && moveToSection.sheet}
+      {owner && newSection.sheet}
       {owner && moveToDeck.sheet}
       {owner && tagCards.sheet}
     </Screen>

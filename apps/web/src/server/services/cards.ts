@@ -97,6 +97,8 @@ export type AddCardsOptions = {
   allowCrossDeckDuplicates?: boolean;
   /** Smart add's pick list, so `cards_added` tells its cards from typed ones. */
   fromLesson?: boolean;
+  /** The Mac app's quick-add panel, so `cards_added` tells its cards from the app's own. */
+  entry?: "desktop_panel" | undefined;
 };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
@@ -378,6 +380,7 @@ export async function addCards(
       source,
       ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
       ...(converted > 0 ? { normalized: converted } : {}),
+      ...(options.entry ? { entry: options.entry } : {}),
     });
   }
   // The run is named after the add's first card, so the same add sent again finds it. A replay

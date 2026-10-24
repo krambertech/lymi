@@ -5,8 +5,9 @@ import type { DeckRow } from "@lymi/client/deck-list";
 import { deckCardsQuery, sectionsQuery } from "@lymi/client/queries";
 import { isolate } from "@lymi/core";
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDeckCards, useSections } from "../data/queries";
+import { useNewSection } from "../sections/name-sheet";
 import { useOnline } from "../streak/goal-picker";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { toast } from "../ui/toast-host";
@@ -106,14 +107,17 @@ export function useMoveCards(deckId: string) {
 
 /**
  * Move to section for a deck's owner, from the deck's selection or a card's menu: `open` with the
- * cards, and render `sheet`. The sheet lists the deck's sections and No section, and the tap is the
- * choice; cards already where they are going stay out of the move.
+ * cards, and render `sheet`. The sheet lists the deck's sections, No section and New section, and
+ * the tap is the choice; cards already where they are going stay out of the move.
  */
 export function useMoveToSection(deckId: string) {
   const sections = useSections(deckId).data?.sections ?? [];
   const rows = useDeckCards(deckId).data;
   const run = useMoveCards(deckId);
+  const named = useNewSection(deckId);
   const [open, setOpen] = useState(false);
+  // New section opens once this sheet has gone, so its name gets the keyboard.
+  const naming = useRef(false);
   // Kept while the sheet closes, so its title does not change on the way out.
   const [picking, setPicking] = useState<{ cardIds: string[]; after?: () => void }>({
     cardIds: [],
@@ -132,22 +136,32 @@ export function useMoveToSection(deckId: string) {
   };
 
   return {
-    /** Moving needs somewhere to move to. */
-    canMove: sections.length > 0,
     open: (cardIds: string[], after?: () => void) => {
       setPicking({ cardIds, ...(after ? { after } : {}) });
       setOpen(true);
     },
     sheet: (
-      <MoveToSectionSheet
-        open={open}
-        onOpenChange={setOpen}
-        sections={sections}
-        count={picking.cardIds.length}
-        term={term}
-        current={current}
-        onPick={pick}
-      />
+      <>
+        <MoveToSectionSheet
+          open={open}
+          onOpenChange={setOpen}
+          onDismiss={() => {
+            if (!naming.current) return;
+            naming.current = false;
+            named.open(picking);
+          }}
+          sections={sections}
+          count={picking.cardIds.length}
+          term={term}
+          current={current}
+          onPick={pick}
+          onNew={() => {
+            naming.current = true;
+            setOpen(false);
+          }}
+        />
+        {named.sheet}
+      </>
     ),
   };
 }
@@ -155,20 +169,24 @@ export function useMoveToSection(deckId: string) {
 function MoveToSectionSheet({
   open,
   onOpenChange,
+  onDismiss,
   sections,
   count,
   term,
   current,
   onPick,
+  onNew,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onDismiss: () => void;
   sections: Section[];
   count: number;
   term: string | undefined;
   /** The section every chosen card is in now, null for none, or undefined when they differ. */
   current: string | null | undefined;
   onPick: (section: Target) => void;
+  onNew: () => void;
 }) {
   const { t } = useLingui();
   const online = useOnline();
@@ -185,22 +203,32 @@ function MoveToSectionSheet({
       description={online ? t`Cards keep their progress.` : t`Moving cards needs a connection.`}
       open={open}
       onOpenChange={onOpenChange}
+      onDismiss={onDismiss}
     >
+      {/* As the web's: the sections, then No section only for cards that are in one. */}
+      {(sections.length > 0 || current !== null) && (
+        <SheetGroup>
+          {sections.map((s) => (
+            <SheetRow
+              key={s.id}
+              label={s.name}
+              chosen={current === s.id}
+              disabled={!online}
+              onPress={() => choose(s)}
+            />
+          ))}
+          {current !== null && (
+            <SheetRow label={t`No section`} disabled={!online} onPress={() => choose(null)} />
+          )}
+        </SheetGroup>
+      )}
       <SheetGroup>
-        {sections.map((s) => (
-          <SheetRow
-            key={s.id}
-            label={s.name}
-            chosen={current === s.id}
-            disabled={!online}
-            onPress={() => choose(s)}
-          />
-        ))}
         <SheetRow
-          label={t`No section`}
-          chosen={current === null}
+          label={t`New section`}
+          icon="plus"
+          opens
           disabled={!online}
-          onPress={() => choose(null)}
+          onPress={() => online && onNew()}
         />
       </SheetGroup>
     </Sheet>

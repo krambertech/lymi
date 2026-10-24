@@ -17,6 +17,7 @@ import { useStreak } from "../data/queries";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
+import { PEEK_ROOM } from "./hooks";
 
 const REVEALS_KEY = "reveals";
 /** Reveals on this phone after which the hint stops coming soon and waits for an idle card. */
@@ -80,7 +81,7 @@ export function RevealHint({ lifted = false }: { lifted?: boolean }) {
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden
       className="absolute inset-x-0 items-center gap-1 px-5 pb-5"
-      style={{ bottom: lifted ? 52 : 0 }}
+      style={{ bottom: lifted ? PEEK_ROOM : 0 }}
     >
       <Animated.View style={hand}>
         <View className="size-11 items-center justify-center">

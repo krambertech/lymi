@@ -77,6 +77,7 @@ import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
 import { TermText } from "../components/term-text";
+import { TurnSpark } from "../components/turn-spark";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -499,6 +500,7 @@ export function ReviewCard({
 
   const hasOffer = !!offer;
   const offerRoom = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
@@ -793,8 +795,17 @@ export function ReviewCard({
         className,
       )}
     >
-      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge. */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]">
+      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge; under the offer the text shows through its frost, cut off at its foot. */}
+      <div
+        ref={scrollerRef}
+        className={clsx(
+          "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain",
+          // Scroll padding as tall as the offer, so a focused control never scrolls in under it.
+          offer && revealed
+            ? "scroll-pb-13 [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
+            : "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]",
+        )}
+      >
         <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
           {!revealed && (
             <button
@@ -1010,10 +1021,16 @@ export function ReviewCard({
             {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
+        {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
+        {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
-      {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
+      {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
-        <div className="shrink-0 px-2 pb-2">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2"
+          // A sibling of the scroller, so a wheel over it is handed on to the card under it.
+          onWheel={(e) => scrollerRef.current?.scrollBy({ top: e.deltaY, left: 0 })}
+        >
           <HookOffer
             {...offer}
             onShown={() => {
@@ -1355,33 +1372,41 @@ export function ReviewComplete({
   const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
+  const [ticked, setTicked] = useState(reduce);
   const [skipped, setSkipped] = useState(false);
   const lanternPlace = useRef<HTMLDivElement>(null);
+  const room = useRef<HTMLDivElement>(null);
   const instant = reduce || skipped;
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
 
   const counted = screen.heading !== "nothing_due";
   const week = landed ? streak : streakBefore;
+  const runWeek = ticked ? streak : streakBefore;
   const days = week ? lastDays(week) : undefined;
-  const flame = week ? streakFlameFor(week) : "lit";
+  const flame = runWeek ? streakFlameFor(runWeek) : "lit";
   const lit = !lanternFor(streak).out;
   const embers = useMemo(
     () => (lit && !reduce ? endEmbers(screen.embers) : []),
     [lit, reduce, screen.embers],
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.
-  const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  const run = screen.streak ? runWeek?.current : (streak ?? week)?.current;
+  const goal = (streak ?? week)?.today.goal;
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers
-    .filter((offer) => !(offer.kind === "continue" && screen.continueLeads))
-    .map((offer) => ({
-      key: offer.kind,
-      icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
-      label:
-        offer.kind === "forgotten"
-          ? t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
-          : t`Continue`,
-      onClick: () => onOffer?.(offer),
-    }));
+  const note = proceed?.note;
+  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  const ways = screen.offers.flatMap((offer) =>
+    offer.kind === "forgotten"
+      ? [
+          {
+            key: offer.kind,
+            label: t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
+            onClick: () => onOffer?.(offer),
+          },
+        ]
+      : [],
+  );
   const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(actionsAt + RISE_MS, embers.length ? AT.embers + embersEnd(embers) : 0);
 
@@ -1391,10 +1416,16 @@ export function ReviewComplete({
   useEffect(() => {
     if (instant) {
       setLanded(true);
+      setTicked(true);
       return;
     }
-    const timer = window.setTimeout(() => setLanded(true), AT.land);
-    return () => window.clearTimeout(timer);
+    const timers = [
+      window.setTimeout(() => setLanded(true), AT.land),
+      window.setTimeout(() => setTicked(true), AT.tick),
+    ];
+    return () => {
+      for (const timer of timers) window.clearTimeout(timer);
+    };
   }, [instant]);
   // The sequence is a moment, never a wait: the first tap or key finishes it.
   useEffect(() => {
@@ -1416,7 +1447,11 @@ export function ReviewComplete({
       className={clsx("isolate flex flex-1 flex-col", skipped && "seq-skip")}
     >
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
-      <div className="m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8">
+      <div
+        ref={room}
+        className="relative m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8"
+      >
+        {turned && !skipped && <TurnSpark lantern={lanternPlace} room={room} />}
         {lit && (
           <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
         )}
@@ -1479,7 +1514,12 @@ export function ReviewComplete({
               <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
             </span>
             <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              <Plural value={attempts} one="review today" other="reviews today" />
+              {/* While the goal is open the count says it, so Continue's count explains itself. */}
+              {!screen.satisfied && goal ? (
+                <Plural value={goal} one="of # review today" other="of # reviews today" />
+              ) : (
+                <Plural value={attempts} one="review today" other="reviews today" />
+              )}
             </span>
           </p>
         ) : (
@@ -1498,17 +1538,16 @@ export function ReviewComplete({
               dates={days.dates}
               size="lg"
               sequence={AT.lights}
-              flare={landed && !reduce && screen.streak}
+              flare={landed && turned}
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
-              <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
+                <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              </span>
               {run ? (
                 <>
                   <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
-                    <span
-                      key={run}
-                      className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
-                    >
+                    <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
                       {run}
                     </span>
                   </span>
@@ -1523,33 +1562,11 @@ export function ReviewComplete({
           </div>
         )}
 
-        {/* While Continue leads, what is left of the day sits under its lights. */}
-        {screen.nudge && (
-          <p
-            className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
-            style={at(AT.run + 120)}
-          >
-            {screen.nudge.kind === "goal" ? (
-              <Plural
-                value={screen.nudge.count}
-                one="# more review to your daily goal"
-                other="# more reviews to your daily goal"
-              />
-            ) : (
-              <Plural
-                value={screen.nudge.count}
-                one="# more card and you’re done for today"
-                other="# more cards and you’re done for today"
-              />
-            )}
-          </p>
-        )}
-
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
         <div
           className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
         >
-          {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is always last and primary. */}
           {ways.map((way, i) => (
             <Button
               key={way.key}
@@ -1558,7 +1575,7 @@ export function ReviewComplete({
               className="seq w-full"
               style={at(AT.actions + i * AT.actionStep)}
             >
-              {way.icon}
+              <StateIcon state="forgot" className="size-4" />
               {way.label}
             </Button>
           ))}
@@ -1566,22 +1583,28 @@ export function ReviewComplete({
             {!counted ? (
               <>
                 {addCards}
-                {done("secondary")}
-              </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {done("secondary")}
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => onOffer?.(proceed)}
-                  className="w-full"
-                >
-                  <Trans>Continue</Trans>
-                </Button>
+                {done("primary")}
               </>
             ) : (
-              done("primary")
+              <>
+                {proceed && (
+                  <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
+                    <Trans>Continue</Trans>
+                    {note && (
+                      <span className="font-normal tabular-nums text-muted">
+                        {note.kind === "goal" ? (
+                          <Plural value={note.count} one="# to goal" other="# to goal" />
+                        ) : note.kind === "cards" ? (
+                          <Plural value={note.count} one="# card left" other="# cards left" />
+                        ) : (
+                          <Trans>other decks</Trans>
+                        )}
+                      </span>
+                    )}
+                  </Button>
+                )}
+                {done("primary")}
+              </>
             )}
           </div>
         </div>

@@ -1137,7 +1137,8 @@ function Review() {
         onClose={leave}
       />
 
-      {!current && !end && !unconfirmed && !failed && <ReviewSkeleton />}
+      {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
+      {!current && !end && !stopped && !unconfirmed && !failed && <ReviewSkeleton />}
 
       {failed && (
         <ReviewError
@@ -1183,12 +1184,7 @@ function Review() {
               onOffer={onOffer}
               done={doneLink}
               addCards={
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => add.openCard(deck)}
-                >
+                <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add cards</Trans>
                 </Button>

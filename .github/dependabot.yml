@@ -1,0 +1,18 @@
+# Electron ships a major every eight weeks and supports only the latest three, so the Mac app
+# would fall out of support within months if left alone. One pull request a month keeps it current
+# and, since each merge releases the app, gives learners about one update a month; its TypeScript,
+# tests and launch check show whether an upgrade changed anything the app uses. docs/stack.md.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /apps/desktop
+    schedule:
+      interval: monthly
+    allow:
+      - dependency-name: electron
+    groups:
+      electron:
+        patterns: ["electron"]
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: "build(desktop)"

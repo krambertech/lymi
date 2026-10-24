@@ -70,6 +70,7 @@ import {
   SearchX,
   Settings,
   Share,
+  ShieldCheck,
   Signpost,
   Sparkle,
   Star,
@@ -209,6 +210,7 @@ const ICONS = {
   filter: ListFilter,
   share: Share,
   copy: Copy,
+  privacy: ShieldCheck,
 } as const;
 
 export type IconName = keyof typeof ICONS;

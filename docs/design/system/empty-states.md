@@ -8,7 +8,7 @@ An empty state shows the learner how to fill what is empty, and it looks tempora
 What is empty?
  ├── Still loading → Skeleton at the loaded size; never an empty state
  ├── It failed to load → ErrorState
- ├── Today, before the first review → StartGuide
+ ├── Today, before the first review → FirstRunGuide (web), StartGuide (phone)
  ├── A whole screen with nothing in it yet (Library, a deck, Insights) → StartPanel
  │     └── and the layout is worth previewing (Insights) → also its real components with ghost
  ├── A group inside a screen (API keys, Connected apps) → EmptySection
@@ -18,6 +18,8 @@ What is empty?
 ## First-run guide
 
 `FirstRunGuide` in `components/first-run.tsx` is Today until the first review ([onboarding.md](../onboarding.md)): dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps, **Create a deck**, **Add cards**, **Finish your first review**.
+
+The phone uses `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`; its entry flow and guide differences are in [onboarding.md](../onboarding.md#on-the-phone).
 
 - Each step is done by the learner's own data, never by a dismissal.
 - A done step shows an amber check and a struck-through title, the current step holds its action, and a later step stays muted. No progress bars.

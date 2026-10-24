@@ -217,6 +217,10 @@ function Root() {
               options={{ presentation: "fullScreenModal", animation: "fade" }}
             />
             <Stack.Screen
+              name="tag-search"
+              options={{ presentation: "fullScreenModal", animation: "fade" }}
+            />
+            <Stack.Screen
               name="new-deck"
               options={{
                 presentation: "formSheet",

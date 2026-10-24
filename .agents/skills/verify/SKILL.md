@@ -17,12 +17,14 @@ A change is verified when the feature it touches has been driven in a running pr
 | Review | [review.md](features/review.md) |
 | The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
+| Memory hook | [memory-hook.md](features/memory-hook.md) |
 | Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
 | Select cards | [select-cards.md](features/select-cards.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
+| Account name | [account-name.md](features/account-name.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
 | Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Import from Anki | [import.md](features/import.md) |
@@ -48,6 +50,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |
 | First run for a Ukrainian beginner | [first-run-ukrainian.md](features/first-run-ukrainian.md) |
+| First run for a Russian beginner | [first-run-russian.md](features/first-run-russian.md) |
 | AI services | [ai-services.md](features/ai-services.md) |
 
 ## Launch

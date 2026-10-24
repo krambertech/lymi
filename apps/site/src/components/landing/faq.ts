@@ -104,6 +104,35 @@ export const CHINESE_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const RUSSIAN_QUESTIONS: Question[] = [
+  {
+    id: "stress",
+    question: msg`Does Lymi show where the stress falls?`,
+    answer: msg`Yes. A card shows its word with a stress mark until the card is Known, then the word as books print it. Turning a card over always shows the mark, and the examples on your cards keep theirs.`,
+  },
+  {
+    id: "homographs",
+    question: msg`What about words spelled the same?`,
+    answer: msg`Each stress is its own word. за́мок, a castle, and замо́к, a lock, are two cards, each with its own stress and its own sound.`,
+  },
+  {
+    id: "yo",
+    question: msg`What about ё?`,
+    answer: msg`Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would.`,
+  },
+  {
+    id: "review",
+    question: msg`What does a card ask me?`,
+    answer: msg`One way at a time: the Russian for its meaning, or the meaning for the Russian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Cards keep their schedule and their word recordings.`,
+  },
+  ...COMMON,
+];
+
 export const UKRAINIAN_QUESTIONS: Question[] = [
   {
     id: "stress",

@@ -48,7 +48,7 @@ Today a language's behaviour lives in three kinds of place: a literal in a helpe
 
 **Instrumentation.** The question is whether each supported language keeps its learners reviewing, and whether recall holds once the reading leaves the cue. `review_graded` reports `reading`, `example_readings` and `readings_faded` whenever a reading is drawn, and gains a new `reading_language` property typed as `SupportedTag`. Japanese charts filter on `reading_language=ja` once Chinese starts sending. `enrichment_finished` gains an optional `languages`, left out when a run fails before its cards are read.
 
-**Roster.** Supported: Japanese, Chinese and Ukrainian (done), and Russian. Configured: Korean (pronounced Hangul where it differs from the spelling, Sino-Korean roots, a default voice, TOPIK I decks), German (article and plural) and Estonian (principal forms). Platform work first: Arabic gets right-to-left layout, then harakat. Later: Cantonese, Hebrew and Thai.
+**Roster.** Supported: Japanese, Chinese, Ukrainian and Russian (done). Configured: Korean (pronounced Hangul where it differs from the spelling, Sino-Korean roots, a default voice, TOPIK I decks), German (article and plural) and Estonian (principal forms). Platform work first: Arabic gets right-to-left layout, then harakat. Later: Cantonese, Hebrew and Thai.
 
 **ADRs on acceptance.** Two decisions become ADRs: language behaviour comes from the tag through records, never from a setting; and `pronunciation` stays the only field.
 

@@ -1,0 +1,117 @@
+# A deck's owner renames, merges, archives and restores the deck's tags from deck settings.
+appId: app.lymi
+name: Deck tags
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/deck-settings?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Tags, 4 tags"
+    timeout: 20000
+- takeScreenshot: 01-settings-row
+- tapOn: "Tags, 4 tags"
+- extendedWaitUntil:
+    visible: "In use"
+    timeout: 20000
+- assertVisible: "noun, 2 cards"
+- takeScreenshot: 02-tags-page
+# A plain rename offers Undo, which puts the old name back.
+- tapOn: "Options for noun"
+- tapOn: "Rename…"
+- extendedWaitUntil:
+    visible: "Rename “noun”"
+    timeout: 10000
+- eraseText: 10
+- inputText: "nouns"
+- takeScreenshot: 03-rename-sheet
+- tapOn: "^Rename$"
+- extendedWaitUntil:
+    visible: "Renamed “noun” to “nouns”"
+    timeout: 20000
+- assertVisible: "nouns, 2 cards"
+- takeScreenshot: 04-renamed
+- tapOn: "Undo"
+- extendedWaitUntil:
+    visible: "noun, 2 cards"
+    timeout: 20000
+# Renaming onto a name already on the deck is refused and points to Merge into….
+- tapOn: "Options for reflexive"
+- tapOn: "Rename…"
+- extendedWaitUntil:
+    visible: "Rename “reflexive”"
+    timeout: 10000
+- eraseText: 12
+- inputText: "verb"
+- extendedWaitUntil:
+    visible: "“verb” is already a tag on this deck. To combine the two, use Merge into… instead."
+    timeout: 10000
+- takeScreenshot: 05-rename-refused
+- runFlow:
+    file: _dismiss.yaml
+    env:
+      MARK: "Rename “reflexive”"
+# Merge into… asks in iOS's alert once its sheet has gone; Keep both leaves the tags as they were.
+- tapOn: "Options for reflexive"
+- tapOn: "Merge into…"
+- extendedWaitUntil:
+    visible: "Merge “reflexive” into"
+    timeout: 10000
+- takeScreenshot: 06-merge-sheet
+- tapOn: "verb, 1"
+- extendedWaitUntil:
+    visible: "Merge “reflexive” into “verb”?"
+    timeout: 10000
+- takeScreenshot: 07-merge-alert
+- tapOn: "Keep both"
+- assertVisible: "reflexive, 1 card"
+- tapOn: "Options for reflexive"
+- tapOn: "Merge into…"
+- extendedWaitUntil:
+    visible: "Merge “reflexive” into"
+    timeout: 10000
+- tapOn: "verb, 1"
+- extendedWaitUntil:
+    visible: "Merge “reflexive” into “verb”?"
+    timeout: 10000
+- tapOn: "Merge"
+- extendedWaitUntil:
+    visible: "Merged “reflexive” into “verb”"
+    timeout: 20000
+- assertNotVisible: "reflexive, 1 card"
+- tapOn: "Options for verb"
+- tapOn: "Merge into…"
+- extendedWaitUntil:
+    visible: "Merge “verb” into"
+    timeout: 10000
+- tapOn: "noun, 2"
+- extendedWaitUntil:
+    visible: "Merge “verb” into “noun”?"
+    timeout: 10000
+- tapOn: "Merge"
+- extendedWaitUntil:
+    visible: "Merged “verb” into “noun”"
+    timeout: 20000
+- assertVisible: "noun, 3 cards"
+- takeScreenshot: 08-merged
+# Archive offers Undo; once archived for good, Restore brings it back from Archived tags.
+- tapOn: "Options for money"
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "Archived “money” from 3 cards"
+    timeout: 20000
+- assertVisible: "Archived tags"
+- takeScreenshot: 09-archived
+- tapOn: "Undo"
+- extendedWaitUntil:
+    visible: "money, 3 cards"
+    timeout: 20000
+- tapOn: "Options for money"
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "Archived tags"
+    timeout: 20000
+- tapOn: "Restore"
+- extendedWaitUntil:
+    visible: "money, 3 cards"
+    timeout: 20000
+- assertNotVisible: "Archived tags"
+- takeScreenshot: 10-restored

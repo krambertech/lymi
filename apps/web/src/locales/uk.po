@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid ", back to all filters"
+msgstr ", назад до всіх фільтрів"
+
 msgid ", not open yet"
 msgstr ", ще не відкрито"
 
@@ -619,6 +622,9 @@ msgstr "{due, plural, one {Повтори # на сьогодні} few {Повт
 msgid "{field} becomes"
 msgstr "{field} стає"
 
+msgid "{field}: {values}"
+msgstr "{field}: {values}"
+
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {термін знайдено} few {терміни знайдено} many {термінів знайдено} other {терміна знайдено}}"
 
@@ -1160,9 +1166,6 @@ msgstr "Відповідь: {back}"
 
 msgid "Answer: {back}. You can add a memory hook."
 msgstr "Відповідь: {back}. Можна додати зачіпку."
-
-msgid "Any time"
-msgstr "Будь-коли"
 
 msgid "Anyone can add this deck from its public page."
 msgstr "Будь-хто може додати цю колоду з її публічної сторінки."
@@ -2162,12 +2165,6 @@ msgstr "Час повторити"
 msgid "due this week"
 msgstr "до повторення цього тижня"
 
-msgid "Due this week"
-msgstr "Повторити цього тижня"
-
-msgid "Due today"
-msgstr "Повторити сьогодні"
-
 msgid "Each block is one day you reviewed."
 msgstr "Кожен блок — день із повтореннями."
 
@@ -2386,6 +2383,12 @@ msgstr "Вставляти виділений текст"
 
 msgid "Filter"
 msgstr "Фільтр"
+
+msgid "Filter by"
+msgstr "Фільтрувати за"
+
+msgid "Filter, {on} on"
+msgstr "Фільтр, увімкнено: {on}"
 
 msgid "Find a tag"
 msgstr "Знайти тег"
@@ -4565,9 +4568,6 @@ msgstr "Системна"
 
 msgid "Tab"
 msgstr "Табуляція"
-
-msgid "Tag: {tagName}"
-msgstr "Тег: {tagName}"
 
 msgid "Tags"
 msgstr "Теги"

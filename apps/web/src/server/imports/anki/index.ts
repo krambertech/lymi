@@ -546,6 +546,7 @@ export const anki: SourceAdapter<AnkiNote> = {
           (examplePinyin
             ? markedExample(raw.example)
             : formatReadings(parseReadings(withoutOtherReadings(raw.example)))),
+        exampleTranslation: raw.exampleTranslation,
         notes: raw.notes,
       });
       if (!fitted.fields.term) return [];

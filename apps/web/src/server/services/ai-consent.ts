@@ -8,7 +8,7 @@ import { ensureSettings, getSettings } from "./settings";
 
 /**
  * Whether Lymi may send a learner's content to an AI service. The phone app sends nothing until
- * the learner has said yes; the web, the API and MCP carry on until they have said no. ADR 0038.
+ * the learner has said yes; the web, the API and MCP carry on until they have said no. ADR 0039.
  */
 export function aiAllowed(choice: boolean | null, fromPhone: boolean): boolean {
   return choice === true || (choice === null && !fromPhone);

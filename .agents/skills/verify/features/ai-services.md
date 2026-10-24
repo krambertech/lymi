@@ -1,6 +1,6 @@
 # AI services
 
-The account's one choice whether Lymi may send the learner's cards, lesson pages and words to AI services ([ADR 0038](../../../../docs/adr/0038-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). The web never asks: an unanswered choice shows as on and AI runs, and turning the switch off stops every AI request for the account, from the phone too.
+The account's one choice whether Lymi may send the learner's cards, lesson pages and words to AI services ([ADR 0039](../../../../docs/adr/0039-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). The web never asks: an unanswered choice shows as on and AI runs, and turning the switch off stops every AI request for the account, from the phone too.
 
 ## Reach
 

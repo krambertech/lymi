@@ -26,7 +26,7 @@ name: Welcome
 - tapOn: "Keen.*"
 - takeScreenshot: 04-goal
 - tapOn: "Continue"
-# A new account is asked before Lymi sends anything to AI services. ADR 0038.
+# A new account is asked before Lymi sends anything to AI services. ADR 0039.
 - extendedWaitUntil:
     visible: "Let AI do the typing"
     timeout: 10000

@@ -3,7 +3,7 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { isolate } from "@lymi/core";
+import { fitsExample, isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -121,6 +121,11 @@ function Composer() {
       return;
     }
     if (!deck || pending) return;
+    // Refused here rather than by the server, so a card queued offline is never refused later.
+    if (!fitsExample(draft.example.trim())) {
+      setError(t`Keep the example under 250 characters.`);
+      return;
+    }
     // The server refuses a description that names the answer, so it is fixed before the card exists.
     if (describesAnswer({ term: text, meaning: draft.meaning.trim() }, picture)) {
       open("picture");

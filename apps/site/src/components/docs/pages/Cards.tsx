@@ -14,7 +14,12 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "example",
     type: "string",
-    note: "One sentence using the term. The Languages page says which languages carry readings inside it, and in what notation.",
+    note: "One sentence using the term, up to 250 characters as shown: readings and stress marks do not count. The Languages page says which languages carry readings inside it, and in what notation. Keep its translation out of it.",
+  },
+  {
+    name: "exampleTranslation",
+    type: "string",
+    note: "The example in your own language, shown after the answer, up to 250 characters. Left out, Lymi writes one when the card is enriched and the deck allows it. An empty string clears it. Ignored without an example.",
   },
   {
     name: "notes",
@@ -47,6 +52,11 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     name: "exampleSource",
     type: '"lesson" | "ai" | "manual"',
     note: "Where the example came from.",
+  },
+  {
+    name: "exampleTranslationSource",
+    type: '"lesson" | "ai" | "manual"',
+    note: "Where the example's translation came from.",
   },
   {
     name: "pronunciationSource",
@@ -124,12 +134,13 @@ export function Cards() {
       </Table>
 
       <Note title="Say when the lesson wrote it">
-        Set <code>meaningSource</code>, <code>exampleSource</code> or{" "}
-        <code>pronunciationSource</code> to <code>"lesson"</code> when the text is in the learner's
-        material. Anything else you send, including text a model generated for you, is recorded as{" "}
-        <code>manual</code>: it is the learner's card, and Activity names the app that wrote it.{" "}
-        <code>"ai"</code> is refused; it marks only what Lymi's own enrichment fills in, and that is
-        the one source that carries the AI badge.
+        Set <code>meaningSource</code>, <code>exampleSource</code>,{" "}
+        <code>exampleTranslationSource</code> or <code>pronunciationSource</code> to{" "}
+        <code>"lesson"</code> when the text is in the learner's material. Anything else you send,
+        including text a model generated for you, is recorded as <code>manual</code>: it is the
+        learner's card, and Activity names the app that wrote it. <code>"ai"</code> is refused; it
+        marks only what Lymi's own enrichment fills in, and that is the one source that carries the
+        AI badge.
       </Note>
 
       <H2>Lymi fills what you leave empty, when asked</H2>
@@ -145,6 +156,13 @@ export function Cards() {
         While a job is outstanding the card reads <code>enrichmentStatus: "working"</code>, and{" "}
         <code>"failed"</code> if it gives up. Poll the card to watch it settle to <code>null</code>.
         The add itself always succeeds; enrichment never holds it up or fails it.
+      </p>
+      <p>
+        The example's translation keeps its own <code>exampleTranslationStatus</code>, because Lymi
+        translates whatever example the card ends up with, yours or its own. Change an example Lymi
+        translated and it writes the translation again, even without <code>enrich</code>; a
+        translation you sent stays, and <code>exampleTranslationStale</code> turns true until you
+        send a new one.
       </p>
       <p>
         Ask again for one card, whether its job failed or it was added before enrichment existed.

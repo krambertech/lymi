@@ -14,7 +14,7 @@ import { Row, RowFace } from "../ui/row";
 import { Sheet, SheetError, SheetGroup, SheetNote } from "../ui/sheet";
 import { Switch } from "../ui/switch";
 
-// Lymi sends nothing to an AI service from the phone until the learner allows it here. ADR 0038.
+// Lymi sends nothing to an AI service from the phone until the learner allows it here. ADR 0039.
 
 function ServiceLine({ icon, label, line }: { icon: IconName; label: string; line: string }) {
   const p = usePalette();
@@ -33,7 +33,7 @@ function ServiceLine({ icon, label, line }: { icon: IconName; label: string; lin
 
 /**
  * What AI does for the learner and what each part sends, the same wherever they are asked. Which
- * services receive it is in the privacy policy, so a change of provider changes no build. ADR 0038.
+ * services receive it is in the privacy policy, so a change of provider changes no build. ADR 0039.
  */
 export function AiServices() {
   const { t } = useLingui();

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "26f23b8b-d7bb-4f10-8ddc-ba87eeadb7c2",
+  "id": "7b488785-1628-4543-a0db-18c8e3df3d28",
   "prevId": "b44164be-bbe5-4c56-bf28-59b7820febe2",
   "tables": {
     "account_deletions": {
@@ -612,6 +612,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "example_translation": {
+          "name": "example_translation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "language": {
           "name": "language",
           "type": "text",
@@ -1066,6 +1073,34 @@
         },
         "notes_source": {
           "name": "notes_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation": {
+          "name": "example_translation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_source": {
+          "name": "example_translation_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_of": {
+          "name": "example_translation_of",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "example_translation_status": {
+          "name": "example_translation_status",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -4108,20 +4143,6 @@
         },
         "analytics_consent_updated_at": {
           "name": "analytics_consent_updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "ai_consent": {
-          "name": "ai_consent",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "ai_consent_updated_at": {
-          "name": "ai_consent_updated_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,

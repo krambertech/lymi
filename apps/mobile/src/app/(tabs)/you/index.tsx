@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { authClient, siteUrl } from "../../../auth/client";
+import { authClient, localizedSiteUrl, siteUrl } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
 import { ExportSheet } from "../../../export/export-sheet";
 import { RunStrip } from "../../../insights/figures";
@@ -28,11 +28,12 @@ const API_DOCS = siteUrl("/docs/api");
 
 /**
  * Everything about the learner, and every setting: Insights first, then this phone's reminder, the
- * account's language, this phone's theme, Activity, the learner's data, feedback and sign-out.
+ * account's language, this phone's theme, Activity, the learner's data, feedback, the privacy
+ * policy and sign-out.
  * phone.md "Navigation", ADR 0036.
  */
 export default function You() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const router = useRouter();
   const [theme, setTheme] = useState<ThemeChoice>(savedTheme);
   const reminder = useReminder();
@@ -117,6 +118,12 @@ export default function You() {
           icon="feedback"
           label={t`Send feedback`}
           onPress={() => router.push("/you/feedback")}
+        />
+        <Row
+          icon="privacy"
+          label={t`Privacy policy`}
+          end="web"
+          onPress={() => void openBrowserAsync(localizedSiteUrl("/privacy", i18n.locale))}
         />
       </Rows>
 

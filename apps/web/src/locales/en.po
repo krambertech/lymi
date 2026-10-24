@@ -908,6 +908,9 @@ msgstr "Add a photo or PDF of the lesson, or paste its text."
 msgid "Add a picture"
 msgstr "Add a picture"
 
+msgid "Add a translation"
+msgstr "Add a translation"
+
 msgid "Add card"
 msgstr "Add card"
 
@@ -1031,6 +1034,9 @@ msgstr "AI"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI example and translation"
+msgstr "AI example and translation"
+
 msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
 msgstr "AI fills in your cards, reads lesson pages in Smart add and says your words aloud. Which services it uses is in the privacy policy."
 
@@ -1063,6 +1069,12 @@ msgstr "AI services are off for your account. Turn them on in Settings to draft 
 
 msgid "AI services are off for your account. Turn them on in Settings to read lessons."
 msgstr "AI services are off for your account. Turn them on in Settings to read lessons."
+
+msgid "AI translates it after you save"
+msgstr "AI translates it after you save"
+
+msgid "AI translation"
+msgstr "AI translation"
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI uses this choice when filling empty fields."
@@ -1876,6 +1888,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
 
+msgid "Couldn’t translate the example."
+msgstr "Couldn’t translate the example."
+
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Couldn’t turn off the join link. Try again."
 
@@ -2261,6 +2276,12 @@ msgstr "Everything, to import into Lymi again: cards, pictures, schedules and re
 msgid "Example"
 msgstr "Example"
 
+msgid "Example and translation by you"
+msgstr "Example and translation by you"
+
+msgid "Example and translation from lesson"
+msgstr "Example and translation from lesson"
+
 msgid "Example by you"
 msgstr "Example by you"
 
@@ -2269,6 +2290,9 @@ msgstr "Example changed to “{value}”"
 
 msgid "Example from lesson"
 msgstr "Example from lesson"
+
+msgid "Example translation"
+msgstr "Example translation"
 
 msgid "Explore"
 msgstr "Explore"
@@ -2776,8 +2800,8 @@ msgstr "Keep studying"
 msgid "Keep the description under 300 characters."
 msgstr "Keep the description under 300 characters."
 
-msgid "Keep the example under 2000 characters."
-msgstr "Keep the example under 2000 characters."
+msgid "Keep the example under 250 characters."
+msgstr "Keep the example under 250 characters."
 
 msgid "Keep the hook under 200 characters."
 msgstr "Keep the hook under 200 characters."
@@ -2814,6 +2838,9 @@ msgstr "Keep the stress under 200 characters."
 
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
+
+msgid "Keep the translation under 250 characters."
+msgstr "Keep the translation under 250 characters."
 
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -3755,6 +3782,9 @@ msgstr "Previous month"
 msgid "Privacy"
 msgstr "Privacy"
 
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
 msgid "Private"
 msgstr "Private"
 
@@ -4622,6 +4652,9 @@ msgstr "The deck leaves Library and its cards stop coming up in review. Restore 
 msgid "the example"
 msgstr "the example"
 
+msgid "the example’s translation"
+msgstr "the example’s translation"
+
 msgid "the language"
 msgstr "the language"
 
@@ -4894,6 +4927,24 @@ msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Total"
 
+msgid "Translated from an earlier example."
+msgstr "Translated from an earlier example."
+
+msgid "Translated from an earlier example. Edit it to match."
+msgstr "Translated from an earlier example. Edit it to match."
+
+msgid "Translation"
+msgstr "Translation"
+
+msgid "Translation by you"
+msgstr "Translation by you"
+
+msgid "Translation changed to “{value}”"
+msgstr "Translation changed to “{value}”"
+
+msgid "Translation from lesson"
+msgstr "Translation from lesson"
+
 msgctxt "deck tag"
 msgid "Travel"
 msgstr "Travel"
@@ -5072,6 +5123,9 @@ msgstr "What is Lymi?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
+
+msgid "What Lymi keeps, who helps provide it, and the choices you have."
+msgstr "What Lymi keeps, who helps provide it, and the choices you have."
 
 msgid "What the decks are about"
 msgstr "What the decks are about"

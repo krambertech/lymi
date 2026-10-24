@@ -609,6 +609,46 @@ describe("a learner's pinned edition", () => {
     ]);
   });
 
+  it("shows each edition's own translation of the example, never another's or one gone stale", async () => {
+    const deck = await estonian("translated");
+    for (const [id, example, translation] of [
+      [deck.cardIds[0], "Tere hommikust!", "Good morning!"],
+      [deck.cardIds[1], "Leib on laual.", "The bread is on the table."],
+    ] as const) {
+      await updateCard(lymi, id, { example, exampleTranslation: translation });
+    }
+    const edition = ukrainian(deck);
+    edition.cards = [
+      { ...edition.cards[0], exampleTranslation: "Доброго ранку!" },
+      // Left without one, so a reader of this edition sees none rather than the English.
+      ...edition.cards.slice(1),
+    ] as typeof edition.cards;
+    await importEdition(lymi, deck.deckId, "uk", edition, publishers);
+    await approveEdition(lymi, deck.deckId, "uk", {}, publishers);
+    await publishEdition(lymi, deck.deckId, "uk", publishers);
+    await addPublishedDeck(anna, "translated", "uk");
+    await addPublishedDeck(bohdan, "translated");
+    const translations = async (ctx: ServiceContext) =>
+      Object.fromEntries(
+        (await listDeckCards(ctx, deck.deckId)).map((row) => [
+          row.card.term,
+          [row.card.exampleTranslation, row.card.exampleTranslationSource],
+        ]),
+      );
+    expect(await translations(anna)).toEqual({
+      "tere translated": ["Доброго ранку!", null],
+      "leib translated": [null, null],
+    });
+    expect(await translations(bohdan)).toEqual({
+      "tere translated": ["Good morning!", "manual"],
+      "leib translated": ["The bread is on the table.", "manual"],
+    });
+
+    // A new example makes the edition's translation of the old one stale until it is signed off again.
+    await updateCard(lymi, deck.cardIds[0], { example: "Tere õhtust!" });
+    expect((await translations(anna))["tere translated"]).toEqual([null, null]);
+  });
+
   it("does not move when the app language changes", async () => {
     const deck = await estonian("settled");
     await publishUkrainian(deck);

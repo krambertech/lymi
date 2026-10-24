@@ -230,6 +230,9 @@ describe("analytics privacy contract", () => {
     );
     expect(analyticsPath("/uk/changelog/rest-days", "public")).toBe("/uk/changelog/rest-days");
     expect(analyticsPath("/changelog/rss.xml", "public")).toBe("/other");
+    expect(analyticsPath("/uk/download", "public")).toBe("/uk/download");
+    expect(analyticsPath("/download/mac-intel", "public")).toBe("/download/mac-intel");
+    expect(analyticsPath("/download/windows", "public")).toBe("/other");
     expect(analyticsPath("/unknown/private", "public")).toBe("/other");
   });
   it("keeps only bounded campaign labels and the referrer hostname", () => {

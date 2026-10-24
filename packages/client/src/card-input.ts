@@ -6,6 +6,7 @@ export interface AddValues {
   term: string;
   meaning?: string | undefined;
   example?: string | undefined;
+  exampleTranslation?: string | undefined;
   pronunciation?: string | undefined;
   notes?: string | undefined;
   hook?: string | undefined;
@@ -24,6 +25,12 @@ export function addInput(values: AddValues): CardInput {
     ...(values.language !== undefined ? { language: values.language } : {}),
     ...(values.meaning ? { meaning: values.meaning, meaningSource: "manual" as const } : {}),
     ...(values.example ? { example: values.example, exampleSource: "manual" as const } : {}),
+    ...(values.example && values.exampleTranslation
+      ? {
+          exampleTranslation: values.exampleTranslation,
+          exampleTranslationSource: "manual" as const,
+        }
+      : {}),
     ...(values.pronunciation
       ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
       : {}),

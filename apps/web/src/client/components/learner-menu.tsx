@@ -15,8 +15,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useLearnerAvatar } from "../lib/avatar";
-import { isAppLanguage } from "../lib/i18n";
-import { publicSiteUrl } from "../lib/origins";
+import { localizedSiteUrl } from "../lib/origins";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
 import { captureAnalytics } from "../lib/telemetry";
 import { Avatar } from "./avatar";
@@ -77,9 +76,7 @@ export function LearnerMenu({
   const [installHelp, setInstallHelp] = useState(false);
   const short = firstName(name) ?? t`You`;
   const installable = !install.installed && (install.canPrompt || install.isIOS);
-  const changelogUrl = publicSiteUrl(
-    isAppLanguage(i18n.locale) && i18n.locale !== "en" ? `/${i18n.locale}/changelog` : "/changelog",
-  );
+  const changelogUrl = localizedSiteUrl("/changelog", i18n.locale);
 
   const place = (to: Place, icon: ReactNode, label: ReactNode, trailing?: ReactNode) => (
     <DropdownMenuLinkItem render={<NavLink to={to} />}>

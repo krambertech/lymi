@@ -8,7 +8,7 @@ import { SettingsGroup } from "./settings-group";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "./ui/field";
 import { Switch } from "./ui/switch";
 
-/** The account's one AI switch. The web runs AI until the learner says no; the phone waits for a yes. ADR 0038. */
+/** The account's one AI switch. The web runs AI until the learner says no; the phone waits for a yes. ADR 0039. */
 export function AiServicesSection() {
   const { t } = useLingui();
   const qc = useQueryClient();

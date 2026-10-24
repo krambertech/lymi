@@ -5,7 +5,7 @@ date: 2026-10-24
 
 # The phone sends nothing to AI until the learner allows it
 
-Each account holds one answer, `user_settings.ai_consent`, to whether Lymi may send the learner's content to third-party AI services: card text for enrichment, hook drafts, deck choice and import language guesses; lesson photos, PDFs and pasted notes for Smart add; and a term for generated pronunciation. The privacy policy names the current providers; the interface never does, so changing one needs no copy change. Null means unanswered. A request from the phone app (`x-lymi-client`) sends nothing until the answer is true; the web, the API and MCP carry on until it is false. The server enforces it in the services, so no client, old phone build, Shortcut or share extension can send content without it.
+Each account holds one answer, `user_settings.ai_consent`, to whether Lymi may send the learner's content to third-party AI services: card text for enrichment, example translations, hook drafts, deck choice and import language guesses; lesson photos, PDFs and pasted notes for Smart add; and a term for generated pronunciation. The privacy policy names the current providers; the interface never does, so changing one needs no copy change. Null means unanswered. A request from the phone app (`x-lymi-client`) sends nothing until the answer is true; the web, the API and MCP carry on until it is false. The server enforces it in the services, so no client, old phone build, Shortcut or share extension can send content without it.
 
 ## Context
 
@@ -26,5 +26,5 @@ Apple's guideline 5.1.2(i) requires apps to say where personal data is shared, n
 - You → AI services and the web's Settings hold the switch. Turning it off stops new requests; text AI already wrote stays, and clips already stored still play.
 - Without a yes the phone saves cards as typed, Smart add explains instead of reading, hook drafts and the list menu's play point to You, and the share extension and Shortcut start with AI off.
 - A shared or published deck's words belong to its owner, so generated pronunciation follows the owner's answer, and the hourly cron skips publishers who said no.
-- An enrichment run checks again at its start and before each chunk of cards, so nothing more is sent once the learner says no.
+- An enrichment run checks again at its start and before each chunk of cards or translations, and an edit queues a translation only with the yes, so nothing more is sent once the learner says no.
 - `PUT /api/settings/ai-consent` mirrors analytics consent: learner only, product origin only, newest `updated_at` wins, audited as `ai.consent`. `ai_consent_shown`, `_granted`, `_declined` and `_withdrawn` count the asks and answers (docs/analytics.md).

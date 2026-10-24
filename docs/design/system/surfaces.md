@@ -64,6 +64,8 @@ On the phone, sheets, their corner buttons and the tab bar are iOS's Liquid Glas
 
 On the web, `glass` is a slight version for what floats without a scrim: menus, popovers, select and combobox lists, and the pill nav. It is the plate nearly opaque over a 12 px blur, with a sheen along the top, the `edge-2` hairline and a soft shadow, the one shadow a day surface carries, because these float over the page. Dialogs, drawers and side sheets stay solid, since glass over a scrim only turns grey. Under reduced transparency, or where the browser has no `backdrop-filter`, it falls back to the plate.
 
+`frost` is for what floats inside a plate over text that scrolls under it, such as the hook offer at a card's foot: `plate-2` at 65% over a 4 px blur, so the words under it show as a soft hint, with no edge, sheen or shadow, because the plate already holds it. The scroller under it drops its foot fade, which turned the panel into a grey gradient, and cuts the text off at the panel's foot instead, so nothing shows in the inset below it. Under reduced transparency, or with no `backdrop-filter`, it falls back to solid `plate-2`.
+
 ## Edges
 
 `edge` is the hairline every plate and control carries: a 1 px ring drawn as a box-shadow, so it never changes the box's size. Hover strengthens it to `edge-2`; `edge-inset` draws it inside the box, for a plate whose content runs to its edge. Use `border-edge` only for a rule between rows. Focus adds the neutral 2 px outline every control gets, in `ring`. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour.

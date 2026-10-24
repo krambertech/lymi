@@ -196,7 +196,9 @@ cards.patch(
   query(ResponseShapeQuery, "query"),
   body(CardEditsInput, "edits"),
   async (c) => {
-    const outcomes = await updateCards(ctxOf(c), c.req.valid("json").cards);
+    const outcomes = await updateCards(ctxOf(c), c.req.valid("json").cards, {
+      enrichment: enrichmentQueue(c.env),
+    });
     const terse = c.req.valid("query").response === "terse";
     return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
   },
@@ -276,7 +278,10 @@ cards.patch(
     errors: [400, 404],
   }),
   body(CardPatch, "patch"),
-  async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) =>
+    c.json(
+      await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"), enrichmentQueue(c.env)),
+    ),
 );
 
 cards.put(

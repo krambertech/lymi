@@ -17,7 +17,8 @@ export const deckCardsQuery = (deckId: string) =>
     refetchInterval: (query) =>
       query.state.data?.some(
         (row) =>
-          row.card.enrichmentStatus === "working" &&
+          (row.card.enrichmentStatus === "working" ||
+            row.card.exampleTranslationStatus === "working") &&
           Date.now() - new Date(row.card.updatedAt).getTime() < ENRICHMENT_PATIENCE,
       )
         ? 2000

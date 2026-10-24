@@ -8,9 +8,12 @@ import {
   enrichCards,
   enrichmentContext,
   failEnrichment,
+  failTranslations,
   type LearnStyleOptions,
   learnDeckStyles,
   settleEnrichment,
+  settleTranslations,
+  translateExamples,
 } from "../services";
 import { aiWithdrawn } from "../services/ai-consent";
 import { textCallReporter, track } from "../services/analytics";
@@ -46,6 +49,8 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
   async run(event: WorkflowEvent<EnrichRunParams>, step: WorkflowStep) {
     const params = event.payload;
     const db = createDb(this.env.DB);
+    // An edit's run asks only for a translation, so a fill another run has under way is not its to settle.
+    const fills = params.trigger !== "edit";
     try {
       const analytics = productAnalytics(
         this.env,
@@ -57,9 +62,10 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       // The key went away between the add and this run, or the learner turned AI off since.
       const withdrawn = await step.do("consent", STEP, () => aiWithdrawn(db, params.userId));
       if (!provider || withdrawn) {
-        await step.do("unconfigured", STEP, () =>
-          settleEnrichment(db, params.userId, params.cardIds),
-        );
+        await step.do("unconfigured", STEP, async () => {
+          if (fills) await settleEnrichment(db, params.userId, params.cardIds);
+          await settleTranslations(db, params.userId, params.cardIds);
+        });
         return;
       }
       const ctx = enrichmentContext(db, params, analytics);
@@ -85,6 +91,48 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
           return [];
         }
       };
+      const translator = createTextProvider(
+        this.env,
+        textCallReporter(analytics, "example_translation"),
+      );
+      const trigger = params.trigger ?? "add";
+      // A translation reads the example a fill just wrote, so each wave is translated once it lands.
+      const translate = async (index: number, ids: string[]) => {
+        if (!translator) return;
+        try {
+          await step.do(`translate ${index}`, STEP, async () => {
+            if (await aiWithdrawn(db, params.userId)) {
+              await settleTranslations(db, params.userId, ids);
+              return;
+            }
+            await analytics.run(() => translateExamples(ctx, ids, translator, trigger));
+          });
+        } catch (err) {
+          await step.do(`translate fail ${index}`, STEP, async () => {
+            const failed = await failTranslations(db, params.userId, ids);
+            track(analytics, {
+              name: "example_translated",
+              outcome: "failed",
+              count: failed,
+              trigger,
+            });
+            await analytics.flush();
+            await reportServerException(this.env, err, {
+              route: "example-translation",
+              method: "WORKFLOW",
+              userId: params.userId,
+            });
+          });
+        }
+      };
+      // An edit only ever leaves an example to translate, so its run neither fills nor learns a style.
+      if (params.trigger === "edit") {
+        for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
+          await translate(index, ids);
+        }
+        return;
+      }
+      const fillTrigger = params.trigger;
       const first = await learn("style first", { firstOnly: true });
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
@@ -92,9 +140,10 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
             // A learner who turns AI off mid-run sends no further chunk.
             if (await aiWithdrawn(db, params.userId)) {
               await settleEnrichment(db, params.userId, ids);
+              await settleTranslations(db, params.userId, ids);
               return;
             }
-            await analytics.run(() => enrichCards(ctx, ids, provider, params.trigger));
+            await analytics.run(() => enrichCards(ctx, ids, provider, fillTrigger));
           });
         } catch (err) {
           // Inside the step, because code outside one runs again when the engine replays.
@@ -113,13 +162,17 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
             });
           });
         }
+        await translate(index, ids);
       }
       await learn("style", { skip: first });
     } finally {
       // Nothing may stay at `working` once this instance stops, whatever stopped it: a step that
       // exhausted its retries ends the run, and a card left shimmering would shimmer forever.
       await step
-        .do("settle", SETTLE_STEP, () => failEnrichment(db, params.userId, params.cardIds))
+        .do("settle", SETTLE_STEP, async () => {
+          if (fills) await failEnrichment(db, params.userId, params.cardIds);
+          await failTranslations(db, params.userId, params.cardIds);
+        })
         .catch(() => {});
     }
   }

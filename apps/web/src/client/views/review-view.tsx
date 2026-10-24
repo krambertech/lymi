@@ -8,6 +8,7 @@ import {
   type KnownReadings,
   type Rating,
   type ReviewAid,
+  shownTranslation,
   termShowsPronunciation,
   textDirection,
 } from "@lymi/core";
@@ -59,6 +60,7 @@ import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
+import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import {
@@ -83,7 +85,7 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
-import { ExampleText, TermText } from "../components/term-text";
+import { TermText } from "../components/term-text";
 import { TurnSpark } from "../components/turn-spark";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
@@ -569,6 +571,7 @@ export function ReviewCard({
 
   const hasOffer = !!offer;
   const offerRoom = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
@@ -654,6 +657,7 @@ export function ReviewCard({
   // The answer moves only when the aid over it arrives or leaves after the reveal.
   const answerGlide = aidGone ? aidGone.animate : shownAfter && aidAnimate;
   const hasExtras = !!(card.example || card.notes);
+  const translation = shownTranslation(card);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -665,6 +669,7 @@ export function ReviewCard({
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.exampleTranslationSource === "ai" && !!translation) ||
     (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none. Sources written
@@ -699,18 +704,15 @@ export function ReviewCard({
   const extrasLines = (
     <>
       {card.example && (
-        <motion.p
-          variants={answerLine}
-          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-          lang={card.language ?? undefined}
-          dir={textDirection(card.language)}
-        >
-          <ExampleText
-            text={card.example}
-            lang={card.language ?? undefined}
+        <motion.div variants={answerLine}>
+          <ExampleLines
+            example={card.example}
+            language={card.language}
             known={knownReadings}
+            translation={translation}
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
-        </motion.p>
+        </motion.div>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">
@@ -865,8 +867,17 @@ export function ReviewCard({
         className,
       )}
     >
-      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge. */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]">
+      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge; under the offer the text shows through its frost, cut off at its foot. */}
+      <div
+        ref={scrollerRef}
+        className={clsx(
+          "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain",
+          // Scroll padding as tall as the offer, so a focused control never scrolls in under it.
+          offer && revealed
+            ? "scroll-pb-13 [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
+            : "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]",
+        )}
+      >
         <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
           {!revealed && (
             <button
@@ -1082,10 +1093,16 @@ export function ReviewCard({
             {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
+        {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
+        {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
-      {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
+      {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
-        <div className="shrink-0 px-2 pb-2">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2"
+          // A sibling of the scroller, so a wheel over it is handed on to the card under it.
+          onWheel={(e) => scrollerRef.current?.scrollBy({ top: e.deltaY, left: 0 })}
+        >
           <HookOffer
             {...offer}
             onShown={() => {

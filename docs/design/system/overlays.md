@@ -71,6 +71,8 @@ A menu's surface, like a popover's and a list's, is the slight `glass` ([surface
 
 `DropdownMenuItem` variants: `default` and `destructive`, for Archive, Remove or Leave. Nothing else exists. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
 
+A checkbox row keeps its tick in the start slot, so checked and unchecked rows line up; one with its own icon, such as Important among Filter's fields, puts the icon there and the tick at the end, where the rows beside it have their chevron.
+
 Menu rows do not scale on press. The hover is one fill that slides between rows ([motion.md](motion.md#hover)).
 
 ## Command palette

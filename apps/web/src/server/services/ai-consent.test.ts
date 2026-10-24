@@ -79,7 +79,7 @@ describe("updateAiConsent", () => {
 
   it("is the learner's alone", async () => {
     const ctx = await learner(db, "ai-consent-2", "Kateryna");
-    await expect(answer({ ...ctx, actor: "integration" }, true)).rejects.toMatchObject({
+    await expect(answer({ ...ctx, actor: "api" }, true)).rejects.toMatchObject({
       code: "forbidden",
     });
   });
@@ -130,7 +130,7 @@ describe("enrichment", () => {
     const [declined] = await addCards(ctx, [{ deckId: deck.id, term: "raamat" }], runs);
     expect(declined?.status === "added" && declined.card.enrichmentStatus).toBeNull();
     const [asked] = await addCards(
-      { ...ctx, actor: "integration" },
+      { ...ctx, actor: "api" },
       [{ deckId: deck.id, term: "laud", enrich: true }],
       runs,
     );

@@ -6,7 +6,8 @@ const ALLOWED = "il fulmine";
 export async function env({ api }) {
   const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   const settings = await api("/api/settings");
-  if (settings.aiConsent !== null) throw new Error(`The persona's AI choice is ${settings.aiConsent}`);
+  if (settings.aiConsent !== null)
+    throw new Error(`The persona's AI choice is ${settings.aiConsent}`);
   return { DECK: deck.name, DECLINED, ALLOWED };
 }
 
@@ -14,7 +15,8 @@ export async function env({ api }) {
 export async function check({ api, poll }) {
   return poll(async () => {
     const settings = await api("/api/settings");
-    if (settings.aiConsent !== true) throw new Error(`AI choice is ${settings.aiConsent}, not true`);
+    if (settings.aiConsent !== true)
+      throw new Error(`AI choice is ${settings.aiConsent}, not true`);
     const found = [];
     for (const term of [DECLINED, ALLOWED]) {
       const { cards } = await api(`/api/cards?query=${encodeURIComponent(term)}`);

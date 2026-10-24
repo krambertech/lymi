@@ -20,7 +20,8 @@ export async function check({ api, poll }) {
     const settings = await api("/api/settings");
     if (!settings.onboardedAt) throw new Error("Welcome was not saved");
     if (settings.dailyGoal !== 50) throw new Error(`Daily goal is ${settings.dailyGoal}, not 50`);
-    if (settings.aiConsent !== true) throw new Error(`AI choice is ${settings.aiConsent}, not true`);
+    if (settings.aiConsent !== true)
+      throw new Error(`AI choice is ${settings.aiConsent}, not true`);
     const decks = await api("/api/decks");
     if (!decks.some((d) => d.name === "Everyday Finnish"))
       throw new Error(`Everyday Finnish is not in Library: ${decks.map((d) => d.name)}`);

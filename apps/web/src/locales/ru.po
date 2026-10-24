@@ -13,9 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-msgid ", back to all filters"
-msgstr ", назад ко всем фильтрам"
-
 msgid ", not open yet"
 msgstr ", ещё не открыт"
 
@@ -622,8 +619,14 @@ msgstr "{due, plural, one {Повтори # на сегодня} few {Повто
 msgid "{field} becomes"
 msgstr "{field} становится"
 
+msgid "{field}, {count} chosen"
+msgstr "{field}, выбрано: {count}"
+
 msgid "{field}: {values}"
 msgstr "{field}: {values}"
+
+msgid "{field}: <0>{values}</0>"
+msgstr "{field}: <0>{values}</0>"
 
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {термин найден} few {термина найдено} many {терминов найдено} other {термина найдено}}"
@@ -699,6 +702,9 @@ msgstr "{name} больше не в колоде «{deck}»"
 
 msgid "{nextName} is ready"
 msgstr "Можно начинать {nextName}"
+
+msgid "{on, plural, one {Filter, # filter on} other {Filter, # filters on}}"
+msgstr "{on, plural, one {Фильтр, включён # фильтр} few {Фильтр, включено # фильтра} many {Фильтр, включено # фильтров} other {Фильтр, включено # фильтра}}"
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {В # карточке нет строки ---, поэтому она импортируется с термином и без значения.} few {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} many {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} other {В # карточки нет строки ---, поэтому они импортируются с термином и без значения.}}"
@@ -1167,6 +1173,9 @@ msgstr "Ответ: {back}"
 msgid "Answer: {back}. You can add a memory hook."
 msgstr "Ответ: {back}. Можно добавить зацепку."
 
+msgid "Any time"
+msgstr "В любое время"
+
 msgid "Anyone can add this deck from its public page."
 msgstr "Любой может добавить эту колоду с её публичной страницы."
 
@@ -1321,6 +1330,9 @@ msgstr "снова позже сегодня"
 
 msgid "back the same day"
 msgstr "снова в тот же день"
+
+msgid "Back to all filters"
+msgstr "Назад ко всем фильтрам"
 
 msgid "Back to Explore"
 msgstr "Назад в Каталог"
@@ -2383,12 +2395,6 @@ msgstr "Вставлять выделенный текст"
 
 msgid "Filter"
 msgstr "Фильтр"
-
-msgid "Filter by"
-msgstr "Фильтровать по"
-
-msgid "Filter, {on} on"
-msgstr "Фильтр, включено: {on}"
 
 msgid "Find a tag"
 msgstr "Найти тег"

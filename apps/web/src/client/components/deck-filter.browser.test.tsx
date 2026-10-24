@@ -86,13 +86,11 @@ test("a field opens its values with what each keeps, several stay on, and the ch
     .toHaveAttribute("aria-checked", "true");
   expect(count()).toBe("5");
 
-  // Back to the fields, where the field now says what is on.
-  await values.getByRole("menuitem", { name: /^State/ }).click();
-  expect(
-    menu()
-      .getByRole("menuitem", { name: /^State/ })
-      .element().textContent,
-  ).toContain("New, Known");
+  // Back to the fields, where the field now counts what is on.
+  await values.getByRole("menuitem", { name: "Back to all filters" }).click();
+  await expect
+    .element(menu().getByRole("menuitem", { name: "State, 2 chosen", exact: true }))
+    .toBeVisible();
   await close();
 
   await expect
@@ -100,12 +98,12 @@ test("a field opens its values with what each keeps, several stay on, and the ch
     .toBeVisible();
   // The button counts the fields that are on; one field is one chip, and Clear filters waits for a second.
   await expect
-    .element(page.getByRole("button", { name: "Filter, 1 on", exact: true }))
+    .element(page.getByRole("button", { name: "Filter, 1 filter on", exact: true }))
     .toBeVisible();
   expect(page.getByRole("button", { name: "Clear filters" }).elements()).toHaveLength(0);
 });
 
-test("a single-valued field replaces its value, a chip reopens its field, and âœ• takes it off", async () => {
+test("a one-of field offers Any first, a chip reopens its field, and âœ• takes it off", async () => {
   await render(<Harness />);
 
   await open("Filter");
@@ -116,10 +114,13 @@ test("a single-valued field replaces its value, a chip reopens its field, and âœ
 
   await open(/^Filter/);
   await page.getByRole("menuitem", { name: "Due" }).click();
-  await page.getByRole("menuitemcheckbox", { name: /^Today/ }).click();
-  await page.getByRole("menuitemcheckbox", { name: /^This week/ }).click();
   await expect
-    .element(page.getByRole("menuitemcheckbox", { name: /^Today/ }))
+    .element(page.getByRole("menuitemradio", { name: /^Any time/ }))
+    .toHaveAttribute("aria-checked", "true");
+  await page.getByRole("menuitemradio", { name: /^Today/ }).click();
+  await page.getByRole("menuitemradio", { name: /^This week/ }).click();
+  await expect
+    .element(page.getByRole("menuitemradio", { name: /^Today/ }))
     .toHaveAttribute("aria-checked", "false");
   await close();
 
@@ -152,6 +153,20 @@ test("a single-valued field replaces its value, a chip reopens its field, and âœ
   await page.getByRole("button", { name: "Clear filters", exact: true }).click();
   expect(count()).toBe("7");
   expect(page.getByRole("button", { name: /^Remove filter/ }).elements()).toHaveLength(0);
+});
+
+test("the arrow keys step into a field and back out to it", async () => {
+  await render(<Harness />);
+  await open("Filter");
+  await expect.element(menu()).toBeVisible();
+  const state = menu().getByRole("menuitem", { name: "State" });
+  (state.element() as HTMLElement).focus();
+
+  await userEvent.keyboard("{ArrowRight}");
+  await expect.element(menu().getByRole("menuitemcheckbox", { name: /^New/ })).toHaveFocus();
+  await userEvent.keyboard("{ArrowLeft}");
+  await expect.element(menu().getByRole("menuitem", { name: "State" })).toHaveFocus();
+  await close();
 });
 
 test("the menu takes the machine's shape", async () => {

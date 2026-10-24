@@ -13,9 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-msgid ", back to all filters"
-msgstr ", back to all filters"
-
 msgid ", not open yet"
 msgstr ", not open yet"
 
@@ -622,8 +619,14 @@ msgstr "{due, plural, one {Review # due} other {Review # due}}"
 msgid "{field} becomes"
 msgstr "{field} becomes"
 
+msgid "{field}, {count} chosen"
+msgstr "{field}, {count} chosen"
+
 msgid "{field}: {values}"
 msgstr "{field}: {values}"
+
+msgid "{field}: <0>{values}</0>"
+msgstr "{field}: <0>{values}</0>"
 
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {term found} other {terms found}}"
@@ -699,6 +702,9 @@ msgstr "{name} left {deck}"
 
 msgid "{nextName} is ready"
 msgstr "{nextName} is ready"
+
+msgid "{on, plural, one {Filter, # filter on} other {Filter, # filters on}}"
+msgstr "{on, plural, one {Filter, # filter on} other {Filter, # filters on}}"
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
@@ -1167,6 +1173,9 @@ msgstr "Answer: {back}"
 msgid "Answer: {back}. You can add a memory hook."
 msgstr "Answer: {back}. You can add a memory hook."
 
+msgid "Any time"
+msgstr "Any time"
+
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
 
@@ -1321,6 +1330,9 @@ msgstr "back later today"
 
 msgid "back the same day"
 msgstr "back the same day"
+
+msgid "Back to all filters"
+msgstr "Back to all filters"
 
 msgid "Back to Explore"
 msgstr "Back to Explore"
@@ -2383,12 +2395,6 @@ msgstr "Fill in selected text"
 
 msgid "Filter"
 msgstr "Filter"
-
-msgid "Filter by"
-msgstr "Filter by"
-
-msgid "Filter, {on} on"
-msgstr "Filter, {on} on"
 
 msgid "Find a tag"
 msgstr "Find a tag"

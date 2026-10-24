@@ -112,8 +112,16 @@ export function toggleValue(
   return field.set(filters, on ? [...rest, value] : rest);
 }
 
-/** How many cards the list would show with this field narrowed to one value and the rest as they are. */
-export function keeps(ctx: FilterContext, filters: DeckFilters, key: FilterKey, value: string) {
-  const narrowed = filterField(key).set(filters, [value]);
+/**
+ * How many cards the list would show with this field narrowed to one value, or left open when the
+ * value is null, and the rest as they are.
+ */
+export function keeps(
+  ctx: FilterContext,
+  filters: DeckFilters,
+  key: FilterKey,
+  value: string | null,
+) {
+  const narrowed = filterField(key).set(filters, value === null ? [] : [value]);
   return filterRows([...ctx.rows], narrowed, ctx.query ?? "", ctx.now, ctx.sections).length;
 }

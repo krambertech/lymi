@@ -682,6 +682,9 @@ msgstr "All Japanese decks"
 msgid "All known"
 msgstr "All known"
 
+msgid "All languages"
+msgstr "All languages"
+
 msgid "All of Explore"
 msgstr "All of Explore"
 
@@ -923,6 +926,9 @@ msgstr "Bring your own AI."
 msgid "Bring your Pleco flashcards."
 msgstr "Bring your Pleco flashcards."
 
+msgid "Browse all decks"
+msgstr "Browse all decks"
+
 msgid "Browser storage holds grades and edits made offline, a copy of your recent data for up to 7 days, recent card pictures and audio, and your preferences. Signing out clears it, except a few preferences such as your theme and app language, and saved audio."
 msgstr "Browser storage holds grades and edits made offline, a copy of your recent data for up to 7 days, recent card pictures and audio, and your preferences. Signing out clears it, except a few preferences such as your theme and app language, and saved audio."
 
@@ -1134,6 +1140,9 @@ msgstr "Citizenship, language and driving test prep with flashcards · Lymi"
 
 msgid "Citizenship, language and driving tests, each with ready decks."
 msgstr "Citizenship, language and driving tests, each with ready decks."
+
+msgid "Class notes, a PDF or a photo of your notebook, as cards."
+msgstr "Class notes, a PDF or a photo of your notebook, as cards."
 
 msgid "Claude · from your lesson notes"
 msgstr "Claude · from your lesson notes"
@@ -1656,6 +1665,9 @@ msgstr "Exam revision"
 msgid "Example"
 msgstr "Example"
 
+msgid "Exams"
+msgstr "Exams"
+
 msgid "Excuse me"
 msgstr "Excuse me"
 
@@ -1748,6 +1760,9 @@ msgstr "Flashcards for cloud, security, finance and project management certifica
 
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
+
+msgid "Flashcards that come back right before you'd forget."
+msgstr "Flashcards that come back right before you'd forget."
 
 msgid "Follow with RSS"
 msgstr "Follow with RSS"
@@ -2074,8 +2089,15 @@ msgstr "How to install"
 msgid "How well-timed reviews change recall"
 msgstr "How well-timed reviews change recall"
 
+msgid "How you work"
+msgstr "How you work"
+
 msgid "How’s it going?"
 msgstr "How’s it going?"
+
+msgctxt "exam"
+msgid "HSK"
+msgstr "HSK"
 
 msgctxt "deck tag"
 msgid "HSK 1"
@@ -2294,6 +2316,10 @@ msgstr "Japanese"
 msgid "Japanese 1 · Mondays"
 msgstr "Japanese 1 · Mondays"
 
+msgctxt "exam"
+msgid "JLPT"
+msgstr "JLPT"
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2327,6 +2353,9 @@ msgstr "Keep going in Lymi"
 
 msgid "Keep the nerves, the drugs and the numbers."
 msgstr "Keep the nerves, the drugs and the numbers."
+
+msgid "Keep the new words from italki, Preply or a private tutor."
+msgstr "Keep the new words from italki, Preply or a private tutor."
 
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
@@ -3027,9 +3056,6 @@ msgstr "Other exams"
 msgid "Other subjects"
 msgstr "Other subjects"
 
-msgid "Overview"
-msgstr "Overview"
-
 msgid "Page not found"
 msgstr "Page not found"
 
@@ -3161,6 +3187,9 @@ msgstr "Polish road signs for the theory test"
 
 msgid "Polish road signs: every sign, by its picture"
 msgstr "Polish road signs: every sign, by its picture"
+
+msgid "Popular"
+msgstr "Popular"
 
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
@@ -3370,6 +3399,9 @@ msgstr "Repetition that works."
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
+
+msgid "Resources"
+msgstr "Resources"
 
 msgid "Restaurant"
 msgstr "Restaurant"
@@ -3941,6 +3973,9 @@ msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
 
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "The 1648 treaties that ended the Thirty Years’ War"
+
+msgid "The 300 general questions and the 10 for your state, as they appear on the test."
+msgstr "The 300 general questions and the 10 for your state, as they appear on the test."
 
 msgid "The 3rd of the month"
 msgstr "The 3rd of the month"
@@ -4703,6 +4738,9 @@ msgstr "What you cram the night before fades within days. Spaced repetition asks
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "What you give up by choosing one option over the next best one"
+
+msgid "What you learn"
+msgstr "What you learn"
 
 msgid "What you need to know for a class or an exam."
 msgstr "What you need to know for a class or an exam."

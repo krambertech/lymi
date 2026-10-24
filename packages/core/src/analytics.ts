@@ -340,6 +340,14 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  site_link_followed: z.object({
+    place: z.enum(["use_cases_menu", "explore_menu", "phone_menu", "footer"]),
+    // A public site path without its locale prefix, never a query or a hash.
+    target: z
+      .string()
+      .regex(/^\/[a-z0-9/-]*$/)
+      .max(120),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -576,6 +584,7 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  site_link_followed: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],

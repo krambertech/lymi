@@ -682,6 +682,9 @@ msgstr "Усі японські колоди"
 msgid "All known"
 msgstr "Усе засвоєно"
 
+msgid "All languages"
+msgstr "Усі мови"
+
 msgid "All of Explore"
 msgstr "Увесь каталог"
 
@@ -923,6 +926,9 @@ msgstr "Підключи свій AI."
 msgid "Bring your Pleco flashcards."
 msgstr "Перенеси картки з Pleco."
 
+msgid "Browse all decks"
+msgstr "Переглянути всі колоди"
+
 msgid "Browser storage holds grades and edits made offline, a copy of your recent data for up to 7 days, recent card pictures and audio, and your preferences. Signing out clears it, except a few preferences such as your theme and app language, and saved audio."
 msgstr "Сховище браузера містить оцінки й зміни, зроблені офлайн, копію твоїх останніх даних до 7 днів, нещодавні зображення карток і аудіо та твої налаштування. Вихід очищає його, крім кількох налаштувань, як-от тема й мова застосунку, і збереженого аудіо."
 
@@ -1134,6 +1140,9 @@ msgstr "Тести на громадянство, мовні іспити й і�
 
 msgid "Citizenship, language and driving tests, each with ready decks."
 msgstr "Тести на громадянство, мовні іспити й іспити на права — з готовими колодами."
+
+msgid "Class notes, a PDF or a photo of your notebook, as cards."
+msgstr "Конспекти, PDF чи фото зошита стають картками."
 
 msgid "Claude · from your lesson notes"
 msgstr "Claude · з твоїх нотаток з уроку"
@@ -1656,6 +1665,9 @@ msgstr "Підготовка до іспиту"
 msgid "Example"
 msgstr "Приклад"
 
+msgid "Exams"
+msgstr "Іспити"
+
 msgid "Excuse me"
 msgstr "Перепрошую"
 
@@ -1748,6 +1760,9 @@ msgstr "Картки для сертифікацій із хмарних тех�
 
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Картки для тесту на громадянство Німеччини (Einbürgerungstest), США, Канади, Чехії та Іспанії, лексики Goethe, HSK, JLPT і TOPIK, а також теорії на права. Мовою іспиту, з перекладом поруч. Безплатно."
+
+msgid "Flashcards that come back right before you'd forget."
+msgstr "Картки, що повертаються саме тоді, коли ти от-от забудеш."
 
 msgid "Follow with RSS"
 msgstr "Стежити через RSS"
@@ -2074,8 +2089,15 @@ msgstr "Як встановити"
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
 
+msgid "How you work"
+msgstr "Як ти працюєш"
+
 msgid "How’s it going?"
 msgstr "Як справи?"
+
+msgctxt "exam"
+msgid "HSK"
+msgstr "HSK"
 
 msgctxt "deck tag"
 msgid "HSK 1"
@@ -2294,6 +2316,10 @@ msgstr "Японська"
 msgid "Japanese 1 · Mondays"
 msgstr "Японська 1 · щопонеділка"
 
+msgctxt "exam"
+msgid "JLPT"
+msgstr "JLPT"
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2327,6 +2353,9 @@ msgstr "Продовжуй у Lymi"
 
 msgid "Keep the nerves, the drugs and the numbers."
 msgstr "Запам’ятай нерви, препарати й цифри."
+
+msgid "Keep the new words from italki, Preply or a private tutor."
+msgstr "Зберігай нові слова з уроків на italki, Preply чи з репетитором."
 
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Зберігай слова й фрази з уроків, занять із репетитором і книжок. Сфотографуй нотатки, і асистент зробить із них картки, які Lymi поверне, перш ніж ти їх забудеш."
@@ -3027,9 +3056,6 @@ msgstr "Інші іспити"
 msgid "Other subjects"
 msgstr "Інші теми"
 
-msgid "Overview"
-msgstr "Вступ"
-
 msgid "Page not found"
 msgstr "Сторінку не знайдено"
 
@@ -3161,6 +3187,9 @@ msgstr "Дорожні знаки Польщі для теорії"
 
 msgid "Polish road signs: every sign, by its picture"
 msgstr "Дорожні знаки Польщі: кожен знак за зображенням"
+
+msgid "Popular"
+msgstr "Популярне"
 
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Надішли посилання для приєднання в чат групи. Кожен, хто приєднається, отримує нову картку, щойно ти її додаси, а розклад повторень у кожного свій. Коли групу набрано, вимкни посилання."
@@ -3370,6 +3399,9 @@ msgstr "Повторення, яке працює."
 
 msgid "Replay pronunciation"
 msgstr "Послухати ще раз"
+
+msgid "Resources"
+msgstr "Ресурси"
 
 msgid "Restaurant"
 msgstr "Ресторан"
@@ -3941,6 +3973,9 @@ msgstr "Повстання в Празі 1618 року, з якого почал
 
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "Договори 1648 року, що завершили Тридцятилітню війну"
+
+msgid "The 300 general questions and the 10 for your state, as they appear on the test."
+msgstr "300 загальних питань і 10 про твою землю — як на тесті."
 
 msgid "The 3rd of the month"
 msgstr "Третє число місяця"
@@ -4703,6 +4738,9 @@ msgstr "Те, що зазубриш у ніч перед іспитом, заб�
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "Те, від чого відмовляєшся, обираючи один варіант замість наступного найкращого"
+
+msgid "What you learn"
+msgstr "Що ти вчиш"
 
 msgid "What you need to know for a class or an exam."
 msgstr "Те, що треба знати для заняття чи іспиту."

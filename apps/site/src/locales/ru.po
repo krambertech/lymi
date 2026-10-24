@@ -706,6 +706,9 @@ msgstr "Все японские колоды"
 msgid "All known"
 msgstr "Всё выучено"
 
+msgid "All languages"
+msgstr "Все языки"
+
 msgid "All of Explore"
 msgstr "Весь каталог"
 
@@ -959,6 +962,9 @@ msgstr "Перенеси карточки из Pleco."
 msgid "Brothers"
 msgstr "Братья"
 
+msgid "Browse all decks"
+msgstr "Смотреть все колоды"
+
 msgid "Browser storage holds grades and edits made offline, a copy of your recent data for up to 7 days, recent card pictures and audio, and your preferences. Signing out clears it, except a few preferences such as your theme and app language, and saved audio."
 msgstr "Хранилище браузера содержит оценки и изменения, сделанные офлайн, копию твоих последних данных до 7 дней, недавние изображения карточек и аудио и твои настройки. Выход очищает его, кроме нескольких настроек, например темы и языка приложения, и сохранённого аудио."
 
@@ -1173,6 +1179,9 @@ msgstr "Тесты на гражданство, языковые экзамен�
 
 msgid "Citizenship, language and driving tests, each with ready decks."
 msgstr "Тесты на гражданство, языковые экзамены и экзамены на права — с готовыми колодами."
+
+msgid "Class notes, a PDF or a photo of your notebook, as cards."
+msgstr "Конспекты, PDF или фото тетради становятся карточками."
 
 msgid "Claude · from your lesson notes"
 msgstr "Claude · из твоих заметок с урока"
@@ -1710,6 +1719,9 @@ msgstr "Подготовка к экзамену"
 msgid "Example"
 msgstr "Пример"
 
+msgid "Exams"
+msgstr "Экзамены"
+
 msgid "Excuse me"
 msgstr "Извините"
 
@@ -1802,6 +1814,9 @@ msgstr "Карточки для сертификаций по облачным �
 
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Карточки для теста на гражданство Германии (Einbürgerungstest), США, Канады, Чехии и Испании, лексики Goethe, HSK, JLPT и TOPIK, а также теории на права. На языке экзамена, с переводом рядом. Бесплатно."
+
+msgid "Flashcards that come back right before you'd forget."
+msgstr "Карточки, которые возвращаются, когда ты вот-вот забудешь."
 
 msgid "Follow with RSS"
 msgstr "Следить через RSS"
@@ -2142,8 +2157,15 @@ msgstr "Как установить"
 msgid "How well-timed reviews change recall"
 msgstr "Как своевременные повторения помогают помнить"
 
+msgid "How you work"
+msgstr "Как ты работаешь"
+
 msgid "How’s it going?"
 msgstr "Как дела?"
+
+msgctxt "exam"
+msgid "HSK"
+msgstr "HSK"
 
 msgctxt "deck tag"
 msgid "HSK 1"
@@ -2365,6 +2387,10 @@ msgstr "Японский"
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
 
+msgctxt "exam"
+msgid "JLPT"
+msgstr "JLPT"
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2401,6 +2427,9 @@ msgstr "Продолжай в Lymi"
 
 msgid "Keep the nerves, the drugs and the numbers."
 msgstr "Запомни нервы, препараты и цифры."
+
+msgid "Keep the new words from italki, Preply or a private tutor."
+msgstr "Сохраняй новые слова с уроков на italki, Preply или с репетитором."
 
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Сохраняй слова и фразы с уроков, занятий с репетитором и из книг. Сфотографируй заметки, и ассистент сделает из них карточки, которые Lymi вернёт, прежде чем ты их забудешь."
@@ -3125,9 +3154,6 @@ msgstr "Другие экзамены"
 msgid "Other subjects"
 msgstr "Другие темы"
 
-msgid "Overview"
-msgstr "Введение"
-
 msgid "Page not found"
 msgstr "Страница не найдена"
 
@@ -3259,6 +3285,9 @@ msgstr "Дорожные знаки Польши для теории"
 
 msgid "Polish road signs: every sign, by its picture"
 msgstr "Дорожные знаки Польши: каждый знак по изображению"
+
+msgid "Popular"
+msgstr "Популярное"
 
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Отправь ссылку для присоединения в чат группы. Каждый, кто присоединится, получает новую карточку, как только ты её добавишь, а расписание повторений у каждого своё. Когда группа набрана, выключи ссылку."
@@ -3468,6 +3497,9 @@ msgstr "Повторение, которое работает."
 
 msgid "Replay pronunciation"
 msgstr "Послушать ещё раз"
+
+msgid "Resources"
+msgstr "Ресурсы"
 
 msgid "Restaurant"
 msgstr "Ресторан"
@@ -4054,6 +4086,9 @@ msgstr "Восстание в Праге 1618 года, с которого на
 
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "Договоры 1648 года, завершившие Тридцатилетнюю войну"
+
+msgid "The 300 general questions and the 10 for your state, as they appear on the test."
+msgstr "300 общих вопросов и 10 о твоей земле — как на тесте."
 
 msgid "The 3rd of the month"
 msgstr "Третье число месяца"
@@ -4846,6 +4881,9 @@ msgstr "То, что зазубришь в ночь перед экзамено�
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "То, от чего отказываешься, выбирая один вариант вместо следующего лучшего"
+
+msgid "What you learn"
+msgstr "Что ты учишь"
 
 msgid "What you need to know for a class or an exam."
 msgstr "То, что нужно знать для занятия или экзамена."

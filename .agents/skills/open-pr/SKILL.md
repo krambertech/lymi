@@ -22,6 +22,7 @@ Continue only when the intended PR diff is isolated and understood.
 ## Prepare the change
 
 - Review the complete diff against the request and repository invariants. Remove scope creep, debug remnants, and accidental generated changes.
+- Gather the proof this kind of change needs under [Proof matches the change](../../../AGENTS.md#before-you-push).
 - Run `pnpm verify:changed` plus any focused, E2E, visual, migration, or integration verification required by the change. Fix failures before opening the PR.
 - For a product change, drive every feature the diff reaches with the [verify skill](../verify/SKILL.md) and name its evidence folder under Verification. This is the author's run; the live verdict comes later from an independent reviewer on the app preview.
 - Derive a Conventional Commit title from the actual change and the Git workflow.

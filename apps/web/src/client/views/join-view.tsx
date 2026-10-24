@@ -29,6 +29,8 @@ export interface JoinProps {
   onJoin?: (() => void) | undefined;
   busy?: boolean | undefined;
   error?: ReactNode | undefined;
+  /** Signed in and not yet a member of a shared deck: report it to Lymi. */
+  onReport?: (() => void) | undefined;
   /** Local development only: the email sign-in, so a browser test can join without Google. */
   devSignIn?: ReactNode | undefined;
 }
@@ -46,6 +48,7 @@ export function JoinView({
   onJoin,
   busy,
   error,
+  onReport,
   devSignIn,
 }: JoinProps) {
   const { t } = useLingui();
@@ -81,6 +84,7 @@ export function JoinView({
               onJoin={onJoin}
               busy={busy}
               error={error}
+              onReport={kind === "link" ? onReport : undefined}
             />
           ) : (
             <DeadLink preview={preview} kind={kind} />
@@ -106,6 +110,7 @@ function LiveLink({
   onJoin,
   busy,
   error,
+  onReport,
 }: Omit<JoinProps, "devSignIn"> & {
   preview: JoinPreviewOut;
   deck: NonNullable<JoinPreviewOut["deck"]>;
@@ -287,6 +292,11 @@ function LiveLink({
         ) : (
           <Button size="lg" className="mt-7 w-full" render={<a href="/" />}>
             <Trans>Go to Lymi</Trans>
+          </Button>
+        )}
+        {onReport && viewer === "visitor" && (
+          <Button variant="ghost" size="sm" className="mt-3 text-muted" onClick={onReport}>
+            <Trans>Report this deck</Trans>
           </Button>
         )}
       </div>

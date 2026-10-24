@@ -37,7 +37,6 @@ import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { takenDown, takenDownCards } from "./takedowns";
 import { addRunId, type EnrichmentQueue, queueEnrichment, runState } from "./enrichment";
 import { memberOf } from "./members";
 import {
@@ -48,6 +47,7 @@ import {
 } from "./modes";
 import { bumped } from "./revisions";
 import { syncTagStatements } from "./tags";
+import { takenDown, takenDownCards } from "./takedowns";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the

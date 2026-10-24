@@ -1,5 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
-import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, SquarePen, Star } from "lucide-react";
+import {
+  Anchor,
+  Archive,
+  ChartNoAxesColumn,
+  CircleAlert,
+  Ellipsis,
+  SquarePen,
+  Star,
+} from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -25,6 +33,8 @@ interface Props {
   /** Opens the card as a place over review: its fields, schedule and history. */
   onView: () => void;
   onArchive: () => void;
+  /** Someone else's card: the learner can report it to Lymi. */
+  onReport?: (() => void) | undefined;
   /** Where focus goes as the menu closes; see `DropdownMenuContent`. */
   finalFocus?: ((closeType: unknown) => boolean | HTMLElement | null | undefined) | undefined;
 }
@@ -45,6 +55,7 @@ export function CardMenu({
   onEdit,
   onView,
   onArchive,
+  onReport,
   finalFocus,
 }: Props) {
   const { t } = useLingui();
@@ -88,6 +99,12 @@ export function CardMenu({
           <ChartNoAxesColumn aria-hidden="true" />
           {t`View card`}
         </DropdownMenuItem>
+        {onReport && (
+          <DropdownMenuItem onClick={onReport}>
+            <CircleAlert aria-hidden="true" />
+            {t`Report card`}
+          </DropdownMenuItem>
+        )}
         {canEdit && <DropdownMenuSeparator />}
         {canEdit && (
           <DropdownMenuItem variant="danger" onClick={onArchive}>

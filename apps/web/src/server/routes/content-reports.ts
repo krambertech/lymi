@@ -56,9 +56,12 @@ moderation.get(
 
 moderation.get(
   "/reports/:id",
-  describe({ hide: true, ok: { schema: ModerationReportOut, description: "One report" }, errors: [404] }),
-  async (c) =>
-    c.json(await getContentReport(ctxOf(c), operatorEmails(c.env), c.req.param("id"))),
+  describe({
+    hide: true,
+    ok: { schema: ModerationReportOut, description: "One report" },
+    errors: [404],
+  }),
+  async (c) => c.json(await getContentReport(ctxOf(c), operatorEmails(c.env), c.req.param("id"))),
 );
 
 moderation.post(

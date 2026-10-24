@@ -7,7 +7,6 @@ import { track } from "./analytics";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { assertDeckRestorable } from "./takedowns";
 import { drawableByDeck } from "./draw";
 import {
   deckAccess,
@@ -29,6 +28,7 @@ import {
 import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
+import { assertDeckRestorable } from "./takedowns";
 
 const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
 

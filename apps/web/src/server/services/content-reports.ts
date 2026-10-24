@@ -185,7 +185,12 @@ async function subjectOf(
     case "join": {
       if (!isJoinToken(target.token)) throw notFound("Join link");
       const [link] = await ctx.db
-        .select({ deckId: schema.decks.id, deckName: schema.decks.name, ownerId: schema.decks.userId, ownerName: schema.user.name })
+        .select({
+          deckId: schema.decks.id,
+          deckName: schema.decks.name,
+          ownerId: schema.decks.userId,
+          ownerName: schema.user.name,
+        })
         .from(schema.deckInvitations)
         .innerJoin(schema.decks, eq(schema.decks.id, schema.deckInvitations.deckId))
         .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
@@ -235,9 +240,7 @@ export async function listContentReports(
         : isNotNull(schema.contentReports.resolvedAt),
     )
     .orderBy(
-      status === "open"
-        ? schema.contentReports.createdAt
-        : desc(schema.contentReports.resolvedAt),
+      status === "open" ? schema.contentReports.createdAt : desc(schema.contentReports.resolvedAt),
     )
     .limit(50);
   return Promise.all(rows.map((row) => presentReport(ctx.db, row.id)));
@@ -353,10 +356,7 @@ export async function resolveContentReport(
     .update(schema.contentReports)
     .set({ resolvedAt: now, action })
     .where(
-      and(
-        isNull(schema.contentReports.resolvedAt),
-        or(eq(schema.contentReports.id, id), same),
-      ),
+      and(isNull(schema.contentReports.resolvedAt), or(eq(schema.contentReports.id, id), same)),
     )
     .returning({ id: schema.contentReports.id, createdAt: schema.contentReports.createdAt });
   for (const row of settled) {

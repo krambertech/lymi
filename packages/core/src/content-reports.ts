@@ -26,7 +26,9 @@ export const ContentReportInput = z.object({
 export type ContentReportInput = z.infer<typeof ContentReportInput>;
 
 export const ContentReportOut = z
-  .object({ id: z.string().meta({ description: "The report, or the one already open for this target" }) })
+  .object({
+    id: z.string().meta({ description: "The report, or the one already open for this target" }),
+  })
   .meta({ id: "ContentReport" });
 export type ContentReportOut = z.infer<typeof ContentReportOut>;
 
@@ -56,7 +58,9 @@ export const ModerationReportOut = z
     resolvedAt: Timestamp.nullable(),
     action: ContentReportAction.nullable(),
     via: z.enum(["member", "join"]),
-    reporter: z.object({ id: z.string().nullable(), name: z.string(), email: z.string() }).nullable(),
+    reporter: z
+      .object({ id: z.string().nullable(), name: z.string(), email: z.string() })
+      .nullable(),
     owner: z.object({ id: z.string().nullable(), name: z.string(), email: z.string() }).nullable(),
     deck: z.object({ id: z.string(), name: z.string(), members: z.number().int() }),
     card: z

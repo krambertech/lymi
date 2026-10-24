@@ -125,7 +125,10 @@ describe("reporting", () => {
       const owner = await person("Owner");
       const deck = await createDeck(owner, { name: `Deck ${i}` });
       await join(member, deck.id);
-      await reportContent(member, env, { target: { kind: "deck", deckId: deck.id }, reason: "spam" });
+      await reportContent(member, env, {
+        target: { kind: "deck", deckId: deck.id },
+        reason: "spam",
+      });
     }
     const owner = await person("Owner");
     const deck = await createDeck(owner, { name: "One more" });
@@ -195,8 +198,8 @@ describe("moderation", () => {
     expect((await listDecks(owner)).map((d) => d.id)).toContain(own.id);
     await expect(restoreDeck(owner, deck.id)).rejects.toEqual(forbidden);
     await expect(turnOnJoinLink(owner, own.id)).rejects.toEqual(forbidden);
-    await expect(
-      inviteByEmail(owner, own.id, "someone@lymi.test", async () => {}),
-    ).rejects.toEqual(forbidden);
+    await expect(inviteByEmail(owner, own.id, "someone@lymi.test", async () => {})).rejects.toEqual(
+      forbidden,
+    );
   });
 });

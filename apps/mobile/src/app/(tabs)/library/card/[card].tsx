@@ -22,6 +22,7 @@ import { useMoveToSection } from "../../../../deck/move-to-section";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
+import { reportHref } from "../../../../sharing/report";
 import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../../theme/motion";
 import { usePalette } from "../../../../theme/palette";
 import { TEXT_END } from "../../../../theme/type";
@@ -430,6 +431,18 @@ export default function CardPage() {
                       ]
                     : []),
                 ],
+                // Someone else's card can be reported, in a group of its own.
+                ...(deck && !owner
+                  ? [
+                      [
+                        {
+                          label: t`Report card`,
+                          icon: "alert" as const,
+                          onSelect: () => router.push(reportHref("card", card.id, card.term)),
+                        },
+                      ],
+                    ]
+                  : []),
                 // Archive sits apart, so it is never pressed for its neighbour.
                 ...(owner
                   ? [

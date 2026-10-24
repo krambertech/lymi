@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
+import { ReportDialog } from "../components/report-dialog";
 import { ApiError, api, refusalDetail } from "../lib/api";
 import { signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
@@ -43,6 +44,7 @@ const served = (() => {
 function Join() {
   const { t } = useLingui();
   const { token } = Route.useParams();
+  const [reporting, setReporting] = useState(false);
   const { dev } = Route.useSearch();
   const navigate = useNavigate();
   const qc = useQueryClient();
@@ -111,28 +113,39 @@ function Join() {
   const busy = hold.isPending || join.isPending;
 
   return (
-    <JoinView
-      preview={preview.data}
-      busy={busy}
-      error={failed ?? (preview.isError ? describe(preview.error) : undefined)}
-      onJoinWithGoogle={busy ? undefined : () => hold.mutate("google")}
-      onJoinWithEmail={busy ? undefined : () => hold.mutate("email")}
-      pending={hold.isPending && hold.variables === "email" ? "email" : "google"}
-      onJoin={busy ? undefined : () => join.mutate()}
-      devSignIn={
-        import.meta.env.DEV &&
-        dev === "1" &&
-        preview.data?.status === "live" &&
-        preview.data.viewer === "signed-out" ? (
-          <button
-            type="button"
-            onClick={() => hold.mutate("dev")}
-            className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
-          >
-            Dev sign-in
-          </button>
-        ) : undefined
-      }
-    />
+    <>
+      <JoinView
+        preview={preview.data}
+        busy={busy}
+        error={failed ?? (preview.isError ? describe(preview.error) : undefined)}
+        onJoinWithGoogle={busy ? undefined : () => hold.mutate("google")}
+        onJoinWithEmail={busy ? undefined : () => hold.mutate("email")}
+        pending={hold.isPending && hold.variables === "email" ? "email" : "google"}
+        onJoin={busy ? undefined : () => join.mutate()}
+        onReport={() => setReporting(true)}
+        devSignIn={
+          import.meta.env.DEV &&
+          dev === "1" &&
+          preview.data?.status === "live" &&
+          preview.data.viewer === "signed-out" ? (
+            <button
+              type="button"
+              onClick={() => hold.mutate("dev")}
+              className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
+            >
+              Dev sign-in
+            </button>
+          ) : undefined
+        }
+      />
+      {preview.data?.deck && (
+        <ReportDialog
+          open={reporting}
+          onOpenChange={setReporting}
+          target={{ kind: "join", token }}
+          name={preview.data.deck.name}
+        />
+      )}
+    </>
   );
 }

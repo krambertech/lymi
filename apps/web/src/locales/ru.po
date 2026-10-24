@@ -1566,6 +1566,9 @@ msgstr "Выбери, чем каждая сторона карточки Noji �
 msgid "Choose what the deck is for."
 msgstr "Выбери, для чего эта колода."
 
+msgid "Choose what’s wrong with it."
+msgstr "Выбери, что с этим не так."
+
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
 
@@ -1860,6 +1863,9 @@ msgstr "Не удалось отправить приглашение. Слиш�
 
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
+
+msgid "Couldn’t send your report"
+msgstr "Не удалось отправить жалобу"
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не удалось выключить ссылку для присоединения. Попробуй ещё раз."
@@ -2462,11 +2468,17 @@ msgstr "Грамматика"
 msgid "Handwritten"
 msgstr "Написано от руки"
 
+msgid "Harassment or bullying"
+msgstr "Травля или преследование"
+
 msgid "Hard"
 msgstr "Трудно"
 
 msgid "Has a picture"
 msgstr "Есть изображение"
+
+msgid "Hateful or offensive"
+msgstr "Ненависть или оскорбления"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Вернись в приложение. Эту вкладку можно закрыть."
@@ -3367,6 +3379,9 @@ msgstr "Не указано"
 msgid "Not started"
 msgstr "Ещё не начато"
 
+msgid "Note"
+msgstr "Примечание"
+
 msgid "Notes"
 msgstr "Заметки"
 
@@ -3549,6 +3564,9 @@ msgstr "Открывает быстрое добавление поверх лю
 
 msgid "Optional"
 msgstr "Необязательно"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Необязательно. Всё, что поможет нам разобраться."
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: isolate(member.name)
@@ -3929,8 +3947,27 @@ msgstr "Заменить изображение"
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
+#. placeholder {0}: isolate(name)
+msgid "Report “{0}”"
+msgstr "Пожаловаться на «{0}»"
+
 msgid "Report a problem or share an idea. We’ll reply by email."
 msgstr "Сообщи о проблеме или поделись идеей. Мы ответим по почте."
+
+msgid "Report card"
+msgstr "Пожаловаться на карточку"
+
+msgid "Report deck"
+msgstr "Пожаловаться на колоду"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Жалоба отправлена. Мы рассмотрим её в течение суток."
+
+msgid "Report this deck"
+msgstr "Пожаловаться на эту колоду"
+
+msgid "Reporting this deck"
+msgstr "Жалоба на колоду"
 
 msgid "Reset your Lymi password"
 msgstr "Новый пароль для Lymi"
@@ -4222,6 +4259,9 @@ msgstr "Отправить приглашение"
 msgid "Send it again"
 msgstr "Отправить ещё раз"
 
+msgid "Send report"
+msgstr "Отправить жалобу"
+
 msgid "Send reset link"
 msgstr "Отправить ссылку"
 
@@ -4245,6 +4285,9 @@ msgstr "Название набора"
 
 msgid "Settings"
 msgstr "Настройки"
+
+msgid "Sexual content"
+msgstr "Сексуальный контент"
 
 msgid "Share link"
 msgstr "Поделиться ссылкой"
@@ -4371,6 +4414,9 @@ msgstr "Сортировка: {0}"
 msgid "Source"
 msgstr "Источник"
 
+msgid "Spam or a scam"
+msgstr "Спам или мошенничество"
+
 msgid "Spreadsheet"
 msgstr "Таблица"
 
@@ -4487,6 +4533,9 @@ msgstr "Нажми, чтобы увидеть ответ"
 
 msgid "Technology"
 msgstr "Технологии"
+
+msgid "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
+msgstr "Сообщи Lymi, если её карточки оскорбительны, кого-то травят или это спам. Владелец не узнает, кто пожаловался."
 
 msgid "Term"
 msgstr "Термин"
@@ -4895,6 +4944,9 @@ msgstr "Попробовать снова"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Попробуй ещё раз с более стабильным соединением и не закрывай Lymi, пока файл не загрузится."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Попробуй вспомнить, затем открой ответ"
 
@@ -5008,6 +5060,9 @@ msgstr "Посмотреть карточку"
 msgid "Visibility"
 msgstr "Видимость"
 
+msgid "We read every report within a day. The owner isn’t told who sent it."
+msgstr "Мы читаем каждую жалобу в течение суток. Владелец не узнает, кто её отправил."
+
 msgid "We signed out your other devices."
 msgstr "Мы вышли из аккаунта на других устройствах."
 
@@ -5070,6 +5125,9 @@ msgstr "Что в этой колоде. Участники тоже это ви
 
 msgid "What’s new"
 msgstr "Что нового"
+
+msgid "What’s wrong"
+msgstr "Что не так"
 
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
@@ -5145,6 +5203,9 @@ msgstr "Эту вкладку можно закрыть."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "Скачать его можно до {until}. Потом он будет удалён."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "В день можно отправить {CONTENT_REPORT_DAILY_LIMIT} жалоб. Если это не может ждать, напиши на hello@lymi.app."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT} сообщений в день. Попробуй завтра."

@@ -1437,6 +1437,9 @@ msgstr "Выбери, чем каждая сторона карточки Noji �
 msgid "Choose what the deck is for."
 msgstr "Выбери, для чего эта колода."
 
+msgid "Choose what’s wrong with it."
+msgstr "Выбери, что с этим не так."
+
 msgid "Choosing the terms worth a card"
 msgstr "Выбираю термины, достойные карточки"
 
@@ -1752,6 +1755,9 @@ msgstr "Не удалось отправить приглашение. Слиш�
 
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
+
+msgid "Couldn’t send your report"
+msgstr "Не удалось отправить жалобу"
 
 msgid "Couldn’t skip for now. Check your connection and try again."
 msgstr "Не удалось пропустить. Проверь соединение и попробуй ещё раз."
@@ -2325,11 +2331,17 @@ msgstr "Греческий"
 msgid "Handwritten"
 msgstr "Написано от руки"
 
+msgid "Harassment or bullying"
+msgstr "Травля или преследование"
+
 msgid "Hard"
 msgstr "Трудно"
 
 msgid "Has a picture"
 msgstr "Есть изображение"
+
+msgid "Hateful or offensive"
+msgstr "Ненависть или оскорбления"
 
 msgid "Have an account?"
 msgstr "Уже есть аккаунт?"
@@ -3078,6 +3090,9 @@ msgstr "Не указано"
 msgid "Not started"
 msgstr "Ещё не начато"
 
+msgid "Note"
+msgstr "Примечание"
+
 msgid "Notes"
 msgstr "Заметки"
 
@@ -3188,6 +3203,9 @@ msgstr "Открой письмо Noji на этом телефоне в теч�
 
 msgid "Open Settings"
 msgstr "Открыть Настройки"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Необязательно. Всё, что поможет нам разобраться."
 
 msgid "Options for {email}"
 msgstr "Действия для {email}"
@@ -3471,6 +3489,18 @@ msgstr "Изменить порядок серий"
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
+msgid "Report card"
+msgstr "Пожаловаться на карточку"
+
+msgid "Report deck"
+msgstr "Пожаловаться на колоду"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Жалоба отправлена. Мы рассмотрим её в течение суток."
+
+msgid "Report this deck"
+msgstr "Пожаловаться на эту колоду"
+
 msgid "Reset filters"
 msgstr "Сбросить фильтры"
 
@@ -3731,6 +3761,9 @@ msgstr "Отправить код"
 msgid "Send feedback"
 msgstr "Обратная связь"
 
+msgid "Send report"
+msgstr "Отправить жалобу"
+
 msgid "Send reset link"
 msgstr "Отправить ссылку"
 
@@ -3758,6 +3791,9 @@ msgstr "Название набора"
 
 msgid "Several pages at once"
 msgstr "Несколько страниц за раз"
+
+msgid "Sexual content"
+msgstr "Сексуальный контент"
 
 msgid "Share"
 msgstr "Поделиться"
@@ -3866,6 +3902,9 @@ msgstr "Сортировка"
 msgid "Source"
 msgstr "Источник"
 
+msgid "Spam or a scam"
+msgstr "Спам или мошенничество"
+
 msgctxt "language"
 msgid "Spanish"
 msgstr "Испанский"
@@ -3972,6 +4011,10 @@ msgstr "Технологии"
 
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Расскажи Lymi, что сломалось или что стоит добавить. Ответ придёт на твою почту."
+
+#. placeholder {0}: isolate(name)
+msgid "Tell Lymi what’s wrong with “{0}”. We read every report within a day, and the owner isn’t told who sent it."
+msgstr "Расскажи Lymi, что не так с «{0}». Мы читаем каждую жалобу в течение суток, а владелец не узнает, кто её отправил."
 
 msgid "Term"
 msgstr "Термин"
@@ -4299,6 +4342,9 @@ msgstr "Попробовать ещё раз"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Попробуй ещё раз с более стабильным соединением и не закрывай Lymi, пока файл не загрузится."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
+
 msgid "Try another word, or part of one."
 msgstr "Попробуй другое слово или его часть."
 
@@ -4449,6 +4495,9 @@ msgstr "Что учишь, по порядку"
 msgid "What you’re learning"
 msgstr "Что ты учишь"
 
+msgid "What’s wrong"
+msgstr "Что не так"
+
 msgid "When it’s back"
 msgstr "Когда вернётся"
 
@@ -4530,6 +4579,9 @@ msgstr "Теперь можно закрыть Lymi. Колоды появятс
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "Скачать его можно до {until}. Потом он будет удалён."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "В день можно отправить {CONTENT_REPORT_DAILY_LIMIT} жалоб. Если это не может ждать, напиши на hello@lymi.app."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT} сообщений в день. Попробуй завтра."

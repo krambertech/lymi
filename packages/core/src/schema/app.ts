@@ -1105,7 +1105,9 @@ export const contentReports = sqliteTable(
     target: text("target", { enum: ["deck", "card"] }).notNull(),
     /** A member reported from inside the deck, or a visitor from its join page. */
     via: text("via", { enum: ["member", "join"] }).notNull(),
-    reason: text("reason", { enum: ["offensive", "sexual", "harassment", "spam", "other"] }).notNull(),
+    reason: text("reason", {
+      enum: ["offensive", "sexual", "harassment", "spam", "other"],
+    }).notNull(),
     /** What the reporter wrote, as written. Private: never logged, audited or sent to analytics. */
     note: text("note"),
     /** The deck's name, its owner's name, and the card's text as they were when reported, as JSON. */

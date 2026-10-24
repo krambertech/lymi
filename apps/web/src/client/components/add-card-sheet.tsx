@@ -97,7 +97,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
           pictureError = errorMessage(e);
         });
       }
-      await refreshAfterCardWrite(qc);
+      // The card already shows where it was added, so the sheet answers without waiting on the lists.
+      void refreshAfterCardWrite(qc);
       const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
       if (createMore) return { status: "added", term, pictureError };

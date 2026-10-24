@@ -494,7 +494,7 @@ export default function CardPage() {
                       [
                         {
                           label: t`Report card`,
-                          icon: "alert" as const,
+                          icon: "report" as const,
                           onSelect: () => router.push(reportHref("card", card.id, card.term)),
                         },
                       ],

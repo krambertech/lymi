@@ -4023,9 +4023,6 @@ msgstr "Поскаржитися на колоду"
 msgid "Report sent. We’ll look within a day."
 msgstr "Скаргу надіслано. Ми розглянемо її протягом доби."
 
-msgid "Report this deck"
-msgstr "Поскаржитися на цю колоду"
-
 msgid "Reporting this deck"
 msgstr "Скарга на колоду"
 

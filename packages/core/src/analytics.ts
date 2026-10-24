@@ -364,7 +364,6 @@ export const analyticsEvents = {
   content_reported: z.object({
     target: z.enum(["deck", "card"]),
     reason: z.enum(["offensive", "sexual", "harassment", "spam", "other"]),
-    via: z.enum(["member", "join"]),
     has_note: z.boolean(),
   }),
   content_report_resolved: z.object({

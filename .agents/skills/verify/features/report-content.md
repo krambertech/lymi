@@ -4,7 +4,7 @@ A learner reports a deck or card someone else wrote. One sheet takes a reason an
 
 ## Reach
 
-In a deck someone else owns: the deck page's **Deck options** › **Report deck**, About this deck's **Report deck**, and on a card, **Card options** › **Report card** in the card's view and in review after the reveal. On a join page, signed in and not yet a member: **Report this deck**.
+In a deck someone else owns: the deck page's **Deck options** › **Report deck**, About this deck's **Report deck**, and on a card, **Card options** › **Report card** in the card's view and in review after the reveal.
 
 ## Drive
 

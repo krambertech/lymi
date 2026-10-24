@@ -10,7 +10,6 @@ const report = {
   createdAt: "2026-10-24T08:00:00.000Z",
   resolvedAt: null,
   action: null,
-  via: "member",
   reporter: { id: "u1", name: "Lesia", email: "lesia@example.com" },
   owner: { id: "u2", name: "Mart", email: "mart@example.com" },
   deck: { id: "d1", name: "Eesti slang", members: 4 },

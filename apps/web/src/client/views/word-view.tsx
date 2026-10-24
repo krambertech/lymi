@@ -23,7 +23,7 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronRight,
-  CircleAlert,
+  Flag,
   FolderInput,
   Image as ImageIcon,
   type LucideIcon,
@@ -587,10 +587,13 @@ export function WordView({
               </DropdownMenuItem>
             )}
             {onReport && (
-              <DropdownMenuItem onClick={onReport}>
-                <CircleAlert />
-                <Trans>Report card</Trans>
-              </DropdownMenuItem>
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={onReport}>
+                  <Flag />
+                  <Trans>Report card</Trans>
+                </DropdownMenuItem>
+              </>
             )}
             {owner && (
               <>

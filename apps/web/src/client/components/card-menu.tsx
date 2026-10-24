@@ -1,13 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import {
-  Anchor,
-  Archive,
-  ChartNoAxesColumn,
-  CircleAlert,
-  Ellipsis,
-  SquarePen,
-  Star,
-} from "lucide-react";
+import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, Flag, SquarePen, Star } from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -99,9 +91,10 @@ export function CardMenu({
           <ChartNoAxesColumn aria-hidden="true" />
           {t`View card`}
         </DropdownMenuItem>
+        {onReport && <DropdownMenuSeparator />}
         {onReport && (
           <DropdownMenuItem onClick={onReport}>
-            <CircleAlert aria-hidden="true" />
+            <Flag aria-hidden="true" />
             {t`Report card`}
           </DropdownMenuItem>
         )}

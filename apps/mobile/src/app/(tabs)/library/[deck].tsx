@@ -474,7 +474,7 @@ export default function Deck() {
                             [
                               {
                                 label: t`Report deck`,
-                                icon: "alert" as const,
+                                icon: "report" as const,
                                 onSelect: () => router.push(reportHref("deck", id, deck.name)),
                               },
                             ],

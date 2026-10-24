@@ -10,11 +10,10 @@ export const CONTENT_REPORT_DAILY_LIMIT = 10;
 
 export const CONTENT_REPORT_NOTE_MAX = 1000;
 
-/** What is being reported: a deck the learner studies, one of its cards, or a deck behind a join link. */
+/** What a member reports: a deck they study, or one of its cards. */
 export const ContentReportTarget = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("deck"), deckId: z.string().min(1).max(64) }),
   z.object({ kind: z.literal("card"), cardId: z.string().min(1).max(64) }),
-  z.object({ kind: z.literal("join"), token: z.string().min(1).max(128) }),
 ]);
 export type ContentReportTarget = z.infer<typeof ContentReportTarget>;
 
@@ -57,7 +56,6 @@ export const ModerationReportOut = z
     createdAt: Timestamp,
     resolvedAt: Timestamp.nullable(),
     action: ContentReportAction.nullable(),
-    via: z.enum(["member", "join"]),
     reporter: z
       .object({ id: z.string().nullable(), name: z.string(), email: z.string() })
       .nullable(),

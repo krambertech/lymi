@@ -35,7 +35,6 @@ export const EMAIL_SAMPLES: Record<TransactionalEmailKind, TransactionalEmailPar
       id: "01JBREPORTSAMPLE00000000000",
       reason: "offensive",
       note: "The example sentence insults a group of people.",
-      via: "member",
       reporter: "Lesia <lesia@example.com>",
       deckName: "Eesti slang",
       ownerName: "Mart",

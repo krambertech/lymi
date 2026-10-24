@@ -12,7 +12,7 @@ import {
   Archive,
   Check,
   ChevronRight,
-  CircleAlert,
+  Flag,
   Link2Off,
   LogOut,
   MailX,
@@ -451,7 +451,7 @@ function DeckAbout({
         }
       >
         <Button className="justify-self-start" onClick={() => setReporting(true)}>
-          <CircleAlert data-icon="inline-start" aria-hidden="true" />
+          <Flag data-icon="inline-start" aria-hidden="true" />
           <Trans>Report deck</Trans>
         </Button>
         <ReportDialog

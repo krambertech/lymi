@@ -74,7 +74,7 @@ describe("reporting", () => {
       .select()
       .from(schema.contentReports)
       .where(eq(schema.contentReports.id, id));
-    expect(row).toMatchObject({ target: "card", via: "member", reason: "offensive" });
+    expect(row).toMatchObject({ target: "card", reason: "offensive" });
     expect(row?.snapshot).toMatchObject({ deckName: "Eesti slang", card: { term: "kurat" } });
 
     const email = latestLocalEmail("hello@lymi.app");
@@ -118,19 +118,16 @@ describe("reporting", () => {
     ).rejects.toMatchObject({ code: "invalid" });
   });
 
-  it("takes a report from a join page before joining", async () => {
-    const { owner, deck } = await sharedDeck();
+  it("refuses someone who has the join link but has not joined", async () => {
+    const { owner, deck, card } = await sharedDeck();
     const visitor = await person("Visitor");
-    const link = await turnOnJoinLink(owner, deck.id);
-    const { id } = await reportContent(visitor, env, {
-      target: { kind: "join", token: link.token },
-      reason: "harassment",
-    });
-    expect(await getContentReport(operator, operators, id)).toMatchObject({
-      via: "join",
-      deck: { id: deck.id, name: "Eesti slang" },
-      card: null,
-    });
+    await turnOnJoinLink(owner, deck.id);
+    await expect(
+      reportContent(visitor, env, { target: { kind: "deck", deckId: deck.id }, reason: "spam" }),
+    ).rejects.toEqual(notFound);
+    await expect(
+      reportContent(visitor, env, { target: { kind: "card", cardId: card.id }, reason: "spam" }),
+    ).rejects.toEqual(notFound);
   });
 
   it("refuses the owner's own deck and a deck the reporter cannot see", async () => {

@@ -38,7 +38,6 @@ export interface ContentReportEmailData {
   reason: ContentReportReason;
   /** The reporter's text, as typed. */
   note: string | null;
-  via: "member" | "join";
   /** Who reported, as a name and address a reply can go to. */
   reporter: string;
   deckName: string;
@@ -303,7 +302,7 @@ function compose(
                     ...(card.notes ? [`Notes: ${card.notes}`] : []),
                   ]
                 : []),
-              `Reported by: ${it.reporter}, ${it.via === "join" ? "from the join page" : "a member"}`,
+              `Reported by: ${it.reporter}, a member`,
               `Report: ${it.id}`,
             ],
           },

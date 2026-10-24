@@ -297,7 +297,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Rows>
           <Rows>
             <Row
-              icon="alert"
+              icon="report"
               label={t`Report deck`}
               onPress={() => router.push(reportHref("deck", deck.id, deck.name))}
             />

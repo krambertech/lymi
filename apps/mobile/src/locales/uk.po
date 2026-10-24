@@ -3570,9 +3570,6 @@ msgstr "Поскаржитися на колоду"
 msgid "Report sent. We’ll look within a day."
 msgstr "Скаргу надіслано. Ми розглянемо її протягом доби."
 
-msgid "Report this deck"
-msgstr "Поскаржитися на цю колоду"
-
 msgid "Reset filters"
 msgstr "Скинути фільтри"
 

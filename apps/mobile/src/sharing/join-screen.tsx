@@ -27,7 +27,6 @@ import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
 import { welcomeWith } from "../welcome/gate";
 import { isPromised, promiseJoin, takeJoin } from "./join-intent";
-import { reportHref } from "./report";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
 export type Arrival =
@@ -196,11 +195,6 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       onJoin={() => join.mutate()}
       onSignIn={signIn}
       onOpen={open}
-      onReport={
-        arrival.kind === "link"
-          ? () => router.push(reportHref("join", arrival.token, data.deck?.name ?? ""))
-          : undefined
-      }
     />
   );
 }
@@ -234,7 +228,6 @@ function LiveLink({
   onJoin,
   onSignIn,
   onOpen,
-  onReport,
 }: {
   preview: JoinPreviewOut;
   deck: NonNullable<JoinPreviewOut["deck"]>;
@@ -245,8 +238,6 @@ function LiveLink({
   onJoin: () => void;
   onSignIn: () => void;
   onOpen: (deckId: string) => void;
-  /** A shared deck seen before joining: report it to Lymi. */
-  onReport?: (() => void) | undefined;
 }) {
   const { t } = useLingui();
   const router = useRouter();
@@ -333,9 +324,6 @@ function LiveLink({
         {note && <Note tone={viewer === "member" ? "good" : "neutral"}>{note}</Note>}
         {error && <Note tone="danger">{error}</Note>}
         {action}
-        {onReport && viewer === "visitor" && (
-          <Button label={t`Report this deck`} variant="ghost" size="sm" onPress={onReport} />
-        )}
       </View>
     </View>
   );

@@ -25,8 +25,8 @@ import {
   Archive,
   ArrowUpDown,
   ChevronDown,
-  CircleAlert,
   Download,
+  Flag,
   FolderInput,
   KeyRound,
   Layers,
@@ -1139,9 +1139,10 @@ export function DeckDetailView({
             <Trans>Export</Trans>
           </DropdownMenuItem>
         )}
+        {member && deck && <DropdownMenuSeparator />}
         {member && deck && (
           <DropdownMenuItem onClick={() => report({ kind: "deck", deckId: deck.id }, deck.name)}>
-            <CircleAlert />
+            <Flag />
             <Trans>Report deck</Trans>
           </DropdownMenuItem>
         )}

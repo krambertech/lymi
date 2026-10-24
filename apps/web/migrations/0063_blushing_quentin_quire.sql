@@ -5,7 +5,6 @@ CREATE TABLE `content_reports` (
 	`deck_id` text,
 	`card_id` text,
 	`target` text NOT NULL,
-	`via` text NOT NULL,
 	`reason` text NOT NULL,
 	`note` text,
 	`snapshot` text NOT NULL,

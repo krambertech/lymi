@@ -1119,8 +1119,6 @@ export const contentReports = sqliteTable(
     cardId: text("card_id").references(() => cards.id, { onDelete: "set null" }),
     /** Whether the card was the subject, kept apart from `cardId` so an erased card stays a card report. */
     target: text("target", { enum: ["deck", "card"] }).notNull(),
-    /** A member reported from inside the deck, or a visitor from its join page. */
-    via: text("via", { enum: ["member", "join"] }).notNull(),
     reason: text("reason", {
       enum: ["offensive", "sexual", "harassment", "spam", "other"],
     }).notNull(),

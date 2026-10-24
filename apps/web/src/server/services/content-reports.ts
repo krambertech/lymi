@@ -16,7 +16,6 @@ import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { archiveDeck } from "./decks";
 import { OPERATOR_INBOX, sendTransactionalEmail } from "./email";
-import { isJoinToken } from "./invitations";
 import { deckAccess, memberOf } from "./members";
 import { getSettings } from "./settings";
 
@@ -36,7 +35,6 @@ interface Subject {
   deckId: string;
   ownerId: string;
   cardId: string | null;
-  via: "member" | "join";
   snapshot: Snapshot;
 }
 
@@ -117,7 +115,6 @@ export async function reportContent(
     deckId: subject.deckId,
     cardId: subject.cardId,
     target: subject.cardId ? "card" : "deck",
-    via: subject.via,
     reason: input.reason,
     note,
     snapshot: subject.snapshot,
@@ -134,7 +131,6 @@ export async function reportContent(
     name: "content_reported",
     target: subject.cardId ? "card" : "deck",
     reason: input.reason,
-    via: subject.via,
     has_note: note !== null,
   });
 
@@ -152,7 +148,6 @@ export async function reportContent(
         id,
         reason: input.reason,
         note,
-        via: subject.via,
         reporter: reporter ? `${reporter.name} <${reporter.email}>` : "unknown",
         ...subject.snapshot,
       },
@@ -176,7 +171,6 @@ async function subjectOf(
         deckId: deck.id,
         ownerId: deck.owner.id,
         cardId: null,
-        via: "member",
         snapshot: { deckName: deck.name, ownerName: deck.owner.name },
       };
     }
@@ -193,7 +187,6 @@ async function subjectOf(
         deckId: card.deckId,
         ownerId: card.userId,
         cardId: card.id,
-        via: "member",
         snapshot: {
           deckName: row.deckName,
           ownerName: row.ownerName,
@@ -204,34 +197,6 @@ async function subjectOf(
             notes: card.notes,
           },
         },
-      };
-    }
-    case "join": {
-      if (!isJoinToken(target.token)) throw notFound("Join link");
-      const [link] = await ctx.db
-        .select({
-          deckId: schema.decks.id,
-          deckName: schema.decks.name,
-          ownerId: schema.decks.userId,
-          ownerName: schema.user.name,
-        })
-        .from(schema.deckInvitations)
-        .innerJoin(schema.decks, eq(schema.decks.id, schema.deckInvitations.deckId))
-        .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
-        .where(
-          and(
-            eq(schema.deckInvitations.token, target.token),
-            isNull(schema.deckInvitations.revokedAt),
-            isNull(schema.decks.archivedAt),
-          ),
-        );
-      if (!link) throw notFound("Join link");
-      return {
-        deckId: link.deckId,
-        ownerId: link.ownerId,
-        cardId: null,
-        via: "join",
-        snapshot: { deckName: link.deckName, ownerName: link.ownerName },
       };
     }
   }
@@ -323,7 +288,6 @@ async function presentReport(db: Db, id: string): Promise<ModerationReportOut> {
     createdAt: report.createdAt.toISOString(),
     resolvedAt: report.resolvedAt?.toISOString() ?? null,
     action: report.action,
-    via: report.via,
     reporter: person(report.reporterId),
     owner: person(report.ownerId),
     deck: {

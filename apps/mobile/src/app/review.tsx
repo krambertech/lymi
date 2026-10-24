@@ -1023,7 +1023,7 @@ function Run({
         {deckRow && !owned && (
           <SheetGroup>
             <SheetRow
-              icon="alert"
+              icon="report"
               label={t`Report card`}
               opens
               onPress={() => {

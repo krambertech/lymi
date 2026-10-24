@@ -80,7 +80,7 @@ export function describeReport(report) {
         ]
       : []),
     `  Owner: ${person(report.owner)}, ${report.ownerReports} report(s) against them`,
-    `  Reporter: ${person(report.reporter)}, ${report.via === "join" ? "from the join page" : "a member"}`,
+    `  Reporter: ${person(report.reporter)}, a member`,
   ].join("\n");
 }
 

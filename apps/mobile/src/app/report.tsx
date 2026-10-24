@@ -24,14 +24,12 @@ import { toast } from "../ui/toast-host";
 /** Where a link to this sheet says what is being reported. */
 export type ReportParams =
   | { kind: "deck"; id: string; name: string }
-  | { kind: "card"; id: string; name: string }
-  | { kind: "join"; id: string; name: string };
+  | { kind: "card"; id: string; name: string };
 
 function targetOf(params: Partial<ReportParams>): ContentReportTarget | null {
   if (!params.id) return null;
   if (params.kind === "deck") return { kind: "deck", deckId: params.id };
   if (params.kind === "card") return { kind: "card", cardId: params.id };
-  if (params.kind === "join") return { kind: "join", token: params.id };
   return null;
 }
 

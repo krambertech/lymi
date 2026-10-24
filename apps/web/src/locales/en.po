@@ -4023,9 +4023,6 @@ msgstr "Report deck"
 msgid "Report sent. We’ll look within a day."
 msgstr "Report sent. We’ll look within a day."
 
-msgid "Report this deck"
-msgstr "Report this deck"
-
 msgid "Reporting this deck"
 msgstr "Reporting this deck"
 

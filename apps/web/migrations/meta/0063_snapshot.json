@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "763b4f18-12f8-4ca2-9f92-bc6e402dc1dc",
+  "id": "449e127d-d561-4f81-a7d6-fd45c1b7d443",
   "prevId": "2461218c-8a0f-4299-80d1-83d4513a7a32",
   "tables": {
     "account_deletions": {
@@ -1372,13 +1372,6 @@
         },
         "target": {
           "name": "target",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "via": {
-          "name": "via",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

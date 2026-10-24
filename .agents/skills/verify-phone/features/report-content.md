@@ -4,7 +4,7 @@ A learner reports a deck or card someone else wrote, as on the web: a sheet with
 
 ## Reach
 
-In a deck someone else owns: **Deck options** › **Report deck**, About this deck's **Report deck** row, **Card options** › **Report card** on a card's page, and **Report card** in review's card sheet after the reveal. On a join screen, signed in and not yet a member: **Report this deck**.
+In a deck someone else owns: **Deck options** › **Report deck**, About this deck's **Report deck** row, **Card options** › **Report card** on a card's page, and **Report card** in review's card sheet after the reveal.
 
 ## Drive
 

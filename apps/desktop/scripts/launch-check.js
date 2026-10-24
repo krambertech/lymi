@@ -10,7 +10,8 @@ const [appPath] = process.argv.slice(2);
 if (!appPath) throw new Error("Usage: launch-check.js <path to Lymi.app>");
 const PRODUCT = "https://my.lymi.app";
 const PORT = 9_571;
-const TIMEOUT_MS = 60_000;
+// The Intel build runs under Rosetta, whose first start translates Electron and took a minute on CI.
+const TIMEOUT_MS = 180_000;
 
 const profile = mkdtempSync(join(tmpdir(), "lymi-launch-"));
 const child = spawn(

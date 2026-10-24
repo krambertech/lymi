@@ -440,6 +440,16 @@
   "accepted": [
     ["channel:list", "--limit", "25", "--json", "--non-interactive"],
     ["channel:create", "production", "--json", "--non-interactive"],
+    ["update:view", "g1", "--json"],
+    ["update:edit", "g2", "--rollout-percentage", "100", "--non-interactive"],
+    [
+      "update:revert-update-rollout",
+      "--group",
+      "g2",
+      "--message",
+      "Roll back production",
+      "--non-interactive"
+    ],
     [
       "update:list",
       "--branch",
@@ -451,7 +461,6 @@
       "--json",
       "--non-interactive"
     ],
-    ["update:view", "g1", "--json"],
     [
       "build:list",
       "--platform",
@@ -523,11 +532,96 @@
       "Roll back production",
       "--non-interactive"
     ],
-    ["update:edit", "g2", "--rollout-percentage", "100", "--non-interactive"],
     [
-      "update:revert-update-rollout",
+      "update:roll-back-to-embedded",
+      "--branch",
+      "production",
+      "--runtime-version",
+      "r1",
+      "--platform",
+      "ios",
+      "--message",
+      "Roll back production",
+      "--non-interactive"
+    ],
+    [
+      "update:list",
+      "--branch",
+      "beta",
+      "--platform",
+      "android",
+      "--limit",
+      "25",
+      "--json",
+      "--non-interactive"
+    ],
+    [
+      "build:list",
+      "--platform",
+      "android",
+      "--build-profile",
+      "beta",
+      "--runtime-version",
+      "r1",
+      "--limit",
+      "10",
+      "--json",
+      "--non-interactive"
+    ],
+    [
+      "build",
+      "--profile",
+      "beta",
+      "--platform",
+      "android",
+      "--auto-submit",
+      "--no-wait",
+      "--non-interactive"
+    ],
+    [
+      "build",
+      "--profile",
+      "production",
+      "--platform",
+      "android",
+      "--auto-submit",
+      "--no-wait",
+      "--non-interactive"
+    ],
+    [
+      "update",
+      "--branch",
+      "beta",
+      "--platform",
+      "android",
+      "--environment",
+      "preview",
+      "--message",
+      "feat(mobile): add reminders",
+      "--non-interactive"
+    ],
+    [
+      "update:republish",
       "--group",
-      "g2",
+      "g1",
+      "--destination-branch",
+      "production",
+      "--platform",
+      "android",
+      "--rollout-percentage",
+      "10",
+      "--message",
+      "Promote abc1234",
+      "--non-interactive"
+    ],
+    [
+      "update:republish",
+      "--group",
+      "g1",
+      "--destination-branch",
+      "production",
+      "--platform",
+      "android",
       "--message",
       "Roll back production",
       "--non-interactive"
@@ -539,7 +633,7 @@
       "--runtime-version",
       "r1",
       "--platform",
-      "ios",
+      "android",
       "--message",
       "Roll back production",
       "--non-interactive"

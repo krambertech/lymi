@@ -555,7 +555,7 @@ export function CardForm(props: CardFormProps) {
         maxLength={cardLimits.meaning ?? undefined}
         value={meaning}
         rows={1}
-        className="min-h-11 py-2.5 leading-normal md:min-h-10"
+        className={ONE_LINE}
         onChange={(e) => {
           setMeaning(e.target.value);
           clear("meaning");
@@ -604,7 +604,8 @@ export function CardForm(props: CardFormProps) {
     set: (value: string) => void,
     limit: number | null,
     options: {
-      long?: boolean;
+      /** A text area that starts one line tall, or several for notes; it grows as it wraps. */
+      lines?: "one" | "several";
       enterAdds?: boolean;
       description?: ReactNode;
     } = {},
@@ -617,12 +618,12 @@ export function CardForm(props: CardFormProps) {
       <Field key={key} data-extra={key}>
         <FieldLabel aside={roomLeft(value, limit)}>{label}</FieldLabel>
         {options.description}
-        {options.long ? (
+        {options.lines ? (
           <Textarea
             maxLength={limit ?? undefined}
             value={value}
-            rows={2}
-            className={options.enterAdds ? undefined : "min-h-[68px]"}
+            rows={options.lines === "one" ? 1 : 2}
+            className={options.lines === "one" ? ONE_LINE : "min-h-[68px]"}
             onChange={(e) => change(e.target.value)}
             onKeyDown={options.enterAdds ? submitOnEnter : undefined}
           />
@@ -671,9 +672,10 @@ export function CardForm(props: CardFormProps) {
   const previewAfter = shown.findLast((key) => key === "pronunciation" || key === "example");
 
   const extraField: Record<Extra, () => ReactNode> = {
-    notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
+    notes: () =>
+      textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { lines: "several" }),
     example: () =>
-      textField("example", t`Example`, example, setExample, cardLimits.example, { long: true }),
+      textField("example", t`Example`, example, setExample, cardLimits.example, { lines: "one" }),
     pronunciation: () =>
       textField(
         "pronunciation",
@@ -691,9 +693,9 @@ export function CardForm(props: CardFormProps) {
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
     hook: () =>
-      // Two lines, so a long hook can be read on a phone; it is one phrase, so Enter is done with it.
+      // One phrase, so Enter is done with it; it wraps so a long hook can be read whole.
       textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
-        long: true,
+        lines: "one",
         enterAdds: true,
         description: (
           <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
@@ -869,6 +871,8 @@ export function CardForm(props: CardFormProps) {
 }
 
 const ECHO_MS = 600;
+/** A text area as tall as an input until its text wraps. */
+const ONE_LINE = "min-h-11 py-2.5 leading-normal md:min-h-10";
 
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {

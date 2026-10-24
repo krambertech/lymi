@@ -122,7 +122,7 @@ describe("simulate actions", () => {
 
   it("reseeding drops a Readwise connection, whose decks the reseed replaces", async () => {
     const ctx = await account();
-    const deck = await createDeck(ctx, { name: "Casa", language: "it" });
+    const deck = await createDeck(ctx, { name: "Casa", defaultLanguage: "it" });
     await db.insert(schema.readwiseConnections).values({
       userId: ctx.userId,
       tokenCipher: "sealed",

@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs, stripVTControlCharacters } from "node:util";
 import { chromium, devices, expect } from "@playwright/test";
 import { doctor, git, report } from "./doctor.mjs";
+import { timedOut } from "./timeouts.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const featuresDir = resolve(here, "../features");
@@ -85,12 +86,6 @@ const patient = expect.configure({ timeout: 15_000 });
 
 function failure(error) {
   return redact(stripVTControlCharacters(error.message)).split("\n").slice(0, 6).join("\n");
-}
-
-/** Playwright waited out its limit for a page, control or element, which a loaded machine can cause too. */
-function timedOut(error) {
-  if (error.name === "TimeoutError") return true;
-  return /^Error: element\(s\) not found$/m.test(stripVTControlCharacters(error.message));
 }
 
 function slug(text) {
@@ -189,6 +184,9 @@ async function driveFeature(browser, name) {
 
   const ok = steps.length > 0 && steps.every((s) => s.ok);
   const timeout = steps.some((s) => s.timedOut);
+  const timeoutNote = steps.some((s) => s.timedOut && s.action === "set up")
+    ? "TIMEOUT in set up means the start page never loaded, so no step ran. Check that the server is up and read its log, then rerun this feature alone."
+    : "TIMEOUT means Playwright waited out its limit for something that never came, which other sessions loading the machine can cause. Rerun this feature alone; a second TIMEOUT means it is likely missing.";
   const lines = [
     `# ${feature.title ?? name}: ${ok ? "PASS" : timeout ? "TIMEOUT" : "FAIL"}`,
     "",
@@ -203,12 +201,7 @@ async function driveFeature(browser, name) {
         : []),
     ]),
     "",
-    ...(timeout
-      ? [
-          "TIMEOUT means Playwright waited out its limit for something that never came, which other sessions loading the machine can cause. Rerun this feature alone; a second TIMEOUT means it is likely missing.",
-          "",
-        ]
-      : []),
+    ...(timeout ? [timeoutNote, ""] : []),
     problems.length ? "Console and network:" : "No console errors or server failures.",
     ...problems.map((p) => `- ${p}`),
     "",

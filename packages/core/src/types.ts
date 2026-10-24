@@ -739,6 +739,9 @@ export type CardsInput = z.infer<typeof CardsInput>;
 export const ActivityQuery = z.object({
   cursor: z.string().min(1).optional(),
   limit: z.coerce.number().int().min(1).max(200).optional(),
+  app: z.string().min(1).max(500).optional().meta({
+    description: "Only the writes of one connected app, API key or source, such as `readwise`",
+  }),
 });
 export type ActivityQuery = z.infer<typeof ActivityQuery>;
 

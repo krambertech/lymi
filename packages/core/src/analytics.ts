@@ -530,6 +530,11 @@ export const analyticsEvents = {
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
+  app_page_viewed: z.object({ app: z.enum(["readwise", "yomitan", "claude", "chatgpt", "other"]) }),
+  app_activity_opened: z.object({
+    app: z.enum(["readwise", "yomitan", "claude", "chatgpt", "other"]),
+    how: z.enum(["card", "all"]),
+  }),
   section_go_to: z.object({}),
   hook_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
@@ -657,6 +662,8 @@ export const analyticsProducers = {
   deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],
   library_searched: ["browser"],
+  app_page_viewed: ["browser"],
+  app_activity_opened: ["browser"],
   section_go_to: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],

@@ -156,10 +156,6 @@ msgstr "{0, plural, one {# file} other {# files}} and text"
 msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 msgstr "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
 
-#. placeholder {0}: book.highlights
-msgid "{0, plural, one {# highlight} other {# highlights}}"
-msgstr "{0, plural, one {# highlight} other {# highlights}}"
-
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
 msgstr "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
@@ -175,6 +171,10 @@ msgstr "{0, plural, one {# note} other {# notes}}"
 #. placeholder {0}: result.rounds.slipping
 msgid "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
 msgstr "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
+
+#. placeholder {0}: pull.skipped
+msgid "{0, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
+msgstr "{0, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
 
 #. placeholder {0}: counts.reviews
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
@@ -305,10 +305,6 @@ msgstr "{0, plural, one {Imported # card} other {Imported # cards}}"
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 
-#. placeholder {0}: unplaced.length
-msgid "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
-msgstr "{0, plural, one {Lymi couldn’t tell which language this book is in. Choose one to bring in its highlights.} other {Lymi couldn’t tell which language these books are in. Choose one to bring in their highlights.}}"
-
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
@@ -374,11 +370,6 @@ msgstr "{0, plural, other {# kinds checked}}"
 msgid "{0, plural, other {All # decks}}"
 msgstr "{0, plural, other {All # decks}}"
 
-#. placeholder {0}: isolate(book.author)
-#. placeholder {1}: book.highlights
-msgid "{0} · {1, plural, one {# highlight} other {# highlights}}"
-msgstr "{0} · {1, plural, one {# highlight} other {# highlights}}"
-
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: isolate(card.deckName)
 #. placeholder {0}: isolate(item.fileName)
@@ -393,9 +384,9 @@ msgid "{0} · {date}"
 msgstr "{0} · {date}"
 
 #. placeholder {0}: isolate(book.author)
-#. placeholder {1}: book.highlights
-msgid "{0} · {language} · {1, plural, one {# highlight} other {# highlights}}"
-msgstr "{0} · {language} · {1, plural, one {# highlight} other {# highlights}}"
+#. placeholder {1}: highlights(book.highlights)
+msgid "{0} · {language} · {1}"
+msgstr "{0} · {language} · {1}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -664,12 +655,15 @@ msgstr "{label}, locked"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
-#. placeholder {0}: book.highlights
-msgid "{language} · {0, plural, one {# highlight} other {# highlights}}"
-msgstr "{language} · {0, plural, one {# highlight} other {# highlights}}"
+#. placeholder {0}: highlights(book.highlights)
+msgid "{language} · {0}"
+msgstr "{language} · {0}"
 
 msgid "{language} · {cards}"
 msgstr "{language} · {cards}"
+
+msgid "{language} highlights go to"
+msgstr "{language} highlights go to"
 
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
@@ -694,6 +688,9 @@ msgstr "{months, plural, one {# month} other {# months}}"
 
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {In # month} other {In # months}}"
+
+msgid "{n, plural, one {# highlight} other {# highlights}}"
+msgstr "{n, plural, one {# highlight} other {# highlights}}"
 
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
@@ -751,9 +748,6 @@ msgstr "{saved, plural, one {Marked # card important} other {Marked # cards impo
 
 msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 msgstr "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
-
-msgid "{skipped, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
-msgstr "{skipped, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
@@ -845,9 +839,6 @@ msgstr "a day"
 msgid "a field"
 msgstr "a field"
 
-msgid "A highlight of a word or a short phrase."
-msgstr "A highlight of a word or a short phrase."
-
 msgid "A key never grades reviews."
 msgstr "A key never grades reviews."
 
@@ -857,9 +848,6 @@ msgstr "A language"
 
 msgid "A link to a picture online."
 msgstr "A link to a picture online."
-
-msgid "A longer passage with the word written in its note. The passage becomes the card’s example."
-msgstr "A longer passage with the word written in its note. The passage becomes the card’s example."
 
 msgid "A Lymi file from another Lymi account"
 msgstr "A Lymi file from another Lymi account"
@@ -1383,9 +1371,6 @@ msgstr "Between rows"
 msgid "Between term and definition"
 msgstr "Between term and definition"
 
-msgid "Books"
-msgstr "Books"
-
 msgid "Both of the above, one card at a time."
 msgstr "Both of the above, one card at a time."
 
@@ -1542,11 +1527,11 @@ msgstr "Check your inbox"
 msgid "Checked"
 msgstr "Checked"
 
-msgid "Checked at {when}. {cards, plural, one {# new card} other {# new cards}} from {highlights, plural, one {# highlight} other {# highlights}}."
-msgstr "Checked at {when}. {cards, plural, one {# new card} other {# new cards}} from {highlights, plural, one {# highlight} other {# highlights}}."
+msgid "Checked at {when}"
+msgstr "Checked at {when}"
 
-msgid "Checked at {when}. No new highlights."
-msgstr "Checked at {when}. No new highlights."
+msgid "Checked at {when} · next around {next}"
+msgstr "Checked at {when} · next around {next}"
 
 msgid "Checking your account…"
 msgstr "Checking your account…"
@@ -1559,6 +1544,9 @@ msgstr "Checking…"
 
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
+
+msgid "Choose <0>Get Access Token</0>, then copy it."
+msgstr "Choose <0>Get Access Token</0>, then copy it."
 
 msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
 msgstr "Choose <0>Lymi file</0>, then download it when it’s ready."
@@ -1729,11 +1717,11 @@ msgstr "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook in
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Connect Lymi, paste the lesson, and ask for the cards"
 
-msgid "Connect Readwise"
-msgstr "Connect Readwise"
-
 msgid "Connect your AI assistant"
 msgstr "Connect your AI assistant"
+
+msgid "Connected"
+msgstr "Connected"
 
 msgid "connected {connected}"
 msgstr "connected {connected}"
@@ -1746,9 +1734,6 @@ msgstr "Connected. Last checked at {when}."
 
 msgid "Connected. Lymi checks every hour."
 msgstr "Connected. Lymi checks every hour."
-
-msgid "Connection"
-msgstr "Connection"
 
 msgid "Consistency"
 msgstr "Consistency"
@@ -1780,9 +1765,6 @@ msgstr "Copied when you save"
 
 msgid "Copy"
 msgstr "Copy"
-
-msgid "Copy it from <0>readwise.io/access_token</0>."
-msgstr "Copy it from <0>readwise.io/access_token</0>."
 
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Copy the set again from Quizlet with Export, then paste it."
@@ -1890,6 +1872,9 @@ msgstr "Couldn’t load this shelf"
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
+
+msgid "Couldn’t load what {app} did. Check your connection and try again."
+msgstr "Couldn’t load what {app} did. Check your connection and try again."
 
 msgid "Couldn’t load what your account holds"
 msgstr "Couldn’t load what your account holds"
@@ -2268,9 +2253,6 @@ msgstr "Each person who studies these decks keeps their own copy, with their pro
 msgid "Each section opens once you know most of the one before it."
 msgstr "Each section opens once you know most of the one before it."
 
-msgid "Each word you highlight in a book in a language you’re learning becomes a card. Lymi checks Readwise every hour."
-msgstr "Each word you highlight in a book in a language you’re learning becomes a card. Lymi checks Readwise every hour."
-
 msgid "Earlier months"
 msgstr "Earlier months"
 
@@ -2369,6 +2351,9 @@ msgstr "Every section is open, so any card can come up in review."
 
 msgid "Everyone studying this deck. You see whether they joined, not their reviews."
 msgstr "Everyone studying this deck. You see whether they joined, not their reviews."
+
+msgid "Everything {app} did, in Activity"
+msgstr "Everything {app} did, in Activity"
 
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
@@ -2643,6 +2628,9 @@ msgstr "Hook from lesson"
 
 msgid "Hook saved"
 msgstr "Hook saved"
+
+msgid "How it connects"
+msgstr "How it connects"
 
 msgid "how it is asked"
 msgstr "how it is asked"
@@ -2961,9 +2949,6 @@ msgstr "Keyboard shortcuts"
 msgid "keys"
 msgstr "keys"
 
-msgid "Kindle, Kobo, Apple Books and Readwise Reader all count, once Readwise has them."
-msgstr "Kindle, Kobo, Apple Books and Readwise Reader all count, once Readwise has them."
-
 msgid "known"
 msgstr "known"
 
@@ -3099,8 +3084,18 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
 
+#. placeholder {0}: connection.tokenHint
+msgid "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi checks Readwise every hour with your token, ending in <0>{0}</0>. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+
+msgid "Lymi checks Readwise every hour with your token. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi checks Readwise every hour with your token. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi couldn’t tell its language. Choose one to bring in its highlights."
+msgstr "Lymi couldn’t tell its language. Choose one to bring in its highlights."
 
 msgid "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
 msgstr "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
@@ -3348,8 +3343,8 @@ msgstr "New cards in this deck get this language."
 msgid "New deck"
 msgstr "New deck"
 
-msgid "New highlights in the books you turn on become cards. A new book in one of your languages is turned on by itself."
-msgstr "New highlights in the books you turn on become cards. A new book in one of your languages is turned on by itself."
+msgid "New highlights in the books you turn on become cards."
+msgstr "New highlights in the books you turn on become cards."
 
 msgid "New key"
 msgstr "New key"
@@ -3521,6 +3516,9 @@ msgstr "Not available on this server yet."
 msgid "Not checked yet. Lymi checks every hour."
 msgstr "Not checked yet. Lymi checks every hour."
 
+msgid "Not connected"
+msgstr "Not connected"
+
 msgid "Not in review yet"
 msgstr "Not in review yet"
 
@@ -3574,6 +3572,12 @@ msgstr "Nothing due today."
 
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
+
+msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
+msgstr "Nothing from {app} yet. What it adds, edits or archives shows here."
+
+msgid "Nothing from this app yet. What it adds, edits or archives shows here."
+msgstr "Nothing from this app yet. What it adds, edits or archives shows here."
 
 msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
 msgstr "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
@@ -3651,6 +3655,9 @@ msgstr "Only continue if you just chose Sign in in Lymi for Mac."
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
 
+msgid "Only one app’s writes"
+msgstr "Only one app’s writes"
+
 msgid "Only people you invite can join. Current members stay."
 msgstr "Only people you invite can join. Current members stay."
 
@@ -3659,6 +3666,9 @@ msgstr "Only the deck’s owner can change this."
 
 msgid "Only this deck’s cards change. Other decks keep the tag as it is."
 msgstr "Only this deck’s cards change. Other decks keep the tag as it is."
+
+msgid "Only what {app} did"
+msgstr "Only what {app} did"
 
 msgid "Only you see these."
 msgstr "Only you see these."
@@ -3673,6 +3683,9 @@ msgstr "Open"
 #. placeholder {1}: isolate(row.existing.deckName)
 msgid "Open “{0}” in {1}"
 msgstr "Open “{0}” in {1}"
+
+msgid "Open <0>readwise.io/access_token</0> and sign in."
+msgstr "Open <0>readwise.io/access_token</0> and sign in."
 
 msgid "Open at login"
 msgstr "Open at login"
@@ -3803,6 +3816,9 @@ msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pict
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Paste a transcript, your notes or the lesson’s text"
+
+msgid "Paste it in Lymi and connect."
+msgstr "Paste it in Lymi and connect."
 
 msgid "Paste notes or a transcript"
 msgstr "Paste notes or a transcript"
@@ -3983,6 +3999,9 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 
+msgid "Read the {app} guide"
+msgstr "Read the {app} guide"
+
 msgid "Read the guide"
 msgstr "Read the guide"
 
@@ -4016,11 +4035,11 @@ msgstr "Readwise didn’t accept that token. Copy it again from readwise.io/acce
 msgid "Readwise is disconnected"
 msgstr "Readwise is disconnected"
 
-msgid "Readwise no longer accepts this token. Paste a new one to carry on."
-msgstr "Readwise no longer accepts this token. Paste a new one to carry on."
-
 msgid "Readwise no longer accepts your token"
 msgstr "Readwise no longer accepts your token"
+
+msgid "Readwise no longer accepts your token. Paste a new one below."
+msgstr "Readwise no longer accepts your token. Paste a new one below."
 
 msgid "Readwise token"
 msgstr "Readwise token"
@@ -4499,6 +4518,9 @@ msgstr "Show all"
 
 msgid "Show another"
 msgstr "Show another"
+
+msgid "Show everything"
+msgstr "Show everything"
 
 msgid "Show hook"
 msgstr "Show hook"
@@ -5098,8 +5120,8 @@ msgstr "Today’s goal"
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Today’s new example audio is used up. Examples you’ve played still play."
 
-msgid "Token ending in <0>{hint}</0>"
-msgstr "Token ending in <0>{hint}</0>"
+msgid "Token refused"
+msgstr "Token refused"
 
 msgid "Tomorrow"
 msgstr "Tomorrow"
@@ -5190,6 +5212,9 @@ msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
+
+msgid "Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards."
+msgstr "Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards."
 
 msgid "Type a name above, then press Enter to tag this card."
 msgstr "Type a name above, then press Enter to tag this card."
@@ -5324,9 +5349,6 @@ msgstr "Welcome to Lymi"
 msgid "Welcome, {first}"
 msgstr "Welcome, {first}"
 
-msgid "What becomes a card"
-msgstr "What becomes a card"
-
 msgid "What happens to its cards"
 msgstr "What happens to its cards"
 
@@ -5369,9 +5391,6 @@ msgstr "What’s wrong"
 
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
-
-msgid "Where each language’s highlights go."
-msgstr "Where each language’s highlights go."
 
 msgid "Where the cards go"
 msgstr "Where the cards go"

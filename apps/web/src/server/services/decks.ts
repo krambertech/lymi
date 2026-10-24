@@ -28,6 +28,7 @@ import {
 import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
+import { assertDeckRestorable } from "./takedowns";
 
 const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
 
@@ -355,6 +356,7 @@ async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date
   const deck = await ownedDeck(ctx, id);
   // Already there changes nothing, so a replayed archive neither moves the date nor logs twice.
   if ((deck.archivedAt === null) === (archivedAt === null)) return { ok: true as const };
+  if (archivedAt === null) await assertDeckRestorable(db, id, deck.owner.id);
   const result = await db
     .update(schema.decks)
     .set({ archivedAt, updatedAt: new Date() })

@@ -6,6 +6,7 @@ import { audit, auditStatementWhen } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
+import { assertMayShare } from "./takedowns";
 
 /** 24 random bytes as base64url: 192 bits, so a join link cannot be guessed. */
 const TOKEN_SHAPE = /^[A-Za-z0-9_-]{32}$/;
@@ -59,6 +60,7 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before sharing it");
   }
+  await assertMayShare(ctx);
   const existing = await activeLink(db, deckId);
   if (existing) return existing;
 
@@ -237,6 +239,7 @@ export async function inviteByEmail(
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before inviting anyone");
   }
+  await assertMayShare(ctx);
   const email = rawEmail.trim().toLowerCase();
 
   const [owner] = await db

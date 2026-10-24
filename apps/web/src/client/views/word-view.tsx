@@ -23,6 +23,7 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronRight,
+  Flag,
   FolderInput,
   Image as ImageIcon,
   type LucideIcon,
@@ -243,6 +244,8 @@ export interface WordProps {
   owner?: WordOwnerActions | undefined;
   /** The learner's own mark, so a member of a shared deck sets it too. */
   onImportantChange?: ((important: boolean) => void) | undefined;
+  /** Someone else's card: the learner can report it to Lymi. */
+  onReport?: (() => void) | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
   onPlayAudio?: (() => void) | undefined;
@@ -419,6 +422,7 @@ export function WordView({
   onClose,
   owner,
   onImportantChange,
+  onReport,
   decks,
   onPlayAudio,
   titleId,
@@ -548,7 +552,7 @@ export function WordView({
         </>
       )}
       {/* The mark is the learner's own; every other item writes the card, so a member gets only the mark. */}
-      {(owner || onImportantChange) && (
+      {(owner || onImportantChange || onReport) && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -581,6 +585,15 @@ export function WordView({
                 <Signpost />
                 <Trans>Move to section…</Trans>
               </DropdownMenuItem>
+            )}
+            {onReport && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={onReport}>
+                  <Flag />
+                  <Trans>Report card</Trans>
+                </DropdownMenuItem>
+              </>
             )}
             {owner && (
               <>

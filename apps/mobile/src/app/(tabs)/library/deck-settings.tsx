@@ -21,6 +21,7 @@ import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
+import { reportHref } from "../../../sharing/report";
 import { usePalette } from "../../../theme/palette";
 import { inputCap, MULTILINE } from "../../../theme/type";
 import { FieldError } from "../../../ui/field";
@@ -293,6 +294,13 @@ function Settings({ deck }: { deck: DeckSummary }) {
           <Rows>
             <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
             <RowFace icon="modes" label={t`Modes`} value={way?.label} end="none" />
+          </Rows>
+          <Rows>
+            <Row
+              icon="report"
+              label={t`Report deck`}
+              onPress={() => router.push(reportHref("deck", deck.id, deck.name))}
+            />
           </Rows>
           <Rows>
             <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />

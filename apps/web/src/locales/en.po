@@ -1590,6 +1590,9 @@ msgstr "Choose what each side of a Noji card becomes on a Lymi card. One side is
 msgid "Choose what the deck is for."
 msgstr "Choose what the deck is for."
 
+msgid "Choose what’s wrong with it."
+msgstr "Choose what’s wrong with it."
+
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
@@ -1890,6 +1893,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t send your report"
+msgstr "Couldn’t send your report"
 
 msgid "Couldn’t translate the example."
 msgstr "Couldn’t translate the example."
@@ -2507,11 +2513,17 @@ msgstr "Grammar"
 msgid "Handwritten"
 msgstr "Handwritten"
 
+msgid "Harassment or bullying"
+msgstr "Harassment or bullying"
+
 msgid "Hard"
 msgstr "Hard"
 
 msgid "Has a picture"
 msgstr "Has a picture"
+
+msgid "Hateful or offensive"
+msgstr "Hateful or offensive"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
@@ -3415,6 +3427,9 @@ msgstr "Not set"
 msgid "Not started"
 msgstr "Not started"
 
+msgid "Note"
+msgstr "Note"
+
 msgid "Notes"
 msgstr "Notes"
 
@@ -3603,6 +3618,9 @@ msgstr "Opens quick add over any app."
 
 msgid "Optional"
 msgstr "Optional"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Optional. Anything that helps us understand."
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: isolate(member.name)
@@ -3992,8 +4010,24 @@ msgstr "Replay example"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+#. placeholder {0}: isolate(name)
+msgid "Report “{0}”"
+msgstr "Report “{0}”"
+
 msgid "Report a problem or share an idea. We’ll reply by email."
 msgstr "Report a problem or share an idea. We’ll reply by email."
+
+msgid "Report card"
+msgstr "Report card"
+
+msgid "Report deck"
+msgstr "Report deck"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Report sent. We’ll look within a day."
+
+msgid "Reporting this deck"
+msgstr "Reporting this deck"
 
 msgid "Reset your Lymi password"
 msgstr "Reset your Lymi password"
@@ -4288,6 +4322,9 @@ msgstr "Send invitation"
 msgid "Send it again"
 msgstr "Send it again"
 
+msgid "Send report"
+msgstr "Send report"
+
 msgid "Send reset link"
 msgstr "Send reset link"
 
@@ -4311,6 +4348,9 @@ msgstr "Set name"
 
 msgid "Settings"
 msgstr "Settings"
+
+msgid "Sexual content"
+msgstr "Sexual content"
 
 msgid "Share link"
 msgstr "Share link"
@@ -4437,6 +4477,9 @@ msgstr "Sort: {0}"
 msgid "Source"
 msgstr "Source"
 
+msgid "Spam or a scam"
+msgstr "Spam or a scam"
+
 msgid "Spreadsheet"
 msgstr "Spreadsheet"
 
@@ -4553,6 +4596,9 @@ msgstr "Tap to reveal the answer"
 
 msgid "Technology"
 msgstr "Technology"
+
+msgid "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
+msgstr "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
 
 msgid "Term"
 msgstr "Term"
@@ -4988,6 +5034,9 @@ msgstr "Try again"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Try again on a steadier connection and keep Lymi open until the upload finishes."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Try again, or write to <0>hello@lymi.app</0>."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Try to remember, then reveal the answer"
 
@@ -5104,6 +5153,9 @@ msgstr "View card"
 msgid "Visibility"
 msgstr "Visibility"
 
+msgid "We read every report within a day. The owner isn’t told who sent it."
+msgstr "We read every report within a day. The owner isn’t told who sent it."
+
 msgid "We signed out your other devices."
 msgstr "We signed out your other devices."
 
@@ -5169,6 +5221,9 @@ msgstr "What’s in this deck. Members see it too."
 
 msgid "What’s new"
 msgstr "What’s new"
+
+msgid "What’s wrong"
+msgstr "What’s wrong"
 
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
@@ -5244,6 +5299,9 @@ msgstr "You can close this tab."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "You can download it until {until}. Then it’s deleted."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."

@@ -44,6 +44,7 @@ import { accountApi } from "./account";
 import { activityApi } from "./activity";
 import { cardsApi } from "./cards";
 import { connectedAppsApi } from "./connected-apps";
+import { contentReportsApi } from "./content-reports";
 import { decksApi } from "./decks";
 import { exploreApi } from "./explore";
 import { exportsApi } from "./exports";
@@ -65,6 +66,7 @@ export const api = {
   ...activityApi,
   ...cardsApi,
   ...connectedAppsApi,
+  ...contentReportsApi,
   ...decksApi,
   ...exploreApi,
   ...exportsApi,

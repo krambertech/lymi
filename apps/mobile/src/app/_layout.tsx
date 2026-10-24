@@ -238,6 +238,16 @@ function Root() {
               }}
             />
             <Stack.Screen
+              name="report"
+              options={{
+                presentation: "formSheet",
+                // A long form with a note to type, so it is opaque, as feedback is. phone.md "Sheets".
+                ...FULL_SHEET,
+                sheetGrabberVisible: true,
+                contentStyle: { backgroundColor: p.sheet },
+              }}
+            />
+            <Stack.Screen
               name="series"
               options={{
                 presentation: "formSheet",

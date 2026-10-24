@@ -43,6 +43,7 @@ import {
   SectionProgress,
   useStartSection,
 } from "../../../sections/sections";
+import { reportHref } from "../../../sharing/report";
 import { useOnline } from "../../../streak/goal-picker";
 import { captureEvent } from "../../../telemetry/posthog";
 import { haptics } from "../../../theme/haptics";
@@ -468,6 +469,17 @@ export default function Deck() {
                       ],
                     ]
                   : [
+                      ...(deck
+                        ? [
+                            [
+                              {
+                                label: t`Report deck`,
+                                icon: "report" as const,
+                                onSelect: () => router.push(reportHref("deck", id, deck.name)),
+                              },
+                            ],
+                          ]
+                        : []),
                       // A deck added from Explore or shared with the learner is left, not archived.
                       [
                         {

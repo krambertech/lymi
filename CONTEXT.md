@@ -144,4 +144,6 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Invitation**: A deck's welcome to one email address. Accepting it, or joining through the join link, creates the account if there is none. _Avoid_: Invite (as a noun), request, seat
 
+**Report**: A learner telling Lymi that a deck or card someone else wrote is hateful, sexual, harassing, spam or otherwise wrong, in a deck they study but don't own, from the deck's or card's menu or About this deck; someone who has only seen a join page cannot. Lymi reads it within a day. An operator dismisses it, archives the card or deck for good, or **suspends the owner from sharing**, which archives every deck they share and stops them turning on a join link or inviting anyone; their own learning is untouched. The owner never learns who reported. Not a **Deck report**, and not **Feedback**. In code, a content report. _Avoid_: Flag, complaint, abuse report, block
+
 **Join**: Becoming a member of a shared deck. **Leave** is the member's way out and **Remove** is the owner's; neither deletes the member's reviews. _Avoid_: Subscribe, enroll, follow, kick

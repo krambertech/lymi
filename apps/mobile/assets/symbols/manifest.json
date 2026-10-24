@@ -91,6 +91,7 @@
   "delete": "trash.mjs",
   "filter": "list-filter.mjs",
   "share": "share.mjs",
+  "report": "flag.mjs",
   "copy": "copy.mjs",
   "privacy": "shield-check.mjs",
   "controlAdd": "packages/design/src/lantern.ts",

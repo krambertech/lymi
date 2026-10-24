@@ -1590,6 +1590,9 @@ msgstr "Вибери, чим кожен бік картки Noji стане в �
 msgid "Choose what the deck is for."
 msgstr "Обери, для чого ця колода."
 
+msgid "Choose what’s wrong with it."
+msgstr "Обери, що з цим не так."
+
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
 
@@ -1890,6 +1893,9 @@ msgstr "Не вдалося надіслати запрошення. Забаг�
 
 msgid "Couldn’t send your feedback"
 msgstr "Не вдалося надіслати повідомлення"
+
+msgid "Couldn’t send your report"
+msgstr "Не вдалося надіслати скаргу"
 
 msgid "Couldn’t translate the example."
 msgstr "Не вдалося перекласти приклад."
@@ -2507,11 +2513,17 @@ msgstr "Граматика"
 msgid "Handwritten"
 msgstr "Написано від руки"
 
+msgid "Harassment or bullying"
+msgstr "Цькування або переслідування"
+
 msgid "Hard"
 msgstr "Важко"
 
 msgid "Has a picture"
 msgstr "Є зображення"
+
+msgid "Hateful or offensive"
+msgstr "Ненависть або образи"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Повернися до застосунку. Цю вкладку можна закрити."
@@ -3415,6 +3427,9 @@ msgstr "Не вказано"
 msgid "Not started"
 msgstr "Ще не почато"
 
+msgid "Note"
+msgstr "Примітка"
+
 msgid "Notes"
 msgstr "Нотатки"
 
@@ -3603,6 +3618,9 @@ msgstr "Відкриває швидке додавання поверх будь
 
 msgid "Optional"
 msgstr "Необов’язково"
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Необов’язково. Усе, що допоможе нам зрозуміти."
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: isolate(member.name)
@@ -3992,8 +4010,24 @@ msgstr "Відтворити приклад ще раз"
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
 
+#. placeholder {0}: isolate(name)
+msgid "Report “{0}”"
+msgstr "Поскаржитися на «{0}»"
+
 msgid "Report a problem or share an idea. We’ll reply by email."
 msgstr "Повідом про проблему або поділися ідеєю. Ми відповімо на пошту."
+
+msgid "Report card"
+msgstr "Поскаржитися на картку"
+
+msgid "Report deck"
+msgstr "Поскаржитися на колоду"
+
+msgid "Report sent. We’ll look within a day."
+msgstr "Скаргу надіслано. Ми розглянемо її протягом доби."
+
+msgid "Reporting this deck"
+msgstr "Скарга на колоду"
 
 msgid "Reset your Lymi password"
 msgstr "Новий пароль для Lymi"
@@ -4288,6 +4322,9 @@ msgstr "Надіслати запрошення"
 msgid "Send it again"
 msgstr "Надіслати ще раз"
 
+msgid "Send report"
+msgstr "Надіслати скаргу"
+
 msgid "Send reset link"
 msgstr "Надіслати посилання"
 
@@ -4311,6 +4348,9 @@ msgstr "Назва набору"
 
 msgid "Settings"
 msgstr "Налаштування"
+
+msgid "Sexual content"
+msgstr "Сексуальний вміст"
 
 msgid "Share link"
 msgstr "Поділитися посиланням"
@@ -4437,6 +4477,9 @@ msgstr "Сортування: {0}"
 msgid "Source"
 msgstr "Джерело"
 
+msgid "Spam or a scam"
+msgstr "Спам або шахрайство"
+
 msgid "Spreadsheet"
 msgstr "Таблиця"
 
@@ -4553,6 +4596,9 @@ msgstr "Торкнися, щоб побачити відповідь"
 
 msgid "Technology"
 msgstr "Технології"
+
+msgid "Tell Lymi if its cards are offensive, harassing or spam. The owner isn’t told who reported it."
+msgstr "Повідом Lymi, якщо її картки образливі, цькують когось або є спамом. Власник не дізнається, хто поскаржився."
 
 msgid "Term"
 msgstr "Термін"
@@ -4988,6 +5034,9 @@ msgstr "Спробувати ще раз"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Спробуй ще раз зі стабільнішим з’єднанням і не закривай Lymi, доки файл не завантажиться."
 
+msgid "Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Спробуй ще раз або напиши на <0>hello@lymi.app</0>."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Спробуй згадати, потім відкрий відповідь"
 
@@ -5104,6 +5153,9 @@ msgstr "Переглянути картку"
 msgid "Visibility"
 msgstr "Видимість"
 
+msgid "We read every report within a day. The owner isn’t told who sent it."
+msgstr "Ми читаємо кожну скаргу протягом доби. Власник не дізнається, хто її надіслав."
+
 msgid "We signed out your other devices."
 msgstr "Ми вийшли з акаунта на інших пристроях."
 
@@ -5169,6 +5221,9 @@ msgstr "Що є в цій колоді. Учасники теж це бачат�
 
 msgid "What’s new"
 msgstr "Що нового"
+
+msgid "What’s wrong"
+msgstr "Що не так"
 
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "Коли більшість розділу засвоєно, наступний готовий, і ти вирішуєш, коли його почати."
@@ -5244,6 +5299,9 @@ msgstr "Цю вкладку можна закрити."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "Завантажити його можна до {until}. Потім його буде видалено."
+
+msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
+msgstr "На день можна надіслати {CONTENT_REPORT_DAILY_LIMIT} скарг. Якщо це не може чекати, напиши на hello@lymi.app."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} повідомлень. Спробуй завтра."

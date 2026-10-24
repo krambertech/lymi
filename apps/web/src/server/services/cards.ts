@@ -37,6 +37,7 @@ import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { takenDown, takenDownCards } from "./takedowns";
 import { addRunId, type EnrichmentQueue, queueEnrichment, runState } from "./enrichment";
 import { memberOf } from "./members";
 import {
@@ -1046,7 +1047,8 @@ export function restoreCards(ctx: ServiceContext, ids: readonly string[]) {
 
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
   const cards = await visibleCards(ctx, [id]);
-  const write = archiveWrite(ctx, cards, id, archivedAt);
+  const removed = archivedAt ? new Set<string>() : await takenDownCards(ctx.db, [id]);
+  const write = archiveWrite(ctx, cards, id, archivedAt, removed);
   if (!write) return;
   await runBatch(ctx.db, batchOf(ctx.db, [write], new Date()));
   reportWrites(ctx, [write], new Set());
@@ -1058,11 +1060,12 @@ async function setArchivedMany(
   archivedAt: Date | null,
 ): Promise<ArchiveCardOutcome[]> {
   const cards = await visibleCards(ctx, ids);
+  const removed = archivedAt ? new Set<string>() : await takenDownCards(ctx.db, ids);
   const now = new Date();
   const writes: CardWrite[] = [];
   const refusals = ids.map((id) =>
     refusalOf(id, () => {
-      const write = archiveWrite(ctx, cards, id, archivedAt);
+      const write = archiveWrite(ctx, cards, id, archivedAt, removed);
       if (write) writes.push(write);
     }),
   );
@@ -1083,11 +1086,13 @@ function archiveWrite(
   cards: Map<string, Card>,
   id: string,
   archivedAt: Date | null,
+  removed: ReadonlySet<string>,
 ): CardWrite | null {
   const current = cards.get(id);
   if (!current) throw notFound("Card");
   assertOwner(ctx, current);
   if ((current.archivedAt === null) === (archivedAt === null)) return null;
+  if (archivedAt === null && removed.has(id)) throw takenDown("card");
   return {
     id,
     statements: [

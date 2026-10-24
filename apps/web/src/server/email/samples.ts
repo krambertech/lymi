@@ -30,6 +30,18 @@ export const EMAIL_SAMPLES: Record<TransactionalEmailKind, TransactionalEmailPar
       language: "uk",
     },
   },
+  "content-report": {
+    contentReport: {
+      id: "01JBREPORTSAMPLE00000000000",
+      reason: "offensive",
+      note: "The example sentence insults a group of people.",
+      via: "member",
+      reporter: "Lesia <lesia@example.com>",
+      deckName: "Eesti slang",
+      ownerName: "Mart",
+      card: { term: "kurat", meaning: "damn", example: null, notes: null },
+    },
+  },
   "delete-account-code": { code: "205918" },
   "account-deleted": {},
 };

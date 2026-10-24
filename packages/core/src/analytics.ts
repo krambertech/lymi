@@ -84,6 +84,7 @@ export const EMAIL_KINDS = [
   "reset-google-account",
   "deck-invitation",
   "feedback",
+  "content-report",
   "delete-account-code",
   "account-deleted",
 ] as const;
@@ -355,6 +356,17 @@ export const analyticsEvents = {
   }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
+  content_reported: z.object({
+    target: z.enum(["deck", "card"]),
+    reason: z.enum(["offensive", "sexual", "harassment", "spam", "other"]),
+    via: z.enum(["member", "join"]),
+    has_note: z.boolean(),
+  }),
+  content_report_resolved: z.object({
+    action: z.enum(["dismiss", "archive_card", "archive_deck", "suspend_sharing"]),
+    target: z.enum(["deck", "card"]),
+    hours: z.number().int().min(0).max(8760),
+  }),
   section_opened: z.object({
     how: z.enum(["auto", "ready", "early"]),
     position: z.number().int().min(1).max(1_000),
@@ -555,6 +567,8 @@ export const analyticsProducers = {
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
+  content_reported: ["worker"],
+  content_report_resolved: ["worker"],
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],

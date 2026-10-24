@@ -7,6 +7,7 @@ import { track } from "./analytics";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { assertDeckRestorable } from "./takedowns";
 import { drawableByDeck } from "./draw";
 import {
   deckAccess,
@@ -354,6 +355,7 @@ async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date
   const deck = await ownedDeck(ctx, id);
   // Already there changes nothing, so a replayed archive neither moves the date nor logs twice.
   if ((deck.archivedAt === null) === (archivedAt === null)) return { ok: true as const };
+  if (archivedAt === null) await assertDeckRestorable(db, id, deck.owner.id);
   const result = await db
     .update(schema.decks)
     .set({ archivedAt, updatedAt: new Date() })

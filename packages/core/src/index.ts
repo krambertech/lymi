@@ -2,6 +2,7 @@ export * from "./card-search";
 export * from "./card-text";
 export * from "./chosen";
 export * from "./client-version";
+export * from "./content-reports";
 export * from "./draw";
 export * from "./enrichment";
 export * from "./export";

@@ -1082,3 +1082,66 @@ export const lessonReads = sqliteTable(
   },
   (t) => [index("lesson_reads_user_day_idx").on(t.userId, t.localDate)],
 );
+
+/**
+ * A learner's report of a deck or card someone else wrote. The content is copied in as it was
+ * reported, so an edit or erasure afterwards cannot hide what was reported. Resolved by a Lymi
+ * operator; the owner never learns who reported.
+ */
+export const contentReports = sqliteTable(
+  "content_reports",
+  {
+    id: text("id").primaryKey(),
+    /** Null once the reporter deletes their account; the report itself still stands. */
+    reporterId: text("reporter_id").references(() => user.id, { onDelete: "set null" }),
+    /** The deck's owner when it was reported. Null once their account is deleted. */
+    ownerId: text("owner_id").references(() => user.id, { onDelete: "set null" }),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    /** Null for a report on the whole deck, or once the card is erased. */
+    cardId: text("card_id").references(() => cards.id, { onDelete: "set null" }),
+    /** Whether the card was the subject, kept apart from `cardId` so an erased card stays a card report. */
+    target: text("target", { enum: ["deck", "card"] }).notNull(),
+    /** A member reported from inside the deck, or a visitor from its join page. */
+    via: text("via", { enum: ["member", "join"] }).notNull(),
+    reason: text("reason", { enum: ["offensive", "sexual", "harassment", "spam", "other"] }).notNull(),
+    /** What the reporter wrote, as written. Private: never logged, audited or sent to analytics. */
+    note: text("note"),
+    /** The deck's name, its owner's name, and the card's text as they were when reported, as JSON. */
+    snapshot: text("snapshot", { mode: "json" }).notNull(),
+    /** The reporter's local date, which the daily cap counts. */
+    localDate: text("local_date").notNull(),
+    resolvedAt: integer("resolved_at", { mode: "timestamp_ms" }),
+    action: text("action", {
+      enum: ["dismiss", "archive_card", "archive_deck", "suspend_sharing"],
+    }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (t) => [
+    index("content_reports_open_idx").on(t.resolvedAt, t.createdAt),
+    index("content_reports_reporter_day_idx").on(t.reporterId, t.localDate),
+    index("content_reports_deck_idx").on(t.deckId, t.action),
+    index("content_reports_card_idx").on(t.cardId, t.action),
+    index("content_reports_owner_idx").on(t.ownerId),
+  ],
+);
+
+export type ContentReport = typeof contentReports.$inferSelect;
+
+/**
+ * An account a Lymi operator stopped from sharing after a report. Its shared decks were archived
+ * and it can neither turn on a join link nor invite anyone; its own learning is untouched.
+ */
+export const sharingSuspensions = sqliteTable("sharing_suspensions", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** The report that led to it. */
+  reportId: text("report_id").references(() => contentReports.id, { onDelete: "set null" }),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});

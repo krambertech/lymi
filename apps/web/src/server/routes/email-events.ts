@@ -63,7 +63,9 @@ emailEvents.post("/", describe({ hide: true, open: true }), async (c) => {
       trackProductEvent(
         c.env,
         userId,
-        { name: problem.type === "bounced" ? "email_bounced" : "email_complained", kind },
+        problem.type === "bounced"
+          ? { name: "email_bounced", kind }
+          : { name: "email_complained", kind },
         undefined,
         analyticsContextFor(db, userId),
       ),

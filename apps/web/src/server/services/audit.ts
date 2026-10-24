@@ -87,6 +87,7 @@ type AccountAction =
   | "avatar.google_refresh"
   | "send_transactional_email"
   | "send_feedback"
+  | "report_content"
   | "retire_unproved_password";
 
 type Details = Record<string, unknown>;

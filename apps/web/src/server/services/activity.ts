@@ -102,6 +102,7 @@ const SENTENCES: Sentences = {
     "avatar.google_refresh": null,
     send_transactional_email: null,
     send_feedback: null,
+    report_content: null,
     retire_unproved_password: null,
   },
 };

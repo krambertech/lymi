@@ -1,6 +1,6 @@
 import type { I18n } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
-import type { FeedbackKind } from "@lymi/core";
+import type { ContentReportReason, FeedbackKind } from "@lymi/core";
 import type { EMAIL_KINDS } from "@lymi/core/analytics";
 import { trayHue } from "@lymi/core/catalog";
 import { eq, sql } from "@lymi/core/db";
@@ -32,6 +32,20 @@ export interface FeedbackEmailData {
   language: string;
 }
 
+/** A learner's report of someone else's deck or card, as Lymi's operator reads it. */
+export interface ContentReportEmailData {
+  id: string;
+  reason: ContentReportReason;
+  /** The reporter's text, as typed. */
+  note: string | null;
+  via: "member" | "join";
+  /** Who reported, as a name and address a reply can go to. */
+  reporter: string;
+  deckName: string;
+  ownerName: string;
+  card?: { term: string; meaning: string | null; example: string | null; notes: string | null };
+}
+
 /** Who asked somebody into which deck, so the message can say it without naming a card. */
 export interface DeckInvitationEmailData {
   deckName: string;
@@ -50,6 +64,7 @@ export interface TransactionalEmailParams {
   /** The confirmation code the phone app asks for, in place of a link. */
   code?: string;
   feedback?: FeedbackEmailData;
+  contentReport?: ContentReportEmailData;
   invitation?: DeckInvitationEmailData;
 }
 
@@ -136,7 +151,7 @@ export async function renderTransactionalEmail(
   params: TransactionalEmailParams = {},
   origins: EmailOrigins = PRODUCTION_ORIGINS,
 ): Promise<RenderedEmail> {
-  const locale = kind === "feedback" ? "en" : emailLanguage(language);
+  const locale = kind === "feedback" || kind === "content-report" ? "en" : emailLanguage(language);
   const i18n = await serverI18n(locale);
   const email = compose(i18n, kind, params);
   // React's server renderer stays out of the Worker entry's static graph, as @lingui/core does.
@@ -161,6 +176,14 @@ const FEEDBACK_SUBJECTS: Record<FeedbackKind, string> = {
   bug: "Lymi feedback: Bug",
   idea: "Lymi feedback: Idea",
   other: "Lymi feedback: Something else",
+};
+
+const REPORT_REASONS: Record<ContentReportReason, string> = {
+  offensive: "Hateful or offensive",
+  sexual: "Sexual content",
+  harassment: "Harassment or bullying",
+  spam: "Spam or a scam",
+  other: "Something else",
 };
 
 /** A link the message cannot be written without; a missing one is a caller bug, not a learner's. */
@@ -252,6 +275,45 @@ function compose(
               `Browser: ${it.browser}`,
               `App language: ${it.language}`,
             ],
+          },
+        ],
+        footer: [],
+      };
+    }
+    case "content-report": {
+      const it = params.contentReport;
+      if (!it) throw new Error("The content report email needs the report it is about");
+      const reason = REPORT_REASONS[it.reason];
+      const card = it.card;
+      return {
+        subject: `Lymi report: ${reason} · ${card ? card.term : it.deckName}`,
+        preview: it.note?.slice(0, 120) ?? `${reason}, reported by ${it.reporter}`,
+        blocks: [
+          ...(it.note ? [{ type: "text" as const, text: it.note }] : []),
+          {
+            type: "details",
+            lines: [
+              `Reason: ${reason}`,
+              `Deck: ${it.deckName}, owned by ${it.ownerName}`,
+              ...(card
+                ? [
+                    `Card: ${card.term}`,
+                    ...(card.meaning ? [`Meaning: ${card.meaning}`] : []),
+                    ...(card.example ? [`Example: ${card.example}`] : []),
+                    ...(card.notes ? [`Notes: ${card.notes}`] : []),
+                  ]
+                : []),
+              `Reported by: ${it.reporter}, ${it.via === "join" ? "from the join page" : "a member"}`,
+              `Report: ${it.id}`,
+            ],
+          },
+          {
+            type: "code",
+            code: `pnpm moderate show ${it.id}`,
+          },
+          {
+            type: "note",
+            text: "Answer within a day: docs/operations.md, A content report arrives.",
           },
         ],
         footer: [],
@@ -549,6 +611,7 @@ export async function sendTransactionalEmail(
       ...(input.url ? { url: input.url } : {}),
       ...(input.code ? { code: input.code } : {}),
       ...(input.feedback ? { feedback: input.feedback } : {}),
+      ...(input.contentReport ? { contentReport: input.contentReport } : {}),
       ...(input.invitation ? { invitation: input.invitation } : {}),
     },
     originsOf(env),

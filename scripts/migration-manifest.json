@@ -243,6 +243,10 @@
     {
       "name": "0060_jazzy_wild_child.sql",
       "sha256": "0b55bb10c022c7ece171dd5150299812bd7cf78023cac5761c391504cd55ca6e"
+    },
+    {
+      "name": "0061_public_wrecker.sql",
+      "sha256": "68bc59f563dd8e205d534a3d1c4d2dd952efff61e3d8223044006c839ee0de50"
     }
   ]
 }

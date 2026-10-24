@@ -2010,8 +2010,8 @@ msgstr "Delete account"
 msgid "Delete series"
 msgstr "Delete series"
 
-msgid "Delete your account, private cards and review history. Members keep shared decks."
-msgstr "Delete your account, private cards and review history. Members keep shared decks."
+msgid "Delete your account, private cards and review history. Members keep their own copy of shared decks."
+msgstr "Delete your account, private cards and review history. Members keep their own copy of shared decks."
 
 msgid "Deleted"
 msgstr "Deleted"

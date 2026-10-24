@@ -55,11 +55,12 @@ export default {
     );
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run(
-      "former-decks",
-      copyFormerDecks(createDb(env.DB), env.EVENTS).then(() =>
-        dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES),
-      ),
+      "former-deck-copies",
+      copyFormerDecks(createDb(env.DB), env.EVENTS).then(({ failed }) => {
+        if (failed > 0) throw new Error(`${failed} copies of a former owner's deck failed`);
+      }),
     );
+    run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     run(
       "apple-revocations",

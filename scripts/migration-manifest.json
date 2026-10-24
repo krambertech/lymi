@@ -253,8 +253,8 @@
       "sha256": "b12d9c2d8d44462efd27342a312afbd5eb93ce6f333d66a722d5007eb8bbec28"
     },
     {
-      "name": "0063_drop_publisher_delete_guard.sql",
-      "sha256": "c06787646a14d982b9b396591420cbe92b7252ed7e421c8b9d12d8434441b117"
+      "name": "0063_guard_studied_decks.sql",
+      "sha256": "6e4744d2330de2ca0d552e2ea6cdbbdccad95ae0514d26af9bdbf68f1dd56cdb"
     }
   ]
 }

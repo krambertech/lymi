@@ -447,7 +447,7 @@
       "idx": 63,
       "version": "6",
       "when": 1792802227571,
-      "tag": "0063_drop_publisher_delete_guard",
+      "tag": "0063_guard_studied_decks",
       "breakpoints": true
     }
   ]

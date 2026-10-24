@@ -1,7 +1,8 @@
-import { newId } from "@lymi/core";
+import { newId, termKey } from "@lymi/core";
 import { type AnyColumn, and, asc, eq, getTableColumns, is, isNull, SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { type AnalyticsWriter, track } from "./analytics";
+import { runInBatches } from "./batch";
 import { stateStatementsForLearner } from "./modes";
 
 /** Members copied per call, so one run stays well inside a Worker's time and D1's batch limits. */
@@ -46,8 +47,8 @@ function copyStatements(
   userId: string,
   language: string | null,
   now: Date,
+  copyId: string,
 ) {
-  const copyId = newId();
   const at = now.getTime();
   const member = sql`exists (select 1 from deck_members
     where deck_id = ${deckId} and user_id = ${userId} and removed_at is null)`;
@@ -169,9 +170,11 @@ function copyStatements(
       .update(schema.sectionStarts)
       .set({ sectionId: newIdOf(schema.sectionStarts.sectionId) })
       .where(and(eq(schema.sectionStarts.userId, userId), copied(schema.sectionStarts.sectionId))),
+    // Second to last: whether it removed a row says whether this run made the copy.
     db
       .delete(schema.deckMembers)
-      .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId))),
+      .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId)))
+      .returning({ id: schema.deckMembers.id }),
     db.delete(schema.deckCopyIds).where(eq(schema.deckCopyIds.userId, userId)),
   ] as const;
 }
@@ -185,7 +188,7 @@ export async function copyFormerDecks(
   db: Db,
   events: AnalyticsWriter | undefined,
   now = new Date(),
-): Promise<{ copied: number }> {
+): Promise<{ copied: number; failed: number }> {
   const members = await db
     .select({
       deckId: schema.formerDeckCopies.deckId,
@@ -204,15 +207,46 @@ export async function copyFormerDecks(
     .orderBy(asc(schema.formerDeckCopies.createdAt))
     .limit(MEMBERS_PER_RUN);
   let copied = 0;
+  let failed = 0;
+  // One member whose copy fails is reported and passed over, so the rest still get theirs.
   for (const { deckId, userId, language, cards } of members) {
-    const [first, ...rest] = copyStatements(db, deckId, userId, language, now);
-    await db.batch([first, ...rest]);
-    copied++;
-    track(events, { name: "former_deck_copied", cards });
+    const copyId = newId();
+    const statements = copyStatements(db, deckId, userId, language, now, copyId);
+    try {
+      const [first, ...rest] = statements;
+      const results = await db.batch([first, ...rest]);
+      const left = results[statements.length - 2] as unknown as { id: string }[];
+      if (left.length === 0) continue;
+      await keyLocalizedTerms(db, copyId);
+      copied++;
+      track(events, { name: "former_deck_copied", cards });
+    } catch (error) {
+      failed++;
+      console.error("Copying a former owner's deck for a member failed", {
+        error: error instanceof Error ? error.name : "unknown",
+      });
+    }
   }
   await db.delete(schema.formerDeckCopies).where(
     sql`not exists (select 1 from deck_members
       where deck_members.deck_id = former_deck_copies.deck_id and deck_members.removed_at is null)`,
   );
-  return { copied };
+  return { copied, failed };
+}
+
+/** A term taken from an edition has no duplicate key yet; `termKey` needs JavaScript's case folding. */
+async function keyLocalizedTerms(db: Db, deckId: string) {
+  const unkeyed = await db
+    .select({ id: schema.cards.id, term: schema.cards.term, language: schema.cards.language })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.deckId, deckId), eq(schema.cards.normalizedTerm, "")));
+  await runInBatches(
+    db,
+    unkeyed.map((card) => [
+      db
+        .update(schema.cards)
+        .set({ normalizedTerm: termKey(card.language, card.term) })
+        .where(eq(schema.cards.id, card.id)),
+    ]),
+  );
 }

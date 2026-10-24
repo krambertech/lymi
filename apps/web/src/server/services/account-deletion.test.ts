@@ -271,8 +271,8 @@ describe("deleting an account", () => {
 
     const captured: unknown[] = [];
     const events = { writeDataPoint: () => {}, capture: (event: unknown) => captured.push(event) };
-    expect(await copyFormerDecks(db, events)).toEqual({ copied: 1 });
-    expect(await copyFormerDecks(db, events)).toEqual({ copied: 0 });
+    expect(await copyFormerDecks(db, events)).toEqual({ copied: 1, failed: 0 });
+    expect(await copyFormerDecks(db, events)).toEqual({ copied: 0, failed: 0 });
     expect(captured).toEqual([{ name: "former_deck_copied", cards: 1 }]);
 
     const copy = await raw
@@ -381,7 +381,7 @@ describe("deleting an account", () => {
     );
     for (const [table, column, id, text] of [
       [schema.deckLocalizations, "deckId", deck.id, { name: "Естонська" }],
-      [schema.cardLocalizations, "cardId", added.card.id, { meaning: "привіт" }],
+      [schema.cardLocalizations, "cardId", added.card.id, { term: "Tere!", meaning: "привіт" }],
     ] as const) {
       await db.insert(table).values({
         id: newId(),
@@ -410,11 +410,11 @@ describe("deleting an account", () => {
     await copyFormerDecks(db, undefined);
     const copy = await raw
       .prepare(
-        "select decks.name as deck, cards.meaning as meaning from decks join cards on cards.deck_id = decks.id where decks.user_id = ?",
+        "select decks.name as deck, cards.term as term, cards.normalized_term as key, cards.meaning as meaning from decks join cards on cards.deck_id = decks.id where decks.user_id = ?",
       )
       .bind(learnerCtx.userId)
-      .first<{ deck: string; meaning: string }>();
-    expect(copy).toEqual({ deck: "Естонська", meaning: "привіт" });
+      .first();
+    expect(copy).toEqual({ deck: "Естонська", term: "Tere!", key: "tere!", meaning: "привіт" });
   });
 
   it("deletes an account that approved a localization of someone else's deck", async () => {
@@ -438,6 +438,70 @@ describe("deleting an account", () => {
       .bind(id)
       .first();
     expect(kept).toEqual({ status: "approved", approved_by: null });
+  });
+
+  it("deletes an owner of more studied decks than D1 binds parameters for", async () => {
+    const owner = await learner(db, "kaarel", "Kaarel");
+    const member = await learner(db, "liina", "Liina");
+    const statements = [];
+    for (let i = 0; i < 60; i++) {
+      const deckId = `many-${i}`;
+      statements.push(
+        raw
+          .prepare(
+            "insert into decks (id, user_id, name, created_at, updated_at) values (?, ?, ?, 0, 0)",
+          )
+          .bind(deckId, owner.userId, `Deck ${i}`),
+        raw
+          .prepare(
+            "insert into deck_members (id, deck_id, user_id, role, joined_at, created_at, updated_at) values (?, ?, ?, 'learner', 0, 0, 0)",
+          )
+          .bind(`many-member-${i}`, deckId, member.userId),
+      );
+    }
+    await raw.batch(statements);
+
+    const leftovers = await deleteAccount(
+      owner,
+      { code: await codeFor(owner, "kaarel@lymi.test") },
+      deps,
+    );
+    expect(leftovers.keptDecks).toBe(60);
+    expect(await count("user", "id", owner.userId)).toBe(0);
+    expect(await count("former_deck_copies", "created_at", "0")).toBe(0);
+    let copied = 0;
+    for (let run = 0; run < 5; run++) copied += (await copyFormerDecks(db, undefined)).copied;
+    expect(copied).toBeGreaterThanOrEqual(60);
+    expect(await count("decks", "user_id", member.userId)).toBe(60);
+    while ((await dropUnstudiedFormerDecks(db, bindings.PRIVATE_IMAGES)) > 0) {}
+  });
+
+  it("passes over a member whose copy fails, and copies the rest", async () => {
+    const owner = await learner(db, "viive", "Viive");
+    const first = await learner(db, "ottmar", "Ottmar");
+    const second = await learner(db, "ehala", "Ehala");
+    const { deck } = await deckWithCard(owner, "jõgi", first);
+    await join(second, deck.id);
+    await deleteAccount(owner, { code: await codeFor(owner, "viive@lymi.test") }, deps);
+
+    let failures = 1;
+    const flaky = new Proxy(db, {
+      get(target, key, receiver) {
+        const value = Reflect.get(target, key, receiver);
+        if (key !== "batch") return value;
+        return (...args: Parameters<Db["batch"]>) => {
+          if (failures-- > 0) return Promise.reject(new Error("D1 unavailable"));
+          return target.batch(...args);
+        };
+      },
+    });
+    const run = await copyFormerDecks(flaky, undefined);
+    expect(run.failed).toBe(1);
+    expect(run.copied).toBeGreaterThanOrEqual(1);
+    await copyFormerDecks(db, undefined);
+    for (const member of [first, second]) {
+      expect(await count("decks", "user_id", member.userId)).toBe(1);
+    }
   });
 
   it("keeps a picture a copy shares when the deck it came from goes", async () => {

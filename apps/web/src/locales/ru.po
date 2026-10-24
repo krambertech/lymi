@@ -2010,8 +2010,8 @@ msgstr "Удалить аккаунт"
 msgid "Delete series"
 msgstr "Удалить серию"
 
-msgid "Delete your account, private cards and review history. Members keep shared decks."
-msgstr "Удали свой аккаунт, личные карточки и историю повторений. Общие колоды останутся у участников."
+msgid "Delete your account, private cards and review history. Members keep their own copy of shared decks."
+msgstr "Удали свой аккаунт, личные карточки и историю повторений. Участники сохранят собственную копию общих колод."
 
 msgid "Deleted"
 msgstr "Удалён"

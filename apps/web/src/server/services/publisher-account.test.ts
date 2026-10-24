@@ -10,8 +10,9 @@ import { gradeCard } from "./review";
 import { learner, testDb } from "./test-db";
 
 /**
- * Deleting an account past every service, as `wrangler d1 execute` would. Migration 0063 dropped
- * the 0028 guard, since `deleteAccount` now copies a published deck for its members first.
+ * Deleting an account past every service, as `wrangler d1 execute` would. The database refuses
+ * while the account owns a deck other people study, since only `deleteAccount` copies it for
+ * them first. Migration 0063.
  */
 let db: Db;
 let raw: D1Database;
@@ -66,6 +67,20 @@ async function count(table: string, column: string, value: string) {
 }
 
 describe("deleting an account", () => {
+  it("is refused while it owns an unarchived deck someone else studies", async () => {
+    const lymi = await publisher("lymi-studied-guard");
+    const deck = await studiedDeck(lymi, "lymi-studied-guard@lymi.test", "guarded");
+    const annaReviews = await count("reviews", "user_id", anna.userId);
+
+    await expect(deleteUser(lymi.userId)).rejects.toThrow(/owns a deck other people study/);
+    expect(await count("decks", "id", deck.id)).toBe(1);
+    expect(await count("reviews", "user_id", anna.userId)).toBe(annaReviews);
+
+    await raw.prepare("update decks set archived_at = 1 where id = ?").bind(deck.id).run();
+    await deleteUser(lymi.userId);
+    expect(await count("user", "id", lymi.userId)).toBe(0);
+  });
+
   it("goes through for an account studying a published deck", async () => {
     const lymi = await publisher("lymi-studied");
     await studiedDeck(lymi, "lymi-studied@lymi.test", "studied-guard");

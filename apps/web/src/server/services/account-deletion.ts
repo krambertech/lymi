@@ -13,7 +13,6 @@ import {
   isNull,
   ne,
   notExists,
-  notInArray,
   or,
   type SQL,
   sql,
@@ -297,7 +296,7 @@ export interface DeletionLeftovers {
   email: string;
   language: TransactionalEmailLanguage;
   confirmedWith: "email" | "apple";
-  /** Decks other people studied, which each of them gets as a copy, and how many were published. */
+  /** Decks other people studied, which each of them gets as a copy, and the account's live published decks. */
   keptDecks: number;
   publishedDecks: number;
   privateImages: string[];
@@ -337,11 +336,19 @@ export async function deleteAccount(
 
   const summary = await deletionSummary(ctx);
   const language = await accountEmailLanguage(db, userId, deps.request);
-  const kept = summary.sharedDecks.map((deck) => deck.id);
-  const keptCards = db
-    .select({ id: schema.cards.id })
-    .from(schema.cards)
-    .where(inArray(schema.cards.deckId, kept));
+  const kept = summary.sharedDecks.length;
+  // The decks `sharedDecks` lists, as a subquery: binding one id each would pass D1's 100
+  // parameters for an owner of many studied decks. It reads nothing once the decks move.
+  const studied = sql`(select decks.id from decks where decks.user_id = ${userId}
+    and decks.archived_at is null and exists (select 1 from deck_members
+      where deck_members.deck_id = decks.id and deck_members.removed_at is null
+        and deck_members.user_id <> ${userId}))`;
+  const studiedCards = sql`(select cards.id from cards where cards.deck_id in ${studied})`;
+  const [published] = await db
+    .select({ n: count() })
+    .from(schema.deckPublications)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+    .where(and(eq(schema.decks.userId, userId), eq(schema.deckPublications.status, "published")));
 
   const [avatar] = await db
     .select({ custom: schema.userAvatars.customKey, google: schema.userAvatars.googleKey })
@@ -353,7 +360,7 @@ export async function deleteAccount(
     .where(
       and(
         eq(schema.cardImages.userId, userId),
-        kept.length > 0 ? notInArray(schema.cardImages.cardId, keptCards) : undefined,
+        sql`${schema.cardImages.cardId} not in ${studiedCards}`,
         // A member's copy shares the picture's object with the deck it came from.
         sql`not exists (select 1 from card_images as other
           where other.object_key = card_images.object_key and other.user_id <> ${userId})`,
@@ -371,7 +378,7 @@ export async function deleteAccount(
           .where(eq(schema.decks.userId, userId)),
       ),
     ),
-    kept.length > 0 ? notInArray(schema.cards.deckId, kept) : undefined,
+    sql`${schema.cards.deckId} not in ${studied}`,
   );
   const audio = await db
     .select({ key: schema.cards.audioKey })
@@ -409,12 +416,16 @@ export async function deleteAccount(
   );
   await runBatch(db, [
     ...leaves,
-    ...(kept.length > 0
+    ...(kept > 0
       ? [
           // Migration 0051 seeds it, which holds its address; this restores it if it went.
           db
             .insert(schema.user)
             .values({ id: FORMER_OWNER_ID, name: "", email: "former-owner@lymi.invalid" })
+            .onConflictDoNothing(),
+          db
+            .insert(schema.formerDeckCopies)
+            .select(sql`select decks.id, ${now.getTime()} from decks where decks.id in ${studied}`)
             .onConflictDoNothing(),
           // Nobody can change a kept deck, invite to it or join it again.
           db
@@ -422,18 +433,25 @@ export async function deleteAccount(
             .set({ revokedAt: now, updatedAt: now })
             .where(
               and(
-                inArray(schema.deckInvitations.deckId, kept),
+                sql`${schema.deckInvitations.deckId} in ${studied}`,
                 isNull(schema.deckInvitations.revokedAt),
               ),
             ),
+          // The public page and its editions belong to the person leaving; members keep the
+          // edition they pinned through the copy.
+          db
+            .delete(schema.deckPublications)
+            .where(sql`${schema.deckPublications.deckId} in ${studied}`),
+          db.delete(schema.deckEditions).where(sql`${schema.deckEditions.deckId} in ${studied}`),
           db
             .update(schema.cardImages)
             .set({ userId: FORMER_OWNER_ID, updatedAt: now })
-            .where(inArray(schema.cardImages.cardId, keptCards)),
+            .where(sql`${schema.cardImages.cardId} in ${studiedCards}`),
           db
             .update(schema.cards)
             .set({ userId: FORMER_OWNER_ID, hookDraft: null, updatedAt: now })
-            .where(inArray(schema.cards.deckId, kept)),
+            .where(sql`${schema.cards.deckId} in ${studied}`),
+          // Last, since `studied` reads the decks by their owner.
           db
             .update(schema.decks)
             .set({
@@ -444,15 +462,7 @@ export async function deleteAccount(
               enrichStyleAt: null,
               updatedAt: now,
             })
-            .where(inArray(schema.decks.id, kept)),
-          // The public page and its editions belong to the person leaving; members keep the
-          // edition they pinned through the copy.
-          db.delete(schema.deckPublications).where(inArray(schema.deckPublications.deckId, kept)),
-          db.delete(schema.deckEditions).where(inArray(schema.deckEditions.deckId, kept)),
-          db
-            .insert(schema.formerDeckCopies)
-            .values(kept.map((deckId) => ({ deckId, createdAt: now })))
-            .onConflictDoNothing(),
+            .where(sql`${schema.decks.id} in ${studied}`),
         ]
       : []),
     // A publisher's sign-off on someone else's edition stays signed off, without their name.
@@ -498,7 +508,7 @@ export async function deleteAccount(
       decks: summary.decks,
       cards: summary.cards,
       reviews: summary.reviews,
-      keptDecks: kept.length,
+      keptDecks: kept,
     }),
     ...(apple ? [db.insert(schema.appleRevocations).values(apple)] : []),
     enqueueAudioPurge(db, going, now),
@@ -520,8 +530,8 @@ export async function deleteAccount(
     email: account.email,
     language,
     confirmedWith,
-    keptDecks: kept.length,
-    publishedDecks: summary.sharedDecks.filter((deck) => deck.published).length,
+    keptDecks: kept,
+    publishedDecks: published?.n ?? 0,
     privateImages: [
       ...images.map((image) => image.key),
       ...[avatar?.custom, avatar?.google].filter((key): key is string => Boolean(key)),

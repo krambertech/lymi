@@ -46,6 +46,8 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
+**Friction log.** When the repository trips you in a way the next agent would hit too, such as a stale generated file, a misleading check message or an unwritten setup step, record it in the log rather than in private memory; one-off nits and your own slips do not belong there. First search the open ones with `gh issue list --label "agent friction" --search "<keywords>"`, and if one matches, comment on it with your occurrence. Otherwise file [the agent friction form](.github/ISSUE_TEMPLATE/agent-friction.yml); from `gh`, use its three questions as `###` headings and the `agent friction` label. An issue with a second occurrence becomes a check, a hook or a line in this guide, and that change closes it.
+
 ## Enforced rules
 
 Each rule below fails a check instead of waiting for review, and the check's message names the fix.
@@ -67,8 +69,6 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |
 | Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |
-
-**Friction log.** When the repository trips you in a way the next agent would hit too, such as a stale generated file, a misleading check message or an unwritten setup step, record it in the log rather than in private memory; one-off nits and your own slips do not belong there. First search the open ones with `gh issue list --label "agent friction" --search "<keywords>"`, and if one matches, comment on it with your occurrence. Otherwise file [the agent friction form](.github/ISSUE_TEMPLATE/agent-friction.yml); from `gh`, use its three questions as `###` headings and the `agent friction` label. An issue with a second occurrence becomes a check, a hook or a line in this guide, and that change closes it.
 
 ## Concise writing
 

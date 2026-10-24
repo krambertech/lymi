@@ -71,7 +71,8 @@ jobs:
   quality:
     needs: plan
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # A full run reaches ten minutes on a slow runner; the limit is for hangs, not slowness.
+    timeout-minutes: 15
     permissions:
       contents: read
     outputs:

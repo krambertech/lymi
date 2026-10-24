@@ -4,6 +4,9 @@ name: Series
 ---
 - runFlow: _open.yaml
 - tapOn: "Library"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 20000
 # The series is made after launch, so a Library restored from the last run's cache is pulled to refresh.
 - swipe:
     start: 50%, 30%

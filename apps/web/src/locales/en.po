@@ -1031,6 +1031,9 @@ msgstr "AI"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
+msgstr "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI fills only empty fields and leaves your text unchanged."
 
@@ -1051,6 +1054,15 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI services"
+msgstr "AI services"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI services are off for your account. Turn them on in Settings to draft hooks."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI services are off for your account. Turn them on in Settings to read lessons."
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI uses this choice when filling empty fields."
@@ -1404,6 +1416,9 @@ msgstr "Cards from Marco’s Tuesday lessons."
 
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
+
+msgid "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
+msgstr "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Cards keep the due dates they had in {app}."
@@ -1830,6 +1845,9 @@ msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again.
 
 msgid "Couldn’t save that. Try again."
 msgstr "Couldn’t save that. Try again."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Couldn’t save the choice. Check your connection and try again."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -3437,6 +3455,9 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
 
+msgid "Off. Cards stay as you type them, and only your own recordings play."
+msgstr "Off. Cards stay as you type them, and only your own recordings play."
+
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
@@ -4968,6 +4989,9 @@ msgstr "Use a public http or https link to a picture."
 
 msgid "Use another account"
 msgstr "Use another account"
+
+msgid "Use AI services"
+msgstr "Use AI services"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."

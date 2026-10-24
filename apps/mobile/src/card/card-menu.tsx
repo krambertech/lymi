@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useDecks, useSections } from "../data/queries";
 import { useMoveToDeck } from "../deck/card-batch";
 import { useMoveToSection } from "../deck/move-to-section";
+import { useAiConsent } from "../privacy/ai-consent";
 import { usePronunciation } from "../review/pronounce";
 import type { RowMenuItem } from "../ui/row-menu";
 import { toast } from "../ui/toast-host";
@@ -52,6 +53,9 @@ export function useArchiveCard() {
 
 /** Plays any card's pronunciation from a list, through one player; a failure says why in a toast. */
 function usePlayAny() {
+  const { t } = useLingui();
+  const router = useRouter();
+  const consent = useAiConsent("speech");
   const [asked, setAsked] = useState<{ card: Card } | null>(null);
   const pronounce = usePronunciation(asked?.card ?? null);
   const play = pronounce?.play;
@@ -64,7 +68,17 @@ function usePlayAny() {
   useEffect(() => {
     if (error) toast.add({ error: true, title: error });
   }, [error]);
-  return (card: Card) => setAsked({ card });
+  return (card: Card) => {
+    // A list has no room for the ask, so it points to where the learner can allow AI.
+    if (card.userId === consent.userId && !card.audioKey && !consent.allowed) {
+      toast.add({
+        title: t`Allow AI services in You to hear this word.`,
+        action: { label: t`Open You`, onPress: () => router.navigate("/you") },
+      });
+      return;
+    }
+    setAsked({ card });
+  };
 }
 
 interface CardMenuOptions {

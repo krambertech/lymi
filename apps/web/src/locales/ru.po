@@ -1031,6 +1031,9 @@ msgstr "AI"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI fills in your cards, reads lesson pages in Smart add and says your words aloud."
+msgstr "AI дополняет твои карточки, читает страницы уроков в Умном добавлении и произносит твои слова."
+
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заполняет только пустые поля и не меняет твой текст."
 
@@ -1051,6 +1054,15 @@ msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI services"
+msgstr "AI-сервисы"
+
+msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgstr "AI-сервисы отключены для твоего аккаунта. Включи их в Настройках, чтобы AI составлял подсказки."
+
+msgid "AI services are off for your account. Turn them on in Settings to read lessons."
+msgstr "AI-сервисы отключены для твоего аккаунта. Включи их в Настройках, чтобы читать уроки."
 
 msgid "AI uses this choice when filling empty fields."
 msgstr "AI учитывает твой выбор при заполнении пустых полей."
@@ -1404,6 +1416,9 @@ msgstr "Карточки с уроков Марко по вторникам."
 
 msgid "Cards from this deck"
 msgstr "Карточки из этой колоды"
+
+msgid "Cards go to OpenAI, lesson pages to Anthropic and Cloudflare, and words to Google, OpenAI or ElevenLabs to be spoken."
+msgstr "Карточки отправляются в OpenAI, страницы уроков — в Anthropic и Cloudflare, а слова для произношения — в Google, OpenAI или ElevenLabs."
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Карточки сохранят даты повторения, которые были в {app}."
@@ -1830,6 +1845,9 @@ msgstr "Не удалось сохранить «{failedTerm}». Проверь 
 
 msgid "Couldn’t save that. Try again."
 msgstr "Не удалось сохранить. Попробуйте ещё раз."
+
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Не удалось сохранить выбор. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
@@ -3437,6 +3455,9 @@ msgstr "Уведомления заблокированы. Разреши их �
 msgid "Now in {elsewhere}"
 msgstr "Сейчас в «{elsewhere}»"
 
+msgid "Off. Cards stay as you type them, and only your own recordings play."
+msgstr "Выключено. Карточки остаются такими, как ты их вводишь, и звучат только твои собственные записи произношения."
+
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
@@ -4968,6 +4989,9 @@ msgstr "Используй публичную ссылку на изображе
 
 msgid "Use another account"
 msgstr "Войти в другой аккаунт"
+
+msgid "Use AI services"
+msgstr "Использовать AI-сервисы"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."

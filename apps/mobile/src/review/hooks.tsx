@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { aiChoice } from "@lymi/client/ai-consent";
 import { api, type Card } from "@lymi/client/api";
 import { settingsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
@@ -255,6 +256,11 @@ export function HookSheet({
 
   const draft = async () => {
     if (!editing || drafting) return;
+    // This sheet can't hold the ask over itself, so it says where AI is allowed.
+    if (aiChoice(settings.data) !== true) {
+      setDraftNote(t`Drafting a hook uses AI. Allow AI services in You to draft one.`);
+      return;
+    }
     const asked = opening.current;
     const before = latest.current;
     setDrafting(true);

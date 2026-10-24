@@ -11,6 +11,7 @@ import { authClient, siteUrl } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
 import { ExportSheet } from "../../../export/export-sheet";
 import { RunStrip } from "../../../insights/figures";
+import { AiServicesRow } from "../../../privacy/ai-consent";
 import { chooseTheme, savedTheme, type ThemeChoice } from "../../../theme/choice";
 import { usePalette } from "../../../theme/palette";
 import { Select } from "../../../ui/menu";
@@ -93,6 +94,7 @@ export default function You() {
         <Rows>
           <Row icon="import" label={t`Import`} onPress={() => router.push("/import")} />
           <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
+          <AiServicesRow />
           <Row icon="keys" label={t`API keys`} onPress={() => router.push("/you/api-keys")} />
           <Row
             icon="apps"

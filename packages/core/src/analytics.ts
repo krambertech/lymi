@@ -111,6 +111,7 @@ const step = z.enum([
   "kind",
   "language",
   "goal",
+  "ai",
   "start",
   "setup",
   "deck",

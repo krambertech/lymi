@@ -851,6 +851,9 @@ msgstr "Добавить урок"
 msgid "Add a word"
 msgstr "Добавить слово"
 
+msgid "Add a word and AI writes its meaning, an example and how it sounds. Before it does, Lymi needs your permission to send these to AI services."
+msgstr "Добавь слово, и AI напишет его значение, пример и произношение. Но сначала Lymi нужно твоё разрешение отправлять это AI-сервисам."
+
 msgid "Add and review"
 msgstr "Добавить и повторить"
 
@@ -953,6 +956,9 @@ msgstr "ИИ заполняет только пустые поля и никог
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
 
+msgid "AI services"
+msgstr "AI-сервисы"
+
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
 
@@ -973,6 +979,15 @@ msgstr "Все твои колоды с историей, без колод, к�
 
 msgid "All your decks, with schedules and review history."
 msgstr "Все твои колоды с расписанием и историей повторений."
+
+msgid "Allow"
+msgstr "Разрешить"
+
+msgid "Allow AI services in You to hear this word."
+msgstr "Разреши AI-сервисы в разделе Ты, чтобы услышать это слово."
+
+msgid "Allowed"
+msgstr "Разрешено"
 
 msgctxt "deck tag"
 msgid "Alphabet"
@@ -1741,6 +1756,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t save. Check your connection and try again."
+msgstr "Не удалось сохранить. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t search cards"
 msgstr "Не удалось найти карточки"
 
@@ -1943,6 +1961,9 @@ msgstr "Готово"
 
 msgid "Draft"
 msgstr "Черновик"
+
+msgid "Drafting a hook uses AI. Allow AI services in You to draft one."
+msgstr "Подсказку составляет AI. Разреши AI-сервисы в разделе Ты, чтобы составить её."
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."
@@ -2172,6 +2193,9 @@ msgstr "Филиппинский"
 
 msgid "Fill in the rest with AI"
 msgstr "Дополнить остальное с AI"
+
+msgid "Filling in cards"
+msgstr "Дополнение карточек"
 
 msgid "Filter"
 msgstr "Фильтр"
@@ -2688,6 +2712,9 @@ msgstr "Урок 15"
 msgid "Lesson text"
 msgstr "Текст урока"
 
+msgid "Let AI do the typing"
+msgstr "Пусть AI пишет за тебя"
+
 msgid "Lets a script read or add to your decks."
 msgstr "Ключ позволяет скрипту читать колоды или добавлять в них."
 
@@ -2755,6 +2782,9 @@ msgstr "После удаления аккаунта Lymi ничего не хр
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi sends what you add to these services. You can change this any time in You."
+msgstr "Lymi отправляет то, что ты добавляешь, этим сервисам. Изменить это можно в любой момент в разделе Ты."
 
 msgid "Lymi was closed before the text arrived. Paste the set again to start over."
 msgstr "Lymi закрыли, пока текст ещё отправлялся. Вставь набор ещё раз, чтобы начать сначала."
@@ -3066,6 +3096,9 @@ msgstr "Пока не в повторениях"
 msgid "Not joined yet · invited {invited}"
 msgstr "Ещё не в колоде · приглашение от {invited}"
 
+msgid "Not now"
+msgstr "Не сейчас"
+
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -3125,6 +3158,9 @@ msgstr "Ничего не добавлено, а файл удалён."
 
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr "Уведомления для Lymi выключены. Включи их в Настройках, чтобы получать напоминание."
+
+msgid "Off"
+msgstr "Выключено"
 
 msgid "Often forgotten"
 msgstr "Часто забываются"
@@ -3188,6 +3224,9 @@ msgstr "Открой письмо Noji на этом телефоне в теч�
 
 msgid "Open Settings"
 msgstr "Открыть Настройки"
+
+msgid "Open You"
+msgstr "Открыть Ты"
 
 msgid "Options for {email}"
 msgstr "Действия для {email}"
@@ -3315,6 +3354,9 @@ msgstr "Нажми Copy text и вставь текст сюда."
 
 msgid "Previous month"
 msgstr "Предыдущий месяц"
+
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
 
 msgid "Private"
 msgstr "Приватная"
@@ -3842,6 +3884,9 @@ msgstr "Словенский"
 msgid "Smart add"
 msgstr "Умное добавление"
 
+msgid "Smart add reads your lesson with AI. Allow it to find the terms."
+msgstr "Умное добавление читает урок с помощью AI. Разреши это, чтобы найти термины."
+
 msgid "So you know which key to revoke later."
 msgstr "Чтобы потом знать, какой ключ отозвать."
 
@@ -4067,6 +4112,12 @@ msgstr "Серия будет удалена навсегда."
 
 msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
 msgstr "Серия будет удалена навсегда. Её колоды могут остаться в Библиотеке или уйти в архив вместе с ней."
+
+msgid "The term goes to Google, OpenAI or ElevenLabs to be spoken."
+msgstr "Термин отправляется в Google, OpenAI или ElevenLabs для произношения."
+
+msgid "The term, meaning, example and notes go to OpenAI."
+msgstr "Термин, значение, пример и заметки отправляются в OpenAI."
 
 msgid "The upload stopped partway"
 msgstr "Загрузка остановилась на полпути"
@@ -4321,6 +4372,9 @@ msgstr "Ссылка для присоединения к «{deck}» выклю�
 msgid "Turned on the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» включена"
 
+msgid "Turning it off stops anything new from being sent. What AI already wrote stays on your cards."
+msgstr "Если выключить, ничего нового отправляться не будет. То, что AI уже написал, останется на карточках."
+
 msgid "Type them here, or send a lesson from your AI assistant."
 msgstr "Введи их здесь или отправь урок из своего AI-ассистента."
 
@@ -4371,6 +4425,12 @@ msgstr "Загрузка"
 msgctxt "deck tag"
 msgid "US civics test"
 msgstr "Тест на гражданство США"
+
+msgid "Use AI with your cards"
+msgstr "Использовать AI с карточками"
+
+msgid "Use AI with your cards?"
+msgstr "Использовать AI с карточками?"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -4476,6 +4536,9 @@ msgstr "Кто может присоединиться"
 msgid "Who’s in this deck needs a connection"
 msgstr "Чтобы увидеть, кто в этой колоде, нужно соединение"
 
+msgid "Without it, you add and review cards as usual."
+msgstr "Без него ты так же добавляешь и повторяешь карточки."
+
 msgid "Words and phrases in a language you’re learning."
 msgstr "Слова и фразы языка, который учишь."
 
@@ -4524,6 +4587,9 @@ msgstr "Ты здесь"
 
 msgid "You are still in the deck."
 msgstr "Ты всё ещё в колоде."
+
+msgid "You can change this any time in You."
+msgstr "Изменить это можно в любой момент в разделе Ты."
 
 msgid "You can close Lymi now. Your decks appear in Library when the import finishes."
 msgstr "Теперь можно закрыть Lymi. Колоды появятся в Библиотеке, когда импорт завершится."
@@ -4632,6 +4698,9 @@ msgstr "Твои собственные материалы, какие угод�
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото изменилось на другом устройстве. Попробуй ещё раз."
+
+msgid "Your photos, PDFs and notes go to Anthropic and Cloudflare."
+msgstr "Твои фото, PDF и заметки отправляются в Anthropic и Cloudflare."
 
 msgid "Your set’s text"
 msgstr "Текст твоего набора"

@@ -505,6 +505,7 @@ export default function CardPage() {
       )}
       {block(t`Schedule`, schedule)}
       {block(t`History`, log)}
+      {pronounce?.sheet}
     </Screen>
   );
 }

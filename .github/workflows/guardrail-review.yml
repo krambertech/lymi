@@ -1,0 +1,49 @@
+name: Guardrail review
+
+# A pull request that changes a guardrail waits for the reviewer's approval of its head commit; docs/testing.md.
+# pull_request_target runs this file and the detector from the base branch, so a pull request cannot loosen
+# the gate that judges it. Nothing from the pull request runs: its head is fetched only as data to diff.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+permissions: {}
+
+concurrency:
+  group: guardrail-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Guardrail review
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      # A review event runs this file from the pull request, so the detector is still taken from the base.
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+
+      - name: Check for guardrail changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GUARDRAIL_REVIEWER: krambertech
+        run: |
+          git fetch --no-tags origin "$HEAD_SHA"
+          node scripts/guardrail-review.mjs

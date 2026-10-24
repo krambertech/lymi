@@ -67,6 +67,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Every learner-facing string is extracted | `pnpm i18n:check` |
 | Applied migrations never change | `pnpm check:migrations` |
 | Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |
+| A pull request that changes a guardrail, such as a suppression without a reason, a lint plugin, a check script or this table, waits for Kateryna's approval of its head commit; an agent never posts `/approve-guardrails` | `Guardrail review` in `.github/workflows/guardrail-review.yml` |
 
 ## Concise writing
 

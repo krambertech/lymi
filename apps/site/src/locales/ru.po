@@ -1008,6 +1008,9 @@ msgstr "Карточки сохранят даты повторения, кот�
 msgid "Cards outside a section"
 msgstr "Карточки без раздела"
 
+msgid "castle"
+msgstr "замок (крепость)"
+
 msgid "CCSE Spanish nationality test"
 msgstr "Экзамен CCSE на гражданство Испании"
 
@@ -2423,6 +2426,9 @@ msgstr "Буквально — «лошадь лошадь тигр тигр»."
 
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Дословно — «это идёт». Так говорят официанты, принимая заказ."
+
+msgid "lock"
+msgstr "замок (на двери)"
 
 msgid "Long time no see"
 msgstr "Давно не виделись"

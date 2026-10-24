@@ -25,6 +25,7 @@ export const CHANGELOG_FIGURES = [
   "command-menu",
   "japanese-card",
   "pinyin",
+  "stress",
 ] as const;
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

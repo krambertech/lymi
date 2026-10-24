@@ -199,6 +199,13 @@ describe("deleting an account", () => {
       async () => {},
     );
 
+    await raw
+      .prepare(
+        "insert into apikey (id, reference_id, key, created_at, updated_at) values ('nora-key', ?, 'hashed', 0, 0)",
+      )
+      .bind(nora.userId)
+      .run();
+
     const code = await codeFor(nora, "nora@lymi.test");
     const leftovers = await deleteAccount(nora, { code }, deps);
 
@@ -220,12 +227,8 @@ describe("deleting an account", () => {
       .bind(owner.userId)
       .first<{ n: number }>();
     expect(left?.n).toBe(1);
-    const open = await raw
-      .prepare(
-        "select count(*) as n from deck_invitations where email = 'nora@lymi.test' and revoked_at is null",
-      )
-      .first<{ n: number }>();
-    expect(open?.n).toBe(0);
+    expect(await count("deck_invitations", "email", "nora@lymi.test")).toBe(0);
+    expect(await count("apikey", "reference_id", nora.userId)).toBe(0);
     const record = await raw
       .prepare("select * from account_deletions where id = ?")
       .bind(nora.userId)

@@ -468,18 +468,18 @@ export async function deleteAccount(
     ].map((table) =>
       db.update(table).set({ approvedBy: null }).where(eq(table.approvedBy, userId)),
     ),
-    // An open invitation to the address would otherwise show as pending to a deck's owner.
+    // Invitations to the address hold it in other owners' decks, and an open one would show as
+    // pending; membership is kept on `deck_members`, so none is needed once the account is gone.
     db
-      .update(schema.deckInvitations)
-      .set({ revokedAt: now, updatedAt: now })
+      .delete(schema.deckInvitations)
       .where(
         and(
           eq(schema.deckInvitations.kind, "named"),
           eq(schema.deckInvitations.email, account.email.toLowerCase()),
-          isNull(schema.deckInvitations.revokedAt),
-          isNull(schema.deckInvitations.acceptedAt),
         ),
       ),
+    // API keys name their account without a foreign key, so they do not cascade.
+    db.delete(schema.apikey).where(eq(schema.apikey.referenceId, userId)),
     db.delete(schema.verification).where(
       // The day's code counter lives two days, so today's and yesterday's may both be there.
       inArray(schema.verification.identifier, [

@@ -2117,8 +2117,8 @@ msgstr "If only"
 msgid "If only; maybe; I wish"
 msgstr "If only; maybe; I wish"
 
-msgid "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change analytics or delete your account."
-msgstr "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change analytics or delete your account."
+msgid "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change AI services or analytics, or delete your account."
+msgstr "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change AI services or analytics, or delete your account."
 
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
@@ -2159,8 +2159,8 @@ msgstr "In Chinese, one character can have more than one sound. <0>行</0> is h�
 msgid "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 msgstr "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 
-msgid "In Lymi you can edit cards and settings, export your library, choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
-msgstr "In Lymi you can edit cards and settings, export your library, choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
+msgid "In Lymi you can edit cards and settings, export your library, turn AI services off or choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
+msgstr "In Lymi you can edit cards and settings, export your library, turn AI services off or choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "In many real data sets, about 30% of numbers start with a 1"
@@ -3980,9 +3980,6 @@ msgstr "The everyday thanks. Suur aitäh is a big one."
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 
-msgid "The first time you play a card, we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
-msgstr "The first time you play a card, we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
-
 msgid "The flashcard app that gets Chinese."
 msgstr "The flashcard app that gets Chinese."
 
@@ -4006,6 +4003,9 @@ msgstr "The girl"
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "The Hradec Králové and Pardubice regions."
+
+msgid "The iPhone and Android apps ask before the first time they send anything to an AI service, and send nothing until you allow it. On the web, AI services are on unless you turn them off. The choice belongs to your account: turn AI services off in You › AI services in the app or Settings › AI services on the web, and nothing new is sent from any app, API key or connected assistant. Text AI already wrote stays on your cards. Without AI services you can still add cards and review as usual, and a word is spoken only if it already has audio. A shared or published deck’s pronunciation follows its owner’s choice."
+msgstr "The iPhone and Android apps ask before the first time they send anything to an AI service, and send nothing until you allow it. On the web, AI services are on unless you turn them off. The choice belongs to your account: turn AI services off in You › AI services in the app or Settings › AI services on the web, and nothing new is sent from any app, API key or connected assistant. Text AI already wrote stays on your cards. Without AI services you can still add cards and review as usual, and a word is spoken only if it already has audio. A shared or published deck’s pronunciation follows its owner’s choice."
 
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
@@ -4679,6 +4679,9 @@ msgstr "What’s new in Lymi, and what got better."
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"
 
+msgid "When AI services are on, these features send:"
+msgstr "When AI services are on, these features send:"
+
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 
@@ -4765,6 +4768,9 @@ msgstr "Widgets"
 
 msgid "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
 msgstr "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
+
+msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
+msgstr "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."

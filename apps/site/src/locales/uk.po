@@ -2117,8 +2117,8 @@ msgstr "Якби ж то"
 msgid "If only; maybe; I wish"
 msgstr "Якби ж то; можливо; от би"
 
-msgid "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change analytics or delete your account."
-msgstr "Якщо ти підключаєш асистента, як-от Claude чи ChatGPT, через MCP, ми зберігаємо дані про застосунок, дозволи, які ти схвалюєш, і його токени доступу. Токен доступу діє годину, а токен оновлення — 30 днів. Підключений застосунок може читати твої колоди, картки, налаштування, огляд і дні поспіль, а з дозволом на запис — додавати, редагувати, архівувати й доповнювати картки та впорядковувати колоди. Він ніколи не може оцінити повторення, керувати ключами чи підключеними застосунками, змінити аналітику або видалити твій обліковий запис."
+msgid "If you connect an assistant such as Claude or ChatGPT through MCP, we store the app’s identity, the permissions you approve and its access tokens. An access token lasts an hour and a refresh token 30 days. A connected app can read your decks, cards, settings, insights and streak, and with write permission it can add, edit, archive and enrich cards and organise decks. It can never grade a review, manage keys or connected apps, change AI services or analytics, or delete your account."
+msgstr "Якщо ти підключаєш асистента, як-от Claude чи ChatGPT, через MCP, ми зберігаємо дані про застосунок, дозволи, які ти схвалюєш, і його токени доступу. Токен доступу діє годину, а токен оновлення — 30 днів. Підключений застосунок може читати твої колоди, картки, налаштування, огляд і дні поспіль, а з дозволом на запис — додавати, редагувати, архівувати й доповнювати картки та впорядковувати колоди. Він ніколи не може оцінити повторення, керувати ключами чи підключеними застосунками, змінити AI-сервіси чи аналітику або видалити твій обліковий запис."
 
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Умовний графік пам’яті за тридцять днів. Без повторень знання поступово згасає. Після повторень на 3-й, 8-й і 19-й день воно відновлюється, а з довшими перервами згасає повільніше."
@@ -2159,8 +2159,8 @@ msgstr "У китайській один ієрогліф може мати кі
 msgid "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 msgstr "У прикладах фуриґана лишається над словами, які ти ще вчиш, і зникає над тими, що вже знаєш."
 
-msgid "In Lymi you can edit cards and settings, export your library, choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
-msgstr "У Lymi ти можеш редагувати картки й налаштування, експортувати бібліотеку, вибирати, які поля заповнює AI, вимикати нагадування, відкликати ключі API, від’єднувати застосунки й видалити обліковий запис. Архівування картки чи колоди ховає її, і це можна скасувати; це не видалення."
+msgid "In Lymi you can edit cards and settings, export your library, turn AI services off or choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and delete your account. Archiving a card or deck hides it and can be undone; it is not deletion."
+msgstr "У Lymi ти можеш редагувати картки й налаштування, експортувати бібліотеку, вимкнути AI-сервіси або вибрати, які поля заповнює AI, вимикати нагадування, відкликати ключі API, від’єднувати застосунки й видалити обліковий запис. Архівування картки чи колоди ховає її, і це можна скасувати; це не видалення."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "У багатьох реальних наборах даних близько 30% чисел починаються з 1"
@@ -3980,9 +3980,6 @@ msgstr "Звичайне «дякую». Suur aitäh — «щиро дякую»
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "Лицевий нерв: м’язи міміки та смак на передніх двох третинах язика"
 
-msgid "The first time you play a card, we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
-msgstr "Коли ти вперше відтворюєш картку, ми надсилаємо текст для озвучення (термін або його читання) і його мову одному провайдеру мовлення: <0>ElevenLabs</0>, <1>Google</1> (Gemini або Cloud Text-to-Speech) чи <2>OpenAI</2>, залежно від мови. Значення, приклад і нотатки ми не надсилаємо. Аудіо ми зберігаємо, щоб відтворювати його знову, і видаляємо разом із карткою."
-
 msgid "The flashcard app that gets Chinese."
 msgstr "Флешкартки, які розуміють китайську."
 
@@ -4006,6 +4003,9 @@ msgstr "Дівчинка"
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловоградецький і Пардубицький краї."
+
+msgid "The iPhone and Android apps ask before the first time they send anything to an AI service, and send nothing until you allow it. On the web, AI services are on unless you turn them off. The choice belongs to your account: turn AI services off in You › AI services in the app or Settings › AI services on the web, and nothing new is sent from any app, API key or connected assistant. Text AI already wrote stays on your cards. Without AI services you can still add cards and review as usual, and a word is spoken only if it already has audio. A shared or published deck’s pronunciation follows its owner’s choice."
+msgstr "Застосунки для iPhone і Android питають, перш ніж уперше щось надіслати AI-сервісу, і нічого не надсилають, доки ти не дозволиш. У вебі AI-сервіси увімкнені, доки ти їх не вимкнеш. Вибір належить твоєму обліковому запису: вимкни AI-сервіси в Ти › AI-сервіси в застосунку або в Налаштування › AI-сервіси у вебі, і нічого нового не надсилатиметься з жодного застосунку, ключа API чи підключеного асистента. Текст, який AI уже написав, залишається на твоїх картках. Без AI-сервісів ти, як і раніше, можеш додавати картки й повторювати, а слово озвучується, лише якщо для нього вже є аудіо. Вимова спільної чи опублікованої колоди залежить від вибору її власника."
 
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "Від 2010 року JLPT не публікує офіційного списку слів, тож колоди N5 і N4 складено за поширеними навчальними списками свого рівня. Жодна з них не є офіційним списком."
@@ -4679,6 +4679,9 @@ msgstr "Нові можливості Lymi і те, що стало краще."
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Коли показник стає метою, він перестає бути добрим показником"
 
+msgid "When AI services are on, these features send:"
+msgstr "Коли AI-сервіси увімкнені, ці функції надсилають:"
+
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Коли колеги йдуть із роботи, їм кажуть <0><1>お疲れ様です</1></0>."
 
@@ -4765,6 +4768,9 @@ msgstr "Віджети"
 
 msgid "Widgets and Control Center receive counts only: cards due, your streak and your goal. Never card text."
 msgstr "Віджети й Пункт керування отримують лише кількості: скільки карток чекає, дні поспіль і мету. Ніколи не текст карток."
+
+msgid "With AI services on, the first time you play a card we send the text to be spoken (the term, or its reading) and its language to one speech provider: <0>ElevenLabs</0>, <1>Google</1> (Gemini or Cloud Text-to-Speech) or <2>OpenAI</2>, depending on the language. We don’t send the meaning, example or notes. We keep the audio to play it again and delete it with the card."
+msgstr "Коли AI-сервіси увімкнені й ти вперше відтворюєш картку, ми надсилаємо текст для озвучення (термін або його читання) і його мову одному провайдеру мовлення: <0>ElevenLabs</0>, <1>Google</1> (Gemini або Cloud Text-to-Speech) чи <2>OpenAI</2>, залежно від мови. Значення, приклад і нотатки ми не надсилаємо. Аудіо ми зберігаємо, щоб відтворювати його знову, і видаляємо разом із карткою."
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."

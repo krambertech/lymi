@@ -127,6 +127,20 @@ function PrivacyPolicyContent() {
           writes is saved on the card and marked as AI-written.
         </Trans>
       </p>
+      <p>
+        <Trans>
+          The iPhone and Android apps ask before the first time they send anything to an AI service,
+          and send nothing until you allow it. On the web, AI services are on unless you turn them
+          off. The choice belongs to your account: turn AI services off in You › AI services in the
+          app or Settings › AI services on the web, and nothing new is sent from any app, API key or
+          connected assistant. Text AI already wrote stays on your cards. Without AI services you
+          can still add cards and review as usual, and a word is spoken only if it already has
+          audio. A shared or published deck’s pronunciation follows its owner’s choice.
+        </Trans>
+      </p>
+      <p>
+        <Trans>When AI services are on, these features send:</Trans>
+      </p>
       <ul>
         <li>
           <Trans>
@@ -184,9 +198,9 @@ function PrivacyPolicyContent() {
       </h2>
       <p>
         <Trans>
-          The first time you play a card, we send the text to be spoken (the term, or its reading)
-          and its language to one speech provider: <strong>ElevenLabs</strong>,{" "}
-          <strong>Google</strong> (Gemini or Cloud Text-to-Speech) or <strong>OpenAI</strong>,
+          With AI services on, the first time you play a card we send the text to be spoken (the
+          term, or its reading) and its language to one speech provider: <strong>ElevenLabs</strong>
+          , <strong>Google</strong> (Gemini or Cloud Text-to-Speech) or <strong>OpenAI</strong>,
           depending on the language. We don’t send the meaning, example or notes. We keep the audio
           to play it again and delete it with the card.
         </Trans>
@@ -247,8 +261,8 @@ function PrivacyPolicyContent() {
           identity, the permissions you approve and its access tokens. An access token lasts an hour
           and a refresh token 30 days. A connected app can read your decks, cards, settings,
           insights and streak, and with write permission it can add, edit, archive and enrich cards
-          and organise decks. It can never grade a review, manage keys or connected apps, change
-          analytics or delete your account.
+          and organise decks. It can never grade a review, manage keys or connected apps, change AI
+          services or analytics, or delete your account.
         </Trans>
       </p>
       <p>
@@ -573,9 +587,10 @@ function PrivacyPolicyContent() {
       </h2>
       <p>
         <Trans>
-          In Lymi you can edit cards and settings, export your library, choose which fields AI
-          fills, turn reminders off, revoke API keys, disconnect apps and delete your account.
-          Archiving a card or deck hides it and can be undone; it is not deletion.
+          In Lymi you can edit cards and settings, export your library, turn AI services off or
+          choose which fields AI fills, turn reminders off, revoke API keys, disconnect apps and
+          delete your account. Archiving a card or deck hides it and can be undone; it is not
+          deletion.
         </Trans>
       </p>
       <p>

@@ -1,0 +1,70 @@
+{
+  "style": "panorama",
+  "feature": {
+    "en": "Keep what you learn",
+    "uk": "Запам’ятовуй надовго",
+    "ru": "Запоминай надолго"
+  },
+  "shots": [
+    {
+      "id": "01-today",
+      "src": "01-today.png",
+      "theme": "light",
+      "caption": {
+        "en": "Review each word right before you'd forget it",
+        "uk": "Повторюй слово якраз перед тим, як забудеш",
+        "ru": "Повторяй слово как раз перед тем, как забудешь"
+      }
+    },
+    {
+      "id": "02-review",
+      "src": "02-review.png",
+      "theme": "light",
+      "caption": {
+        "en": "See the word, recall it, flip the card",
+        "uk": "Глянь на слово, пригадай, переверни картку",
+        "ru": "Взгляни на слово, вспомни, переверни карточку"
+      }
+    },
+    {
+      "id": "03-ai",
+      "src": "03-ai.png",
+      "theme": "light",
+      "caption": {
+        "en": "Type a word. AI adds the meaning and an example.",
+        "uk": "Введи слово — AI додасть значення й приклад",
+        "ru": "Введи слово — AI добавит значение и пример"
+      }
+    },
+    {
+      "id": "04-japanese",
+      "src": "04-japanese.png",
+      "theme": "light",
+      "caption": {
+        "en": "Learning Japanese? The reading sits over the kanji",
+        "uk": "Вчиш японську? Читання — просто над кандзі",
+        "ru": "Учишь японский? Чтение — прямо над кандзи"
+      }
+    },
+    {
+      "id": "05-library",
+      "src": "05-library.png",
+      "theme": "light",
+      "caption": {
+        "en": "One deck for each lesson",
+        "uk": "Окрема колода для кожного уроку",
+        "ru": "Отдельная колода для каждого урока"
+      }
+    },
+    {
+      "id": "06-streak",
+      "src": "06-streak.png",
+      "theme": "dark",
+      "caption": {
+        "en": "A few minutes a day keeps the flame lit",
+        "uk": "Кілька хвилин щодня — і вогник горить",
+        "ru": "Пара минут в день — и огонёк горит"
+      }
+    }
+  ]
+}

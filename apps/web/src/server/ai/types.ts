@@ -1,5 +1,7 @@
 export type SpeechRequest = {
   previousText?: string | undefined;
+  /** A sentence rather than a word, which a provider that takes a prompt is told. */
+  kind?: "example" | undefined;
   text: string;
   language: string;
   /** Receives what the vendor bills by, when the provider can tell. */

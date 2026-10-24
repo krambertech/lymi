@@ -51,6 +51,7 @@ const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
   meaning: msg`Meaning`,
   pronunciation: msg`Pronunciation`,
   example: msg`Example`,
+  exampleTranslation: msg`Example translation`,
   notes: msg`Notes`,
   skip: msg`Leave out`,
 };

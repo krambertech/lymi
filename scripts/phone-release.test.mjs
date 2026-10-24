@@ -6,10 +6,12 @@ import {
   createEas,
   EAS_CLI_VERSION,
   hasLiveBuild,
-  iosGroups,
+  platformGroups,
+  promotionCandidate,
   promotionCheck,
   readiness,
   recordSampleCalls,
+  releasePlatforms,
   rollbackPlan,
   rolloutDue,
   sampleCalls,
@@ -27,7 +29,15 @@ test("is ready only with a token, a project and an update URL", () => {
   assert.match(reason, /EXPO_TOKEN.*projectId.*updates\.url/);
 });
 
-test("keeps the groups that ship to iOS", () => {
+test("releases iOS alone until PHONE_PLATFORMS names Android", () => {
+  assert.deepEqual(releasePlatforms(undefined), ["ios"]);
+  assert.deepEqual(releasePlatforms(""), ["ios"]);
+  assert.deepEqual(releasePlatforms("android, ios"), ["ios", "android"]);
+  assert.deepEqual(releasePlatforms("android"), ["android"]);
+  assert.throws(() => releasePlatforms("ios,web"), /PHONE_PLATFORMS names web/);
+});
+
+test("keeps the groups that ship to the platform", () => {
   const list = {
     currentPage: [
       { group: "a", platforms: "android" },
@@ -36,10 +46,32 @@ test("keeps the groups that ship to iOS", () => {
     ],
   };
   assert.deepEqual(
-    iosGroups(list).map((group) => group.group),
+    platformGroups(list, "ios").map((group) => group.group),
     ["b", "c"],
   );
-  assert.deepEqual(iosGroups(undefined), []);
+  assert.deepEqual(
+    platformGroups(list, "android").map((group) => group.group),
+    ["a", "b"],
+  );
+  assert.deepEqual(platformGroups(undefined, "ios"), []);
+});
+
+test("promotes one commit that every released platform runs on beta", () => {
+  const ios = { group: "i1", runtime: "ri", commit: "abc1234def" };
+  const android = { group: "a1", runtime: "ra", commit: "abc1234def" };
+  assert.deepEqual(promotionCandidate({ ios, android }), {
+    ok: true,
+    commit: "abc1234def",
+    groups: { ios: { group: "i1", runtime: "ri" }, android: { group: "a1", runtime: "ra" } },
+  });
+  assert.match(
+    promotionCandidate({ ios, android: { ...android, commit: "9999999aaa" } }).reason,
+    /ios abc1234, android 9999999\); run Phone beta again/,
+  );
+  assert.match(
+    promotionCandidate({ ios, android: { group: "", runtime: "", commit: "" } }).reason,
+    /Nothing is published on beta for android/,
+  );
 });
 
 test("counts a queued or finished build and ignores a failed one", () => {
@@ -118,36 +150,58 @@ function assertAccepted(argv) {
   assert.ok(positionals <= command.args.length, `${id} takes ${command.args.length} arguments`);
 }
 
-/** A stub CLI that answers like a project with one partial production rollout. */
-function stubEas() {
+/**
+ * A stub CLI that answers like a project with one partial production rollout on each platform,
+ * where each platform publishes its own groups.
+ */
+function stubEas(answers = {}) {
   const calls = [];
   const captured = new Set();
-  const answers = {
-    "channel:list": { currentPage: [{ name: "beta" }] },
-    "update:list": {
-      currentPage: [
-        {
-          group: "g2",
-          runtimeVersion: "r1",
-          rolloutPercentage: 10,
-          platforms: "ios",
-          message: "x",
-        },
-        { group: "g1", runtimeVersion: "r1", platforms: "ios", message: "y" },
-      ],
-    },
-    "update:view": [
-      { platform: "ios", gitCommitHash: "abc1234def", createdAt: "2026-10-01T00:00:00Z" },
+  const list = (platform) => ({
+    currentPage: [
+      {
+        group: `${platform}-g2`,
+        runtimeVersion: `${platform}-r1`,
+        rolloutPercentage: 10,
+        platforms: platform,
+        message: "x",
+      },
+      {
+        group: `${platform}-g1`,
+        runtimeVersion: `${platform}-r1`,
+        platforms: platform,
+        message: "y",
+      },
     ],
-    "build:list": [{ status: "FINISHED" }],
+  });
+  const answer = (argv) => {
+    const id = argv[3];
+    const value = (flag) => argv[argv.indexOf(flag) + 1];
+    if (answers[id]) return answers[id](argv);
+    if (id === "channel:list") return { currentPage: [{ name: "beta" }] };
+    if (id === "update:list") return list(value("--platform"));
+    if (id === "update:view") {
+      return [
+        {
+          platform: argv[4].split("-")[0],
+          gitCommitHash: "abc1234def",
+          createdAt: "2026-10-01T00:00:00Z",
+        },
+      ];
+    }
+    if (id === "build:list") return [{ status: "FINISHED" }];
+    return {};
   };
   const eas = createEas((argv, { capture }) => {
     calls.push(argv);
     if (capture) captured.add(argv[3]);
-    return capture ? JSON.stringify(answers[argv[3]] ?? {}) : null;
+    return capture ? JSON.stringify(answer(argv)) : null;
   });
   return { calls, captured, eas };
 }
+
+const called = (calls, id) =>
+  calls.filter((argv) => argv[3] === id).map((argv) => argv.slice(4).join(" "));
 
 test("records the pinned CLI's commands", () => {
   assert.equal(manifest.version, EAS_CLI_VERSION);
@@ -157,7 +211,7 @@ test("records the pinned CLI's commands", () => {
 test("sends only flags the pinned CLI accepts, for every call", () => {
   const { calls, eas } = stubEas();
   sampleCalls(eas);
-  assert.equal(calls.length, 13);
+  assert.equal(calls.length, 21);
   for (const argv of calls) assertAccepted(argv);
 });
 
@@ -172,13 +226,13 @@ test("sends exactly the calls the pinned CLI's own parser accepted, values inclu
 test("captures only the output it parses, so the rest reaches the job log", () => {
   const { captured, eas } = stubEas();
   eas.channels();
-  eas.groups("beta");
+  eas.groups("android", "beta");
   eas.view("g1");
-  eas.builds("beta", "r1");
+  eas.builds("android", "beta", "r1");
   eas.createChannel("production");
-  eas.build("beta");
-  eas.publish("beta", "preview", "m");
-  eas.republish("g1", "production", "m", 10);
+  eas.build("android", "beta");
+  eas.publish("android", "beta", "preview", "m");
+  eas.republish("android", "g1", "production", "m", 10);
   assert.deepEqual([...captured].sort(), [
     "build:list",
     "channel:list",
@@ -196,18 +250,95 @@ test("creates only the channels a fresh project is missing", () => {
 
 test("the release commands reach the CLI through accepted calls", () => {
   const { calls, eas } = stubEas();
-  const commands = createCommands(eas);
-  assert.deepEqual(commands.latest("beta"), {
-    group: "g2",
-    runtime: "r1",
+  const commands = createCommands(eas, ["ios", "android"]);
+  assert.deepEqual(commands.latest("beta", "android"), {
+    group: "android-g2",
+    runtime: "android-r1",
     rollout: 10,
     commit: "abc1234def",
   });
   commands["finish-rollout"]("production", "24");
-  commands.rollback("production");
-  assert.ok(calls.some((argv) => argv[3] === "update:edit"));
-  assert.ok(calls.some((argv) => argv[3] === "update:revert-update-rollout"));
+  commands.rollback("production", "all");
+  assert.deepEqual(called(calls, "update:edit"), [
+    "ios-g2 --rollout-percentage 100 --non-interactive",
+    "android-g2 --rollout-percentage 100 --non-interactive",
+  ]);
+  assert.equal(called(calls, "update:revert-update-rollout").length, 2);
   for (const argv of calls) assertAccepted(argv);
+});
+
+test("touches only the released platforms", () => {
+  const { calls, eas } = stubEas();
+  createCommands(eas, ["ios"])["finish-rollout"]("production", "24");
+  assert.deepEqual(called(calls, "update:edit"), [
+    "ios-g2 --rollout-percentage 100 --non-interactive",
+  ]);
+});
+
+test("rolls back a named group on its own platform only", () => {
+  const { calls, eas } = stubEas();
+  createCommands(eas, ["ios", "android"]).rollback("production", "all", "android-g1");
+  assert.deepEqual(called(calls, "update:republish"), [
+    "--group android-g1 --destination-branch production --platform android --message Roll back production --non-interactive",
+  ]);
+});
+
+test("refuses a rollback with nothing published on any chosen platform", () => {
+  const { eas } = stubEas({ "update:list": () => ({ currentPage: [] }) });
+  assert.throws(
+    () => createCommands(eas, ["ios", "android"]).rollback("beta", "android"),
+    /nothing to roll back/,
+  );
+});
+
+test("Promote republishes every platform or none", () => {
+  const beta = (platform) => ({
+    currentPage: [{ group: `${platform}-b`, runtimeVersion: "r", platforms: platform }],
+  });
+  const production = (running) => (platform) => ({
+    currentPage:
+      running === platform
+        ? [
+            {
+              group: `${platform}-p`,
+              platforms: platform,
+              rolloutPercentage: 10,
+              message: "Promote 9999999",
+            },
+          ]
+        : [],
+  });
+  const groups = JSON.stringify({ ios: { group: "ios-b" }, android: { group: "android-b" } });
+  const run = (running) => {
+    const { calls, eas } = stubEas({
+      "update:list": (argv) => {
+        const platform = argv[argv.indexOf("--platform") + 1];
+        return argv.includes("beta") ? beta(platform) : production(running)(platform);
+      },
+    });
+    const commands = createCommands(eas, ["ios", "android"]);
+    return { calls, promote: () => commands.promote("abc1234def", groups) };
+  };
+  const blocked = run("android");
+  assert.throws(blocked.promote, /android: A production rollout is still running/);
+  assert.deepEqual(called(blocked.calls, "update:republish"), []);
+  const clear = run("");
+  assert.deepEqual(clear.promote(), { promoted: true });
+  assert.equal(called(clear.calls, "update:republish").length, 2);
+});
+
+test("builds only the platforms whose runtime has no live build", () => {
+  const { calls, eas } = stubEas({
+    "build:list": (argv) =>
+      argv.includes("android") ? [{ status: "ERRORED" }] : [{ status: "FINISHED" }],
+  });
+  createCommands(eas, ["ios", "android"])["build-missing"](
+    "production",
+    JSON.stringify({ ios: { runtime: "ri" }, android: { runtime: "ra" } }),
+  );
+  assert.deepEqual(called(calls, "build"), [
+    "--profile production --platform android --auto-submit --no-wait --non-interactive",
+  ]);
 });
 
 test("promotes only the tested group, once, with no rollout running", () => {

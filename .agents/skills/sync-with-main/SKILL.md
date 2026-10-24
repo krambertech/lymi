@@ -20,6 +20,8 @@ git log --oneline origin/main..HEAD
 
 Record the branch, HEAD, upstream, working-tree changes, and unpushed commits before changing history. The working tree must be clean. Commit the intended work first; in a worktree, avoid `git stash` because every worktree shares the same stash stack.
 
+A branch in a native stack is a separate case: when `gh stack view` lists it, sync with `gh stack sync` and resolve conflicts layer by layer with `gh stack rebase`, following the stacked section in `docs/git-workflow.md`. A plain `git rebase origin/main` on one layer leaves it out of step with the layers around it. The conflict rules below still apply to each layer.
+
 Branches based on Lymi's pre-2026-09-06 history are a separate case. Create a fresh branch from `origin/main` and transplant only the unique commits or net diff, following the migration section in `docs/git-workflow.md`. Keep the original branch until the replacement is verified.
 
 ## Rebase onto main

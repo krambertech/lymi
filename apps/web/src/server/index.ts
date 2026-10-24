@@ -8,6 +8,7 @@ import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { purgeCardAudio } from "./services/audio";
+import { purgeExpiredAuthRows } from "./services/auth-retention";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
@@ -53,6 +54,7 @@ export default {
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
+    run("purge-expired-auth", purgeExpiredAuthRows(createDb(env.DB), at));
     // Hourly: each run reads the next slice of published decks to find the cards their pages show first. #759.
     if (at.getUTCMinutes() < 15) {
       const db = createDb(env.DB);

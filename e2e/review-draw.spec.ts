@@ -196,9 +196,7 @@ test("a round from Today walks its own cards and ends with Round done", async ({
   await page.keyboard.press("Space");
   await page.keyboard.press("3");
   await expect(page.getByRole("heading", { name: "Round done" })).toBeVisible();
-  await expect(
-    page.getByText("3 more cards and you’re done for today", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Continue/ })).toContainText("3 cards left");
 });
 
 test("a return missed in a deck review comes up in the all-decks review", async ({

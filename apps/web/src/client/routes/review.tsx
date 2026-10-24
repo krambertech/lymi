@@ -60,6 +60,7 @@ import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
 import { lastInputWasKey } from "../lib/last-input";
+import { playAlone } from "../lib/now-playing";
 import {
   decksQuery,
   drawQuery,
@@ -674,9 +675,12 @@ function Review() {
 
   const watchAudio = useCallback(
     (audio: HTMLAudioElement) => {
-      audio.addEventListener("ended", () => {
-        if (playingAudio.current === audio) stopAudio();
-      });
+      // The example's clip pauses this one when it starts, which ends it the same way.
+      for (const done of ["ended", "pause"]) {
+        audio.addEventListener(done, () => {
+          if (playingAudio.current === audio) stopAudio();
+        });
+      }
       return audio;
     },
     [stopAudio],
@@ -738,7 +742,7 @@ function Review() {
     else setAudioState("loading");
     playingAudio.current = audio;
     try {
-      await audio.play();
+      await playAlone(audio);
       if (playingAudio.current === audio) {
         loadedAudio.current = { source, audio };
         setAudioState("playing");
@@ -1133,7 +1137,8 @@ function Review() {
         onClose={leave}
       />
 
-      {!current && !end && !unconfirmed && !failed && <ReviewSkeleton />}
+      {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
+      {!current && !end && !stopped && !unconfirmed && !failed && <ReviewSkeleton />}
 
       {failed && (
         <ReviewError
@@ -1179,12 +1184,7 @@ function Review() {
               onOffer={onOffer}
               done={doneLink}
               addCards={
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => add.openCard(deck)}
-                >
+                <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add cards</Trans>
                 </Button>

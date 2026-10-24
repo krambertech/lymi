@@ -58,7 +58,8 @@ export default async function drive({ page, step, api, expect }) {
     const byTerm = (term) => list.find((c) => c.term === term);
     const bank = byTerm("银行");
     expect(bank.pronunciation).toBe("yínháng");
-    expect(bank.notes.startsWith("銀行\nnoun\n我去銀行。\n")).toBe(true);
+    expect(bank.notes.startsWith("銀行\nnoun\n我去銀行。")).toBe(true);
+    expect(bank.exampleTranslation).toBe("I am going to the bank.");
     // Inline once Chinese examples draw pinyin, a notes line until then.
     const inline = bank.example === "我[Wǒ]去[qù]银行[yín háng]。";
     expect(inline || (bank.example === "我去银行。" && bank.notes.includes("Wǒ qù yínháng."))).toBe(
@@ -67,7 +68,7 @@ export default async function drive({ page, step, api, expect }) {
     expect(byTerm("东西").pronunciation).toBe("dōng xi");
     expect(byTerm("你好")).toMatchObject({ pronunciation: "nǐ hǎo", notes: null });
     expect(byTerm("行").pronunciation).toBe("xíng / háng");
-    expect(byTerm("很").notes).not.toMatch(/很好。\n|Wo3/);
+    expect(byTerm("很").notes ?? "").not.toMatch(/很好。\n|Wo3/);
     for (const card of list.filter((c) => c.term !== "行")) {
       expect(card.audioKey).toMatch(/\/recorded\//);
     }

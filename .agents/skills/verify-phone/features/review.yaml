@@ -27,7 +27,7 @@ name: Review
     visible: "Review done"
     timeout: 20000
 # The phone keeps today's count with the review on the device, so a persona reset leaves it as it was.
-- assertVisible: "\\d+ reviews today"
+- assertVisible: "\\d+( of \\d+)? reviews today"
 - takeScreenshot: 03-review-done
 - tapOn: "^Done$"
 - scrollUntilVisible:

@@ -1,8 +1,9 @@
 name: Phone promote
 
-# The weekly release: the update TestFlight has been running passes the smoke journey, then reaches
-# 10% of App Store installs, and a `production` binary is built when its runtime has none. Phone
-# rollout widens it to everyone a day later. ADR 0032; docs/phone-release.md.
+# The weekly release: the commit beta installs have been running passes the smoke journey, then each
+# platform's update reaches 10% of store installs, and a `production` binary is built for each
+# runtime that has none. Phone rollout widens it to everyone a day later. ADR 0032;
+# docs/phone-release.md.
 on:
   workflow_dispatch:
 
@@ -18,10 +19,10 @@ jobs:
       contents: read
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      PHONE_PLATFORMS: ${{ vars.PHONE_PLATFORMS }}
     outputs:
       ready: ${{ steps.eas.outputs.ready }}
-      group: ${{ steps.latest.outputs.group }}
-      runtime: ${{ steps.latest.outputs.runtime }}
+      groups: ${{ steps.latest.outputs.groups }}
       commit: ${{ steps.latest.outputs.commit }}
     steps:
       - uses: actions/checkout@v5
@@ -48,14 +49,11 @@ jobs:
         if: steps.eas.outputs.ready == 'true'
         run: node scripts/phone-release.mjs channels
 
-      - name: Find the update TestFlight is running
+      # Stops when a platform has nothing on beta, or the platforms run different commits.
+      - name: Find the commit beta installs are running
         id: latest
         if: steps.eas.outputs.ready == 'true'
-        run: |
-          node scripts/phone-release.mjs latest beta
-          if ! grep -q '^group=.\+' "$GITHUB_OUTPUT"; then
-            echo "::error title=Phone promote::Nothing is published on beta yet."; exit 1
-          fi
+        run: node scripts/phone-release.mjs candidate
 
   smoke:
     needs: plan
@@ -179,8 +177,7 @@ jobs:
       contents: read
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      GROUP: ${{ needs.plan.outputs.group }}
-      RUNTIME: ${{ needs.plan.outputs.runtime }}
+      GROUPS: ${{ needs.plan.outputs.groups }}
       COMMIT: ${{ needs.plan.outputs.commit }}
     steps:
       - uses: actions/checkout@v5
@@ -197,17 +194,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Re-checks beta and production first. The same files TestFlight ran, so beta's source maps cover them.
-      - name: Republish the update to production at 10%
+      # Re-checks every platform's beta and production before republishing any. The same files beta
+      # ran, so beta's source maps cover them.
+      - name: Republish each platform's update to production at 10%
         id: promote
-        run: node scripts/phone-release.mjs promote "$GROUP" "$COMMIT"
+        run: node scripts/phone-release.mjs promote "$COMMIT" "$GROUPS"
 
-      - name: Look for a production build of this runtime
-        id: build
+      # Uploaded to App Store Connect and Play's closed testing track; sending a version for review
+      # or promoting it to Play's production track stays a person's call.
+      - name: Build each runtime that has no production binary
         if: steps.promote.outputs.promoted == 'true'
-        run: node scripts/phone-release.mjs has-build production "$RUNTIME"
-
-      # Uploaded to App Store Connect; submitting the version for review stays a person's call.
-      - name: Build for the App Store
-        if: steps.build.outputs.build == 'false'
-        run: node scripts/phone-release.mjs build production
+        run: node scripts/phone-release.mjs build-missing production "$GROUPS"

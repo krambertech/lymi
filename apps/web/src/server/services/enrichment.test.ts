@@ -64,18 +64,60 @@ describe("emptyFields", () => {
 describe("deck enrichment fields", () => {
   it("starts a deck from its language, and keeps an owner's choice", () => {
     expect(defaultEnrichFields(null)).toEqual(["meaning"]);
-    expect(defaultEnrichFields("it")).toEqual(["meaning", "example"]);
-    expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
-    expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
-    expect(defaultEnrichFields("vi")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
-    expect(defaultEnrichFields("da")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    expect(defaultEnrichFields("it")).toEqual(["meaning", "example", "exampleTranslation"]);
+    expect(defaultEnrichFields("et")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
+    expect(defaultEnrichFields("zh-Hans")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("ko-KR")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("vi")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("ka")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("da")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+      "pronunciation",
+    ]);
     for (const tag of ["fr", "es", "pt", "pt-BR", "hu", "cs"])
-      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example"]);
+      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "exampleTranslation"]);
     for (const tag of ["fi", "lv", "lt", "nb", "no", "nn", "sv", "is", "pl", "nl", "de"])
-      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "notes"]);
-    expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
+      expect(defaultEnrichFields(tag)).toEqual([
+        "meaning",
+        "example",
+        "exampleTranslation",
+        "notes",
+      ]);
+    expect(deckEnrichFields(null, "et")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
   });
@@ -83,7 +125,12 @@ describe("deck enrichment fields", () => {
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {
     expect(defaultEnrichFields("de", "subject")).toEqual(["meaning"]);
     expect(defaultEnrichFields("ja", "other")).toEqual(["meaning"]);
-    expect(defaultEnrichFields("et", "language")).toEqual(["meaning", "example", "notes"]);
+    expect(defaultEnrichFields("et", "language")).toEqual([
+      "meaning",
+      "example",
+      "exampleTranslation",
+      "notes",
+    ]);
     expect(deckEnrichFields(null, "de", "subject")).toEqual(["meaning"]);
     expect(deckEnrichFields(["meaning", "example"], "de", "subject")).toEqual([
       "meaning",
@@ -221,6 +268,18 @@ describe("enrichmentWrite", () => {
     });
     expect(enrichmentWrite(card, { ...marked, example: "Я живу в Москве́." }, [], "ru")).toEqual({});
     expect(enrichmentWrite(card, { ...marked, example: "Мы живём в Москве́." }, [], "ru")).toEqual(
+      {},
+    );
+  });
+
+  it("adds stress to a Ukrainian example by the same rule", () => {
+    const card = { ...blank, language: "uk", example: "Я працюю в банку." };
+    const marked = { ...reply, example: "Я працю́ю в ба́нку." };
+    expect(enrichmentWrite(card, marked, [], "uk")).toEqual({
+      example: "Я працю́ю в ба́нку.",
+      readingsFor: "Я працюю в банку.",
+    });
+    expect(enrichmentWrite(card, { ...marked, example: "Я рабо́таю в ба́нку." }, [], "uk")).toEqual(
       {},
     );
   });
@@ -1016,7 +1075,7 @@ describe("enrichment that follows the deck", () => {
     });
   });
 
-  it("leaves a Ukrainian example's stress alone until Ukrainian has a prompt module", async () => {
+  it("adds stress to a Ukrainian example and keeps it the learner's", async () => {
     const ctx = await learner(db, "deck-fields-readings-uk", "Kateryna");
     const deck = await createDeck(ctx, { name: "Українська", defaultLanguage: "uk" });
     const card = await added(
@@ -1030,15 +1089,18 @@ describe("enrichment that follows the deck", () => {
           meaning: "to work",
           example: "Я працю́ю в ба́нку.",
           notes: null,
-          pronunciation: null,
+          pronunciation: "працюва́ти",
           language: null,
         },
       ],
     });
     await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
     const input = JSON.parse(provider.asked[0]?.input ?? "{}");
-    expect(input.cards).toEqual([expect.not.objectContaining({ addReadings: true })]);
-    expect(await showCard(ctx, card.id)).toMatchObject({ example: "Я працюю в банку." });
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, addReadings: true })]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "Я працю́ю в ба́нку.",
+      exampleSource: "manual",
+    });
   });
 
   it("adds stress to a Russian example and keeps it the learner's", async () => {
@@ -1207,7 +1269,11 @@ describe("requestEnrichment", () => {
 
   it("refuses a card with no empty field rather than accepting it silently", async () => {
     const { ctx, card } = await bareCard("ask-4");
-    await updateCard(ctx, card.id, CardPatch.parse(full));
+    await updateCard(
+      ctx,
+      card.id,
+      CardPatch.parse({ ...full, exampleTranslation: "Hurry up, the train is leaving!" }),
+    );
     expect(needsEnrichment(await showCard(ctx, card.id), DECK_ENRICH_FIELDS)).toBe(false);
     const queue: EnrichmentQueue = { create: vi.fn() };
     expect(await code(requestEnrichment(ctx, card.id, queue))).toBe("invalid");

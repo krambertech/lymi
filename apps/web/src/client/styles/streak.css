@@ -3,6 +3,17 @@
   .streak-tick {
     animation: streak-tick 320ms var(--ease-out) both;
   }
+  /* When the day turns at the end of a review, the run rolls up warm, then cools to its ink. */
+  .run-catch {
+    animation:
+      run-catch 460ms var(--ease-out) both,
+      run-warm 1400ms var(--ease-out) both;
+  }
+  /* The run's flame catches the spark: it flares past its full size and settles. */
+  .flame-catch {
+    transform-origin: 50% 100%;
+    animation: flame-catch 700ms var(--ease-out) both;
+  }
   /* The current run draws across from its first day, the way the connection rail does. */
   .streak-draw {
     animation: streak-draw 260ms var(--ease-out) var(--draw-delay, 0ms) both;
@@ -19,6 +30,26 @@
   from {
     opacity: 0;
     transform: translateY(60%);
+  }
+}
+@keyframes run-catch {
+  from {
+    opacity: 0;
+    transform: translateY(60%) scale(1.18);
+  }
+  60% {
+    transform: translateY(0) scale(1.1);
+  }
+}
+@keyframes run-warm {
+  from,
+  25% {
+    color: var(--amber-text);
+  }
+}
+@keyframes flame-catch {
+  25% {
+    scale: 1.3;
   }
 }
 @keyframes streak-pop {

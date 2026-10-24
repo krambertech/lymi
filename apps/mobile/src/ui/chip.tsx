@@ -102,13 +102,29 @@ const SOURCE: Record<FieldSource, { icon: IconName; tone: ChipTone; mark: Messag
   manual: { icon: "manual", tone: "default", mark: msg`You` },
 };
 
-type SourceField = "meaning" | "example" | "pronunciation" | "hook";
+type SourceField =
+  | "meaning"
+  | "example"
+  | "exampleTranslation"
+  | "exampleAndTranslation"
+  | "pronunciation"
+  | "hook";
 
 // Whole sentences per field, so each language can inflect the field word on its own.
 const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
   field: { lesson: msg`From the lesson`, ai: msg`AI wrote this`, manual: msg`You wrote this` },
   meaning: { lesson: msg`Meaning from lesson`, ai: msg`AI meaning`, manual: msg`Meaning by you` },
   example: { lesson: msg`Example from lesson`, ai: msg`AI example`, manual: msg`Example by you` },
+  exampleTranslation: {
+    lesson: msg`Translation from lesson`,
+    ai: msg`AI translation`,
+    manual: msg`Translation by you`,
+  },
+  exampleAndTranslation: {
+    lesson: msg`Example and translation from lesson`,
+    ai: msg`AI example and translation`,
+    manual: msg`Example and translation by you`,
+  },
   pronunciation: {
     lesson: msg`Pronunciation from lesson`,
     ai: msg`AI pronunciation`,

@@ -9,6 +9,7 @@ import { japanese } from "./japanese";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
 import type { LanguagePrompts } from "./types";
+import { ukrainian } from "./ukrainian";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
@@ -20,6 +21,7 @@ export const LANGUAGE_PROMPTS = {
   zh: chinese,
   ru: russian,
   ta: tamil,
+  uk: ukrainian,
   yue: cantonese,
 } as const satisfies Record<PromptTag, LanguagePrompts>;
 

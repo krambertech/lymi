@@ -8,6 +8,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const EAS_CLI_VERSION = "24.13.0";
 export const CHANNELS = ["beta", "production"];
+export const PLATFORMS = ["ios", "android"];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const APP = join(ROOT, "apps/mobile");
 const MANIFEST = join(ROOT, "scripts/eas-cli-commands.json");
@@ -24,9 +25,22 @@ export function readiness({ token, config }) {
     : { ready: true, reason: "" };
 }
 
-/** `eas update:list --json` groups, newest first, keeping those that ship to iOS. */
-export function iosGroups(list) {
-  return (list?.currentPage ?? []).filter((group) => /\bios\b/.test(group.platforms ?? ""));
+/** The platforms the workflows release, from the PHONE_PLATFORMS variable; iOS alone until Play is set up. */
+export function releasePlatforms(value) {
+  const named = (value ?? "").split(/[\s,]+/).filter(Boolean);
+  const unknown = named.filter((platform) => !PLATFORMS.includes(platform));
+  if (unknown.length)
+    throw new Error(`PHONE_PLATFORMS names ${unknown.join(", ")}; use ios, android.`);
+  return named.length ? PLATFORMS.filter((platform) => named.includes(platform)) : ["ios"];
+}
+
+/**
+ * `eas update:list --json` groups, newest first, keeping those that ship to the platform. Each
+ * platform publishes its own groups, because a group carries one runtime and the two fingerprints differ.
+ */
+export function platformGroups(list, platform) {
+  const named = new RegExp(`\\b${platform}\\b`);
+  return (list?.currentPage ?? []).filter((group) => named.test(group.platforms ?? ""));
 }
 
 /** Whether a build for this runtime exists or is on its way, so another would be wasted. */
@@ -58,6 +72,27 @@ export function rollbackPlan(groups, group) {
     return { action: "republish", group: previous.group };
   }
   return { action: "embedded", runtime: latest.runtimeVersion };
+}
+
+/** The beta update Promote tests and ships: one commit, with a group on every released platform. */
+export function promotionCandidate(latest) {
+  const missing = Object.keys(latest).filter((platform) => !latest[platform].group);
+  if (missing.length) {
+    return { ok: false, reason: `Nothing is published on beta for ${missing.join(", ")} yet.` };
+  }
+  const commits = new Set(Object.values(latest).map((update) => update.commit));
+  if (commits.size > 1) {
+    const each = Object.entries(latest).map(([p, u]) => `${p} ${u.commit.slice(0, 7)}`);
+    return {
+      ok: false,
+      reason: `Beta runs different commits (${each.join(", ")}); run Phone beta again.`,
+    };
+  }
+  const [commit] = commits;
+  const groups = Object.fromEntries(
+    Object.entries(latest).map(([p, u]) => [p, { group: u.group, runtime: u.runtime }]),
+  );
+  return { ok: true, commit, groups };
 }
 
 /** Whether production may take this beta group now, or why not. */
@@ -101,30 +136,28 @@ export function createEas(runner = defaultRunner) {
   return {
     channels: () => json(["channel:list", "--limit", "25", "--json", "--non-interactive"]),
     createChannel: (name) => call(["channel:create", name, "--json", "--non-interactive"]),
-    groups: (branch) =>
-      iosGroups(
+    groups: (platform, branch) =>
+      platformGroups(
         json([
           "update:list",
           "--branch",
           branch,
           "--platform",
-          "ios",
+          platform,
           "--limit",
           "25",
           "--json",
           "--non-interactive",
         ]),
+        platform,
       ),
     // update:view takes --json and no --non-interactive.
-    view: (group) => {
-      const updates = json(["update:view", group, "--json"]);
-      return updates.find((update) => update.platform === "ios") ?? updates[0];
-    },
-    builds: (profile, runtime) =>
+    view: (group) => json(["update:view", group, "--json"])[0],
+    builds: (platform, profile, runtime) =>
       json([
         "build:list",
         "--platform",
-        "ios",
+        platform,
         "--build-profile",
         profile,
         "--runtime-version",
@@ -134,31 +167,31 @@ export function createEas(runner = defaultRunner) {
         "--json",
         "--non-interactive",
       ]),
-    build: (profile) =>
+    build: (platform, profile) =>
       call([
         "build",
         "--profile",
         profile,
         "--platform",
-        "ios",
+        platform,
         "--auto-submit",
         "--no-wait",
         "--non-interactive",
       ]),
-    publish: (branch, environment, message) =>
+    publish: (platform, branch, environment, message) =>
       call([
         "update",
         "--branch",
         branch,
         "--platform",
-        "ios",
+        platform,
         "--environment",
         environment,
         "--message",
         message,
         "--non-interactive",
       ]),
-    republish: (group, branch, message, rollout) =>
+    republish: (platform, group, branch, message, rollout) =>
       call([
         "update:republish",
         "--group",
@@ -166,7 +199,7 @@ export function createEas(runner = defaultRunner) {
         "--destination-branch",
         branch,
         "--platform",
-        "ios",
+        platform,
         ...(rollout ? ["--rollout-percentage", String(rollout)] : []),
         "--message",
         message,
@@ -183,7 +216,7 @@ export function createEas(runner = defaultRunner) {
         message,
         "--non-interactive",
       ]),
-    rollBackToEmbedded: (branch, runtime, message) =>
+    rollBackToEmbedded: (platform, branch, runtime, message) =>
       call([
         "update:roll-back-to-embedded",
         "--branch",
@@ -191,7 +224,7 @@ export function createEas(runner = defaultRunner) {
         "--runtime-version",
         runtime,
         "--platform",
-        "ios",
+        platform,
         "--message",
         message,
         "--non-interactive",
@@ -203,17 +236,19 @@ export function createEas(runner = defaultRunner) {
 export function sampleCalls(eas) {
   eas.channels();
   eas.createChannel("production");
-  eas.groups("beta");
   eas.view("g1");
-  eas.builds("beta", "r1");
-  eas.build("beta");
-  eas.build("production");
-  eas.publish("beta", "preview", "feat(mobile): add reminders");
-  eas.republish("g1", "production", "Promote abc1234", 10);
-  eas.republish("g1", "production", "Roll back production");
   eas.finishRollout("g2");
   eas.revertRollout("g2", "Roll back production");
-  eas.rollBackToEmbedded("production", "r1", "Roll back production");
+  for (const platform of PLATFORMS) {
+    eas.groups(platform, "beta");
+    eas.builds(platform, "beta", "r1");
+    eas.build(platform, "beta");
+    eas.build(platform, "production");
+    eas.publish(platform, "beta", "preview", "feat(mobile): add reminders");
+    eas.republish(platform, "g1", "production", "Promote abc1234", 10);
+    eas.republish(platform, "g1", "production", "Roll back production");
+    eas.rollBackToEmbedded(platform, "production", "r1", "Roll back production");
+  }
 }
 
 /** The argv of each sample call, without the npx prefix. */
@@ -229,7 +264,21 @@ export function recordSampleCalls() {
 }
 
 /** The release commands; each returns the values the workflow reads as step outputs. */
-export function createCommands(eas = createEas()) {
+export function createCommands(
+  eas = createEas(),
+  platforms = releasePlatforms(process.env.PHONE_PLATFORMS),
+) {
+  const latest = (platform, branch) => {
+    const [group] = eas.groups(platform, branch);
+    if (!group) return { group: "", runtime: "", rollout: "", commit: "" };
+    return {
+      group: group.group,
+      runtime: group.runtimeVersion,
+      rollout: group.rolloutPercentage ?? 100,
+      commit: eas.view(group.group).gitCommitHash ?? "",
+    };
+  };
+
   return {
     ready() {
       const config = JSON.parse(readFileSync(join(APP, "app.json"), "utf8")).expo;
@@ -237,15 +286,19 @@ export function createCommands(eas = createEas()) {
       if (!ready) {
         console.log(`::notice title=Phone release skipped::${reason} docs/phone-release.md`);
       }
-      return { ready };
+      return { ready, platforms: JSON.stringify(platforms) };
     },
 
-    runtime() {
+    runtime(platform) {
       const cli = join(APP, "node_modules/expo-updates/bin/cli.js");
-      const resolved = execFileSync("node", [cli, "runtimeversion:resolve", "--platform", "ios"], {
-        cwd: APP,
-        encoding: "utf8",
-      });
+      const resolved = execFileSync(
+        "node",
+        [cli, "runtimeversion:resolve", "--platform", platform],
+        {
+          cwd: APP,
+          encoding: "utf8",
+        },
+      );
       return { runtime: JSON.parse(resolved).runtimeVersion };
     },
 
@@ -258,65 +311,105 @@ export function createCommands(eas = createEas()) {
       }
     },
 
-    latest(branch) {
-      const [latest] = eas.groups(branch);
-      if (!latest) return { group: "", runtime: "", rollout: "", commit: "" };
-      return {
-        group: latest.group,
-        runtime: latest.runtimeVersion,
-        rollout: latest.rolloutPercentage ?? 100,
-        commit: eas.view(latest.group).gitCommitHash ?? "",
-      };
+    latest(branch, platform) {
+      return latest(platform, branch);
     },
 
-    "has-build"(profile, runtime) {
-      return { build: hasLiveBuild(eas.builds(profile, runtime)) };
+    // Promote ships one commit everywhere, so every released platform's beta must run it.
+    candidate() {
+      const result = promotionCandidate(
+        Object.fromEntries(platforms.map((platform) => [platform, latest(platform, "beta")])),
+      );
+      if (!result.ok) throw new Error(result.reason);
+      return { commit: result.commit, groups: JSON.stringify(result.groups) };
     },
 
-    build(profile) {
-      eas.build(profile);
+    "has-build"(platform, profile, runtime) {
+      return { build: hasLiveBuild(eas.builds(platform, profile, runtime)) };
     },
 
-    publish(branch, environment, message) {
-      eas.publish(branch, environment, message);
+    build(platform, profile) {
+      eas.build(platform, profile);
     },
 
-    promote(group, commit) {
-      const check = promotionCheck({
-        planned: group,
-        beta: eas.groups("beta")[0],
-        production: eas.groups("production"),
-        commit,
-      });
-      if (check.done) {
-        console.log(`::notice title=Phone promote::${check.reason}`);
-        return { promoted: false };
+    "build-missing"(profile, groups) {
+      for (const [platform, { runtime }] of Object.entries(JSON.parse(groups))) {
+        if (hasLiveBuild(eas.builds(platform, profile, runtime))) continue;
+        eas.build(platform, profile);
       }
-      if (!check.ok) throw new Error(check.reason);
-      eas.republish(group, "production", promoteMessage(commit), 10);
-      return { promoted: true };
+    },
+
+    publish(platform, branch, environment, message) {
+      eas.publish(platform, branch, environment, message);
+    },
+
+    // Every platform is checked before any is republished, so production never takes half a release.
+    promote(commit, groups) {
+      const planned = Object.entries(JSON.parse(groups));
+      const checks = planned.map(([platform, { group }]) => {
+        const check = promotionCheck({
+          planned: group,
+          beta: eas.groups(platform, "beta")[0],
+          production: eas.groups(platform, "production"),
+          commit,
+        });
+        if (!check.ok && !check.done) throw new Error(`${platform}: ${check.reason}`);
+        return { platform, group, check };
+      });
+      let promoted = false;
+      for (const { platform, group, check } of checks) {
+        if (check.done) {
+          console.log(`::notice title=Phone promote::${platform}: ${check.reason}`);
+          continue;
+        }
+        eas.republish(platform, group, "production", promoteMessage(commit), 10);
+        promoted = true;
+      }
+      return { promoted };
     },
 
     "finish-rollout"(branch, hours) {
-      const [latest] = eas.groups(branch);
-      if (!latest) return console.log(`Nothing is published on ${branch}.`);
-      if (!rolloutDue(latest, eas.view(latest.group).createdAt, Date.now(), Number(hours))) {
-        return console.log(`No rollout on ${branch} is due to finish.`);
+      for (const platform of platforms) {
+        const [group] = eas.groups(platform, branch);
+        if (!group) {
+          console.log(`Nothing is published on ${branch} for ${platform}.`);
+          continue;
+        }
+        if (!rolloutDue(group, eas.view(group.group).createdAt, Date.now(), Number(hours))) {
+          console.log(`No ${platform} rollout on ${branch} is due to finish.`);
+          continue;
+        }
+        eas.finishRollout(group.group);
+        console.log(`Rolled ${group.group} out to every ${platform} install on ${branch}.`);
       }
-      eas.finishRollout(latest.group);
-      console.log(`Rolled ${latest.group} out to everyone on ${branch}.`);
     },
 
-    rollback(branch, group) {
-      const plan = rollbackPlan(eas.groups(branch), group);
+    // A group names its own platform; without one, each chosen platform rolls back its newest update.
+    rollback(branch, which, group) {
+      const chosen = group
+        ? [eas.view(group).platform]
+        : which === "all"
+          ? platforms
+          : releasePlatforms(which);
       const message = `Roll back ${branch}`;
-      if (plan.action === "none") {
+      let rolledBack = 0;
+      for (const platform of chosen) {
+        const plan = rollbackPlan(eas.groups(platform, branch), group);
+        if (plan.action === "none") {
+          console.log(`Nothing is published on ${branch} for ${platform}.`);
+          continue;
+        }
+        if (plan.action === "revert-rollout") eas.revertRollout(plan.group, message);
+        if (plan.action === "republish") eas.republish(platform, plan.group, branch, message);
+        if (plan.action === "embedded") {
+          eas.rollBackToEmbedded(platform, branch, plan.runtime, message);
+        }
+        console.log(`Rolled back ${platform} on ${branch}: ${JSON.stringify(plan)}`);
+        rolledBack++;
+      }
+      if (!rolledBack) {
         throw new Error(`Nothing is published on ${branch}, so there is nothing to roll back.`);
       }
-      if (plan.action === "revert-rollout") eas.revertRollout(plan.group, message);
-      if (plan.action === "republish") eas.republish(plan.group, branch, message);
-      if (plan.action === "embedded") eas.rollBackToEmbedded(branch, plan.runtime, message);
-      console.log(`Rolled back ${branch}: ${JSON.stringify(plan)}`);
     },
 
     // Records the pinned CLI's commands and flags, and every sample call its own parser accepted, values included.

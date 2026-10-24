@@ -8,6 +8,7 @@ import {
   type KnownReadings,
   type Rating,
   type ReviewAid,
+  shownTranslation,
   termShowsPronunciation,
   textDirection,
 } from "@lymi/core";
@@ -22,22 +23,11 @@ import {
   streakFlameFor,
 } from "@lymi/design";
 import { clsx } from "clsx";
-import {
-  BookMarked,
-  Library,
-  Loader2,
-  Lock,
-  type LucideIcon,
-  Pointer,
-  Signpost,
-  Volume2,
-  X,
-} from "lucide-react";
+import { BookMarked, Library, Lock, type LucideIcon, Pointer, Signpost, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
   motion,
-  useAnimate,
   useIsPresent,
   useMotionValue,
   useTransform,
@@ -53,12 +43,15 @@ import {
   useRef,
   useState,
 } from "react";
+import { AudioButton, AudioPlace } from "../components/audio-button";
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
+import { ExampleAudioButton, ExamplePlace } from "../components/example-audio";
+import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import {
@@ -83,7 +76,8 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
-import { ExampleText, TermText } from "../components/term-text";
+import { TermText } from "../components/term-text";
+import { TurnSpark } from "../components/turn-spark";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -191,68 +185,6 @@ export function ReviewHeader({
         <X />
       </IconButton>
     </header>
-  );
-}
-
-interface AudioButtonProps {
-  state: "idle" | "loading" | "playing";
-  error: string | null;
-  onPlay: () => void;
-  className?: string | undefined;
-}
-
-/**
- * Pronunciation, at the end of the word. A failure turns the button red, shakes it once and says
- * why in a tip over it; the button stays red until the next try.
- *
- * The word joiner keeps the button on the line with the word's last letters, and the line-tall box
- * centres it on that line. Its name is in the app language, not the card's.
- */
-function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
-  const { t, i18n } = useLingui();
-  const button = useRef<HTMLButtonElement>(null);
-  const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const reduce = useReduceMotion();
-  const shaken = useRef(error);
-
-  // Shake once per new failure, never for an error the button was drawn with.
-  useEffect(() => {
-    if (error === shaken.current) return;
-    shaken.current = error;
-    if (!error || reduce || !scope.current) return;
-    animate(scope.current, { x: [0, -4, 4, -3, 3, -1, 0] }, { duration: 0.4, ease: "easeInOut" });
-  }, [error, reduce, animate, scope]);
-
-  return (
-    <span className="whitespace-nowrap" lang={i18n.locale}>
-      {"\u2060"}
-      <span ref={scope} className="ms-3 inline-flex h-[1lh] items-center align-top">
-        <IconButton
-          ref={button}
-          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-          size="sm"
-          variant={error ? "danger" : "secondary"}
-          round
-          // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
-          className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
-          aria-disabled={state === "loading"}
-          // The review lets the grade keys through from here, since a click leaves focus on it.
-          data-audio=""
-          onClick={(e) => {
-            e.stopPropagation();
-            onPlay();
-          }}
-        >
-          {/* A clip voiced before is preloaded, so a load here is speech being made. */}
-          {state === "loading" ? (
-            <Loader2 className="animate-spin" aria-hidden="true" />
-          ) : (
-            <Volume2 aria-hidden="true" />
-          )}
-        </IconButton>
-      </span>
-      <ErrorTip anchor={button} message={error} />
-    </span>
   );
 }
 
@@ -568,6 +500,7 @@ export function ReviewCard({
 
   const hasOffer = !!offer;
   const offerRoom = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
@@ -653,6 +586,7 @@ export function ReviewCard({
   // The answer moves only when the aid over it arrives or leaves after the reveal.
   const answerGlide = aidGone ? aidGone.animate : shownAfter && aidAnimate;
   const hasExtras = !!(card.example || card.notes);
+  const translation = shownTranslation(card);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -664,6 +598,7 @@ export function ReviewCard({
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.exampleTranslationSource === "ai" && !!translation) ||
     (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none. Sources written
@@ -685,31 +620,27 @@ export function ReviewCard({
       />
     );
   // The measuring copy holds the button's place without a second live button.
-  const audioPlace = () =>
-    onPlayAudio && (
-      <span className="whitespace-nowrap">
-        {"\u2060"}
-        <span className="ms-3 inline-flex h-[1lh] items-center align-top">
-          <span className="size-8" />
-        </span>
-      </span>
-    );
+  const audioPlace = () => onPlayAudio && <AudioPlace />;
 
-  const extrasLines = (
+  const extrasLines = (measure: boolean) => (
     <>
       {card.example && (
-        <motion.p
-          variants={answerLine}
-          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
-          lang={card.language ?? undefined}
-          dir={textDirection(card.language)}
-        >
-          <ExampleText
-            text={card.example}
-            lang={card.language ?? undefined}
+        <motion.div variants={answerLine}>
+          <ExampleLines
+            example={card.example}
+            language={card.language}
             known={knownReadings}
+            translation={translation}
+            after={
+              measure ? (
+                <ExamplePlace card={card} />
+              ) : (
+                <ExampleAudioButton card={card} surface="review" />
+              )
+            }
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
-        </motion.p>
+        </motion.div>
       )}
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">
@@ -830,7 +761,7 @@ export function ReviewCard({
             ))}
           {hasExtras && (
             <div ref={extrasRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
-              {extrasLines}
+              {extrasLines(measure)}
             </div>
           )}
           {chips && (
@@ -864,8 +795,17 @@ export function ReviewCard({
         className,
       )}
     >
-      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge. */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]">
+      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge; under the offer the text shows through its frost, cut off at its foot. */}
+      <div
+        ref={scrollerRef}
+        className={clsx(
+          "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain",
+          // Scroll padding as tall as the offer, so a focused control never scrolls in under it.
+          offer && revealed
+            ? "scroll-pb-13 [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-0.5rem),transparent_calc(100%-0.5rem))]"
+            : "[mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]",
+        )}
+      >
         <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
           {!revealed && (
             <button
@@ -1081,10 +1021,16 @@ export function ReviewCard({
             {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
+        {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
+        {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
-      {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
+      {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
-        <div className="shrink-0 px-2 pb-2">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-2 pb-2"
+          // A sibling of the scroller, so a wheel over it is handed on to the card under it.
+          onWheel={(e) => scrollerRef.current?.scrollBy({ top: e.deltaY, left: 0 })}
+        >
           <HookOffer
             {...offer}
             onShown={() => {
@@ -1426,33 +1372,41 @@ export function ReviewComplete({
   const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
+  const [ticked, setTicked] = useState(reduce);
   const [skipped, setSkipped] = useState(false);
   const lanternPlace = useRef<HTMLDivElement>(null);
+  const room = useRef<HTMLDivElement>(null);
   const instant = reduce || skipped;
+  // The day just turned: a spark carries it from the flame to today's light and on to the run.
+  const turned = screen.streak && !reduce;
 
   const counted = screen.heading !== "nothing_due";
   const week = landed ? streak : streakBefore;
+  const runWeek = ticked ? streak : streakBefore;
   const days = week ? lastDays(week) : undefined;
-  const flame = week ? streakFlameFor(week) : "lit";
+  const flame = runWeek ? streakFlameFor(runWeek) : "lit";
   const lit = !lanternFor(streak).out;
   const embers = useMemo(
     () => (lit && !reduce ? endEmbers(screen.embers) : []),
     [lit, reduce, screen.embers],
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.
-  const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  const run = screen.streak ? runWeek?.current : (streak ?? week)?.current;
+  const goal = (streak ?? week)?.today.goal;
   const proceed = screen.offers.find((o) => o.kind === "continue");
-  const ways = screen.offers
-    .filter((offer) => !(offer.kind === "continue" && screen.continueLeads))
-    .map((offer) => ({
-      key: offer.kind,
-      icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
-      label:
-        offer.kind === "forgotten"
-          ? t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
-          : t`Continue`,
-      onClick: () => onOffer?.(offer),
-    }));
+  const note = proceed?.note;
+  // Only Review forgotten sits above Done, so Done and Continue keep their places on every end.
+  const ways = screen.offers.flatMap((offer) =>
+    offer.kind === "forgotten"
+      ? [
+          {
+            key: offer.kind,
+            label: t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
+            onClick: () => onOffer?.(offer),
+          },
+        ]
+      : [],
+  );
   const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(actionsAt + RISE_MS, embers.length ? AT.embers + embersEnd(embers) : 0);
 
@@ -1462,10 +1416,16 @@ export function ReviewComplete({
   useEffect(() => {
     if (instant) {
       setLanded(true);
+      setTicked(true);
       return;
     }
-    const timer = window.setTimeout(() => setLanded(true), AT.land);
-    return () => window.clearTimeout(timer);
+    const timers = [
+      window.setTimeout(() => setLanded(true), AT.land),
+      window.setTimeout(() => setTicked(true), AT.tick),
+    ];
+    return () => {
+      for (const timer of timers) window.clearTimeout(timer);
+    };
   }, [instant]);
   // The sequence is a moment, never a wait: the first tap or key finishes it.
   useEffect(() => {
@@ -1487,7 +1447,11 @@ export function ReviewComplete({
       className={clsx("isolate flex flex-1 flex-col", skipped && "seq-skip")}
     >
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
-      <div className="m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8">
+      <div
+        ref={room}
+        className="relative m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8"
+      >
+        {turned && !skipped && <TurnSpark lantern={lanternPlace} room={room} />}
         {lit && (
           <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
         )}
@@ -1550,7 +1514,12 @@ export function ReviewComplete({
               <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
             </span>
             <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              <Plural value={attempts} one="review today" other="reviews today" />
+              {/* While the goal is open the count says it, so Continue's count explains itself. */}
+              {!screen.satisfied && goal ? (
+                <Plural value={goal} one="of # review today" other="of # reviews today" />
+              ) : (
+                <Plural value={attempts} one="review today" other="reviews today" />
+              )}
             </span>
           </p>
         ) : (
@@ -1569,17 +1538,16 @@ export function ReviewComplete({
               dates={days.dates}
               size="lg"
               sequence={AT.lights}
-              flare={landed && !reduce && screen.streak}
+              flare={landed && turned}
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
-              <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
+                <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              </span>
               {run ? (
                 <>
                   <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
-                    <span
-                      key={run}
-                      className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
-                    >
+                    <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
                       {run}
                     </span>
                   </span>
@@ -1594,33 +1562,11 @@ export function ReviewComplete({
           </div>
         )}
 
-        {/* While Continue leads, what is left of the day sits under its lights. */}
-        {screen.nudge && (
-          <p
-            className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
-            style={at(AT.run + 120)}
-          >
-            {screen.nudge.kind === "goal" ? (
-              <Plural
-                value={screen.nudge.count}
-                one="# more review to your daily goal"
-                other="# more reviews to your daily goal"
-              />
-            ) : (
-              <Plural
-                value={screen.nudge.count}
-                one="# more card and you’re done for today"
-                other="# more cards and you’re done for today"
-              />
-            )}
-          </p>
-        )}
-
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
         <div
           className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
         >
-          {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is always last and primary. */}
           {ways.map((way, i) => (
             <Button
               key={way.key}
@@ -1629,7 +1575,7 @@ export function ReviewComplete({
               className="seq w-full"
               style={at(AT.actions + i * AT.actionStep)}
             >
-              {way.icon}
+              <StateIcon state="forgot" className="size-4" />
               {way.label}
             </Button>
           ))}
@@ -1637,22 +1583,28 @@ export function ReviewComplete({
             {!counted ? (
               <>
                 {addCards}
-                {done("secondary")}
-              </>
-            ) : screen.continueLeads && proceed ? (
-              <>
-                {done("secondary")}
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => onOffer?.(proceed)}
-                  className="w-full"
-                >
-                  <Trans>Continue</Trans>
-                </Button>
+                {done("primary")}
               </>
             ) : (
-              done("primary")
+              <>
+                {proceed && (
+                  <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
+                    <Trans>Continue</Trans>
+                    {note && (
+                      <span className="font-normal tabular-nums text-muted">
+                        {note.kind === "goal" ? (
+                          <Plural value={note.count} one="# to goal" other="# to goal" />
+                        ) : note.kind === "cards" ? (
+                          <Plural value={note.count} one="# card left" other="# cards left" />
+                        ) : (
+                          <Trans>other decks</Trans>
+                        )}
+                      </span>
+                    )}
+                  </Button>
+                )}
+                {done("primary")}
+              </>
             )}
           </div>
         </div>

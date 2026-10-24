@@ -188,12 +188,12 @@ describe("guessFieldRoles", () => {
       "skip",
       "skip",
       "example",
-      "notes",
+      "exampleTranslation",
       "notes",
       "skip",
     ]);
   });
-  it("reads Kaishi 1.5k: the translation and one pitch line go to notes, frequency is left out", () => {
+  it("reads Kaishi 1.5k: the translation is the example's, one pitch line goes to notes, frequency is left out", () => {
     const kaishi = {
       Word: "term",
       "Word Reading": "pronunciation",
@@ -201,7 +201,7 @@ describe("guessFieldRoles", () => {
       "Word Furigana": "skip",
       "Word Audio": "skip",
       Sentence: "example",
-      "Sentence Meaning": "notes",
+      "Sentence Meaning": "exampleTranslation",
       "Sentence Furigana": "skip",
       "Sentence Audio": "skip",
       Notes: "notes",
@@ -215,7 +215,7 @@ describe("guessFieldRoles", () => {
   it("keeps a sentence translation listed before the meaning out of the meaning", () => {
     expect(guessFieldRoles(["Expression", "Sentence-English", "Meaning", "Rank"])).toEqual([
       "term",
-      "notes",
+      "exampleTranslation",
       "meaning",
       "skip",
     ]);
@@ -229,7 +229,7 @@ describe("guessFieldRoles", () => {
       SentenceSimplified: "example",
       SentencePinyin: "notes",
       SentenceZhuyin: "notes",
-      SentenceTranslation: "notes",
+      SentenceTranslation: "exampleTranslation",
       WordAudio: "skip",
     };
     expect(guessFieldRoles(Object.keys(both))).toEqual(Object.values(both));

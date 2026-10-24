@@ -80,6 +80,7 @@ type PublicationAction = "publish" | "update_publication" | "withdraw_publicatio
 type AccountAction =
   | "onboarding.finish"
   | "analytics.consent"
+  | "ai.consent"
   | "analytics.review_start"
   | "rename"
   | "avatar.upload"

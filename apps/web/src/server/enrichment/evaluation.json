@@ -89,13 +89,13 @@
           "term": "Meie maja on madal.",
           "meaning": "Наш дом низкий.",
           "example": "",
-          "notes": "- дом — *maja · maja · maja*\n- низкий — *madal · madala · madalat*"
+          "notes": "Дом: *maja · maja · maja*\nНизкий: *madal · madala · madalat*"
         },
         {
           "term": "Millal sa koju tuled?",
           "meaning": "Когда ты придёшь домой?",
           "example": "",
-          "notes": "- когда? — *millal*\n- приходить — *tulema · tulla · tulen*\n*koju* — домой (куда), *kodus* — дома (где)"
+          "notes": "Когда?: *millal*\nПриходить: *tulema · tulla · tulen*\nДомой (куда): *koju*, дома (где): *kodus*"
         }
       ],
       "cases": [
@@ -525,6 +525,307 @@
           "term": "замок",
           "meaning": "castle",
           "expect": { "pronunciation": { "oneOf": ["за́мок"] }, "notes": { "includes": ["замо́к"] } }
+        }
+      ]
+    },
+    {
+      "id": "uk-en",
+      "name": "Ukrainian basics",
+      "language": "uk",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "uk-en-01",
+          "term": "замок",
+          "meaning": "castle",
+          "expect": { "pronunciation": { "oneOf": ["за́мок"] } }
+        },
+        {
+          "id": "uk-en-02",
+          "term": "замок",
+          "meaning": "lock",
+          "expect": { "pronunciation": { "oneOf": ["замо́к"] } }
+        },
+        {
+          "id": "uk-en-03",
+          "term": "дорога",
+          "meaning": "road",
+          "expect": { "pronunciation": { "oneOf": ["доро́га"] } }
+        },
+        {
+          "id": "uk-en-04",
+          "term": "дорога",
+          "meaning": "dear (feminine)",
+          "expect": { "pronunciation": { "oneOf": ["дорога́"] } }
+        },
+        {
+          "id": "uk-en-05",
+          "term": "брати",
+          "meaning": "to take",
+          "expect": { "pronunciation": { "oneOf": ["бра́ти"] } }
+        },
+        {
+          "id": "uk-en-06",
+          "term": "брати",
+          "meaning": "brothers",
+          "expect": { "pronunciation": { "oneOf": ["брати́"] } }
+        },
+        {
+          "id": "uk-en-07",
+          "term": "руки",
+          "meaning": "hands",
+          "expect": { "pronunciation": { "oneOf": ["ру́ки"] } }
+        },
+        {
+          "id": "uk-en-08",
+          "term": "неділя",
+          "expect": { "meaning": { "oneOf": ["Sunday"] }, "pronunciation": { "oneOf": ["неді́ля"] } }
+        },
+        {
+          "id": "uk-en-09",
+          "term": "час",
+          "expect": { "meaning": { "includes": ["time"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "uk-en-10",
+          "term": "луна",
+          "expect": { "meaning": { "includes": ["echo"] }, "pronunciation": { "oneOf": ["луна́"] } }
+        },
+        {
+          "id": "uk-en-11",
+          "term": "питати",
+          "expect": { "meaning": { "includes": ["ask"] }, "pronunciation": { "oneOf": ["пита́ти"] } }
+        },
+        {
+          "id": "uk-en-12",
+          "term": "дім",
+          "expect": {
+            "meaning": { "oneOf": ["house", "home", "house; home", "home; house"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "uk-en-13",
+          "term": "кіно",
+          "expect": {
+            "meaning": { "includes": ["cinema"] },
+            "pronunciation": { "oneOf": ["кіно́"] }
+          }
+        },
+        {
+          "id": "uk-en-14",
+          "term": "м'ясо",
+          "expect": { "meaning": { "oneOf": ["meat"] }, "pronunciation": { "oneOf": ["м'я́со"] } }
+        },
+        {
+          "id": "uk-en-15",
+          "term": "п'ять",
+          "expect": { "meaning": { "oneOf": ["five"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "uk-en-16",
+          "term": "їжак",
+          "expect": { "meaning": { "oneOf": ["hedgehog"] }, "pronunciation": { "oneOf": ["їжа́к"] } }
+        },
+        {
+          "id": "uk-en-17",
+          "term": "дитина",
+          "expect": {
+            "meaning": { "oneOf": ["child", "baby", "child; baby"] },
+            "pronunciation": { "oneOf": ["дити́на"] }
+          }
+        },
+        {
+          "id": "uk-en-18",
+          "term": "молоко",
+          "expect": { "meaning": { "oneOf": ["milk"] }, "pronunciation": { "oneOf": ["молоко́"] } }
+        },
+        {
+          "id": "uk-en-19",
+          "term": "яблуко",
+          "expect": { "meaning": { "oneOf": ["apple"] }, "pronunciation": { "oneOf": ["я́блуко"] } }
+        },
+        {
+          "id": "uk-en-20",
+          "term": "дякую",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["дя́кую"] }
+          }
+        },
+        {
+          "id": "uk-en-21",
+          "term": "добрий день",
+          "expect": {
+            "meaning": { "includes": ["good afternoon"] },
+            "pronunciation": { "oneOf": ["до́брий день"] }
+          }
+        },
+        {
+          "id": "uk-en-22",
+          "term": "працювати",
+          "example": "Я працюю в банку.",
+          "expect": {
+            "meaning": { "includes": ["work"] },
+            "example": { "oneOf": ["Я працю́ю в ба́нку."] }
+          }
+        },
+        {
+          "id": "uk-en-23",
+          "term": "читати",
+          "example": "Ми читаємо книгу ввечері.",
+          "expect": {
+            "meaning": { "includes": ["read"] },
+            "example": { "oneOf": ["Ми чита́ємо кни́гу вве́чері."] }
+          }
+        },
+        {
+          "id": "uk-en-24",
+          "term": "дзвонити",
+          "example": "Він дзвонить мамі щодня.",
+          "expect": {
+            "meaning": { "includes": ["call"] },
+            "example": { "oneOf": ["Він дзво́нить ма́мі щодня́."] }
+          }
+        },
+        {
+          "id": "uk-en-25",
+          "term": "білка",
+          "example": "У парку живе білка.",
+          "expect": {
+            "meaning": { "oneOf": ["squirrel"] },
+            "example": { "oneOf": ["У па́рку живе́ бі́лка."] }
+          }
+        },
+        {
+          "id": "uk-en-26",
+          "term": "час",
+          "example": "У мене немає часу.",
+          "expect": {
+            "meaning": { "includes": ["time"] },
+            "example": { "oneOf": ["У мене́ нема́є ча́су."] }
+          }
+        },
+        {
+          "id": "uk-en-27",
+          "term": "допомога",
+          "example": "Дякую за допомогу.",
+          "expect": {
+            "meaning": { "includes": ["help"] },
+            "example": { "oneOf": ["Дя́кую за допомо́гу."] }
+          }
+        },
+        {
+          "id": "uk-en-28",
+          "term": "удома",
+          "example": "Мій брат удома.",
+          "expect": {
+            "meaning": { "includes": ["home"] },
+            "example": { "oneOf": ["Мій брат удо́ма."] }
+          }
+        },
+        {
+          "id": "uk-en-29",
+          "term": "книга",
+          "example": "У тебе п'ять книг.",
+          "expect": {
+            "meaning": { "includes": ["book"] },
+            "example": { "oneOf": ["У тебе́ п'ять книг."] }
+          }
+        }
+      ]
+    },
+    {
+      "id": "uk-en-notes",
+      "name": "Ukrainian A2 · Words",
+      "language": "uk",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "uk-notes-01",
+          "term": "рука",
+          "expect": {
+            "meaning": { "includes": ["hand"] },
+            "pronunciation": { "oneOf": ["рука́"] },
+            "notes": { "includes": ["ру́ки"] }
+          }
+        },
+        {
+          "id": "uk-notes-02",
+          "term": "сестра",
+          "expect": {
+            "meaning": { "oneOf": ["sister"] },
+            "pronunciation": { "oneOf": ["сестра́"] },
+            "notes": { "includes": ["се́стри"] }
+          }
+        },
+        {
+          "id": "uk-notes-03",
+          "term": "робити",
+          "expect": {
+            "meaning": { "includes": ["do"] },
+            "pronunciation": { "oneOf": ["роби́ти"] },
+            "notes": { "includes": ["зроби"] }
+          }
+        },
+        {
+          "id": "uk-notes-04",
+          "term": "говорити",
+          "expect": {
+            "meaning": { "includes": ["speak"] },
+            "pronunciation": { "oneOf": ["говори́ти"] },
+            "notes": "filled"
+          }
+        },
+        {
+          "id": "uk-notes-05",
+          "term": "ніч",
+          "expect": {
+            "meaning": { "oneOf": ["night"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["feminine"] }
+          }
+        },
+        {
+          "id": "uk-notes-06",
+          "term": "дитина",
+          "expect": { "pronunciation": { "oneOf": ["дити́на"] }, "notes": { "includes": ["ді́ти"] } }
+        },
+        {
+          "id": "uk-notes-07",
+          "term": "неділя",
+          "expect": {
+            "meaning": { "oneOf": ["Sunday"] },
+            "pronunciation": { "oneOf": ["неді́ля"] },
+            "notes": { "includes": ["week"] }
+          }
+        },
+        {
+          "id": "uk-notes-08",
+          "term": "замок",
+          "meaning": "castle",
+          "expect": { "pronunciation": { "oneOf": ["за́мок"] }, "notes": { "includes": ["замо́к"] } }
+        },
+        {
+          "id": "uk-notes-09",
+          "term": "брат",
+          "expect": {
+            "meaning": { "oneOf": ["brother"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["брати́"] }
+          }
+        },
+        {
+          "id": "uk-notes-10",
+          "term": "дякувати",
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["дя́кувати"] },
+            "notes": { "includes": ["dative", "подя́кувати"] }
+          }
         }
       ]
     },

@@ -21,6 +21,8 @@
       crossorigin
     />
     <script>
+      // Inside the Mac app, make room for its traffic lights before first paint (desktop.ts).
+      if (window.lymiDesktop) document.documentElement.dataset.shell = "mac";
       // Apply the saved theme before first paint so there is no flash.
       try {
         var t = localStorage.getItem("lymi-theme");

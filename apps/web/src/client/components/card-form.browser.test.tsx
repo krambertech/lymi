@@ -90,6 +90,7 @@ test("a discarded draft holding only a hook counts as work to bring back", () =>
     meaning: "",
     pronunciation: "",
     example: "",
+    exampleTranslation: "",
     notes: "",
     hook: "",
     source: "",

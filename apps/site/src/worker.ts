@@ -4,6 +4,12 @@
 import { handle } from "@astrojs/cloudflare/handler";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { movedDeckPath, productAddPath } from "./lib/deck-page";
+import {
+  countsAsDownload,
+  downloadCapture,
+  downloadCaptureRequest,
+  macDownload,
+} from "./lib/mac-download";
 import { productUrl, signUpRedirect, signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
@@ -41,6 +47,20 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
+
+    const download = macDownload(url.pathname);
+    if (download) {
+      const capture =
+        countsAsDownload(request) && downloadCapture(request, { timezone: request.cf?.timezone });
+      if (capture) {
+        const edge = { country: request.cf?.country, ip: request.headers.get("cf-connecting-ip") };
+        ctx.waitUntil(proxyPostHog(downloadCaptureRequest(request, capture), edge));
+      }
+      return new Response(null, {
+        status: 302,
+        headers: { location: download.file, "cache-control": "no-store" },
+      });
+    }
 
     if (JOIN_PATHS.test(url.pathname)) return Response.redirect(signUpUrl(), 301);
     if (SIGN_UP_PATHS.test(url.pathname)) return Response.redirect(signUpRedirect(url.search), 302);

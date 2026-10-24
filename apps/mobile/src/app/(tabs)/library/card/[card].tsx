@@ -255,9 +255,11 @@ export default function CardPage() {
       <Field
         key="example"
         label={t`Example`}
-        ai={exampleAi}
-        // One badge names both when the AI wrote both; one by the label never claims the learner's example.
-        field={translationAi ? "exampleAndTranslation" : "example"}
+        ai={exampleAi || translationAi}
+        // One badge names what the AI wrote, in words when it is only the translation, so it never claims the learner's example.
+        field={
+          exampleAi ? (translationAi ? "exampleAndTranslation" : "example") : "exampleTranslation"
+        }
         onPress={edit("example")}
         end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
         below={
@@ -282,10 +284,6 @@ export default function CardPage() {
           className="text-md text-text"
           lang={card.language}
           translation={translation ? { text: translation, className: "text-md text-muted" } : null}
-          control={
-            translationAi &&
-            !exampleAi && <SourceChip source="ai" field="exampleTranslation" badge />
-          }
         />
         {translating && !translation && (
           <View className="h-5 justify-center" accessibilityElementsHidden>
@@ -593,7 +591,7 @@ function Field({
     <View className="flex-1 gap-1">
       <View className="flex-row items-center gap-2">
         <Text className="text-sm font-medium text-muted">{label}</Text>
-        {ai && <SourceChip source="ai" field={field} badge />}
+        {ai && <SourceChip source="ai" field={field} badge={field !== "exampleTranslation"} />}
       </View>
       {children}
     </View>

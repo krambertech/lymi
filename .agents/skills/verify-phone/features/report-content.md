@@ -17,4 +17,5 @@ In a deck someone else owns: **Deck options** › **Report deck**, About this de
 ## Gotchas
 
 - Send report is the header's amber action; its accessibility label is **Send report**.
+- Maestro does not match a curly apostrophe, so the flow writes `.` in its place.
 - Card options is iOS's own menu, so Report card is found by its text once the menu is open.

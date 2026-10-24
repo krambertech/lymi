@@ -12,15 +12,15 @@ name: Report a shared deck or card
 - takeScreenshot: 01-about
 - tapOn: "Report deck"
 - extendedWaitUntil:
-    visible: "What’s wrong"
+    visible: "Hateful or offensive"
     timeout: 20000
 - tapOn: "Send report"
-- assertVisible: "Choose what’s wrong with it."
+- assertVisible: "Choose what.s wrong with it."
 - tapOn: "Spam or a scam"
 - takeScreenshot: 02-report-sheet
 - tapOn: "Send report"
 - extendedWaitUntil:
-    visible: "Report sent. We’ll look within a day."
+    visible: "Report sent. We.ll look within a day."
     timeout: 20000
 - takeScreenshot: 03-sent
 - openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
@@ -30,11 +30,11 @@ name: Report a shared deck or card
 - tapOn: "Card options"
 - tapOn: "Report card"
 - extendedWaitUntil:
-    visible: "What’s wrong"
+    visible: "Hateful or offensive"
     timeout: 20000
 - tapOn: "Hateful or offensive"
 - tapOn: "Send report"
 - extendedWaitUntil:
-    visible: "Report sent. We’ll look within a day."
+    visible: "Report sent. We.ll look within a day."
     timeout: 20000
 - takeScreenshot: 04-card-sent

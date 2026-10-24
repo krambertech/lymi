@@ -8,7 +8,7 @@ An empty state shows the learner how to fill what is empty, and it looks tempora
 What is empty?
  ├── Still loading → Skeleton at the loaded size; never an empty state
  ├── It failed to load → ErrorState
- ├── Today, before the first review → StartGuide
+ ├── Today, before the first review → FirstRunGuide
  ├── A whole screen with nothing in it yet (Library, a deck, Insights) → StartPanel
  │     └── and the layout is worth previewing (Insights) → also its real components with ghost
  ├── A group inside a screen (API keys, Connected apps) → EmptySection

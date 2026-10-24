@@ -91,6 +91,14 @@ Anything a list accepts beyond its rows, such as a language tag it has never hea
 
 A card's tags are chosen from a chip, `TagsChip`: a `Combobox` with `multiple`, whose search finds the learner's tags in use, those starting with what was typed first, each with its card count on the end. A Create row after them adds the name as typed whenever it is not a tag in use already, and a tag row adds that tag in its own spelling. The list stays open while tags are picked, and the chip then reads the one tag, or how many.
 
+## Text language and direction
+
+`Input` and `Textarea` default to `dir="auto"`, so learner text finds its own direction without turning the form around. Content in a known language carries that language where the control supports it; the example and its translation each keep their own direction. Do not force every field to the app's direction. Read text follows [type.md](type.md#text-direction).
+
+## Optional card fields
+
+Card forms keep capture short: term, meaning and deck lead; optional fields wait behind `FieldChipButton` or a choice trigger with the same look. A text chip adds the field after those already shown and focuses it; a choice chip opens its picker and then names the chosen value. Once revealed, a field stays for that card even when emptied. Use `FieldChipRow` for the named, horizontally scrolling row, including its focus-ring room and overflow fades, rather than descriptive `Chip` components. The card-specific fields, ordering and draft behavior belong in [library-decks-and-cards.md](../library-decks-and-cards.md#adding-and-editing-a-card); the phone's keyboard row belongs in [phone.md](phone.md#add-a-word-and-edit-card).
+
 ## Choice controls
 
 `Checkbox`, `Switch`, `RadioGroup` and `ToggleGroup` are Base UI parts that submit with a native form under their `name`. `Segmented` is `ToggleGroup`'s look in the product: the track, the plate and the heights.

@@ -13,6 +13,7 @@
     "src/client",
     "src/shared",
     "vite.config.ts",
+    "vitest.workers.config.ts",
     "mcp-app.build.ts",
     "drizzle.config.ts",
     "design",

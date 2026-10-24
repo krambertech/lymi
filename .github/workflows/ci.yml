@@ -38,6 +38,7 @@ jobs:
       component_browsers: ${{ steps.coverage.outputs.component_browsers }}
       component_coverage: ${{ steps.coverage.outputs.component_coverage }}
       run_deploy_check: ${{ steps.coverage.outputs.run_deploy_check }}
+      run_workers_tests: ${{ steps.coverage.outputs.run_workers_tests }}
       run_app_preview: ${{ steps.coverage.outputs.run_app_preview }}
       run_site_preview: ${{ steps.coverage.outputs.run_site_preview }}
       reason: ${{ steps.coverage.outputs.reason }}
@@ -70,7 +71,8 @@ jobs:
   quality:
     needs: plan
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # A full run reaches ten minutes on a slow runner; the limit is for hangs, not slowness.
+    timeout-minutes: 15
     permissions:
       contents: read
     outputs:
@@ -82,6 +84,7 @@ jobs:
       boundaries_outcome: ${{ steps.boundaries.outcome }}
       typecheck_outcome: ${{ steps.typecheck.outcome }}
       test_outcome: ${{ steps.test.outcome }}
+      workers_test_outcome: ${{ steps.workers_test.outcome }}
       deploy_product_outcome: ${{ steps.deploy_product.outcome }}
       deploy_site_outcome: ${{ steps.deploy_site.outcome }}
     steps:
@@ -140,6 +143,12 @@ jobs:
         env:
           LYMI_COMPONENT_INSTANCES: ${{ needs.plan.outputs.component_instances }}
         run: pnpm test
+
+      # Outgoing fetches in workerd, which refuses options Node accepts. docs/testing.md.
+      - name: Run Workers-runtime tests
+        id: workers_test
+        if: needs.plan.outputs.run_workers_tests == 'true'
+        run: pnpm --filter @lymi/web test:workers
 
       - name: Check product deployment package
         id: deploy_product
@@ -267,6 +276,7 @@ jobs:
           BOUNDARIES_OUTCOME: ${{ needs.quality.outputs.boundaries_outcome }}
           TYPECHECK_OUTCOME: ${{ needs.quality.outputs.typecheck_outcome }}
           TEST_OUTCOME: ${{ needs.quality.outputs.test_outcome }}
+          WORKERS_TEST_OUTCOME: ${{ needs.quality.outputs.workers_test_outcome }}
           DEPLOY_PRODUCT_OUTCOME: ${{ needs.quality.outputs.deploy_product_outcome }}
           DEPLOY_SITE_OUTCOME: ${{ needs.quality.outputs.deploy_site_outcome }}
         run: node scripts/ci-summary.mjs

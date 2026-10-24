@@ -140,6 +140,7 @@ export function renderCiSummary(env, shardOutcomes = []) {
     `| Deployment boundaries | ${outcome(env.BOUNDARIES_OUTCOME)} |`,
     `| TypeScript | ${outcome(env.TYPECHECK_OUTCOME)} |`,
     `| Unit tests | ${outcome(env.TEST_OUTCOME)} |`,
+    `| Workers-runtime tests | ${outcome(env.WORKERS_TEST_OUTCOME)} |`,
     `| Product deployment package | ${outcome(env.DEPLOY_PRODUCT_OUTCOME)} |`,
     `| Public-site deployment package | ${outcome(env.DEPLOY_SITE_OUTCOME)} |`,
     "",

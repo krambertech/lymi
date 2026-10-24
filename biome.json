@@ -169,6 +169,10 @@
       "plugins": ["./biome-plugins/no-sql-lower.grit"]
     },
     {
+      "includes": ["apps/web/**", "packages/**", "!**/*.test.ts"],
+      "plugins": ["./biome-plugins/no-redirect-error.grit"]
+    },
+    {
       "includes": [
         "packages/core/src/**",
         "packages/client/src/**",

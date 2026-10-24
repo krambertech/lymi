@@ -9,6 +9,7 @@ import {
   allComponentInstances,
   componentBrowsers,
   describeComponentInstances,
+  requiresWorkersTests,
   selectComponentInstances,
 } from "./test-plan.mjs";
 
@@ -39,6 +40,7 @@ function fullPlan(reason) {
       playwrightArgs: "",
       coverage: "Chromium + WebKit",
       runDeployCheck: true,
+      runWorkersTests: true,
       runAppPreview: false,
       runSitePreview: false,
       reason,
@@ -52,6 +54,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
     const runAppPreview = requiresAppPreview(changedPaths);
     const runSitePreview = requiresSitePreview(changedPaths);
     const instances = selectComponentInstances(changedPaths);
+    const runWorkersTests = requiresWorkersTests(changedPaths);
     if (!requiresE2E(changedPaths)) {
       return withComponentInstances(
         shardedPlan({
@@ -60,6 +63,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
           playwrightArgs: "",
           coverage: "No browser E2E",
           runDeployCheck: false,
+          runWorkersTests,
           runAppPreview,
           runSitePreview,
           reason: "This pull request changes no production-affecting paths.",
@@ -75,6 +79,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
         playwrightArgs: "--project=chromium",
         coverage: "Chromium",
         runDeployCheck: true,
+        runWorkersTests,
         runAppPreview,
         runSitePreview,
         reason: "This pull request changes production-affecting paths.",
@@ -91,6 +96,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
         playwrightArgs: "",
         coverage: "No browser E2E",
         runDeployCheck: true,
+        runWorkersTests: true,
         runAppPreview: false,
         runSitePreview: false,
         reason: "The manually dispatched run explicitly disabled browser E2E.",
@@ -129,6 +135,7 @@ function writeGitHubOutputs(plan) {
     component_browsers: plan.componentBrowsers,
     component_coverage: plan.componentCoverage,
     run_deploy_check: String(plan.runDeployCheck),
+    run_workers_tests: String(plan.runWorkersTests),
     run_app_preview: String(plan.runAppPreview),
     run_site_preview: String(plan.runSitePreview),
     reason: plan.reason,
@@ -154,7 +161,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       plan.runE2E ? ` across ${plan.shards} shards` : ""
     }; component tests on ${plan.componentCoverage}; deployment package check ${
       plan.runDeployCheck ? "enabled" : "skipped"
-    }; app preview ${plan.runAppPreview ? "enabled" : "skipped"}; public-site preview ${
+    }; Workers-runtime tests ${plan.runWorkersTests ? "enabled" : "skipped"}; app preview ${plan.runAppPreview ? "enabled" : "skipped"}; public-site preview ${
       plan.runSitePreview ? "enabled" : "skipped"
     }. ${plan.reason}\n`,
   );

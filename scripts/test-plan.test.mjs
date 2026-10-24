@@ -5,6 +5,7 @@ import {
   componentBrowsers,
   describeComponentInstances,
   requiresTouchInstances,
+  requiresWorkersTests,
   runsEverything,
   selectComponentInstances,
 } from "./test-plan.mjs";
@@ -61,4 +62,17 @@ test("files the tests depend on without importing widen the run to everything", 
 test("no changes need no browsers beyond desktop", () => {
   assert.equal(runsEverything([]), false);
   assert.deepEqual(selectComponentInstances([]), ["desktop"]);
+});
+
+test("server and core changes run the Workers-runtime tests; a screen does not", () => {
+  for (const path of [
+    "apps/web/src/server/ai/openai-speech.ts",
+    "packages/core/src/fsrs.ts",
+    "apps/web/vitest.workers.config.ts",
+  ]) {
+    assert.equal(requiresWorkersTests([path]), true, path);
+  }
+  for (const path of ["apps/web/src/client/routes/today.tsx", "packages/client/src/api/cards.ts"]) {
+    assert.equal(requiresWorkersTests([path]), false, path);
+  }
 });

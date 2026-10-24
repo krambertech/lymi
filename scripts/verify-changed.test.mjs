@@ -87,3 +87,12 @@ test("changed paths join committed and untracked files against the merge base", 
   assert.equal(calls[0], "merge-base origin/main HEAD");
   assert.equal(calls[1], `diff --name-only ${base}`);
 });
+
+test("a server change also runs the Workers-runtime tests", () => {
+  const steps = planSteps({
+    base,
+    paths: ["apps/web/src/server/cimd-fetch.ts"],
+    hasRouteTree: true,
+  });
+  assert.deepEqual(steps.at(-1).args, ["--filter", "@lymi/web", "test:workers"]);
+});

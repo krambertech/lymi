@@ -21,12 +21,14 @@ A change is verified when the feature it touches has been driven in the running 
 | Add a card | [add-card.md](features/add-card.md) |
 | Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
 | Library and the deck page | [library.md](features/library.md) |
+| Search | [search.md](features/search.md) |
 | Deck filters | [deck-filters.md](features/deck-filters.md) |
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
+| Enrich a card | [card-enrich.md](features/card-enrich.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Making and archiving sections | [sections.md](features/sections.md) |
 | Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |

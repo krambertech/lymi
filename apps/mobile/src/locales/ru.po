@@ -13,6 +13,9 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{seen}”"
 msgstr "«{seen}»"
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "В «{term}» нечего дополнять."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже есть в колоде {deck}"
 
@@ -1610,6 +1613,12 @@ msgstr "Не удалось скачать файл. Проверь соедин
 msgid "Couldn’t draft a hook. Try again in a moment."
 msgstr "Не удалось подготовить зацепку. Попробуй ещё раз чуть позже."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Не удалось дополнить «{term}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t enrich this card."
+msgstr "Не удалось дополнить эту карточку."
+
 msgid "Couldn’t finish the import"
 msgstr "Не удалось завершить импорт"
 
@@ -1898,6 +1907,9 @@ msgstr "Колоды от Lymi. Добавь одну — учи её на св�
 msgid "Decks in a series are reviewed together."
 msgstr "Колоды одной серии повторяются вместе."
 
+msgid "Decks other people study"
+msgstr "Колоды, которые изучают другие"
+
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
@@ -2002,6 +2014,9 @@ msgstr "Каждый блок — день с повторениями."
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Каждую карточку спрашивают в обе стороны, каждую сторону по своему расписанию."
 
+msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Каждый, кто изучает эти колоды, получит собственную копию со своим прогрессом, но без твоего имени. Чтобы забрать колоду у других, сначала архивируй её. Архивированные колоды удалятся вместе с аккаунтом."
+
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
 
@@ -2060,11 +2075,20 @@ msgctxt "language"
 msgid "English"
 msgstr "Английский"
 
+msgid "Enrich"
+msgstr "Дополнить"
+
 msgid "Enriched"
 msgstr "Дополнено ИИ"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Дополнена # карточка} few {Дополнено # карточки} many {Дополнено # карточек} other {Дополнено # карточки}} в колоде «{deck}»"
+
+msgid "Enriched this card"
+msgstr "Карточка дополнена"
+
+msgid "Enriching this card"
+msgstr "Дополняем эту карточку"
 
 msgid "Enter a full email address, like anna@example.com."
 msgstr "Введи полный адрес, например anna@example.com."
@@ -3273,9 +3297,6 @@ msgstr "Другое"
 msgid "other decks"
 msgstr "другие колоды"
 
-msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
-msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на hello@lymi.app, чтобы удалить его."
-
 msgid "Other subjects"
 msgstr "Другие темы"
 
@@ -3320,9 +3341,6 @@ msgstr "Заглянуть в зацепку"
 
 msgid "People"
 msgstr "Люди"
-
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После удаления твоего аккаунта их никто не сможет изменить."
 
 msgctxt "language"
 msgid "Persian"
@@ -3402,6 +3420,9 @@ msgstr "Твоё произношение"
 
 msgid "Pronunciation from lesson"
 msgstr "Произношение с урока"
+
+msgid "Published decks leave Explore, so nobody new can add them."
+msgstr "Опубликованные колоды исчезнут из Каталога, поэтому никто новый не сможет их добавить."
 
 msgid "Publishing and deck reports"
 msgstr "Публикация и отчёты о колодах"
@@ -3575,6 +3596,9 @@ msgstr "Восстановлен раздел «{name}» в колоде «{deck
 
 msgid "Restored the series {name}"
 msgstr "Восстановлена серия «{name}»"
+
+msgid "Retry"
+msgstr "Повторить"
 
 msgid "Review"
 msgstr "Повторение"
@@ -4257,6 +4281,9 @@ msgstr "Для этого импорта нужно соединение"
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
 
+msgid "This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "Это аккаунт издателя Lymi. Он публикует колоды в Каталоге, поэтому его нельзя удалить здесь. Напиши на hello@lymi.app, чтобы его удалить."
+
 msgid "This is how it will look in Lymi. Change fields if a part is in the wrong place."
 msgstr "Так она будет выглядеть в Lymi. Измени поля, если что-то стоит не на своём месте."
 
@@ -4559,9 +4586,6 @@ msgstr "Что это значит"
 
 msgid "What it’s for"
 msgstr "Для чего она"
-
-msgid "What stays for others"
-msgstr "Что останется другим"
 
 msgid "What this is about"
 msgstr "О чём это"

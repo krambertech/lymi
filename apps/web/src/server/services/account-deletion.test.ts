@@ -13,7 +13,8 @@ import {
 import { purgeCardAudio } from "./audio";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
-import { createDeck } from "./decks";
+import { copyFormerDecks } from "./deck-copies";
+import { archiveDeck, createDeck } from "./decks";
 import { clearLocalEmailOutbox, latestLocalEmail } from "./email";
 import { inviteByEmail } from "./invitations";
 import { join, leave } from "./members";
@@ -39,6 +40,8 @@ const deps: DeletionDeps = {
   endSessions: async (userId) => {
     ended.push(userId);
   },
+  appleClients: null,
+  publishers: new Set(),
 };
 
 beforeAll(async () => {
@@ -91,13 +94,13 @@ describe("deleting an account", () => {
     await deckWithCard(olga, "tere");
     const { deck: shared } = await deckWithCard(olga, "aitäh", ivan);
 
-    expect(await deletionSummary(olga)).toEqual({
+    expect(await deletionSummary(olga, new Set())).toEqual({
       blocked: null,
       confirmWith: "email",
       decks: 2,
       cards: 2,
       reviews: 2,
-      sharedDecks: [{ id: shared.id, name: shared.name, members: 1 }],
+      sharedDecks: [{ id: shared.id, name: shared.name, members: 1, published: false }],
     });
   });
 
@@ -197,6 +200,13 @@ describe("deleting an account", () => {
       async () => {},
     );
 
+    await raw
+      .prepare(
+        "insert into apikey (id, reference_id, key, created_at, updated_at) values ('nora-key', ?, 'hashed', 0, 0)",
+      )
+      .bind(nora.userId)
+      .run();
+
     const code = await codeFor(nora, "nora@lymi.test");
     const leftovers = await deleteAccount(nora, { code }, deps);
 
@@ -218,12 +228,8 @@ describe("deleting an account", () => {
       .bind(owner.userId)
       .first<{ n: number }>();
     expect(left?.n).toBe(1);
-    const open = await raw
-      .prepare(
-        "select count(*) as n from deck_invitations where email = 'nora@lymi.test' and revoked_at is null",
-      )
-      .first<{ n: number }>();
-    expect(open?.n).toBe(0);
+    expect(await count("deck_invitations", "email", "nora@lymi.test")).toBe(0);
+    expect(await count("apikey", "reference_id", nora.userId)).toBe(0);
     const record = await raw
       .prepare("select * from account_deletions where id = ?")
       .bind(nora.userId)
@@ -238,7 +244,7 @@ describe("deleting an account", () => {
     });
   });
 
-  it("keeps a deck other people study for them, with nobody able to change it", async () => {
+  it("gives each member a private copy of a deck they study, with their own progress", async () => {
     const kadri = await learner(db, "kadri", "Kadri");
     const peeter = await learner(db, "peeter", "Peeter");
     const { deck, card } = await deckWithCard(kadri, "maja", peeter);
@@ -255,19 +261,53 @@ describe("deleting an account", () => {
 
     expect(leftovers.keptDecks).toBe(1);
     expect(await count("user", "id", kadri.userId)).toBe(0);
-    const kept = await raw
-      .prepare("select user_id, series_id from decks where id = ?")
+    // Until the copy is made, the deck waits under the former owner and nobody can change it.
+    expect(await count("former_deck_copies", "deck_id", deck.id)).toBe(1);
+    const waiting = await raw
+      .prepare("select user_id from decks where id = ?")
       .bind(deck.id)
-      .first<{ user_id: string; series_id: string | null }>();
-    expect(kept).toEqual({ user_id: FORMER_OWNER_ID, series_id: null });
-    expect(await count("cards", "id", card.id)).toBe(1);
-    // The AI's draft was only ever the owner's.
-    expect(await count("cards", "hook_draft", "a draft")).toBe(0);
+      .first<{ user_id: string }>();
+    expect(waiting?.user_id).toBe(FORMER_OWNER_ID);
     expect(await count("card_corrections", "card_id", card.id)).toBe(0);
-    expect(await count("card_states", "user_id", peeter.userId)).toBe(1);
+
+    const captured: unknown[] = [];
+    const events = { writeDataPoint: () => {}, capture: (event: unknown) => captured.push(event) };
+    expect(await copyFormerDecks(db, events)).toEqual({ copied: 1, failed: 0 });
+    expect(await copyFormerDecks(db, events)).toEqual({ copied: 0, failed: 0 });
+    expect(captured).toEqual([{ name: "former_deck_copied", cards: 1 }]);
+
+    const copy = await raw
+      .prepare("select id, name from decks where user_id = ?")
+      .bind(peeter.userId)
+      .all<{ id: string; name: string }>();
+    expect(copy.results).toEqual([{ id: expect.any(String), name: deck.name }]);
+    const copied = await raw
+      .prepare("select id, term, hook_draft from cards where deck_id = ?")
+      .bind(copy.results[0]?.id)
+      .first<{ id: string; term: string; hook_draft: string | null }>();
+    expect(copied).toMatchObject({ term: "maja", hook_draft: null });
+    expect(await count("card_states", "card_id", copied?.id ?? "")).toBe(1);
+    expect(await count("reviews", "card_id", copied?.id ?? "")).toBe(1);
+    expect(await count("deck_members", "user_id", peeter.userId)).toBe(0);
+    expect(await count("deck_copy_ids", "user_id", peeter.userId)).toBe(0);
+    expect(await count("former_deck_copies", "deck_id", deck.id)).toBe(0);
+
+    const images = { delete: async () => {} } as unknown as R2Bucket;
+    expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
+    expect(await count("decks", "id", deck.id)).toBe(0);
     expect(await count("reviews", "user_id", peeter.userId)).toBe(1);
-    // The owner's own schedule and reviews go with them.
-    expect(await count("card_states", "user_id", kadri.userId)).toBe(0);
+  });
+
+  it("deletes an archived deck for everyone, with the members' progress in it", async () => {
+    const owner = await learner(db, "rutt", "Rutt");
+    const member = await learner(db, "kalev", "Kalev");
+    const { deck } = await deckWithCard(owner, "kass", member);
+    await archiveDeck(owner, deck.id);
+    expect((await deletionSummary(owner, new Set())).sharedDecks).toEqual([]);
+
+    await deleteAccount(owner, { code: await codeFor(owner, "rutt@lymi.test") }, deps);
+    expect(await count("decks", "id", deck.id)).toBe(0);
+    expect(await count("reviews", "user_id", member.userId)).toBe(0);
   });
 
   it("deletes the audio of the learner's cards and leaves a kept deck's", async () => {
@@ -321,11 +361,13 @@ describe("deleting an account", () => {
     expect(await stored(card.id)).toEqual([]);
   });
 
-  it("refuses an account that owns a published deck", async () => {
+  it("deletes a publisher, closing the page and copying each learner's pinned edition", async () => {
     await db.insert(schema.user).values({ id: "lymi-lib", name: "Lymi", email: "lib@lymi.test" });
     const lymi: ServiceContext = { db, userId: "lymi-lib", actor: "user" };
+    const learnerCtx = await learner(db, "oksana", "Oksana");
     const deck = await createDeck(lymi, { name: "Estonian", defaultLanguage: "et" });
-    await addCards(lymi, [{ deckId: deck.id, term: "tere", meaning: "hi" }]);
+    const [added] = await addCards(lymi, [{ deckId: deck.id, term: "tere", meaning: "hi" }]);
+    if (added?.status !== "added") throw new Error("card not added");
     await publishDeck(
       lymi,
       deck.id,
@@ -338,19 +380,65 @@ describe("deleting an account", () => {
       },
       new Set(["lib@lymi.test"]),
     );
+    for (const [table, column, id, text] of [
+      [schema.deckLocalizations, "deckId", deck.id, { name: "Естонська" }],
+      [schema.cardLocalizations, "cardId", added.card.id, { term: "Tere!", meaning: "привіт" }],
+    ] as const) {
+      await db.insert(table).values({
+        id: newId(),
+        [column]: id,
+        ...text,
+        language: "uk",
+        provenance: "human",
+        status: "approved",
+        sourceRevision: 0,
+        approvedBy: "lymi-lib",
+      } as never);
+    }
+    await join(learnerCtx, deck.id, { meaningLanguage: "uk" });
 
-    expect((await deletionSummary(lymi)).blocked).toBe("publisher");
-    await expect(sendDeletionCode(lymi, env, undefined)).rejects.toMatchObject({
-      reason: "publisher",
-    });
+    const summary = await deletionSummary(lymi, new Set());
+    expect(summary.blocked).toBeNull();
+    expect(summary.sharedDecks).toEqual([
+      { id: deck.id, name: "Estonian", members: 1, published: true },
+    ]);
+    await sendDeletionCode(lymi, env, undefined);
+    const code = latestLocalEmail("lib@lymi.test")?.text.match(/\b\d{6}\b/)?.[0] ?? "";
+    const leftovers = await deleteAccount(lymi, { code }, deps);
+    expect(leftovers.publishedDecks).toBe(1);
+    expect(await count("deck_publications", "deck_id", deck.id)).toBe(0);
+
+    await copyFormerDecks(db, undefined);
+    const copy = await raw
+      .prepare(
+        "select decks.name as deck, cards.term as term, cards.normalized_term as key, cards.meaning as meaning from decks join cards on cards.deck_id = decks.id where decks.user_id = ?",
+      )
+      .bind(learnerCtx.userId)
+      .first();
+    expect(copy).toEqual({ deck: "Естонська", term: "Tere!", key: "tere!", meaning: "привіт" });
   });
 
-  it("refuses an account that approved a localization of someone else's deck", async () => {
+  it("refuses one of Lymi's own publisher accounts while it is on the list", async () => {
+    const lymi = await learner(db, "lymi-books", "Lymi");
+    const publishers = new Set(["lymi-books@lymi.test"]);
+    expect((await deletionSummary(lymi, publishers)).blocked).toBe("publisher");
+    await expect(
+      sendDeletionCode(lymi, { ...env, PUBLISHER_EMAILS: "lymi-books@lymi.test" }, undefined),
+    ).rejects.toMatchObject({ reason: "publisher" });
+    const code = await codeFor(lymi, "lymi-books@lymi.test");
+    await expect(deleteAccount(lymi, { code }, { ...deps, publishers })).rejects.toMatchObject({
+      reason: "publisher",
+    });
+    expect(await count("user", "id", lymi.userId)).toBe(1);
+  });
+
+  it("deletes an account that approved a localization of someone else's deck", async () => {
     const owner = await learner(db, "urmas", "Urmas");
     const editor = await learner(db, "liis", "Liis");
     const deck = await createDeck(owner, { name: "Sõnad", defaultLanguage: "et" });
+    const id = newId();
     await db.insert(schema.deckLocalizations).values({
-      id: newId(),
+      id,
       deckId: deck.id,
       language: "uk",
       provenance: "human",
@@ -359,47 +447,110 @@ describe("deleting an account", () => {
       approvedBy: editor.userId,
     });
 
-    expect((await deletionSummary(editor)).blocked).toBe("publisher");
-    await expect(sendDeletionCode(editor, env, undefined)).rejects.toMatchObject({
-      reason: "publisher",
+    await deleteAccount(editor, { code: await codeFor(editor, "liis@lymi.test") }, deps);
+    const kept = await raw
+      .prepare("select status, approved_by from deck_localizations where id = ?")
+      .bind(id)
+      .first();
+    expect(kept).toEqual({ status: "approved", approved_by: null });
+  });
+
+  it("deletes an owner of more studied decks than D1 binds parameters for", async () => {
+    const owner = await learner(db, "kaarel", "Kaarel");
+    const member = await learner(db, "liina", "Liina");
+    const statements = [];
+    for (let i = 0; i < 60; i++) {
+      const deckId = `many-${i}`;
+      statements.push(
+        raw
+          .prepare(
+            "insert into decks (id, user_id, name, created_at, updated_at) values (?, ?, ?, 0, 0)",
+          )
+          .bind(deckId, owner.userId, `Deck ${i}`),
+        raw
+          .prepare(
+            "insert into deck_members (id, deck_id, user_id, role, joined_at, created_at, updated_at) values (?, ?, ?, 'learner', 0, 0, 0)",
+          )
+          .bind(`many-member-${i}`, deckId, member.userId),
+      );
+    }
+    await raw.batch(statements);
+
+    const leftovers = await deleteAccount(
+      owner,
+      { code: await codeFor(owner, "kaarel@lymi.test") },
+      deps,
+    );
+    expect(leftovers.keptDecks).toBe(60);
+    expect(await count("user", "id", owner.userId)).toBe(0);
+    expect(await count("former_deck_copies", "created_at", "0")).toBe(0);
+    let copied = 0;
+    for (let run = 0; run < 5; run++) copied += (await copyFormerDecks(db, undefined)).copied;
+    expect(copied).toBeGreaterThanOrEqual(60);
+    expect(await count("decks", "user_id", member.userId)).toBe(60);
+    while ((await dropUnstudiedFormerDecks(db, bindings.PRIVATE_IMAGES)) > 0) {}
+  });
+
+  it("passes over a member whose copy fails, and copies the rest", async () => {
+    const owner = await learner(db, "viive", "Viive");
+    const first = await learner(db, "ottmar", "Ottmar");
+    const second = await learner(db, "ehala", "Ehala");
+    const { deck } = await deckWithCard(owner, "jõgi", first);
+    await join(second, deck.id);
+    await deleteAccount(owner, { code: await codeFor(owner, "viive@lymi.test") }, deps);
+
+    let failures = 1;
+    const flaky = new Proxy(db, {
+      get(target, key, receiver) {
+        const value = Reflect.get(target, key, receiver);
+        if (key !== "batch") return value;
+        return (...args: Parameters<Db["batch"]>) => {
+          if (failures-- > 0) return Promise.reject(new Error("D1 unavailable"));
+          return target.batch(...args);
+        };
+      },
     });
+    const run = await copyFormerDecks(flaky, undefined);
+    expect(run.failed).toBe(1);
+    expect(run.copied).toBeGreaterThanOrEqual(1);
+    await copyFormerDecks(db, undefined);
+    for (const member of [first, second]) {
+      expect(await count("decks", "user_id", member.userId)).toBe(1);
+    }
   });
 
-  it("moves a kept card's tags to the former owner, one tag per name", async () => {
-    const reader = await learner(db, "anni", "Anni");
-    const kept: { deckId: string; cardId: string }[] = [];
-    for (const [handle, name] of [
-      ["tiit", "Tiit"],
-      ["siim", "Siim"],
-    ] as const) {
-      const owner = await learner(db, handle, name);
-      const deck = await createDeck(owner, { name: `Tags ${handle}`, defaultLanguage: "et" });
-      const [added] = await addCards(owner, [
-        { deckId: deck.id, term: `sõna-${handle}`, meaning: "word", tags: ["Verbs", handle] },
-      ]);
-      if (added?.status !== "added") throw new Error("card not added");
-      await join(reader, deck.id);
-      await deleteAccount(owner, { code: await codeFor(owner, `${handle}@lymi.test`) }, deps);
-      kept.push({ deckId: deck.id, cardId: added.card.id });
-    }
+  it("keeps a picture a copy shares when the deck it came from goes", async () => {
+    const owner = await learner(db, "helle", "Helle");
+    const member = await learner(db, "arvo", "Arvo");
+    const { deck, card } = await deckWithCard(owner, "kuu", member);
+    await db.insert(schema.cardImages).values({
+      id: newId(),
+      cardId: card.id,
+      userId: owner.userId,
+      objectKey: `cards/${card.id}/shared`,
+      contentType: "image/webp",
+      width: 1,
+      height: 1,
+      byteSize: 1,
+      sourceKind: "upload",
+      createdBy: "user",
+    });
+    await deleteAccount(owner, { code: await codeFor(owner, "helle@lymi.test") }, deps);
+    await copyFormerDecks(db, undefined);
 
-    const tags = await raw
-      .prepare(
-        "select card_tags.card_id as card, tags.name as name from card_tags join tags on tags.id = card_tags.tag_id where tags.user_id = ? order by card_tags.card_id, card_tags.position",
-      )
-      .bind(FORMER_OWNER_ID)
-      .all<{ card: string; name: string }>();
-    for (const { cardId } of kept) {
-      expect(tags.results.filter((row) => row.card === cardId)).toHaveLength(2);
-    }
-    const verbs = await raw
-      .prepare("select count(*) as n from tags where user_id = ? and normalized_name = 'verbs'")
-      .bind(FORMER_OWNER_ID)
-      .first<{ n: number }>();
-    expect(verbs?.n).toBe(1);
+    const deleted: string[] = [];
+    const images = {
+      delete: async (keys: string | string[]) => {
+        deleted.push(...(Array.isArray(keys) ? keys : [keys]));
+      },
+    } as unknown as R2Bucket;
+    await dropUnstudiedFormerDecks(db, images);
+    expect(await count("decks", "id", deck.id)).toBe(0);
+    expect(deleted).not.toContain(`cards/${card.id}/shared`);
+    expect(await count("card_images", "user_id", member.userId)).toBe(1);
   });
 
-  it("drops a kept deck and its pictures, and queues its audio, once its last member leaves", async () => {
+  it("drops a deck kept before copies, and its pictures, once its last member leaves", async () => {
     const owner = await learner(db, "maret", "Maret");
     const member = await learner(db, "jaan", "Jaan");
     const { deck, card } = await deckWithCard(owner, "puu", member);
@@ -416,6 +567,8 @@ describe("deleting an account", () => {
       createdBy: "user",
     });
     await deleteAccount(owner, { code: await codeFor(owner, "maret@lymi.test") }, deps);
+    // A deck kept under the former owner before copies existed has no queue entry.
+    await raw.prepare("delete from former_deck_copies where deck_id = ?").bind(deck.id).run();
 
     const deleted: string[] = [];
     const images = {
@@ -457,7 +610,7 @@ describe("deleting an account", () => {
 
     it("asks the phone for Apple's sheet", async () => {
       const ctx = await appleLearner("kaja", "apple-kaja");
-      expect((await deletionSummary(ctx)).confirmWith).toBe("apple");
+      expect((await deletionSummary(ctx, new Set())).confirmWith).toBe("apple");
     });
 
     it("refuses another Apple ID, an unverified token, or no Apple configuration", async () => {

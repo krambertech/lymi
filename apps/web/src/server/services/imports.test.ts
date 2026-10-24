@@ -19,6 +19,7 @@ import { createDb, type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
 import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
 import { bytesSource } from "../imports/files";
+import { nextWriteStep, writeImport } from "../imports/write-run";
 import type { AnalyticsEvent } from "./analytics";
 import { analyticsContextFor } from "./analytics-context";
 import { pronunciationAudio } from "./audio";
@@ -39,12 +40,12 @@ import {
   finishImport,
   getImport,
   IMPORT_STALL_MS,
+  type ImportResume,
   type ImportRunParams,
   type ImportView,
   inspectImport,
   listImports,
   NOTES_PER_CHUNK,
-  nextWriteStep,
   PICTURES_PER_STEP,
   prepareImportDecks,
   previewImportChoices,
@@ -1104,17 +1105,29 @@ describe("counting what was written", () => {
 });
 
 describe("nextWriteStep", () => {
+  const limits = { steps: 900, calls: 1000 };
+  const at = { chunk: 5, chunks: 90, pending: 0, steps: 20, calls: 400, costliest: 100 };
   it("writes chunks, stores their pictures, then finishes", () => {
-    expect(nextWriteStep({ chunk: 0, chunks: 2, pending: 0, steps: 2 })).toBe("cards");
-    expect(nextWriteStep({ chunk: 1, chunks: 2, pending: 120, steps: 3 })).toBe("pictures");
-    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 20, steps: 9 })).toBe("pictures");
-    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 0, steps: 10 })).toBe("finish");
+    const start = { steps: 2, calls: 10, costliest: 0 };
+    expect(nextWriteStep({ ...start, chunk: 0, chunks: 2, pending: 0 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...start, chunk: 1, chunks: 2, pending: 120 }, limits)).toBe("pictures");
+    expect(nextWriteStep({ ...start, chunk: 2, chunks: 2, pending: 20 }, limits)).toBe("pictures");
+    expect(nextWriteStep({ ...start, chunk: 2, chunks: 2, pending: 0 }, limits)).toBe("finish");
   });
   it("hands over to a new run before the step budget runs out", () => {
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 897 }, 900)).toBe("cards");
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 898 }, 900)).toBe("hand over");
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 40, steps: 898 }, 900)).toBe("hand over");
-    expect(nextWriteStep({ chunk: 90, chunks: 90, pending: 0, steps: 899 }, 900)).toBe("finish");
+    expect(nextWriteStep({ ...at, steps: 897 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...at, steps: 898 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, steps: 898, pending: 40 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, steps: 899, chunk: 90 }, limits)).toBe("finish");
+  });
+  it("hands over while the next step has room for twice the costliest so far", () => {
+    expect(nextWriteStep({ ...at, calls: 799 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...at, calls: 800 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, calls: 800, pending: 40 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, calls: 999, chunk: 90 }, limits)).toBe("finish");
+  });
+  it("writes once before handing over, however much reading the file cost", () => {
+    expect(nextWriteStep({ ...at, calls: 990, costliest: 0 }, limits)).toBe("cards");
   });
 });
 
@@ -1256,7 +1269,10 @@ function png(width: number, height: number) {
 }
 
 /** A Lymi export of `count` cards, each with its own picture. */
-async function pictureDeck(count: number) {
+/** A Lymi file of `count` cards, every `every`th of them with a picture. */
+async function pictureDeck(count: number, every = 1) {
+  const pictured = (i: number) => i % every === 0;
+  const pictures = Array.from({ length: count }, (_, i) => i).filter(pictured);
   const encoder = new TextEncoder();
   const segment = new ZipSegment(0);
   const manifest: LymiFileManifest = {
@@ -1278,7 +1294,7 @@ async function pictureDeck(count: number) {
         createdAt: CREATED,
       },
     ],
-    counts: { decks: 1, cards: count, reviews: 0, pictures: count, sounds: 0 },
+    counts: { decks: 1, cards: count, reviews: 0, pictures: pictures.length, sounds: 0 },
   };
   const cards = Array.from(
     { length: count },
@@ -1297,7 +1313,9 @@ async function pictureDeck(count: number) {
       meaningSource: null,
       exampleSource: null,
       reviewModes: null,
-      picture: { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 },
+      picture: pictured(i)
+        ? { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 }
+        : null,
       archivedAt: null,
       createdAt: CREATED,
       states: [],
@@ -1310,7 +1328,7 @@ async function pictureDeck(count: number) {
     true,
   );
   const picture = png(24, 24);
-  for (let i = 0; i < count; i++) await segment.add(`media/c${i}.png`, picture, false);
+  for (const i of pictures) await segment.add(`media/c${i}.png`, picture, false);
   const directory = centralDirectory(segment.records, segment.length);
   return new Uint8Array(Buffer.concat([segment.bytes(), directory]));
 }
@@ -1653,5 +1671,139 @@ describe("a write that runs out of calls", () => {
     expect(failure).toBe("damaged");
     expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "damaged" });
     expect(reported).toEqual([]);
+  });
+});
+
+describe("a write handed over to fresh runs", () => {
+  /** One Workflow instance's steps: each runs once, and a replay gets back what it returned. */
+  function instance() {
+    const results = new Map<string, unknown>();
+    return async <T>(name: string, work: () => Promise<T>): Promise<T> => {
+      if (!results.has(name)) results.set(name, structuredClone(await work()));
+      return structuredClone(results.get(name)) as T;
+    };
+  }
+
+  it("hands the rest over before the call budget runs out, and writes every card and picture once", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} };
+    const learnerCtx = await fresh();
+    // Past one chunk, with pictures in both, so runs hand over between chunks and between pictures.
+    const count = NOTES_PER_CHUNK + 60;
+    const pictured = count / 4;
+    const { id } = await upload(learnerCtx, "pictures.zip", await pictureDeck(count, 4));
+    await inspectImport(learnerCtx, id, env.IMPORTS);
+    await confirmImport(learnerCtx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+
+    // Far below Cloudflare's cap, so the import takes several runs.
+    const limit = 400;
+    const reserve = 20;
+    let params: ImportRunParams = {
+      importId: id,
+      userId: learnerCtx.userId,
+      actor: learnerCtx.actor,
+      phase: "write",
+    };
+    let handedOver: ImportRunParams[] = [];
+    const run = (step: ReturnType<typeof instance>, budget: CallBudget) =>
+      writeImport(params, {
+        ctx: { ...learnerCtx, db: createDb(budget.wrap(env.DB)), analytics },
+        uploads: budget.wrap(env.IMPORTS),
+        storage: {
+          bucket: budget.wrap(env.PRIVATE_IMAGES),
+          images: budget.wrap(env.IMAGES),
+          audio: budget.wrap(env.AUDIO),
+        },
+        budget,
+        step,
+        handOver: async (resume) => {
+          handedOver.push({ ...params, resume });
+        },
+      });
+
+    const resumes: ImportResume[] = [];
+    let runs = 0;
+    let used = 0;
+    const done: number[] = [];
+    for (;;) {
+      runs++;
+      const step = instance();
+      const budget = new CallBudget(limit, reserve);
+      const outcome = await run(step, budget);
+      used += budget.used;
+      expect(budget.used).toBeLessThan(limit - reserve);
+      if (outcome === "done") break;
+
+      // Replayed, the instance makes the same decisions from what its steps recorded, so it
+      // writes nothing again and starts no second run.
+      const replay = new CallBudget(limit, reserve);
+      expect(await run(step, replay)).toBe("handed over");
+      expect(replay.used).toBe(0);
+      expect(handedOver).toHaveLength(1);
+
+      const view = await getImport(learnerCtx, id);
+      expect(view.status).toBe("importing");
+      done.push(view.progress.media.done);
+      params = handedOver[0] as ImportRunParams;
+      if (params.resume) resumes.push(params.resume);
+      handedOver = [];
+    }
+
+    expect(resumes.some((resume) => resume.pending.length > 0)).toBe(true);
+    expect(resumes.some((resume) => resume.pending.length === 0)).toBe(true);
+    // No single run could have written it.
+    expect(used).toBeGreaterThan(limit - reserve);
+    for (let i = 1; i < done.length; i++) expect(done[i]).toBeGreaterThan(done[i - 1] as number);
+
+    const terms = (await cardsOf(learnerCtx)).map((c) => c.term);
+    expect(terms).toHaveLength(count);
+    expect(new Set(terms)).toEqual(new Set(Array.from({ length: count }, (_, i) => `parola ${i}`)));
+    const images = await db
+      .select({ cardId: schema.cardImages.cardId })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, learnerCtx.userId));
+    expect(images).toHaveLength(pictured);
+    expect(new Set(images.map((row) => row.cardId)).size).toBe(pictured);
+
+    // The learner sees one import, finished with every card and picture.
+    const imports = await listImports(learnerCtx);
+    expect(imports.map((item) => item.id)).toEqual([id]);
+    expect(await getImport(learnerCtx, id)).toMatchObject({
+      status: "done",
+      counts: { added: count, pictures: pictured, picturesSkipped: 0 },
+      progress: { media: { done: pictured, total: pictured } },
+    });
+    const finished = events.filter((e) => e.name === "import_finished");
+    expect(finished).toEqual([expect.objectContaining({ outcome: "done", write_runs: runs })]);
+  }, 120_000);
+
+  it("leaves write_runs out when a run was handed over before runs were counted", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} };
+    const ctx = { ...(await fresh()), analytics };
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(2));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const budget = new CallBudget();
+    const resume = { chunk: 0, pending: [], pictures: { stored: 0, skipped: 0 }, handled: 0 };
+    const params: ImportRunParams = {
+      importId: id,
+      userId: ctx.userId,
+      actor: ctx.actor,
+      phase: "write",
+      resume,
+    };
+    const outcome = await writeImport(params, {
+      ctx,
+      uploads: env.IMPORTS,
+      storage: { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      budget,
+      step: instance(),
+      handOver: async () => {},
+    });
+    expect(outcome).toBe("done");
+    const finished = events.find((e) => e.name === "import_finished");
+    expect(finished).toMatchObject({ outcome: "done", card_count: 2 });
+    expect(finished).not.toHaveProperty("write_runs");
   });
 });

@@ -327,6 +327,8 @@ export const analyticsEvents = {
     pictures: count.optional(),
     pictures_skipped: count.optional(),
     write_seconds: count.optional(),
+    /** Workflow runs the write took, each handing the rest to the next before its call budget ran out. */
+    write_runs: count.optional(),
     /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
     readings_converted: count.optional(),
   }),

@@ -29,8 +29,8 @@ const LOCAL = new Set(["prepare", "bind", "withSession", "input", "transform", "
 
 /**
  * Counts the calls one run makes through the bindings it wraps, and refuses any that would leave
- * less than the reserve, so the run stops while it can still mark its import failed. #939 hands a
- * long run over to a fresh one instead.
+ * less than the reserve, so the run stops while it can still mark its import failed. A write run
+ * hands over to a fresh one well before that, so a refusal means a single step cost too much.
  */
 export class CallBudget {
   used = 0;

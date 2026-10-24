@@ -224,7 +224,7 @@ export function CardFields({
         maxLength={spec.limit ?? undefined}
         onChangeText={(v) => onChange(f, v)}
         placeholder={placeholder?.[f] ?? i18n._(spec.hint)}
-        placeholderTextColor={p.muted}
+        placeholderTextColor={quiet ? p.faint : p.muted}
         accessibilityLabel={label}
         autoCorrect={!spec.learned}
         spellCheck={!spec.learned}
@@ -244,7 +244,7 @@ export function CardFields({
           term
             ? "min-h-12 py-1.5 font-sans font-medium text-text"
             : quiet
-              ? "min-h-9 py-1.5 font-sans text-text-2"
+              ? "min-h-8 py-1 font-sans text-text-2"
               : "min-h-9 py-1.5 font-sans text-text"
         }
         // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
@@ -282,21 +282,13 @@ export function CardFields({
             {line(f, i, label)}
             {below?.[f] && <Text className="text-sm text-muted">{below[f]}</Text>}
             {f === "example" && shown[i + 1] === UNDER_EXAMPLE && (
-              // The example's chin: the translation belongs to the example, so it hangs from its line.
-              <View className="gap-1">
-                <View className="flex-row items-start gap-2.5 rounded-xl bg-glass-group px-3.5">
-                  <View style={{ paddingTop: 10 }}>
-                    <Icon name="language" size={16} colour={p.muted} />
-                  </View>
-                  <View className="flex-1">
-                    {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
-                  </View>
-                  {ai?.(UNDER_EXAMPLE) && (
-                    <View style={{ paddingTop: 12 }}>
-                      <Icon name="ai" size={12} colour={p.ai} />
-                    </View>
-                  )}
+              // The translation belongs to the example, so it sits indented under its line, behind a hairline.
+              <View className="mt-1 ps-3" style={{ borderStartWidth: 2, borderColor: p.edge }}>
+                <View className="flex-row items-center gap-1.5">
+                  <FieldName>{i18n._(FORM_FIELD[UNDER_EXAMPLE].label)}</FieldName>
+                  {ai?.(UNDER_EXAMPLE) && <Icon name="ai" size={12} colour={p.ai} />}
                 </View>
+                {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
                 {below?.[UNDER_EXAMPLE] && (
                   <Text className="text-sm text-muted">{below[UNDER_EXAMPLE]}</Text>
                 )}

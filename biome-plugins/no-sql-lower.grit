@@ -2,3 +2,5 @@ JsTemplateExpression() as $sql where {
   $sql <: r"(?is)sql`.*\blower\s*\(\s*(?:[^h\s]|h[^e]|he[^x]).*",
   register_diagnostic(span=$sql, message="SQLite's lower() folds ASCII only, so Дієслова and дієслова stay different on D1. Fold in JavaScript with toLocaleLowerCase() and bind the result, or store a normalised column.")
 }
+
+// Demo edit for the guardrail gate; never merged.

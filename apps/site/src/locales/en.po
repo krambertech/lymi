@@ -201,6 +201,9 @@ msgstr "<0>price elasticity</0> ?"
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 
+msgid "<0>за́мок</0> is a castle."
+msgstr "<0>за́мок</0> is a castle."
+
 msgid "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a different train."
 msgstr "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a different train."
 
@@ -291,6 +294,9 @@ msgstr "A brilliant first round rarely repeats in the second."
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "A café, an evening or a person can all be gezellig."
 
+msgid "A card shows its stress mark until you know the word, then the word as books print it. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
+msgstr "A card shows its stress mark until you know the word, then the word as books print it. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
+
 msgid "A card shows its stress mark until you know the word, then the word as Ukrainians write it. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
 msgstr "A card shows its stress mark until you know the word, then the word as Ukrainians write it. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
 
@@ -348,6 +354,9 @@ msgstr "A free flashcard app for Japanese. Start with kana, then N5 and N4 words
 msgid "A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole."
 msgstr "A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole."
 
+msgid "A free flashcard app for Russian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and the core words."
+msgstr "A free flashcard app for Russian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and the core words."
+
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 
@@ -381,6 +390,9 @@ msgstr "A major chord with a minor seventh, built on the fifth note of the key"
 
 msgid "A native Mandarin AI voice reads every card. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "A native Mandarin AI voice reads every card. Tap a word to hear it. If a card has its own recording, that plays instead."
+
+msgid "A native Russian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
+msgstr "A native Russian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 
 msgid "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 msgstr "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
@@ -514,6 +526,9 @@ msgstr "Add a word from today’s lesson. AI fills in the pinyin, an example and
 msgid "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
 msgstr "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
 
+msgid "Add a word from today’s lesson. AI marks the stress its meaning calls for, writes an example with every stress marked, and names the word it could be mistaken for. It fills only what you left empty and marks what it wrote."
+msgstr "Add a word from today’s lesson. AI marks the stress its meaning calls for, writes an example with every stress marked, and names the word it could be mistaken for. It fills only what you left empty and marks what it wrote."
+
 msgid "Add both decks"
 msgstr "Add both decks"
 
@@ -543,6 +558,9 @@ msgstr "Add the deck"
 
 msgid "Add the new words from today’s lesson to my Chinese deck."
 msgstr "Add the new words from today’s lesson to my Chinese deck."
+
+msgid "Add the new words from today’s lesson to my Russian deck."
+msgstr "Add the new words from today’s lesson to my Russian deck."
 
 msgid "Add the new words from today’s lesson to my Ukrainian deck."
 msgstr "Add the new words from today’s lesson to my Ukrainian deck."
@@ -576,6 +594,9 @@ msgstr "Added 7 cards to Estonian. I skipped <0>palun</0>, which you already hav
 
 msgid "Added 7 cards with pinyin. I skipped <0>地铁</0>, which you already have."
 msgstr "Added 7 cards with pinyin. I skipped <0>地铁</0>, which you already have."
+
+msgid "Added 7 cards with their stress. I skipped <0>вокза́л</0>, which you already have."
+msgstr "Added 7 cards with their stress. I skipped <0>вокза́л</0>, which you already have."
 
 msgid "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
 msgstr "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
@@ -631,6 +652,9 @@ msgstr "All 300 general questions of the Einbürgerungstest and the 10 for your 
 msgid "All 33 letters and the apostrophe, then first words to read."
 msgstr "All 33 letters and the apostrophe, then first words to read."
 
+msgid "All 33 letters, then first words to read."
+msgstr "All 33 letters, then first words to read."
+
 msgid "All Chinese decks"
 msgstr "All Chinese decks"
 
@@ -657,6 +681,9 @@ msgstr "All of Explore"
 
 msgid "All of them, equally often"
 msgstr "All of them, equally often"
+
+msgid "All Russian decks"
+msgstr "All Russian decks"
 
 msgid "All shelves"
 msgstr "All shelves"
@@ -859,6 +886,9 @@ msgstr "Biology · new"
 
 msgid "Book"
 msgstr "Book"
+
+msgid "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
+msgstr "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
@@ -1734,6 +1764,9 @@ msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spani
 msgid "Flashcards that come back right before you'd forget."
 msgstr "Flashcards that come back right before you'd forget."
 
+msgid "Flour"
+msgstr "Flour"
+
 msgid "Follow with RSS"
 msgstr "Follow with RSS"
 
@@ -1808,6 +1841,9 @@ msgstr "Free decks for the first two HSK levels. Take HSK 1, then HSK 2. Each 
 msgid "Free decks from the letters to everyday words. Read the alphabet, then take A1 and A2. Each day adds a few new words to your reviews."
 msgstr "Free decks from the letters to everyday words. Read the alphabet, then take A1 and A2. Each day adds a few new words to your reviews."
 
+msgid "Free decks from the letters to everyday words. Read the alphabet, then take A1 and the core words. Each day adds a few new words to your reviews."
+msgstr "Free decks from the letters to everyday words. Read the alphabet, then take A1 and the core words. Each day adds a few new words to your reviews."
+
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 
@@ -1822,6 +1858,9 @@ msgstr "Free Japanese decks with readings and a voice on every card. Add one in 
 
 msgid "free of charge"
 msgstr "free of charge"
+
+msgid "Free Russian decks with a voice on every card. Add one in a tap. More are on the way."
+msgstr "Free Russian decks with a voice on every card. Add one in a tap. More are on the way."
 
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
@@ -1980,6 +2019,9 @@ msgstr "Hear where the stress falls."
 msgid "Heart"
 msgstr "Heart"
 
+msgid "Hedgehog"
+msgstr "Hedgehog"
+
 msgid "Hello"
 msgstr "Hello"
 
@@ -2096,6 +2138,9 @@ msgstr "huànchéng · To change lines"
 msgid "Hugs"
 msgstr "Hugs"
 
+msgid "I cry"
+msgstr "I cry"
+
 msgid "I don’t mind"
 msgstr "I don’t mind"
 
@@ -2111,6 +2156,9 @@ msgstr "I hope so; if only"
 msgid "I miss it"
 msgstr "I miss it"
 
+msgid "I pay"
+msgstr "I pay"
+
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Ice, jää, plus edge, äär: four ä in a row."
 
@@ -2119,6 +2167,9 @@ msgstr "idea"
 
 msgid "idiom"
 msgstr "idiom"
+
+msgid "If"
+msgstr "If"
 
 msgid "If a story shows a gun early on, it should go off later"
 msgstr "If a story shows a gun early on, it should go off later"
@@ -2441,6 +2492,9 @@ msgstr "Learn Japanese vocabulary with flashcards · Lymi"
 msgid "Learn Japanese words in a few minutes a day, from your first hiragana to the words in this week’s lesson. Every card shows you how to read the kanji until you don’t need the help."
 msgstr "Learn Japanese words in a few minutes a day, from your first hiragana to the words in this week’s lesson. Every card shows you how to read the kanji until you don’t need the help."
 
+msgid "Learn Russian vocabulary with flashcards · Lymi"
+msgstr "Learn Russian vocabulary with flashcards · Lymi"
+
 msgid "Learn the questions once. Keep them until exam day."
 msgstr "Learn the questions once. Keep them until exam day."
 
@@ -2722,6 +2776,9 @@ msgstr "Metro; subway"
 msgid "Microbiology"
 msgstr "Microbiology"
 
+msgid "Milk"
+msgstr "Milk"
+
 msgid "minutes to answer them"
 msgstr "minutes to answer them"
 
@@ -2995,11 +3052,17 @@ msgstr "One way at a time: the Chinese for its meaning, or the meaning for the C
 msgid "One way at a time: the Japanese for its meaning, or the meaning for the Japanese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "One way at a time: the Japanese for its meaning, or the meaning for the Japanese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 
+msgid "One way at a time: the Russian for its meaning, or the meaning for the Russian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
+msgstr "One way at a time: the Russian for its meaning, or the meaning for the Russian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
+
 msgid "One way at a time: the Ukrainian for its meaning, or the meaning for the Ukrainian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "One way at a time: the Ukrainian for its meaning, or the meaning for the Ukrainian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "One word for asking, handing something over and answering thanks."
+
+msgid "Only"
+msgstr "Only"
 
 msgid "Only you, unless you share the deck. Cards made from your notes stay in your account."
 msgstr "Only you, unless you share the deck. Cards made from your notes stay in your account."
@@ -3470,6 +3533,12 @@ msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
 
 msgid "Running your fingers through someone’s hair"
 msgstr "Running your fingers through someone’s hair"
+
+msgid "Russian"
+msgstr "Russian"
+
+msgid "Russian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
+msgstr "Russian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
 
 msgid "Said before a meal"
 msgstr "Said before a meal"
@@ -4066,6 +4135,9 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 msgid "The flashcard app that gets Chinese."
 msgstr "The flashcard app that gets Chinese."
 
+msgid "The flashcard app that gets Russian."
+msgstr "The flashcard app that gets Russian."
+
 msgid "The flashcard app that gets Ukrainian."
 msgstr "The flashcard app that gets Ukrainian."
 
@@ -4207,6 +4279,9 @@ msgstr "The same word for someone you love and a price you’d rather not pay."
 msgid "The small things that matter once you’re a few weeks in."
 msgstr "The small things that matter once you’re a few weeks in."
 
+msgid "The small words every sentence is built from."
+msgstr "The small words every sentence is built from."
+
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
 
@@ -4278,6 +4353,9 @@ msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."
 
 msgid "Thursday Mandarin class"
 msgstr "Thursday Mandarin class"
+
+msgid "Thursday Russian class"
+msgstr "Thursday Russian class"
 
 msgid "ticket"
 msgstr "ticket"
@@ -4405,6 +4483,9 @@ msgstr "To read"
 msgid "to run"
 msgstr "to run"
 
+msgid "To say"
+msgstr "To say"
+
 msgid "To sleep; to go to bed"
 msgstr "To sleep; to go to bed"
 
@@ -4422,6 +4503,9 @@ msgstr "To take a taxi"
 
 msgid "To usually do something"
 msgstr "To usually do something"
+
+msgid "To work"
+msgstr "To work"
 
 msgid "Today"
 msgstr "Today"
@@ -4447,6 +4531,9 @@ msgstr "TOPIK I: 80 points for level 1, 140 for level 2."
 
 msgid "TOPIK: the words for TOPIK I and the start of TOPIK II"
 msgstr "TOPIK: the words for TOPIK I and the start of TOPIK II"
+
+msgid "Torment"
+msgstr "Torment"
 
 msgid "Town; city"
 msgstr "Town; city"
@@ -4696,6 +4783,9 @@ msgstr "Websites"
 msgid "What about words spelled the same?"
 msgstr "What about words spelled the same?"
 
+msgid "What about ё?"
+msgstr "What about ё?"
+
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
 
@@ -4852,6 +4942,9 @@ msgstr "won’t do, no"
 msgid "word"
 msgstr "word"
 
+msgid "Word"
+msgstr "Word"
+
 msgid "Word recordings"
 msgstr "Word recordings"
 
@@ -4885,6 +4978,9 @@ msgstr "Writing"
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Written with the characters for tree, leak and sun."
 
+msgid "Yes"
+msgstr "Yes"
+
 msgid "Yes, actually"
 msgstr "Yes, actually"
 
@@ -4911,6 +5007,9 @@ msgstr "Yes, with tone marks. A card shows pinyin over its word until the card i
 
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
+
+msgid "Yes. A card shows its word with a stress mark until the card is Known, then the word as books print it. Turning a card over always shows the mark, and the examples on your cards keep theirs."
+msgstr "Yes. A card shows its word with a stress mark until the card is Known, then the word as books print it. Turning a card over always shows the mark, and the examples on your cards keep theirs."
 
 msgid "Yes. A card shows its word with a stress mark until the card is Known, then the word as Ukrainians write it. Turning a card over always shows the mark, and the examples on your cards keep theirs."
 msgstr "Yes. A card shows its word with a stress mark until the card is Known, then the word as Ukrainians write it. Turning a card over always shows the mark, and the examples on your cards keep theirs."
@@ -5037,6 +5136,9 @@ msgstr "Your tutor’s message"
 
 msgid "Your words, not a course."
 msgstr "Your words, not a course."
+
+msgid "Русский · new"
+msgstr "Русский · new"
 
 msgid "Українська · new"
 msgstr "Українська · new"

@@ -74,8 +74,8 @@ test("refuses an empty name under the field and sends nothing", async () => {
 
 test("stops at the schema's limit and says how much room is left", async () => {
   await renderDialog();
-  await userEvent.clear(field());
-  await userEvent.type(field(), "a".repeat(85));
+  await userEvent.fill(field(), "a".repeat(78));
+  await userEvent.type(field(), "aaaaa");
   await expect.element(field()).toHaveValue("a".repeat(80));
   await expect.element(page.getByText("0 characters left")).toBeVisible();
 });

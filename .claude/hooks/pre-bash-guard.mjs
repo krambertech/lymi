@@ -47,8 +47,8 @@ const shells = new Set(["bash", "sh", "zsh"]);
 const keywords = new Set(["if", "then", "elif", "else", "do", "while", "until"]);
 
 /** Returns why `command` is refused, or null when it may run. */
-export function check(command) {
-  const exported = new Map();
+export function check(command, inherited = new Map()) {
+  const exported = new Map(inherited);
   for (const words of segments(command)) {
     if (words[0] === "export") {
       for (const word of words.slice(1)) assign(exported, word);
@@ -91,11 +91,11 @@ function inspect(input, env) {
     }
   }
 
-  const program = basename(words[0]);
+  const program = basename(words[0]).replace(/(?<=.)@[^@]*$/, "");
   const args = words.slice(1);
   if (shells.has(program)) {
     const flag = args.findIndex((arg) => /^-[a-z]*c[a-z]*$/.test(arg));
-    return flag === -1 || args[flag + 1] === undefined ? null : check(args[flag + 1]);
+    return flag === -1 || args[flag + 1] === undefined ? null : check(args[flag + 1], env);
   }
   if (program === "git") return git(args);
   if (program === "pnpm") return pnpm(args, env);
@@ -170,19 +170,37 @@ function runScript(name, args, env) {
   return null;
 }
 
+const wranglerValues = new Set([
+  "-c",
+  "--config",
+  "-e",
+  "--env",
+  "--cwd",
+  "--name",
+  "--tag",
+  "--message",
+  "--command",
+  "--file",
+  "--persist-to",
+]);
+
 function wrangler(args) {
-  const words = args.filter((arg) => !arg.startsWith("-"));
-  if (words[0] === "deploy" && !args.includes("--dry-run")) return production("wrangler deploy");
-  if (words[0] === "versions" && words[1] === "deploy")
-    return production("wrangler versions deploy");
-  if (
-    words[0] === "d1" &&
-    words[1] === "migrations" &&
-    words[2] === "apply" &&
-    args.includes("--remote")
-  ) {
-    return production("wrangler d1 migrations apply --remote");
+  const words = [];
+  for (let i = 0; i < args.length; i++) {
+    if (wranglerValues.has(args[i])) i++;
+    else if (!args[i].startsWith("-")) words.push(args[i]);
   }
+  const named = (count) => production(`wrangler ${words.slice(0, count).join(" ")}`);
+  if (words[0] === "deploy") return args.includes("--dry-run") ? null : named(1);
+  if (words[0] === "rollback" || words[0] === "delete") return named(1);
+  if (words[0] === "versions" && words[1] === "deploy") return named(2);
+  const secret = words.indexOf("secret");
+  if (secret !== -1 && ["put", "delete", "bulk"].includes(words[secret + 1]))
+    return named(secret + 2);
+  const remote = args.includes("--remote");
+  if (remote && words[0] === "d1" && words[1] === "execute") return named(2);
+  if (remote && words[0] === "d1" && words[1] === "migrations" && words[2] === "apply")
+    return named(3);
   return null;
 }
 

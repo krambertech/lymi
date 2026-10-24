@@ -96,7 +96,7 @@ Write for the next decision, not as a record of the work session. State each out
 
 Agents also never run these; each line names what to run instead:
 
-- `wrangler deploy` or `wrangler d1 migrations apply --remote`: run `pnpm deploy:check` to check a build and `pnpm deploy:health` to see what is live.
+- `wrangler deploy`, `rollback`, `delete` or `secret put`, or `wrangler d1 execute` or `d1 migrations apply` with `--remote`: run `pnpm deploy:check` to check a build and `pnpm deploy:health` to see what is live.
 - A bare `git stash`, `git stash pop`, or `git stash apply`, `drop` or `clear` without an entry: every worktree shares one stash stack, so make a WIP commit, or `git stash push -u -m "<unique tag>"` and later `git stash apply <sha>`.
-- `npx expo run:ios` or `pnpm ios`: run `pnpm exec stim ios` from `apps/mobile`; only the smoke journey's Release build with `--configuration Release --device <udid>` runs through Expo.
+- `npx expo run:ios` or `pnpm --filter @lymi/mobile ios`: run `pnpm exec stim ios` from `apps/mobile`; only the smoke journey's Release build with `--configuration Release --device <udid>` runs through Expo.
 - `pnpm verify` or the whole `pnpm test:e2e`: run `pnpm verify:changed` and `pnpm test:e2e:chromium`; when "Before you push" calls for the full run, prefix it with `LYMI_FULL_SUITE=1`.

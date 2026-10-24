@@ -92,6 +92,7 @@ test("a learner can filter, sort and open the words in a deck", async ({
 
     await page.reload();
     await page.getByRole("button", { name: "Filter", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Tags", exact: true }).click();
     await expect(page.getByRole("menuitemcheckbox", { name: "food 3", exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
   });

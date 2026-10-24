@@ -1,7 +1,3 @@
-name: Agent friction
-description: A repository gotcha that tripped an agent and would trip the next one.
-title: "friction: "
-labels: ["agent friction"]
 body:
   - type: textarea
     id: happened

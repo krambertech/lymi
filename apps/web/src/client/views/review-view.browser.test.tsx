@@ -530,7 +530,8 @@ test("revealed without a peek, the hook waits for Show hook, which puts it under
     .element(card.getByRole("status"))
     .toHaveTextContent("Memory hook: Speed up the brigade");
   expect(card.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
-  expect(card.element().textContent).toContain("AI hook");
+  // The hook is the AI's, but review never says who wrote it.
+  expect(card.element().textContent).not.toContain("AI");
 });
 
 test("a quick second tap on the peek does not turn the card", async () => {

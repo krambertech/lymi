@@ -1,0 +1,87 @@
+# Apps: the empty state, an assistant's page, Yomitan's key and Readwise's token.
+appId: app.lymi
+name: Apps
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Apps"
+- tapOn: "Apps"
+- extendedWaitUntil:
+    visible: "Connect your first app"
+    timeout: 20000
+- assertVisible: "Custom MCP"
+- takeScreenshot: 01-empty
+- tapOn: "Grok"
+- extendedWaitUntil:
+    visible: "MCP server address"
+    timeout: 20000
+- assertVisible: "Not connected"
+- scrollUntilVisible:
+    element: "Client ID"
+- tapOn: "Copy MCP server address"
+- assertVisible: "Copied"
+- scrollUntilVisible:
+    element: "Then try asking"
+- takeScreenshot: 02-grok
+- tapOn: "Apps"
+- extendedWaitUntil:
+    visible: "Yomitan"
+    timeout: 10000
+- tapOn: "Yomitan"
+- scrollUntilVisible:
+    element: "Make a key for Yomitan"
+    centerElement: true
+- tapOn: "Make a key for Yomitan"
+- extendedWaitUntil:
+    visible: "Your key is ready.*"
+    timeout: 20000
+- takeScreenshot: 03-yomitan-key
+- tapOn: "Done"
+- scrollUntilVisible:
+    element: "Not used yet"
+    direction: UP
+- scrollUntilVisible:
+    element: "Disconnect Yomitan"
+    centerElement: true
+- takeScreenshot: 04-yomitan
+- tapOn: "Disconnect Yomitan"
+- extendedWaitUntil:
+    visible: "Stay connected"
+    timeout: 10000
+- tapOn:
+    text: "Disconnect Yomitan"
+    index: 1
+- extendedWaitUntil:
+    visible: "Make a key for Yomitan"
+    timeout: 20000
+- tapOn: "Apps"
+- extendedWaitUntil:
+    visible: "Readwise"
+    timeout: 10000
+- tapOn: "Readwise"
+- scrollUntilVisible:
+    element: "Readwise token"
+    centerElement: true
+- tapOn: "Readwise token"
+- inputText: "${TOKEN}"
+- pressKey: Enter
+- scrollUntilVisible:
+    element: "Connected"
+    direction: UP
+    timeout: 30000
+- takeScreenshot: 05-readwise
+- scrollUntilVisible:
+    element: "Disconnect Readwise"
+    centerElement: true
+- tapOn: "Disconnect Readwise"
+- extendedWaitUntil:
+    visible: "Stay connected"
+    timeout: 10000
+- tapOn:
+    text: "Disconnect Readwise"
+    index: 1
+- extendedWaitUntil:
+    visible: "Add an app|Connect your first app"
+    timeout: 20000
+- takeScreenshot: 06-after

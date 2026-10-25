@@ -673,8 +673,8 @@ export const analyticsProducers = {
   deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],
   library_searched: ["browser"],
-  app_page_viewed: ["browser"],
-  app_activity_opened: ["browser"],
+  app_page_viewed: ["browser", "phone"],
+  app_activity_opened: ["browser", "phone"],
   section_go_to: ["phone"],
   hint_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
@@ -741,7 +741,6 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/share",
     "/series-order",
     "/api-keys",
-    "/connected-apps",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

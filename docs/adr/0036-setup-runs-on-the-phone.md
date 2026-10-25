@@ -20,7 +20,7 @@ ADR 0030 kept five setup jobs on the web because they involve files or long secr
 
 ## Consequences
 
-- The phone's import pages live at the web's paths, `/import`, `/import/<app>` and `/import/<id>`, so Activity opens an import on the screen that started it, and `$pageview` counts both apps under one path. Keys and connected apps count as `/api-keys` and `/connected-apps`.
+- The phone's import pages live at the web's paths, `/import`, `/import/<app>` and `/import/<id>`, so Activity opens an import on the screen that started it, and `$pageview` counts both apps under one path. Keys count as `/api-keys`, and Apps and each app's page as the web's `/settings` and `/settings/:item`.
 - An upload runs while Lymi is open. iOS suspends the app soon after it leaves the screen, so the upload page says to keep Lymi open and the failed part is retried from where it stopped; a closed app asks for the same file again.
 - The phone's frozen API contract now includes the import, export, key and connected-app routes, so they keep every supported release working.
 - `export_started` counts exports from both apps, and `import_started` and `export_started` from the phone carry `client=phone`.

@@ -16,3 +16,5 @@ Under the header come four parts, each on plates and in this order:
 Before an app is connected, the page holds only the header and How it connects, with the field to connect in it.
 
 Yomitan's page shows the key Yomitan holds: its Settings replace the key, its Activity is every AnkiConnect write made with a key named Yomitan, so it survives a replaced key and leaves out another AnkiConnect tool's key, and Stop revokes it. Until Yomitan's icon licence is settled, a dictionary glyph stands in for its mark.
+
+On the phone, You → Apps is the Apps group as its own page, with Add an app as chips on the page under its heading and the empty state in the room rather than on a plate, and each app's page is pushed from it with Stop confirmed in iOS's alert ([phone.md](system/phone.md#navigation)). An app Lymi doesn't recognise carries Unverified as a chip beside its name.

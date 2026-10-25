@@ -96,12 +96,8 @@ export default function You() {
           <Row icon="import" label={t`Import`} onPress={() => router.push("/import")} />
           <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
           <AiServicesRow />
+          <Row icon="apps" label={t`Apps`} onPress={() => router.push("/you/apps")} />
           <Row icon="keys" label={t`API keys`} onPress={() => router.push("/you/api-keys")} />
-          <Row
-            icon="apps"
-            label={t`Connected apps`}
-            onPress={() => router.push("/you/connected-apps")}
-          />
           {publishes && (
             <Row
               icon="publish"

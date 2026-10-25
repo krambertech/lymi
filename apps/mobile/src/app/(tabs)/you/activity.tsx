@@ -1,18 +1,23 @@
 import { useLingui } from "@lingui/react/macro";
 import { mergeActivity } from "@lymi/client/activity";
+import { BUILT_IN_APPS } from "@lymi/client/apps";
+import { activityQuery, appActivityQuery } from "@lymi/client/queries";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ActivityView } from "../../../activity/activity-view";
-import { useActivity } from "../../../data/queries";
 import { useOnline } from "../../../streak/goal-picker";
 import { Screen } from "../../../ui/screen";
 
 /** Rows enough to fill a phone screen, below which the log reads its next page at once. */
 const SCREENFUL = 12;
 
-/** What landed in the learner's decks from outside the app. activity.md. */
+/** What landed in the learner's decks from outside the app; an app's page opens it on that app alone. activity.md. */
 export default function Activity() {
   const { t } = useLingui();
-  const query = useActivity();
+  const router = useRouter();
+  const { app } = useLocalSearchParams<{ app?: string }>();
+  const query = useInfiniteQuery(app ? appActivityQuery(app) : activityQuery);
   const online = useOnline();
   const pages = query.data?.pages;
   const first = pages?.[0];
@@ -45,6 +50,14 @@ export default function Activity() {
         loadingMore={query.isFetchingNextPage}
         moreFailed={query.isFetchNextPageError}
         onMore={() => void query.fetchNextPage()}
+        filter={
+          app
+            ? {
+                name: first?.entries[0]?.app ?? BUILT_IN_APPS[app] ?? null,
+                onClear: () => router.setParams({ app: undefined }),
+              }
+            : undefined
+        }
       />
     </Screen>
   );

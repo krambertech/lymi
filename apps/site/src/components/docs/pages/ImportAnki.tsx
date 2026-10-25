@@ -44,8 +44,8 @@ export function ImportAnki() {
           <ul>
             <li>
               <strong>The language of each deck.</strong> Anki does not store a language, so Lymi
-              guesses from the deck name. Lymi needs the language to find duplicates and to say
-              words out loud.
+              uses the deck name and its cards. Lymi needs the language to find duplicates and to
+              say words out loud.
             </li>
             <li>
               <strong>How a card will look.</strong> Lymi shows one of your cards as it will arrive.
@@ -194,7 +194,9 @@ export function ImportAnki() {
       <H3>Lymi can’t read the file</H3>
       <p>
         Export again from Anki as <strong>Anki Deck Package (.apkg)</strong> and choose that file. A
-        text export or a spreadsheet cannot be imported yet.
+        plain text list can be brought through{" "}
+        <a href="/docs/import-from-quizlet">Quizlet and text lists</a>, but it will not include
+        Anki’s media or review history.
       </p>
       <H3>The upload stopped</H3>
       <p>

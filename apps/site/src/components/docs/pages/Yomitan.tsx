@@ -32,16 +32,18 @@ export function Yomitan() {
         <div>
           <StepTitle>Install Yomitan and a dictionary</StepTitle>
           <p>
-            Add Yomitan from your browser’s extension store. Its welcome page offers recommended
-            dictionaries for the language you read: JMdict for Japanese, or a Wiktionary dictionary
-            for most other languages. Import one before you go on.
+            Follow <a href="https://yomitan.wiki/getting-started/">Yomitan’s installation guide</a>{" "}
+            to add it to your browser. Its welcome page offers recommended dictionaries for the
+            language you read: JMdict for Japanese, or a Wiktionary dictionary for most other
+            languages. Import one before you go on.
           </p>
         </div>
         <div>
           <StepTitle>Copy the address and a key from Lymi</StepTitle>
           <p>
             In Lymi, open <strong>Settings</strong> from the menu under your name and choose{" "}
-            <strong>Yomitan</strong>. Copy the AnkiConnect server address:
+            <strong>Yomitan</strong> under <strong>Apps</strong>. In the phone app, open{" "}
+            <strong>You → Apps → Yomitan</strong>. Copy the AnkiConnect server address:
           </p>
           <Code
             lang="text"
@@ -189,8 +191,8 @@ export function Yomitan() {
       <Note title="What Yomitan sends to Lymi">
         Each time the pop-up opens, Yomitan sends the word to check for a duplicate, and Lymi keeps
         nothing from that check. When you press +, it sends the fields above and the word’s audio.
-        Revoke the key under <strong>API keys</strong> in Settings to disconnect Yomitan; the cards
-        it added stay.
+        Choose <strong>Disconnect Yomitan</strong> on its page to revoke the key; the cards it added
+        stay.
       </Note>
 
       <NextLinks

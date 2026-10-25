@@ -1,12 +1,12 @@
 import { Code } from "../Code";
 import { ORIGIN } from "../origin";
-import { H2, Lead, NextLinks, Steps, StepTitle } from "../Prose";
+import { H2, Lead, NextLinks } from "../Prose";
 
 export function McpChatgpt() {
   return (
     <div className="doc-prose">
       <Lead>
-        ChatGPT reaches Lymi through a custom connector, and the Codex CLI through its MCP config.
+        ChatGPT reaches Lymi through a custom MCP plugin, and the Codex CLI through its MCP config.
         Both sign in with OAuth; neither takes an API key.
       </Lead>
 
@@ -19,45 +19,25 @@ export function McpChatgpt() {
 
       <H2>ChatGPT</H2>
       <p>
-        Custom connectors need developer mode on the web, which Plus, Pro, Business, Enterprise and
-        Education accounts have. OpenAI's help center limits write actions to Business, Enterprise
-        and Education, so on Plus or Pro expect ChatGPT to read your decks but not change them. On a
-        workspace plan an admin has to allow developer mode first.
+        Open <strong>Plugins</strong> on the web, choose the plus button, then{" "}
+        <strong>Add custom MCP server</strong>. Name it Lymi and paste the server URL above. Choose{" "}
+        <strong>OAuth</strong> authentication and{" "}
+        <strong>Client ID Metadata Documents (CIMD)</strong> when asked how the client identifies
+        itself. Lymi does not use dynamic client registration.
       </p>
       <p>
-        By default ChatGPT asks before a write, such as adding cards or archiving a deck. You can
-        let it remember your answer for a tool for the rest of the conversation.
+        Review the connection warning and choose <strong>Create as a plugin</strong>. Complete
+        Lymi’s sign-in and approve the access you want to grant. Install the resulting plugin, then
+        select it with <strong>@</strong> in a new chat.
       </p>
-      <Steps>
-        <div>
-          <StepTitle>Turn on developer mode</StepTitle>
-          <p>
-            In ChatGPT on the web, open <strong>Settings → Apps → Advanced settings</strong> and
-            switch <strong>Developer mode</strong> on.
-          </p>
-        </div>
-        <div>
-          <StepTitle>Create the connector</StepTitle>
-          <p>
-            Go to <strong>Settings → Connectors</strong> and choose <strong>Create</strong>. Give it
-            a name, a short description, and the MCP server URL above. Leave the authentication
-            fields alone: Lymi advertises OAuth through the protocol.
-          </p>
-        </div>
-        <div>
-          <StepTitle>Sign in</StepTitle>
-          <p>
-            ChatGPT sends you to Lymi. Sign in with the account your Lymi uses and approve the
-            connection, unticking <strong>write</strong> if you want it read-only.
-          </p>
-        </div>
-        <div>
-          <StepTitle>Use it in a chat</StepTitle>
-          <p>
-            Enable the connector for the conversation from the composer, the same way as any other.
-          </p>
-        </div>
-      </Steps>
+      <p>
+        Account and workspace permissions can affect whether this option is available. If your
+        interface still uses Apps, follow{" "}
+        <a href="https://developers.openai.com/api/docs/guides/custom-mcp-server">
+          OpenAI’s current connection guide
+        </a>{" "}
+        for your account.
+      </p>
 
       <H2>Codex CLI</H2>
       <p>Add the server, then sign in. Codex handles the OAuth round trip for you.</p>

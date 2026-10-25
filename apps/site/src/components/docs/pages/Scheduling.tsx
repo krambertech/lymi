@@ -211,8 +211,8 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
       </div>
       <p>
         The minutes are FSRS’s learning step. Lymi doesn’t wait for them: a card still learning{" "}
-        <a href="#missed-cards-come-back-in-the-same-review">comes back</a> after a few other cards
-        in the same review.
+        <a href="#a-forgotten-card-comes-back-once-after-a-while">comes back</a> after a few other
+        cards in the same review.
       </p>
 
       <H3>On a learned card, only Forgot goes back</H3>
@@ -356,7 +356,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
         A return is never shown before its gap. If the review runs out first, the card waits in
         Review forgotten at the end, a second look you choose to take. A card forgotten twice in a
         day, or on {k.slippingForgottenDays} of the last {k.slippingRecentDays} days it came up,
-        offers to add a hint.
+        offers to add a hook.
       </p>
 
       <H3>Cards left learning come back first</H3>

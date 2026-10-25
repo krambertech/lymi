@@ -75,11 +75,16 @@ CI's artifact boundary check fails if the public build contains service-worker o
 
 ## Documentation structure
 
-Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. The sidebar puts connecting an assistant before the API, because more readers arrive with an assistant than with a script.
+Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. The sidebar separates Start, Using Lymi, Imports, Exports, Integrations, MCP assistants and API. File imports are separate from ongoing reading-app connections; every assistant setup guide stays under MCP assistants. Technical card fields and language formats live under API.
 
 | Path | Purpose |
 | --- | --- |
 | `/docs` | What the docs cover and which way in to choose. |
+| `/docs/getting-started`, `/docs/decks` | For learners: first cards and reviews, organization, sharing, Explore and archive. |
+| `/docs/import` | Import formats, preview, duplicates, repeated imports and undo. |
+| `/docs/import-from-quizlet` | Quizlet export, pasted or delimited text pairs, separators, limits and preview. |
+| `/docs/import-from-lymi` | Importing a Lymi export, preserved card data and the section and series limitations. |
+| `/docs/readwise` | Connecting a token, choosing books and decks, new highlights, card extraction, troubleshooting and disconnecting. |
 | `/docs/quickstart` | Make a key, add a card and see it in the app. |
 | `/docs/authentication` | Keys, scopes, rate limit and error codes. |
 | `/docs/mobile` | For learners: adding the product to the home screen on iPhone, iPad and Android as a PWA; the native Expo phone app is a separate option, what an installed Lymi adds, removing it, and the two problems a learner can fix. |

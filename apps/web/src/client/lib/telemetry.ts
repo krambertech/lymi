@@ -13,11 +13,6 @@ import { isStaleChunkError, reloadOntoCurrentBuild } from "./stale-build";
 
 export { captureAnalytics, capturePageview };
 
-/** Session replay masks the text inside an element with this class; every card's own words carry it. */
-export const PRIVATE_TEXT = "ph-mask";
-/** Session replay draws an element with this class as an empty box; a card's picture carries it. */
-export const PRIVATE_BOX = "ph-no-capture";
-
 /** Where this visit began, sent with sign-up so the new account records its source. */
 export function firstTouchHeaders(): Record<string, string> {
   const touch = visitFirstTouch("product");

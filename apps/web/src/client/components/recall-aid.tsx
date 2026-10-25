@@ -7,7 +7,7 @@ import { clsx } from "clsx";
 import { Anchor, type LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import type { Card } from "../lib/api";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";

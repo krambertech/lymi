@@ -36,7 +36,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";

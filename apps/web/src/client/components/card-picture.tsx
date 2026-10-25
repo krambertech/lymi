@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { cn } from "cn";
 import { ImageOff } from "lucide-react";
 import { type CSSProperties, useState } from "react";
-import { PRIVATE_BOX } from "@/lib/telemetry";
+import { PRIVATE_BOX } from "@/lib/replay";
 import type { CardImage } from "../lib/api";
 import { isOpaque, useCardPicture } from "../lib/card-images";
 import { Skeleton } from "./skeleton";

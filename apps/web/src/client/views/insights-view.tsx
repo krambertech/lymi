@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type InsightsOut, localDate, textDirection } from "@lymi/core";
 import { clsx } from "clsx";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { DAY_GRID_HEIGHT, DayGrid } from "../components/day-grid";
 import { ErrorState } from "../components/empty-state";

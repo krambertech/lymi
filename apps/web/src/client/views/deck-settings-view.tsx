@@ -22,7 +22,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";

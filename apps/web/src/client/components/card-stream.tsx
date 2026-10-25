@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { Play } from "lucide-react";
 import type { CSSProperties } from "react";
 import { useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 
 interface Card {
   term: string;

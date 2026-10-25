@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";

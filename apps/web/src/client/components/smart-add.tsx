@@ -7,7 +7,7 @@ import { cn } from "cn";
 import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import {
   api,
   type DeckSummary,

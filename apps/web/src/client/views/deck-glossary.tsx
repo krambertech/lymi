@@ -46,7 +46,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button, IconButton } from "../components/button";
 import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";

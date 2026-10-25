@@ -5,7 +5,7 @@ import { useIsMutating, useMutation, useQuery, useQueryClient } from "@tanstack/
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { ApiError, api } from "../lib/api";
 import {
   type Avatar as AvatarState,

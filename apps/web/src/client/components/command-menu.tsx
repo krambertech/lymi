@@ -34,7 +34,7 @@ import {
   SunMoon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import type { CardHit, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { bidi } from "../lib/bidi";

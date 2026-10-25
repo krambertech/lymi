@@ -10,7 +10,7 @@ import {
 } from "@lymi/core";
 import { FileText } from "lucide-react";
 import { useDeferredValue, useId, useMemo, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { InlineError } from "../components/inline-error";
 import type { Back } from "../components/layout/screen";

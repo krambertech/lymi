@@ -43,7 +43,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { AudioButton, AudioPlace } from "../components/audio-button";
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";

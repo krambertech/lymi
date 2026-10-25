@@ -3,7 +3,7 @@ import { isolate } from "@lymi/core";
 import { clsx } from "clsx";
 import { AlertCircle, Check } from "lucide-react";
 import type { ReactNode } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import type { AppIdentity } from "../components/app-mark";
 import { Button } from "../components/button";
 import { AppIdentityLine, Connection } from "../components/connection";

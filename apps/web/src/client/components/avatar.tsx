@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { UserX } from "lucide-react";
 import { type ComponentProps, useState } from "react";
-import { PRIVATE_BOX } from "@/lib/telemetry";
+import { PRIVATE_BOX } from "@/lib/replay";
 
 interface Props extends Omit<ComponentProps<"span">, "children"> {
   name: string | undefined;

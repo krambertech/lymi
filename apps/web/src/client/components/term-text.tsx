@@ -8,7 +8,7 @@ import {
   textDirection,
 } from "@lymi/core";
 import { useMemo } from "react";
-import { PRIVATE_TEXT } from "@/lib/telemetry";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Furigana } from "./furigana";
 
 interface TermTextProps {

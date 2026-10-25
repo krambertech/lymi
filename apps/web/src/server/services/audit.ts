@@ -81,6 +81,7 @@ type AccountAction =
   | "onboarding.finish"
   | "analytics.consent"
   | "ai.consent"
+  | "replay.choice"
   | "analytics.review_start"
   | "rename"
   | "avatar.upload"

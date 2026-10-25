@@ -1066,6 +1066,8 @@ export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),
   dailyGoal: DailyGoal.optional(),
+  /** Whether the web app may record how the learner moves through it. */
+  sessionReplay: z.boolean().optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 

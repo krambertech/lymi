@@ -7,7 +7,7 @@ import {
 import { and, eq, isNull, lt, or } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { track } from "./analytics";
-import { auditStatementWhen } from "./audit";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { applyGoalToToday } from "./review-days";
 
@@ -31,6 +31,7 @@ export function defaultSettings(userId: string): UserSettings {
     analyticsConsentUpdatedAt: null,
     aiConsent: null,
     aiConsentUpdatedAt: null,
+    sessionReplay: null,
     appLanguage: null,
     meaningLanguage: "en",
     dailyGoal: 50,
@@ -57,10 +58,20 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
   if (patch.dailyGoal !== undefined && ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can change the daily goal.");
   }
-  if (patch.appLanguage === undefined && patch.dailyGoal === undefined) return getSettings(ctx);
+  if (patch.sessionReplay !== undefined && ctx.actor !== "user") {
+    throw new ServiceError("forbidden", "Only the learner can change session replay.");
+  }
+  if (
+    patch.appLanguage === undefined &&
+    patch.dailyGoal === undefined &&
+    patch.sessionReplay === undefined
+  )
+    return getSettings(ctx);
   const before = await getSettings(ctx);
   await ensureSettings(ctx);
-  await ctx.db
+  const replayChanged =
+    patch.sessionReplay !== undefined && patch.sessionReplay !== (before.sessionReplay !== false);
+  const update = ctx.db
     .update(schema.userSettings)
     .set({
       ...(patch.appLanguage !== undefined && {
@@ -71,9 +82,22 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
         dailyGoal: patch.dailyGoal,
         dailyGoalChosenAt: new Date(),
       }),
+      ...(patch.sessionReplay !== undefined && { sessionReplay: patch.sessionReplay }),
       updatedAt: new Date(),
     })
     .where(eq(schema.userSettings.userId, ctx.userId));
+  if (replayChanged) {
+    await ctx.db.batch([
+      auditStatement(ctx, {
+        entity: "account",
+        action: "replay.choice",
+        id: ctx.userId,
+        details: { allowed: patch.sessionReplay },
+      }),
+      update,
+    ]);
+    track(ctx.analytics, { name: "session_replay_set", on: patch.sessionReplay === true });
+  } else await update;
   if (patch.dailyGoal !== undefined) {
     await applyGoalToToday(ctx, patch.dailyGoal);
     if (!before.dailyGoalChosenAt || before.dailyGoal !== patch.dailyGoal)

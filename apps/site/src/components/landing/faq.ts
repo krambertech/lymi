@@ -75,6 +75,35 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const POLISH_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say Polish words aloud?`,
+    answer: msg`Yes. Every card is read by a native Polish AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn Polish from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made Polish decks have meanings in Ukrainian and Russian as well as English, and their notes say where a Polish word only looks like a Ukrainian or Russian one. Lymi itself is in both languages.`,
+  },
+  {
+    id: "b1",
+    question: msg`Will it get me to the B1 certificate?`,
+    answer: msg`The A1, A2 and B1 decks follow the topics of Poland’s state exams, so they cover the words the B1 exam expects. They are not an official word list, and the exam also tests listening, reading, writing and speaking.`,
+  },
+  {
+    id: "stress",
+    question: msg`Does Lymi show where the stress falls?`,
+    answer: msg`Most Polish words stress the second syllable from the end, so their cards leave it out. A word that breaks the rule, such as muzyka, shows its stress when you turn the card: mùzyka.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
 export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "script",

@@ -198,6 +198,9 @@ msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
 
+msgid "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not a melon. The ready-made decks say in a card’s notes where a Polish word only looks like yours, and AI writes the same note for the words you add."
+msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not a melon. The ready-made decks say in a card’s notes where a Polish word only looks like yours, and AI writes the same note for the words you add."
+
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 
@@ -354,6 +357,9 @@ msgstr "A free flashcard app for Japanese. Start with kana, then N5 and N4 words
 msgid "A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole."
 msgstr "A free flashcard app for Mandarin Chinese. Pinyin sits over each word until you know it, each reading of a character gets its own card, and your Pleco flashcards and free HSK 1 and HSK 2 decks come in whole."
 
+msgid "A free flashcard app for Polish. A native voice reads every card, notes mark the words that only look like Ukrainian or Russian ones, and free decks follow the state exams from A1 to B1."
+msgstr "A free flashcard app for Polish. A native voice reads every card, notes mark the words that only look like Ukrainian or Russian ones, and free decks follow the state exams from A1 to B1."
+
 msgid "A free flashcard app for Russian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and the core words."
 msgstr "A free flashcard app for Russian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and the core words."
 
@@ -390,6 +396,9 @@ msgstr "A major chord with a minor seventh, built on the fifth note of the key"
 
 msgid "A native Mandarin AI voice reads every card. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "A native Mandarin AI voice reads every card. Tap a word to hear it. If a card has its own recording, that plays instead."
+
+msgid "A native Polish AI voice reads every card, so <0>ą</0>, <1>ę</1>, <2>rz</2> and <3>szcz</3> sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
+msgstr "A native Polish AI voice reads every card, so <0>ą</0>, <1>ę</1>, <2>rz</2> and <3>szcz</3> sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 
 msgid "A native Russian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 msgstr "A native Russian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
@@ -529,11 +538,20 @@ msgstr "Add a word from today’s lesson. AI marks its stress, writes an example
 msgid "Add a word from today’s lesson. AI marks the stress its meaning calls for, writes an example with every stress marked, and names the word it could be mistaken for. It fills only what you left empty and marks what it wrote."
 msgstr "Add a word from today’s lesson. AI marks the stress its meaning calls for, writes an example with every stress marked, and names the word it could be mistaken for. It fills only what you left empty and marks what it wrote."
 
+msgid "Add a word from today’s lesson. AI writes an example and the forms you need, and marks the stress on the few words that break the rule. It fills only what you left empty and marks what it wrote."
+msgstr "Add a word from today’s lesson. AI writes an example and the forms you need, and marks the stress on the few words that break the rule. It fills only what you left empty and marks what it wrote."
+
+msgid "Add a word from today’s lesson. AI writes an example, the forms you need, and a note when the word looks like one you know but means something else. It fills only what you left empty and marks what it wrote."
+msgstr "Add a word from today’s lesson. AI writes an example, the forms you need, and a note when the word looks like one you know but means something else. It fills only what you left empty and marks what it wrote."
+
 msgid "Add both decks"
 msgstr "Add both decks"
 
 msgid "Add cards yourself"
 msgstr "Add cards yourself"
+
+msgid "Add deck"
+msgstr "Add deck"
 
 msgid "Add hint"
 msgstr "Add hint"
@@ -604,6 +622,9 @@ msgstr "Added 7 cards with their stress. I skipped <0>квито́к</0>, which 
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 
+msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
+msgstr "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
+
 msgid "Added 9 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Added 9 cards to Spanish. I skipped “ojalá”, which you already have."
 
@@ -612,6 +633,9 @@ msgstr "Added after this week’s lesson"
 
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Added to Chess, with the meaning and an example."
+
+msgid "Address registration"
+msgstr "Address registration"
 
 msgid "adjective"
 msgstr "adjective"
@@ -681,6 +705,9 @@ msgstr "All of Explore"
 
 msgid "All of them, equally often"
 msgstr "All of them, equally often"
+
+msgid "All Polish decks"
+msgstr "All Polish decks"
 
 msgid "All Russian decks"
 msgstr "All Russian decks"
@@ -775,6 +802,9 @@ msgstr "API reference"
 
 msgid "Apple"
 msgstr "Apple"
+
+msgid "Appointment; deadline"
+msgstr "Appointment; deadline"
 
 msgid "Apps you connect through MCP, and scripts using your API keys, can access data within the permissions you approve. Their providers receive the data returned to them and handle it under their own policies. Disconnecting an app or revoking a key does not erase copies already received; an app’s current access token can remain valid until it expires."
 msgstr "Apps you connect through MCP, and scripts using your API keys, can access data within the permissions you approve. Their providers receive the data returned to them and handle it under their own policies. Disconnecting an app or revoking a key does not erase copies already received; an app’s current access token can remain valid until it expires."
@@ -890,6 +920,9 @@ msgstr "Book"
 msgid "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 msgstr "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 
+msgid "Bread"
+msgstr "Bread"
+
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
 
@@ -992,6 +1025,9 @@ msgstr "Can I get a coffee?"
 msgid "Can I learn Estonian from Russian or Ukrainian?"
 msgstr "Can I learn Estonian from Russian or Ukrainian?"
 
+msgid "Can I learn Polish from Ukrainian or Russian?"
+msgstr "Can I learn Polish from Ukrainian or Russian?"
+
 msgid "Can I review offline?"
 msgstr "Can I review offline?"
 
@@ -1006,6 +1042,9 @@ msgstr "Can learners change the deck?"
 
 msgid "Can Lymi say Estonian words aloud?"
 msgstr "Can Lymi say Estonian words aloud?"
+
+msgid "Can Lymi say Polish words aloud?"
+msgstr "Can Lymi say Polish words aloud?"
 
 msgid "Can my class use it together?"
 msgstr "Can my class use it together?"
@@ -1195,6 +1234,9 @@ msgstr "Congratulations"
 msgid "Connect an assistant"
 msgstr "Connect an assistant"
 
+msgid "Connect ChatGPT, Claude or another assistant. Send it a photo of today’s notes and it adds the new words, or ask how many cards are waiting tonight."
+msgstr "Connect ChatGPT, Claude or another assistant. Send it a photo of today’s notes and it adds the new words, or ask how many cards are waiting tonight."
+
 msgid "Connect ChatGPT, Claude or another assistant. Send it today’s notes and it adds the new words with pinyin. Or ask how many cards are waiting tonight."
 msgstr "Connect ChatGPT, Claude or another assistant. Send it today’s notes and it adds the new words with pinyin. Or ask how many cards are waiting tonight."
 
@@ -1252,6 +1294,9 @@ msgstr "Copy the chat or take a photo"
 
 msgid "Copy the lesson chat or transcript, export your shared notes, or take a photo of your notebook or your tutor’s whiteboard."
 msgstr "Copy the lesson chat or transcript, export your shared notes, or take a photo of your notebook or your tutor’s whiteboard."
+
+msgid "Core nouns, verbs and adjectives, with the forms you need to use them."
+msgstr "Core nouns, verbs and adjectives, with the forms you need to use them."
 
 msgctxt "deck tag"
 msgid "Core vocabulary"
@@ -1635,6 +1680,9 @@ msgstr "Every state’s deck"
 msgid "Every subject on one schedule."
 msgstr "Every subject on one schedule."
 
+msgid "Every word with its forms."
+msgstr "Every word with its forms."
+
 msgid "Every word with its three forms."
 msgstr "Every word with its three forms."
 
@@ -1764,6 +1812,9 @@ msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spani
 msgid "Flashcards that come back right before you'd forget."
 msgstr "Flashcards that come back right before you'd forget."
 
+msgid "Flat"
+msgstr "Flat"
+
 msgid "Flour"
 msgstr "Flour"
 
@@ -1848,6 +1899,9 @@ msgstr "Free decks from the letters to everyday words. Read the alphabet, then t
 msgid "Free decks from the letters to everyday words. Read the alphabet, then take A1 and the core words. Each day adds a few new words to your reviews."
 msgstr "Free decks from the letters to everyday words. Read the alphabet, then take A1 and the core words. Each day adds a few new words to your reviews."
 
+msgid "Free decks that follow the topics of Poland’s state exams. Take A1, then A2, with the core words beside them. Each day adds a few new words to your reviews."
+msgstr "Free decks that follow the topics of Poland’s state exams. Take A1, then A2, with the core words beside them. Each day adds a few new words to your reviews."
+
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 
@@ -1862,6 +1916,9 @@ msgstr "Free Japanese decks with readings and a voice on every card. Add one in 
 
 msgid "free of charge"
 msgstr "free of charge"
+
+msgid "Free Polish decks with a native voice on every card, with meanings in English, Ukrainian or Russian. Add one in a tap."
+msgstr "Free Polish decks with a native voice on every card, with meanings in English, Ukrainian or Russian. Add one in a tap."
 
 msgid "Free Russian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Russian decks with a voice on every card. Add one in a tap. More are on the way."
@@ -1895,6 +1952,9 @@ msgstr "From now until your test date"
 
 msgid "From your lesson"
 msgstr "From your lesson"
+
+msgid "Future, “I”"
+msgstr "Future, “I”"
 
 msgid "Genitive"
 msgstr "Genitive"
@@ -2009,6 +2069,11 @@ msgstr "Head ööd! Good night."
 msgid "health insurance company"
 msgstr "health insurance company"
 
+#. placeholder {0}: current.term
+#. placeholder {0}: w.term
+msgid "Hear {0}"
+msgstr "Hear {0}"
+
 #. placeholder {0}: f.marked
 #. placeholder {1}: i18n._(f.meaning)
 msgid "Hear {0}, {1}"
@@ -2052,6 +2117,9 @@ msgstr "Here’s the chat from today’s lesson with Marta. Add the new phrases.
 
 msgid "Hi"
 msgstr "Hi"
+
+msgid "Hi; bye"
+msgstr "Hi; bye"
 
 msgid "Hint"
 msgstr "Hint"
@@ -2196,6 +2264,9 @@ msgstr "Illustration of recall over thirty days. One line fades after a card is 
 msgid "Illustration only. Your review timing adapts to what you remember."
 msgstr "Illustration only. Your review timing adapts to what you remember."
 
+msgid "Imperfective"
+msgstr "Imperfective"
+
 msgid "Import"
 msgstr "Import"
 
@@ -2222,6 +2293,9 @@ msgstr "In example sentences, furigana stays over the words you’re still learn
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "In many real data sets, about 30% of numbers start with a 1"
+
+msgid "in Polish"
+msgstr "in Polish"
 
 msgid "In the end"
 msgstr "In the end"
@@ -2502,6 +2576,12 @@ msgstr "Learn Japanese vocabulary with flashcards · Lymi"
 msgid "Learn Japanese words in a few minutes a day, from your first hiragana to the words in this week’s lesson. Every card shows you how to read the kanji until you don’t need the help."
 msgstr "Learn Japanese words in a few minutes a day, from your first hiragana to the words in this week’s lesson. Every card shows you how to read the kanji until you don’t need the help."
 
+msgid "Learn Polish vocabulary with flashcards · Lymi"
+msgstr "Learn Polish vocabulary with flashcards · Lymi"
+
+msgid "Learn Polish words in a few minutes a day, each with the forms you need to use it. A native voice reads every card, and free decks take you from <0>dzień dobry</0> to B1."
+msgstr "Learn Polish words in a few minutes a day, each with the forms you need to use it. A native voice reads every card, and free decks take you from <0>dzień dobry</0> to B1."
+
 msgid "Learn Russian vocabulary with flashcards · Lymi"
 msgstr "Learn Russian vocabulary with flashcards · Lymi"
 
@@ -2570,6 +2650,9 @@ msgstr "Literally “horse horse tiger tiger”."
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Literally “that walks”. Waiters say it when they take your order."
 
+msgid "Locative"
+msgstr "Locative"
+
 msgid "Lock"
 msgstr "Lock"
 
@@ -2587,6 +2670,12 @@ msgstr "Longing for what is gone"
 
 msgid "look forward to"
 msgstr "look forward to"
+
+msgid "Looks familiar. Means something else."
+msgstr "Looks familiar. Means something else."
+
+msgid "Looks like"
+msgstr "Looks like"
 
 msgid "Lymi · Flashcard app with spaced repetition"
 msgstr "Lymi · Flashcard app with spaced repetition"
@@ -2747,6 +2836,9 @@ msgstr "Meaning"
 msgid "Meanings in your language"
 msgstr "Meanings in your language"
 
+msgid "Means"
+msgstr "Means"
+
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Medical French for nurses. Use the clinical meaning."
 
@@ -2815,6 +2907,9 @@ msgstr "Morning"
 
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
+
+msgid "Most Polish words stress the second syllable from the end, so their cards leave it out. A word that breaks the rule, such as muzyka, shows its stress when you turn the card: mùzyka."
+msgstr "Most Polish words stress the second syllable from the end, so their cards leave it out. A word that breaks the rule, such as muzyka, shows its stress when you turn the card: mùzyka."
 
 msgid "Move from Anki"
 msgstr "Move from Anki"
@@ -2983,6 +3078,9 @@ msgstr "Notes and PDFs"
 
 msgid "Notes from today’s Estonian class. Add the new words to my deck."
 msgstr "Notes from today’s Estonian class. Add the new words to my deck."
+
+msgid "Notes from today’s Polish lesson. Add the new words to my deck."
+msgstr "Notes from today’s Polish lesson. Add the new words to my deck."
 
 msgid "Nothing here by that name."
 msgstr "Nothing here by that name."
@@ -3158,6 +3256,12 @@ msgstr "Pedestrian crossing"
 msgid "People, food, time and your first verbs."
 msgstr "People, food, time and your first verbs."
 
+msgid "Perfective"
+msgstr "Perfective"
+
+msgid "Person"
+msgstr "Person"
+
 msgid "Personal ID code"
 msgstr "Personal ID code"
 
@@ -3245,11 +3349,26 @@ msgstr "Poland"
 msgid "Policies"
 msgstr "Policies"
 
+msgid "Polish"
+msgstr "Polish"
+
+msgid "Polish changes a word’s ending, and sometimes its middle: <0>pies</0>, <1>psa</1>, <2>o psie</2>. Verbs come in pairs: <3>robić</3> while you do it, <4>zrobić</4> once it’s done. The decks keep the forms in each card’s notes, and AI adds them to the words you save."
+msgstr "Polish changes a word’s ending, and sometimes its middle: <0>pies</0>, <1>psa</1>, <2>o psie</2>. Verbs come in pairs: <3>robić</3> while you do it, <4>zrobić</4> once it’s done. The decks keep the forms in each card’s notes, and AI adds them to the words you save."
+
+msgid "Polish for Offices and Paperwork has 50 words and phrases for offices in Poland: the queue ticket, the window, the forms, PESEL and the residence card. Hear each one before you go."
+msgstr "Polish for Offices and Paperwork has 50 words and phrases for offices in Poland: the queue ticket, the window, the forms, PESEL and the residence card. Hear each one before you go."
+
+msgid "Polish looks close to your language, until <0>sklep</0> turns out to be a shop. Learn the words in a few minutes a day, with a note wherever a word only looks familiar and a native voice on every card."
+msgstr "Polish looks close to your language, until <0>sklep</0> turns out to be a shop. Learn the words in a few minutes a day, with a note wherever a word only looks familiar and a native voice on every card."
+
 msgid "Polish road signs for the theory test"
 msgstr "Polish road signs for the theory test"
 
 msgid "Polish road signs: every sign, by its picture"
 msgstr "Polish road signs: every sign, by its picture"
+
+msgid "Polski · new"
+msgstr "Polski · new"
 
 msgid "Popular"
 msgstr "Popular"
@@ -3323,6 +3442,9 @@ msgstr "Public transport"
 #. placeholder {0}: date(deck.publishedAt)
 msgid "Published {0}"
 msgstr "Published {0}"
+
+msgid "Pumpkin"
+msgstr "Pumpkin"
 
 msgid "Questions"
 msgstr "Questions"
@@ -3420,6 +3542,9 @@ msgstr "Readings only where you need them"
 msgid "Ready decks for citizenship, language and driving theory tests after a move. Each holds what the exam asks in its own language, with a translation alongside, and brings back what you get wrong until it sticks."
 msgstr "Ready decks for citizenship, language and driving theory tests after a move. Each holds what the exam asks in its own language, with a translation alongside, and brings back what you get wrong until it sticks."
 
+msgid "Ready for the urząd."
+msgstr "Ready for the urząd."
+
 msgid "Ready to start"
 msgstr "Ready to start"
 
@@ -3468,6 +3593,9 @@ msgstr "Remember first, then check."
 
 msgid "Reminders are optional. Web reminders use your browser’s push service, which receives a delivery address and the reminder, including the number of cards due. Phone reminders are scheduled on your device."
 msgstr "Reminders are optional. Web reminders use your browser’s push service, which receives a delivery address and the reminder, including the number of cards due. Phone reminders are scheduled on your device."
+
+msgid "Rental agreement"
+msgstr "Rental agreement"
 
 msgid "Repetition that works."
 msgstr "Repetition that works."
@@ -3697,6 +3825,9 @@ msgstr "Sharing and connected apps"
 msgid "Shelves"
 msgstr "Shelves"
 
+msgid "Shop"
+msgstr "Shop"
+
 msgid "Shortcuts"
 msgstr "Shortcuts"
 
@@ -3734,6 +3865,9 @@ msgstr "Sign in with Google or an email address, and it joins your Library, free
 msgid "Signals"
 msgstr "Signals"
 
+msgid "Signature"
+msgstr "Signature"
+
 msgid "Simplified deck"
 msgstr "Simplified deck"
 
@@ -3742,6 +3876,9 @@ msgstr "Simplified or traditional"
 
 msgid "Simplified or traditional?"
 msgstr "Simplified or traditional?"
+
+msgid "Since 1 July 2025, Polish citizenship asks for a state B1 certificate. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
+msgstr "Since 1 July 2025, Polish citizenship asks for a state B1 certificate. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
 
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Sitting through a bad film because you paid for the ticket."
@@ -3794,6 +3931,9 @@ msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Ja
 msgid "Something else"
 msgstr "Something else"
 
+msgid "Sorry; excuse me"
+msgstr "Sorry; excuse me"
+
 msgid "Sounds good"
 msgstr "Sounds good"
 
@@ -3842,6 +3982,9 @@ msgstr "Start here"
 msgid "Start learning"
 msgstr "Start learning"
 
+msgid "Start with <0>dzień dobry</0> tonight."
+msgstr "Start with <0>dzień dobry</0> tonight."
+
 msgid "Start with <0>tere</0> tonight."
 msgstr "Start with <0>tere</0> tonight."
 
@@ -3853,6 +3996,12 @@ msgstr "Start with <0>あ</0> tonight."
 
 msgid "Start with a ready-made course."
 msgstr "Start with a ready-made course."
+
+msgid "Start with A1 words"
+msgstr "Start with A1 words"
+
+msgid "Start with A1. Keep going."
+msgstr "Start with A1. Keep going."
 
 msgid "Start with chapter one."
 msgstr "Start with chapter one."
@@ -4022,6 +4171,9 @@ msgstr "Teach anything worth remembering."
 msgid "Teachers"
 msgstr "Teachers"
 
+msgid "Team"
+msgstr "Team"
+
 msgid "Technology"
 msgstr "Technology"
 
@@ -4082,6 +4234,9 @@ msgstr "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word l
 msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word lists for their level. They follow those levels; they are not official or complete exam lists."
 msgstr "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word lists for their level. They follow those levels; they are not official or complete exam lists."
 
+msgid "The A1, A2 and B1 decks follow the topics of Poland’s state exams, so they cover the words the B1 exam expects. They are not an official word list, and the exam also tests listening, reading, writing and speaking."
+msgstr "The A1, A2 and B1 decks follow the topics of Poland’s state exams, so they cover the words the B1 exam expects. They are not an official word list, and the exam also tests listening, reading, writing and speaking."
+
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 
@@ -4141,6 +4296,9 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 
 msgid "The flashcard app that gets Chinese."
 msgstr "The flashcard app that gets Chinese."
+
+msgid "The flashcard app that gets Polish."
+msgstr "The flashcard app that gets Polish."
 
 msgid "The flashcard app that gets Russian."
 msgstr "The flashcard app that gets Russian."
@@ -4360,6 +4518,9 @@ msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."
 
 msgid "Thursday Mandarin class"
 msgstr "Thursday Mandarin class"
+
+msgid "Thursday Polish class"
+msgstr "Thursday Polish class"
 
 msgid "Thursday Russian class"
 msgstr "Thursday Russian class"
@@ -4937,6 +5098,9 @@ msgstr "Whose notes"
 msgid "Widgets"
 msgstr "Widgets"
 
+msgid "Will it get me to the B1 certificate?"
+msgstr "Will it get me to the B1 certificate?"
+
 msgid "Will the AI slip into Russian?"
 msgstr "Will the AI slip into Russian?"
 
@@ -4960,6 +5124,12 @@ msgstr "Words and phrases from lessons, chats and books."
 
 msgid "Words and phrases from lessons, tutors and reading."
 msgstr "Words and phrases from lessons, tutors and reading."
+
+msgid "Words by the topics of the A1 exam: people, home, food and the shop."
+msgstr "Words by the topics of the A1 exam: people, home, food and the shop."
+
+msgid "Words for everyday life in Poland, once A1 feels easy."
+msgstr "Words for everyday life in Poland, once A1 feels easy."
 
 msgid "Words for the citizenship exam"
 msgstr "Words for the citizenship exam"
@@ -5039,6 +5209,9 @@ msgstr "Yes. Cards keep their schedule and their word recordings."
 msgid "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
 msgstr "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
 
+msgid "Yes. Every card is read by a native Polish AI voice. Press play on any card to hear it."
+msgstr "Yes. Every card is read by a native Polish AI voice. Press play on any card to hear it."
+
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 
@@ -5053,6 +5226,9 @@ msgstr "Yes. Open Lymi once while you’re online, and after that you can review
 
 msgid "Yes. The ready-made Estonian decks have meanings in Russian and Ukrainian as well as English, and Lymi itself is in both languages."
 msgstr "Yes. The ready-made Estonian decks have meanings in Russian and Ukrainian as well as English, and Lymi itself is in both languages."
+
+msgid "Yes. The ready-made Polish decks have meanings in Ukrainian and Russian as well as English, and their notes say where a Polish word only looks like a Ukrainian or Russian one. Lymi itself is in both languages."
+msgstr "Yes. The ready-made Polish decks have meanings in Ukrainian and Russian as well as English, and their notes say where a Polish word only looks like a Ukrainian or Russian one. Lymi itself is in both languages."
 
 msgid "Yes. The verb deck lists each verb’s three forms, and when you add a word, AI writes its forms in the card’s notes: nominative, genitive and partitive for a noun, and the ma-infinitive, the da-infinitive and the present tense for a verb."
 msgstr "Yes. The verb deck lists each verb’s three forms, and when you add a word, AI writes its forms in the card’s notes: nominative, genitive and partitive for a noun, and the ma-infinitive, the da-infinitive and the present tense for a verb."

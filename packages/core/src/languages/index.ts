@@ -22,7 +22,11 @@ import type {
 } from "./types";
 import { ukrainian } from "./ukrainian";
 
-export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./configured";
+export {
+  CONFIGURED as CONFIGURED_LANGUAGES,
+  type ConfiguredTag,
+  type LanguageConfig,
+} from "./configured";
 export { type TextDirection, textDirection } from "./direction";
 export * from "./names";
 export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";

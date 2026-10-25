@@ -26,7 +26,7 @@ export interface LanguageConfig {
   enrichByDefault: boolean;
 }
 
-export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
+const ROWS = {
   ko: {
     pronunciation: "pronunciation",
     scripts: ["Kore"],
@@ -278,7 +278,12 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     starts: [],
     enrichByDefault: true,
   },
-};
+} satisfies Record<string, LanguageConfig>;
+
+/** A configured row's own tag, never one of its aliases. */
+export type ConfiguredTag = keyof typeof ROWS;
+
+export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = ROWS;
 
 /** The row's own tag for each tag a configured row answers to, in lower case, its aliases included. */
 export const CONFIGURED_TAGS: ReadonlyMap<string, string> = new Map(

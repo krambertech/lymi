@@ -608,6 +608,39 @@ const A1_RU = russian([
   { term: "молоко", pronunciation: "молоко́", meaning: "milk", example: "Я пью молоко́ у́тром." },
 ]);
 
+const polish = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "pl", meaningSource: "lesson" as const }));
+
+const CORE_PL = polish([
+  { term: "człowiek", meaning: "person" },
+  { term: "praca", meaning: "work; job" },
+]);
+
+const A1_PL = polish([
+  { term: "dzień dobry", meaning: "hello (polite); good morning" },
+  { term: "sklep", meaning: "shop", notes: "Not склеп, a crypt." },
+  { term: "muzyka", pronunciation: "mùzyka", meaning: "music" },
+]);
+
+const A2_PL = polish([
+  { term: "dynia", meaning: "pumpkin" },
+  { term: "drużyna", meaning: "team" },
+]);
+
+const OFFICE_PL = polish([
+  { term: "Gdzie mogę pobrać numerek?", meaning: "Where can I get a queue ticket?" },
+  { term: "karta pobytu", meaning: "residence card" },
+]);
+
+/** A Polish deck's Ukrainian edition, keyed by the original's meanings as the persona type asks. */
+const polishEdition = (name: string, summary: string, meanings: Record<string, string>) => ({
+  language: "uk",
+  name,
+  summary,
+  description: summary,
+  meanings,
+});
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -808,7 +841,7 @@ export const personas: Persona[] = [
     group: "Together",
     name: "Lymi",
     description:
-      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese, Ukrainian and Russian decks; one in English and Ukrainian editions.",
+      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese, Ukrainian, Russian and Polish decks; the Estonian and Polish ones also in Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -1099,6 +1132,95 @@ export const personas: Persona[] = [
           tags: ["beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Polish Words",
+        description: "Beginner nouns, verbs and adjectives with the forms you need.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 4,
+        cards: CORE_PL,
+        publication: {
+          slug: "core-polish-words",
+          summary: "Beginner nouns, verbs and adjectives with the forms you need.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська: базові слова", "Базові польські слова з потрібними формами.", {
+              człowiek: "людина",
+              praca: "робота",
+            }),
+          ],
+        },
+      },
+      {
+        name: "Polish for Offices and Paperwork",
+        description: "Words and phrases for offices and paperwork in Poland.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 3,
+        cards: OFFICE_PL,
+        publication: {
+          slug: "polish-for-offices-and-paperwork",
+          summary: "Words and phrases for offices and paperwork in Poland.",
+          category: "languages",
+          tags: ["conversation"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition(
+              "Польська: установи й документи",
+              "Слова й фрази для установ і документів у Польщі.",
+              {
+                "Gdzie mogę pobrać numerek?": "Де можна взяти талончик у черзі?",
+                "karta pobytu": "посвідка на проживання",
+              },
+            ),
+          ],
+        },
+      },
+      {
+        name: "Polish A2 Vocabulary",
+        description: "Words for A2.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 2,
+        cards: A2_PL,
+        publication: {
+          slug: "polish-a2-vocabulary",
+          summary: "Words for A2.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська A2: слова за темами", "Слова для A2.", {
+              dynia: "гарбуз",
+              drużyna: "команда",
+            }),
+          ],
+        },
+      },
+      {
+        name: "Polish A1 Vocabulary",
+        description: "Words for A1.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 1,
+        cards: A1_PL,
+        publication: {
+          slug: "polish-a1-vocabulary",
+          summary: "Words for A1.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська A1: слова за темами", "Слова для A1.", {
+              "dzień dobry": "добрий день",
+              sklep: "магазин",
+              muzyka: "музика",
+            }),
+          ],
         },
       },
     ],

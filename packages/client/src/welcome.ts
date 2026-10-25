@@ -1,4 +1,4 @@
-import type { DAILY_GOAL_PRESETS, LearningKind, SupportedTag } from "@lymi/core";
+import type { ConfiguredTag, DAILY_GOAL_PRESETS, LearningKind, SupportedTag } from "@lymi/core";
 import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@lymi/core/catalog";
 
 // Welcome's choices, shared by the web and the phone so both ask the same questions with the same
@@ -15,11 +15,16 @@ export const LANGUAGE_PILLS = 12;
 export const START_DECKS = 4;
 /** Shelves a test deck sits on; every other subject is a subject. */
 const TEST_CATEGORIES = ["citizenship", "driving"];
+/** A language with a beginner path: every supported one, and a configured one given its decks. */
+export type BeginnerLanguage = SupportedTag | ConfiguredTag;
+
 /**
- * Published decks a beginner in a supported language should start with, in the order to take them;
- * the rest of the language's decks follow in Explore's order. docs/proposals/supported-languages.md.
+ * Published decks a beginner should start with, in the order to take them; the rest of the
+ * language's decks follow in Explore's order. docs/proposals/supported-languages.md.
  */
-export const BEGINNER_DECKS: Readonly<Record<SupportedTag, readonly string[]>> = {
+export const BEGINNER_DECKS: Readonly<
+  Record<SupportedTag, readonly string[]> & Partial<Record<ConfiguredTag, readonly string[]>>
+> = {
   ja: [
     "read-japanese-kana",
     "japanese-n5-vocabulary-practice",
@@ -34,6 +39,8 @@ export const BEGINNER_DECKS: Readonly<Record<SupportedTag, readonly string[]>> =
     "core-ukrainian-words",
   ],
   ru: ["russian-alphabet", "russian-a1-vocabulary", "core-russian-words"],
+  // An alphabet deck, mapping each letter to a Ukrainian one, will go first. docs/proposals/polish.md.
+  pl: ["polish-a1-vocabulary", "polish-a2-vocabulary", "core-polish-words"],
 };
 
 /** Minutes are a rough guide: about twenty seconds a review, rounded to a figure that reads as one. */
@@ -48,9 +55,9 @@ export const GOAL_MINUTES: Record<(typeof DAILY_GOAL_PRESETS)[number], number> =
 export function languageDecks(catalog: PublicDeckSummary[], language: string | null) {
   const decks = catalog.filter((d) => taughtLanguage(d) === language);
   const first =
-    language && Object.hasOwn(BEGINNER_DECKS, language)
-      ? BEGINNER_DECKS[language as SupportedTag]
-      : [];
+    (language && Object.hasOwn(BEGINNER_DECKS, language)
+      ? BEGINNER_DECKS[language as BeginnerLanguage]
+      : undefined) ?? [];
   const rank = (slug: string) => {
     const at = first.indexOf(slug);
     return at === -1 ? first.length : at;

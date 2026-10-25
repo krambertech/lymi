@@ -4,12 +4,13 @@ import { useLingui } from "@lingui/react/macro";
 import type { ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
-import { LifeBuoy, type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
+import { HintIcon } from "./hint-icon";
 
 /**
  * One step of help before the reveal. Steps come in the order review offers them, so a later
@@ -32,7 +33,7 @@ const STEPS: Record<
     take: msg`Peek at your hint`,
     show: msg`Show hint`,
     name: msg`Hint:`,
-    icon: LifeBuoy,
+    icon: HintIcon,
   },
 };
 

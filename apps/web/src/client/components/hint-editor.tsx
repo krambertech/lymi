@@ -3,7 +3,7 @@ import { refusedForAiConsent } from "@lymi/client/ai-consent";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hintable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { LifeBuoy, Loader2, Sparkle } from "lucide-react";
+import { Loader2, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
@@ -11,6 +11,7 @@ import { composing } from "../lib/composing";
 import { settingsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
+import { HintIcon } from "./hint-icon";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
 
@@ -156,7 +157,7 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
       }}
     >
       <label className="flex min-w-0 items-start gap-2 pe-2.5">
-        <LifeBuoy className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+        <HintIcon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
         <span className="sr-only">{t`Hint`}</span>
         <textarea
           ref={field}

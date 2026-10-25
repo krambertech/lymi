@@ -1,10 +1,11 @@
 import { Trans } from "@lingui/react/macro";
 import { EASE_OUT } from "@lymi/design";
 import { cn } from "cn";
-import { ChevronRight, LifeBuoy } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import { type ReactNode, useState } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
+import { HintIcon } from "./hint-icon";
 
 /** The panel's box, one line tall, shared by the live offer and the hidden copy that measures its room. */
 export const HINT_OFFER_BOX =
@@ -14,7 +15,7 @@ export const HINT_OFFER_BOX =
 export function HintOfferFace({ icon }: { icon?: ReactNode }) {
   return (
     <>
-      {icon ?? <LifeBuoy className="size-4 shrink-0 text-text-2" aria-hidden="true" />}
+      {icon ?? <HintIcon className="size-4 shrink-0 text-text-2" aria-hidden="true" />}
       <span className="min-w-0 flex-1 truncate text-base font-medium text-text">
         <Trans>Try a hint</Trans>
         {/* What a hint is stays in the name, so the panel keeps to one line. */}
@@ -86,7 +87,7 @@ export function HintOffer({ delay, animate, parked, onOpen, onShown }: HintOffer
             animate={{ scale: 1 }}
             transition={{ delay: delay + 0.04, duration: travel ? 0.24 : 0, ease: EASE_OUT }}
           >
-            <LifeBuoy className="size-4" />
+            <HintIcon className="size-4" />
           </motion.span>
         }
       />

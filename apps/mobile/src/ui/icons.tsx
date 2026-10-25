@@ -217,6 +217,9 @@ const ICONS = {
 
 export type IconName = keyof typeof ICONS;
 
+/** Raised by this share of its size, so a full ring centres on Onest's capitals; iOS sets them lower in their line than the web, so this is half the web's nudge. */
+const RAISE: Partial<Record<IconName, number>> = { hint: 0.046875 };
+
 export function Icon({
   name,
   size = 20,
@@ -232,7 +235,14 @@ export function Icon({
   filled?: boolean;
 }) {
   const Glyph = ICONS[name];
+  const raise = RAISE[name];
   return (
-    <Glyph size={size} color={colour} strokeWidth={strokeWidth} fill={filled ? colour : "none"} />
+    <Glyph
+      size={size}
+      color={colour}
+      strokeWidth={strokeWidth}
+      fill={filled ? colour : "none"}
+      style={raise ? { transform: [{ translateY: -size * raise }] } : undefined}
+    />
   );
 }

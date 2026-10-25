@@ -88,7 +88,8 @@ export function McpGemini() {
       <H2>The Gemini app</H2>
       <p>
         Custom apps in the Gemini app are open to personal accounts of adults in the US, in English.
-        Google signs the app in on its own, so no client ID is needed.
+        Google also requires Keep Activity to be on. Lymi’s connection from the Gemini app has not
+        been verified; the CLI setup above is the documented path.
       </p>
       <Steps>
         <div>
@@ -107,9 +108,9 @@ export function McpGemini() {
         </div>
       </Steps>
       <p>
-        If Gemini asks for a client ID and secret instead, it could not identify itself to Lymi.
-        Write to <a href="mailto:hello@lymi.app">hello@lymi.app</a>; Lymi has not been tested there
-        yet.
+        If Gemini asks for a client ID and secret, stop there. The public client ID above is for
+        Gemini CLI and its local callback; it cannot be reused for the Gemini app. Write to{" "}
+        <a href="mailto:hello@lymi.app">hello@lymi.app</a>; Lymi has not been tested there yet.
       </p>
 
       <H2>When it does not connect</H2>

@@ -23,8 +23,8 @@ export function McpOverview() {
           <StepTitle>The assistant asks, and is turned away</StepTitle>
           <p>
             Its first request has no token, so Lymi answers <code>401</code> with a{" "}
-            <code>WWW-Authenticate</code> header naming where to go next. That header is the whole
-            handshake: nothing is configured by hand.
+            <code>WWW-Authenticate</code> header naming where to go next. The assistant follows that
+            metadata to sign in. Some clients also need the public client ID in their setup guide.
           </p>
         </div>
         <div>
@@ -79,9 +79,9 @@ export function McpOverview() {
 
       <H2>What a connected assistant can do</H2>
       <p>
-        The same surface as the API, less review grading. The assistant reads their descriptions, so
-        you rarely name one yourself: ask it to add the cards from a lesson, and it finds the deck
-        and calls <code>add_cards</code>.
+        Tools for decks, cards, organization and learning progress. The assistant reads their
+        descriptions, so you rarely name one yourself: ask it to add the cards from a lesson, and it
+        finds the deck and calls <code>add_cards</code>.
       </p>
       <Defs
         items={[
@@ -226,8 +226,9 @@ export function McpOverview() {
           mint or revoke one.
         </li>
         <li>
-          <strong>Delete anything.</strong> Archive and restore are the only two, and both are
-          reversible.
+          <strong>Delete your account.</strong> Account deletion stays in the app. Cards, decks and
+          sections are archived and can be restored. Deleting a series is permanent; its decks can
+          stay in Library or be archived with it.
         </li>
       </ul>
       <p>
@@ -237,22 +238,21 @@ export function McpOverview() {
 
       <H2>What the client has to support</H2>
       <p>
-        Lymi follows the MCP authorization spec of 28 July 2026. Two things follow, and both can
-        stop a client connecting:
+        Lymi uses OAuth with client metadata and PKCE. Check these requirements if a custom MCP
+        client cannot connect:
       </p>
       <ul>
         <li>
           <strong>Client ID Metadata Documents.</strong> A client identifies itself with an HTTPS
-          URL that serves its own metadata. Dynamic client registration is deprecated by that spec
-          and is switched off here, so a client that only knows how to register dynamically cannot
-          connect.
+          URL that serves its own metadata. Dynamic client registration is switched off in Lymi. Use
+          a client’s metadata URL or the public client ID from its Lymi setup guide.
         </li>
         <li>
           <strong>PKCE with S256.</strong> The only code challenge method Lymi accepts.
         </li>
       </ul>
       <p>
-        You also need a Lymi account. Anyone can sign up, with Google or with an email address and a
+        You also need a Lymi account. Sign in with Apple, Google or a confirmed email address and
         password.
       </p>
 

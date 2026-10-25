@@ -1,113 +1,81 @@
-import { Lantern } from "../../Lantern";
-import { Code } from "../Code";
-import { OPENAPI_URL, ORIGIN } from "../origin";
-import { Defs, H2, Lead, NextLinks, Note } from "../Prose";
+import { H2, Lead, NextLinks } from "../Prose";
 
 export function Overview() {
   return (
     <div className="doc-prose">
       <Lead>
-        Lymi keeps the cards you are learning and asks you about them again at the right time. An
-        assistant or a script can do anything you do by hand, over the same API the app uses.
+        Learn how to add and organize cards, review what you are learning, and connect Lymi to the
+        tools you already use.
       </Lead>
-
-      <div className="mb-10 flex items-center gap-4 rounded-lg bg-plate p-4 edge">
-        <Lantern variant="lit" flicker glow className="size-14 shrink-0" />
-        <p className="!mb-0 text-base text-text-2">
-          Add a card once, wherever you meet it. Lymi keeps it and brings it back before you forget.
-        </p>
-      </div>
-
-      <H2>Two ways in</H2>
-      <p>
-        Pick by who is calling. An assistant such as Claude or ChatGPT signs in as you, over OAuth,
-        and never sees a key. A script you wrote uses an API key.
-      </p>
-
-      <Defs
-        items={[
-          {
-            term: "MCP",
-            def: (
-              <>
-                An assistant connects to <code>/mcp</code> and asks you to sign in once. Best for
-                “add these five cards to my Italian deck” in the middle of a conversation.
-              </>
-            ),
-          },
-          {
-            term: "API key",
-            def: (
-              <>
-                A header on every request, made in Settings. Best for curl, cron jobs, a shortcut on
-                your phone, and anything you run yourself.
-              </>
-            ),
-          },
-        ]}
-      />
-
-      <H2>The API has its own origin</H2>
-      <p>
-        The guides live on the public website, while the API and MCP server stay with the product.
-        There is no version in the path.
-      </p>
-      <Code lang="text" code={ORIGIN} label="Base URL" />
-      <p>
-        The machine-readable description of every route lives at{" "}
-        <a href={OPENAPI_URL}>{OPENAPI_URL}</a>. The <a href="/docs/api">API reference</a> is that
-        document, rendered.
-      </p>
-
-      <H2>What an integration may do</H2>
-      <p>
-        A key or a connected assistant can read your decks and cards, add and edit them, and archive
-        or restore them. Three things are yours alone, from the app, whatever the scope:
-      </p>
-      <ul>
-        <li>
-          <strong>Grading a review.</strong> Only you can say whether you remembered a card.
-        </li>
-        <li>
-          <strong>Managing API keys.</strong> A key can never mint or revoke another key.
-        </li>
-        <li>
-          <strong>Deleting anything.</strong> There is no delete. Archiving hides a card and
-          restoring brings it back with its schedule intact.
-        </li>
-      </ul>
-
-      <Note title="Nothing lands unseen">
-        A card added over the API carries <code>createdBy: "api"</code>, and one added over MCP
-        carries <code>createdBy: "mcp"</code>. Every write is recorded in the audit log with the
-        actor that made it, so you can always tell your own typing from a script’s.
-      </Note>
-
-      <H2>Where to go next</H2>
+      <H2>Use Lymi</H2>
       <NextLinks
         items={[
           {
-            to: "/docs/mcp",
-            title: "Connect an assistant",
-            blurb: "Sign Claude or ChatGPT in to your own decks.",
+            to: "/docs/getting-started",
+            title: "Getting started",
+            blurb: "Choose a deck, add your first cards and begin a review.",
           },
           {
-            to: "/docs/quickstart",
-            title: "Quickstart",
-            blurb: "Make a key and add a card in about two minutes.",
+            to: "/docs/decks",
+            title: "Decks and sharing",
+            blurb: "Organize cards with sections, series and tags, or share a deck.",
           },
           {
-            to: "/docs/cards",
-            title: "Decks and cards",
-            blurb: "The shape of a card, and what happens when you add one twice.",
+            to: "/docs/mobile",
+            title: "Lymi on your phone",
+            blurb: "Add the web app to your home screen.",
           },
           {
-            to: "/docs/api",
-            title: "API reference",
-            blurb: "Every route, parameter and response.",
+            to: "/docs/scheduling",
+            title: "Review scheduling",
+            blurb: "When a card returns and how Lymi chooses what comes next.",
           },
         ]}
       />
+      <H2>Bring cards in or take them out</H2>
+      <NextLinks
+        items={[
+          {
+            to: "/docs/import",
+            title: "Import cards",
+            blurb: "Bring decks from Anki, Mochi, Noji, Pleco, Quizlet or a Lymi file.",
+          },
+          {
+            to: "/docs/export",
+            title: "Export your decks",
+            blurb: "Choose an Anki package, a Lymi file or a spreadsheet.",
+          },
+        ]}
+      />
+      <H2>Connect your tools</H2>
+      <NextLinks
+        items={[
+          {
+            to: "/docs/yomitan",
+            title: "Yomitan",
+            blurb: "Turn dictionary lookups into cards while you read.",
+          },
+          {
+            to: "/docs/readwise",
+            title: "Readwise",
+            blurb: "Turn new highlights from reading apps into cards.",
+          },
+          {
+            to: "/docs/mcp",
+            title: "MCP assistants",
+            blurb: "Connect Claude, ChatGPT, Codex, Gemini, Cursor or Grok.",
+          },
+          {
+            to: "/docs/quickstart",
+            title: "API quickstart",
+            blurb: "Make a key and add a card from your own script.",
+          },
+        ]}
+      />
+      <p>
+        The <a href="/docs/api">API reference</a> lists routes, parameters and responses. Technical
+        card fields and language formats live in the API section.
+      </p>
     </div>
   );
 }

@@ -41,8 +41,8 @@ export function Authentication() {
 
       <H2>Send the key in a header</H2>
       <p>
-        Put the key in <code>x-api-key</code>. There is no bearer token and no query parameter, so a
-        key can never end up in a log line or a browser history.
+        Put the key in <code>x-api-key</code>. There is no bearer token and no query parameter, so
+        the key stays out of request URLs and browser history.
       </p>
       <Code
         lang="http"
@@ -74,7 +74,7 @@ content-type: application/json`}
           <tr>
             <Td className="font-mono text-sm">read</Td>
             <Td>List and read decks, cards, the review queue and settings.</Td>
-            <Td>Anything that changes something.</Td>
+            <Td>Edit or archive learning content. Export requests are allowed with read access.</Td>
           </tr>
           <tr>
             <Td className="font-mono text-sm">write</Td>
@@ -86,8 +86,8 @@ content-type: application/json`}
 
       <H3>What no key can do</H3>
       <p>
-        Two routes need your own session in the app and answer <code>403</code> to any key, whatever
-        its scope:
+        These actions need your own session in the app and answer <code>403</code> to any key,
+        whatever its scope:
       </p>
       <ul>
         <li>

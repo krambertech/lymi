@@ -33,7 +33,7 @@ export function llmsTxt(): string {
     "",
     "> Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.",
     "",
-    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An AI assistant can add and enrich cards over MCP or the HTTP API, and anything it writes is marked as AI. Decks can be published, joined by a link, imported from Anki or Mochi, and exported as an Anki package or a Lymi file. Lymi is free to use.",
+    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An assistant can add cards over MCP or the HTTP API. Activity names the app that wrote them; only fields filled by Lymi’s own AI carry an AI badge. Decks can be published, joined by a link, imported from Anki, Mochi, Noji, Pleco, Quizlet or a Lymi file, and exported as an Anki package or a Lymi file. Lymi is free to use.",
     "",
     "## Pages",
     "",

@@ -24,7 +24,13 @@ export type DocPath =
   | "/docs/mcp/gemini"
   | "/docs/mcp/cursor"
   | "/docs/mcp/grok"
-  | "/docs/yomitan";
+  | "/docs/yomitan"
+  | "/docs/getting-started"
+  | "/docs/decks"
+  | "/docs/import"
+  | "/docs/import-from-quizlet"
+  | "/docs/import-from-lymi"
+  | "/docs/readwise";
 
 export interface DocPage {
   to: DocPath;
@@ -42,29 +48,127 @@ export const PAGES: DocPage[] = [
     to: "/docs",
     nav: "Overview",
     title: "Lymi docs",
-    blurb: "Connect an assistant or write your own scripts, and where to start.",
+    blurb: "Guides for learning, imports, exports, integrations, MCP and the API.",
     section: "Start",
+  },
+  {
+    to: "/docs/getting-started",
+    nav: "Getting started",
+    title: "Getting started",
+    blurb: "Add your first cards, review what is due and find your way around Lymi.",
+    section: "Start",
+  },
+  {
+    to: "/docs/decks",
+    nav: "Decks and sharing",
+    title: "Decks and sharing",
+    blurb: "Organize cards, use sections and series, and share a deck.",
+    section: "Using Lymi",
+  },
+  {
+    to: "/docs/mobile",
+    nav: "Lymi on your phone",
+    title: "Lymi on your phone",
+    blurb: "Add the Lymi web app to your phone’s home screen.",
+    section: "Using Lymi",
+  },
+  {
+    to: "/docs/scheduling",
+    nav: "Review scheduling",
+    title: "How reviews are scheduled",
+    blurb: "When a card is due, which card comes next, and the simulations behind the rules.",
+    section: "Using Lymi",
+  },
+  {
+    to: "/docs/import",
+    nav: "Overview",
+    title: "Import cards",
+    blurb: "Choose a format, check the preview and undo an import.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-anki",
+    nav: "Anki",
+    title: "Import from Anki",
+    blurb: "Bring your Anki decks across with their pictures, tags and review history.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-mochi",
+    nav: "Mochi",
+    title: "Import from Mochi",
+    blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-noji",
+    nav: "Noji",
+    title: "Import from Noji",
+    blurb: "Bring your Noji decks across with their sub-decks, pictures and learning progress.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-pleco",
+    nav: "Pleco",
+    title: "Import from Pleco",
+    blurb: "Bring your Pleco flashcards across with their pinyin, definitions and categories.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-quizlet",
+    nav: "Quizlet and text lists",
+    title: "Import from Quizlet",
+    blurb: "Bring terms and definitions into a new or existing deck.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/import-from-lymi",
+    nav: "Lymi file",
+    title: "Import a Lymi file",
+    blurb: "Bring cards, media and review history from a Lymi export.",
+    section: "Imports",
+  },
+  {
+    to: "/docs/export",
+    nav: "Export",
+    title: "Export your decks",
+    blurb: "Take a deck or your library out as an Anki package or a Lymi file.",
+    section: "Exports",
+  },
+  {
+    to: "/docs/yomitan",
+    nav: "Yomitan",
+    title: "Yomitan",
+    blurb: "Add the words you look up in Yomitan’s pop-up dictionary as cards.",
+    section: "Integrations",
+  },
+  {
+    to: "/docs/readwise",
+    nav: "Readwise",
+    title: "Readwise",
+    blurb: "Turn new reading highlights into cards and choose where they go.",
+    section: "Integrations",
   },
   {
     to: "/docs/mcp",
     nav: "Overview",
     title: "Connect an assistant",
     blurb: "What the MCP server is, how sign-in works, and what a connected assistant may do.",
-    section: "Assistants",
+    section: "MCP assistants",
   },
   {
     to: "/docs/mcp/claude",
     nav: "Claude",
     title: "Claude",
     blurb: "Connect Lymi to Claude Desktop, claude.ai and Claude Code.",
-    section: "Assistants",
+    section: "MCP assistants",
   },
   {
     to: "/docs/mcp/chatgpt",
     nav: "ChatGPT and Codex",
     title: "ChatGPT and Codex",
-    blurb: "Connect Lymi to ChatGPT connectors and to the Codex CLI.",
-    section: "Assistants",
+    blurb: "Connect Lymi to ChatGPT as a custom MCP plugin and to the Codex CLI.",
+    section: "MCP assistants",
   },
   {
     to: "/docs/mcp/gemini",
@@ -72,93 +176,21 @@ export const PAGES: DocPage[] = [
     title: "Gemini",
     blurb:
       "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it, and to the Gemini app.",
-    section: "Assistants",
+    section: "MCP assistants",
   },
   {
     to: "/docs/mcp/cursor",
     nav: "Cursor",
     title: "Cursor",
     blurb: "Connect Lymi to Cursor, with the client ID Lymi publishes for it.",
-    section: "Assistants",
+    section: "MCP assistants",
   },
   {
     to: "/docs/mcp/grok",
     nav: "Grok",
     title: "Grok",
     blurb: "Connect Lymi to Grok as a custom connector, with the client ID Lymi publishes for it.",
-    section: "Assistants",
-  },
-  {
-    to: "/docs/yomitan",
-    nav: "Yomitan",
-    title: "Yomitan",
-    blurb: "Add the words you look up in Yomitan’s pop-up dictionary as cards.",
-    section: "Add from other apps",
-  },
-  {
-    to: "/docs/mobile",
-    nav: "Lymi on your phone",
-    title: "Lymi on your phone",
-    blurb:
-      "Add Lymi to the home screen of an iPhone or Android phone until the mobile app arrives.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/cards",
-    nav: "Decks and cards",
-    title: "Decks and cards",
-    blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/languages",
-    nav: "Languages",
-    title: "Languages",
-    blurb:
-      "How a card's pronunciation and example are written in each language with its own format.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/import-from-anki",
-    nav: "Import from Anki",
-    title: "Import from Anki",
-    blurb: "Bring your Anki decks across with their pictures, tags and review history.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/import-from-mochi",
-    nav: "Import from Mochi",
-    title: "Import from Mochi",
-    blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/import-from-noji",
-    nav: "Import from Noji",
-    title: "Import from Noji",
-    blurb: "Bring your Noji decks across with their sub-decks, pictures and learning progress.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/import-from-pleco",
-    nav: "Import from Pleco",
-    title: "Import from Pleco",
-    blurb: "Bring your Pleco flashcards across with their pinyin, definitions and categories.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/export",
-    nav: "Export",
-    title: "Export your decks",
-    blurb: "Take a deck or your library out as an Anki package or a Lymi file.",
-    section: "Guides",
-  },
-  {
-    to: "/docs/scheduling",
-    nav: "Review scheduling",
-    title: "How reviews are scheduled",
-    blurb: "When a card is due, which card comes next, and the simulations behind the rules.",
-    section: "Guides",
+    section: "MCP assistants",
   },
   {
     to: "/docs/quickstart",
@@ -172,6 +204,21 @@ export const PAGES: DocPage[] = [
     nav: "Authentication",
     title: "Authentication",
     blurb: "API keys, scopes, what a key can never do, and every error you can get.",
+    section: "API",
+  },
+  {
+    to: "/docs/cards",
+    nav: "Card fields and duplicates",
+    title: "Decks and cards",
+    blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
+    section: "API",
+  },
+  {
+    to: "/docs/languages",
+    nav: "Language formats",
+    title: "Languages",
+    blurb:
+      "How a card's pronunciation and example are written in each language with its own format.",
     section: "API",
   },
   {
@@ -192,9 +239,11 @@ export const PAGES: DocPage[] = [
 
 export const SECTIONS: { name: string; pages: DocPage[] }[] = [
   "Start",
-  "Assistants",
-  "Add from other apps",
-  "Guides",
+  "Using Lymi",
+  "Imports",
+  "Exports",
+  "Integrations",
+  "MCP assistants",
   "API",
 ].map((name) => ({ name, pages: PAGES.filter((p) => p.section === name) }));
 

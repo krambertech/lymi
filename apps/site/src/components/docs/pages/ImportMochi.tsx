@@ -41,8 +41,8 @@ export function ImportMochi() {
           <ul>
             <li>
               <strong>The language of each deck.</strong> Mochi does not store a language, so Lymi
-              guesses from the deck name. Lymi needs the language to find duplicates and to say
-              words out loud.
+              uses the deck name and its cards. Lymi needs the language to find duplicates and to
+              say words out loud.
             </li>
             <li>
               <strong>How a card will look.</strong> Lymi shows one card of each kind as it will
@@ -98,7 +98,7 @@ export function ImportMochi() {
           },
           {
             term: "Review history",
-            def: "Every past review comes across on its original day and shows in Insights. Remembered counts as Good and Forgot as Again. Each card keeps the due date it had in Mochi.",
+            def: "Every past review comes across on its original day and shows in Insights. Remembered counts as Good and a forgotten review as Forgot. Each card keeps the due date it had in Mochi.",
           },
           {
             term: "Archived cards",

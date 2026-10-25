@@ -83,8 +83,8 @@ for x in results:
       />
       <Note title="200 cards a call">
         A batch takes up to 200 cards, across any decks. For a longer list, send it in chunks of
-        200. There is no cursor and no partial success: a batch either validates and runs, or
-        returns <code>400</code> and changes nothing.
+        200. A malformed batch returns <code>400</code> before it runs. Once it runs, each card has
+        its own added, skipped or error outcome. Check every result and retry only failures.
       </Note>
 
       <H2>Re-run a script without making a mess</H2>
@@ -132,8 +132,8 @@ if (edits.length > 0) {
   | jq -r '.[] | select(.due > 0) | "\\(.due)\\t\\(.name)"'`}
       />
       <p>
-        For the cards themselves rather than the counts, ask the queue. It comes back oldest due
-        first, and <code>total</code> tells you how many there are beyond the page you asked for.
+        For the cards themselves rather than the counts, ask the queue. It follows the same draw as
+        a review, and <code>total</code> tells you how many there are beyond the page you asked for.
       </p>
       <Code
         lang="bash"
@@ -142,22 +142,24 @@ if (edits.length > 0) {
   | jq -r '"\\(.total) due", (.items[] | "  \\(.card.term) — \\(.card.meaning // "no meaning yet")")'`}
       />
 
-      <H2>Back a deck up</H2>
+      <H2>Export a deck</H2>
       <p>
-        Cards come back with their scheduling state, so a dump is enough to rebuild the deck
-        elsewhere or to keep a copy outside Lymi.
+        Use the export API for a portable copy with media and review history. A read key can start
+        an export. Poll the returned export’s status, then download its <code>downloadUrl</code>{" "}
+        with the same key when it is done. The file is available for a day.
       </p>
       <Code
         lang="bash"
-        label="Terminal"
-        code={`DECK=0mtoyiymqa34h1xeaqo
-
-curl -s "$LYMI_URL/api/decks/$DECK/cards" -H "x-api-key: $LYMI_KEY" \\
-  > "italian-$(date +%Y-%m-%d).json"`}
+        label="Start a Lymi export"
+        code={`curl "$LYMI_URL/api/exports" \\
+  -H "x-api-key: $LYMI_KEY" \\
+  -H "content-type: application/json" \\
+  -d '{"format":"lymi","deckId":"0mtoyiymqa34h1xeaqo"}'`}
       />
       <p>
-        Want it as a spreadsheet instead? The deck menu in the app exports a CSV. This route is for
-        the full shape, including <code>fsrs</code> and every timestamp.
+        The <a href="/docs/export">export guide</a> explains formats and ownership limits. The{" "}
+        <a href="/docs/api">API reference</a> documents polling and downloads. Listing a deck’s
+        cards alone does not include every mode’s state, full review history or media.
       </p>
 
       <NextLinks

@@ -6,7 +6,40 @@ import { type DocPage, PAGES } from "./nav";
 
 /** Words a reader might type that do not appear in a page's title or blurb. */
 const TERMS: Record<string, string[]> = {
-  "/docs": ["openapi", "base url", "rate limit", "what can i build"],
+  "/docs": ["help", "guides", "documentation"],
+  "/docs/getting-started": ["first card", "smart add", "pdf", "photo", "daily goal", "AI services"],
+  "/docs/decks": [
+    "share",
+    "join link",
+    "member",
+    "owner",
+    "sections",
+    "series",
+    "tags",
+    "explore",
+    "archive",
+  ],
+  "/docs/import": ["formats", "move", "migrate", "preview", "undo", "archive import"],
+  "/docs/import-from-quizlet": [
+    "quizlet",
+    "csv",
+    "tsv",
+    "txt",
+    "paste",
+    "spreadsheet",
+    "separators",
+  ],
+  "/docs/import-from-lymi": ["zip", "restore", "backup", "another account", "history"],
+  "/docs/readwise": [
+    "kindle",
+    "kobo",
+    "apple books",
+    "reader",
+    "highlights",
+    "token",
+    "books",
+    "hourly",
+  ],
   "/docs/quickstart": ["curl", "first request", "x-api-key", "hello world", "get started"],
   "/docs/authentication": [
     "api key",

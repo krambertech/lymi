@@ -69,7 +69,7 @@ export function McpGemini() {
       <p>
         Gemini CLI keeps the tokens in <code>~/.gemini/mcp-oauth-tokens.json</code> and refreshes
         them on its own. To disconnect for good, remove the <code>lymi</code> entry and revoke the
-        grant under <strong>Connected apps</strong> in Lymi.
+        grant under <strong>Settings → Apps</strong> in Lymi.
       </p>
 
       <H2>Why the client ID is on lymi.app</H2>

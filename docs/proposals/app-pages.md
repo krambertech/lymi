@@ -30,7 +30,7 @@ One scrolling page under Settings, with the way back to Settings on every screen
 | A plain API key for a script | A row in API keys | Stays a row: a key is not an app. A key made for an app, as Yomitan's is, shows on that app's page |
 | Anki, Mochi, Noji, Lymi, Quizlet, Pleco imports | One page per app with export steps | Stay import flows, which are one file rather than a standing connection. Their steps move onto a plate so the two kinds of page agree |
 
-The Settings groups stay as they are: Connected apps for assistants, Add from other apps for Readwise and Yomitan. Every row in either opens its app's page.
+On 25 October 2026 Kateryna replaced the two Settings groups with one **Apps** group: connected apps first as rows, then an "Add an app" strip of chips for every supported app not yet connected (Claude, ChatGPT, Gemini, Grok, Cursor, Readwise, Yomitan and Custom MCP for any other MCP client). Every row and chip opens its app's page; an assistant's page before it connects holds the guide's steps, Lymi's MCP address and any client ID to copy. With nothing connected the group shows the apps' marks, one line on what they do and every chip. A separate Apps page and an assistant-first page were considered and rejected. Import, Export and API keys stay their own groups, and a key an app made, such as Yomitan's, shows only on that app's page.
 
 ## What it needs
 

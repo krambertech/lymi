@@ -12,10 +12,11 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
 import { useConfirmStep } from "../lib/use-confirm-step";
+import { YOMITAN_KEY_NAME } from "../lib/yomitan";
 import { Button } from "./button";
 import { Chip } from "./chip";
-import { DocLink } from "./connected-apps-section";
 import { CopyField } from "./copy-field";
+import { DocLink } from "./doc-link";
 import { EmptySection } from "./empty-state";
 import { InlineError } from "./inline-error";
 import { Lantern } from "./lantern";
@@ -54,15 +55,15 @@ export function ApiKeysSection() {
     },
   });
 
-  // The new key has its own panel above; listing it as well reads as two keys.
-  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
+  // The new key has its own panel above, and Yomitan's is on Yomitan's page; listing either here reads as two keys.
+  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id && k.name !== YOMITAN_KEY_NAME);
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
     <SettingsGroup
       id="api-keys"
       title={t`API keys`}
-      description={t`For scripts and curl. For AI apps, use Connected apps instead.`}
+      description={t`For scripts and curl. For AI assistants, use Apps instead.`}
     >
       {fresh && (
         <FreshKey

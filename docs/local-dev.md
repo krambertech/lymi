@@ -182,7 +182,7 @@ A JavaScript change needs no native build: `npx expo export:embed --platform ios
 
 ## Connect Readwise without an account
 
-On a loopback or preview server, the token `lymi-dev-readwise-0000` reaches a fake Readwise with three invented books (Italian, Estonian, English) instead of readwise.io. Paste it in Settings → Add from other apps → Readwise. A book's language comes from the AI, so without `AI_GATEWAY_URL` and `AI_GATEWAY_TOKEN` every book stays unknown until a later pull reads it again.
+On a loopback or preview server, the token `lymi-dev-readwise-0000` reaches a fake Readwise with three invented books (Italian, Estonian, English) instead of readwise.io. Paste it in Settings → Apps → Readwise. A book's language comes from the AI, so without `AI_GATEWAY_URL` and `AI_GATEWAY_TOKEN` every book stays unknown until a later pull reads it again.
 
 ## Call the routes directly
 

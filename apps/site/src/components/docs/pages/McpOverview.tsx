@@ -73,7 +73,7 @@ export function McpOverview() {
         ask you to reconnect.
       </p>
       <p>
-        Disconnect an assistant under <strong>Settings → Connected apps</strong> and its next
+        Disconnect an assistant from its page under <strong>Settings → Apps</strong> and its next
         request is refused, even if its token has not expired. It has to ask you again.
       </p>
 

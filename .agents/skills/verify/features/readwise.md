@@ -4,7 +4,7 @@ Readwise sends the learner's book highlights to Lymi, which follows the books in
 
 ## Reach
 
-Settings, **Add from other apps**, the **Readwise** row, which opens `/settings/readwise`.
+Settings, **Apps**, the **Readwise** chip (or its row once connected), which opens `/settings/readwise`.
 
 ## Drive
 

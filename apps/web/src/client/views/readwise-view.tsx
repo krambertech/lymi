@@ -4,7 +4,7 @@ import { RefreshCw } from "lucide-react";
 import { type FormEvent, type ReactNode, useState } from "react";
 import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
-import { DocLink } from "../components/connected-apps-section";
+import { DocLink } from "../components/doc-link";
 import { InlineError } from "../components/inline-error";
 import { ReadwiseMark } from "../components/readwise-mark";
 import { Skeleton } from "../components/skeleton";
@@ -237,7 +237,7 @@ function TokenForm({
 function Connect(props: Props) {
   const { t } = useLingui();
   const { connection } = props;
-  const needsToken = !connection || connection.status !== "active";
+  const needsToken = connection?.status !== "active";
   return (
     <AppConnect
       name="Readwise"

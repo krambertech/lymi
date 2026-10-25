@@ -1,11 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { BookA, Copy, KeyRound } from "lucide-react";
+import { Copy, KeyRound } from "lucide-react";
 import { FreshKey, lastUsed, shortDate } from "../components/api-keys-section";
 import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { InlineError } from "../components/inline-error";
 import { Skeleton } from "../components/skeleton";
+import { YomitanMark } from "../components/yomitan-mark";
 import type { ApiKeySummary } from "../lib/api";
 import { YOMITAN_ACTIVITY_APP } from "../lib/yomitan";
 
@@ -38,7 +39,7 @@ export function YomitanView(props: Props) {
     <AppPage
       appKey="yomitan"
       name="Yomitan"
-      mark={<YomitanMark />}
+      mark={<YomitanMark className="size-14" />}
       status={status}
       does={t`A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in.`}
       action={
@@ -69,18 +70,6 @@ export function YomitanView(props: Props) {
         </>
       )}
     </AppPage>
-  );
-}
-
-/** Yomitan's icon is GPL-3.0 artwork with no separate licence, so a dictionary stands in for it. */
-function YomitanMark() {
-  return (
-    <span
-      aria-hidden="true"
-      className="edge grid size-14 shrink-0 place-items-center rounded-lg bg-plate text-text"
-    >
-      <BookA className="size-7" strokeWidth={1.75} />
-    </span>
   );
 }
 

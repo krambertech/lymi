@@ -1,6 +1,8 @@
 # App pages
 
-Every app that writes to the learner's decks has one page built from `AppPage` in `apps/web/src/client/components/app-page.tsx`, so each app answers the same questions in the same places. Readwise and Yomitan are on it; connected apps follow ([the proposal](../proposals/app-pages.md)).
+Every app that writes to the learner's decks has one page built from `AppPage` in `apps/web/src/client/components/app-page.tsx`, so each app answers the same questions in the same places. Readwise, Yomitan and the AI assistants are on it ([the proposal](../proposals/app-pages.md)).
+
+Settings reaches them from one Apps group (`AppsSection`): connected apps first as rows with their mark and status, then **Add an app**, a strip of chips for every supported app not yet connected, ending with **Custom MCP** for any other MCP client. With nothing connected the group is a plate with the apps' marks fanned as in the rail's offer, one line on what assistants and reading apps do, and every chip. An assistant's page lives at `/settings/apps/<key>`: before it connects, the steps from its guide, Lymi's MCP address and any client ID to copy, and a button to the app when it has a web page for it; once connected, **Try asking** examples that copy to the clipboard, what it may do, its Activity and Disconnect. A connected app Lymi does not recognise gets the same page at its grant's id.
 
 The page sits under Settings, with the way back to Settings on every screen size. The header holds the app's real mark on a plate tile, its name, a status chip with one line under it, one line on what the app does for the learner, and its one everyday action when it has one, such as **Check now**. The status chip is a word as well as a colour: Connected, Not connected, Token refused.
 

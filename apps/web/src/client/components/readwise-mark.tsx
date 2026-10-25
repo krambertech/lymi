@@ -7,17 +7,27 @@ const BLOCK = "M309.691 117.748H184.799V236.976H309.691V117.748Z";
 const COUNTER =
   "M293.999 138.338C287.183 150.865 297.694 209.904 297.694 209.904C297.838 213.023 295.727 215.759 292.655 216.431C292.655 216.431 228.289 216.719 207.025 234.383";
 
-/** Readwise's mark on a plate tile, in the room's ink so it reads by day and at night. */
-export function ReadwiseMark({ className }: { className?: string | undefined }) {
+/**
+ * Readwise's mark on a plate tile, in the room's ink so it reads by day and at night. `bare` drops
+ * the tile, for a mark inside a chip.
+ */
+export function ReadwiseMark({
+  className,
+  bare = false,
+}: {
+  className?: string | undefined;
+  bare?: boolean;
+}) {
   return (
     <span
       aria-hidden="true"
       className={clsx(
-        "edge grid shrink-0 place-items-center rounded-lg bg-plate text-text",
+        "grid shrink-0 place-items-center text-text",
+        !bare && "edge rounded-lg bg-plate",
         className,
       )}
     >
-      <svg viewBox="100 100 300 300" className="size-3/5">
+      <svg viewBox="100 100 300 300" className={bare ? "size-full" : "size-3/5"}>
         <path d={R} fill="currentColor" />
         <path d={BLOCK} fill="currentColor" />
         <path d={COUNTER} fill="var(--plate)" />

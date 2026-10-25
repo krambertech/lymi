@@ -196,7 +196,7 @@ test("an assistant already connected turns its card into what it can do", async 
     </QueryClientProvider>,
   );
   await expect.element(page.getByRole("heading", { name: "Claude is connected" })).toBeVisible();
-  await expect.element(page.getByRole("link", { name: "Connected apps" })).toBeVisible();
+  await expect.element(page.getByRole("link", { name: "Your apps" })).toBeVisible();
   await expect.element(page.getByText("Connect your AI assistant")).not.toBeInTheDocument();
 });
 

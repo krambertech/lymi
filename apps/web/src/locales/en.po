@@ -1137,9 +1137,6 @@ msgstr "AI uses this choice when filling empty fields."
 msgid "AI uses this choice when filling empty fields. Only you see it."
 msgstr "AI uses this choice when filling empty fields. Only you see it."
 
-msgid "AI wrote part of this card"
-msgstr "AI wrote part of this card"
-
 msgid "AI wrote this"
 msgstr "AI wrote this"
 

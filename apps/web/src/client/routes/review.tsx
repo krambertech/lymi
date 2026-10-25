@@ -794,8 +794,7 @@ function Review() {
     if (revealed) setRevealed(false);
   }
   const hook = current?.card.hook ?? null;
-  const hookSource = current?.card.hookSource ?? null;
-  const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
+  const steps = useMemo(() => aidSteps({ hook }), [hook]);
   const taken = aidState.key === showing ? aidState.taken : 0;
   const shownAfter = aidState.key === showing && aidState.shown;
   // Only a step taken before the reveal is help with recall; seeing the hook after it is not.

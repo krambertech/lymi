@@ -941,9 +941,6 @@ msgstr "Ahead"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "AI draft"
-
 msgid "AI example"
 msgstr "AI example"
 
@@ -982,9 +979,6 @@ msgstr "AI translates it after you save"
 
 msgid "AI translation"
 msgstr "AI translation"
-
-msgid "AI wrote part of this card"
-msgstr "AI wrote part of this card"
 
 msgid "AI wrote this"
 msgstr "AI wrote this"
@@ -2010,6 +2004,9 @@ msgstr "Draft"
 
 msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
 msgstr "Drafting a hook uses AI. Turn on AI services in You to draft one."
+
+msgid "Drafting…"
+msgstr "Drafting…"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Drag a series by its handle. Library shows them in this order."

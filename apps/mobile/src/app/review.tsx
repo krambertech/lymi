@@ -127,7 +127,7 @@ import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
-import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { Chip, StateChip } from "../ui/chip";
 import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
@@ -1373,13 +1373,6 @@ function CardPlate({
     (part): part is string => !!part,
   );
   const translation = shownTranslation(card);
-  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
-  const aiWritten =
-    card.meaningSource === "ai" ||
-    (card.exampleSource === "ai" && !!card.example) ||
-    (card.exampleTranslationSource === "ai" && !!translation) ||
-    (card.notesSource === "ai" && !!card.notes) ||
-    (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none.
   const place = section
     ? { icon: "section" as const, name: section }
@@ -1523,31 +1516,19 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {/* The hook has one place, under the cue, held from the start so peeking at it or showing it moves nothing. */}
-                  {hook && (
+                  {/* The hook has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
+                  {hook && hookShown ? (
                     <View className="pt-3">
-                      <View
-                        className="opacity-0"
-                        style={{ minHeight: HOOK_ROOM }}
-                        accessibilityElementsHidden
-                        importantForAccessibility="no-hide-descendants"
-                      >
-                        <HookLine text={hook.text} source={hook.source} still />
-                      </View>
-                      {hookShown ? (
-                        <View className="absolute inset-x-0 top-3">
-                          <HookLine text={hook.text} source={hook.source} still={still} />
-                        </View>
-                      ) : revealed && onShowHook ? (
-                        <View className="absolute inset-x-0 top-2">
-                          <ShowHookButton still={still} onShow={onShowHook} />
-                        </View>
-                      ) : null}
+                      <HookLine text={hook.text} still={still} />
                     </View>
-                  )}
+                  ) : hook && revealed && onShowHook ? (
+                    <View className="pt-2">
+                      <ShowHookButton still={still} onShow={onShowHook} />
+                    </View>
+                  ) : null}
                 </Animated.View>
                 {revealed && (
-                  <View className="gap-5 pt-5">
+                  <Animated.View layout={glide} className="gap-5 pt-5">
                     <Wick still={still} />
                     <View className="gap-3">
                       <Animated.View entering={arrive()}>
@@ -1645,21 +1626,18 @@ function CardPlate({
                           <CardNotes source={card.notes} className="text-base text-muted" />
                         </Animated.View>
                       )}
-                      {(place || aiWritten) && (
+                      {place && (
                         <Animated.View
                           entering={arrive()}
                           className="mt-1 flex-row flex-wrap items-center gap-1.5"
                         >
-                          {place && (
-                            <Chip size="sm" icon={place.icon}>
-                              {place.name}
-                            </Chip>
-                          )}
-                          {aiWritten && <AiCardChip />}
+                          <Chip size="sm" icon={place.icon}>
+                            {place.name}
+                          </Chip>
                         </Animated.View>
                       )}
                     </View>
-                  </View>
+                  </Animated.View>
                 )}
               </Pressable>
             </ScrollView>
@@ -1692,7 +1670,7 @@ function CardPlate({
                     </CardLine>
                     {hook && (
                       <View className="pt-3" style={{ minHeight: HOOK_ROOM }}>
-                        <HookLine text={hook.text} source={hook.source} still />
+                        <HookLine text={hook.text} still />
                       </View>
                     )}
                     <View className="gap-5 pt-5">

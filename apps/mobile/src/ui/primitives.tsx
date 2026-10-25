@@ -214,6 +214,8 @@ interface ButtonProps {
   /** A mark that is not one of Lymi's icons, such as Google's G. */
   lead?: ReactNode;
   loading?: boolean;
+  /** Its work is slow in coming and the label says so: a turning loader takes the icon's place, as on IconButton. */
+  busy?: boolean;
   /** Pressing cannot do anything yet. It dims and swallows the press, and VoiceOver still finds it. */
   disabled?: boolean;
   /** A secondary with a stronger edge, for the way in most learners take (Google on sign-in). */
@@ -234,6 +236,7 @@ export function Button({
   icon,
   lead,
   loading = false,
+  busy = false,
   disabled = false,
   strong = false,
   onPress,
@@ -241,7 +244,7 @@ export function Button({
 }: ButtonProps) {
   const p = usePalette();
   const { box, ink } = look(variant, p, strong);
-  const inert = loading || disabled;
+  const inert = loading || busy || disabled;
   return (
     <Press
       onPress={inert ? undefined : onPress}
@@ -250,13 +253,20 @@ export function Button({
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={detail ? `${label}, ${detail}` : undefined}
-      accessibilityState={{ busy: loading, disabled }}
+      accessibilityState={{ busy: loading || busy, disabled }}
       className={`flex-row items-center justify-center gap-2 ${box} ${HEIGHT[size]} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}
     >
       <View className={`flex-row items-center gap-2 ${loading ? "opacity-0" : ""}`}>
         {lead}
-        {icon && <Icon name={icon} colour={ink} size={ICON[size]} />}
+        {icon &&
+          (busy ? (
+            <Turning>
+              <Icon name="loading" colour={ink} size={ICON[size]} />
+            </Turning>
+          ) : (
+            <Icon name={icon} colour={ink} size={ICON[size]} />
+          ))}
         <Text className={`${LABEL[size]} font-medium`} style={{ color: ink }}>
           {label}
         </Text>

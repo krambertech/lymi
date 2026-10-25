@@ -941,9 +941,6 @@ msgstr "Впереди"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "Черновик AI"
-
 msgid "AI example"
 msgstr "Пример от AI"
 
@@ -982,9 +979,6 @@ msgstr "AI переведёт после сохранения"
 
 msgid "AI translation"
 msgstr "Перевод от AI"
-
-msgid "AI wrote part of this card"
-msgstr "Часть этой карточки написал AI"
 
 msgid "AI wrote this"
 msgstr "Это написал AI"
@@ -2010,6 +2004,9 @@ msgstr "Черновик"
 
 msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
 msgstr "Подсказку составляет AI. Включи AI-сервисы в разделе Ты, чтобы составить её."
+
+msgid "Drafting…"
+msgstr "Готовим…"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."

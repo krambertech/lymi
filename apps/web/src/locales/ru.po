@@ -1137,9 +1137,6 @@ msgstr "AI учитывает твой выбор при заполнении п
 msgid "AI uses this choice when filling empty fields. Only you see it."
 msgstr "AI учитывает твой выбор при заполнении пустых полей. Только ты его видишь."
 
-msgid "AI wrote part of this card"
-msgstr "Часть этой карточки написал AI"
-
 msgid "AI wrote this"
 msgstr "Это написал AI"
 

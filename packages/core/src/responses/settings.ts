@@ -12,6 +12,10 @@ export const SettingsOut = z
         "Whether Lymi may send the learner's cards, lesson material and words to be spoken to AI services. Null until they answer: the phone app asks first, and other callers proceed unless it is false.",
     }),
     aiConsentUpdatedAt: Timestamp.nullable(),
+    sessionReplay: z.boolean().nullable().meta({
+      description:
+        "Whether the web app may record how the learner moves through it, with their cards, names and typing masked. Null means yes; only false stops it.",
+    }),
     appLanguage: AppLanguage.nullable().meta({
       ...OPEN,
       description:

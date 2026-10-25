@@ -70,6 +70,22 @@ describe("PostHog proxy", () => {
     expect(events[0].properties.$geoip_country_code).toBe("UA");
   });
 
+  it("forwards session replay snapshots", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("{}")),
+    );
+    const batch = [{ event: "$snapshot", properties: { $session_id: "s", $snapshot_data: [] } }];
+    const response = await proxyPostHog(capture(JSON.stringify(batch), { path: "/s/" }), {
+      ip: "203.0.113.7",
+    });
+    expect(response.status).toBe(200);
+    const request = sent();
+    expect(request.url).toBe("https://eu.i.posthog.com/s/?ver=1");
+    expect(request.headers.has("x-forwarded-for")).toBe(false);
+    expect(JSON.parse(request.body)[0].properties.$session_id).toBe("s");
+  });
+
   it("refuses anything but capture endpoints", async () => {
     vi.stubGlobal("fetch", vi.fn());
     expect((await proxyPostHog(capture("{}", { path: "/flags/" }), {})).status).toBe(404);

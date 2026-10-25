@@ -2717,6 +2717,9 @@ msgstr "Hateful or offensive"
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
 
+msgid "Help improve Lymi"
+msgstr "Help improve Lymi"
+
 msgid "Hide password"
 msgstr "Hide password"
 
@@ -3203,6 +3206,9 @@ msgstr "Let this app use your Lymi?"
 
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
+
+msgid "Lets us see how you move through Lymi, so we can find what’s confusing. All text stays hidden."
+msgstr "Lets us see how you move through Lymi, so we can find what’s confusing. All text stays hidden."
 
 msgid "Library"
 msgstr "Library"
@@ -3788,6 +3794,9 @@ msgstr "Now in {elsewhere}"
 
 msgid "Off for mobile and web. Existing card text and saved audio stay."
 msgstr "Off for mobile and web. Existing card text and saved audio stay."
+
+msgid "Off. We don’t see how you move through Lymi."
+msgstr "Off. We don’t see how you move through Lymi."
 
 msgid "Often forgotten"
 msgstr "Often forgotten"

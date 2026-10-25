@@ -15,6 +15,8 @@ export type Settings = {
   /** Null until answered; the phone sends nothing to AI until it is true. */
   aiConsent?: boolean | null | undefined;
   aiConsentUpdatedAt?: string | null | undefined;
+  /** Null means yes; only false stops session replay. */
+  sessionReplay?: boolean | null | undefined;
   appLanguage: AppLanguage | null;
   meaningLanguage: string;
   dailyGoal: number;

@@ -329,6 +329,8 @@ export const userSettings = sqliteTable("user_settings", {
   /** Whether Lymi may send the learner's content to AI services. Null until they answer; the phone treats it as no. */
   aiConsent: integer("ai_consent", { mode: "boolean" }),
   aiConsentUpdatedAt: integer("ai_consent_updated_at", { mode: "timestamp_ms" }),
+  /** Whether the web app may replay how the learner moves through it. Null means yes; Settings turns it off. */
+  sessionReplay: integer("session_replay", { mode: "boolean" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */

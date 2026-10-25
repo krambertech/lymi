@@ -7,7 +7,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy covers Lymi’s website, apps, API and connected assistants.`;
-export const PRIVACY_UPDATED = msg`24 October 2026`;
+export const PRIVACY_UPDATED = msg`25 October 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -162,7 +162,13 @@ function PrivacyPolicyContent() {
           linked to your account identifier and include actions, counts, review grades, app and
           device information, country derived from the IP address, and technical AI usage such as
           model and cost. Events exclude card text, prompts, names, email addresses and credentials.
-          We do not use session replay or automatic click recording.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          PostHog may also record how the apps are used, to show where Lymi is hard to use.
+          Recordings hide all text and pictures. Turn them off in Settings with Help improve Lymi;
+          they also stop if you object to product analytics.
         </Trans>
       </p>
       <p>

@@ -21,6 +21,7 @@ import Svg, { Path } from "react-native-svg";
 import { useSessionHeaders } from "../auth/client";
 import { useAiConsent } from "../privacy/ai-consent";
 import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
+import { usePalette } from "../theme/palette";
 import { IconButton, Text } from "../ui/primitives";
 
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
@@ -285,6 +286,7 @@ export function SpeakerButton({
   quiet?: boolean;
 }) {
   const reduce = useReduceMotion();
+  const p = usePalette();
   const { anchor, style, tips } = useSoundError(error);
 
   return (
@@ -301,8 +303,13 @@ export function SpeakerButton({
           reach={12}
           // A clip voiced before is preloaded, so a load here is speech being made.
           busy={state === "loading"}
+          // A quiet speaker is a bare glyph in muted, a size down, so the term's stays the card's main one.
           glyph={(ink, size) => (
-            <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />
+            <Speaker
+              ink={quiet && !error ? p.muted : ink}
+              size={quiet ? size - 1 : size}
+              playing={state === "playing" && !reduce}
+            />
           )}
           onPress={() => {
             tips?.hide();

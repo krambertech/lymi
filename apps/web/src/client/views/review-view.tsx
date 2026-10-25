@@ -50,7 +50,7 @@ import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
-import { ExampleAudioButton, ExamplePlace } from "../components/example-audio";
+import { ExampleAudioButton, ExamplePlace, useExampleAudio } from "../components/example-audio";
 import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
@@ -454,6 +454,7 @@ export function ReviewCard({
   const { t, i18n } = useLingui();
   const reduce = useReduceMotion();
   const { card, mode } = item;
+  const exampleSound = useExampleAudio(card, "review");
   const picture = mode.cue === "image" ? card.image : null;
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
@@ -631,13 +632,15 @@ export function ReviewCard({
             language={card.language}
             known={knownReadings}
             translation={translation}
-            after={
+            speaker={
               measure ? (
                 <ExamplePlace card={card} />
               ) : (
-                <ExampleAudioButton card={card} surface="review" />
+                exampleSound && <ExampleAudioButton sound={exampleSound} />
               )
             }
+            speakerAfterLastWord
+            onPlay={measure || !exampleSound ? undefined : () => exampleSound.play("sentence")}
             className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
         </motion.div>

@@ -6,17 +6,19 @@ import { playAlone } from "../lib/now-playing";
 import { captureAnalytics } from "../lib/telemetry";
 import { AudioButton, AudioPlace } from "./audio-button";
 
-interface Props {
-  card: Pick<Card, "id" | "example" | "language" | "updatedAt">;
-  /** Where it was pressed, for `example_audio_played`. */
-  surface: "review" | "card";
-  className?: string | undefined;
-}
+type SpokenCard = Pick<Card, "id" | "example" | "language" | "updatedAt">;
+/** Where it was pressed, for `example_audio_played`. */
+type Surface = "review" | "card";
+/** What was pressed: the speaker, or in review the sentence itself. */
+type Control = "speaker" | "sentence";
 
 type Played = { url: string; audio: HTMLAudioElement; objectUrl: string };
 
-/** Reads the card's example aloud on a press, making its clip the first time; it never plays on its own. */
-export function ExampleAudioButton({ card, surface, className }: Props) {
+/**
+ * Reads the card's example aloud on a press, making its clip the first time; it never plays on its
+ * own. Null when the example cannot be spoken.
+ */
+export function useExampleAudio(card: SpokenCard, surface: Surface) {
   const { t } = useLingui();
   const played = useRef<Played | null>(null);
   const [state, setState] = useState<"idle" | "loading" | "playing">("idle");
@@ -48,7 +50,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
 
   if (!canSpeakExample(card)) return null;
 
-  const play = async () => {
+  const play = async (control: Control) => {
     if (state === "loading") return;
     setError(null);
     setLimited(null);
@@ -59,6 +61,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
       captureAnalytics("example_audio_played", {
         outcome,
         surface,
+        control,
         ...(kept ? {} : { wait_ms: waited() }),
       });
     try {
@@ -95,13 +98,20 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
     }
   };
 
+  return { state, error, limited, play: (control: Control = "speaker") => void play(control) };
+}
+
+export type ExampleAudio = NonNullable<ReturnType<typeof useExampleAudio>>;
+
+/** The example's speaker: a bare glyph, quieter than the term's. */
+export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
+  const { t } = useLingui();
   return (
     <AudioButton
-      state={state}
-      error={error}
-      unavailable={limited}
-      onPlay={() => void play()}
-      className={className}
+      state={sound.state}
+      error={sound.error}
+      unavailable={sound.limited}
+      onPlay={() => sound.play()}
       labels={{ play: t`Play example`, replay: t`Replay example` }}
       quiet
     />
@@ -109,6 +119,6 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
 }
 
 /** The button's room in review's measuring copy, where the example can be spoken. */
-export function ExamplePlace({ card }: Pick<Props, "card">) {
-  return canSpeakExample(card) ? <AudioPlace /> : null;
+export function ExamplePlace({ card }: { card: SpokenCard }) {
+  return canSpeakExample(card) ? <AudioPlace quiet /> : null;
 }

@@ -99,7 +99,12 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
-import { type ExampleAudio, ExamplePress, useExampleAudio } from "../review/example-audio";
+import {
+  type ExampleAudio,
+  ExampleAudioButton,
+  ExamplePress,
+  useExampleAudio,
+} from "../review/example-audio";
 import {
   HookLine,
   HookOffer,
@@ -1439,7 +1444,7 @@ function CardPlate({
           const action = e.nativeEvent.actionName;
           if (action === "peek") onPeek?.();
           if (action === "menu") onMenu?.();
-          if (action === "example") exampleSound?.play();
+          if (action === "example") exampleSound?.play("action");
           if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
@@ -1619,24 +1624,18 @@ function CardPlate({
                       {card.example && (
                         <Animated.View entering={arrive()}>
                           <ExamplePress sound={exampleSound} onLongPress={hold}>
-                            {(state) => (
-                              <ExampleText
-                                text={card.example ?? ""}
-                                known={known}
-                                // Lit while it is read aloud, the way the term's speaker lights.
-                                className={
-                                  state === "idle"
-                                    ? "text-md text-text-2"
-                                    : "text-md text-amber-text"
-                                }
-                                lang={card.language}
-                                translation={
-                                  translation
-                                    ? { text: translation, className: "text-md text-muted" }
-                                    : null
-                                }
-                              />
-                            )}
+                            <ExampleText
+                              text={card.example ?? ""}
+                              known={known}
+                              className="text-md text-text-2"
+                              lang={card.language}
+                              translation={
+                                translation
+                                  ? { text: translation, className: "text-md text-muted" }
+                                  : null
+                              }
+                              after={exampleSound && <ExampleAudioButton sound={exampleSound} />}
+                            />
                           </ExamplePress>
                         </Animated.View>
                       )}

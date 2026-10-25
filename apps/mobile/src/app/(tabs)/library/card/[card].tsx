@@ -38,7 +38,12 @@ import { Plate, Press, Text } from "../../../../ui/primitives";
 import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
-import { ExampleText, TermText } from "../../../../ui/term-text";
+import {
+  EXAMPLE_END_BOX,
+  ExampleText,
+  TermText,
+  useExampleFirstLine,
+} from "../../../../ui/term-text";
 import { toast } from "../../../../ui/toast-host";
 
 const DAY = 86_400_000;
@@ -121,6 +126,12 @@ export default function CardPage() {
   }, [playError]);
   // The example's speaker is on the page, but its tip has no layer to draw on here.
   const exampleError = exampleSound?.error;
+  const exampleMiddle = useExampleFirstLine({
+    text: card?.example ?? "",
+    known,
+    className: "text-md text-text",
+    lang: card?.language,
+  });
   useEffect(() => {
     if (exampleError) toast.add({ error: true, title: exampleError });
   }, [exampleError]);
@@ -284,6 +295,7 @@ export default function CardPage() {
         }
         onPress={edit("example")}
         end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
+        endMiddle={exampleMiddle}
         // A failed run names itself once, under the fields, so its translation does not say it again.
         below={
           owner &&
@@ -645,6 +657,7 @@ function Field({
   ai = false,
   field,
   end,
+  endMiddle,
   below,
   onPress,
   children,
@@ -654,6 +667,8 @@ function Field({
   field?: ComponentProps<typeof SourceChip>["field"];
   /** A control at the row's end, such as the example's play. */
   end?: ReactNode;
+  /** Where `end` centres, down from the top of the value; it centres on the row when left out. */
+  endMiddle?: number | undefined;
   /** Under the field and apart from its edit button, such as a retry. */
   below?: ReactNode;
   /** Opens the field to edit; left out where the learner may not change it. */
@@ -661,9 +676,13 @@ function Field({
   children: ReactNode;
 }) {
   const { t } = useLingui();
+  const [labelHeight, setLabelHeight] = useState(0);
   const body = (
     <View className="flex-1 gap-1">
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        onLayout={(e) => setLabelHeight(e.nativeEvent.layout.height)}
+      >
         <Text className="text-sm font-medium text-muted">{label}</Text>
         {ai && <SourceChip source="ai" field={field} badge={field !== "exampleTranslation"} />}
       </View>
@@ -671,7 +690,9 @@ function Field({
     </View>
   );
   const row = (
-    <View className="min-h-14 flex-row items-center gap-3 px-5 py-3.5">
+    <View
+      className={`min-h-14 flex-row gap-3 px-5 py-3.5 ${endMiddle === undefined ? "items-center" : "items-start"}`}
+    >
       {onPress ? (
         <Press
           onPress={onPress}
@@ -684,7 +705,20 @@ function Field({
       ) : (
         body
       )}
-      {end}
+      {endMiddle === undefined ? (
+        end
+      ) : (
+        // The label, the 4 pt gap under it, then the value's own first line.
+        <View
+          className="justify-center"
+          style={{
+            height: EXAMPLE_END_BOX,
+            marginTop: labelHeight + 4 + endMiddle - EXAMPLE_END_BOX / 2,
+          }}
+        >
+          {end}
+        </View>
+      )}
     </View>
   );
   if (!below) return row;

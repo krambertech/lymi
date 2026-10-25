@@ -530,6 +530,8 @@ export const analyticsEvents = {
     outcome: z.enum(["played", "failed", "limited"]),
     surface: z.enum(["review", "card"]),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+    // Optional because earlier releases send none.
+    control: z.enum(["speaker", "sentence", "action"]).optional(),
   }),
   lead_in_decided: z.object({
     language: z.string().regex(/^[a-z]{2,3}$/),

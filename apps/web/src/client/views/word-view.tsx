@@ -41,7 +41,7 @@ import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
-import { ExampleAudioButton } from "../components/example-audio";
+import { ExampleAudioButton, useExampleAudio } from "../components/example-audio";
 import { ExampleLines } from "../components/example-lines";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
@@ -429,6 +429,7 @@ export function WordView({
   onBusyChange,
 }: WordProps) {
   const { t, i18n } = useLingui();
+  const exampleSound = useExampleAudio(card, "card");
   const now = new Date();
   const states = record?.states;
   const reviews = record?.reviews;
@@ -753,7 +754,7 @@ export function WordView({
                     )
                   }
                   className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
-                  after={<ExampleAudioButton card={card} surface="card" />}
+                  speaker={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                 />
                 {translating && !translation && (
                   <div className="flex items-center text-base leading-relaxed" aria-hidden="true">

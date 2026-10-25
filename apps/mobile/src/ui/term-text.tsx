@@ -6,12 +6,12 @@ import {
   markedTerm,
   markKnownReadings,
   termReading,
-  textDirection,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { textStart } from "../theme/type";
-import { Furigana } from "./furigana";
+import { Furigana, useFirstLineMiddle, useLineMetrics } from "./furigana";
+import { INLINE_ROOM, InlineControl, RunControl } from "./inline-control";
 import { Text } from "./primitives";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
@@ -57,48 +57,92 @@ export function TermText({
   );
 }
 
-/** An example, with its inline readings drawn in its language's notation: furigana, or pinyin and Jyutping for Chinese and Cantonese. */
+/**
+ * An example over its translation, with its inline readings drawn in its language's notation:
+ * furigana, or pinyin and Jyutping for Chinese and Cantonese. `after` follows the last word and
+ * centres on that line's letters, under any readings, as the term's speaker does.
+ */
 export function ExampleText({
   text,
   known,
   translation,
+  after,
   ...props
 }: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
-  /**
-   * The example's translation in parentheses, run on after it in its own classes, or on its own
-   * line when it reads in the other direction, since a run-on would start at the wrong edge.
-   */
-  translation?: { text: string; className: string } | null | undefined;
+  /** The example's translation, on its own line under it in its own classes. */
+  translation?: { text: string; className: string; lines?: number } | null | undefined;
+  /** A 32 pt control after the example's last word, such as its speaker in review. */
+  after?: ReactNode;
 }) {
   const { i18n } = useLingui();
   const { lang } = props;
-  const runsOn = textDirection(lang) === textDirection(i18n.locale);
-  const segments = useMemo(
+  const segments = useExampleSegments(text, known, lang);
+  const { line, ruby } = useLineMetrics({ segments, ...props });
+  return (
+    <View className="gap-1">
+      <Furigana
+        segments={segments}
+        {...props}
+        style={[
+          StyleSheet.flatten(props.style),
+          textStart(lang),
+          after && !ruby ? INLINE_ROOM : null,
+        ]}
+        after={
+          !after ? undefined : ruby ? (
+            <RunControl line={line} start={QUIET_START}>
+              {after}
+            </RunControl>
+          ) : (
+            // An example is reading size, where iOS already centres the button on the line.
+            <InlineControl start={QUIET_START}>{after}</InlineControl>
+          )
+        }
+      />
+      {translation && (
+        <Text
+          className={translation.className}
+          lang={i18n.locale}
+          numberOfLines={translation.lines}
+        >
+          {translation.text}
+        </Text>
+      )}
+    </View>
+  );
+}
+
+/** The room before the example's speaker, whose bare glyph already sits inside its 32 pt box. */
+const QUIET_START = 4;
+
+/** The speaker's drawn height, whose box the card page centres on the example's first line. */
+export const EXAMPLE_END_BOX = 32;
+
+function useExampleSegments(
+  text: string,
+  known: KnownReadings | undefined,
+  lang: string | null | undefined,
+) {
+  return useMemo(
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
   );
-  const own = !!translation && !runsOn;
-  const sentence = (
-    <Furigana
-      segments={segments}
-      {...props}
-      tail={
-        translation && runsOn
-          ? { text: ` (${translation.text})`, className: translation.className, lang: i18n.locale }
-          : undefined
-      }
-      style={[StyleSheet.flatten(props.style), textStart(lang)]}
-    />
-  );
-  if (!own || !translation) return sentence;
-  return (
-    <View className="gap-1">
-      {sentence}
-      <Text className={translation.className} lang={i18n.locale}>
-        ({translation.text})
-      </Text>
-    </View>
-  );
+}
+
+/**
+ * Where the middle of an example's first line sits from the top of `ExampleText`, for a control
+ * beside it that `ExampleText` does not hold, such as the card page's speaker outside its edit button.
+ */
+export function useExampleFirstLine({
+  text,
+  known,
+  ...props
+}: Pick<
+  ComponentProps<typeof ExampleText>,
+  "text" | "known" | "lang" | "className" | "style" | "maxFontSizeMultiplier"
+>) {
+  const segments = useExampleSegments(text, known, props.lang);
+  return useFirstLineMiddle({ segments, ...props });
 }

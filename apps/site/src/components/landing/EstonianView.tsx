@@ -4,6 +4,7 @@ import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
+import { DeckPath } from "./DeckPath";
 import { EnrichEstonian, NotesToCardsEstonian } from "./EstonianAi";
 import { EstonianBento } from "./EstonianBento";
 import { EstonianForms } from "./EstonianForms";
@@ -24,7 +25,6 @@ import {
   LanguageHero,
   OwnAiSection,
   ReturnSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
@@ -93,7 +93,8 @@ export function EstonianView({ decks, locale }: Props) {
       </Wide>
 
       {steps.length > 1 && (
-        <StartSection
+        <Wide
+          id="start"
           title={
             <Trans>
               Start with <span lang="et">tere</span>. Keep going.
@@ -105,9 +106,9 @@ export function EstonianView({ decks, locale }: Props) {
               your reviews.
             </Trans>
           }
-          steps={steps}
-          lang="et"
-        />
+        >
+          <DeckPath steps={steps} lang="et" />
+        </Wide>
       )}
 
       <VoiceSection

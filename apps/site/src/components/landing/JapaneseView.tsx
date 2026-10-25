@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import type { Locale } from "../../lib/routes";
 import { addUrl } from "../deck/DeckView";
 import { Attachment } from "./AssistantChat";
+import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { JAPANESE_QUESTIONS } from "./faq";
 import { EnrichJapanese, PageToCards } from "./JapaneseAi";
@@ -20,11 +21,9 @@ import {
   LanguageName,
   OwnAiSection,
   ReturnSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { pathSteps } from "./language-decks";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
@@ -38,7 +37,10 @@ interface Props {
 
 /** The page for people learning Japanese, from their first kana to N4 and their own lessons. */
 export function JapaneseView({ decks, locale }: Props) {
-  const steps = pathSteps(JAPANESE_PATH, decks);
+  const steps = JAPANESE_PATH.flatMap((step) => {
+    const deck = decks.find((d) => d.slug === step.slug);
+    return deck ? [{ ...step, name: deck.name, count: deck.cardCount }] : [];
+  });
 
   return (
     <LandingLayout
@@ -87,7 +89,8 @@ export function JapaneseView({ decks, locale }: Props) {
       </Wide>
 
       {steps.length > 0 && (
-        <StartSection
+        <Wide
+          id="start"
           title={
             <Trans>
               Start at <span lang="ja">あ</span>. Keep going.
@@ -99,9 +102,9 @@ export function JapaneseView({ decks, locale }: Props) {
               your reviews.
             </Trans>
           }
-          steps={steps}
-          lang="ja"
-        />
+        >
+          <DeckPath steps={steps} lang="ja" />
+        </Wide>
       )}
 
       <VoiceSection

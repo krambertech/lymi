@@ -15,6 +15,7 @@ import {
   CHINESE_PATH,
   CHINESE_VOICE_WORDS,
 } from "./chinese";
+import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { CHINESE_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
@@ -26,7 +27,6 @@ import {
   LanguageName,
   OwnAiSection,
   ReturnSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
@@ -172,7 +172,8 @@ export function ChineseView({ decks, locale }: Props) {
       />
 
       {steps.length > 0 && (
-        <StartSection
+        <Wide
+          id="start"
           title={<Trans>Start with HSK&nbsp;1. Keep going.</Trans>}
           body={
             <Trans>
@@ -180,9 +181,9 @@ export function ChineseView({ decks, locale }: Props) {
               adds a few new words to your reviews.
             </Trans>
           }
-          steps={steps}
-          lang="zh-Hans"
-        />
+        >
+          <DeckPath steps={steps} lang="zh-Hans" />
+        </Wide>
       )}
 
       <VoiceSection

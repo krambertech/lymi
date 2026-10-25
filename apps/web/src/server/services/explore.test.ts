@@ -260,6 +260,21 @@ describe("more like this", () => {
     ]);
   });
 
+  it("fills a Ukrainian reader's row past the Russian decks that rank higher", async () => {
+    const kitchen = {
+      category: "languages" as const,
+      tags: ["grammar" as const, "beginner" as const],
+    };
+    await publish("kitchen-ru", { ...kitchen, language: "ru" });
+    for (const n of [1, 2, 3]) await publish(`kitchen-ru-${n}`, { ...kitchen, language: "ru" });
+    await publish("kitchen-et", { ...kitchen, language: "et" });
+    const ukrainian = await reader("related-uk", "uk");
+    const related = (await exploreDeck(ukrainian, "kitchen-ru")).related.map((row) => row.slug);
+    expect(related[0]).toBe("kitchen-et");
+    expect(related).toHaveLength(3);
+    expect(related.filter((slug) => slug.startsWith("kitchen-ru"))).toEqual([]);
+  });
+
   it("is empty for a deck nothing relates to", async () => {
     await publish("lonely", { category: null, language: "is" });
     expect((await exploreDeck(anna, "lonely")).related).toEqual([]);

@@ -84,11 +84,10 @@ export async function resolveDeckPage(
       headers: { location: location.toString(), "cache-control": MISSING_CACHE_CONTROL },
     });
   }
-  const [relatedRows, places] = await Promise.all([
+  const [related, places] = await Promise.all([
     listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE }),
     listPublicDeckPlaces(db, locale).catch(linksFailed(slug, locale)),
   ]);
-  const related = relatedRows.filter((deck) => offersDeck(locale, deck));
   const links = places
     ? await neighbourLinks(
         places.filter((place) => offersDeck(locale, place)),

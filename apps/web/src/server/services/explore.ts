@@ -37,13 +37,11 @@ export async function exploreDeck(ctx: ServiceContext, slug: string): Promise<Ex
     throw new ServiceError("not_found", "This deck is not published");
   }
   const added = await addedDecks(ctx.db, ctx.userId);
-  const related = (
-    await listRelatedDecks(ctx.db, slug, {
-      language: meaningLanguage,
-      exclude: new Set(added.keys()),
-      limit: RELATED_IN_PRODUCT,
-    })
-  ).filter((deck) => offersDeck(meaningLanguage, deck));
+  const related = await listRelatedDecks(ctx.db, slug, {
+    language: meaningLanguage,
+    exclude: new Set(added.keys()),
+    limit: RELATED_IN_PRODUCT,
+  });
   return { deck: result.deck, deckId: added.get(slug) ?? null, related };
 }
 

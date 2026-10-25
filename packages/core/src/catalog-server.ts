@@ -5,6 +5,7 @@ import {
   deckPageHand,
   deckPageSpread,
   isPublicDeckSlug,
+  offersDeck,
   PublicDeckOut,
   type PublicDeckResult,
   PublicDeckSummary,
@@ -618,10 +619,11 @@ export async function listRelatedDecks(
   // The deck itself need not be readable here: its page answers by direct link in every locale.
   const deck = rows.find((row) => row.slug === slug);
   if (!deck) return [];
+  const { language } = opts;
   const candidates = await readableRows(
     db,
-    rows.filter((row) => !opts.exclude?.has(row.slug)),
-    opts.language,
+    rows.filter((row) => !opts.exclude?.has(row.slug) && (!language || offersDeck(language, row))),
+    language,
   );
   const ranked = rankRelated(deck, candidates, opts.limit);
   if (ranked.length === 0) return [];

@@ -172,6 +172,54 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
 
+msgid "*Dear* friend!"
+msgstr "*Dear* friend!"
+
+msgid "*Every day* is fun."
+msgstr "*Every day* is fun."
+
+msgid "*Good morning*, Ms Anna!"
+msgstr "*Good morning*, Ms Anna!"
+
+msgid "*Hello*, a coffee, please."
+msgstr "*Hello*, a coffee, please."
+
+msgid "*Sunday* is a day off."
+msgstr "*Sunday* is a day off."
+
+msgid "*Sunday* is my favourite day."
+msgstr "*Sunday* is my favourite day."
+
+msgid "*Thank you* for your help."
+msgstr "*Thank you* for your help."
+
+msgid "*Thank you* so much!"
+msgstr "*Thank you* so much!"
+
+msgid "*Thank you* very much!"
+msgstr "*Thank you* very much!"
+
+msgid "*Thanks* a lot!"
+msgstr "*Thanks* a lot!"
+
+msgid "*Thanks* again!"
+msgstr "*Thanks* again!"
+
+msgid "*Thanks* for the help!"
+msgstr "*Thanks* for the help!"
+
+msgid "*Thanks* for your help!"
+msgstr "*Thanks* for your help!"
+
+msgid "*Thanks*, everything’s fine."
+msgstr "*Thanks*, everything’s fine."
+
+msgid "*Thanks*, it’s delicious!"
+msgstr "*Thanks*, it’s delicious!"
+
+msgid "*Tomorrow* is Saturday."
+msgstr "*Tomorrow* is Saturday."
+
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {due} other {due}}"
 
@@ -284,6 +332,9 @@ msgstr "9 days"
 
 msgid "A .mochi file from Mochi"
 msgstr "A .mochi file from Mochi"
+
+msgid "A *hedgehog* lives in the forest."
+msgstr "A *hedgehog* lives in the forest."
 
 msgid "A bad idea that seemed good"
 msgstr "A bad idea that seemed good"
@@ -761,6 +812,9 @@ msgstr "An idea that only sounds brilliant after a few drinks"
 msgid "An idea that only sounds good after a few drinks"
 msgstr "An idea that only sounds good after a few drinks"
 
+msgid "An old *castle* stands on the hill."
+msgstr "An old *castle* stands on the hill."
+
 msgid "Anatomy"
 msgstr "Anatomy"
 
@@ -1024,6 +1078,9 @@ msgstr "Can I bring my Pleco flashcards?"
 
 msgid "Can I get a coffee?"
 msgstr "Can I get a coffee?"
+
+msgid "Can I have your *phone* number?"
+msgstr "Can I have your *phone* number?"
 
 msgid "Can I learn Estonian from Russian or Ukrainian?"
 msgstr "Can I learn Estonian from Russian or Ukrainian?"
@@ -1406,6 +1463,9 @@ msgstr "Deutsch · verb"
 msgid "Deutsch · word"
 msgstr "Deutsch · word"
 
+msgid "Did you *eat* breakfast?"
+msgstr "Did you *eat* breakfast?"
+
 msgid "diffusion"
 msgstr "diffusion"
 
@@ -1424,6 +1484,9 @@ msgstr "Do I need to read kana first?"
 
 msgid "Do the words match the Goethe exams?"
 msgstr "Do the words match the Goethe exams?"
+
+msgid "Do you *like* tea?"
+msgstr "Do you *like* tea?"
 
 msgid "Docs"
 msgstr "Docs"
@@ -1466,6 +1529,9 @@ msgstr "Does the German deck include my state’s questions?"
 
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Doing it twice has the same effect as doing it once"
+
+msgid "Don’t drink coffee before *bed*."
+msgstr "Don’t drink coffee before *bed*."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
@@ -1650,6 +1716,9 @@ msgstr "Every language"
 msgid "Every letter counts"
 msgstr "Every letter counts"
 
+msgid "Every morning I read a book on the *train*."
+msgstr "Every morning I read a book on the *train*."
+
 msgid "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
 msgstr "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
 
@@ -1821,6 +1890,9 @@ msgstr "Flashcards that stick."
 msgid "Flat"
 msgstr "Flat"
 
+msgid "Flats in Tallinn are *expensive*."
+msgstr "Flats in Tallinn are *expensive*."
+
 msgid "Flour"
 msgstr "Flour"
 
@@ -1956,9 +2028,6 @@ msgstr "From G. K. Chesterton’s 1929 book The Thing."
 msgid "From now until your test date"
 msgstr "From now until your test date"
 
-msgid "From your lesson"
-msgstr "From your lesson"
-
 msgid "Future, “I”"
 msgstr "Future, “I”"
 
@@ -2004,6 +2073,9 @@ msgstr "Getting around"
 msgid "Give each account only the access its task needs"
 msgstr "Give each account only the access its task needs"
 
+msgid "Give me an *apple*, please."
+msgstr "Give me an *apple*, please."
+
 msgid "Give way"
 msgstr "Give way"
 
@@ -2031,6 +2103,9 @@ msgstr "Going over a lesson again"
 
 msgid "Good"
 msgstr "Good"
+
+msgid "Good *morning*!"
+msgstr "Good *morning*!"
 
 msgid "Good luck!"
 msgstr "Good luck!"
@@ -2066,8 +2141,17 @@ msgstr "Hand"
 msgid "Hard"
 msgstr "Hard"
 
+msgid "Have a *lovely* weekend!"
+msgstr "Have a *lovely* weekend!"
+
 msgid "Have you eaten? A way to say hello"
 msgstr "Have you eaten? A way to say hello"
+
+msgid "He doesn’t *like* rainy days."
+msgstr "He doesn’t *like* rainy days."
+
+msgid "He’s a good *friend* of mine."
+msgstr "He’s a good *friend* of mine."
 
 msgid "Head ööd! Good night."
 msgstr "Head ööd! Good night."
@@ -2142,6 +2226,9 @@ msgstr "History"
 msgid "History notes"
 msgstr "History notes"
 
+msgid "How do you *read* this kanji?"
+msgstr "How do you *read* this kanji?"
+
 msgid "How do you say it?"
 msgstr "How do you say it?"
 
@@ -2180,6 +2267,9 @@ msgstr "How much a bond’s price moves when interest rates change"
 
 msgid "How much demand changes when the price changes"
 msgstr "How much demand changes when the price changes"
+
+msgid "How much is a *taxi*?"
+msgstr "How much is a *taxi*?"
 
 msgid "How sections work"
 msgstr "How sections work"
@@ -2222,8 +2312,41 @@ msgstr "huànchéng · To change lines"
 msgid "Hugs"
 msgstr "Hugs"
 
+msgid "I *feel* a bit tired today."
+msgstr "I *feel* a bit tired today."
+
+msgid "I *go to bed* at eleven."
+msgstr "I *go to bed* at eleven."
+
+msgid "I *like* watching films at home."
+msgstr "I *like* watching films at home."
+
+msgid "I *read* manga every night."
+msgstr "I *read* manga every night."
+
+msgid "I *think* he’s right."
+msgstr "I *think* he’s right."
+
+msgid "I *think* it’s great."
+msgstr "I *think* it’s great."
+
+msgid "I ate an *apple*."
+msgstr "I ate an *apple*."
+
+msgid "I bought a new *lock*."
+msgstr "I bought a new *lock*."
+
+msgid "I bought bread at the *shop*."
+msgstr "I bought bread at the *shop*."
+
+msgid "I can’t get to the *phone*."
+msgstr "I can’t get to the *phone*."
+
 msgid "I cry"
 msgstr "I cry"
+
+msgid "I don’t have a *dog*."
+msgstr "I don’t have a *dog*."
 
 msgid "I don’t mind"
 msgstr "I don’t mind"
@@ -2234,14 +2357,113 @@ msgstr "I don’t understand"
 msgid "I don’t understand."
 msgstr "I don’t understand."
 
+msgid "I drink *milk* in the morning."
+msgstr "I drink *milk* in the morning."
+
+msgid "I drink coffee every *morning*."
+msgstr "I drink coffee every *morning*."
+
+msgid "I eat *fruit* every day."
+msgstr "I eat *fruit* every day."
+
+msgid "I forgot to bring my *things*."
+msgstr "I forgot to bring my *things*."
+
+msgid "I go to work by *train*."
+msgstr "I go to work by *train*."
+
+msgid "I got a *call* from my mum."
+msgstr "I got a *call* from my mum."
+
+msgid "I have a *dog*."
+msgstr "I have a *dog*."
+
+msgid "I have a Japanese *friend*."
+msgstr "I have a Japanese *friend*."
+
 msgid "I hope so; if only"
 msgstr "I hope so; if only"
+
+msgid "I learn a little *every day*."
+msgstr "I learn a little *every day*."
+
+msgid "I like *reading* books."
+msgstr "I like *reading* books."
+
+msgid "I like Polish *music*."
+msgstr "I like Polish *music*."
+
+msgid "I live in the *city*."
+msgstr "I live in the *city*."
 
 msgid "I miss it"
 msgstr "I miss it"
 
 msgid "I pay"
 msgstr "I pay"
+
+msgid "I really *like* this book."
+msgstr "I really *like* this book."
+
+msgid "I study Japanese *every day*."
+msgstr "I study Japanese *every day*."
+
+msgid "I take a walk in the *park*."
+msgstr "I take a walk in the *park*."
+
+msgid "I take the *metro* to work every day."
+msgstr "I take the *metro* to work every day."
+
+msgid "I want to *eat* sushi."
+msgstr "I want to *eat* sushi."
+
+msgid "I want to *sleep*."
+msgstr "I want to *sleep*."
+
+msgid "I watched a film with a *friend*."
+msgstr "I watched a film with a *friend*."
+
+msgid "I won’t buy such an *expensive* phone."
+msgstr "I won’t buy such an *expensive* phone."
+
+msgid "I work in a *warehouse*."
+msgstr "I work in a *warehouse*."
+
+msgid "I’ll *call* you later."
+msgstr "I’ll *call* you later."
+
+msgid "I’ll be waiting in the *park*."
+msgstr "I’ll be waiting in the *park*."
+
+msgid "I’m *reading* the newspaper."
+msgstr "I’m *reading* the newspaper."
+
+msgid "I’m getting up early *tomorrow* morning."
+msgstr "I’m getting up early *tomorrow* morning."
+
+msgid "I’m going out to eat with a *friend*."
+msgstr "I’m going out to eat with a *friend*."
+
+msgid "I’m going to a *friend’s* house this weekend."
+msgstr "I’m going to a *friend’s* house this weekend."
+
+msgid "I’m going to Beijing *tomorrow*."
+msgstr "I’m going to Beijing *tomorrow*."
+
+msgid "I’m going to the *bank* to get money."
+msgstr "I’m going to the *bank* to get money."
+
+msgid "I’m going to the *shop*."
+msgstr "I’m going to the *shop*."
+
+msgid "I’m listening to *music*."
+msgstr "I’m listening to *music*."
+
+msgid "I’m reading a fashion *magazine*."
+msgstr "I’m reading a fashion *magazine*."
+
+msgid "I’m taking the *dog* for a walk."
+msgstr "I’m taking the *dog* for a walk."
 
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Ice, jää, plus edge, äär: four ä in a row."
@@ -2336,6 +2558,9 @@ msgstr "Is it only for languages?"
 msgid "Is it the official question set?"
 msgstr "Is it the official question set?"
 
+msgid "Is there a *bank* nearby?"
+msgstr "Is there a *bank* nearby?"
+
 msgid "Is there a ready-made deck for my certification?"
 msgstr "Is there a ready-made deck for my certification?"
 
@@ -2366,6 +2591,9 @@ msgstr "It schedules every card with spaced repetition and brings it back right 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 
+msgid "It was a really *pleasant* evening."
+msgstr "It was a really *pleasant* evening."
+
 msgid "It will all work out"
 msgstr "It will all work out"
 
@@ -2375,11 +2603,17 @@ msgstr "It works the same for a lesson on italki, on Preply or with a tutor you 
 msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 msgstr "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 
+msgid "It’s *cosy* in the sauna."
+msgstr "It’s *cosy* in the sauna."
+
 msgid "It’s fine; I’m OK"
 msgstr "It’s fine; I’m OK"
 
 msgid "It’s in your Downloads folder."
 msgstr "It’s in your Downloads folder."
+
+msgid "It’s late, so I’ll *take a taxi* home."
+msgstr "It’s late, so I’ll *take a taxi* home."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "It’s made for tutors and small classes. There are no rosters, assignments or grades."
@@ -2389,6 +2623,9 @@ msgstr "It’s OK"
 
 msgid "It’s okay"
 msgstr "It’s okay"
+
+msgid "It’s raining, so I want to *take a taxi*."
+msgstr "It’s raining, so I want to *take a taxi*."
 
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "It’s why a half-read chapter keeps nagging at you."
@@ -2634,6 +2871,15 @@ msgstr "Lesson 4 · getting around"
 
 msgid "Let Claude add cards?"
 msgstr "Let Claude add cards?"
+
+msgid "Let’s *take a taxi*."
+msgstr "Let’s *take a taxi*."
+
+msgid "Let’s go into *town*!"
+msgstr "Let’s go into *town*!"
+
+msgid "Let’s meet again *tomorrow*."
+msgstr "Let’s meet again *tomorrow*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
@@ -2908,6 +3154,9 @@ msgstr "More than a translation."
 msgid "More updates"
 msgstr "More updates"
 
+msgid "morning"
+msgstr "morning"
+
 msgid "Morning"
 msgstr "Morning"
 
@@ -2946,6 +3195,9 @@ msgstr "Music lessons"
 
 msgid "Music theory"
 msgstr "Music theory"
+
+msgid "My dad runs *every day*."
+msgstr "My dad runs *every day*."
 
 msgid "My dear"
 msgstr "My dear"
@@ -2999,6 +3251,9 @@ msgstr "New York DMV written test: the rules of the road"
 msgid "Newer"
 msgstr "Newer"
 
+msgid "Next *Sunday* will be warm."
+msgstr "Next *Sunday* will be warm."
+
 msgid "Next card"
 msgstr "Next card"
 
@@ -3035,6 +3290,12 @@ msgstr "No pinyin over <0>我们在这里</0>: you know those characters."
 
 msgid "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgstr "No reading over <0>次</0> and <1>駅</1>: you already know them."
+
+msgid "No, *thank you*."
+msgstr "No, *thank you*."
+
+msgid "No, *thanks*."
+msgstr "No, *thanks*."
 
 msgid "No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud."
 msgstr "No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud."
@@ -3524,6 +3785,9 @@ msgstr "queue, line"
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Quick nunchi means sensing a mood before anyone says a word."
 
+msgid "rain"
+msgstr "rain"
+
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 
@@ -3771,6 +4035,12 @@ msgstr "See the decks"
 msgid "See what you know"
 msgstr "See what you know"
 
+msgid "See you *tomorrow*, then."
+msgstr "See you *tomorrow*, then."
+
+msgid "See you *tomorrow*!"
+msgstr "See you *tomorrow*!"
+
 msgid "See you soon"
 msgstr "See you soon"
 
@@ -3822,6 +4092,9 @@ msgstr "Service providers and international transfers"
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 
+msgid "Shall we *eat* together?"
+msgstr "Shall we *eat* together?"
+
 msgid "Share one deck with your class."
 msgstr "Share one deck with your class."
 
@@ -3830,6 +4103,12 @@ msgstr "Share one link."
 
 msgid "Sharing and connected apps"
 msgstr "Sharing and connected apps"
+
+msgid "She came back from *town*."
+msgstr "She came back from *town*."
+
+msgid "She works at a *bank*."
+msgstr "She works at a *bank*."
 
 msgid "Shelves"
 msgstr "Shelves"
@@ -4159,11 +4438,17 @@ msgstr "take a taxi"
 msgid "Take it again"
 msgstr "Take it again"
 
+msgid "Take the *metro* to the airport."
+msgstr "Take the *metro* to the airport."
+
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
 
 msgid "Tape, a spare part and some nerve."
 msgstr "Tape, a spare part and some nerve."
+
+msgid "Tartu is a beautiful *city*."
+msgstr "Tartu is a beautiful *city*."
 
 msgid "tasty"
 msgstr "tasty"
@@ -4204,6 +4489,9 @@ msgstr "Text · 2 pages"
 msgid "Text you copy from a Quizlet set"
 msgstr "Text you copy from a Quizlet set"
 
+msgid "thank you"
+msgstr "thank you"
+
 msgid "Thank you"
 msgstr "Thank you"
 
@@ -4218,6 +4506,48 @@ msgstr "Thanks; cheers"
 
 msgid "That chess term you just used, add it to my deck."
 msgstr "That chess term you just used, add it to my deck."
+
+msgid "The *book* is on the table."
+msgstr "The *book* is on the table."
+
+msgid "The *castle* is open to tourists."
+msgstr "The *castle* is open to tourists."
+
+msgid "The *flour* is on the top shelf."
+msgstr "The *flour* is on the top shelf."
+
+msgid "The *hedgehog* is asleep under a bush."
+msgstr "The *hedgehog* is asleep under a bush."
+
+msgid "The *lock* is broken again."
+msgstr "The *lock* is broken again."
+
+msgid "The *lock* on the door is broken."
+msgstr "The *lock* on the door is broken."
+
+msgid "The *metro* is faster than the bus."
+msgstr "The *metro* is faster than the bus."
+
+msgid "The *milk* is in the fridge."
+msgstr "The *milk* is in the fridge."
+
+msgid "The *morning* was sunny."
+msgstr "The *morning* was sunny."
+
+msgid "The *road* leads to the city."
+msgstr "The *road* leads to the city."
+
+msgid "The *shop* is closed."
+msgstr "The *shop* is closed."
+
+msgid "The *train* is running a little late."
+msgstr "The *train* is running a little late."
+
+msgid "The *water* is very cold."
+msgstr "The *water* is very cold."
+
+msgid "The *way* home takes an hour."
+msgstr "The *way* home takes an hour."
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
@@ -4248,6 +4578,15 @@ msgstr "The browning that gives seared, baked and toasted food its flavour"
 
 msgid "The cards from this page will land here."
 msgstr "The cards from this page will land here."
+
+msgid "The cat is asleep on the *rug*."
+msgstr "The cat is asleep on the *rug*."
+
+msgid "The children are already *asleep*."
+msgstr "The children are already *asleep*."
+
+msgid "The children are playing in the *park*."
+msgstr "The children are playing in the *park*."
 
 msgid "The cost of making one more unit"
 msgstr "The cost of making one more unit"
@@ -4300,6 +4639,12 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 msgid "The flashcard app that gets Chinese."
 msgstr "The flashcard app that gets Chinese."
 
+msgid "The flashcard app that gets Estonian."
+msgstr "The flashcard app that gets Estonian."
+
+msgid "The flashcard app that gets Japanese."
+msgstr "The flashcard app that gets Japanese."
+
 msgid "The flashcard app that gets Polish."
 msgstr "The flashcard app that gets Polish."
 
@@ -4308,12 +4653,6 @@ msgstr "The flashcard app that gets Russian."
 
 msgid "The flashcard app that gets Ukrainian."
 msgstr "The flashcard app that gets Ukrainian."
-
-msgid "The flashcard app that speaks Estonian."
-msgstr "The flashcard app that speaks Estonian."
-
-msgid "The flashcard app that speaks Japanese."
-msgstr "The flashcard app that speaks Japanese."
 
 msgid "The free evening after work"
 msgstr "The free evening after work"
@@ -4326,6 +4665,9 @@ msgstr "The German, Spanish and Czech decks keep questions and answers in the ex
 
 msgid "The girl"
 msgstr "The girl"
+
+msgid "The goods are in the *warehouse*."
+msgstr "The goods are in the *warehouse*."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "The Hradec Králové and Pardubice regions."
@@ -4369,6 +4711,9 @@ msgstr "The most useful words of each level’s Goethe-Institut word list, every
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "The network of nerves that runs from the neck into the arm"
 
+msgid "The new *rug* is soft."
+msgstr "The new *rug* is soft."
+
 msgid "The new cards are in your deck, and terms you already have are skipped. Fix or archive any card."
 msgstr "The new cards are in your deck, and terms you already have are skipped. Fix or archive any card."
 
@@ -4377,6 +4722,9 @@ msgstr "The new cards are in your deck, and words you already have are skipped. 
 
 msgid "The next section opens at 80% known"
 msgstr "The next section opens at 80% known"
+
+msgid "The old *castle* on the hill."
+msgstr "The old *castle* on the hill."
 
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
@@ -4471,6 +4819,9 @@ msgstr "The Vikings"
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 
+msgid "The weather is *lovely* today."
+msgstr "The weather is *lovely* today."
+
 msgid "The whiteboard"
 msgstr "The whiteboard"
 
@@ -4489,11 +4840,17 @@ msgstr "Then press ⌃⌥L in any app to add a card."
 msgid "Then review them in Lymi."
 msgstr "Then review them in Lymi."
 
+msgid "There are too many *things*."
+msgstr "There are too many *things*."
+
 msgid "There is no deck at this address."
 msgstr "There is no deck at this address."
 
 msgid "There is nothing published yet."
 msgstr "There is nothing published yet."
+
+msgid "There’s a *park* near the station."
+msgstr "There’s a *park* near the station."
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
@@ -4501,11 +4858,59 @@ msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote 
 msgid "They follow {source}, in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source}, in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 
+msgid "They say it’ll rain *tomorrow*."
+msgstr "They say it’ll rain *tomorrow*."
+
+msgid "This *apple* is very sweet."
+msgstr "This *apple* is very sweet."
+
+msgid "This *book* is really interesting."
+msgstr "This *book* is really interesting."
+
+msgid "This *castle* is very old."
+msgstr "This *castle* is very old."
+
+msgid "This *dog* is big."
+msgstr "This *dog* is big."
+
+msgid "This *fruit* is very sweet."
+msgstr "This *fruit* is very sweet."
+
+msgid "This *lock* won’t open."
+msgstr "This *lock* won’t open."
+
+msgid "This *milk* is fresh."
+msgstr "This *milk* is fresh."
+
+msgid "This *music* is too loud."
+msgstr "This *music* is too loud."
+
+msgid "This *road* is very long."
+msgstr "This *road* is very long."
+
+msgid "This *shop* is open until 10 pm."
+msgstr "This *shop* is open until 10 pm."
+
+msgid "This *thing* is really handy."
+msgstr "This *thing* is really handy."
+
+msgid "This *water* is clean."
+msgstr "This *water* is clean."
+
+msgid "This café is *expensive*."
+msgstr "This café is *expensive*."
+
 msgid "This deck is no longer published · Lymi"
 msgstr "This deck is no longer published · Lymi"
 
 msgid "This deck is no longer published."
 msgstr "This deck is no longer published."
+
+msgid "This is my *book*."
+msgstr "This is my *book*."
+
+msgid "This is my Chinese *friend*."
+msgstr "This is my Chinese *friend*."
 
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
@@ -4683,6 +5088,9 @@ msgstr "Today"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Today’s page from my textbook. Add the new words to my Japanese deck."
+
+msgid "tomorrow"
+msgstr "tomorrow"
 
 msgid "Tomorrow"
 msgstr "Tomorrow"
@@ -4927,6 +5335,9 @@ msgstr "Water"
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Water moving through a membrane toward the side with more dissolved substance"
 
+msgid "We bought a *rug* for the living room."
+msgstr "We bought a *rug* for the living room."
+
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 
@@ -4942,6 +5353,9 @@ msgstr "We use access controls and encrypted connections to protect data. No onl
 msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 msgstr "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 
+msgid "We’re old *friends*."
+msgstr "We’re old *friends*."
+
 msgid "Weather"
 msgstr "Weather"
 
@@ -4950,6 +5364,15 @@ msgstr "Website visits are counted without a persistent device identifier, using
 
 msgid "Websites"
 msgstr "Websites"
+
+msgid "What *fruit* is this?"
+msgstr "What *fruit* is this?"
+
+msgid "What *things* did you buy?"
+msgstr "What *things* did you buy?"
+
+msgid "What a little *hedgehog*!"
+msgstr "What a little *hedgehog*!"
 
 msgid "What about words spelled the same?"
 msgstr "What about words spelled the same?"
@@ -4960,11 +5383,17 @@ msgstr "What about ё?"
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
 
+msgid "What are you going to *eat*?"
+msgstr "What are you going to *eat*?"
+
 msgid "What are you learning?"
 msgstr "What are you learning?"
 
 msgid "What comes across"
 msgstr "What comes across"
+
+msgid "What do you *think*?"
+msgstr "What do you *think*?"
 
 msgid "What does a card ask me?"
 msgstr "What does a card ask me?"
@@ -4995,6 +5424,12 @@ msgstr "What stays for others"
 
 msgid "What the test looks like"
 msgstr "What the test looks like"
+
+msgid "What time does the *bank* open?"
+msgstr "What time does the *bank* open?"
+
+msgid "What time is the next *train*?"
+msgstr "What time is the next *train*?"
 
 msgid "What we collect and why"
 msgstr "What we collect and why"
@@ -5046,6 +5481,15 @@ msgstr "Where cards come from"
 
 msgid "Where should I start?"
 msgstr "Where should I start?"
+
+msgid "Where’s the *flour*?"
+msgstr "Where’s the *flour*?"
+
+msgid "Where’s the *metro* station?"
+msgstr "Where’s the *metro* station?"
+
+msgid "Where’s the *water*?"
+msgstr "Where’s the *water*?"
 
 msgid "Which assistants can add cards?"
 msgstr "Which assistants can add cards?"
@@ -5103,6 +5547,9 @@ msgstr "Widgets"
 
 msgid "Will it get me to the B1 certificate?"
 msgstr "Will it get me to the B1 certificate?"
+
+msgid "Will it rain *tomorrow*?"
+msgstr "Will it rain *tomorrow*?"
 
 msgid "Will the AI slip into Russian?"
 msgstr "Will the AI slip into Russian?"
@@ -5277,6 +5724,9 @@ msgstr "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but
 
 msgid "You learned this one in context."
 msgstr "You learned this one in context."
+
+msgid "You need *flour* for pancakes."
+msgstr "You need *flour* for pancakes."
 
 msgid "You own this deck"
 msgstr "You own this deck"

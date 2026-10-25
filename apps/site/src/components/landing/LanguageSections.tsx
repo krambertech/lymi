@@ -10,7 +10,7 @@ import { AssistantMarksWithMore } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
-import { HandExamples } from "./HandExamples";
+import { type Example, HandExamples } from "./HandExamples";
 import { HandOfCards } from "./HandOfCards";
 import type { HandCard } from "./hand-cards";
 import { ReturnLane } from "./ReturnLane";
@@ -35,7 +35,7 @@ interface HeroProps {
   start?: { href: string; label: ReactNode } | undefined;
   cards: readonly HandCard[];
   /** Sentences that drift around the hand, by the id of the card in front. */
-  examples: Record<string, string[]>;
+  examples: Record<string, Example[]>;
   /** The language of the cards and their sentences. */
   lang: string;
   /** A tighter measure, for a headline whose last word would otherwise sit alone. */
@@ -61,7 +61,7 @@ export function LanguageHero({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_62%_at_74%_56%,var(--color-pool),transparent_70%)]"
       />
-      <div className="relative mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-20 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,500px)] @5xl:gap-14">
+      <div className="relative mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-20 @2xl:px-10 @4xl:pt-20 @5xl:min-h-[660px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,500px)] @5xl:gap-14">
         <div className="min-w-0 max-w-[560px]">
           {kicker}
           <h1
@@ -81,10 +81,10 @@ export function LanguageHero({
             )}
           </div>
         </div>
-        <div className="relative pt-20 pb-4 @5xl:py-20">
+        <div className="relative pt-24 pb-4">
           <HandExamples front={front} examples={examples} lang={lang} />
           <div className="relative">
-            <HandOfCards cards={cards} onFront={setFront} quiet ordered />
+            <HandOfCards cards={cards} layout="side" onFront={setFront} quiet ordered />
           </div>
         </div>
       </div>

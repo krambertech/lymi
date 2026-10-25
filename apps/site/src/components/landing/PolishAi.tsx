@@ -55,15 +55,12 @@ export function EnrichPolish({ locale }: { locale: Locale }) {
         <span lang={locale} className="min-h-[1.5em] text-md text-text">
           {card.meaning}
         </span>
-        <span className="text-xs text-muted">
-          <Trans>From your lesson</Trans>
-        </span>
       </Field>
       <Field label={<Trans>Example</Trans>} wrote={at("example")}>
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[1.5em] text-lg text-text"
+          className="min-h-[1.5em] text-md text-text"
         >
           <Pl>{card.example}</Pl>
         </motion.span>

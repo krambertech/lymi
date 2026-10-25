@@ -8,6 +8,7 @@ import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
 import { Wide } from "./FeatureSection";
 import type { Question } from "./faq";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
 import { LandingLayout } from "./LandingLayout";
@@ -34,7 +35,7 @@ export interface StressPage {
   /** The language's own name, untranslated, over the headline. */
   kicker: string;
   hand: HandCard[];
-  examples: Record<string, string[]>;
+  examples: Record<string, Example[]>;
   pairs: StressPair[];
   /** One word, plain and marked, for the card that comes back over seven weeks. */
   returning: { plain: string; marked: string };

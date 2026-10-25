@@ -1085,6 +1085,49 @@ html:has(.deck-cards[open]) {
   transition-duration: 380ms;
 }
 
+/* A language page's hand: the front card squared, the cards behind it stepping out to one side
+   and turning from its lower corner. The stage is tall enough for their far corners, which dip as
+   they turn, and leaves bands above and below for the sentences. */
+.hand-stage[data-layout="side"] {
+  --cw: min(280px, 70cqw);
+  --step-x: 0.07;
+  --step-turn: 3deg;
+  --from-start: 0.6;
+  height: calc(var(--ch) + var(--cw) * 0.22);
+}
+@container (max-width: 420px) {
+  .hand-stage[data-layout="side"] {
+    --cw: 80cqw;
+    --step-x: 0.03;
+    --step-turn: 1.6deg;
+    --from-start: 0.55;
+    height: calc(var(--ch) + var(--cw) * 0.12);
+  }
+}
+.hand-stage[data-layout="side"] .hand-card {
+  inset-inline-start: calc(50% - var(--cw) * var(--from-start));
+  transform-origin: 0% 100%;
+}
+/* Only an edge of each card behind shows, so its words would be cut letters; it shows as a blank card. */
+.hand-stage[data-layout="side"] .hand-card[data-place="fan"] .hand-face > * {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out);
+}
+.hand-stage[data-layout="side"] .hand-card[data-place="deck"] {
+  transform: translate(calc(var(--cw) * 0.45), calc(var(--cw) * 0.5)) rotate(16deg) scale(0.94);
+}
+.hand-stage[data-layout="side"] .hand-card[data-place="front"] {
+  transform: none;
+}
+.hand-stage[data-layout="side"] .hand-card[data-place="fan"] {
+  transform: translateX(calc(var(--slot) * var(--step-x) * var(--cw)))
+    rotate(calc(var(--slot) * var(--step-turn))) scale(calc(1 - var(--slot) * 0.02));
+}
+.hand-stage[data-layout="side"] .hand-card[data-place="gone"] {
+  transform: translate(calc(var(--cw) * -0.55), calc(var(--cw) * -0.08)) rotate(-9deg) scale(0.96);
+  transition-duration: 460ms;
+}
+
 /* The 404's one card, with no fan behind it. */
 .hand-stage[data-layout="single"] {
   height: calc(var(--ch) + var(--cw) * 0.04);
@@ -1656,7 +1699,7 @@ html:has(.deck-cards[open]) {
   }
 }
 
-/* The Japanese page's example sentences, drifting slowly behind the hand; they blur only as they come and go. */
+/* A language page's example sentences, drifting slowly around the hand; they blur only as they come and go. */
 .hand-drift {
   animation: hand-drift 9s ease-in-out infinite alternate;
 }

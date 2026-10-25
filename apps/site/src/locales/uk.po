@@ -172,6 +172,54 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
 
+msgid "*Dear* friend!"
+msgstr "*Дорогий* друже!"
+
+msgid "*Every day* is fun."
+msgstr "*Кожен день* приносить радість."
+
+msgid "*Good morning*, Ms Anna!"
+msgstr "*Добрий день*, пані Анно!"
+
+msgid "*Hello*, a coffee, please."
+msgstr "*Добрий день*, каву, будь ласка."
+
+msgid "*Sunday* is a day off."
+msgstr "*Неділя* — вихідний."
+
+msgid "*Sunday* is my favourite day."
+msgstr "*Неділя* — мій улюблений день."
+
+msgid "*Thank you* for your help."
+msgstr "*Дякую* за допомогу."
+
+msgid "*Thank you* so much!"
+msgstr "Щиро *дякую*!"
+
+msgid "*Thank you* very much!"
+msgstr "Дуже *дякую*!"
+
+msgid "*Thanks* a lot!"
+msgstr "Велике *дякую*!"
+
+msgid "*Thanks* again!"
+msgstr "Ще раз *дякую*!"
+
+msgid "*Thanks* for the help!"
+msgstr "*Дякую* за допомогу!"
+
+msgid "*Thanks* for your help!"
+msgstr "*Дякую* за допомогу!"
+
+msgid "*Thanks*, everything’s fine."
+msgstr "*Дякую*, усе добре."
+
+msgid "*Thanks*, it’s delicious!"
+msgstr "*Дякую*, дуже смачно!"
+
+msgid "*Tomorrow* is Saturday."
+msgstr "*Завтра* субота."
+
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
@@ -284,6 +332,9 @@ msgstr "9 днів"
 
 msgid "A .mochi file from Mochi"
 msgstr "Файл .mochi з Mochi"
+
+msgid "A *hedgehog* lives in the forest."
+msgstr "У лісі живе *їжачок*."
 
 msgid "A bad idea that seemed good"
 msgstr "Погана ідея, що здавалася доброю"
@@ -761,6 +812,9 @@ msgstr "Ідея, що здається геніальною лише після
 msgid "An idea that only sounds good after a few drinks"
 msgstr "Ідея, яка здається геніальною лише після кількох чарок"
 
+msgid "An old *castle* stands on the hill."
+msgstr "На пагорбі стоїть старий *замок*."
+
 msgid "Anatomy"
 msgstr "Анатомія"
 
@@ -1024,6 +1078,9 @@ msgstr "Можна перенести картки з Pleco?"
 
 msgid "Can I get a coffee?"
 msgstr "Можна мені каву?"
+
+msgid "Can I have your *phone* number?"
+msgstr "Даси свій номер *телефону*?"
 
 msgid "Can I learn Estonian from Russian or Ukrainian?"
 msgstr "Чи можна вчити естонську з української чи російської?"
@@ -1406,6 +1463,9 @@ msgstr "Deutsch · дієслово"
 msgid "Deutsch · word"
 msgstr "Deutsch · слово"
 
+msgid "Did you *eat* breakfast?"
+msgstr "Ти *поснідав*?"
+
 msgid "diffusion"
 msgstr "дифузія"
 
@@ -1424,6 +1484,9 @@ msgstr "Чи треба спершу навчитися читати кану?"
 
 msgid "Do the words match the Goethe exams?"
 msgstr "Чи відповідають слова іспитам Goethe?"
+
+msgid "Do you *like* tea?"
+msgstr "Ти *любиш* чай?"
 
 msgid "Docs"
 msgstr "Документація"
@@ -1466,6 +1529,9 @@ msgstr "Чи є в німецькій колоді питання моєї зе�
 
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
+
+msgid "Don’t drink coffee before *bed*."
+msgstr "Не пий каву перед *сном*."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
@@ -1650,6 +1716,9 @@ msgstr "Усі мови"
 msgid "Every letter counts"
 msgstr "Кожна літера важлива"
 
+msgid "Every morning I read a book on the *train*."
+msgstr "Щоранку я читаю книжку в *поїзді*."
+
 msgid "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
 msgstr "Кожен іменник має der, die або das, а в нотатках є множина, тож артикль запам’ятовується разом зі словом, а не потім."
 
@@ -1821,6 +1890,9 @@ msgstr "Картки, які не забуваються."
 msgid "Flat"
 msgstr "Квартира"
 
+msgid "Flats in Tallinn are *expensive*."
+msgstr "Квартири в Таллінні *дорогі*."
+
 msgid "Flour"
 msgstr "Борошно"
 
@@ -1956,9 +2028,6 @@ msgstr "З книжки Ґ. К. Честертона «The Thing» 1929 року
 msgid "From now until your test date"
 msgstr "Від сьогодні до дня тесту"
 
-msgid "From your lesson"
-msgstr "З твого уроку"
-
 msgid "Future, “I”"
 msgstr "Майбутній час, «я»"
 
@@ -2004,6 +2073,9 @@ msgstr "Як дістатися"
 msgid "Give each account only the access its task needs"
 msgstr "Давай кожному обліковому запису лише той доступ, що потрібен для його завдання"
 
+msgid "Give me an *apple*, please."
+msgstr "Дай мені *яблуко*, будь ласка."
+
 msgid "Give way"
 msgstr "Дати дорогу"
 
@@ -2031,6 +2103,9 @@ msgstr "Повторення пройденого"
 
 msgid "Good"
 msgstr "Добре"
+
+msgid "Good *morning*!"
+msgstr "Доброго *ранку*!"
 
 msgid "Good luck!"
 msgstr "Щасти!"
@@ -2066,8 +2141,17 @@ msgstr "Рука"
 msgid "Hard"
 msgstr "Важко"
 
+msgid "Have a *lovely* weekend!"
+msgstr "*Гарних* вихідних!"
+
 msgid "Have you eaten? A way to say hello"
 msgstr "Ти вже поїв? Так вітаються"
+
+msgid "He doesn’t *like* rainy days."
+msgstr "Він не *любить* дощових днів."
+
+msgid "He’s a good *friend* of mine."
+msgstr "Він мій добрий *друг*."
 
 msgid "Head ööd! Good night."
 msgstr "Head ööd! На добраніч."
@@ -2142,6 +2226,9 @@ msgstr "Історія"
 msgid "History notes"
 msgstr "Нотатки з історії"
 
+msgid "How do you *read* this kanji?"
+msgstr "Як *читається* цей ієрогліф?"
+
 msgid "How do you say it?"
 msgstr "Як це сказати?"
 
@@ -2180,6 +2267,9 @@ msgstr "Наскільки змінюється ціна облігації, к�
 
 msgid "How much demand changes when the price changes"
 msgstr "Наскільки змінюється попит, коли змінюється ціна"
+
+msgid "How much is a *taxi*?"
+msgstr "Скільки коштує *таксі*?"
 
 msgid "How sections work"
 msgstr "Як працюють розділи"
@@ -2222,8 +2312,41 @@ msgstr "huànchéng · Пересісти на іншу лінію"
 msgid "Hugs"
 msgstr "Обійми"
 
+msgid "I *feel* a bit tired today."
+msgstr "Сьогодні я *почуваюся* трохи втомленим."
+
+msgid "I *go to bed* at eleven."
+msgstr "Я *лягаю спати* об одинадцятій."
+
+msgid "I *like* watching films at home."
+msgstr "Я *люблю* дивитися фільми вдома."
+
+msgid "I *read* manga every night."
+msgstr "Щовечора я *читаю* мангу."
+
+msgid "I *think* he’s right."
+msgstr "Я *думаю*, що він має рацію."
+
+msgid "I *think* it’s great."
+msgstr "Я *думаю*, це чудово."
+
+msgid "I ate an *apple*."
+msgstr "Я з’їв *яблуко*."
+
+msgid "I bought a new *lock*."
+msgstr "Я купив новий *замок*."
+
+msgid "I bought bread at the *shop*."
+msgstr "Я купила хліб у *магазині*."
+
+msgid "I can’t get to the *phone*."
+msgstr "Я не можу підійти до *телефону*."
+
 msgid "I cry"
 msgstr "Я плачу (сльози)"
+
+msgid "I don’t have a *dog*."
+msgstr "У мене немає *собаки*."
 
 msgid "I don’t mind"
 msgstr "Мені однаково"
@@ -2234,14 +2357,113 @@ msgstr "Я не розумію"
 msgid "I don’t understand."
 msgstr "Я не розумію."
 
+msgid "I drink *milk* in the morning."
+msgstr "Я п’ю *молоко* вранці."
+
+msgid "I drink coffee every *morning*."
+msgstr "Кожного *ранку* я п’ю каву."
+
+msgid "I eat *fruit* every day."
+msgstr "Я їм *фрукти* щодня."
+
+msgid "I forgot to bring my *things*."
+msgstr "Я забув узяти *речі*."
+
+msgid "I go to work by *train*."
+msgstr "Я їжджу на роботу *поїздом*."
+
+msgid "I got a *call* from my mum."
+msgstr "Мені *дзвонила* мама."
+
+msgid "I have a *dog*."
+msgstr "У мене є *собака*."
+
+msgid "I have a Japanese *friend*."
+msgstr "У мене є *друг* — японець."
+
 msgid "I hope so; if only"
 msgstr "Сподіваюся; якби ж то"
+
+msgid "I learn a little *every day*."
+msgstr "Я вчу потроху *щодня*."
+
+msgid "I like *reading* books."
+msgstr "Я люблю *читати* книжки."
+
+msgid "I like Polish *music*."
+msgstr "Я люблю польську *музику*."
+
+msgid "I live in the *city*."
+msgstr "Я живу в *місті*."
 
 msgid "I miss it"
 msgstr "Мені цього бракує"
 
 msgid "I pay"
 msgstr "Я плачу (гроші)"
+
+msgid "I really *like* this book."
+msgstr "Мені дуже *подобається* ця книжка."
+
+msgid "I study Japanese *every day*."
+msgstr "Я вчу японську *щодня*."
+
+msgid "I take a walk in the *park*."
+msgstr "Я гуляю в *парку*."
+
+msgid "I take the *metro* to work every day."
+msgstr "Щодня я їжджу на роботу на *метро*."
+
+msgid "I want to *eat* sushi."
+msgstr "Я хочу *з’їсти* суші."
+
+msgid "I want to *sleep*."
+msgstr "Я хочу *спати*."
+
+msgid "I watched a film with a *friend*."
+msgstr "Я дивився фільм із *другом*."
+
+msgid "I won’t buy such an *expensive* phone."
+msgstr "Я не куплю такий *дорогий* телефон."
+
+msgid "I work in a *warehouse*."
+msgstr "Я працюю на *складі*."
+
+msgid "I’ll *call* you later."
+msgstr "Я тобі *подзвоню* пізніше."
+
+msgid "I’ll be waiting in the *park*."
+msgstr "Я чекатиму в *парку*."
+
+msgid "I’m *reading* the newspaper."
+msgstr "Я *читаю* газету."
+
+msgid "I’m getting up early *tomorrow* morning."
+msgstr "*Завтра* я встаю рано."
+
+msgid "I’m going out to eat with a *friend*."
+msgstr "Я йду поїсти з *другом*."
+
+msgid "I’m going to a *friend’s* house this weekend."
+msgstr "На вихідних я йду в гості до *друга*."
+
+msgid "I’m going to Beijing *tomorrow*."
+msgstr "*Завтра* я їду до Пекіна."
+
+msgid "I’m going to the *bank* to get money."
+msgstr "Я йду в *банк* зняти гроші."
+
+msgid "I’m going to the *shop*."
+msgstr "Я йду в *магазин*."
+
+msgid "I’m listening to *music*."
+msgstr "Я слухаю *музику*."
+
+msgid "I’m reading a fashion *magazine*."
+msgstr "Я читаю *журнал* про моду."
+
+msgid "I’m taking the *dog* for a walk."
+msgstr "Я йду гуляти із *собакою*."
 
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Лід — jää, край — äär: чотири ä поспіль."
@@ -2336,6 +2558,9 @@ msgstr "Це лише для мов?"
 msgid "Is it the official question set?"
 msgstr "Це офіційний набір питань?"
 
+msgid "Is there a *bank* nearby?"
+msgstr "Тут поблизу є *банк*?"
+
 msgid "Is there a ready-made deck for my certification?"
 msgstr "Чи є готова колода для моєї сертифікації?"
 
@@ -2366,6 +2591,9 @@ msgstr "Lymi планує кожну картку за методом інтер
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
 
+msgid "It was a really *pleasant* evening."
+msgstr "Це був дуже *приємний* вечір."
+
 msgid "It will all work out"
 msgstr "Усе владнається"
 
@@ -2375,11 +2603,17 @@ msgstr "Так само для уроку на italki, на Preply чи з ре�
 msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 msgstr "Він пише українською, а читає голос носія української. Коли слово схоже на російське, але означає інше, про це скажуть нотатки картки: неді́ля — це неділя, а не тиждень."
 
+msgid "It’s *cosy* in the sauna."
+msgstr "У сауні *затишно*."
+
 msgid "It’s fine; I’m OK"
 msgstr "Усе гаразд; зі мною все добре"
 
 msgid "It’s in your Downloads folder."
 msgstr "Він у теці «Завантаження»."
+
+msgid "It’s late, so I’ll *take a taxi* home."
+msgstr "Уже пізно, тож додому я поїду на *таксі*."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "Lymi зроблено для репетиторів і невеликих груп. Тут немає журналів, завдань чи оцінок."
@@ -2389,6 +2623,9 @@ msgstr "Нічого страшного"
 
 msgid "It’s okay"
 msgstr "Усе гаразд"
+
+msgid "It’s raining, so I want to *take a taxi*."
+msgstr "Іде дощ, тож я хочу взяти *таксі*."
 
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "Ось чому недочитаний розділ не дає спокою."
@@ -2634,6 +2871,15 @@ msgstr "Урок 4 · транспорт"
 
 msgid "Let Claude add cards?"
 msgstr "Дозволити Claude додавати картки?"
+
+msgid "Let’s *take a taxi*."
+msgstr "Поїхали на *таксі*."
+
+msgid "Let’s go into *town*!"
+msgstr "Ходімо в *місто*!"
+
+msgid "Let’s meet again *tomorrow*."
+msgstr "Побачимося *завтра*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Попрактикуймося. Використовуй німецькі слова з моєї колоди."
@@ -2908,6 +3154,9 @@ msgstr "Більше, ніж переклад."
 msgid "More updates"
 msgstr "Інші оновлення"
 
+msgid "morning"
+msgstr "ранок"
+
 msgid "Morning"
 msgstr "Ранок"
 
@@ -2946,6 +3195,9 @@ msgstr "Уроки музики"
 
 msgid "Music theory"
 msgstr "Теорія музики"
+
+msgid "My dad runs *every day*."
+msgstr "Тато бігає *щодня*."
 
 msgid "My dear"
 msgstr "Мій любий"
@@ -2999,6 +3251,9 @@ msgstr "Письмовий іспит DMV у Нью-Йорку: правила �
 msgid "Newer"
 msgstr "Новіше"
 
+msgid "Next *Sunday* will be warm."
+msgstr "Наступної *неділі* буде тепло."
+
 msgid "Next card"
 msgstr "Наступна картка"
 
@@ -3035,6 +3290,12 @@ msgstr "Над <0>我们在这里</0> піньїню немає: ці ієрог
 
 msgid "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgstr "Над <0>次</0> і <1>駅</1> читання немає: ти їх уже знаєш."
+
+msgid "No, *thank you*."
+msgstr "Ні, *дякую*."
+
+msgid "No, *thanks*."
+msgstr "Ні, *дякую*."
 
 msgid "No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud."
 msgstr "Ні. На картці може бути будь-що, що варто запам’ятати: термін, дата, формула, акорд. Мовні картки ще й можна прослухати."
@@ -3524,6 +3785,9 @@ msgstr "черга"
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Мати добре нунчі — відчувати настрій, поки ніхто ще нічого не сказав."
 
+msgid "rain"
+msgstr "дощ"
+
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana охоплює хірагану й катакану, зокрема дзвінкі та складені звуки, малу цу й знак довгого голосного."
 
@@ -3771,6 +4035,12 @@ msgstr "Переглянути колоди"
 msgid "See what you know"
 msgstr "Видно, що ти вже знаєш"
 
+msgid "See you *tomorrow*, then."
+msgstr "Ну, до *завтра*."
+
+msgid "See you *tomorrow*!"
+msgstr "До *завтра*!"
+
 msgid "See you soon"
 msgstr "До зустрічі"
 
@@ -3822,6 +4092,9 @@ msgstr "Постачальники послуг і міжнародне пере
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Сім карток: чотири з фінської, дві шахові й одна з тієї статті про обробку сигналів."
 
+msgid "Shall we *eat* together?"
+msgstr "*Поїмо* разом?"
+
 msgid "Share one deck with your class."
 msgstr "Одна колода на всю групу."
 
@@ -3830,6 +4103,12 @@ msgstr "Одне посилання для всіх."
 
 msgid "Sharing and connected apps"
 msgstr "Спільні колоди й підключені застосунки"
+
+msgid "She came back from *town*."
+msgstr "Вона повернулася з *міста*."
+
+msgid "She works at a *bank*."
+msgstr "Вона працює в *банку*."
 
 msgid "Shelves"
 msgstr "Полиці"
@@ -4159,11 +4438,17 @@ msgstr "взяти таксі"
 msgid "Take it again"
 msgstr "Сфотографувати ще раз"
 
+msgid "Take the *metro* to the airport."
+msgstr "До аеропорту їдь на *метро*."
+
 msgid "Tap to turn it over"
 msgstr "Торкнися, щоб перевернути"
 
 msgid "Tape, a spare part and some nerve."
 msgstr "Скотч, запасна деталь і трохи сміливості."
+
+msgid "Tartu is a beautiful *city*."
+msgstr "Тарту — гарне *місто*."
 
 msgid "tasty"
 msgstr "смачний"
@@ -4204,6 +4489,9 @@ msgstr "Текст · 2 сторінки"
 msgid "Text you copy from a Quizlet set"
 msgstr "Текст, скопійований із набору Quizlet"
 
+msgid "thank you"
+msgstr "дякую"
+
 msgid "Thank you"
 msgstr "Дякую"
 
@@ -4218,6 +4506,48 @@ msgstr "Дякую; дякую, друже"
 
 msgid "That chess term you just used, add it to my deck."
 msgstr "Додай у мою колоду цей шаховий термін."
+
+msgid "The *book* is on the table."
+msgstr "*Книжка* лежить на столі."
+
+msgid "The *castle* is open to tourists."
+msgstr "*Замок* відкритий для туристів."
+
+msgid "The *flour* is on the top shelf."
+msgstr "*Борошно* на верхній полиці."
+
+msgid "The *hedgehog* is asleep under a bush."
+msgstr "*Їжачок* спить під кущем."
+
+msgid "The *lock* is broken again."
+msgstr "*Замок* знову зламався."
+
+msgid "The *lock* on the door is broken."
+msgstr "*Замок* на дверях зламався."
+
+msgid "The *metro* is faster than the bus."
+msgstr "На *метро* швидше, ніж автобусом."
+
+msgid "The *milk* is in the fridge."
+msgstr "*Молоко* в холодильнику."
+
+msgid "The *morning* was sunny."
+msgstr "*Ранок* був сонячний."
+
+msgid "The *road* leads to the city."
+msgstr "*Дорога* веде до міста."
+
+msgid "The *shop* is closed."
+msgstr "*Магазин* зачинений."
+
+msgid "The *train* is running a little late."
+msgstr "*Поїзд* трохи запізнюється."
+
+msgid "The *water* is very cold."
+msgstr "*Вода* дуже холодна."
+
+msgid "The *way* home takes an hour."
+msgstr "*Дорога* додому займає годину."
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "Повстання в Празі 1618 року, з якого почалася Тридцятилітня війна"
@@ -4248,6 +4578,15 @@ msgstr "Підрум’янювання, що надає смаку смажен
 
 msgid "The cards from this page will land here."
 msgstr "Картки з цієї сторінки з’являться тут."
+
+msgid "The cat is asleep on the *rug*."
+msgstr "Кіт спить на *килимі*."
+
+msgid "The children are already *asleep*."
+msgstr "Діти вже *сплять*."
+
+msgid "The children are playing in the *park*."
+msgstr "Діти граються в *парку*."
 
 msgid "The cost of making one more unit"
 msgstr "Скільки коштує виготовити ще одну одиницю"
@@ -4300,6 +4639,12 @@ msgstr "Лицевий нерв: м’язи міміки та смак на п�
 msgid "The flashcard app that gets Chinese."
 msgstr "Флешкартки, які розуміють китайську."
 
+msgid "The flashcard app that gets Estonian."
+msgstr "Флешкартки, які розуміють естонську."
+
+msgid "The flashcard app that gets Japanese."
+msgstr "Флешкартки, які розуміють японську."
+
 msgid "The flashcard app that gets Polish."
 msgstr "Флешкартки, які розуміють польську."
 
@@ -4308,12 +4653,6 @@ msgstr "Флешкартки, які розуміють російську."
 
 msgid "The flashcard app that gets Ukrainian."
 msgstr "Флешкартки, які розуміють українську."
-
-msgid "The flashcard app that speaks Estonian."
-msgstr "Флешкартки, які говорять естонською."
-
-msgid "The flashcard app that speaks Japanese."
-msgstr "Флешкартки, які говорять японською."
 
 msgid "The free evening after work"
 msgstr "Вільний вечір після роботи"
@@ -4326,6 +4665,9 @@ msgstr "У німецькій, іспанській і чеській колод
 
 msgid "The girl"
 msgstr "Дівчинка"
+
+msgid "The goods are in the *warehouse*."
+msgstr "Товар на *складі*."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловоградецький і Пардубицький краї."
@@ -4369,6 +4711,9 @@ msgstr "Найкорисніші слова зі списку Goethe-Institut д
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетення нервів, що йде від шиї до руки"
 
+msgid "The new *rug* is soft."
+msgstr "Новий *килим* м’який."
+
 msgid "The new cards are in your deck, and terms you already have are skipped. Fix or archive any card."
 msgstr "Нові картки вже в колоді, а терміни, які в тебе є, пропущено. Будь-яку картку можна виправити або архівувати."
 
@@ -4377,6 +4722,9 @@ msgstr "Нові картки вже в колоді, а слова, які в �
 
 msgid "The next section opens at 80% known"
 msgstr "Наступний розділ відкривається, коли засвоєно 80%"
+
+msgid "The old *castle* on the hill."
+msgstr "Старий *замок* на горі."
 
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "Ту, що відповідає твоєму тесту чи темі. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
@@ -4471,6 +4819,9 @@ msgstr "Вікінги"
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "Лексика перших двох рівнів HSK — з класичних списків слів і програми 2025 року, з перекладом біля кожного слова."
 
+msgid "The weather is *lovely* today."
+msgstr "Сьогодні *чудова* погода."
+
 msgid "The whiteboard"
 msgstr "Дошка"
 
@@ -4489,11 +4840,17 @@ msgstr "Потім натисни ⌃⌥L у будь-якому застосу�
 msgid "Then review them in Lymi."
 msgstr "Потім повторюй їх у Lymi."
 
+msgid "There are too many *things*."
+msgstr "Забагато *речей*."
+
 msgid "There is no deck at this address."
 msgstr "За цією адресою немає колоди."
 
 msgid "There is nothing published yet."
 msgstr "Поки що нічого не опубліковано."
+
+msgid "There’s a *park* near the station."
+msgstr "Біля вокзалу є *парк*."
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."
@@ -4501,11 +4858,59 @@ msgstr "Вони відповідають джерелу {source} ({edition}), �
 msgid "They follow {source}, in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source}, дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."
 
+msgid "They say it’ll rain *tomorrow*."
+msgstr "Кажуть, *завтра* буде дощ."
+
+msgid "This *apple* is very sweet."
+msgstr "Це *яблуко* дуже солодке."
+
+msgid "This *book* is really interesting."
+msgstr "Ця *книжка* дуже цікава."
+
+msgid "This *castle* is very old."
+msgstr "Цей *замок* дуже старий."
+
+msgid "This *dog* is big."
+msgstr "Цей *собака* великий."
+
+msgid "This *fruit* is very sweet."
+msgstr "Цей *фрукт* дуже солодкий."
+
+msgid "This *lock* won’t open."
+msgstr "Цей *замок* не відмикається."
+
+msgid "This *milk* is fresh."
+msgstr "Це *молоко* свіже."
+
+msgid "This *music* is too loud."
+msgstr "Ця *музика* надто гучна."
+
+msgid "This *road* is very long."
+msgstr "Ця *дорога* дуже довга."
+
+msgid "This *shop* is open until 10 pm."
+msgstr "Цей *магазин* працює до 22:00."
+
+msgid "This *thing* is really handy."
+msgstr "Ця *річ* дуже зручна."
+
+msgid "This *water* is clean."
+msgstr "Ця *вода* чиста."
+
+msgid "This café is *expensive*."
+msgstr "Ця кав’ярня *дорога*."
+
 msgid "This deck is no longer published · Lymi"
 msgstr "Колода більше не опублікована · Lymi"
 
 msgid "This deck is no longer published."
 msgstr "Ця колода більше не опублікована."
+
+msgid "This is my *book*."
+msgstr "Це моя *книжка*."
+
+msgid "This is my Chinese *friend*."
+msgstr "Це мій *друг* із Китаю."
 
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Це чинний формат HSK 2.0. Програма, опублікована 2025 року, збільшує рівень 1 до 300 слів, а рівень 2 — до 500."
@@ -4683,6 +5088,9 @@ msgstr "Сьогодні"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сьогоднішня сторінка з мого підручника. Додай нові слова до моєї японської колоди."
+
+msgid "tomorrow"
+msgstr "завтра"
 
 msgid "Tomorrow"
 msgstr "Завтра"
@@ -4927,6 +5335,9 @@ msgstr "Вода"
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Рух води крізь мембрану в бік, де більше розчиненої речовини"
 
+msgid "We bought a *rug* for the living room."
+msgstr "Ми купили *килим* у вітальню."
+
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "Ми не продаємо твої персональні дані, не показуємо рекламу й не відстежуємо тебе в застосунках і на сайтах інших компаній. Описані нижче дані потрібні, щоб надавати, захищати й удосконалювати Lymi."
 
@@ -4942,6 +5353,9 @@ msgstr "Ми використовуємо контроль доступу й з�
 msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 msgstr "Ми використовуємо файли cookie й сховище пристрою для входу, уподобань, роботи офлайн і синхронізації незавершених змін та повторень. Публічний сайт зберігає вподобання в браузері, але не використовує аналітичних cookie. Вихід очищає кешовані застосунком дані облікового запису, хоча деякі вподобання й кешоване аудіо можуть залишитися."
 
+msgid "We’re old *friends*."
+msgstr "Ми давні *друзі*."
+
 msgid "Weather"
 msgstr "Погода"
 
@@ -4950,6 +5364,15 @@ msgstr "Відвідування сайту підраховуються без 
 
 msgid "Websites"
 msgstr "Сайти"
+
+msgid "What *fruit* is this?"
+msgstr "Що це за *фрукт*?"
+
+msgid "What *things* did you buy?"
+msgstr "Які *речі* ти купив?"
+
+msgid "What a little *hedgehog*!"
+msgstr "Який маленький *їжачок*!"
 
 msgid "What about words spelled the same?"
 msgstr "А як зі словами, що пишуться однаково?"
@@ -4960,11 +5383,17 @@ msgstr "А як щодо ё?"
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
 
+msgid "What are you going to *eat*?"
+msgstr "Що ти *їстимеш*?"
+
 msgid "What are you learning?"
 msgstr "Що ти вчиш?"
 
 msgid "What comes across"
 msgstr "Що перенесеться"
+
+msgid "What do you *think*?"
+msgstr "Що ти *думаєш*?"
 
 msgid "What does a card ask me?"
 msgstr "Про що питає картка?"
@@ -4995,6 +5424,12 @@ msgstr "Що залишиться іншим"
 
 msgid "What the test looks like"
 msgstr "Як влаштований тест"
+
+msgid "What time does the *bank* open?"
+msgstr "О котрій відчиняється *банк*?"
+
+msgid "What time is the next *train*?"
+msgstr "О котрій наступний *поїзд*?"
 
 msgid "What we collect and why"
 msgstr "Які дані ми збираємо й навіщо"
@@ -5046,6 +5481,15 @@ msgstr "Звідки надходять картки"
 
 msgid "Where should I start?"
 msgstr "З чого почати?"
+
+msgid "Where’s the *flour*?"
+msgstr "Де тут *борошно*?"
+
+msgid "Where’s the *metro* station?"
+msgstr "Де станція *метро*?"
+
+msgid "Where’s the *water*?"
+msgstr "Де тут *вода*?"
 
 msgid "Which assistants can add cards?"
 msgstr "Які асистенти можуть додавати картки?"
@@ -5103,6 +5547,9 @@ msgstr "Віджети"
 
 msgid "Will it get me to the B1 certificate?"
 msgstr "Чи допоможе це скласти іспит на B1?"
+
+msgid "Will it rain *tomorrow*?"
+msgstr "*Завтра* буде дощ?"
 
 msgid "Will the AI slip into Russian?"
 msgstr "AI не перейде на російську?"
@@ -5277,6 +5724,9 @@ msgstr "Ти знаєш <0>银行</0>. <1>行</1> втрачає háng і в <2>
 
 msgid "You learned this one in context."
 msgstr "Вивчено в контексті."
+
+msgid "You need *flour* for pancakes."
+msgstr "Для млинців потрібне *борошно*."
 
 msgid "You own this deck"
 msgstr "Твоя колода"

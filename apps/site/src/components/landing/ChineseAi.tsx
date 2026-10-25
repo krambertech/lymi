@@ -45,16 +45,14 @@ export function EnrichChinese() {
         <span className="min-h-[1.5em] text-md text-text">
           <Trans>To change lines (metro, trains)</Trans>
         </span>
-        <span className="text-xs text-muted">
-          <Trans>From your lesson</Trans>
-        </span>
       </Field>
       <Field label={<Trans>Example</Trans>} wrote={at("example")}>
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[2.2em] text-[26px] leading-[1.9] text-text"
+          className="min-h-[2.2em] text-2xl leading-[1.9] text-text"
         >
+          {/* The term's size, not the other fields': any smaller and each syllable's pinyin spaces its character out. */}
           <Zh>
             <Pinyin
               term="我们在这里换乘二号线。"

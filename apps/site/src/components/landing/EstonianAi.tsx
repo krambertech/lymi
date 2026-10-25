@@ -37,7 +37,7 @@ export function EnrichEstonian() {
           lang="et"
           initial={false}
           animate={appear(at("forms"))}
-          className="min-h-[1.5em] text-md text-text italic"
+          className="min-h-[1.5em] text-md text-text"
         >
           sõber · sõbra · sõpra
         </motion.span>

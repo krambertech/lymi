@@ -1,6 +1,5 @@
 import { env } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
-import type { SupportedTag } from "@lymi/core";
 import {
   hasShelfPage,
   offersDeck,
@@ -18,7 +17,7 @@ import type { APIContext, AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
-import { LANGUAGE_PAGES } from "./language-pages";
+import { LANGUAGE_PAGES, type LanguagePageTag } from "./language-pages";
 import { menuShelves } from "./menu-shelves";
 import { type Locale, locales } from "./routes";
 import type { SitemapShelf } from "./sitemap";
@@ -216,7 +215,7 @@ export async function resolveExamsPage(
 
 export interface LanguageDecksPage {
   locale: Locale;
-  language: SupportedTag;
+  language: LanguagePageTag;
   /** The language's decks, those a beginner starts from first, as Welcome offers them. */
   decks: PublicDeckSummary[];
 }
@@ -255,7 +254,7 @@ async function resolveTaughtDecks(
 export async function resolveLanguageDecks(
   astro: AstroGlobal,
   locale: Locale,
-  language: SupportedTag,
+  language: LanguagePageTag,
 ): Promise<LanguageDecksPage | Response> {
   const decks = await resolveTaughtDecks(astro, locale, language, LANGUAGE_PAGES[language].page);
   return decks instanceof Response ? decks : { locale, language, decks };

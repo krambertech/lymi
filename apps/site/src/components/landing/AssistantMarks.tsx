@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { useId } from "react";
 import { localizedPath } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
@@ -115,12 +116,17 @@ const ASSISTANTS: readonly Assistant[] = [
 ];
 
 /** A vendor's colour is a quotation: it fills the mark and never the plate around it. */
-function Mark({ assistant }: { assistant: Assistant }) {
+function Mark({ assistant, small }: { assistant: Assistant; small?: boolean | undefined }) {
   const id = useId();
   const layers = assistant.brand === undefined ? ["currentColor"] : [assistant.brand].flat();
 
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 shrink-0" fillRule="evenodd">
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={clsx("shrink-0", small ? "size-4" : "size-5")}
+      fillRule="evenodd"
+    >
       <defs>
         {layers.map((paint, i) =>
           typeof paint === "string" ? null : (
@@ -201,6 +207,32 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/** A quiet line of the assistants Lymi works in, each opening its setup guide. */
+export function WorksWith({ names }: { names: readonly AssistantName[] }) {
+  const label = useId();
+  const assistants = names.flatMap((name) => ASSISTANTS.filter((a) => a.name === name));
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+      <span id={label}>
+        <Trans>Works with</Trans>
+      </span>
+      <ul aria-labelledby={label} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {assistants.map((assistant) => (
+          <li key={assistant.name}>
+            <a
+              href={assistant.guide}
+              className="inline-flex items-center gap-1.5 rounded-xs text-text-2 hoverable:hover:text-text"
+            >
+              <Mark assistant={assistant} small />
+              {assistant.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

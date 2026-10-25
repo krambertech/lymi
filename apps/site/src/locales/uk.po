@@ -965,6 +965,9 @@ msgstr "Брати"
 msgid "Browse all decks"
 msgstr "Переглянути всі колоди"
 
+msgid "Browse free decks"
+msgstr "Безкоштовні колоди"
+
 msgid "Build a course in sections and share it with your class."
 msgstr "Збери курс із розділів і поділися ним із групою."
 
@@ -1812,6 +1815,9 @@ msgstr "Картки для тесту на громадянство Німеч�
 msgid "Flashcards that come back right before you'd forget."
 msgstr "Картки, що повертаються саме тоді, коли ти от-от забудеш."
 
+msgid "Flashcards that stick."
+msgstr "Картки, які не забуваються."
+
 msgid "Flat"
 msgstr "Квартира"
 
@@ -2515,9 +2521,6 @@ msgstr "Бережи свою <0>українську.</0>"
 msgid "Keep what you learn in any language."
 msgstr "Бережи вивчене будь-якою мовою."
 
-msgid "Keep what you learn."
-msgstr "Запам’ятовуй надовго."
-
 msgid "Know where you stand."
 msgstr "Знай, де ти зараз."
 
@@ -2790,6 +2793,9 @@ msgstr "Основна навігація"
 
 msgid "Mainland voice"
 msgstr "Голос материкового Китаю"
+
+msgid "Make a card in seconds and review it in Lymi. Spaced repetition brings it back right before you’d forget, until you remember it for good."
+msgstr "Створи картку за кілька секунд і повторюй її в Lymi. Інтервальне повторення повертає її саме тоді, коли ти от-от забудеш, аж поки не запам’ятаєш назавжди."
 
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Створи колоду для групи й надішли посилання для приєднання. Кожна картка, яку ти додаси після уроку, з’явиться в усіх, хто приєднався, а розклад повторень у кожного свій."
@@ -3704,9 +3710,6 @@ msgstr "продаж"
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"
-
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
-msgstr "Збережи слово, термін чи ідею як флеш-картку. Lymi покаже її знову якраз перед тим, як ти забудеш. Безкоштовно."
 
 msgid "Say it"
 msgstr "Вимова"
@@ -5151,6 +5154,9 @@ msgstr "Робота й навчання"
 
 msgid "Works offline"
 msgstr "Працює без інтернету"
+
+msgid "Works with"
+msgstr "Працює з"
 
 msgid "Writing"
 msgstr "Письмо"

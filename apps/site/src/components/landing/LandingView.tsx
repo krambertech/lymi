@@ -1,11 +1,12 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Gift, KeyRound, WifiOff } from "lucide-react";
+import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantChat } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
+import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import { Assurances } from "./Assurances";
 import { USE_CASE_CARDS } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
@@ -65,13 +66,18 @@ export function LandingView() {
       page="landing"
       hero={
         <Hero
-          title={<Trans>Keep what you learn.</Trans>}
+          title={<Trans>Flashcards that stick.</Trans>}
           lede={
             <Trans>
-              Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
-              forget. Free to use.
+              Make a card in seconds and review it in Lymi. Spaced repetition brings it back right
+              before you’d forget, until you remember it for good.
             </Trans>
           }
+          secondary={{
+            href: explorePath(i18n.locale),
+            label: <Trans>Browse free decks</Trans>,
+          }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
         />
       }
     >

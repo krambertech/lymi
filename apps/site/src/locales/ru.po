@@ -965,6 +965,9 @@ msgstr "Братья"
 msgid "Browse all decks"
 msgstr "Смотреть все колоды"
 
+msgid "Browse free decks"
+msgstr "Бесплатные колоды"
+
 msgid "Build a course in sections and share it with your class."
 msgstr "Собери курс из разделов и поделись им с группой."
 
@@ -1812,6 +1815,9 @@ msgstr "Карточки для теста на гражданство Герм�
 msgid "Flashcards that come back right before you'd forget."
 msgstr "Карточки, которые возвращаются, когда ты вот-вот забудешь."
 
+msgid "Flashcards that stick."
+msgstr "Карточки, которые не забываются."
+
 msgid "Flat"
 msgstr "Квартира"
 
@@ -2515,9 +2521,6 @@ msgstr "Сохраняй свой <0>украинский.</0>"
 msgid "Keep what you learn in any language."
 msgstr "Сохраняй выученное на любом языке."
 
-msgid "Keep what you learn."
-msgstr "Запоминай надолго."
-
 msgid "Know where you stand."
 msgstr "Знай, где ты сейчас."
 
@@ -2790,6 +2793,9 @@ msgstr "Основная навигация"
 
 msgid "Mainland voice"
 msgstr "Голос материкового Китая"
+
+msgid "Make a card in seconds and review it in Lymi. Spaced repetition brings it back right before you’d forget, until you remember it for good."
+msgstr "Создай карточку за пару секунд и повторяй её в Lymi. Интервальное повторение возвращает её как раз тогда, когда ты вот-вот забудешь, пока не запомнишь навсегда."
 
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Создай колоду для группы и отправь ссылку для присоединения. Каждая карточка, которую ты добавишь после урока, появится у всех, кто присоединился, а расписание повторений у каждого своё."
@@ -3704,9 +3710,6 @@ msgstr "продажа"
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизируй с частотой вдвое выше максимальной"
-
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
-msgstr "Сохрани слово, термин или идею как флеш-карточку. Lymi покажет её снова как раз перед тем, как ты забудешь. Бесплатно."
 
 msgid "Say it"
 msgstr "Произношение"
@@ -5151,6 +5154,9 @@ msgstr "Работа и учёба"
 
 msgid "Works offline"
 msgstr "Работает без интернета"
+
+msgid "Works with"
+msgstr "Работает с"
 
 msgid "Writing"
 msgstr "Письмо"

@@ -965,6 +965,9 @@ msgstr "Brothers"
 msgid "Browse all decks"
 msgstr "Browse all decks"
 
+msgid "Browse free decks"
+msgstr "Browse free decks"
+
 msgid "Build a course in sections and share it with your class."
 msgstr "Build a course in sections and share it with your class."
 
@@ -1812,6 +1815,9 @@ msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spani
 msgid "Flashcards that come back right before you'd forget."
 msgstr "Flashcards that come back right before you'd forget."
 
+msgid "Flashcards that stick."
+msgstr "Flashcards that stick."
+
 msgid "Flat"
 msgstr "Flat"
 
@@ -2515,9 +2521,6 @@ msgstr "Keep what you learn in <0>Ukrainian.</0>"
 msgid "Keep what you learn in any language."
 msgstr "Keep what you learn in any language."
 
-msgid "Keep what you learn."
-msgstr "Keep what you learn."
-
 msgid "Know where you stand."
 msgstr "Know where you stand."
 
@@ -2790,6 +2793,9 @@ msgstr "Main navigation"
 
 msgid "Mainland voice"
 msgstr "Mainland voice"
+
+msgid "Make a card in seconds and review it in Lymi. Spaced repetition brings it back right before you’d forget, until you remember it for good."
+msgstr "Make a card in seconds and review it in Lymi. Spaced repetition brings it back right before you’d forget, until you remember it for good."
 
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
@@ -3704,9 +3710,6 @@ msgstr "sale"
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
-
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
-msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free to use."
 
 msgid "Say it"
 msgstr "Say it"
@@ -5151,6 +5154,9 @@ msgstr "Work and study"
 
 msgid "Works offline"
 msgstr "Works offline"
+
+msgid "Works with"
+msgstr "Works with"
 
 msgid "Writing"
 msgstr "Writing"

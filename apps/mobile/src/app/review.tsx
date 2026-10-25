@@ -186,10 +186,10 @@ interface Graded {
   item: QueueItem;
   grade: LocalGrade;
   listed: boolean;
-  deck: CardDeck;
-  forgotten: boolean;
   /** The hint as it showed under the cue at the grade, or nothing when it was not showing. */
   hint: Hint | null;
+  /** The step exactly as it was drawn at the grade, so the copy left underneath never reflows. */
+  shown: Step;
 }
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
@@ -866,9 +866,8 @@ function Run({
       item,
       grade: record,
       listed,
-      deck: cardDeck,
-      forgotten,
       hint: hintShown ? hint : null,
+      shown: step,
     });
     setReturned(false);
     setSending((n) => n + 1);
@@ -907,6 +906,36 @@ function Run({
       .finally(() => setSending((n) => n - 1));
   };
 
+  const step: Step = {
+    item,
+    deck: cardDeck,
+    forgotten,
+    hint,
+    hintShown,
+    known,
+    revealed,
+    still: returned,
+    onReveal: () => {
+      haptics.reveal();
+      revealedAt.current = performance.now();
+      setRevealed(true);
+    },
+    onPeek: () => {
+      haptics.tick();
+      setAidState({ key: showing, peeked: true, shown: false });
+    },
+    onShowHint: () => setAidState({ key: showing, peeked: false, shown: true }),
+    offer: offer && revealed,
+    onOffer: openHint,
+    onMenu: openMenu,
+    easyLocked: peeked,
+    lockedTip: locked.key === showing ? locked.presses : 0,
+    onGrade,
+    onUndo: lastGraded ? undo : undefined,
+    pronounce,
+    exampleSound,
+  };
+
   return (
     <Cover style={pull.style}>
       <View
@@ -930,51 +959,13 @@ function Run({
                 <Turn
                   // Each graded card is drawn afresh, so nothing glides from the one before it.
                   key={lastGraded.grade.reviewedAt}
-                  item={lastGraded.item}
-                  deck={lastGraded.deck}
-                  forgotten={lastGraded.forgotten}
-                  hint={lastGraded.hint}
-                  hintShown={!!lastGraded.hint}
-                  known={known}
-                  easyLocked={lastGraded.grade.aid === "hint"}
-                  revealed
+                  {...lastGraded.shown}
                   still
                 />
               )
             }
           >
-            {(top) => (
-              <Turn
-                top={top}
-                item={item}
-                deck={cardDeck}
-                forgotten={forgotten}
-                hint={hint}
-                hintShown={hintShown}
-                known={known}
-                revealed={revealed}
-                still={returned}
-                onReveal={() => {
-                  haptics.reveal();
-                  revealedAt.current = performance.now();
-                  setRevealed(true);
-                }}
-                onPeek={() => {
-                  haptics.tick();
-                  setAidState({ key: showing, peeked: true, shown: false });
-                }}
-                onShowHint={() => setAidState({ key: showing, peeked: false, shown: true })}
-                offer={offer && revealed}
-                onOffer={openHint}
-                onMenu={openMenu}
-                easyLocked={peeked}
-                lockedTip={locked.key === showing ? locked.presses : 0}
-                onGrade={onGrade}
-                onUndo={lastGraded ? undo : undefined}
-                pronounce={pronounce}
-                exampleSound={exampleSound}
-              />
-            )}
+            {(top) => <Turn top={top} {...step} />}
           </CardStack>
         </UndoArea>
       </View>
@@ -1141,32 +1132,8 @@ function ReviewError({
   );
 }
 
-/** A card and, once it is revealed, its grades under it: one step of the stack. */
-function Turn({
-  top,
-  item,
-  deck,
-  forgotten,
-  hint,
-  hintShown,
-  known,
-  revealed,
-  still = false,
-  onReveal,
-  onPeek,
-  onShowHint,
-  offer = false,
-  onOffer,
-  onMenu,
-  easyLocked = false,
-  lockedTip = 0,
-  onGrade,
-  onUndo,
-  pronounce,
-  exampleSound,
-}: {
-  /** On the top step, how the card moves; the step underneath stays still. */
-  top?: TopCard;
+/** What one step of the stack draws, on top or left underneath once graded. */
+interface Step {
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
@@ -1193,6 +1160,34 @@ function Turn({
   onUndo?: (() => void) | undefined;
   pronounce?: Pronunciation | null;
   exampleSound?: ExampleAudio | null;
+}
+
+/** A card and, once it is revealed, its grades under it: one step of the stack. */
+function Turn({
+  top,
+  item,
+  deck,
+  forgotten,
+  hint,
+  hintShown,
+  known,
+  revealed,
+  still = false,
+  onReveal,
+  onPeek,
+  onShowHint,
+  offer = false,
+  onOffer,
+  onMenu,
+  easyLocked = false,
+  lockedTip = 0,
+  onGrade,
+  onUndo,
+  pronounce,
+  exampleSound,
+}: Step & {
+  /** On the top step, how the card moves; the step underneath stays still. */
+  top?: TopCard;
 }) {
   const card = (
     <CardPlate
@@ -1325,9 +1320,8 @@ function CardPlate({
   onMenu,
   onUndo,
 }: {
-  /** The pronunciation on the top card; none underneath. */
   pronounce: Pronunciation | null;
-  /** The example's speaker on the top card once revealed; none underneath. */
+  /** The example's speaker, once revealed. */
   exampleSound: ExampleAudio | null;
   item: QueueItem;
   deck: CardDeck;
@@ -1750,7 +1744,11 @@ function GradeStrip({
   const reduce = useReduceMotion();
   const why = t`You can’t choose Easy after peeking at your hint.`;
   const [tip, setTip] = useState(false);
+  // Only a press made here is said; a strip drawn after one, as on a graded copy, stays quiet.
+  const said = useRef(lockedTip);
   useEffect(() => {
+    if (lockedTip === said.current) return;
+    said.current = lockedTip;
     if (lockedTip === 0) return;
     setTip(true);
     AccessibilityInfo.announceForAccessibility(why);

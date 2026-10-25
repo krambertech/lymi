@@ -1,6 +1,12 @@
 import type { DesktopBridge } from "@lymi/client/desktop";
 
-export type { DesktopBridge, MacPreferences, MacSaved, MacSetting } from "@lymi/client/desktop";
+export type {
+  DesktopBridge,
+  MacPreferences,
+  MacSaved,
+  MacSetting,
+  MacUpdate,
+} from "@lymi/client/desktop";
 
 declare global {
   interface Window {

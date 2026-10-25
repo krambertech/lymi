@@ -1,6 +1,6 @@
 # The docs site
 
-The docs site at `/docs` is the same two rooms as the product. Pages are plain on the canvas, not in cards: a card in the docs means a code block, a callout, or one operation.
+The docs site at `/docs` uses the product’s light and dark themes. Render prose directly on the canvas. Reserve panels for code blocks, callouts and individual API operations.
 
 ## Prose
 

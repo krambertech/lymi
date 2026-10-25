@@ -1,3 +1,4 @@
+import type { MacUpdate } from "@lymi/client/desktop";
 import { app, autoUpdater } from "electron";
 import { updateFeed } from "./downloads.js";
 
@@ -5,9 +6,9 @@ const CHECK_EVERY_MS = 60 * 60_000;
 
 /**
  * Downloads a new version in the background and never asks: Squirrel installs it the next time
- * Lymi quits, and `onReady` lets the tray offer to restart sooner.
+ * Lymi quits, and `onChange` reaching `ready` lets the tray and This Mac offer to restart sooner.
  */
-export function watchForUpdates(onReady: () => void) {
+export function watchForUpdates(onChange: (update: MacUpdate) => void) {
   const feed = updateFeed(process.platform, process.arch);
   if (!app.isPackaged || !feed) return;
   let downloading = false;
@@ -17,13 +18,16 @@ export function watchForUpdates(onReady: () => void) {
     downloading = false;
     console.error("Update check failed", error);
   });
+  autoUpdater.on("checking-for-update", () => onChange("checking"));
+  autoUpdater.on("update-not-available", () => onChange("current"));
   autoUpdater.on("update-available", () => {
     downloading = true;
+    onChange("downloading");
   });
   // On macOS every check downloads an available update again, so checking stops once one is ready.
   autoUpdater.on("update-downloaded", () => {
     clearInterval(timer);
-    onReady();
+    onChange("ready");
   });
   autoUpdater.setFeedURL({ url: feed, serverType: "json" });
   const check = () => {

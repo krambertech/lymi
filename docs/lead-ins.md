@@ -1,6 +1,6 @@
 # Lead-ins
 
-A lead-in is the few words a speech engine hears before a term, so it says the sense the learner means. A Japanese card holds はし for a bridge, but はし is also chopsticks and an edge, each with its own pitch. Sent alone, the kana gives the voice nothing to choose with. With 川を渡る sent first, it says the bridge. The lead-in goes to ElevenLabs v4 as `previous_text`, which shapes the delivery but is never spoken, so the clip still holds only the term.
+A [lead-in](../CONTEXT.md) is the few words a speech engine hears before a term, so it says the sense the learner means. A Japanese card holds はし for a bridge, but はし is also chopsticks and an edge, each with its own pitch. Sent alone, the kana gives the voice nothing to choose with. With 川を渡る sent first, it says the bridge. The lead-in goes to ElevenLabs v4 as `previous_text`, which shapes the delivery but is never spoken, so the clip still holds only the term.
 
 Lead-ins exist only where they help: Japanese is the one language with a policy, and ElevenLabs v4 is the one voice they were auditioned on. Other languages and providers speak the term alone and never reach a model. [The Japanese proposal](proposals/japanese.md) has the listening tests behind this.
 
@@ -30,11 +30,11 @@ flowchart TD
 | 時計 とけい, clock | pass | 0.23 | Kana alone; no writer call |
 | コーヒー, coffee | loanword | not asked | Kana alone; no model call |
 
-The scores come from the evaluation run on 19 October 2026. Other languages, and voices other than ElevenLabs v4, skip the whole flow and speak the term alone.
+The scores come from the evaluation run on 19 October 2026.
 
 The free rules live in the policy because they depend on the language. A katakana loanword rarely shares its reading with another word, and a reading over 8 kana is a compound or a phrase that carries its own context. The decision model answers one yes-or-no question per card. The writer is told to return no lead-in for sentences, greetings and time words, and its reply must pass the policy's checks: at most 16 characters, Japanese script only, no repeat of the term or its reading, and no generic word such as とても that fits every sense.
 
-When Clef is down or gives no score, the writer decides alone, as it did before there was a decision model. Missing a homophone is the worse mistake, because the learner hears the wrong word. A unique word flagged by mistake costs one writer call, and the writer can still answer that none is needed.
+When Clef is down or gives no score, the writer decides alone. Missing a homophone is the worse mistake, because the learner hears the wrong word. A unique word flagged by mistake costs one writer call, and the writer can still answer that none is needed.
 
 ## What is stored and when it is asked again
 

@@ -19,7 +19,7 @@ import { cacheLookup, localCard, patchCard, rebase, showWrite } from "./write-pr
 /**
  * The learner's card and deck writes, kept on the device until the server has them, so every one
  * made offline lands once the connection returns. Grades have their own outbox in `grades.ts`;
- * a flush sends both in the order they were made. docs/stack.md#offline has the rules.
+ * a flush sends both in the order they were made. ADR 0023 has the rules.
  */
 // One key per queued write, under WRITE_PREFIX, so a tab adding one never rewrites another tab's.
 const LOCK = "lymi-writes";

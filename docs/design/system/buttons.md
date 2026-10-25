@@ -1,6 +1,6 @@
 # Buttons
 
-`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live, and the public site's copy in `apps/site/src/components/Button.tsx` draws the same variants with the same light and lift.
+`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live, and the public site's copy in `apps/site/src/components/Button.tsx` uses matching variants and surface treatments.
 
 ## Which control
 
@@ -23,10 +23,10 @@ What does pressing it do?
 
 ## Button variants
 
-Variants: `primary`, `secondary`, `ghost`, `danger`. Nothing else exists; an unlisted variant is a bug, not an option. **The default is `secondary`**, so leave `variant` off for an ordinary action.
+Variants: `primary`, `secondary`, `ghost`, `danger`. Nothing else exists. **The default is `secondary`**, so leave `variant` off for an ordinary action.
 
-- `primary` is the one thing to press on the view: amber on `amber-ink`. **One per view.** Two primaries means the screen has no hierarchy, and amber stops meaning act. It carries `key-light`, a soft fall of light along its top ([surfaces.md](surfaces.md#lit-and-set-in)).
-- `secondary` is every other action: a plate with an edge. This is the default. Like every plate it lifts at night and hovers with `veil` over its fill ([surfaces.md](surfaces.md#hover)).
+- `primary` is the one thing to press on the view: an amber fill with `amber-ink` text. **One per view.** Two primaries means the screen has no hierarchy, and amber stops meaning act. It carries `key-light`, the shared top highlight ([surfaces.md](surfaces.md#lit-and-set-in)).
+- `secondary` is every other action: a plate with an edge. Like every plate it lifts in dark theme and hovers with `veil` over its fill ([surfaces.md](surfaces.md#hover)).
 - `ghost` is a way out or a quiet action beside others: Cancel, the safe choice in a question ("Keep member"), Clear filters, a sort button in a toolbar. No plate until hovered.
 - `danger` archives, deletes, revokes or removes. Soft red until hovered, and its label names the consequence ("Revoke key").
 

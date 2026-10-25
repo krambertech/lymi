@@ -1,95 +1,80 @@
-# Brand: the lantern, the flame and the wordmark
+# Brand
 
-Lymi is cut from *lyhty*, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: small at the start of a day, a little taller with every review, full when the daily goal is reached, and out only when the streak breaks.
+Lymi’s name is associated with illuminating what you learn. The storm lantern is the brand symbol. In the signed-in app its flame also shows today’s review progress. Public pages, sign-in and app icons use a fixed brand flame without learner state. Keep the name’s origin and the symbol’s rationale here; describe features elsewhere in ordinary product terms.
 
-## Which mark
+## Choose the mark
 
-```text
-Where does it go?
- ├── Login, the app icon, public pages, an empty screen → Lantern with no progress (the brand lantern)
- ├── Welcome's first screen → the brand lantern catching from out, once, in its pool of light
- ├── Today's due card, the review header, the end of a review → Lantern with lanternFor(streak)
- ├── Beside the streak number (the streak pill, the streak modal) → Flame with streakFlameFor(streak)
- ├── The rail's top line → AppTile at 28 px beside the plain Wordmark
- ├── A phone tab's top bar → AppTile at 40 px with an edge, no wordmark
- ├── The login screen, the app store → the lit Wordmark
- └── An error → no mark at all; ErrorState
-```
+| Location | Mark |
+| --- | --- |
+| Sign-in, app icon, public pages, empty states | Brand lantern without progress |
+| Welcome’s first screen | Brand lantern with a single lighting animation |
+| Today’s due panel, review header, review completion | `Lantern` with `lanternFor(streak)` |
+| Beside a streak number | `Flame` with `streakFlameFor(streak)` |
+| Desktop rail | `AppTile` at 28 px and plain `Wordmark` |
+| Phone tab header | `AppTile` at 40 px with an edge, without wordmark |
+| Sign-in and app-store artwork | Lit `Wordmark` |
+| Errors | `ErrorState`, without a brand mark |
 
-## The lantern
+Use the plain wordmark whenever the lantern is also visible. The standalone streak flame is a status component and can appear beside the lantern.
 
-Drawn in a 120 unit box. Top to bottom: a bail tall enough to read as a handle rather than a keyring, turning on two visible pivots; a hood that flares wide over the glass; two rods down the sides; the glass itself; a fount on a foot. The flare, the rods and the pivots are what make it a lantern. Without them the silhouette is a battery.
+## Lantern drawing
 
-- The metal is `metal`, which is the text colour of the room: ink by day, white at night. Never grey.
-- The glass is one **opaque** colour, `glass`, not a tint over a hole. A translucent glass needs a backer in the room's colour, and then the mark drags a pale slab onto any surface that is not the page background. Every metal part overlaps the glass edges, so nothing can spill outside the frame.
-- When the flame is out, the glass is `glass-unlit` and an ember in `edge-2` sits where the flame was.
-- There is one drawing for every size. The rods and the flame are what keep the drawing legible when it is tiny; a simplified cut that drops them collapses into a mushroom by 24 px. The browser tab uses the same drawing with the viewBox squared around its own bounds.
+`packages/design/src/lantern.ts` owns the geometry used by web, site and phone. It uses a 120-unit viewBox with a handle, pivots, hood, side rods, glass and base. Keep the complete drawing at every size; the rods and flame preserve recognition at small sizes. The favicon uses the same drawing with a square viewBox around its bounds.
 
-The geometry lives in `packages/design/src/lantern.ts` and nowhere else. The web's `Lantern` and `Lockup`, the site and the phone all draw from it, so the mark cannot drift between them.
+- Metal uses `metal`: dark in light theme and ivory in dark theme.
+- Glass uses the opaque `glass` token. Metal overlaps its edges to contain the fill.
+- An unlit lantern uses `glass-unlit` and an ember in `edge-2`.
+- Preserve the shared geometry and flat treatment. Do not add an outline, bevel, translucent glass, extra flame or background fill inside the mark. Rotation is limited to the shared launch and pull-to-refresh animation below.
 
-Never: grey metal, translucent glass, a room colour painted inside the mark, an outline, a rotation, a bevel, a second illustration, or two flames in one mark. If the lantern is on the screen, the wordmark is plain.
+## Review progress
 
-## What the lantern's flame shows
+`lanternFor` in `@lymi/design` maps a streak summary to `Lantern` props. `progress` is today’s accepted reviews divided by the daily goal; `fed` increases with every accepted review.
 
-The flame shows how far today has come. **Whether the streak is alive is the number's job, never the flame's.**
+The flame is out only when there is no current streak and no accepted review today. A live streak starts the day lit. The first accepted review lights an unlit flame, and subsequent reviews increase its size. Forgot and Easy contribute equally. A confirmed nothing-due day keeps the start-of-day flame lit without increasing progress. Ending a review or leaving the day unfinished does not extinguish it.
 
-- It is out only when there is no streak and no review yet today: a new learner, or the morning after a day that ended short of its goal.
-- The first accepted review lights it small, it grows through the day, and it is full at the goal. A live streak keeps its flame lit from the start of the day.
-- Nothing due, an ended session and an unfinished morning never put it out. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
+The flame starts at 0.72× brand size and grows to 1.02× just below the goal. Reaching the goal increases it to 1.16× for the rest of the day. Height carries the full scale change; width changes at half that rate. Halo width grows from 0.7× to 1.7× brand width.
 
-`Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak and no review yet today, and `fed` goes up by one for every accepted review. `lanternFor` in `@lymi/design` turns the streak summary into those props. A screen never asks the lantern to celebrate.
+Each accepted review animates the flame and halo, then settles at the new size. Consecutive animations continue from their current position. Two or three amber particles also rise from the hood, with a fixed 2.5–3.5 px size independent of lantern size. Grades cycle through three particle sets, with at most three visible sets at once. These animations never delay the next card.
 
-While lit, the flame is one continuous size. It starts each day at 0.72× the brand flame and grows with progress to 1.02× just before the goal; height carries the growth and width follows at half the rate. Growth stops short of full so that reaching the goal is a rise of its own, to 1.16×, where the flame stays for the rest of the day. The halo's width follows, from 0.7× the brand halo to 1.7× at the goal.
-
-Every accepted review feeds the flame, and Forgot feeds it exactly as Easy does. A feed is a breath: the flame draws up and thin and the halo swells, then both settle at the new size. Reviews close together flow into one long breath, because each breath starts from wherever the last one is.
-
-A breath alone is too quiet to see at 44 px while the eye is on the card, so every feed also throws a spark: two or three amber embers leave the top of the hood and drift up past the bail as they fade. They are drawn over the metal and hold their pixel size, 2.5 to 3.5 px, at any lantern size. Grades take three sets of embers in turn, and at most three sets are in the air at once. The spark never delays the next card.
-
-The brand lantern omits `progress` and shows the one canonical flame. It never shows a learner's state. The live version, with a day to play through, is the Lantern page of `/design`.
+The brand lantern omits `progress` and uses the fixed brand flame. The Lantern page of `/design` demonstrates both versions.
 
 ## Flame
 
-`Flame` in `components/flame.tsx` is the flame on its own, beside the streak number, at 16 to 44 px. It says out, lit or full, in the lantern's words; it is not a gauge, a progress ring, a celebration or a brand mark. It has three states and nothing between them, because growth between reviews would be unreadable at 16 px and restless on a mark that is on every screen:
+`Flame` in `components/flame.tsx` appears beside the streak number at 16–44 px. `streakFlameFor` selects three states:
 
-- **Out** under the same conditions as the lantern. It shows the lantern's ember scaled to the flame's height, because the ember as drawn is a speck at this size.
-- **Lit** from the first review of the day until the goal, or all day on a live streak, including a day with nothing due: the brand flame, held still.
-- **Full** once today's goal is met or every available review is done: 1.16× the brand flame, and flickering.
+- **Out:** no streak and no reviews today; show an ember scaled to remain visible.
+- **Lit:** a live streak or at least one review today, before the goal is satisfied; hold the brand flame still.
+- **Full:** the goal is met or all available reviews are complete; use 1.16× brand size with flicker.
 
-`streakFlameFor` in `@lymi/design` reads the state from the streak summary. `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped, because a clipped tip is the one thing that makes the mark look broken. It never sparks on its own; the spark belongs to the lantern. The one exception is the end of the review that turns the day, where the lantern's spark reaches the run's flame and it throws three as it catches ([motion.md](motion.md#the-end-of-a-review)). The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
+The component crops its viewBox to the flame’s bounds and allows visual overflow so growth does not clip the tip. It has no intermediate progress sizes. Particles belong to the lantern, except in the completion sequence that first satisfies the day ([motion.md](motion.md#the-end-of-a-review)).
 
 ## How the flame moves
 
-The flame flickers on a 2.6 s loop, and three things move on that loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a still halo reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small. The loop holds still while the lantern is off screen, as does every other endless loop on the public site.
-
-Its changes are springs from Motion, so an interrupted movement keeps its speed instead of starting over. The values live in `FLAME_MOTION` in `@lymi/design`, and the design system and the phone read them from there.
+Shared values live in `FLAME_MOTION` in `@lymi/design`. Flicker uses a 2.6 s loop for the flame, core and halo, scaled relative to the current progress size. Pause continuous animation while off screen. Springs preserve velocity when interrupted.
 
 | Change | Timing |
 | --- | --- |
 | Settle after a review | 900 ms |
-| Breath | 280 ms in, 900 ms out |
-| Rise at the goal | 1.4 s, a breath 1.6 times as deep |
-| Catch from out | 700 ms, bounce 0.12, the one overshoot |
-| Going out | 1.6 s, so it reads as a fire dying down |
-| Spark | embers on a 620 ms spring, fading over 620 ms, the second and third 50–120 ms after the first |
+| Review pulse | 280 ms in, 900 ms out |
+| Goal reached | 1.4 s, pulse at 1.6× depth |
+| Unlit to lit | 700 ms, bounce 0.12 |
+| Lit to unlit | 1.6 s |
+| Particles | 620 ms spring and fade, with the second and third delayed 50–120 ms |
 
-`Flame` uses the same springs: out to lit is the catch, lit to full the rise, full to lit a settle, lit to out the going out. Under reduced motion it jumps to the new state without flickering, and the three states still read apart.
+`Flame` uses the same state-transition springs. Under reduced motion, apply the new size and halo immediately, without flicker or particles. Keep the background light’s size and colour fixed within each theme; only the flame changes with progress.
 
-The lantern's pool is the same at every hour: one size and one colour in each room, so the learner never wonders why the light changed. Only the flame changes, and only with today's progress.
+At app launch and on pull to refresh, the lantern body rotates ±5° around the handle pivot while the handle counters at ∓3.5°. Use the shared animation rather than adding rotations at call sites.
 
-Carried, the lantern swings from the bail at app launch and on pull to refresh: the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
+## Wordmark
 
-## Wordmark and lockups
+`Wordmark` in `components/logo.tsx` renders lowercase `lymi` from `components/wordmark-paths.ts`: Onest 600 with −0.025em tracking, generated with fontTools. The lit version replaces the i’s dot with a flame. Use it for sign-in and app-store artwork; use the plain version elsewhere.
 
-`lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`, generated with fontTools) and rendered by `Wordmark` in `components/logo.tsx`. The lit wordmark replaces the dot of the i with a flame: use it on the login screen and the app store, and the plain one everywhere else.
-
-- In the rail the mark is `AppTile` at 28 px with the plain wordmark beside it, not the row lockup: the tile gives the mark its own surface, and it is the same picture the learner taps on their home screen.
-- The row lockup (`Lockup`): the lantern is 1.30em tall, its foot on the baseline and its bail just above the l, 0.17em before the word. There is no stacked lockup.
-- Clear space is half a lantern on every side.
+`Lockup` places a 1.30em lantern 0.17em before the word, with its base on the baseline and handle just above the l. There is no stacked version. Clear space is half a lantern on every side. The rail uses `AppTile` and the wordmark rather than this lockup.
 
 ## App icon and link preview
 
-The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets are in `apps/web/public/brand/` and regenerate with `node scripts/brand.mjs && sh scripts/icons.sh`.
+The app icon uses the dark canvas, ivory metal and a lit brand flame. Regenerate `apps/web/public/brand/` with `node scripts/brand.mjs && sh scripts/icons.sh`.
 
-The link preview, `apps/site/public/share.png`, is the app icon's room widened to 1200 × 630: the lit row lockup over “Keep what you learn.” in the same warm centre. Everything sits in the middle 630 px, so an app that crops the preview to a square keeps the whole picture.
+`apps/site/public/share.png` is 1200 × 630, with the lit row lockup and “Keep what you learn.” centred within the middle 630 px so square crops retain the artwork.
 
-No display serif, no sparkle icon outside the AI badge, no confetti.
+Use the standard typeface and brand assets. Reserve the sparkle icon for the AI badge and omit confetti.

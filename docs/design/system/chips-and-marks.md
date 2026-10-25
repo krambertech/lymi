@@ -46,7 +46,7 @@ case "failed":
 - `compact` is the badge form: the mark and one word, beside the label of the field it belongs to. Only the AI's source is shown this way; the learner's and the lesson's carry no badge.
 - The full form names all three sources where a chip row has the space and the comparison helps.
 
-Review marks no source, neither on the answer nor on the hook: who wrote a field does not help recall, so it is the card page's to say.
+Review marks no source, neither on the answer nor on the hint: who wrote a field does not help recall, so it is the card page's to say.
 
 ## DueCount
 

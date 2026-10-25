@@ -12,7 +12,9 @@ The phone follows the product's rules. Its release builds against production wai
 
 Both origins send through `POST /ingest/*`, which only forwards PostHog's capture endpoints. The Worker sets `$geoip_country_code` and `$geoip_country_name` from Cloudflare's country and `$geoip_disable`, so PostHog's own lookup never runs, and forwards the visitor's address only for cookieless events, whose hash needs it. Profiles contain only `ui_locale` and a positive `is_internal` flag for explicitly configured internal IDs. The confirmed personal and work accounts and the explicitly named Spark onboarding test account are listed in `INTERNAL_ACCOUNT_IDS`; use a local account lookup to extend it, never send the lookup's names or addresses to PostHog. An absent internal flag never overwrites a manually classified profile.
 
-A visit's first touch is the first public page, an external referrer hostname and bounded `utm_source`, `utm_medium` and `utm_campaign` labels. With no storage to keep it, public pages add it to followed links as `lp`, `ref` and the campaign keys, and then drop `lp` and `ref` from their own visible address so a copied link does not pass a source on. The landing page is carried even without a referrer, because apps and messengers often send none. The product reads it from its arrival address and sends it with sign-up: the email form in the `x-lymi-first-touch` header, Google in OAuth `additionalData`. A deck's Add and Join pages carry it into the sign-up form they reload, so a visit that begins at a product door records `/add/:item` or `/join/:item`, and one that began on a public deck page keeps that page's slug. The server validates it before `signed_up` records it. Error monitoring works independently and strips private messages, URLs and context before delivery. It keeps a message only when it is one of the runtime's own network or chunk failure messages listed in `packages/core/src/telemetry.ts`, without the address it names. A product browser error carries `route`, the same route pattern as `$pageview`, `release`, the commit its bundle was built from, which matches the Worker's version tag, and `caught_by`, the handler that caught it: `window`, `rejection`, `router` or `react`. An error that both the router and React catch is reported once. A chunk an older build named, after a deploy replaced it, reloads the page once per build instead of being reported; only a failure that survives that reload reaches PostHog. The phone's release builds report uncaught errors and unhandled rejections the same way, without a person profile; a report from an account in `INTERNAL_ACCOUNT_IDS` also carries the event property `is_internal=true`. Click autocapture, surveys, feature flags and performance autocapture remain off.
+A visit's first touch is the first public page, an external referrer hostname and bounded `utm_source`, `utm_medium` and `utm_campaign` labels. With no storage to keep it, public pages add it to followed links as `lp`, `ref` and the campaign keys, and then drop `lp` and `ref` from their own visible address so a copied link does not pass a source on. The landing page is carried even without a referrer, because apps and messengers often send none. The product reads it from its arrival address and sends it with sign-up: the email form in the `x-lymi-first-touch` header, Google in OAuth `additionalData`. A deck's Add and Join pages carry it into the sign-up form they reload, so a visit that begins at a product door records `/add/:item` or `/join/:item`, and one that began on a public deck page keeps that page's slug. The server validates it before `signed_up` records it.
+
+Error monitoring works independently and strips private messages, URLs and context before delivery. It keeps a message only when it is one of the runtime's own network or chunk failure messages listed in `packages/core/src/telemetry.ts`, without the address it names. A product browser error carries `route`, the same route pattern as `$pageview`, `release`, the commit its bundle was built from, which matches the Worker's version tag, and `caught_by`, the handler that caught it: `window`, `rejection`, `router` or `react`. An error that both the router and React catch is reported once. A chunk an older build named, after a deploy replaced it, reloads the page once per build instead of being reported; only a failure that survives that reload reaches PostHog. The phone's release builds report uncaught errors and unhandled rejections the same way, without a person profile; a report from an account in `INTERNAL_ACCOUNT_IDS` also carries the event property `is_internal=true`. Click autocapture, surveys, feature flags and performance autocapture remain off.
 
 ## Session replay
 
@@ -101,14 +103,56 @@ Page properties contain approved routes, with private dynamic IDs replaced by `:
 | `former_deck_copied` | Worker, once a member's private copy of a deck whose owner deleted their account lands, with the deck's `cards`. Only the run whose batch removed the membership sends it, so overlapping runs count a copy once; a failed copy sends nothing and the cron reports it to Error Tracking. Analytics Engine only. Answers how many members keep a deck after its owner leaves. |
 | `apple_revocation_attempted` | Worker, for each try at revoking a deleted account's Sign in with Apple grant, and once when a delete could not try: `outcome` (`revoked`; `retrying` when Apple refused a revoke the cron will repeat; `failed` once it gives up; `skipped` when no Sign in with Apple key is configured or the account left nothing to revoke with), `attempt`, the revokes tried so far, and on anything but `revoked` a fixed `reason` (`no_key`, `no_token`, `exchange`, `revoke`, `lost`). Analytics Engine only, since the person is already gone. Answers whether every deleted Apple account ends its grant, as Apple requires; a run whose row was settled by another run sends nothing. Never the account, token or Apple's reply. |
 
+Lead-ins add no learner interaction or play event: whether they keep playback reliable is read from `pronunciation_played` outcomes before and after delivery, and how each card was decided from `lead_in_decided`. Worker dependency health and the bounded `lead_in_resolved` operational logs in [operations](operations.md) distinguish generated context, reuse, no-context results and failures without card content.
+
 A measured review leg begins when a card is presented. Finished legs end at a goal, a confirmed empty queue, or a round or chosen list with every card in it graded or dropped (or, once its page runs out, a refetch of the round that lands with nothing left, since a card can leave the round on another device), and count net recall attempts since presentation, including repeated cards and subtracting Undo. Abandonment reports net `cards_done` against the frozen initial planned `card_count`; left, navigation and pagehide are observable exits. Continue starts another leg and does not retain first-session eligibility after actual work. An empty screen, failed refresh or offline exhaustion cannot manufacture a completion: a round loads a page at a time, and a page running out while the next loads, or after that refetch failed, is not the round's end, so leaving then reports abandonment. Each emptied page asks for the round once, so a round that lost a card never refetches in a loop. A leg reports finished at most once, even if Undo or a late page brings a card back. Browser shutdown delivery is best effort; absence of abandonment proves nothing. These counts are attempts, not unique cards, and are distinct from accepted server grades queued offline.
 
 The first-review marker is stored separately from mutable/imported history, so retries and Undo do not repeat activation. It is written after the grade's response, only while PostHog is configured. Historical non-import reviews seed existing learners as already active. Marker errors never roll back grades. Account deletion cascades markers and settings with the account.
 
+## Query the Analytics Engine counts
+
+The production product Worker writes aggregate points to `lymi_events` and `lymi_requests`. Query them through the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/) with an account token that has Analytics Read permission. `_sample_interval` weights rows when Cloudflare samples them. These metrics contain no learner identifier, so sign-ins below are a count of events, not distinct daily active learners.
+
+In `lymi_requests`, `index1` is the caller: `user` for a session, `api` for an API key, `mcp` for an authorized MCP call, `anon` for a request refused with 401, and `public` for a route that runs before authentication and never identifies the caller, such as `/api/auth/*`, `/api/join/*` and `/public/media/*`. `blob1` is the route pattern, or `unmatched` when no route answered. `blob2` is the method, `blob3` the status class, and `blob4` the phone release from `x-lymi-client`, such as `ios 1.2.0`, or `none` for the web, API keys and MCP. A release below the minimum version gets only 426, counted as `public` and `4xx`.
+
+Daily sign-ins:
+
+```sql
+SELECT toStartOfDay(timestamp) AS day, SUM(_sample_interval) AS sign_ins
+FROM lymi_events
+WHERE index1 = 'signed_in' AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY day ORDER BY day DESC
+```
+
+Reviews by mode each week:
+
+```sql
+SELECT toStartOfWeek(timestamp) AS week, blob1 AS mode, SUM(_sample_interval) AS reviews
+FROM lymi_events
+WHERE index1 = 'review_graded' AND timestamp > NOW() - INTERVAL '90' DAY
+GROUP BY week, mode ORDER BY week DESC, mode
+```
+
+API and MCP requests by route:
+
+```sql
+SELECT index1 AS actor, blob1 AS route, SUM(_sample_interval) AS calls
+FROM lymi_requests
+WHERE index1 IN ('api', 'mcp') AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY actor, route ORDER BY calls DESC
+```
+
+Phone releases still calling, to choose a minimum version:
+
+```sql
+SELECT blob4 AS release, blob3 AS status, SUM(_sample_interval) AS calls
+FROM lymi_requests
+WHERE blob4 != 'none' AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY release, status ORDER BY release DESC
+```
+
 ## Extend and verify
 
-For each feature, state the measurement question in the PR's Instrumentation section, reuse or add a catalog event, document its owner and exact firing condition here, and test allowed properties plus meaningful retry/failure behavior. Use fixed categories and counts rather than user-entered strings. Keep outcome ownership on the server and interaction ownership in the browser. If no event answers a useful question, state why. Add properties compatibly; a changed meaning needs a new event or explicit schema migration.
+[`AGENTS.md`](../AGENTS.md#before-you-push) says when a change needs an event; the measurement question goes in the pull request's Instrumentation section. Document a new event's owner and exact firing condition in the table above, and test its allowed properties and its retry and failure behavior. Use fixed categories and counts rather than user-entered strings. Keep outcome ownership on the server and interaction ownership in the browser. Add properties compatibly; a changed meaning needs a new event or explicit schema migration.
 
 Run contract/identity tests, service tests and the repository gates. Development and previews never send to PostHog. Before using a production funnel, verify one journey in live ingestion: cookieless public page with country → sign-up with its first touch → identify → committed membership/cards → accepted review, matching distinct IDs and locale; also verify that an account with `analytics_consent` set to `false` stops delivery. Do not infer live delivery from a passing test or a green deploy. Filter person `is_internal=true` out of growth charts. Project timezone is Europe/Tallinn. A phone event is verified the same way, from a TestFlight build: launch, screen, review leg and a grade with `client=phone`, under the learner's distinct ID.
-
-Lead-ins add no learner interaction or play event: whether they keep playback reliable is read from `pronunciation_played` outcomes before and after delivery, and how each card was decided from `lead_in_decided`. The writer's cost is `$ai_generation` with `$ai_span_name` `lead_in`. Worker dependency health and the bounded `lead_in_resolved` operational logs in [operations](operations.md) distinguish generated context, reuse, no-context results and failures without card content.

@@ -1,6 +1,6 @@
 # Hints in review
 
-A hint under the cue in review: Show hint after the reveal, the offer to write one on an often-forgotten card, and the sheet that writes it with Draft. The hint takes room only as it shows, so the answer glides down for it, and review marks no source, on the hint or the answer. [`phone.md`](../../../../docs/design/system/phone.md) "Review" owns the rules.
+A hint under the cue in review: Show hint after the reveal, the offer to write one on an often-forgotten card, and the sheet that writes it with Draft. The hint takes room only as it shows, so the answer glides down for it, and review marks no source, on the hint or the answer. [phone.md](../../../../docs/design/system/phone.md#review) owns the rules.
 
 ## Reach
 
@@ -17,5 +17,5 @@ A review of a deck holding a card with a hint, and of Tricky Estonian, which `PO
 ## Gotchas
 
 - The card is one element to VoiceOver and the hint sheet is native, so Maestro's hierarchy has neither Show hint, the offer, the hint line, Draft nor ✓; each is tapped where it sits on the iPhone 17, and the screenshots are the proof of what they show.
-- Draft calls the model through the AI Gateway, which needs `AI_GATEWAY_TOKEN` in `apps/web/.dev.vars`; without it the sheet says it couldn't draft, Another draft never shows and the check fails. To see the states without a token, make `hintDraftFor` in `apps/web/src/server/services/hint-draft.ts` wait ten seconds and return a fixed hint, never committed.
+- Draft calls the model through the AI Gateway, which needs `AI_GATEWAY_TOKEN` in `apps/web/.dev.vars`; without it the sheet says it couldn't draft, Another draft never shows and the check fails. To see the states without a token, make `hintDraftFor` in `apps/web/src/server/services/hint-draft.ts` wait ten seconds and return a fixed hint, and leave that change uncommitted.
 - A tap waits for the screen to settle, so **Drafting…** is caught only when the draft takes longer than that wait.

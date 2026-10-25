@@ -1,6 +1,6 @@
-# Lymi for iOS (proof of concept)
+# Lymi for iOS
 
-An Expo app that shows the phone's design language and stack. It signs in to a real Lymi account and runs Today, Review and Library on the learner's own data; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
+The iPhone app, in Expo React Native, signed in to a real Lymi account and run on the learner's own data. Why it is React Native sharing `packages/core` is [ADR 0029](../../docs/adr/0029-the-phone-app-is-expo-react-native-sharing-core.md); where it differs from the web is [the phone design file](../../docs/design/system/phone.md); how it ships is [the phone release guide](../../docs/phone-release.md).
 
 ## Run it
 
@@ -21,7 +21,7 @@ Better Auth's Expo plugin keeps the session cookie in SecureStore, and `sessionH
 
 ## Design choices
 
-The proof of concept compared options side by side and kept one of each: the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them. The tabs are iOS's own tab bar and capture sits in the top bar ([ADR 0034](../../docs/adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
+Of the options the proof of concept compared side by side, the app keeps the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them. The tabs are iOS's own tab bar and capture sits in the top bar ([ADR 0034](../../docs/adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
 
 ## What is shared with the web
 
@@ -40,7 +40,7 @@ React Native Skia draws the lantern (`src/brand/lantern.tsx`) and the end of a r
 
 ## Widgets
 
-`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers and the rooms' colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
+`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs a new native build through `pnpm exec stim ios`; see the local-development guide linked above. The app pushes today's numbers and the theme colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
 
 Widget text and weekday letters follow the account’s app language, including the next-day timeline; the app formats them before sending, so widgets load no catalogs. WidgetKit’s gallery names and descriptions follow iOS’s language through `assets/widgets/Localizable.xcstrings`, copied into the extension by `plugins/with-widget-localizations.cjs`.
 

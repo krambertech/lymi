@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
-import type { AskApp, MenuCommand, ToApp, ToPage } from "@lymi/client/desktop";
+import type { AskApp, MacUpdate, MenuCommand, ToApp, ToPage } from "@lymi/client/desktop";
 import {
   app,
   BrowserWindow,
@@ -68,7 +68,7 @@ const sessionKnown = new Promise<void>((resolve) => {
   sessionRead = resolve;
 });
 let copying: Promise<void> | null = null;
-let updateReady = false;
+let update: MacUpdate | undefined;
 
 const isProduct = (url: string | undefined) => isProductOf(url, PRODUCT_URL);
 const fromProduct = (event: IpcMainEvent | IpcMainInvokeEvent) => isProduct(event.senderFrame?.url);
@@ -300,7 +300,7 @@ function renderTray() {
       { type: "separator" },
       { label: "Settings…", click: () => runCommand("settings") },
       { type: "separator" },
-      ...(updateReady ? [{ label: "Restart to update", click: restartToUpdate }] : []),
+      ...(update === "ready" ? [{ label: "Restart to update", click: restartToUpdate }] : []),
       { label: "Quit Lymi", role: "quit" },
     ]),
   );
@@ -351,6 +351,7 @@ const preferencesOut = () => ({
   openAtLogin: app.getLoginItemSettings().openAtLogin,
   accessibility: systemPreferences.isTrustedAccessibilityClient(false),
   version: app.getVersion(),
+  ...(update && { update }),
 });
 
 /** What the page sends: the contract's shape, but untrusted, so every value is checked here. */
@@ -377,6 +378,9 @@ const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
   },
   "app:sign-in": (provider) => {
     if (provider === "apple" || provider === "google") void requestSignIn(PRODUCT_URL, provider);
+  },
+  "app:restart-to-update": () => {
+    if (update === "ready") restartToUpdate();
   },
   // The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
   "prefs:accessibility": () => {
@@ -474,6 +478,8 @@ if (!app.requestSingleInstanceLock()) {
  */
 async function offerToMove() {
   if (!app.isPackaged || process.platform !== "darwin" || app.isInApplicationsFolder()) return;
+  // A copy driven over the debugging port, as the launch check does, would wait on the dialog forever.
+  if (app.commandLine.hasSwitch("remote-debugging-port")) return;
   const { response } = await dialog.showMessageBox({
     message: "Move Lymi to Applications?",
     detail:
@@ -513,9 +519,10 @@ async function start() {
   void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
-  watchForUpdates(() => {
-    updateReady = true;
+  watchForUpdates((next) => {
+    update = next;
     renderTray();
+    toPage(main, "app:update", next);
   });
   // Signing in or out in a window adds or removes the session cookie, and the window, the tray and
   // the panel follow. The daily refresh rewrites it in place, an overwrite then an insert, and

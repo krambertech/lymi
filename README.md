@@ -1,8 +1,9 @@
 # Lymi
 
-A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
+Lymi is a flashcard app for remembering what you learn, in any subject. Create cards by hand, from notes and files, or through connected tools. AI can fill missing fields, and spaced repetition schedules reviews.
 
-- [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
+- [PRODUCT.md](PRODUCT.md): who it is for, what it does on each surface, how it should feel
+- [docs/review.md](docs/review.md): how a review, the daily goal and the streak work
 - [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
 - [design.lymi.app](https://design.lymi.app): the design system rendered with the real components; also `/design` on the local dev server
 - [docs/stack.md](docs/stack.md): the technical decisions and why
@@ -19,7 +20,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 
 ## Run it
 
-Requires Node 22 and pnpm 10.
+Requires Node 22.19 or later and pnpm 10.
 
 ```bash
 pnpm install
@@ -41,7 +42,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
-apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+apps/mobile       iPhone app: Expo React Native (see its README)
 apps/desktop      Mac app: Electron shell around the product (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
@@ -54,7 +55,7 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```bash
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
-pnpm check        # Biome lint + format check, then check:design
+pnpm check        # lint, formatting, design, styling, cache, agent-doc and phone-symbol checks
 pnpm check:design # DESIGN.md and the phone's values match packages/design; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
@@ -95,7 +96,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 
 After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 
-See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.
+See [docs/site-structure.md](docs/site-structure.md) for origin routing, build configuration and deployment checks.
 
 ## License
 

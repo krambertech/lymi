@@ -1,12 +1,25 @@
-# Lymi — working agreements
+# Lymi - working agreements
 
-A vocabulary app for one learner. Read [`CONTEXT.md`](CONTEXT.md) before naming anything: it is the authority on the domain words, and it lists the words to avoid. A card is never a "flashcard", removal is always "archive", and the AI "enriches" — it never "suggests".
+Lymi is a flashcard app for learning any subject with spaced repetition. [`CONTEXT.md`](CONTEXT.md) defines product terms: use “card” for an individual item, “archive” for reversible removal, and “enrich” for AI filling missing fields. Use “flashcard app” when describing the product category.
+
+## Read first
+
+Fetch the remote default branch before inspecting or changing code. Use the fresh ref for current-state claims unless the task explicitly targets another branch, pull request or local changes. Preserve dirty and divergent checkouts; inspect the ref directly or use an isolated worktree. If the fetch fails, report it rather than treating stale code as current.
+
+| Before you | Read |
+| --- | --- |
+| Name anything | [`CONTEXT.md`](CONTEXT.md) |
+| Decide what to build or where it runs | [`PRODUCT.md`](PRODUCT.md): who it is for, which surface leads which job, and the feature map with each feature's owning document |
+| Change review, the daily goal or the streak | [`docs/review.md`](docs/review.md) |
+| Write UI | [`DESIGN.md`](DESIGN.md), then the system file in `docs/design/system` for what you are building |
+| Propose a different technical shape | [`docs/stack.md`](docs/stack.md), which records technical choices and rejected alternatives, and [`docs/adr`](docs/adr/README.md) |
+| Find a folder or a command | [`README.md`](README.md) |
 
 ## The repo
 
-[`README.md`](README.md) has the layout and the commands. [`docs/stack.md`](docs/stack.md) has every technical decision with the alternative that lost, so read it before proposing a different shape. [`PRODUCT.md`](PRODUCT.md) is who it is for; [`DESIGN.md`](DESIGN.md) holds the rules every screen follows and indexes the system files in `docs/design/system` and the feature design in `docs/design`; read the system file for what you are building before writing UI.
+`apps/site` deploys the Astro public site and its health-and-redirects Worker. `apps/web` deploys the Vite React product and Hono backend. `apps/mobile` is the React Native phone app. `apps/desktop` is the Electron Mac app, released separately from the Workers ([README](apps/desktop/README.md)).
 
-Two deployables: `apps/site` is the Astro public site plus its narrow health-and-redirects Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and the React Native app in `apps/mobile` import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there. `packages/client` is what the web and phone clients share: the API client, query options, the grade and write outboxes, and the review draw. Each app configures it once with its origin, session headers and storage. `packages/design` holds what all three apps draw with: the tokens, the lantern's geometry, the flame and seven lights' rules, and motion presets. `apps/desktop` is the Mac app: an Electron shell that loads the product and adds a menu bar lantern and a quick-add panel; it ships apart from the Workers ([its README](apps/desktop/README.md)).
+Shared code belongs in `packages/core` (schema, validation and scheduling), `packages/client` (API client, queries, outboxes and review draw) or `packages/design` (tokens, brand geometry and motion). Each client configures the shared client package with its origin, session headers and storage.
 
 ## Testing locally
 
@@ -18,7 +31,7 @@ To prove a product change works, drive the features it touches with [the verify 
 
 **Instrumentation is part of done.** For each behavior change, state the product question it should answer and add or reuse an event at its owning interaction or committed outcome. Document the event meaning, allowed properties and producer; preserve existing chart contracts, exclude private content, and verify failure and duplicate paths. Record instrumentation and its validation in the pull request. If the change needs no event, explain why.
 
-**Proof matches the change.** A logic fix needs a test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and before-and-after screenshots. A server fix needs that test plus a request transcript: the request and the response it now gets. Ask of every proof whether it could pass while the original task stays broken; if it could, it proves nothing. The pull request names which proof it gives.
+**Proof matches the change.** A logic fix needs a regression test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and before-and-after screenshots. A server fix also needs a request and response demonstrating the corrected behavior. Record the evidence in the pull request.
 
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
 
@@ -34,17 +47,13 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 ## Conventions
 
-**Documentation.** Write each prose paragraph and each list item as a single source line. Let the editor wrap text visually. Preserve source line boundaries where Markdown structure requires them, such as headings, tables, code blocks, and separate list items.
+**Types.** `interface Props` for React component props, `type` for unions and small shapes. Zod schemas in `packages/core/src/types.ts` are the source of truth for every API payload - the route parses with one, and the TypeScript type is inferred from it, never hand-written alongside.
 
-**Filenames.** Files under `apps/web/src/client` are kebab-case, matching what the shadcn CLI writes: `AddMenu` lives in `add-menu.tsx`. Biome's `useFilenamingConvention` enforces it everywhere except `routes/`, where TanStack Router needs `$param` names.
-
-**Types.** `interface Props` for React component props, `type` for unions and small shapes. Zod schemas in `packages/core/src/types.ts` are the source of truth for every API payload — the route parses with one, and the TypeScript type is inferred from it, never hand-written alongside.
-
-**Styling.** Tailwind v4 utilities over the Lymi tokens: `bg-plate`, `text-text-2`, `border-edge`. The token values are canonical as OKLCH variables in `packages/design/tokens.css`, which the web and the site import; `DESIGN.md`'s frontmatter and the phone's values are generated from it, and `pnpm check:design` fails on drift. A raw hex or a stock Tailwind color (`bg-slate-100`) in a component is a bug — it breaks dark mode, which is a separate warm palette rather than an inversion. Use logical direction utilities (`ms-`, `pe-`, `start-`, `text-start`) rather than physical ones (`ml-`, `pr-`, `left-`, `text-left`), so a right-to-left locale is a catalog and not a refactor; `inset-x-0` and centring with `left-1/2` are not directional and stay.
+**Styling.** Use Tailwind v4 utilities over Lymi tokens (`bg-plate`, `text-text-2`, `border-edge`) and logical directions (`ms-`, `pe-`, `start-`, `text-start`). Raw values break theme support; physical directions complicate right-to-left layouts. `inset-x-0` and centring with `left-1/2` are allowed. `packages/design/tokens.css` owns the OKLCH values used by web and site and generated into the phone palette and `DESIGN.md`.
 
 **Interface text.** Use [the UX-copy skill](.agents/skills/ux-copy/SKILL.md) whenever learner-facing text changes. The English sentence in the component is the message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module-level constants, `<Plural>` or `plural` for counts. Never build a sentence from concatenated fragments or a ternary on `=== 1`. Dates and numbers go through `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`. `pnpm i18n:extract` after adding a string; `pnpm i18n:check` runs in `verify` and fails on an unextracted one. ADR 0012.
 
-**Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context — the Activity screen exists so nothing an integration does lands unseen.
+**Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context - the Activity screen exists so nothing an integration does lands unseen.
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
@@ -82,16 +91,32 @@ Write for the next decision, not as a record of the work session. State each out
 
 **Pull request review comments.** Raise one actionable issue per inline comment. Start with the concrete defect or risk, then state the consequence and the smallest useful fix direction. Keep the comment to two or three sentences. Put cross-cutting context in one top-level review comment instead of repeating it inline.
 
-**Documentation.** Record durable behavior, decisions, constraints, and operating instructions. Leave implementation narration, review history, and test results in the pull request. Lead with the current rule or decision, keep one idea per paragraph, and use the fewest headings needed. Update the owning document rather than creating a new summary or duplicating facts already present in code or configuration. Proposals hold exploration and, once accepted, a concise delivery outline; they never override current product, design, vocabulary, stack, data-model, or ADR sources. GitHub issues track active work without copying the proposal.
-
-**Pull request titles.** Use `type(scope): imperative summary`. Target 60 characters and never exceed 72. Name the concrete outcome in literal language. Omit metaphors, promotion, issue numbers, and a final period. Example: `fix(auth): preserve deep links after sign-in`.
+**Documentation.** Describe behavior literally. Keep brand rationale in `docs/design/system/brand.md`. Write each prose paragraph and each list item as a single source line and let the editor wrap it; headings, tables, code blocks and list items keep their own lines. Record durable behavior, decisions, constraints, and operating instructions. Leave implementation narration, review history, and test results in the pull request. Lead with the current rule or decision, keep one idea per paragraph, and use the fewest headings needed. Update the owning document rather than creating a new summary or duplicating facts already present in code or configuration. Proposals hold exploration and, once accepted, a concise delivery outline; they never override current product, design, vocabulary, stack, data-model, or ADR sources. GitHub issues track active work without copying the proposal.
 
 **Pull request descriptions.** Start from `.github/pull_request_template.md`; do not compose a parallel shape from memory. Keep the summary to one short paragraph or at most three bullets and list only checks that ran and their result. Every rendered UI change keeps the `Screenshots` section with an attached after image at minimum and before-and-after evidence when comparison helps, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready. Add `Why`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
 
 ## Generated files
 
-`routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, `packages/core/simulation/results.json`, `scripts/migration-manifest.json`, everything under `migrations/`, and the clips in `apps/site/public/audio/hand/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, the appropriate workspace's `cf-typegen` after a Wrangler binding change, `pnpm --filter @lymi/core simulate` after changing the draw, the scheduler or a year-long simulation, and `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) after changing a landing card's term. `packages/design/src/tokens.gen.ts` and `packages/design/uniwind.gen.css` are generated too: run `node scripts/check-design-docs.mjs --write` after changing `packages/design/tokens.css`. `packages/design/fonts/onest-cyrillic-wght-normal.woff2` is generated too: run `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) after updating `@fontsource-variable/onest`. `apps/mobile/assets/symbols/` is generated too: run `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) after changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts`. `apps/desktop/assets/trayTemplate.png`, `trayTemplate@2x.png`, `icon.png` and `icon.icns` are generated too: run `pnpm --filter @lymi/desktop tray-icon` after changing `tray.svg`, and `app-icon` (both need `rsvg-convert`) after changing `icon.svg`; `apps/desktop/assets/dmg-background.tiff` is too: run its `dmg-background` after changing the download window. `apps/web/src/server/enrichment/runs/` holds recorded live runs: run `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) after any change to what the enrichment model reads. Each file in `apps/mobile/contract/` is a phone release's frozen API, written by `pnpm --filter @lymi/mobile contract:freeze`; never edit one, and delete one only when the minimum supported version passes it (ADR 0032).
+Edit the source and re-run its generator, because the next run overwrites a hand edit.
+
+| Generated | Regenerate after | With |
+| --- | --- | --- |
+| everything under `migrations/`, `scripts/migration-manifest.json` | a schema change | `pnpm db:generate` |
+| `packages/core/src/schema/auth.ts` | a Better Auth config change | `pnpm --filter @lymi/web auth:schema` |
+| both `worker-configuration.d.ts` files | a Wrangler binding change | that workspace's `cf-typegen` |
+| `apps/web/src/client/routeTree.gen.ts` | adding or renaming a file in `apps/web/src/client/routes` | `pnpm dev` or `pnpm build`, through the TanStack Router plugin |
+| `packages/core/simulation/results.json` | changing the draw, the scheduler or a year-long simulation | `pnpm --filter @lymi/core simulate` |
+| `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css`, `DESIGN.md`'s frontmatter | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
+| `packages/design/fonts/onest-cyrillic-wght-normal.woff2` | updating `@fontsource-variable/onest` | `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) |
+| `apps/mobile/assets/symbols/` | changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts` | `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) |
+| `apps/desktop/assets/trayTemplate.png`, `trayTemplate@2x.png` | changing `tray.svg` | `pnpm --filter @lymi/desktop tray-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/icon.png`, `icon.icns` | changing `icon.svg` | `pnpm --filter @lymi/desktop app-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/dmg-background.tiff` | changing the download window | `pnpm --filter @lymi/desktop dmg-background` |
+| the clips in `apps/site/public/audio/hand/` | changing a landing card's term | `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) |
+| recorded live runs in `apps/web/src/server/enrichment/runs/` | any change to what the enrichment model reads | `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) |
+
+Each file in `apps/mobile/contract/` is a phone release's frozen API, written by `pnpm --filter @lymi/mobile contract:freeze`; it never changes, and it is deleted only when the minimum supported version passes it (ADR 0032).
 
 ## Leave alone
 
-`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored — keep it that way.
+`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored - keep it that way.

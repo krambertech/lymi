@@ -4,7 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { FieldSource, ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
-import { Anchor, type LucideIcon } from "lucide-react";
+import { Lightbulb, type LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
@@ -14,7 +14,7 @@ import { SourceChip } from "./chip";
 
 /**
  * One step of help before the reveal. Steps come in the order review offers them, so a later
- * aid such as a hint is one more entry after the hook, taken with the same control and key.
+ * aid, such as the term's first letters, is one more entry after the hint, taken with the same control and key.
  */
 export interface AidStep {
   aid: ReviewAid;
@@ -30,19 +30,19 @@ const STEPS: Record<
   ReviewAid,
   { take: MessageDescriptor; show: MessageDescriptor; name: MessageDescriptor; icon: LucideIcon }
 > = {
-  hook: {
-    take: msg`Peek at your hook`,
-    show: msg`Show hook`,
-    name: msg`Memory hook:`,
-    icon: Anchor,
+  hint: {
+    take: msg`Peek at your hint`,
+    show: msg`Show hint`,
+    name: msg`Hint:`,
+    icon: Lightbulb,
   },
 };
 
 /** The key that takes the next step, matched by its place so every keyboard layout reaches it. */
 export const AID_KEY = { code: "KeyH", label: "H" } as const;
 
-export function aidSteps(card: Pick<Card, "hook" | "hookSource">): AidStep[] {
-  return card.hook ? [{ aid: "hook", text: card.hook, source: card.hookSource }] : [];
+export function aidSteps(card: Pick<Card, "hint" | "hintSource">): AidStep[] {
+  return card.hint ? [{ aid: "hint", text: card.hint, source: card.hintSource }] : [];
 }
 
 /** The aid a grade records: the furthest step taken. */
@@ -57,7 +57,7 @@ interface NextProps {
 
 /**
  * The quiet control at the foot of an unrevealed card that takes the next step, as quiet as Show
- * hook, since recall comes first; the card stacks it over its reveal button, so a tap on it never
+ * hint, since recall comes first; the card stacks it over its reveal button, so a tap on it never
  * turns the card. Once every step is taken it stays as an invisible, inert placeholder, so the cue
  * keeps its room and glides rather than jumps.
  */
@@ -117,7 +117,7 @@ export function RecallAidShow({ steps, animate, onShow }: ShowProps) {
       transition={{ duration: reduce ? 0.2 : 0.26, delay: 0.12, ease: EASE_OUT }}
       onAnimationComplete={() => setReady(true)}
     >
-      {/* Pulled to the start edge, so its anchor stands where the hook's will. */}
+      {/* Pulled to the start edge, so its lightbulb stands where the hint's will. */}
       <Button
         variant="ghost"
         size="sm"
@@ -180,7 +180,7 @@ function AidLine({ step }: { step: AidStep }) {
         {step.text}
         {step.source === "ai" && (
           <span className="ms-2 inline-flex -translate-y-px align-middle">
-            <SourceChip source="ai" field="hook" size="xs" />
+            <SourceChip source="ai" field="hint" size="xs" />
           </span>
         )}
       </span>

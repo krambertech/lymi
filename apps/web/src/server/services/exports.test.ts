@@ -247,8 +247,8 @@ async function library(ctx: ServiceContext) {
     .set({
       exampleSource: "ai",
       pronunciationSource: "ai",
-      hook: "A cat naps in the gatehouse",
-      hookSource: "ai",
+      hint: "A cat naps in the gatehouse",
+      hintSource: "ai",
     })
     .where(eq(schema.cards.id, gatto.id));
   const pictures = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
@@ -362,8 +362,8 @@ async function snapshot(ctx: ServiceContext) {
           meaningSource: card.meaningSource,
           exampleSource: card.exampleSource,
           pronunciationSource: card.pronunciationSource,
-          hook: card.hook,
-          hookSource: card.hookSource,
+          hint: card.hint,
+          hintSource: card.hintSource,
           reviewModes: card.directions ? card.reviewModeKeys : null,
           archived: card.archivedAt !== null,
           picture: image

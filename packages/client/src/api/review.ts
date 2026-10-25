@@ -43,7 +43,7 @@ export type QueueItem = {
   fsrsState: number;
   /** Absent once a grade since the fetch has moved the schedule. */
   next?: Record<Rating, string> | undefined;
-  /** Often forgotten, so review offers to write a memory hook. */
+  /** Often forgotten, so review offers to write a hint. */
   slipping?: boolean | undefined;
 };
 export type Queue = { total: number; items: QueueItem[] };

@@ -16,7 +16,7 @@ export function CardView({ card }: { card: ViewCard }) {
   const rows: {
     label: string;
     text: string | null;
-    field: "example" | "exampleTranslation" | "pronunciation" | "hook" | null;
+    field: "example" | "exampleTranslation" | "pronunciation" | "hint" | null;
     ai: boolean;
     lang?: string | undefined;
   }[] = [
@@ -40,7 +40,7 @@ export function CardView({ card }: { card: ViewCard }) {
       field: "pronunciation",
       ai: card.pronunciationSource === "ai",
     },
-    { label: t`Hook`, text: card.hook, field: "hook", ai: card.hookSource === "ai" },
+    { label: t`Hint`, text: card.hint, field: "hint", ai: card.hintSource === "ai" },
     { label: t`Picture`, text: card.image?.description ?? null, field: null, ai: false },
     { label: t`Source`, text: card.source, field: null, ai: false },
   ];

@@ -1,6 +1,5 @@
 import {
   Activity,
-  Anchor,
   Archive,
   ArchiveRestore,
   ArrowDown,
@@ -145,7 +144,7 @@ const ICONS = {
   pronunciation: Volume2,
   source: Library,
   notes: NotebookPen,
-  hook: Anchor,
+  hint: Lightbulb,
   tags: Tag,
   lock: Lock,
   unlock: LockOpen,

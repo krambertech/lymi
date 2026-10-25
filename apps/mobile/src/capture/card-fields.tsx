@@ -37,7 +37,7 @@ export const FORM_FIELD: Record<
   {
     label: MessageDescriptor;
     icon: IconName;
-    hint: MessageDescriptor;
+    placeholder: MessageDescriptor;
     limit: number | null;
     /** In the language being learned, which the phone's dictionary gets wrong. */
     learned: boolean;
@@ -46,56 +46,56 @@ export const FORM_FIELD: Record<
   term: {
     label: msg`Term`,
     icon: "edit",
-    hint: msg`A word or phrase`,
+    placeholder: msg`A word or phrase`,
     limit: cardLimits.term,
     learned: true,
   },
   meaning: {
     label: msg`Meaning`,
     icon: "meaning",
-    hint: msg`What it means`,
+    placeholder: msg`What it means`,
     limit: cardLimits.meaning,
     learned: false,
   },
   pronunciation: {
     label: msg`Pronunciation`,
     icon: "pronunciation",
-    hint: msg`How it sounds`,
+    placeholder: msg`How it sounds`,
     limit: cardLimits.pronunciation,
     learned: true,
   },
   example: {
     label: msg`Example`,
     icon: "example",
-    hint: msg`A sentence that uses it`,
+    placeholder: msg`A sentence that uses it`,
     limit: cardLimits.example,
     learned: true,
   },
   exampleTranslation: {
     label: msg`Translation`,
     icon: "example",
-    hint: msg`Add a translation`,
+    placeholder: msg`Add a translation`,
     limit: cardLimits.exampleTranslation,
     learned: false,
   },
   notes: {
     label: msg`Notes`,
     icon: "notes",
-    hint: msg`Grammar, usage, anything else`,
+    placeholder: msg`Grammar, usage, anything else`,
     limit: cardLimits.notes,
     learned: false,
   },
-  hook: {
-    label: msg`Memory hook`,
-    icon: "hook",
-    hint: msg`A sound-alike, or something to picture`,
-    limit: cardLimits.hook,
+  hint: {
+    label: msg`Hint`,
+    icon: "hint",
+    placeholder: msg`A sound-alike, or something to picture`,
+    limit: cardLimits.hint,
     learned: false,
   },
   source: {
     label: msg`Source`,
     icon: "source",
-    hint: msg`Where you met it, such as a lesson`,
+    placeholder: msg`Where you met it, such as a lesson`,
     limit: cardLimits.source,
     learned: false,
   },
@@ -223,7 +223,7 @@ export function CardFields({
         value={values[f]}
         maxLength={spec.limit ?? undefined}
         onChangeText={(v) => onChange(f, v)}
-        placeholder={placeholder?.[f] ?? i18n._(spec.hint)}
+        placeholder={placeholder?.[f] ?? i18n._(spec.placeholder)}
         placeholderTextColor={quiet ? p.faint : p.muted}
         accessibilityLabel={label}
         autoCorrect={!spec.learned}

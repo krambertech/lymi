@@ -11,9 +11,9 @@ A good card asks one thing and has one normal answer. Everything else on it is o
 3. **Production has one right answer.** When a meaning fits more than one term, add a short cue in parentheses so only this term fits: "думать (размышлять)" for mõtlema, "думать (считать)" for arvama. A card with two right answers marks the learner wrong for knowing the other one.
 4. **The term is the citation form, in the deck's fixed shape.** Estonian verbs carry their three principal forms ("jooma · juua · joon"), a German noun carries its article. The shape is the same for every card of that kind in the deck, and the forms are copied as the lesson prints them.
 5. **The example is one short sentence in the language being learned, where every other word is easier than the term, at most 250 characters as shown.** It shows the word in use; it is not what the learner recalls. Its translation goes in its own field, never in brackets after it or in the notes, and is one natural sentence in the meaning language that uses the card's meaning for the term.
-6. **Nothing on the cue side gives the answer away.** An example, note or hook that spells the term turns production into reading.
+6. **Nothing on the cue side gives the answer away.** An example, note or hint that spells the term turns production into reading.
 7. **Look-alikes get a contrast line on both cards.** Similar words and near-synonyms learned together are the most common cause of forgetting. One line ("Сравни: *arvama*, считать") is cheaper than splitting the lesson.
-8. **A hook is for a word that keeps failing, not for every card.** Mnemonics help when chosen, so the learner writes one, often when review offers it for an often-forgotten card. A hook leads back to the term without spelling it.
+8. **A hint is for a word that keeps failing, not for every card.** Mnemonics help when chosen, so the learner writes one, often when review offers it for an often-forgotten card. A hint leads back to the term without spelling it.
 9. **A card that keeps failing is split or rewritten, not given more notes.**
 10. **One format per deck.** The same term shape, the same meaning style and the same note labels on every card, so the deck reads as one voice and the AI can copy it.
 

@@ -339,15 +339,15 @@ export default function CardPage() {
         </Field>
       )
     ),
-    card.hook && (
+    card.hint && (
       <Field
-        key="hook"
-        label={t`Memory hook`}
-        ai={card.hookSource === "ai"}
-        field="hook"
-        onPress={edit("hook")}
+        key="hint"
+        label={t`Hint`}
+        ai={card.hintSource === "ai"}
+        field="hint"
+        onPress={edit("hint")}
       >
-        <Text className="text-md text-text">{card.hook}</Text>
+        <Text className="text-md text-text">{card.hint}</Text>
       </Field>
     ),
   ].filter(Boolean);

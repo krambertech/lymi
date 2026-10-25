@@ -231,7 +231,7 @@ export function ChineseView({ decks, locale }: Props) {
           title={<Trans>Type one word. Get a whole card.</Trans>}
           body={
             <Trans>
-              Add a word from today’s lesson. AI fills in the pinyin, an example and a hook to help
+              Add a word from today’s lesson. AI fills in the pinyin, an example and a hint to help
               you remember it. It fills only what you left empty and marks what it wrote.
             </Trans>
           }

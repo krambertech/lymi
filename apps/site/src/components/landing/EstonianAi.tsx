@@ -6,7 +6,7 @@ import { useMemo, useRef } from "react";
 import { Field } from "./JapaneseAi";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
-const BEATS = { typed: 1000, meaning: 1700, forms: 2400, example: 3100, hook: 3800 };
+const BEATS = { typed: 1000, meaning: 1700, forms: 2400, example: 3100, hint: 3800 };
 
 /** A word typed after a lesson; the AI fills each empty field, starting with its three forms. */
 export function EnrichEstonian() {
@@ -52,10 +52,10 @@ export function EnrichEstonian() {
           Ma lähen <span className="text-amber-text">sõbraga</span> kinno.
         </motion.span>
       </Field>
-      <Field label={<Trans>Memory hook</Trans>} wrote={at("hook")}>
+      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
         <motion.span
           initial={false}
-          animate={appear(at("hook"))}
+          animate={appear(at("hint"))}
           className="min-h-[1.5em] text-md text-text"
         >
           <Trans>

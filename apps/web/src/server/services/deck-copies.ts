@@ -112,7 +112,7 @@ function copyStatements(
         where sections.deck_id = ${deckId}`,
     ),
     // Audio stays behind: generated speech is made again on the first play, and the owner's
-    // recordings go with their account. Tags and the AI's hook draft were the owner's.
+    // recordings go with their account. Tags and the AI's hint draft were the owner's.
     copyRows(
       db,
       schema.cards,
@@ -129,7 +129,7 @@ function copyStatements(
         example: sql`coalesce(local.example, cards.example)`,
         notes: sql`coalesce(local.notes, cards.notes)`,
         tags: "[]",
-        hookDraft: null,
+        hintDraft: null,
         enrichmentStatus: null,
         enrichmentFields: null,
         audioKey: null,

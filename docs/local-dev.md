@@ -32,13 +32,13 @@ No password is typed anywhere. The server creates the account on first use, seed
 | Persona | Account | Starts with |
 | --- | --- | --- |
 | `fresh` | Fresh | Nothing. The first-run screens. |
-| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two memory hooks, Noor's shared Lisboa a dois, and Everyday Finnish from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
+| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two hints, Noor's shared Lisboa a dois, and Everyday Finnish from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
 | `rested` | Leena | Eleven days running through two rest days, the last one yesterday, and 9 due. Today opens on the rest-day banner. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
-| `heavy` | Vera | Four years of daily study, to profile at scale: 27 decks from 0 to 4,500 cards (11,900 in all), three series, a 2,250-card deck in 24 sections, two decks asked both ways, three archived decks, about 200 important cards and 40 hooks, about 112,000 reviews and 400 due. It seeds in about 40 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
+| `heavy` | Vera | Four years of daily study, to profile at scale: 27 decks from 0 to 4,500 cards (11,900 in all), three series, a 2,250-card deck in 24 sections, two decks asked both ways, three archived decks, about 200 important cards and 40 hints, about 112,000 reviews and 400 due. It seeds in about 40 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
 | `japanese` | Mika | Five months of Japanese with English meanings: 169 real words and sentences in JLPT sections, kanji with kana readings, kana-only words, katakana loanwords, examples with inline furigana, and a numbers deck asked both ways. |
 | `shared` | Noor | Owns Lisboa a dois with four learners (Kateryna, Tomás and the companion accounts Ana and Pedro), a waiting invitation to mira@example.com and its join link on. A learner in Ana's deck, with Everyday Estonian added in its Ukrainian edition. |
 | `joining` | Tomás | Joined Noor's deck through its link and has not got set up. Signing in without `returnTo` opens `/welcome?deck=<id>`, the Welcome that arriving from a join link opens. |
@@ -202,7 +202,7 @@ The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAP
 | `POST /api/dev/recall` `{ count, rating? }` | Grades that many due cards through the review service, Good unless `rating` says otherwise. |
 | `POST /api/dev/goal` | Grades Good until today's goal is met, going past the due cards when they run out. |
 | `POST /api/dev/slip` `{ count }` | Gives that many cards four lapses in six reviews on past review days, so they are often forgotten. |
-| `POST /api/dev/often-forgotten` `{ hooked? }` | Replaces the deck Tricky Estonian with two often-forgotten cards with no memory hook, due now, so review offers one, and, unless `hooked` is false, a card that already has a hook, due now, so review shows the peek. |
+| `POST /api/dev/often-forgotten` `{ hinted? }` | Replaces the deck Tricky Estonian with two often-forgotten cards with no hint, due now, so review offers one, and, unless `hinted` is false, a card that already has a hint, due now, so review shows the peek. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
 | `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `GET /api/dev/mcp-host?view=<view>` | The MCP Apps view in a stand-in host, answered by the real MCP server as the signed-in account. `view` is `card`, `deck`, `due`, `insights`, `streak` or `home`; `theme`, `locale` and `width` are optional. Beside the frame it lists what the view told the host, such as a link it opened. `home` takes `deeplink=/card/<id>`. The view is built once per server start, so restart the server after changing it. |

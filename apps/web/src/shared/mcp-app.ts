@@ -20,7 +20,7 @@ export interface ViewCard {
   exampleTranslation: string | null;
   exampleTranslationStale: boolean;
   notes: string | null;
-  hook: string | null;
+  hint: string | null;
   language: string | null;
   source: string | null;
   image: { description: string | null } | null;
@@ -29,7 +29,7 @@ export interface ViewCard {
   exampleTranslationSource: ViewFieldSource | null;
   pronunciationSource: ViewFieldSource | null;
   notesSource: ViewFieldSource | null;
-  hookSource: ViewFieldSource | null;
+  hintSource: ViewFieldSource | null;
   enrichmentStatus: "working" | "failed" | null;
   archivedAt: string | null;
   createdAt: string;

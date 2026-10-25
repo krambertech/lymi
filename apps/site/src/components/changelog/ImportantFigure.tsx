@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, SquarePen, Star } from "lucide-react";
+import { Archive, ChartNoAxesColumn, Ellipsis, Lightbulb, SquarePen, Star } from "lucide-react";
 import type { ReactNode } from "react";
 
 const ROWS = [
@@ -66,7 +66,7 @@ export function ImportantFigure() {
         ))}
       </ul>
       <div className="absolute end-3 top-[124px] grid w-52 rounded-md bg-sheet p-1 edge-2 shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
-        <Item icon={<Anchor />} label={<Trans>Add hook</Trans>} />
+        <Item icon={<Lightbulb />} label={<Trans>Add hint</Trans>} />
         <Item icon={<SquarePen />} label={<Trans>Edit card</Trans>} />
         <Item icon={<Star />} label={<Trans>Mark important</Trans>} lit />
         <Item icon={<ChartNoAxesColumn />} label={<Trans>View card</Trans>} />

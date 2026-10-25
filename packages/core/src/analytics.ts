@@ -64,7 +64,7 @@ export const TYPED_CARD_FIELDS = [
   "example",
   "pronunciation",
   "notes",
-  "hook",
+  "hint",
   "source",
   "tags",
   "section",
@@ -72,7 +72,7 @@ export const TYPED_CARD_FIELDS = [
 ] as const;
 export type TypedCardField = (typeof TYPED_CARD_FIELDS)[number];
 /** The fields a chip adds to the web card form. */
-const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hook"] as const;
+const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hint"] as const;
 /** Every email Lymi sends, by kind; the recipient and body never leave the Worker. */
 export const EMAIL_KINDS = [
   "test",
@@ -277,7 +277,7 @@ export const analyticsEvents = {
   }),
   streak_ended: z.object({ streak_days: count }),
   rest_day_used: z.object({ streak_days: count }),
-  hook_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
+  hint_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
   cards_archived: z.object({
     origin: z.enum(["typed", "api", "ai_mcp", "import", "other"]),
     count,
@@ -492,7 +492,7 @@ export const analyticsEvents = {
       "enrich",
       "example_translation",
       "deck_style",
-      "hook",
+      "hint",
       "import_languages",
       "deck_choice",
       "lesson_read",
@@ -544,7 +544,7 @@ export const analyticsEvents = {
     how: z.enum(["card", "all"]),
   }),
   section_go_to: z.object({}),
-  hook_drafted: z.object({
+  hint_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
     wait_ms: z.number().int().nonnegative().max(60_000),
   }),
@@ -614,7 +614,7 @@ export const analyticsProducers = {
   review_undone: ["worker"],
   streak_ended: ["worker"],
   rest_day_used: ["worker"],
-  hook_added: ["worker"],
+  hint_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
   command_menu_run: ["browser"],
@@ -674,7 +674,7 @@ export const analyticsProducers = {
   app_page_viewed: ["browser"],
   app_activity_opened: ["browser"],
   section_go_to: ["phone"],
-  hook_drafted: ["browser", "phone"],
+  hint_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   example_audio_played: ["browser", "phone"],
   lead_in_decided: ["worker"],

@@ -2,14 +2,14 @@ import { readFileSync } from "node:fs";
 import { type EnrichedField, normalizeCardText, type ReviewModeKey, readingKey } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { decksBrief } from "../lessons/prompt";
-import { hookable, hookInput } from "../services/hook-draft";
+import { hintable, hintInput } from "../services/hint-draft";
 import { ukrainian } from "./ukrainian";
 
 const fixtures = JSON.parse(
   readFileSync(new URL("./fixtures/uk.json", import.meta.url), "utf8"),
 ) as {
   lesson: { term: string; printed: string; reading: string }[];
-  hook: {
+  hint: {
     term: string;
     pronunciation: string;
     meaning: string;
@@ -58,14 +58,14 @@ describe("the uk lesson slot", () => {
   });
 });
 
-describe("the uk hook slot", () => {
+describe("the uk hint slot", () => {
   it("sends its advice with every Ukrainian card the keyword method fits", () => {
-    expect(fixtures.hook.length).toBeGreaterThanOrEqual(20);
-    for (const card of fixtures.hook) {
-      const hookCard = { ...card, language: card.language ?? "uk" };
+    expect(fixtures.hint.length).toBeGreaterThanOrEqual(20);
+    for (const card of fixtures.hint) {
+      const hintCard = { ...card, language: card.language ?? "uk" };
       const meaningLanguage = /\p{Script=Cyrillic}/u.test(card.meaning) ? "ru" : "en";
-      expect(hookable(hookCard, meaningLanguage), card.term).toBe(true);
-      expect(JSON.parse(hookInput(hookCard)).guide, card.term).toBe(ukrainian.hook);
+      expect(hintable(hintCard, meaningLanguage), card.term).toBe(true);
+      expect(JSON.parse(hintInput(hintCard)).guide, card.term).toBe(ukrainian.hint);
     }
   });
 });

@@ -32,6 +32,7 @@ import {
   TEXT_MODES,
   termKey,
   wantsTranslation,
+  withHint,
 } from "@lymi/core";
 import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
@@ -70,7 +71,7 @@ type Sources = {
   exampleTranslationSource?: FieldSource | null | undefined;
   pronunciationSource?: FieldSource | null | undefined;
   notesSource?: FieldSource | null | undefined;
-  hookSource?: FieldSource | null | undefined;
+  hintSource?: FieldSource | null | undefined;
 };
 /**
  * A card write from inside the server, which may record Lymi's own AI as a field's source. No
@@ -81,13 +82,13 @@ export type ServerCardInput = Omit<CardInput, keyof Sources> &
     /** The source's own id, such as `readwise:<highlight id>`, so a later pull finds the card. */
     externalId?: string | undefined;
   };
-type Cleared = "meaning" | "pronunciation" | "hook";
+type Cleared = "meaning" | "pronunciation" | "hint";
 export type ServerCardPatch = Omit<CardPatch, keyof Sources | Cleared> &
   Sources & {
     /** Null clears a field back to never set, which a split and Undo need. */
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
-    hook?: string | null | undefined;
+    hint?: string | null | undefined;
     /** The revision the card held this text at, for a write that puts earlier text back. */
     revision?: number | undefined;
   };
@@ -95,7 +96,7 @@ type ServerCardEdit = Omit<CardEditInput, keyof Sources | Cleared> &
   Sources & {
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
-    hook?: string | null | undefined;
+    hint?: string | null | undefined;
     revision?: number | undefined;
   };
 
@@ -197,11 +198,12 @@ export async function addCard(
  */
 export async function addCards(
   ctx: ServiceContext,
-  inputs: ServerCardInput[],
+  received: ServerCardInput[],
   enrichment?: EnrichmentQueue | null,
   options: AddCardsOptions = {},
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
+  const inputs = received.map((card) => withHint(card));
   if (inputs.length === 0) return [];
   // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
   const enrichAllowed =
@@ -338,7 +340,7 @@ export async function addCards(
         input.example && input.exampleTranslation ? exampleFingerprint(input.example) : null,
       exampleTranslationStatus: null,
       notes: input.notes ?? null,
-      hook: input.hook || null,
+      hint: input.hint || null,
       language,
       tags: input.tags ?? [],
       source: input.source ?? null,
@@ -352,8 +354,8 @@ export async function addCards(
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
       notesSource: input.notesSource ?? (input.notes ? "manual" : null),
-      hookSource: input.hook ? (input.hookSource ?? "manual") : null,
-      hookDraft: null,
+      hintSource: input.hint ? (input.hintSource ?? "manual") : null,
+      hintDraft: null,
       enrichmentStatus: null,
       enrichmentFields: null,
       audioKey: null,
@@ -369,7 +371,7 @@ export async function addCards(
     if (card.example) filled.add("example");
     if (card.pronunciation) filled.add("pronunciation");
     if (card.notes) filled.add("notes");
-    if (card.hook) filled.add("hook");
+    if (card.hint) filled.add("hint");
     if (card.source) filled.add("source");
     if (card.tags.length) filled.add("tags");
     if (card.sectionId) filled.add("section");
@@ -720,7 +722,7 @@ const aiWrote = (card: Card) =>
     card.exampleTranslationSource,
     card.notesSource,
     card.pronunciationSource,
-    card.hookSource,
+    card.hintSource,
   ].includes("ai");
 
 /**
@@ -924,7 +926,7 @@ export async function updateCard(
   patch: ServerCardPatch,
   enrichment?: EnrichmentQueue | null,
 ) {
-  const edit = { ...patch, cardId: id };
+  const edit = { ...withHint(patch), cardId: id };
   const lookups = await editLookups(ctx, [edit], enrichment);
   const now = new Date();
   const write = editWrite(ctx, lookups, edit, now);
@@ -958,7 +960,7 @@ export type EditCardOutcome =
  */
 export async function updateCards(
   ctx: ServiceContext,
-  edits: CardEditInput[],
+  received: CardEditInput[],
   /** Tags the edits take off that are archived rather than dropped, for Restore. */
   options: {
     archiveTags?: readonly string[];
@@ -966,6 +968,7 @@ export async function updateCards(
   } = {},
 ): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
+  const edits = received.map((edit) => withHint(edit));
   if (edits.length === 0) return [];
   const lookups = await editLookups(ctx, edits, options.enrichment);
   const now = new Date();
@@ -1211,20 +1214,20 @@ function editWrite(
     patch.example !== undefined && !sameExample(language, current.example, patch.example);
   // The translation's source is written with its text, in `translationAfter`, never on its own.
   const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
-  const hook = patch.hook === undefined ? current.hook : patch.hook || null;
+  const hint = patch.hint === undefined ? current.hint : patch.hint || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
     notesSource: sourceAfter(patch.notes, patch.notesSource),
-    // Only a hook has a source, whatever the caller said about one that is not there. A hook saved
+    // Only a hint has a source, whatever the caller said about one that is not there. A hint saved
     // exactly as the AI drafted it is the AI's, whoever pressed Save.
-    hookSource: !hook
+    hintSource: !hint
       ? null
-      : patch.hook !== undefined && hook === current.hookDraft
+      : patch.hint !== undefined && hint === current.hintDraft
         ? ("ai" as const)
-        : sourceAfter(patch.hook, patch.hookSource),
+        : sourceAfter(patch.hint, patch.hintSource),
   };
   const translation = translationAfter(ctx, lookups, current, patch, deckId);
   // A draft fits the text it was drafted for, so a new term or meaning sends the next one back to the AI.
@@ -1239,7 +1242,7 @@ function editWrite(
     .update(schema.cards)
     .set({
       ...fields,
-      hook,
+      hint,
       ...sources,
       ...translation.set,
       ...(modes ?? {}),
@@ -1248,7 +1251,7 @@ function editWrite(
       normalizedTerm,
       ...(audioStale ? { audioKey: null, audioSource: null } : {}),
       ...(exampleRecordingStale ? { exampleRecordingKey: null } : {}),
-      ...(draftStale ? { hookDraft: null } : {}),
+      ...(draftStale ? { hintDraft: null } : {}),
       updatedAt: now,
     })
     .where(eq(schema.cards.id, id));
@@ -1271,8 +1274,8 @@ function editWrite(
     language: patch.language === undefined ? current.language : patch.language,
     normalized: text.normalized,
     reports:
-      hook && !current.hook && sources.hookSource
-        ? { name: "hook_added", source: sources.hookSource }
+      hint && !current.hint && sources.hintSource
+        ? { name: "hint_added", source: sources.hintSource }
         : undefined,
   };
 }

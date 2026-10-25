@@ -7,19 +7,19 @@ import { expect, type Locator, type Page, test } from "./test";
 // and taps timed against the motion are component tests. Every test here signs in as the same
 // account, one per file, so each seeds a deck of its own.
 
-const WHY = "You can’t choose Easy after peeking at your hook.";
+const WHY = "You can’t choose Easy after peeking at your hint.";
 
 type History = { reviews: { rating: number; aid: string | null }[] };
 
-/** A deck of its own holding one new card, due now, with a hook or without one. */
-async function cardWithHook(page: Page, term: string, hook: string | null) {
+/** A deck of its own holding one new card, due now, with a hint or without one. */
+async function cardWithHint(page: Page, term: string, hint: string | null) {
   const deck = await page.request.post("/api/decks", {
-    data: { name: `Hooks ${term}`, defaultLanguage: "et" },
+    data: { name: `Hints ${term}`, defaultLanguage: "et" },
   });
   expect(deck.ok()).toBeTruthy();
   const deckId = ((await deck.json()) as { id: string }).id;
   const added = await page.request.post("/api/cards", {
-    data: { deckId, term, meaning: "snow", enrich: false, ...(hook ? { hook } : {}) },
+    data: { deckId, term, meaning: "snow", enrich: false, ...(hint ? { hint } : {}) },
   });
   expect(added.ok()).toBeTruthy();
   const cardId = ((await added.json()) as { card: { id: string } }).card.id;
@@ -37,18 +37,18 @@ async function box(locator: Locator) {
 const history = async (page: Page, cardId: string) =>
   (await (await page.request.get(`/api/cards/${cardId}/history`)).json()) as History;
 
-/** How far the hook's line sits below the cue's first line, which the reveal must not change. */
-const hookOffset = (hook: ElementHandle<Element>, cue: ElementHandle<Element>) =>
-  hook.evaluate((line, word) => {
+/** How far the hint's line sits below the cue's first line, which the reveal must not change. */
+const hintOffset = (hint: ElementHandle<Element>, cue: ElementHandle<Element>) =>
+  hint.evaluate((line, word) => {
     const top = (el: Element) => el.getBoundingClientRect().top;
     return { connected: line.isConnected, offset: Math.round(top(line) - top(word as Element)) };
   }, cue);
 
-test("a learner peeks at a hook, Easy is out, and the peek stays on the grade through the outbox and a reload", async ({
+test("a learner peeks at a hint, Easy is out, and the peek stays on the grade through the outbox and a reload", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const { deckId, cardId } = await cardWithHook(
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const { deckId, cardId } = await cardWithHint(
     page,
     "lumi",
     "Fresh snow makes the street luminous.",
@@ -57,36 +57,36 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
 
   const card = page.getByLabel("Recognition card for lumi", { exact: true });
   const grades = page.getByRole("group", { name: "Choose a recall grade" });
-  await test.step("the peek shows the hook without turning the card", async () => {
-    await card.getByRole("button", { name: /Peek at your hook/ }).click();
+  await test.step("the peek shows the hint without turning the card", async () => {
+    await card.getByRole("button", { name: /Peek at your hint/ }).click();
     await expect(
       card.getByRole("paragraph").filter({ hasText: "Fresh snow makes the street luminous." }),
     ).toBeVisible();
     await expect(card.getByRole("status")).toHaveText(
-      "Memory hook: Fresh snow makes the street luminous.",
+      "Hint: Fresh snow makes the street luminous.",
     );
     await expect(grades).toBeHidden();
-    await expect(card.getByRole("button", { name: /Peek at your hook/ })).toBeHidden();
+    await expect(card.getByRole("button", { name: /Peek at your hint/ })).toBeHidden();
   });
 
-  await test.step("the reveal leaves the hook in its place under the cue", async () => {
-    const hook = await card
+  await test.step("the reveal leaves the hint in its place under the cue", async () => {
+    const hint = await card
       .getByRole("paragraph")
       .filter({ hasText: "Fresh snow makes the street luminous." })
       .elementHandle();
     // The cue ends in a word joiner that keeps its pronunciation button on its line.
     const cue = await card.getByText(/^lumi\u2060?$/).elementHandle();
-    if (!hook || !cue) throw new Error("no hook or cue on the card");
-    const before = await hookOffset(hook, cue);
+    if (!hint || !cue) throw new Error("no hint or cue on the card");
+    const before = await hintOffset(hint, cue);
     // A tap on the card this soon after the peek would be taken as a doubled tap, so a key reveals.
     await page.keyboard.press("Space");
     await expect(grades).toBeVisible();
     // The same line, not a new one among the notes, and as far below the cue as it was.
-    expect(await hookOffset(hook, cue)).toEqual({ ...before, connected: true });
+    expect(await hintOffset(hint, cue)).toEqual({ ...before, connected: true });
     await expect(
       card.getByRole("paragraph").filter({ hasText: "Fresh snow makes the street luminous." }),
     ).toHaveCount(1);
-    await expect(card.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+    await expect(card.getByRole("button", { name: /Show hint/ })).toHaveCount(0);
   });
 
   await test.step("after the reveal Easy is locked: a tap or its key says why and grades nothing", async () => {
@@ -122,42 +122,42 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
     expect((await sent).postDataJSON()).toMatchObject({
       cardId,
       rating: 3,
-      aid: "hook",
+      aid: "hint",
       recallMs: expect.any(Number),
       gradeMs: expect.any(Number),
     });
     await expect
       .poll(async () => (await history(page, cardId)).reviews)
-      .toEqual([expect.objectContaining({ rating: 3, aid: "hook" })]);
+      .toEqual([expect.objectContaining({ rating: 3, aid: "hint" })]);
   });
 });
 
-test("revealed without a peek, Show hook puts the hook under the cue and leaves Easy open", async ({
+test("revealed without a peek, Show hint puts the hint under the cue and leaves Easy open", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const { deckId, cardId } = await cardWithHook(page, "härm", "Frost is harmful to roses.");
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const { deckId, cardId } = await cardWithHint(page, "härm", "Frost is harmful to roses.");
   await page.goto(`/review?deck=${deckId}`);
   const card = page.getByLabel("Recognition card for härm", { exact: true });
   const grades = page.getByRole("group", { name: "Choose a recall grade" });
-  const hook = card.getByRole("paragraph").filter({ hasText: "Frost is harmful to roses." });
+  const hint = card.getByRole("paragraph").filter({ hasText: "Frost is harmful to roses." });
   await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
   await expect(grades).toBeVisible();
-  await expect(hook).toHaveCount(0);
+  await expect(hint).toHaveCount(0);
 
-  const show = card.getByRole("button", { name: /Show hook/ });
+  const show = card.getByRole("button", { name: /Show hint/ });
   await show.click();
-  await expect(hook).toBeVisible();
-  await expect(card.getByRole("status")).toHaveText("Memory hook: Frost is harmful to roses.");
+  await expect(hint).toBeVisible();
+  await expect(card.getByRole("status")).toHaveText("Hint: Frost is harmful to roses.");
   await expect(show).toHaveCount(0);
   // Under the cue, above the answer the reveal brought.
-  const hookBox = await box(hook);
+  const hintBox = await box(hint);
   const cueBox = await box(card.getByText(/^härm\u2060?$/));
   const answerBox = await box(card.getByText("snow", { exact: true }));
-  expect(hookBox.y).toBeGreaterThan(cueBox.y);
-  expect(hookBox.y).toBeLessThan(answerBox.y);
+  expect(hintBox.y).toBeGreaterThan(cueBox.y);
+  expect(hintBox.y).toBeLessThan(answerBox.y);
 
-  // Seeing the hook with the answer out is not help with recall, so Easy stays and records nothing.
+  // Seeing the hint with the answer out is not help with recall, so Easy stays and records nothing.
   const graded = page.waitForRequest((r) => r.url().endsWith("/api/review/grade"));
   await grades.getByRole("button", { name: /^Easy/ }).click();
   expect((await graded).postDataJSON()).not.toHaveProperty("aid");
@@ -166,13 +166,13 @@ test("revealed without a peek, Show hook puts the hook under the cue and leaves 
     .toEqual([expect.objectContaining({ rating: 4, aid: null })]);
 });
 
-test("H on the focused peek shows the hook and hands focus to the card", async ({
+test("H on the focused peek shows the hint and hands focus to the card", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const { deckId } = await cardWithHook(page, "vihm", "Rain drums on a van.");
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const { deckId } = await cardWithHint(page, "vihm", "Rain drums on a van.");
   await page.goto(`/review?deck=${deckId}`);
-  const peek = page.getByRole("button", { name: /Peek at your hook/ });
+  const peek = page.getByRole("button", { name: /Peek at your hint/ });
   await peek.focus();
   await page.keyboard.press("h");
   await expect(
@@ -184,9 +184,9 @@ test("H on the focused peek shows the hook and hands focus to the card", async (
   await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeVisible();
 });
 
-test("H shows the hook after the reveal at once", async ({ page }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const { deckId } = await cardWithHook(page, "kask", "A birch in a cask.");
+test("H shows the hint after the reveal at once", async ({ page }, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const { deckId } = await cardWithHint(page, "kask", "A birch in a cask.");
   await page.goto(`/review?deck=${deckId}`);
   await expect(page.getByRole("button", { name: "Reveal the card" })).toBeVisible();
   await page.keyboard.press("Space");
@@ -194,24 +194,24 @@ test("H shows the hook after the reveal at once", async ({ page }, testInfo) => 
   await expect(grades.getByRole("button", { name: /^Easy/ })).toBeVisible();
   await page.keyboard.press("h");
   await expect(page.getByRole("paragraph").filter({ hasText: "A birch in a cask." })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Show hint/ })).toHaveCount(0);
   await expect(grades.getByRole("button", { name: "Easy, locked" })).toHaveCount(0);
 });
 
-test("an often-forgotten card offers a hook the learner writes, and Undo takes it off", async ({
+test("an often-forgotten card offers a hint the learner writes, and Undo takes it off", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hooked: false } });
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hinted: false } });
   expect(seeded.ok()).toBeTruthy();
   const { deckId } = (await seeded.json()) as { deckId: string };
   await page.goto(`/review?deck=${deckId}`);
   await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
 
-  await page.getByRole("button", { name: /Try a memory hook/ }).click();
+  await page.getByRole("button", { name: /Try a hint/ }).click();
   // Written in its own place on the card, with no dialog over it.
   const card = page.getByLabel(/^Production card for /);
-  const field = card.getByRole("textbox", { name: "Memory hook" });
+  const field = card.getByRole("textbox", { name: "Hint" });
   await expect(field).toBeFocused();
   await expect(field).toHaveValue("");
   await field.fill("Picture it carved for the season");
@@ -219,15 +219,15 @@ test("an often-forgotten card offers a hook the learner writes, and Undo takes i
   await expect(field).toHaveCount(0);
   // Saving hands focus back to the grades.
   await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeFocused();
-  await expect(page.getByText("Hook added")).toBeVisible();
+  await expect(page.getByText("Hint added")).toBeVisible();
 
   // Written after the reveal, it shows at once under the cue, as the learner's own.
   const written = card
     .getByRole("paragraph")
     .filter({ hasText: "Picture it carved for the season" });
   await expect(written).toBeVisible();
-  await expect(card.getByText("AI hook")).toBeHidden();
-  await expect(card.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+  await expect(card.getByText("AI hint")).toBeHidden();
+  await expect(card.getByRole("button", { name: /Show hint/ })).toHaveCount(0);
 
   await page.getByRole("button", { name: "Undo", exact: true }).click();
   await expect(written).toHaveCount(0);
@@ -236,8 +236,8 @@ test("an often-forgotten card offers a hook the learner writes, and Undo takes i
 test("the revealed card's menu archives it, review moves on, and Undo brings it back", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "review-hook");
-  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hooked: false } });
+  await startAsTestLearner(page, testInfo, "review-hint");
+  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hinted: false } });
   expect(seeded.ok()).toBeTruthy();
   const { deckId } = (await seeded.json()) as { deckId: string };
   await page.goto(`/review?deck=${deckId}`);

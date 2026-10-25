@@ -325,12 +325,13 @@ export function HookSheet({
           style={{ fontSize: 17, textAlignVertical: "top" }}
           maxFontSizeMultiplier={inputCap(17)}
         />
-        {/* Inside the field and its room kept, so the sheet never changes height as a draft arrives or the button goes. */}
-        <View className="min-h-8 justify-center gap-1">
-          {draftNote && <Text className="text-sm text-muted">{draftNote}</Text>}
+        {/* The sheet sits on the keyboard and grows upward, so a note above Draft leaves the button under the finger that pressed it. */}
+        {draftNote && <Text className="pt-1 text-sm text-muted">{draftNote}</Text>}
+        {/* Its room kept, so a draft arriving or the button going never changes the sheet's height. */}
+        <View className="min-h-8 flex-row items-center">
           {/* One control throughout, as on the web: its label says what a press does, and its loader turns in the sparkle's place. */}
           {draftable && (
-            <View className="-ms-3 flex-row">
+            <View className="-ms-3">
               <Button
                 size="sm"
                 variant="ghost"

@@ -1902,15 +1902,6 @@
        "minimum": 1,
        "maximum": 200
       }
-     },
-     {
-      "in": "query",
-      "name": "app",
-      "schema": {
-       "type": "string",
-       "minLength": 1,
-       "maxLength": 500
-      }
      }
     ]
    }
@@ -3767,16 +3758,6 @@
       }
      }
     },
-    "parameters": [
-     {
-      "in": "query",
-      "name": "from",
-      "schema": {
-       "type": "string",
-       "const": "desktop_panel"
-      }
-     }
-    ],
     "requestBody": {
      "required": true,
      "content": {
@@ -3805,15 +3786,11 @@
           "type": "string",
           "maxLength": 200
          },
-         "exampleTranslation": {
-          "type": "string",
-          "maxLength": 250
-         },
          "notes": {
           "type": "string",
           "maxLength": 2000
          },
-         "hint": {
+         "hook": {
           "type": "string",
           "maxLength": 200
          },
@@ -3878,13 +3855,6 @@
            "manual"
           ]
          },
-         "exampleTranslationSource": {
-          "type": "string",
-          "enum": [
-           "lesson",
-           "manual"
-          ]
-         },
          "pronunciationSource": {
           "type": "string",
           "enum": [
@@ -3899,7 +3869,7 @@
            "manual"
           ]
          },
-         "hintSource": {
+         "hookSource": {
           "type": "string",
           "enum": [
            "lesson",
@@ -4091,15 +4061,11 @@
           "type": "string",
           "maxLength": 200
          },
-         "exampleTranslation": {
-          "type": "string",
-          "maxLength": 250
-         },
          "notes": {
           "type": "string",
           "maxLength": 2000
          },
-         "hint": {
+         "hook": {
           "type": "string",
           "maxLength": 200
          },
@@ -4164,13 +4130,6 @@
            "manual"
           ]
          },
-         "exampleTranslationSource": {
-          "type": "string",
-          "enum": [
-           "lesson",
-           "manual"
-          ]
-         },
          "pronunciationSource": {
           "type": "string",
           "enum": [
@@ -4185,7 +4144,7 @@
            "manual"
           ]
          },
-         "hintSource": {
+         "hookSource": {
           "type": "string",
           "enum": [
            "lesson",
@@ -4348,15 +4307,15 @@
     ]
    }
   },
-  "/api/cards/{id}/hint-draft": {
+  "/api/cards/{id}/hook-draft": {
    "post": {
-    "operationId": "postApiCardsByIdHintDraft",
+    "operationId": "postApiCardsByIdHookDraft",
     "responses": {
      "200": {
       "content": {
        "application/json": {
         "schema": {
-         "$ref": "#/components/schemas/HintDraft"
+         "$ref": "#/components/schemas/HookDraft"
         }
        }
       }
@@ -4389,15 +4348,6 @@
       }
      },
      "429": {
-      "content": {
-       "application/json": {
-        "schema": {
-         "$ref": "#/components/schemas/Error"
-        }
-       }
-      }
-     },
-     "503": {
       "content": {
        "application/json": {
         "schema": {
@@ -4731,9 +4681,6 @@
                    "null"
                   ]
                  },
-                 "sectionLanguage": {
-                  "type": "string"
-                 },
                  "mode": {
                   "type": "string",
                   "enum": [
@@ -4959,9 +4906,6 @@
                  "null"
                 ]
                },
-               "nameLanguage": {
-                "type": "string"
-               },
                "cards": {
                 "type": "array",
                 "items": {
@@ -5120,9 +5064,6 @@
                    "string",
                    "null"
                   ]
-                 },
-                 "sectionLanguage": {
-                  "type": "string"
                  },
                  "mode": {
                   "type": "string",
@@ -5764,7 +5705,6 @@
              "meaning",
              "pronunciation",
              "example",
-             "exampleTranslation",
              "notes",
              "skip"
             ]
@@ -5908,7 +5848,6 @@
              "meaning",
              "pronunciation",
              "example",
-             "exampleTranslation",
              "notes",
              "skip"
             ]
@@ -6766,16 +6705,12 @@
          "type": "integer",
          "minimum": -9007199254740991,
          "maximum": 9007199254740991
-        },
-        "published": {
-         "type": "boolean"
         }
        },
        "required": [
         "id",
         "name",
-        "members",
-        "published"
+        "members"
        ]
       }
      }
@@ -7057,14 +6992,13 @@
     "x-lymi-open": true
    },
    "DeckEnrichFields": {
-    "maxItems": 5,
+    "maxItems": 4,
     "type": "array",
     "items": {
      "type": "string",
      "enum": [
       "meaning",
       "example",
-      "exampleTranslation",
       "notes",
       "pronunciation"
      ],
@@ -7390,37 +7324,13 @@
        "null"
       ]
      },
-     "exampleTranslation": {
-      "type": [
-       "string",
-       "null"
-      ]
-     },
-     "exampleTranslationStale": {
-      "type": "boolean"
-     },
-     "exampleTranslationStatus": {
-      "anyOf": [
-       {
-        "type": "string",
-        "enum": [
-         "working",
-         "failed"
-        ]
-       },
-       {
-        "type": "null"
-       }
-      ],
-      "x-lymi-open": true
-     },
      "notes": {
       "type": [
        "string",
        "null"
       ]
      },
-     "hint": {
+     "hook": {
       "type": [
        "string",
        "null"
@@ -7521,22 +7431,6 @@
       ],
       "x-lymi-open": true
      },
-     "exampleTranslationSource": {
-      "anyOf": [
-       {
-        "type": "string",
-        "enum": [
-         "lesson",
-         "ai",
-         "manual"
-        ]
-       },
-       {
-        "type": "null"
-       }
-      ],
-      "x-lymi-open": true
-     },
      "pronunciationSource": {
       "anyOf": [
        {
@@ -7569,7 +7463,7 @@
       ],
       "x-lymi-open": true
      },
-     "hintSource": {
+     "hookSource": {
       "anyOf": [
        {
         "type": "string",
@@ -7642,10 +7536,6 @@
        }
       ]
      },
-     "exampleRecorded": {
-      "x-lymi-open": true,
-      "type": "boolean"
-     },
      "createdBy": {
       "type": "string",
       "enum": [
@@ -7698,11 +7588,8 @@
      "meaning",
      "pronunciation",
      "example",
-     "exampleTranslation",
-     "exampleTranslationStale",
-     "exampleTranslationStatus",
      "notes",
-     "hint",
+     "hook",
      "language",
      "tags",
      "source",
@@ -7713,10 +7600,9 @@
      "imageVersion",
      "meaningSource",
      "exampleSource",
-     "exampleTranslationSource",
      "pronunciationSource",
      "notesSource",
-     "hintSource",
+     "hookSource",
      "enrichmentStatus",
      "enrichmentFields",
      "audioKey",
@@ -8167,37 +8053,13 @@
        "null"
       ]
      },
-     "exampleTranslation": {
-      "type": [
-       "string",
-       "null"
-      ]
-     },
-     "exampleTranslationStale": {
-      "type": "boolean"
-     },
-     "exampleTranslationStatus": {
-      "anyOf": [
-       {
-        "type": "string",
-        "enum": [
-         "working",
-         "failed"
-        ]
-       },
-       {
-        "type": "null"
-       }
-      ],
-      "x-lymi-open": true
-     },
      "notes": {
       "type": [
        "string",
        "null"
       ]
      },
-     "hint": {
+     "hook": {
       "type": [
        "string",
        "null"
@@ -8298,22 +8160,6 @@
       ],
       "x-lymi-open": true
      },
-     "exampleTranslationSource": {
-      "anyOf": [
-       {
-        "type": "string",
-        "enum": [
-         "lesson",
-         "ai",
-         "manual"
-        ]
-       },
-       {
-        "type": "null"
-       }
-      ],
-      "x-lymi-open": true
-     },
      "pronunciationSource": {
       "anyOf": [
        {
@@ -8346,7 +8192,7 @@
       ],
       "x-lymi-open": true
      },
-     "hintSource": {
+     "hookSource": {
       "anyOf": [
        {
         "type": "string",
@@ -8419,10 +8265,6 @@
        }
       ]
      },
-     "exampleRecorded": {
-      "x-lymi-open": true,
-      "type": "boolean"
-     },
      "createdBy": {
       "type": "string",
       "enum": [
@@ -8481,11 +8323,8 @@
      "meaning",
      "pronunciation",
      "example",
-     "exampleTranslation",
-     "exampleTranslationStale",
-     "exampleTranslationStatus",
      "notes",
-     "hint",
+     "hook",
      "language",
      "tags",
      "source",
@@ -8496,10 +8335,9 @@
      "imageVersion",
      "meaningSource",
      "exampleSource",
-     "exampleTranslationSource",
      "pronunciationSource",
      "notesSource",
-     "hintSource",
+     "hookSource",
      "enrichmentStatus",
      "enrichmentFields",
      "audioKey",
@@ -8833,7 +8671,7 @@
    "ReviewAid": {
     "type": "string",
     "enum": [
-     "hint"
+     "hook"
     ]
    },
    "CardEvent": {
@@ -8910,10 +8748,10 @@
      "language"
     ]
    },
-   "HintDraft": {
+   "HookDraft": {
     "type": "object",
     "properties": {
-     "hint": {
+     "hook": {
       "type": [
        "string",
        "null"
@@ -8921,7 +8759,7 @@
      }
     },
     "required": [
-     "hint"
+     "hook"
     ]
    },
    "Queue": {
@@ -9388,24 +9226,6 @@
        }
       ]
      },
-     "aiConsent": {
-      "type": [
-       "boolean",
-       "null"
-      ]
-     },
-     "aiConsentUpdatedAt": {
-      "anyOf": [
-       {
-        "type": "string",
-        "format": "date-time",
-        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
-       },
-       {
-        "type": "null"
-       }
-      ]
-     },
      "appLanguage": {
       "anyOf": [
        {
@@ -9506,8 +9326,6 @@
      "userId",
      "analyticsConsent",
      "analyticsConsentUpdatedAt",
-     "aiConsent",
-     "aiConsentUpdatedAt",
      "appLanguage",
      "meaningLanguage",
      "dailyGoal",
@@ -10208,7 +10026,6 @@
              "meaning",
              "pronunciation",
              "example",
-             "exampleTranslation",
              "notes",
              "skip"
             ]
@@ -10438,7 +10255,6 @@
            "meaning",
            "pronunciation",
            "example",
-           "exampleTranslation",
            "notes",
            "skip"
           ]
@@ -10618,16 +10434,6 @@
       "minimum": -9007199254740991,
       "maximum": 9007199254740991
      },
-     "exampleRecordings": {
-      "type": "integer",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-     },
-     "exampleRecordingsSkipped": {
-      "type": "integer",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-     },
      "soundsLeftOut": {
       "type": "integer",
       "minimum": -9007199254740991,
@@ -10744,16 +10550,6 @@
       "minimum": -9007199254740991,
       "maximum": 9007199254740991
      },
-     "exampleRecordings": {
-      "type": "integer",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-     },
-     "exampleRecordingsSkipped": {
-      "type": "integer",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-     },
      "soundsLeftOut": {
       "type": "integer",
       "minimum": -9007199254740991,
@@ -10820,12 +10616,6 @@
           ]
          },
          "pronunciation": {
-          "type": [
-           "string",
-           "null"
-          ]
-         },
-         "exampleTranslation": {
           "type": [
            "string",
            "null"

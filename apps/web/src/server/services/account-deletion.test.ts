@@ -248,7 +248,7 @@ describe("deleting an account", () => {
     const kadri = await learner(db, "kadri", "Kadri");
     const peeter = await learner(db, "peeter", "Peeter");
     const { deck, card } = await deckWithCard(kadri, "maja", peeter);
-    await raw.prepare("update cards set hint_draft = 'a draft' where id = ?").bind(card.id).run();
+    await raw.prepare("update cards set hook_draft = 'a draft' where id = ?").bind(card.id).run();
     await raw
       .prepare(
         "insert into card_corrections (card_id, field, user_id, ai_text, created_at) values (?, 'meaning', ?, 'the AI', 0)",
@@ -282,10 +282,10 @@ describe("deleting an account", () => {
       .all<{ id: string; name: string }>();
     expect(copy.results).toEqual([{ id: expect.any(String), name: deck.name }]);
     const copied = await raw
-      .prepare("select id, term, hint_draft from cards where deck_id = ?")
+      .prepare("select id, term, hook_draft from cards where deck_id = ?")
       .bind(copy.results[0]?.id)
-      .first<{ id: string; term: string; hint_draft: string | null }>();
-    expect(copied).toMatchObject({ term: "maja", hint_draft: null });
+      .first<{ id: string; term: string; hook_draft: string | null }>();
+    expect(copied).toMatchObject({ term: "maja", hook_draft: null });
     expect(await count("card_states", "card_id", copied?.id ?? "")).toBe(1);
     expect(await count("reviews", "card_id", copied?.id ?? "")).toBe(1);
     expect(await count("deck_members", "user_id", peeter.userId)).toBe(0);

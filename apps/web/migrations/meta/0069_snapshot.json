@@ -1,5 +1,5 @@
 {
-  "id": "c551e1bb-c61f-4230-9bc8-9bfe0c384ccf",
+  "id": "dcfe015d-1673-48f6-8d04-3167f31f7e47",
   "prevId": "fe714bdb-f2a2-44b8-845a-0068f8ec2c1d",
   "version": "6",
   "dialect": "sqlite",
@@ -1199,22 +1199,22 @@
           "notNull": false,
           "autoincrement": false
         },
-        "hint": {
-          "name": "hint",
+        "hook": {
+          "name": "hook",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "hint_source": {
-          "name": "hint_source",
+        "hook_source": {
+          "name": "hook_source",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "hint_draft": {
-          "name": "hint_draft",
+        "hook_draft": {
+          "name": "hook_draft",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

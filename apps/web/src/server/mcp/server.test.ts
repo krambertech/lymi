@@ -105,6 +105,8 @@ const card: CardView = {
   notes: null,
   hint: null,
   hintSource: null,
+  hook: null,
+  hookSource: null,
   language: "it",
   tags: [],
   source: null,

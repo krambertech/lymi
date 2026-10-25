@@ -89,6 +89,8 @@ const fieldName: Record<string, MessageDescriptor> = {
   exampleTranslation: msg`the example’s translation`,
   notes: msg`the notes`,
   hint: msg`the hint`,
+  // An edit logged before the rename names the field `hook`.
+  hook: msg`the hint`,
   source: msg`the source`,
   language: msg`the language`,
   tags: msg`the tags`,
@@ -112,6 +114,7 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   exampleTranslation: (value) => msg`Translation changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
   hint: (value) => msg`Hint changed to “${value}”`,
+  hook: (value) => msg`Hint changed to “${value}”`,
 };
 
 const eventIcon: Record<WordEvent["kind"], LucideIcon> = {

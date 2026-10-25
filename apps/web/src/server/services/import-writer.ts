@@ -865,8 +865,8 @@ export async function writeChunk<Note>(
           pronunciation = coalesce(cards.pronunciation, incoming.pronunciation),
           example = coalesce(cards.example, incoming.example),
           notes = coalesce(cards.notes, incoming.notes),
-          hint_source = case when cards.hint is null and incoming.hint is not null then incoming.hint_source else cards.hint_source end,
-          hint = coalesce(cards.hint, incoming.hint),
+          hook_source = case when cards.hook is null and incoming.hint is not null then incoming.hint_source else cards.hook_source end,
+          hook = coalesce(cards.hook, incoming.hint),
           tags = case when cards.tags = '[]' then incoming.tags else cards.tags end,
           -- Filling a blank field is text an edition translates, so its localization goes stale.
           revision = case when (cards.meaning is null and incoming.meaning is not null)
@@ -883,7 +883,7 @@ export async function writeChunk<Note>(
     statements.push(
       sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example,
           example_translation, example_translation_source, example_translation_of, notes,
-          hint, hint_source, language, tags, directions, review_modes, meaning_source, example_source,
+          hook, hook_source, language, tags, directions, review_modes, meaning_source, example_source,
           pronunciation_source, notes_source, source, created_by, archived_at, import_id, external_id, created_at, updated_at)
         select ${j("id")}, ${userId}, ${j("deckId")}, ${j("term")}, ${j("normalizedTerm")}, ${j("meaning")},
           ${j("pronunciation")}, ${j("example")}, ${j("exampleTranslation")}, ${j("exampleTranslationSource")},

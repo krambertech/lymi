@@ -90,6 +90,12 @@ export const CardOut = z
     pronunciationSource: FieldSource.nullable().meta(OPEN),
     notesSource: FieldSource.nullable().meta(OPEN),
     hintSource: FieldSource.nullable().meta(OPEN),
+    hook: z.string().nullable().meta({ deprecated: true, description: "The old name of `hint`" }),
+    hookSource: FieldSource.nullable().meta({
+      ...OPEN,
+      deprecated: true,
+      description: "The old name of `hintSource`",
+    }),
     enrichmentStatus: EnrichmentStatus.nullable().meta({
       ...OPEN,
       description: "Set while the AI is filling the card's empty fields, and null once it settles",
@@ -146,6 +152,12 @@ export const HintDraftOut = z
   })
   .meta({ id: "HintDraft" });
 export type HintDraftOut = z.infer<typeof HintDraftOut>;
+
+/** `HintDraft` under its old name, for an older app or API client. */
+export const HookDraftOut = z
+  .object({ hook: HintDraftOut.shape.hint })
+  .meta({ id: "HookDraft", deprecated: true });
+export type HookDraftOut = z.infer<typeof HookDraftOut>;
 
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),

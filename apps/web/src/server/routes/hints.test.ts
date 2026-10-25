@@ -98,3 +98,36 @@ describe("hints", () => {
     expect((await history(card.id)).reviews[0]).toMatchObject({ rating: 4, aid: null });
   });
 });
+
+describe("the hint's old name", () => {
+  it("takes a hook as the hint and returns it under both names", async () => {
+    const card = await hintedCard("lumi3");
+    const patched = await app.fetch(`/api/cards/${card.id}`, {
+      ...json({ hook: "Lumi lights the street", hookSource: "lesson" }, { method: "PATCH" }),
+      as: learner,
+    });
+    expect(await patched.json()).toMatchObject({
+      hint: "Lumi lights the street",
+      hintSource: "lesson",
+      hook: "Lumi lights the street",
+      hookSource: "lesson",
+    });
+  });
+
+  it("keeps a queued grade that names its aid hook, stored as hint", async () => {
+    const card = await hintedCard("lumi4");
+    expect((await grade(card.id, 4, { aid: "hook" })).status).toBe(400);
+    expect((await grade(card.id, 3, { aid: "hook" })).status).toBe(200);
+    expect((await history(card.id)).reviews).toMatchObject([{ rating: 3, aid: "hint" }]);
+  });
+
+  it("answers the old draft path under the old name", async () => {
+    const card = await hintedCard("lumi5");
+    const drafted = await app.fetch(`/api/cards/${card.id}/hook-draft`, {
+      method: "POST",
+      as: learner,
+    });
+    expect(drafted.status).not.toBe(404);
+    if (drafted.ok) expect(await drafted.json()).toHaveProperty("hook");
+  });
+});

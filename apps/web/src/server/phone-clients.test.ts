@@ -161,8 +161,7 @@ describe("the example's translation among a deck's AI fields", () => {
   let owner: Session;
 
   beforeAll(async () => {
-    // The gate still guards a release below the minimum, so the test lets one through.
-    open = await testApp({ env: { PHONE_MINIMUM_VERSION_IOS: "0.0.1" } });
+    open = await testApp();
     owner = await open.signUp("phone-translation");
   }, 60_000);
 

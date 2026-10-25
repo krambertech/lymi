@@ -277,8 +277,8 @@
       "sha256": "cf7ac811b3962a2f9a9a4485c5cd83e3ba7f42ff90e3a1be4f4b36186ba06ca9"
     },
     {
-      "name": "0069_rename_hook_to_hint.sql",
-      "sha256": "9c0660a870ee7c22cad44170eaca1dc313565449108ec9192303037e4482e86e"
+      "name": "0069_review_aid_hint.sql",
+      "sha256": "47e4c279e3bec9641aefb537ef31c7600df04441b35e98e162ebc829f5a2bdf9"
     }
   ]
 }

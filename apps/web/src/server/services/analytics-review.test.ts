@@ -284,6 +284,43 @@ it("says where a Ukrainian stress showed only for a grader whose build knows Ukr
   ]);
 });
 
+it("says where a Polish stress showed only for a word that breaks the rule and a grader that underlines it", async () => {
+  const student = await learner(db, "analytics-stress-pl", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "Słowa", defaultLanguage: "pl" });
+  const added = await addCards(ctx, [
+    { deckId: deck.id, term: "muzyka", meaning: "music", pronunciation: "mùzyka" },
+    { deckId: deck.id, term: "fizyka", meaning: "physics", pronunciation: "fìzyka" },
+    { deckId: deck.id, term: "szkoła", meaning: "school" },
+  ]);
+  // A 0.0.9 phone shows Polish stress as a line; the web and 0.0.10 underline it.
+  const graders = [{ uk: true }, { uk: true, pl: true }, { uk: true, pl: true }];
+  for (const [i, inPlace] of graders.entries()) {
+    const card = added[i];
+    await gradeCard(
+      ctx,
+      {
+        cardId: card?.status === "added" ? card.card.id : "",
+        direction: "recognition",
+        rating: 3,
+        reviewedAt: new Date(),
+      },
+      { over: true, inPlace, byWord: true },
+    );
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language]);
+  expect(graded).toEqual([
+    [undefined, undefined],
+    ["cue", "pl"],
+    [undefined, undefined],
+  ]);
+});
+
 it("says where a Tamil reading showed only for a grader that draws it over each word", async () => {
   const student = await learner(db, "analytics-word-since", "Learner");
   const { analytics, capture, settled } = writer();

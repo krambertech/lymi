@@ -10,6 +10,7 @@ import {
   languageSupport,
   pronunciationGuide,
   pronunciationName,
+  speechContext,
   speechInputs,
   speechLocale,
   stressRules,
@@ -215,6 +216,14 @@ describe("languageFormat for Russian", () => {
   });
   it("names a script for every language it publishes", () => {
     for (const format of LANGUAGE_FORMATS) expect(format.scripts.length).toBeGreaterThan(0);
+  });
+});
+
+describe("speechContext", () => {
+  it("names the words a voice hears first, from a record or a configured row", () => {
+    expect(speechContext("uk")).toBe("Українською:");
+    expect(speechContext("pl-PL")).toBe("Po polsku:");
+    expect(speechContext("de")).toBeNull();
   });
 });
 

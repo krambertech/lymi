@@ -13,6 +13,7 @@
  */
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createTextProvider, type TextProvider } from "../ai";
+import { evalEnv, requireKeys } from "../ai/eval-env";
 import {
   chunked,
   ENRICHMENT_INSTRUCTIONS,
@@ -125,13 +126,9 @@ async function main() {
   if (from) {
     run = JSON.parse(readFileSync(from, "utf8")) as RecordedRun;
   } else {
-    const { OPENAI_API_KEY, OPENAI_TEXT_MODEL, AI_GATEWAY_URL, AI_GATEWAY_TOKEN } = process.env;
-    const provider = createTextProvider({
-      OPENAI_API_KEY,
-      OPENAI_TEXT_MODEL,
-      AI_GATEWAY_URL,
-      AI_GATEWAY_TOKEN,
-    });
+    const env = evalEnv();
+    requireKeys(env, ["OPENAI_API_KEY", "AI_GATEWAY_TOKEN"], "run the evaluation");
+    const provider = createTextProvider(env);
     if (!provider) throw new Error("Set OPENAI_API_KEY to run the evaluation");
     console.log(`Model: ${provider.model}`);
     run = newRun(provider.model, await callModel(decks, provider));

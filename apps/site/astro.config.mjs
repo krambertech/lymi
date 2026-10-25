@@ -10,7 +10,11 @@ export default defineConfig({
   trailingSlash: "never",
   i18n: { defaultLocale: "en", locales: ["en", "uk", "ru"] },
   // Pages prerender unless they opt out; only published deck pages render per request. ADR 0016.
-  adapter: cloudflare({ imageService: "passthrough" }),
+  // `astro dev` reads the product's migrated local D1, as `wrangler dev --persist-to` does.
+  adapter: cloudflare({
+    imageService: "passthrough",
+    persistState: { path: "../web/.wrangler/state" },
+  }),
   session: false,
   integrations: [react()],
   vite: {

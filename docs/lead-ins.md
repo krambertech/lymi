@@ -63,7 +63,7 @@ On a first play the learner can wait for up to three calls in a row: Clef (about
 The policy is `apps/web/src/server/lead-ins/japanese.ts`. After changing its question, threshold, instructions or checks:
 
 1. Bump `version`.
-2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `GEMINI_API_KEY` and the AI Gateway variables in `.dev.vars`.
+2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `GEMINI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
 3. Check that every ambiguous case is still flagged before you accept more flagged clear cases.
 
 On 19 October 2026 the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.

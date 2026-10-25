@@ -212,6 +212,12 @@ export function initAnalytics(options: {
         delete event.$set_once;
         delete event.$unset;
         const ui_locale = AnalyticsLocale.catch("en").parse(document.documentElement.lang);
+        // While a session is recorded, its ID lets PostHog open the recording from an event or error.
+        const sessionId = event.properties.$session_id;
+        const recorded =
+          replay === "on" && recordable() && typeof sessionId === "string"
+            ? { $session_id: sessionId }
+            : {};
         if (event.event === "$exception") {
           event.properties = {
             ...exceptionProperties(event.properties),
@@ -228,6 +234,7 @@ export function initAnalytics(options: {
             schema_version: ANALYTICS_SCHEMA_VERSION,
             $geoip_disable: true,
             $process_person_profile: false,
+            ...recorded,
           };
           return event;
         }
@@ -308,6 +315,7 @@ export function initAnalytics(options: {
           ui_locale,
           schema_version: ANALYTICS_SCHEMA_VERSION,
           $geoip_disable: true,
+          ...recorded,
         };
         return event;
       },

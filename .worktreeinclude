@@ -1,0 +1,2 @@
+# Git-ignored files Claude Code copies from the main checkout into each worktree it creates. docs/local-dev.md.
+apps/web/.dev.vars

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { AiCardChip, Chip, SourceChip, StateChip } from "../../ui/chip";
+import { Chip, SourceChip, StateChip } from "../../ui/chip";
 import { DueCount } from "../../ui/due-count";
 import {
   Field,
@@ -517,15 +517,6 @@ export function Labels() {
                   <SourceChip source="ai" field="meaning" />
                   <SourceChip source="lesson" field="example" />
                   <SourceChip source="manual" field="meaning" />
-                </Row>
-              ),
-            },
-            {
-              label: "A whole card",
-              note: "Under a review’s answer, once, when any shown field is the AI’s.",
-              render: () => (
-                <Row>
-                  <AiCardChip />
                 </Row>
               ),
             },

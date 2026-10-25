@@ -158,13 +158,3 @@ export function SourceChip({
     </Chip>
   );
 }
-
-/** The AI's mark for a whole card, where the fields shown together would each carry a badge. */
-export function AiCardChip() {
-  const { t } = useLingui();
-  return (
-    <Chip tone="ai" size="sm" icon="ai" accessibilityLabel={t`AI wrote part of this card`}>
-      {t`AI`}
-    </Chip>
-  );
-}

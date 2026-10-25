@@ -18,6 +18,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Review | [review.md](features/review.md) |
 | The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
 | Archive in review | [review-archive.md](features/review-archive.md) |
+| Hints in review: Show hint, the offer, and Draft | [review-hints.md](features/review-hints.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
 | Library and the deck page | [library.md](features/library.md) |

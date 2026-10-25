@@ -1001,9 +1001,6 @@ msgstr "Попереду"
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft"
-msgstr "Чернетка AI"
-
 msgid "AI example"
 msgstr "Приклад від AI"
 
@@ -1042,9 +1039,6 @@ msgstr "AI перекладе після збереження"
 
 msgid "AI translation"
 msgstr "Переклад від AI"
-
-msgid "AI wrote part of this card"
-msgstr "Частину цієї картки написав AI"
 
 msgid "AI wrote this"
 msgstr "Це написав AI"
@@ -2166,6 +2160,9 @@ msgstr "Чернетка"
 
 msgid "Drafting a hint uses AI. Turn on AI services in You to draft one."
 msgstr "Підказку складає AI. Увімкни AI-сервіси в розділі Ти, щоб скласти її."
+
+msgid "Drafting…"
+msgstr "Готуємо…"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетягніть серію за ручку. У Бібліотеці серії стоять у цьому порядку."

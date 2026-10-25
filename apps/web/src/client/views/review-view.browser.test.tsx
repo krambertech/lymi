@@ -22,7 +22,7 @@ const item = (card: Partial<QueueItem["card"]>): QueueItem => ({
   card: { ...queueItem.card, ...card },
 });
 
-test("a revealed card shows its source, not its tags, and marks only what the AI wrote", async () => {
+test("a revealed card shows its source, not its tags, and never who wrote it", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard
@@ -41,32 +41,11 @@ test("a revealed card shows its source, not its tags, and marks only what the AI
 
   expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
-  expect(card.textContent).toContain("AI wrote part of this card");
+  expect(card.textContent).not.toContain("AI");
   expect(card.textContent).toContain("Lesson 14");
   expect(card.textContent).not.toContain("verbs");
   expect(card.textContent).not.toContain("from lesson");
   expect(card.textContent).not.toContain("by you");
-});
-
-test("several AI-written fields share one AI chip", async () => {
-  await render(
-    <I18nProvider i18n={i18n}>
-      <ReviewCard
-        item={item({
-          meaningSource: "ai",
-          example: "Meie maja on madal.",
-          exampleSource: "ai",
-          pronunciation: "ˈmeie ˈmaja",
-          pronunciationSource: "ai",
-        })}
-        revealed
-        animateReveal={false}
-        onReveal={noop}
-      />
-    </I18nProvider>,
-  );
-
-  expect(page.getByText("AI wrote part of this card").elements()).toHaveLength(1);
 });
 
 test("the learner's own text and no source carry no chip", async () => {
@@ -549,7 +528,8 @@ test("revealed without a peek, the hint waits for Show hint, which puts it under
   await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
   await expect.element(card.getByRole("status")).toHaveTextContent("Hint: Speed up the brigade");
   expect(card.getByRole("button", { name: /Show hint/ }).elements()).toHaveLength(0);
-  expect(card.element().textContent).toContain("AI hint");
+  // The hint is the AI's, but review never says who wrote it.
+  expect(card.element().textContent).not.toContain("AI");
 });
 
 test("a quick second tap on the peek does not turn the card", async () => {

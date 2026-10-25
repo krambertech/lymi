@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { FieldSource, ReviewAid } from "@lymi/core";
+import type { ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
 import { Lightbulb, type LucideIcon } from "lucide-react";
@@ -10,7 +10,6 @@ import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
-import { SourceChip } from "./chip";
 
 /**
  * One step of help before the reveal. Steps come in the order review offers them, so a later
@@ -19,7 +18,6 @@ import { SourceChip } from "./chip";
 export interface AidStep {
   aid: ReviewAid;
   text: string;
-  source: FieldSource | null;
 }
 
 /**
@@ -41,8 +39,8 @@ const STEPS: Record<
 /** The key that takes the next step, matched by its place so every keyboard layout reaches it. */
 export const AID_KEY = { code: "KeyH", label: "H" } as const;
 
-export function aidSteps(card: Pick<Card, "hint" | "hintSource">): AidStep[] {
-  return card.hint ? [{ aid: "hint", text: card.hint, source: card.hintSource }] : [];
+export function aidSteps(card: Pick<Card, "hint">): AidStep[] {
+  return card.hint ? [{ aid: "hint", text: card.hint }] : [];
 }
 
 /** The aid a grade records: the furthest step taken. */
@@ -168,7 +166,7 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
   );
 }
 
-/** One aid as text: its icon, what it says, and the AI badge while the AI's words are unchanged. */
+/** One aid as text: its icon and what it says. Who wrote it is the card page's to say, not review's. */
 function AidLine({ step }: { step: AidStep }) {
   const { i18n } = useLingui();
   const { name, icon: Icon } = STEPS[step.aid];
@@ -178,11 +176,6 @@ function AidLine({ step }: { step: AidStep }) {
       <span className="min-w-0 [overflow-wrap:anywhere]">
         <span className="sr-only">{i18n._(name)} </span>
         {step.text}
-        {step.source === "ai" && (
-          <span className="ms-2 inline-flex -translate-y-px align-middle">
-            <SourceChip source="ai" field="hint" size="xs" />
-          </span>
-        )}
       </span>
     </p>
   );

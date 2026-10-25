@@ -47,7 +47,7 @@ import { AudioButton, AudioPlace } from "../components/audio-button";
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
-import { AiCardChip, Chip, StateChip } from "../components/chip";
+import { Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import { ExampleAudioButton, ExamplePlace, useExampleAudio } from "../components/example-audio";
@@ -603,13 +603,6 @@ export function ReviewCard({
   const tail = [mode.cue === "image" ? i18n._(modeLabel(mode)) : null, languageCode].filter(
     (part): part is string => !!part,
   );
-  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
-  const aiWritten =
-    card.meaningSource === "ai" ||
-    (card.exampleSource === "ai" && !!card.example) ||
-    (card.exampleTranslationSource === "ai" && !!translation) ||
-    (card.notesSource === "ai" && !!card.notes) ||
-    (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none. Sources written
   // before sections existed tend to restate the section, so the two never show together.
   const place = section
@@ -617,7 +610,6 @@ export function ReviewCard({
     : card.source
       ? { Icon: Library, label: t`Source`, name: card.source }
       : null;
-  const chips = aiWritten || !!place;
 
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -782,16 +774,13 @@ export function ReviewCard({
               {extrasLines(measure)}
             </div>
           )}
-          {chips && (
+          {place && (
             <motion.div variants={answerLine} className="mt-1 flex items-center gap-1.5">
-              {place && (
-                <Chip size="sm" className="min-w-0 max-w-full">
-                  <place.Icon className="size-3 shrink-0" aria-hidden="true" />
-                  <span className="sr-only">{place.label}</span>
-                  <span className="truncate">{place.name}</span>
-                </Chip>
-              )}
-              {aiWritten && <AiCardChip />}
+              <Chip size="sm" className="min-w-0 max-w-full">
+                <place.Icon className="size-3 shrink-0" aria-hidden="true" />
+                <span className="sr-only">{place.label}</span>
+                <span className="truncate">{place.name}</span>
+              </Chip>
             </motion.div>
           )}
         </div>

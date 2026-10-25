@@ -132,7 +132,7 @@ import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
-import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { Chip, StateChip } from "../ui/chip";
 import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
@@ -1378,13 +1378,6 @@ function CardPlate({
     (part): part is string => !!part,
   );
   const translation = shownTranslation(card);
-  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
-  const aiWritten =
-    card.meaningSource === "ai" ||
-    (card.exampleSource === "ai" && !!card.example) ||
-    (card.exampleTranslationSource === "ai" && !!translation) ||
-    (card.notesSource === "ai" && !!card.notes) ||
-    (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none.
   const place = section
     ? { icon: "section" as const, name: section }
@@ -1528,31 +1521,19 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {/* The hint has one place, under the cue, held from the start so peeking at it or showing it moves nothing. */}
-                  {hint && (
+                  {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
+                  {hint && hintShown ? (
                     <View className="pt-3">
-                      <View
-                        className="opacity-0"
-                        style={{ minHeight: HINT_ROOM }}
-                        accessibilityElementsHidden
-                        importantForAccessibility="no-hide-descendants"
-                      >
-                        <HintLine text={hint.text} source={hint.source} still />
-                      </View>
-                      {hintShown ? (
-                        <View className="absolute inset-x-0 top-3">
-                          <HintLine text={hint.text} source={hint.source} still={still} />
-                        </View>
-                      ) : revealed && onShowHint ? (
-                        <View className="absolute inset-x-0 top-2">
-                          <ShowHintButton still={still} onShow={onShowHint} />
-                        </View>
-                      ) : null}
+                      <HintLine text={hint.text} still={still} />
                     </View>
-                  )}
+                  ) : hint && revealed && onShowHint ? (
+                    <View className="pt-2">
+                      <ShowHintButton still={still} onShow={onShowHint} />
+                    </View>
+                  ) : null}
                 </Animated.View>
                 {revealed && (
-                  <View className="gap-5 pt-5">
+                  <Animated.View layout={glide} className="gap-5 pt-5">
                     <Wick still={still} />
                     <View className="gap-3">
                       <Animated.View entering={arrive()}>
@@ -1644,21 +1625,18 @@ function CardPlate({
                           <CardNotes source={card.notes} className="text-base text-muted" />
                         </Animated.View>
                       )}
-                      {(place || aiWritten) && (
+                      {place && (
                         <Animated.View
                           entering={arrive()}
                           className="mt-1 flex-row flex-wrap items-center gap-1.5"
                         >
-                          {place && (
-                            <Chip size="sm" icon={place.icon}>
-                              {place.name}
-                            </Chip>
-                          )}
-                          {aiWritten && <AiCardChip />}
+                          <Chip size="sm" icon={place.icon}>
+                            {place.name}
+                          </Chip>
                         </Animated.View>
                       )}
                     </View>
-                  </View>
+                  </Animated.View>
                 )}
               </Pressable>
             </ScrollView>
@@ -1691,7 +1669,7 @@ function CardPlate({
                     </CardLine>
                     {hint && (
                       <View className="pt-3" style={{ minHeight: HINT_ROOM }}>
-                        <HintLine text={hint.text} source={hint.source} still />
+                        <HintLine text={hint.text} still />
                       </View>
                     )}
                     <View className="gap-5 pt-5">

@@ -22,8 +22,7 @@ import { useGlass } from "../theme/glass";
 import { ALWAYS, CROSSFADE, curve, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { SourceChip } from "../ui/chip";
-import { Button, Icon, IconButton, Text } from "../ui/primitives";
+import { Button, Icon, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { useSheetFocus } from "../ui/sheet-focus";
 
@@ -71,6 +70,7 @@ export function ShowHintButton({ still, onShow }: { still: boolean; onShow: () =
   return (
     <Animated.View
       entering={still ? undefined : reduce ? CROSSFADE : arrive(260, 10, 120)}
+      exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       // Pulled to the start edge, so its lightbulb stands where the hint's will.
       className="-ms-3 flex-row"
     >
@@ -79,16 +79,8 @@ export function ShowHintButton({ still, onShow }: { still: boolean; onShow: () =
   );
 }
 
-/** The hint under the cue: its lightbulb, its words, and the AI's mark while the words are the AI's. */
-export function HintLine({
-  text,
-  source,
-  still,
-}: {
-  text: string;
-  source: FieldSource | null;
-  still: boolean;
-}) {
+/** The hint under the cue: its lightbulb and its words. Who wrote it is the card page's to say, not review's. */
+export function HintLine({ text, still }: { text: string; still: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();
@@ -102,10 +94,7 @@ export function HintLine({
       <View className="pt-1">
         <Icon name="hint" size={16} colour={p.muted} />
       </View>
-      <View className="min-w-0 flex-1 flex-row flex-wrap items-center gap-x-2 gap-y-1">
-        <Text className="text-md text-text-2">{text}</Text>
-        {source === "ai" && <SourceChip source="ai" field="hint" badge />}
-      </View>
+      <Text className="min-w-0 flex-1 text-md text-text-2">{text}</Text>
     </Animated.View>
   );
 }
@@ -336,38 +325,23 @@ export function HintSheet({
           style={{ fontSize: 17, textAlignVertical: "top" }}
           maxFontSizeMultiplier={inputCap(17)}
         />
-        {/* Inside the field and its room kept, so the sheet never changes height as a draft arrives or the button goes. */}
-        <View className="min-h-8 flex-row items-center gap-3">
-          <View className="min-w-0 flex-1 flex-row items-center gap-1.5">
-            {draftNote ? (
-              <Text className="text-sm text-muted">{draftNote}</Text>
-            ) : untouched ? (
-              <>
-                <Icon name="ai" size={14} colour={p.muted} />
-                <Text className="text-sm text-muted">{t`AI draft`}</Text>
-              </>
-            ) : null}
-          </View>
-          {/* Labelled while the field is empty, an icon once a draft is in; the sheet's ✓ saves, so the row holds only the draft. */}
-          {draftable &&
-            (untouched ? (
-              <IconButton
-                size="sm"
-                icon="ai"
-                label={t`Another draft`}
-                busy={drafting}
-                onPress={() => void draft()}
-              />
-            ) : (
+        {/* The sheet sits on the keyboard and grows upward, so a note above Draft leaves the button under the finger that pressed it. */}
+        {draftNote && <Text className="pt-1 text-sm text-muted">{draftNote}</Text>}
+        {/* Its room kept, so a draft arriving or the button going never changes the sheet's height. */}
+        <View className="min-h-8 flex-row items-center">
+          {/* One control throughout, as on the web: its label says what a press does, and its loader turns in the sparkle's place. */}
+          {draftable && (
+            <View className="-ms-3">
               <Button
                 size="sm"
                 variant="ghost"
                 icon="ai"
-                label={t`Draft`}
-                loading={drafting}
+                label={drafting ? t`Drafting…` : untouched ? t`Another draft` : t`Draft`}
+                busy={drafting}
                 onPress={() => void draft()}
               />
-            ))}
+            </View>
+          )}
         </View>
       </View>
     </Sheet>

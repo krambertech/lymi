@@ -384,7 +384,7 @@ export const analyticsEvents = {
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
   site_link_followed: z.object({
-    place: z.enum(["use_cases_menu", "explore_menu", "phone_menu", "footer", "hero"]),
+    place: z.enum(["use_cases_menu", "explore_menu", "phone_menu", "footer", "hero", "landing"]),
     // A public site path without its locale prefix, never a query or a hash.
     target: z
       .string()

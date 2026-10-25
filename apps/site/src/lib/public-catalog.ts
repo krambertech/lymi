@@ -17,6 +17,7 @@ import type { APIContext, AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
+import { featuredDecks } from "./featured-decks";
 import { LANGUAGE_PAGES, type LanguagePageTag } from "./language-pages";
 import { menuShelves } from "./menu-shelves";
 import { type Locale, locales } from "./routes";
@@ -82,6 +83,27 @@ export async function menuShelvesResponse(context: APIContext): Promise<Response
     return new Response(null, { status: 304, headers });
   }
   return Response.json(shelves, { headers });
+}
+
+/**
+ * The homepage's free decks as JSON, for `?locale=` or English. The homepage is prerendered, so it
+ * reads them after loading, cached like Explore.
+ */
+export async function featuredDecksResponse(context: APIContext): Promise<Response> {
+  const asked = context.url.searchParams.get("locale");
+  const locale: Locale = locales.find((each) => each === asked) ?? "en";
+  const decks = featuredDecks(await catalogIn(drizzle(env.DB), locale));
+  const etag = catalogEtag({
+    content: catalogContentHash(decks),
+    locale,
+    version: env.CF_VERSION_METADATA?.id,
+    page: "featured",
+  });
+  const headers = { "cache-control": DECK_CACHE_CONTROL, etag };
+  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, { status: 304, headers });
+  }
+  return Response.json(decks, { headers });
 }
 
 export interface ShelfPage {

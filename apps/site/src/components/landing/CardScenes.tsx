@@ -1,0 +1,353 @@
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
+import { Check, Copy } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import type { ReactNode } from "react";
+import { Added, Attachment } from "./AssistantChat";
+import { Pick } from "./MaterialToCards";
+import { EASE, usePlayback, useStill } from "./playback";
+
+/** Each scene plays its beats once while `play` is true; reduced motion shows the last beat. */
+interface SceneProps {
+  play: boolean;
+}
+
+function useScene<Beat extends string>(beats: Record<Beat, number>, play: boolean) {
+  return usePlayback(beats, play, useStill());
+}
+
+const ENTER = {
+  initial: { opacity: 0, y: 10, filter: "blur(4px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: { duration: 0.45, ease: EASE },
+};
+
+function Appear({
+  on,
+  children,
+  className,
+}: {
+  on: boolean;
+  children: ReactNode;
+  className?: string;
+}) {
+  const still = useStill();
+  return (
+    <AnimatePresence initial={false}>
+      {on && (
+        <motion.div {...ENTER} initial={still ? false : ENTER.initial} className={className}>
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/** The product's mark on a field the AI wrote. */
+export function AiChip() {
+  return (
+    <span className="inline-flex h-5 shrink-0 items-center rounded-xs bg-ai-soft px-1.5 text-2xs font-medium text-ai">
+      AI
+    </span>
+  );
+}
+
+function Caret() {
+  return (
+    <span
+      aria-hidden="true"
+      className="ms-0.5 h-5 w-0.5 animate-pulse bg-amber motion-reduce:hidden"
+    />
+  );
+}
+
+/* A word: type it, and the rest fills in. */
+
+const WORD = "Feierabend";
+const WORD_BEATS = {
+  ...Object.fromEntries(Array.from(WORD, (_, i) => [`c${i}`, 250 + i * 85])),
+  meaning: 1400,
+  example: 1850,
+  hint: 2300,
+} as Record<string, number>;
+
+function Field({ label, children, on }: { label: ReactNode; children: ReactNode; on: boolean }) {
+  return (
+    <div className="rounded-lg bg-plate px-3 py-2 edge">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs text-muted">{label}</span>
+        {on && <AiChip />}
+      </div>
+      <div
+        className={clsx(
+          "mt-0.5 min-h-5 text-sm text-pretty text-text transition-[opacity,filter] duration-500",
+          on ? "opacity-100" : "opacity-0 blur-[4px]",
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function WordScene({ play }: SceneProps) {
+  const { at } = useScene(WORD_BEATS, play);
+  const typed = Array.from(WORD)
+    .filter((_, i) => at(`c${i}`))
+    .join("");
+  return (
+    <div className="grid w-full max-w-[340px] gap-1.5">
+      <div className="rounded-lg bg-plate px-3 py-2 edge-2">
+        <span className="text-xs text-muted">
+          <Trans>Term</Trans>
+        </span>
+        <p
+          lang="de"
+          className="mt-0.5 flex h-7 items-center text-xl font-medium tracking-[-0.025em] text-text"
+        >
+          {typed}
+          {!at("meaning") && <Caret />}
+        </p>
+      </div>
+      <Field label={<Trans>Meaning</Trans>} on={at("meaning")}>
+        <Trans>The evening after work</Trans>
+      </Field>
+      <Field label={<Trans>Example</Trans>} on={at("example")}>
+        <span lang="de">Nach Feierabend gehe ich joggen.</span>
+      </Field>
+      <Field label={<Trans>Hint</Trans>} on={at("hint")}>
+        <Trans>Feier (party) + Abend (evening): the evening that’s yours.</Trans>
+      </Field>
+    </div>
+  );
+}
+
+/* A lesson: a photo of notes becomes cards. */
+
+const NOTES = [
+  {
+    line: "Osmosis → more solute",
+    term: "osmosis",
+    meaning: msg`Water moving across a membrane toward more solute`,
+  },
+  {
+    line: "Diffusion: high → low",
+    term: "diffusion",
+    meaning: msg`Particles spreading from high to low concentration`,
+  },
+  { line: "Mitochondria = ATP", term: "mitochondria", meaning: null },
+  {
+    line: "Active transport (ATP!)",
+    term: "active transport",
+    meaning: msg`Moving molecules against the gradient, using energy`,
+  },
+];
+const LESSON_BEATS = {
+  l0: 500,
+  c0: 900,
+  l1: 1300,
+  c1: 1700,
+  l2: 2100,
+  c2: 2500,
+  l3: 2900,
+  c3: 3300,
+};
+const CORNERS = [
+  "top-0 start-0 border-s-2 border-t-2 rounded-ss-md",
+  "top-0 end-0 border-e-2 border-t-2 rounded-se-md",
+  "bottom-0 start-0 border-s-2 border-b-2 rounded-es-md",
+  "bottom-0 end-0 border-e-2 border-b-2 rounded-ee-md",
+];
+
+/** A ruled page of notes in the camera's frame; `lit(i)` highlights a line once it has been read. */
+function NotesPage({ lit }: { lit: (i: number) => boolean }) {
+  return (
+    <div className="relative -rotate-3 p-3">
+      {CORNERS.map((corner) => (
+        <span
+          key={corner}
+          aria-hidden="true"
+          className={clsx("absolute size-5 border-amber", corner)}
+        />
+      ))}
+      <div className="w-[212px] rounded-sm bg-plate px-4 pt-3 pb-4 shadow-[0_14px_30px_-12px_oklch(0.3_0.03_60/0.35)] edge">
+        <p className="flex justify-between text-xs text-muted">
+          <span>
+            <Trans>Biology · week 6</Trans>
+          </span>
+          <span>p. 14</span>
+        </p>
+        <ul className="mt-2 bg-[repeating-linear-gradient(to_bottom,transparent_0,transparent_27px,var(--edge)_27px,var(--edge)_28px)]">
+          {NOTES.map((note, i) => (
+            <li
+              key={note.term}
+              className="flex h-7 items-end pb-0.5 text-[13px] whitespace-nowrap text-text-2"
+            >
+              <Pick on={lit(i)}>{note.line}</Pick>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export function LessonScene({ play }: SceneProps) {
+  const { i18n } = useLingui();
+  const { at } = useScene(LESSON_BEATS, play);
+  return (
+    <div className="grid w-full max-w-[500px] items-center gap-5 @2xl:grid-cols-[auto_minmax(0,1fr)] @2xl:gap-4">
+      <div className="justify-self-center">
+        <NotesPage lit={(i) => at(`l${i}` as keyof typeof LESSON_BEATS)} />
+      </div>
+      <div className="grid min-h-[196px] content-start gap-1.5">
+        {NOTES.map((note, i) => (
+          <Appear key={note.term} on={at(`c${i}` as keyof typeof LESSON_BEATS)}>
+            {note.meaning ? (
+              <div className="flex items-start gap-2.5 rounded-lg bg-plate px-3 py-2 edge">
+                <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-good" />
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-text">{note.term}</p>
+                  <p className="truncate text-xs text-text-2">{i18n._(note.meaning)}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-start gap-2.5 rounded-lg bg-plate/60 px-3 py-2 edge">
+                <Copy aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-muted">{note.term}</p>
+                  <p className="truncate text-xs text-muted">
+                    <Trans>Already in Biology</Trans>
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full bg-plate-2 px-2 py-0.5 text-2xs font-medium text-text-2">
+                  <Trans>Duplicate</Trans>
+                </span>
+              </div>
+            )}
+          </Appear>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Your AI: a chat that adds cards. */
+
+const CHAT_BEATS = { ask: 200, typing: 1000, reply: 2000 };
+
+export function ChatScene({ play }: SceneProps) {
+  const { at } = useScene(CHAT_BEATS, play);
+  return (
+    <div className="flex w-full max-w-[440px] flex-col gap-3">
+      <Appear
+        on={at("ask")}
+        className="max-w-[86%] self-end rounded-[14px] bg-plate-2 px-3.5 py-2.5 text-sm text-text edge"
+      >
+        <Attachment name="Lecture 6 - Cell transport.pdf" kind={<Trans>PDF · 12 pages</Trans>} />
+        <Trans>Make cards from the new terms in this.</Trans>
+      </Appear>
+      <AnimatePresence mode="wait" initial={false}>
+        {at("typing") && !at("reply") && (
+          <motion.div
+            key="typing"
+            exit={{ opacity: 0 }}
+            className="flex w-16 gap-1 self-start rounded-[14px] bg-plate px-3.5 py-3.5 edge"
+          >
+            {[0, 1, 2].map((d) => (
+              <span
+                key={d}
+                className="size-1.5 animate-pulse rounded-full bg-faint motion-reduce:animate-none"
+                style={{ animationDelay: `${d * 150}ms` }}
+              />
+            ))}
+          </motion.div>
+        )}
+        {at("reply") && (
+          <motion.div
+            key="reply"
+            {...ENTER}
+            className="max-w-[92%] self-start rounded-[14px] bg-plate px-3.5 py-2.5 text-sm text-text-2 edge"
+          >
+            <Added
+              card={{
+                label: msg`Biology · new`,
+                term: "homeostasis",
+                meaning: msg`Keeping the body’s inside conditions steady`,
+              }}
+            >
+              <Trans>Added 8 cards to Biology. I skipped 2 you already have.</Trans>
+            </Added>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* From anywhere: the Mac's quick add. */
+
+const QUICK = "Weltschmerz";
+const QUICK_BEATS = {
+  k0: 300,
+  k1: 500,
+  k2: 700,
+  panel: 1000,
+  ...Object.fromEntries(Array.from(QUICK, (_, i) => [`c${i}`, 1400 + i * 70])),
+  added: 2600,
+} as Record<string, number>;
+
+export function Key({ down = false, children }: { down?: boolean; children: ReactNode }) {
+  return (
+    <kbd
+      className={clsx(
+        "grid h-9 min-w-9 place-items-center rounded-md bg-plate px-2 text-md text-text transition-[translate,box-shadow] duration-150",
+        down
+          ? "translate-y-px shadow-[inset_0_0_0_1px_var(--edge-2)]"
+          : "shadow-[0_0_0_1px_var(--edge),0_2px_0_var(--edge-2)]",
+      )}
+    >
+      {children}
+    </kbd>
+  );
+}
+
+export function QuickAddScene({ play }: SceneProps) {
+  const { at } = useScene(QUICK_BEATS, play);
+  const typed = Array.from(QUICK)
+    .filter((_, i) => at(`c${i}`))
+    .join("");
+  const pressing = !at("panel");
+  return (
+    <div className="grid w-full max-w-[300px] justify-items-center gap-5">
+      <div className="flex gap-1.5" aria-hidden="true">
+        <Key down={at("k0") && pressing}>⌃</Key>
+        <Key down={at("k1") && pressing}>⌥</Key>
+        <Key down={at("k2") && pressing}>L</Key>
+      </div>
+      <div
+        className={clsx(
+          "w-full rounded-xl bg-plate p-3 shadow-[0_18px_40px_-18px_oklch(0.3_0.03_60/0.45)] edge transition-[opacity,translate,scale] duration-300",
+          at("panel") ? "opacity-100" : "translate-y-2 scale-95 opacity-0",
+        )}
+      >
+        <p lang="de" className="flex h-9 items-center rounded-md bg-plate-2 px-3 text-md text-text">
+          {typed}
+          {!at("added") && <Caret />}
+        </p>
+        <p className="mt-2 flex items-center justify-between text-xs text-muted">
+          <span lang="de">Deutsch</span>
+          {at("added") ? (
+            <span className="flex items-center gap-1 text-good">
+              <Check aria-hidden="true" className="size-3.5" />
+              <Trans>Added</Trans>
+            </span>
+          ) : (
+            <span aria-hidden="true">⌘↩</span>
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}

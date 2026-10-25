@@ -3,7 +3,7 @@ import { z } from "zod";
 import { lessonReading } from "../languages";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const LESSON_PROMPT_VERSION = 6;
+export const LESSON_PROMPT_VERSION = 5;
 
 /** The rules come from docs/card-writing.md; change both together. */
 export const INSTRUCTIONS = `You turn one language lesson into a pick list: the terms worth a card in the learner's deck. The learner ticks the terms they want, so list every candidate and let them choose.

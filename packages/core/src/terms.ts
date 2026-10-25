@@ -12,8 +12,8 @@ export function normaliseTerm(term: string): string {
 }
 
 /**
- * A card's `normalized_term`: `normaliseTerm`, then without stress marks, its language's own mark
- * only, where its language draws them in place, so за́мок and замок are one term and the stress tells two words apart through
+ * A card's `normalized_term`: `normaliseTerm`, then without stress marks where its language draws
+ * them in place, so за́мок and замок are one term and the stress tells two words apart through
  * the reading key, and with Ukrainian's apostrophes as one. The fold is never global: NFC keeps
  * U+0301 on Lithuanian ą́. ADR 0004.
  */
@@ -21,8 +21,7 @@ export function termKey(language: string | null | undefined, term: string): stri
   const key = normaliseTerm(term);
   const rules = stressRules(language);
   if (!rules) return key;
-  const plain = stripStress(key, rules.mark);
-  return rules.apostrophes ? foldApostrophes(plain) : plain;
+  return rules.apostrophes ? foldApostrophes(stripStress(key)) : stripStress(key);
 }
 
 /** What the duplicate rule compares, from a card's language and its `normaliseTerm` key. */

@@ -48,6 +48,12 @@ const GUIDES: Record<string, FieldGuide> = {
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
+  pl: {
+    notes:
+      "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), or *na* vs *w*. For a reader in Ukrainian or Russian, also a false friend, naming the look-alike and what it means (False friend: *sklep*, a shop, not склеп, a crypt), and a case or preposition that differs from theirs (*tęsknić za domem*, not по). Words that most often trick that reader: sklep, dynia, arbuz, owoce, magazyn, dywan, krzesło, czaszka, drużyna, pensja, plecy, łyżwy, recepta, zwyczajnie.",
+    pronunciation:
+      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule: words in -yka and -ika, first and second person plural past forms (byliśmy) and a few numerals (czterysta). Then write the term with a grave accent on the stressed vowel as one composed letter (mùzyka, bỳliśmy), because an acute would turn o into the letter ó.",
+  },
   cs: {
     notes:
       "Verb: Perfective: *udělat* (or Imperfective: on a perfective term), Present: *dělám*. Noun: Gender where the ending hides it, Genitive: *domu*, Plural where irregular (*člověk*, Plural: *lidé*). Usage: the case a verb takes, or a pair like *doma / domů*. Keep háček and čárka, and ů apart from ú, as written.",

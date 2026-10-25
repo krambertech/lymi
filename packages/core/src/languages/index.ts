@@ -8,7 +8,6 @@ import { chinese } from "./chinese";
 import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
-import { polish } from "./polish";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
 import type {
@@ -53,7 +52,6 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ta: tamil,
   yue: cantonese,
-  pl: polish,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -120,8 +118,7 @@ export function stressRules(language: string | null | undefined): StressRules | 
 /** Whether this language's examples carry inline readings Lymi parses, or stress marks, so the AI may add them. */
 export function examplesCarryReadings(language: string | null | undefined): boolean {
   const engine = readingEngine(language);
-  if (engine === "stress") return stressRules(language)?.marks === "every";
-  return engine !== null && EXAMPLE_NOTATION[engine] !== null;
+  return engine === "stress" || (engine !== null && EXAMPLE_NOTATION[engine] !== null);
 }
 
 /** The script whose face draws this language's text, or null when Onest draws it. */
@@ -134,6 +131,13 @@ export function languageScript(language: string | null | undefined): Script | nu
 export function speechLocale(language: string | null | undefined): string | null {
   const script = languageScript(language);
   return (script && languageSupport(language)?.speech.locales?.[script]) ?? null;
+}
+
+/** Words sent silently before every term of this language, from its record or its configured row, or null. */
+export function speechContext(language: string | null | undefined): string | null {
+  return (
+    languageSupport(language)?.speech.context ?? configuredLanguage(language)?.speechContext ?? null
+  );
 }
 
 /** Whether speech, and the phone's screen reader, says the Reading in place of the term. */

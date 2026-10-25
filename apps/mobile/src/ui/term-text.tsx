@@ -5,23 +5,21 @@ import {
   type KnownReadings,
   markedTerm,
   markKnownReadings,
-  stressedTerm,
   termReading,
   textDirection,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { textStart } from "../theme/type";
-import { Furigana, StressedRuns } from "./furigana";
+import { Furigana } from "./furigana";
 import { Text } from "./primitives";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
 /**
- * A card's term, with its reading drawn over it, its stress marked in place, or its stressed
- * syllable underlined when its language does one of these. Without a reading over it, it is
- * `plain` of the text when given, else one plain `Text` in the same classes; `hidden` draws it
- * without its stress, as on a Known card's cue.
+ * A card's term, with its reading drawn over it or its stress marked in place when its language
+ * does either. Without a reading over it, it is `plain` of the text when given, else one plain
+ * `Text` in the same classes; `hidden` draws it without its stress, as on a Known card's cue.
  */
 export function TermText({
   card,
@@ -36,7 +34,7 @@ export function TermText({
   };
   /** Holds a reading's room over a term without one, so a list of terms that draw readings keeps one height. */
   room?: boolean;
-  plain?: (text: ReactNode) => ReactNode;
+  plain?: (text: string) => ReactNode;
 }) {
   const { term, language, pronunciation } = card;
   const segments = useMemo(
@@ -47,16 +45,11 @@ export function TermText({
     () => markedTerm({ term, language, pronunciation }),
     [term, language, pronunciation],
   );
-  const stressed = useMemo(
-    () => (props.hidden ? null : stressedTerm({ term, language, pronunciation })),
-    [term, language, pronunciation, props.hidden],
-  );
   const text = marked !== null && !props.hidden ? marked : term;
-  if (!segments && plain !== undefined)
-    return plain(stressed ? <StressedRuns spans={stressed} /> : text);
+  if (!segments && plain !== undefined) return plain(text);
   return (
     <Furigana
-      segments={segments ?? stressed ?? [{ text }]}
+      segments={segments ?? [{ text }]}
       room={room && drawsReadings(language)}
       lang={language}
       {...props}

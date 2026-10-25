@@ -94,7 +94,7 @@ export function CardLine({
   // The cue is sized for the text size already; the answer grows, short of the cue.
   const limit = grows ? ANSWER_GROWS : 1;
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
-  const plain = (text: ReactNode) => (
+  const plain = (text: string) => (
     <Text
       className="text-text"
       style={[style, textStart(lang), after ? INLINE_ROOM : null, muted ? { color: muted } : null]}

@@ -10,6 +10,7 @@ import {
   languageSupport,
   pronunciationGuide,
   pronunciationName,
+  speechContext,
   speechInputs,
   speechLocale,
   stressRules,
@@ -70,18 +71,9 @@ describe("drawsReadings", () => {
 
 describe("stressRules", () => {
   it("lets Russian restore ё and Ukrainian restore nothing, and no other language mark one", () => {
-    expect(stressRules("ru-RU")).toMatchObject({ vowels: "аеёиоуыэюя", restores: { ё: "е" } });
-    expect(stressRules("uk-UA")).toMatchObject({ vowels: "аеєиіїоуюя", apostrophes: true });
-    expect(stressRules("uk")?.restores).toBeUndefined();
+    expect(stressRules("ru-RU")).toEqual({ vowels: "аеёиоуыэюя", restores: { ё: "е" } });
+    expect(stressRules("uk-UA")).toEqual({ vowels: "аеєиіїоуюя", apostrophes: true });
     for (const tag of ["bg", "be", "ja", null]) expect(stressRules(tag)).toBeNull();
-  });
-  it("marks Polish stress with a grave, only where it breaks the rule, as an underlined syllable", () => {
-    expect(stressRules("pl-PL")).toMatchObject({
-      mark: "\u0300",
-      marks: "exceptions",
-      draw: "syllable",
-    });
-    expect(stressRules("ru")).toMatchObject({ marks: "every", draw: "mark" });
   });
 });
 
@@ -91,8 +83,6 @@ describe("examplesCarryReadings", () => {
     expect(examplesCarryReadings("zh-TW")).toBe(true);
     expect(examplesCarryReadings("ru")).toBe(true);
     expect(examplesCarryReadings("ko")).toBe(false);
-    // Polish marks only a word that breaks its stress rule, and a sentence's forms move it.
-    expect(examplesCarryReadings("pl")).toBe(false);
   });
 });
 
@@ -164,7 +154,7 @@ describe("languageFormat", () => {
     expect(configuredLanguage("ka-GE")?.scripts).toEqual(["Geor"]);
   });
   it("configures a language with no format of its own and publishes none for it", () => {
-    for (const tag of ["et", "fi", "lv", "nb", "no", "nn", "sv", "is", "nl"]) {
+    for (const tag of ["et", "fi", "lv", "nb", "no", "nn", "sv", "is", "pl", "nl"]) {
       expect(configuredLanguage(tag)).not.toBeNull();
       expect(languageFormat(tag)).toBeNull();
     }
@@ -229,13 +219,20 @@ describe("languageFormat for Russian", () => {
   });
 });
 
+describe("speechContext", () => {
+  it("names the words a voice hears first, from a record or a configured row", () => {
+    expect(speechContext("uk")).toBe("Українською:");
+    expect(speechContext("pl-PL")).toBe("Po polsku:");
+    expect(speechContext("de")).toBeNull();
+  });
+});
+
 describe("pronunciationName", () => {
-  it("calls a Russian, Ukrainian or Polish pronunciation its Stress", () => {
+  it("calls a Russian or Ukrainian pronunciation its Stress", () => {
     expect(pronunciationName("ru")).toBe("stress");
     expect(pronunciationName("uk")).toBe("stress");
-    expect(pronunciationName("pl")).toBe("stress");
     expect(pronunciationName("ja")).toBe("reading");
-    expect(pronunciationName("nl")).toBe("pronunciation");
+    expect(pronunciationName("pl")).toBe("pronunciation");
     expect(pronunciationName(null)).toBe("pronunciation");
   });
 });

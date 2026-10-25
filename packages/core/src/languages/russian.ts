@@ -11,7 +11,7 @@ export const russian = {
   scripts: [],
   written: ["Cyrl"],
   engine: "stress",
-  stress: { vowels: "аеёиоуыэюя", restores: { ё: "е" }, marks: "every", draw: "mark" },
+  stress: { vowels: "аеёиоуыэюя", restores: { ё: "е" } },
   pronunciation: "stress",
   format: {
     name: "Russian",

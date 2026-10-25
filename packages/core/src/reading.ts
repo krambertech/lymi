@@ -16,14 +16,7 @@ import {
 } from "./jyutping";
 import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
-import {
-  addsStress,
-  markedForm,
-  missingStress,
-  type StressSpan,
-  stressKey,
-  stressSpans,
-} from "./stress";
+import { addsStress, markedForm, missingStress, stressKey } from "./stress";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -278,26 +271,6 @@ export function markedTerm(card: {
     markedForm(card.term, card.pronunciation, rules) ??
     (at > 0 && !card.term.includes(" · ")
       ? markedForm(card.term, card.pronunciation.slice(0, at), rules)
-      : null)
-  );
-}
-
-/**
- * The term in runs with its stressed syllable marked, for a language that underlines it rather than
- * drawing the mark, or null where `markedTerm` draws nothing. Takes a first form as `markedTerm` does.
- */
-export function stressedTerm(card: {
-  term: string;
-  language?: string | null | undefined;
-  pronunciation?: string | null | undefined;
-}): StressSpan[] | null {
-  const rules = stressRules(card.language);
-  if (rules?.draw !== "syllable" || !card.pronunciation) return null;
-  const at = card.pronunciation.indexOf(" · ");
-  return (
-    stressSpans(card.term, card.pronunciation, rules) ??
-    (at > 0 && !card.term.includes(" · ")
-      ? stressSpans(card.term, card.pronunciation.slice(0, at), rules)
       : null)
   );
 }
@@ -589,8 +562,7 @@ export function addsReadingsOnly(
   after: string,
   language: string | null | undefined,
 ): boolean {
-  const rules = stressRules(language);
-  if (rules) return addsStress(before, after, rules.mark);
+  if (stressRules(language)) return addsStress(before, after);
   return (
     after !== before && stripReadings(after, language) === before && hasReadings(after, language)
   );

@@ -6,7 +6,7 @@ decision: none
 
 # Polish
 
-A Ukrainian living in Poland should find in Lymi the Polish they need first: the letters, everyday words, the office, and the words that look Ukrainian but mean something else. Polish becomes the fifth [supported language](supported-languages.md), with its own page in English, Ukrainian and Russian. The Ukrainian edition is the one that matters most.
+A Ukrainian living in Poland should find in Lymi the Polish they need first: the letters, everyday words, the office, and the words that look Ukrainian but mean something else. Polish stays a configured language, and gets its own page in English, Ukrainian and Russian and a beginner path in Welcome. The Ukrainian edition is the one that matters most.
 
 ## Evidence
 
@@ -29,7 +29,9 @@ Today's code:
 
 ## Decision (leaning)
 
-**Tier.** Polish joins `SupportedTag` on the marks-in-place engine. Only a word that breaks the stress rule has a pronunciation: the term with a grave over its stressed vowel, which is what the enrichment guide already writes. The cue draws that word's stressed syllable underlined until the card is Known, because a drawn *ù* looks like a letter Polish lacks; a regular word has no pronunciation and draws as it is. The exceptions are a small group: words in -yka and -ika, first- and second-person plural past forms (*byliśmy*), the conditional (*zrobiłabym*), and a few numerals (*czterysta*). `StressRules` gains the mark it uses, so Polish never treats the acute in *ó* as stress. Duplicates follow the reading key, as Ukrainian's do, though Polish has almost no words told apart by stress. Examples carry no marks. This is the smallest honest way in: the page table, Welcome's beginner path, analytics and verify all key on `SupportedTag`.
+**Tier.** Polish stays configured. It has no engine to add: its spelling shows its sound, and stress falls on the second-to-last syllable. A word that breaks the rule (words in -yka and -ika, *byliśmy*, *czterysta*) keeps the term with a grave over its stressed vowel in the pronunciation field, *mùzyka*, shown after the reveal as today. Drawing that stress on the cue was built and dropped: it was a Polish-only feature added mainly to put Polish on the supported list, and the field already carries it.
+
+**Pages and Welcome for configured languages.** `LANGUAGE_PAGES` and `BEGINNER_DECKS` take a configured language as well as a `SupportedTag`, so Polish, and Estonian from its separate route, use the shared page and the beginner path.
 
 **Beginner path.** A new `polish-alphabet` deck, then `polish-a1-vocabulary`, `polish-a2-vocabulary` and `core-polish-words`, through `BEGINNER_DECKS.pl`. The Ukrainian edition of the alphabet maps each Polish letter to the Ukrainian one (*sz* ш, *cz* ч, *szcz* щ, *ż* and *rz* ж, *y* и, *i* і, *w* в, *ł* like the last в in вовк, *ch* and *h* х, *ó* у), and says where there is none (*ą*, *ę*).
 
@@ -39,27 +41,27 @@ Today's code:
 
 **Speaking.** Recognition is nearly free for a Ukrainian reader and production is the gap, so the beginner decks are published with both directions.
 
-**Prompts.** The `pl` module gains a slot for readers in Ukrainian or Russian: note a verb whose case or preposition differs from Ukrainian (*tęsknić za*, not *по*), and a false friend. Twenty invented fixtures per slot, led by the false friends and stress exceptions, with a recorded run. Kateryna reviews.
+**Prompts.** The `pl` guide in `enrichment/languages.ts` asks, for a reader in Ukrainian or Russian, for a false friend with its look-alike and a case or preposition that differs (*tęsknić za*, not *по*), and names the words that most often trick that reader. `evaluation.json` holds a `pl-en` deck led by the stress exceptions and regular words, and a `pl-uk` deck led by the false friends, with a recorded run. Kateryna reviews.
 
-**Speech.** As with Ukrainian, the `pl` record sends «Po polsku:» as `speech.context` before every term, so the voice hears the language and not a neighbour's. Then a short listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions. A voice that fails is replaced.
+**Speech.** As with Ukrainian, the configured `pl` row sends «Po polsku:» as its `speechContext` before every term, so the voice hears the language and not a neighbour's. Then a short listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions. A voice that fails is replaced.
 
 **Page.** `/languages/polish` in three locales through `LANGUAGE_PAGES`. The showpiece differs by locale: in Ukrainian and Russian, the false friends (*sklep* against склеп, *dynia* and *arbuz* against диня and гарбуз); in English, a word's forms (*pies*, *psa*; *robić*, *zrobić*). Below it, the deck path from the alphabet, the office deck for people settling in Poland, the voice, enrichment, and the B1 certificate.
 
-**Instrumentation.** `review_graded` sends `reading_language=pl` when a stress mark is drawn. The question is whether Polish learners who start from Welcome keep reviewing after the first week, against the other supported languages.
+**Instrumentation.** The question is whether Polish learners who start from Welcome keep reviewing after the first week, against the other languages with a beginner path; Welcome's existing events, by language, answer it.
 
 **Left out.** Declension and conjugation tables, case drills and typed answers. Lymi is a card app, and the forms belong in a card's notes.
 
 ## Delivery
 
-1. The `pl` record on the stress engine with a grave mark, its conformance fixture and the cue drawing on the web and the phone.
-2. The `pl` prompt module with its fixtures and recorded run, and the listening test.
+1. «Po polsku:» for the voice and the `pl` guide's false friends and case notes, with the `pl-en` and `pl-uk` evaluation decks and a recorded run.
+2. The listening test.
 3. The alphabet, top 100 verbs and top 1000 words, with Ukrainian and Russian editions; the Ukrainian false-friends deck; and false-friend notes in the existing decks' Ukrainian and Russian editions.
-4. The page, the `polish.md` verify feature, `BEGINNER_DECKS.pl`, and `pl` joining `SupportedTag`.
+4. `LANGUAGE_PAGES` and `BEGINNER_DECKS` for configured languages, then the Polish page, `BEGINNER_DECKS.pl` and a `polish.md` verify feature.
 
 Separate, because it touches every language: search that finds *żółw* from *zolw*. Separate, because it is its own page: `/exams/polish-b1-certificate`, built on `polish-b1-vocabulary` and the office deck.
 
 ## Open questions
 
-1. Does an exception word show its stress as an accent, an underlined syllable, or a lit syllable?
+1. Does Estonian move onto the shared page when the page table opens to configured languages?
 2. Does the English edition need its own showpiece, or is the page mainly for Ukrainian and Russian readers?
 3. Do the Russian and English false-friends decks come with this work, or after the page?

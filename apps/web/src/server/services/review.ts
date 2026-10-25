@@ -315,12 +315,7 @@ export async function gradeCard(
    * and before 0.0.8 for Ukrainian, a Tamil reading over each word, which a phone before 0.0.6
    * lacks, and Jyutping over the term, which a phone before 0.0.7 lacks.
    */
-  draws: Draws = {
-    over: true,
-    inPlace: { ru: true, uk: true, pl: true },
-    byWord: true,
-    jyutping: true,
-  },
+  draws: Draws = { over: true, inPlace: { ru: true, uk: true }, byWord: true, jyutping: true },
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;

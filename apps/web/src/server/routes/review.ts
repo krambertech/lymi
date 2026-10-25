@@ -188,7 +188,7 @@ const FURIGANA_SINCE = { ios: "0.0.2" };
 /** The first phone release that draws a Cantonese card's Jyutping over its term rather than as a line. */
 const JYUTPING_SINCE = { ios: "0.0.7" };
 /** The first phone release that draws each language's stress on its term rather than as a line after the reveal. */
-const STRESS_SINCE = { ru: { ios: "0.0.4" }, uk: { ios: "0.0.8" }, pl: { ios: "0.0.10" } };
+const STRESS_SINCE = { ru: { ios: "0.0.4" }, uk: { ios: "0.0.8" } };
 /** The first phone release that draws a Tamil card's reading over each word. */
 const WORD_READING_SINCE = { ios: "0.0.6" };
 
@@ -212,7 +212,6 @@ review.post(
         inPlace: {
           ru: clientSupports(c, STRESS_SINCE.ru),
           uk: clientSupports(c, STRESS_SINCE.uk),
-          pl: clientSupports(c, STRESS_SINCE.pl),
         },
         byWord: clientSupports(c, WORD_READING_SINCE),
       }),

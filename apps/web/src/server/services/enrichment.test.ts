@@ -105,15 +105,7 @@ describe("deck enrichment fields", () => {
     ]);
     for (const tag of ["fr", "es", "pt", "pt-BR", "hu", "cs"])
       expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "exampleTranslation"]);
-    // Polish marks only a stress that breaks its rule, so most of its cards leave the field empty.
-    expect(defaultEnrichFields("pl")).toEqual([
-      "meaning",
-      "example",
-      "exampleTranslation",
-      "notes",
-      "pronunciation",
-    ]);
-    for (const tag of ["fi", "lv", "lt", "nb", "no", "nn", "sv", "is", "nl", "de"])
+    for (const tag of ["fi", "lv", "lt", "nb", "no", "nn", "sv", "is", "pl", "nl", "de"])
       expect(defaultEnrichFields(tag)).toEqual([
         "meaning",
         "example",

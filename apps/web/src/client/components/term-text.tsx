@@ -4,15 +4,11 @@ import {
   type KnownReadings,
   markedTerm,
   markKnownReadings,
-  stressedTerm,
   termReading,
   textDirection,
 } from "@lymi/core";
 import { useMemo } from "react";
 import { Furigana } from "./furigana";
-
-/** A Polish term's stressed syllable, underlined in the lantern's amber. */
-const STRESSED_SYLLABLE = "underline decoration-amber-mark decoration-2 underline-offset-[0.18em]";
 
 interface TermTextProps {
   card: {
@@ -27,8 +23,8 @@ interface TermTextProps {
 }
 
 /**
- * A card's term, with its reading drawn over it, its stress marked in place, or its stressed
- * syllable underlined when its language does one of these, else as plain text.
+ * A card's term, with its reading drawn over it or its stress marked in place when its language
+ * does either, else as plain text.
  */
 export function TermText({ card, hidden, room }: TermTextProps) {
   // Its own direction isolates the term, so an Arabic one keeps its order inside an English line.
@@ -49,24 +45,8 @@ function TermRuns({ card, hidden, room }: TermTextProps) {
     () => markedTerm({ term, language, pronunciation }),
     [term, language, pronunciation],
   );
-  const stressed = useMemo(
-    () => stressedTerm({ term, language, pronunciation }),
-    [term, language, pronunciation],
-  );
   const lang = language ?? undefined;
   if (segments) return <Furigana segments={segments} lang={lang} hidden={hidden} />;
-  if (stressed && !hidden)
-    return stressed.map((span, index) =>
-      span.stressed ? (
-        // Runs never reorder, so the index is a stable key.
-        // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
-        <span key={index} className={STRESSED_SYLLABLE}>
-          {span.text}
-        </span>
-      ) : (
-        span.text
-      ),
-    );
   if (marked !== null) return hidden ? term : marked;
   if (room && drawsReadings(language))
     return <Furigana segments={[{ text: term, reading: "\u00a0" }]} lang={lang} hidden />;

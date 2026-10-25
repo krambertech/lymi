@@ -10,7 +10,6 @@ import {
   hasStress,
   ImageDescription,
   isolate,
-  languageFormat,
   markedTerm,
   modeKey,
   modeOf,
@@ -18,7 +17,6 @@ import {
   type ReviewModeKey,
   revealsAnswer,
   shownLength,
-  stressRules,
   termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -355,9 +353,8 @@ export function CardForm(props: CardFormProps) {
   const stressMissed =
     named === "stress" &&
     !!termCard.term &&
-    hasStress(pronunciation, stressRules(language)?.mark) &&
+    hasStress(pronunciation) &&
     markedTerm(termCard) === null;
-  const stressSample = languageFormat(language)?.pronunciation.sample.pronunciation ?? "за́мок";
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
@@ -817,7 +814,7 @@ export function CardForm(props: CardFormProps) {
         {
           description: stressMissed && (
             <FieldDescription>
-              {t`Review shows the stress only when it’s the term with a stress mark added, as in ${{ sample: isolate(stressSample) }}.`}
+              {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
             </FieldDescription>
           ),
         },

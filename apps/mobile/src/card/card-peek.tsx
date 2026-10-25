@@ -136,10 +136,10 @@ export function CardPeek({
             text={card.example}
             known={known}
             className="text-md text-text-2"
-            lines={translation ? 3 : 2}
+            lines={2}
             lang={card.language}
             translation={
-              translation ? { text: translation, className: "text-md text-muted" } : null
+              translation ? { text: translation, className: "text-md text-muted", lines: 1 } : null
             }
           />
         )}

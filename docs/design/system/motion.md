@@ -88,7 +88,7 @@ The pointing hand at the card's foot taps three times and rests with a line unde
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 
-On the phone, while a pronunciation plays, its speaker's two waves light one after the other, outward, on a 900 ms loop, as iOS's own speaker does, and settle back whole over 140 ms when it stops (`SPEAKER_WAVES`). The web's speaker holds still.
+While a term or an example plays, its speaker's two waves light one after the other, outward, on a 900 ms loop, as iOS's own speaker does, and settle back whole over 140 ms when it stops (`SPEAKER_WAVES`), on the web and the phone. Nothing else changes while it plays: the example keeps its colour.
 
 Easy locked after a peek does not move, shake or change when pressed. A tap, a click or its key opens the same tip over it with the reason, which leaves after four seconds or at the next tap; hover names the reason in a tooltip, which stands aside while the tip shows.
 

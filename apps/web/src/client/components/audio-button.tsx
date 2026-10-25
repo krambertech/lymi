@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
+import { SPEAKER_WAVES } from "@lymi/design";
 import { clsx } from "clsx";
-import { Clock, Loader2, Volume2 } from "lucide-react";
+import { Clock, Loader2 } from "lucide-react";
 import { useAnimate } from "motion/react";
 import { useEffect, useRef } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
@@ -53,7 +54,7 @@ export function AudioButton({
   return (
     <span className="whitespace-nowrap" lang={i18n.locale}>
       {"\u2060"}
-      <span ref={scope} className="ms-3 inline-flex h-[1lh] items-center align-top">
+      <span ref={scope} className={quiet ? ON_LETTERS : ON_LINE}>
         <IconButton
           ref={button}
           label={
@@ -61,11 +62,20 @@ export function AudioButton({
               ? (labels?.replay ?? t`Replay pronunciation`)
               : (labels?.play ?? t`Play pronunciation`)
           }
-          size="sm"
+          size={quiet ? "xs" : "sm"}
           variant={error ? "danger" : quiet ? "ghost" : "secondary"}
           round
-          // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
-          className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
+          className={clsx(
+            quiet
+              ? // A bare glyph in muted, a size down, so the term's speaker stays the card's main one.
+                [
+                  "absolute! start-0 top-[calc(-0.35em-12px)]",
+                  !error && "text-muted! hoverable:hover:text-text!",
+                ]
+              : // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
+                "[--hit-x:-12px] before:-inset-y-3!",
+            className,
+          )}
           aria-disabled={state === "loading"}
           // The review lets the grade keys through from here, since a click leaves focus on it.
           data-audio=""
@@ -78,7 +88,7 @@ export function AudioButton({
           {state === "loading" ? (
             <Loader2 className="animate-spin" aria-hidden="true" />
           ) : (
-            <Volume2 aria-hidden="true" />
+            <Speaker playing={state === "playing" && !reduce} />
           )}
         </IconButton>
       </span>
@@ -91,14 +101,92 @@ export function AudioButton({
   );
 }
 
+/** Centres a 32 px speaker on its line, after the word it follows. */
+const ON_LINE = "ms-3 inline-flex h-[1lh] items-center align-top";
+/**
+ * Hangs a 24 px speaker from the baseline, centred on the letters rather than the line box, so
+ * readings drawn over the line never lift it.
+ */
+const ON_LETTERS = "relative ms-2 inline-block h-0 w-6 align-baseline";
+
 /** The button's room in a measuring copy, without a second live button. */
-export function AudioPlace() {
+export function AudioPlace({ quiet }: Pick<AudioButtonProps, "quiet">) {
   return (
     <span className="whitespace-nowrap">
       {"\u2060"}
-      <span className="ms-3 inline-flex h-[1lh] items-center align-top">
-        <span className="size-8" />
-      </span>
+      {quiet ? (
+        <span className={ON_LETTERS} />
+      ) : (
+        <span className={ON_LINE}>
+          <span className="size-8" />
+        </span>
+      )}
     </span>
   );
+}
+
+/** How dim a wave is between its turns of light, as on the phone's speaker. */
+const WAVE_REST = 0.3;
+const WAVE_STEPS = 24;
+
+/** A wave's opacity through one loop: full at its `peak`, falling away smoothly either side. */
+function waveLoop(peak: number) {
+  return Array.from({ length: WAVE_STEPS + 1 }, (_, step) => {
+    const apart = Math.abs(((step / WAVE_STEPS - peak + 1.5) % 1) - 0.5);
+    return WAVE_REST + (1 - WAVE_REST) * Math.exp(-((apart / 0.18) ** 2));
+  });
+}
+const WAVES = [
+  { d: "M16 9a5 5 0 0 1 0 6", loop: waveLoop(0.3) },
+  { d: "M19.364 18.364a9 9 0 0 0 0-12.728", loop: waveLoop(0.55) },
+];
+
+/**
+ * Lucide's `volume-2`, whose waves light one after the other, outward, while it plays, and settle
+ * back whole when it stops. motion.md "Review".
+ */
+function Speaker({ playing }: { playing: boolean }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z" />
+      {WAVES.map((wave) => (
+        <Wave key={wave.d} d={wave.d} loop={wave.loop} playing={playing} />
+      ))}
+    </svg>
+  );
+}
+
+/** One wave: it eases down to its loop's first light, then loops, so playing never starts with a jump. */
+function Wave({ d, loop, playing }: { d: string; loop: number[]; playing: boolean }) {
+  const [scope, animate] = useAnimate<SVGPathElement>();
+  useEffect(() => {
+    const path = scope.current;
+    if (!path) return;
+    if (!playing) {
+      const settle = animate(path, { strokeOpacity: 1 }, SPEAKER_WAVES.settle);
+      return () => settle.stop();
+    }
+    let stopped = false;
+    let looping: { stop: () => void } | undefined;
+    const lead = animate(path, { strokeOpacity: loop[0] }, SPEAKER_WAVES.start);
+    void lead.then(() => {
+      if (stopped) return;
+      looping = animate(path, { strokeOpacity: loop }, { ...SPEAKER_WAVES.loop, repeat: Infinity });
+    });
+    return () => {
+      stopped = true;
+      lead.stop();
+      looping?.stop();
+    };
+  }, [playing, loop, animate, scope]);
+  return <path ref={scope} d={d} />;
 }

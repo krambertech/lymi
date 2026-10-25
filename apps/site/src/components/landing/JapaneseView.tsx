@@ -24,6 +24,7 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
@@ -37,11 +38,8 @@ interface Props {
 
 /** The page for people learning Japanese, from their first kana to N4 and their own lessons. */
 export function JapaneseView({ decks, locale }: Props) {
-  // Unlike `pathSteps`, this adds without the page's edition; whether Japanese should pass one is undecided.
-  const steps = JAPANESE_PATH.flatMap((step) => {
-    const deck = decks.find((d) => d.slug === step.slug);
-    return deck ? [{ ...step, name: deck.name, count: deck.cardCount }] : [];
-  });
+  const kana = decks.find((d) => d.slug === KANA);
+  const steps = pathSteps(JAPANESE_PATH, decks);
 
   return (
     <LandingLayout
@@ -58,7 +56,10 @@ export function JapaneseView({ decks, locale }: Props) {
               the help.
             </Trans>
           }
-          start={{ href: addUrl(KANA), label: <Trans>Start with kana</Trans> }}
+          start={{
+            href: kana ? addDeckUrl(kana) : addUrl(KANA),
+            label: <Trans>Start with kana</Trans>,
+          }}
           cards={JAPANESE_HAND}
           examples={HAND_EXAMPLES}
           lang="ja"

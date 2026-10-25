@@ -9,12 +9,13 @@ import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
 import { StateIcon, stateKey, stateMarks } from "./state-mark";
 
-export type ChipTone = "default" | "ai" | "danger";
+export type ChipTone = "default" | "ai" | "good" | "danger";
 export type ChipSize = "sm" | "md";
 
 const TONE: Record<ChipTone, { box: string; ink: keyof Palette }> = {
   default: { box: "bg-plate-2", ink: "text-2" },
   ai: { box: "bg-ai-soft", ink: "ai" },
+  good: { box: "bg-good-soft", ink: "good" },
   danger: { box: "bg-danger-soft", ink: "danger" },
 };
 

@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { mergeActivity } from "@lymi/client/activity";
+import { BUILT_IN_APPS } from "@lymi/client/apps";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDocumentTitle } from "../lib/document-title";
@@ -13,12 +14,6 @@ export const Route = createFileRoute("/activity")({
   }),
   component: ActivityRoute,
 });
-
-// Names for the apps Lymi runs itself, so a filter with no rows yet still says whose it is.
-const BUILT_IN_APPS: Record<string, string> = {
-  readwise: "Readwise",
-  "anki-connect:Yomitan": "Yomitan",
-};
 
 function ActivityRoute() {
   const { t } = useLingui();

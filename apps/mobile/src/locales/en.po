@@ -170,6 +170,10 @@ msgstr "{0, plural, one {# note is image occlusion or has no term, so it’s ski
 msgid "{0, plural, one {# note} other {# notes}}"
 msgstr "{0, plural, one {# note} other {# notes}}"
 
+#. placeholder {0}: pull.skipped
+msgid "{0, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
+msgstr "{0, plural, one {# passage had no word in its note.} other {# passages had no word in their notes.}}"
+
 #. placeholder {0}: counts.reviews
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
 msgstr "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
@@ -361,6 +365,10 @@ msgstr "{0} · {1}"
 msgid "{0} · {date}"
 msgstr "{0} · {date}"
 
+#. placeholder {0}: isolate(book.author)
+msgid "{0} · {language} · {count}"
+msgstr "{0} · {language} · {count}"
+
 #. placeholder {0}: shelfOf(deck)
 msgid "{0} · In Library"
 msgstr "{0} · In Library"
@@ -436,6 +444,12 @@ msgstr "{added, plural, one {Added # card to {name}} other {Added # cards to {na
 
 msgid "{after} of {total}"
 msgstr "{after} of {total}"
+
+msgid "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
+msgstr "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
+
+msgid "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
+msgstr "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
 
 #. placeholder {0}: chosen.length
 #. placeholder {1}: decks.length
@@ -620,6 +634,12 @@ msgstr "{label}: {chosen}"
 msgid "{language} · {cards}"
 msgstr "{language} · {cards}"
 
+msgid "{language} · {count}"
+msgstr "{language} · {count}"
+
+msgid "{language} highlights go to"
+msgstr "{language} highlights go to"
+
 msgid "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgstr "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 
@@ -631,6 +651,9 @@ msgstr "{limit, plural, one {You’ve used today’s # lesson} other {You’ve u
 
 msgid "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
 msgstr "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
+
+msgid "{n, plural, one {# highlight} other {# highlights}}"
+msgstr "{n, plural, one {# highlight} other {# highlights}}"
 
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
@@ -652,6 +675,9 @@ msgstr "{nextName} is ready"
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
+
+msgid "{others, plural, one {# other book isn’t in a language you’re learning.} other {# other books aren’t in a language you’re learning.}}"
+msgstr "{others, plural, one {# other book isn’t in a language you’re learning.} other {# other books aren’t in a language you’re learning.}}"
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
@@ -822,8 +848,14 @@ msgstr "A new code is on its way to {address}."
 msgid "A new deck"
 msgstr "A new deck"
 
+msgid "A new key replaces this one, and this one stops working."
+msgstr "A new key replaces this one, and this one stops working."
+
 msgid "A PDF, or a text file such as a transcript"
 msgstr "A PDF, or a text file such as a transcript"
+
+msgid "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
+msgstr "A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in."
 
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "A rest day keeps the streak through one missed day a week."
@@ -885,6 +917,9 @@ msgstr "Add a translation"
 msgid "Add a word"
 msgstr "Add a word"
 
+msgid "Add an app"
+msgstr "Add an app"
+
 msgid "Add and review"
 msgstr "Add and review"
 
@@ -909,11 +944,20 @@ msgstr "Add cards from your next lesson"
 msgid "Add hook"
 msgstr "Add hook"
 
+msgid "Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect."
+msgstr "Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect."
+
+msgid "Add Lymi’s address and client ID under <0>mcpServers</0> in <1>~/.gemini/settings.json</1>, as the guide shows."
+msgstr "Add Lymi’s address and client ID under <0>mcpServers</0> in <1>~/.gemini/settings.json</1>, as the guide shows."
+
 msgid "Add more"
 msgstr "Add more"
 
 msgid "Add the lesson in any form, or several at once. You choose which terms become cards."
 msgstr "Add the lesson in any form, or several at once. You choose which terms become cards."
+
+msgid "Add the words from this lesson to my deck"
+msgstr "Add the words from this lesson to my deck"
 
 msgid "Add the words you want to learn, and they show here."
 msgstr "Add the words you want to learn, and they show here."
@@ -1048,11 +1092,17 @@ msgstr "An .ofc file, up to 1 GB."
 msgid "An app"
 msgstr "An app"
 
+msgid "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
+msgstr "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
+
 msgid "Anki package"
 msgstr "Anki package"
 
 msgid "Anki, Mochi, Noji"
 msgstr "Anki, Mochi, Noji"
+
+msgid "AnkiConnect server address"
+msgstr "AnkiConnect server address"
 
 msgid "Another draft"
 msgstr "Another draft"
@@ -1067,6 +1117,9 @@ msgstr "Another language"
 
 msgid "Another way"
 msgstr "Another way"
+
+msgid "Any app that can use a remote MCP server can add cards to your decks and tell you what’s due."
+msgstr "Any app that can use a remote MCP server can add cards to your decks and tell you what’s due."
 
 msgid "Any section"
 msgstr "Any section"
@@ -1092,8 +1145,14 @@ msgstr "Anyone with the link"
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
+msgid "API key"
+msgstr "API key"
+
 msgid "API key for {name}"
 msgstr "API key for {name}"
+
+msgid "API key for Yomitan"
+msgstr "API key for Yomitan"
 
 msgid "API keys"
 msgstr "API keys"
@@ -1109,6 +1168,12 @@ msgstr "Apply"
 
 msgid "Apply filters"
 msgstr "Apply filters"
+
+msgid "Apps"
+msgstr "Apps"
+
+msgid "Apps that add cards to your decks."
+msgstr "Apps that add cards to your decks."
 
 msgid "Apps you can import from"
 msgstr "Apps you can import from"
@@ -1292,6 +1357,12 @@ msgstr "by the API"
 msgid "by you"
 msgstr "by you"
 
+msgid "Can read and change your decks"
+msgstr "Can read and change your decks"
+
+msgid "Can read your decks"
+msgstr "Can read your decks"
+
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
 msgstr "Canadian citizenship test"
@@ -1390,6 +1461,9 @@ msgstr "Changing tags needs a connection."
 msgid "Changing the goal needs a connection."
 msgstr "Changing the goal needs a connection."
 
+msgid "Check now"
+msgstr "Check now"
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Check that the whole link was copied, or ask for a new one."
 
@@ -1414,6 +1488,12 @@ msgstr "Check your inbox"
 msgid "Checked"
 msgstr "Checked"
 
+msgid "Checked at {when}"
+msgstr "Checked at {when}"
+
+msgid "Checked at {when} · next around {next}"
+msgstr "Checked at {when} · next around {next}"
+
 msgid "Checking your decks for duplicates"
 msgstr "Checking your decks for duplicates"
 
@@ -1424,11 +1504,20 @@ msgstr "Chinese"
 msgid "Choose"
 msgstr "Choose"
 
+msgid "Choose <0>Add custom connector</0> and paste Lymi’s address."
+msgstr "Choose <0>Add custom connector</0> and paste Lymi’s address."
+
+msgid "Choose <0>Get Access Token</0>, then copy it."
+msgstr "Choose <0>Get Access Token</0>, then copy it."
+
 msgid "Choose a deck"
 msgstr "Choose a deck"
 
 msgid "Choose a deck or a way to bring your own."
 msgstr "Choose a deck or a way to bring your own."
+
+msgid "Choose a language"
+msgstr "Choose a language"
 
 msgid "Choose Anki Deck Package, and turn on Include Scheduling Information and Include Media."
 msgstr "Choose Anki Deck Package, and turn on Include Scheduling Information and Include Media."
@@ -1511,6 +1600,9 @@ msgstr "Clear search"
 msgid "Clear the picture"
 msgstr "Clear the picture"
 
+msgid "Client ID"
+msgstr "Client ID"
+
 msgid "Close"
 msgstr "Close"
 
@@ -1544,15 +1636,12 @@ msgstr "Confirm with Apple to delete your account for good."
 msgid "Connect"
 msgstr "Connect"
 
-#. placeholder {0}: a.name
+#. placeholder {0}: a.app?.name ?? ""
 msgid "Connect {0}"
 msgstr "Connect {0}"
 
 msgid "Connect an app"
 msgstr "Connect an app"
-
-msgid "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
-msgstr "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
 
 msgid "Connect it once, then send your notes as cards."
 msgstr "Connect it once, then send your notes as cards."
@@ -1566,11 +1655,20 @@ msgstr "Connect to the internet to see where it stands."
 msgid "Connect your AI assistant"
 msgstr "Connect your AI assistant"
 
+msgid "Connect your first app"
+msgstr "Connect your first app"
+
+msgid "Connected"
+msgstr "Connected"
+
 msgid "connected {connected}"
 msgstr "connected {connected}"
 
-msgid "Connected apps"
-msgstr "Connected apps"
+msgid "Connected. Last checked at {when}."
+msgstr "Connected. Last checked at {when}."
+
+msgid "Connected. Lymi checks every hour."
+msgstr "Connected. Lymi checks every hour."
 
 msgid "Consistency"
 msgstr "Consistency"
@@ -1591,11 +1689,26 @@ msgstr "Conversation"
 msgid "Copied"
 msgstr "Copied"
 
+msgid "Copied. Paste it into the chat."
+msgstr "Copied. Paste it into the chat."
+
+msgid "Copies it"
+msgstr "Copies it"
+
+msgid "Copy"
+msgstr "Copy"
+
+msgid "Copy {label}"
+msgstr "Copy {label}"
+
 msgid "Copy key"
 msgstr "Copy key"
 
 msgid "Copy link"
 msgstr "Copy link"
+
+msgid "Copy Lymi’s address and make a key for Yomitan."
+msgstr "Copy Lymi’s address and make a key for Yomitan."
 
 msgid "Copy the set again from Quizlet with Export, then paste it."
 msgstr "Copy the set again from Quizlet with Export, then paste it."
@@ -1705,23 +1818,29 @@ msgstr "Couldn’t load this import"
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
 
+msgid "Couldn’t load what {app} did. Check your connection and try again."
+msgstr "Couldn’t load what {app} did. Check your connection and try again."
+
 msgid "Couldn’t load what your account holds"
 msgstr "Couldn’t load what your account holds"
 
 msgid "Couldn’t load who’s in this deck"
 msgstr "Couldn’t load who’s in this deck"
 
+msgid "Couldn’t load your apps"
+msgstr "Couldn’t load your apps"
+
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
-
-msgid "Couldn’t load your connected apps"
-msgstr "Couldn’t load your connected apps"
 
 msgid "Couldn’t load your keys"
 msgstr "Couldn’t load your keys"
 
 msgid "Couldn’t load your Library"
 msgstr "Couldn’t load your Library"
+
+msgid "Couldn’t load your Readwise connection. Check your connection and try again."
+msgstr "Couldn’t load your Readwise connection. Check your connection and try again."
 
 msgid "Couldn’t load your series"
 msgstr "Couldn’t load your series"
@@ -1757,6 +1876,12 @@ msgstr "Couldn’t play the pronunciation. Try again in a moment."
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Couldn’t reach Lymi. Check your connection and try again."
 
+msgid "Couldn’t reach Readwise. Check your connection and try again."
+msgstr "Couldn’t reach Readwise. Check your connection and try again."
+
+msgid "Couldn’t reach Readwise. Try again in a minute."
+msgstr "Couldn’t reach Readwise. Try again in a minute."
+
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
@@ -1778,6 +1903,12 @@ msgstr "Couldn’t restore “{0}”."
 
 msgid "Couldn’t restore “{name}”."
 msgstr "Couldn’t restore “{name}”."
+
+msgid "Couldn’t revoke the old key. Revoke it under API keys in You."
+msgstr "Couldn’t revoke the old key. Revoke it under API keys in You."
+
+msgid "Couldn’t save that change. Check your connection and try again."
+msgstr "Couldn’t save that change. Check your connection and try again."
 
 msgid "Couldn’t save that."
 msgstr "Couldn’t save that."
@@ -1891,6 +2022,9 @@ msgstr "Croatian"
 msgid "Custom"
 msgstr "Custom"
 
+msgid "Custom MCP"
+msgstr "Custom MCP"
+
 msgid "Custom separator"
 msgstr "Custom separator"
 
@@ -1993,11 +2127,17 @@ msgstr "Discard"
 msgid "Discard this lesson?"
 msgstr "Discard this lesson?"
 
-msgid "Disconnect"
-msgstr "Disconnect"
+msgid "Disconnect {app}"
+msgstr "Disconnect {app}"
 
-msgid "Disconnect {name}?"
-msgstr "Disconnect {name}?"
+msgid "Disconnect Readwise"
+msgstr "Disconnect Readwise"
+
+msgid "Disconnect Yomitan"
+msgstr "Disconnect Yomitan"
+
+msgid "Disconnected"
+msgstr "Disconnected"
 
 msgid "Dismiss"
 msgstr "Dismiss"
@@ -2174,6 +2314,9 @@ msgstr "Every shelf"
 msgid "Every term worth a card is already in your decks."
 msgstr "Every term worth a card is already in your decks."
 
+msgid "Everything {app} did, in Activity"
+msgstr "Everything {app} did, in Activity"
+
 msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 msgstr "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
 
@@ -2309,17 +2452,14 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
 
-msgid "For Claude, ChatGPT and Gemini"
-msgstr "For Claude, ChatGPT and Gemini"
-
-msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
-msgstr "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
+msgid "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
+msgstr "For each dictionary, choose a Lymi deck and the note type <0>Lymi card</0>."
 
 msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 msgstr "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 
-msgid "For scripts and curl. For AI apps, use Connected apps instead."
-msgstr "For scripts and curl. For AI apps, use Connected apps instead."
+msgid "For scripts and curl. For AI assistants, use Apps instead."
+msgstr "For scripts and curl. For AI assistants, use Apps instead."
 
 msgid "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
 msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
@@ -2380,6 +2520,9 @@ msgstr "Getting a card ready…"
 
 msgid "Getting started"
 msgstr "Getting started"
+
+msgid "Give {app} a lesson, a PDF or a chat and it adds the cards to your decks. It can also tell you what’s due."
+msgstr "Give {app} a lesson, a PDF or a chat and it adds the cards to your decks. It can also tell you what’s due."
 
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
@@ -2482,6 +2625,9 @@ msgstr "How cards are asked"
 msgid "How do you want to start?"
 msgstr "How do you want to start?"
 
+msgid "How it connects"
+msgstr "How it connects"
+
 msgid "How it sounds"
 msgstr "How it sounds"
 
@@ -2496,9 +2642,6 @@ msgstr "How much time a day?"
 
 msgid "How sections open"
 msgstr "How sections open"
-
-msgid "How to connect"
-msgstr "How to connect"
 
 msgid "How your memory is doing"
 msgstr "How your memory is doing"
@@ -2576,11 +2719,26 @@ msgstr "Importing your cards"
 msgid "In {0}"
 msgstr "In {0}"
 
+msgid "In <0>Cursor Settings → MCP → Add</0>, add Lymi’s address and client ID, as the guide shows."
+msgstr "In <0>Cursor Settings → MCP → Add</0>, add Lymi’s address and client ID, as the guide shows."
+
+msgid "In <0>Settings → Connectors</0>, choose <1>Create</1> and paste Lymi’s address."
+msgstr "In <0>Settings → Connectors</0>, choose <1>Create</1> and paste Lymi’s address."
+
+msgid "In a chat, turn Lymi on under <0>+ → Connectors</0>."
+msgstr "In a chat, turn Lymi on under <0>+ → Connectors</0>."
+
 msgid "In an hour"
 msgstr "In an hour"
 
 msgid "In Anki, open the deck’s menu and choose Export. On a computer, choose File, then Export."
 msgstr "In Anki, open the deck’s menu and choose Export. On a computer, choose File, then Export."
+
+msgid "In ChatGPT on the web, turn on <0>Developer mode</0> under <1>Settings → Apps → Advanced settings</1>."
+msgstr "In ChatGPT on the web, turn on <0>Developer mode</0> under <1>Settings → Apps → Advanced settings</1>."
+
+msgid "In Claude, open <0>Settings → Connectors</0>."
+msgstr "In Claude, open <0>Settings → Connectors</0>."
 
 msgid "In Library"
 msgstr "In Library"
@@ -2605,6 +2763,12 @@ msgstr "In the other account, open a deck’s menu and choose Export deck, or ch
 
 msgid "In use"
 msgstr "In use"
+
+msgid "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+msgstr "In Yomitan’s settings, turn on <0>Anki</0> and paste both."
+
+msgid "In your app, add a remote MCP server with Lymi’s address."
+msgstr "In your app, add a remote MCP server with Lymi’s address."
 
 msgid "Includes your schedule and review history."
 msgstr "Includes your schedule and review history."
@@ -2644,9 +2808,6 @@ msgstr "Invited {name} to {deck}"
 
 msgid "Inviting needs a connection."
 msgstr "Inviting needs a connection."
-
-msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
-msgstr "It can’t reach your decks from its next request. To use it again, connect it from the app."
 
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
@@ -2747,6 +2908,12 @@ msgstr "Keep the name under 32 characters."
 
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
+
+msgid "Key made {made} · {used}"
+msgstr "Key made {made} · {used}"
+
+msgid "Key made {made}. Paste it into Yomitan’s Anki settings."
+msgstr "Key made {made}. Paste it into Yomitan’s Anki settings."
 
 msgid "known"
 msgstr "known"
@@ -2872,14 +3039,30 @@ msgstr "Lymi also gets the screen you are on, the app version, your phone and yo
 msgid "Lymi brings it back just before you’d forget it."
 msgstr "Lymi brings it back just before you’d forget it."
 
+msgid "Lymi can no longer read your saved token. Paste it again below."
+msgstr "Lymi can no longer read your saved token. Paste it again below."
+
 msgid "Lymi can’t be reached. Check your connection and try again."
 msgstr "Lymi can’t be reached. Check your connection and try again."
+
+#. placeholder {0}: connection.tokenHint
+msgid "Lymi checks Readwise every hour with your token, ending in {0}. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi checks Readwise every hour with your token, ending in {0}. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+
+msgid "Lymi checks Readwise every hour with your token. A highlight of a word becomes a card, and so does a passage with the word written in its note."
+msgstr "Lymi checks Readwise every hour with your token. A highlight of a word becomes a card, and so does a passage with the word written in its note."
 
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 
+msgid "Lymi couldn’t tell its language. Choose one to bring in its highlights."
+msgstr "Lymi couldn’t tell its language. Choose one to bring in its highlights."
+
 msgid "Lymi file"
 msgstr "Lymi file"
+
+msgid "Lymi forgets your Readwise token and stops checking. Cards already added stay."
+msgstr "Lymi forgets your Readwise token and stops checking. Cards already added stay."
 
 msgid "Lymi is free to use."
 msgstr "Lymi is free to use."
@@ -2890,8 +3073,14 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 msgid "Lymi keeps nothing once the account is gone."
 msgstr "Lymi keeps nothing once the account is gone."
 
+msgid "Lymi needs your Readwise token again"
+msgstr "Lymi needs your Readwise token again"
+
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
+msgstr "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
 
 msgid "Lymi was closed before the text arrived. Paste the set again to start over."
 msgstr "Lymi was closed before the text arrived. Paste the set again to start over."
@@ -2923,6 +3112,12 @@ msgstr "Make a deck"
 msgid "Make a deck and add cards from your last lesson."
 msgstr "Make a deck and add cards from your last lesson."
 
+msgid "Make a deck from this article"
+msgstr "Make a deck from this article"
+
+msgid "Make a key for Yomitan"
+msgstr "Make a key for Yomitan"
+
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
@@ -2941,6 +3136,9 @@ msgstr "Marked important"
 
 msgid "May belong on another card"
 msgstr "May belong on another card"
+
+msgid "MCP server address"
+msgstr "MCP server address"
 
 msgid "Meaning"
 msgstr "Meaning"
@@ -3093,11 +3291,17 @@ msgstr "New cards"
 msgid "New deck"
 msgstr "New deck"
 
+msgid "New highlights in the books you turn on become cards."
+msgstr "New highlights in the books you turn on become cards."
+
 msgid "New key"
 msgstr "New key"
 
 msgid "New line"
 msgstr "New line"
+
+msgid "New Readwise token"
+msgstr "New Readwise token"
 
 msgid "New section"
 msgstr "New section"
@@ -3120,8 +3324,8 @@ msgstr "Next: choose decks"
 msgid "No activity yet"
 msgstr "No activity yet"
 
-msgid "No apps connected"
-msgstr "No apps connected"
+msgid "No books in a language you’re learning yet. One appears here when you highlight in it."
+msgstr "No books in a language you’re learning yet. One appears here when you highlight in it."
 
 msgid "No card of this kind has a term."
 msgstr "No card of this kind has a term."
@@ -3210,6 +3414,9 @@ msgstr "Nobody new can add it."
 msgid "None"
 msgstr "None"
 
+msgid "None of your decks has a language yet. Give a deck one, and highlights in it can come in."
+msgstr "None of your decks has a language yet. Give a deck one, and highlights in it can come in."
+
 msgctxt "language"
 msgid "Norwegian"
 msgstr "Norwegian"
@@ -3217,6 +3424,12 @@ msgstr "Norwegian"
 msgctxt "language"
 msgid "Norwegian Nynorsk"
 msgstr "Norwegian Nynorsk"
+
+msgid "Not checked yet. Lymi checks every hour."
+msgstr "Not checked yet. Lymi checks every hour."
+
+msgid "Not connected"
+msgstr "Not connected"
 
 msgid "Not in review yet"
 msgstr "Not in review yet"
@@ -3239,6 +3452,9 @@ msgstr "Not set"
 msgid "Not started"
 msgstr "Not started"
 
+msgid "Not used yet"
+msgstr "Not used yet"
+
 msgid "Note"
 msgstr "Note"
 
@@ -3259,6 +3475,15 @@ msgstr "Nothing due today, so your streak is safe."
 
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
+
+msgid "Nothing from {app} yet"
+msgstr "Nothing from {app} yet"
+
+msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
+msgstr "Nothing from {app} yet. What it adds, edits or archives shows here."
+
+msgid "Nothing from this app yet. What it adds, edits or archives shows here."
+msgstr "Nothing from this app yet. What it adds, edits or archives shows here."
 
 msgid "Nothing is deleted. Restore it from Archived sections."
 msgstr "Nothing is deleted. Restore it from Archived sections."
@@ -3317,6 +3542,9 @@ msgstr "One import takes up to 5,000 cards. Split the set and import it in parts
 msgid "One side only"
 msgstr "One side only"
 
+msgid "Only one app’s writes"
+msgstr "Only one app’s writes"
+
 msgid "Only people you invite"
 msgstr "Only people you invite"
 
@@ -3326,14 +3554,26 @@ msgstr "Only the deck’s owner can change this."
 msgid "Only this deck’s cards change. Other decks keep the tag as it is."
 msgstr "Only this deck’s cards change. Other decks keep the tag as it is."
 
+msgid "Only what {app} did"
+msgstr "Only what {app} did"
+
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."
 
 msgid "Open"
 msgstr "Open"
 
+msgid "Open {app}"
+msgstr "Open {app}"
+
 msgid "Open {name}"
 msgstr "Open {name}"
+
+msgid "Open <0>grok.com/connectors</0>, press <1>New Connector</1>, choose <2>Custom</2> and paste Lymi’s address."
+msgstr "Open <0>grok.com/connectors</0>, press <1>New Connector</1>, choose <2>Custom</2> and paste Lymi’s address."
+
+msgid "Open <0>readwise.io/access_token</0> and sign in."
+msgstr "Open <0>readwise.io/access_token</0> and sign in."
 
 msgid "Open deck"
 msgstr "Open deck"
@@ -3422,8 +3662,14 @@ msgstr "Paste a transcript, your notes or the lesson’s text"
 msgid "Paste it again"
 msgstr "Paste it again"
 
+msgid "Paste it in Lymi and connect."
+msgstr "Paste it in Lymi and connect."
+
 msgid "Paste notes or a transcript"
 msgstr "Paste notes or a transcript"
+
+msgid "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
+msgstr "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
 
 msgid "PDF"
 msgstr "PDF"
@@ -3486,6 +3732,12 @@ msgctxt "language"
 msgid "Portuguese"
 msgstr "Portuguese"
 
+msgid "Press <0>Connect</0> beside Lymi."
+msgstr "Press <0>Connect</0> beside Lymi."
+
+msgid "Press <0>Save & Connect</0>, then sign in to Lymi and allow it."
+msgstr "Press <0>Save & Connect</0>, then sign in to Lymi and allow it."
+
 msgid "Press Copy text, then paste it here."
 msgstr "Press Copy text, then paste it here."
 
@@ -3540,8 +3792,8 @@ msgstr "Read and write"
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews."
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews."
 
-msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
-msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
+msgid "Read the {app} guide"
+msgstr "Read the {app} guide"
 
 msgid "Read the guide"
 msgstr "Read the guide"
@@ -3566,6 +3818,21 @@ msgstr "Reading the text"
 
 msgid "Reading your file"
 msgstr "Reading your file"
+
+msgid "Readwise didn’t accept that token. Copy it again from readwise.io/access_token."
+msgstr "Readwise didn’t accept that token. Copy it again from readwise.io/access_token."
+
+msgid "Readwise is disconnected"
+msgstr "Readwise is disconnected"
+
+msgid "Readwise no longer accepts your token"
+msgstr "Readwise no longer accepts your token"
+
+msgid "Readwise no longer accepts your token. Paste a new one below."
+msgstr "Readwise no longer accepts your token. Paste a new one below."
+
+msgid "Readwise token"
+msgstr "Readwise token"
 
 msgid "Ready to import"
 msgstr "Ready to import"
@@ -3658,6 +3925,9 @@ msgstr "Reorder sections"
 
 msgid "Reorder series"
 msgstr "Reorder series"
+
+msgid "Replace the key"
+msgstr "Replace the key"
 
 msgid "Replay example"
 msgstr "Replay example"
@@ -3968,6 +4238,9 @@ msgstr "Series order"
 msgid "Set name"
 msgstr "Set name"
 
+msgid "Settings"
+msgstr "Settings"
+
 msgid "Several pages at once"
 msgstr "Several pages at once"
 
@@ -4001,6 +4274,9 @@ msgstr "Show all"
 msgid "Show another"
 msgstr "Show another"
 
+msgid "Show everything"
+msgstr "Show everything"
+
 msgid "Show hook"
 msgstr "Show hook"
 
@@ -4031,6 +4307,12 @@ msgstr "Sign in to continue."
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
 
+msgid "Sign in to Lymi when {app} asks, and allow it."
+msgstr "Sign in to Lymi when {app} asks, and allow it."
+
+msgid "Sign in to Lymi when the app asks, and allow it."
+msgstr "Sign in to Lymi when the app asks, and allow it."
+
 msgid "Sign in with email"
 msgstr "Sign in with email"
 
@@ -4042,6 +4324,13 @@ msgstr "Sign out and lose them"
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
+
+msgid "Since {since}"
+msgstr "Since {since}"
+
+#. placeholder {0}: listed.host
+msgid "Since {since} · <0>{0}</0>"
+msgstr "Since {since} · <0>{0}</0>"
 
 msgid "Skip for now"
 msgstr "Skip for now"
@@ -4105,6 +4394,9 @@ msgstr "Start {sectionName}"
 
 msgid "Start {sectionName} early?"
 msgstr "Start {sectionName} early?"
+
+msgid "Start <0>gemini</0> and run <1>/mcp auth lymi</1>."
+msgstr "Start <0>gemini</0> and run <1>/mcp auth lymi</1>."
 
 msgid "Start a new streak"
 msgstr "Start a new streak"
@@ -4314,6 +4606,9 @@ msgstr "Their invitation link stops working. You can invite them again any time.
 msgid "Theme"
 msgstr "Theme"
 
+msgid "Then try asking"
+msgstr "Then try asking"
+
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
@@ -4513,6 +4808,12 @@ msgstr "Today’s goal"
 msgid "Today’s new example audio is used up. Examples you’ve played still play."
 msgstr "Today’s new example audio is used up. Examples you’ve played still play."
 
+msgid "Token needed"
+msgstr "Token needed"
+
+msgid "Token refused"
+msgstr "Token refused"
+
 msgid "tomorrow"
 msgstr "tomorrow"
 
@@ -4594,6 +4895,9 @@ msgstr "Turn on AI"
 msgid "Turn on AI services in You to hear this word."
 msgstr "Turn on AI services in You to hear this word."
 
+msgid "Turn the connector on in a chat."
+msgstr "Turn the connector on in a chat."
+
 msgid "Turn your notes into cards"
 msgstr "Turn your notes into cards"
 
@@ -4602,6 +4906,9 @@ msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
+
+msgid "Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards."
+msgstr "Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards."
 
 msgid "Type them here, or send a lesson from your AI assistant."
 msgstr "Type them here, or send a lesson from your AI assistant."
@@ -4628,6 +4935,9 @@ msgstr "Unmark important"
 msgctxt "chosen cards"
 msgid "Unmark important"
 msgstr "Unmark important"
+
+msgid "Untitled"
+msgstr "Untitled"
 
 msgid "Untitled key"
 msgstr "Untitled key"
@@ -4671,6 +4981,9 @@ msgstr "Use these fields"
 
 msgid "Use these languages"
 msgstr "Use these languages"
+
+msgid "Use this token"
+msgstr "Use this token"
 
 msgid "used {d} d ago"
 msgstr "used {d} d ago"
@@ -4719,6 +5032,9 @@ msgstr "What are you learning?"
 msgid "What goes"
 msgstr "What goes"
 
+msgid "What it adds, edits or archives shows here."
+msgstr "What it adds, edits or archives shows here."
+
 msgid "What it means"
 msgstr "What it means"
 
@@ -4733,6 +5049,9 @@ msgstr "What you learn, in order"
 
 msgid "What you’re learning"
 msgstr "What you’re learning"
+
+msgid "What’s due today?"
+msgstr "What’s due today?"
 
 msgid "What’s wrong"
 msgstr "What’s wrong"
@@ -4800,6 +5119,12 @@ msgstr "Yesterday was a rest day"
 
 msgid "Yesterday was a rest day. Reach today’s goal to keep it going."
 msgstr "Yesterday was a rest day. Reach today’s goal to keep it going."
+
+msgid "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+msgstr "Yomitan adds cards to Lymi as it would to Anki. It sends each word you look up to check for a duplicate, and Lymi keeps nothing from a check."
+
+msgid "Yomitan is disconnected"
+msgstr "Yomitan is disconnected"
 
 msgid "You"
 msgstr "You"
@@ -4873,11 +5198,11 @@ msgstr "You’re offline. Showing your cards as of {when}."
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "You’ve asked for several codes today. Try again tomorrow."
 
+msgid "Your apps need a connection"
+msgstr "Your apps need a connection"
+
 msgid "Your cards and your streak, on every device."
 msgstr "Your cards and your streak, on every device."
-
-msgid "Your connected apps need a connection"
-msgstr "Your connected apps need a connection"
 
 msgid "Your data"
 msgstr "Your data"
@@ -4899,6 +5224,9 @@ msgstr "Your first request in a few minutes"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
+
+msgid "Your key is ready. Copy it now. You won’t see it again."
+msgstr "Your key is ready. Copy it now. You won’t see it again."
 
 msgid "Your keys need a connection"
 msgstr "Your keys need a connection"

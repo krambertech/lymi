@@ -1,4 +1,4 @@
-# API keys and connected apps: make a key, copy it, revoke it, then open Connected apps.
+# API keys: make a key, copy it, revoke it, then open Apps beside it.
 appId: app.lymi
 name: API keys and connected apps
 ---
@@ -45,9 +45,9 @@ name: API keys and connected apps
     timeout: 20000
 - tapOn: "You"
 - scrollUntilVisible:
-    element: "Connected apps"
-- tapOn: "Connected apps"
+    element: "Apps"
+- tapOn: "Apps"
 - extendedWaitUntil:
-    visible: "Connect ChatGPT or Claude.*"
+    visible: "Connect your first app"
     timeout: 20000
 - takeScreenshot: 07-apps

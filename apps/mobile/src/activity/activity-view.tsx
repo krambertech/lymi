@@ -294,6 +294,8 @@ interface RowProps {
   entry: ActivityEntry;
   time: string;
   first: boolean;
+  /** Off on an app's own page, which already says whose writes these are. */
+  caller?: boolean;
   /** Opens the list's one sheet on this row's cards. */
   onCards: (entry: ActivityEntry, meta: string) => void;
   /** Opens the list's export sheet on this row's file. */
@@ -305,12 +307,12 @@ interface RowProps {
  * cards in a sheet over the list; an import opens its page and an export its sheet, as on the web;
  * a deck opens in Library.
  */
-function ActivityRow({ entry, time, first, onCards, onExport }: RowProps) {
+function ActivityRow({ entry, time, first, caller: named = true, onCards, onExport }: RowProps) {
   const p = usePalette();
   const router = useRouter();
   const caller = useCaller()(entry);
   const file = entry.import ?? entry.export;
-  const meta = [namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time]
+  const meta = [named && namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time]
     .filter(Boolean)
     .join(" · ");
   const hasCards = entry.cards.length > 0;
@@ -511,6 +513,8 @@ interface Props {
   loadingMore: boolean;
   moreFailed: boolean;
   onMore: () => void;
+  /** Only one app's writes, opened from that app's page; `onClear` shows everything again. */
+  filter?: { name: string | null; onClear: () => void } | undefined;
 }
 
 export function ActivityView({
@@ -525,14 +529,19 @@ export function ActivityView({
   loadingMore,
   moreFailed,
   onMore,
+  filter,
 }: Props) {
   const { t, i18n } = useLingui();
-  // One sheet for the whole list, so a page of rows does not mount a sheet each.
-  const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
-  const [open, setOpen] = useState(false);
-  const [file, setFile] = useState<ActivityEntry | null>(null);
-  const [exportOpen, setExportOpen] = useState(false);
+  const sheets = useRowSheets();
   const p = usePalette();
+  const only = filter && (
+    <View className="flex-row flex-wrap items-center gap-x-3 gap-y-1 px-1">
+      <Text className="text-base text-text-2">
+        {filter.name ? t`Only what ${{ app: isolate(filter.name) }} did` : t`Only one app’s writes`}
+      </Text>
+      <Button label={t`Show everything`} variant="ghost" size="sm" onPress={filter.onClear} />
+    </View>
+  );
   if (offline) {
     return (
       <View className="items-center gap-3 pt-20">
@@ -576,6 +585,20 @@ export function ActivityView({
       </View>
     );
   }
+  if (entries.length === 0 && filter) {
+    return (
+      <>
+        {only}
+        <Plate className="p-4">
+          <Text className="text-base text-text-2">
+            {filter.name
+              ? t`Nothing from ${{ app: isolate(filter.name) }} yet. What it adds, edits or archives shows here.`
+              : t`Nothing from this app yet. What it adds, edits or archives shows here.`}
+          </Text>
+        </Plate>
+      </>
+    );
+  }
   if (entries.length === 0) {
     // An empty Activity is the good news that nothing landed unseen, so it asks for nothing.
     return (
@@ -601,6 +624,7 @@ export function ActivityView({
   });
   return (
     <>
+      {only}
       {days.map((day) => (
         <View key={day.key} className="gap-2">
           <Text className="px-1 text-base font-medium text-muted" accessibilityRole="header">
@@ -614,39 +638,112 @@ export function ActivityView({
                 entry={entry}
                 time={time.format(new Date(entry.at))}
                 first={i === 0}
-                onCards={(entry, meta) => {
-                  setChosen({ entry, meta });
-                  setOpen(true);
-                }}
-                onExport={(entry) => {
-                  setFile(entry);
-                  setExportOpen(true);
-                }}
+                onCards={sheets.onCards}
+                onExport={sheets.onExport}
               />
             ))}
           </Plate>
         </View>
       ))}
       <Foot hasMore={hasMore} loading={loadingMore} failed={moreFailed} onMore={onMore} />
-      <CardsSheet
-        entry={chosen?.entry ?? null}
-        meta={chosen?.meta ?? ""}
-        open={open}
-        onOpenChange={setOpen}
-      />
-      {file?.export && (
-        <ExportSheet
-          key={file.group}
-          open={exportOpen}
-          onOpenChange={setExportOpen}
-          initial={file.export}
-          scope={
-            file.deck && file.export.deckId
-              ? { kind: "deck", deckId: file.export.deckId, deckName: file.deck.name }
-              : { kind: "library" }
-          }
+      {sheets.sheets}
+    </>
+  );
+}
+
+/**
+ * The list's one cards sheet and one export sheet, so a page of rows does not mount a sheet each.
+ * `onCardsOpened` hears a row open its cards.
+ */
+function useRowSheets(onCardsOpened?: () => void) {
+  const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState<ActivityEntry | null>(null);
+  const [exportOpen, setExportOpen] = useState(false);
+  return {
+    onCards: (entry: ActivityEntry, meta: string) => {
+      setChosen({ entry, meta });
+      setOpen(true);
+      onCardsOpened?.();
+    },
+    onExport: (entry: ActivityEntry) => {
+      setFile(entry);
+      setExportOpen(true);
+    },
+    sheets: (
+      <>
+        <CardsSheet
+          entry={chosen?.entry ?? null}
+          meta={chosen?.meta ?? ""}
+          open={open}
+          onOpenChange={setOpen}
         />
-      )}
+        {file?.export && (
+          <ExportSheet
+            key={file.group}
+            open={exportOpen}
+            onOpenChange={setExportOpen}
+            initial={file.export}
+            scope={
+              file.deck && file.export.deckId
+                ? { kind: "deck", deckId: file.export.deckId, deckName: file.deck.name }
+                : { kind: "library" }
+            }
+          />
+        )}
+      </>
+    ),
+  };
+}
+
+/**
+ * One app's rows on one plate, for its page under Apps: each says its day and time, since there are
+ * no day headings, and none repeats the app's name. `foot` closes the plate, such as a link to the
+ * whole of Activity.
+ */
+export function ActivityList({
+  entries,
+  today,
+  zone,
+  foot,
+  onCardsOpened,
+}: {
+  entries: ActivityEntry[];
+  today: string | undefined;
+  zone: string | undefined;
+  foot?: ReactNode;
+  onCardsOpened?: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const sheets = useRowSheets(onCardsOpened);
+  const time = new Intl.DateTimeFormat(i18n.locale, {
+    timeStyle: "short",
+    ...(zone ? { timeZone: zone } : {}),
+  });
+  const days = byDay(entries, i18n.locale, {
+    today: t`Today`,
+    yesterday: t`Yesterday`,
+    todayKey: today ?? "",
+  });
+  return (
+    <>
+      <Plate className="overflow-hidden">
+        {days.flatMap((day, d) =>
+          day.entries.map((entry, i) => (
+            <ActivityRow
+              key={entry.group}
+              entry={entry}
+              time={`${day.label} · ${time.format(new Date(entry.at))}`}
+              first={d === 0 && i === 0}
+              caller={false}
+              onCards={sheets.onCards}
+              onExport={sheets.onExport}
+            />
+          )),
+        )}
+        {foot && <View className="border-t border-edge">{foot}</View>}
+      </Plate>
+      {sheets.sheets}
     </>
   );
 }

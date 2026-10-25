@@ -13,16 +13,29 @@ import {
 import { schemaHref, useReference } from "./reference";
 import { inline } from "./Text";
 
-/** A type, linked to the object it names wherever that object is described. */
-export function TypeName({ schema }: { schema: Schema | undefined }) {
+/**
+ * A type, linked to the object it names wherever that object is described. In a field row it is
+ * small and quiet; `inSentence` sets it at the size of the words around it.
+ */
+export function TypeName({
+  schema,
+  inSentence = false,
+}: {
+  schema: Schema | undefined;
+  inSentence?: boolean;
+}) {
   const ref = useReference();
   const label = typeLabel(schema, ref.defs);
   const named = refName(schema) ?? refName(schema?.items);
-  if (!named) return <span className="font-mono text-xs text-muted">{label}</span>;
+  const size = inSentence ? "!bg-transparent !p-0 text-[0.9em] text-text" : "text-xs text-muted";
+  if (!named) return <span className={clsx("font-mono", size)}>{label}</span>;
   return (
     <a
       href={schemaHref(named, ref)}
-      className="doc-plain font-mono text-xs text-muted underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text hoverable:hover:decoration-current"
+      className={clsx(
+        "doc-plain font-mono underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text hoverable:hover:decoration-current",
+        size,
+      )}
     >
       {label}
     </a>
@@ -93,7 +106,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   if (!expand && named) {
     return (
       <p className="!mb-0 text-base text-text-2">
-        A <TypeName schema={schema} /> object.
+        A <TypeName schema={schema} inSentence /> object.
       </p>
     );
   }
@@ -120,7 +133,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
     return (
       <div className="grid gap-2">
         <p className="!mb-0 text-base text-text-2">
-          An array of <TypeName schema={inner} />.
+          An array of <TypeName schema={inner} inSentence />.
         </p>
         {!refName(inner) && <Fields schema={inner} expand />}
       </div>
@@ -131,7 +144,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   if (props.length === 0) {
     return (
       <p className="!mb-0 text-base text-text-2">
-        <TypeName schema={resolved} />
+        <TypeName schema={resolved} inSentence />
       </p>
     );
   }

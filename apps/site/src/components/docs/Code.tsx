@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { highlight, type Lang } from "./highlight";
 
 /** Copy to clipboard, then say so for a second and a half. */
-export function CopyButton({ text, className }: { text: string; className?: string | undefined }) {
+function CopyButton({ text, className }: { text: string; className?: string | undefined }) {
   const [done, setDone] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);

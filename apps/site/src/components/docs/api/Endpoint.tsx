@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
-import { useState } from "react";
-import { CopyButton } from "../Code";
-import { highlight } from "../highlight";
+import { ChevronRight } from "lucide-react";
+import { Code } from "../Code";
 import {
   accessOf,
   bodySchema,
@@ -10,6 +9,7 @@ import {
   type Method,
   type Route,
   responseSchema,
+  type Schema,
 } from "../openapi";
 import { ORIGIN } from "../origin";
 import { slug } from "../Prose";
@@ -54,63 +54,36 @@ export function anchorFor(route: Route): string {
 /** Every route answers 401 and 429, and every write 403, so the overview says so once. */
 const SHARED_ERRORS = new Set(["401", "403", "429"]);
 
-/** The request and an example response, one at a time, so neither pushes the other off screen. */
-function Example({ route }: { route: Route }) {
-  const { doc, defs } = useReference();
-  const success = Object.entries(route.op.responses ?? {}).find(([code]) => code.startsWith("2"));
-  const response = success ? responseSchema(success[1]) : undefined;
-  const samples = [
-    { name: "Request", lang: "bash" as const, code: curlFor(route, ORIGIN, doc) },
-    ...(response
-      ? [
-          {
-            name: success?.[0] === "200" ? "Response" : `Response ${success?.[0]}`,
-            lang: "json" as const,
-            code: JSON.stringify(example(response, defs), null, 2),
-          },
-        ]
-      : []),
-  ];
-  const [name, setName] = useState(samples[0]?.name);
-  const active = samples.find((s) => s.name === name) ?? samples[0];
-  if (!active) return null;
+/** What a success looks like as JSON, folded so the fields above it stay the first read. */
+function ResponseExample({ schema }: { schema: Schema }) {
+  const { defs } = useReference();
   return (
-    <div className="rounded-md bg-plate edge">
-      <div className="flex h-9 items-center justify-between gap-3 border-b border-edge px-1.5">
-        <div className="flex items-center gap-0.5" role="tablist" aria-label="Example">
-          {samples.map((s) => {
-            const on = s.name === active.name;
-            return (
-              <button
-                key={s.name}
-                type="button"
-                role="tab"
-                aria-selected={on}
-                onClick={() => setName(s.name)}
-                className={clsx(
-                  "h-7 shrink-0 rounded-xs px-2 text-xs font-medium transition-[background-color,color] duration-150",
-                  on ? "bg-plate-2 text-text" : "text-muted hoverable:hover:text-text",
-                )}
-              >
-                {s.name}
-              </button>
-            );
-          })}
-        </div>
-        <CopyButton text={active.code} />
+    <details className="group">
+      <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-xs text-sm text-muted hoverable:hover:text-text [&::-webkit-details-marker]:hidden">
+        <ChevronRight
+          className="size-3.5 transition-transform duration-150 group-open:rotate-90"
+          aria-hidden="true"
+        />
+        Example response
+      </summary>
+      <div className="[&_pre]:max-h-[24rem] [&_pre]:overflow-y-auto">
+        <Code
+          lang="json"
+          label="Response"
+          code={JSON.stringify(example(schema, defs), null, 2)}
+          className="!mb-0 !mt-2"
+        />
       </div>
-      <pre className="doc-code doc-scroll max-h-[28rem] overflow-y-auto px-3.5 py-3">
-        <code>{highlight(active.code, active.lang)}</code>
-      </pre>
-    </div>
+    </details>
   );
 }
 
 /**
- * One route: what it does in a sentence, who may call it, what it takes and what it returns.
- * On a wide screen the example stays beside it while the details scroll; narrower, it follows.
+ * One route: what it does, who may call it and the request to copy, then what it takes and
+ * what it returns. One column at every width, so the request is always under the path.
  */
 export function Endpoint({ route }: { route: Route }) {
+  const { doc } = useReference();
   const { method, path, op } = route;
   const body = bodySchema(op);
   const responses = Object.entries(op.responses ?? {}).sort(([a], [b]) => a.localeCompare(b));
@@ -145,15 +118,19 @@ export function Endpoint({ route }: { route: Route }) {
         <div>
           <Label>Returns</Label>
           <div className="grid gap-3">
-            {success.map(([code, res]) => (
-              <div key={code} className="grid gap-2">
-                <div className="flex items-center gap-2">
-                  <StatusTag code={code} />
-                  <span className="text-base text-text-2">{inline(res.description ?? "")}</span>
+            {success.map(([code, res]) => {
+              const schema = responseSchema(res);
+              return (
+                <div key={code} className="grid gap-2">
+                  <div className="flex items-center gap-2">
+                    <StatusTag code={code} />
+                    <span className="text-base text-text-2">{inline(res.description ?? "")}</span>
+                  </div>
+                  <Fields schema={schema} />
+                  {schema && <ResponseExample schema={schema} />}
                 </div>
-                <Fields schema={responseSchema(res)} />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -194,11 +171,9 @@ export function Endpoint({ route }: { route: Route }) {
         </span>
         <span className="text-sm text-muted">{accessOf(op, method)}</span>
       </div>
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-10">
+      <div className="grid gap-6">
+        <Code lang="bash" label="Request" code={curlFor(route, ORIGIN, doc)} className="!my-0" />
         {details}
-        <div className="xl:sticky xl:top-20 xl:self-start">
-          <Example route={route} />
-        </div>
       </div>
     </section>
   );
@@ -207,7 +182,7 @@ export function Endpoint({ route }: { route: Route }) {
 /** Every route of a resource on its own line, method and path in columns that line up. */
 export function EndpointIndex({ routes }: { routes: Route[] }) {
   return (
-    <ul className="grid list-none grid-cols-[auto_minmax(0,1fr)] rounded-md bg-plate !ps-0 edge sm:grid-cols-[auto_minmax(0,auto)_minmax(0,1fr)]">
+    <ul className="grid list-none grid-cols-[auto_minmax(0,1fr)] overflow-hidden rounded-md bg-plate !ps-0 edge sm:grid-cols-[auto_minmax(0,auto)_minmax(0,1fr)]">
       {routes.map((route) => (
         <li
           key={`${route.method} ${route.path}`}
@@ -215,9 +190,16 @@ export function EndpointIndex({ routes }: { routes: Route[] }) {
         >
           <a
             href={`#${anchorFor(route)}`}
-            className="doc-plain col-span-full grid grid-cols-subgrid items-baseline gap-x-3 gap-y-0.5 px-3.5 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-2"
+            className="doc-plain group col-span-full grid grid-cols-subgrid items-baseline gap-x-3 gap-y-0.5 px-3.5 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-2"
           >
-            <MethodTag method={route.method} className="w-14 self-center" />
+            {/* A hovered row takes the tag's grey, so the tag lifts to the plate to stay readable. */}
+            <MethodTag
+              method={route.method}
+              className={clsx(
+                "w-14 self-center",
+                route.method !== "delete" && "group-hover:bg-plate",
+              )}
+            />
             <code className="truncate !bg-transparent !p-0 font-mono !text-[0.8125rem] text-text max-sm:col-start-2 max-sm:row-start-2">
               {route.path}
             </code>

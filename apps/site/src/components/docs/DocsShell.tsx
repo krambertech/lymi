@@ -114,7 +114,7 @@ function SiteNav({ pathname, onNavigate }: { pathname: string; onNavigate?: () =
  */
 export function DocsShell({ pathname, children }: { pathname: string; children: ReactNode }) {
   const page = pageAt(pathname);
-  // A resource page sets its examples beside each route, so it takes the contents column's width.
+  // A resource page carries field lists and requests, so it gets a wider column than prose does.
   const resource = pathname.startsWith("/docs/api/");
   const { prev, next } = neighbours(pathname);
   const [menu, setMenu] = useState(false);
@@ -267,7 +267,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
         </aside>
 
         <main id="doc-content" className="min-w-0 flex-1 py-10 lg:py-12">
-          <div className={resource ? "max-w-[68rem]" : "max-w-[44rem]"}>
+          <div className={resource ? "max-w-[50rem]" : "max-w-[44rem]"}>
             {/* The overview draws its own, larger heading. */}
             {page && pathname !== "/docs" && (
               <header className="mb-8">
@@ -333,8 +333,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
 
         <aside
           className={clsx(
-            "sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-48 shrink-0 overflow-y-auto py-12",
-            !resource && "xl:block",
+            "sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-48 shrink-0 overflow-y-auto py-12 xl:block",
           )}
         >
           <Toc path={pathname} />

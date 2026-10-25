@@ -8,7 +8,6 @@ import { ArrowLink } from "./ArrowLink";
 import { Added, AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
-import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { HandExamples } from "./HandExamples";
 import { HandOfCards } from "./HandOfCards";
@@ -111,22 +110,6 @@ export function ReturnSection({ lang, term }: ReturnProps) {
       }
     >
       <ReturnLane lang={lang} term={term} />
-    </Wide>
-  );
-}
-
-interface StartProps {
-  title: ReactNode;
-  body: ReactNode;
-  steps: ComponentProps<typeof DeckPath>["steps"];
-  lang: string;
-}
-
-/** The free beginner decks in the order to take them. */
-export function StartSection({ title, body, steps, lang }: StartProps) {
-  return (
-    <Wide id="start" title={title} body={body}>
-      <DeckPath steps={steps} lang={lang} />
     </Wide>
   );
 }

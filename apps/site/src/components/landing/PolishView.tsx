@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
+import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { POLISH_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
@@ -16,7 +17,6 @@ import {
   LanguageName,
   OwnAiSection,
   ReturnSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
@@ -126,7 +126,8 @@ export function PolishView({ decks, locale }: Props) {
       <ReturnSection lang="pl" term={() => (reader ? "sklep" : "pies")} />
 
       {steps.length > 1 && (
-        <StartSection
+        <Wide
+          id="start"
           title={<Trans>Start with A1. Keep going.</Trans>}
           body={
             <Trans>
@@ -134,9 +135,9 @@ export function PolishView({ decks, locale }: Props) {
               core words beside them. Each day adds a few new words to your reviews.
             </Trans>
           }
-          steps={steps}
-          lang="pl"
-        />
+        >
+          <DeckPath steps={steps} lang="pl" />
+        </Wide>
       )}
 
       {office && (

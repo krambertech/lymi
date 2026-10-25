@@ -6,18 +6,18 @@ export default async function drive({ page, step, api, expect }) {
   if ((page.viewportSize()?.width ?? 0) < 768) return;
   const offer = page.getByRole("region", { name: "Connect your AI assistant" });
 
-  await step("With no app connected, the card offers each guide", async () => {
+  await step("With no app connected, the card offers each app's page", async () => {
     const apps = await api("/api/connected-apps");
     expect(apps).toEqual([]);
     await expect(offer).toBeVisible();
     for (const name of ["Claude", "ChatGPT", "Gemini", "Grok"]) {
       await expect(
         offer.getByRole("link", { name: `Connect ${name}`, exact: true }),
-      ).toHaveAttribute("href", new RegExp(`/docs/mcp/${name.toLowerCase()}$`));
+      ).toHaveAttribute("href", new RegExp(`/settings/apps/${name.toLowerCase()}$`));
     }
     await expect(offer.getByRole("link", { name: /^Connect your AI assistant/ })).toHaveAttribute(
       "href",
-      /\/docs\/mcp$/,
+      /\/settings#apps$/,
     );
     await expect(offer.getByRole("button", { name: "Connect", exact: true })).toHaveCount(0);
     return apps;

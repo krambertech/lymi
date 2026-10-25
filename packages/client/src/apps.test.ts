@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ApiKeySummary, ConnectedApp } from "./api";
-import { assistantOf, assistants, yomitanKey } from "./apps";
+import { assistantOf, assistants, pageParams, yomitanKey } from "./apps";
 
 const site = (path: string) => `https://lymi.app${path}`;
 const list = assistants(site);
@@ -52,6 +52,28 @@ describe("assistantOf", () => {
     expect(
       assistantOf(list, grant("https://notes.example.com/c.json", "Claude"), site),
     ).toBeUndefined();
+  });
+});
+
+describe("pageParams", () => {
+  it("opens a lone grant by its assistant and two grants for one assistant by their ids", () => {
+    const gemini = list.find((a) => a.key === "gemini")?.clientId ?? "";
+    const params = pageParams(
+      list,
+      [
+        { ...grant("https://claude.ai/oauth/client.json"), id: "claude" },
+        { ...grant("https://accountlinking.google.com/c.json"), id: "gemini-app" },
+        { ...grant(gemini), id: "gemini-cli" },
+        { ...grant("https://notes.example.com/c.json"), id: "notes" },
+      ],
+      site,
+    );
+    expect(Object.fromEntries(params)).toEqual({
+      claude: "claude",
+      "gemini-app": "gemini-app",
+      "gemini-cli": "gemini-cli",
+      notes: "notes",
+    });
   });
 });
 

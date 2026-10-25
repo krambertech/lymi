@@ -3,9 +3,8 @@ import type { ConnectedApp } from "@lymi/client/api";
 import { type AppIdentity, listedApp } from "@lymi/client/app-marks";
 import type { Assistant } from "@lymi/client/apps";
 import { isolate } from "@lymi/core";
-import { openBrowserAsync } from "expo-web-browser";
 import type { ReactNode } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { siteUrl } from "../auth/client";
 import { haptics } from "../theme/haptics";
 import { clipboard } from "../ui/clipboard";
@@ -102,7 +101,8 @@ export function AssistantPage(props: Props) {
             label={t`Open ${{ app: isolate(name) }}`}
             icon="web"
             variant="primary"
-            onPress={() => void openBrowserAsync(assistant.open ?? "")}
+            // Through the system, so an installed Claude or ChatGPT takes the link where it is signed in.
+            onPress={() => void Linking.openURL(assistant.open ?? "")}
           />
         )
       }

@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { clear, usePalette } from "../theme/palette";
 import { Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
 import { lastUsed, shortDate } from "../you/key-dates";
-import { ASSISTANTS, appPageParam, identityOf } from "./catalog";
+import { ASSISTANTS, appPageParams, identityOf } from "./catalog";
 import { AppGlyph, AppMark, CustomMark, ReadwiseMark, UnverifiedChip, YomitanMark } from "./marks";
 
 interface Props {
@@ -78,11 +78,17 @@ export function AppsList({ consents, readwise, yomitan, toAdd }: Props) {
   const { t } = useLingui();
   const items = useAddable(toAdd, !readwise, !yomitan);
   if (consents.length === 0 && !readwise && !yomitan) return <Empty />;
+  const pages = appPageParams(consents);
   return (
     <>
       <Plate className="overflow-hidden">
         {consents.map((item, i) => (
-          <AssistantRow key={item.id} item={item} first={i === 0} />
+          <AssistantRow
+            key={item.id}
+            item={item}
+            page={pages.get(item.id) ?? item.id}
+            first={i === 0}
+          />
         ))}
         {readwise && (
           <Row
@@ -249,14 +255,14 @@ function Row({
   );
 }
 
-function AssistantRow({ item, first }: { item: ConnectedApp; first: boolean }) {
+function AssistantRow({ item, page, first }: { item: ConnectedApp; page: string; first: boolean }) {
   const { t, i18n } = useLingui();
   const app = identityOf(item);
   const listed = listedApp(app);
   const connected = i18n.date(new Date(item.createdAt), { day: "numeric", month: "short" });
   return (
     <Row
-      to={`/you/apps/${appPageParam(item)}` as Href}
+      to={`/you/apps/${page}` as Href}
       mark={<AppMark app={{ ...app, name: listed.title }} />}
       name={listed.title ?? t`An app`}
       badge={listed.unverified && <UnverifiedChip borrowed={listed.borrowed} />}

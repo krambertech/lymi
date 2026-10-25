@@ -51,7 +51,8 @@ export function AppPage({
   mark: ReactNode;
   /** Beside the name, such as Unverified. */
   badge?: ReactNode;
-  status: AppStatus | undefined;
+  /** Undefined while it loads; null when it couldn't be read. */
+  status: AppStatus | null | undefined;
   /** What the app does for the learner, in one line. */
   does: string;
   /** The app's one everyday action, such as Check now. */
@@ -82,9 +83,9 @@ export function AppPage({
                 <Chip size="sm" tone={TONE[status.tone]}>
                   {status.label}
                 </Chip>
-              ) : (
+              ) : status === undefined ? (
                 <Skeleton width={88} height={22} />
-              )}
+              ) : null}
             </View>
           </View>
           {status?.detail}

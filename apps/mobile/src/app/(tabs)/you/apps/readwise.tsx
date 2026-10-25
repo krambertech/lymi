@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { api, type Readwise, refusalCode } from "@lymi/client/api";
+import { api, errorMessage, type Readwise, refusalCode } from "@lymi/client/api";
 import { readwiseQuery } from "@lymi/client/queries";
 import { isolate, languageKey } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -104,7 +104,8 @@ export default function ReadwisePage() {
     refusalCode(error) === "readwise_refused"
       ? t`Readwise didn’t accept that token. Copy it again from readwise.io/access_token.`
       : t`Couldn’t reach Readwise. Check your connection and try again.`;
-  const connection = state.isSuccess ? state.data.connection : undefined;
+  const connection = state.data ? state.data.connection : undefined;
+  const status = useStatus(connection);
   const choices: DeckChoice[] = (decks.data ?? []).flatMap((d) =>
     d.role === "owner" && !d.archivedAt && d.defaultLanguage
       ? [{ id: d.id, name: d.name, language: languageKey(d.defaultLanguage) }]
@@ -122,7 +123,7 @@ export default function ReadwisePage() {
       appKey="readwise"
       name="Readwise"
       mark={<ReadwiseMark size={56} />}
-      status={useStatus(connection)}
+      status={state.isError && !state.data ? null : status}
       does={t`Turns the words you highlight in Kindle, Kobo, Apple Books and Readwise Reader into cards.`}
       action={
         connection?.status === "active" && (
@@ -142,7 +143,7 @@ export default function ReadwisePage() {
         )
       }
     >
-      {state.isError ? (
+      {state.isError && !state.data ? (
         <View className="items-start gap-3">
           <FieldError>
             {t`Couldn’t load your Readwise connection. Check your connection and try again.`}
@@ -180,6 +181,7 @@ export default function ReadwisePage() {
             keep={t`Stay connected`}
             onStop={() => disconnect.mutate()}
             stopping={disconnect.isPending}
+            error={disconnect.error ? errorMessage(disconnect.error) : null}
           />
         </>
       )}

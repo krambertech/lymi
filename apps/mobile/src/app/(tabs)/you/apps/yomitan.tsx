@@ -19,6 +19,7 @@ import {
 import { YomitanMark } from "../../../../apps/marks";
 import { API_URL, siteUrl } from "../../../../auth/client";
 import { FieldError } from "../../../../ui/field";
+import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
 import { Button, Plate, Text } from "../../../../ui/primitives";
 import { Skeleton } from "../../../../ui/skeleton";
 import { toast } from "../../../../ui/toast-host";
@@ -32,9 +33,10 @@ export default function Yomitan() {
   const { t, i18n } = useLingui();
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
+  const keysFailed = useLoadFailed(keys);
   // An old key that failed to revoke, kept until it leaves the key list so its note stays up.
   const [stuck, setStuck] = useState<string | null>(null);
-  const current = keys.isSuccess ? yomitanKey(keys.data.filter((k) => k.id !== stuck)) : undefined;
+  const current = keys.data ? yomitanKey(keys.data.filter((k) => k.id !== stuck)) : undefined;
   // A new key replaces the one this page shows, so a key thought leaked stops working.
   const make = useMutation({
     mutationFn: async (replacing: string | null) => {
@@ -67,10 +69,18 @@ export default function Yomitan() {
       appKey="yomitan"
       name="Yomitan"
       mark={<YomitanMark size={56} />}
-      status={statusOf(current)}
+      status={keysFailed ? null : statusOf(current)}
       does={t`A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in.`}
     >
-      {current === undefined && !keys.isError ? (
+      {keysFailed ? (
+        // Making a key here would leave Yomitan's own key working beside a second one.
+        <LoadFailed
+          query={keys}
+          failed={t`Couldn’t load your keys`}
+          offline={t`Your keys need a connection`}
+          size="inline"
+        />
+      ) : current === undefined ? (
         <Skeleton height={200} />
       ) : !current ? (
         <Connect

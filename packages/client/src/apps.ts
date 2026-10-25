@@ -70,6 +70,23 @@ export function assistantOf(
   return list.find((a) => a.key !== "custom" && a.key === key);
 }
 
+/**
+ * The page each connected app's row opens, by grant id: its assistant's key while it is the only
+ * grant for that assistant, else its own grant id, so two Claude grants never share one page.
+ */
+export function pageParams(
+  list: readonly Assistant[],
+  consents: readonly ConnectedApp[],
+  site: (path: string) => string,
+): Map<string, string> {
+  const keyed = consents.map((item) => [item, assistantOf(list, item, site)?.key] as const);
+  const count = new Map<string, number>();
+  for (const [, key] of keyed) if (key) count.set(key, (count.get(key) ?? 0) + 1);
+  return new Map(
+    keyed.map(([item, key]) => [item.id, key && count.get(key) === 1 ? key : item.id]),
+  );
+}
+
 /** The name the Apps group gives the key it makes for Yomitan, so the row and the page can find it. */
 export const YOMITAN_KEY_NAME = "Yomitan";
 

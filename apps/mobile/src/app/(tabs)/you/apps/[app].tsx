@@ -6,6 +6,8 @@ import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { AssistantPage } from "../../../../apps/assistant-page";
 import { assistantByKey, assistantOf, identityOf } from "../../../../apps/catalog";
 import { API_URL } from "../../../../auth/client";
+import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
+import { Screen } from "../../../../ui/screen";
 import { toast } from "../../../../ui/toast-host";
 
 /** `[app]` is an assistant's key, or the grant id of a connected app Lymi does not know. */
@@ -15,9 +17,11 @@ export default function AssistantRoute() {
   const qc = useQueryClient();
   const router = useRouter();
   const apps = useQuery(connectedAppsQuery);
+  const failed = useLoadFailed(apps);
 
   const byKey = assistantByKey(app);
-  const connected = apps.isSuccess
+  // The kept copy stands while a refetch fails, as on Apps.
+  const connected = apps.data
     ? (apps.data.find((item) =>
         byKey ? byKey.key !== "custom" && assistantOf(item)?.key === byKey.key : item.id === app,
       ) ?? null)
@@ -36,8 +40,20 @@ export default function AssistantRoute() {
     },
   });
 
+  // Reached from Today's offer as well as Apps, so a read that can't run says so here too.
+  if (failed)
+    return (
+      <Screen title={byKey?.app?.name ?? t`Apps`} back={{ label: t`Apps`, to: "/you/apps" }}>
+        <LoadFailed
+          query={apps}
+          failed={t`Couldn’t load your apps`}
+          offline={t`Your apps need a connection`}
+        />
+      </Screen>
+    );
+
   // An old link to an app that has since been disconnected.
-  if (apps.isSuccess && !assistant && !connected) return <Redirect href="/you/apps" />;
+  if (apps.data && !assistant && !connected) return <Redirect href="/you/apps" />;
 
   return (
     <AssistantPage

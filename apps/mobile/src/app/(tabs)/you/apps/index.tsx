@@ -16,7 +16,14 @@ export default function Apps() {
   const apps = useQuery(connectedAppsQuery);
   const readwise = useQuery(readwiseQuery);
   const keys = useQuery(keysQuery);
-  const failed = useLoadFailed(apps);
+  // A Readwise or key list that can't load would read as not connected and offer to add it again.
+  const failures = [useLoadFailed(apps), useLoadFailed(readwise), useLoadFailed(keys)];
+  const failed = failures.some(Boolean);
+  const retry = {
+    ...apps,
+    refetch: () => Promise.all([apps.refetch(), readwise.refetch(), keys.refetch()]),
+    isFetching: apps.isFetching || readwise.isFetching || keys.isFetching,
+  } as unknown as typeof apps;
   const consents = apps.data ?? [];
   const connected = new Set(consents.map((c) => assistantOf(c)?.key));
   const toAdd = ASSISTANTS.filter((a) => a.key === "custom" || !connected.has(a.key));
@@ -30,7 +37,7 @@ export default function Apps() {
     >
       {failed ? (
         <LoadFailed
-          query={apps}
+          query={retry}
           failed={t`Couldn’t load your apps`}
           offline={t`Your apps need a connection`}
         />

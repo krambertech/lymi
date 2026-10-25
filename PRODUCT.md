@@ -12,7 +12,7 @@ Lymi is for people who want to remember what they study and spend less time prep
 
 Kateryna’s language lessons are an important source of product feedback. They are a concrete use case, not a limit on the audience or subject matter. Evaluate a feature against a real learning need rather than an imagined audience.
 
-## What should work well
+## Purpose
 
 Capture and review are the main tasks. Adding useful cards should take minutes, and daily review should be quick to start and easy to continue across devices.
 

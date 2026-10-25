@@ -1197,7 +1197,8 @@ describe("Ukrainian context", () => {
 });
 
 describe("Polish context", () => {
-  it("says «Po polsku:» silently before the term, and says the term, not its marked stress", async () => {
+  // Polish goes to Gemini first by default, which takes no previous text; this is the ElevenLabs voice ELEVENLABS_SPEECH_VOICES can name.
+  it("says «Po polsku:» silently before the term to an ElevenLabs voice, and says the term, not its marked stress", async () => {
     const { bucket } = contextBucket();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     const row = card({ term: "muzyka", language: "pl", pronunciation: "mùzyka" });

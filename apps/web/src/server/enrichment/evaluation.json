@@ -2803,7 +2803,11 @@
         {
           "id": "pl-en-17",
           "term": "żółw",
-          "expect": { "meaning": { "includes": ["turtle"] }, "pronunciation": "empty" }
+          "expect": {
+            "meaning": { "includes": ["turtle"] },
+            "notes": { "excludes": ["False friend"] },
+            "pronunciation": "empty"
+          }
         },
         {
           "id": "pl-en-18",
@@ -2811,6 +2815,17 @@
           "expect": { "meaning": { "includes": ["eighth"] }, "pronunciation": "empty" }
         },
         { "id": "pl-en-19", "term": "zrobiłbym", "expect": { "pronunciation": "empty" } },
+        {
+          "id": "pl-en-21",
+          "term": "zrobiłabym",
+          "expect": { "pronunciation": { "oneOf": ["zrobìłabym"] } }
+        },
+        {
+          "id": "pl-en-22",
+          "term": "motyka",
+          "expect": { "meaning": { "includes": ["hoe"] }, "pronunciation": "empty" }
+        },
+        { "id": "pl-en-23", "term": "papryka", "expect": { "pronunciation": "empty" } },
         {
           "id": "pl-en-20",
           "term": "szczęście",
@@ -2924,7 +2939,17 @@
         {
           "id": "pl-uk-18",
           "term": "tęsknić",
-          "expect": { "meaning": { "includes": ["сумува"] }, "notes": { "includes": ["za"] } }
+          "expect": { "meaning": { "includes": ["сумува"] }, "notes": { "excludes": ["по "] } }
+        },
+        {
+          "id": "pl-uk-21",
+          "term": "dzwonić",
+          "expect": { "meaning": { "includes": ["дзвон"] }, "notes": { "includes": ["do"] } }
+        },
+        {
+          "id": "pl-uk-22",
+          "term": "recepta",
+          "expect": { "meaning": { "includes": ["рецепт"] } }
         },
         {
           "id": "pl-uk-19",

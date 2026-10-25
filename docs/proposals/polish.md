@@ -12,7 +12,7 @@ A Ukrainian living in Poland should find in Lymi the Polish they need first: the
 
 About 1.68 million Ukrainians live in Poland (Statistics Poland, 2026), and 73% of those surveyed by the University of Warsaw's Centre of Migration Research see their future there. Since 1 July 2025 citizenship needs a state B1 certificate or a degree taught in Polish, and the transition for older certificates ended on 30 June 2026. A draft would raise it to B2; it has not passed.
 
-Research on Ukrainians learning Polish agrees on three things. The languages are close, so beginners understand fast and then stall, sure they are understood when they are not (Banach 2024, after Skalska and Skalski's "communication trap"). Understanding runs well ahead of speaking and writing (Izdebska-Długosz). Errors come from Ukrainian habits: false friends first, then a verb's case or preposition (*tęsknić za*, not *по*), then endings.
+Research on Ukrainians learning Polish agrees on three things. The languages are close, so beginners understand fast and then stall, sure they are understood when they are not (Banach 2024, after Skalska and Skalski's "communication trap"). Understanding runs well ahead of speaking and writing (Izdebska-Długosz). Errors come from Ukrainian habits: false friends first, then a verb's case or preposition (*dzwonić do mamy*, not мамі), then endings.
 
 Banach's list of false friends from a year of refugee classes in Łódź: *sklep* (shop; склеп is a crypt), *dynia* (pumpkin; диня is a melon), *arbuz* (watermelon; гарбуз is a pumpkin), *dywan* (rug; диван is a sofa), *krzesło* (chair; крісло is an armchair), *owoce* (fruit; овочі are vegetables), *magazyn* (warehouse; магазин is a shop), *łyżwy* (skates; лижі are skis), *czaszka* (skull; чашка is a cup), *człowiek* (person; чоловік is a man or husband), *drużyna* (team; дружина is a wife), *pensja* (salary; пенсія is a pension), *plecy* (back; плечі are shoulders), *recepta* (prescription; рецепт is a recipe), *zwyczajnie* (ordinarily; звичайно is of course).
 
@@ -22,7 +22,7 @@ Today's code:
 
 - `pl` is a configured language in `packages/core/src/languages/configured.ts`, with Latin script, no format and notes as its starting field.
 - The `pl` guide in `apps/web/src/server/enrichment/languages.ts` already asks for aspect pairs, the genitive where the stem changes, masculine-personal plurals, the case a verb takes, *na* against *w*, a false friend for a reader in Ukrainian or Russian, and a grave accent on the stressed vowel of a word that breaks the stress rule (*mùzyka*). `evaluation.json` has one Polish case.
-- `speech-voices.ts` reads Polish with a native ElevenLabs voice. Nobody has listened to it on *ę*, *ą*, *rz* or *szcz*.
+- `speech-voices.ts` names a native ElevenLabs voice for Polish, but `pl` is not in `DEFAULT_NATIVE_SPEECH_LANGUAGES`, so Polish is voiced by Gemini first unless `ELEVENLABS_SPEECH_VOICES` names it. Nobody has listened to either on *ę*, *ą*, *rz* or *szcz*.
 - Eight Polish decks are published with Ukrainian and Russian editions: `polish-a1-vocabulary` (249 cards), `polish-a2-vocabulary`, `polish-b1-vocabulary`, `core-polish-words` (64), `everyday-polish-conversation`, `travel-polish`, `polish-for-offices-and-paperwork` (50) and `polish-road-signs`. There is no alphabet deck.
 - Search does not fold Latin diacritics, so *zolw* misses *żółw*. NFD leaves *ł* whole, so stripping marks alone would not fix it.
 - Estonian, also configured, has its own page through a separate route (`ESTONIAN_PAGE_DECKS`); `LANGUAGE_PAGES` and `BEGINNER_DECKS` take only a `SupportedTag`.
@@ -41,9 +41,9 @@ Today's code:
 
 **Speaking.** Recognition is nearly free for a Ukrainian reader and production is the gap, so the beginner decks are published with both directions.
 
-**Prompts.** The `pl` guide in `enrichment/languages.ts` asks, for a reader in Ukrainian or Russian, for a false friend with its look-alike and a case or preposition that differs (*tęsknić za*, not *по*), and names the words that most often trick that reader. `evaluation.json` holds a `pl-en` deck led by the stress exceptions and regular words, and a `pl-uk` deck led by the false friends, with a recorded run. Kateryna reviews.
+**Prompts.** The `pl` guide in `enrichment/languages.ts` asks, for a reader in Ukrainian or Russian, for a false friend with its look-alike and a case or preposition that differs (for Ukrainian *dzwonić do mamy*, not мамі; for Russian *tęsknić za*, not по), and names the words that trick each reader. `evaluation.json` holds a `pl-en` deck led by the stress exceptions and regular words, and a `pl-uk` deck led by the false friends, with a recorded run. Kateryna reviews.
 
-**Speech.** As with Ukrainian, the configured `pl` row sends «Po polsku:» as its `speechContext` before every term, so the voice hears the language and not a neighbour's. Then a short listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions. A voice that fails is replaced.
+**Speech.** As with Ukrainian, the configured `pl` row names «Po polsku:» as its `speechContext`, so the voice hears the language and not a neighbour's. Only ElevenLabs takes previous text, so the context reaches Polish speech once `pl` is voiced there. A listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions, Gemini against the ElevenLabs voice, decides whether `pl` joins `DEFAULT_NATIVE_SPEECH_LANGUAGES`; that switch voices every Polish card again on ElevenLabs, so it waits for the test.
 
 **Page.** `/languages/polish` in three locales through `LANGUAGE_PAGES`. The showpiece differs by locale: in Ukrainian and Russian, the false friends (*sklep* against склеп, *dynia* and *arbuz* against диня and гарбуз); in English, a word's forms (*pies*, *psa*; *robić*, *zrobić*). Below it, the deck path from the alphabet, the office deck for people settling in Poland, the voice, enrichment, and the B1 certificate.
 
@@ -53,7 +53,7 @@ Today's code:
 
 ## Delivery
 
-1. «Po polsku:» for the voice and the `pl` guide's false friends and case notes, with the `pl-en` and `pl-uk` evaluation decks and a recorded run.
+1. «Po polsku:» as Polish's speech context, used once Polish is voiced on ElevenLabs, and the `pl` guide's false friends and case notes, with the `pl-en` and `pl-uk` evaluation decks and a recorded run.
 2. The listening test.
 3. The alphabet, top 100 verbs and top 1000 words, with Ukrainian and Russian editions; the Ukrainian false-friends deck; and false-friend notes in the existing decks' Ukrainian and Russian editions.
 4. `LANGUAGE_PAGES` and `BEGINNER_DECKS` for configured languages, then the Polish page, `BEGINNER_DECKS.pl` and a `polish.md` verify feature.

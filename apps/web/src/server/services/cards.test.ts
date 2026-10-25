@@ -489,6 +489,22 @@ describe("bulk edits and archives", () => {
     expect(states.length).toBeGreaterThan(0);
   });
 
+  it("restores as many cards as a bulk call carries", async () => {
+    const ctx = await learner(db, "bulk-restore-200", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const ids = await addTerms(
+      ctx,
+      deck.id,
+      Array.from({ length: 200 }, (_, i) => `parola ${i}`),
+    );
+    await archiveCards(ctx, ids);
+
+    const outcomes = await restoreCards(ctx, ids);
+
+    expect(outcomes.filter((outcome) => outcome.status === "restored")).toHaveLength(200);
+    expect((await showCard(ctx, ids[199] as string)).archivedAt).toBeNull();
+  });
+
   it("reduces an add to the card's id and enrichment, the existing card's when skipped", async () => {
     const ctx = await learner(db, "bulk-terse-1", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });

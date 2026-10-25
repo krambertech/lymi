@@ -39,6 +39,7 @@ import { VoiceTiles } from "./VoiceTiles";
 
 const FIRST_DECK = "polish-a1-vocabulary";
 const OFFICE_DECK = "polish-for-offices-and-paperwork";
+const B1_DECK = "polish-b1-vocabulary";
 
 /** The edition a deck row was read in, which rides along so the learner gets the same meanings. */
 const editionOf = (deck: PublicDeckSummary) =>
@@ -117,6 +118,7 @@ export function PolishView({ decks, locale }: Props) {
   const openAppUrl = openLymiUrl();
   const reader = locale === "en" ? null : locale;
   const office = decks.find((d) => d.slug === OFFICE_DECK);
+  const b1 = decks.find((d) => d.slug === B1_DECK);
   const steps = POLISH_PATH.flatMap((step) => {
     const deck = decks.find((d) => d.slug === step.slug);
     return deck
@@ -200,12 +202,24 @@ export function PolishView({ decks, locale }: Props) {
               </Trans>
             }
             after={
-              <p className="text-md text-pretty text-text-2">
-                <Trans>
-                  Since 1 July 2025, Polish citizenship asks for a state B1 certificate. The A1, A2
-                  and B1 decks follow the state exams’ topics, one level after another.
-                </Trans>
-              </p>
+              <>
+                <p className="text-md text-pretty text-text-2">
+                  <Trans>
+                    Polish citizenship asks for Polish at B1. Since 1 July 2025 a post-secondary
+                    school certificate no longer shows it, so most people take the state B1 exam.
+                    The A1, A2 and B1 decks follow the state exams’ topics, one level after another.
+                  </Trans>
+                </p>
+                {b1 && (
+                  <a
+                    href={addUrl(b1.slug, editionOf(b1))}
+                    className="mt-4 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+                  >
+                    {b1.name}
+                    <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+                  </a>
+                )}
+              </>
             }
           >
             <OfficeDeck deck={office} words={OFFICE_WORDS} locale={locale} />

@@ -3355,6 +3355,9 @@ msgstr "Polish"
 msgid "Polish changes a word’s ending, and sometimes its middle: <0>pies</0>, <1>psa</1>, <2>o psie</2>. Verbs come in pairs: <3>robić</3> while you do it, <4>zrobić</4> once it’s done. The decks keep the forms in each card’s notes, and AI adds them to the words you save."
 msgstr "Polish changes a word’s ending, and sometimes its middle: <0>pies</0>, <1>psa</1>, <2>o psie</2>. Verbs come in pairs: <3>robić</3> while you do it, <4>zrobić</4> once it’s done. The decks keep the forms in each card’s notes, and AI adds them to the words you save."
 
+msgid "Polish citizenship asks for Polish at B1. Since 1 July 2025 a post-secondary school certificate no longer shows it, so most people take the state B1 exam. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
+msgstr "Polish citizenship asks for Polish at B1. Since 1 July 2025 a post-secondary school certificate no longer shows it, so most people take the state B1 exam. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
+
 msgid "Polish for Offices and Paperwork has 50 words and phrases for offices in Poland: the queue ticket, the window, the forms, PESEL and the residence card. Hear each one before you go."
 msgstr "Polish for Offices and Paperwork has 50 words and phrases for offices in Poland: the queue ticket, the window, the forms, PESEL and the residence card. Hear each one before you go."
 
@@ -3876,9 +3879,6 @@ msgstr "Simplified or traditional"
 
 msgid "Simplified or traditional?"
 msgstr "Simplified or traditional?"
-
-msgid "Since 1 July 2025, Polish citizenship asks for a state B1 certificate. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
-msgstr "Since 1 July 2025, Polish citizenship asks for a state B1 certificate. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
 
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Sitting through a bad film because you paid for the ticket."

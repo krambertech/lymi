@@ -17,4 +17,4 @@ Before each reveal the card's label reads "Recognition card for 一点儿, read 
 ## Gotchas
 
 - Before the reveal the card is one button whose label says the term and its pinyin, so the flow matches the pinyin inside that label; VoiceOver reads the term's hanzi, not the pinyin drawn over it.
-- A Known card would hide the pinyin until the reveal; both seeded cards are New, so this flow checks the New side only, and the web's component tests and [the web's Chinese feature](../../verify/features/chinese.md) check the Known side.
+- A Known card would hide the pinyin until the reveal; all three cards under review are New, so this flow checks the New side only, and the web's component tests and [the web's Chinese feature](../../verify/features/chinese.md) check the Known side.

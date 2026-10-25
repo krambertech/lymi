@@ -207,7 +207,7 @@ The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAP
 | `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `GET /api/dev/mcp-host?view=<view>` | The MCP Apps view in a stand-in host, answered by the real MCP server as the signed-in account. `view` is `card`, `deck`, `due`, `insights`, `streak` or `home`; `theme`, `locale` and `width` are optional. Beside the frame it lists what the view told the host, such as a link it opened. `home` takes `deeplink=/card/<id>`. The view is built once per server start, so restart the server after changing it. |
 | `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |
-| `GET /api/dev/emails/render?kind=&language=` | One email kind rendered with its sample data; the `/emails` page draws every kind with it, in both rooms and at phone width. |
+| `GET /api/dev/emails/render?kind=&language=` | One email kind rendered with its sample data; the `/emails` page draws every kind with it, in both themes and at phone width. |
 
 Seeding goes through the same services as the app and the API, so decks and cards carry audit rows and scheduling state. The review history is then replayed through the real scheduler in memory and written back in one go. The same persona seeds the same grades every time.
 

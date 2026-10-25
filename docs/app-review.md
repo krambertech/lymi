@@ -4,7 +4,7 @@ This is what App Store review (guideline 1.2) and Google Play's user-generated c
 
 ## Review note
 
-> Lymi is a vocabulary app. Most of what a learner sees they wrote themselves. Other people's content reaches them in two ways only.
+> Lymi is a flashcard app for learning any subject. Most of what a learner sees they wrote themselves. Other people's content reaches them in two ways only.
 >
 > 1. Ready-made decks in Explore. Only Lymi's own publisher account can publish to Explore, and every deck there is written or reviewed by us before it goes up. Learners cannot publish, comment or message each other.
 > 2. Shared decks. A learner can share a deck they wrote through a private join link or an email invitation. Nothing shared is public or searchable: it reaches only people the owner sends the link to, and a member can study it but never change it or contact anyone through it.

@@ -1,48 +1,39 @@
 # Product
 
-## Register
+## Positioning
 
-product
+Lymi is a flashcard app for learning any subject with spaced repetition. Learners create cards from notes, lessons, books and other material, or start with a published deck. AI reduces the work of preparing cards while the learner controls their content and grades their own recall.
 
-## Users
+Language learning is one use case alongside exams, medicine, professional certifications and other subjects. Language-specific readings, stress marks and pronunciation improve language cards without defining the scope of the app. Cards also work without a language.
 
-Lymi is for people who learn from real material and want to keep what they learned: words from a language lesson, terms for an exam, drug names for a pharmacology test. Language learners come first, and the languages Lymi supports in full get their own readings and stress marks; every other subject works with plain cards.
+## Who it is for
 
-Kateryna is the first learner and the bar for every feature. She takes language lessons and uses Lymi in two places. On the phone, in short sessions, often in the evening. On the laptop, after a lesson, when she turns notes or a transcript into cards and wants the keyboard to do the work.
+Lymi is for people who want to remember what they study and spend less time preparing cards. They may write their own cards, use an assistant or import an existing deck. Members of a shared deck review the owner’s content with their own schedule and history. Visitors can browse published decks and add one to Library.
 
-The job to be done is "remember what I learned in this week's lesson without spending my evening making cards." Capture has to be fast enough to do while the lesson is still fresh. Review has to be pleasant enough to do every day without being asked.
+Kateryna’s language lessons are an important source of product feedback. They are a concrete use case, not a limit on the audience or subject matter. Evaluate a feature against a real learning need rather than an imagined audience.
 
-Two more kinds of people meet Lymi. A member studies a shared deck someone else writes, starting with Kateryna's Estonian class ([ADR 0011](docs/adr/0011-a-shared-deck-is-one-deck-with-many-learners.md)). A visitor finds a published deck on the public site and adds it. A feature earns its place by a real learner's need, never an imagined audience's.
+## What should work well
 
-## Product Purpose
+Capture and review are the main tasks. Adding useful cards should take minutes, and daily review should be quick to start and easy to continue across devices.
 
-Lymi turns what you learn into cards, lets AI fill in the tedious fields, and brings each card back with spaced repetition (FSRS).
+- **Create useful cards with less effort.** Accept material from the learner’s existing tools, preserve its context and skip duplicates.
+- **Keep AI work inspectable.** Mark fields written by Lymi’s AI, make them easy to correct and preserve learner-written text. Enrichment fills empty fields; its own example translation can be refreshed when the example changes.
+- **Support recall.** FSRS schedules reviews, and the learner grades each attempt. Count attempts honestly and keep reminders free of guilt or invented urgency.
+- **Keep control with the learner.** Provide archive and restore for learning content, Undo for supported actions, portable exports and scoped integration access. Account deletion is a separate permanent action.
 
-It exists because the current tools each fail in one way. Anki is capable and unpleasant. Mochi is pretty and hard to feed from outside. AI card generators are fast and untrustworthy. Lymi should be pleasant, programmable, and honest about what the AI wrote versus what came from the lesson.
-
-Success is repeated use of real material and retained recall, not the number of generated cards, public pages, or AI actions. For Kateryna that means she reviews in Lymi most days by choice, adding a lesson's vocabulary takes a few minutes instead of an evening, what the AI enriches is useful and easy to correct, and her cards and progress are the same on the phone and the laptop.
-
-## Product Position
-
-Lymi keeps what you learned in real life and brings it back until you remember it. It starts with adult language learners who collect material from lessons, reading, work, and conversations with people or AI.
-
-The narrow promise is to remove the clerical work of making cards without removing learner judgment. Lymi keeps the original term, meaning, source, and context together; AI fills only blank fields, clearly marks what it wrote, and stays easy to correct or undo.
-
-Learning moves from recognising material toward producing it. The review queue is calm and honest: it brings back useful material without streak pressure, invented urgency, or hidden grading by an assistant.
-
-Lymi stays open to the tools learners already use. The apps, the API, and MCP share the same product rules, while private card content and review evidence stay under the learner's control.
+Success means regular review of useful material and improved recall. Generated-card counts, public-page counts and AI usage alone do not establish that success.
 
 ## Surfaces
 
-The web app, the phone app and the public site share the rules, the data and the design language. Only the layout and the input change with the screen.
+The apps share product rules, account data and design tokens. Layout and input follow the device.
 
-- The phone leads the daily jobs: reviewing in the evening, glancing at what is due, catching a word while the lesson is fresh, and turning the lesson's pages into cards right after it. It also reaches the learner outside the app, through widgets, the Lock Screen, controls, sharing from other apps and one reminder.
-- The web leads the jobs that want a keyboard and room: turning long material such as a PDF or a transcript into cards, tidying a deck, reading Insights at length, and setup.
-- The Mac app is the web product in its own window, plus a menu bar lantern with the due count and a quick-add panel ([its README](apps/desktop/README.md)).
-- The site is where a visitor meets Lymi and finds a published deck.
-- AI assistants and scripts reach the same rules through the API and MCP.
+- **Phone:** daily review, quick capture, photos of notes, widgets, sharing from other apps and reminders.
+- **Web:** review, longer source material, keyboard-based editing, deck organisation and detailed Insights.
+- **Mac:** the web product in an Electron window, plus a menu bar due count and quick-add panel ([README](apps/desktop/README.md)).
+- **Public site:** product information, published decks, guides and API documentation.
+- **API and MCP:** card and deck management from scripts and assistants under the same permissions as the apps. Integrations cannot grade reviews.
 
-Every learning feature reaches both apps. It ships on the web first by default and reaches the phone through a linked phone issue once it is verified. Setup runs on the phone too: import, export, API keys and connected apps. Publishing and deck reports go through an API key, from the docs, on either ([ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md), [ADR 0036](docs/adr/0036-setup-runs-on-the-phone.md)).
+Learning features belong on both web and phone. By default, ship on the web first and track phone delivery in a linked issue after verification. This is a delivery policy, not a claim that every screen already matches. Import, export, API keys and connected apps are available on the phone too. Publishing and publisher reports use an API key ([ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md), [ADR 0036](docs/adr/0036-setup-runs-on-the-phone.md)).
 
 ## Features
 
@@ -53,8 +44,8 @@ What Lymi does today, by the learner's job. Each row names where it runs and the
 | Feature | What the learner gets | Where | Owner |
 | --- | --- | --- | --- |
 | Add a card | One card by hand, with duplicates skipped | Web (⌘K), phone (top bar, Shortcut, share sheet), Mac quick add, API, MCP | [Library, decks and cards](docs/design/library-decks-and-cards.md) |
-| Smart add | The AI picks the terms worth a card from a lesson, a PDF or photos of pages | Web, phone | [The proposal](docs/proposals/adding-cards-from-a-lesson.md) |
-| Enrich | The AI fills a card's empty fields, in the deck's style, and marks what it wrote | Web, phone, MCP | [ADR 0033](docs/adr/0033-a-deck-decides-what-enrichment-fills.md), [ADR 0037](docs/adr/0037-a-deck-learns-its-style-from-the-owners-cards.md) |
+| Smart add | The AI extracts candidate cards from text, PDFs or photos; the learner chooses which to add | Web, phone | [Getting started](docs/design/onboarding.md), [implementation](docs/stack.md#ai-enrichment-plus-lazy-multilingual-speech) |
+| Enrich | The AI fills a card's empty fields, in the deck's style, and marks what it wrote | Web, phone, API, MCP | [ADR 0033](docs/adr/0033-a-deck-decides-what-enrichment-fills.md), [ADR 0037](docs/adr/0037-a-deck-learns-its-style-from-the-owners-cards.md) |
 | Import | Decks and history from Anki, Mochi, Noji, Pleco, Quizlet or another Lymi account | Web, phone | [Imports and exports](docs/design/imports.md) |
 | Reading apps | Readwise highlights every hour, Yomitan lookups through AnkiConnect | Web, phone | [App pages](docs/design/app-pages.md) |
 
@@ -75,8 +66,8 @@ What Lymi does today, by the learner's job. Each row names where it runs and the
 | --- | --- | --- | --- |
 | Today | What is due, the streak, rounds, and the first-run guide for a new account | Web, phone | [Getting started](docs/design/onboarding.md) |
 | Review | One card at a time, graded 1 to 4, with Undo, hints and offline grading | Web, phone, Mac | [How a review works](docs/review.md) |
-| Daily goal and streak | A chosen number of attempts a day, days in a row, one automatic rest day a week | Web, phone, MCP | [How a review works](docs/review.md), [The streak](docs/design/streak.md) |
-| End of a review | One success screen with today's total and the ways on | Web, phone | [Review completion](docs/design/review-completion.md) |
+| Daily goal and streak | A chosen number of attempts a day, days in a row, an automatic rest day when no rest day occurred in the preceding six days | Web, phone, MCP | [How a review works](docs/review.md), [The streak](docs/design/streak.md) |
+| End of a review | Today’s review total and the available next actions | Web, phone | [Review completion](docs/design/review-completion.md) |
 | Insights | Charts of the learner's history, and the cards they often forget | Web, phone, MCP | [Insights](docs/design/insights.md) |
 | Outside the app | One daily reminder, widgets, Lock Screen, controls, the Mac menu bar count | Phone, web push, Mac | [Phone](docs/design/system/phone.md) |
 
@@ -98,47 +89,20 @@ What Lymi does today, by the learner's job. Each row names where it runs and the
 | Connected apps | Claude, ChatGPT and other MCP clients read and write cards under the same rules | Web, phone | [Letting an app in](docs/design/connected-apps.md), [App pages](docs/design/app-pages.md) |
 | API keys | A scoped key for scripts and the documented API | Web, phone | [ADR 0001](docs/adr/0001-integration-cards-are-ordinary-cards.md) |
 | Activity | Every write that came from outside the app, with a way to inspect it | Web, phone | [Activity](docs/design/activity.md) |
-| Export | One deck or the whole library, as an Anki package or a Lymi file | Web, phone | [Imports and exports](docs/design/imports.md) |
+| Export | Owned decks as an Anki package or a Lymi file; a single deck also supports a spreadsheet | Web, phone | [Imports and exports](docs/design/imports.md) |
 | AI services | One switch for everything Lymi sends to an AI service | Web, phone | [ADR 0039](docs/adr/0039-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md) |
 | Account | Settings, feedback, and deleting the account | Web, phone | [CONTEXT.md](CONTEXT.md) |
 
-## Brand Personality
+## Design and voice
 
-Three words: warm, calm, quick.
+Use clear text, readable content, standard controls and quick interactions. Give capture and review keyboard shortcuts and comfortable touch targets. Explain failures and provide a recovery action. Use confirmation for irreversible choices and Undo where the operation supports it.
 
-The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive, so it is out only when there is no streak and no review yet today, and the first review lights it again. What it shows in the signed-in product is in [the brand rules](docs/design/system/brand.md).
+Write in plain, friendly language. Name the action or outcome directly. Count cards and reviews, and keep status separate from praise or pressure. [CONTEXT.md](CONTEXT.md) defines product terms; [DESIGN.md](DESIGN.md) indexes the interface rules. The lantern’s role and rendering rules live in [brand.md](docs/design/system/brand.md).
 
-Brand-only appearances do not expose learner state. The app icon, login, and public surfaces use one canonical healthy flame. That is the emotional register: a small warm light you bring with you, not a coach, not a game, not a productivity dashboard.
+Keep charts in Insights, where the learner chooses to inspect them. Today should help the learner start a review. Avoid decorative gradients, unnecessary illustrations, excessive settings and game mechanics that compete with learning.
 
-Voice is plain and friendly. It says "Daily goal reached" when the chosen number is complete and "Nothing left today" when no useful reviews remain, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
+## Accessibility
 
-Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. On the phone they can also be felt. A haptic answers every touch that changes state, and one sound, which the learner can turn off, marks the daily goal. Everywhere else the interface is quiet: the lantern and what it lights are the only things that glow, and every other surface is flat by day and lifted only slightly at night.
+Target WCAG 2.2 AA. Use both themes, visible focus, keyboard access and status labels that do not rely on colour. Text contrast must meet 4.5:1 for normal text. Phone touch targets are at least 44 points; web inputs use at least 16 px text to prevent iOS zoom.
 
-## Anti-references
-
-- **Duolingo.** No mascot with a personality, no streak pressure, no confetti, no push notifications that guilt.
-- **Anki.** No walls of settings, no default-widget grey, no feeling that the tool is fighting you.
-- **Generic AI apps.** No sparkle icon on every AI feature, no purple-to-blue gradient, no "magic".
-- **Editorial dark mode.** No display serifs, no near-black with a lone neon accent, no landing-page typography inside an app.
-- **Skeuomorphic flashcards.** No paper textures, ruled lines, or drop shadows pretending to be a desk.
-- **The dashboard.** No hero metrics, no charts on the home screen, no gamified progress rings shouting numbers. Today's counts are cards to act on, each leading to its review, and its one picture is the streak's run. Charts belong in Insights, on their own screen, where looking at them is a choice.
-
-## Design Principles
-
-1. **The words are the content.** Every screen is built around the term on the card. Type, spacing and colour serve legibility first. Nothing competes with the term for attention.
-2. **Quick before clever.** Capture and review are the two things done every day. They get keyboard shortcuts, one-tap answers, and no confirmation dialogs. Cleverness goes into enrichment, where the learner has time.
-3. **Show what the AI did.** Anything the AI wrote carries its field source, so AI text is never mistaken for the lesson. Enrichment fills only empty fields and never overwrites text. A card an integration adds is an ordinary card from the moment it lands, and Activity lists the write so the learner can inspect, edit or archive it.
-4. **Standard controls, one symbol.** Buttons, inputs, chips and lists look like what they are. The lantern is the single piece of illustration in the app, and it appears at full size only where there is nothing else to look at.
-5. **Cheap mistakes.** Every destructive or scheduling action can be undone within a few seconds. Archive instead of delete. Progress is never lost to a wrong tap.
-6. **Same app on both screens.** Desktop and phone are the same product with different layouts, not a main app and a companion. Review continuity across devices is a feature, not a sync detail. Which screen leads which job is in [Surfaces](#surfaces).
-
-## Accessibility & Inclusion
-
-- WCAG 2.2 AA is the floor. Body text meets 4.5:1 in both themes, including muted text and placeholders.
-- Light and dark themes are both first-class. The app follows the OS unless the learner picks one. Dark is a warm room lit by the lantern, not black.
-- All motion respects `prefers-reduced-motion`. The flame's flicker, its breath and spark after a review, and its rise at the goal each have a still alternative: the flame takes its new size and halo at once, and no spark plays.
-- Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
-- Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall on the web and 80 pt, nearly square, in the phone app.
-- Inputs are 16 px or larger so iOS does not zoom.
-- Status is never colour alone. "New", "Learning" and "Known" carry a label and, where colour is used, the state's icon.
-- Audio has a visible control and never autoplays.
+Respect the learner’s reduced-motion setting and the OS preference. State changes must remain clear without animation. Audio starts only when requested and has a visible, named control. Platform-specific requirements and component sizes belong in [the design system](DESIGN.md#where-the-rules-live).

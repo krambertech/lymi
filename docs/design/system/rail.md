@@ -46,7 +46,7 @@ A series stays a heading over its decks in the rail. It is not a row, it does no
 | Current | `bg-rail-chosen edge-inset`, `text` | white with a hairline, as a plate | a flat step above the rail with a hairline inside, never lifted |
 | Focus | the neutral 2 px `ring` outline | | |
 
-The current row is always the strongest row and hover always sits under it. Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer would outrank the one the learner is on. The learner row and the streak pill hover with `rail-hover` for the same reason, and the learner row takes the current row's look while its menu is open.
+The current row is always the strongest row and hover always sits under it. Never `edge` or `bg-plate` on the current row: in dark theme `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer would outrank the one the learner is on. The learner row and the streak pill hover with `rail-hover` for the same reason, and the learner row takes the current row's look while its menu is open.
 
 ## Hover
 

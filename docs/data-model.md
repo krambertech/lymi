@@ -1,6 +1,6 @@
 # Data model and API
 
-What is in D1 and what the API returns. This page describes and decides nothing: tables are defined in `packages/core/src/schema`, request bodies in `packages/core/src/types.ts` and responses in `packages/core/src/responses`.
+What is in D1 and what the API returns. The implementation is authoritative: tables are defined in `packages/core/src/schema`, request bodies in `packages/core/src/types.ts` and responses in `packages/core/src/responses`.
 
 ## Entities
 
@@ -311,15 +311,15 @@ erDiagram
   }
 ```
 
-All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Learning content is never deleted by the app: decks and cards archive, while reviews and audit rows are permanent. Push subscriptions are device capabilities, not learning content, and are deleted when the learner turns reminders off or the push service reports that the subscription has expired.
+Application timestamps use millisecond integers; the schema defines which timestamps each table carries. Application ids are time-prefixed 19-character strings. Cards and decks support archive and restore. Ordinary review history is append-only, but account deletion and content moderation have separate erasure rules. Push subscriptions are device capabilities and are deleted when reminders are disabled or the subscription expires.
 
-The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
+The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Application rows are scoped through user ownership or parent and membership relationships. Review schedules and history belong to each learner, including when deck content is shared.
 
 Expired auth rows go on a schedule, not only with their account. Each cron run (`services/auth-retention.ts`) deletes up to 500 `verification` rows past `expires_at` and up to 500 `session` rows more than a day past `expires_at`, which takes the IP address and user agent with them. The session's day of grace exists because deleting a session sets `session_id` to null on its OAuth access tokens, and the provider checks a token's session only when it has one, so an unbound token would answer again until its own hour ran out. Refresh tokens keep their row either way: the provider already drops an expired session from a refresh. KV copies of sessions expire on their own TTL and are not touched.
 
 ### Review days
 
-A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. A rest day has no column: the streak summary derives it on every read. The rules are in [the daily review goal proposal](proposals/daily-review-goal-and-rolling-queue.md) and live in `services/review-days.ts`.
+A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. A rest day has no column: the streak summary derives it on every read. The rules are in [How a review works](review.md) and live in `services/review-days.ts`.
 
 ### Sections
 
@@ -353,7 +353,7 @@ A published deck's cards carry their pictures and stored pronunciation into publ
 
 ### Editions
 
-A published deck's own fields are its original edition, in `deck_publications.meaning_language`. Every further edition is one `deck_editions` row plus typed localizations in `series_localizations`, `deck_localizations`, `section_localizations` and `card_localizations`, each unique per `(entity_id, language)` and holding only the fields an edition may change: the deck's name, description and public summary, a section's name, a series' name, and a card's term, meaning, pronunciation, example, example translation and notes. A field left null keeps the original, except the example translation, which a reader of the edition sees only while its row is approved and current and otherwise not at all, since the original's is in another language. A card's own `example_translation` is not text an edition translates, so it never raises `revision`. Everything else — the card's language, tags, picture, audio and review modes, and the deck's ordering and sources — is canonical and shared. An ordinary or community deck writes no rows here. [ADR 0015](adr/0015-published-decks-use-pinned-localized-editions.md).
+A published deck's own fields are its original edition, in `deck_publications.meaning_language`. Every further edition is one `deck_editions` row plus typed localizations in `series_localizations`, `deck_localizations`, `section_localizations` and `card_localizations`, each unique per `(entity_id, language)` and holding only the fields an edition may change: the deck's name, description and public summary, a section's name, a series' name, and a card's term, meaning, pronunciation, example, example translation and notes. A field left null keeps the original, except the example translation, which a reader of the edition sees only while its row is approved and current and otherwise not at all, since the original's is in another language. A card's own `example_translation` is not text an edition translates, so it never raises `revision`. Everything else - the card's language, tags, picture, audio and review modes, and the deck's ordering and sources - is canonical and shared. An ordinary or community deck writes no rows here. [ADR 0015](adr/0015-published-decks-use-pinned-localized-editions.md).
 
 Staleness is a comparison, not a scan. `series`, `decks`, `sections` and `cards` each carry `revision`, raised only by an edit that changes text an edition translates, and each localization stores the `source_revision` it was written from. A row written from a lower revision is stale. `provenance` says who wrote the text and `status` how far it has got; an import lands every row as `draft`, and only a publisher with actor `user` or `api` moves one to `approved`, which also re-reads it against the revision as it stands now. A write-scoped key of the deck's publisher account may approve and publish an edition, which is how Lymi releases its own; an MCP client, an AI job and a read-only key cannot, and the audit row's `actor`, `actor_client` and `actor_client_name` keep an API release apart from a person's and name the key after it is revoked. `publishEdition` refuses an edition with any missing or stale unit and returns what is holding it back. `deck_publications.edition_fields` names the card fields each edition owes, `["meaning"]` by default; a deck whose terms are not in a language being learned adds `term`. It also gates the write: a card localization carrying `term` is refused unless the publication names it, because a localized term on a language deck would replace the prompt with its own answer. A republished publication that leaves the field out keeps what it had, so the gate cannot be widened or narrowed by accident.
 
@@ -421,7 +421,7 @@ Archiving an import stamps its own `archived_at` on every card it added that is 
 
 ### Exports
 
-An export reads the decks the learner can see, archived ones included, or one deck they can see. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
+An export reads only decks the learner owns, archived ones included, or one owned deck. Library exports omit decks owned by someone else. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
 
 ### Feedback
 
@@ -437,11 +437,11 @@ A note a learner sends from the learner menu is stored before it is emailed, so 
 
 ### Tags and source
 
-Tags are labels on a card, up to 20 of 40 characters, and the same name is one tag across every deck the learner studies ([proposal](proposals/tags.md)). `tags` holds each owner's names, unique by `tagKey(name)` (NFC, trimmed, lower-cased in JavaScript, since SQLite folds only ASCII), and `card_tags` links a card to its tags in order. The move is expand and contract, in the expand phase: `cards.tags` stays the API's list of names and is written back from `card_tags` in the same batch as every card write (`syncTagStatements` in `services/tags.ts`), so readers and an older Worker during a deploy keep working. Migration 0049 keyed existing tags with SQLite's ASCII-only `lower()`; `scripts/backfill-tag-keys.ts` re-keys them and merges tags that then match, once per database after it. A link keeps `archived_at` when its tag is archived from the card's deck, so Restore puts the tag back where it was; `cards.tags` holds only active links, and putting the tag on the card again makes its link active. A reader of a pinned non-original edition sees no tags until editions name them. Contraction, reading names from `card_tags` and dropping the column, is a later migration. `source` is free text saying where the card came from; it is a label on the card, and a deck is grouped by its sections, not by source. When AI capture arrives, pasted material becomes a `sources` row and cards point at it with `source_id`; the text column stays for hand-added cards.
+Tags are labels on a card, up to 20 of 40 characters, and the same name is one tag across every deck the learner studies ([proposal](proposals/tags.md)). `tags` holds each owner's names, unique by `tagKey(name)` (NFC, trimmed, lower-cased in JavaScript, since SQLite folds only ASCII), and `card_tags` links a card to its tags in order. The move is expand and contract, in the expand phase: `cards.tags` stays the API's list of names and is written back from `card_tags` in the same batch as every card write (`syncTagStatements` in `services/tags.ts`), so readers and an older Worker during a deploy keep working. Migration 0049 keyed existing tags with SQLite's ASCII-only `lower()`; `scripts/backfill-tag-keys.ts` re-keys them and merges tags that then match, once per database after it. A link keeps `archived_at` when its tag is archived from the card's deck, so Restore puts the tag back where it was; `cards.tags` holds only active links, and putting the tag on the card again makes its link active. A reader of a pinned non-original edition sees no tags until editions name them. Contraction, reading names from `card_tags` and dropping the column, is a later migration. `source` is free text saying where the card came from; it is a label on the card, and a deck is grouped by its sections, not by source. Smart add records read limits in `lesson_reads`, not a stored copy of the lesson. Cards retain their source label.
 
 ### Why language is on the card
 
-Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullable. A null language means no audio and no language-specific AI for that card, and everything else works. `decks.default_language` only prefills new cards.
+Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullable. A null language disables generated speech and language-specific behavior; an imported recording can still play. Other card and review features remain available. `decks.default_language` only prefills new cards.
 
 ## API
 
@@ -464,7 +464,6 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - `language` on a new card defaults to the deck's `default_language` when not given.
 - Validation failures return `400 { error, issues }` with the Zod issues. Missing or bad credentials return `401 { error }`.
 
-## Not decided yet
+## Card fields
 
-- One `meaning` string per card, or multiple senses as rows. Decide before the first deploy with real data.
-- Tags as a JSON column (current) or a table, once search needs them.
+A card has one meaning string. Tags use `tags` and `card_tags`, with the legacy JSON list maintained during the compatibility period described above. These are current schema choices, not open pre-release questions.

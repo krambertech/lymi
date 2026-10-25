@@ -9,7 +9,7 @@ description: Run the Lymi product locally and put it in a chosen state. Use when
 
 ## Start
 
-Start the server with the Browser pane's `preview_start` and the `lymi` launch configuration, never through Bash. It prefers port 5241 and takes a free port when another worktree holds it; use the port `preview_start` reports.
+When the Browser pane’s `preview_start` is available, start the `lymi` launch configuration and use its reported port. Otherwise use `node .agents/skills/verify/scripts/server.mjs start`, as described in [verify](../verify/SKILL.md#launch). Both prefer port 5241 and select a free port when needed.
 
 If the server logs a migration error, or `pnpm db:migrate` reports a table that already exists, run `pnpm local db:fresh` and start the server again.
 

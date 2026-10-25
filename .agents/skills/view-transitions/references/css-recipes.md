@@ -1,6 +1,6 @@
 # CSS recipes
 
-Copy these into a new `apps/web/src/client/styles/view-transitions.css` and import it from [`apps/web/src/client/styles.css`](../../../../apps/web/src/client/styles.css) beside the other feature files. They are global pseudo-element selectors — Tailwind v4 does not generate them, and they cannot live in a component.
+Copy these into a new `apps/web/src/client/styles/view-transitions.css` and import it from [`apps/web/src/client/styles.css`](../../../../apps/web/src/client/styles.css) beside the other feature files. They are global pseudo-element selectors - Tailwind v4 does not generate them, and they cannot live in a component.
 
 Every recipe assumes the typed router config from `SKILL.md`. Where types are unsupported the browser still runs an untyped transition, so the plain `::view-transition-old(root)` rules at the top are the floor everything else builds on.
 
@@ -14,7 +14,7 @@ Every recipe assumes the typed router config from `SKILL.md`. Where types are un
 }
 ```
 
-Lymi's motion is quick and warm. Anything over 400ms on a phone reads as sluggish, and the review screen is used one card after another — a transition the learner waits through twice is one they resent by the tenth.
+Lymi's motion is quick and warm. Anything over 400ms on a phone reads as sluggish, and the review screen is used one card after another - a transition the learner waits through twice is one they resent by the tenth.
 
 ## The floor: an untyped cross-fade
 
@@ -128,7 +128,7 @@ Wrap the state change in `document.startViewTransition` yourself when a query re
 
 ## Persistent elements
 
-Anything that stays on screen across a navigation — the nav bar, a sticky header — needs its own name, or it rides along with the page snapshot and slides off.
+Anything that stays on screen across a navigation - the nav bar, a sticky header - needs its own name, or it rides along with the page snapshot and slides off.
 
 ```css
 ::view-transition-group(persistent-nav) {
@@ -161,4 +161,4 @@ If the element uses `backdrop-filter`, animating the pair flashes. Hide the old 
 }
 ```
 
-View transitions ignore `prefers-reduced-motion` on their own — without this block, a learner who asked the OS for less motion gets every slide anyway. Every copy includes it.
+View transitions ignore `prefers-reduced-motion` on their own - without this block, a learner who asked the OS for less motion gets every slide anyway. Every copy includes it.

@@ -1,6 +1,6 @@
 # Overlays
 
-Every overlay takes the shape of the machine it is on: anchored or centred on a desktop, a drawer from the bottom edge on touch. The primitives in `apps/web/src/client/components/ui` hold both shapes behind shadcn's part names, so a call site never asks which machine it is on ([ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md)).
+Overlay layout follows the input device: anchored or centred on a desktop, a drawer from the bottom edge on touch. The primitives in `apps/web/src/client/components/ui` hold both shapes behind shadcn's part names, so a call site never asks which machine it is on ([ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md)).
 
 ## Which overlay
 
@@ -46,7 +46,7 @@ A question is a centred dialog on a desktop with its actions in a row, the prima
 
 ## Sheets
 
-On touch a sheet is a drawer that rises from the bottom edge and can be swiped away. Its title stays pinned at its top and its actions at its foot. When the software keyboard rises, the drawer shortens to the room above the keys and only the fields between scroll, so the title and the action are always in sight. On a desktop a panel pinned to the bottom of a 1400 px window is a phone pattern nobody finished, so the same sheet is a centred dialog. The forms inside know nothing about either shape.
+On touch a sheet is a drawer that rises from the bottom edge and can be swiped away. Its title stays pinned at its top and its actions at its foot. When the software keyboard rises, the drawer shortens to the room above the keys and only the fields between scroll, so the title and the action are always in sight. On desktop, the same sheet is a centred dialog. The forms inside know nothing about either shape.
 
 A centred dialog that holds a task with steps, such as Smart add, keeps one height for every step and scrolls only its middle: `DialogContent scroll="body"` holds the frame still, `PlaceBar` stays at the top, the actions stay at the foot, and `DialogBody` is the part that scrolls. A short question or form scrolls as one and leaves `scroll` at its default.
 

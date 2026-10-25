@@ -1,111 +1,115 @@
 # Surfaces
 
-By day every surface is flat: depth comes from tone and one hairline edge, and nothing lifts. At night plates sit a little off the room on a soft shadow, with no lit lip along the top, which read as a ridge. Texture goes only where something is lit or holds a level, never across a whole screen.
+Light-theme surfaces use colour and thin borders for separation. Dark-theme panels add subtle shadows through shared utilities. Use texture only in the documented progress treatments below.
 
 ## Which background
 
-Every surface is one of these tones.
-
-```text
-What is it?
- ├── The page itself → bg-canvas (the room)
- ├── The desktop navigation → bg-rail (one step off the room)
- ├── A sheet that rises over the room, on the phone → bg-sheet
- ├── A thing in the room: a card, a panel, a row group, a control → bg-plate with the edge utility
- ├── A well inside a plate: a chip, a track, a nested group → bg-plate-2
- ├── The chosen option riding in a plate-2 track (Segmented, the pill nav) → bg-chosen
- ├── The current row in the rail → bg-rail-chosen with edge-inset (see The rail's rows)
- ├── Something empty that will fill later → no fill, a dashed border-edge-2 outline (see empty-states.md)
- └── A published deck on Explore → a deck tray (see The deck tray), and nowhere else
-```
+| Element | Treatment |
+| --- | --- |
+| Page | `bg-canvas` |
+| Desktop navigation | `bg-rail` |
+| Native phone sheet | Platform glass, or `bg-sheet` on older iOS |
+| Panel, card, grouped rows or filled control | `edge bg-plate` |
+| Nested group, chip or track | `bg-plate-2` |
+| Selected option inside a `plate-2` track | `bg-chosen` |
+| Current rail row | `bg-rail-chosen edge-inset` |
+| Empty content placeholder | No fill, dashed `border-edge-2` ([empty-states.md](empty-states.md)) |
+| Published-deck preview on Explore | Deck tray, defined below |
 
 ```tsx
-// Correct: a plate is a fill and the edge utility
+// Shared edge treatment adapts to both themes.
 <section className="edge rounded-xl bg-plate p-5">…</section>
-
-// Incorrect: a drop shadow by hand; the night lift belongs to edge
-<section className="rounded-xl bg-plate p-5 shadow-md">…</section>
 ```
 
-The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it.
+The rail has a thin border on its inner edge. Its tone differs from the canvas in each theme.
 
 ## Elevation
 
-Every level comes from a utility; a hand-written `shadow-*` is never right.
+Use shared utilities rather than handwritten shadows.
 
-| Level | What | By day | At night |
-| --- | --- | --- | --- |
-| Room | `bg-canvas` | the page | the page |
-| Sheet | Liquid Glass on iOS 26; `bg-sheet` before it | the room, set apart by the scrim behind it | a step lighter than the room, since a scrim cannot darken the dark |
-| Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a soft shadow under the hairline |
-| Well | `well`, a track or an unlit pane | set into its plate | set into its plate, a step lighter so it still reads |
-| Chosen | `bg-chosen`, in a `plate-2` track | white | a lifted warm grey, above its track |
-| Current rail row | `bg-rail-chosen edge-inset` | white with a hairline | flat: a step above the rail with a hairline inside, never lifted |
+| Surface | Light theme | Dark theme |
+| --- | --- | --- |
+| Page | `bg-canvas` | `bg-canvas` |
+| Sheet fallback | Canvas tone, separated by a scrim | Lighter than canvas |
+| Panel (`edge bg-plate`) | White with a thin border | Thin border and `--lift` shadow |
+| Inset (`well`) | Inset border and top shading | Same treatment on a lighter fill |
+| Selected option (`bg-chosen`) | White | Lighter warm grey than its track |
+| Current rail row | Thin inset border | Thin inset border, without shadow |
 
-Never lifted: a form field, which sets `--lift` to nothing because a field is set into the page and a lifted one reads as a button; anything with no fill at rest, such as a ghost button, a navigation row or a menu row; a chip; a well. Overlays keep their own edge and scrim ([overlays.md](overlays.md)).
+Form fields clear `--lift` so they remain visually distinct from buttons. Unfilled controls, navigation and menu rows, chips and inset groups also have no elevation. Overlays own their borders and scrims ([overlays.md](overlays.md)).
 
 ### Hover
 
-Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there. A row in the rail has its own pair (see The rail's rows).
+Filled interactive panels, secondary buttons and grades strengthen to `edge-2` and apply `veil` over their existing fill. List rows inside a panel also hover with `veil`.
 
-### The rail's rows
+Unfilled controls and items on `plate-2` use `bg-hover`. Do not use `plate-2` as their hover fill; it is indistinguishable from the light-theme rail. Rail rows use the separate states below.
 
-The rail shows where the learner is, so its current row is the strongest row in it and hover always sits below it. The current row is `bg-rail-chosen` with `edge-inset`; a row under the pointer fills with `bg-rail-hover`. Each state in both rooms, and why the current row never takes `edge` or `bg-plate`, is in [rail.md](rail.md#states).
+### The rail’s rows
+
+The current row uses `bg-rail-chosen edge-inset`; hover uses `bg-rail-hover`. Selection must remain stronger than hover. See [rail.md](rail.md#states) for both themes.
 
 ### The chosen option
 
-A chosen option in a `plate-2` track sits on `bg-chosen`, never `bg-plate`. By day the two are the same white; at night `plate` is darker than `plate-2`, so a plate thumb reads as a hole and the choice is unclear.
+Use `bg-chosen` for a selected option inside a `plate-2` track. `bg-plate` is darker than that track in dark theme and makes selection unclear.
 
 ## On glass
 
-On the phone, sheets, their corner buttons and the tab bar are iOS's Liquid Glass with no room tint: the glass is the platform's, and a tint only turns it into a slab. The two exceptions are the amber of the one standing action and the frost a peek sheet needs ([phone.md](phone.md#sheets)). What sits on glass lets it through and takes its colour, as iOS's own grouped rows do. A plate, a field, a sheet's row group or a chip is `bg-glass-plate`; a chosen option is `bg-glass-chosen`; neither lifts, because the glass already floats. `OnGlass` in `apps/mobile/src/ui/surface.tsx` switches `Plate`, `Segmented`, `Input` and the field chips to these fills, and every `Sheet` wraps its content in it. An opaque warm plate on glass reads as a brown box on a grey sheet.
+Native iOS 26 sheets, corner buttons and the tab bar use Liquid Glass without a background tint. The standing capture action keeps its amber tint, and peek sheets use frost ([phone.md](phone.md#sheets)). Content on glass uses `bg-glass-plate` and `bg-glass-chosen` without elevation. `OnGlass` in `apps/mobile/src/ui/surface.tsx` supplies these fills to `Plate`, `Segmented`, `Input` and field chips; every `Sheet` wraps its content in it.
 
-On the web, `glass` is a slight version for what floats without a scrim: menus, popovers, select and combobox lists, and the pill nav. It is the plate nearly opaque over a 12 px blur, with a sheen along the top, the `edge-2` hairline and a soft shadow, the one shadow a day surface carries, because these float over the page. Dialogs, drawers and side sheets stay solid, since glass over a scrim only turns grey. Under reduced transparency, or where the browser has no `backdrop-filter`, it falls back to the plate.
+Web `glass` is for menus, popovers, select and combobox lists, and pill navigation. It combines a nearly opaque panel, 12 px blur, top highlight, `edge-2` and shadow. Dialogs, drawers and side sheets remain opaque. Under reduced transparency or without `backdrop-filter`, use the opaque panel fallback.
 
-`frost` is for what floats inside a plate over text that scrolls under it, such as the hint offer at a card's foot: `plate-2` at 65% over a 4 px blur, so the words under it show as a soft hint, with no edge, sheen or shadow, because the plate already holds it. The scroller under it drops its foot fade, which turned the panel into a grey gradient, and cuts the text off at the panel's foot instead, so nothing shows in the inset below it. Under reduced transparency, or with no `backdrop-filter`, it falls back to solid `plate-2`.
+Use `frost` for controls floating over scrolling text inside a panel, such as a hint offer: `plate-2` at 65%, 4 px blur, and no border, highlight or shadow. Clip the underlying scroller at the control’s bottom and omit its bottom fade so text cannot show in the inset below it. The reduced-transparency fallback is solid `plate-2`.
 
 ## Edges
 
-`edge` is the hairline every plate and control carries: a 1 px ring drawn as a box-shadow, so it never changes the box's size. Hover strengthens it to `edge-2`; `edge-inset` draws it inside the box, for a plate whose content runs to its edge. Use `border-edge` only for a rule between rows. Focus adds the neutral 2 px outline every control gets, in `ring`. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour.
+`edge` draws a 1 px ring using box-shadow without changing dimensions. `edge-2` strengthens it on hover, and `edge-inset` draws inside the bounds when content reaches the edge. Use `border-edge` for dividers between rows. Focus adds the neutral 2 px `ring` outline. Forced-colour mode replaces the shadow with a system-colour outline.
 
-At night `edge` and `edge-2` also carry `--lift` (see Elevation). By day `--lift` is nothing.
+In dark theme `edge` and `edge-2` include `--lift`; in light theme they do not. Form fields clear that elevation.
 
-A photo gets `image-edge` instead: a 1 px outline drawn inside its bounds, untinted black by day and white at night, because a warm line reads as grime on a picture. A card picture wears it only when it is opaque, so a drawing on transparency never sits in a box.
+Pictures use `image-edge`, a neutral 1 px inset outline, black in light theme and white in dark theme. Apply it only to opaque pictures; transparent artwork keeps its shape without a rectangular frame.
 
-An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the invalid ring on a control (`shadow-[0_0_0_1px_var(--danger)]`), a ring on a calendar day, or the hairline on an overlay's edge. Never a blurred shadow.
+An inset box-shadow may draw a stroke that a border cannot, such as a validation ring (`shadow-[0_0_0_1px_var(--danger)]`), calendar-day ring or overlay border. Use the shared utilities for blurred shadows.
 
 ## Sets
 
-A set read together, such as Today's rounds, a series in Library or a day on Activity, is a heading above its plates or a list of rows in one plate. It never sits in a tray, because a well with tiles in it reads as a box around things the heading already groups.
+Group related panels with a heading and spacing, or place related rows in one panel. Today’s rounds, Library series and Activity days do not need an additional background container.
 
 ## Lit and set in
 
-A track or an unlit pane is `well`: its hairline drawn inside, and a slight shade along its top, so it reads as set into its plate. What fills it is `lit`: light caught along its top and, at night, the faint glow of the flame. They go on the review progress, today's goal, the seven lights and the thirty-day strip. The progress fill is ink, so it turns its glow off with `[--lit-glow:0_0_#0000]`.
+`well` draws an inset border and top shading for a track or unfilled progress area. `lit` adds a top highlight and subtle dark-theme glow to the fill. Use them for review progress, daily goals, seven-day indicators and the thirty-day strip. Review progress uses an ink fill and disables glow with `[--lit-glow:0_0_#0000]`.
 
-The primary button carries `key-light`, a soft fall of light with no lip and no shadow.
+Primary buttons use `key-light`, a subtle highlight without a border ridge or shadow.
 
 ## Radius
 
-The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2xl` 30 and `full`. Controls are `md` (a small button is `sm`), plates and cards are `xl`, rows inside a list are `md` or `lg`, chips and round buttons are `full`. An arbitrary radius is for a drawn illustration only, never a control or a plate. A control inset in a plate takes the plate's radius less the gap, so the corners run parallel: Today's Review button sits 8 px inside a 22 px plate, so it is `rounded-md`, 14 px.
+| Token | Radius |
+| --- | --- |
+| `rounded-xs` | 6 px |
+| `rounded-sm` | 10 px |
+| `rounded-md` | 14 px |
+| `rounded-lg` | 18 px |
+| `rounded-xl` | 22 px |
+| `rounded-2xl` | 30 px |
+| `rounded-full` | Fully rounded |
+
+Controls use `md`, small buttons `sm`, panels and cards `xl`, grouped rows `md` or `lg`, and chips and round buttons `full`. Arbitrary radii are limited to illustrations. A control inset within a panel uses the panel radius minus the gap: an 8 px inset in a 22 px panel gives a 14 px `rounded-md` control.
 
 ## The glow
 
-The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. A lit fill's faint night glow is the flame's too, and it comes from `lit`, never from `glow`.
+Apply `glow` only to `.lantern-light`, never the whole drawing. `lit` supplies the separate subtle glow on progress fills. [brand.md](brand.md) defines the mark and its state.
 
-The light spills into the room in four places: as `lamplit` on the lantern's plate on Today, a pool from the lantern's side; around the lantern at the end of a review and at Welcome's first screen, under Motion, both drawn by `LanternLight`; and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. On the public site, the hero scene of a page for one way of learning (tutor lessons, notes) stands in a still pool of the lantern's light, so the material and its cards read as one moment. All of them go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
+Background light is allowed on Today’s due panel (`lamplit`), review completion and Welcome (`LanternLight`), Explore’s search, shelf-page headings in their shelf colour, and public use-case hero scenes. These treatments respect reduced transparency. Review particles and the day-grid animation use the same glow.
 
-Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, the lantern's pool of light at the end of a review, at Welcome and on Today, and the light in `lit` and `key-light`. No surface carries grain or noise.
+Use gradients only for these background lights, app icons and link previews, and the shared `lit` and `key-light` utilities. Other surfaces have no decorative gradient, grain or noise.
 
 ## The deck tray
 
-On Explore a published deck shows as one of its own cards sitting in a deck tray: a rounded panel the card is cut against, with the deck's name below it on the open canvas rather than inside a box. The deck tray is why the cut reads as tucked into the shelf; the same card cut in mid-air reads as clipped. It shows two thirds of the card, which is the most that can be taken before the meaning goes with it, and the deck's name is the largest thing in the group.
+Explore previews a deck with a real card inside a rounded, coloured tray and the deck’s name below it. Show roughly two thirds of the card while keeping its meaning visible. Add one background sheet per additional card, up to two. Hover raises the card and spreads the sheets over 260 ms; reduced motion keeps them still.
 
-The card in a deck tray sits on paper: one blank sheet per further card the deck holds, at most two, so the stack is the deck's own depth rather than a decoration. Pointing at a deck lifts the card and spreads the sheets either side of it over 260 ms; under reduced motion they rest where they are.
+`trayHue` in `packages/core` selects one of eight hues from the slug. All use the same lightness and chroma and exclude amber. This makes colour stable across filtering and catalogue growth, though adjacent decks can share a hue. `.deck-tray` in `packages/design/tray.css` is shared by site and product; the product uses `DeckTray`. In dark theme trays use lightness 0.30 and chroma 0.065, with cards at lightness 0.33.
 
-A deck tray is the one surface that carries a hue. Eight of them share one lightness and one chroma, chosen from the slug and nothing else, so a deck keeps its colour as the catalogue grows, a search that hides its neighbours does not repaint it, and its own page arrives at the same colour without being told. Two of the eight landing side by side is the price of that. **The amber band is left out**: amber means act, and a deck tray is not a thing to press. At night the deck tray is lifted well off the room, at lightness 0.30 and chroma 0.065, so its hue still reads, and the card in it is lifted to 0.33, so the card still sits proud of it. The code is `trayHue` in `packages/core` and `.deck-tray` in `packages/design/tray.css`, which the site and the product both import; `DeckTray` draws it in the product.
+The deck page reuses this hue behind its preview, across the full width, at lower chroma than the tile. The colour is computed from the slug rather than stored.
 
-A deck keeps that colour on its own page, as the ground its card spread lies on: click a lilac deck tray and land on a lilac page. The colour is a pure function of the slug, so nothing is stored and the two pages cannot disagree. The ground runs to both edges, because the spread's outer cards reach past the text column, and it holds **less chroma than a deck tray**: the same colour over a page reads far louder than over 216 px.
+Published-card previews use the card’s review modes. Prefer a picture mode when a public picture exists; otherwise cycle through modes by card position. Show the cue above the divider and target below, with pictures at their natural aspect ratio aligned to the start edge. Trial reviews hide the target until reveal. Card lists retain the term beside the picture. Audio has a named control and starts only on request.
 
-Every preview of a published deck's card, in its deck tray, the page's spread, the try-it hand and the in-app fan, shows the card in one of the review modes a learner is asked it in, so a visitor sees what learning the deck is like. A picture mode goes first, while the card has a public picture; otherwise the preview steps through the card's modes by its place, so a deck asked both ways shows both. The cue sits above the rule, a picture at its own shape on the start edge, and what the learner recalls sits under it, as a turned card in review. The try-it card shows only the cue until it is turned, and the card list keeps the term readable beside the picture. Pronunciation has a named play control and never starts on its own.
-
-Explore inside the product departs from this twice, each with its reason in [the feature's design](../explore.md#in-the-product): a tile there is a card rather than a group on the open canvas, because the Add button on it has to belong to something, and a deck's own page lays its colour under the whole header, with a hand of its cards in place of the tray and a white Add rather than amber.
+In the product, a tile wraps its preview, name and Add action in one panel. A deck page uses its colour across the header, preview cards and a white Add button ([explore.md](../explore.md#in-the-product)).

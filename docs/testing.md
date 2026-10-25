@@ -53,14 +53,14 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 
 | Check | Save | Push | Pull request | Main |
 | --- | --- | --- | --- | --- |
-| Biome, interface strings, migration safety, TypeScript | — | all | all | all |
-| Production build and deployment boundaries | — | on handover | yes | yes |
+| Biome, interface strings, migration safety, TypeScript | - | all | all | all |
+| Production build and deployment boundaries | - | on handover | yes | yes |
 | Unit, service and route tests | changed graph | changed graph | all | all |
-| Workers-runtime tests | — | when server or core changed | when server or core changed | all |
+| Workers-runtime tests | - | when server or core changed | when server or core changed | all |
 | Component tests, desktop Chromium | changed graph | changed graph | all | all |
-| Component tests, touch Chromium and WebKit | — | — | when the diff reaches the primitives | all |
-| Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
-| Deployment package dry runs | — | — | production-affecting diffs | both |
+| Component tests, touch Chromium and WebKit | - | - | when the diff reaches the primitives | all |
+| Journeys | - | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
+| Deployment package dry runs | - | - | production-affecting diffs | both |
 
 - **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
@@ -278,9 +278,9 @@ Maestro needs Java 17 or later on `JAVA_HOME`.
 
 | Check | Pull request | Main | Promote | Monday |
 | --- | --- | --- | --- | --- |
-| Unit, typecheck, contract, client against the Worker | all | all | all | — |
-| Contract against production's `/api/openapi.json` | — | — | — | yes |
-| Smoke journey | by hand | — | must pass | yes |
+| Unit, typecheck, contract, client against the Worker | all | all | all | - |
+| Contract against production's `/api/openapi.json` | - | - | - | yes |
+| Smoke journey | by hand | - | must pass | yes |
 
 A pull request that touches only the web or the Worker runs the same Linux checks as one that touches the phone: the contract is what an installed app depends on, and it costs seconds. Start the journey by hand from the Actions tab, on the `Phone` workflow, when a pull request changes something native or the sign-in path.
 

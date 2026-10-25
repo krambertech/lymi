@@ -1,10 +1,10 @@
 # Colour
 
-Warm neutrals, nearly grey, with amber as the only saturated accent. Amber is the colour that means act; every other hue describes and never asks.
+Use warm neutrals for surfaces and amber for defined actions and states. Card states, errors, success and AI provenance have their own semantic colours.
 
 ## Use a token, never a value
 
-**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value is right in one room and wrong in the other. The values live in `packages/design/tokens.css`; every copy of them is generated, and `pnpm check:design` fails on drift.
+**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value can fail in the other theme. The values live in `packages/design/tokens.css`; every copy of them is generated, and `pnpm check:design` fails on drift.
 
 ```tsx
 // Correct
@@ -17,11 +17,11 @@ Warm neutrals, nearly grey, with amber as the only saturated accent. Amber is th
 
 The one exception is a third party's own mark, which keeps its brand colours: `GoogleMark` and the brand colour of each connected app in `AppMark`.
 
-Dark is not inverted light: the plate is lighter than the canvas in both rooms. The night room is a warm charcoal rather than a brown, so iOS's neutral Liquid Glass sits in it; the warmth comes from the lamp, the amber and the text. Surfaces and their tokens are in [surfaces.md](surfaces.md).
+Dark theme uses a separate warm-charcoal palette. Panels are lighter than the canvas in both themes. Use [surfaces.md](surfaces.md) for background and elevation roles.
 
 ## Which text colour
 
-Text on canvas meets 4.5:1 in both rooms, `muted` included.
+Text on canvas meets 4.5:1 in both themes, `muted` included.
 
 ```text
 Is it text on a coloured fill?
@@ -49,9 +49,9 @@ A hue comes in up to three strengths, and the job decides which one a component 
 | Text | Words | 4.5:1 on `canvas` | `amber-text` |
 | Mark | An icon or dot beside a word, which the word explains | 3:1 on `plate-2`, the lightest ground a mark sits on | `amber-mark` |
 
-**A hue gets its own mark token only when its text token stops looking like the hue.** Darkening red or green to 4.5:1 leaves them red and green, so `danger` and `good` serve as their own marks. Darkening amber to 4.5:1 turns it brown, so an amber icon uses `amber-mark`, which is as light as 3:1 allows. The card states are marks and nothing else, which is why `state-known` is lighter than `good` by day.
+**A hue gets its own mark token only when its text token stops looking like the hue.** Darkening red or green to 4.5:1 leaves them red and green, so `danger` and `good` serve as their own marks. Darkening amber to 4.5:1 turns it brown, so an amber icon uses `amber-mark`, which is as light as 3:1 allows. The card states are marks and nothing else, which is why `state-known` is lighter than `good` in light theme.
 
-In the dark room the fill is already light enough for every job, so `amber-mark` is `amber` there.
+In dark theme the fill is already light enough for every job, so `amber-mark` is `amber` there.
 
 ```tsx
 // Correct: an icon beside the word it marks
@@ -70,14 +70,14 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 1. The flame, in the lantern and in `Flame`.
 2. The one thing to press on the page: `Button variant="primary"`.
 3. The capture button, which is the app's standing action rather than the page's.
-4. A due count, as `DueCount`: the number in ink on `amber-tint`, never amber text, which by day has to darken to brown to be readable.
-5. A day the learner reviewed: the seven lights, the streak modal's month and goal track, the thirty-day strip and the Insights day grid. It is the same lit glass at every size, which makes it the flame rather than a sixth thing.
+4. A due count, as `DueCount`: the number in ink on `amber-tint`, never amber text, which in light theme has to darken to brown to be readable.
+5. A day the learner reviewed: the seven lights, the streak modal's month and goal track, the thirty-day strip and the Insights day grid. Use the shared `well` and `lit` treatments at every size.
 6. The Easy grade's icon, `text-grade-easy`, which is `amber-mark`.
-7. The star of a card the learner marked important, `amber-mark` and always filled, beside the term in a deck's list and before the word Important on the card page. It is the learner's own choice of what to keep lit, so it borrows the lantern's light; it is a mark, never a button, and the word or the screen reader's label carries it.
-8. A warning that an action is out of reach for now, as `Notice tone="warning"`: an `amber-mark` icon and ink text on `amber-soft`, above the controls it disables. It asks the learner to come back, so it is the one notice that is not neutral.
-9. The phone's chosen tab: its filled icon in `amber-mark` and its label in `amber-text`. It is the one selected state that is amber, because native tab bars tint the tab the learner is on and ink alone barely parts it from the muted rest; the web's rail keeps its ink row ([phone.md](phone.md)).
+7. An important card’s filled star in `amber-mark`, beside the term in deck lists and before Important on the card page. It is a status mark with a visible or accessible label.
+8. A warning that an action is out of reach for now, as `Notice tone="warning"`: an `amber-mark` icon and ink text on `amber-soft`, above the controls it disables. This treatment distinguishes a temporary restriction from an error.
+9. The phone's chosen tab: its filled icon in `amber-mark` and its label in `amber-text`. Native tab bars use this tint to distinguish selection from muted inactive tabs; the web rail uses a neutral selected row ([phone.md](phone.md)).
 
-A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
+A checkbox or switch is amber when checked. The phone review’s example also uses amber while requested audio loads or plays. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 
 Never amber for: any other selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray or a deck tray, a heading, a link, or decoration.
 
@@ -95,7 +95,7 @@ They come from `stateMarks` and `StateIcon` in `components/state-mark.tsx`, whic
 
 The icon, in its colour, marks the counts on a deck's split plate, the deck's filter menu, each card in a deck's list, every state chip, each row of Insights' Cards plate and the New cards tile on Today. On Insights each state is a row of its mark, its word, a bar in its colour against all the learner's cards, and its count, so the colour is never read alone. A deck carries no stripe: its split is the counts on its plate.
 
-Text stays ink: a state chip is a plain `plate-2` chip, and the colour lives on its icon. Each state colour is a [mark](#fill-text-and-mark): it holds 3:1 against `plate-2` in both rooms. Known is a brighter green than `good` by day, because `good` also colours words and has to hold 4.5:1; in the dark room Known is `good`.
+Text stays ink: a state chip is a plain `plate-2` chip, and the colour lives on its icon. Each state colour is a [mark](#fill-text-and-mark): it holds 3:1 against `plate-2` in both themes. Known is a brighter green than `good` in light theme, because `good` also colours words and has to hold 4.5:1; in dark theme Known is `good`.
 
 Learning is blue because blue is furthest from amber, `danger` and `good`, so a state never reads as something to press or as an error, and blue and green stay apart for red-green colour blindness. Never make a state amber or mustard: beside amber it reads as dirty orange. `state-learning-soft` and `state-learning-text` are for the site's scheduling figures only.
 

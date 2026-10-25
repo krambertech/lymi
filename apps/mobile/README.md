@@ -40,7 +40,7 @@ React Native Skia draws the lantern (`src/brand/lantern.tsx`) and the end of a r
 
 ## Widgets
 
-`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers and the rooms' colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
+`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs a new native build through `pnpm exec stim ios`; see the local-development guide linked above. The app pushes today's numbers and the theme colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
 
 Widget text and weekday letters follow the account’s app language, including the next-day timeline; the app formats them before sending, so widgets load no catalogs. WidgetKit’s gallery names and descriptions follow iOS’s language through `assets/widgets/Localizable.xcstrings`, copied into the extension by `plugins/with-widget-localizations.cjs`.
 

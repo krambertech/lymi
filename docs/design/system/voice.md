@@ -10,5 +10,5 @@ Plain and friendly. The interface counts cards, not points, never nags and never
 - Reminders and other notifications carry no guilt and no urgency.
 - An empty state names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here".
 - A toast says what just happened; how much of a learner's text it quotes is in [overlays.md](overlays.md#toasts).
-- Anything the AI wrote carries its badge where it appears, and nothing else is marked, so the label is a fact about one field rather than a disclaimer about the card.
+- On card pages and forms, mark fields written by Lymi’s enrichment with the AI badge. Review omits these badges. Text supplied by a connected assistant is recorded as manual, with the app named in Activity.
 - Curly quotes and the ellipsis character: “ ” ’ …, never straight quotes or three dots.

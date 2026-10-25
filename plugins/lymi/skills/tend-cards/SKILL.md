@@ -30,7 +30,7 @@ Text you write for the learner is theirs: leave its source out. Set a source of 
 
 ## Hints
 
-A hint is a short association in the meaning language that leads back to the term: a sound-alike word, or a picture in the mind. It gives away none of the answer: no first letters, translation or part of the term. Review can show it under the cue before reveal, so it should help recall without answering for the learner.
+A hint is a short association in the meaning language that leads back to the term: a sound-alike word, or a picture in the mind. For an association hint, avoid spelling the answer or giving its translation. Lymi also supports progressive recall help such as first letters; that counts as an aid before reveal and prevents an Easy grade. Do not confuse that review control with text the assistant is asked to save as an association hint. Review can show it under the cue before reveal, so it should help recall without answering for the learner.
 
 ## Often forgotten
 

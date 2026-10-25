@@ -2,7 +2,7 @@
 
 Activity is the one place that answers "did anything land in my decks that I did not put there". It lists writes made by imports, connected apps and the AI, the files the learner took out, and the people events of a shared deck: who joined, who left, who was removed, and when the join link was turned on or off. The learner's own edits are not here; a card's own history holds those.
 
-Activity sits behind **You**, not in the rail, because it is read when something is in question rather than steered by; the learner menu holds it on every device ([layout](system/layout.md#you)).
+On the web, Activity opens from the learner menu. On the native phone app it opens from You ([layout](system/layout.md#you)).
 
 ## The list
 
@@ -14,7 +14,7 @@ The sentence never names who did it, because the line under it does: "Added 3 ca
 
 An archived deck has no screen to open, so a row that names one is read rather than pressed, and so are the cards inside it.
 
-Who is the app's name when Lymi knows it — a connected app names itself when it asks for consent, and an API key carries the name the learner gave it. Where there is no name, the row falls back to the words the card history already uses: a connected app, the API, the AI, Lymi.
+Who is the app's name when Lymi knows it - a connected app names itself when it asks for consent, and an API key carries the name the learner gave it. Where there is no name, the row falls back to the words the card history already uses: a connected app, the API, the AI, Lymi.
 
 An export is the one row whose action sits on the row: **Download**, while the file lasts its day. Everything else a row can do is behind the thing it opens.
 
@@ -34,7 +34,7 @@ An empty Activity is an `EmptySection` with the screen's own mark, **Nothing yet
 
 ## What it costs to add an event
 
-An event appears here because a service wrote an audit row for it, so the screen is a read and never a second source of truth. The rows a service can write are one typed list in `services/audit.ts`, and the reader's table in `services/activity.ts` names a sentence, or deliberately none, for every entry in it, so a new kind of write does not compile until this screen has decided on it. Two things make a write invisible: no audit row at all, which is the bug to look for when something lands unseen, and a kind the reader's table marks as unsaid — caching a card's audio is the AI's work but not a change to the card, and naming it an edit here would be a lie on the one screen that must not tell one.
+An event appears here because a service wrote an audit row for it, so the screen is a read and never a second source of truth. The rows a service can write are one typed list in `services/audit.ts`, and the reader's table in `services/activity.ts` names a sentence, or deliberately none, for every entry in it, so a new kind of write does not compile until this screen has decided on it. Two things make a write invisible: no audit row at all, which is the bug to look for when something lands unseen, and a kind the reader's table marks as unsaid - caching a card's audio is the AI's work but not a change to the card, and naming it an edit here would be a lie on the one screen that must not tell one.
 
 The AI's own writes are here too: a run that fills empty fields after an add is "Enriched 3 cards in Verbi", never an edit.
 

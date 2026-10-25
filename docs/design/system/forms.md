@@ -67,7 +67,7 @@ There is no shorthand component: every form is written with the parts, so there 
 
 ## Settings save as they change
 
-A settings screen, such as Settings or a deck's settings, has no Save button: a change is made when it is made, and every one is reversible. A switch, a select or a radio saves on change; a text field saves on blur and when the learner leaves the screen. The screen's `status` shows Saving…, then Saved with a check, or the error, beside the title.
+A settings screen, such as Settings or a deck's settings, has no Save button: settings save directly rather than waiting for a separate submit. A switch, a select or a radio saves on change; a text field saves on blur and when the learner leaves the screen. The screen's `status` shows Saving…, then Saved with a check, or the error, beside the title.
 
 A Save, Create or Add button belongs to a sheet: a form the learner opened to make or change one thing, which submits as a whole.
 

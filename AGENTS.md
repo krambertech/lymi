@@ -1,8 +1,10 @@
-# Lymi — working agreements
+# Lymi - working agreements
 
-Lymi keeps what people learn as cards and brings them back with spaced repetition, languages first. [`CONTEXT.md`](CONTEXT.md) is the authority on the domain words and lists the words to avoid: a card is never a "flashcard", removal is always "archive", and the AI "enriches" — it never "suggests".
+Lymi is a flashcard app for learning any subject with spaced repetition. [`CONTEXT.md`](CONTEXT.md) defines product terms: use “card” for an individual item, “archive” for reversible removal, and “enrich” for AI filling missing fields. Use “flashcard app” when describing the product category.
 
 ## Read first
+
+Fetch the remote default branch before inspecting or changing code. Use the fresh ref for current-state claims unless the task explicitly targets another branch, pull request or local changes. Preserve dirty and divergent checkouts; inspect the ref directly or use an isolated worktree. If the fetch fails, report it rather than treating stale code as current.
 
 | Before you | Read |
 | --- | --- |
@@ -10,12 +12,14 @@ Lymi keeps what people learn as cards and brings them back with spaced repetitio
 | Decide what to build or where it runs | [`PRODUCT.md`](PRODUCT.md): who it is for, which surface leads which job, and the feature map with each feature's owning document |
 | Change review, the daily goal or the streak | [`docs/review.md`](docs/review.md) |
 | Write UI | [`DESIGN.md`](DESIGN.md), then the system file in `docs/design/system` for what you are building |
-| Propose a different technical shape | [`docs/stack.md`](docs/stack.md), which records the alternative that lost, and [`docs/adr`](docs/adr/README.md) |
+| Propose a different technical shape | [`docs/stack.md`](docs/stack.md), which records technical choices and rejected alternatives, and [`docs/adr`](docs/adr/README.md) |
 | Find a folder or a command | [`README.md`](README.md) |
 
 ## The repo
 
-Two deployables: `apps/site` is the Astro public site plus its narrow health-and-redirects Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and the React Native app in `apps/mobile` import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there. `packages/client` is what the web and phone clients share: the API client, query options, the grade and write outboxes, and the review draw. Each app configures it once with its origin, session headers and storage. `packages/design` holds what all three apps draw with: the tokens, the lantern's geometry, the flame and seven lights' rules, and motion presets. `apps/desktop` is the Mac app: an Electron shell that loads the product and adds a menu bar lantern and a quick-add panel; it ships apart from the Workers ([its README](apps/desktop/README.md)).
+`apps/site` deploys the Astro public site and its health-and-redirects Worker. `apps/web` deploys the Vite React product and Hono backend. `apps/mobile` is the React Native phone app. `apps/desktop` is the Electron Mac app, released separately from the Workers ([README](apps/desktop/README.md)).
+
+Shared code belongs in `packages/core` (schema, validation and scheduling), `packages/client` (API client, queries, outboxes and review draw) or `packages/design` (tokens, brand geometry and motion). Each client configures the shared client package with its origin, session headers and storage.
 
 ## Testing locally
 
@@ -27,7 +31,7 @@ To prove a product change works, drive the features it touches with [the verify 
 
 **Instrumentation is part of done.** For each behavior change, state the product question it should answer and add or reuse an event at its owning interaction or committed outcome. Document the event meaning, allowed properties and producer; preserve existing chart contracts, exclude private content, and verify failure and duplicate paths. Record instrumentation and its validation in the pull request. If the change needs no event, explain why.
 
-**Proof matches the change.** A logic fix needs a test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and before-and-after screenshots. A server fix needs that test plus a request transcript: the request and the response it now gets. Ask of every proof whether it could pass while the original task stays broken; if it could, it proves nothing. The pull request names which proof it gives.
+**Proof matches the change.** A logic fix needs a regression test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and before-and-after screenshots. A server fix also needs a request and response demonstrating the corrected behavior. Record the evidence in the pull request.
 
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
 
@@ -43,13 +47,13 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 ## Conventions
 
-**Types.** `interface Props` for React component props, `type` for unions and small shapes. Zod schemas in `packages/core/src/types.ts` are the source of truth for every API payload — the route parses with one, and the TypeScript type is inferred from it, never hand-written alongside.
+**Types.** `interface Props` for React component props, `type` for unions and small shapes. Zod schemas in `packages/core/src/types.ts` are the source of truth for every API payload - the route parses with one, and the TypeScript type is inferred from it, never hand-written alongside.
 
-**Styling.** Tailwind v4 utilities over the Lymi tokens, such as `bg-plate`, `text-text-2` and `border-edge`, in logical directions (`ms-`, `pe-`, `start-`, `text-start`). Tokens, not values, because dark mode is a separate warm palette rather than an inversion; logical directions, so a right-to-left locale is a catalog and not a refactor. `inset-x-0` and centring with `left-1/2` are not directional and stay. The values live as OKLCH variables in `packages/design/tokens.css`, which the web and the site import and from which `DESIGN.md`'s frontmatter and the phone's values are generated.
+**Styling.** Use Tailwind v4 utilities over Lymi tokens (`bg-plate`, `text-text-2`, `border-edge`) and logical directions (`ms-`, `pe-`, `start-`, `text-start`). Raw values break theme support; physical directions complicate right-to-left layouts. `inset-x-0` and centring with `left-1/2` are allowed. `packages/design/tokens.css` owns the OKLCH values used by web and site and generated into the phone palette and `DESIGN.md`.
 
 **Interface text.** Use [the UX-copy skill](.agents/skills/ux-copy/SKILL.md) whenever learner-facing text changes. The English sentence in the component is the message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module-level constants, `<Plural>` or `plural` for counts. Never build a sentence from concatenated fragments or a ternary on `=== 1`. Dates and numbers go through `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`. `pnpm i18n:extract` after adding a string; `pnpm i18n:check` runs in `verify` and fails on an unextracted one. ADR 0012.
 
-**Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context — the Activity screen exists so nothing an integration does lands unseen.
+**Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context - the Activity screen exists so nothing an integration does lands unseen.
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
@@ -87,7 +91,7 @@ Write for the next decision, not as a record of the work session. State each out
 
 **Pull request review comments.** Raise one actionable issue per inline comment. Start with the concrete defect or risk, then state the consequence and the smallest useful fix direction. Keep the comment to two or three sentences. Put cross-cutting context in one top-level review comment instead of repeating it inline.
 
-**Documentation.** Write each prose paragraph and each list item as a single source line and let the editor wrap it; headings, tables, code blocks and list items keep their own lines. Record durable behavior, decisions, constraints, and operating instructions. Leave implementation narration, review history, and test results in the pull request. Lead with the current rule or decision, keep one idea per paragraph, and use the fewest headings needed. Update the owning document rather than creating a new summary or duplicating facts already present in code or configuration. Proposals hold exploration and, once accepted, a concise delivery outline; they never override current product, design, vocabulary, stack, data-model, or ADR sources. GitHub issues track active work without copying the proposal.
+**Documentation.** Describe behavior literally. Keep brand rationale in `docs/design/system/brand.md`. Write each prose paragraph and each list item as a single source line and let the editor wrap it; headings, tables, code blocks and list items keep their own lines. Record durable behavior, decisions, constraints, and operating instructions. Leave implementation narration, review history, and test results in the pull request. Lead with the current rule or decision, keep one idea per paragraph, and use the fewest headings needed. Update the owning document rather than creating a new summary or duplicating facts already present in code or configuration. Proposals hold exploration and, once accepted, a concise delivery outline; they never override current product, design, vocabulary, stack, data-model, or ADR sources. GitHub issues track active work without copying the proposal.
 
 **Pull request descriptions.** Start from `.github/pull_request_template.md`; do not compose a parallel shape from memory. Keep the summary to one short paragraph or at most three bullets and list only checks that ran and their result. Every rendered UI change keeps the `Screenshots` section with an attached after image at minimum and before-and-after evidence when comparison helps, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready. Add `Why`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
 
@@ -115,4 +119,4 @@ Each file in `apps/mobile/contract/` is a phone release's frozen API, written by
 
 ## Leave alone
 
-`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored — keep it that way.
+`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored - keep it that way.

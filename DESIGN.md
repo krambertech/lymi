@@ -1,6 +1,6 @@
 ---
 name: Lymi
-description: Cards to remember what you learn, lit by a storm lantern. Two rooms, one flame. Warm, calm, quick.
+description: A flashcard app with warm light and dark themes, readable content and quick capture and review.
 colors:
   canvas: "#f8f6f4"
   rail: "#f2f0ec"
@@ -291,7 +291,7 @@ components:
 
 # Lymi design system
 
-Lymi is lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. The light room is flat and the dark one sits each plate a little off the room on a soft shadow; both are warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
+Lymi uses warm light and dark themes, clear typography and restrained motion. The app follows the OS theme unless the learner chooses one in Settings. Light surfaces use borders for separation; dark surfaces also use subtle elevation. Amber highlights primary actions and the specific states listed in [colour.md](docs/design/system/colour.md#amber-means-act).
 
 The frontmatter above is generated from `packages/design/tokens.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
 
@@ -300,8 +300,8 @@ The frontmatter above is generated from `packages/design/tokens.css` by `node sc
 Each rule links to the file that holds its detail and its exceptions.
 
 1. **Tokens, never values.** Colour through the semantic utilities (`bg-plate`, `text-muted`), type through the scale (`text-lg`), radius through `rounded-*`. A raw hex or a stock Tailwind colour breaks dark mode, which is its own warm palette rather than an inversion. [colour.md](docs/design/system/colour.md)
-2. **Amber means act.** It is the flame, the one primary button, capture, a due count, a day reviewed, the Easy grade's icon, the star of an important card, the phone's chosen tab, and the phone review's example while its requested audio loads or plays. Nothing else is amber, including any other selected state. [colour.md](docs/design/system/colour.md#amber-means-act)
-3. **Surfaces are quiet.** By day depth is one hairline edge; at night `edge` lifts a plate off the room. Texture goes only where something is lit or holds a level, and a set never sits in a tray. Never a hand-made drop shadow or a decorative gradient. [surfaces.md](docs/design/system/surfaces.md)
+2. **Use amber only for defined roles.** Primary actions, capture, due counts, review progress, important-card marks, selected checkboxes and switches, and native navigation have specific rules. Read the complete list before adding another use. [colour.md](docs/design/system/colour.md#amber-means-act)
+3. **Use the surface utilities.** Light surfaces use a thin border; dark surfaces add elevation through `edge`. Use `well`, `lit` and `key-light` only for their documented roles. Group related panels with spacing and headings. [surfaces.md](docs/design/system/surfaces.md)
 4. **One primary per view.** Two primaries means the screen has no hierarchy. `secondary` is the default variant. [buttons.md](docs/design/system/buttons.md)
 5. **A closed set is closed.** Every variant, size and tone a component takes is listed in its file. An unlisted one is a bug, not an option, and a `className` that resizes or recolours a component is the same bug.
 6. **Never `disabled` on a button that cannot run yet.** Forms stay pressable and validate on submit; `aria-disabled` is for mid-request. [buttons.md](docs/design/system/buttons.md#states)
@@ -311,7 +311,7 @@ Each rule links to the file that holds its detail and its exceptions.
 10. **Status is never colour alone.** A state carries an icon and a word; an error carries an icon. [colour.md](docs/design/system/colour.md#status-is-never-colour-alone)
 11. **Every control has** default, hover, focus, active, disabled and, where it applies, loading. Hover goes through `hoverable:` so touch never sticks.
 12. **Motion conveys state**, leaves faster than it arrives, never animates a keyboard action, and has a reduced version. [motion.md](docs/design/system/motion.md)
-13. **One language on every surface.** The web, the site and the phone share the tokens, the lantern and the moments in motion.md. A change to a shared mechanic names its behaviour on all three surfaces in the same pull request or proposal. [phone.md](docs/design/system/phone.md)
+13. **Shared design across apps.** The web, the site and the phone share the tokens, the lantern and the moments in motion.md. A change to a shared mechanic names its behaviour on all three surfaces in the same pull request or proposal. [phone.md](docs/design/system/phone.md)
 
 ## Where the rules live
 

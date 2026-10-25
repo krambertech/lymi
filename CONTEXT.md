@@ -1,20 +1,20 @@
 # Lymi
 
-Lymi keeps what a learner learned as cards and brings them back with spaced repetition. Cards come from lessons and other material, by hand, by the AI or through integrations. Who it is for and what it does are in [PRODUCT.md](PRODUCT.md); this file names the things.
+Lymi is a flashcard app for learning any subject with spaced repetition. Cards can be created by hand, from material the learner brings, or through integrations. [PRODUCT.md](PRODUCT.md) defines the positioning and scope; this file defines product terms. Use “flashcard app” for the category and “card” for an individual item in the interface.
 
 ## Language
 
 ### Content
 
-**Card**: One thing worth remembering: a term and whatever context it has. It may hold a word, a phrase or anything else, so the interface counts and names cards, never words. A card added by an integration is an ordinary card from the moment it lands. The public site may say "flashcard" to name the category for people searching for one. _Avoid_: Word, flashcard, entry, proposal, draft, suggestion
+**Card**: One item to remember, with a term and optional supporting fields. It can hold a word, phrase, question, concept or fact. Count individual items as cards. A card added by an integration is an ordinary card. _Avoid_: Entry, proposal, draft, suggestion (for a saved card)
 
-**Term**: What the card asks about, in the language being learned: a word, a phrase or anything else worth remembering. _Avoid_: Word, front
+**Term**: The card’s main text: a word, phrase, question or concept. It may have a language, but a language is optional. Review modes decide whether the learner sees or recalls it. _Avoid_: Word (when the content may be broader), front
 
 **Deck**: A named group of cards. It may carry a default language, but language lives on the card. _Avoid_: Collection, list, folder
 
-**Style**: What the AI learned about a deck from the cards its owner wrote and their corrections of its text: what the deck is about and the habits its cards follow. It sits under the owner's instructions, which it never changes, and only the owner sees it. ADR 0037. _Avoid_: Profile, preferences, memory
+**Style**: The deck’s subject and writing patterns, inferred from the owner’s cards and corrections to AI text. Enrichment follows these patterns and the owner’s explicit instructions; instructions take precedence. Only the owner can see the style. ADR 0037. _Avoid_: Profile, preferences, memory
 
-**Correction**: The owner's rewrite of a field the AI wrote, kept as the AI's text beside the card's text now, so the deck's style learns what enrichment gets wrong. Emptying the field counts; putting the AI's text back with Undo withdraws it. Only the owner's own cards have them, and nobody sees them. ADR 0037. _Avoid_: Feedback, rating, fix
+**Correction**: A record of the owner changing a field written by Lymi’s AI. It preserves the AI version for learning the deck’s style. Clearing the field counts as a correction; restoring the AI version with Undo withdraws it. Corrections are private and apply only to the owner’s cards. ADR 0037. _Avoid_: Feedback, rating (for this record)
 
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 
@@ -36,17 +36,17 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Stress**: Which syllable of a Russian or Ukrainian word is stressed, which natives never write. The card keeps the term as natives write it and stores the stress as its pronunciation: the term with U+0301 over each stressed vowel of a word of two or more syllables, such as за́мок, and in Russian ё restored where the term writes е, such as ёжик. A term sent with its stress, as a lesson or an Anki deck marks it, is stored as замок stressed за́мок. The card form calls that field Stress on a Russian or Ukrainian card. In review the marked form stands in for the term while the card is New or Learning and the plain term returns once it is Known; the answer always shows the marks. Examples carry their marks inline and never lose them, because stress moves as a word inflects. _Avoid_: Accent, reading (for this field), emphasis
 
-**Supported language**: A language Lymi treats in full, decided by the card's language tag alone, with no mode or setting: Japanese, Chinese, Cantonese, Tamil, Ukrainian and Russian today. Each has its own record in `packages/core/src/languages`, which is the only place a language's tag is checked; every other language works as it always has. _Avoid_: First-party language, featured language, native language, profile, mode
+**Supported language**: A language with specific behavior selected from the card’s language tag. Japanese, Chinese, Cantonese and Tamil have reading support; Ukrainian and Russian have stress support. Other languages have pronunciation formats, script choices or enrichment defaults in `packages/core/src/languages/configured.ts`. Consult `languageFormat` and the registry rather than treating this list as exhaustive. Cards in other languages, and cards without a language, still work. _Avoid_: First-party language, featured language, native language, profile, mode
 
-**Example translation**: The card's example in the meaning language, kept beside the example rather than in it, so the example stays one sentence in the language being learned. Review shows it after the answer, right after the example, quieter and in parentheses. Where the deck lets it, the AI writes one for every example, whoever wrote the example, and writes it again when the example changes; one a person wrote stays and is marked as written for an earlier example until they rewrite it. Emptying it is a choice the AI leaves alone until Enrich. An edition carries its own. The example and its translation are each at most 250 characters as shown, readings and stress marks not counted. ADR 0038. _Avoid_: Gloss, subtitle, example meaning, sentence meaning
+**Example translation**: The card's example in the meaning language, kept beside the example rather than in it, so the example stays one sentence in the language being learned. Review shows it after the answer, directly below the example in muted text, without parentheses. Where the deck lets it, the AI writes one for every example, whoever wrote the example, and writes it again when the example changes; one a person wrote stays and is marked as written for an earlier example until they rewrite it. Emptying it is a choice the AI leaves alone until Enrich. An edition carries its own. The example and its translation are each at most 250 characters as shown, readings and stress marks not counted. ADR 0038. _Avoid_: Gloss, subtitle, example meaning, sentence meaning
 
 **Lead-in**: The few words said before a term so generated speech hears which sense is meant, such as 川を渡る before はし for a bridge. It is never shown or spoken on its own, and a card gets one only when its reading alone could name another word. _Avoid_: Context, prefix, hint
 
 **Recording**: A clip that came with an import of the term itself, such as an Anki deck's word audio, or of its example sentence. The term's is the card's audio: Lymi plays it instead of reading the term aloud, even on a card with no language, and keeps it through every edit but a new term, which drops it. The example's plays from the example's own play control instead of generated speech and stays through every edit but a new sentence; fixing its readings, stress marks or spacing keeps it. An export carries both out. A recording goes wherever its deck goes: whoever studies a shared deck hears it, and a published deck's public page plays the term's. Generated speech fills only a term or example without one. _Avoid_: Sound, voice, native audio, attachment
 
-**Field source**: Where one field's text came from: the lesson, the AI, or the learner. Kept per field, on the meaning, the example, its translation, the notes, the pronunciation and the hint, so AI text is never mistaken for the lesson. "AI" is Lymi's own enrichment and nothing else: text a connected app or the API sends is the learner's whoever composed it, because Activity already names the app, and only the lesson may be claimed for it.
+**Field source**: The origin of a field’s text: `lesson`, `ai` or `manual`. Recorded separately for meaning, example, example translation, notes, pronunciation and hint. `ai` means Lymi’s enrichment; API and MCP text defaults to `manual`, regardless of who composed it. A caller can declare `lesson` for text taken from source material. Activity records the connected app separately.
 
-**AI badge**: The violet mark beside a field that says Lymi's enrichment wrote it. Only that is marked: the learner's own words and the lesson's are the ordinary case and carry nothing, which is what makes the badge carry. The text itself stays ordinary text, because the learner is meant to read the meaning, not the label. Editing a field the AI wrote makes it the learner's and the badge goes. _Avoid_: Tag, flag, chip (for this one), "AI-generated", disclaimer
+**AI badge**: A violet mark identifying a field written by Lymi’s enrichment. Card pages and forms show it beside the field; review omits provenance badges to keep attention on recall. Learner-written and lesson-sourced text has no AI badge. Editing an AI-written field changes its source to manual and removes the badge. _Avoid_: Tag, flag, chip (for this mark), disclaimer
 
 **App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable in Settings. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)
 
@@ -54,7 +54,7 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Languages match by their primary subtag, so `ja` and `ja-JP` are one language, and a kana spelling never matches a kanji one. In Japanese, two cards whose kana readings both exist, fit the term and differ are two words, so 上手 read じょうず and 上手 read うわて are not duplicates; a card without a reading matches either. In Russian and Ukrainian the Stress counts the same way, so замок stressed за́мок and замок stressed замо́к are two cards, and a term matches with or without its stress marks. In Ukrainian ’, ‘, ʼ and ` are one apostrophe, so м’ясо and м'ясо are one term. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
-**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, the example's translation, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text, except that it rewrites its own example translation for a changed example. ADR 0033. _Avoid_: Prepare, generate, suggest
+**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, the example's translation, notes and pronunciation it may fill, and it can infer the language; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text, except that it rewrites its own example translation for a changed example. ADR 0033. _Avoid_: Prepare, generate, suggest
 
 **AI services**: The third-party services Lymi sends a learner's content to: OpenAI for enrichment and hint drafts, Anthropic and Cloudflare for Smart add, and Google, OpenAI or ElevenLabs for generated pronunciation. The account holds one choice about all of them; the phone app asks for it before the first AI action and sends nothing until the learner allows it, and a no stops the web too. ADR 0039. _Avoid_: AI consent, data sharing, permissions (in copy)
 
@@ -98,13 +98,13 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Actor**: Who made a write: the learner in the app, the API, an MCP client, the AI, or the system.
 
-**Audit row**: The record of one write: its actor, the connected app behind it and that app's name at the time, what was written and what happened to it. Every write leaves one, and Activity reads them and nothing else, so a write with no audit row is the bug to look for when something lands unseen. _Avoid_: Log entry, event (in copy), history
+**Audit row**: A record of a write, including its actor, connected app or key and name at the time, action, entity and result. Services write these records; Activity reads the relevant kinds. If an integration write is missing from Activity, check its audit row and the Activity mapping. _Avoid_: Log entry, event (in copy), history
 
 **Scope**: What a key or OAuth grant may do: read, or read and write. Reviews are never writable by an integration.
 
 **Connected app**: An MCP client the learner let in on the consent screen, listed in Settings. The grant behind it is an OAuth consent; "connected app" is what the learner is shown, because the client is the thing they recognise. _Avoid_: Integration (that is the actor), authorized client, OAuth client (in the interface)
 
-**Disconnect**: Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again. For Readwise, Lymi forgets the token the learner pasted and stops pulling; the cards it added stay. _Avoid_: Revoke (that is for API keys), remove, delete
+**Disconnect**: Taking a connected app's access back. Removes the app’s consent, so its next MCP request is refused even if its access token has not expired. The app must ask for access again. For Readwise, Lymi forgets the token the learner pasted and stops pulling; the cards it added stay. _Avoid_: Revoke (that is for API keys), remove, delete
 
 **Highlight**: A word or passage the learner marked while reading, which Lymi pulls from Readwise every hour. It becomes a card in the deck for its book's language, or nothing; it is never kept on its own. A highlight of a few words is the term; a passage needs the word in its note until Lymi extracts from passages. _Avoid_: Clipping, annotation, quote
 
@@ -112,7 +112,7 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Export**: One file the learner takes out of Lymi, for one deck or the whole library: an Anki package that Anki and Mochi open, or a Lymi file that Lymi imports back without loss. The server writes it, it downloads only with the learner's own session or key, and it is deleted a day after it is written. Only decks the learner owns are in it: a member never carries someone else's cards out of Lymi, and the library file leaves their shared decks out. A spreadsheet of one deck is written in the browser and is not an export in this sense. _Avoid_: Backup, download (for the thing itself), dump
 
-**Activity**: The list of what came into the learner's decks from outside the app — imports, and writes made by integrations and the AI — with the files they took out and who is in their shared decks: joins, leaves, removals, and the join link going on or off. Nothing lands unseen. Writes of one kind by one caller in one deck on one day are one row, which opens the cards it wrote so they can be inspected, edited or archived without leaving. _Avoid_: Review queue, inbox, approvals, history (for this screen)
+**Activity**: The screen listing imports, exports, integration and enrichment writes, and shared-deck membership and join-link changes. Card writes are grouped by action, caller, deck and day; a group opens the affected cards for inspection. Ordinary in-app edits appear in card history instead. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
 **Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps, the apps that add cards from what the learner reads, such as Readwise and Yomitan, and API keys, then exporting the library and importing from another app. Nothing else lives there. The phone has no Settings screen; You holds the same settings there. _Avoid_: You, profile, account, preferences
 
@@ -122,7 +122,7 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Inspect**: Looking over a card an integration added, and optionally editing or archiving it. _Avoid_: Review, approve
 
-**Archive**: Hiding a card or deck without destroying it. Restore undoes it. Everything a learner writes is archived rather than deleted, so this is the word for removing cards, decks and sections. _Avoid_: Delete, remove, trash
+**Archive**: Hiding a card, deck or section while preserving it for Restore. Use this word for reversible removal of learning content. Account deletion and content moderation have separate erasure rules. _Avoid_: Delete, remove, trash
 
 **Delete**: Removing a series for good. A series is a grouping and holds no writing of its own, so nothing a learner made is lost and there is nothing to restore. Besides **Delete account**, the only delete the app has; never use the word for a card, deck or section.
 
@@ -134,7 +134,7 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Owner**: The learner whose deck it is. The only one who writes to it, for now. _Avoid_: Admin, creator, author
 
-**Member**: A learner who joined a shared deck. Studies it, cannot change it, and cannot export it. The deck page and About this deck name its owner, and Leave is the only move offered on it. _Avoid_: Subscriber, follower, student, collaborator
+**Member**: A learner who joined a shared deck. Studies it, cannot change it, and cannot export it. The deck page and About this deck name its owner. Members can review, mark cards important, report content and leave the deck. _Avoid_: Subscriber, follower, student, collaborator
 
 **Role**: What a member may do in a shared deck: owner, editor, contributor, or learner. Only owner and learner exist in the interface yet.
 
@@ -144,7 +144,7 @@ Lymi keeps what a learner learned as cards and brings them back with spaced repe
 
 **Deck report**: Counts a publisher reads about their own published decks through the API: adds, first reviews, returning learners and page views. It never names a learner. ADR 0028. _Avoid_: Analytics, stats, insights (Insights is the learner's own screen)
 
-**Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Decks sit on a shelf per language they teach, then a shelf per subject, such as Science or Citizenship. Today's first-run guide offers its decks under **Or start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
+**Explore**: The catalogue of published decks, grouped by taught language and then subject. Visitors use `lymi.app/explore`. Signed-in learners use Explore in the desktop rail, narrow-web learner menu or native phone tab bar. Add puts a deck in Library. The web’s first-run guide also offers it under **Explore ready-made decks about**. Both surfaces share catalogue data; the product includes Library membership. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
 **First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), then ways to create a first deck and ready-made decks. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
 

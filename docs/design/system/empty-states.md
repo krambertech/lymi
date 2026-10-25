@@ -67,5 +67,5 @@ A screen whose layout is worth previewing shows its real components at zero. Ins
 
 - Every empty state is quieter than the page: its title is `text-xl` for the first-run guide, which heads Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never `size="xl"`.
 - An empty state holds no examples or sample content. They crowd the action and can be mistaken for the learner's own data.
-- The copy names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here". It never promises what the product does not do yet, and never ties the lantern to anything but the streak.
+- The copy names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here". It never promises what the product does not do yet, and describes the empty content directly.
 - An empty screen may show the brand lantern, because an empty screen says nothing about the streak. An error never does.

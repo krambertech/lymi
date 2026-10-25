@@ -461,8 +461,8 @@ msgstr "{added, plural, one {Добавлена # карточка} few {Доб�
 msgid "{after} of {total}"
 msgstr "{after} из {total}"
 
-msgid "{app} can no longer read or change your decks. Cards it added stay."
-msgstr "{app} больше не сможет читать или менять твои колоды. Добавленные им карточки останутся."
+msgid "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
+msgstr "{app} больше не сможет читать или менять твои колоды. Добавленные им карточки останутся. Чтобы изменить доступ, отключи и подключи его снова."
 
 msgid "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
 msgstr "{app} подключается к Lymi как удалённый MCP-сервер и входит через твой аккаунт Lymi. Что ему можно делать, ты выбираешь при входе."
@@ -1062,9 +1062,6 @@ msgstr "Добавлено сегодня"
 msgid "Adding…"
 msgstr "Добавляем…"
 
-msgid "Address copied"
-msgstr "Адрес скопирован"
-
 msgid "After you add them, Lymi writes each card’s example and pronunciation."
 msgstr "Когда ты их добавишь, Lymi напишет к каждой карточке пример и произношение."
 
@@ -1434,6 +1431,12 @@ msgstr "автор: {who}"
 
 msgid "Camera"
 msgstr "Камера"
+
+msgid "Can read and change your decks"
+msgstr "Может читать и менять твои колоды"
+
+msgid "Can read your decks"
+msgstr "Может читать твои колоды"
 
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
@@ -1811,9 +1814,6 @@ msgstr "Скопировано. Вставь в чат."
 msgid "Copy"
 msgstr "Копировать"
 
-msgid "Copy address"
-msgstr "Копировать адрес"
-
 msgid "Copy Lymi’s address and make a key for Yomitan."
 msgstr "Скопируй адрес Lymi и создай ключ для Yomitan."
 
@@ -1851,9 +1851,6 @@ msgstr "Не удалось проверить это устройство. Об
 
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Не удалось подключиться к Lymi. Попробуй ещё раз через минуту."
-
-msgid "Couldn’t copy the address. Copy it under How it connects."
-msgstr "Не удалось скопировать адрес. Скопируй его в разделе «Как это подключается»."
 
 msgid "Couldn’t copy. Type it into the chat instead."
 msgstr "Не удалось скопировать. Напиши это в чате сам."
@@ -3718,6 +3715,9 @@ msgstr "Сегодня нечего повторять."
 msgid "Nothing forgotten today"
 msgstr "Сегодня ничего не забыто"
 
+msgid "Nothing from {app} yet"
+msgstr "От {app} пока ничего"
+
 msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
 msgstr "От {app} пока ничего нет. Здесь появится то, что он добавляет, изменяет или архивирует."
 
@@ -4153,9 +4153,6 @@ msgstr "Чтение и запись"
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 msgstr "«Чтение» просматривает колоды и карточки. «Чтение и запись» также добавляет, редактирует и архивирует их. Ключ никогда не ставит оценок за повторение. <0>Справочник API</0>"
 
-msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
-msgstr "«Чтение» просматривает колоды и карточки. «Чтение и запись» также добавляет, редактирует и архивирует их. Доступ ты выбираешь, когда приложение входит в Lymi. Чтобы изменить его, отключи приложение и войди снова."
-
 msgid "Read the {app} guide"
 msgstr "Открыть руководство для {app}"
 
@@ -4182,12 +4179,6 @@ msgstr "Читаю текст"
 
 msgid "Reading your file"
 msgstr "Читаем твой файл"
-
-msgid "Reads and changes your decks"
-msgstr "Читает и меняет твои колоды"
-
-msgid "Reads your decks"
-msgstr "Читает твои колоды"
 
 msgid "Readwise"
 msgstr "Readwise"
@@ -5110,6 +5101,9 @@ msgstr "Ссылка из приглашения перестанет работ
 msgid "Theme"
 msgstr "Тема"
 
+msgid "Then try asking"
+msgstr "Потом попробуй попросить"
+
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
 
@@ -5377,9 +5371,6 @@ msgstr "Попробуй ещё раз с более стабильным сое
 msgid "Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
 
-msgid "Try asking"
-msgstr "Попробуй попросить"
-
 msgid "Try to remember, then reveal the answer"
 msgstr "Попробуй вспомнить, затем открой ответ"
 
@@ -5548,6 +5539,9 @@ msgstr "Что будет с колодами"
 
 msgid "What is Lymi?"
 msgstr "Что такое Lymi?"
+
+msgid "What it adds, edits or archives shows here."
+msgstr "Здесь появится то, что он добавляет, редактирует или архивирует."
 
 msgid "What it’s for"
 msgstr "Для чего она"

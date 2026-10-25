@@ -4,13 +4,14 @@ import { isolate } from "@lymi/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { ArrowUpRight, BookOpen } from "lucide-react";
+import { ArrowUpRight, BookOpen, History } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 import { appActivityQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { useConfirmStep } from "../lib/use-confirm-step";
 import { ActivityList } from "../views/activity-view";
 import { Button } from "./button";
+import { EmptySection } from "./empty-state";
 import { InlineError } from "./inline-error";
 import { Screen } from "./layout/screen";
 import { Go } from "./next-steps";
@@ -47,7 +48,7 @@ export function AppPage({
     captureAnalytics("app_page_viewed", { app: appKey });
   }, [appKey]);
   return (
-    <Screen width="md" back={{ label: t`Settings`, to: "/settings" }} backOnDesktop ownTitle>
+    <Screen width="md" back={{ label: t`Settings`, to: "/settings", hash: "apps" }} backOnDesktop ownTitle>
       <header className="grid gap-4 pb-8">
         <div className="flex items-center gap-4">
           <span className="grid size-14 shrink-0">{mark}</span>
@@ -133,11 +134,12 @@ export function AppActivity({
       ) : !entries ? (
         <Skeleton className="h-[145px] rounded-xl" />
       ) : entries.length === 0 ? (
-        <p className="edge rounded-xl bg-plate px-4 py-4 text-base text-text-2">
-          <Trans>
-            Nothing from {{ app: isolate(name) }} yet. What it adds, edits or archives shows here.
-          </Trans>
-        </p>
+        <EmptySection
+          icon={<History />}
+          title={t`Nothing from ${{ app: isolate(name) }} yet`}
+          body={t`What it adds, edits or archives shows here.`}
+          className="rounded-xl"
+        />
       ) : (
         <ActivityList
           entries={entries}

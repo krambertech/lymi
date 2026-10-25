@@ -42,14 +42,6 @@ function YomitanRoute() {
     },
   });
   const address = productUrl("/api/anki-connect");
-  const copyAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(address);
-      toast.add({ title: t`Address copied` });
-    } catch {
-      toast.add({ title: t`Couldn’t copy the address. Copy it under How it connects.` });
-    }
-  };
   const failed = make.error ?? revoke.error ?? (keys.isError ? keys.error : null);
   const error = failed
     ? errorMessage(failed)
@@ -72,7 +64,6 @@ function YomitanRoute() {
       onDone={() => make.reset()}
       onRevoke={(id) => revoke.mutate(id)}
       revoking={revoke.isPending}
-      onCopyAddress={() => void copyAddress()}
       error={error}
     />
   );

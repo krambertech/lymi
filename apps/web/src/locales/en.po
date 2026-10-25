@@ -461,8 +461,8 @@ msgstr "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi i
 msgid "{after} of {total}"
 msgstr "{after} of {total}"
 
-msgid "{app} can no longer read or change your decks. Cards it added stay."
-msgstr "{app} can no longer read or change your decks. Cards it added stay."
+msgid "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
+msgstr "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
 
 msgid "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
 msgstr "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
@@ -1062,9 +1062,6 @@ msgstr "Added today"
 msgid "Adding…"
 msgstr "Adding…"
 
-msgid "Address copied"
-msgstr "Address copied"
-
 msgid "After you add them, Lymi writes each card’s example and pronunciation."
 msgstr "After you add them, Lymi writes each card’s example and pronunciation."
 
@@ -1434,6 +1431,12 @@ msgstr "by {who}"
 
 msgid "Camera"
 msgstr "Camera"
+
+msgid "Can read and change your decks"
+msgstr "Can read and change your decks"
+
+msgid "Can read your decks"
+msgstr "Can read your decks"
 
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
@@ -1811,9 +1814,6 @@ msgstr "Copied. Paste it into the chat."
 msgid "Copy"
 msgstr "Copy"
 
-msgid "Copy address"
-msgstr "Copy address"
-
 msgid "Copy Lymi’s address and make a key for Yomitan."
 msgstr "Copy Lymi’s address and make a key for Yomitan."
 
@@ -1851,9 +1851,6 @@ msgstr "Couldn’t check this device. Reload to try again."
 
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Couldn’t connect to Lymi. Try again in a moment."
-
-msgid "Couldn’t copy the address. Copy it under How it connects."
-msgstr "Couldn’t copy the address. Copy it under How it connects."
 
 msgid "Couldn’t copy. Type it into the chat instead."
 msgstr "Couldn’t copy. Type it into the chat instead."
@@ -3718,6 +3715,9 @@ msgstr "Nothing due today."
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
+msgid "Nothing from {app} yet"
+msgstr "Nothing from {app} yet"
+
 msgid "Nothing from {app} yet. What it adds, edits or archives shows here."
 msgstr "Nothing from {app} yet. What it adds, edits or archives shows here."
 
@@ -4153,9 +4153,6 @@ msgstr "Read and write"
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 
-msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
-msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
-
 msgid "Read the {app} guide"
 msgstr "Read the {app} guide"
 
@@ -4182,12 +4179,6 @@ msgstr "Reading the text"
 
 msgid "Reading your file"
 msgstr "Reading your file"
-
-msgid "Reads and changes your decks"
-msgstr "Reads and changes your decks"
-
-msgid "Reads your decks"
-msgstr "Reads your decks"
 
 msgid "Readwise"
 msgstr "Readwise"
@@ -5110,6 +5101,9 @@ msgstr "Their invitation link stops working. You can invite them again any time.
 msgid "Theme"
 msgstr "Theme"
 
+msgid "Then try asking"
+msgstr "Then try asking"
+
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
@@ -5377,9 +5371,6 @@ msgstr "Try again on a steadier connection and keep Lymi open until the upload f
 msgid "Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Try again, or write to <0>hello@lymi.app</0>."
 
-msgid "Try asking"
-msgstr "Try asking"
-
 msgid "Try to remember, then reveal the answer"
 msgstr "Try to remember, then reveal the answer"
 
@@ -5548,6 +5539,9 @@ msgstr "What happens to its decks"
 
 msgid "What is Lymi?"
 msgstr "What is Lymi?"
+
+msgid "What it adds, edits or archives shows here."
+msgstr "What it adds, edits or archives shows here."
 
 msgid "What it’s for"
 msgstr "What it’s for"

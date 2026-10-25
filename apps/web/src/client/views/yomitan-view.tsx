@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Copy, KeyRound } from "lucide-react";
+import { KeyRound } from "lucide-react";
 import { lastUsed, shortDate } from "../components/api-keys-section";
 import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
@@ -23,7 +23,6 @@ interface Props {
   onDone: () => void;
   onRevoke: (id: string) => void;
   revoking: boolean;
-  onCopyAddress: () => void;
   error: string | null;
 }
 
@@ -42,14 +41,6 @@ export function YomitanView(props: Props) {
       mark={<YomitanMark className="size-14" />}
       status={status}
       does={t`A pop-up dictionary for Chrome, Edge and Firefox. Hold Shift over a word on any page and press + to add it as a card, with its reading, its meaning and the sentence you read it in.`}
-      action={
-        current && (
-          <Button size="sm" onClick={props.onCopyAddress}>
-            <Copy data-icon="inline-start" aria-hidden="true" />
-            <Trans>Copy address</Trans>
-          </Button>
-        )
-      }
     >
       {current === undefined ? (
         <Skeleton className="h-40 w-full rounded-xl" />

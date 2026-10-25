@@ -4,14 +4,7 @@ import { isolate } from "@lymi/core";
 import { ArrowUpRight, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import { AppMark } from "../components/app-mark";
-import {
-  AppActivity,
-  AppConnect,
-  type AppKey,
-  AppPage,
-  AppSection,
-  AppStop,
-} from "../components/app-page";
+import { AppActivity, AppConnect, type AppKey, AppPage, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { InlineError } from "../components/inline-error";
@@ -69,12 +62,23 @@ export function AssistantView(props: Props) {
             ? {
                 label: t`Connected`,
                 tone: "good",
-                detail: listed?.host ? (
-                  <Trans>
-                    Since {since} · <span className="font-mono">{listed.host}</span>
-                  </Trans>
-                ) : (
-                  <Trans>Since {since}</Trans>
+                detail: (
+                  <>
+                    {listed?.host ? (
+                      <Trans>
+                        Since {since} · <span className="font-mono">{listed.host}</span>
+                      </Trans>
+                    ) : (
+                      <Trans>Since {since}</Trans>
+                    )}
+                    <span className="block">
+                      {connected.scope === "write" ? (
+                        <Trans>Can read and change your decks</Trans>
+                      ) : (
+                        <Trans>Can read your decks</Trans>
+                      )}
+                    </span>
+                  </>
                 ),
               }
             : { label: t`Not connected`, tone: "muted" }
@@ -106,28 +110,10 @@ export function AssistantView(props: Props) {
         <Skeleton className="h-40 w-full rounded-xl" />
       ) : connected ? (
         <>
-          <TryAsking onCopy={props.onCopyPrompt} />
-          <AppSection title={t`Settings`}>
-            <div className="edge grid gap-1 rounded-xl bg-plate px-4 py-3.5">
-              <span className="text-md font-medium text-text">
-                {connected.scope === "write" ? (
-                  <Trans>Reads and changes your decks</Trans>
-                ) : (
-                  <Trans>Reads your decks</Trans>
-                )}
-              </span>
-              <span className="text-sm text-muted text-pretty">
-                <Trans>
-                  Read lists decks and cards. Read and write also adds, edits and archives them. You
-                  choose access when the app signs in. To change it, disconnect and sign in again.
-                </Trans>
-              </span>
-            </div>
-          </AppSection>
           <AppActivity appKey={appKey} app={connected.clientId} name={name} />
           {assistant && <Connect {...props} assistant={assistant} name={name} />}
           <AppStop
-            consequence={t`${{ app: isolate(name) }} can no longer read or change your decks. Cards it added stay.`}
+            consequence={t`${{ app: isolate(name) }} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again.`}
             label={t`Disconnect ${{ app: isolate(name) }}`}
             keep={t`Stay connected`}
             onStop={props.onDisconnect}
@@ -146,7 +132,7 @@ export function AssistantView(props: Props) {
   );
 }
 
-/** Things to ask, each copied for pasting into the assistant. */
+/** Things to ask once it's connected, each copied for pasting into the assistant. */
 function TryAsking({ onCopy }: { onCopy: (prompt: string) => void }) {
   const { t } = useLingui();
   const prompts = [
@@ -155,7 +141,10 @@ function TryAsking({ onCopy }: { onCopy: (prompt: string) => void }) {
     t`Make a deck from this article`,
   ];
   return (
-    <AppSection title={t`Try asking`}>
+    <div className="grid gap-2 border-t border-edge pt-4">
+      <span className="text-sm font-medium text-text-2">
+        <Trans>Then try asking</Trans>
+      </span>
       <ul className="flex flex-wrap gap-2">
         {prompts.map((prompt) => (
           <li key={prompt}>
@@ -169,12 +158,17 @@ function TryAsking({ onCopy }: { onCopy: (prompt: string) => void }) {
           </li>
         ))}
       </ul>
-    </AppSection>
+    </div>
   );
 }
 
 /** How it connects: the steps for this assistant, Lymi's address and any client ID it needs. */
-function Connect({ assistant, name, address }: Props & { assistant: Assistant; name: string }) {
+function Connect({
+  assistant,
+  name,
+  address,
+  onCopyPrompt,
+}: Props & { assistant: Assistant; name: string }) {
   const { t } = useLingui();
   const signIn = (
     <Trans key="sign-in">Sign in to Lymi when {{ app: isolate(name) }} asks, and allow it.</Trans>
@@ -215,6 +209,7 @@ function Connect({ assistant, name, address }: Props & { assistant: Assistant; n
           </div>
         )}
       </div>
+      <TryAsking onCopy={onCopyPrompt} />
     </AppConnect>
   );
 }

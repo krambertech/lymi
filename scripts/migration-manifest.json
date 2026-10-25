@@ -283,6 +283,10 @@
     {
       "name": "0070_review_aid_hint_again.sql",
       "sha256": "196da4e028b09862a0b0d01916d1715ecd402fd2107e90f4bc855202230a76da"
+    },
+    {
+      "name": "0071_pale_solo.sql",
+      "sha256": "6ccc7488de90d8e1dd499ac1dd10b04f41b3f0f43d4abd30f77c496912f6229d"
     }
   ]
 }

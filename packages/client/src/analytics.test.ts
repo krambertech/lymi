@@ -284,17 +284,36 @@ it("records the product only once the account allows it, and stops on opt-out", 
   expect(sdk.options()?.session_recording?.maskAllInputs).toBe(true);
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
-  analytics.setAnalyticsLearner("account-1", true);
+  analytics.setAnalyticsLearner("account-1", true, true);
   await recorderLoaded();
   expect(sdk.startSessionRecording).toHaveBeenCalledTimes(1);
-  analytics.setAnalyticsLearner("account-1", false);
+  analytics.setAnalyticsLearner("account-1", false, true);
   expect(sdk.stopSessionRecording).toHaveBeenCalledTimes(1);
+});
+
+it("stops recording when the learner turns session replay off, and keeps their events", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true, false);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  analytics.setAnalyticsLearner("account-1", true, true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).toHaveBeenCalledTimes(1);
+  analytics.setAnalyticsLearner("account-1", true, false);
+  expect(sdk.stopSessionRecording).toHaveBeenCalledTimes(1);
+  expect(
+    analytics.captureAnalytics("welcome_step_viewed", { step_name: "goal", skipped: false }),
+  ).toBe(true);
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
 });
 
 it("sends a snapshot with only its recording and keeps tokens out of recorded addresses", async () => {
   await load("https://my.lymi.app/today");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-  analytics.setAnalyticsLearner("account-1", true);
+  analytics.setAnalyticsLearner("account-1", true, true);
   sdk.capture("$snapshot", {
     $snapshot_data: [{ type: 2 }],
     $snapshot_bytes: 10,
@@ -335,7 +354,7 @@ it("never records a signed-out visitor or an internal account", async () => {
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
   const [internal] = INTERNAL_ACCOUNT_IDS;
-  analytics.setAnalyticsLearner(internal, true);
+  analytics.setAnalyticsLearner(internal, true, true);
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
   const before = sdk.sent.length;

@@ -119,7 +119,7 @@ test("the real browser SDK records a product page through the proxy with card te
   await page.evaluate(async (path) => {
     const analytics = await import(path);
     analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-    analytics.setAnalyticsLearner("test-opaque-account", true);
+    analytics.setAnalyticsLearner("test-opaque-account", true, true);
   }, modulePath);
   // The recorder uploads nothing until the learner interacts after it has loaded.
   await expect(async () => {

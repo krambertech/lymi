@@ -2714,6 +2714,9 @@ msgstr "Ненависть або образи"
 msgid "Head back to the app. You can close this tab."
 msgstr "Повернися до застосунку. Цю вкладку можна закрити."
 
+msgid "Help improve Lymi"
+msgstr "Допомагати покращувати Lymi"
+
 msgid "Hide password"
 msgstr "Сховати пароль"
 
@@ -3200,6 +3203,9 @@ msgstr "Дозволити цьому застосунку користуват�
 
 msgid "Lets a script read or add to your decks."
 msgstr "Дає скрипту читати твої колоди й додавати в них."
+
+msgid "Lets us see where Lymi is hard to use by replaying how you move through it. Your cards, names and typing stay hidden."
+msgstr "Дає нам побачити, де Lymi незручний, відтворюючи, як ти ним користуєшся. Твої картки, імена й те, що ти вводиш, залишаються прихованими."
 
 msgid "Library"
 msgstr "Бібліотека"
@@ -3785,6 +3791,9 @@ msgstr "Зараз у «{elsewhere}»"
 
 msgid "Off for mobile and web. Existing card text and saved audio stay."
 msgstr "Вимкнено в мобільному застосунку й у вебверсії. Наявний текст карток і збережене аудіо залишаються."
+
+msgid "Off. We don’t replay how you use Lymi."
+msgstr "Вимкнено. Ми не відтворюємо, як ти користуєшся Lymi."
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"

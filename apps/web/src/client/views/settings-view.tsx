@@ -36,6 +36,8 @@ export interface SettingsProps {
   onExportLibrary?: (() => void) | undefined;
   /** A link to the page that deletes the account, drawn as its button. */
   deleteAccountLink?: ReactElement | undefined;
+  /** The account's privacy choices, above the policy link. */
+  privacyChoices?: ReactNode;
 }
 
 /** Each language in its own name, so a learner can find theirs whatever is active. */
@@ -67,6 +69,7 @@ export function SettingsView({
   importLink,
   onExportLibrary,
   deleteAccountLink,
+  privacyChoices,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
@@ -147,6 +150,7 @@ export function SettingsView({
         title={t`Privacy`}
         description={t`What Lymi keeps, who helps provide it, and the choices you have.`}
       >
+        {privacyChoices}
         <Button
           variant="secondary"
           className="justify-self-start"

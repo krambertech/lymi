@@ -24,6 +24,7 @@ let surface: "public" | "product" = "product";
 let initialized = false;
 let learner: string | undefined;
 let accountAllowed = false;
+let replayAllowed = false;
 let accountChecked = false;
 let identifySent: string | undefined;
 let lastPage: string | undefined;
@@ -328,7 +329,13 @@ function applyState(): void {
 
 /** Replay records signed-in learners only: a signed-out visitor has no setting to object with. */
 function recordable(): boolean {
-  return surface === "product" && allowed() && !!learner && !INTERNAL_ACCOUNT_IDS.has(learner);
+  return (
+    surface === "product" &&
+    allowed() &&
+    replayAllowed &&
+    !!learner &&
+    !INTERNAL_ACCOUNT_IDS.has(learner)
+  );
 }
 
 /** The recorder is a chunk of its own, loaded only when a product page may be recorded. */
@@ -365,11 +372,17 @@ function identifyLearner(): void {
 }
 
 /** The product reports who is signed in and whether their account turned analytics off. */
-export function setAnalyticsLearner(id: string | undefined, permitted = false): void {
+export function setAnalyticsLearner(
+  id: string | undefined,
+  permitted = false,
+  /** Whether the account left session replay on in Settings. */
+  replay = false,
+): void {
   if ((learner && learner !== id) || (identifySent && !permitted)) forget();
   learner = id;
   accountChecked = true;
   accountAllowed = permitted;
+  replayAllowed = replay;
   if (initialized) applyState();
 }
 

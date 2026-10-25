@@ -24,8 +24,12 @@ import { MAX_RECORDING_BYTES, recordingFormat, storeRecording } from "./recordin
  */
 
 export const PROTOCOL_VERSION = 6;
-/** The audit client of every AnkiConnect write, whichever key made it. */
-export const ANKI_CONNECT_CLIENT = "anki-connect";
+/**
+ * The audit client of an AnkiConnect write: one per key name, so a replaced key keeps its app's
+ * Activity and another AnkiConnect tool's key stays apart from it.
+ */
+export const ankiConnectClient = (keyName: string | undefined) =>
+  keyName ? `anki-connect:${keyName}` : "anki-connect";
 export const NOTE_TYPE = "Lymi card";
 /** Named so Yomitan fills each with the right marker on its own: the first with the term. */
 export const NOTE_FIELDS = ["Term", "Reading", "Meaning", "Sentence", "URL", "Audio"] as const;

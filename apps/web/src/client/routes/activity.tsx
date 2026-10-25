@@ -15,7 +15,10 @@ export const Route = createFileRoute("/activity")({
 });
 
 // Names for the apps Lymi runs itself, so a filter with no rows yet still says whose it is.
-const BUILT_IN_APPS: Record<string, string> = { readwise: "Readwise", "anki-connect": "Yomitan" };
+const BUILT_IN_APPS: Record<string, string> = {
+  readwise: "Readwise",
+  "anki-connect:Yomitan": "Yomitan",
+};
 
 function ActivityRoute() {
   const { t } = useLingui();

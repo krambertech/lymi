@@ -92,7 +92,7 @@ describe("/api/anki-connect", () => {
     });
   });
 
-  it("keeps an earlier key's adds in Yomitan's Activity after the key is replaced", async () => {
+  it("keeps an earlier Yomitan key's adds in its Activity, apart from another tool's key", async () => {
     const made = await app.fetch("/api/keys", {
       ...json({ name: "Yomitan", scope: "write" }),
       as: learner,
@@ -106,11 +106,14 @@ describe("/api/anki-connect", () => {
     await post({ action: "addNote", version: 2, key: old, params: { note } });
     const revoked = await app.fetch(`/api/keys/${oldId}`, { method: "DELETE", as: learner });
     expect(revoked.ok).toBe(true);
+    const other = await makeKey("Another reader", "write");
+    const otherNote = { ...note, fields: { Term: "郵便局", Reading: "ゆうびんきょく" } };
+    await post({ action: "addNote", version: 2, key: other, params: { note: otherNote } });
 
-    const activity = await app.fetch("/api/activity?app=anki-connect", { as: learner });
+    const activity = await app.fetch("/api/activity?app=anki-connect:Yomitan", { as: learner });
     const { entries } = (await activity.json()) as { entries: { cards: { term: string }[] }[] };
-    expect(entries.flatMap((e) => e.cards.map((c) => c.term))).toEqual(
-      expect.arrayContaining(["台風", "散歩"]),
-    );
+    const terms = entries.flatMap((e) => e.cards.map((c) => c.term));
+    expect(terms).toEqual(expect.arrayContaining(["台風", "散歩"]));
+    expect(terms).not.toContain("郵便局");
   });
 });

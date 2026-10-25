@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { SPEAKER_WAVES } from "@lymi/design";
 import { clsx } from "clsx";
 import { Clock, Loader2 } from "lucide-react";
-import { motion, useAnimate } from "motion/react";
+import { useAnimate } from "motion/react";
 import { useEffect, useRef } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { IconButton } from "./button";
@@ -159,14 +159,34 @@ function Speaker({ playing }: { playing: boolean }) {
     >
       <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z" />
       {WAVES.map((wave) => (
-        <motion.path
-          key={wave.d}
-          d={wave.d}
-          initial={false}
-          animate={{ strokeOpacity: playing ? wave.loop : 1 }}
-          transition={playing ? { ...SPEAKER_WAVES.loop, repeat: Infinity } : SPEAKER_WAVES.settle}
-        />
+        <Wave key={wave.d} d={wave.d} loop={wave.loop} playing={playing} />
       ))}
     </svg>
   );
+}
+
+/** One wave: it eases down to its loop's first light, then loops, so playing never starts with a jump. */
+function Wave({ d, loop, playing }: { d: string; loop: number[]; playing: boolean }) {
+  const [scope, animate] = useAnimate<SVGPathElement>();
+  useEffect(() => {
+    const path = scope.current;
+    if (!path) return;
+    if (!playing) {
+      const settle = animate(path, { strokeOpacity: 1 }, SPEAKER_WAVES.settle);
+      return () => settle.stop();
+    }
+    let stopped = false;
+    let looping: { stop: () => void } | undefined;
+    const lead = animate(path, { strokeOpacity: loop[0] }, SPEAKER_WAVES.start);
+    void lead.then(() => {
+      if (stopped) return;
+      looping = animate(path, { strokeOpacity: loop }, { ...SPEAKER_WAVES.loop, repeat: Infinity });
+    });
+    return () => {
+      stopped = true;
+      lead.stop();
+      looping?.stop();
+    };
+  }, [playing, loop, animate, scope]);
+  return <path ref={scope} d={d} />;
 }

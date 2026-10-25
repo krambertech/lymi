@@ -430,6 +430,9 @@ function measureFit(els: FitElements, offerFoot: number, pillFoot: number, aidRo
  * A long card keeps its grades in view: its cue and target step down in size, and what still does
  * not fit scrolls inside the plate.
  */
+/** How long after the reveal a tap on the card still counts as the reveal's. */
+export const REVEAL_TAP_GUARD_MS = 400;
+
 export function ReviewCard({
   item,
   deck,
@@ -455,6 +458,11 @@ export function ReviewCard({
   const reduce = useReduceMotion();
   const { card, mode } = item;
   const exampleSound = useExampleAudio(card, "review");
+  // A tap that lands on the sentence just after the reveal is the reveal's own tap doubled.
+  const revealedAt = useRef(0);
+  useEffect(() => {
+    if (revealed) revealedAt.current = performance.now();
+  }, [revealed]);
   const picture = mode.cue === "image" ? card.image : null;
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
@@ -640,7 +648,14 @@ export function ReviewCard({
               )
             }
             speakerAfterLastWord
-            onPlay={measure || !exampleSound ? undefined : () => exampleSound.play("sentence")}
+            onPlay={
+              measure || !exampleSound
+                ? undefined
+                : () => {
+                    if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
+                    exampleSound.play("sentence");
+                  }
+            }
             className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
         </motion.div>

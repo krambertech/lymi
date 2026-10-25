@@ -49,9 +49,9 @@ export function ExampleLines({
         onClick={
           onPlay &&
           ((e) => {
-            // A selection being made is not a press.
-            if (window.getSelection()?.toString()) return;
             e.stopPropagation();
+            // A double click selects a word, and a drag selects more; neither is a press.
+            if (e.detail > 1 || window.getSelection()?.toString()) return;
             onPlay();
           })
         }

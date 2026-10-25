@@ -79,6 +79,7 @@ import { useReduceMotion } from "../lib/use-reduce-motion";
 import { useWordHistory } from "../lib/use-word-history";
 import {
   GradeBar,
+  REVEAL_TAP_GUARD_MS,
   ReviewCard,
   ReviewComplete,
   ReviewError,
@@ -124,8 +125,6 @@ export const Route = createFileRoute("/review")({
   component: ReviewPage,
 });
 
-/** How long after the reveal a tap on the card still counts as the reveal's. */
-const REVEAL_TAP_GUARD_MS = 400;
 /** The grade strip, where focus goes when a sheet over the card closes. */
 const GRADES_ID = "review-grades";
 const gradesFocus = () => {

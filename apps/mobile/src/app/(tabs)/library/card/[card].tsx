@@ -295,7 +295,7 @@ export default function CardPage() {
         }
         onPress={edit("example")}
         end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
-        endMiddle={exampleMiddle}
+        endMiddle={exampleSound ? exampleMiddle : undefined}
         // A failed run names itself once, under the fields, so its translation does not say it again.
         below={
           owner &&

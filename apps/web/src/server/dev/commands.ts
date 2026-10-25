@@ -91,7 +91,7 @@ export const commands: DevCommand[] = [
     group: "Simulate",
     title: "Make {count} often forgotten",
     count: { default: 3, max: 200 },
-    keywords: "slipping hook",
+    keywords: "slipping hint",
     blocked: noReviews,
     run: async (ctx, { count }) => `${cards(await slipCards(ctx, count))} are now often forgotten.`,
   },

@@ -27,7 +27,7 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     note: "Anything else worth keeping. Markdown: **bold**, *italic*, ++underline++, ~~strikethrough~~, links such as [text](https://example.com) or <https://example.com> (http, https or mailto), and lists starting with - or 1. Anything else, HTML included, shows as typed.",
   },
   {
-    name: "hook",
+    name: "hint",
     type: "string",
     note: "A short association that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after. Up to 200 characters.",
   },
@@ -64,9 +64,9 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     note: "Where the pronunciation came from.",
   },
   {
-    name: "hookSource",
+    name: "hintSource",
     type: '"lesson" | "ai" | "manual"',
-    note: "Where the hook came from.",
+    note: "Where the hint came from.",
   },
   {
     name: "enrich",

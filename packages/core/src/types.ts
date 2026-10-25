@@ -578,8 +578,8 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
-  // A hook is a phrase that leads back to the answer, never a paragraph.
-  hook: 200,
+  // A hint is a phrase that leads back to the answer, never a paragraph.
+  hint: 200,
 } as const;
 
 /** How many tags a card may carry, and how long each may be. */
@@ -641,10 +641,10 @@ export const CardInput = z.object({
     .max(CARD_LIMITS.notes)
     .optional()
     .meta({ description: `${NOTES_FORMAT} The limit counts the Markdown source.` }),
-  hook: z
+  hint: z
     .string()
     .trim()
-    .max(CARD_LIMITS.hook, "Keep the hook under 200 characters.")
+    .max(CARD_LIMITS.hint, "Keep the hint under 200 characters.")
     .optional()
     .meta({
       description:
@@ -671,7 +671,20 @@ export const CardInput = z.object({
   exampleTranslationSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
   notesSource: StatedFieldSource.optional(),
-  hookSource: StatedFieldSource.optional(),
+  hintSource: StatedFieldSource.optional(),
+  hook: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.hint, "Keep the hint under 200 characters.")
+    .optional()
+    .meta({
+      deprecated: true,
+      description: "The old name of `hint`, used when `hint` is left out.",
+    }),
+  hookSource: StatedFieldSource.optional().meta({
+    deprecated: true,
+    description: "The old name of `hintSource`, used when `hintSource` is left out.",
+  }),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
@@ -682,6 +695,24 @@ export const CardInput = z.object({
   }),
 });
 export type CardInput = z.infer<typeof CardInput>;
+
+/** A card write under the current names: `hook` and `hookSource` stand in for a `hint` left out. */
+export function withHint<
+  T extends {
+    hint?: string | null | undefined;
+    hintSource?: unknown;
+    hook?: string | undefined;
+    hookSource?: unknown;
+  },
+>({ hook, hookSource, ...input }: T): Omit<T, "hook" | "hookSource"> {
+  return {
+    ...input,
+    ...(input.hint === undefined && hook !== undefined ? { hint: hook } : {}),
+    ...(input.hintSource === undefined && hookSource !== undefined
+      ? { hintSource: hookSource }
+      : {}),
+  };
+}
 
 export const DeckChoiceInput = z.object({
   term: z.string().trim().min(1, "Type the term.").max(CARD_LIMITS.term),
@@ -706,7 +737,7 @@ export const cardLimits = {
   exampleTranslation: CardInput.shape.exampleTranslation.unwrap().maxLength,
   notes: CardInput.shape.notes.unwrap().maxLength,
   source: CardInput.shape.source.unwrap().maxLength,
-  hook: CardInput.shape.hook.unwrap().maxLength,
+  hint: CardInput.shape.hint.unwrap().maxLength,
 } satisfies Record<string, number | null>;
 
 /** A learner's own answer to a Smart add question, checked against the terms on the list. */
@@ -824,16 +855,20 @@ export const ResponseShapeQuery = z.object({ response: ResponseShape.optional() 
  * What helped a recall before the reveal, in the order review offers them, so a later step such as
  * a hint joins the end. Easy means recall without help, so no aided grade may be Easy.
  */
-export const REVIEW_AIDS = ["hook"] as const;
+export const REVIEW_AIDS = ["hint"] as const;
 export const ReviewAid = z.enum(REVIEW_AIDS).meta({
   id: "ReviewAid",
-  description: "hook: the learner peeked at the card's memory hook before the reveal.",
+  description: "hint: the learner peeked at the card's hint before the reveal.",
 });
 export type ReviewAid = z.infer<typeof ReviewAid>;
 
 /** Whether a grade may follow what the learner used before the reveal: every grade but an aided Easy. */
 export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) =>
   !aid || rating !== FsrsRating.Easy;
+
+/** A grade's aid under its current name; `hook` is what `hint` was called before. */
+export const gradeAid = (aid: ReviewAid | "hook" | undefined): ReviewAid | undefined =>
+  aid === "hook" ? "hint" : aid;
 
 /** Easy on a mode already graded today counts as Good: a second try is no sign of ease, ADR 0031. */
 export const countedRating = (rating: Rating, repeat: boolean): Rating =>
@@ -859,9 +894,19 @@ export const GradeInput = z
     reviewedAt: z.coerce.date().optional(),
     /** The device zone, used only to set the review zone the first time one is reported. */
     timezone: z.string().max(64).optional(),
-    aid: ReviewAid.optional().meta({
-      description: "What the learner used before the reveal. Left out, the recall was unaided.",
-    }),
+    aid: z
+      .union([
+        ReviewAid,
+        z.literal("hook").meta({
+          deprecated: true,
+          description:
+            "The old name of `hint`, still accepted from an older app or a queued grade.",
+        }),
+      ])
+      .optional()
+      .meta({
+        description: "What the learner used before the reveal. Left out, the recall was unaided.",
+      }),
     recallMs: ReviewTime.optional().meta({
       description:
         "Milliseconds the cue was on screen in the foreground before the reveal, or before the grade when there was no reveal. Left out when unknown or over 10 minutes.",
@@ -879,7 +924,7 @@ export const GradeInput = z
     message: "Say which review mode was graded.",
     path: ["mode"],
   })
-  .refine((grade) => gradeAllowed(grade.rating, grade.aid), {
+  .refine((grade) => gradeAllowed(grade.rating, gradeAid(grade.aid)), {
     message: "Easy means recall without help, so a grade with an aid cannot be Easy.",
     path: ["rating"],
   });
@@ -979,7 +1024,7 @@ export const AI_CONSENT_PLACES = [
   "add",
   "smart_add",
   "speech",
-  "hook",
+  "hint",
   "enrich",
   "settings",
 ] as const;

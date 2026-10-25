@@ -31,9 +31,9 @@ function card(patch: Partial<Card> = {}): Card {
     exampleTranslationOf: null,
     exampleTranslationStatus: null,
     notes: null,
-    hook: null,
-    hookSource: null,
-    hookDraft: null,
+    hint: null,
+    hintSource: null,
+    hintDraft: null,
     language: "et",
     tags: [],
     source: null,
@@ -1194,5 +1194,24 @@ describe("Ukrainian context", () => {
     const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, deps);
     expect(replay.key).toBe(first.key);
     expect(speech).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("Polish context", () => {
+  // Polish goes to Gemini first by default, which takes no previous text; this is the ElevenLabs voice ELEVENLABS_SPEECH_VOICES can name.
+  it("says «Po polsku:» silently before the term to an ElevenLabs voice, and says the term, not its marked stress", async () => {
+    const { bucket } = contextBucket();
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const row = card({ term: "muzyka", language: "pl", pronunciation: "mùzyka" });
+    await pronunciationAudio(context(row), row.id, {
+      bucket,
+      providers: () => [{ ...provider("elevenlabs", speech), locale: "pl-PL" }],
+    });
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "muzyka",
+      language: "pl",
+      previousText: "Po polsku:",
+      usage: expect.any(Function),
+    });
   });
 });

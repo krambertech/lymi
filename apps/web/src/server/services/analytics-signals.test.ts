@@ -47,7 +47,7 @@ async function cardFor(id: string) {
   return { ctx, cards, events };
 }
 
-it("names the card's state before the grade and a peek at the hook", async () => {
+it("names the card's state before the grade and a peek at the hint", async () => {
   const { ctx, cards, events } = await cardFor("signals-grade");
   const card = cards[0];
   if (!card) throw new Error("Card not added");
@@ -55,11 +55,11 @@ it("names the card's state before the grade and a peek at the hook", async () =>
     cardId: card.id,
     direction: "recognition",
     rating: 3,
-    aid: "hook",
+    aid: "hint",
     reviewedAt: new Date(),
   });
   const graded = (await events()).filter((event) => event.name === "review_graded");
-  expect(graded).toMatchObject([{ name: "review_graded", grade: 3, state: "new", aid: "hook" }]);
+  expect(graded).toMatchObject([{ name: "review_graded", grade: 3, state: "new", aid: "hint" }]);
 });
 
 it("says where web review drew a Japanese term's reading, and nothing for other cards or the phone", async () => {
@@ -110,18 +110,18 @@ it("reports a rest day and a broken run once, from the day's first activity", as
   ]);
 });
 
-it("reports a first hook with its source, and archives by origin without card text", async () => {
+it("reports a first hint with its source, and archives by origin without card text", async () => {
   const { ctx, cards, events } = await cardFor("signals-cards");
   const [first, second] = cards;
   if (!first || !second) throw new Error("Cards not added");
-  await updateCard(ctx, first.id, { hook: "a picture" });
-  await updateCard(ctx, first.id, { hook: "another picture" });
+  await updateCard(ctx, first.id, { hint: "a picture" });
+  await updateCard(ctx, first.id, { hint: "another picture" });
   await db.update(schema.cards).set({ meaningSource: "ai" }).where(eq(schema.cards.id, second.id));
   await archiveCards(ctx, [first.id, second.id]);
   await archiveCards(ctx, [first.id, second.id]);
   const all = await events();
-  expect(all.filter((event) => event.name === "hook_added")).toEqual([
-    { name: "hook_added", source: "manual" },
+  expect(all.filter((event) => event.name === "hint_added")).toEqual([
+    { name: "hint_added", source: "manual" },
   ]);
   expect(all.filter((event) => event.name === "cards_archived")).toEqual([
     { name: "cards_archived", origin: "typed", count: 2, ai_written: 1 },

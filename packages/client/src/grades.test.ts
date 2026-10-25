@@ -88,11 +88,11 @@ describe("recording a grade", () => {
 
   it("keeps a peek with a queued grade and sends it on replay", async () => {
     grade.mockRejectedValueOnce(offline());
-    expect(await grades.recordGrade({ ...g("a"), aid: "hook" })).toBe("queued");
+    expect(await grades.recordGrade({ ...g("a"), aid: "hint" })).toBe("queued");
     grades.resetGradeCache();
     grade.mockResolvedValueOnce(accepted("rev-a"));
     expect(await grades.flushOutbox()).toBe(1);
-    expect(grade.mock.calls.at(-1)?.[0]).toMatchObject({ cardId: "a", rating: 3, aid: "hook" });
+    expect(grade.mock.calls.at(-1)?.[0]).toMatchObject({ cardId: "a", rating: 3, aid: "hint" });
   });
 
   it("keeps the times measured at the grade with a queued grade and sends them on replay", async () => {

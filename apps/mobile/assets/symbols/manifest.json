@@ -27,7 +27,7 @@
   "pronunciation": "volume-2.mjs",
   "source": "library.mjs",
   "notes": "notebook-pen.mjs",
-  "hook": "anchor.mjs",
+  "hint": "lightbulb.mjs",
   "tags": "tag.mjs",
   "lock": "lock.mjs",
   "unlock": "lock-open.mjs",

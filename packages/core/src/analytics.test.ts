@@ -103,15 +103,15 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("pronunciation_played", { outcome: "failed", revealed: true }, "worker"),
     ).toBeNull();
-    // A draft is the learner's own press, and neither the hook nor the card leaves the device.
+    // A draft is the learner's own press, and neither the hint nor the card leaves the device.
     expect(
       eventProperties(
-        "hook_drafted",
-        { outcome: "drafted", wait_ms: 1800, hook: "ВОИН" },
+        "hint_drafted",
+        { outcome: "drafted", wait_ms: 1800, hint: "ВОИН" },
         "browser",
       ),
     ).toEqual({ outcome: "drafted", wait_ms: 1800 });
-    expect(eventProperties("hook_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
+    expect(eventProperties("hint_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
     expect(
       eventProperties(
         "cards_tagged",

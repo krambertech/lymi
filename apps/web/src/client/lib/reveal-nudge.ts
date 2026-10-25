@@ -1,11 +1,11 @@
-import { revealHintDelayMs } from "@lymi/client/reveal-hint";
+import { revealNudgeDelayMs } from "@lymi/client/reveal-nudge";
 import { useEffect, useState } from "react";
 
 const KEY = "lymi-reveals";
 /** Reveals after which the learner has shown they know the card is the button. */
 const LEARNED_AFTER = 3;
 
-// Kept in memory as well, so a browser that refuses storage still stops hinting in one session.
+// Kept in memory as well, so a browser that refuses storage still stops nudging in one session.
 let memory = 0;
 
 function readReveals(): number {
@@ -16,7 +16,7 @@ function readReveals(): number {
   }
 }
 
-/** Counts a reveal, by tap or keyboard, until the learner has made enough to stop the hint. */
+/** Counts a reveal, by tap or keyboard, until the learner has made enough to stop the nudge. */
 export function recordReveal(): void {
   const next = readReveals() + 1;
   if (next > LEARNED_AFTER) return;
@@ -30,10 +30,10 @@ const ACTIVITY = ["pointerdown", "keydown", "wheel"] as const;
 
 /**
  * Whether the unrevealed card should show how to reveal it. The clock starts with each card and,
- * until the hint appears, restarts on any press, key or scroll, so it only answers a learner who
+ * until the nudge appears, restarts on any press, key or scroll, so it only answers a learner who
  * is looking at the card and doing nothing.
  */
-export function useRevealHint(
+export function useRevealNudge(
   cardKey: string | undefined,
   revealed: boolean,
   reviewedDays: number | undefined,
@@ -42,7 +42,7 @@ export function useRevealHint(
   useEffect(() => {
     setShow(false);
     if (!cardKey || revealed) return;
-    const delay = revealHintDelayMs(reviewedDays, readReveals() < LEARNED_AFTER);
+    const delay = revealNudgeDelayMs(reviewedDays, readReveals() < LEARNED_AFTER);
     if (delay === null) return;
     let timer = 0;
     const start = () => {

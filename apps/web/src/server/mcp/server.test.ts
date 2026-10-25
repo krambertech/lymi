@@ -103,6 +103,8 @@ const card: CardView = {
   exampleRecorded: false,
   exampleTranslationStatus: null,
   notes: null,
+  hint: null,
+  hintSource: null,
   hook: null,
   hookSource: null,
   language: "it",
@@ -580,7 +582,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a mentioned deck like get_deck, not as every card's fields", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);
@@ -721,6 +723,21 @@ describe("Lymi MCP server", () => {
       undefined,
     );
     expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+  });
+
+  it("returns a card's hint under its old name too, for a client that kept the old schema", async () => {
+    services.updateCard.mockResolvedValue({ ...card, hint: "Sbrigati!", hintSource: "manual" });
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", hint: "Sbrigati!" },
+    });
+    expect(res.structuredContent).toMatchObject({
+      hint: "Sbrigati!",
+      hintSource: "manual",
+      hook: "Sbrigati!",
+      hookSource: "manual",
+    });
   });
 
   it("archives many cards in one call and reports each card's outcome in order", async () => {
@@ -1231,7 +1248,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a large deck in a few kilobytes and points to search_cards for the rest", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);

@@ -24,7 +24,7 @@ export interface LanguagePrompts {
   enrich: { guide: FieldGuide; example: string };
   /** Adding cards from a lesson: what a reading the lesson prints looks like. */
   lesson: string;
-  /** Memory hooks: advice for this language's terms, or null when the generic method serves. */
-  hook: string | null;
+  /** Hints: advice for this language's terms, or null when the generic method serves. */
+  hint: string | null;
   checks: readonly LanguageCheck[];
 }

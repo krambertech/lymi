@@ -120,8 +120,8 @@ export type ImportedCard = {
   pictureDescription?: string | undefined;
   /** The translation was written for an earlier example, from a Lymi zip. */
   translationStale?: boolean | undefined;
-  /** The card's memory hook and who wrote it, from a Lymi zip. */
-  hook?: { text: string; source: FieldSource } | undefined;
+  /** The card's hint and who wrote it, from a Lymi zip. */
+  hint?: { text: string; source: FieldSource } | undefined;
 };
 
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
@@ -132,7 +132,7 @@ export const IMPORT_LIMITS = {
   example: 2000,
   exampleTranslation: EXAMPLE_LENGTH,
   notes: 2000,
-  hook: 200,
+  hint: 200,
   tags: 20,
   tag: 40,
   deckName: 80,

@@ -8,11 +8,11 @@ The deck page's **Add → New card** menu or `N`, the rail's **Add** menu, or To
 
 ## Drive
 
-[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, choose **Add → New card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, press the **Notes** chip and write a note in the field it adds, open the **Tags** chip and pick **noun**, press the **Memory hook** chip at the row's end and write a hook, and press **Add to Lezione 12**.
+[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, choose **Add → New card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, press the **Notes** chip and write a note in the field it adds, open the **Tags** chip and pick **noun**, press the **Hint** chip at the row's end and write a hint, and press **Add to Lezione 12**.
 
 ## End state
 
-The sheet closes, **Notifications** says **Added “la nebbia”**, and the card is in the deck's list, also after a reload. `/api/decks` gives Lezione 12 one more card, and `/api/cards?term=la%20nebbia` returns exactly one card, in that deck, with that meaning, the note, the tag `noun` and the hook as the learner's own. Before adding, the Tags chip reads **noun**. In the deck's review, graded Good up to the new card, **Peek at your hook** shows the hook under the cue.
+The sheet closes, **Notifications** says **Added “la nebbia”**, and the card is in the deck's list, also after a reload. `/api/decks` gives Lezione 12 one more card, and `/api/cards?term=la%20nebbia` returns exactly one card, in that deck, with that meaning, the note, the tag `noun` and the hint as the learner's own. Before adding, the Tags chip reads **noun**. In the deck's review, graded Good up to the new card, **Peek at your hint** shows the hint under the cue.
 
 ## Gotchas
 

@@ -98,11 +98,11 @@ export function headword(term: string): string {
 }
 
 /**
- * Whether a card is one the keyword method fits, so the AI may draft its hook: a word or a phrase of
+ * Whether a card is one the keyword method fits, so the AI may draft its hint: a word or a phrase of
  * up to three words, on its first form, in a language other than the one its meanings are written
  * in. A sentence or a fact in the learner's own language has nothing to sound alike.
  */
-export function hookable(
+export function hintable(
   card: { term: string; meaning?: string | null | undefined; language?: string | null | undefined },
   meaningLanguage: string,
 ): boolean {

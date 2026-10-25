@@ -422,9 +422,9 @@ dev.post("/slip", describe({ hide: true, open: true }), body(CountBody, "slip"),
   return c.json({ slipped, counts: await devCounts(ctx) });
 });
 
-const OftenForgottenBody = z.object({ hooked: z.boolean().optional() });
+const OftenForgottenBody = z.object({ hinted: z.boolean().optional() });
 
-// Often-forgotten cards with no hook, so review's offer to write one can be seen and tested.
+// Often-forgotten cards with no hint, so review's offer to write one can be seen and tested.
 dev.post(
   "/often-forgotten",
   describe({ hide: true, open: true }),

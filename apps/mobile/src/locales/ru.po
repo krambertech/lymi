@@ -941,8 +941,8 @@ msgstr "Добавь карточки с последнего урока, а п�
 msgid "Add cards from your next lesson"
 msgstr "Добавь карточки из следующего урока"
 
-msgid "Add hook"
-msgstr "Добавить зацепку"
+msgid "Add hint"
+msgstr "Добавить подсказку"
 
 msgid "Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect."
 msgstr "Добавь Lymi как удалённый MCP-сервер с OAuth. Lymi не позволяет приложениям регистрироваться самим, поэтому приложение, которое не может представиться через документ client ID, не подключится."
@@ -1019,8 +1019,8 @@ msgstr "AI дополнит"
 msgid "AI follows these when filling cards. Only you see them."
 msgstr "ИИ следует им, когда заполняет карточки. Видишь их только ты."
 
-msgid "AI hook"
-msgstr "Зацепка от AI"
+msgid "AI hint"
+msgstr "Подсказка от AI"
 
 msgid "AI meaning"
 msgstr "Значение от AI"
@@ -1758,8 +1758,8 @@ msgstr "Не удалось удалить аккаунт. Проверь сое
 msgid "Couldn’t download the file. Check your connection and try again."
 msgstr "Не удалось скачать файл. Проверь соединение и попробуй ещё раз."
 
-msgid "Couldn’t draft a hook. Try again in a moment."
-msgstr "Не удалось подготовить зацепку. Попробуй ещё раз чуть позже."
+msgid "Couldn’t draft a hint. Try again in a moment."
+msgstr "Не удалось подготовить подсказку. Попробуй ещё раз чуть позже."
 
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не удалось дополнить «{term}». Проверь соединение и попробуй снова."
@@ -1919,8 +1919,8 @@ msgstr "Не удалось сохранить карточку."
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не удалось сохранить цель. Попробуй ещё раз."
 
-msgid "Couldn’t save the hook."
-msgstr "Не удалось сохранить зацепку."
+msgid "Couldn’t save the hint."
+msgstr "Не удалось сохранить подсказку."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
@@ -2164,7 +2164,7 @@ msgstr "Готово"
 msgid "Draft"
 msgstr "Черновик"
 
-msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgid "Drafting a hint uses AI. Turn on AI services in You to draft one."
 msgstr "Подсказку составляет AI. Включи AI-сервисы в разделе Ты, чтобы составить её."
 
 msgid "Drag a series by its handle. Library shows them in this order."
@@ -2210,8 +2210,8 @@ msgstr "Изменить"
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
-msgid "Edit hook"
-msgstr "Изменить зацепку"
+msgid "Edit hint"
+msgstr "Изменить подсказку"
 
 msgid "Edit term"
 msgstr "Изменить термин"
@@ -2610,14 +2610,20 @@ msgctxt "language"
 msgid "Hindi"
 msgstr "Хинди"
 
+msgid "Hint"
+msgstr "Подсказка"
+
+msgid "Hint by you"
+msgstr "Твоя подсказка"
+
+msgid "Hint from lesson"
+msgstr "Подсказка с урока"
+
+msgid "Hint: {text}"
+msgstr "Подсказка: {text}"
+
 msgid "History"
 msgstr "История"
-
-msgid "Hook by you"
-msgstr "Твоя зацепка"
-
-msgid "Hook from lesson"
-msgstr "Зацепка с урока"
 
 msgid "How cards are asked"
 msgstr "Как задаются карточки"
@@ -3152,12 +3158,6 @@ msgstr "Значение с урока"
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медицинский французский для медсестёр. Бери медицинское значение."
 
-msgid "Memory hook"
-msgstr "Зацепка"
-
-msgid "Memory hook: {text}"
-msgstr "Зацепка: {text}"
-
 msgid "Merge"
 msgstr "Объединить"
 
@@ -3390,8 +3390,8 @@ msgstr "Разделов пока нет"
 msgid "No series"
 msgstr "Без серии"
 
-msgid "No strong hook for this one. Try again, or write your own."
-msgstr "Для этой карточки нет удачной зацепки. Попробуй ещё раз или напиши свою."
+msgid "No strong hint for this one. Try again, or write your own."
+msgstr "Для этой карточки нет удачной подсказки. Попробуй ещё раз или напиши свою."
 
 msgid "No tags match “{query}”"
 msgstr "Нет тегов по запросу «{query}»"
@@ -3674,8 +3674,8 @@ msgstr "Вставь client ID, оставь секрет пустым и выб
 msgid "PDF"
 msgstr "PDF"
 
-msgid "Peek at your hook"
-msgstr "Заглянуть в зацепку"
+msgid "Peek at your hint"
+msgstr "Заглянуть в подсказку"
 
 msgid "People"
 msgstr "Люди"
@@ -4277,8 +4277,8 @@ msgstr "Показать другую"
 msgid "Show everything"
 msgstr "Показать всё"
 
-msgid "Show hook"
-msgstr "Показать зацепку"
+msgid "Show hint"
+msgstr "Показать подсказку"
 
 msgid "Show in Library"
 msgstr "Показать в Библиотеке"
@@ -4858,8 +4858,8 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
 
-msgid "Try a memory hook"
-msgstr "Попробуй зацепку"
+msgid "Try a hint"
+msgstr "Попробуй подсказку"
 
 msgid "Try a word from a card, or a language."
 msgstr "Попробуй слово с карточки или название языка."
@@ -5089,8 +5089,8 @@ msgstr "Слова и фразы языка, который учишь."
 msgid "Work and study"
 msgstr "Работа и учёба"
 
-msgid "Write a hook."
-msgstr "Напиши зацепку."
+msgid "Write a hint."
+msgstr "Напиши подсказку."
 
 msgid "Write to Lymi"
 msgstr "Написать в Lymi"
@@ -5153,8 +5153,8 @@ msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT}
 msgid "You can undo the whole import later from Activity."
 msgstr "Весь импорт можно потом отменить в Активности."
 
-msgid "You can’t choose Easy after peeking at your hook."
-msgstr "После того как заглянешь в зацепку, «Легко» выбрать нельзя."
+msgid "You can’t choose Easy after peeking at your hint."
+msgstr "После того как заглянешь в подсказку, «Легко» выбрать нельзя."
 
 msgid "You cannot add this deck."
 msgstr "Ты не можешь добавить эту колоду."

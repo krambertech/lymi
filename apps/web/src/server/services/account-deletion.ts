@@ -478,7 +478,7 @@ export async function deleteAccount(
             .where(sql`${schema.cardImages.cardId} in ${studiedCards}`),
           db
             .update(schema.cards)
-            .set({ userId: FORMER_OWNER_ID, hookDraft: null, updatedAt: now })
+            .set({ userId: FORMER_OWNER_ID, hintDraft: null, updatedAt: now })
             .where(sql`${schema.cards.deckId} in ${studied}`),
           // Last, since `studied` reads the decks by their owner.
           db

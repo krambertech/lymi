@@ -14,7 +14,7 @@ export const japanese = {
 Why: addReadings asks for the same example with a reading after each run of kanji, and nothing else changed.`,
   },
   lesson: "furigana over or beside kanji, a kana gloss in brackets",
-  hook: null,
+  hint: null,
   checks: [
     { field: "example", rule: "readings over kanji", pass: (text) => !missingReadings(text, "ja") },
   ],

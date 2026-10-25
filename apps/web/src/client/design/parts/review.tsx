@@ -201,7 +201,7 @@ function ReviewPhone({
         deck={reviewDeck}
         section={picture ? undefined : "Lezione 3"}
         revealed={revealed}
-        hint={!revealed}
+        nudge={!revealed}
         onReveal={() => setRevealed(true)}
         onPlayAudio={noop}
         className="mt-4"

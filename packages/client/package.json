@@ -32,7 +32,7 @@
     "./imports": "./src/imports.ts",
     "./app-marks": "./src/app-marks.ts",
     "./apps": "./src/apps.ts",
-    "./reveal-hint": "./src/reveal-hint.ts",
+    "./reveal-nudge": "./src/reveal-nudge.ts",
     "./dev-palette": "./src/dev-palette.ts",
     "./desktop": "./src/desktop.ts",
     "./ai-consent": "./src/ai-consent.ts"

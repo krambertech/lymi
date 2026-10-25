@@ -2,7 +2,7 @@ import {
   CARD_LIMITS,
   effectiveModes,
   headword,
-  hookable,
+  hintable,
   modesFromDirections,
   type ReviewModeKey,
 } from "@lymi/core";
@@ -18,9 +18,9 @@ import { getSettings } from "./settings";
 
 /**
  * What the model sees of a card: the term, its meaning, the term's language, and the text modes
- * it is asked in, which decide what the hook must never write.
+ * it is asked in, which decide what the hint must never write.
  */
-export type HookCard = {
+export type HintCard = {
   term: string;
   meaning: string;
   language: string;
@@ -37,12 +37,13 @@ const DECK_MEANINGS = 8;
 const MAX_WORDS = 6;
 
 /** The rule now lives in core, for the clients; language tests still read it from here. */
-export { hookable } from "@lymi/core";
+export { hintable } from "@lymi/core";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HOOK_PROMPT_VERSION = 7;
+export const HINT_PROMPT_VERSION = 7;
 
-export const HOOK_INSTRUCTIONS = [
+// The model is asked for a memory hook: unlike "hint", the word tells it never to give the answer away.
+export const HINT_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",
   "Write the hook entirely in the language the card's meaning is written in. Read the meaning text to tell which, along with deckMeanings, other meanings from the same deck in the same language, and give that language's tag in language before the hook. Most examples below are Russian, but a meaning in English gets an English hook, and a meaning in Ukrainian, with letters such as і, ї, є or ґ, gets a Ukrainian hook, never a Russian one. When the meaning alone could be either, such as магазин, the language of deckMeanings decides. No words of the language being learned appear in the hook.",
   "A hook needs two links, and both must click.",
@@ -79,14 +80,14 @@ export const HOOK_INSTRUCTIONS = [
   "- Return null when the term is in the same language as its meaning, or when the card is not a word or phrase with a translation. Null is better than a weak hook.",
 ].join("\n");
 
-export const HOOK_REPLY_SCHEMA = {
+export const HINT_REPLY_SCHEMA = {
   name: "memory_hook",
   schema: {
     type: "object",
     properties: {
       language: { type: "string" },
       candidates: { type: "array", items: { type: "string" } },
-      hook: { type: ["string", "null"], maxLength: CARD_LIMITS.hook },
+      hook: { type: ["string", "null"], maxLength: CARD_LIMITS.hint },
     },
     required: ["language", "candidates", "hook"],
     additionalProperties: false,
@@ -100,7 +101,7 @@ function fold(text: string): string {
   return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
 }
 
-/** Short words that carry no meaning of their own, so a hook may say them whatever the card is. */
+/** Short words that carry no meaning of their own, so a hint may say them whatever the card is. */
 const FUNCTION_WORDS = new Set([
   "the",
   "and",
@@ -146,12 +147,12 @@ function contentWords(text: string): string[] {
 }
 
 /**
- * True when one of `words` appears in `hook`. A short word must match whole; a longer one matches
+ * True when one of `words` appears in `hint`. A short word must match whole; a longer one matches
  * on its first letters, up to four, so an inflection or a vowel change in the ending counts too:
  * "слабый" catches "слабая", "приносить" catches "принёс".
  */
-function mentions(hook: string, words: readonly string[]): boolean {
-  const said = contentWords(hook);
+function mentions(hint: string, words: readonly string[]): boolean {
+  const said = contentWords(hint);
   return words.some((word) => {
     if (word.length <= 3) return said.includes(word);
     const stem = word.slice(0, Math.max(3, Math.min(4, word.length - 2)));
@@ -168,26 +169,26 @@ const ASKS_MEANING = new Set<ReviewModeKey>(["term_to_meaning", "image_to_meanin
  * the cue, the meaning where the term or a picture is. A sound-alike in the learner's script is not
  * the term.
  */
-export function givesAway(hook: string, card: HookCard): boolean {
+export function givesAway(hint: string, card: HintCard): boolean {
   const asks = (modes: Set<ReviewModeKey>) => card.asked.some((mode) => modes.has(mode));
-  if (asks(ASKS_TERM) && mentions(hook, contentWords(headword(card.term)))) return true;
-  return asks(ASKS_MEANING) && mentions(hook, contentWords(card.meaning));
+  if (asks(ASKS_TERM) && mentions(hint, contentWords(headword(card.term)))) return true;
+  return asks(ASKS_MEANING) && mentions(hint, contentWords(card.meaning));
 }
 
 /** The draft as the model wrote it, trimmed, or null when it broke a rule the prompt sets. */
-export function acceptDraft(raw: string | null, card: HookCard): string | null {
-  const hook = raw
+export function acceptDraft(raw: string | null, card: HintCard): string | null {
+  const hint = raw
     ?.trim()
     .replace(/^["“«]|["”»]$/g, "")
     .trim();
-  if (!hook) return null;
-  if (hook.includes("\n") || hook.split(/\s+/).length > MAX_WORDS) return null;
-  return givesAway(hook, card) ? null : hook;
+  if (!hint) return null;
+  if (hint.includes("\n") || hint.split(/\s+/).length > MAX_WORDS) return null;
+  return givesAway(hint, card) ? null : hint;
 }
 
 /** What the model reads about one card. */
-export function hookInput(card: HookCard): string {
-  const guide = languagePrompts(card.language)?.hook;
+export function hintInput(card: HintCard): string {
+  const guide = languagePrompts(card.language)?.hint;
   return JSON.stringify({
     term: card.term,
     meaning: card.meaning,
@@ -200,13 +201,13 @@ export function hookInput(card: HookCard): string {
 }
 
 /** One draft for one card, or null when the model has none it may offer. */
-export async function draftHook(provider: TextProvider, card: HookCard): Promise<string | null> {
-  const input = hookInput(card);
+export async function draftHint(provider: TextProvider, card: HintCard): Promise<string | null> {
+  const input = hintInput(card);
   const reply = Reply.safeParse(
     await provider.complete({
-      instructions: HOOK_INSTRUCTIONS,
+      instructions: HINT_INSTRUCTIONS,
       input,
-      schema: HOOK_REPLY_SCHEMA,
+      schema: HINT_REPLY_SCHEMA,
       // The candidates are written in the reply, so no hidden reasoning: about 2 s, as good as medium's 10 s on real cards.
       effort: "none",
     }),
@@ -215,12 +216,12 @@ export async function draftHook(provider: TextProvider, card: HookCard): Promise
 }
 
 /**
- * A fresh draft for the owner's hook editor, asked for with its Draft button, or null for a card the
+ * A fresh draft for the owner's hint editor, asked for with its Draft button, or null for a card the
  * keyword method does not fit, where no vendor is configured, or when the AI had none. The draft is
- * kept on the card only so a hook saved as exactly that text is marked as the AI's; keeping it is
+ * kept on the card only so a hint saved as exactly that text is marked as the AI's; keeping it is
  * bookkeeping, not a change to the card, so it is not audited and leaves `updatedAt` alone.
  */
-export async function hookDraftFor(
+export async function hintDraftFor(
   ctx: ServiceContext,
   cardId: string,
   provider: TextProvider | null,
@@ -237,7 +238,7 @@ export async function hookDraftFor(
     language: card.language ?? "",
     pronunciation: card.pronunciation,
   };
-  if (!hookable(subject, meaningLanguage)) return null;
+  if (!hintable(subject, meaningLanguage)) return null;
   const [deck] = await ctx.db
     .select({ directions: schema.decks.directions })
     .from(schema.decks)
@@ -258,25 +259,25 @@ export async function hookDraftFor(
     )
     .limit(DECK_MEANINGS);
   const deckMeanings = neighbours.flatMap(({ meaning }) => (meaning?.trim() ? [meaning] : []));
-  const hookCard = { ...subject, asked, deckMeanings };
+  const hintCard = { ...subject, asked, deckMeanings };
   if (!provider) return null;
 
   // A reply can come back empty or break a rule now and then, so one more try before answering none.
   let draft: string | null;
   try {
-    draft = (await draftHook(provider, hookCard)) ?? (await draftHook(provider, hookCard));
+    draft = (await draftHint(provider, hintCard)) ?? (await draftHint(provider, hintCard));
   } catch (error) {
-    console.error("Drafting a hook failed", {
+    console.error("Drafting a hint failed", {
       error: error instanceof Error ? error.name : "unknown",
     });
-    throw new ServiceError("unavailable", "The AI couldn't draft a hook. Try again in a moment.");
+    throw new ServiceError("unavailable", "The AI couldn't draft a hint. Try again in a moment.");
   }
   // An empty answer keeps the last draft, which may still be in the learner's field. Only while the
   // card still reads as it did, so a draft never outlives the words it was for.
   if (draft === null) return null;
   await ctx.db
     .update(schema.cards)
-    .set({ hookDraft: draft })
+    .set({ hintDraft: draft })
     .where(
       and(
         eq(schema.cards.id, card.id),

@@ -10,7 +10,7 @@ import type {
   DeckChoiceInput,
   DeckChoiceOut,
   Direction,
-  HookDraftOut,
+  HintDraftOut,
   ImportantCardsOut,
   ReviewMode,
   TerseCardsOut,
@@ -29,7 +29,7 @@ export type Card = Omit<
   CardRow,
   | "reviewModeKeys"
   | "revision"
-  | "hookDraft"
+  | "hintDraft"
   | "audioApprovedKey"
   | "exampleTranslationOf"
   | "exampleRecordingKey"
@@ -132,9 +132,9 @@ export const cardsApi = {
     request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
   /** Ask the AI to fill the card's empty fields. Comes back working; the deck's poll watches it. */
   enrichCard: (id: string) => request<Card>(`/api/cards/${id}/enrich`, { method: "POST" }),
-  /** The AI's draft for the card's memory hook, kept on the server until the card's text changes. */
-  draftHook: (id: string) =>
-    request<HookDraftOut>(`/api/cards/${id}/hook-draft`, { method: "POST" }),
+  /** The AI's draft for the card's hint, kept on the server until the card's text changes. */
+  draftHint: (id: string) =>
+    request<HintDraftOut>(`/api/cards/${id}/hint-draft`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   // Bump the request version when a speech policy changes without a card edit.

@@ -11,13 +11,19 @@ pnpm db:migrate
 pnpm --filter @lymi/web dev --port 5241
 ```
 
-`pnpm dev` runs the product and the public website together. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, or on a free port when another worktree already holds 5241. A loopback `PRODUCT_URL` follows whichever port the request arrived on, so `.dev.vars` needs no per-worktree edit. Browsers share cookies across ports, so a loopback server prefixes its cookies with its port (`lymi-5241.session_token`) and parallel worktrees keep separate sessions.
+`pnpm dev` runs the product and the public website together. The website reads the product's local D1, so `pnpm db:migrate` prepares both. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, or on a free port when another worktree already holds 5241. A loopback `PRODUCT_URL` follows whichever port the request arrived on, so `.dev.vars` needs no per-worktree edit. Browsers share cookies across ports, so a loopback server prefixes its cookies with its port (`lymi-5241.session_token`) and parallel worktrees keep separate sessions.
 
 If `pnpm db:migrate` fails with "table already exists" or a migration name it has never seen, the local D1 was built from another branch. `pnpm local db:fresh` moves it aside and applies every migration again. Nothing in that directory is production data.
 
 ## Run tests while you work
 
 `pnpm test:watch` runs the product's Vitest in watch mode on the `unit` project and the desktop Chromium component instance. A save reruns only the tests that import what changed, and no other browser starts. Before a push, `pnpm verify:changed` adds the static checks; [`docs/testing.md`](testing.md) has what runs at each gate.
+
+## Keys for model evaluations
+
+The evaluations (`eval:enrichment`, `eval:style`, `eval:lead-ins --write` and `eval:stress`) call vendors through the `lymi` AI Gateway: they read keys from `apps/web/.dev.vars` and the gateway URL from `wrangler.jsonc`, and a missing key stops them with every missing name. `AI_GATEWAY_TOKEN` is an authentication token for the `lymi` gateway, made under AI Gateway in the Cloudflare dashboard; `OPENAI_API_KEY` and `GEMINI_API_KEY` are the vendors' own keys.
+
+Keep real values in the main checkout's `apps/web/.dev.vars`. `.worktreeinclude` copies that file into each worktree Claude Code creates, and unit tests and `cf-typegen` ignore it, so its keys never change what they see.
 
 ## Become a persona
 

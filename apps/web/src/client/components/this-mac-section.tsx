@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { cn } from "cn";
 import { type ReactNode, useEffect, useState } from "react";
 import {
   acceleratorFrom,
@@ -92,7 +93,10 @@ export function ThisMacSection() {
               onKeyDown={recording ? onRecordKey : undefined}
               onBlur={() => setRecording(false)}
               aria-label={t`Quick add shortcut: ${keys}. Change`}
-              className="min-w-24 tabular-nums"
+              className={cn(
+                "min-w-24 tabular-nums",
+                recording && "outline-2 outline-offset-2 outline-ring",
+              )}
             >
               {recording ? t`Press keys` : keys}
             </Button>
@@ -182,10 +186,13 @@ function SwitchRow({ label, description, checked, disabled, onChange, action }: 
       className="relative gap-3 border-t border-edge px-4 py-3.5"
     >
       <FieldContent className="gap-0.5">
-        <FieldLabel className="text-base text-text">{label}</FieldLabel>
+        {/* Stretched over the row, so a click on the sentence flips the switch too. */}
+        <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+          {label}
+        </FieldLabel>
         <FieldDescription>{description}</FieldDescription>
       </FieldContent>
-      {action}
+      {action && <div className="relative shrink-0">{action}</div>}
       <Switch
         className="self-center"
         checked={checked}

@@ -252,11 +252,22 @@ function DesktopAdd() {
   }
 
   const status = line && (
-    <p className="flex min-w-0 items-center gap-2 text-sm text-text-2">
+    <p className="flex min-w-0 items-start gap-2 text-sm text-text-2">
       {line.kind === "added" && (
-        <Check aria-hidden className="size-4 shrink-0 text-good" strokeWidth={2.5} />
+        <Check
+          aria-hidden
+          className="mt-[calc(0.5lh-0.5rem)] size-4 shrink-0 text-good"
+          strokeWidth={2.5}
+        />
       )}
-      <span className={clsx("min-w-0 truncate", line.kind === "failed" && "text-danger")}>
+      {/* A queued add wraps rather than cut off the sentence that says where the card waits. */}
+      <span
+        className={clsx(
+          "min-w-0",
+          line.kind === "added" && line.queued ? "line-clamp-3" : "truncate",
+          line.kind === "failed" && "text-danger",
+        )}
+      >
         {line.text}
       </span>
       {line.kind === "added" && (

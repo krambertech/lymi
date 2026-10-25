@@ -205,6 +205,11 @@ export function ExploreDeckView({
   // The deck's colour runs under its whole header, back included. docs/design/explore.md.
   const cover = (bar: ReactNode) => (
     <div className="deck-cover" data-hue={trayHue(deck.slug)}>
+      {/* The ground under the Mac's title bar while the cover is in view, so its title scrolls under it and the shell's strip takes over after. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none sticky top-0 z-(--z-sticky) -mb-(--inset-top) h-(--inset-top) mac:bg-(--ground)"
+      />
       <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(var(--inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-[calc(var(--inset-top)+2rem)] @3xl/shell:pb-11">
         {bar}
         <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">

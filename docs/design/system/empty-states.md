@@ -1,6 +1,6 @@
 # Empty states
 
-An empty state shows the learner how to fill what is empty, and it looks temporary, so it is never mistaken for content. The shape follows what is empty. The live versions are on the design system's Empty states page.
+An empty state names what is missing and offers the next useful action. Its styling distinguishes it from saved content. The design system’s Empty states page shows the available components.
 
 ## Which empty state
 
@@ -21,7 +21,7 @@ What is empty?
 
 ## StartPanel
 
-`StartPanel` in `components/start-panel.tsx` serves Library with no decks, a deck with no cards, and Insights with no history. It is a 1.5 px dashed `edge-2` outline on the bare canvas, never a plate, because dashed is New's own mark for "not here yet". Inside sit an outline icon of what is missing in a `plate-2` circle (`icon`), a `text-lg` title, one sentence in `text-2`, one primary button at its normal size, and optionally a `StartPanelSection` under a dashed rule holding `NextSteps` rows for the other ways in. Library's icon is the rail's Library mark and a deck's is Layers, the cards mark.
+`StartPanel` in `components/start-panel.tsx` is used for an empty Library, empty deck or Insights without history. Use a 1.5 px dashed `edge-2` outline directly on the canvas. Include an outline icon in a `plate-2` circle, a `text-lg` title, one `text-2` sentence and a normal-sized primary action. Optional alternatives use `NextSteps` in `StartPanelSection` below a dashed divider. Library uses its navigation icon; a deck uses Layers.
 
 ```tsx
 // Correct, from deck-detail-view.tsx
@@ -39,19 +39,19 @@ What is empty?
 </div>
 ```
 
-A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow (`Go`), separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Where the learner may use Smart add, **Turn your notes into cards** leads the rows of a deck with no cards and Today's first-run guide offers it as **From your notes**; both open Smart add. Connecting Claude or ChatGPT is offered only while no app is connected.
+A start panel has one primary action. Alternatives use `NextSteps` rows with an outlined icon, title, description and `Go` arrow, separated by spacing. Link directly to the relevant Settings group or public guide. Where Smart add is available, lead with Turn your notes into cards for an empty deck; Today offers the same action as From your notes. Offer assistant connection only while no app is connected.
 
 ## Previews at zero
 
-A screen whose layout is worth previewing shows its real components at zero. Insights draws its four `StatPlate`s with `ghost`, dashed and muted with their figures drawn empty, under its start panel. The preview uses the real component, so it moves when the layout does. Never draw a second picture of the same shape.
+Use the real components for an empty-data layout preview. Insights shows its four `StatPlate`s below the start panel with `ghost`, dashed borders, muted styling and empty figures. Reusing the components keeps the preview consistent with the populated screen.
 
 ## EmptySection, NoResults and ErrorState
 
 `EmptySection`, `NoResults` and `ErrorState` live in `components/empty-state.tsx`.
 
 - `EmptySection` is an empty group inside a screen: an icon in a `plate-2` circle, a short title, one line of why, and the action that fills it.
-- `NoResults` takes the list's place under the controls that caused it, so the way back sits beside its cause. It has the start panel's dashed `edge-2` outline, because it is temporary, an outline icon of what narrowed the list (search or the filter) in a `plate-2` circle, a title naming the query or the filter, one line of what to do, and Clear search or Show all.
-- `ErrorState` is a screen that failed to load: centred, with the alert icon on `danger-soft`, never the lantern, because a calm lit lantern cannot say that something failed. The title says what failed, the line says the fix, and Try again retries.
+- `NoResults` replaces the list below its search or filter controls. Use a dashed `edge-2` outline, a search or filter icon in a `plate-2` circle, a title naming the query or filter, recovery text and Clear search or Show all.
+- `ErrorState` represents a failed screen load. Centre an alert icon on `danger-soft`, name the failure, explain recovery and offer Try again. Use the error icon rather than the brand mark.
 
 ```tsx
 // Correct, from deck-detail-view.tsx

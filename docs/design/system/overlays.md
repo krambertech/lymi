@@ -19,7 +19,7 @@ What is opening?
 
 **Undo replaces confirmation**, so a question is a last resort. A sheet is not a question: it is a form the learner asked for.
 
-"Desktop" means `DESKTOP_QUERY` in `lib/device.ts`, `(min-width: 768px) and (hover: hover) and (pointer: fine)`, read by `useOverlayShape` as the overlay opens and held until it closes. The pointer counts as well as the width, so a tablet held in two hands still gets the drawer at 900 px. The shape is frozen while it is open, because crossing the breakpoint mid-edit would remount the form and take the half-typed word with it.
+Use `DESKTOP_QUERY` from `lib/device.ts`: `(min-width: 768px) and (hover: hover) and (pointer: fine)`. `useOverlayShape` reads it on open and holds the result until close. This gives touch tablets drawers even at wide sizes and prevents a resize from remounting a partially completed form.
 
 ## Questions
 
@@ -46,7 +46,7 @@ A question is a centred dialog on a desktop with its actions in a row, the prima
 
 ## Sheets
 
-On touch a sheet is a drawer that rises from the bottom edge and can be swiped away. Its title stays pinned at its top and its actions at its foot. When the software keyboard rises, the drawer shortens to the room above the keys and only the fields between scroll, so the title and the action are always in sight. On desktop, the same sheet is a centred dialog. The forms inside know nothing about either shape.
+Touch sheets open as dismissible bottom drawers. Pin the title above the scrolling fields and actions below them. When the keyboard opens, reduce the drawer to the available height so title and actions remain visible. On desktop use a centred dialog. Form content uses the same components in either layout.
 
 A centred dialog that holds a task with steps, such as Smart add, keeps one height for every step and scrolls only its middle: `DialogContent scroll="body"` holds the frame still, `PlaceBar` stays at the top, the actions stay at the foot, and `DialogBody` is the part that scrolls. A short question or form scrolls as one and leaves `scroll` at its default.
 
@@ -65,7 +65,7 @@ The phone app keeps this rule with iOS's own navigation: a place is pushed from 
 
 ## Menus
 
-On a desktop a menu is anchored to its trigger. On touch the same rows rise in a drawer from the bottom edge, where the thumb is, and swipe away. The rows keep their menu roles and arrow keys in both shapes, and a keyboard hint is left out of the drawer because there is no keyboard to hint at. `DropdownMenu` holds both shapes; use shadcn's parts.
+Desktop menus anchor to their trigger. Touch menus use a bottom drawer with the same rows, menu roles and arrow-key support, without keyboard shortcut hints. `DropdownMenu` provides both layouts through the shared parts.
 
 A menu's surface, like a popover's and a list's, is the slight `glass` ([surfaces.md](surfaces.md#on-glass)); a dialog or a drawer stays solid.
 
@@ -77,7 +77,7 @@ Menu rows do not scale on press. The hover is one fill that slides between rows 
 
 ## Command palette
 
-⌘K (Ctrl K elsewhere) opens the command menu on a desktop: one field over a list of cards, decks, places and actions, top-anchored at 12% of the window and 620 px wide. The developer palette on backtick is the same shell in its graphite skin. Both draw with `components/ui/command-palette.tsx`, which owns the frame, the field, the list's keys and the row; each palette brings only its rows.
+⌘K on Mac or Ctrl K elsewhere opens the desktop command menu. It has one search field above cards, decks, destinations and actions, positioned 12% from the top at 620 px wide. The backtick developer palette uses the same `components/ui/command-palette.tsx` frame with graphite styling. Each palette supplies its own rows.
 
 - Focus stays in the field. Arrows move the highlight and wrap, Enter runs the row, ⌘Enter runs its second action, and Escape closes. An Enter that confirms an input method's word is not a run.
 - A palette with pages, like the developer palette, passes `onBack`: Escape empties the field first, then leaves the page, and Backspace in an empty field leaves it too; Escape closes only from the first page.
@@ -118,5 +118,5 @@ Toasts keep shadcn's default motion: they rise from below the edge and restack o
 - The drawer rises from the bottom edge over 450 ms on the drawer curve (`--ease-drawer`), follows the finger while it is dragged, and leaves in up to 320 ms, shorter the harder it was flicked.
 - A place on touch is the same drawer turned on its side: it arrives from the end edge over the same 450 ms, follows a swipe toward that edge, and leaves the way it came.
 - The centred dialog arrives with a card's 6 px rise over 200 ms and leaves in 140 ms, faster than it came.
-- On a desktop a menu grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms, leaving in 100, because a menu belongs to its trigger; a list that slides in from somewhere else reads as a panel that happened to land there.
+- Desktop menus scale from 0.94 to 1 over 140 ms, from the corner nearest the trigger, and close in 100 ms. Keep the transform origin aligned with the trigger.
 - Under reduced motion the phone drawer and the toast crossfade with no travel.

@@ -49,7 +49,7 @@ A hue comes in up to three strengths, and the job decides which one a component 
 | Text | Words | 4.5:1 on `canvas` | `amber-text` |
 | Mark | An icon or dot beside a word, which the word explains | 3:1 on `plate-2`, the lightest ground a mark sits on | `amber-mark` |
 
-**A hue gets its own mark token only when its text token stops looking like the hue.** Darkening red or green to 4.5:1 leaves them red and green, so `danger` and `good` serve as their own marks. Darkening amber to 4.5:1 turns it brown, so an amber icon uses `amber-mark`, which is as light as 3:1 allows. The card states are marks and nothing else, which is why `state-known` is lighter than `good` in light theme.
+**Add a separate mark token when the text-strength colour loses its visual identity.** `danger` and `good` work for both text and icons. Amber needs a lighter `amber-mark` for icons: it meets 3:1 against `plate-2`, while `amber-text` is dark enough for 4.5:1 text contrast. Card-state tokens are for marks and do not carry text.
 
 In dark theme the fill is already light enough for every job, so `amber-mark` is `amber` there.
 
@@ -107,9 +107,9 @@ The grade icons use `grade-forgot` (`danger`), `grade-hard` (`muted`), `grade-go
 
 ## What the AI wrote
 
-What the AI wrote is the fourth mark, and the one hue outside the states. A meaning, example or pronunciation it filled carries `ai`, a violet badge of the sparkle and the word AI, beside the field's label rather than at the far edge of the panel. It is `SourceChip size="xs"` in `components/chip.tsx`.
+The `ai` token is reserved for the violet AI provenance badge. Show its sparkle and AI label beside an enriched field’s label using `SourceChip size="xs"` in `components/chip.tsx`.
 
-**The badge marks the AI and nothing else** ([CONTEXT.md](../../../CONTEXT.md) has why). Violet is the last hue that is not amber, a card state or `danger`, so the badge reads as "not from you or the lesson" without reading as act, progress or error. The colour lives on the badge alone; enriched text stays ordinary text.
+The badge identifies text written by Lymi’s enrichment ([CONTEXT.md](../../../CONTEXT.md)). Apply violet to the badge only; the enriched text uses normal content colours. Review omits field-source badges.
 
 ## Status is never colour alone
 

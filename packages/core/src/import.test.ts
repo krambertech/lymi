@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   boldStress,
+  clozeRecordings,
   fieldsFromRoles,
   fitFields,
   guessFieldRoles,
@@ -331,6 +332,24 @@ describe("noteRecordings", () => {
         [[], [], ["satz.mp3"]],
       ),
     ).toEqual({ recording: undefined, exampleRecording: "satz.mp3", leftOut: 0 });
+  });
+  it("gives a cloze's sentence clip to the example and leaves a word's out", () => {
+    expect(
+      clozeRecordings(
+        ["Text", "Back Extra", "Word Audio", "Sentence Audio"],
+        [[], [], ["word.mp3"], ["sentence.mp3"]],
+      ),
+    ).toEqual({ recording: undefined, exampleRecording: "sentence.mp3", leftOut: 1 });
+    expect(clozeRecordings(["Text", "Word Audio"], [[], ["word.mp3"]])).toEqual({
+      recording: undefined,
+      exampleRecording: undefined,
+      leftOut: 1,
+    });
+    expect(clozeRecordings(["Text", "Back Extra"], [["satz.mp3"], []])).toEqual({
+      recording: undefined,
+      exampleRecording: "satz.mp3",
+      leftOut: 0,
+    });
   });
   it("keeps one clip each and ignores Lymi's own speech", () => {
     expect(

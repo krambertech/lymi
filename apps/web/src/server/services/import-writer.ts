@@ -297,10 +297,10 @@ function classify(
       // A card whose word the learner changed since never gets the old word's clip.
       const takesRecording =
         !existing.recorded && normaliseTerm(existing.term) === normaliseTerm(card.fields.term);
-      // A blank example is filled with the file's, so the clip says it too.
+      // A missing example is filled with the file's, so the clip says it too; a cleared one stays.
       const takesExampleRecording =
         !existing.exampleRecorded &&
-        (!existing.example?.trim() ||
+        (existing.example === null ||
           sameExample(existing.language, existing.example, card.fields.example));
       return { kind: "existing", card, id: existing.id, takesRecording, takesExampleRecording };
     }
@@ -658,6 +658,8 @@ export type PendingPicture = {
   name: string;
   description?: string | undefined;
   kind?: "recording" | "exampleRecording" | undefined;
+  /** The sentence an example's recording says, which the card must still say when it is stored. */
+  example?: string | undefined;
 };
 
 /**
@@ -724,6 +726,7 @@ export async function writeChunk<Note>(
           cardId: item.id,
           name: item.card.exampleRecording,
           kind: "exampleRecording",
+          example: item.card.fields.example,
         });
       }
       existingRows.push({
@@ -792,7 +795,12 @@ export async function writeChunk<Note>(
       pictures.push({ cardId: id, name: item.card.recording, kind: "recording" });
     }
     if (item.card.exampleRecording) {
-      pictures.push({ cardId: id, name: item.card.exampleRecording, kind: "exampleRecording" });
+      pictures.push({
+        cardId: id,
+        name: item.card.exampleRecording,
+        kind: "exampleRecording",
+        example: fields.example,
+      });
     }
 
     for (const progress of item.card.progress) {
@@ -1004,16 +1012,13 @@ export async function attachPictures<Note>(
   const attach = async (picture: PendingPicture) => {
     if (picture.kind !== undefined) {
       const { audio } = storage;
-      const store = picture.kind === "recording" ? storeRecording : storeExampleRecording;
       // A damaged clip is left out like an unplayable one; a storage failure still retries.
-      const outcome = audio
-        ? await store(
-            ctx,
-            picture.cardId,
-            () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null),
-            audio,
-          )
-        : "skipped";
+      const load = () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null);
+      const outcome = !audio
+        ? "skipped"
+        : picture.kind === "recording"
+          ? await storeRecording(ctx, picture.cardId, load, audio)
+          : await storeExampleRecording(ctx, picture.cardId, picture.example, load, audio);
       // A card a retried step already recorded was counted then.
       if (outcome !== "kept") {
         (picture.kind === "recording" ? recordings : exampleRecordings)[outcome]++;

@@ -37,6 +37,7 @@ export type CardView = Omit<
   /** The viewer's own mark, never the owner's. */
   important: boolean;
   exampleTranslationStale: boolean;
+  exampleRecorded: boolean;
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -64,7 +65,7 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     hookDraft: _draft,
     audioApprovedKey: _approved,
     exampleTranslationOf: _of,
-    // The example's play control finds its recording on the server, so no client reads the key.
+    // A client needs only whether there is one; the example's route finds the clip itself.
     exampleRecordingKey: _recording,
     ...rest
   } = card;
@@ -78,6 +79,7 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
         ? "failed"
         : card.exampleTranslationStatus,
     exampleTranslationStale: translationStale(card),
+    exampleRecorded: card.exampleRecordingKey !== null,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,

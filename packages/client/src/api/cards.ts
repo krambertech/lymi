@@ -40,6 +40,8 @@ export type Card = Omit<
   important: boolean;
   /** The translation was written for an earlier example; review leaves it out. */
   exampleTranslationStale: boolean;
+  /** The example has an imported recording, which plays even without a language. */
+  exampleRecorded?: boolean | undefined;
 };
 /** `direction` is the legacy name of a text mode, and null for a picture mode. */
 export type CardState = Omit<CardStateRow, "mode" | "direction"> & {

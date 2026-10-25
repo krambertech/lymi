@@ -1152,11 +1152,10 @@ function editWrite(
         speechInputs(current.language).some(
           (field) => patch[field] !== undefined && patch[field] !== current[field],
         );
-  // An example's recording says its sentence, so only a new sentence drops it. CONTEXT.md, Recording.
+  // An example's recording says its sentence, so only a new sentence drops it. Cleared whatever
+  // this read saw, so a clip an import stores meanwhile never outlives the edit. CONTEXT.md, Recording.
   const exampleRecordingStale =
-    current.exampleRecordingKey !== null &&
-    patch.example !== undefined &&
-    !sameExample(language, current.example, patch.example);
+    patch.example !== undefined && !sameExample(language, current.example, patch.example);
   // The translation's source is written with its text, in `translationAfter`, never on its own.
   const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;

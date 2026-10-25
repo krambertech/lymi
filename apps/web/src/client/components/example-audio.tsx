@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { canSpeakExample } from "@lymi/core";
+import { canPlayExample } from "@lymi/core";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card } from "../lib/api";
 import { playAlone } from "../lib/now-playing";
@@ -7,7 +7,7 @@ import { captureAnalytics } from "../lib/telemetry";
 import { AudioButton, AudioPlace } from "./audio-button";
 
 interface Props {
-  card: Pick<Card, "id" | "example" | "language" | "updatedAt">;
+  card: Pick<Card, "id" | "example" | "language" | "updatedAt" | "exampleRecorded">;
   /** Where it was pressed, for `example_audio_played`. */
   surface: "review" | "card";
   className?: string | undefined;
@@ -46,7 +46,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
     [url],
   );
 
-  if (!canSpeakExample(card)) return null;
+  if (!canPlayExample(card)) return null;
 
   const play = async () => {
     if (state === "loading") return;
@@ -108,7 +108,7 @@ export function ExampleAudioButton({ card, surface, className }: Props) {
   );
 }
 
-/** The button's room in review's measuring copy, where the example can be spoken. */
+/** The button's room in review's measuring copy, where the example can be played. */
 export function ExamplePlace({ card }: Pick<Props, "card">) {
-  return canSpeakExample(card) ? <AudioPlace /> : null;
+  return canPlayExample(card) ? <AudioPlace /> : null;
 }

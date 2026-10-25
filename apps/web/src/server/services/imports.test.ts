@@ -23,7 +23,7 @@ import { nextWriteStep, writeImport } from "../imports/write-run";
 import type { AnalyticsEvent } from "./analytics";
 import { analyticsContextFor } from "./analytics-context";
 import { pronunciationAudio } from "./audio";
-import { addCards, archiveCard, updateCard } from "./cards";
+import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { exampleAudio } from "./example-audio";
@@ -623,6 +623,9 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const hashi = await card(ctx, "箸");
     const sentence = await exampleRecording(hashi.id);
     expect(sentence).not.toBeNull();
+    const view = await showCard(ctx, hashi.id);
+    expect(view.exampleRecorded).toBe(true);
+    expect(view).not.toHaveProperty("exampleRecordingKey");
 
     const played = await exampleAudio(
       ctx,
@@ -639,6 +642,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
 
     await updateCard(ctx, hashi.id, { example: "箸で食べました。" });
     expect(await exampleRecording(hashi.id)).toBeNull();
+    expect((await showCard(ctx, hashi.id)).exampleRecorded).toBe(false);
     // The term's recording says the word, which is unchanged.
     expect((await recorded(hashi.id)).source).toBe("recorded");
   });
@@ -663,6 +667,16 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
       exampleRecordingsSkipped: 0,
     });
     expect(await exampleRecording(hashi.id)).toBe(kept);
+    expect(await exampleRecording(sakura.id)).toBeNull();
+
+    // A sentence the learner cleared stays cleared, so no clip is promised for it.
+    await updateCard(ctx, sakura.id, { example: "" });
+    const cleared = await runImport(ctx, "kaishi.apkg");
+    expect(cleared.preview).toMatchObject({ exampleRecordings: 0 });
+    expect(cleared.result.counts).toMatchObject({
+      exampleRecordings: 0,
+      exampleRecordingsSkipped: 0,
+    });
     expect(await exampleRecording(sakura.id)).toBeNull();
 
     // The same file again reads no clip and changes nothing.
@@ -712,6 +726,35 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     expect(preview).toMatchObject({ existing: 3, recordings: 0 });
     expect(result.counts).toMatchObject({ recordings: 0 });
     expect(await recorded(sakura.id)).toEqual({ key: null, source: null });
+  });
+
+  it("stores no clip for a sentence the learner changed while the import ran", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Changed", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [
+      { deckId: deck.id, term: "箸", example: "箸で食べました。" },
+    ]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const clip = new Uint8Array([0x49, 0x44, 0x33, ...new Array(61).fill(3)]);
+    const file = {
+      adapter: { media: async () => async () => clip },
+    } as unknown as ImportWork<unknown>;
+    const totals = await attachPictures(
+      ctx,
+      file,
+      bytesSource(new Uint8Array()),
+      [
+        {
+          cardId: added.card.id,
+          name: "sentence.mp3",
+          kind: "exampleRecording",
+          example: "箸で食べます。",
+        },
+      ],
+      { audio: env.AUDIO },
+    );
+    expect(totals.exampleRecordings).toEqual({ stored: 0, skipped: 1 });
+    expect(await exampleRecording(added.card.id)).toBeNull();
   });
 
   it("leaves out a clip the file cannot give back, and goes on with the import", async () => {

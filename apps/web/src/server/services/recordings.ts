@@ -1,3 +1,4 @@
+import { sameExample } from "@lymi/core";
 import { and, eq, isNull, or } from "@lymi/core/db";
 import { schema } from "../db";
 import { auditStatementWhen } from "./audit";
@@ -101,25 +102,28 @@ export async function storeRecording(
 
 /**
  * Stores an imported clip of the example as its recording, which its play control plays instead
- * of generated speech, on the same terms as `storeRecording`. A card without an example by now
- * has nothing to play it beside, so the clip is skipped.
+ * of generated speech, on the same terms as `storeRecording`. A card that no longer says `said`,
+ * the sentence the clip was imported with, has nothing to play it beside, so the clip is skipped.
  */
 export async function storeExampleRecording(
   ctx: ServiceContext,
   cardId: string,
+  said: string | undefined,
   load: () => Promise<Uint8Array | null>,
   bucket: R2Bucket,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db
     .select({
       deckId: schema.cards.deckId,
+      language: schema.cards.language,
       example: schema.cards.example,
       exampleRecordingKey: schema.cards.exampleRecordingKey,
     })
     .from(schema.cards)
     .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
-  if (!card?.example?.trim()) return "skipped";
+  if (!card) return "skipped";
   if (card.exampleRecordingKey) return "kept";
+  if (!sameExample(card.language, card.example, said)) return "skipped";
   const put = await putRecording(bucket, cardId, "example-recorded", await load());
   if (!put) return "skipped";
   const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.exampleRecordingKey, put.key))!;

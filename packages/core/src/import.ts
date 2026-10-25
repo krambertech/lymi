@@ -299,6 +299,27 @@ export function noteRecordings(
   };
 }
 
+/**
+ * A cloze note's clips, which speak its sentence: the first in a field named for a sentence, or in
+ * one not named for audio, is the example's. A field named for audio alone says the hidden word,
+ * so its clip is left out, and the note has no term recording.
+ */
+export function clozeRecordings(
+  names: readonly string[],
+  clips: readonly (readonly string[])[],
+): ReturnType<typeof noteRecordings> {
+  const roles = names.map((name): FieldRole => {
+    const words = fieldWords(name);
+    return AUDIO_FIELD.test(words) && !SENTENCE_FIELD.test(words) ? "skip" : "example";
+  });
+  const sounds = noteRecordings(names, roles, clips);
+  return {
+    recording: undefined,
+    exampleRecording: sounds.exampleRecording,
+    leftOut: sounds.leftOut + (sounds.recording ? 1 : 0),
+  };
+}
+
 /** A card's share of its note's recordings: the example's only while the card has an example to play it. */
 export function cardRecordings(
   sounds: ReturnType<typeof noteRecordings>,

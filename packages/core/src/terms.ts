@@ -154,6 +154,15 @@ export function canSpeakExample(card: {
   return !!spoken && [...spoken].length <= SPOKEN_EXAMPLE_MAX;
 }
 
+/** Whether a card's example has audio to play: its own recording, or speech Lymi can generate. */
+export function canPlayExample(card: {
+  example?: string | null | undefined;
+  language?: string | null | undefined;
+  exampleRecorded?: boolean | undefined;
+}): boolean {
+  return (!!card.exampleRecorded && !!card.example?.trim()) || canSpeakExample(card);
+}
+
 /**
  * Whether two examples say the same sentence, whatever readings, stress marks, spacing or case
  * they carry, so an example's recording outlives a furigana fix and goes with a new sentence.

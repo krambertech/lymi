@@ -112,6 +112,14 @@ export const CardOut = z
         description:
           "`recorded` for a recording an import brought, which plays even without a language and is never replaced; `generated` for Lymi's speech; null without audio",
       }),
+    exampleRecorded: z
+      .boolean()
+      .optional()
+      .meta({
+        ...OPEN,
+        description:
+          "The example has a recording an import brought, which its play control plays even without a language; absent from servers before examples' recordings were kept",
+      }),
     createdBy: Actor.meta({ ...OPEN, description: "Who added the card" }),
     importId: z
       .string()

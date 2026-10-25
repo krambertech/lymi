@@ -1,6 +1,7 @@
 import {
   boldStress,
   cardRecordings,
+  clozeRecordings,
   examplesCarryReadings,
   type FieldRole,
   fieldsFromRoles,
@@ -511,14 +512,9 @@ export const anki: SourceAdapter<AnkiNote> = {
     const tags = importTags(note.tags);
     const picture = note.fields.flatMap(imageSources)[0];
     const clips = note.fields.map(soundSources);
-    // A cloze's clips speak its sentence, which is the card's example, not the word it hides.
     const sounds =
       type.kind === "cloze"
-        ? noteRecordings(
-            type.fields,
-            type.fields.map(() => "example"),
-            clips,
-          )
+        ? clozeRecordings(type.fields, clips)
         : noteRecordings(type.fields, roles, clips);
     const pitchLeftOut = type.fields.some(
       (name, i) =>

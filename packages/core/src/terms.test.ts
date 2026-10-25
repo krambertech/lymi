@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { languageKey } from "./languages";
 import {
+  canPlayExample,
   canPlayPronunciation,
   canSpeakExample,
   canSpeakTerm,
@@ -234,6 +235,18 @@ describe("spokenExample", () => {
     expect(canSpeakExample({ example: "a".repeat(SPOKEN_EXAMPLE_MAX + 1), language: "de" })).toBe(
       false,
     );
+  });
+});
+
+describe("canPlayExample", () => {
+  it("plays an example's recording without a language or past the speech limit", () => {
+    expect(
+      canPlayExample({ example: "Ich esse Brot.", language: null, exampleRecorded: true }),
+    ).toBe(true);
+    const long = "a".repeat(SPOKEN_EXAMPLE_MAX + 1);
+    expect(canPlayExample({ example: long, language: "de", exampleRecorded: true })).toBe(true);
+    expect(canPlayExample({ example: long, language: "de" })).toBe(false);
+    expect(canPlayExample({ example: "", language: "de", exampleRecorded: true })).toBe(false);
   });
 });
 

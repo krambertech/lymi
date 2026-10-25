@@ -86,11 +86,8 @@ test("a failing step makes the comment FAIL and names the step and its error", (
     const body = render({ features, sha });
     assert.ok(body.startsWith(marker));
     assert.match(body, /## Verify: FAIL at `f82f0b4a`/);
-    assert.match(
-      body,
-      /\| Add a card \| preview-lymi-app-pr-7 · desktop \| \*\*FAIL\*\* at step 2 \|/,
-    );
-    assert.match(body, /\| Review \| Local · desktop \| PASS \|/);
+    assert.match(body, /\| Add a card \| Preview · desktop web \| \*\*FAIL\*\* at step 2 \|/);
+    assert.match(body, /\| Review \| Local · desktop web \| PASS \|/);
     assert.match(body, /\*\*Add a card\*\* failed at step 2, Fill the term:/);
     assert.match(body, /toBeVisible\(\) failed/);
     assert.match(body, /# Review: PASS/);
@@ -106,8 +103,11 @@ test("readable steps and screenshots are folded, with failures visible before th
     const body = render({ features: collect(dir, sha), sha });
     const firstFold = body.indexOf("<details>");
     assert.ok(body.indexOf("failed at step 2, Fill the term:") < firstFold);
-    assert.match(body, /\| Review \| Local · phone \| PASS \|/);
-    assert.match(body, /<summary>Review \(Local · desktop\): steps and 2 screenshots<\/summary>/);
+    assert.match(body, /\| Review \| Local · mobile web \| PASS \|/);
+    assert.match(
+      body,
+      /<summary>Review \(Local · desktop web\): steps and 2 screenshots<\/summary>/,
+    );
     assert.match(body, /1\. \*\*PASS\*\* Open Today\n2\. \*\*PASS\*\* Start the review/);
     assert.match(body, /<details><summary>Full run log<\/summary>\n\n```text/);
     assert.ok(body.indexOf("1. **PASS** Open Today") < body.lastIndexOf("<summary>Full run log"));

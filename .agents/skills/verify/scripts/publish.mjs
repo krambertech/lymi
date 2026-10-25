@@ -90,7 +90,7 @@ function result(f) {
 function location(feature) {
   const phone = feature.where.endsWith("-phone");
   const instance = phone ? feature.where.slice(0, -6) : feature.where;
-  return `${instance === "local" ? "Local" : instance} · ${phone ? "phone" : "desktop"}`;
+  return `${instance === "local" ? "Local" : "Preview"} · ${phone ? "mobile web" : "desktop web"}`;
 }
 
 const html = (text) =>

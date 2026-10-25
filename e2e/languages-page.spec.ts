@@ -43,7 +43,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
       .click();
     await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages/estonian$`));
     await expect(
-      page.getByRole("heading", { level: 1, name: "The flashcard app that speaks Estonian." }),
+      page.getByRole("heading", { level: 1, name: "The flashcard app that gets Estonian." }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",

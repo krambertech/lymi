@@ -1,8 +1,10 @@
+import { API_RESOURCES } from "@lymi/core/api-resources";
 import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, languageOfPage } from "./language-pages";
 import {
+  apiReferenceRoute,
   englishOnlyPaths,
   isRuntimePage,
   type LocalizedPage,
@@ -70,7 +72,11 @@ describe("public routes", () => {
   it("has every page rendered per request in every locale, and nothing else dynamic", () => {
     expect([...runtimePaths].filter((path) => !allRoutes.has(path))).toEqual([]);
     const undeclared = [...allRoutes].filter(
-      (route) => route.includes("[") && !runtimePaths.has(route) && !contentPaths.has(route),
+      (route) =>
+        route.includes("[") &&
+        !runtimePaths.has(route) &&
+        !contentPaths.has(route) &&
+        route !== apiReferenceRoute,
     );
     expect(undeclared).toEqual([]);
   });
@@ -102,7 +108,8 @@ describe("public routes", () => {
     const updates = locales.flatMap((locale) =>
       changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
     );
-    expect(new Set(listed)).toEqual(new Set([...routes, ...updates]));
+    const reference = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
+    expect(new Set(listed)).toEqual(new Set([...routes, ...updates, ...reference]));
   });
 });
 

@@ -90,8 +90,9 @@ export function Note({
         )}
         aria-hidden="true"
       />
-      <div className="min-w-0 [&>:last-child]:mb-0 [&>p]:mb-2">
-        {title && <p className="font-medium text-text">{title}</p>}
+      {/* Inline code on the well takes the page's plate, so it still reads as a chip. */}
+      <div className="min-w-0 [&>:last-child]:mb-0 [&>p]:mb-2 [&_code]:!bg-plate">
+        {title && <p className="!mb-1 font-medium text-text">{title}</p>}
         {children}
       </div>
     </aside>
@@ -118,16 +119,16 @@ export function Steps({ children }: { children: ReactNode }) {
               className="absolute left-[13px] top-[30px] h-[calc(100%+1.1rem)] w-px bg-edge-2"
             />
           )}
-          <div className="min-w-0 pt-[3px] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{child}</div>
+          <div className="min-w-0 [&>:first-child]:mt-0 [&>:last-child]:mb-0">{child}</div>
         </li>
       ))}
     </ol>
   );
 }
 
-/** The heading of one step. Sits on the same line as its number. */
+/** The heading of one step. Its line is as tall as the number beside it, so the two centre. */
 export function StepTitle({ children }: { children: ReactNode }) {
-  return <p className="mb-1.5 font-medium text-text">{children}</p>;
+  return <p className="!mb-1.5 font-medium leading-[26px] text-text">{children}</p>;
 }
 
 /** Terms and meanings on shared columns, so every meaning starts at the same edge. */
@@ -148,15 +149,15 @@ export function Defs({ items }: { items: { term: ReactNode; def: ReactNode }[] }
   );
 }
 
-/** Links onward. A list with hairlines, not a grid of boxes. */
+/** Links onward, as rows of one plate, so a hovered row fills inside the lines around it. */
 export function NextLinks({ items }: { items: { to: DocPath; title: string; blurb: string }[] }) {
   return (
-    <ul className="my-6 grid list-none !pl-0">
+    <ul className="my-6 grid list-none overflow-hidden rounded-md bg-plate !pl-0 edge">
       {items.map((it) => (
-        <li key={it.to} className="border-t border-edge last:border-b">
+        <li key={it.to} className="border-edge [&:not(:first-child)]:border-t">
           <a
             href={it.to}
-            className="doc-plain group flex items-center gap-4 py-3.5 transition-colors duration-150 hoverable:hover:bg-plate-2 -mx-3 px-3 rounded-sm"
+            className="doc-plain group flex items-center gap-4 px-4 py-3.5 transition-colors duration-150 hoverable:hover:bg-plate-2"
           >
             <span className="min-w-0 flex-1">
               <span className="block font-medium text-text">{it.title}</span>

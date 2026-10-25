@@ -1,3 +1,4 @@
+import { API_RESOURCES } from "@lymi/core/api-resources";
 import type { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
 import { DEFAULT_PUBLIC_SITE_ORIGIN } from "../shared/origins";
@@ -77,54 +78,7 @@ export function mountOpenApi(app: Hono<AppEnv>) {
           },
         },
         security: [{ apiKey: [] }, { session: [] }],
-        tags: [
-          { name: "Decks", description: "A deck holds cards and sets their defaults." },
-          {
-            name: "Series",
-            description:
-              "The owner's optional, ordered groups of their own decks, reviewed together. Members of a shared deck never see them.",
-          },
-          {
-            name: "Sections",
-            description:
-              "Optional, ordered parts of one deck that every learner sees. Each learner opens them in order unless the owner turns that off.",
-          },
-          {
-            name: "Cards",
-            description:
-              "One term and what the learner knows about it. Adding a term that already exists is skipped, never rejected.",
-          },
-          {
-            name: "Tags",
-            description:
-              "Labels on cards that find and review them across decks. A card's tags are part of the card, and the same name is one tag in every deck you study.",
-          },
-          {
-            name: "Review",
-            description:
-              "What is due, and what it would be scheduled to. Grading is the learner's alone.",
-          },
-          {
-            name: "Pictures",
-            description:
-              "A card's one private picture: set from bytes or a public link, described, archived and restored.",
-          },
-          {
-            name: "Reports",
-            description:
-              "Aggregate results for a publisher's own published decks: adds, first reviews, returning learners and page views. Read-only.",
-          },
-          { name: "Settings", description: "The learner's own preferences." },
-          {
-            name: "Languages",
-            description: "How cards in each language are written. Public and cacheable.",
-          },
-          {
-            name: "API keys",
-            description: "Session only: no key can list, mint or revoke another key.",
-          },
-          { name: "Account", description: "Who the credential belongs to." },
-        ],
+        tags: API_RESOURCES.map(({ name, description }) => ({ name, description })),
       },
     }),
   );

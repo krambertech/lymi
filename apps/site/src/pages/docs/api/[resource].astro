@@ -1,0 +1,20 @@
+---
+import { API_RESOURCES } from "@lymi/core/api-resources";
+import DocsApiResourcePage from "../../../components/islands/DocsApiResourcePage";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+
+export function getStaticPaths() {
+  return API_RESOURCES.map((resource) => ({ params: { resource: resource.slug }, props: { resource } }));
+}
+
+const { resource } = Astro.props;
+---
+
+<BaseLayout
+  title={`${resource.name} · API reference · Lymi docs`}
+  description={resource.description}
+  canonicalPath={`/docs/api/${resource.slug}`}
+>
+  <DocsApiResourcePage slug={resource.slug} client:load />
+</BaseLayout>

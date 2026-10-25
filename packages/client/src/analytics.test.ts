@@ -378,3 +378,17 @@ it("never records the public site", async () => {
   sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
   expect(sdk.sent).toHaveLength(before);
 });
+
+it("links events and errors to the recording only while the session is recorded", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true, false);
+  sdk.capture("welcome_step_viewed", { step_name: "goal", skipped: false, $session_id: "s1" });
+  sdk.capture("$exception", { $exception_list: [], $session_id: "s1" });
+  expect(sdk.sent.slice(-2).map((e) => e.properties.$session_id)).toEqual([undefined, undefined]);
+  analytics.setAnalyticsLearner("account-1", true, true);
+  await recorderLoaded();
+  sdk.capture("welcome_step_viewed", { step_name: "goal", skipped: false, $session_id: "s1" });
+  sdk.capture("$exception", { $exception_list: [], $session_id: "s1" });
+  expect(sdk.sent.slice(-2).map((e) => e.properties.$session_id)).toEqual(["s1", "s1"]);
+});

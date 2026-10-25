@@ -166,12 +166,3 @@ export const POPULAR_LINKS: readonly SiteLink[] = [
   examLink("jlpt", msg({ message: "JLPT", context: "exam" })),
   examLink("hsk", msg({ message: "HSK", context: "exam" })),
 ];
-
-/** The deck the Use cases menu shows on its tray, with a real card from it. */
-export const MENU_FEATURE = {
-  href: page("einbuergerungstest"),
-  title: msg`Einbürgerungstest`,
-  blurb: msg`The 300 general questions and the 10 for your state, as they appear on the test.`,
-  sample: exam("germany").sample,
-  hue: 3,
-};

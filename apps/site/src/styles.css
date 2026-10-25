@@ -1331,17 +1331,6 @@ html:has(.deck-cards[open]) {
   background: oklch(0.34 0.065 var(--tray-h, 235));
 }
 
-/* The Use cases menu's deck, on a tray like Explore's, with its card running off the foot. */
-.menu-feature {
-  --tray-l: 0.958;
-  --tray-c: 0.042;
-  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
-}
-[data-theme="dark"] .menu-feature {
-  --tray-l: 0.3;
-  --tray-c: 0.065;
-}
-
 /* A shelf's colour beside its name in the Explore menu: its tray's hue, strong enough to tell apart. */
 .shelf-swatch {
   flex: none;

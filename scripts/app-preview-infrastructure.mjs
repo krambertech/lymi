@@ -263,14 +263,15 @@ async function previewWorkflows(client, workerName) {
   return result.filter((workflow) => workflow.name.startsWith(`${workerName}-`));
 }
 
-async function workerExists(client, name) {
-  const settings = await cfRequest(
+// A first deploy that loses Cloudflare's 10007 race leaves the Worker with workers.dev and preview URLs off.
+async function workerReady(client, name) {
+  const subdomain = await cfRequest(
     client,
-    `/workers/scripts/${encodeURIComponent(name)}/settings`,
+    `/workers/scripts/${encodeURIComponent(name)}/subdomain`,
     {},
     true,
   );
-  return settings !== null;
+  return Boolean(subdomain?.enabled && subdomain?.previews_enabled);
 }
 
 async function ensure(find, create) {
@@ -294,8 +295,8 @@ export async function ensurePreviewInfrastructure({
   if (!accountId || !token) throw new Error("Cloudflare preview credentials are required");
   const names = previewNames(prNumber);
   const client = { accountId, token, fetchImpl };
-  const [exists, { subdomain }, database, namespace, bucket] = await Promise.all([
-    workerExists(client, names.workerName),
+  const [ready, { subdomain }, database, namespace, bucket] = await Promise.all([
+    workerReady(client, names.workerName),
     cfRequest(client, "/workers/subdomain"),
     ensure(
       () => exactD1(client, names.databaseName),
@@ -327,7 +328,7 @@ export async function ensurePreviewInfrastructure({
     previewUrl: `https://${names.alias}-${names.workerName}.${subdomain}.workers.dev`,
     databaseId: database.uuid,
     namespaceId: namespace.id,
-    workerExists: exists,
+    workerReady: ready,
   };
 }
 
@@ -499,7 +500,7 @@ async function prepareFromCli([prNumber, inputPath, outputPath, secretsPath]) {
         `entry_url=${entryUrl}`,
         `preview_url=${infrastructure.previewUrl}`,
         `database_name=${infrastructure.names.databaseName}`,
-        `worker_exists=${infrastructure.workerExists}`,
+        `worker_ready=${infrastructure.workerReady}`,
       ].join("\n")}\n`,
     );
   }

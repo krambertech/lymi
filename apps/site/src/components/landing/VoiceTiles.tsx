@@ -89,10 +89,7 @@ export function VoiceTiles({ words, lang, folder }: Props) {
   };
 
   return (
-    <div
-      ref={root}
-      className="mt-12 grid grid-cols-2 gap-2.5 @2xl:grid-cols-3 @4xl:mt-16 @5xl:grid-cols-6"
-    >
+    <div ref={root} className="mt-12 grid grid-cols-2 gap-2.5 @2xl:grid-cols-3 @4xl:mt-16">
       {words.map((w) => {
         const on = playing?.id === w.id;
         return (
@@ -101,12 +98,23 @@ export function VoiceTiles({ words, lang, folder }: Props) {
             type="button"
             onClick={() => play(w.id)}
             aria-label={w.reading ? t`Play ${w.term}, ${w.reading}` : t`Play ${w.term}`}
-            className="grid gap-2.5 rounded-lg bg-plate-2 p-4 text-start edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-hover"
+            className="grid gap-2.5 rounded-lg bg-plate-2 p-3 text-start @md:p-4 edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-hover"
           >
-            <span className="flex items-start justify-between gap-2">
-              <span lang={lang} className="text-3xl leading-tight font-medium text-text">
-                {w.term}
+            {/* The word has the tile's whole width and grows with it, so здра́вствуйте fits a phone. */}
+            <span
+              lang={lang}
+              className="min-w-0 text-xl leading-tight font-medium text-text @md:text-2xl @4xl:text-3xl"
+            >
+              {w.term}
+            </span>
+            {w.reading && (
+              <span lang={lang} className="text-md text-amber-text">
+                {w.reading}
               </span>
+            )}
+            <Wave peaks={peaks[w.id] ?? null} played={on ? (playing?.at ?? 0) : 0} />
+            <span className="flex items-end justify-between gap-2">
+              <span className="text-sm text-muted">{i18n._(w.meaning)}</span>
               <span
                 className={clsx(
                   "grid size-8 shrink-0 place-items-center rounded-full transition-colors",
@@ -116,13 +124,6 @@ export function VoiceTiles({ words, lang, folder }: Props) {
                 <Volume2 aria-hidden="true" className="size-4" />
               </span>
             </span>
-            {w.reading && (
-              <span lang={lang} className="text-md text-amber-text">
-                {w.reading}
-              </span>
-            )}
-            <Wave peaks={peaks[w.id] ?? null} played={on ? (playing?.at ?? 0) : 0} />
-            <span className="text-sm text-muted">{i18n._(w.meaning)}</span>
           </button>
         );
       })}

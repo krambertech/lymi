@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { modeOf } from "@lymi/core";
+import { offersLanguage } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import {
@@ -9,6 +10,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -390,7 +392,7 @@ interface Props {
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
 export function HandOfCards({
-  cards = HAND_CARDS,
+  cards: passed,
   layout = "fan",
   dealt: given,
   finale,
@@ -399,6 +401,11 @@ export function HandOfCards({
   ordered,
 }: Props) {
   const { t, i18n } = useLingui();
+  // Only the landing's mixed hand drops a language the page doesn't offer; a deck page's cards are its own.
+  const cards = useMemo(
+    () => passed ?? HAND_CARDS.filter((card) => offersLanguage(i18n.locale, card.language)),
+    [passed, i18n.locale],
+  );
   const [hand, setHand] = useState<Dealt[]>(() =>
     (given ?? []).map((card, key) => ({ key, card })),
   );

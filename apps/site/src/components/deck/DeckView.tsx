@@ -527,7 +527,7 @@ export function DeckGone({ status, locale }: GoneProps) {
 }
 
 interface FooterProps extends LocaleProps {
-  languagePaths: Record<Locale, string>;
+  languagePaths: Partial<Record<Locale, string>>;
 }
 
 export function DeckFooter({ locale, languagePaths }: FooterProps) {

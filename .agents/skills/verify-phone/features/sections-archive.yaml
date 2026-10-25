@@ -3,12 +3,12 @@ appId: app.lymi
 name: Archive a section
 ---
 - runFlow: _open.yaml
-- openLink: lymi://library/sections?id=${DECK_ID}
+- openLink: lymi://library/${DECK_ID}/sections
 - extendedWaitUntil:
-    visible: "Section 1: ${FIRST}, 5 cards"
+    visible: "Section 1: ${FIRST}, .*"
     timeout: 20000
 - swipe:
-    from: "Section 1: ${FIRST}, 5 cards"
+    from: "Section 1: ${FIRST}, .*"
     direction: LEFT
 - tapOn: "Archive"
 - extendedWaitUntil:
@@ -23,10 +23,10 @@ name: Archive a section
     timeout: 20000
 - takeScreenshot: 02-archived-with-cards
 - extendedWaitUntil:
-    visible: "Section 1: ${SECOND}, 5 cards"
+    visible: "Section 1: ${SECOND}, .*"
     timeout: 20000
 - swipe:
-    from: "Section 1: ${SECOND}, 5 cards"
+    from: "Section 1: ${SECOND}, .*"
     direction: LEFT
 - tapOn: "Archive"
 - extendedWaitUntil:
@@ -40,6 +40,6 @@ name: Archive a section
 - takeScreenshot: 03-archived-keeping-cards
 - tapOn: "Undo"
 - extendedWaitUntil:
-    visible: "Section 1: ${SECOND}, 5 cards"
+    visible: "Section 1: ${SECOND}, .*"
     timeout: 20000
 - takeScreenshot: 04-undone

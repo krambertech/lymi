@@ -1,12 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
-import type { LineColumn, Opening } from "@lymi/client/section-line";
+import { focusIndex, type LineColumn, type Opening } from "@lymi/client/section-line";
 import { isolate } from "@lymi/core";
 import type { Href } from "expo-router";
-import { useRef, useState } from "react";
-import { I18nManager, ScrollView, View } from "react-native";
-import { clear, usePalette } from "../theme/palette";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { ScrollView, View } from "react-native";
+import Svg, { Circle, Path } from "react-native-svg";
+import { usePalette } from "../theme/palette";
 import { Icon } from "../ui/icons";
 import { Button, Press, Text } from "../ui/primitives";
 
@@ -18,171 +19,213 @@ export function sectionPage(deckId: string, sectionId: string) {
   return `/library/${deckId}/sections/${sectionId || NO_SECTION}` as Href;
 }
 
-/** A column never narrows past this; more sections than fit scroll sideways instead. */
-const MIN_COLUMN = 22;
-const GAP = 4;
-const HEIGHT = 52;
-const FADE = 28;
+/** Every section of a deck, with its progress; the owner edits them there too. */
+export function sectionsPage(deckId: string) {
+  return `/library/${deckId}/sections` as Href;
+}
+
+const share = (n: number, total: number) => (total > 0 ? Math.min(1, n / total) : 0);
 
 /**
- * Every section of a deck as one line of columns, each filled from its foot with what is known and,
- * above it, what is learning. A few sections share the width; past what fits, each keeps its
- * minimum and the line scrolls, opening on the section the learner is on, with a fade on the edge
- * that has more. The current column is ringed and carries a tick where the next section opens. A
- * tap opens that section's page. docs/proposals/section-pages.md.
+ * A section's progress as a ring: known, then learning after it, around a track. A section that
+ * waits is a dashed ring; one fully known closes into a filled disc with a check, unless something
+ * sits inside it, such as a stop's number on the Sections page.
  */
-export function SectionLine({
-  columns,
-  hereId,
-  tick,
-  onOpen,
+export function ProgressRing({
+  column: c,
+  size,
+  stroke = 3,
+  children,
 }: {
-  columns: readonly LineColumn[];
-  /** The section the learner is on, or null in a deck that opens every section at once. */
-  hereId: string | null;
-  /** Known cards the current section needs before the next opens, drawn across its column. */
-  tick: number | null;
-  onOpen: (column: LineColumn) => void;
+  column: Pick<LineColumn, "known" | "learning" | "total" | "waiting">;
+  size: number;
+  stroke?: number;
+  children?: ReactNode;
 }) {
-  const { t, i18n } = useLingui();
   const p = usePalette();
-  const [width, setWidth] = useState(0);
-  const [x, setX] = useState(0);
-  const ref = useRef<ScrollView>(null);
-  const opened = useRef(false);
-  const n = columns.length;
-  const column = Math.max(MIN_COLUMN, (width - GAP * (n - 1)) / n);
-  const content = n * column + GAP * (n - 1);
-  const scrolls = width > 0 && content > width + 1;
-  const at = Math.max(
-    0,
-    columns.findIndex((c) => c.id === hereId),
+  const r = (size - stroke) / 2;
+  const half = size / 2;
+  const around = 2 * Math.PI * r;
+  const known = share(c.known, c.total);
+  const learning = share(c.learning, c.total);
+  const done = c.total > 0 && c.known >= c.total;
+  const inside = (
+    <View className="absolute inset-0 items-center justify-center">
+      {children ??
+        (c.waiting ? (
+          <Icon name="lock" size={Math.round(size * 0.42)} colour={p.muted} strokeWidth={2.25} />
+        ) : null)}
+    </View>
   );
-  // Opens on the current section once the line has its full width, so the scroll is not clamped short.
-  const open = (laidOut: number) => {
-    if (opened.current || !scrolls || laidOut < content - 1) return;
-    opened.current = true;
-    const target = at * (column + GAP) - width / 2 + column / 2;
-    ref.current?.scrollTo({ x: Math.max(0, Math.min(target, content - width)), animated: false });
-  };
-  // React Native mirrors a horizontal scroll view in a right-to-left locale, so the fades follow.
-  const fade = (edge: "start" | "end") => {
-    const toLeft = (edge === "start") !== I18nManager.isRTL;
-    return {
-      experimental_backgroundImage: `linear-gradient(to ${toLeft ? "left" : "right"}, ${clear(p.plate)}, ${p.plate})`,
-    };
-  };
-  const more = { start: scrolls && x > 2, end: scrolls && x < content - width - 2 };
+  if (done && !children)
+    return (
+      <Svg width={size} height={size} viewBox="0 0 16 16">
+        <Circle cx="8" cy="8" r="8" fill={p["state-known"]} />
+        <Path
+          d="m4.75 8.25 2.25 2.25 4.25-4.5"
+          fill="none"
+          stroke={p.plate}
+          strokeWidth={1.6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </Svg>
+    );
   return (
-    <View onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
-      {width > 0 && (
-        <ScrollView
-          ref={ref}
-          horizontal
-          scrollEnabled={scrolls}
-          showsHorizontalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          onScroll={(e) => setX(e.nativeEvent.contentOffset.x)}
-          scrollEventThrottle={32}
-          onContentSizeChange={(w) => open(w)}
-          contentContainerStyle={{ gap: GAP }}
-        >
-          {columns.map((c, i) => {
-            const here = c.id === hereId;
-            const name = c.section?.name ?? t`No section`;
-            const known = i18n.number(c.known);
-            const counted = plural(c.total, {
-              one: `${name}, ${known} of # card known`,
-              other: `${name}, ${known} of # cards known`,
-            });
-            return (
-              <Press
-                key={c.id || NO_SECTION}
-                onPress={() => onOpen(c)}
-                accessibilityRole="button"
-                accessibilityLabel={`${c.waiting ? t`${name}, not open yet` : counted}${here ? `, ${t`You are here`}` : ""}`}
-                className="items-center gap-1"
-                style={{ width: column }}
-              >
-                <Column column={c} width={column} here={here} tick={here ? tick : null} />
-                <Text
-                  className={`text-xs ${here ? "font-semibold text-text" : "text-muted"}`}
-                  style={{ fontVariant: ["tabular-nums"] }}
-                >
-                  {c.section ? i18n.number(i + 1) : "–"}
-                </Text>
-              </Press>
-            );
-          })}
-        </ScrollView>
-      )}
-      {more.start && (
-        <View
-          pointerEvents="none"
-          className="absolute start-0 top-0"
-          style={[{ width: FADE, height: HEIGHT + 20 }, fade("start") as object]}
-        />
-      )}
-      {more.end && (
-        <View
-          pointerEvents="none"
-          className="absolute end-0 top-0"
-          style={[{ width: FADE, height: HEIGHT + 20 }, fade("end") as object]}
-        />
-      )}
+    <View style={{ width: size, height: size }}>
+      <Svg width={size} height={size} style={{ transform: [{ rotate: "-90deg" }] }}>
+        {c.waiting ? (
+          <Circle
+            cx={half}
+            cy={half}
+            r={r}
+            fill="none"
+            stroke={p["edge-2"]}
+            strokeWidth={1.5}
+            strokeDasharray="3 3"
+          />
+        ) : (
+          <>
+            <Circle
+              cx={half}
+              cy={half}
+              r={r}
+              fill="none"
+              stroke={p["edge-2"]}
+              strokeWidth={stroke}
+            />
+            {learning > 0 && (
+              <Circle
+                cx={half}
+                cy={half}
+                r={r}
+                fill="none"
+                stroke={p["state-learning"]}
+                strokeWidth={stroke}
+                strokeDasharray={`${(known + learning) * around} ${around}`}
+              />
+            )}
+            {known > 0 && (
+              <Circle
+                cx={half}
+                cy={half}
+                r={r}
+                fill="none"
+                stroke={p["state-known"]}
+                strokeWidth={stroke}
+                strokeDasharray={`${known * around} ${around}`}
+              />
+            )}
+          </>
+        )}
+      </Svg>
+      {inside}
     </View>
   );
 }
 
-/** A section's column: learning stacked on known from the foot, or a lock while it waits. */
-function Column({
-  column: c,
-  width,
-  here,
-  tick,
+const TILE = 116;
+const GAP = 8;
+/** The summary plate's padding, which the tiles scroll under so the row reads as running on. */
+const BLEED = 20;
+
+/**
+ * Every section of a deck as a row of tiles that scrolls sideways, each with its ring, its number,
+ * its name and how much of it is known, opening on the section the learner is on. A tile opens that
+ * section's page. Cards with no section get the last tile. docs/proposals/section-pages.md.
+ */
+export function SectionLine({
+  columns,
+  state,
+  onOpen,
 }: {
-  column: LineColumn;
-  width: number;
-  here: boolean;
-  tick: number | null;
+  columns: readonly LineColumn[];
+  /** What opens next, or null in a deck that opens every section at once. */
+  state: Opening | null;
+  onOpen: (column: LineColumn) => void;
 }) {
+  const { t, i18n } = useLingui();
   const p = usePalette();
-  const share = (n: number) => (c.total > 0 ? Math.min(1, n / c.total) : 0);
+  const ref = useRef<ScrollView>(null);
+  const [width, setWidth] = useState(0);
+  const [content, setContent] = useState(0);
+  const opened = useRef(false);
+  const at = focusIndex(columns, state);
+  // Opens on the learner's section, centred, once both widths are known, so the scroll is not clamped short.
+  useEffect(() => {
+    if (opened.current || !width || content <= width) return;
+    opened.current = true;
+    const x = BLEED + at * (TILE + GAP) - (width - TILE) / 2;
+    ref.current?.scrollTo({ x: Math.max(0, Math.min(x, content - width)), animated: false });
+  }, [width, content, at]);
   return (
     <View
-      className="justify-end overflow-hidden bg-plate-2"
-      style={{
-        width,
-        height: HEIGHT,
-        borderRadius: Math.min(6, width / 2),
-        borderWidth: here ? 2 : 0,
-        borderColor: p.text,
-      }}
+      style={{ marginHorizontal: -BLEED }}
+      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
     >
-      {c.waiting ? (
-        <View className="flex-1 items-center justify-center">
-          <Icon name="lock" size={12} colour={p.muted} />
-        </View>
-      ) : (
-        <>
-          <View
-            style={{ height: `${share(c.learning) * 100}%`, backgroundColor: p["state-learning"] }}
-          />
-          <View style={{ height: `${share(c.known) * 100}%`, backgroundColor: p["state-known"] }} />
-          {tick != null && c.total > 0 && (
-            <View
-              style={{
-                position: "absolute",
-                start: 0,
-                end: 0,
-                height: 2,
-                bottom: share(tick) * (HEIGHT - 4) - 1,
-                backgroundColor: p.text,
-              }}
-            />
-          )}
-        </>
-      )}
+      <ScrollView
+        ref={ref}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        decelerationRate="fast"
+        snapToInterval={TILE + GAP}
+        contentContainerStyle={{ gap: GAP, paddingHorizontal: BLEED }}
+        onContentSizeChange={(w) => setContent(w)}
+      >
+        {columns.map((c, i) => {
+          const here = i === at;
+          const name = c.section?.name ?? t`No section`;
+          const known = i18n.number(c.known);
+          const counted = plural(c.total, {
+            one: `${name}, ${known} of # card known`,
+            other: `${name}, ${known} of # cards known`,
+          });
+          return (
+            <Press
+              key={c.id || NO_SECTION}
+              onPress={() => onOpen(c)}
+              accessibilityRole="button"
+              accessibilityLabel={`${c.waiting ? t`${name}, not open yet` : counted}${here && state ? `, ${t`You are here`}` : ""}`}
+              style={{ width: TILE }}
+            >
+              <View
+                className="flex-1 justify-between gap-3 rounded-lg"
+                style={{
+                  padding: 12,
+                  minHeight: 108,
+                  backgroundColor: c.waiting ? "transparent" : here ? p.plate : p["plate-2"],
+                  borderWidth: c.waiting || here ? 1.5 : 0,
+                  borderStyle: c.waiting ? "dashed" : "solid",
+                  borderColor: here ? p.text : p["edge-2"],
+                }}
+              >
+                <View className="flex-row items-start justify-between">
+                  <ProgressRing column={c} size={24} />
+                  {c.section && (
+                    <Text className="text-xs text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                      {i18n.number(i + 1)}
+                    </Text>
+                  )}
+                </View>
+                <View className="gap-0.5">
+                  <Text
+                    className={`text-sm font-medium ${c.waiting ? "text-text-2" : "text-text"}`}
+                    numberOfLines={2}
+                  >
+                    {name}
+                  </Text>
+                  <Text className="text-xs text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                    {c.waiting
+                      ? plural(c.total, { one: "# card", other: "# cards" })
+                      : `${known}/${i18n.number(c.total)}`}
+                  </Text>
+                </View>
+              </View>
+            </Press>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
@@ -277,6 +320,80 @@ function Line({ icon, sentence }: { icon: "lock" | "unlock"; sentence: string })
         <Icon name={icon} size={16} colour={p.muted} />
       </View>
       <Text className="flex-1 text-sm text-text-2">{sentence}</Text>
+    </View>
+  );
+}
+
+/**
+ * Every section as a column, filled from its foot with known and then learning, side by side across
+ * the width, so a deck's progress reads at a glance on the Sections page. A section that waits is a
+ * dashed outline, and a short ink bar marks the learner's section. A column opens its section.
+ */
+export function SectionColumns({
+  columns,
+  focus,
+  onOpen,
+}: {
+  columns: readonly LineColumn[];
+  /** The learner's column, or -1 for none. */
+  focus: number;
+  onOpen: (column: LineColumn) => void;
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  const gap = columns.length > 24 ? 2 : 3;
+  return (
+    <View className="flex-row" style={{ gap }}>
+      {columns.map((c, i) => (
+        <Press
+          key={c.id || NO_SECTION}
+          onPress={() => onOpen(c)}
+          haptic={false}
+          scale={1}
+          accessibilityRole="button"
+          accessibilityLabel={c.section?.name ?? t`No section`}
+          className="gap-1.5"
+          style={{ flex: 1 }}
+        >
+          <View
+            className="justify-end overflow-hidden"
+            style={{
+              height: 56,
+              borderRadius: 4,
+              backgroundColor: c.waiting ? "transparent" : p["plate-2"],
+              borderWidth: c.waiting ? 1 : 0,
+              borderStyle: "dashed",
+              borderColor: p["edge-2"],
+            }}
+          >
+            {!c.waiting && (
+              <>
+                <View
+                  style={{
+                    height: `${share(c.learning, c.total) * 100}%`,
+                    backgroundColor: p["state-learning"],
+                  }}
+                />
+                <View
+                  style={{
+                    height: `${share(c.known, c.total) * 100}%`,
+                    backgroundColor: p["state-known"],
+                  }}
+                />
+              </>
+            )}
+          </View>
+          <View
+            className="self-center rounded-full"
+            style={{
+              height: 3,
+              width: "70%",
+              maxWidth: 16,
+              backgroundColor: i === focus ? p.text : "transparent",
+            }}
+          />
+        </Press>
+      ))}
     </View>
   );
 }

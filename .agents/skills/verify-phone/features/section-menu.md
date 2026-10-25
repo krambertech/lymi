@@ -16,5 +16,5 @@ Nothing is written by the flow; the check reads the two sections back in their o
 
 ## Gotchas
 
-- The heading reads **name, N cards**, with **not open yet** after the name while it is locked. The section line's column for the same section reads **name, N of M cards known**, so the flow matches the heading's form; a long press on the column opens the section's page.
+- The heading reads **name, N cards**, with **not open yet** after the name while it is locked. The summary's tile for the same section reads **name, N of M cards known**, so the flow matches the heading's form; a long press on the tile opens the section's page.
 - A member of the deck sees no Rename or Reorder. The phone signs in only as `learner`, whose seed has no sections, hence the API setup.

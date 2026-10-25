@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Card, CardState, Section } from "./api";
 import type { DeckRow } from "./deck-list";
-import { lineColumns, opening } from "./section-line";
+import { focusIndex, lineColumns, opening } from "./section-line";
 
 function section(id: string, opts: Partial<Section> = {}): Section {
   return {
@@ -75,5 +75,44 @@ describe("opening", () => {
 
   it("says nothing for a deck that opens every section at once", () => {
     expect(opening([section("1")], null)).toBeNull();
+  });
+});
+
+describe("focusIndex", () => {
+  const sections = [
+    section("1", { known: 10, notStarted: 0 }),
+    section("2", { known: 4, notStarted: 2 }),
+    section("3", { known: 0, status: "locked" }),
+  ];
+  const columns = lineColumns(sections, []);
+
+  it("shows the learner's section while the next one waits", () => {
+    const state = opening(sections, { currentId: "2", nextId: "3", ready: false });
+    expect(focusIndex(columns, state)).toBe(1);
+  });
+
+  it("shows the first section not fully known once every section is open, not the last", () => {
+    const open = [
+      section("1", { known: 10, notStarted: 0 }),
+      section("2", { known: 3 }),
+      section("3"),
+    ];
+    const state = opening(open, { currentId: "3", nextId: null, ready: false });
+    expect(focusIndex(lineColumns(open, []), state)).toBe(1);
+  });
+
+  it("falls back to the first column in a deck that opens every section at once and is all known", () => {
+    const known = [
+      section("1", { known: 10, notStarted: 0 }),
+      section("2", { known: 10, notStarted: 0 }),
+    ];
+    expect(focusIndex(lineColumns(known, []), null)).toBe(0);
+  });
+
+  it("never focuses the cards with no section", () => {
+    const known = [section("1", { known: 10, notStarted: 0 })];
+    const withNone = lineColumns(known, [row("a", null, 0)]);
+    expect(withNone).toHaveLength(2);
+    expect(focusIndex(withNone, null)).toBe(0);
   });
 });

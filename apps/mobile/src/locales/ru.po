@@ -35,6 +35,10 @@ msgstr "{0, plural, =0 {Карточки попали в колоды, кото�
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
+#. placeholder {0}: c.total
+msgid "{0, plural, one {{known} of # card known} other {{known} of # cards known}}"
+msgstr "{0, plural, one {выучено {known} из # карточки} few {выучено {known} из # карточек} many {выучено {known} из # карточек} other {выучено {known} из # карточки}}"
+
 #. placeholder {0}: rows.length
 msgid "{0, plural, one {{known} of # card} other {{known} of # cards}}"
 msgstr "{0, plural, one {{known} из # карточки} few {{known} из # карточек} many {{known} из # карточек} other {{known} из # карточки}}"
@@ -118,13 +122,17 @@ msgstr "{0, plural, one {# замороженная в Noji карточка п�
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
 msgstr "{0, plural, one {# карточка, выучена} few {# карточки, все выучены} many {# карточек, все выучены} other {# карточки, все выучены}}"
 
+#. placeholder {0}: c.total
+msgid "{0, plural, one {# card, not open yet} other {# cards, not open yet}}"
+msgstr "{0, plural, one {Ещё не открыт · # карточка} few {Ещё не открыт · # карточки} many {Ещё не открыт · # карточек} other {Ещё не открыт · # карточки}}"
+
 #. placeholder {0}: preview.pitchSkipped
 msgid "{0, plural, one {# card’s pitch accent can’t be read as text, so it’s skipped.} other {# cards’ pitch accents can’t be read as text, so they’re skipped.}}"
 msgstr "{0, plural, one {Тоновое ударение # карточки не читается как текст, поэтому оно пропущено.} few {Тоновое ударение # карточек не читается как текст, поэтому оно пропущено.} many {Тоновое ударение # карточек не читается как текст, поэтому оно пропущено.} other {Тоновое ударение # карточки не читается как текст, поэтому оно пропущено.}}"
 
+#. placeholder {0}: c.total
 #. placeholder {0}: d.total
 #. placeholder {0}: deck.cardCount
-#. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -421,6 +429,10 @@ msgstr "Запомнено: {0}, забыто: {1}."
 msgid "{0} shared a deck"
 msgstr "{0} делится колодой"
 
+#. placeholder {0}: i18n.number(due)
+msgid "{0} to review"
+msgstr "{0} к повторению"
+
 #. placeholder {0}: s.title
 msgid "{0}, done"
 msgstr "{0}, выполнено"
@@ -666,8 +678,6 @@ msgstr "{name} больше не в колоде «{deck}»"
 msgid "{name}, {cards}"
 msgstr "{name}, {cards}"
 
-msgid "{nextName} is ready"
-msgstr "Можно начинать {nextName}"
 msgid "{name}, not open yet"
 msgstr "{name}, ещё не открыт"
 
@@ -799,6 +809,11 @@ msgstr "{words, plural, one {# слово} few {# слова} many {# слов} 
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
+
+#. placeholder {0}: i18n.number(learned)
+#. placeholder {1}: i18n.number(sections.length)
+msgid "<0>{0}</0> of {1} known"
+msgstr "<0>{0}</0> из {1} выучено"
 
 msgid "<0>{percent}</0> known"
 msgstr "<0>{percent}</0> выучено"
@@ -1055,6 +1070,13 @@ msgstr "Все"
 
 msgid "All at once"
 msgstr "Все сразу"
+
+msgid "All sections"
+msgstr "Все разделы"
+
+#. placeholder {0}: i18n.number(count)
+msgid "All sections, {0}"
+msgstr "Все разделы, {0}"
 
 msgid "All shelves"
 msgstr "Все полки"
@@ -2549,9 +2571,6 @@ msgstr "Дай серии название."
 msgid "Give the tag a name."
 msgstr "Дай тегу название."
 
-msgid "Go to {currentName}"
-msgstr "Перейти к «{currentName}»"
-
 msgid "Go to import"
 msgstr "К импорту"
 
@@ -3627,10 +3646,11 @@ msgstr "Открыть Настройки"
 msgid "Open You"
 msgstr "Открыть Ты"
 
-msgid "Optional. Anything that helps us understand."
-msgstr "Необязательно. Всё, что поможет нам разобраться."
 msgid "Opens after {beforeName}."
 msgstr "Откроется после {beforeName}."
+
+msgid "Optional. Anything that helps us understand."
+msgstr "Необязательно. Всё, что поможет нам разобраться."
 
 msgid "Options for {email}"
 msgstr "Действия для {email}"
@@ -3771,10 +3791,11 @@ msgstr "Предыдущий"
 msgid "Previous month"
 msgstr "Предыдущий месяц"
 
-msgid "Privacy policy"
-msgstr "Политика конфиденциальности"
 msgid "Previous section, {name}"
 msgstr "Предыдущий раздел, {name}"
+
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
 
 msgid "Private"
 msgstr "Приватная"

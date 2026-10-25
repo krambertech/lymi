@@ -578,7 +578,8 @@ export const analyticsEvents = {
     how: z.enum(["card", "all"]),
   }),
   section_go_to: z.object({}),
-  section_page_opened: z.object({ from: z.enum(["line", "heading", "step"]) }),
+  section_page_opened: z.object({ from: z.enum(["tile", "heading", "step", "sections"]) }),
+  sections_opened: z.object({ from: z.enum(["deck", "settings"]) }),
   hint_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
     wait_ms: z.number().int().nonnegative().max(60_000),
@@ -716,6 +717,7 @@ export const analyticsProducers = {
   app_activity_opened: ["browser", "phone"],
   section_go_to: ["phone"],
   section_page_opened: ["phone"],
+  sections_opened: ["phone"],
   hint_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   example_audio_played: ["browser", "phone"],

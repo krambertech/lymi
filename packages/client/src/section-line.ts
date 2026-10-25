@@ -61,3 +61,18 @@ export function opening(
     return { kind: "coming_up", current, next, notStarted: current.notStarted };
   return { kind: "waits", current, next, left: Math.max(0, current.knownNeeded - current.known) };
 }
+
+/**
+ * The column to show first: the section the learner is on, or, once every section is open or the
+ * deck opens them all at once, the first one not fully known.
+ */
+export function focusIndex(columns: readonly LineColumn[], state: Opening | null): number {
+  if (!state || state.kind === "open") {
+    const first = columns.findIndex((c) => c.section && c.known < c.total);
+    if (first >= 0) return first;
+  }
+  return Math.max(
+    0,
+    columns.findIndex((c) => c.id === state?.current.id),
+  );
+}

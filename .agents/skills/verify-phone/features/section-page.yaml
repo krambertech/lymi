@@ -1,4 +1,4 @@
-# The section line in a deck's summary, a section's page, its menu and selection, a waiting section, No section, and Archive section.
+# The section tiles in a deck's summary, the Sections page, a section's page, its menu and selection, a waiting section, No section, and Archive section.
 appId: app.lymi
 name: Section pages
 ---
@@ -75,6 +75,11 @@ name: Section pages
     timeout: 20000
 - tapOn: "Section options"
 - tapOn: "Archive section"
+# Its one card asks what happens to it first; keeping it moves it to No section.
+- extendedWaitUntil:
+    visible: "Keep the card.*"
+    timeout: 10000
+- tapOn: "Keep the card.*"
 - extendedWaitUntil:
     visible: "Archived “${LOCKED}”"
     timeout: 20000
@@ -89,3 +94,18 @@ name: Section pages
     visible: "(?i)section 1 of 3"
     timeout: 20000
 - takeScreenshot: 09-heading-opens
+# All sections opens the Sections page, whose stops open a section's page too.
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "All sections, 3"
+    timeout: 20000
+- tapOn: "All sections, 3"
+- extendedWaitUntil:
+    visible: ".* of 3 known"
+    timeout: 20000
+- takeScreenshot: 10-all-sections
+- tapOn: "Section 1: At the office, .*"
+- extendedWaitUntil:
+    visible: "(?i)section 1 of 3"
+    timeout: 20000
+- takeScreenshot: 11-stop-opens

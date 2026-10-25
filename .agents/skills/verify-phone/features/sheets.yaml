@@ -55,7 +55,7 @@ name: Sheets
 - takeScreenshot: 08-instructions
 - runFlow: { file: _dismiss.yaml, env: { MARK: "^Instructions$" } }
 # Sections.
-- openLink: lymi://library/sections?id=${DECK_ID}
+- openLink: lymi://library/${DECK_ID}/sections
 - extendedWaitUntil:
     visible: "How sections open.*"
     timeout: 20000

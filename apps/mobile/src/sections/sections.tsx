@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
+import { api, type Section, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
 import { type SectionActionId, sectionActions } from "@lymi/client/section-actions";
 import { isolate } from "@lymi/core";
@@ -99,7 +99,7 @@ export function useSectionMenu(
 ) {
   const { t } = useLingui();
   const router = useRouter();
-  const sectionsPage = `/library/sections?id=${deckId}`;
+  const page = `/library/${deckId}/sections`;
   return (section: Section): (MenuItem & Pick<RowMenuItem, "id" | "icon">)[][] => {
     const action: Record<SectionActionId, MenuItem & Pick<RowMenuItem, "id" | "icon">> = {
       start_section: {
@@ -130,13 +130,13 @@ export function useSectionMenu(
         id: "rename_section",
         label: t`Rename section`,
         icon: "edit",
-        onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
+        onSelect: () => router.push(`${page}?rename=${section.id}` as Href),
       },
       reorder_sections: {
         id: "reorder_sections",
         label: t`Reorder sections`,
         icon: "grip",
-        onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
+        onSelect: () => router.push(`${page}?edit=1` as Href),
       },
       archive_section: {
         id: "archive_section",

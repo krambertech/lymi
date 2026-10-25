@@ -33,7 +33,13 @@ import { useMoveNotice, useSeriesActions } from "../data/series";
 import { ExportSheet } from "../export/export-sheet";
 import { useArchiveSection } from "../sections/archive-section";
 import { useNewSection } from "../sections/name-sheet";
-import { OpeningLine, OpensAfter, SectionLine, sectionPage } from "../sections/section-line";
+import {
+  OpeningLine,
+  OpensAfter,
+  SectionLine,
+  sectionPage,
+  sectionsPage,
+} from "../sections/section-line";
 import { ReadyNote, SectionHeading, useSectionMenu, useStartSection } from "../sections/sections";
 import { reportHref } from "../sharing/report";
 import { useOnline } from "../streak/goal-picker";
@@ -46,7 +52,7 @@ import { EmptyState } from "../ui/empty-state";
 import { Icon } from "../ui/icons";
 import { LoadFailed, useLoadFailed } from "../ui/load-failed";
 import { OfflineNote } from "../ui/offline-note";
-import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../ui/primitives";
+import { Button, LIFT, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../ui/row-menu";
 import { BarButton, Screen } from "../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
@@ -655,8 +661,8 @@ function Top({
 }
 
 /**
- * The deck's sections under its summary: a column each, which opens that section's page, then the
- * one sentence about what opens the next. Replaced the web's SectionProgress on the phone.
+ * The deck's sections under its summary: a tile each, which opens that section's page, the one
+ * sentence about what opens the next, then All sections, the page with every section on it.
  */
 function DeckSections({
   deckId,
@@ -673,23 +679,43 @@ function DeckSections({
   starting: string | undefined;
   onStart: (section: Section) => void;
 }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const router = useRouter();
+  const count = columns.filter((c) => c.section).length;
   return (
-    <View className="gap-3 border-t border-edge pt-4">
+    <View className="gap-4 border-t border-edge pt-4">
       <Text className="text-md font-medium text-text" accessibilityRole="header">
         {t`Sections`}
       </Text>
       <SectionLine
+        // A new deck in the same screen opens on its own section, not where the last one scrolled to.
+        key={deckId}
         columns={columns}
-        hereId={state?.current.id ?? null}
-        tick={state && state.kind !== "open" ? state.current.knownNeeded : null}
+        state={state}
         onOpen={(c) => {
-          captureEvent("section_page_opened", { from: "line" });
+          captureEvent("section_page_opened", { from: "tile" });
           router.push(sectionPage(deckId, c.id));
         }}
       />
       {state && <OpeningLine state={state} due={due} starting={starting} onStart={onStart} />}
+      {/* The plate's last row, so it reaches the plate's edges as a list's row does. */}
+      <Press
+        onPress={() => {
+          captureEvent("sections_opened", { from: "deck" });
+          router.push(sectionsPage(deckId));
+        }}
+        scale={0.99}
+        accessibilityRole="link"
+        accessibilityLabel={t`All sections, ${i18n.number(count)}`}
+        className="flex-row items-center gap-3 border-t border-edge"
+        style={{ minHeight: 52, marginHorizontal: -20, marginBottom: -20, paddingHorizontal: 20 }}
+      >
+        <Text className="flex-1 text-base text-text">{t`All sections`}</Text>
+        <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          {i18n.number(count)}
+        </Text>
+        <RowArrow />
+      </Press>
     </View>
   );
 }
@@ -726,12 +752,7 @@ function SectionTop({
       <View className="flex-row items-end justify-between gap-3">
         <View className="shrink gap-1">
           {section && (
-            <Text
-              className="text-sm font-medium uppercase text-muted"
-              style={{ letterSpacing: 0.8 }}
-            >
-              {t`Section ${place} of ${total}`}
-            </Text>
+            <Text className="text-base text-muted">{t`Section ${place} of ${total}`}</Text>
           )}
           <Text className="text-lg text-muted">
             <Trans>

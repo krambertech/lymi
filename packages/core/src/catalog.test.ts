@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   catalogSearchText,
   isPublicDeckSlug,
+  offersDeck,
+  offersLanguage,
   type PublicDeckSummary,
   previewMode,
   type RelatedCandidate,
@@ -13,8 +15,6 @@ import {
   shelvesOf,
   taughtLanguage,
   UNCATEGORISED,
-  offersDeck,
-  offersLanguage,
 } from "./catalog";
 import {
   type CardRow,

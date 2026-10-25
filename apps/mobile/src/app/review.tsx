@@ -1744,7 +1744,11 @@ function GradeStrip({
   const reduce = useReduceMotion();
   const why = t`You can’t choose Easy after peeking at your hint.`;
   const [tip, setTip] = useState(false);
+  // Only a press made here is said; a strip drawn after one, as on a graded copy, stays quiet.
+  const said = useRef(lockedTip);
   useEffect(() => {
+    if (lockedTip === said.current) return;
+    said.current = lockedTip;
     if (lockedTip === 0) return;
     setTip(true);
     AccessibilityInfo.announceForAccessibility(why);

@@ -23,7 +23,7 @@ const { page } = Astro.props;
 const { locale } = page;
 const i18n = pageI18n(locale);
 const slug = page.status === 200 ? page.deck.slug : page.slug;
-const paths = deckPaths(slug);
+const paths = deckPaths(slug, page.status === 200 ? page.deck : undefined);
 const deck = page.status === 200 ? page.deck : null;
 const path = deck ? sectionPath(deck) : null;
 const stack = deck ? stackCards(deck) : [];

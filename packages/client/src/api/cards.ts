@@ -27,7 +27,12 @@ export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
 export type Card = Omit<
   CardRow,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
+  | "reviewModeKeys"
+  | "revision"
+  | "hookDraft"
+  | "audioApprovedKey"
+  | "exampleTranslationOf"
+  | "exampleRecordingKey"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
@@ -35,6 +40,8 @@ export type Card = Omit<
   important: boolean;
   /** The translation was written for an earlier example; review leaves it out. */
   exampleTranslationStale: boolean;
+  /** The example has an imported recording, which plays even without a language. */
+  exampleRecorded?: boolean | undefined;
 };
 /** `direction` is the legacy name of a text mode, and null for a picture mode. */
 export type CardState = Omit<CardStateRow, "mode" | "direction"> & {

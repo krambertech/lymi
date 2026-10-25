@@ -311,6 +311,7 @@ function fileCard(
   item: ScopeCard,
   picture: string | null,
   recording: string | null = null,
+  exampleRecording: string | null = null,
 ): LymiFileCard {
   const { card, image } = item;
   return {
@@ -345,6 +346,7 @@ function fileCard(
           }
         : null,
     recording: recording ? { file: recording } : null,
+    exampleRecording: exampleRecording ? { file: exampleRecording } : null,
     archivedAt: card.archivedAt?.getTime() ?? null,
     createdAt: card.createdAt.getTime(),
     states: item.states.sort((a, b) => a.mode.localeCompare(b.mode)),
@@ -362,6 +364,15 @@ function soundName(card: Card, format: "anki" | "lymi") {
   const recorded = card.audioSource === "recorded";
   if (format === "lymi") return recorded ? `media/${card.id}.${extension}` : null;
   return `lymi-${card.id}-${recorded ? "recording" : "speech"}.${extension}`;
+}
+
+/** The example's recording's file name, named so importing it back gives it to the example again. */
+function exampleSoundName(card: Card, format: "anki" | "lymi") {
+  const extension = /\.([a-z0-9]{2,5})$/i.exec(card.exampleRecordingKey ?? "")?.[1]?.toLowerCase();
+  if (!extension) return null;
+  return format === "lymi"
+    ? `media/${card.id}-example.${extension}`
+    : `lymi-${card.id}-example-recording.${extension}`;
 }
 
 const segmentKey = (row: Export, segment: number) => `${row.objectKey}/${segment}`;
@@ -410,11 +421,13 @@ export async function writeExportData(ctx: ServiceContext, id: string, storage: 
             item,
             item.image ? `media/${item.card.id}.webp` : null,
             soundName(item.card, "lymi"),
+            exampleSoundName(item.card, "lymi"),
           );
           counts.cards++;
           counts.reviews += card.states.reduce((sum, state) => sum + state.reviews.length, 0);
           if (card.picture) counts.pictures++;
           if (card.recording) counts.sounds++;
+          if (card.exampleRecording) counts.sounds++;
           await lines.write(encoder.encode(`${JSON.stringify(card)}\n`));
         }
       }
@@ -439,15 +452,17 @@ export async function writeExportData(ctx: ServiceContext, id: string, storage: 
         for (const item of page) {
           const picture = item.image ? `lymi-${item.card.id}.webp` : null;
           const sound = soundName(item.card, "anki");
+          const exampleSound = exampleSoundName(item.card, "anki");
           const card = fileCard(item, picture);
           const own = card.reviewModes ?? deckModes.get(card.deck) ?? [];
           const modes = own.some((mode) => !isImageMode(mode))
             ? own.filter((mode) => !isImageMode(mode))
             : own;
-          await collection.add({ card, modes, picture, sound });
+          await collection.add({ card, modes, picture, sound, exampleSound });
           counts.cards++;
           if (picture) counts.pictures++;
           if (sound) counts.sounds++;
+          if (exampleSound) counts.sounds++;
           if (collection.byteLength > MAX_ANKI_COLLECTION_BYTES) throw new ExportTooLarge();
         }
       }
@@ -555,8 +570,10 @@ export async function writeExportMedia(
       and(
         sql`${schema.cards.deckId} in (select value from json_each(${deckIds}))`,
         anki
-          ? sql`(${schema.cardImages.id} is not null or ${schema.cards.audioKey} is not null)`
-          : sql`(${schema.cardImages.id} is not null or ${schema.cards.audioSource} = 'recorded')`,
+          ? sql`(${schema.cardImages.id} is not null or ${schema.cards.audioKey} is not null
+              or ${schema.cards.exampleRecordingKey} is not null)`
+          : sql`(${schema.cardImages.id} is not null or ${schema.cards.audioSource} = 'recorded'
+              or ${schema.cards.exampleRecordingKey} is not null)`,
         step.after ? sql`${schema.cards.id} > ${step.after}` : undefined,
       ),
     )
@@ -592,6 +609,10 @@ export async function writeExportMedia(
         );
       const sound = soundName(card, anki ? "anki" : "lymi");
       if (sound && card.audioKey) await copy(storage.audio, card.audioKey, sound);
+      const exampleSound = exampleSoundName(card, anki ? "anki" : "lymi");
+      if (exampleSound && card.exampleRecordingKey) {
+        await copy(storage.audio, card.exampleRecordingKey, exampleSound);
+      }
     }
   } catch (err) {
     if (err instanceof ZipTooLarge) throw new ExportTooLarge();

@@ -1,12 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
-import { canSpeakExample } from "@lymi/core";
+import { canPlayExample } from "@lymi/core";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card } from "../lib/api";
 import { playAlone } from "../lib/now-playing";
 import { captureAnalytics } from "../lib/telemetry";
 import { AudioButton, AudioPlace } from "./audio-button";
 
-type SpokenCard = Pick<Card, "id" | "example" | "language" | "updatedAt">;
+type SpokenCard = Pick<Card, "id" | "example" | "language" | "updatedAt" | "exampleRecorded">;
 /** Where it was pressed, for `example_audio_played`. */
 type Surface = "review" | "card";
 /** What was pressed: the speaker, or in review the sentence itself. */
@@ -48,7 +48,7 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
     [url],
   );
 
-  if (!canSpeakExample(card)) return null;
+  if (!canPlayExample(card)) return null;
 
   const play = async (control: Control) => {
     if (state === "loading") return;
@@ -118,7 +118,7 @@ export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
   );
 }
 
-/** The button's room in review's measuring copy, where the example can be spoken. */
+/** The button's room in review's measuring copy, where the example can be played. */
 export function ExamplePlace({ card }: { card: SpokenCard }) {
-  return canSpeakExample(card) ? <AudioPlace quiet /> : null;
+  return canPlayExample(card) ? <AudioPlace quiet /> : null;
 }

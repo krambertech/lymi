@@ -154,6 +154,29 @@ export function canSpeakExample(card: {
   return !!spoken && [...spoken].length <= SPOKEN_EXAMPLE_MAX;
 }
 
+/** Whether a card's example has audio to play: its own recording, or speech Lymi can generate. */
+export function canPlayExample(card: {
+  example?: string | null | undefined;
+  language?: string | null | undefined;
+  exampleRecorded?: boolean | undefined;
+}): boolean {
+  return (!!card.exampleRecorded && !!card.example?.trim()) || canSpeakExample(card);
+}
+
+/**
+ * Whether two examples say the same sentence, whatever readings, stress marks, spacing or case
+ * they carry, so an example's recording outlives a furigana fix and goes with a new sentence.
+ */
+export function sameExample(
+  language: string | null | undefined,
+  a: string | null | undefined,
+  b: string | null | undefined,
+): boolean {
+  const said = (text: string | null | undefined) =>
+    termKey(language, stripReadings(text ?? "", language)).replace(/\s+/g, "");
+  return !!said(a) && said(a) === said(b);
+}
+
 /** What an in-memory player's clip was made from, so it is discarded when any of it changes. */
 export function pronunciationInputKey(card: {
   id: string;

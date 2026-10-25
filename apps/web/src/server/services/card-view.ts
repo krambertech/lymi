@@ -25,13 +25,19 @@ export interface CardImageView {
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
 export type CardView = Omit<
   Card,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
+  | "reviewModeKeys"
+  | "revision"
+  | "hookDraft"
+  | "audioApprovedKey"
+  | "exampleTranslationOf"
+  | "exampleRecordingKey"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
   /** The viewer's own mark, never the owner's. */
   important: boolean;
   exampleTranslationStale: boolean;
+  exampleRecorded: boolean;
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -59,6 +65,8 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     hookDraft: _draft,
     audioApprovedKey: _approved,
     exampleTranslationOf: _of,
+    // A client needs only whether there is one; the example's route finds the clip itself.
+    exampleRecordingKey: _recording,
     ...rest
   } = card;
   return {
@@ -71,6 +79,7 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
         ? "failed"
         : card.exampleTranslationStatus,
     exampleTranslationStale: translationStale(card),
+    exampleRecorded: card.exampleRecordingKey !== null,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,

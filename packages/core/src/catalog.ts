@@ -171,6 +171,27 @@ export function readableIn(
   );
 }
 
+/** The languages a reader of each meaning language is never offered to learn: their own, and Russian to Ukrainian readers. */
+const NOT_OFFERED: Record<string, readonly string[]> = { uk: ["uk", "ru"], ru: ["ru"] };
+
+/**
+ * Whether a reader whose meaning language is `reader` is offered learning `language`. Explore, a
+ * deck's page, the language pages and the site's links leave out what this refuses.
+ * `docs/design/explore.md` owns the rule.
+ */
+export function offersLanguage(reader: string, language: string | null | undefined): boolean {
+  const hidden = Object.entries(NOT_OFFERED).find(([each]) => sameLanguage(each, reader))?.[1];
+  return !language || !hidden?.some((each) => sameLanguage(each, language));
+}
+
+/** Whether a reader of `reader` is offered a published deck; a subject deck always is. */
+export function offersDeck(
+  reader: string,
+  deck: { category: string | null; language: string | null },
+): boolean {
+  return offersLanguage(reader, taughtLanguage(deck));
+}
+
 /** What decides whether two published decks are related. */
 export interface RelatedCandidate {
   slug: string;

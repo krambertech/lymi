@@ -7,7 +7,7 @@ import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
-import { EXAM_LINKS, LANGUAGE_LINKS, type SiteLink, USE_CASE_LINKS } from "./site-links";
+import { EXAM_LINKS, LANGUAGE_LINKS, linksIn, type SiteLink, USE_CASE_LINKS } from "./site-links";
 
 const linkClass = "rounded-xs hoverable:hover:text-text";
 
@@ -96,7 +96,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
             ))}
           </Group>
           <Group title={<Trans>Languages</Trans>}>
-            <Links links={LANGUAGE_LINKS} />
+            <Links links={linksIn(LANGUAGE_LINKS, i18n.locale)} />
             <AllLink href={localizedPath("languages", i18n.locale)}>
               <Trans>All languages</Trans>
             </AllLink>

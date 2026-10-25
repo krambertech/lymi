@@ -394,6 +394,14 @@ function Done({
                 })}
               </Line>
             )}
+            {(counts.exampleRecordings ?? 0) > 0 && (
+              <Line tone="good">
+                {plural(counts.exampleRecordings ?? 0, {
+                  one: "# example recording was imported.",
+                  other: "# example recordings were imported.",
+                })}
+              </Line>
+            )}
             {counts.existing > 0 && (
               <Line tone="good">
                 {plural(counts.existing, {
@@ -424,6 +432,15 @@ function Done({
                   one: "# recording couldn’t be read or played, so Lymi reads that term aloud itself.",
                   other:
                     "# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.",
+                })}
+              </Line>
+            )}
+            {(counts.exampleRecordingsSkipped ?? 0) > 0 && (
+              <Line tone="skip">
+                {plural(counts.exampleRecordingsSkipped ?? 0, {
+                  one: "# example recording couldn’t be read or played, so Lymi reads that example aloud itself.",
+                  other:
+                    "# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.",
                 })}
               </Line>
             )}

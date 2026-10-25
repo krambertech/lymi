@@ -13,7 +13,7 @@ import { withAudioLease } from "./lead-in";
 // Bump with any change to how an example is voiced, the prompt included, so every clip is made again.
 const EXAMPLE_AUDIO_VERSION = 1;
 
-/** A card's example read aloud: its stored clip, or one made on a press while today's allowance lasts. */
+/** A card's example read aloud: its recording, its stored clip, or one made on a press while today's allowance lasts. */
 export async function exampleAudio(
   ctx: ServiceContext,
   cardId: string,
@@ -22,6 +22,12 @@ export async function exampleAudio(
 ): Promise<{ clip: R2ObjectBody } | { retryAfter: number }> {
   const card = await getCard(ctx, cardId);
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
+  // A recording plays as it is, free of the allowance and the owner's AI choice. CONTEXT.md, Recording.
+  if (card.exampleRecordingKey) {
+    const recorded = await sent.bucket.get(card.exampleRecordingKey);
+    if (recorded) return { clip: recorded };
+    throw new ServiceError("unavailable", "The example's recording is temporarily unavailable");
+  }
   // The sentence is its owner's, so the owner's choice decides whether it is voiced. ADR 0039.
   const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
   const language = LanguageTag.safeParse(card.language);

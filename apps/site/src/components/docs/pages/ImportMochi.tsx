@@ -111,9 +111,9 @@ export function ImportMochi() {
       <ul>
         <li>
           <strong>Other audio.</strong> A recording of the word, in an audio field or beside the
-          word, becomes the card’s audio and Lymi plays it. Sentence recordings and clips in formats
-          such as Ogg stay behind, and Lymi reads those terms aloud itself. The preview counts what
-          is left out.
+          word, becomes the card’s audio and Lymi plays it. A recording in a sentence audio field or
+          beside the example plays from the example’s play button. Clips in formats such as Ogg stay
+          behind, and Lymi reads those terms aloud itself. The preview counts what is left out.
         </li>
         <li>
           <strong>What Mochi generated.</strong> Speech, image search results and AI text that Mochi

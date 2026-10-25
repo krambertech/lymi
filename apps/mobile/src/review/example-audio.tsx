@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
-import { canSpeakExample } from "@lymi/core";
+import { canPlayExample } from "@lymi/core";
 import { fetch } from "expo/fetch";
 import { File, Paths } from "expo-file-system";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -45,7 +45,7 @@ function useAudioExample(
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const consent = useAiConsent("speech");
-  const url = card && canSpeakExample(card) ? api.exampleAudioUrl(card.id, card.updatedAt) : null;
+  const url = card && canPlayExample(card) ? api.exampleAudioUrl(card.id, card.updatedAt) : null;
   // The example on screen now, which a load that settles late checks before it plays.
   const shown = useRef(url);
   shown.current = url;

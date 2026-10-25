@@ -44,7 +44,7 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -186,11 +186,16 @@ interface Graded {
   item: QueueItem;
   grade: LocalGrade;
   listed: boolean;
-  deck: CardDeck;
-  forgotten: boolean;
   /** The hint as it showed under the cue at the grade, or nothing when it was not showing. */
   hint: Hint | null;
+  /** The step exactly as it was drawn at the grade, so the copy left underneath never reflows. */
+  shown: Step;
 }
+type Step = Omit<ComponentProps<typeof Turn>, "top">;
+type Sound = { state: "idle" | "loading" | "playing"; error: string | null };
+/** A speaker on the graded copy keeps its place but rests, so it never replays a failure's tip. */
+const resting = <S extends Sound>(sound: S | null | undefined) =>
+  sound ? { ...sound, state: "idle" as const, error: null } : null;
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
 const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
@@ -866,9 +871,12 @@ function Run({
       item,
       grade: record,
       listed,
-      deck: cardDeck,
-      forgotten,
       hint: hintShown ? hint : null,
+      shown: {
+        ...step,
+        pronounce: resting(step.pronounce),
+        exampleSound: resting(step.exampleSound),
+      },
     });
     setReturned(false);
     setSending((n) => n + 1);
@@ -907,6 +915,36 @@ function Run({
       .finally(() => setSending((n) => n - 1));
   };
 
+  const step: Step = {
+    item,
+    deck: cardDeck,
+    forgotten,
+    hint,
+    hintShown,
+    known,
+    revealed,
+    still: returned,
+    onReveal: () => {
+      haptics.reveal();
+      revealedAt.current = performance.now();
+      setRevealed(true);
+    },
+    onPeek: () => {
+      haptics.tick();
+      setAidState({ key: showing, peeked: true, shown: false });
+    },
+    onShowHint: () => setAidState({ key: showing, peeked: false, shown: true }),
+    offer: offer && revealed,
+    onOffer: openHint,
+    onMenu: openMenu,
+    easyLocked: peeked,
+    lockedTip: locked.key === showing ? locked.presses : 0,
+    onGrade,
+    onUndo: lastGraded ? undo : undefined,
+    pronounce,
+    exampleSound,
+  };
+
   return (
     <Cover style={pull.style}>
       <View
@@ -930,51 +968,13 @@ function Run({
                 <Turn
                   // Each graded card is drawn afresh, so nothing glides from the one before it.
                   key={lastGraded.grade.reviewedAt}
-                  item={lastGraded.item}
-                  deck={lastGraded.deck}
-                  forgotten={lastGraded.forgotten}
-                  hint={lastGraded.hint}
-                  hintShown={!!lastGraded.hint}
-                  known={known}
-                  easyLocked={lastGraded.grade.aid === "hint"}
-                  revealed
+                  {...lastGraded.shown}
                   still
                 />
               )
             }
           >
-            {(top) => (
-              <Turn
-                top={top}
-                item={item}
-                deck={cardDeck}
-                forgotten={forgotten}
-                hint={hint}
-                hintShown={hintShown}
-                known={known}
-                revealed={revealed}
-                still={returned}
-                onReveal={() => {
-                  haptics.reveal();
-                  revealedAt.current = performance.now();
-                  setRevealed(true);
-                }}
-                onPeek={() => {
-                  haptics.tick();
-                  setAidState({ key: showing, peeked: true, shown: false });
-                }}
-                onShowHint={() => setAidState({ key: showing, peeked: false, shown: true })}
-                offer={offer && revealed}
-                onOffer={openHint}
-                onMenu={openMenu}
-                easyLocked={peeked}
-                lockedTip={locked.key === showing ? locked.presses : 0}
-                onGrade={onGrade}
-                onUndo={lastGraded ? undo : undefined}
-                pronounce={pronounce}
-                exampleSound={exampleSound}
-              />
-            )}
+            {(top) => <Turn top={top} {...step} />}
           </CardStack>
         </UndoArea>
       </View>
@@ -1325,9 +1325,8 @@ function CardPlate({
   onMenu,
   onUndo,
 }: {
-  /** The pronunciation on the top card; none underneath. */
   pronounce: Pronunciation | null;
-  /** The example's speaker on the top card once revealed; none underneath. */
+  /** The example's speaker, once revealed. */
   exampleSound: ExampleAudio | null;
   item: QueueItem;
   deck: CardDeck;

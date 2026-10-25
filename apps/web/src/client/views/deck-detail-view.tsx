@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import type { FilterContext } from "@lymi/client/deck-filters";
 import {
   activeFilterCount,
   chosenReview,
@@ -10,16 +11,11 @@ import {
   deckTags,
   filterRows,
   groupRows,
+  liveFilters,
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import {
-  CHOSEN_LIMIT,
-  type ContentReportTarget,
-  isolate,
-  type KnownReadings,
-  unisolate,
-} from "@lymi/core";
+import { CHOSEN_LIMIT, type ContentReportTarget, isolate, type KnownReadings } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -64,6 +60,7 @@ import { Button, IconButton } from "../components/button";
 import { CardPlace } from "../components/card-place";
 import { Chip } from "../components/chip";
 import { directionLabel, languageName } from "../components/deck-fields";
+import { FilterChips, FilterMenu } from "../components/deck-filter";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
 import { NavLink, useStaticNav } from "../components/nav-link";
@@ -77,11 +74,9 @@ import { StateIcon, stateMarks } from "../components/state-mark";
 import { type StreakSummary, useTodayStatus } from "../components/streak";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
@@ -89,17 +84,9 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
 import type { DeckSummary, Section, Sections } from "../lib/api";
-import { bidi } from "../lib/bidi";
 import { captureAnalytics } from "../lib/telemetry";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { type WordHistory, WordView } from "./word-view";
-
-/** A menu row greys its icons, so a state's mark takes its own colour back. */
-const menuMarkColour = {
-  new: "text-state-new!",
-  learning: "text-state-learning!",
-  known: "text-state-known!",
-} as const;
 
 /** The narrowest list that still keeps meanings beside words; narrower than it and a card, the card is a sheet. */
 const LIST_PX = 640;
@@ -390,27 +377,11 @@ function DeckPlates({
 }
 
 /** A filter that is on, with the press that turns it off. */
-function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }) {
-  const { t } = useLingui();
-  return (
-    <button
-      type="button"
-      onClick={onRemove}
-      aria-label={t`Remove filter: ${{ label: unisolate(label) }}`}
-      // The hit area reaches 40 px, as far as the 8 px gap to the next chip allows.
-      className="relative inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2 transition-[background-color,color,scale] duration-150 ease-out before:absolute before:-inset-1 before:content-[''] active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text motion-reduce:active:scale-100"
-    >
-      {bidi(label)}
-      <X className="size-3.5 text-muted" aria-hidden="true" />
-    </button>
-  );
-}
-
 function ListTools({
   sections,
-  tags,
   filters,
   setFilters,
+  filterCtx,
   sort,
   setSort,
   query,
@@ -418,173 +389,34 @@ function ListTools({
   searchRef,
 }: {
   sections: Section[];
-  /** The tags on the deck's cards, most used first. */
-  tags: { key: string; name: string; cards: number }[];
   filters: DeckFilters;
   setFilters: (next: DeckFilters) => void;
+  filterCtx: FilterContext;
   sort: DeckSort;
   setSort: (next: DeckSort) => void;
   query: string;
   setQuery: (next: string) => void;
   searchRef: RefObject<HTMLInputElement | null>;
 }) {
-  const { t, i18n } = useLingui();
-  const sectionName = (id: string) =>
-    id ? (sections.find((s) => s.id === id)?.name ?? "") : t`No section`;
-  const dueName = { today: t`Due today`, week: t`Due this week` };
+  const { t } = useLingui();
+  // Where focus lands when a chip's menu empties it and the chip leaves.
+  const filterButton = useRef<HTMLButtonElement>(null);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`Due date`,
     added: t`Recently added`,
     az: t`A–Z`,
   };
-  const toggle = <T,>(list: T[], item: T, on: boolean) =>
-    on ? [...list, item] : list.filter((x) => x !== item);
-  // Only the menu reports a filter turned on; a chip or Clear filters only takes one off.
-  const choose = (next: DeckFilters, kind: "state" | "due" | "section" | "tag", on: boolean) => {
-    if (on) captureAnalytics("deck_filter_added", { kind });
-    setFilters(next);
-  };
-
-  const chips = [
-    ...filters.states.map((state) => ({
-      key: `state:${state}`,
-      label: i18n._(stateMarks[state].groupLabel),
-      remove: () => setFilters({ ...filters, states: toggle(filters.states, state, false) }),
-    })),
-    ...(filters.due
-      ? [
-          {
-            key: "due",
-            label: dueName[filters.due],
-            remove: () => setFilters({ ...filters, due: null }),
-          },
-        ]
-      : []),
-    ...filters.sections.map((id) => ({
-      key: `section:${id}`,
-      label: sectionName(id),
-      remove: () => setFilters({ ...filters, sections: toggle(filters.sections, id, false) }),
-    })),
-    ...filters.tags.map((key) => {
-      const tagName = tags.find((tag) => tag.key === key)?.name ?? key;
-      return {
-        key: `tag:${key}`,
-        label: t`Tag: ${{ tagName: isolate(tagName) }}`,
-        remove: () => setFilters({ ...filters, tags: toggle(filters.tags, key, false) }),
-      };
-    }),
-  ];
 
   return (
     <div className="grid gap-2.5">
       <div className="flex items-center gap-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <Button size="sm">
-                <ListFilter data-icon="inline-start" aria-hidden="true" />
-                <Trans>Filter</Trans>
-              </Button>
-            }
-          />
-          <DropdownMenuContent
-            aria-label={t`Filter`}
-            className="max-w-[min(20rem,var(--available-width))]"
-          >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>
-                <Trans>State</Trans>
-              </DropdownMenuLabel>
-              {(["new", "learning", "known"] as const).map((state) => (
-                <DropdownMenuCheckboxItem
-                  key={state}
-                  checked={filters.states.includes(state)}
-                  onCheckedChange={(on) =>
-                    choose({ ...filters, states: toggle(filters.states, state, on) }, "state", on)
-                  }
-                >
-                  <StateIcon state={state} className={menuMarkColour[state]} />
-                  {i18n._(stateMarks[state].groupLabel)}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>
-                <Trans>Due</Trans>
-              </DropdownMenuLabel>
-              <DropdownMenuRadioGroup
-                value={filters.due ?? "any"}
-                onValueChange={(v) =>
-                  choose(
-                    { ...filters, due: v === "any" ? null : (v as "today" | "week") },
-                    "due",
-                    v !== "any",
-                  )
-                }
-              >
-                <DropdownMenuRadioItem value="any" closeOnClick={false}>
-                  <Trans>Any time</Trans>
-                </DropdownMenuRadioItem>
-                {(["today", "week"] as const).map((due) => (
-                  <DropdownMenuRadioItem key={due} value={due} closeOnClick={false}>
-                    {dueName[due]}
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </DropdownMenuGroup>
-            {sections.length > 0 && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>
-                    <Trans>Section</Trans>
-                  </DropdownMenuLabel>
-                  {[...sections.map((s) => s.id), ""].map((id) => (
-                    <DropdownMenuCheckboxItem
-                      key={id || "none"}
-                      checked={filters.sections.includes(id)}
-                      onCheckedChange={(on) =>
-                        choose(
-                          { ...filters, sections: toggle(filters.sections, id, on) },
-                          "section",
-                          on,
-                        )
-                      }
-                    >
-                      <span className="truncate">{sectionName(id)}</span>
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuGroup>
-              </>
-            )}
-            {tags.length > 0 && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>
-                    <Trans>Tags</Trans>
-                  </DropdownMenuLabel>
-                  {tags.map((tag) => (
-                    <DropdownMenuCheckboxItem
-                      key={tag.key}
-                      checked={filters.tags.includes(tag.key)}
-                      onCheckedChange={(on) =>
-                        choose({ ...filters, tags: toggle(filters.tags, tag.key, on) }, "tag", on)
-                      }
-                    >
-                      <span className="min-w-0 flex-1 truncate">{tag.name}</span>
-                      <span className="ms-auto ps-3 text-sm text-muted tabular-nums">
-                        {i18n.number(tag.cards)}
-                      </span>
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuGroup>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <FilterMenu
+          filters={filters}
+          setFilters={setFilters}
+          ctx={filterCtx}
+          triggerRef={filterButton}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -626,18 +458,12 @@ function ListTools({
           />
         </div>
       </div>
-      {chips.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          {chips.map((chip) => (
-            <FilterChip key={chip.key} label={chip.label} onRemove={chip.remove} />
-          ))}
-          {chips.length > 1 && (
-            <Button size="sm" variant="ghost" onClick={() => setFilters(noFilters)}>
-              <Trans>Clear filters</Trans>
-            </Button>
-          )}
-        </div>
-      )}
+      <FilterChips
+        filters={filters}
+        setFilters={setFilters}
+        ctx={filterCtx}
+        fallbackFocus={filterButton}
+      />
     </div>
   );
 }
@@ -840,7 +666,13 @@ export function DeckDetailView({
   };
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
-  const tags = useMemo(() => deckTags(cards ?? []), [cards]);
+  // A tag renamed or archived, or a section gone, leaves the filter rather than an orphan chip.
+  useEffect(() => {
+    if (!cards) return;
+    const tagKeys = new Set(deckTags(cards).map((tag) => tag.key));
+    const sectionIds = new Set(sections.map((s) => s.id));
+    setFilters((f) => liveFilters(f, tagKeys, sectionIds));
+  }, [cards, sections]);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   // A deck with sections opens on them; one without has nothing to group that way.
   const sort: DeckSort =
@@ -889,6 +721,10 @@ export function DeckDetailView({
   // The list's clock, refreshed with the cards rather than every render, so headings hold still.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the cards are the reason to look again
   const now = useMemo(() => Date.now(), [cards]);
+  const filterCtx = useMemo<FilterContext>(
+    () => ({ rows: cards ?? [], sections, now, query: q }),
+    [cards, sections, now, q],
+  );
   const shown = useMemo(
     () => (cards ? filterRows(cards, filters, q, now, sections) : undefined),
     [cards, filters, q, now, sections],
@@ -1403,9 +1239,9 @@ export function DeckDetailView({
             ) : (
               <ListTools
                 sections={sections}
-                tags={tags}
                 filters={filters}
                 setFilters={setFilters}
+                filterCtx={filterCtx}
                 sort={sort}
                 setSort={setSort}
                 query={q}

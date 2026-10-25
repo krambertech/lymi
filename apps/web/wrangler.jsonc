@@ -39,7 +39,7 @@
     // Comma-separated. Accounts that may publish decks they own to the public catalog. ADR 0020.
     "PUBLISHER_EMAILS": "library@lymi.app",
     // The oldest phone release the API serves; older ones get 426 and Update Lymi. ADR 0032.
-    "PHONE_MINIMUM_VERSION_IOS": "0.0.3",
+    "PHONE_MINIMUM_VERSION_IOS": "0.0.10",
     // Where Update Lymi sends an iPhone: TestFlight until the App Store listing (#492).
     "PHONE_UPDATE_URL_IOS": "itms-beta://",
     // Every model call requires this gateway; external providers also require AI_GATEWAY_TOKEN.

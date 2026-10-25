@@ -7,6 +7,7 @@ import {
   curlFor,
   example,
   type Method,
+  paramsOf,
   type Route,
   responseSchema,
   type Schema,
@@ -89,7 +90,7 @@ export function Endpoint({ route }: { route: Route }) {
   const responses = Object.entries(op.responses ?? {}).sort(([a], [b]) => a.localeCompare(b));
   const success = responses.filter(([code]) => code.startsWith("2"));
   const failures = responses.filter(([code]) => !code.startsWith("2") && !SHARED_ERRORS.has(code));
-  const params = op.parameters ?? [];
+  const params = paramsOf(op, doc);
   const hasPath = params.some((p) => p.in === "path");
   const hasQuery = params.some((p) => p.in === "query");
 

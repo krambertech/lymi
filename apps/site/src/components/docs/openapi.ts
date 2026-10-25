@@ -47,7 +47,8 @@ export interface Operation {
   summary?: string;
   description?: string;
   tags?: string[];
-  parameters?: Param[];
+  /** Inline, or a `$ref` into `components.parameters` when the generator hoists one. */
+  parameters?: (Param | { $ref: string })[];
   requestBody?: { required?: boolean; content?: Record<string, { schema?: Schema }> };
   responses?: Record<string, Response>;
   security?: Record<string, string[]>[];
@@ -57,7 +58,16 @@ export interface Doc {
   info?: { title?: string; version?: string; description?: string };
   tags?: { name: string; description?: string }[];
   paths?: Record<string, Record<string, Operation>>;
-  components?: { schemas?: Record<string, Schema> };
+  components?: { schemas?: Record<string, Schema>; parameters?: Record<string, Param> };
+}
+
+/** A route's parameters with every `$ref` followed; one that points nowhere is left out. */
+export function paramsOf(op: Operation, doc: Doc): Param[] {
+  return (op.parameters ?? []).flatMap((p) => {
+    if (!("$ref" in p)) return [p];
+    const target = doc.components?.parameters?.[p.$ref.split("/").pop() ?? ""];
+    return target ? [target] : [];
+  });
 }
 
 export const METHODS = ["get", "post", "patch", "put", "delete"] as const;
@@ -225,7 +235,7 @@ function sample(schema: Schema | undefined, defs: Defs, depth = 0): unknown {
  */
 export function curlFor(route: Route, origin: string, doc: Doc): string {
   const { method, path, op } = route;
-  const query = (op.parameters ?? [])
+  const query = paramsOf(op, doc)
     .filter((p) => p.in === "query" && p.required)
     .map((p) => `${p.name}=`)
     .join("&");
@@ -351,7 +361,9 @@ export function example(schema: Schema | undefined, defs: Defs, depth = 0): unkn
   const union = s.anyOf ?? s.oneOf;
   if (union) {
     const first = union.find((u) => u.type !== "null");
-    return first ? example(first, { ...defs, ...(s.$defs ?? {}) }, depth) : null;
+    if (!first) return null;
+    // A named member counts as a step deeper, so a union that names itself still ends.
+    return example(first, { ...defs, ...(s.$defs ?? {}) }, first.$ref ? depth + 1 : depth);
   }
   const type = Array.isArray(s.type) ? s.type.find((t) => t !== "null") : s.type;
   if (type === "array") return depth > 2 ? [] : [example(s.items, defs, depth + 1)];

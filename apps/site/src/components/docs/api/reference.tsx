@@ -39,7 +39,14 @@ export function useOpenApi(here: string | undefined) {
   // The page fills in after the fetch, so a link to a route or object lands once it exists.
   useEffect(() => {
     if (!doc || !location.hash) return;
-    document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+    const raw = location.hash.slice(1);
+    let id = raw;
+    try {
+      id = decodeURIComponent(raw);
+    } catch {
+      // A hand-typed fragment with a stray percent sign is not valid encoding; look it up as written.
+    }
+    document.getElementById(id)?.scrollIntoView();
   }, [doc]);
   const reference = useMemo((): Reference | undefined => {
     if (!doc) return undefined;

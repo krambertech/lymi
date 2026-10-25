@@ -331,11 +331,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
           </div>
         </main>
 
-        <aside
-          className={clsx(
-            "sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-48 shrink-0 overflow-y-auto py-12 xl:block",
-          )}
-        >
+        <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-48 shrink-0 overflow-y-auto py-12 xl:block">
           <Toc path={pathname} />
         </aside>
       </div>

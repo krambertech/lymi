@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Code } from "../Code";
 import { routesOf } from "../openapi";
 import { OPENAPI_URL, ORIGIN } from "../origin";
-import { Defs, H2, Lead } from "../Prose";
+import { Defs, H2, Lead, slug } from "../Prose";
 import { ObjectEntry } from "./ResourcePage";
 import { LoadFailed, ReferenceProvider, useOpenApi } from "./reference";
 
@@ -12,8 +12,8 @@ function Directory({ counts }: { counts: Map<string, number> | undefined }) {
   return (
     <div className="my-6 grid gap-8">
       {API_RESOURCE_GROUPS.map((group) => (
-        <section key={group} aria-labelledby={`group-${group}`}>
-          <h3 id={`group-${group}`} className="!mb-2 !mt-0 !text-sm !font-medium !text-muted">
+        <section key={group} aria-labelledby={`group-${slug(group)}`}>
+          <h3 id={`group-${slug(group)}`} className="!mb-2 !mt-0 !text-sm !font-medium !text-muted">
             {group}
           </h3>
           <ul className="grid list-none overflow-hidden rounded-md bg-plate !ps-0 edge">

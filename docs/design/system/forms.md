@@ -1,6 +1,6 @@
 # Forms
 
-Every form is built from the parts in `apps/web/src/client/components/ui`: `Field` for the row, then one control. A form reads as one row repeated, so every control is the same box.
+Build forms from `Field` and the controls in `apps/web/src/client/components/ui`. Use consistent control sizes within a form.
 
 ## Which control
 
@@ -21,13 +21,13 @@ What is the learner giving?
       └── A fixed list longer than 15 that is searched by name (languages) → Combobox
 ```
 
-A short list is picked from and a long one is searched. `ToggleGroup multiple` has no product use yet, so raise a new multi-choice shape before building one. Use `Select`, never the platform `<select>`, whose list is the one thing in a form the palette does not reach.
+Use Select for short lists and Combobox for long searchable lists. `ToggleGroup multiple` has no current product use; establish its interaction before adding one. Use the shared `Select` rather than a platform `<select>` so its popup follows the theme.
 
 ## The control box
 
-Every control is 44 px tall on the phone and 40 px on a desktop, with 16 px text on any touch screen, a tablet included, so iOS does not zoom on focus. Input, Select and Combobox take this from `controlSize` in `components/ui/input.tsx`; Textarea takes only its text size from `controlText`, so its height follows its content. Every control in a form keeps this size, including "the one field that matters": a form with three type sizes looks unfinished, and the field that matters is already first.
+Controls are 44 px tall on narrow screens and 40 px on desktop. Touch inputs, including on tablets, use 16 px text to prevent iOS zoom. Input, Select and Combobox use `controlSize` from `components/ui/input.tsx`; Textarea uses `controlText` and grows with its content. Keep these sizes consistent, including the form’s main field.
 
-Controls size by the **viewport**, not the container: a phone is a phone whatever it is nested in, and a sheet renders in a portal where a container query has nothing to measure and would silently never fire.
+Size controls by the **viewport**. Sheets render in portals that may have no query container, so container queries are unsuitable for this sizing.
 
 ## A form row is a Field
 
@@ -79,13 +79,13 @@ Forms stay pressable and validate on submit ([buttons.md](buttons.md#states)). P
 
 Both are the same box as every other control when closed.
 
-`Select` takes the shape of the machine the way a menu does. On a desktop a panel unfolds under the box, 4 px and scale 0.98 over 140 ms; the arrows walk the rows and typing a letter jumps to a name. On a touch device the same rows rise in a drawer under the thumb and swipe away, and inside a form sheet that drawer stacks over the form's. The rows are the control's height, and the chosen one leads with a check in a slot every row keeps. The hover is the one sliding fill, so the keyboard's row, not the pointer's, is the row Enter picks.
+`Select` opens an anchored panel on desktop, moving 4 px from scale 0.98 over 140 ms. Arrow keys move between rows and typing jumps to a matching name. On touch, the rows open in a dismissible bottom drawer, stacked over a form drawer when needed. Rows use the control height and reserve a check slot in every option. Keyboard focus determines the option selected by Enter.
 
-`Combobox` is a Select you search, and takes the machine's shape the same way: a panel under the box on a desktop, or above it when there is more room, and a drawer titled with the field's name on touch. The search field leads and takes focus, and the list keeps one height in the drawer while it filters, so the drawer does not jump with each letter. The names filter as you type, the first match is highlighted so Enter takes it, and a letter typed on the closed box opens it with that letter searched.
+`Combobox` adds search to the same responsive layout: an anchored panel on desktop, above the field if needed, or a drawer named after the field on touch. Focus the search field when opening. Keep the drawer’s list height stable while filtering. Highlight the first match for Enter; typing on the closed control opens it with that search text.
 
-A row may carry a caption, `SelectItem`'s `description`, when each option needs a sentence and a sheet already spends its cards on another question: New deck asks its purpose with cards and its review mode with a captioned Select. The panel then takes the box's width (`w-(--anchor-width)`) so a caption wraps rather than widening the list past the sheet, and the chosen row's caption is the field's description.
+Use `SelectItem`’s `description` when options need explanatory text and the form already uses RadioCards for its main question. New deck uses RadioCards for purpose and a captioned Select for review modes. Set `w-(--anchor-width)` so captions wrap within the field width, and show the selected caption as the field description.
 
-Anything a list accepts beyond its rows, such as a language tag it has never heard of, belongs to the product field that holds it (`LanguageField`), not to the primitive.
+Handle values outside the option list, such as an unlisted language tag, in the product field (`LanguageField`) rather than the shared primitive.
 
 A card's tags are chosen from a chip, `TagsChip`: a `Combobox` with `multiple`, whose search finds the learner's tags in use, those starting with what was typed first, each with its card count on the end. A Create row after them adds the name as typed whenever it is not a tag in use already, and a tag row adds that tag in its own spelling. The list stays open while tags are picked, and the chip then reads the one tag, or how many.
 

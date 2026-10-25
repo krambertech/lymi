@@ -1,6 +1,6 @@
 # Chips and marks
 
-Descriptive chips and marks say a card's state, where a field came from, how many cards are due, or a key to press. These components are not buttons, and none is amber except the due count. Controls that look like chips have their own semantics and components below.
+Use descriptive chips for card states, field sources, due counts and keyboard shortcuts. They are not interactive controls. DueCount is the only amber descriptive chip; interactive chip-shaped controls are covered below.
 
 ## Which one
 
@@ -18,9 +18,9 @@ What does the label say?
 
 `Chip` in `components/chip.tsx` is a pill on `plate-2`.
 
-Tones: `default`, `ai`, `danger`. Nothing else exists. **The default is `default`**; `ai` belongs to `SourceChip`, so a call site uses it only through that component.
+Supported tones are `default`, `ai` and `danger`, with `default` as the default. Use `SourceChip` for AI provenance rather than setting `ai` at a call site.
 
-Sizes: `xs` 17 px, `sm` 22 px, `md` 26 px, `lg` 28 px. Nothing else exists. The default is `md`. Use `sm` beside other text in a row or a people list, `md` on its own, and `lg` only for the state chip on a card under review (`StateChip size="lg" inReview`). `xs` is the AI badge only.
+Supported sizes are `xs` 17 px, `sm` 22 px, `md` 26 px and `lg` 28 px. The default is `md`. Use `sm` beside other text in a row or a people list, `md` on its own, and `lg` only for the state chip on a card under review (`StateChip size="lg" inReview`). `xs` is the AI badge only.
 
 ```tsx
 // Correct, from activity-view.tsx
@@ -43,14 +43,14 @@ case "failed":
 
 `SourceChip` says who wrote a field: the lesson, the AI, or the learner ("You").
 
-- `compact` is the badge form: the mark and one word, beside the label of the field it belongs to. Only the AI's source is shown this way; the learner's and the lesson's carry no badge.
+- `size="xs"` is the badge form: the mark and one word, beside the label of the field it belongs to. Only the AI's source is shown this way; the learner's and the lesson's carry no badge.
 - The full form names all three sources where a chip row has the space and the comparison helps.
 
-Review marks no source, neither on the answer nor on the hint: who wrote a field does not help recall, so it is the card page's to say.
+Review omits source badges on both answers and hints. Show field provenance on the card page.
 
 ## DueCount
 
-`DueCount` in `components/due-count.tsx` is the number of cards due, in ink on `amber-tint`, never amber text. It takes `sm` (the default, in a row) or `lg`. It is one of amber's allowed uses; down a list it repeats once per row, which is still one decision.
+`DueCount` in `components/due-count.tsx` is the number of cards due, in ink on `amber-tint`, never amber text. It takes `sm` (the default, in a row) or `lg`. It may repeat in each row of a list; this is a defined use of amber.
 
 ## Kbd
 
@@ -64,7 +64,7 @@ On the web, card-form chips use `FieldChipButton` and the matching picker trigge
 
 ## The chosen chip
 
-A filter chip that is chosen is a solid `text` fill with `canvas` text, and its count goes to 60% of that: `bg-text text-canvas`. It is the only selected state a chip has. Amber is out because amber means act, and the segmented control's plate on `plate-2` has too little contrast against the canvas at chip size. It is drawn in place, not by `Chip`, as in the product's deck glossary.
+Selected filter chips use `bg-text text-canvas`, with their count at 60% opacity. Use this single selected state rather than amber. The segmented control’s selected fill has insufficient contrast at chip size on the canvas. Filter chips are rendered by their feature, not by descriptive `Chip`.
 
 ```tsx
 // Correct
@@ -76,4 +76,4 @@ chosen ? "bg-amber text-amber-ink" : "bg-plate-2"
 
 ## Shelf chips
 
-Explore's chips are links, not filters: each jumps to its shelf and moves focus to the shelf's heading. Their one chosen state says where the reader is, not what is picked: once the bar has stuck, the chip of the shelf under it takes the chosen chip's fill, `bg-text text-canvas`, with `aria-current="location"`. They are larger than a `Chip` because they are the page's way around, 40 px on the site and 36 px in the product, and 44 px on a coarse pointer, on `plate-2` with ink text and the shelf's deck count in `muted`. They are drawn in the site's `ShelfBar` and the product's `ShelfBar`. [explore.md](../explore.md)
+Explore shelf chips are links. Each scrolls to its shelf and focuses the heading. Once the navigation bar is sticky, the visible shelf’s chip uses `bg-text text-canvas` and `aria-current="location"`. Chips are 40 px on the site, 36 px in the product and 44 px for coarse pointers. Unselected chips use `plate-2`, normal text and a muted deck count. Both surfaces render them through `ShelfBar`. [explore.md](../explore.md)

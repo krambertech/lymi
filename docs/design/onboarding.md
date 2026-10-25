@@ -1,16 +1,16 @@
 # Getting started
 
-A new account starts on Today, not on a separate set of screens. Today carries a first-run guide until the first review, so the place a learner learns the product is the place they will use every day. Its job is to get them to a first review, not to teach the product or ask questions whose answers change nothing. The phone still asks Welcome's questions ([on the phone](#on-the-phone)).
+New web accounts start on Today with a first-run guide that remains until the first accepted review. The guide helps the learner create or choose a deck, add cards and begin review. The phone uses Welcome before Today ([on the phone](#on-the-phone)).
 
 ## The guide
 
-`FirstRunGuide` in `components/first-run.tsx` sits on the bare canvas, dashed like every empty state ([empty-states.md](system/empty-states.md)), and is a path, as on the phone: the lantern heads a line that runs down three numbered steps, lit amber as far as the step the learner is on. One column holds the lantern and the numbers and one the words, so the heading, the line under it and every step's title start at one edge; the line stops just short of the lantern's base and of each number. The heading greets the learner by first name and stays put, the line under it says what comes next, and the count ("1 of 3 done") sits in the corner on the heading's line.
+`FirstRunGuide` in `components/first-run.tsx` uses the canvas and dashed empty-state treatment ([empty-states.md](system/empty-states.md)). A lantern and three numbered steps share a vertical line, amber through the current step. Keep the markers in one column and text in another, with gaps around the lantern and numbers. The heading greets the learner by first name and stays stable; supporting text gives the next action. Put the completed-step count, such as “1 of 3 done”, at the end of the heading row.
 
 1. **Create a deck**: done once the learner has a deck of their own, or any deck with cards. An empty deck someone shared does not count, because its member cannot add to it.
 2. **Add cards**: done once a deck has cards. While current it holds **Add a card** and, where Smart add is allowed, **Turn your notes into cards**; the learner's own empty deck is named in its line.
 3. **Finish your first review**: holds **Review**, which opens that deck's review. The guide leaves with the first accepted grade.
 
-Every step has the same box, so the rhythm holds whatever is current; the current one is the one filled plate and holds its action. A done step is an amber check with its title struck through, the current step's number is dark, and a later step waits muted. There are no progress bars. While the guide shows, Today's own cards wait, because they have nothing to say yet.
+Keep each step’s dimensions stable. Only the current step has a filled panel and action. Completed steps use an amber check and struck-through title; future steps use muted numbers. There is no separate progress bar. Hide the normal Today panels while the guide is active.
 
 ## Under the guide
 
@@ -24,13 +24,13 @@ Today's first visit before any review counts as getting set up: the browser save
 
 ## Motion
 
-The first visit on a device plays once (`lymi-first-run-lit` in local storage). The lantern catches from its ember, its pool blooms from 120 ms and seven embers lift from 420 ms; the heading rises at 260 ms and the line at 360 ms, then the three steps 140 ms apart from 520 ms. Create your first deck arrives from 820 ms, its cards 80 ms apart, the assistant marks popping in on a spring, then the ready-made decks. Every later visit, and every visit under reduced motion, finds it lit and still.
+Play the entrance once per device, tracked by `lymi-first-run-lit` in local storage. Light the lantern, expand its background light from 120 ms and emit seven particles from 420 ms. Animate the heading at 260 ms, supporting text at 360 ms and steps from 520 ms at 140 ms intervals. Create your first deck appears from 820 ms, with cards 80 ms apart and assistant marks on a spring, followed by published decks. Subsequent visits and reduced motion show the final state without animation.
 
 ## On the phone
 
-The phone shows Welcome before Today. It asks (what the learner is learning, which language, how much time a day, and how to start, whose ready-made decks follow `BEGINNER_DECKS` as on the web) and saves to the same `PUT /api/settings/onboarding`, so finishing or skipping on either app holds on both. The app's root decides it once per sign-in: sign-in stays on screen until the account is read, Welcome then fades in as the only signed-in screen, and Today first appears once finishing or Skip for now saves `onboarded_at`, then opens where Welcome sent the learner, such as the first review.
+The phone shows Welcome before Today. It asks what the learner is learning, their language, daily time and preferred starting method. Published-deck choices use `BEGINNER_DECKS`, as on web. Both apps save through `PUT /api/settings/onboarding`, so completion or skipping applies across devices. After sign-in, keep the sign-in screen visible until account state is known, then show Welcome alone when required. Finishing or Skip for now saves `onboarded_at` and opens the selected destination, such as the first review.
 
-How it works shows its three steps already lit, since lighting them one by one flashed on the phone, and the questions' titles are a step smaller than the web's. The primary is the `lg` button at the foot, Back and Skip for now are glass in the bar, and every answer is a whole plate with a tick.
+Show all three How it works steps lit immediately; sequential lighting caused flashing on phone. Question titles are one size smaller than on web. Use an `lg` primary action at the bottom, glass Back and Skip for now in the header, and full-panel answer choices with checks.
 
 Bring your own leads with **Turn your notes into cards**, which makes the learner's first deck from the answers, named for the language or My notes, and opens Smart add on it. Import finishes Welcome and then opens Import over Today ([ADR 0036](../adr/0036-setup-runs-on-the-phone.md)); Claude or ChatGPT opens its setup guide over Today; Type my own cards opens New deck over Today.
 

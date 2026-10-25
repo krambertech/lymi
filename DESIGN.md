@@ -293,7 +293,7 @@ components:
 
 Lymi uses warm light and dark themes, clear typography and restrained motion. The app follows the OS theme unless the learner chooses one in Settings. Light surfaces use borders for separation; dark surfaces also use subtle elevation. Amber highlights primary actions and the specific states listed in [colour.md](docs/design/system/colour.md#amber-means-act).
 
-The frontmatter above is generated from `packages/design/tokens.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
+The colour values above are generated from `packages/design/tokens.css` with `node scripts/check-design-docs.mjs --write`; `pnpm check:design` checks that they match. The local `/design` route renders the actual tokens and components, with desktop and touch layouts, component states and a reduced-motion control on each canvas.
 
 ## Rules every screen follows
 
@@ -302,20 +302,20 @@ Each rule links to the file that holds its detail and its exceptions.
 1. **Tokens, never values.** Colour through the semantic utilities (`bg-plate`, `text-muted`), type through the scale (`text-lg`), radius through `rounded-*`. A raw hex or a stock Tailwind colour breaks dark mode, which is its own warm palette rather than an inversion. [colour.md](docs/design/system/colour.md)
 2. **Use amber only for defined roles.** Primary actions, capture, due counts, review progress, important-card marks, selected checkboxes and switches, and native navigation have specific rules. Read the complete list before adding another use. [colour.md](docs/design/system/colour.md#amber-means-act)
 3. **Use the surface utilities.** Light surfaces use a thin border; dark surfaces add elevation through `edge`. Use `well`, `lit` and `key-light` only for their documented roles. Group related panels with spacing and headings. [surfaces.md](docs/design/system/surfaces.md)
-4. **One primary per view.** Two primaries means the screen has no hierarchy. `secondary` is the default variant. [buttons.md](docs/design/system/buttons.md)
-5. **A closed set is closed.** Every variant, size and tone a component takes is listed in its file. An unlisted one is a bug, not an option, and a `className` that resizes or recolours a component is the same bug.
+4. **One primary action per view.** Use `secondary`, the default variant, for other actions. A dialog has its own action hierarchy. [buttons.md](docs/design/system/buttons.md)
+5. **Use the component’s supported API.** Variants, sizes and tones are defined in its source. Extend that API when needed rather than resizing or recolouring individual instances with `className`.
 6. **Never `disabled` on a button that cannot run yet.** Forms stay pressable and validate on submit; `aria-disabled` is for mid-request. [buttons.md](docs/design/system/buttons.md#states)
 7. **Undo replaces confirmation.** A question dialog is for what cannot be undone. [overlays.md](docs/design/system/overlays.md)
 8. **Every screen is built with `Screen`**, carries one `h1`, and skips no heading level. [layout.md](docs/design/system/layout.md)
-9. **Logical directions.** `ms-`, `pe-`, `start-`, `text-start`, never `ml-`, `pr-`, `left-`, `text-left`, so a right-to-left locale is a catalog and not a refactor.
+9. **Use logical directions.** Prefer `ms-`, `pe-`, `start-` and `text-start` so layouts support right-to-left languages without separate spacing rules.
 10. **Status is never colour alone.** A state carries an icon and a word; an error carries an icon. [colour.md](docs/design/system/colour.md#status-is-never-colour-alone)
 11. **Every control has** default, hover, focus, active, disabled and, where it applies, loading. Hover goes through `hoverable:` so touch never sticks.
 12. **Motion conveys state**, leaves faster than it arrives, never animates a keyboard action, and has a reduced version. [motion.md](docs/design/system/motion.md)
-13. **Shared design across apps.** The web, the site and the phone share the tokens, the lantern and the moments in motion.md. A change to a shared mechanic names its behaviour on all three surfaces in the same pull request or proposal. [phone.md](docs/design/system/phone.md)
+13. **Share design across apps.** Web, site and phone use the same tokens, brand assets and motion presets. When changing shared behavior, describe its effect on each surface in the pull request or proposal. [phone.md](docs/design/system/phone.md)
 
 ## Where the rules live
 
-Read the file for what you are building. Each is short enough to read whole.
+Read the guide for the component or interaction you are changing.
 
 | Building | Read |
 | --- | --- |

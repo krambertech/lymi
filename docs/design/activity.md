@@ -1,6 +1,6 @@
 # Activity
 
-Activity is the one place that answers "did anything land in my decks that I did not put there". It lists writes made by imports, connected apps and the AI, the files the learner took out, and the people events of a shared deck: who joined, who left, who was removed, and when the join link was turned on or off. The learner's own edits are not here; a card's own history holds those.
+Activity lists imports, exports, connected-app and AI writes, and shared-deck membership and join-link changes. It lets the learner inspect changes made outside their own in-app editing. Their direct edits appear in each card’s history.
 
 On the web, Activity opens from the learner menu. On the native phone app it opens from You ([layout](system/layout.md#you)).
 
@@ -10,13 +10,13 @@ One list, newest first, under day headings: **Today**, **Yesterday**, then the d
 
 Each day is one plate of rows with hairlines between, the shape Library uses. A row is one sentence about what happened, a line under it saying who and when, and an end that says what pressing it does.
 
-The sentence never names who did it, because the line under it does: "Added 3 cards to German verbs", then "Claude · 14:32". That keeps one message per event in every language, rather than a subject glued to a verb, and keeps the count's plural inside the sentence where a translator can inflect it. The two people events whose subject is another person are the exception: "Maryna joined German verbs" names her, because the sentence is about her and the owner is not the actor.
+Keep the event sentence separate from its attribution: “Added 3 cards to German verbs”, then “Claude · 14:32”. Translate the complete event sentence with its plural count. Membership events can name the person in the sentence, such as “Maryna joined German verbs”, because that person is the subject.
 
 An archived deck has no screen to open, so a row that names one is read rather than pressed, and so are the cards inside it.
 
-Who is the app's name when Lymi knows it - a connected app names itself when it asks for consent, and an API key carries the name the learner gave it. Where there is no name, the row falls back to the words the card history already uses: a connected app, the API, the AI, Lymi.
+Use the connected app’s name or the learner’s API-key name as attribution. When unavailable, use the card-history fallback: a connected app, the API, the AI or Lymi.
 
-An export is the one row whose action sits on the row: **Download**, while the file lasts its day. Everything else a row can do is behind the thing it opens.
+Exports have an inline Download action while the file remains available for a day. Other row actions are reached through the row’s destination.
 
 Rows that wrote cards **expand in place** to the cards they wrote, so a write can be read without leaving the screen. A card opens where every card opens: the card in its deck, which holds its fields, its history and Archive. A group holding more cards than the expansion shows ends with a row that opens the deck. Everything else opens where the work is: an import row opens its import, a deck row opens the deck.
 
@@ -26,16 +26,16 @@ Rows that wrote cards **expand in place** to the cards they wrote, so a write ca
 
 ## Grouping
 
-Twelve cards from one app in one afternoon is one row, not twelve. Writes group by day, actor, app, what they did, and the deck they landed in; the row carries the count and the time of the most recent write in the group. A group never spans two days, so a day heading is always true.
+Group writes by local day, actor, app, action and deck. Each group shows the count and latest write time. A group never crosses a day boundary.
 
 ## Empty, loading, failing
 
-An empty Activity is an `EmptySection` with the screen's own mark, **Nothing yet**, and one line saying what shows up here; it has no start panel and asks for nothing, because nothing having come in is the good news and importing starts in Settings. The screen carries no subtitle either, because the rows say what they are. Loading is a day heading and a plate of two rows at the height they load at. The foot of the list stays put: **Show more** while there is another page, and **That's everything** once there is not, so the key that pressed the button still has somewhere to be. A list that fails to load is `ErrorState` with Try again; a later page that fails says so beside its button and leaves the rows above it alone.
+Empty Activity uses `EmptySection`, its screen icon, **Nothing yet** and one explanatory line. Omit a start panel, action and screen subtitle; imports begin in Settings. Loading shows a day heading and two row placeholders at their final height. Keep the list footer stable: **Show more** when more pages exist, then **That’s everything**. Initial failure uses `ErrorState` with Try again. A later-page failure appears beside the pagination action and retains loaded rows.
 
 ## What it costs to add an event
 
-An event appears here because a service wrote an audit row for it, so the screen is a read and never a second source of truth. The rows a service can write are one typed list in `services/audit.ts`, and the reader's table in `services/activity.ts` names a sentence, or deliberately none, for every entry in it, so a new kind of write does not compile until this screen has decided on it. Two things make a write invisible: no audit row at all, which is the bug to look for when something lands unseen, and a kind the reader's table marks as unsaid - caching a card's audio is the AI's work but not a change to the card, and naming it an edit here would be a lie on the one screen that must not tell one.
+Activity reads service audit rows rather than maintaining a separate event store. `services/audit.ts` defines write kinds; `services/activity.ts` maps each to a sentence or explicitly omits it. When a write is missing, check both the audit record and mapping. Background audio caching is intentionally omitted because it does not edit card content.
 
 The AI's own writes are here too: a run that fills empty fields after an add is "Enriched 3 cards in Verbi", never an edit.
 
-Every row keeps the app or key behind the write and its name at the time, taken from the service context rather than passed by each writer, so no write can lose it; a caller the context cannot name shows as "a connected app". Because a row keeps the name it had at the write, revoking a key leaves its history readable.
+Store the app or key id and its name at write time from the service context. Fall back to “a connected app” when no name is available. Retain the recorded name after revocation so older events remain understandable.

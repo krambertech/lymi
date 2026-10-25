@@ -1,19 +1,19 @@
 # The rail
 
-The rail is the desktop navigation: `Sidebar` in `views/shell.tsx`, built from `RailNav`, `RailRow` and `RailHeading` in `components/rail-nav.tsx`. The design pages' sidebar uses the same three, so the two rails cannot drift. Where the rail sits in the frame is in [layout.md](layout.md#desktop-the-rail).
+The rail is the desktop navigation. `Sidebar` in `views/shell.tsx` uses `RailNav`, `RailRow` and `RailHeading` from `components/rail-nav.tsx`. The design sidebar uses the same components. [layout.md](layout.md#desktop-the-rail) defines its placement.
 
 ## Anatomy
 
 Top to bottom:
 
 1. The first line: the app tile and wordmark, the streak pill, and capture. It sits 32 px down, level with the page title beside it.
-2. The places: Today, Library, Insights and Explore, each with an icon.
+2. The main screens: Today, Library, Insights and Explore, each with an icon.
 3. **Decks**, for the decks that belong to no series.
 4. One section per series, in Library's order, headed by the series' name.
 5. The offer to connect an AI assistant, while none is connected.
 6. The learner, under a rule across the rail.
 
-The first line, the offer and the learner stay put; only the places between them scroll, so capture and the learner menu are in reach however many decks there are.
+The header, assistant offer and learner row stay fixed while the navigation and deck list scroll. Capture and the learner menu remain accessible in a long list.
 
 ```tsx
 <RailNav rows={groups}>
@@ -33,20 +33,20 @@ A row is `RailRow`, rendered as the router's link: 40 px tall, `text-base` in `t
 
 ## Sections and series
 
-A section heading is `RailHeading`: 12 px tracked capitals in `muted`, 28 px above it. It is a label rather than an `h2`, so the screen beside the rail keeps the only heading outline. A series' name is a heading in exactly the same style as Decks, because a series is a sibling of Decks rather than something inside it. Decks heads only the decks without a series, and it is left out when there are none, so a learner whose every deck is in one series sees that series alone. A series with no decks has no section.
+`RailHeading` uses 12 px tracked capitals in `muted`, with 28 px above it. It is a label, not an `h2`, so it does not alter the content screen’s heading outline. Series headings use the same style as Decks. Show Decks only when ungrouped decks exist, and omit series with no decks.
 
-A series stays a heading over its decks in the rail. It is not a row, it does not fold, and its decks are not indented: each of those read as either busy or bare. A series has no page yet.
+Series headings do not navigate or collapse. Keep their deck rows unindented. A series has no dedicated page.
 
 ## States
 
-| State | Row | Light room | Dark room |
+| State | Row | Light theme | Dark theme |
 | --- | --- | --- | --- |
 | Rest | no fill, `text-2` | | |
 | Hover | the `RailNav` fill, `text` | `rail-hover`, the same as `hover` | a 4% white wash |
 | Current | `bg-rail-chosen edge-inset`, `text` | white with a hairline, as a plate | a flat step above the rail with a hairline inside, never lifted |
 | Focus | the neutral 2 px `ring` outline | | |
 
-The current row is always the strongest row and hover always sits under it. Never `edge` or `bg-plate` on the current row: in dark theme `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer would outrank the one the learner is on. The learner row and the streak pill hover with `rail-hover` for the same reason, and the learner row takes the current row's look while its menu is open.
+Selection must remain more prominent than hover. Use `bg-rail-chosen edge-inset` rather than `edge` or `bg-plate`: those panel treatments add unwanted elevation or weaker contrast in dark theme. Learner and streak controls hover with `rail-hover`. While the learner menu is open, its row uses the selected treatment.
 
 ## Hover
 
@@ -58,4 +58,4 @@ The learner row is `LearnerMenu` with `variant="rail"`: 56 px, a 34 px avatar an
 
 ## The offer to connect an assistant
 
-`AssistantOffer` is a plate above the learner's rule, shown once the learner's connected apps have loaded and there are none. It holds the marks of Claude, ChatGPT, Gemini and Grok, each opening its page under Settings, then a title with an arrow and one line on what an assistant does for the learner; the title and line together open the Apps group in Settings. It has no button, so it stays short enough to leave the places in view in a short window. It is the only plate in the rail, so it is the only thing there that reads as a note rather than a place. Pointing at the card spreads the marks sideways until their overlap opens and nudges the arrow; the marks never rise, because a lift reads as a jump; under reduced motion nothing moves. Its `xs` dismiss sits at the end of the marks' row and shows only while the pointer is on the card or focus is in it, because a corner button beside the tiles reads as misaligned; on touch it always shows. Dismissing hides the card on this device. The learner menu keeps `AssistantMenuItem`, a Connect AI assistant row beside Docs and Send feedback with the plug icon, on the rail and the phone alike, until an app connects; dismissing the card never removes the row, so the way in is never lost.
+`AssistantOffer` appears above the learner divider once connected apps have loaded and the list is empty. It shows Claude, ChatGPT, Gemini and Grok marks, each linking to its Settings page. The title, arrow and description link to the Apps group. Keep the panel compact and omit an additional button. Hover spreads the overlapping marks horizontally and moves the arrow slightly; reduced motion keeps them still. The `xs` dismiss button is at the end of the marks row, visible on hover or focus and always visible on touch. Dismissal is device-local. `AssistantMenuItem` remains in the learner menu, beside Docs and Send feedback, until an app connects.

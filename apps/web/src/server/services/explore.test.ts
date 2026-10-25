@@ -113,6 +113,15 @@ describe("exploreCatalog", () => {
     expect(find(await exploreCatalog(anna), "archived")).toBeUndefined();
   });
 
+  it("never shows a Ukrainian reader a Russian deck, nor a Russian reader one", async () => {
+    await publish("russian-words", { language: "ru" });
+    const shown = async (appLanguage: "en" | "uk" | "ru") =>
+      find(await exploreCatalog(await reader(`ru-${appLanguage}`, appLanguage)), "russian-words");
+    expect(await shown("uk")).toBeUndefined();
+    expect(await shown("ru")).toBeUndefined();
+    expect(await shown("en")).toBeDefined();
+  });
+
   it("lists a catalogue of more decks than D1 binds parameters for", async () => {
     // Written straight to the tables, a few rows a statement: the service path costs seconds a deck.
     const slugs = Array.from({ length: 110 }, (_, index) => `wide-${index}`);

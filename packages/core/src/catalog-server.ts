@@ -426,6 +426,8 @@ export async function listPublicDeckSlugs(db: CatalogDb, limit = SITEMAP_DECK_LI
       slug: deckPublications.slug,
       updatedAt: deckPublications.updatedAt,
       meaningLanguage: deckPublications.meaningLanguage,
+      category: deckPublications.category,
+      language: decks.defaultLanguage,
     })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))

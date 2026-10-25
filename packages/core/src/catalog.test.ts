@@ -13,6 +13,8 @@ import {
   shelvesOf,
   taughtLanguage,
   UNCATEGORISED,
+  offersDeck,
+  offersLanguage,
 } from "./catalog";
 import {
   type CardRow,
@@ -483,5 +485,24 @@ describe("the portable entry point", () => {
     const modules = [...seen].map((href) => href.slice(href.indexOf("/src/") + 1));
     expect(modules.filter((path) => /^src\/(db|schema\/|catalog-server)/.test(path))).toEqual([]);
     expect([...packages].filter((name) => name.startsWith("drizzle"))).toEqual([]);
+  });
+});
+
+describe("offersLanguage", () => {
+  it("keeps Russian from Ukrainian and Russian readers, and Ukrainian from its own", () => {
+    expect(offersLanguage("uk", "ru")).toBe(false);
+    expect(offersLanguage("uk", "uk")).toBe(false);
+    expect(offersLanguage("ru", "ru-RU")).toBe(false);
+    expect(offersLanguage("ru", "uk")).toBe(true);
+    expect(offersLanguage("en", "ru")).toBe(true);
+    expect(offersLanguage("uk", "ja")).toBe(true);
+    expect(offersLanguage("uk", null)).toBe(true);
+  });
+});
+
+describe("offersDeck", () => {
+  it("hides a language deck but never a subject deck written in that language", () => {
+    expect(offersDeck("uk", { category: "languages", language: "ru" })).toBe(false);
+    expect(offersDeck("ru", { category: "science", language: "ru" })).toBe(true);
   });
 });

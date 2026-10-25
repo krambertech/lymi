@@ -3,6 +3,7 @@ import {
   DECK_PAGE_SPREAD,
   deckPageHand,
   deckPageSpread,
+  offersDeck,
   type PublicDeckOut,
   type PublicDeckSummary,
   previewMode,
@@ -53,11 +54,16 @@ export function deckSharePath(slug: string, locale: Locale): string {
   return `${deckPath(slug, locale)}/share.png`;
 }
 
-export function deckPaths(slug: string): Record<Locale, string> {
-  return Object.fromEntries(locales.map((locale) => [locale, deckPath(slug, locale)])) as Record<
-    Locale,
-    string
-  >;
+/** The deck's page in each locale that offers it; with no deck to ask, every locale. */
+export function deckPaths(
+  slug: string,
+  deck?: { category: string | null; language: string | null },
+): Partial<Record<Locale, string>> {
+  return Object.fromEntries(
+    locales
+      .filter((locale) => !deck || offersDeck(locale, deck))
+      .map((locale) => [locale, deckPath(slug, locale)]),
+  );
 }
 
 function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {

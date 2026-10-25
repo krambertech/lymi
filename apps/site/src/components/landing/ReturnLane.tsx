@@ -72,12 +72,13 @@ export function ReturnLane({ term, lang }: Props) {
           return (
             <li
               key={stop.day}
-              className="grid grid-cols-[76px_24px_minmax(0,1fr)] items-center gap-4 @3xl:grid-cols-1 @3xl:justify-items-center @3xl:gap-2.5 @3xl:text-center"
+              className="grid grid-cols-[auto_24px_minmax(0,1fr)] items-center gap-4 @3xl:grid-cols-1 @3xl:justify-items-center @3xl:gap-2.5 @3xl:text-center"
             >
+              {/* The tile grows with its word: a fixed width cut off неділя and молоко. */}
               <span
                 lang={lang}
                 className={clsx(
-                  "grid h-[86px] w-[76px] place-items-center rounded-md bg-plate text-2xl leading-[1.6] font-medium text-text edge-2 transition-[opacity,translate] duration-500 @3xl:h-[104px] @3xl:w-[92px] @3xl:text-[26px]",
+                  "grid h-[86px] min-w-[76px] place-items-center rounded-md bg-plate px-3 text-2xl leading-[1.6] font-medium whitespace-nowrap text-text edge-2 transition-[opacity,translate] duration-500 @3xl:h-[104px] @3xl:min-w-[92px] @3xl:text-[22px] @5xl:text-[26px]",
                   !on && "translate-y-1.5 opacity-35",
                 )}
               >

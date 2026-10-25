@@ -1,4 +1,5 @@
-import { LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
+import { offersLanguage } from "@lymi/core/catalog";
+import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
 
 /** Each supported language's page, which `/languages/[language]` renders. */
 const languagePages = Object.fromEntries(
@@ -77,6 +78,12 @@ export const englishOnlyPaths = [
   "/docs/api",
   "/docs/recipes",
 ] as const;
+
+/** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
+export function pageLocales(page: LocalizedPage): Locale[] {
+  const tag = LANGUAGE_PAGE_TAGS.find((each) => LANGUAGE_PAGES[each].page === page);
+  return locales.filter((locale) => offersLanguage(locale, tag));
+}
 
 export function localizedPath(page: LocalizedPage, locale: string): string {
   const path = localizedPages[page];

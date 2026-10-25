@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import { offersLanguage } from "@lymi/core/catalog";
 import {
   BadgeCheck,
   ClipboardCheck,
@@ -12,7 +13,7 @@ import {
   Video,
 } from "lucide-react";
 import { EXAMS, type Exam, examPath } from "../../lib/exams";
-import { LANGUAGE_PAGES } from "../../lib/language-pages";
+import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES } from "../../lib/language-pages";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 
 export interface UseCaseLink {
@@ -28,6 +29,13 @@ export interface UseCaseLink {
 export interface SiteLink {
   label: MessageDescriptor;
   href: (locale: string) => string;
+  /** The language a language's page teaches, which some locales don't offer. */
+  language?: string;
+}
+
+/** The links this locale shows: none to a language it doesn't offer. */
+export function linksIn(links: readonly SiteLink[], locale: string): SiteLink[] {
+  return links.filter((link) => offersLanguage(locale, link.language));
 }
 
 interface UseCaseGroup {
@@ -134,8 +142,12 @@ const EINBUERGERUNGSTEST: SiteLink = {
 
 /** The pages written for one language. */
 export const LANGUAGE_LINKS: readonly SiteLink[] = [
-  ...Object.values(LANGUAGE_PAGES).map(({ page: name, label }) => ({ label, href: page(name) })),
-  { label: msg`Estonian`, href: page("estonian") },
+  ...LANGUAGE_PAGE_TAGS.map((tag) => ({
+    label: LANGUAGE_PAGES[tag].label,
+    href: page(LANGUAGE_PAGES[tag].page),
+    language: tag,
+  })),
+  { label: msg`Estonian`, href: page("estonian"), language: "et" },
 ];
 
 /** The exams the footer names; the rest are one click away on the exam hub. */

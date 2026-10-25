@@ -3,7 +3,7 @@ import { EXAM_DECKS, EXAMS, examPath, examsPath } from "../lib/exams";
 import { ESTONIAN_PAGE_DECKS, LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES } from "../lib/language-pages";
 import { shelfPagePaths } from "../lib/public-catalog";
 import { publishedDeckSlugs } from "../lib/public-deck";
-import { localizedPath } from "../lib/routes";
+import { localizedPath, pageLocales } from "../lib/routes";
 import { runtimeSitemap } from "../lib/sitemap";
 
 export const prerender = false;
@@ -18,6 +18,7 @@ export async function GET() {
     ...LANGUAGE_PAGE_TAGS.map((tag) => ({
       path: (locale: string) => localizedPath(LANGUAGE_PAGES[tag].page, locale),
       slugs: BEGINNER_DECKS[tag],
+      listed: pageLocales(LANGUAGE_PAGES[tag].page),
     })),
     { path: (locale: string) => localizedPath("estonian", locale), slugs: ESTONIAN_PAGE_DECKS },
   ];

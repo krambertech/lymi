@@ -1,4 +1,4 @@
-import type { ExploreDeckOut, ExploreOut } from "@lymi/core/catalog";
+import { type ExploreDeckOut, type ExploreOut, offersDeck } from "@lymi/core/catalog";
 import { listPublicCatalog, listRelatedDecks, loadPublicDeck } from "@lymi/core/catalog/server";
 import { and, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Db } from "../db";
@@ -15,7 +15,9 @@ import { getSettings } from "./settings";
  */
 export async function exploreCatalog(ctx: ServiceContext): Promise<ExploreOut> {
   const { meaningLanguage } = await getSettings(ctx);
-  const decks = await listPublicCatalog(ctx.db, meaningLanguage);
+  const decks = (await listPublicCatalog(ctx.db, meaningLanguage)).filter((deck) =>
+    offersDeck(meaningLanguage, deck),
+  );
   const added = await addedDecks(
     ctx.db,
     ctx.userId,
@@ -35,11 +37,13 @@ export async function exploreDeck(ctx: ServiceContext, slug: string): Promise<Ex
     throw new ServiceError("not_found", "This deck is not published");
   }
   const added = await addedDecks(ctx.db, ctx.userId);
-  const related = await listRelatedDecks(ctx.db, slug, {
-    language: meaningLanguage,
-    exclude: new Set(added.keys()),
-    limit: RELATED_IN_PRODUCT,
-  });
+  const related = (
+    await listRelatedDecks(ctx.db, slug, {
+      language: meaningLanguage,
+      exclude: new Set(added.keys()),
+      limit: RELATED_IN_PRODUCT,
+    })
+  ).filter((deck) => offersDeck(meaningLanguage, deck));
   return { deck: result.deck, deckId: added.get(slug) ?? null, related };
 }
 

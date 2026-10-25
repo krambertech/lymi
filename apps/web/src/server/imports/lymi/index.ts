@@ -39,6 +39,8 @@ export type LymiNote = {
   picture: boolean;
   /** Whether the zip holds the recording the card names; absent in notes stored before recordings. */
   recording?: boolean | undefined;
+  /** Whether the zip holds the example's recording; absent in notes stored before those were kept. */
+  exampleRecording?: boolean | undefined;
 };
 
 async function openExport(file: RandomAccess) {
@@ -159,6 +161,7 @@ export const lymi: SourceAdapter<LymiNote> = {
       summary.reviews += card.states.reduce((sum, state) => sum + state.reviews.length, 0);
       if (card.picture && zip.has(card.picture.file)) summary.pictures++;
       if (card.recording && zip.has(card.recording.file)) summary.audio++;
+      if (card.exampleRecording && zip.has(card.exampleRecording.file)) summary.audio++;
       counts.set(card.deck, (counts.get(card.deck) ?? 0) + 1);
     }
     if (summary.notes === 0) {
@@ -184,6 +187,7 @@ export const lymi: SourceAdapter<LymiNote> = {
           deckLanguage: deck?.defaultLanguage ?? null,
           picture: Boolean(card.picture && zip.has(card.picture.file)),
           recording: Boolean(card.recording && zip.has(card.recording.file)),
+          exampleRecording: Boolean(card.exampleRecording && zip.has(card.exampleRecording.file)),
         };
       }
     }
@@ -225,6 +229,8 @@ export const lymi: SourceAdapter<LymiNote> = {
         archived: card.archivedAt !== null,
         picture: note.picture ? card.picture?.file : undefined,
         recording: note.recording ? card.recording?.file : undefined,
+        exampleRecording:
+          note.exampleRecording && fitted.fields.example ? card.exampleRecording?.file : undefined,
         progress,
         shortened: fitted.shortened || tags.shortened || !!hook?.shortened,
         // A card in its deck's language follows the language the learner chooses for the deck.

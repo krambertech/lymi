@@ -135,6 +135,7 @@ function copyStatements(
         audioKey: null,
         audioSource: null,
         audioApprovedKey: null,
+        exampleRecordingKey: null,
         sectionId: sql`sections.new_id`,
       },
       sql`from cards

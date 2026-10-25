@@ -29,7 +29,8 @@ export default async function drive({ page, step, api, expect }) {
     const main = page.getByRole("main");
     await expect(main.getByText(/^2 cards bring their recordings\./)).toBeVisible();
     await expect(main.getByText(/^1 recording is in a format Lymi can’t play/)).toBeVisible();
-    await expect(main.getByText(/^2 clips are left out, such as sentence clips\./)).toBeVisible();
+    await expect(main.getByText(/^2 examples bring their recordings\./)).toBeVisible();
+    await expect(main.getByText(/clips? (is|are) left out/)).toHaveCount(0);
     await expect(main.getByText(/^1 card’s pitch accent can’t be read as text/)).toBeVisible();
   });
 
@@ -40,6 +41,9 @@ export default async function drive({ page, step, api, expect }) {
     });
     const main = page.getByRole("main");
     await expect(main.getByText("2 recordings were imported.", { exact: true })).toBeVisible();
+    await expect(
+      main.getByText("2 example recordings were imported.", { exact: true }),
+    ).toBeVisible();
     await expect(main.getByText(/^1 recording couldn’t be read or played/)).toBeVisible();
     const decks = await api("/api/decks");
     const deck = decks.find((d) => d.name === "Kaishi 1.5k");
@@ -101,11 +105,27 @@ export default async function drive({ page, step, api, expect }) {
     const stored = await api(`/api/cards/${cardId}`);
     const row = stored.card ?? stored;
     expect(row.audioKey).toMatch(/\/recorded\//);
+
+    // Space on the focused speaker would replay it, so reveal with focus back on the page.
+    await page.evaluate(() => document.activeElement?.blur());
+    await page.keyboard.press("Space");
+    await page.getByRole("button", { name: "Play example" }).filter({ visible: true }).focus();
+    await page.keyboard.press("Enter");
+    await expect.poll(() => page.evaluate(() => window.__played.length)).toBeGreaterThan(1);
+    await expect.poll(() => page.evaluate(() => window.__played.at(-1)?.ok ?? null)).toBe(true);
+    // The example's player plays a blob of what its route answered, so fetch the route itself.
+    const example = await page.request.get(`/api/audio/${cardId}/example`);
+    expect(example.status()).toBe(200);
+    expect(example.headers()["content-type"]).toBe("audio/mpeg");
+    // The fixture's clips are 0.4-second tones; generated speech of the sentence is far longer.
+    const bytes = (await example.body()).byteLength;
+    expect(bytes).toBeLessThan(16_000);
     return {
       card: term,
       played: src.replace(/^.*\/api/, "/api"),
       type: clip.headers()["content-type"],
       audioKey: row.audioKey,
+      example: { type: example.headers()["content-type"], bytes },
     };
   });
 }

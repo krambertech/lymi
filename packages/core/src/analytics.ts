@@ -330,6 +330,8 @@ export const analyticsEvents = {
     outcome: z.enum(["done", "failed"]),
     recordings: count.optional(),
     recordings_skipped: count.optional(),
+    example_recordings: count.optional(),
+    example_recordings_skipped: count.optional(),
     sounds_left_out: count.optional(),
     pictures: count.optional(),
     pictures_skipped: count.optional(),

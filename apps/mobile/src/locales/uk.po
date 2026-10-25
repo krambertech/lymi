@@ -117,8 +117,8 @@ msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
 #. placeholder {0}: preview.audio
-msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
-msgstr "{0, plural, one {# аудіофрагмент пропущено, наприклад фрагмент речення. Переноситься лише запис самого терміна.} few {# аудіофрагменти пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} many {# аудіофрагментів пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} other {# аудіофрагмента пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.}}"
+msgid "{0, plural, one {# clip is left out. A card keeps one recording of its term and one of its example.} other {# clips are left out. A card keeps one recording of its term and one of its example.}}"
+msgstr "{0, plural, one {# аудіофрагмент пропущено. Картка зберігає один запис терміна й один запис прикладу.} few {# аудіофрагменти пропущено. Картка зберігає один запис терміна й один запис прикладу.} many {# аудіофрагментів пропущено. Картка зберігає один запис терміна й один запис прикладу.} other {# аудіофрагмента пропущено. Картка зберігає один запис терміна й один запис прикладу.}}"
 
 #. placeholder {0}: s.deckIds.length
 #. placeholder {0}: s.decks.length
@@ -129,6 +129,22 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
+#. placeholder {0}: preview.exampleRecordings ?? 0
+msgid "{0, plural, one {# example brings its recording. Lymi plays it instead of reading the example aloud.} other {# examples bring their recordings. Lymi plays them instead of reading the examples aloud.}}"
+msgstr "{0, plural, one {# приклад переноситься із записом. Lymi відтворює його замість того, щоб читати приклад сам.} few {# приклади переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.} many {# прикладів переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.} other {# прикладу переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.}}"
+
+#. placeholder {0}: counts.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording couldn’t be read or played, so Lymi reads that example aloud itself.} other {# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# запис прикладу не вдалося прочитати або відтворити, тому Lymi сам читає цей приклад.} few {# записи прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.} many {# записів прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.} other {# запису прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.}}"
+
+#. placeholder {0}: preview.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording is in a format Lymi can’t play, so Lymi reads that example aloud itself.} other {# example recordings are in a format Lymi can’t play, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# запис прикладу у форматі, який Lymi не може відтворити, тому Lymi сам читає цей приклад.} few {# записи прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.} many {# записів прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.} other {# запису прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.}}"
+
+#. placeholder {0}: counts.exampleRecordings ?? 0
+msgid "{0, plural, one {# example recording was imported.} other {# example recordings were imported.}}"
+msgstr "{0, plural, one {Імпортовано # запис прикладу.} few {Імпортовано # записи прикладів.} many {Імпортовано # записів прикладів.} other {Імпортовано # запису прикладів.}}"
 
 #. placeholder {0}: filled.length
 msgid "{0, plural, one {# field} other {# fields}}"

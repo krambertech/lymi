@@ -1,7 +1,6 @@
-import { I18nProvider } from "@lingui/react";
 import type { ComponentType } from "react";
 import type { ChangelogFigureName } from "../../lib/changelog-figures";
-import { pageI18n } from "../../lib/i18n";
+import { Localized } from "../Localized";
 import { AssistantChat } from "../landing/AssistantChat";
 import { EnrichDemo } from "../landing/EnrichDemo";
 import { ImportDemo } from "../landing/ImportDemo";
@@ -64,8 +63,8 @@ interface Props {
 export default function ChangelogFigure({ figure, locale }: Props) {
   const Figure = FIGURES[figure];
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <Figure />
-    </I18nProvider>
+    </Localized>
   );
 }

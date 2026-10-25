@@ -4,12 +4,8 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { useRef, useState } from "react";
 import type { Locale } from "../../lib/routes";
-import { addUrl } from "../deck/DeckView";
+import { addDeckUrl } from "./language-decks";
 import type { PolishWord } from "./polish";
-
-/** The edition a deck row was read in, which rides along so the learner gets the same meanings. */
-const editionOf = (deck: PublicDeckSummary) =>
-  deck.meaningLanguage === "en" ? undefined : deck.meaningLanguage;
 
 function usePlayer() {
   const clip = useRef<HTMLAudioElement | null>(null);
@@ -45,7 +41,7 @@ export function OfficeDeck({ deck, words, locale }: Props) {
           </p>
         </div>
         <a
-          href={addUrl(deck.slug, editionOf(deck))}
+          href={addDeckUrl(deck)}
           className="inline-flex h-8 shrink-0 items-center rounded-full bg-plate-2 px-3 text-sm font-medium text-text edge hoverable:hover:bg-hover"
         >
           <Trans>Add deck</Trans>

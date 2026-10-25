@@ -7,7 +7,7 @@ import { pageI18n } from "../../lib/i18n";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import SiteHeader from "../islands/SiteHeader";
-import { ChangelogFooter } from "./ChangelogFooter";
+import { PageFooter } from "../PageFooter";
 import ChangelogUpdate from "./ChangelogUpdate.astro";
 import {
   CHANGELOG_BLURB,
@@ -94,6 +94,6 @@ const updates = await changelogUpdates(locale);
       import { fitChangelogStages } from "../../lib/changelog-stage";
       fitChangelogStages();
     </script>
-    <ChangelogFooter locale={locale} />
+    <PageFooter locale={locale} page="changelog" />
   </div>
 </BaseLayout>

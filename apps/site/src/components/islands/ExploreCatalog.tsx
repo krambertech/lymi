@@ -1,4 +1,3 @@
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicationTag } from "@lymi/core";
 import { catalogSearchText, type PublicDeckSummary } from "@lymi/core/catalog";
@@ -16,6 +15,7 @@ import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { ShelfBar, shelfId } from "../explore/ShelfBar";
 import { Lantern } from "../Lantern";
+import { Localized } from "../Localized";
 
 interface Props {
   locale: Locale;
@@ -180,8 +180,8 @@ function Catalog({ locale, decks }: Props) {
 
 export default function ExploreCatalog({ locale, decks }: Props) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <Catalog locale={locale} decks={decks} />
-    </I18nProvider>
+    </Localized>
   );
 }

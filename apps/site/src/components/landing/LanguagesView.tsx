@@ -4,10 +4,9 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { offersLanguage } from "@lymi/core/catalog";
 import { clsx } from "clsx";
-import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { openLymiUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
+import { ArrowLink } from "./ArrowLink";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
@@ -15,6 +14,7 @@ import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
+import { LandingLayout } from "./LandingLayout";
 import {
   type LanguageCard,
   LEARNING_LANGUAGES,
@@ -26,8 +26,6 @@ import { Questions } from "./Questions";
 import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 import { WordFieldHero } from "./WordFieldHero";
 
 export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
@@ -96,13 +94,9 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
 function TutorLessonsLink() {
   const { i18n } = useLingui();
   return (
-    <a
-      href={localizedPath("tutorLessons", i18n.locale)}
-      className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-    >
+    <ArrowLink href={localizedPath("tutorLessons", i18n.locale)}>
       <Trans>Step by step, after a tutor lesson</Trans>
-      <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-    </a>
+    </ArrowLink>
   );
 }
 
@@ -110,13 +104,9 @@ function TutorLessonsLink() {
 function TeachersLink() {
   const { i18n } = useLingui();
   return (
-    <a
-      href={localizedPath("teachers", i18n.locale)}
-      className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-    >
+    <ArrowLink href={localizedPath("teachers", i18n.locale)}>
       <Trans>Lymi for teachers</Trans>
-      <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-    </a>
+    </ArrowLink>
   );
 }
 
@@ -180,69 +170,61 @@ function HandSection({
 
 /** The sections every language page shares, filled with one page's words and cards. */
 function LanguagePage(props: PageProps) {
-  const openAppUrl = openLymiUrl();
-
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current={props.page} />
-        <WordFieldHero frames={props.frames} label={props.heroLabel} lede={props.heroLede} />
-      </header>
+    <LandingLayout
+      page={props.page}
+      hero={<WordFieldHero frames={props.frames} label={props.heroLabel} lede={props.heroLede} />}
+    >
+      <NotesSection notebooks={props.notebooks} />
 
-      <main>
-        <NotesSection notebooks={props.notebooks} />
+      <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />
 
-        <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />
+      <RightMoment
+        title={<Trans>The right moment matters.</Trans>}
+        body={
+          <Trans>
+            Memory fades. Recalling something at the right time strengthens it and lets the next gap
+            grow. Lymi uses each grade to decide when the card returns.
+          </Trans>
+        }
+      />
 
-        <RightMoment
-          title={<Trans>The right moment matters.</Trans>}
-          body={
-            <Trans>
-              Memory fades. Recalling something at the right time strengthens it and lets the next
-              gap grow. Lymi uses each grade to decide when the card returns.
-            </Trans>
-          }
+      <FeatureSection
+        demoFirst
+        title={<Trans>Share one deck with your class.</Trans>}
+        after={<TeachersLink />}
+        body={
+          <Trans>
+            Make a deck for the class and send its join link. Every card you add after a lesson
+            reaches everyone who joined, and each person keeps their own schedule.
+          </Trans>
+        }
+      >
+        <SharedDeckDemo
+          name={props.classDeck.name}
+          language={props.classDeck.language}
+          cards={props.classDeck.cards}
         />
+      </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          title={<Trans>Share one deck with your class.</Trans>}
-          after={<TeachersLink />}
-          body={
-            <Trans>
-              Make a deck for the class and send its join link. Every card you add after a lesson
-              reaches everyone who joined, and each person keeps their own schedule.
-            </Trans>
-          }
-        >
-          <SharedDeckDemo
-            name={props.classDeck.name}
-            language={props.classDeck.language}
-            cards={props.classDeck.cards}
-          />
-        </FeatureSection>
+      <FeatureSection
+        title={<Trans>Bring your favourite AI along.</Trans>}
+        body={
+          <Trans>
+            Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask
+            for the new words, ask what’s waiting tonight, or tidy a deck in plain language.
+            Building something of your own? The same things work through the public API.
+          </Trans>
+        }
+        after={<AssistantMarksWithMore />}
+      >
+        <AssistantChat conversation={props.conversation} />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Bring your favourite AI along.</Trans>}
-          body={
-            <Trans>
-              Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask
-              for the new words, ask what’s waiting tonight, or tidy a deck in plain language.
-              Building something of your own? The same things work through the public API.
-            </Trans>
-          }
-          after={<AssistantMarksWithMore />}
-        >
-          <AssistantChat conversation={props.conversation} />
-        </FeatureSection>
+      <Questions title={<Trans>Questions before you start.</Trans>} items={props.questions} />
 
-        <Questions title={<Trans>Questions before you start.</Trans>} items={props.questions} />
-
-        <SignUpSection title={props.joinTitle} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page={props.page} />
-    </div>
+      <SignUpSection title={props.joinTitle} />
+    </LandingLayout>
   );
 }
 

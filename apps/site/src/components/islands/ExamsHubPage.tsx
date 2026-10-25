@@ -1,7 +1,5 @@
-import { I18nProvider } from "@lingui/react";
-import { pageI18n } from "../../lib/i18n";
 import { ExamsHub } from "../exams/ExamsHub";
-import { Queries } from "./Queries";
+import { Island } from "./Island";
 
 interface Props {
   locale?: string | undefined;
@@ -10,10 +8,8 @@ interface Props {
 
 export default function ExamsHubPage({ locale, counts }: Props) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
-      <Queries>
-        <ExamsHub counts={counts} />
-      </Queries>
-    </I18nProvider>
+    <Island locale={locale}>
+      <ExamsHub counts={counts} />
+    </Island>
   );
 }

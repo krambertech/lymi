@@ -1,4 +1,3 @@
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { SectionProgression } from "@lymi/core";
 import { clsx } from "clsx";
@@ -14,9 +13,9 @@ import {
   useState,
 } from "react";
 import type { SectionStep } from "../../lib/deck-page";
-import { pageI18n } from "../../lib/i18n";
 import { publicMediaUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
+import { Localized } from "../Localized";
 
 interface Props {
   locale: string;
@@ -32,9 +31,9 @@ interface Props {
 
 export default function DeckSections({ locale, ...props }: Props) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <Sections {...props} />
-    </I18nProvider>
+    </Localized>
   );
 }
 

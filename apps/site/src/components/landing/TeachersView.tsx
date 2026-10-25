@@ -1,19 +1,17 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { openLymiUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { ClassHero } from "./ClassHero";
 import { FeatureSection } from "./FeatureSection";
 import { TEACHERS_QUESTIONS } from "./faq";
 import { JoinLinkDemo } from "./JoinLinkDemo";
+import { LandingLayout } from "./LandingLayout";
 import { LibraryDemo } from "./LibraryDemo";
 import { Questions } from "./Questions";
 import { RightMoment } from "./RightMoment";
 import { SeriesDemo } from "./SeriesDemo";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const TEACHERS_TITLE = msg`Lymi for teachers · One deck for your whole class`;
@@ -21,7 +19,6 @@ export const TEACHERS_BLURB = msg`Build a course in sections, share it with one 
 
 /** The page for tutors and small classes: build the course, share it, keep adding to it. */
 export function TeachersView() {
-  const openAppUrl = openLymiUrl();
   const subjects: UseCase[] = [
     {
       id: "languages",
@@ -67,104 +64,95 @@ export function TeachersView() {
   ];
 
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="teachers" />
-        <ClassHero />
-      </header>
+    <LandingLayout page="teachers" hero={<ClassHero />}>
+      <UseCases title={<Trans>Teach anything worth remembering.</Trans>} items={subjects} />
 
-      <main>
-        <UseCases title={<Trans>Teach anything worth remembering.</Trans>} items={subjects} />
+      <FeatureSection
+        id="course"
+        demoFirst
+        title={<Trans>Build the course in order.</Trans>}
+        body={
+          <Trans>
+            Split a deck into sections, one per unit. Learners start with the first, and the next
+            opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can
+            start the next section early.
+          </Trans>
+        }
+      >
+        <SeriesDemo />
+      </FeatureSection>
 
-        <FeatureSection
-          id="course"
-          demoFirst
-          title={<Trans>Build the course in order.</Trans>}
-          body={
-            <Trans>
-              Split a deck into sections, one per unit. Learners start with the first, and the next
-              opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can
-              start the next section early.
-            </Trans>
-          }
-        >
-          <SeriesDemo />
-        </FeatureSection>
+      <FeatureSection
+        tinted
+        title={<Trans>Share one link.</Trans>}
+        body={
+          <Trans>
+            Post the join link in your class chat. Everyone who joins gets each card as you add it,
+            and keeps their own schedule. Turn the link off once the class is full.
+          </Trans>
+        }
+      >
+        <JoinLinkDemo />
+      </FeatureSection>
 
-        <FeatureSection
-          tinted
-          title={<Trans>Share one link.</Trans>}
-          body={
-            <Trans>
-              Post the join link in your class chat. Everyone who joins gets each card as you add
-              it, and keeps their own schedule. Turn the link off once the class is full.
-            </Trans>
-          }
-        >
-          <JoinLinkDemo />
-        </FeatureSection>
+      <RightMoment
+        title={<Trans>Repetition that works.</Trans>}
+        body={
+          <Trans>
+            Memory fades. Recalling something at the right time strengthens it and lets the next gap
+            grow. Lymi uses each learner’s grades to decide when every card comes back.
+          </Trans>
+        }
+      />
 
-        <RightMoment
-          title={<Trans>Repetition that works.</Trans>}
-          body={
-            <Trans>
-              Memory fades. Recalling something at the right time strengthens it and lets the next
-              gap grow. Lymi uses each learner’s grades to decide when every card comes back.
-            </Trans>
-          }
-        />
+      <FeatureSection
+        demoFirst
+        tinted
+        title={<Trans>Fill decks from the tools you already use.</Trans>}
+        body={
+          <Trans>
+            Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also
+            has a public API, so you can bring in a list from a spreadsheet, add cards from your
+            course platform, or show what’s due on your class site.
+          </Trans>
+        }
+        after={
+          <div className="flex flex-wrap gap-2">
+            <a href="/docs" className={buttonClass("secondary")}>
+              <Trans>See how it works</Trans>
+            </a>
+            <a href="/docs/api" className={buttonClass("ghost")}>
+              <Trans>API reference</Trans>
+            </a>
+          </div>
+        }
+      >
+        <ApiConnections />
+      </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>Fill decks from the tools you already use.</Trans>}
-          body={
-            <Trans>
-              Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also
-              has a public API, so you can bring in a list from a spreadsheet, add cards from your
-              course platform, or show what’s due on your class site.
-            </Trans>
-          }
-          after={
-            <div className="flex flex-wrap gap-2">
-              <a href="/docs" className={buttonClass("secondary")}>
-                <Trans>See how it works</Trans>
-              </a>
-              <a href="/docs/api" className={buttonClass("ghost")}>
-                <Trans>API reference</Trans>
-              </a>
-            </div>
-          }
-        >
-          <ApiConnections />
-        </FeatureSection>
+      <FeatureSection
+        title={<Trans>Start with a ready-made course.</Trans>}
+        body={
+          <Trans>
+            Pick a course from the deck library, add it to your class and adapt it as you go. Share
+            your own when it’s ready.
+          </Trans>
+        }
+      >
+        <LibraryDemo />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Start with a ready-made course.</Trans>}
-          body={
-            <Trans>
-              Pick a course from the deck library, add it to your class and adapt it as you go.
-              Share your own when it’s ready.
-            </Trans>
-          }
-        >
-          <LibraryDemo />
-        </FeatureSection>
+      <Questions title={<Trans>Questions from teachers.</Trans>} items={TEACHERS_QUESTIONS} />
 
-        <Questions title={<Trans>Questions from teachers.</Trans>} items={TEACHERS_QUESTIONS} />
-
-        <SignUpSection
-          title={<Trans>Bring Lymi to your next class.</Trans>}
-          note={
-            <Trans>
-              Sections and the deck library are rolling out during the beta. We’ll tell you when
-              your account has them.
-            </Trans>
-          }
-        />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="teachers" />
-    </div>
+      <SignUpSection
+        title={<Trans>Bring Lymi to your next class.</Trans>}
+        note={
+          <Trans>
+            Sections and the deck library are rolling out during the beta. We’ll tell you when your
+            account has them.
+          </Trans>
+        }
+      />
+    </LandingLayout>
   );
 }

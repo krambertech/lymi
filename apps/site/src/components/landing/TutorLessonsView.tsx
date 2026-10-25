@@ -2,7 +2,6 @@ import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
-import { openLymiUrl } from "../../lib/origins";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { ConnectSteps } from "./ConnectSteps";
@@ -11,13 +10,12 @@ import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
 import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
+import { LandingLayout } from "./LandingLayout";
 import { LEARNING_LANGUAGES, type LearningLanguage } from "./language-cards";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 
 export const TUTOR_LESSONS_TITLE = msg`Turn your tutor lessons into flashcards · Lymi`;
 export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free.`;
@@ -246,12 +244,10 @@ function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode 
 
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
-  const openAppUrl = openLymiUrl();
-
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="tutorLessons" />
+    <LandingLayout
+      page="tutorLessons"
+      hero={
         <Hero
           title={<Trans>Keep every word from your tutor lessons.</Trans>}
           lede={
@@ -265,185 +261,180 @@ export function TutorLessonsView() {
             <LessonChat mark={(i, text) => <Pick on={front === HERO_IDS[i]}>{text}</Pick>} />
           )}
         />
-      </header>
-
-      <main>
-        <section
-          aria-labelledby="material-title"
-          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
-        >
-          <div className="mx-auto max-w-[1040px]">
-            <div id="material-title">
-              <SectionTitle>
-                <Trans>Turn your lesson into cards.</Trans>
-              </SectionTitle>
-            </div>
-            <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
-              <Trans>
-                Your assistant picks out the new words, keeps the meanings from the lesson and skips
-                the ones already in your deck.
-              </Trans>
-            </p>
-            <div className="mt-12">
-              <MaterialToCards materials={MATERIALS} />
-            </div>
+      }
+    >
+      <section
+        aria-labelledby="material-title"
+        className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+      >
+        <div className="mx-auto max-w-[1040px]">
+          <div id="material-title">
+            <SectionTitle>
+              <Trans>Turn your lesson into cards.</Trans>
+            </SectionTitle>
           </div>
-        </section>
-
-        <GuideSteps
-          id="guide"
-          title={<Trans>How it works</Trans>}
-          lede={
+          <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
             <Trans>
-              It works the same for a lesson on italki, on Preply or with a tutor you meet in
-              person.
+              Your assistant picks out the new words, keeps the meanings from the lesson and skips
+              the ones already in your deck.
             </Trans>
-          }
-          steps={[
+          </p>
+          <div className="mt-12">
+            <MaterialToCards materials={MATERIALS} />
+          </div>
+        </div>
+      </section>
+
+      <GuideSteps
+        id="guide"
+        title={<Trans>How it works</Trans>}
+        lede={
+          <Trans>
+            It works the same for a lesson on italki, on Preply or with a tutor you meet in person.
+          </Trans>
+        }
+        steps={[
+          {
+            id: "connect",
+            title: <Trans>Connect your AI assistant</Trans>,
+            body: (
+              <Trans>
+                Add Lymi to Claude, Grok or another assistant.{" "}
+                <a
+                  href="#connect"
+                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                >
+                  It takes three steps
+                </a>
+                . No assistant?{" "}
+                <a
+                  href="#guide-without"
+                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                >
+                  Start another way
+                </a>
+                .
+              </Trans>
+            ),
+          },
+          {
+            id: "collect",
+            title: <Trans>Copy the chat or take a photo</Trans>,
+            body: (
+              <Trans>
+                Copy the lesson chat or transcript, export your shared notes, or take a photo of
+                your notebook or your tutor’s whiteboard.
+              </Trans>
+            ),
+          },
+          {
+            id: "send",
+            title: <Trans>Send it to your assistant</Trans>,
+            body: (
+              <Trans>
+                Paste the text or attach the photo and ask: “Add the new words to my Spanish deck in
+                Lymi.” Say which deck, or ask it to make one.
+              </Trans>
+            ),
+          },
+          {
+            id: "check",
+            title: <Trans>Check the cards in Lymi</Trans>,
+            body: (
+              <Trans>
+                The new cards are in your deck, and words you already have are skipped. Fix or
+                archive any card.
+              </Trans>
+            ),
+          },
+          {
+            id: "review",
+            title: <Trans>Review a few minutes a day</Trans>,
+            body: (
+              <Trans>
+                Open Today on your phone or laptop. Lymi shows each word again right before you’d
+                forget it, so the next lesson starts where the last one ended.
+              </Trans>
+            ),
+          },
+        ]}
+        note={
+          <Trans>
+            Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a
+            day.
+          </Trans>
+        }
+        withoutAssistant
+      />
+
+      <FeatureSection
+        tinted
+        title={<Trans>Ask what to review.</Trans>}
+        body={
+          <Trans>
+            Your assistant can also tell you what’s due before the next lesson, or which words you
+            keep getting wrong, so you can ask your tutor about them.
+          </Trans>
+        }
+        after={<AssistantMarksWithMore />}
+      >
+        <AssistantChat
+          conversation={[
             {
-              id: "connect",
-              title: <Trans>Connect your AI assistant</Trans>,
+              from: "you",
               body: (
-                <Trans>
-                  Add Lymi to Claude, Grok or another assistant.{" "}
-                  <a
-                    href="#connect"
-                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
-                  >
-                    It takes three steps
-                  </a>
-                  . No assistant?{" "}
-                  <a
-                    href="#guide-without"
-                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
-                  >
-                    Start another way
-                  </a>
-                  .
-                </Trans>
+                <>
+                  <Attachment name="lesson-with-marta.txt" kind={<Trans>Text · 2 pages</Trans>} />
+                  <Trans>
+                    Here’s the chat from today’s lesson with Marta. Add the new phrases.
+                  </Trans>
+                </>
               ),
             },
             {
-              id: "collect",
-              title: <Trans>Copy the chat or take a photo</Trans>,
+              from: "them",
               body: (
-                <Trans>
-                  Copy the lesson chat or transcript, export your shared notes, or take a photo of
-                  your notebook or your tutor’s whiteboard.
-                </Trans>
+                <Added card={ADDED}>
+                  <Trans>
+                    Added 9 cards to Spanish. I skipped “ojalá”, which you already have.
+                  </Trans>
+                </Added>
               ),
             },
+            { from: "you", body: <Trans>Which words should I ask Marta about on Friday?</Trans> },
             {
-              id: "send",
-              title: <Trans>Send it to your assistant</Trans>,
+              from: "them",
               body: (
                 <Trans>
-                  Paste the text or attach the photo and ask: “Add the new words to my Spanish deck
-                  in Lymi.” Say which deck, or ask it to make one.
-                </Trans>
-              ),
-            },
-            {
-              id: "check",
-              title: <Trans>Check the cards in Lymi</Trans>,
-              body: (
-                <Trans>
-                  The new cards are in your deck, and words you already have are skipped. Fix or
-                  archive any card.
-                </Trans>
-              ),
-            },
-            {
-              id: "review",
-              title: <Trans>Review a few minutes a day</Trans>,
-              body: (
-                <Trans>
-                  Open Today on your phone or laptop. Lymi shows each word again right before you’d
-                  forget it, so the next lesson starts where the last one ended.
+                  The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”.
                 </Trans>
               ),
             },
           ]}
-          note={
-            <Trans>
-              Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons
-              a day.
-            </Trans>
-          }
-          withoutAssistant
         />
+      </FeatureSection>
 
-        <FeatureSection
-          tinted
-          title={<Trans>Ask what to review.</Trans>}
-          body={
-            <Trans>
-              Your assistant can also tell you what’s due before the next lesson, or which words you
-              keep getting wrong, so you can ask your tutor about them.
-            </Trans>
-          }
-          after={<AssistantMarksWithMore />}
-        >
-          <AssistantChat
-            conversation={[
-              {
-                from: "you",
-                body: (
-                  <>
-                    <Attachment name="lesson-with-marta.txt" kind={<Trans>Text · 2 pages</Trans>} />
-                    <Trans>
-                      Here’s the chat from today’s lesson with Marta. Add the new phrases.
-                    </Trans>
-                  </>
-                ),
-              },
-              {
-                from: "them",
-                body: (
-                  <Added card={ADDED}>
-                    <Trans>
-                      Added 9 cards to Spanish. I skipped “ojalá”, which you already have.
-                    </Trans>
-                  </Added>
-                ),
-              },
-              { from: "you", body: <Trans>Which words should I ask Marta about on Friday?</Trans> },
-              {
-                from: "them",
-                body: (
-                  <Trans>
-                    The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”.
-                  </Trans>
-                ),
-              },
-            ]}
-          />
-        </FeatureSection>
+      <FeatureSection
+        demoFirst
+        title={<Trans>Review a few minutes a day.</Trans>}
+        body={
+          <Trans>
+            One card at a time, graded in a tap, even offline. Words you know wait longer, and the
+            ones you miss come back sooner.
+          </Trans>
+        }
+      >
+        <ReviewDemo cards={REVIEW} />
+      </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          title={<Trans>Review a few minutes a day.</Trans>}
-          body={
-            <Trans>
-              One card at a time, graded in a tap, even offline. Words you know wait longer, and the
-              ones you miss come back sooner.
-            </Trans>
-          }
-        >
-          <ReviewDemo cards={REVIEW} />
-        </FeatureSection>
+      <ConnectSteps />
 
-        <ConnectSteps />
+      <Questions
+        title={<Trans>Questions before you start.</Trans>}
+        items={TUTOR_LESSONS_QUESTIONS}
+      />
 
-        <Questions
-          title={<Trans>Questions before you start.</Trans>}
-          items={TUTOR_LESSONS_QUESTIONS}
-        />
-
-        <SignUpSection title={<Trans>Keep the words from your next lesson.</Trans>} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="tutorLessons" />
-    </div>
+      <SignUpSection title={<Trans>Keep the words from your next lesson.</Trans>} />
+    </LandingLayout>
   );
 }

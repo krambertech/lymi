@@ -1,5 +1,4 @@
 import { msg } from "@lingui/core/macro";
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { Check, ChevronRight, List } from "lucide-react";
@@ -16,6 +15,7 @@ import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { addUrl } from "../deck/DeckView";
+import { Localized } from "../Localized";
 import { SectionTitle } from "../landing/FeatureSection";
 import type { Question } from "../landing/faq";
 import { Questions } from "../landing/Questions";
@@ -30,11 +30,6 @@ interface LocaleProps {
 
 interface ExamProps extends LocaleProps {
   exam: Exam;
-}
-
-/** Server-rendered parts share one provider each; only the nav hydrates. */
-function Localized({ locale, children }: LocaleProps & { children: ReactNode }) {
-  return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
 /** The latest change among some decks, for "updated" beside a source. */

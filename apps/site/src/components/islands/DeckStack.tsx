@@ -1,11 +1,10 @@
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans } from "@lingui/react/macro";
 import { type CSSProperties, useMemo } from "react";
 import { deckHandCards } from "../../lib/deck-hand";
 import type { DeckCard } from "../../lib/deck-page";
-import { pageI18n } from "../../lib/i18n";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
+import { Localized } from "../Localized";
 import { HandOfCards } from "../landing/HandOfCards";
 import type { HandCard } from "../landing/hand-cards";
 
@@ -37,9 +36,9 @@ const EMBERS_AT = 460;
 export default function DeckStack({ locale, cards, termLanguage, total, addUrl }: Props) {
   const hand = useMemo(() => deckHandCards(cards, termLanguage), [cards, termLanguage]);
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <Hand hand={hand} total={total} addUrl={addUrl} />
-    </I18nProvider>
+    </Localized>
   );
 }
 

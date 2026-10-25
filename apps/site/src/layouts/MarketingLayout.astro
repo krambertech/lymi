@@ -1,0 +1,41 @@
+---
+import type { MessageDescriptor } from "@lingui/core";
+import type { Question } from "../components/landing/faq";
+import { SHARE_IMAGE_ALT } from "../components/landing/LandingView";
+import { jsonForScript } from "../lib/deck-page";
+import { pageI18n } from "../lib/i18n";
+import { type LocalizedPage, localizedPath } from "../lib/routes";
+import { marketingPage } from "../lib/structured-data";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  page: LocalizedPage;
+  title: MessageDescriptor;
+  blurb: MessageDescriptor;
+  /** The questions the page answers, repeated in its structured data. */
+  questions?: readonly Question[] | undefined;
+  /** The structured data describes Lymi itself as well as the page. */
+  entity?: boolean | undefined;
+  /** The page's language, for a page rendered per request; a fixed route has it from its path. */
+  locale?: string | undefined;
+}
+
+const { page, questions, entity } = Astro.props;
+const locale = Astro.props.locale ?? Astro.currentLocale;
+const i18n = pageI18n(locale);
+const title = i18n._(Astro.props.title);
+const description = i18n._(Astro.props.blurb);
+const path = localizedPath(page, i18n.locale);
+const structuredData = marketingPage({ name: title, description, path, i18n, questions, entity });
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={path}
+  localizedPage={page}
+  shareImageAlt={i18n._(SHARE_IMAGE_ALT)}
+>
+  <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
+  <slot />
+</BaseLayout>

@@ -10,7 +10,7 @@ import { trayHue } from "../../lib/tray";
 import PublicNav from "../islands/PublicNav";
 import { shelfLabel } from "./explore-labels";
 import { EXPLORE_NAME } from "./explore-meta";
-import { ExploreFooter } from "./ExploreView";
+import { PageFooter } from "../PageFooter";
 import { shelfCopy } from "./shelf-copy";
 import { ShelfAbout, ShelfDecks, ShelfHero, ShelfMore } from "./ShelfView";
 
@@ -65,6 +65,6 @@ const footerPaths = Object.fromEntries(
       <ShelfAbout locale={locale} copy={copy} heading={copy.aboutHeading} />
       <ShelfMore locale={locale} others={others} languages={languages} />
     </main>
-    <ExploreFooter locale={locale} paths={footerPaths} />
+    <PageFooter locale={locale} paths={footerPaths} />
   </div>
 </BaseLayout>

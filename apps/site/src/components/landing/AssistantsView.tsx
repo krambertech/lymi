@@ -1,7 +1,6 @@
 import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { openLymiUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantHero } from "./AssistantHero";
@@ -10,13 +9,12 @@ import type { SampleCard } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { ASSISTANTS_QUESTIONS } from "./faq";
+import { LandingLayout } from "./LandingLayout";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { SendAnything } from "./SendAnything";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 
 export const ASSISTANTS_TITLE = msg`Make cards with Claude, ChatGPT, Gemini or Grok · Lymi`;
 export const ASSISTANTS_BLURB = msg`Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget.`;
@@ -64,90 +62,79 @@ const TYPED: SampleCard = {
 
 /** The page for people who already use an AI assistant: it makes the cards, Lymi keeps them. */
 export function AssistantsView() {
-  const openAppUrl = openLymiUrl();
-
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="assistants" />
-        <AssistantHero />
-      </header>
+    <LandingLayout page="assistants" hero={<AssistantHero />}>
+      <SendAnything />
 
-      <main>
-        <SendAnything />
+      <FeatureSection
+        demoFirst
+        title={<Trans>Then review them in Lymi.</Trans>}
+        body={
+          <Trans>
+            Recall the word before you look, then say how well you knew it. Hard cards come back
+            sooner, easy ones wait.
+          </Trans>
+        }
+      >
+        <ReviewDemo cards={GERMAN_REVIEW} />
+      </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          title={<Trans>Then review them in Lymi.</Trans>}
-          body={
-            <Trans>
-              Recall the word before you look, then say how well you knew it. Hard cards come back
-              sooner, easy ones wait.
-            </Trans>
-          }
-        >
-          <ReviewDemo cards={GERMAN_REVIEW} />
-        </FeatureSection>
+      <FeatureSection
+        title={<Trans>Practise with your own words.</Trans>}
+        body={
+          <Trans>
+            Your assistant can read your decks. Ask it for a conversation that uses the words you’re
+            learning, and it corrects you as you go.
+          </Trans>
+        }
+      >
+        <PracticeChat />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Practise with your own words.</Trans>}
-          body={
-            <Trans>
-              Your assistant can read your decks. Ask it for a conversation that uses the words
-              you’re learning, and it corrects you as you go.
-            </Trans>
-          }
-        >
-          <PracticeChat />
-        </FeatureSection>
+      <FeatureSection
+        demoFirst
+        tinted
+        title={<Trans>No chat? Type the word.</Trans>}
+        body={
+          <Trans>
+            Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote
+            and never overwrites yours.
+          </Trans>
+        }
+      >
+        <EnrichDemo card={TYPED} />
+      </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>No chat? Type the word.</Trans>}
-          body={
-            <Trans>
-              Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it
-              wrote and never overwrites yours.
-            </Trans>
-          }
-        >
-          <EnrichDemo card={TYPED} />
-        </FeatureSection>
+      <FeatureSection
+        title={<Trans>Or build your own.</Trans>}
+        body={
+          <Trans>
+            Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a
+            spreadsheet, or show what’s due on your own site.
+          </Trans>
+        }
+        after={
+          <div className="flex flex-wrap gap-2">
+            <a href="/docs" className={buttonClass("secondary")}>
+              <Trans>See how it works</Trans>
+            </a>
+            <a href="/docs/api" className={buttonClass("ghost")}>
+              <Trans>API reference</Trans>
+            </a>
+          </div>
+        }
+      >
+        <ApiConnections />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Or build your own.</Trans>}
-          body={
-            <Trans>
-              Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from
-              a spreadsheet, or show what’s due on your own site.
-            </Trans>
-          }
-          after={
-            <div className="flex flex-wrap gap-2">
-              <a href="/docs" className={buttonClass("secondary")}>
-                <Trans>See how it works</Trans>
-              </a>
-              <a href="/docs/api" className={buttonClass("ghost")}>
-                <Trans>API reference</Trans>
-              </a>
-            </div>
-          }
-        >
-          <ApiConnections />
-        </FeatureSection>
+      <ConnectSteps />
 
-        <ConnectSteps />
+      <Questions
+        title={<Trans>Questions before you connect.</Trans>}
+        items={ASSISTANTS_QUESTIONS}
+      />
 
-        <Questions
-          title={<Trans>Questions before you connect.</Trans>}
-          items={ASSISTANTS_QUESTIONS}
-        />
-
-        <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="assistants" />
-    </div>
+      <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />
+    </LandingLayout>
   );
 }

@@ -80,7 +80,7 @@ test("the real browser SDK sends only approved payloads through the proxy, witho
   expect(sent.join(" ")).not.toContain('"step_name":"start"');
 });
 
-test("the real browser SDK records a product page through the proxy with card text masked", async ({
+test("the real browser SDK records a product page through the proxy with every word and picture masked", async ({
   page,
   context,
 }) => {
@@ -124,10 +124,11 @@ test("the real browser SDK records a product page through the proxy with card te
   // The recorder uploads nothing until the learner interacts after it has loaded.
   await expect(async () => {
     await page.getByRole("button", { name: "Show answer" }).click();
-    expect(snapshots.join(" ")).toContain("Show answer");
+    expect(snapshots.join(" ")).toContain('"tagName":"button"');
   }).toPass({ timeout: 20_000 });
   const payload = snapshots.join(" ");
   expect(payload).toContain("test-opaque-account");
+  expect(payload).not.toContain("Show answer");
   expect(payload).not.toContain("private-card-term");
   expect(payload).not.toContain("private-picture-description");
   expect(payload).not.toContain("private-learner-name");

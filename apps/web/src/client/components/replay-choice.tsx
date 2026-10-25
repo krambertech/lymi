@@ -38,8 +38,8 @@ export function ReplayChoice() {
             </FieldLabel>
             <FieldDescription>
               {on
-                ? t`Lets us see where Lymi is hard to use by replaying how you move through it. Your cards, names and typing stay hidden.`
-                : t`Off. We don’t replay how you use Lymi.`}
+                ? t`Lets us see how you move through Lymi, so we can find what’s confusing. All text stays hidden.`
+                : t`Off. We don’t see how you move through Lymi.`}
             </FieldDescription>
           </FieldContent>
           <Switch

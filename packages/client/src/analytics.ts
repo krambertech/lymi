@@ -178,12 +178,13 @@ export function initAnalytics(options: {
       capture_dead_clicks: false,
       save_campaign_params: false,
       save_referrer: false,
-      // Started once the account allows it; text inside `ph-mask` and every input is masked.
+      // Started once the account allows it. Every word, input and picture is masked: a recording
+      // shows layout, clicks and scrolling only.
       disable_session_recording: true,
       session_recording: {
         maskAllInputs: true,
-        // dnd-kit's live region announces the dragged card by its term.
-        maskTextSelector: '[id^="DndLiveRegion"]',
+        maskTextSelector: "*",
+        blockSelector: "img, picture, video, canvas, svg image",
         maskAttributeFn: (name, value) =>
           HIDDEN_ATTRIBUTES.has(name) ? "*".repeat(value.length) : value,
         // A recorded address keeps only its route, so tokens and IDs in it never leave.
@@ -352,8 +353,6 @@ function applyReplay(): void {
     .then(() => {
       if (replay !== "loading" || !recordable()) return;
       replay = "on";
-      // The tab title names the deck on screen, and the recorder copies `<title>` too.
-      document.querySelector("title")?.classList.add("ph-mask");
       posthog.startSessionRecording();
     })
     .catch(() => {

@@ -12,6 +12,8 @@ type Options = {
   before_send: (event: Payload) => Payload | null;
   session_recording?: {
     maskAllInputs?: boolean;
+    maskTextSelector?: string;
+    blockSelector?: string;
     maskCapturedNetworkRequestFn?: (request: { name: string }) => { name: string };
     maskAttributeFn?: (name: string, value: string) => string;
   };
@@ -281,7 +283,11 @@ it("records the product only once the account allows it, and stops on opt-out", 
   expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG?.phc_test).toMatchObject({
     config: { sessionRecording: { endpoint: "/s/" } },
   });
-  expect(sdk.options()?.session_recording?.maskAllInputs).toBe(true);
+  expect(sdk.options()?.session_recording).toMatchObject({
+    maskAllInputs: true,
+    maskTextSelector: "*",
+    blockSelector: expect.stringContaining("img"),
+  });
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
   analytics.setAnalyticsLearner("account-1", true, true);

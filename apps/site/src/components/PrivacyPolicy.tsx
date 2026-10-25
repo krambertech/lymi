@@ -167,8 +167,8 @@ function PrivacyPolicyContent() {
       <p>
         <Trans>
           PostHog may also record how the apps are used, to show where Lymi is hard to use.
-          Recordings hide card text, pictures and what you type. Turn them off in Settings with Help
-          improve Lymi; they also stop if you object to product analytics.
+          Recordings hide all text and pictures. Turn them off in Settings with Help improve Lymi;
+          they also stop if you object to product analytics.
         </Trans>
       </p>
       <p>

@@ -3204,8 +3204,8 @@ msgstr "Let this app use your Lymi?"
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
 
-msgid "Lets us see where Lymi is hard to use by replaying how you move through it. Your cards, names and typing stay hidden."
-msgstr "Lets us see where Lymi is hard to use by replaying how you move through it. Your cards, names and typing stay hidden."
+msgid "Lets us see how you move through Lymi, so we can find what’s confusing. All text stays hidden."
+msgstr "Lets us see how you move through Lymi, so we can find what’s confusing. All text stays hidden."
 
 msgid "Library"
 msgstr "Library"
@@ -3792,8 +3792,8 @@ msgstr "Now in {elsewhere}"
 msgid "Off for mobile and web. Existing card text and saved audio stay."
 msgstr "Off for mobile and web. Existing card text and saved audio stay."
 
-msgid "Off. We don’t replay how you use Lymi."
-msgstr "Off. We don’t replay how you use Lymi."
+msgid "Off. We don’t see how you move through Lymi."
+msgstr "Off. We don’t see how you move through Lymi."
 
 msgid "Often forgotten"
 msgstr "Often forgotten"

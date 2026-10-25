@@ -71,7 +71,7 @@ Leave empty for the first version. For later releases, describe only the changes
 
 - Support URL: `https://lymi.app/support`
 - Marketing URL: `https://lymi.app`
-- Privacy Policy URL: `https://lymi.app/privacy`
+- Privacy Policy URL: `https://lymi.app/uk/privacy`
 
 ## Google Play
 

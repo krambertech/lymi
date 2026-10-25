@@ -1,70 +1,53 @@
 # Store console checklist
 
-What App Store Connect and Play Console need by hand for the first submission, in order. The answers live beside this file: listing text in [`listing/`](listing), privacy answers in [`privacy.md`](privacy.md), review access in [`review.md`](review.md), screenshots from [`screenshots/`](screenshots). Play's account, signing and testing-track setup is in [`docs/phone-release.md`](../../../docs/phone-release.md#setting-up-google-play); this list covers only the listing and its declarations.
+What App Store Connect and Play Console need for submission. Listing text lives in [`listing/`](listing), privacy answers in [`privacy.md`](privacy.md), review access in [`review.md`](review.md), and screenshot captions and order in [`screenshots/shots.json`](screenshots/shots.json). Signing, testing tracks, version contracts and build promotion are in [`docs/phone-release.md`](../../../docs/phone-release.md).
 
 ## Before either store
 
-1. Raise `expo.version` in `apps/mobile/app.json` to `1.0.0`, the version the stores will show, and follow the contract steps in `docs/phone-release.md` for a new version.
-2. Ship a binary with this pull request's privacy manifest, the AI consent prompt (#973) and content reports (#971). Each changes the native fingerprint or the review notes, so the build under review must postdate all three.
-3. Make the review account as [`review.md`](review.md) describes.
-4. Run `node apps/mobile/store/screenshots/render.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
+1. Set the public release version in `apps/mobile/app.json` and follow the version-contract steps in `docs/phone-release.md`. The selected binary and console version must match.
+2. Build after all native configuration changes, including privacy manifests and extensions. Verify AI permission, account deletion and shared-content reporting in that release candidate; source changes or a working development build do not prove the submitted binary includes them.
+3. Prepare the review account as [`review.md`](review.md) describes. Verify email/password sign-in without inbox access, cards due, and a deck owned by a second account for reporting. Use a separate disposable account to test deletion.
+4. Verify every advertised feature on each submitted platform: imports and exports, Smart add, offline review and reconnection, reminders, sharing, and iOS widgets and the share extension. Recheck translations and permission-denied paths. Remove a listing claim if the release candidate does not support it.
+5. Check the support, privacy and account-deletion URLs while signed out, including the route back after signing in. Confirm the support and moderation inboxes are monitored.
+6. Render screenshots with `node apps/mobile/store/screenshots/render.mjs`. Read the selected style from `shots.json`; output is `screenshots/out/<style>/<language>/<size>/`. Inspect captions, order and the actual app screens before uploading. Header artwork is a separate asset.
+7. Resolve the AI-provider audience and processing terms described in [`privacy.md`](privacy.md#provider-terms). A store age rating does not by itself satisfy a provider’s age restrictions.
 
 ## App Store Connect
 
 All under App Store Connect, Apps, Lymi.
 
-1. **Languages.** App Information, then the language menu at the top right of the page: add Ukrainian and Russian. English (U.S.) stays the primary language.
-2. **App Information**, per language: Name and Subtitle from `listing/<language>.md`. Then, once:
-   - Category: Primary **Education**, Secondary **Reference**.
-   - Content Rights: **No**, it does not contain, show or access third-party content. Cards are the learner's own or Lymi's.
-   - Age Rating: Edit, and answer as in [Age rating](#age-rating) below. The result should be 4+.
-3. **App Privacy.** Privacy Policy URL `https://lymi.app/privacy`, then the data types in [`privacy.md`](privacy.md#app-store-connect-app-privacy). Publish.
-4. **Pricing and Availability.** Price **Free** (USD 0). Availability: all countries and regions.
-5. **EU trader status.** App Store Connect home, Business, then the Digital Services Act section. A trader's address, phone and email are shown on the EU store page. Deciding whether Lymi is a trader is yours; distribution in the EU waits until it is answered.
-6. **The version page**, `iOS App 1.0` in the sidebar, per language:
-   - iPhone screenshots: the 6.9" slot takes `out/canvas/<language>/6.9/`, the 6.3" slot takes `out/canvas/<language>/6.3/`, in file order.
-   - Promotional Text, Description, Keywords from `listing/<language>.md`.
-   - Support URL `https://lymi.app/support`, Marketing URL `https://lymi.app`.
-   - What's New stays empty on the first version.
-7. **The version page**, once:
-   - Build: the TestFlight build from step 2 of [Before either store](#before-either-store).
-   - Copyright: `2026 Kateryna Porshnieva`.
-   - App Review Information: from [`review.md`](review.md).
-   - Version Release: **Manually release this version**, so you choose the day.
-8. **Add for Review**, then **Submit to App Review**.
+1. **Languages.** Add Ukrainian and Russian; keep English (U.S.) primary. Copy Name and Subtitle from each `listing/<language>.md` into App Information.
+2. **App Information.** Primary category **Education**, secondary **Reference**. The account holder must confirm the Content Rights declaration against the actual imported and published content and the necessary permissions; do not automatically declare that Lymi never accesses third-party content.
+3. **Age Rating.** Answer the current questionnaire from the content learners can reach, including published decks; do not target a predetermined rating. See [Age rating](#age-rating).
+4. **App Privacy.** Use the data types and purposes in [`privacy.md`](privacy.md#app-store-connect-app-privacy), matched to the submitted build and third-party services. Localize the policy URL: `https://lymi.app/privacy`, `https://lymi.app/uk/privacy`, `https://lymi.app/ru/privacy`. Publishing the declaration requires the account holder’s approval.
+5. **Pricing and Availability.** Price **Free**, all countries and regions, including future regions. Disable iPhone/iPad app availability on Apple silicon Mac. Confirm regional eligibility separately; choosing every region does not complete its compliance requirements.
+6. **Agreements and EU trader status.** The account holder accepts any required Apple Developer Program agreement. Complete the Digital Services Act declaration with the operator’s correct status and verified details; a trader’s contact details appear on the EU listing. Do not reuse the private App Review contact as a public trader contact without confirmation.
+7. **Version page, per language.** Upload the six selected-style iPhone screenshots to the matching 6.9-inch and 6.3-inch slots, in file order. Paste Promotional Text, Description and Keywords from `listing/<language>.md`; set Support URL `https://lymi.app/support` and Marketing URL `https://lymi.app`. Leave What’s New empty for the first release. Check header and search artwork separately when supplied.
+8. **Version page, once.** Select the verified release build, enter copyright `2026 Kateryna Porshnieva`, and fill App Review Information from [`review.md`](review.md). Paste the content safeguards note only after verifying its reporting fixture. Select **Manually release this version**.
+9. Review export-compliance questions for the selected build and resolve any submission warnings. **Add for Review** and **Submit to App Review** require separate approval; saving metadata does not authorize submission.
 
 ### Age rating
 
-- In-app controls and capabilities: Parental Controls **No**, Age Assurance **No**, Unrestricted Web Access **No**, User-Generated Content **Yes**, Messaging and Chat **No**, Social Media **No**, Advertising **No**.
-- Every frequency question (profanity, horror, alcohol and drugs, medical information, sexual content, violence, weapons, simulated gambling, contests): **None**. Health or wellness topics, gambling and loot boxes: **No**.
-- Age categories: **Not Applicable**. No override.
+The first-release questionnaire was saved on 25 October 2026 with a global rating of **13+**, with regional variations. Re-answer when the app’s content or capabilities change; do not treat this as a permanent rating.
 
-User-generated content is **Yes** because a learner can share a deck with anyone holding its link. It keeps 4+ and is why the review notes describe reporting.
+- Capabilities: User-Generated Content **Yes** because members study shared decks. Parental controls, age assurance, unrestricted web access, messaging, social media and advertising were **No**.
+- Frequency: **Infrequent** alcohol references, mature themes, realistic violence, and guns or other weapons. Published decks include beer vocabulary and historical material about persecution, the Holocaust, an assassination attempt, torture, the death penalty and weapon ownership. The remaining frequency answers were **None**, with no medical/wellness, gambling or loot-box features.
+- The app was not entered in the Kids category and had no age override. Reconcile any future minimum age in the terms or product with the questionnaire and override requirements.
 
 ## Google Play Console
 
-All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` first.
+Complete the account verification and app setup in `docs/phone-release.md` first. Text and images prepared locally are not saved Play Console listings until an app record exists and they have been uploaded.
 
-1. **Store settings.** Grow users, Store presence, Store settings: category **Education**, contact email `hello@lymi.app`, website `https://lymi.app`.
-2. **Main store listing.** Grow users, Store presence, Main store listing, in English (United States):
-   - App name, Short description, Full description from `listing/en.md`.
-   - App icon: `apps/mobile/assets/icon.png` resized to 512 × 512, `sips -z 512 512 apps/mobile/assets/icon.png --out icon-512.png`.
-   - Feature graphic: `out/play-feature/en.jpg`.
-   - Phone screenshots: `out/canvas/en/play/`, all six. Skip tablet screenshots; the app is phone-only.
-3. **Translations.** On the same page, Manage translations, Add your own translations: Ukrainian and Russian, with the text from `listing/uk.md` and `listing/ru.md`, the feature graphic `out/play-feature/<language>.jpg` and the screenshots `out/canvas/<language>/play/`.
-4. **App content**, under Policy and programs. Each declaration below opens from that page:
-   - Privacy policy: `https://lymi.app/privacy`.
-   - Ads: **No, my app does not contain ads**.
-   - App access: from [`review.md`](review.md#google-play-console-app-access).
-   - Content rating: start the questionnaire with `hello@lymi.app`, category **Reference, News, or Educational**. Answer **No** to violence, sexuality, language, controlled substances, crude humour and gambling. Interactive features: users can interact or exchange content **Yes** (shared decks), shares location **No**, digital purchases **No**, unrestricted internet **No**. Expect Everyone / PEGI 3 with "Users Interact".
-   - Target audience and content: **18 and over** only. Lymi is built for adult learners and its terms set no age, so this avoids the Families policy and the teen rules; widening it later is one change here.
-   - News app **No**, COVID-19 contact tracing **No**, Government app **No**, Financial features **None**, Health **My app does not have any health features**.
-   - Data safety: from [`privacy.md`](privacy.md#google-play-console-data-safety).
-   - Advertising ID: **No**, the app does not use it.
-5. **Release notes.** When promoting the release, paste the release notes from `listing/<language>.md`.
+1. **Account and testing.** Complete identity, device and contact verification as required by the account dashboard. New personal developer accounts created after 13 November 2023 need a closed test with at least 12 continuously opted-in testers for 14 days before applying for production access; confirm the account’s current requirements in the console. Internal testing does not satisfy that closed-test requirement. See [Google’s testing requirements](https://support.google.com/googleplay/android-developer/answer/14151465).
+2. **Store settings.** Category **Education**, contact email `hello@lymi.app`, website `https://lymi.app`.
+3. **Main store listing and translations.** Use the Google Play fields from `listing/en.md`, `listing/uk.md` and `listing/ru.md`. Upload a 512 × 512 app icon, a 1024 × 500 feature graphic per locale, and the six selected-style phone screenshots from `out/<style>/<language>/play/`. Do not paste the App Store description’s iOS-only widget or share-extension claims into Play.
+4. **App content.** Set the localized privacy policy, review access from [`review.md`](review.md#google-play-console-app-access), Data safety from [`privacy.md`](privacy.md#google-play-console-data-safety), and the external account-deletion URL. No ads or Advertising ID are used.
+5. **Content rating and audience.** Complete the IARC questionnaire from the actual catalog, shared content and app capabilities; include applicable alcohol and historical violence references rather than copying an all-No answer sheet. The operator must choose the intended target ages and resolve provider restrictions first. Do not select 18+ solely to avoid another policy or assume Apple’s rating determines Google’s audience declaration.
+6. **Other declarations.** Review the current console questions. Lymi is not a news, government, financial or health app and has no COVID-19 tracing features. Verify that the selected build and SDKs still match those answers.
+7. **Release.** Use the matching release notes from `listing/<language>.md`. Complete any required testing and production-access steps before seeking separate approval to submit or publish.
 
 ## After approval
 
-- Release the App Store version by hand from its version page.
-- Check the live listings in each language on a phone: name, screenshots in order, and that the privacy label matches [`privacy.md`](privacy.md).
-- The next release's What's New and release notes go into `listing/` first, then into both consoles.
+- Release the App Store version manually after approval to launch.
+- Check the live listings in each language on a phone: name, screenshot order, support links, availability, pricing and privacy label. Verify the installed store build’s sign-in and first review.
+- Put future What’s New and release notes in `listing/` first, then copy them into both consoles.

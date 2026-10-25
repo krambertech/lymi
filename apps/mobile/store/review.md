@@ -18,7 +18,7 @@ Optionally add the account's ID to `INTERNAL_ACCOUNT_IDS` in [`packages/core/src
 
 Before each submission, sign in with it and check that it still has its decks, cards due and the shared deck, because a reviewer may archive cards or leave decks.
 
-The notes below depend on two pull requests being in the build under review: the AI consent prompt (#973) and reporting shared content (#971, which adds [`docs/app-review.md`](../../../docs/app-review.md)). Apple's guideline 5.1.2(i) asks for permission before personal data goes to a third-party AI, and 1.2 asks for a way to report shared content, so don't submit a build without them.
+The submitted build must include AI permission controls and shared-content reporting. Apple’s guideline 5.1.2(i) requires disclosure and permission before personal data goes to third-party AI; guideline 1.2 requires safeguards for shared content. Check these flows in the release candidate, not only in source.
 
 ## App Store Connect: App Review Information
 
@@ -36,13 +36,13 @@ SIGNING IN
 Choose Sign in with email on the first screen, enter the email and password above and sign in. This account needs no code. Sign in with Apple and Google also work with your own accounts.
 
 WHAT TO TRY
-Today shows the cards due; start a review there and grade each card. Library holds the decks; open one to see its cards. The + button adds a card: type a term and AI fills in the meaning. Smart add turns a photo of a lesson page into cards.
+Today shows the cards due; start a review there and grade each card. Library holds the decks; open one to see its cards. Use + to add a card by hand, or turn on AI to fill its empty fields. Smart add extracts terms from photos, PDFs or pasted text; choose which become cards.
 
 ACCOUNT DELETION
 You tab > Delete account. The screen lists what will be erased, then asks for confirmation: an account made with Sign in with Apple confirms with Apple, and an email account confirms with a 6-digit code sent to its address. Please don't delete the demo account; if you do, tell us in App Review messages and we will make it again. To try the whole flow, sign in with Apple and delete that account.
 
 AI SERVICES
-Lymi uses AI services to fill in a card's empty fields, read lesson pages in Smart add and say words aloud. The app asks before it first sends anything to them and sends nothing until the learner allows it. The prompt names what goes to whom: a card's text to OpenAI, Smart add's photos and files to Anthropic, a term to Google, OpenAI or ElevenLabs to be spoken, with Cloudflare in between. The choice can be changed at any time in You > AI services. Without it, adding cards by hand and reviewing work as usual.
+Lymi asks for permission before using AI to process the learner’s own content. The permission screen describes enrichment, Smart add and pronunciation, explains that relevant text and lesson material go to third-party AI services, and links to the localized privacy policy for provider details. Change the account-wide choice in You > AI services. Manual card creation and review work with AI off. Existing text and saved audio remain; audio in shared and published decks follows the owner’s choice.
 
 CONTENT SAFEGUARDS
 [Paste the review note from docs/app-review.md here.]

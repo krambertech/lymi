@@ -75,7 +75,7 @@ CI's artifact boundary check fails if the public build contains service-worker o
 
 ## Documentation structure
 
-Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. The sidebar separates Start, Using Lymi, Imports, Exports, Integrations, MCP assistants and API. File imports are separate from ongoing reading-app connections; every assistant setup guide stays under MCP assistants. Technical card fields and language formats live under API.
+Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. A Guides | API switch at the top of the sidebar picks which half it shows. Guides separates Start, Using Lymi, Import and export, Integrations and MCP assistants. File imports are separate from ongoing reading-app connections; every assistant setup guide stays under MCP assistants. API holds Using the API, with technical card fields and language formats, then the reference by resource group. Previous and next links stay within the half being read.
 
 | Path | Purpose |
 | --- | --- |
@@ -97,7 +97,8 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | `/docs/export` | For learners: exporting a deck or the library, what the Anki package, Lymi file and spreadsheet hold, opening the package in Anki and Mochi, importing a Lymi file, shared decks and the download window. |
 | `/docs/scheduling` | How FSRS sets intervals and how the draw picks the next card. Tables, the simulated day and interval examples are computed from `packages/core` at build time; the year-long studies come from `packages/core/simulation/results.json`. |
 | `/docs/recipes` | Import a word list, safely re-run a script and back up a deck. |
-| `/docs/api` | Browser-rendered reference loaded from `https://my.lymi.app/api/openapi.json` without credentials. |
+| `/docs/api` | The reference's overview: base URL, conventions, shared errors and every resource by group. Loaded from `https://my.lymi.app/api/openapi.json` without credentials, like each resource page. |
+| `/docs/api/{resource}` | One page per resource in `packages/core/src/api-resources.ts`: its routes, each with its request and an example response, then the objects it returns. Every OpenAPI operation carries exactly one of those resources as its tag, which `apps/web/src/server/openapi.test.ts` enforces. |
 | `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt`, `/docs/mcp/gemini` | Connecting an assistant to `https://my.lymi.app/mcp`. |
 
 The product OpenAPI route permits CORS only for the exact public website origin and does not permit credentials. `my.lymi.app/api/docs` redirects to the public API reference. Privacy, terms and support are top-level public routes so they remain stable for people, connected apps and provider listings.

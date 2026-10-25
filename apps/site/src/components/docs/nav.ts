@@ -1,3 +1,5 @@
+import { API_RESOURCE_GROUPS, API_RESOURCES } from "@lymi/core/api-resources";
+
 /**
  * The map of the documentation site. One list, in reading order, so the sidebar, the
  * "next page" link at the foot of every page and the search index can never disagree.
@@ -18,6 +20,7 @@ export type DocPath =
   | "/docs/scheduling"
   | "/docs/recipes"
   | "/docs/api"
+  | `/docs/api/${string}`
   | "/docs/mcp"
   | "/docs/mcp/claude"
   | "/docs/mcp/chatgpt"
@@ -42,6 +45,23 @@ export interface DocPage {
   blurb: string;
   section: string;
 }
+
+/** The two halves of the site. Each owns the sections the sidebar shows while one of its pages is open. */
+export const TABS = [
+  {
+    id: "guides",
+    label: "Guides",
+    to: "/docs",
+    sections: ["Start", "Using Lymi", "Import and export", "Integrations", "MCP assistants"],
+  },
+  {
+    id: "api",
+    label: "API",
+    to: "/docs/quickstart",
+    sections: ["Using the API", "Reference", ...API_RESOURCE_GROUPS],
+  },
+] as const satisfies { id: string; label: string; to: DocPath; sections: readonly string[] }[];
+export type DocTab = (typeof TABS)[number];
 
 export const PAGES: DocPage[] = [
   {
@@ -84,56 +104,56 @@ export const PAGES: DocPage[] = [
     nav: "Overview",
     title: "Import cards",
     blurb: "Choose a format, check the preview and undo an import.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-anki",
     nav: "Anki",
     title: "Import from Anki",
     blurb: "Bring your Anki decks across with their pictures, tags and review history.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-mochi",
     nav: "Mochi",
     title: "Import from Mochi",
     blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-noji",
     nav: "Noji",
     title: "Import from Noji",
     blurb: "Bring your Noji decks across with their sub-decks, pictures and learning progress.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-pleco",
     nav: "Pleco",
     title: "Import from Pleco",
     blurb: "Bring your Pleco flashcards across with their pinyin, definitions and categories.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-quizlet",
     nav: "Quizlet and text lists",
     title: "Import from Quizlet",
     blurb: "Bring terms and definitions into a new or existing deck.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/import-from-lymi",
     nav: "Lymi file",
     title: "Import a Lymi file",
     blurb: "Bring cards, media and review history from a Lymi export.",
-    section: "Imports",
+    section: "Import and export",
   },
   {
     to: "/docs/export",
     nav: "Export",
     title: "Export your decks",
     blurb: "Take a deck or your library out as an Anki package or a Lymi file.",
-    section: "Exports",
+    section: "Import and export",
   },
   {
     to: "/docs/yomitan",
@@ -197,21 +217,21 @@ export const PAGES: DocPage[] = [
     nav: "Quickstart",
     title: "Quickstart",
     blurb: "Make a key, add your first card, and see it in the app.",
-    section: "API",
+    section: "Using the API",
   },
   {
     to: "/docs/authentication",
     nav: "Authentication",
     title: "Authentication",
     blurb: "API keys, scopes, what a key can never do, and every error you can get.",
-    section: "API",
+    section: "Using the API",
   },
   {
     to: "/docs/cards",
     nav: "Card fields and duplicates",
     title: "Decks and cards",
     blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
-    section: "API",
+    section: "Using the API",
   },
   {
     to: "/docs/languages",
@@ -219,43 +239,61 @@ export const PAGES: DocPage[] = [
     title: "Languages",
     blurb:
       "How a card's pronunciation and example are written in each language with its own format.",
-    section: "API",
+    section: "Using the API",
   },
   {
     to: "/docs/recipes",
     nav: "Recipes",
     title: "Recipes",
     blurb: "Import a lesson, back up a deck, and keep a script safe to re-run.",
-    section: "API",
+    section: "Using the API",
   },
   {
     to: "/docs/api",
-    nav: "API reference",
+    nav: "All resources",
     title: "API reference",
-    blurb: "Every route, parameter and response, generated from the running server.",
-    section: "API",
+    blurb:
+      "Every resource the API serves, with its routes and objects, read from the running server.",
+    section: "Reference",
   },
+  ...API_RESOURCES.map(
+    (r): DocPage => ({
+      to: `/docs/api/${r.slug}`,
+      nav: r.name,
+      title: r.name,
+      blurb: r.description,
+      section: r.group,
+    }),
+  ),
 ];
 
-export const SECTIONS: { name: string; pages: DocPage[] }[] = [
-  "Start",
-  "Using Lymi",
-  "Imports",
-  "Exports",
-  "Integrations",
-  "MCP assistants",
-  "API",
-].map((name) => ({ name, pages: PAGES.filter((p) => p.section === name) }));
+function sectionsOf(tab: DocTab): { name: string; pages: DocPage[] }[] {
+  return tab.sections.map((name) => ({ name, pages: PAGES.filter((p) => p.section === name) }));
+}
+
+export function tabOf(path: string): DocTab {
+  const section = pageAt(path)?.section;
+  return TABS.find((t) => (t.sections as readonly string[]).includes(section ?? "")) ?? TABS[0];
+}
+
+/** The sidebar for the page at this path: its tab's sections, in order. */
+export function sidebarFor(path: string): { name: string; pages: DocPage[] }[] {
+  return sectionsOf(tabOf(path));
+}
 
 export function pageAt(path: string): DocPage | undefined {
   return PAGES.find((p) => p.to === path);
 }
 
-/** The page before and after this one, in reading order. Drives the foot of every page. */
+/**
+ * The page before and after this one, in the sidebar's order within its tab, so the foot of an
+ * API page never leads into the guides.
+ */
 export function neighbours(path: string): { prev?: DocPage; next?: DocPage } {
-  const i = PAGES.findIndex((p) => p.to === path);
+  const order = sidebarFor(path).flatMap((s) => s.pages);
+  const i = order.findIndex((p) => p.to === path);
   if (i === -1) return {};
-  const prev = PAGES[i - 1];
-  const next = PAGES[i + 1];
+  const prev = order[i - 1];
+  const next = order[i + 1];
   return { ...(prev ? { prev } : {}), ...(next ? { next } : {}) };
 }

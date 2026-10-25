@@ -1,3 +1,4 @@
+import { API_RESOURCES } from "@lymi/core/api-resources";
 import { offersLanguage } from "@lymi/core/catalog";
 import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
 
@@ -53,8 +54,12 @@ export const localizedContentPages = ["/changelog/[slug]"] as const;
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
+/** One API reference page per resource, which `/docs/api/[resource]` renders. */
+export const apiReferenceRoute = "/docs/api/[resource]";
+const apiReferencePaths = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
+
 /** Terms, support and developer documentation stay in English on purpose. */
-export const englishOnlyPaths = [
+export const englishOnlyPaths: readonly string[] = [
   "/terms",
   "/support",
   "/docs",
@@ -84,7 +89,8 @@ export const englishOnlyPaths = [
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",
-] as const;
+  ...apiReferencePaths,
+];
 
 /** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
 export function pageLocales(page: LocalizedPage): Locale[] {

@@ -1205,6 +1205,9 @@ msgstr "приложение без адреса"
 msgid "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
 msgstr "Ассистент превращает урок, PDF или чат в карточки. Readwise и Yomitan добавляют слова, пока ты читаешь."
 
+msgid "An update is ready. It installs when Lymi restarts."
+msgstr "Обновление готово. Оно установится, когда Lymi перезапустится."
+
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Анимированные изображения не подходят. Выбери неподвижное."
 
@@ -3257,8 +3260,8 @@ msgstr "Lymi не распознаёт это приложение. Разреш
 msgid "Lymi file"
 msgstr "Файл Lymi"
 
-msgid "Lymi for Mac {version}"
-msgstr "Lymi для Mac {version}"
+msgid "Lymi for Mac"
+msgstr "Lymi для Mac"
 
 msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
 msgstr "Lymi для Mac откроется и выполнит вход. Когда это произойдёт, вкладку можно закрыть."
@@ -4362,6 +4365,9 @@ msgstr "Новый пароль для Lymi"
 
 msgid "Reset your password"
 msgstr "Новый пароль"
+
+msgid "Restart to update"
+msgstr "Перезапустить и обновить"
 
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "restore"
@@ -5511,6 +5517,18 @@ msgstr "использован {m} мин назад"
 
 msgid "used just now"
 msgstr "только что использован"
+
+msgid "Version {version}."
+msgstr "Версия {version}."
+
+msgid "Version {version}. Checking for updates…"
+msgstr "Версия {version}. Ищем обновления…"
+
+msgid "Version {version}. Downloading an update…"
+msgstr "Версия {version}. Загружаем обновление…"
+
+msgid "Version {version}. Up to date."
+msgstr "Версия {version}. Обновлений нет."
 
 msgid "View card"
 msgstr "Посмотреть карточку"

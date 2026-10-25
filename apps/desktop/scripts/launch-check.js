@@ -16,7 +16,8 @@ const TIMEOUT_MS = 180_000;
 const profile = mkdtempSync(join(tmpdir(), "lymi-launch-"));
 const child = spawn(
   join(appPath, "Contents", "MacOS", "Lymi"),
-  [`--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`],
+  // A mock keychain, or an unsigned copy asks for and claims the installed app's "Lymi Safe Storage".
+  [`--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`, "--use-mock-keychain"],
   { stdio: "inherit" },
 );
 let exited = null;
@@ -58,6 +59,9 @@ try {
   process.exitCode = 1;
 } finally {
   child.kill();
+  // A Lymi stuck on a modal ignores SIGTERM, and waiting on it held a release for an hour.
+  const killed = setTimeout(() => child.kill("SIGKILL"), 5_000);
   if (exited === null) await new Promise((resolve) => child.once("exit", resolve));
+  clearTimeout(killed);
   rmSync(profile, { recursive: true, force: true });
 }

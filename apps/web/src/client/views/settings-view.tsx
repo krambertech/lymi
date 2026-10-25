@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage, ImportSource } from "@lymi/core";
-import { Download, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowUpRight, Download, ShieldCheck, Trash2 } from "lucide-react";
 import type { ReactElement, ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
@@ -154,6 +154,7 @@ export function SettingsView({
         >
           <ShieldCheck data-icon="inline-start" aria-hidden="true" />
           <Trans>Privacy policy</Trans>
+          <ArrowUpRight data-icon="inline-end" aria-hidden="true" />
         </Button>
       </SettingsGroup>
 

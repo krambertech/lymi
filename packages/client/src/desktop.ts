@@ -27,6 +27,10 @@ export interface DesktopBridge {
   onMenuCommand(listener: (command: MenuCommand) => void): () => void;
   /** Signs in through the system browser, straight to the provider's page. Added in version 2. */
   signIn?(provider: SignInProvider): void;
+  /** Quits and opens the downloaded version. Added in version 3. */
+  restartToUpdate?(): void;
+  /** Each change in the app's own update, as `MacPreferences.update`. Added in version 3. */
+  onUpdate?(listener: (update: MacUpdate) => void): () => void;
 }
 
 /** The providers that refuse an app's window, so the Mac app signs in with them in the browser. */
@@ -48,7 +52,11 @@ export interface MacPreferences {
   /** Whether macOS lets Lymi read the selection; read only. */
   accessibility: boolean;
   version: string;
+  /** Where the app's own update stands; an unpackaged app and one before version 3 leave it out. */
+  update?: MacUpdate;
 }
+
+export type MacUpdate = "checking" | "current" | "downloading" | "ready";
 
 export type MacSetting = "shortcut" | "showInMenuBar" | "showDue" | "fillSelection" | "openAtLogin";
 
@@ -92,6 +100,7 @@ export interface ToApp {
   "prefs:accessibility": [];
   "prefs:recording": [on: boolean];
   "app:sign-in": [provider: SignInProvider];
+  "app:restart-to-update": [];
 }
 export interface AskApp {
   "prefs:get": { args: []; result: MacPreferences | null };
@@ -102,4 +111,5 @@ export interface ToPage {
   "menu:command": MenuCommand;
   "app:navigate": string;
   "window:full-screen": boolean;
+  "app:update": MacUpdate;
 }

@@ -333,19 +333,25 @@ describe("noteRecordings", () => {
       ),
     ).toEqual({ recording: undefined, exampleRecording: "satz.mp3", leftOut: 0 });
   });
-  it("gives a cloze's sentence clip to the example and leaves a word's out", () => {
+  it("gives a cloze's sentence clip to the example and leaves any other out", () => {
     expect(
       clozeRecordings(
         ["Text", "Back Extra", "Word Audio", "Sentence Audio"],
-        [[], [], ["word.mp3"], ["sentence.mp3"]],
+        [[], ["extra.mp3"], ["word.mp3"], ["sentence.mp3"]],
+        0,
       ),
-    ).toEqual({ recording: undefined, exampleRecording: "sentence.mp3", leftOut: 1 });
-    expect(clozeRecordings(["Text", "Word Audio"], [[], ["word.mp3"]])).toEqual({
+    ).toEqual({ recording: undefined, exampleRecording: "sentence.mp3", leftOut: 2 });
+    expect(clozeRecordings(["Text", "Word Audio"], [[], ["word.mp3"]], 0)).toEqual({
       recording: undefined,
       exampleRecording: undefined,
       leftOut: 1,
     });
-    expect(clozeRecordings(["Text", "Back Extra"], [["satz.mp3"], []])).toEqual({
+    expect(clozeRecordings(["Text", "Back Extra"], [[], ["word.mp3"]], 0)).toEqual({
+      recording: undefined,
+      exampleRecording: undefined,
+      leftOut: 1,
+    });
+    expect(clozeRecordings(["Text", "Back Extra"], [["satz.mp3"], []], 0)).toEqual({
       recording: undefined,
       exampleRecording: "satz.mp3",
       leftOut: 0,

@@ -300,18 +300,19 @@ export function noteRecordings(
 }
 
 /**
- * A cloze note's clips, which speak its sentence: the first in a field named for a sentence, or in
- * one not named for audio, is the example's. A field named for audio alone says the hidden word,
- * so its clip is left out, and the note has no term recording.
+ * A cloze note's sentence clip: the first in a field named for a sentence, then in `text`, the
+ * field the cloze is written in. Any other clip, such as a word's in Back Extra, says the hidden
+ * word or something else, so it is left out, and the note has no term recording.
  */
 export function clozeRecordings(
   names: readonly string[],
   clips: readonly (readonly string[])[],
+  text: number,
 ): ReturnType<typeof noteRecordings> {
-  const roles = names.map((name): FieldRole => {
-    const words = fieldWords(name);
-    return AUDIO_FIELD.test(words) && !SENTENCE_FIELD.test(words) ? "skip" : "example";
-  });
+  const roles = names.map(
+    (name, i): FieldRole =>
+      i === text || SENTENCE_FIELD.test(fieldWords(name)) ? "example" : "skip",
+  );
   const sounds = noteRecordings(names, roles, clips);
   return {
     recording: undefined,

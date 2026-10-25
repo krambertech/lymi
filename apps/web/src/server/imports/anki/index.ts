@@ -514,7 +514,7 @@ export const anki: SourceAdapter<AnkiNote> = {
     const clips = note.fields.map(soundSources);
     const sounds =
       type.kind === "cloze"
-        ? clozeRecordings(type.fields, clips)
+        ? clozeRecordings(type.fields, clips, roles.indexOf("term"))
         : noteRecordings(type.fields, roles, clips);
     const pitchLeftOut = type.fields.some(
       (name, i) =>

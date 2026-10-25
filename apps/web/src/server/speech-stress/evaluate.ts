@@ -24,6 +24,7 @@ import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import { z } from "zod";
 import { createElevenLabsSpeechProvider } from "../ai/elevenlabs-speech";
+import { evalEnv } from "../ai/eval-env";
 import { providerEndpoint } from "../ai/gateway";
 import { createGeminiApiSpeechProvider } from "../ai/gemini-api-speech";
 import { createGoogleChirpProvider } from "../ai/google-chirp";
@@ -533,12 +534,7 @@ function dryToken() {
 }
 
 function liveEnv(): Env {
-  const wrangler = readFileSync(new URL("../../../wrangler.jsonc", import.meta.url), "utf8");
-  return {
-    ...process.env,
-    AI_GATEWAY_URL:
-      process.env.AI_GATEWAY_URL ?? /"AI_GATEWAY_URL":\s*"([^"]+)"/.exec(wrangler)?.[1],
-  };
+  return evalEnv() as Env;
 }
 
 function placeholderEnv(): Env {

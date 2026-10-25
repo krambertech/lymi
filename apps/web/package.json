@@ -14,7 +14,7 @@
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
     "test:workers": "vitest run --config vitest.workers.config.ts",
-    "cf-typegen": "wrangler types",
+    "cf-typegen": "wrangler types --env-file /dev/null",
     "db:generate": "drizzle-kit generate && node ../../scripts/check-migrations.mjs --write",
     "db:check": "drizzle-kit check",
     "db:migrate": "wrangler d1 migrations apply lymi --local",

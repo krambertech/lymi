@@ -258,8 +258,12 @@ export function useSoundError(error: string | null) {
   const tips = useContext(TipContext);
   const anchor = useRef<View>(null);
   const shake = useSharedValue(0);
+  // Only a failure that happens here is said; a button drawn already failed, as on a graded copy, stays quiet.
+  const said = useRef(error);
 
   useEffect(() => {
+    if (error === said.current) return;
+    said.current = error;
     if (!error) return;
     anchor.current?.measureInWindow((x, y, width, height) =>
       tips?.show(error, { x, y, width, height }),

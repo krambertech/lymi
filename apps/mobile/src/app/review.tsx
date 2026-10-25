@@ -44,7 +44,7 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -191,11 +191,6 @@ interface Graded {
   /** The step exactly as it was drawn at the grade, so the copy left underneath never reflows. */
   shown: Step;
 }
-type Step = Omit<ComponentProps<typeof Turn>, "top">;
-type Sound = { state: "idle" | "loading" | "playing"; error: string | null };
-/** A speaker on the graded copy keeps its place but rests, so it never replays a failure's tip. */
-const resting = <S extends Sound>(sound: S | null | undefined) =>
-  sound ? { ...sound, state: "idle" as const, error: null } : null;
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
 const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
@@ -872,11 +867,7 @@ function Run({
       grade: record,
       listed,
       hint: hintShown ? hint : null,
-      shown: {
-        ...step,
-        pronounce: resting(step.pronounce),
-        exampleSound: resting(step.exampleSound),
-      },
+      shown: step,
     });
     setReturned(false);
     setSending((n) => n + 1);
@@ -1141,32 +1132,8 @@ function ReviewError({
   );
 }
 
-/** A card and, once it is revealed, its grades under it: one step of the stack. */
-function Turn({
-  top,
-  item,
-  deck,
-  forgotten,
-  hint,
-  hintShown,
-  known,
-  revealed,
-  still = false,
-  onReveal,
-  onPeek,
-  onShowHint,
-  offer = false,
-  onOffer,
-  onMenu,
-  easyLocked = false,
-  lockedTip = 0,
-  onGrade,
-  onUndo,
-  pronounce,
-  exampleSound,
-}: {
-  /** On the top step, how the card moves; the step underneath stays still. */
-  top?: TopCard;
+/** What one step of the stack draws, on top or left underneath once graded. */
+interface Step {
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
@@ -1193,6 +1160,34 @@ function Turn({
   onUndo?: (() => void) | undefined;
   pronounce?: Pronunciation | null;
   exampleSound?: ExampleAudio | null;
+}
+
+/** A card and, once it is revealed, its grades under it: one step of the stack. */
+function Turn({
+  top,
+  item,
+  deck,
+  forgotten,
+  hint,
+  hintShown,
+  known,
+  revealed,
+  still = false,
+  onReveal,
+  onPeek,
+  onShowHint,
+  offer = false,
+  onOffer,
+  onMenu,
+  easyLocked = false,
+  lockedTip = 0,
+  onGrade,
+  onUndo,
+  pronounce,
+  exampleSound,
+}: Step & {
+  /** On the top step, how the card moves; the step underneath stays still. */
+  top?: TopCard;
 }) {
   const card = (
     <CardPlate

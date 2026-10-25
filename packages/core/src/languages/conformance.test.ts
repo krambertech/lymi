@@ -16,6 +16,7 @@ import {
 } from "../reading";
 import { stripStress } from "../stress";
 import ja from "./fixtures/ja.json";
+import pl from "./fixtures/pl.json";
 import ru from "./fixtures/ru.json";
 import ta from "./fixtures/ta.json";
 import uk from "./fixtures/uk.json";
@@ -28,6 +29,7 @@ import {
   type ReadingEngine,
   type RecordTag,
   readingEngine,
+  stressRules,
 } from "./index";
 
 interface Fixture {
@@ -57,7 +59,7 @@ const NOTATION: Record<
   {
     parse: (text: string) => ReadingSegment[];
     format: (segments: readonly ReadingSegment[]) => string;
-    strip: (text: string) => string;
+    strip: (text: string, language: string) => string;
     draw: (card: Card) => string | null;
   }
 > = {
@@ -73,7 +75,7 @@ const NOTATION: Record<
   stress: {
     parse: (text) => (text ? [{ text }] : []),
     format: (segments) => segments.map((segment) => segment.text).join(""),
-    strip: stripStress,
+    strip: (text, language) => stripStress(text, stressRules(language)?.mark),
     draw: markedTerm,
   },
   // Readings come from the spelling, so an example is plain text and the term draws as word[reading].
@@ -93,7 +95,7 @@ function overTerm(card: Card): string | null {
   return segments && NOTATION[readingEngine(card.language) as ReadingEngine].format(segments);
 }
 
-const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, ta, uk, yue };
+const FIXTURES: Record<RecordTag, Fixture> = { ja, zh, ru, ta, uk, yue, pl };
 
 const TOKENS = readFileSync(new URL("../../../design/tokens.css", import.meta.url), "utf8");
 
@@ -123,7 +125,7 @@ describe.each(Object.values(LANGUAGE_RECORDS))("$tag", (record) => {
   it("gives each example back when its readings are parsed, written or removed", () => {
     for (const { text, plain } of fixture.examples) {
       expect(notation.format(notation.parse(text))).toBe(text);
-      expect(notation.strip(text)).toBe(plain);
+      expect(notation.strip(text, record.tag)).toBe(plain);
     }
   });
 

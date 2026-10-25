@@ -11,7 +11,7 @@ export const ukrainian = {
   scripts: [],
   written: ["Cyrl"],
   engine: "stress",
-  stress: { vowels: "аеєиіїоуюя", apostrophes: true },
+  stress: { vowels: "аеєиіїоуюя", apostrophes: true, marks: "every", draw: "mark" },
   pronunciation: "stress",
   format: {
     name: "Ukrainian",

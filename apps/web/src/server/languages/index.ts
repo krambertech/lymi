@@ -6,6 +6,7 @@ import { examplesCarryReadings, languageSupport, type SupportedTag, stressRules 
 import { cantonese } from "./cantonese";
 import { chinese } from "./chinese";
 import { japanese } from "./japanese";
+import { polish } from "./polish";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
 import type { LanguagePrompts } from "./types";
@@ -13,11 +14,12 @@ import { ukrainian } from "./ukrainian";
 
 export type { FieldGuide, LanguageCheck, LanguagePrompts } from "./types";
 
-/** Every supported language, and Tamil and Cantonese, whose modules are evaluated before they join SupportedTag. */
-type PromptTag = SupportedTag | "ta" | "yue";
+/** Every supported language, and Tamil, Cantonese and Polish, whose modules are evaluated before they join SupportedTag. */
+type PromptTag = SupportedTag | "ta" | "yue" | "pl";
 
 export const LANGUAGE_PROMPTS = {
   ja: japanese,
+  pl: polish,
   zh: chinese,
   ru: russian,
   ta: tamil,

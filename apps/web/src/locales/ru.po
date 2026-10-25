@@ -4446,8 +4446,8 @@ msgstr "Повторяй в своём темпе. Новые карточки �
 msgid "Review progress"
 msgstr "Прогресс повторения"
 
-msgid "Review shows the stress only when it’s the term with a stress mark added, as in за́мок."
-msgstr "Ударение видно в повторении, только если это термин с добавленным знаком ударения, как за́мок."
+msgid "Review shows the stress only when it’s the term with a stress mark added, as in {sample}."
+msgstr "Ударение видно в повторении, только если это термин с добавленным знаком ударения, как {sample}."
 
 msgid "Review these decks together, in this order."
 msgstr "Повторяй эти колоды вместе, в этом порядке."

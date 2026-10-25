@@ -81,3 +81,28 @@ describe("right-to-left terms", () => {
     await expect.poll(() => input.matches(":dir(rtl)")).toBe(true);
   });
 });
+
+describe("Polish stress", () => {
+  test("underlines the stressed syllable of a word that breaks the rule, and draws the term plain when hidden", async () => {
+    const card = { term: "matematyka", language: "pl", pronunciation: "matemàtyka" };
+    await render(
+      <p data-testid="line">
+        <TermText card={card} />
+      </p>,
+    );
+    const underlined = [...container().querySelectorAll("span span")].filter((span) =>
+      getComputedStyle(span).textDecorationLine.includes("underline"),
+    );
+    expect(underlined.map((span) => span.textContent)).toEqual(["ma"]);
+    expect(container().textContent).toBe("matematyka");
+
+    await render(
+      <p data-testid="known">
+        <TermText card={card} hidden />
+      </p>,
+    );
+    const known = document.querySelector("[data-testid=known]") as HTMLElement;
+    expect(known.querySelectorAll("span span")).toHaveLength(0);
+    expect(known.textContent).toBe("matematyka");
+  });
+});

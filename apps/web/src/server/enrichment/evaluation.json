@@ -2683,6 +2683,142 @@
       ]
     },
     {
+      "id": "pl-en",
+      "name": "Polish basics",
+      "language": "pl",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "pl-en-01",
+          "term": "muzyka",
+          "expect": {
+            "meaning": { "includes": ["music"] },
+            "pronunciation": { "oneOf": ["mùzyka"] }
+          }
+        },
+        {
+          "id": "pl-en-02",
+          "term": "matematyka",
+          "expect": {
+            "meaning": { "includes": ["math"] },
+            "pronunciation": { "oneOf": ["matemàtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-03",
+          "term": "fizyka",
+          "expect": {
+            "meaning": { "includes": ["physics"] },
+            "pronunciation": { "oneOf": ["fìzyka"] }
+          }
+        },
+        {
+          "id": "pl-en-04",
+          "term": "gramatyka",
+          "expect": {
+            "meaning": { "includes": ["grammar"] },
+            "pronunciation": { "oneOf": ["gramàtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-05",
+          "term": "polityka",
+          "expect": {
+            "meaning": { "includes": ["politic"] },
+            "pronunciation": { "oneOf": ["polìtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-06",
+          "term": "technika",
+          "expect": { "pronunciation": { "oneOf": ["tèchnika"] } }
+        },
+        {
+          "id": "pl-en-07",
+          "term": "fabryka",
+          "expect": {
+            "meaning": { "includes": ["factory"] },
+            "pronunciation": { "oneOf": ["fàbryka"] }
+          }
+        },
+        {
+          "id": "pl-en-08",
+          "term": "Ameryka",
+          "expect": {
+            "meaning": { "includes": ["America"] },
+            "pronunciation": { "oneOf": ["Amèryka"] }
+          }
+        },
+        {
+          "id": "pl-en-09",
+          "term": "Afryka",
+          "expect": {
+            "meaning": { "includes": ["Africa"] },
+            "pronunciation": { "oneOf": ["Àfryka"] }
+          }
+        },
+        {
+          "id": "pl-en-10",
+          "term": "byliśmy",
+          "expect": {
+            "meaning": { "includes": ["we were"] },
+            "pronunciation": { "oneOf": ["bỳliśmy"] }
+          }
+        },
+        {
+          "id": "pl-en-11",
+          "term": "zrobilibyśmy",
+          "expect": { "pronunciation": { "oneOf": ["zrobìlibyśmy"] } }
+        },
+        {
+          "id": "pl-en-12",
+          "term": "czterysta",
+          "expect": {
+            "meaning": { "includes": ["four hundred"] },
+            "pronunciation": { "oneOf": ["cztèrysta"] }
+          }
+        },
+        {
+          "id": "pl-en-13",
+          "term": "uniwersytet",
+          "expect": { "meaning": { "includes": ["university"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-14",
+          "term": "telefon",
+          "expect": { "meaning": { "includes": ["phone"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-15",
+          "term": "szkoła",
+          "expect": { "meaning": { "includes": ["school"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-16",
+          "term": "dziękuję",
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-17",
+          "term": "żółw",
+          "expect": { "meaning": { "includes": ["turtle"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-18",
+          "term": "ósmy",
+          "expect": { "meaning": { "includes": ["eighth"] }, "pronunciation": "empty" }
+        },
+        { "id": "pl-en-19", "term": "zrobiłbym", "expect": { "pronunciation": "empty" } },
+        {
+          "id": "pl-en-20",
+          "term": "szczęście",
+          "expect": { "meaning": { "includes": ["happiness", "luck"] }, "pronunciation": "empty" }
+        }
+      ]
+    },
+    {
       "id": "pl-uk",
       "name": "Польська для карти поляка",
       "language": "pl",
@@ -2745,6 +2881,63 @@
           "id": "pl-uk-10",
           "term": "Gdzie jest dworzec?",
           "expect": { "meaning": { "includes": ["вокзал"] }, "example": "empty" }
+        },
+        {
+          "id": "pl-uk-11",
+          "term": "sklep",
+          "expect": {
+            "meaning": { "includes": ["магазин"] },
+            "notes": { "includes": ["склеп"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "pl-uk-12",
+          "term": "dynia",
+          "expect": { "meaning": { "includes": ["гарбуз"] }, "notes": { "includes": ["дин"] } }
+        },
+        {
+          "id": "pl-uk-13",
+          "term": "arbuz",
+          "expect": { "meaning": { "includes": ["кавун"] }, "notes": { "includes": ["гарбуз"] } }
+        },
+        {
+          "id": "pl-uk-14",
+          "term": "owoce",
+          "expect": { "meaning": { "includes": ["фрукт"] }, "notes": { "includes": ["овоч"] } }
+        },
+        {
+          "id": "pl-uk-15",
+          "term": "magazyn",
+          "expect": { "meaning": { "includes": ["склад"] }, "notes": { "includes": ["магазин"] } }
+        },
+        {
+          "id": "pl-uk-16",
+          "term": "drużyna",
+          "expect": { "meaning": { "includes": ["команд"] }, "notes": { "includes": ["дружин"] } }
+        },
+        {
+          "id": "pl-uk-17",
+          "term": "pensja",
+          "expect": { "meaning": { "includes": ["зарплат"] }, "notes": { "includes": ["пенсі"] } }
+        },
+        {
+          "id": "pl-uk-18",
+          "term": "tęsknić",
+          "expect": { "meaning": { "includes": ["сумува"] }, "notes": { "includes": ["za"] } }
+        },
+        {
+          "id": "pl-uk-19",
+          "term": "muzyka",
+          "expect": {
+            "meaning": { "includes": ["музик"] },
+            "pronunciation": { "oneOf": ["mùzyka"] }
+          }
+        },
+        {
+          "id": "pl-uk-20",
+          "term": "byliśmy",
+          "expect": { "pronunciation": { "oneOf": ["bỳliśmy"] } }
         }
       ]
     },

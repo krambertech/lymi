@@ -69,7 +69,7 @@ export function planStressBackfill(rows: readonly StressRow[]): {
     });
     if (!normalized.includes("term") || fields.term === undefined) {
       const key = termKey(card.language, card.term);
-      if (hasStress(card.term)) counts.kept += 1;
+      if (hasStress(card.term, rules.mark)) counts.kept += 1;
       else if (rules.apostrophes && key !== card.normalizedTerm) {
         counts.rekeyed += 1;
         changes.push({

@@ -8,6 +8,7 @@ import { chinese } from "./chinese";
 import { CONFIGURED, CONFIGURED_TAGS, type LanguageConfig } from "./configured";
 import { japanese } from "./japanese";
 import { EXAMPLE_NOTATION } from "./notation";
+import { polish } from "./polish";
 import { russian } from "./russian";
 import { tamil } from "./tamil";
 import type {
@@ -52,6 +53,7 @@ export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
   ta: tamil,
   yue: cantonese,
+  pl: polish,
 } as const satisfies Record<RecordTag, LanguageSupport>;
 
 /** "ja" and "ja-JP" are one language: the primary subtag in lower case, "" for no language. */
@@ -118,7 +120,8 @@ export function stressRules(language: string | null | undefined): StressRules | 
 /** Whether this language's examples carry inline readings Lymi parses, or stress marks, so the AI may add them. */
 export function examplesCarryReadings(language: string | null | undefined): boolean {
   const engine = readingEngine(language);
-  return engine === "stress" || (engine !== null && EXAMPLE_NOTATION[engine] !== null);
+  if (engine === "stress") return stressRules(language)?.marks === "every";
+  return engine !== null && EXAMPLE_NOTATION[engine] !== null;
 }
 
 /** The script whose face draws this language's text, or null when Onest draws it. */

@@ -181,13 +181,6 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     starts: ["notes"],
     enrichByDefault: true,
   },
-  pl: {
-    pronunciation: "pronunciation",
-    scripts: ["Latn"],
-    format: null,
-    starts: ["notes"],
-    enrichByDefault: true,
-  },
   nl: {
     pronunciation: "pronunciation",
     scripts: ["Latn"],

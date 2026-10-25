@@ -1,6 +1,7 @@
 import {
   lettersReading,
   type ReadingSegment,
+  type StressSpan,
   saysReading,
   textDirection,
   toneRuns,
@@ -18,6 +19,7 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useResolveClassNames } from "uniwind";
 import { timed, useReduceMotion } from "../theme/motion";
+import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import {
   clampBoxes,
@@ -29,7 +31,8 @@ import {
 import { Text } from "./primitives";
 
 interface Props {
-  segments: readonly ReadingSegment[];
+  /** Runs of the text; a stressed run is underlined, as a Polish term's stressed syllable. */
+  segments: readonly (ReadingSegment & { stressed?: boolean })[];
   lang?: string | null | undefined;
   /** Fades the readings in and out in place, keeping their room; only a review cue passes it. */
   hidden?: boolean | undefined;
@@ -67,7 +70,13 @@ export function Furigana(props: Props) {
       lang={lang}
       accessibilityRole={props.accessibilityRole ?? "text"}
     >
-      {segments.map((segment) => segment.text).join("")}
+      {segments.some((segment) => segment.stressed) ? (
+        <StressedRuns
+          spans={segments.map(({ text, stressed }) => ({ text, stressed: !!stressed }))}
+        />
+      ) : (
+        segments.map((segment) => segment.text).join("")
+      )}
       {tail && (
         <Text className={tail.className} lang={tail.lang ?? lang}>
           {tail.text}
@@ -75,6 +84,25 @@ export function Furigana(props: Props) {
       )}
       {after}
     </Text>
+  );
+}
+
+/** A term's runs with its stressed syllable underlined, inside the caller's `Text`. */
+export function StressedRuns({ spans }: { spans: readonly StressSpan[] }) {
+  const p = usePalette();
+  const underline = {
+    textDecorationLine: "underline",
+    textDecorationColor: p["amber-mark"],
+  } as const;
+  return spans.map((span, at) =>
+    span.stressed ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+      <Text key={at} style={underline}>
+        {span.text}
+      </Text>
+    ) : (
+      span.text
+    ),
   );
 }
 

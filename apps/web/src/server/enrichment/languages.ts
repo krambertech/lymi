@@ -48,12 +48,6 @@ const GUIDES: Record<string, FieldGuide> = {
     pronunciation:
       "Leave pronunciation null, unless the word doesn't follow Swedish spelling rules.",
   },
-  pl: {
-    notes:
-      "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), *na* vs *w*, or, for a reader in Ukrainian or Russian, a false friend (False friend: *dywan*, a carpet, not a sofa).",
-    pronunciation:
-      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule: then the term with a grave accent on the stressed vowel (mùzyka), because an acute would turn o into the letter ó.",
-  },
   cs: {
     notes:
       "Verb: Perfective: *udělat* (or Imperfective: on a perfective term), Present: *dělám*. Noun: Gender where the ending hides it, Genitive: *domu*, Plural where irregular (*člověk*, Plural: *lidé*). Usage: the case a verb takes, or a pair like *doma / domů*. Keep háček and čárka, and ů apart from ú, as written.",

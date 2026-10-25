@@ -5,7 +5,7 @@ export type SupportedTag = "ja" | "zh" | "uk" | "ru";
  * A tag with a record in the index: each supported tag, and one whose language is still landing.
  * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
  */
-export type RecordTag = SupportedTag | "ta" | "yue";
+export type RecordTag = SupportedTag | "ta" | "yue" | "pl";
 
 /** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
 export type Script = "Jpan" | "Hans" | "Hant" | "Taml";
@@ -29,6 +29,19 @@ export interface StressRules {
   restores?: Readonly<Record<string, string>>;
   /** Its apostrophes, ’ ‘ ʼ and `, are one letter with ', so м’ясо and м'ясо are one term. */
   apostrophes?: boolean;
+  /** The combining mark over a stressed vowel, U+0301 unless that mark is part of a letter, as in Polish ó. */
+  mark?: string;
+  /** Vowels whose acute is no letter of the language, so an acute typed over one is the stress mark. */
+  acuteVowels?: string;
+  /** Letter pairs that spell one sound, so an underlined syllable never splits one. */
+  digraphs?: readonly string[];
+  /**
+   * Which words carry a mark: every word of two or more syllables, where stress may fall anywhere,
+   * or only a word that breaks the language's fixed stress, which examples never mark.
+   */
+  marks: "every" | "exceptions";
+  /** How a screen shows the stress: the mark in place, or the stressed syllable underlined. */
+  draw: "mark" | "syllable";
 }
 
 /** What makes two cards of a language the same card: the term alone, or the term and a differing Reading. */
@@ -71,6 +84,8 @@ export interface LanguageSupport {
    */
   extlangs?: readonly string[];
   engine: ReadingEngine;
+  /** Fields a language deck lets the AI fill from the start besides its Reading or stress, as a configured language's `starts`. */
+  starts?: readonly "notes"[];
   /** Where the stress engine lets a mark stand. */
   stress?: StressRules;
   /** What the pronunciation holds, which the card form names the field after: a Reading, or the term with its stress marked. */

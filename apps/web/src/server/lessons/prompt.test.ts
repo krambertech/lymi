@@ -24,6 +24,7 @@ const DECKS = [
   deck("ta", "ta"),
   deck("ru", "ru"),
   deck("uk", "uk"),
+  deck("pl", "pl"),
   deck("et", "et"),
   deck("none", null),
 ];
@@ -35,8 +36,8 @@ describe("the lesson prompt", () => {
     const hash = promptHash({ INSTRUCTIONS, REPLY_SCHEMA, brief: brief(DECKS) });
     // Raise LESSON_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ LESSON_PROMPT_VERSION, hash }).toEqual({
-      LESSON_PROMPT_VERSION: 5,
-      hash: "3f5eed19092ecf06",
+      LESSON_PROMPT_VERSION: 6,
+      hash: "cb28546485f645f9",
     });
   });
 

@@ -1,15 +1,90 @@
 import { describe, expect, it } from "vitest";
 import {
+  acuteStress,
   addsStress,
   cyrillicStress,
   hasStress,
   markedForm,
   missingStress,
+  stressSpans,
   stripStress,
   wordStress,
 } from ".";
 
-const RU = { vowels: "аеёиоуыэюя", restores: { ё: "е" } } as const;
+const RU = {
+  vowels: "аеёиоуыэюя",
+  restores: { ё: "е" },
+  marks: "every",
+  draw: "mark",
+} as const;
+
+const UK = { vowels: "аеєиіїоуюя", marks: "every", draw: "mark" } as const;
+
+const PL = {
+  vowels: "aąeęioóuy",
+  mark: "\u0300",
+  acuteVowels: "aeiuy",
+  digraphs: ["ch", "cz", "dz", "dź", "dż", "rz", "sz"],
+  marks: "exceptions",
+  draw: "syllable",
+} as const;
+
+describe("a grave stress mark", () => {
+  it("leaves ó, ś and every other Polish letter alone", () => {
+    expect(stripStress("żółć ćma źdźbło", PL.mark)).toBe("żółć ćma źdźbło");
+    expect(hasStress("żółw", PL.mark)).toBe(false);
+    expect(stripStress("mùzyka", PL.mark)).toBe("muzyka");
+    expect(markedForm("Ósma", "Ósma", PL)).toBeNull();
+    expect(markedForm("matematyka", "matemàtyka", PL)).toBe("matemàtyka");
+  });
+
+  it("never finds a Polish word missing its stress, since only exceptions carry one", () => {
+    expect(missingStress("Lubię muzykę i matematykę.", PL)).toBe(false);
+    expect(wordStress("Słucham mùzyki.", PL).map((word) => word.acutes)).toEqual([0, 1]);
+  });
+
+  it("takes an acute over a vowel Polish never writes with one as the mark, and keeps ó", () => {
+    expect(acuteStress("múzyka", PL)).toBe("mùzyka");
+    expect(acuteStress("ósmy", PL)).toBe("ósmy");
+    expect(acuteStress("Ámeryka", PL)).toBe("Àmeryka");
+    expect(acuteStress("замóк", RU)).toBe("замóк");
+  });
+});
+
+describe("stressSpans", () => {
+  const underlined = (term: string, pronunciation: string) =>
+    stressSpans(term, pronunciation, PL)
+      ?.filter((span) => span.stressed)
+      .map((span) => span.text);
+
+  it("underlines the stressed syllable's onset and vowel", () => {
+    expect(underlined("muzyka", "mùzyka")).toEqual(["mu"]);
+    expect(underlined("matematyka", "matemàtyka")).toEqual(["ma"]);
+    expect(underlined("byliśmy", "bỳliśmy")).toEqual(["by"]);
+    expect(underlined("zrobiłabym", "zrobìłabym")).toEqual(["bi"]);
+    expect(underlined("technika", "tèchnika")).toEqual(["te"]);
+  });
+
+  it("takes a word's whole opening cluster, a digraph and a softening i", () => {
+    expect(underlined("czterysta", "cztèrysta")).toEqual(["czte"]);
+    expect(underlined("rzeczpospolita", "rzeczpospòlita")).toEqual(["po"]);
+    expect(underlined("gramatyka", "gramàtyka")).toEqual(["ma"]);
+    expect(underlined("uniwersytet", "uniwersỳtet")).toEqual(["sy"]);
+    expect(underlined("pojechaliśmy", "pojechàliśmy")).toEqual(["cha"]);
+    expect(underlined("poszliśmy", "pòszliśmy")).toEqual(["po"]);
+    expect(underlined("musielibyśmy", "musièlibyśmy")).toEqual(["sie"]);
+  });
+
+  it("keeps the term's own letters and case, and draws nothing without a mark", () => {
+    expect(stressSpans("Ameryka", "Amèryka", PL)).toEqual([
+      { text: "A", stressed: false },
+      { text: "me", stressed: true },
+      { text: "ryka", stressed: false },
+    ]);
+    expect(stressSpans("muzyka", "muzyka", PL)).toBeNull();
+    expect(stressSpans("muzyka", "múzyka", PL)).toBeNull();
+  });
+});
 
 describe("stripStress", () => {
   it("removes U+0301 and keeps every other mark", () => {
@@ -49,7 +124,7 @@ describe("markedForm", () => {
     expect(markedForm("творог", "тво́ро́г", RU)).toBe("тво́ро́г");
   });
   it("restores nothing where the rules restore nothing", () => {
-    expect(markedForm("ежик", "ёжик", { vowels: "аеєиіїоуюя" })).toBeNull();
+    expect(markedForm("ежик", "ёжик", UK)).toBeNull();
   });
 });
 
@@ -74,7 +149,7 @@ describe("wordStress", () => {
     ]);
     expect(wordStress("ё́лка", RU)[0]?.acuteOnDotted).toBe(true);
     expect(wordStress("что́-то", RU)).toHaveLength(1);
-    expect(wordStress("об’є́кт", { vowels: "аеєиіїоуюя" })).toEqual([
+    expect(wordStress("об’є́кт", UK)).toEqual([
       { word: "об’є́кт", syllables: 2, acutes: 1, dotted: false, acuteOnDotted: false },
     ]);
   });
@@ -85,7 +160,7 @@ describe("missingStress", () => {
     expect(missingStress("Я живу́ в Москве́.", RU)).toBe(false);
     expect(missingStress("Я живу в Москве́.", RU)).toBe(true);
     expect(missingStress("Ёлка в лесу́.", RU)).toBe(false);
-    expect(missingStress("Я бачу ялинку.", { vowels: "аеєиіїоуюя" })).toBe(true);
+    expect(missingStress("Я бачу ялинку.", UK)).toBe(true);
     expect(missingStress("OK, да.", RU)).toBe(false);
   });
 });

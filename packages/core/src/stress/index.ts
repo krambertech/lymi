@@ -1,12 +1,15 @@
 /**
  * The marks-in-place engine: the term stays as natives write it, and the pronunciation is the
- * term with U+0301 over each stressed vowel, drawn in place of the term until the card is Known.
- * docs/proposals/russian-and-ukrainian.md.
+ * term with a mark, U+0301 unless the language's rules name another, over each stressed vowel,
+ * drawn in place of the term until the card is Known. docs/proposals/russian-and-ukrainian.md.
  */
 import type { StressRules } from "../languages/types";
 
 /** The combining acute that marks a stressed vowel. */
 export const STRESS = "́";
+
+/** The mark a language's rules put over a stressed vowel. */
+const markOf = (rules: StressRules) => rules.mark ?? STRESS;
 
 /** One base character and the combining marks after it, in NFD, so й stays и with its breve. */
 const UNIT = /\P{M}\p{M}*/gu;
@@ -19,13 +22,13 @@ const clean = (text: string) => text.normalize("NFC").trim().replace(/\s+/g, " "
  * Text with its stress marks taken out and every other mark kept, so ё, й and Lithuanian ą́'s
  * ogonek survive: removing all of `\p{M}` after NFD would turn й into и.
  */
-export function stripStress(text: string): string {
-  return text.normalize("NFD").replaceAll(STRESS, "").normalize("NFC");
+export function stripStress(text: string, mark = STRESS): string {
+  return text.normalize("NFD").replaceAll(mark, "").normalize("NFC");
 }
 
 /** Whether text carries a stress mark. */
-export function hasStress(text: string): boolean {
-  return text.normalize("NFD").includes(STRESS);
+export function hasStress(text: string, mark = STRESS): boolean {
+  return text.normalize("NFD").includes(mark);
 }
 
 /** One character of the term as drawn: its letter, and whether it restores ё or takes an acute. */
@@ -53,6 +56,7 @@ export function readStress(
   pronunciation: string,
   rules: StressRules,
 ): { form: string; marks: number } | null {
+  const mark = markOf(rules);
   const plain = units(clean(term));
   const marked = units(clean(pronunciation));
   if (plain.length === 0 || plain.length !== marked.length) return null;
@@ -60,8 +64,8 @@ export function readStress(
   for (const [i, unit] of plain.entries()) {
     const lower = apostrophe(unit.toLowerCase().normalize("NFC"));
     const read = apostrophe((marked[i] as string).toLowerCase());
-    const acute = read.includes(STRESS) && !lower.includes(STRESS);
-    const letter = (acute ? read.replace(STRESS, "") : read).normalize("NFC");
+    const acute = read.includes(mark) && !lower.includes(mark);
+    const letter = (acute ? read.replace(mark, "") : read).normalize("NFC");
     const restored = letter !== lower;
     if (restored && rules.restores?.[letter] !== lower) return null;
     const vowel = rules.vowels.includes(letter);
@@ -76,7 +80,7 @@ export function readStress(
     for (const char of word) {
       const acute = char.acute && syllables > 1;
       if (acute || char.restored) marks += 1;
-      out += acute ? char.text + STRESS : char.text;
+      out += acute ? char.text + mark : char.text;
     }
   }
   return { form: out.normalize("NFC"), marks };
@@ -109,11 +113,11 @@ function words(chars: readonly Drawn[]): Drawn[][] {
   return out;
 }
 
-/** One Cyrillic word of a sentence and the stress it carries. */
+/** One word of a sentence in the language's letters and the stress it carries. */
 export interface WordStress {
   word: string;
   syllables: number;
-  /** Acutes over a vowel. */
+  /** Stress marks over a vowel. */
   acutes: number;
   /** It writes a letter whose dots mark its stress, as Russian ё does. */
   dotted: boolean;
@@ -124,14 +128,19 @@ export interface WordStress {
 /** A word, with a hyphen or apostrophe between letters keeping it one word, as `words` does for the term. */
 const WORD = /[\p{L}\p{M}]+(?:[-\u2010\u2011'\u2018\u2019`][\p{L}\p{M}]+)*/gu;
 
-/** Each Cyrillic word of a sentence with its syllables and marks, so a check can say which word lacks its stress. */
+/**
+ * Each word of a sentence with a vowel of the language, with its syllables and marks, so a check
+ * can say which word lacks its stress and a Latin word in a Cyrillic sentence is left out.
+ */
 export function wordStress(text: string, rules: StressRules): WordStress[] {
+  const mark = markOf(rules);
   return (text.normalize("NFC").match(WORD) ?? []).flatMap((word) => {
-    if (!/\p{Script=Cyrillic}/u.test(word)) return [];
+    const vowel = (unit: string) => rules.vowels.includes(stripStress(unit, mark).toLowerCase());
+    if (!units(word).some(vowel)) return [];
     const out: WordStress = { word, syllables: 0, acutes: 0, dotted: false, acuteOnDotted: false };
     for (const unit of units(word)) {
-      const letter = stripStress(unit).toLowerCase();
-      const acute = unit.includes(STRESS);
+      const letter = stripStress(unit, mark).toLowerCase();
+      const acute = unit.includes(mark);
       const dotted = rules.restores?.[letter] !== undefined;
       if (rules.vowels.includes(letter)) out.syllables += 1;
       if (acute) out.acutes += 1;
@@ -142,24 +151,28 @@ export function wordStress(text: string, rules: StressRules): WordStress[] {
   });
 }
 
-/** Whether a word of two or more syllables in the text has no stress shown, by an acute or by ё. */
+/**
+ * Whether a word of two or more syllables in the text has no stress shown, by an acute or by ё.
+ * Never in a language that marks only its exceptions, since a bare word there is stressed as usual.
+ */
 export function missingStress(text: string, rules: StressRules): boolean {
+  if (rules.marks === "exceptions") return false;
   return wordStress(text, rules).some(
     (word) => word.syllables > 1 && word.acutes === 0 && !word.dotted,
   );
 }
 
 /** Whether `after` is `before` with stress marks added, keeping every mark it had and changing nothing else. */
-export function addsStress(before: string, after: string): boolean {
-  if (stripStress(after) !== stripStress(before)) return false;
+export function addsStress(before: string, after: string, mark = STRESS): boolean {
+  if (stripStress(after, mark) !== stripStress(before, mark)) return false;
   const had = units(before);
   const has = units(after);
   if (had.length !== has.length) return false;
   let added = false;
   for (const [i, unit] of had.entries()) {
-    const marked = (has[i] as string).includes(STRESS);
-    if (unit.includes(STRESS) && !marked) return false;
-    if (marked && !unit.includes(STRESS)) added = true;
+    const marked = (has[i] as string).includes(mark);
+    if (unit.includes(mark) && !marked) return false;
+    if (marked && !unit.includes(mark)) added = true;
   }
   return added;
 }
@@ -204,4 +217,67 @@ export function cyrillicStress(text: string, rules: StressRules): string {
       : word,
   );
   return out === decomposed ? text : out.normalize("NFC");
+}
+
+/**
+ * Text with an acute over a vowel the language never writes with one turned into its stress mark,
+ * so múzyka typed with a Polish keyboard's acute becomes mùzyka while ó, a letter, stays.
+ */
+export function acuteStress(text: string, rules: StressRules): string {
+  const vowels = rules.acuteVowels;
+  if (!vowels || markOf(rules) === STRESS) return text;
+  const out = text
+    .normalize("NFD")
+    .replace(/(\p{L})\u0301/gu, (found, letter: string) =>
+      vowels.includes(letter.toLowerCase()) ? letter + markOf(rules) : found,
+    );
+  // Composed, so mùzyka stores one letter ù however it was typed.
+  return out.normalize("NFC");
+}
+
+/** A run of a term as drawn with its stressed syllable underlined, and whether it is that syllable. */
+export type StressSpan = { text: string; stressed: boolean };
+
+/**
+ * The term in runs, with each stressed syllable's onset and vowel as one stressed run, or null
+ * where `markedForm` draws nothing. The onset is a word's whole opening cluster, else the one
+ * consonant or digraph before the vowel with a softening i, so cztèrysta underlines czte and
+ * zrobìłabym bi.
+ */
+export function stressSpans(
+  term: string,
+  pronunciation: string,
+  rules: StressRules,
+): StressSpan[] | null {
+  const form = markedForm(term, pronunciation, rules);
+  if (form === null) return null;
+  const mark = markOf(rules);
+  const chars = units(form).map((unit) => ({
+    text: unit.replace(mark, "").normalize("NFC"),
+    marked: unit.includes(mark),
+  }));
+  const lower = (at: number) => chars[at]?.text.toLowerCase() ?? "";
+  const letter = (at: number) => /^\p{L}/u.test(chars[at]?.text ?? "");
+  const consonant = (at: number) => letter(at) && !rules.vowels.includes(lower(at));
+  const stressed = new Set<number>();
+  for (const [vowel, char] of chars.entries()) {
+    if (!char.marked) continue;
+    let start = vowel;
+    if (lower(start - 1) === "i" && consonant(start - 2)) start -= 1;
+    let opening = start;
+    while (consonant(opening - 1)) opening -= 1;
+    if (!letter(opening - 1)) start = opening;
+    else if (consonant(start - 1)) {
+      start -= 1;
+      if (rules.digraphs?.includes(lower(start - 1) + lower(start))) start -= 1;
+    }
+    for (let at = start; at <= vowel; at += 1) stressed.add(at);
+  }
+  const spans: StressSpan[] = [];
+  for (const [at, char] of chars.entries()) {
+    const last = spans.at(-1);
+    if (last && last.stressed === stressed.has(at)) last.text += char.text;
+    else spans.push({ text: char.text, stressed: stressed.has(at) });
+  }
+  return spans;
 }

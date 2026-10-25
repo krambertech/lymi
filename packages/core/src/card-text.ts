@@ -8,7 +8,14 @@ import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
-import { cyrillicStress, hasStress, readStress, stressKey, stripStress } from "./stress";
+import {
+  acuteStress,
+  cyrillicStress,
+  hasStress,
+  readStress,
+  stressKey,
+  stripStress,
+} from "./stress";
 
 /** A field `normalizeCardText` may convert. */
 export type NormalizedField = "term" | "pronunciation";
@@ -44,20 +51,22 @@ function dropSpelledReading({ term, pronunciation }: CardText): CardText {
 }
 
 /**
- * Accented Latin look-alikes become Cyrillic vowels with U+0301 (замóк → замо́к), and a stressed
- * term splits into the term as natives write it and its stress as the pronunciation, as a lesson
- * or an import marks it: за́мок → замок stressed за́мок. A pronunciation that says something else,
- * such as IPA or another stress, leaves the term as sent.
+ * Accented Latin look-alikes become Cyrillic vowels with U+0301 (замóк → замо́к), an acute where a
+ * language writes no such letter becomes its mark (múzyka → mùzyka), and a stressed term splits
+ * into the term as natives write it and its stress as the pronunciation, as a lesson or an import
+ * marks it: за́мок → замок stressed за́мок. A pronunciation that says something else, such as IPA
+ * or another stress, leaves the term as sent.
  */
 function markStress({ term, pronunciation }: CardText, language: string): CardText {
   const rules = stressRules(language);
   if (!rules) return {};
-  const sent = pronunciation?.trim() ? cyrillicStress(pronunciation, rules) : pronunciation;
+  const marked = (text: string) => acuteStress(cyrillicStress(text, rules), rules);
+  const sent = pronunciation?.trim() ? marked(pronunciation) : pronunciation;
   const out: CardText = sent === pronunciation ? {} : { pronunciation: sent };
   if (term === undefined) return out;
-  const typed = cyrillicStress(term, rules);
-  const plain = stripStress(typed);
-  const read = hasStress(typed) ? readStress(plain, typed, rules) : null;
+  const typed = marked(term);
+  const plain = stripStress(typed, rules.mark);
+  const read = hasStress(typed, rules.mark) ? readStress(plain, typed, rules) : null;
   if (read === null) return typed === term ? out : { ...out, term: typed };
   // An acute over ё or over a word of one syllable says nothing, so it only leaves the term.
   if (read.marks === 0) return { ...out, term: plain };

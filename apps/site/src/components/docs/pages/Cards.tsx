@@ -224,6 +224,11 @@ export function Cards() {
           <code>за́мок</code> (a castle) and <code>замо́к</code> (a lock) are two words. A
           pronunciation that is not the term with marks added, such as IPA, counts as no reading.
         </li>
+        <li>
+          Polish marks only a word whose stress breaks its rule, with U+0300, a grave, over the
+          stressed vowel: <code>muzyka</code> stressed <code>mùzyka</code>. A regular word has no
+          pronunciation, and <code>ó</code> stays a letter, never a stress.
+        </li>
         <li>A card with no language only collides with other cards that have no language.</li>
         <li>Archived cards do not collide. Adding a term you archived makes a fresh card.</li>
       </ul>

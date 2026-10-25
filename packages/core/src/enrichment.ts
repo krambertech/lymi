@@ -72,11 +72,12 @@ export function defaultEnrichFields(
   const pronounced = configured
     ? configured.starts.includes("pronunciation")
     : languageSupport(language) !== null || READING_LANGUAGES.has(primary);
+  const notes = (configured ?? languageSupport(language))?.starts?.includes("notes");
   return [
     "meaning",
     "example",
     "exampleTranslation",
-    ...(configured?.starts.includes("notes") ? (["notes"] as const) : []),
+    ...(notes ? (["notes"] as const) : []),
     ...(pronounced ? (["pronunciation"] as const) : []),
   ];
 }

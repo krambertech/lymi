@@ -7,6 +7,7 @@ import { clsx } from "clsx";
 import { Anchor, type LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import type { Card } from "../lib/api";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
@@ -177,7 +178,7 @@ function AidLine({ step }: { step: AidStep }) {
       <Icon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
       <span className="min-w-0 [overflow-wrap:anywhere]">
         <span className="sr-only">{i18n._(name)} </span>
-        {step.text}
+        <span className={PRIVATE_TEXT}>{step.text}</span>
         {step.source === "ai" && (
           <span className="ms-2 inline-flex -translate-y-px align-middle">
             <SourceChip source="ai" field="hook" size="xs" />

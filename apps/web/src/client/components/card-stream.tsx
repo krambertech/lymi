@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { Play } from "lucide-react";
 import type { CSSProperties } from "react";
 import { useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 
 interface Card {
   term: string;
@@ -64,6 +65,7 @@ export function CardStream({ cards, language, direction, className }: Props) {
           <span
             lang={language ?? undefined}
             className={clsx(
+              PRIVATE_TEXT,
               "hyphenate line-clamp-2 break-words font-medium tracking-[-0.015em]",
               up ? "text-2xl leading-[1.2]" : "text-xl leading-[1.2]",
             )}
@@ -72,7 +74,13 @@ export function CardStream({ cards, language, direction, className }: Props) {
             {card.term}
           </span>
           {card.meaning && (
-            <span className={clsx("line-clamp-2 text-text-2", up ? "text-md" : "text-base")}>
+            <span
+              className={clsx(
+                PRIVATE_TEXT,
+                "line-clamp-2 text-text-2",
+                up ? "text-md" : "text-base",
+              )}
+            >
               {card.meaning}
             </span>
           )}

@@ -36,6 +36,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
@@ -337,6 +338,7 @@ function ReadField({
           <p
             lang={lang}
             className={clsx(
+              PRIVATE_TEXT,
               "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
               empty ? "text-muted" : "text-text",
             )}

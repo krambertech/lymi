@@ -8,6 +8,7 @@ import {
   textDirection,
 } from "@lymi/core";
 import { useMemo } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { Furigana } from "./furigana";
 
 interface TermTextProps {
@@ -29,7 +30,11 @@ interface TermTextProps {
 export function TermText({ card, hidden, room }: TermTextProps) {
   // Its own direction isolates the term, so an Arabic one keeps its order inside an English line.
   return (
-    <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+    <span
+      className={PRIVATE_TEXT}
+      lang={card.language ?? undefined}
+      dir={textDirection(card.language)}
+    >
       <TermRuns card={card} hidden={hidden} room={room} />
     </span>
   );
@@ -67,7 +72,7 @@ export function ExampleText({ text, lang, known }: ExampleTextProps) {
     [text, known, lang],
   );
   return (
-    <span lang={lang} dir={textDirection(lang)}>
+    <span className={PRIVATE_TEXT} lang={lang} dir={textDirection(lang)}>
       <Furigana segments={segments} lang={lang} />
     </span>
   );

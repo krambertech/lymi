@@ -34,6 +34,33 @@ let pageSource: Omit<Attribution, "first_landing_page"> | undefined;
 let entryPending = true;
 let directEntry = false;
 let release: string | undefined;
+let replay: "off" | "loading" | "on" = "off";
+
+/**
+ * Session replay for the product. The free plan holds 10,000 web recordings a month; lower
+ * `sampleRate` before traffic outgrows it. PostHog's remote config is never fetched, so the SDK
+ * reads this one instead.
+ */
+const REPLAY_CONFIG = {
+  hasFeatureFlags: false,
+  sessionRecording: { endpoint: "/s/", sampleRate: "1.00", minimumDurationMilliseconds: 2000 },
+};
+const SNAPSHOT_PROPERTIES = [
+  "$snapshot_data",
+  "$snapshot_bytes",
+  "$session_id",
+  "$window_id",
+  "$lib",
+  "$lib_version",
+] as const;
+// A recording never shows these, and they can carry a card's words or a name.
+const HIDDEN_ATTRIBUTES = new Set([
+  "aria-label",
+  "aria-description",
+  "aria-valuetext",
+  "title",
+  "alt",
+]);
 
 /** Where this page load's visit began, for the sign-up request to carry to the server. */
 export function visitFirstTouch(on: "public" | "product" = surface): Attribution | undefined {
@@ -128,6 +155,13 @@ export function initAnalytics(options: {
     pageSource = source;
   }
   try {
+    if (surface === "product") {
+      const preloaded = window as { _POSTHOG_REMOTE_CONFIG?: Record<string, { config: unknown }> };
+      preloaded._POSTHOG_REMOTE_CONFIG = {
+        ...preloaded._POSTHOG_REMOTE_CONFIG,
+        [options.token as string]: { config: REPLAY_CONFIG },
+      };
+    }
     posthog.init(options.token as string, {
       api_host: `${location.origin}${POSTHOG_PROXY_PATH}`,
       ui_host: "https://eu.posthog.com",
@@ -143,7 +177,22 @@ export function initAnalytics(options: {
       capture_dead_clicks: false,
       save_campaign_params: false,
       save_referrer: false,
+      // Started once the account allows it; text inside `ph-mask` and every input is masked.
       disable_session_recording: true,
+      session_recording: {
+        maskAllInputs: true,
+        maskAttributeFn: (name, value) =>
+          HIDDEN_ATTRIBUTES.has(name) ? "*".repeat(value.length) : value,
+        // A recorded address keeps only its route, so tokens and IDs in it never leave.
+        maskCapturedNetworkRequestFn: (request) => {
+          try {
+            const url = new URL(request.name, location.origin);
+            return { ...request, name: url.origin + analyticsPath(url.pathname, surface) };
+          } catch {
+            return { ...request, name: location.origin };
+          }
+        },
+      },
       disable_surveys: true,
       disable_external_dependency_loading: true,
       advanced_disable_flags: true,
@@ -175,6 +224,17 @@ export function initAnalytics(options: {
           return event;
         }
         if (!allowed()) return null;
+        if (event.event === "$snapshot") {
+          if (surface !== "product") return null;
+          const snapshot: Record<string, unknown> = {};
+          for (const key of SNAPSHOT_PROPERTIES) snapshot[key] = event.properties[key];
+          event.properties = {
+            ...snapshot,
+            token: options.token,
+            distinct_id: posthog.get_distinct_id(),
+          };
+          return event;
+        }
         let properties: Record<string, unknown> | null;
         if (event.event === "$set" && learner && accountAllowed) {
           properties = {
@@ -241,6 +301,7 @@ export function initAnalytics(options: {
 }
 
 function applyState(): void {
+  applyReplay();
   if (!initialized || !allowed()) {
     ready = false;
     return;
@@ -261,6 +322,27 @@ function applyState(): void {
     ready = true;
     window.dispatchEvent(new Event(ANALYTICS_READY));
   }
+}
+
+/** The recorder is a chunk of its own, loaded only when a product page may be recorded. */
+function applyReplay(): void {
+  if (!initialized || surface !== "product") return;
+  if (!allowed()) {
+    if (replay === "on") posthog.stopSessionRecording();
+    replay = "off";
+    return;
+  }
+  if (replay !== "off") return;
+  replay = "loading";
+  import("posthog-js/dist/posthog-recorder")
+    .then(() => {
+      if (replay !== "loading" || !allowed()) return;
+      replay = "on";
+      posthog.startSessionRecording();
+    })
+    .catch(() => {
+      replay = "off";
+    });
 }
 
 function identifyLearner(): void {

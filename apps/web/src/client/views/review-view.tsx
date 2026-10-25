@@ -43,6 +43,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { AudioButton, AudioPlace } from "../components/audio-button";
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
@@ -869,6 +870,7 @@ export function ReviewCard({
           <div
             ref={columnRef}
             className={clsx(
+              PRIVATE_TEXT,
               "relative flex flex-1 flex-col justify-center gap-5 py-2",
               // A fade that stays filled would trap the speaker's z-20 under the reveal layer.
               animateIn && "enter-fade [animation-fill-mode:backwards]!",

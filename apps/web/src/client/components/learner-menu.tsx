@@ -14,6 +14,7 @@ import {
   Settings,
 } from "lucide-react";
 import { type ReactNode, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { useLearnerAvatar } from "../lib/avatar";
 import { localizedSiteUrl } from "../lib/origins";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
@@ -104,7 +105,9 @@ export function LearnerMenu({
                 )}
               >
                 <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={34} />
-                <span className="min-w-0 flex-1 truncate text-base text-text">{short}</span>
+                <span className={clsx(PRIVATE_TEXT, "min-w-0 flex-1 truncate text-base text-text")}>
+                  {short}
+                </span>
               </button>
             ) : (
               <button
@@ -117,7 +120,7 @@ export function LearnerMenu({
                 )}
               >
                 <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={40} />
-                <span className="sr-only">{short}</span>
+                <span className={clsx(PRIVATE_TEXT, "sr-only")}>{short}</span>
               </button>
             )
           }
@@ -130,7 +133,7 @@ export function LearnerMenu({
         >
           {name && (
             <>
-              <div className="grid gap-0.5 px-2.5 pb-2 pt-1.5">
+              <div className={clsx(PRIVATE_TEXT, "grid gap-0.5 px-2.5 pb-2 pt-1.5")}>
                 <span className="truncate text-base font-medium text-text">{name}</span>
                 {email && <span className="truncate text-xs text-muted">{email}</span>}
               </div>

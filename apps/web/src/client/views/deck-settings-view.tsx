@@ -22,6 +22,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
@@ -633,7 +634,9 @@ function MemberRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <Avatar name={member.name} size={36} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{member.name}</p>
+        <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
+          {member.name}
+        </p>
         <p className="text-sm text-muted tabular-nums">
           <Trans>joined {joined}</Trans>
         </p>

@@ -240,8 +240,8 @@ msgstr "2025 version"
 msgid "2026 edition"
 msgstr "2026 edition"
 
-msgid "24 October 2026"
-msgstr "24 October 2026"
+msgid "25 October 2026"
+msgstr "25 October 2026"
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
@@ -3257,8 +3257,11 @@ msgstr "Popular"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 
-msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials. We do not use session replay or automatic click recording."
-msgstr "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials. We do not use session replay or automatic click recording."
+msgid "PostHog may also record how the apps are used, to show where Lymi is hard to use. Recordings hide card text, pictures and what you type, and stop if you object to product analytics."
+msgstr "PostHog may also record how the apps are used, to show where Lymi is hard to use. Recordings hide card text, pictures and what you type, and stop if you object to product analytics."
+
+msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials."
+msgstr "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials."
 
 msgid "Practice questions on the California Driver’s Handbook, one rule to a card."
 msgstr "Practice questions on the California Driver’s Handbook, one rule to a card."

@@ -7,6 +7,7 @@ import { cn } from "cn";
 import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import {
   api,
   type DeckSummary,
@@ -1009,7 +1010,7 @@ function ListStep({
                   />
                   <div className="grid min-w-0">
                     <FieldLabel className="text-base font-medium text-text [overflow-wrap:anywhere]">
-                      <bdi>{term.term}</bdi>
+                      <bdi className={PRIVATE_TEXT}>{term.term}</bdi>
                     </FieldLabel>
                     <span className="text-sm text-text-2">{term.gloss}</span>
                     <TermNote term={term} />
@@ -1094,7 +1095,7 @@ function ExistingList({ terms }: { terms: LessonTerm[] }) {
               <Check className="size-4" aria-hidden="true" />
             </span>
             <div className="grid min-w-0 gap-0.5">
-              <bdi className="text-base text-muted">{term.term}</bdi>
+              <bdi className={cn(PRIVATE_TEXT, "text-base text-muted")}>{term.term}</bdi>
               <span className="text-sm text-muted">
                 <Trans>In {isolate(term.existing?.deckName)}</Trans>
               </span>

@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { cn } from "cn";
 import { ImageOff } from "lucide-react";
 import { type CSSProperties, useState } from "react";
+import { PRIVATE_BOX } from "@/lib/telemetry";
 import type { CardImage } from "../lib/api";
 import { isOpaque, useCardPicture } from "../lib/card-images";
 import { Skeleton } from "./skeleton";
@@ -38,6 +39,7 @@ export function CardPicture({
     return (
       <div
         className={cn(
+          PRIVATE_BOX,
           "grid min-h-24 content-center justify-items-start gap-2 rounded-lg bg-plate-2 p-4",
           className,
         )}
@@ -60,7 +62,12 @@ export function CardPicture({
   return (
     <div
       style={box}
-      className={cn("relative overflow-hidden rounded-lg", !src && "bg-plate-2", className)}
+      className={cn(
+        PRIVATE_BOX,
+        "relative overflow-hidden rounded-lg",
+        !src && "bg-plate-2",
+        className,
+      )}
     >
       {src ? (
         <img

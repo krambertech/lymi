@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
@@ -437,7 +438,7 @@ function CardRow({ card, link }: { card: ActivityCard; link: CardLink }) {
   const { t } = useLingui();
   const face = (
     <>
-      <span className="grid min-w-0 flex-1 gap-0.5">
+      <span className={clsx(PRIVATE_TEXT, "grid min-w-0 flex-1 gap-0.5")}>
         <bdi className="truncate text-base font-medium">{card.term}</bdi>
         {card.meaning && <bdi className="truncate text-sm text-muted">{card.meaning}</bdi>}
       </span>

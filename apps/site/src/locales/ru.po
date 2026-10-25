@@ -240,8 +240,8 @@ msgstr "Версия 2025 года"
 msgid "2026 edition"
 msgstr "Издание 2026 года"
 
-msgid "24 October 2026"
-msgstr "24 октября 2026 года"
+msgid "25 October 2026"
+msgstr "25 октября 2026 года"
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 вопросов, 15 для сдачи. Выучить — 300."
@@ -3257,8 +3257,11 @@ msgstr "Популярное"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Отправь ссылку для присоединения в чат группы. Каждый, кто присоединится, получает новую карточку, как только ты её добавишь, а расписание повторений у каждого своё. Когда группа набрана, выключи ссылку."
 
-msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials. We do not use session replay or automatic click recording."
-msgstr "Облако PostHog в ЕС получает события использования, чтобы помогать нам улучшать Lymi. В приложениях они связаны с идентификатором аккаунта и содержат действия, количества, оценки повторений, сведения о приложении и устройстве, страну, определённую по IP-адресу, и технические данные использования AI, например модель и стоимость. События не содержат текста карточек, AI-запросов, имён, электронных адресов или учётных данных. Мы не используем запись сеансов или автоматическую запись нажатий."
+msgid "PostHog may also record how the apps are used, to show where Lymi is hard to use. Recordings hide card text, pictures and what you type, and stop if you object to product analytics."
+msgstr "PostHog также может записывать, как используются приложения, чтобы показать, где Lymi неудобен. Записи скрывают текст карточек, изображения и то, что ты вводишь, и прекращаются, если ты возразишь против продуктовой аналитики."
+
+msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In the apps these are linked to your account identifier and include actions, counts, review grades, app and device information, country derived from the IP address, and technical AI usage such as model and cost. Events exclude card text, prompts, names, email addresses and credentials."
+msgstr "Облако PostHog в ЕС получает события использования, чтобы помогать нам улучшать Lymi. В приложениях они связаны с идентификатором аккаунта и содержат действия, количества, оценки повторений, сведения о приложении и устройстве, страну, определённую по IP-адресу, и технические данные использования AI, например модель и стоимость. События не содержат текста карточек, AI-запросов, имён, электронных адресов или учётных данных."
 
 msgid "Practice questions on the California Driver’s Handbook, one rule to a card."
 msgstr "Тренировочные вопросы по California Driver’s Handbook — одно правило на карточку."

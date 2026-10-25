@@ -1,6 +1,7 @@
 import { type NoteBlock, type NoteInline, parseNotes } from "@lymi/core/notes";
 import { cn } from "cn";
 import { useMemo } from "react";
+import { PRIVATE_TEXT } from "@/lib/telemetry";
 
 function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
   return nodes.map((node, i) => {
@@ -75,6 +76,7 @@ export function CardNotes({ source, className }: Props) {
     <div
       dir="auto"
       className={cn(
+        PRIVATE_TEXT,
         "grid grid-cols-[minmax(0,1fr)] gap-[0.5lh] [overflow-wrap:anywhere]",
         className,
       )}

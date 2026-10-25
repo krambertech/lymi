@@ -9,6 +9,11 @@ type Payload = {
 };
 type Options = {
   before_send: (event: Payload) => Payload | null;
+  session_recording?: {
+    maskAllInputs?: boolean;
+    maskCapturedNetworkRequestFn?: (request: { name: string }) => { name: string };
+    maskAttributeFn?: (name: string, value: string) => string;
+  };
   api_host: string;
   persistence: string;
   cookieless_mode?: string;
@@ -53,12 +58,15 @@ const sdk = vi.hoisted(() => {
       id = next;
       capture("$identify", { $anon_distinct_id: anonymous, $set: props });
     }),
+    startSessionRecording: vi.fn(),
+    stopSessionRecording: vi.fn(),
     captureException: vi.fn((_error: unknown, properties: Record<string, unknown> = {}) =>
       capture("$exception", { $exception_list: [], ...properties }),
     ),
   };
 });
 vi.mock("posthog-js/no-external", () => ({ default: sdk }));
+vi.mock("posthog-js/dist/posthog-recorder", () => ({}));
 let cookieWrites: string[];
 let analytics: typeof import("./analytics");
 
@@ -260,4 +268,71 @@ it("does not initialize in development or previews", async () => {
   analytics.captureAnalytics("add_to_lymi_clicked", { deck_slug: "eesti-a1" });
   expect(sdk.init).not.toHaveBeenCalled();
   expect(sdk.sent).toEqual([]);
+});
+
+type Preloaded = { _POSTHOG_REMOTE_CONFIG?: Record<string, { config: unknown }> };
+const recorderLoaded = () => new Promise((resolve) => setTimeout(resolve));
+
+it("records the product only once the account allows it, and stops on opt-out", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG?.phc_test).toMatchObject({
+    config: { sessionRecording: { endpoint: "/s/" } },
+  });
+  expect(sdk.options()?.session_recording?.maskAllInputs).toBe(true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  analytics.setAnalyticsLearner("account-1", true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).toHaveBeenCalledTimes(1);
+  analytics.setAnalyticsLearner("account-1", false);
+  expect(sdk.stopSessionRecording).toHaveBeenCalledTimes(1);
+});
+
+it("sends a snapshot with only its recording and keeps tokens out of recorded addresses", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true);
+  sdk.capture("$snapshot", {
+    $snapshot_data: [{ type: 2 }],
+    $snapshot_bytes: 10,
+    $session_id: "session",
+    $window_id: "window",
+    $lib: "web",
+    $lib_version: "1",
+  });
+  const snapshot = sdk.sent.at(-1);
+  expect(snapshot?.event).toBe("$snapshot");
+  expect(snapshot?.properties).toEqual({
+    $snapshot_data: [{ type: 2 }],
+    $snapshot_bytes: 10,
+    $session_id: "session",
+    $window_id: "window",
+    $lib: "web",
+    $lib_version: "1",
+    token: "phc_test",
+    distinct_id: "account-1",
+  });
+  const mask = sdk.options()?.session_recording?.maskCapturedNetworkRequestFn;
+  expect(mask?.({ name: "https://my.lymi.app/join/secret-token?ref=x" }).name).toBe(
+    "https://my.lymi.app/join/:item",
+  );
+  const attribute = sdk.options()?.session_recording?.maskAttributeFn;
+  expect(attribute?.("aria-label", "Options for Kateryna")).toBe("********************");
+  expect(attribute?.("class", "grid gap-1")).toBe("grid gap-1");
+  analytics.setAnalyticsLearner("account-1", false);
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("never records the public site", async () => {
+  await load("https://lymi.app/");
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  await recorderLoaded();
+  expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG).toBeUndefined();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
 });

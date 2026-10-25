@@ -4,7 +4,12 @@ import { curlFor, type Doc, example, paramsOf, type Route, schemaHomes } from ".
 const doc: Doc = {
   components: {
     parameters: {
-      AddQuery: { in: "query", name: "meaningLanguage", required: true, schema: { type: "string" } },
+      AddQuery: {
+        in: "query",
+        name: "meaningLanguage",
+        required: true,
+        schema: { type: "string" },
+      },
     },
     schemas: {
       Deck: { type: "object", properties: { id: { type: "string" } } },

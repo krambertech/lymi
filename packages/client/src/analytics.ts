@@ -14,6 +14,8 @@ import {
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
 import posthog from "posthog-js/no-external";
+// The SDK loads its web-vitals reader from PostHog's servers unless it is bundled here.
+import "posthog-js/dist/web-vitals";
 
 export const ANALYTICS_READY = "lymi:analytics-ready";
 // Read at load, before client-side navigation rewrites the address and the referrer stops applying.
@@ -172,9 +174,11 @@ export function initAnalytics(options: {
       person_profiles: "identified_only",
       autocapture: false,
       capture_pageview: false,
-      capture_pageleave: false,
+      capture_pageleave: true,
       capture_exceptions: false,
-      capture_performance: false,
+      capture_performance: { web_vitals: true, network_timing: false },
+      // Where public visitors click and scroll; the product has session replay instead.
+      enable_heatmaps: surface === "public",
       capture_dead_clicks: false,
       save_campaign_params: false,
       save_referrer: false,
@@ -261,11 +265,22 @@ export function initAnalytics(options: {
                   },
                 }
               : null;
-        } else properties = eventProperties(event.event, event.properties, "browser");
+        } else
+          properties = eventProperties(
+            event.event,
+            sdkEventProperties(event.event, event.properties) ?? event.properties,
+            "browser",
+          );
         if (!properties) return null;
         const cookieless = event.properties.$cookieless_mode === true;
         event.properties = {
           ...properties,
+          ...(event.event === "$pageleave" || event.event === "$web_vitals"
+            ? {
+                $pathname: properties.pathname,
+                $current_url: `${location.origin}${properties.pathname}`,
+              }
+            : {}),
           ...(event.event === "$pageview"
             ? {
                 $pathname: properties.pathname,
@@ -409,6 +424,48 @@ export function capturePageview(pathname: string): void {
   entryPending = false;
   captureAnalytics("$pageview", { pathname: analyticsPath(pathname, surface), ...source });
   directEntry = false;
+}
+
+/** The route of an address the SDK reports, or undefined when it can't be read. */
+function routeOf(url: unknown): string | undefined {
+  try {
+    return analyticsPath(new URL(String(url), location.origin).pathname, surface);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * PostHog's own page-leave, web-vitals and heatmap events name full addresses; these keep only the
+ * route, so the catalog's allowlist can take the rest.
+ */
+function sdkEventProperties(
+  name: string,
+  properties: Record<string, unknown>,
+): Record<string, unknown> | undefined {
+  if (name === "$pageleave")
+    return {
+      ...properties,
+      pathname: routeOf(properties.$prev_pageview_pathname ?? location.pathname),
+    };
+  if (name === "$web_vitals") return { ...properties, pathname: routeOf(properties.$current_url) };
+  if (name !== "$$heatmap") return undefined;
+  const data: Record<string, unknown[]> = {};
+  const given = properties.$heatmap_data;
+  if (given && typeof given === "object")
+    for (const [url, points] of Object.entries(given)) {
+      const route = routeOf(url);
+      if (route && Array.isArray(points))
+        data[`${location.origin}${route}`] = [
+          ...(data[`${location.origin}${route}`] ?? []),
+          ...points,
+        ];
+    }
+  return {
+    $heatmap_data: data,
+    $viewport_width: Math.round(window.innerWidth),
+    $viewport_height: Math.round(window.innerHeight),
+  };
 }
 
 /** Which handler caught a browser error, so a report without a stack still says where it surfaced. */

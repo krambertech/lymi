@@ -243,11 +243,11 @@ msgstr "2025 version"
 msgid "2026 edition"
 msgstr "2026 edition"
 
-msgid "25 October 2026"
-msgstr "25 October 2026"
-
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
+
+msgid "26 October 2026"
+msgstr "26 October 2026"
 
 msgid "3 of 4 chosen"
 msgstr "3 of 4 chosen"
@@ -4942,8 +4942,8 @@ msgstr "We use cookies and device storage for sign-in, preferences, offline use 
 msgid "Weather"
 msgstr "Weather"
 
-msgid "Website visits are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
-msgstr "Website visits are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
+msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
+msgstr "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 
 msgid "Websites"
 msgstr "Websites"

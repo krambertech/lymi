@@ -243,11 +243,11 @@ msgstr "Версія 2025 року"
 msgid "2026 edition"
 msgstr "Видання 2026 року"
 
-msgid "25 October 2026"
-msgstr "25 жовтня 2026 року"
-
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 питань, 15 для складання. Вивчити — 300."
+
+msgid "26 October 2026"
+msgstr "26 жовтня 2026 року"
 
 msgid "3 of 4 chosen"
 msgstr "Обрано 3 з 4"
@@ -4942,8 +4942,8 @@ msgstr "Ми використовуємо файли cookie й сховище п
 msgid "Weather"
 msgstr "Погода"
 
-msgid "Website visits are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
-msgstr "Відвідування сайту підраховуються без постійного ідентифікатора пристрою: використовується щоденний код відвідувача, утворений з IP-адреси та даних браузера. Відомості про джерело переходу й кампанію можуть передаватися посиланнями до реєстрації. Звіти про помилки містять очищені технічні дані, країну та ідентифікатор облікового запису або застосунку; вони надсилаються й після заперечення проти продуктової аналітики. Журнали хостингу й узагальнені показники швидкодії також допомагають підтримувати роботу та безпеку Lymi."
+msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
+msgstr "Відвідування сайту, а також те, куди відвідувачі натискають і як далеко гортають, підраховуються без постійного ідентифікатора пристрою: використовується щоденний код відвідувача, утворений з IP-адреси та даних браузера. Відомості про джерело переходу й кампанію можуть передаватися посиланнями до реєстрації. Звіти про помилки містять очищені технічні дані, країну та ідентифікатор облікового запису або застосунку; вони надсилаються й після заперечення проти продуктової аналітики. Журнали хостингу й узагальнені показники швидкодії також допомагають підтримувати роботу та безпеку Lymi."
 
 msgid "Websites"
 msgstr "Сайти"

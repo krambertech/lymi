@@ -616,7 +616,7 @@ export function WordView({
     <article className="@container flex min-w-0 flex-col gap-6">
       <PlaceBar parent={deckName} actions={controls} onClose={onClose} />
 
-      <header className="grid gap-1.5">
+      <header className={clsx(PRIVATE_TEXT, "grid gap-1.5")}>
         <h1
           id={titleId}
           // Takes focus when a sheet or drawer opens on it, so the first stop is the word, not a control.

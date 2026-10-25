@@ -1,3 +1,4 @@
+import { INTERNAL_ACCOUNT_IDS } from "@lymi/core/analytics";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
 type Payload = {
@@ -74,6 +75,7 @@ async function load(url: string, referrer = "https://example.com/private") {
   vi.resetModules();
   vi.stubGlobal("location", new URL(url));
   const document = Object.assign(new EventTarget(), {
+    querySelector: () => null,
     documentElement: { lang: "uk" },
     referrer,
     visibilityState: "visible",
@@ -321,6 +323,21 @@ it("sends a snapshot with only its recording and keeps tokens out of recorded ad
   expect(attribute?.("aria-label", "Options for Kateryna")).toBe("********************");
   expect(attribute?.("class", "grid gap-1")).toBe("grid gap-1");
   analytics.setAnalyticsLearner("account-1", false);
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("never records a signed-out visitor or an internal account", async () => {
+  await load("https://my.lymi.app/login");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner(undefined);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  const [internal] = INTERNAL_ACCOUNT_IDS;
+  analytics.setAnalyticsLearner(internal, true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
   const before = sdk.sent.length;
   sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
   expect(sdk.sent).toHaveLength(before);

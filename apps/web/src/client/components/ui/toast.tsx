@@ -1,6 +1,7 @@
 import { type ToastManagerAddOptions, Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cn } from "cn";
 import { OctagonXIcon, XIcon } from "lucide-react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { bidi } from "../../lib/bidi";
 
 const manager = ToastPrimitive.createToastManager();
@@ -164,7 +165,7 @@ function ToastList({
       <ToastContent>
         <ToastIcon type={toastItem.type} />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <ToastTitle>{bidi(toastItem.title)}</ToastTitle>
+          <ToastTitle className={PRIVATE_TEXT}>{bidi(toastItem.title)}</ToastTitle>
           <ToastDescription>{bidi(toastItem.description)}</ToastDescription>
         </div>
         <ToastAction />

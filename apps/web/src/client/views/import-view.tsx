@@ -13,6 +13,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { LanguageField } from "../components/deck-fields";
@@ -745,7 +746,7 @@ function ImportLines({
                 other: "# cards are already in your decks, so they’re skipped.",
               })}
             </summary>
-            <ul className="mt-2 grid gap-1 text-sm">
+            <ul className={`${PRIVATE_TEXT} mt-2 grid gap-1 text-sm`}>
               {preview.duplicateExamples.map((d) => (
                 <li key={`${d.term}-${d.deckName}`}>
                   <Trans>

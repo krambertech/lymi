@@ -530,7 +530,9 @@ function MembersGroup({
           <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
             <Avatar name={owner.name} size={36} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-base font-medium text-text">{owner.name}</p>
+              <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
+                {owner.name}
+              </p>
             </div>
             <Chip size="sm">
               <Trans>Owner</Trans>
@@ -583,12 +585,17 @@ function InvitationRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <span
         aria-hidden="true"
-        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint"
+        className={clsx(
+          PRIVATE_TEXT,
+          "grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint",
+        )}
       >
         {invitation.email.slice(0, 1).toUpperCase()}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{invitation.email}</p>
+        <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
+          {invitation.email}
+        </p>
         <p className="text-sm text-muted tabular-nums">
           <Trans>invited {invited}</Trans>
         </p>

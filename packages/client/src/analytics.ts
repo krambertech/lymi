@@ -225,7 +225,7 @@ export function initAnalytics(options: {
         }
         if (!allowed()) return null;
         if (event.event === "$snapshot") {
-          if (surface !== "product") return null;
+          if (!recordable()) return null;
           const snapshot: Record<string, unknown> = {};
           for (const key of SNAPSHOT_PROPERTIES) snapshot[key] = event.properties[key];
           event.properties = {
@@ -324,10 +324,15 @@ function applyState(): void {
   }
 }
 
+/** Replay records signed-in learners only: a signed-out visitor has no setting to object with. */
+function recordable(): boolean {
+  return surface === "product" && allowed() && !!learner && !INTERNAL_ACCOUNT_IDS.has(learner);
+}
+
 /** The recorder is a chunk of its own, loaded only when a product page may be recorded. */
 function applyReplay(): void {
   if (!initialized || surface !== "product") return;
-  if (!allowed()) {
+  if (!recordable()) {
     if (replay === "on") posthog.stopSessionRecording();
     replay = "off";
     return;
@@ -336,8 +341,10 @@ function applyReplay(): void {
   replay = "loading";
   import("posthog-js/dist/posthog-recorder")
     .then(() => {
-      if (replay !== "loading" || !allowed()) return;
+      if (replay !== "loading" || !recordable()) return;
       replay = "on";
+      // The tab title names the deck on screen, and the recorder copies `<title>` too.
+      document.querySelector("title")?.classList.add("ph-mask");
       posthog.startSessionRecording();
     })
     .catch(() => {

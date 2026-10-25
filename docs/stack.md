@@ -152,6 +152,8 @@ Three ways in, one system:
 | curl, scripts, Claude Code | Personal API key, made and revoked in Settings | `apiKey` plugin |
 | Claude Desktop, Codex, other MCP clients | OAuth 2.1 access token | `@better-auth/mcp` plugin, which makes this Worker the authorization server |
 
+Yomitan and other AnkiConnect clients send a personal key in the request body, because the protocol has no header for one. `POST /api/anki-connect` sits before the authentication middleware, reads that key with the same `apiKey` check, answers any origin without credentials, and calls the card service like the REST and MCP routes do. Its protocol is written from AnkiConnect's public description; no AnkiConnect code is used, and the Anki name appears only to describe compatibility.
+
 Claude Desktop and Codex both require OAuth for remote MCP servers, which is why a bearer key alone was not enough. `@better-auth/mcp` (Better Auth 1.7) serves the `.well-known` metadata, the consent page and JWT access tokens. The Worker checks tokens against its own JWKS with no database hit. Cloudflare's `workers-oauth-provider` was the earlier plan and is no longer needed.
 
 Every key and every OAuth grant carries one scope, `read` or `write`. Write allows creating, editing and archiving decks and cards. Nothing an integration holds can grade a review.

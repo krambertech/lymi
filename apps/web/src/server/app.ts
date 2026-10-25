@@ -27,6 +27,7 @@ import { authenticate } from "./principal";
 import { account } from "./routes/account";
 import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
+import { ankiConnect } from "./routes/anki-connect";
 import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
@@ -46,6 +47,7 @@ import { languages } from "./routes/languages";
 import { lessonReads } from "./routes/lessons";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
+import { readwise } from "./routes/readwise";
 import { reports } from "./routes/reports";
 import { review } from "./routes/review";
 import { deckSections, sections } from "./routes/sections";
@@ -269,6 +271,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 // Resend's delivery reports are signed, not sent with a session.
 app.route("/api/email/events", emailEvents);
 
+// AnkiConnect clients send the key in the body, so this door authenticates itself.
+app.route("/api/anki-connect", ankiConnect);
+
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
@@ -356,6 +361,7 @@ app.route("/api/tags", tags);
 app.route("/api/reports", reports);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
+app.route("/api/readwise", readwise);
 app.route("/api/push", push);
 app.route("/api/audio", audio);
 app.route("/api/avatar", avatar);

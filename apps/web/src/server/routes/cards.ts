@@ -18,7 +18,6 @@ import {
   DeckChoiceOut,
   EditCardsOut,
   HintDraftOut,
-  HookDraftOut,
   ImportantCardsOut,
   OkOut,
   ResponseShapeQuery,
@@ -356,24 +355,6 @@ cards.post(
     const ctx = ctxOf(c);
     const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hint"));
     return c.json({ hint: await hintDraftFor(ctx, c.req.param("id"), provider) });
-  },
-);
-
-cards.post(
-  "/:id/hook-draft",
-  describe({
-    tags: ["Cards"],
-    summary: "Draft a hint (old path)",
-    description: "The old path of `/api/cards/{id}/hint-draft`, answering under the old name.",
-    deprecated: true,
-    ok: { schema: HookDraftOut, description: "The draft, or null" },
-    errors: [404, 503],
-  }),
-  limitHintDrafts,
-  async (c) => {
-    const ctx = ctxOf(c);
-    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hint"));
-    return c.json({ hook: await hintDraftFor(ctx, c.req.param("id"), provider) });
   },
 );
 

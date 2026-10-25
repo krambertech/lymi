@@ -17,7 +17,7 @@ export async function GET() {
     })),
     ...LANGUAGE_PAGE_TAGS.map((tag) => ({
       path: (locale: string) => localizedPath(LANGUAGE_PAGES[tag].page, locale),
-      slugs: BEGINNER_DECKS[tag],
+      slugs: BEGINNER_DECKS[tag] ?? [],
       listed: pageLocales(LANGUAGE_PAGES[tag].page),
     })),
     { path: (locale: string) => localizedPath("estonian", locale), slugs: ESTONIAN_PAGE_DECKS },

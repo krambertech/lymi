@@ -21,7 +21,7 @@ interface __BaseEnv_Env {
 	POSTHOG_PROJECT_TOKEN: "phc_mz7nfyKuwoSbZ787CAdbYhihXMEwYKbnNvGQ7LUuxPnU";
 	OPERATOR_EMAILS: "kateryna@buffer.com,k.porshnieva@gmail.com";
 	PUBLISHER_EMAILS: "library@lymi.app";
-	PHONE_MINIMUM_VERSION_IOS: "0.0.3";
+	PHONE_MINIMUM_VERSION_IOS: "0.0.10";
 	PHONE_UPDATE_URL_IOS: "itms-beta://";
 	AI_GATEWAY_ID: "lymi";
 	AI_GATEWAY_URL: "https://gateway.ai.cloudflare.com/v1/ce6da857aeb521aa2730848a194b8866/lymi";

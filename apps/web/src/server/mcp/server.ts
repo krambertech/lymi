@@ -1205,10 +1205,6 @@ const CardOut = z.object({
   pronunciationSource: FieldSource.nullable(),
   notesSource: FieldSource.nullable(),
   hintSource: FieldSource.nullable(),
-  hook: z.string().nullable().optional().describe("Deprecated: the old name of `hint`"),
-  hookSource: FieldSource.nullable()
-    .optional()
-    .describe("Deprecated: the old name of `hintSource`"),
   enrichmentStatus: EnrichmentStatus.nullable().describe(
     "Set while Lymi is filling the card's empty fields, and null once it settles",
   ),
@@ -1262,9 +1258,6 @@ function cardOut(card: CardView): CardOut {
     pronunciationSource: card.pronunciationSource,
     notesSource: card.notesSource,
     hintSource: card.hintSource,
-    // A client holding the output schema from before the rename still reads these.
-    hook: card.hint,
-    hookSource: card.hintSource,
     enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),

@@ -279,6 +279,10 @@
     {
       "name": "0069_review_aid_hint.sql",
       "sha256": "47e4c279e3bec9641aefb537ef31c7600df04441b35e98e162ebc829f5a2bdf9"
+    },
+    {
+      "name": "0070_review_aid_hint_again.sql",
+      "sha256": "196da4e028b09862a0b0d01916d1715ecd402fd2107e90f4bc855202230a76da"
     }
   ]
 }

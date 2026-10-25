@@ -79,7 +79,7 @@ describe("public routes", () => {
     expect([...contentPaths].filter((path) => !allRoutes.has(path))).toEqual([]);
   });
 
-  it("serves each supported language's page from the language route in every locale", () => {
+  it("serves each language's page from the language route in every locale", () => {
     for (const tag of LANGUAGE_PAGE_TAGS) {
       const { page } = LANGUAGE_PAGES[tag];
       expect(languageOfPage(page)).toBe(tag);

@@ -45,6 +45,7 @@ export default defineConfig({
     url: `${e2eProductUrl}/api/health`,
     reuseExistingServer: false,
     gracefulShutdown: { signal: "SIGTERM", timeout: 500 },
-    timeout: 120_000,
+    // Building both apps and migrating three databases takes about two minutes on a CI runner.
+    timeout: 240_000,
   },
 });

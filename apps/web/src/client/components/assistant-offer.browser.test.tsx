@@ -42,7 +42,7 @@ test("offers each assistant's guide while no app is connected", async () => {
     .element(page.getByRole("link", { name: "Connect Claude" }))
     .toHaveAttribute("href", expect.stringContaining("/docs/mcp/claude"));
   await expect
-    .element(page.getByRole("link", { name: "Connect", exact: true }))
+    .element(page.getByRole("link", { name: /^Connect your AI assistant/ }))
     .toHaveAttribute("href", expect.stringMatching(/\/docs\/mcp$/));
 });
 

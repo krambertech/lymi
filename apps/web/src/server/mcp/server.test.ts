@@ -725,6 +725,21 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
   });
 
+  it("returns a card's hint under its old name too, for a client that kept the old schema", async () => {
+    services.updateCard.mockResolvedValue({ ...card, hint: "Sbrigati!", hintSource: "manual" });
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", hint: "Sbrigati!" },
+    });
+    expect(res.structuredContent).toMatchObject({
+      hint: "Sbrigati!",
+      hintSource: "manual",
+      hook: "Sbrigati!",
+      hookSource: "manual",
+    });
+  });
+
   it("archives many cards in one call and reports each card's outcome in order", async () => {
     services.archiveCards.mockResolvedValue([
       { id: "card-1", status: "archived" },

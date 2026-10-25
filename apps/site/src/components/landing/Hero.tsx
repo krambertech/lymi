@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
@@ -17,10 +18,14 @@ interface Props {
   behind?: ((front: string | undefined) => ReactNode) | undefined;
   /** A scene of its own in place of the hand of cards. */
   visual?: ReactNode;
+  /** A quieter second way in, beside Get started. */
+  secondary?: { href: string; label: ReactNode } | undefined;
+  /** A small line under the actions. */
+  after?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
+export function Hero({ title, lede, cards, layout, behind, visual, secondary, after }: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -38,10 +43,23 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
           {title}
         </h1>
         <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
-        <div className="mt-8">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
+        <div data-nav="hero">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+              <Trans>Get started</Trans>
+            </a>
+            {secondary && (
+              <a href={secondary.href} className={buttonClass("ghost", "lg")}>
+                {secondary.label}
+                <ArrowRight
+                  aria-hidden="true"
+                  data-icon="inline-end"
+                  className="rtl:-scale-x-100"
+                />
+              </a>
+            )}
+          </div>
+          {after && <div className="mt-8">{after}</div>}
         </div>
       </div>
 

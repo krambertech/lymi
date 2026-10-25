@@ -1,0 +1,134 @@
+name: Nightly verify
+
+on:
+  schedule:
+    # Early morning in Europe, after the day's merges and before anyone reads the issues.
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+    inputs:
+      features:
+        description: Features to drive, separated by spaces; empty drives every feature in the map
+        required: false
+        type: string
+
+# A dispatched run waits for the nightly one instead of racing it over the same issues.
+concurrency:
+  group: verify-nightly
+  cancel-in-progress: false
+
+jobs:
+  drive:
+    name: drive every feature on main
+    runs-on: ubuntu-latest
+    # A safety net: every feature takes about twenty minutes on a local server.
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    outputs:
+      install: ${{ steps.install.outcome }}
+      browser: ${{ steps.browser.outcome }}
+      server: ${{ steps.server.outcome }}
+      drive: ${{ steps.drive.outcome }}
+      artifact_url: ${{ steps.evidence.outputs.artifact-url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        id: install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        id: browser
+        run: pnpm exec playwright install --with-deps --only-shell chromium
+
+      - name: Start the product
+        id: server
+        env:
+          LYMI_REMOTE_BINDINGS: "0"
+        run: |
+          node .agents/skills/verify/scripts/server.mjs start | tee "$RUNNER_TEMP/server.out"
+          echo "origin=$(tail -n 1 "$RUNNER_TEMP/server.out")" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Drive every feature
+        id: drive
+        env:
+          FEATURES: ${{ inputs.features }}
+          ORIGIN: ${{ steps.server.outputs.origin }}
+        run: >-
+          node scripts/verify-nightly.mjs drive $FEATURES
+          --url "$ORIGIN" --sha "$GITHUB_SHA"
+          --out "$RUNNER_TEMP/evidence"
+
+      - name: Upload evidence
+        id: evidence
+        if: ${{ !cancelled() && steps.drive.outcome == 'success' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: verify-nightly-evidence-${{ github.sha }}
+          path: ${{ runner.temp }}/evidence
+          retention-days: 30
+
+      - name: Upload verdict
+        if: ${{ !cancelled() && steps.drive.outcome == 'success' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: verify-nightly-verdict
+          path: ${{ runner.temp }}/evidence/verdict.json
+          retention-days: 7
+
+      - name: Upload the server log
+        if: ${{ !cancelled() && steps.server.outcome == 'failure' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: verify-nightly-server-log
+          path: apps/web/.wrangler/verify-server.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+  report:
+    name: keep the nightly issues current
+    needs: drive
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+
+      # The script needs no dependencies, and caching a pnpm store that was never created fails the job.
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+
+      - name: Collect the verdict
+        if: needs.drive.outputs.drive == 'success'
+        uses: actions/download-artifact@v6
+        with:
+          name: verify-nightly-verdict
+          path: ${{ runner.temp }}/verdict
+
+      - name: Open, update and close issues
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          INSTALL_OUTCOME: ${{ needs.drive.outputs.install }}
+          BROWSER_OUTCOME: ${{ needs.drive.outputs.browser }}
+          SERVER_OUTCOME: ${{ needs.drive.outputs.server }}
+          DRIVE_OUTCOME: ${{ needs.drive.outputs.drive }}
+          ARTIFACT_URL: ${{ needs.drive.outputs.artifact_url }}
+        run: >-
+          node scripts/verify-nightly.mjs report
+          --verdict "$RUNNER_TEMP/verdict/verdict.json"
+          --artifact-url "$ARTIFACT_URL"
+          --artifact-name "verify-nightly-evidence-$GITHUB_SHA"

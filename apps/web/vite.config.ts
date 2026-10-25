@@ -116,7 +116,10 @@ export default defineConfig({
                 },
               },
             }
-          : undefined,
+          : // A runner with no Cloudflare token, such as the nightly verify run, has no Workers AI.
+            process.env.LYMI_REMOTE_BINDINGS === "0"
+            ? { remoteBindings: false }
+            : undefined,
       ),
     // Uploads hidden source maps for the client and the Worker, then deletes them so none ship.
     !process.env.VITEST &&

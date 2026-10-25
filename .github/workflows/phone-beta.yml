@@ -1,8 +1,8 @@
 name: Phone beta
 
-# Every green merge to main that changes the phone reaches beta installs: an over-the-air update on
-# the `beta` branch for each platform, and a `beta` build uploaded to TestFlight or Play's internal
-# track when that platform's native fingerprint has no build yet. ADR 0032; docs/phone-release.md.
+# Every green merge to main that changes the phone publishes an over-the-air update on the `beta`
+# branch for each platform. Only a run by hand starts a `beta` build for TestFlight or Play's internal
+# track, when that platform's native fingerprint has no build yet. ADR 0032; docs/phone-release.md.
 on:
   workflow_run:
     workflows: [CI]
@@ -131,9 +131,18 @@ jobs:
         if: steps.plan.outputs.release == 'true'
         run: node scripts/phone-release.mjs has-build "$PLATFORM" beta "${{ steps.runtime.outputs.runtime }}"
 
+      # The free EAS plan allows 15 builds a month per platform, so merges never spend one on their own.
+      - name: Leave the build for a run by hand
+        if: >-
+          steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false' &&
+          github.event_name != 'workflow_dispatch'
+        run: echo "::warning title=Phone beta::No $PLATFORM beta build has this native fingerprint, so beta installs keep their last update. Run Phone beta by hand to build one."
+
       # A new binary embeds this commit, and the update lets earlier ones on the same runtime catch up.
       - name: Build and send to TestFlight or Play's internal track
-        if: steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false'
+        if: >-
+          steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false' &&
+          github.event_name == 'workflow_dispatch'
         run: node scripts/phone-release.mjs build "$PLATFORM" beta
 
       - name: Publish the update to beta

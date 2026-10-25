@@ -380,3 +380,15 @@ test("every workflow installs the app's dependencies before it calls EAS", () =>
     }
   }
 });
+
+test("only a run of Phone beta by hand spends a build", () => {
+  const workflow = readFileSync(
+    new URL("../.github/workflows/phone-beta.yml", import.meta.url),
+    "utf8",
+  );
+  const builds = workflow
+    .split(/^ {6}- /m)
+    .filter((step) => /phone-release\.mjs build\b/.test(step));
+  assert.equal(builds.length, 1);
+  assert.match(builds[0], /github\.event_name == 'workflow_dispatch'/);
+});

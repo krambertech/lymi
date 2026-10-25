@@ -436,6 +436,8 @@ function ConditionChip({
   const name = fieldName[field.key];
   const chosen = valueNames(field, values);
   const Icon = fieldIcon[field.key];
+  // Tags are gathered from every card, so a chip asks once rather than on each render.
+  const options = useMemo(() => field.values(ctx), [field, ctx]);
   const remove = (
     <button
       type="button"
@@ -494,7 +496,7 @@ function ConditionChip({
             <DropdownMenuLabel inset>{name}</DropdownMenuLabel>
             <FieldValues
               field={field}
-              values={field.values(ctx)}
+              values={options}
               filters={filters}
               setFilters={setFilters}
               ctx={ctx}

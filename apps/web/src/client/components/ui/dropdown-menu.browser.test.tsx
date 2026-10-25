@@ -442,4 +442,71 @@ describe("DropdownMenu", () => {
     await expect.element(added).toHaveAttribute("aria-checked", "true");
     await expect.element(page.getByRole("menu", { name: "Sort" })).toBeVisible();
   });
+
+  // Hover fills are pointer-only, so these hold on a desktop.
+  const fill = (el: Element) => getComputedStyle(el).backgroundColor;
+  const clear = "rgba(0, 0, 0, 0)";
+
+  test.runIf(desktop)(
+    "only one row is filled: a clicked row gives way to the pointer, and to focus from keys",
+    async () => {
+      const screen = await render(
+        <DropdownMenu>
+          <DropdownMenuTrigger render={<button type="button">Filter</button>} />
+          <DropdownMenuContent aria-label="Filter">
+            <DropdownMenuCheckboxItem>New</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Known</DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>,
+      );
+      await screen.getByRole("button", { name: "Filter" }).click();
+      const fresh = page.getByRole("menuitemcheckbox", { name: "New" });
+      const known = page.getByRole("menuitemcheckbox", { name: "Known" });
+      await fresh.click();
+      await known.hover();
+      expect(fill(fresh.element())).toBe(clear);
+      await expect
+        .element(page.getByRole("menu").element().querySelector(".fluid-highlight") as HTMLElement)
+        .not.toHaveAttribute("data-hidden");
+
+      await userEvent.keyboard("{ArrowDown}");
+      const focused = document.activeElement as Element;
+      expect(focused.getAttribute("role")).toBe("menuitemcheckbox");
+      expect(fill(focused)).not.toBe(clear);
+    },
+  );
+
+  test.runIf(desktop)("the pointer's fill waits when the rows change under it", async () => {
+    function Steps() {
+      const [step, setStep] = useState(1);
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger render={<button type="button">Filter</button>} />
+          <DropdownMenuContent aria-label="Filter">
+            {step === 1 ? (
+              <DropdownMenuItem closeOnClick={false} onClick={() => setStep(2)}>
+                Tags
+              </DropdownMenuItem>
+            ) : (
+              <>
+                <DropdownMenuItem closeOnClick={false}>Back</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem>food</DropdownMenuCheckboxItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    const screen = await render(<Steps />);
+    await screen.getByRole("button", { name: "Filter" }).click();
+    const highlight = () =>
+      page.getByRole("menu").element().querySelector(".fluid-highlight") as HTMLElement;
+    await page.getByRole("menuitem", { name: "Tags" }).hover();
+    await expect.element(highlight()).not.toHaveAttribute("data-hidden");
+
+    await page.getByRole("menuitem", { name: "Tags" }).click();
+    await expect.element(page.getByRole("menuitemcheckbox", { name: "food" })).toBeVisible();
+    await expect.element(highlight()).toHaveAttribute("data-hidden");
+  });
 });

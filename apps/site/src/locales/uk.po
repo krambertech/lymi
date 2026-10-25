@@ -4222,9 +4222,6 @@ msgstr "Повстання в Празі 1618 року, з якого почал
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "Договори 1648 року, що завершили Тридцятилітню війну"
 
-msgid "The 300 general questions and the 10 for your state, as they appear on the test."
-msgstr "300 загальних питань і 10 про твою землю — як на тесті."
-
 msgid "The 3rd of the month"
 msgstr "Третє число місяця"
 

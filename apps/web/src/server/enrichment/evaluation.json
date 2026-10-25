@@ -2939,7 +2939,10 @@
         {
           "id": "pl-uk-18",
           "term": "tęsknić",
-          "expect": { "meaning": { "includes": ["сумува"] }, "notes": { "excludes": ["по "] } }
+          "expect": {
+            "meaning": { "includes": ["сумува"] },
+            "notes": { "excludes": ["по ", "по)", "по,", "по.", "по»"] }
+          }
         },
         {
           "id": "pl-uk-21",

@@ -1205,6 +1205,9 @@ msgstr "an app with no address"
 msgid "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
 msgstr "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
 
+msgid "An update is ready. It installs when Lymi restarts."
+msgstr "An update is ready. It installs when Lymi restarts."
+
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Animated images can’t be used. Choose a still image."
 
@@ -3257,8 +3260,8 @@ msgstr "Lymi doesn’t recognise this app. Allow it only if you trust the addres
 msgid "Lymi file"
 msgstr "Lymi file"
 
-msgid "Lymi for Mac {version}"
-msgstr "Lymi for Mac {version}"
+msgid "Lymi for Mac"
+msgstr "Lymi for Mac"
 
 msgid "Lymi for Mac opens and signs you in. You can close this tab once it has."
 msgstr "Lymi for Mac opens and signs you in. You can close this tab once it has."
@@ -4362,6 +4365,9 @@ msgstr "Reset your Lymi password"
 
 msgid "Reset your password"
 msgstr "Reset your password"
+
+msgid "Restart to update"
+msgstr "Restart to update"
 
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "restore"
@@ -5511,6 +5517,18 @@ msgstr "used {m} min ago"
 
 msgid "used just now"
 msgstr "used just now"
+
+msgid "Version {version}."
+msgstr "Version {version}."
+
+msgid "Version {version}. Checking for updates…"
+msgstr "Version {version}. Checking for updates…"
+
+msgid "Version {version}. Downloading an update…"
+msgstr "Version {version}. Downloading an update…"
+
+msgid "Version {version}. Up to date."
+msgstr "Version {version}. Up to date."
 
 msgid "View card"
 msgstr "View card"

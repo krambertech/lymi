@@ -40,50 +40,48 @@ const renderAdd = async (outcome: CardFormOutcome = { status: "added", term: "la
   return onSubmit;
 };
 
-const hookChip = () => page.getByRole("button", { name: "Memory hook" });
+const hintChip = () => page.getByRole("button", { name: "Hint" });
 
-test("adding offers the hook last in the row and sends it with the card", async () => {
+test("adding offers the hint last in the row and sends it with the card", async () => {
   const onSubmit = await renderAdd();
   const row = page.getByRole("group", { name: "More about this card" });
   const chips = [...row.element().querySelectorAll("button")];
-  expect(chips.at(-1)?.textContent).toBe("Memory hook");
+  expect(chips.at(-1)?.textContent).toBe("Hint");
 
   await userEvent.type(page.getByRole("textbox", { name: "Term" }), "la mela");
-  await hookChip().click();
-  await userEvent.type(page.getByRole("textbox", { name: "Memory hook" }), "Mellow apple");
+  await hintChip().click();
+  await userEvent.type(page.getByRole("textbox", { name: "Hint" }), "Mellow apple");
   await page.getByRole("button", { name: /^Add to/ }).click();
 
   expect(onSubmit).toHaveBeenCalledWith(
-    expect.objectContaining({ term: "la mela", hook: "Mellow apple" }),
+    expect.objectContaining({ term: "la mela", hint: "Mellow apple" }),
   );
 });
 
-test("Create more clears the hook for the next card", async () => {
+test("Create more clears the hint for the next card", async () => {
   await renderAdd();
   await userEvent.type(page.getByRole("textbox", { name: "Term" }), "la mela");
-  await hookChip().click();
-  await userEvent.type(page.getByRole("textbox", { name: "Memory hook" }), "Mellow apple");
+  await hintChip().click();
+  await userEvent.type(page.getByRole("textbox", { name: "Hint" }), "Mellow apple");
   await page.getByRole("button", { name: /^Add to/ }).click();
 
   await expect.element(page.getByText("Added “la mela”")).toBeVisible();
-  await expect.element(page.getByRole("textbox", { name: "Memory hook" })).not.toBeInTheDocument();
-  await expect.element(hookChip()).toBeVisible();
+  await expect.element(page.getByRole("textbox", { name: "Hint" })).not.toBeInTheDocument();
+  await expect.element(hintChip()).toBeVisible();
 });
 
-test("a duplicate keeps the hook on the form", async () => {
+test("a duplicate keeps the hint on the form", async () => {
   await renderAdd({ status: "skipped", term: "la mela", deckName: deck.name });
   await userEvent.type(page.getByRole("textbox", { name: "Term" }), "la mela");
-  await hookChip().click();
-  await userEvent.type(page.getByRole("textbox", { name: "Memory hook" }), "Mellow apple");
+  await hintChip().click();
+  await userEvent.type(page.getByRole("textbox", { name: "Hint" }), "Mellow apple");
   await page.getByRole("button", { name: /^Add to/ }).click();
 
   await expect.element(page.getByText(/is already in/)).toBeVisible();
-  await expect
-    .element(page.getByRole("textbox", { name: "Memory hook" }))
-    .toHaveValue("Mellow apple");
+  await expect.element(page.getByRole("textbox", { name: "Hint" })).toHaveValue("Mellow apple");
 });
 
-test("a discarded draft holding only a hook counts as work to bring back", () => {
+test("a discarded draft holding only a hint counts as work to bring back", () => {
   const empty: CardFormDraft = {
     deckId: deck.id,
     term: "",
@@ -92,7 +90,7 @@ test("a discarded draft holding only a hook counts as work to bring back", () =>
     example: "",
     exampleTranslation: "",
     notes: "",
-    hook: "",
+    hint: "",
     source: "",
     tags: [],
     language: null,
@@ -103,5 +101,5 @@ test("a discarded draft holding only a hook counts as work to bring back", () =>
     languageChosen: false,
   };
   expect(draftHasWork(empty)).toBe(false);
-  expect(draftHasWork({ ...empty, hook: "Mellow apple" })).toBe(true);
+  expect(draftHasWork({ ...empty, hint: "Mellow apple" })).toBe(true);
 });

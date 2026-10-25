@@ -1,0 +1,1 @@
+ALTER TABLE `cards` ADD `example_recording_key` text;

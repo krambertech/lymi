@@ -9,12 +9,13 @@ import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
 import { StateIcon, stateKey, stateMarks } from "./state-mark";
 
-export type ChipTone = "default" | "ai" | "danger";
+export type ChipTone = "default" | "ai" | "good" | "danger";
 export type ChipSize = "sm" | "md";
 
 const TONE: Record<ChipTone, { box: string; ink: keyof Palette }> = {
   default: { box: "bg-plate-2", ink: "text-2" },
   ai: { box: "bg-ai-soft", ink: "ai" },
+  good: { box: "bg-good-soft", ink: "good" },
   danger: { box: "bg-danger-soft", ink: "danger" },
 };
 
@@ -108,7 +109,7 @@ type SourceField =
   | "exampleTranslation"
   | "exampleAndTranslation"
   | "pronunciation"
-  | "hook";
+  | "hint";
 
 // Whole sentences per field, so each language can inflect the field word on its own.
 const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
@@ -130,7 +131,7 @@ const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDes
     ai: msg`AI pronunciation`,
     manual: msg`Pronunciation by you`,
   },
-  hook: { lesson: msg`Hook from lesson`, ai: msg`AI hook`, manual: msg`Hook by you` },
+  hint: { lesson: msg`Hint from lesson`, ai: msg`AI hint`, manual: msg`Hint by you` },
 };
 
 /**
@@ -154,16 +155,6 @@ export function SourceChip({
   return (
     <Chip tone={m.tone} size="sm" icon={m.icon} accessibilityLabel={label}>
       {badge ? i18n._(m.mark) : label}
-    </Chip>
-  );
-}
-
-/** The AI's mark for a whole card, where the fields shown together would each carry a badge. */
-export function AiCardChip() {
-  const { t } = useLingui();
-  return (
-    <Chip tone="ai" size="sm" icon="ai" accessibilityLabel={t`AI wrote part of this card`}>
-      {t`AI`}
     </Chip>
   );
 }

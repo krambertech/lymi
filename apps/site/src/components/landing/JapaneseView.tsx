@@ -239,7 +239,7 @@ export function JapaneseView({ decks, locale }: Props) {
           body={
             <Trans>
               Add a word from today’s lesson and AI fills in the reading, the meaning, an example
-              and a hook to help you remember it. It only fills what you left empty, and marks what
+              and a hint to help you remember it. It only fills what you left empty, and marks what
               it wrote.
             </Trans>
           }

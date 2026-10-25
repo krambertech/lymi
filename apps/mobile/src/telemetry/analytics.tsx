@@ -1,24 +1,15 @@
 import { decksQuery, settingsQuery } from "@lymi/client/queries";
-import { analyticsPath, backlogOf } from "@lymi/core/analytics";
+import { backlogOf } from "@lymi/core/analytics";
 import { useQuery } from "@tanstack/react-query";
 import { useGlobalSearchParams, usePathname, useRootNavigationState } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
 import { type EntryOpened, entryOf } from "../entry/links";
 import { captureEvent, setTelemetryLearner, verifyReleaseException } from "./posthog";
+import { screenPath } from "./screen-path";
 
 /** Back from the background after this long is another opening, as a reload would be on the web. */
 const AWAY_MS = 30 * 60_000;
-
-/** The web page a phone screen stands for, so both count under one path. */
-export function screenPath(pathname: string): string {
-  const path = pathname.startsWith("/you/")
-    ? pathname.slice("/you".length)
-    : pathname === "/library/archived"
-      ? "/archived"
-      : pathname;
-  return analyticsPath(path, "product");
-}
 
 /**
  * Tells PostHog who is signed in and whether their account allows analytics, then counts the

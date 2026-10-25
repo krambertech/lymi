@@ -50,7 +50,7 @@ const ENRICH_BEATS = {
   reading: 1700,
   meaning: 2400,
   example: 3100,
-  hook: 3800,
+  hint: 3800,
   known: 5200,
 };
 
@@ -127,10 +127,10 @@ export function EnrichJapanese() {
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Memory hook</Trans>} wrote={at("hook")}>
+      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
         <motion.span
           initial={false}
-          animate={appear(at("hook"))}
+          animate={appear(at("hint"))}
           className="min-h-[1.5em] text-md text-text"
         >
           <Trans>

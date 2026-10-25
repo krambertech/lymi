@@ -21,6 +21,6 @@ Why: the meaning says замок is a lock, замо́к, not a castle, за́м
   },
   lesson:
     "an acute over the stressed vowel, in the term itself or beside it (молоко́), as Russian textbooks print stress",
-  hook: "The pronunciation's acute marks the stressed syllable, which carries the word: make that syllable the loud one in a sound-alike, since a hook stressed elsewhere teaches the wrong word. Many words share a root with an English loan (телефо́н, теа́тр); when one does, try that route first.",
+  hint: "The pronunciation's acute marks the stressed syllable, which carries the word: make that syllable the loud one in a sound-alike, since a hook stressed elsewhere teaches the wrong word. Many words share a root with an English loan (телефо́н, теа́тр); when one does, try that route first.",
   checks: stressChecks(LANGUAGE_RECORDS.ru.stress, "no mark on ё or one syllable"),
 } as const satisfies LanguagePrompts;

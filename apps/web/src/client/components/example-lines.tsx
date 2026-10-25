@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { type KnownReadings, textDirection } from "@lymi/core";
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { ExampleText } from "./term-text";
 
@@ -10,14 +11,19 @@ interface Props {
   translation?: string | null | undefined;
   /** Follows the translation, such as the AI's badge when the AI wrote only the translation. */
   badge?: ReactNode;
-  /** Right after the example's last word, before its translation, such as its play control. */
-  after?: ReactNode;
+  /** The example's play control: at the block's far edge, level with its first line. */
+  speaker?: ReactNode;
+  /** Puts the speaker after the example's last word instead, as review does. */
+  speakerAfterLastWord?: boolean | undefined;
+  /** Plays the example when the sentence itself is clicked. */
+  onPlay?: (() => void) | undefined;
   className?: string | undefined;
 }
 
 /**
- * An example and its translation in parentheses, run on after it in `muted`. A translation that
- * reads in the other direction gets its own line, because a run-on would start at the wrong edge.
+ * An example over its translation in `muted`, with its speaker at the far edge or after its last
+ * word. Either way the speaker hangs from the baseline it shares with the first or last line, so it
+ * centres on the letters whatever readings sit over them.
  */
 export function ExampleLines({
   example,
@@ -25,30 +31,48 @@ export function ExampleLines({
   known,
   translation,
   badge,
-  after,
+  speaker,
+  speakerAfterLastWord,
+  onPlay,
   className,
 }: Props) {
   const { i18n } = useLingui();
   const lang = language ?? undefined;
-  const runsOn = textDirection(language) === textDirection(i18n.locale);
-  // In the meaning language, like the meaning, so it takes its language and direction from it.
-  const translated = translation && (
-    <span lang={i18n.locale} dir="auto" className="text-muted">
-      ({translation}){badge && <span className="ms-1.5 inline-flex align-[0.0625em]">{badge}</span>}
-    </span>
+  const inline = speakerAfterLastWord && speaker;
+  const lines = (
+    <div className="grid min-w-0 gap-0.5">
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: the sentence is only a wider pointer target; its speaker is the keyboard's control */}
+      <p
+        lang={lang}
+        dir={textDirection(language)}
+        className={clsx(className, onPlay && "cursor-pointer")}
+        onClick={
+          onPlay &&
+          ((e) => {
+            e.stopPropagation();
+            // A double click selects a word, and a drag selects more; neither is a press.
+            if (e.detail > 1 || window.getSelection()?.toString()) return;
+            onPlay();
+          })
+        }
+      >
+        <ExampleText text={example} lang={lang} known={known} />
+        {inline}
+      </p>
+      {translation && (
+        // In the meaning language, like the meaning, so it takes its language and direction from it.
+        <p lang={i18n.locale} dir="auto" className={className}>
+          <span className="text-muted">{translation}</span>
+          {badge && <span className="ms-1.5 inline-flex align-[0.0625em]">{badge}</span>}
+        </p>
+      )}
+    </div>
   );
-  const sentence = (
-    <p lang={lang} dir={textDirection(language)} className={className}>
-      <ExampleText text={example} lang={lang} known={known} />
-      {after}
-      {runsOn && translated && <> {translated}</>}
-    </p>
-  );
-  if (runsOn || !translated) return sentence;
+  if (!speaker || inline) return lines;
   return (
-    <div className="grid gap-1">
-      {sentence}
-      <p className={className}>{translated}</p>
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline">
+      {lines}
+      <span className={className}>{speaker}</span>
     </div>
   );
 }

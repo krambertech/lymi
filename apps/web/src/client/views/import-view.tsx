@@ -729,6 +729,15 @@ function ImportLines({
           })}
         </Line>
       )}
+      {(preview.exampleRecordings ?? 0) > 0 && (
+        <Line tone="good">
+          {plural(preview.exampleRecordings ?? 0, {
+            one: "# example brings its recording. Lymi plays it instead of reading the example aloud.",
+            other:
+              "# examples bring their recordings. Lymi plays them instead of reading the examples aloud.",
+          })}
+        </Line>
+      )}
       {preview.existing > 0 && (
         <Line tone="good">
           {plural(preview.existing, {
@@ -807,12 +816,21 @@ function ImportLines({
           })}
         </Line>
       )}
+      {(preview.exampleRecordingsSkipped ?? 0) > 0 && (
+        <Line tone="skip">
+          {plural(preview.exampleRecordingsSkipped ?? 0, {
+            one: "# example recording is in a format Lymi can’t play, so Lymi reads that example aloud itself.",
+            other:
+              "# example recordings are in a format Lymi can’t play, so Lymi reads those examples aloud itself.",
+          })}
+        </Line>
+      )}
       {preview.audio > 0 && (
         <Line tone="skip">
           {plural(preview.audio, {
-            one: "# clip is left out, such as a sentence’s. Only a term’s own recording comes across.",
+            one: "# clip is left out. A card keeps one recording of its term and one of its example.",
             other:
-              "# clips are left out, such as sentence clips. Only a term’s own recording comes across.",
+              "# clips are left out. A card keeps one recording of its term and one of its example.",
           })}
         </Line>
       )}
@@ -1457,6 +1475,14 @@ export function ImportDoneView({
                 })}
               </Line>
             )}
+            {(counts.exampleRecordings ?? 0) > 0 && (
+              <Line tone="good">
+                {plural(counts.exampleRecordings ?? 0, {
+                  one: "# example recording was imported.",
+                  other: "# example recordings were imported.",
+                })}
+              </Line>
+            )}
             {counts.existing > 0 && (
               <Line tone="good">
                 {plural(counts.existing, {
@@ -1487,6 +1513,15 @@ export function ImportDoneView({
                   one: "# recording couldn’t be read or played, so Lymi reads that term aloud itself.",
                   other:
                     "# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.",
+                })}
+              </Line>
+            )}
+            {(counts.exampleRecordingsSkipped ?? 0) > 0 && (
+              <Line tone="skip">
+                {plural(counts.exampleRecordingsSkipped ?? 0, {
+                  one: "# example recording couldn’t be read or played, so Lymi reads that example aloud itself.",
+                  other:
+                    "# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.",
                 })}
               </Line>
             )}

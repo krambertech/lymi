@@ -132,8 +132,8 @@ msgid "{0, plural, one {# card} other {# cards}} · {1}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}} · {1}"
 
 #. placeholder {0}: preview.audio
-msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
-msgstr "{0, plural, one {# аудіофрагмент пропущено, наприклад фрагмент речення. Переноситься лише запис самого терміна.} few {# аудіофрагменти пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} many {# аудіофрагментів пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} other {# аудіофрагмента пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.}}"
+msgid "{0, plural, one {# clip is left out. A card keeps one recording of its term and one of its example.} other {# clips are left out. A card keeps one recording of its term and one of its example.}}"
+msgstr "{0, plural, one {# аудіофрагмент пропущено. Картка зберігає один запис терміна й один запис прикладу.} few {# аудіофрагменти пропущено. Картка зберігає один запис терміна й один запис прикладу.} many {# аудіофрагментів пропущено. Картка зберігає один запис терміна й один запис прикладу.} other {# аудіофрагмента пропущено. Картка зберігає один запис терміна й один запис прикладу.}}"
 
 #. placeholder {0}: c.count
 #. placeholder {0}: shelf.decks.length
@@ -143,6 +143,22 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
+#. placeholder {0}: preview.exampleRecordings ?? 0
+msgid "{0, plural, one {# example brings its recording. Lymi plays it instead of reading the example aloud.} other {# examples bring their recordings. Lymi plays them instead of reading the examples aloud.}}"
+msgstr "{0, plural, one {# приклад переноситься із записом. Lymi відтворює його замість того, щоб читати приклад сам.} few {# приклади переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.} many {# прикладів переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.} other {# прикладу переносяться із записами. Lymi відтворює їх замість того, щоб читати приклади сам.}}"
+
+#. placeholder {0}: counts.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording couldn’t be read or played, so Lymi reads that example aloud itself.} other {# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# запис прикладу не вдалося прочитати або відтворити, тому Lymi сам читає цей приклад.} few {# записи прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.} many {# записів прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.} other {# запису прикладів не вдалося прочитати або відтворити, тому Lymi сам читає ці приклади.}}"
+
+#. placeholder {0}: preview.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording is in a format Lymi can’t play, so Lymi reads that example aloud itself.} other {# example recordings are in a format Lymi can’t play, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# запис прикладу у форматі, який Lymi не може відтворити, тому Lymi сам читає цей приклад.} few {# записи прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.} many {# записів прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.} other {# запису прикладів у форматі, який Lymi не може відтворити, тому Lymi сам читає ці приклади.}}"
+
+#. placeholder {0}: counts.exampleRecordings ?? 0
+msgid "{0, plural, one {# example recording was imported.} other {# example recordings were imported.}}"
+msgstr "{0, plural, one {Імпортовано # запис прикладу.} few {Імпортовано # записи прикладів.} many {Імпортовано # записів прикладів.} other {Імпортовано # запису прикладів.}}"
 
 #. placeholder {0}: pages.length
 msgid "{0, plural, one {# file} other {# files}} · up to {MAX_FILES}"
@@ -981,8 +997,8 @@ msgstr "Додай картки з наступного уроку"
 msgid "Add cards with the API"
 msgstr "Додавай картки через API"
 
-msgid "Add hook"
-msgstr "Додати зачіпку"
+msgid "Add hint"
+msgstr "Додати підказку"
 
 msgid "Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect."
 msgstr "Додай Lymi як віддалений MCP-сервер з OAuth. Lymi не дозволяє застосункам реєструватися самим, тож застосунок, який не може назватися через документ client ID, не підключиться."
@@ -1098,8 +1114,8 @@ msgstr "AI доповнює картки, знаходить терміни в �
 msgid "AI fills only empty fields and leaves your text unchanged."
 msgstr "AI заповнює лише порожні поля й не змінює твій текст."
 
-msgid "AI hook"
-msgstr "Зачіпка від AI"
+msgid "AI hint"
+msgstr "Підказка від AI"
 
 msgid "AI keeps this up to date from the cards you write. Your instructions come first."
 msgstr "AI оновлює це за картками, які ти пишеш. Твої інструкції важливіші."
@@ -1119,7 +1135,7 @@ msgstr "Вимова від AI"
 msgid "AI services"
 msgstr "AI-сервіси"
 
-msgid "AI services are off for your account. Turn them on in Settings to draft hooks."
+msgid "AI services are off for your account. Turn them on in Settings to draft hints."
 msgstr "AI-сервіси вимкнено для твого акаунта. Увімкни їх у Налаштуваннях, щоб AI складав підказки."
 
 msgid "AI services are off for your account. Turn them on in Settings to read lessons."
@@ -1136,9 +1152,6 @@ msgstr "AI враховує твій вибір, коли заповнює по�
 
 msgid "AI uses this choice when filling empty fields. Only you see it."
 msgstr "AI враховує твій вибір, коли заповнює порожні поля. Лише ти його бачиш."
-
-msgid "AI wrote part of this card"
-msgstr "Частину цієї картки написав AI"
 
 msgid "AI wrote this"
 msgstr "Це написав AI"
@@ -1222,8 +1235,8 @@ msgstr "Інша форма {0}, у «{1}»"
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
 
-msgid "Answer: {back}. You can add a memory hook."
-msgstr "Відповідь: {back}. Можна додати зачіпку."
+msgid "Answer: {back}. You can add a hint."
+msgstr "Відповідь: {back}. Можна додати підказку."
 
 msgid "Any app that can use a remote MCP server can add cards to your decks and tell you what’s due."
 msgstr "Будь-який застосунок, що вміє працювати з віддаленим MCP-сервером, може додавати картки до твоїх колод і казати, що на черзі."
@@ -1876,8 +1889,8 @@ msgstr "Не вдалося скопіювати. Напиши це в чаті 
 msgid "Couldn’t delete your account. Check your connection and try again."
 msgstr "Не вдалося видалити акаунт. Перевір з’єднання й повтори спробу."
 
-msgid "Couldn’t draft a hook. Try again in a moment."
-msgstr "Не вдалося підготувати зачіпку. Спробуй ще раз за мить."
+msgid "Couldn’t draft a hint. Try again in a moment."
+msgstr "Не вдалося підготувати підказку. Спробуй ще раз за мить."
 
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не вдалося доповнити «{term}». Перевір з’єднання й повтори спробу."
@@ -2277,11 +2290,11 @@ msgstr "Завантаж файл з листа від Noji протягом 24 
 msgid "Draft"
 msgstr "Чернетка"
 
-msgid "Draft a hook"
-msgstr "Підготувати зачіпку"
+msgid "Draft a hint"
+msgstr "Підготувати підказку"
 
-msgid "Drafting a hook…"
-msgstr "Готуємо зачіпку…"
+msgid "Drafting a hint…"
+msgstr "Готуємо підказку…"
 
 msgid "Drafting…"
 msgstr "Готуємо…"
@@ -2356,8 +2369,8 @@ msgstr "Змінити"
 msgid "Edit card"
 msgstr "Редагувати картку"
 
-msgid "Edit hook"
-msgstr "Змінити зачіпку"
+msgid "Edit hint"
+msgstr "Змінити підказку"
 
 msgid "Edit name"
 msgstr "Змінити ім’я"
@@ -2704,27 +2717,36 @@ msgstr "Повернися до застосунку. Цю вкладку мож
 msgid "Hide password"
 msgstr "Сховати пароль"
 
+msgid "Hint"
+msgstr "Підказка"
+
+msgid "Hint added"
+msgstr "Підказку додано"
+
+msgid "Hint by you"
+msgstr "Твоя підказка"
+
+msgid "Hint changed to “{value}”"
+msgstr "Нова підказка: «{value}»"
+
+msgid "Hint from lesson"
+msgstr "Підказка з уроку"
+
+msgid "Hint saved"
+msgstr "Підказку збережено"
+
+msgid "Hint:"
+msgstr "Підказка:"
+
+msgid "Hint: {spokenAid}"
+msgstr "Підказка: {spokenAid}"
+
 msgid "History"
 msgstr "Історія"
 
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "history changes"
 msgstr "історія зміни"
-
-msgid "Hook"
-msgstr "Зачіпка"
-
-msgid "Hook added"
-msgstr "Зачіпку додано"
-
-msgid "Hook by you"
-msgstr "Твоя зачіпка"
-
-msgid "Hook from lesson"
-msgstr "Зачіпка з уроку"
-
-msgid "Hook saved"
-msgstr "Зачіпку збережено"
 
 msgid "How it connects"
 msgstr "Як це підключається"
@@ -3018,8 +3040,8 @@ msgstr "Опис має бути коротшим за 300 символів."
 msgid "Keep the example under 250 characters."
 msgstr "Приклад має бути коротшим за 250 символів."
 
-msgid "Keep the hook under 200 characters."
-msgstr "Зачіпка має бути коротшою за 200 символів."
+msgid "Keep the hint under 200 characters."
+msgstr "Підказка має бути коротшою за 200 символів."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Мовний тег має бути коротшим за 12 символів."
@@ -3344,18 +3366,6 @@ msgstr "Значення з уроку"
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медична французька для медсестер. Бери медичне значення."
 
-msgid "Memory hook"
-msgstr "Зачіпка"
-
-msgid "Memory hook changed to “{value}”"
-msgstr "Нова зачіпка: «{value}»"
-
-msgid "Memory hook:"
-msgstr "Зачіпка:"
-
-msgid "Memory hook: {spokenAid}"
-msgstr "Зачіпка: {spokenAid}"
-
 msgid "Merge"
 msgstr "Об’єднати"
 
@@ -3637,8 +3647,8 @@ msgstr "Без розділу"
 msgid "No series"
 msgstr "Без серії"
 
-msgid "No strong hook for this one. Try again, or write your own."
-msgstr "Для цієї картки немає вдалої зачіпки. Спробуй ще раз або напиши свою."
+msgid "No strong hint for this one. Try again, or write your own."
+msgstr "Для цієї картки немає вдалої підказки. Спробуй ще раз або напиши свою."
 
 msgid "No tag matches “{query}”."
 msgstr "Немає тегу, що відповідає «{query}»."
@@ -3998,11 +4008,11 @@ msgstr "Зупинити картки"
 msgid "PDF"
 msgstr "PDF"
 
-msgid "Peek at or show your hook"
-msgstr "Підглянути або показати зачіпку"
+msgid "Peek at or show your hint"
+msgstr "Підглянути або показати підказку"
 
-msgid "Peek at your hook"
-msgstr "Підглянути зачіпку"
+msgid "Peek at your hint"
+msgstr "Підглянути підказку"
 
 msgid "People"
 msgstr "Люди"
@@ -4691,8 +4701,8 @@ msgstr "Показати іншу"
 msgid "Show everything"
 msgstr "Показати все"
 
-msgid "Show hook"
-msgstr "Показати зачіпку"
+msgid "Show hint"
+msgstr "Показати підказку"
 
 msgid "Show in the menu bar"
 msgstr "Показувати в рядку меню"
@@ -5050,6 +5060,9 @@ msgstr "приклад"
 msgid "the example’s translation"
 msgstr "переклад прикладу"
 
+msgid "the hint"
+msgstr "підказку"
+
 msgid "the language"
 msgstr "мову"
 
@@ -5073,9 +5086,6 @@ msgstr "Посилання діє годину. Якщо це не ти прос
 
 msgid "the meaning"
 msgstr "значення"
-
-msgid "the memory hook"
-msgstr "зачіпку"
 
 msgid "the notes"
 msgstr "нотатки"
@@ -5368,8 +5378,8 @@ msgstr "Спробуй назву колоди, її мову або серію.
 msgid "Try a different term or meaning, or clear the search."
 msgstr "Спробуй інший термін чи значення або очисть пошук."
 
-msgid "Try a memory hook"
-msgstr "Спробуй зачіпку"
+msgid "Try a hint"
+msgstr "Спробуй підказку"
 
 msgid "Try again"
 msgstr "Спробувати ще раз"
@@ -5607,8 +5617,8 @@ msgstr "Слова й фрази мови, яку вчиш."
 msgid "Work and study"
 msgstr "Робота й навчання"
 
-msgid "Write a hook."
-msgstr "Напиши зачіпку."
+msgid "Write a hint."
+msgstr "Напиши підказку."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
@@ -5682,8 +5692,8 @@ msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} по�
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
 
-msgid "You can’t choose Easy after peeking at your hook."
-msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
+msgid "You can’t choose Easy after peeking at your hint."
+msgstr "Після того як підглянеш підказку, «Легко» вибрати не можна."
 
 msgid "You can’t undo this."
 msgstr "Цю дію не можна скасувати."

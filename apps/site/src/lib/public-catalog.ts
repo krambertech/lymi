@@ -3,6 +3,7 @@ import { languageDecks } from "@lymi/client/welcome";
 import type { SupportedTag } from "@lymi/core";
 import {
   hasShelfPage,
+  offersDeck,
   type PublicDeckSummary,
   type Shelf,
   type ShelfKind,
@@ -22,6 +23,14 @@ import { menuShelves } from "./menu-shelves";
 import { type Locale, locales } from "./routes";
 import type { SitemapShelf } from "./sitemap";
 
+/** This locale's catalogue without the decks it doesn't offer. */
+async function catalogIn(
+  db: Parameters<typeof listPublicCatalog>[0],
+  locale: Locale,
+): Promise<PublicDeckSummary[]> {
+  return (await listPublicCatalog(db, locale)).filter((deck) => offersDeck(locale, deck));
+}
+
 export interface ExplorePage {
   locale: Locale;
   decks: PublicDeckSummary[];
@@ -36,7 +45,7 @@ export async function resolveExplorePage(
   astro: AstroGlobal,
   locale: Locale,
 ): Promise<ExplorePage | Response> {
-  const decks = await listPublicCatalog(drizzle(env.DB), locale);
+  const decks = await catalogIn(drizzle(env.DB), locale);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   const etag = catalogEtag({
@@ -62,7 +71,7 @@ export async function resolveExplorePage(
 export async function menuShelvesResponse(context: APIContext): Promise<Response> {
   const asked = context.url.searchParams.get("locale");
   const locale: Locale = locales.find((each) => each === asked) ?? "en";
-  const shelves = menuShelves(await listPublicCatalog(drizzle(env.DB), locale), locale);
+  const shelves = menuShelves(await catalogIn(drizzle(env.DB), locale), locale);
   const etag = catalogEtag({
     content: catalogContentHash([], shelves),
     locale,
@@ -102,7 +111,7 @@ export async function resolveShelfPage(
   if (!SHELF_KINDS.includes(kind)) return null;
   const route = { kind: kind as ShelfKind, name };
   const db = drizzle(env.DB);
-  const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
+  const catalogs = await Promise.all(locales.map((each) => catalogIn(db, each)));
   const shelvesIn = Object.fromEntries(
     locales.map((each, at) => [each, shelvesOf(catalogs[at] ?? [])]),
   ) as Record<Locale, Shelf[]>;
@@ -143,7 +152,7 @@ export async function resolveShelfPage(
 /** Every shelf page there is, with its address in the locales that have it and its decks, for the sitemap. */
 export async function shelfPagePaths(): Promise<SitemapShelf[]> {
   const db = drizzle(env.DB);
-  const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
+  const catalogs = await Promise.all(locales.map((each) => catalogIn(db, each)));
   const byRoute = new Map<string, { paths: Partial<Record<Locale, string>>; slugs: Set<string> }>();
   locales.forEach((each, at) => {
     for (const shelf of shelvesOf(catalogs[at] ?? [])) {
@@ -176,10 +185,7 @@ export async function resolveExamsPage(
   page: string,
 ): Promise<ExamsPage | Response> {
   const db = drizzle(env.DB);
-  const [catalogue, slugs] = await Promise.all([
-    listPublicCatalog(db, locale),
-    listPublicDeckSlugs(db),
-  ]);
+  const [catalogue, slugs] = await Promise.all([catalogIn(db, locale), listPublicDeckSlugs(db)]);
   const exams = listedExams(catalogue);
   const updated = Object.fromEntries(
     slugs
@@ -222,7 +228,7 @@ async function resolveTaughtDecks(
   language: string,
   page: string,
 ): Promise<PublicDeckSummary[] | Response> {
-  const decks = languageDecks(await listPublicCatalog(drizzle(env.DB), locale), language);
+  const decks = languageDecks(await catalogIn(drizzle(env.DB), locale), language);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   const etag = catalogEtag({

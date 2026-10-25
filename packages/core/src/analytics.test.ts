@@ -103,15 +103,15 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("pronunciation_played", { outcome: "failed", revealed: true }, "worker"),
     ).toBeNull();
-    // A draft is the learner's own press, and neither the hook nor the card leaves the device.
+    // A draft is the learner's own press, and neither the hint nor the card leaves the device.
     expect(
       eventProperties(
-        "hook_drafted",
-        { outcome: "drafted", wait_ms: 1800, hook: "ВОИН" },
+        "hint_drafted",
+        { outcome: "drafted", wait_ms: 1800, hint: "ВОИН" },
         "browser",
       ),
     ).toEqual({ outcome: "drafted", wait_ms: 1800 });
-    expect(eventProperties("hook_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
+    expect(eventProperties("hint_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
     expect(
       eventProperties(
         "cards_tagged",
@@ -220,7 +220,7 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/share", "product")).toBe("/share");
     expect(analyticsPath("/series-order", "product")).toBe("/series-order");
     expect(analyticsPath("/api-keys", "product")).toBe("/api-keys");
-    expect(analyticsPath("/connected-apps", "product")).toBe("/connected-apps");
+    expect(analyticsPath("/settings/claude", "product")).toBe("/settings/:item");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");

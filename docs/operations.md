@@ -98,7 +98,7 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 
 ## AI calls are failing
 
-`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hint drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
 
 ## Nobody reviewed yesterday
 

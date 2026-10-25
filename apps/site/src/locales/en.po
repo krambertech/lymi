@@ -514,14 +514,14 @@ msgstr "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the 
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Add a photo, PDF or transcript, and tick the words you want."
 
-msgid "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
-msgstr "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgid "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgstr "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
 
-msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
-msgstr "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgstr "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
 
-msgid "Add a word from today’s lesson. AI fills in the pinyin, an example and a hook to help you remember it. It fills only what you left empty and marks what it wrote."
-msgstr "Add a word from today’s lesson. AI fills in the pinyin, an example and a hook to help you remember it. It fills only what you left empty and marks what it wrote."
+msgid "Add a word from today’s lesson. AI fills in the pinyin, an example and a hint to help you remember it. It fills only what you left empty and marks what it wrote."
+msgstr "Add a word from today’s lesson. AI fills in the pinyin, an example and a hint to help you remember it. It fills only what you left empty and marks what it wrote."
 
 msgid "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
 msgstr "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
@@ -535,8 +535,8 @@ msgstr "Add both decks"
 msgid "Add cards yourself"
 msgstr "Add cards yourself"
 
-msgid "Add hook"
-msgstr "Add hook"
+msgid "Add hint"
+msgstr "Add hint"
 
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
@@ -1032,8 +1032,8 @@ msgstr "Canadian citizenship test"
 msgid "Canadian citizenship test: practice questions on every chapter"
 msgstr "Canadian citizenship test: practice questions on every chapter"
 
-msgid "Card enrichment, example translations, memory hooks and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
-msgstr "Card enrichment, example translations, memory hooks and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
+msgid "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
+msgstr "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
 
 msgid "Cards"
 msgstr "Cards"
@@ -2053,6 +2053,9 @@ msgstr "Here’s the chat from today’s lesson with Marta. Add the new phrases.
 msgid "Hi"
 msgstr "Hi"
 
+msgid "Hint"
+msgstr "Hint"
+
 msgid "hiragana"
 msgstr "hiragana"
 
@@ -2764,9 +2767,6 @@ msgstr "Memory fades. Recalling something at the right time strengthens it and l
 
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
 msgstr "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
-
-msgid "Memory hook"
-msgstr "Memory hook"
 
 msgid "Menu"
 msgstr "Menu"

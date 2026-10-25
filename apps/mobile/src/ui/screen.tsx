@@ -406,6 +406,8 @@ export function Screen<T = never>({
           {...scroll}
           ref={scroller}
           keyboardShouldPersistTaps="handled"
+          // A field on the page, such as Readwise's token, scrolls clear of the keyboard as iOS insets it.
+          automaticallyAdjustKeyboardInsets
           contentContainerClassName="px-5 gap-7"
         >
           {content}

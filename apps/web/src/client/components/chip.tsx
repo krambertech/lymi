@@ -86,7 +86,7 @@ type SourceField =
   | "exampleAndTranslation"
   | "notes"
   | "pronunciation"
-  | "hook";
+  | "hint";
 
 // Whole sentences per field, so each language can inflect the field word on its own. `field`
 // is the form for a place that does not name the field next to the chip.
@@ -126,10 +126,10 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
     ai: msg`AI pronunciation`,
     manual: msg`Pronunciation by you`,
   },
-  hook: {
-    lesson: msg`Hook from lesson`,
-    ai: msg`AI hook`,
-    manual: msg`Hook by you`,
+  hint: {
+    lesson: msg`Hint from lesson`,
+    ai: msg`AI hint`,
+    manual: msg`Hint by you`,
   },
 };
 
@@ -167,23 +167,6 @@ export function SourceChip({
       ) : (
         label
       )}
-    </Chip>
-  );
-}
-
-/**
- * The AI's mark for a whole card, where the fields shown together would otherwise each carry a
- * badge: one chip when any of them is AI-written, the size of the chips beside it.
- */
-export function AiCardChip() {
-  const { t } = useLingui();
-  return (
-    <Chip tone="ai" size="sm">
-      <Sparkle className="size-3" aria-hidden="true" />
-      <span aria-hidden="true">
-        <Trans>AI</Trans>
-      </span>
-      <span className="sr-only">{t`AI wrote part of this card`}</span>
     </Chip>
   );
 }

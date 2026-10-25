@@ -22,6 +22,6 @@ Why: the meaning says замок is a lock, замо́к, not a castle, за́м
   },
   lesson:
     "an acute over the stressed vowel, in the term itself or beside it (молоко́), as Ukrainian textbooks print stress",
-  hook: "The pronunciation's acute marks the stressed syllable, which carries the word: make that syllable the loud one in a sound-alike, since a hook stressed elsewhere teaches the wrong word. Many words share a root with an English loan (телефо́н, теа́тр); when one does, try that route first. A word that looks like a Russian one with another meaning, such as неді́ля, Sunday, must lead to the Ukrainian meaning.",
+  hint: "The pronunciation's acute marks the stressed syllable, which carries the word: make that syllable the loud one in a sound-alike, since a hook stressed elsewhere teaches the wrong word. Many words share a root with an English loan (телефо́н, теа́тр); when one does, try that route first. A word that looks like a Russian one with another meaning, such as неді́ля, Sunday, must lead to the Ukrainian meaning.",
   checks: stressChecks(LANGUAGE_RECORDS.uk.stress, "no mark on one syllable"),
 } as const satisfies LanguagePrompts;

@@ -1,15 +1,15 @@
 import { readFileSync } from "node:fs";
-import { type EnrichedField, hookable, normalizeCardText, type ReviewModeKey } from "@lymi/core";
+import { type EnrichedField, hintable, normalizeCardText, type ReviewModeKey } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { decksBrief } from "../lessons/prompt";
-import { hookInput } from "../services/hook-draft";
+import { hintInput } from "../services/hint-draft";
 import { tamil } from "./tamil";
 
 const fixtures = JSON.parse(
   readFileSync(new URL("./fixtures/ta.json", import.meta.url), "utf8"),
 ) as {
   lesson: { term: string; printed: string; stored: string | null }[];
-  hook: { term: string; pronunciation: string; meaning: string; asked: ReviewModeKey[] }[];
+  hint: { term: string; pronunciation: string; meaning: string; asked: ReviewModeKey[] }[];
   checks: { rule: string; field: EnrichedField; term?: string; text: string; pass: boolean }[];
 };
 
@@ -31,13 +31,13 @@ describe("the ta lesson slot", () => {
   });
 });
 
-describe("the ta hook slot", () => {
+describe("the ta hint slot", () => {
   it("sends its advice with every Tamil card the keyword method fits", () => {
-    expect(fixtures.hook.length).toBeGreaterThanOrEqual(20);
-    for (const card of fixtures.hook) {
-      const hookCard = { ...card, language: "ta" };
-      expect(hookable(hookCard, "en"), card.term).toBe(true);
-      expect(JSON.parse(hookInput(hookCard)).guide, card.term).toBe(tamil.hook);
+    expect(fixtures.hint.length).toBeGreaterThanOrEqual(20);
+    for (const card of fixtures.hint) {
+      const hintCard = { ...card, language: "ta" };
+      expect(hintable(hintCard, "en"), card.term).toBe(true);
+      expect(JSON.parse(hintInput(hintCard)).guide, card.term).toBe(tamil.hint);
     }
   });
 });

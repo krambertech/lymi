@@ -1,5 +1,5 @@
 {
-  "about": "Invented cases for the zh module's lesson, hook and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Mandarin reader should review these with chinese.ts.",
+  "about": "Invented cases for the zh module's lesson, hint and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Mandarin reader should review these with chinese.ts.",
   "lesson": [
     {
       "term": "学习",
@@ -127,7 +127,7 @@
       "reading": "xuéxí"
     }
   ],
-  "hook": [
+  "hint": [
     {
       "term": "电脑",
       "pronunciation": "diànnǎo",

@@ -9,10 +9,10 @@ Lymi has no ads, no ad SDK, no App Tracking Transparency prompt and no advertisi
 | Data | Where it goes | Why |
 | --- | --- | --- |
 | Email, name, Apple or Google account ID | Lymi's server on Cloudflare | Sign-in, account emails through Resend, the name members of a shared deck see |
-| Cards, decks, sections, tags, hooks, reviews, settings | Lymi's server | The product itself, synced between phone and web |
+| Cards, decks, sections, tags, hints, reviews, settings | Lymi's server | The product itself, synced between phone and web |
 | Card pictures, profile photo | Lymi's server (R2), re-encoded to WebP without metadata | Shown on the card and to members of a shared deck |
 | Lesson pages, PDFs and text for Smart add | Lymi's server, then Anthropic through Cloudflare AI Gateway | Extracting terms; the material is not kept after the read |
-| A card's term and existing fields, the deck's name, instructions and style | OpenAI, Google Gemini and Workers AI through AI Gateway | Enrichment, hook drafts, Japanese lead-ins, language detection |
+| A card's term and existing fields, the deck's name, instructions and style | OpenAI, Google Gemini and Workers AI through AI Gateway | Enrichment, hint drafts, Japanese lead-ins, language detection |
 | A card's term, reading or example sentence, with pronunciation context where needed | Google Cloud TTS, Gemini, ElevenLabs or OpenAI speech | Speech; the clip is cached on Lymi's server |
 | Import files (Anki, Mochi, Quizlet, Noji, Lymi), including retained card recordings | Lymi's server (R2) | Importing |
 | Feedback notes | Lymi's server, emailed to the operator inbox | Answering the learner |

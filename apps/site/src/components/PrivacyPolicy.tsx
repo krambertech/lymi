@@ -106,10 +106,10 @@ function PrivacyPolicyContent() {
       <ul>
         <li>
           <Trans>
-            Card enrichment, example translations, memory hooks and deck style use card fields,
-            relevant cards from the deck, deck details and instructions, and corrections you make to
-            AI text. Enrichment can run when you add cards or request it; deck style is updated in
-            the background. These text features use OpenAI.
+            Card enrichment, example translations, hints and deck style use card fields, relevant
+            cards from the deck, deck details and instructions, and corrections you make to AI text.
+            Enrichment can run when you add cards or request it; deck style is updated in the
+            background. These text features use OpenAI.
           </Trans>
         </li>
         <li>

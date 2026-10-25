@@ -8,7 +8,6 @@ Descriptive chips and marks say a card's state, where a field came from, how man
 What does the label say?
  ├── A card's state (New, Learning, Known, Forgotten) → StateChip, or StateIcon beside a count
  ├── Where a field came from → SourceChip; size="xs" beside a field's label, full in a chip row
- ├── That the AI wrote any of a card's fields shown together → AiCardChip
  ├── How many cards are due → DueCount
  ├── A keyboard shortcut → Kbd
  ├── A status that failed (an import that stopped) → Chip tone="danger"
@@ -19,7 +18,7 @@ What does the label say?
 
 `Chip` in `components/chip.tsx` is a pill on `plate-2`.
 
-Tones: `default`, `ai`, `danger`. Nothing else exists. **The default is `default`**; `ai` belongs to `SourceChip` and `AiCardChip`, so a call site uses it only through those components.
+Tones: `default`, `ai`, `danger`. Nothing else exists. **The default is `default`**; `ai` belongs to `SourceChip`, so a call site uses it only through that component.
 
 Sizes: `xs` 17 px, `sm` 22 px, `md` 26 px, `lg` 28 px. Nothing else exists. The default is `md`. Use `sm` beside other text in a row or a people list, `md` on its own, and `lg` only for the state chip on a card under review (`StateChip size="lg" inReview`). `xs` is the AI badge only.
 
@@ -47,9 +46,7 @@ case "failed":
 - `compact` is the badge form: the mark and one word, beside the label of the field it belongs to. Only the AI's source is shown this way; the learner's and the lesson's carry no badge.
 - The full form names all three sources where a chip row has the space and the comparison helps.
 
-## AiCardChip
-
-`AiCardChip` is the AI's mark for a whole card, under a review's answer: one `sm` chip of the sparkle and the word AI when any field shown there is AI-written. A badge per field stacked identical chips in one row, so the row says only that the AI wrote part of the card; the card's own screen marks each field.
+Review marks no source, neither on the answer nor on the hook: who wrote a field does not help recall, so it is the card page's to say.
 
 ## DueCount
 

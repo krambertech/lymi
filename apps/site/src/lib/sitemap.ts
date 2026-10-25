@@ -1,4 +1,4 @@
-import { readableIn } from "@lymi/core/catalog";
+import { offersDeck, readableIn } from "@lymi/core/catalog";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
@@ -79,6 +79,8 @@ interface SitemapDeck {
   updatedAt: Date;
   meaningLanguage: string;
   editions: readonly string[];
+  category: string | null;
+  language: string | null;
 }
 
 /** A shelf's page, in the locales where its readers have enough decks for one, and its decks. */
@@ -91,6 +93,8 @@ export interface SitemapShelf {
 export interface SitemapGuide {
   path: (locale: Locale) => string;
   slugs: readonly string[];
+  /** The locales it exists in, when not every one. */
+  listed?: readonly Locale[];
 }
 
 /**
@@ -117,12 +121,12 @@ export function runtimeSitemap(
       const changed = slugs ? newest(slugs) : undefined;
       return localized((locale) => paths[locale] ?? "", changed, listed);
     }),
-    ...guides.flatMap((guide) => localized(guide.path, newest(guide.slugs))),
+    ...guides.flatMap((guide) => localized(guide.path, newest(guide.slugs), guide.listed)),
     ...decks.flatMap((deck) =>
       localized(
         (locale) => deckPath(deck.slug, locale),
         deck.updatedAt,
-        locales.filter((locale) => readableIn(deck, locale)),
+        locales.filter((locale) => readableIn(deck, locale) && offersDeck(locale, deck)),
       ),
     ),
   ]);

@@ -111,7 +111,7 @@ export interface PersonaCard {
   section?: string;
   /** Who added it. `mcp` and `api` cards show up in Activity. */
   createdBy?: Actor;
-  hook?: string;
+  hint?: string;
   /** Marked important by the learner. */
   important?: boolean;
   /** A picture from `pictures.ts`, by its key. */
@@ -300,7 +300,7 @@ const ARRIVALS: PersonaCard[] = [
   },
 ];
 
-/** A newer lesson with pictures, important cards and memory hooks. */
+/** A newer lesson with pictures, important cards and hints. */
 const CASA: PersonaCard[] = lesson("Lezione 15", [
   { term: "la finestra", meaning: "the window", picture: "la finestra", important: true },
   { term: "la porta", meaning: "the door", picture: "la porta" },
@@ -308,11 +308,11 @@ const CASA: PersonaCard[] = lesson("Lezione 15", [
   {
     term: "il cassetto della cucina",
     meaning: "the kitchen drawer",
-    hook: "A cassette tape hidden among the spoons.",
+    hint: "A cassette tape hidden among the spoons.",
     important: true,
   },
   { term: "il divano", meaning: "the sofa", important: true },
-  { term: "lo specchio", meaning: "the mirror", hook: "Spec-chio: you inspect yourself in it." },
+  { term: "lo specchio", meaning: "the mirror", hint: "Spec-chio: you inspect yourself in it." },
   { term: "il tappeto", meaning: "the rug" },
   { term: "le scale", meaning: "the stairs", important: true },
   { term: "il bagno", meaning: "the bathroom" },
@@ -624,7 +624,7 @@ export const personas: Persona[] = [
     group: "Everyday",
     name: "Kateryna",
     description:
-      "A little of everything: three weeks in, a series, pictures, important cards, hooks, cards from an assistant, a deck shared by Noor and one from Explore.",
+      "A little of everything: three weeks in, a series, pictures, important cards, hints, cards from an assistant, a deck shared by Noor and one from Explore.",
     appLanguage: "en",
     // Misses 18 and 7 days ago are rest days; 13 and 5 fall within a week of one and break the run, so the streak (4) and the best run (7) differ.
     reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 6, 4, 3, 2, 1],

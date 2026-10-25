@@ -10,7 +10,7 @@ import type {
   DeckChoiceInput,
   DeckChoiceOut,
   Direction,
-  HookDraftOut,
+  HintDraftOut,
   ImportantCardsOut,
   ReviewMode,
   TerseCardsOut,
@@ -27,7 +27,12 @@ export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
 export type Card = Omit<
   CardRow,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
+  | "reviewModeKeys"
+  | "revision"
+  | "hintDraft"
+  | "audioApprovedKey"
+  | "exampleTranslationOf"
+  | "exampleRecordingKey"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
@@ -35,6 +40,8 @@ export type Card = Omit<
   important: boolean;
   /** The translation was written for an earlier example; review leaves it out. */
   exampleTranslationStale: boolean;
+  /** The example has an imported recording, which plays even without a language. */
+  exampleRecorded?: boolean | undefined;
 };
 /** `direction` is the legacy name of a text mode, and null for a picture mode. */
 export type CardState = Omit<CardStateRow, "mode" | "direction"> & {
@@ -125,9 +132,9 @@ export const cardsApi = {
     request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
   /** Ask the AI to fill the card's empty fields. Comes back working; the deck's poll watches it. */
   enrichCard: (id: string) => request<Card>(`/api/cards/${id}/enrich`, { method: "POST" }),
-  /** The AI's draft for the card's memory hook, kept on the server until the card's text changes. */
-  draftHook: (id: string) =>
-    request<HookDraftOut>(`/api/cards/${id}/hook-draft`, { method: "POST" }),
+  /** The AI's draft for the card's hint, kept on the server until the card's text changes. */
+  draftHint: (id: string) =>
+    request<HintDraftOut>(`/api/cards/${id}/hint-draft`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   // Bump the request version when a speech policy changes without a card edit.

@@ -1,15 +1,14 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
-import { canSpeakExample } from "@lymi/core";
+import { canPlayExample } from "@lymi/core";
 import { fetch } from "expo/fetch";
 import { File, Paths } from "expo-file-system";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Pressable } from "react-native";
-import Animated from "react-native-reanimated";
 import { useSessionHeaders } from "../auth/client";
 import { useAiConsent } from "../privacy/ai-consent";
 import { captureEvent } from "../telemetry/posthog";
-import { audio, type ExpoAudio, SpeakerButton, useSoundError } from "./pronounce";
+import { audio, type ExpoAudio, SpeakerButton } from "./pronounce";
 
 /** Past this from a clip in hand to no sound, the play counts as failed. */
 const START_LIMIT_MS = 12_000;
@@ -26,6 +25,8 @@ type Card = {
 };
 /** Where it was pressed, for `example_audio_played`. */
 type Surface = "review" | "card";
+/** What was pressed: its speaker, the sentence itself in review, or VoiceOver's action. */
+type Control = "speaker" | "sentence" | "action";
 
 /**
  * Reads a card's example aloud on a press, never on its own. The clip is fetched with the session so
@@ -44,7 +45,7 @@ function useAudioExample(
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const consent = useAiConsent("speech");
-  const url = card && canSpeakExample(card) ? api.exampleAudioUrl(card.id, card.updatedAt) : null;
+  const url = card && canPlayExample(card) ? api.exampleAudioUrl(card.id, card.updatedAt) : null;
   // The example on screen now, which a load that settles late checks before it plays.
   const shown = useRef(url);
   shown.current = url;
@@ -57,12 +58,17 @@ function useAudioExample(
       mounted.current = false;
     };
   }, []);
-  const pressed = useRef<{ at: number; kept: boolean }>({ at: 0, kept: false });
+  const pressed = useRef<{ at: number; kept: boolean; control: Control }>({
+    at: 0,
+    kept: false,
+    control: "speaker",
+  });
 
   const report = (outcome: "played" | "failed" | "limited") =>
     captureEvent("example_audio_played", {
       outcome,
       surface,
+      control: pressed.current.control,
       ...(pressed.current.kept
         ? {}
         : { wait_ms: Math.min(60_000, Math.round(performance.now() - pressed.current.at)) }),
@@ -101,11 +107,11 @@ function useAudioExample(
 
   // The learner left the screen or moved to another card while it loaded, so it never plays over them.
   const left = () => !mounted.current || shown.current !== url;
-  const play = async (askedForAi = false) => {
+  const play = async (control: Control, askedForAi = false) => {
     if (loading) return;
     setError(null);
     const kept = loaded.current === url;
-    pressed.current = { at: performance.now(), kept };
+    pressed.current = { at: performance.now(), kept, control };
     if (kept) {
       void player.seekTo(0);
       player.play();
@@ -125,7 +131,7 @@ function useAudioExample(
       // A clip not made yet waits for the owner's yes, which only the learner's own card can ask for.
       if (response.status === 404 && !askedForAi && card.userId === consent.userId) {
         setLoading(false);
-        if (!consent.allowed && (await consent.ask()) && !left()) await play(true);
+        if (!consent.allowed && (await consent.ask()) && !left()) await play(control, true);
         return;
       }
       if (!response.ok) throw new Error(`example audio ${response.status}`);
@@ -152,7 +158,12 @@ function useAudioExample(
     : loading || asked
       ? "loading"
       : "idle";
-  return { play: () => void play(), state, error, sheet: consent.sheet };
+  return {
+    play: (control: Control = "speaker") => void play(control),
+    state,
+    error,
+    sheet: consent.sheet,
+  };
 }
 
 const noExample = (_card: Card | null, _surface: Surface) => null;
@@ -162,7 +173,7 @@ export const useExampleAudio = player
   : noExample;
 export type ExampleAudio = NonNullable<ReturnType<typeof useAudioExample>>;
 
-/** The example's speaker at the card page's row end: quieter than the term's. */
+/** The example's speaker at its first line's far edge: a bare glyph a step quieter than the term's. */
 export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
   const { t } = useLingui();
   return (
@@ -175,8 +186,9 @@ export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
 }
 
 /**
- * The example as its own play control in review: a tap reads it aloud, so the card carries no
- * second speaker. A hold still opens the card's menu, and VoiceOver plays it as the card's action.
+ * The example as a play control in review too, beside its speaker: a tap reads it aloud, and a hold
+ * still opens the card's menu. The speaker says why a play failed, and VoiceOver plays it as the
+ * card's action.
  */
 export function ExamplePress({
   sound,
@@ -185,23 +197,17 @@ export function ExamplePress({
 }: {
   sound: ExampleAudio | null;
   onLongPress?: (() => void) | undefined;
-  children: (state: ExampleAudio["state"]) => ReactNode;
+  children: ReactNode;
 }) {
-  const { anchor, style, tips } = useSoundError(sound?.error ?? null);
-  if (!sound) return children("idle");
+  if (!sound) return children;
   return (
-    <Animated.View ref={anchor} style={style}>
-      <Pressable
-        accessible={false}
-        onPress={() => {
-          tips?.hide();
-          sound.play();
-        }}
-        onLongPress={onLongPress}
-        delayLongPress={400}
-      >
-        {children(sound.state)}
-      </Pressable>
-    </Animated.View>
+    <Pressable
+      accessible={false}
+      onPress={() => sound.play("sentence")}
+      onLongPress={onLongPress}
+      delayLongPress={400}
+    >
+      {children}
+    </Pressable>
   );
 }

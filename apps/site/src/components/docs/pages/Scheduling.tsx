@@ -356,7 +356,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
         A return is never shown before its gap. If the review runs out first, the card waits in
         Review forgotten at the end, a second look you choose to take. A card forgotten twice in a
         day, or on {k.slippingForgottenDays} of the last {k.slippingRecentDays} days it came up,
-        offers to add a memory hook.
+        offers to add a hint.
       </p>
 
       <H3>Cards left learning come back first</H3>

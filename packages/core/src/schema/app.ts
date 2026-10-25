@@ -207,14 +207,15 @@ export const cards = sqliteTable(
     exampleTranslationOf: text("example_translation_of"),
     /** Set while the AI is translating the example, and cleared once it settles. */
     exampleTranslationStatus: text("example_translation_status", { enum: ["working", "failed"] }),
-    /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
-    hook: text("hook"),
-    hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
+    /** A hint. Not an edition field, so writing one leaves `revision` and every edition alone. */
+    // The columns keep their first name, so a deploy never meets a Worker that reads the other one.
+    hint: text("hook"),
+    hintSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
     /**
-     * The hook the AI drafted for the owner's editor, kept until the term or meaning changes; empty
-     * when it had none. Saving exactly this text marks the hook as the AI's.
+     * The hint the AI drafted for the owner's editor, kept until the term or meaning changes; empty
+     * when it had none. Saving exactly this text marks the hint as the AI's.
      */
-    hookDraft: text("hook_draft"),
+    hintDraft: text("hook_draft"),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** The fields the outstanding run may fill, so a screen holds space for those alone. */
@@ -228,6 +229,8 @@ export const cards = sqliteTable(
     audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
     /** Retired: recordings follow their deck without approval. Nothing reads it; a later migration drops it. */
     audioApprovedKey: text("audio_approved_key"),
+    /** R2 key of the example's recording an import brought, which its play control plays; null without one. */
+    exampleRecordingKey: text("example_recording_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()

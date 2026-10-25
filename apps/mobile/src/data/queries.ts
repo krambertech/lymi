@@ -7,7 +7,6 @@ import {
   undoGrade,
 } from "@lymi/client/grades";
 import {
-  activityQuery,
   archivedCardPagesQuery,
   archivedDecksQuery,
   deckCardsQuery,
@@ -57,7 +56,6 @@ export const useSections = (deckId: string | undefined) =>
 export const useStreak = () => useQuery(streakQuery);
 export const useRounds = () => useQuery(roundsQuery);
 export const useInsights = (period: 30 | 90 | 0) => useQuery(insightsQuery(period));
-export const useActivity = () => useInfiniteQuery(activityQuery);
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
 /** A round from Today, or cards chosen in a deck, is a fixed list the server orders, walked in order. */

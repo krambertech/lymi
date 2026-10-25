@@ -17,6 +17,7 @@ import {
   DeckChoiceInput,
   DeckChoiceOut,
   EditCardsOut,
+  HintDraftOut,
   HookDraftOut,
   ImportantCardsOut,
   OkOut,
@@ -27,7 +28,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { createTextProvider } from "../ai";
 import { publisherEmails } from "../env";
-import { limitHookDrafts } from "../hook-draft-rate-limit";
+import { limitHintDrafts } from "../hint-draft-rate-limit";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -39,7 +40,7 @@ import {
   cardHistory,
   chooseDeck,
   enrichmentQueue,
-  hookDraftFor,
+  hintDraftFor,
   isPublisherEmail,
   requestEnrichment,
   restoreCard,
@@ -339,22 +340,40 @@ cards.post(
 );
 
 cards.post(
+  "/:id/hint-draft",
+  describe({
+    tags: ["Cards"],
+    summary: "Draft a hint",
+    description:
+      "A fresh AI draft for the card's hint: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
+      "Each ask drafts again, so asking twice gives another, up to 60 an hour. Nothing on the card changes. " +
+      "Only the card's owner may ask.",
+    ok: { schema: HintDraftOut, description: "The draft, or null" },
+    errors: [404, 503],
+  }),
+  limitHintDrafts,
+  async (c) => {
+    const ctx = ctxOf(c);
+    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hint"));
+    return c.json({ hint: await hintDraftFor(ctx, c.req.param("id"), provider) });
+  },
+);
+
+cards.post(
   "/:id/hook-draft",
   describe({
     tags: ["Cards"],
-    summary: "Draft a memory hook",
-    description:
-      "A fresh AI draft for the card's memory hook: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
-      "Each ask drafts again, so asking twice gives another, up to 60 an hour. Nothing on the card changes. " +
-      "Only the card's owner may ask.",
+    summary: "Draft a hint (old path)",
+    description: "The old path of `/api/cards/{id}/hint-draft`, answering under the old name.",
+    deprecated: true,
     ok: { schema: HookDraftOut, description: "The draft, or null" },
     errors: [404, 503],
   }),
-  limitHookDrafts,
+  limitHintDrafts,
   async (c) => {
     const ctx = ctxOf(c);
-    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hook"));
-    return c.json({ hook: await hookDraftFor(ctx, c.req.param("id"), provider) });
+    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hint"));
+    return c.json({ hook: await hintDraftFor(ctx, c.req.param("id"), provider) });
   },
 );
 

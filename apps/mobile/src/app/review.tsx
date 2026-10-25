@@ -99,15 +99,20 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
-import { type ExampleAudio, ExamplePress, useExampleAudio } from "../review/example-audio";
 import {
-  HookLine,
-  HookOffer,
-  HookSheet,
+  type ExampleAudio,
+  ExampleAudioButton,
+  ExamplePress,
+  useExampleAudio,
+} from "../review/example-audio";
+import {
+  HintLine,
+  HintOffer,
+  HintSheet,
   PEEK_ROOM,
   PeekButton,
-  ShowHookButton,
-} from "../review/hooks";
+  ShowHintButton,
+} from "../review/hints";
 import { modeLabel } from "../review/modes";
 import {
   PronounceButton,
@@ -117,7 +122,7 @@ import {
   useTipLayer,
 } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
-import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
+import { countReveal, RevealNudge, useRevealNudge } from "../review/reveal-nudge";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
 import { reportHref } from "../sharing/report";
@@ -127,7 +132,7 @@ import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
-import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { Chip, StateChip } from "../ui/chip";
 import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
@@ -172,8 +177,8 @@ interface ListCards {
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
 /** The deck a card came from, named first on the card. A review can mix every deck. */
 type CardDeck = { name: string; language?: string | null | undefined } | undefined;
-/** A card's memory hook as review shows it: its words and who wrote them. */
-type Hook = { text: string; source: FieldSource | null };
+/** A card's hint as review shows it: its words and who wrote them. */
+type Hint = { text: string; source: FieldSource | null };
 /** A tap this soon after the reveal is the reveal's own tap doubled, not one for the menu. */
 const REVEAL_TAP_GUARD_MS = 400;
 /** The last grade and the card as it was shown, so a swipe from the start edge can bring both back. */
@@ -183,8 +188,8 @@ interface Graded {
   listed: boolean;
   deck: CardDeck;
   forgotten: boolean;
-  /** The hook as it showed under the cue at the grade, or nothing when it was not showing. */
-  hook: Hook | null;
+  /** The hint as it showed under the cue at the grade, or nothing when it was not showing. */
+  hint: Hint | null;
 }
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
@@ -319,19 +324,19 @@ function Run({
   const [lastGraded, setLastGraded] = useState<Graded | null>(null);
   // A card a swipe brought back arrives revealed, with nothing left to play.
   const [returned, setReturned] = useState(false);
-  // How far into the card's hook the learner went, held for the card on screen: a peek before the
+  // How far into the card's hint the learner went, held for the card on screen: a peek before the
   // reveal is help with recall, and a look after it is not.
   const [aidState, setAidState] = useState({ key: "", peeked: false, shown: false });
-  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  // Whether the card on screen offers a hint, decided as it arrives and held until its grade.
   const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
   // Presses of Easy after a peek, counted per card so an earlier card's never show its tip.
   const [locked, setLocked] = useState({ key: "", presses: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hookOpen, setHookOpen] = useState(false);
+  const [hintOpen, setHintOpen] = useState(false);
   // What the menu chose, run once its sheet has gone, so nothing moves under it.
   const chosen = useRef<(() => void) | null>(null);
-  // Hooks and marks set in this review, shown at once rather than when the draw is fetched again.
-  const [hooks, setHooks] = useState<ReadonlyMap<string, Hook>>(() => new Map());
+  // Hints and marks set in this review, shown at once rather than when the draw is fetched again.
+  const [hints, setHints] = useState<ReadonlyMap<string, Hint>>(() => new Map());
   const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
   const revealedAt = useRef(0);
   // Grades taken back, by when they were made, whose answers from the server no longer apply.
@@ -343,8 +348,8 @@ function Run({
     () =>
       onCardEdited((written) => {
         setEdits((m) => new Map(m).set(written.id, written));
-        // The corrected card carries its hook, so an earlier hook saved here no longer stands in.
-        setHooks((m) => {
+        // The corrected card carries its hint, so an earlier hint saved here no longer stands in.
+        setHints((m) => {
           if (!m.has(written.id)) return m;
           const next = new Map(m);
           next.delete(written.id);
@@ -447,8 +452,8 @@ function Run({
     setPinned({ cardId: last.item.card.id, mode: modeKey(last.item.mode) });
     setAidState({
       key: `${keyOf(last.item)}:${done - 1}`,
-      peeked: last.grade.aid === "hook",
-      shown: !!last.hook,
+      peeked: last.grade.aid === "hint",
+      shown: !!last.hint,
     });
     setReturned(true);
     setRevealed(true);
@@ -762,13 +767,13 @@ function Run({
   const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
   const showing = `${keyOf(current)}:${done}`;
-  const hook: Hook | null =
-    hooks.get(card.id) ?? (card.hook ? { text: card.hook, source: card.hookSource ?? null } : null);
+  const hint: Hint | null =
+    hints.get(card.id) ?? (card.hint ? { text: card.hint, source: card.hintSource ?? null } : null);
   const peeked = aidState.key === showing && aidState.peeked;
-  const hookShown = !!hook && aidState.key === showing && (aidState.peeked || aidState.shown);
+  const hintShown = !!hint && aidState.key === showing && (aidState.peeked || aidState.shown);
   const owned = deckRow?.role === "owner";
   const important = marks.get(card.id) ?? card.important;
-  // A card often forgotten, or forgotten twice today, with no hook offers one in a deck the learner
+  // A card often forgotten, or forgotten twice today, with no hint offers one in a deck the learner
   // owns. It waits for the card's deck, and once decided it holds, so a refetch never moves it mid-card.
   if (cardOffer.key !== showing && deckRow) {
     const forgotToday = state.log.filter(
@@ -776,13 +781,13 @@ function Run({
     ).length;
     setCardOffer({
       key: showing,
-      offer: (current.slipping || forgotToday >= 2) && !hook && owned,
+      offer: (current.slipping || forgotToday >= 2) && !hint && owned,
       parked: false,
     });
   }
   const offer = cardOffer.key === showing && cardOffer.offer && !cardOffer.parked;
-  const openHook = () => {
-    setHookOpen(true);
+  const openHint = () => {
+    setHintOpen(true);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
   const markImportant = async (value: boolean) => {
@@ -826,7 +831,7 @@ function Run({
 
   const onGrade = (rating: Rating) => {
     // Easy means recall without help, so after a peek it only says why, and grades nothing.
-    if (!gradeAllowed(rating, peeked ? "hook" : undefined)) {
+    if (!gradeAllowed(rating, peeked ? "hint" : undefined)) {
       haptics.warning();
       setLocked((l) => ({ key: showing, presses: l.key === showing ? l.presses + 1 : 1 }));
       return;
@@ -848,7 +853,7 @@ function Run({
       rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
-      ...(peeked ? { aid: "hook" as const } : {}),
+      ...(peeked ? { aid: "hint" as const } : {}),
       ...recallTimes(),
       // Counted from the card as it shows, edits made during this review included.
       ...readingsFadedField(qc, edits.get(item.card.id) ?? item.card),
@@ -863,7 +868,7 @@ function Run({
       listed,
       deck: cardDeck,
       forgotten,
-      hook: hookShown ? hook : null,
+      hint: hintShown ? hint : null,
     });
     setReturned(false);
     setSending((n) => n + 1);
@@ -928,10 +933,10 @@ function Run({
                   item={lastGraded.item}
                   deck={lastGraded.deck}
                   forgotten={lastGraded.forgotten}
-                  hook={lastGraded.hook}
-                  hookShown={!!lastGraded.hook}
+                  hint={lastGraded.hint}
+                  hintShown={!!lastGraded.hint}
                   known={known}
-                  easyLocked={lastGraded.grade.aid === "hook"}
+                  easyLocked={lastGraded.grade.aid === "hint"}
                   revealed
                   still
                 />
@@ -944,8 +949,8 @@ function Run({
                 item={item}
                 deck={cardDeck}
                 forgotten={forgotten}
-                hook={hook}
-                hookShown={hookShown}
+                hint={hint}
+                hintShown={hintShown}
                 known={known}
                 revealed={revealed}
                 still={returned}
@@ -958,9 +963,9 @@ function Run({
                   haptics.tick();
                   setAidState({ key: showing, peeked: true, shown: false });
                 }}
-                onShowHook={() => setAidState({ key: showing, peeked: false, shown: true })}
+                onShowHint={() => setAidState({ key: showing, peeked: false, shown: true })}
                 offer={offer && revealed}
-                onOffer={openHook}
+                onOffer={openHint}
                 onMenu={openMenu}
                 easyLocked={peeked}
                 lockedTip={locked.key === showing ? locked.presses : 0}
@@ -986,10 +991,10 @@ function Run({
         <SheetGroup>
           {owned && (
             <SheetRow
-              icon="hook"
-              label={hook ? t`Edit hook` : t`Add hook`}
+              icon="hint"
+              label={hint ? t`Edit hint` : t`Add hint`}
               onPress={() => {
-                chosen.current = openHook;
+                chosen.current = openHint;
                 setMenuOpen(false);
               }}
             />
@@ -1047,21 +1052,21 @@ function Run({
           </SheetGroup>
         )}
       </Sheet>
-      <HookSheet
-        card={{ ...card, hook: hook?.text ?? null, hookSource: hook?.source ?? null }}
-        open={hookOpen}
-        onClose={() => setHookOpen(false)}
+      <HintSheet
+        card={{ ...card, hint: hint?.text ?? null, hintSource: hint?.source ?? null }}
+        open={hintOpen}
+        onClose={() => setHintOpen(false)}
         onSaved={(saved) => {
-          setHooks((m) => new Map(m).set(card.id, saved));
-          // A card corrected in Edit card earlier keeps this hook too, so both say the same.
+          setHints((m) => new Map(m).set(card.id, saved));
+          // A card corrected in Edit card earlier keeps this hint too, so both say the same.
           setEdits((m) => {
             const edited = m.get(card.id);
             return edited
-              ? new Map(m).set(card.id, { ...edited, hook: saved.text, hookSource: saved.source })
+              ? new Map(m).set(card.id, { ...edited, hint: saved.text, hintSource: saved.source })
               : m;
           });
-          setHookOpen(false);
-          // Written after the reveal, it shows at once where Show hook would have put it.
+          setHintOpen(false);
+          // Written after the reveal, it shows at once where Show hint would have put it.
           if (revealed) setAidState({ key: showing, peeked, shown: true });
           void qc.invalidateQueries({ queryKey: ["queue"] });
           void qc.invalidateQueries({ queryKey: ["decks"] });
@@ -1142,14 +1147,14 @@ function Turn({
   item,
   deck,
   forgotten,
-  hook,
-  hookShown,
+  hint,
+  hintShown,
   known,
   revealed,
   still = false,
   onReveal,
   onPeek,
-  onShowHook,
+  onShowHint,
   offer = false,
   onOffer,
   onMenu,
@@ -1165,9 +1170,9 @@ function Turn({
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
-  hook: Hook | null;
-  /** The hook shows under the cue: peeked at before the reveal, or shown after it. */
-  hookShown: boolean;
+  hint: Hint | null;
+  /** The hint shows under the cue: peeked at before the reveal, or shown after it. */
+  hintShown: boolean;
   /** The learner's Known pairs, whose readings fade in the example. */
   known: KnownReadings;
   revealed: boolean;
@@ -1175,12 +1180,12 @@ function Turn({
   still?: boolean;
   onReveal?: () => void;
   onPeek?: () => void;
-  onShowHook?: () => void;
-  /** The offer to write a hook, at the foot of the revealed card. */
+  onShowHint?: () => void;
+  /** The offer to write a hint, at the foot of the revealed card. */
   offer?: boolean;
   onOffer?: () => void;
   onMenu?: () => void;
-  /** Peeked at the hook before the reveal, so Easy cannot be chosen. */
+  /** Peeked at the hint before the reveal, so Easy cannot be chosen. */
   easyLocked?: boolean;
   /** Presses of Easy after a peek on this card, each showing why it is locked. */
   lockedTip?: number;
@@ -1196,14 +1201,14 @@ function Turn({
       item={item}
       deck={deck}
       forgotten={forgotten}
-      hook={hook}
-      hookShown={hookShown}
+      hint={hint}
+      hintShown={hintShown}
       known={known}
       revealed={revealed}
       still={still}
       onReveal={onReveal}
       onPeek={onPeek}
-      onShowHook={onShowHook}
+      onShowHint={onShowHint}
       offer={offer}
       onOffer={onOffer}
       onMenu={onMenu}
@@ -1307,14 +1312,14 @@ function CardPlate({
   item: { card, fsrsState, mode },
   deck,
   forgotten,
-  hook,
-  hookShown,
+  hint,
+  hintShown,
   known,
   revealed,
   still,
   onReveal,
   onPeek,
-  onShowHook,
+  onShowHint,
   offer,
   onOffer,
   onMenu,
@@ -1327,14 +1332,14 @@ function CardPlate({
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
-  hook: Hook | null;
-  hookShown: boolean;
+  hint: Hint | null;
+  hintShown: boolean;
   known: KnownReadings;
   revealed: boolean;
   still: boolean;
   onReveal: (() => void) | undefined;
   onPeek: (() => void) | undefined;
-  onShowHook: (() => void) | undefined;
+  onShowHint: (() => void) | undefined;
   offer: boolean;
   onOffer: (() => void) | undefined;
   /** Revealed, holding the card opens its menu. */
@@ -1346,7 +1351,7 @@ function CardPlate({
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
-  const hint = useRevealHint(onReveal ? `${card.id}:${modeKey(mode)}` : null, revealed);
+  const nudge = useRevealNudge(onReveal ? `${card.id}:${modeKey(mode)}` : null, revealed);
   const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
     (s) => s.id === card.sectionId,
   )?.name;
@@ -1373,20 +1378,13 @@ function CardPlate({
     (part): part is string => !!part,
   );
   const translation = shownTranslation(card);
-  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
-  const aiWritten =
-    card.meaningSource === "ai" ||
-    (card.exampleSource === "ai" && !!card.example) ||
-    (card.exampleTranslationSource === "ai" && !!translation) ||
-    (card.notesSource === "ai" && !!card.notes) ||
-    (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none.
   const place = section
     ? { icon: "section" as const, name: section }
     : card.source
       ? { icon: "source" as const, name: card.source }
       : null;
-  const canPeek = !revealed && !!hook && !hookShown && !!onPeek;
+  const canPeek = !revealed && !!hint && !hintShown && !!onPeek;
   const hold =
     revealed && onMenu
       ? () => {
@@ -1429,7 +1427,7 @@ function CardPlate({
         delayLongPress={400}
         disabled={revealed ? !onMenu : !onReveal}
         accessibilityActions={[
-          ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
+          ...(canPeek ? [{ name: "peek", label: t`Peek at your hint` }] : []),
           ...(revealed && onMenu ? [{ name: "menu", label: t`Card options` }] : []),
           // The revealed card is one element to VoiceOver, so a tap on its example is offered as an action.
           ...(revealed && exampleSound ? [{ name: "example", label: t`Play example` }] : []),
@@ -1439,7 +1437,7 @@ function CardPlate({
           const action = e.nativeEvent.actionName;
           if (action === "peek") onPeek?.();
           if (action === "menu") onMenu?.();
-          if (action === "example") exampleSound?.play();
+          if (action === "example") exampleSound?.play("action");
           if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
@@ -1479,7 +1477,7 @@ function CardPlate({
               // The offer and Peek float over the card's foot, so the last line can scroll clear above them.
               contentContainerStyle={{
                 paddingBottom:
-                  16 + (offerShown ? offerRoom : 0) + (hook && !revealed ? PEEK_ROOM : 0),
+                  16 + (offerShown ? offerRoom : 0) + (hint && !revealed ? PEEK_ROOM : 0),
               }}
               onLayout={(e) => {
                 fit.onRoom(e);
@@ -1523,31 +1521,19 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {/* The hook has one place, under the cue, held from the start so peeking at it or showing it moves nothing. */}
-                  {hook && (
+                  {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
+                  {hint && hintShown ? (
                     <View className="pt-3">
-                      <View
-                        className="opacity-0"
-                        style={{ minHeight: HOOK_ROOM }}
-                        accessibilityElementsHidden
-                        importantForAccessibility="no-hide-descendants"
-                      >
-                        <HookLine text={hook.text} source={hook.source} still />
-                      </View>
-                      {hookShown ? (
-                        <View className="absolute inset-x-0 top-3">
-                          <HookLine text={hook.text} source={hook.source} still={still} />
-                        </View>
-                      ) : revealed && onShowHook ? (
-                        <View className="absolute inset-x-0 top-2">
-                          <ShowHookButton still={still} onShow={onShowHook} />
-                        </View>
-                      ) : null}
+                      <HintLine text={hint.text} still={still} />
                     </View>
-                  )}
+                  ) : hint && revealed && onShowHint ? (
+                    <View className="pt-2">
+                      <ShowHintButton still={still} onShow={onShowHint} />
+                    </View>
+                  ) : null}
                 </Animated.View>
                 {revealed && (
-                  <View className="gap-5 pt-5">
+                  <Animated.View layout={glide} className="gap-5 pt-5">
                     <Wick still={still} />
                     <View className="gap-3">
                       <Animated.View entering={arrive()}>
@@ -1619,24 +1605,18 @@ function CardPlate({
                       {card.example && (
                         <Animated.View entering={arrive()}>
                           <ExamplePress sound={exampleSound} onLongPress={hold}>
-                            {(state) => (
-                              <ExampleText
-                                text={card.example ?? ""}
-                                known={known}
-                                // Lit while it is read aloud, the way the term's speaker lights.
-                                className={
-                                  state === "idle"
-                                    ? "text-md text-text-2"
-                                    : "text-md text-amber-text"
-                                }
-                                lang={card.language}
-                                translation={
-                                  translation
-                                    ? { text: translation, className: "text-md text-muted" }
-                                    : null
-                                }
-                              />
-                            )}
+                            <ExampleText
+                              text={card.example ?? ""}
+                              known={known}
+                              className="text-md text-text-2"
+                              lang={card.language}
+                              translation={
+                                translation
+                                  ? { text: translation, className: "text-md text-muted" }
+                                  : null
+                              }
+                              after={exampleSound && <ExampleAudioButton sound={exampleSound} />}
+                            />
                           </ExamplePress>
                         </Animated.View>
                       )}
@@ -1645,21 +1625,18 @@ function CardPlate({
                           <CardNotes source={card.notes} className="text-base text-muted" />
                         </Animated.View>
                       )}
-                      {(place || aiWritten) && (
+                      {place && (
                         <Animated.View
                           entering={arrive()}
                           className="mt-1 flex-row flex-wrap items-center gap-1.5"
                         >
-                          {place && (
-                            <Chip size="sm" icon={place.icon}>
-                              {place.name}
-                            </Chip>
-                          )}
-                          {aiWritten && <AiCardChip />}
+                          <Chip size="sm" icon={place.icon}>
+                            {place.name}
+                          </Chip>
                         </Animated.View>
                       )}
                     </View>
-                  </View>
+                  </Animated.View>
                 )}
               </Pressable>
             </ScrollView>
@@ -1690,9 +1667,9 @@ function CardPlate({
                     >
                       {cue}
                     </CardLine>
-                    {hook && (
-                      <View className="pt-3" style={{ minHeight: HOOK_ROOM }}>
-                        <HookLine text={hook.text} source={hook.source} still />
+                    {hint && (
+                      <View className="pt-3" style={{ minHeight: HINT_ROOM }}>
+                        <HintLine text={hint.text} still />
                       </View>
                     )}
                     <View className="gap-5 pt-5">
@@ -1712,12 +1689,12 @@ function CardPlate({
             </View>
           )}
 
-          {!revealed && hint && <RevealHint lifted={canPeek} />}
+          {!revealed && nudge && <RevealNudge lifted={canPeek} />}
           {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
           {/* None under the offer, so its glass has text to blur. On the plate, since the scroll's box stops short of its foot. */}
           <ScrollFade edge="bottom" height={40} shown={edges.more.below && !offerShown} />
           {offerShown && onOffer && (
-            <HookOffer
+            <HintOffer
               still={still}
               onOpen={onOffer}
               onLayout={(e) => setOfferRoom(e.nativeEvent.layout.height)}
@@ -1747,8 +1724,8 @@ const gradeIn = (i: number) =>
  */
 /** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
 const GRADE_ROOM = 92;
-/** The hook's place under the cue is never shorter than Show hook's 32 pt, which starts 4 pt above the hook's line. */
-const HOOK_ROOM = 28;
+/** The hint's place under the cue is never shorter than Show hint's 32 pt, which starts 4 pt above the hint's line. */
+const HINT_ROOM = 28;
 
 function GradeStrip({
   still = false,
@@ -1771,7 +1748,7 @@ function GradeStrip({
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
-  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const why = t`You can’t choose Easy after peeking at your hint.`;
   const [tip, setTip] = useState(false);
   useEffect(() => {
     if (lockedTip === 0) return;

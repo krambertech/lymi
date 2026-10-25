@@ -1,7 +1,6 @@
-import type { I18n } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type ApiKeySummary, api, errorMessage } from "@lymi/client/api";
+import { YOMITAN_KEY_NAME } from "@lymi/client/apps";
 import { keysQuery } from "@lymi/client/queries";
 import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,6 +22,7 @@ import { Sheet, SheetError, SheetHeading, SheetNote } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 import { DocRow } from "../../../you/doc-row";
+import { lastUsed, shortDate } from "../../../you/key-dates";
 
 /** Personal API keys for scripts, as the web's Settings has them. phone.md "Navigation", ADR 0036. */
 export default function ApiKeys() {
@@ -59,15 +59,16 @@ export default function ApiKeys() {
       ],
     );
 
-  // The new key has its own plate above; listing it as well reads as two keys.
-  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
+  // The new key has its own plate above; listing it as well reads as two keys. Yomitan's key lives
+  // on Yomitan's page, as on the web.
+  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id && k.name !== YOMITAN_KEY_NAME);
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
     <Screen
       title={t`API keys`}
       back={{ label: t`You`, to: "/you" }}
-      description={t`For scripts and curl. For AI apps, use Connected apps instead.`}
+      description={t`For scripts and curl. For AI assistants, use Apps instead.`}
       actions={<BarButton icon="plus" label={t`New key`} onPress={() => setMaking(true)} />}
     >
       {fresh && (
@@ -324,22 +325,4 @@ function NewKeySheet({
       {error && <SheetError>{error}</SheetError>}
     </Sheet>
   );
-}
-
-function lastUsed(i18n: I18n, iso: string | null): string {
-  if (!iso) return i18n._(msg`never used`);
-  const ms = Date.now() - new Date(iso).getTime();
-  const m = Math.round(ms / 60_000);
-  if (m < 1) return i18n._(msg`used just now`);
-  if (m < 60) return i18n._(msg`used ${m} min ago`);
-  const h = Math.round(m / 60);
-  if (h < 24) return i18n._(msg`used ${h} h ago`);
-  const d = Math.round(h / 24);
-  if (d < 14) return i18n._(msg`used ${d} d ago`);
-  const date = shortDate(i18n, iso);
-  return i18n._(msg`used ${date}`);
-}
-
-function shortDate(i18n: I18n, iso: string): string {
-  return i18n.date(new Date(iso), { day: "numeric", month: "short" });
 }

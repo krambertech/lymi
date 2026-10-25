@@ -23,12 +23,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
-  Anchor,
   AudioLines,
   Check,
   Image as ImageIcon,
   Languages,
   Library,
+  Lightbulb,
   type LucideIcon,
   NotebookPen,
   Plus,
@@ -69,7 +69,7 @@ export interface CardFormValues {
   /** Empty with an example leaves the AI to translate it, where the deck lets it. */
   exampleTranslation: string;
   notes: string;
-  hook: string;
+  hint: string;
   source: string;
   tags: string[];
   language: string | null;
@@ -101,7 +101,7 @@ export const draftHasWork = (d: CardFormDraft) =>
     d.example ||
     d.notes ||
     d.pronunciation ||
-    d.hook ||
+    d.hint ||
     d.picture.kind !== "none"
   );
 
@@ -138,8 +138,8 @@ export interface AddCardFormProps extends CardFormBase {
   onRetryPicture?: (() => void) | undefined;
 }
 
-/** The field the card editor opens at: the cue's, the picture, or the hook. */
-export type EditFocus = "term" | "meaning" | "picture" | "hook";
+/** The field the card editor opens at: the cue's, the picture, or the hint. */
+export type EditFocus = "term" | "meaning" | "picture" | "hint";
 
 export interface EditCardFormProps extends CardFormBase {
   mode: "edit";
@@ -156,11 +156,11 @@ const NEARLY_FULL = 0.9;
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
 
 /** A field a chip adds to the form. Tags, the section and how it is asked are choices instead. */
-type Extra = "notes" | "example" | "pronunciation" | "source" | "picture" | "hook";
+type Extra = "notes" | "example" | "pronunciation" | "source" | "picture" | "hint";
 /** What a chip in the row stands for. */
 type ChipKey = Extra | "tags";
 
-const EXTRAS: Extra[] = ["notes", "example", "pronunciation", "source", "picture", "hook"];
+const EXTRAS: Extra[] = ["notes", "example", "pronunciation", "source", "picture", "hint"];
 /** The order for a deck with no cards to count, after the fields its AI may fill. */
 const BASE_ORDER: ChipKey[] = ["notes", "tags", "source", "example", "pronunciation", "picture"];
 
@@ -171,7 +171,7 @@ const FIELD_OF: Record<string, Extra> = {
   exampleTranslation: "example",
   pronunciation: "pronunciation",
   notes: "notes",
-  hook: "hook",
+  hint: "hint",
   source: "source",
 };
 
@@ -252,7 +252,7 @@ export function CardForm(props: CardFormProps) {
     draft?.exampleTranslation ?? card?.exampleTranslation ?? "",
   );
   const [notes, setNotes] = useState(draft?.notes ?? card?.notes ?? "");
-  const [hook, setHook] = useState(draft?.hook ?? card?.hook ?? "");
+  const [hint, setHint] = useState(draft?.hint ?? card?.hint ?? "");
   const [source, setSource] = useState(draft?.source ?? card?.source ?? "");
   const [tags, setTags] = useState<string[]>(draft?.tags ?? card?.tags ?? []);
   // Until the learner picks one, a new card takes its deck's language.
@@ -276,14 +276,14 @@ export function CardForm(props: CardFormProps) {
     example,
     pronunciation,
     source,
-    hook,
+    hint,
     picture: picture.kind === "none" ? "" : "picture",
   };
   // A field once shown stays until the next card, even emptied to be rewritten, so it never
   // vanishes from under the caret; the fields a card already holds start shown.
   const [shown, setShown] = useState<Extra[]>(() => {
     const start = EXTRAS.filter((key) => text[key].trim());
-    if (focus === "picture" || focus === "hook") {
+    if (focus === "picture" || focus === "hint") {
       if (!start.includes(focus)) start.push(focus);
     }
     return start;
@@ -359,8 +359,8 @@ export function CardForm(props: CardFormProps) {
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
-  // Adding keeps the hook at the row's end, since a hook is mostly for a card that keeps failing.
-  const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hook"];
+  // Adding keeps the hint at the row's end, since a hint is mostly for a card that keeps failing.
+  const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hint"];
   // The deck's cards as the deck page last read them; without them the AI's fields lead.
   // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
   const order = useMemo(
@@ -381,7 +381,7 @@ export function CardForm(props: CardFormProps) {
     example: example.trim(),
     exampleTranslation: example.trim() ? translation.trim() : "",
     notes: notes.trim(),
-    hook: hook.trim(),
+    hint: hint.trim(),
     source: source.trim(),
     tags,
     language,
@@ -449,7 +449,7 @@ export function CardForm(props: CardFormProps) {
           example: t`Keep the example under 250 characters.`,
           exampleTranslation: t`Keep the translation under 250 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
-          hook: t`Keep the hook under 200 characters.`,
+          hint: t`Keep the hint under 200 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
           reviewModes: t`Choose at least one way to be asked.`,
@@ -505,7 +505,7 @@ export function CardForm(props: CardFormProps) {
     setExample("");
     setTranslation("");
     setNotes("");
-    setHook("");
+    setHint("");
     setModes(null);
     setPicture({ kind: "none" });
     setDescription("");
@@ -821,9 +821,9 @@ export function CardForm(props: CardFormProps) {
         },
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
-    hook: () =>
-      // One phrase, so Enter is done with it; it wraps so a long hook can be read whole.
-      textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
+    hint: () =>
+      // One phrase, so Enter is done with it; it wraps so a long hint can be read whole.
+      textField("hint", t`Hint`, hint, setHint, CARD_LIMITS.hint, {
         lines: "one",
         enterAdds: true,
         placeholder: t`A sound-alike, or something to picture`,
@@ -859,7 +859,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: { icon: AudioLines, label: pronunciationLabel },
     source: { icon: Library, label: t`Source` },
     picture: { icon: ImageIcon, label: t`Picture` },
-    hook: { icon: Anchor, label: t`Memory hook` },
+    hint: { icon: Lightbulb, label: t`Hint` },
   };
   const chipFor = (key: ChipKey) => {
     if (key === "tags")
@@ -934,7 +934,7 @@ export function CardForm(props: CardFormProps) {
           pictureDescribed={hasPicture && !!description.trim()}
           invalid={!!invalid.reviewModes}
         />
-        {adding && chipFor("hook")}
+        {adding && chipFor("hint")}
       </FieldChipRow>
       {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
       <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>

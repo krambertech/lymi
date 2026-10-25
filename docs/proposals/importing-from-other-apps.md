@@ -42,7 +42,7 @@ Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is 
 | Furigana `漢字[かんじ]`, a reading field | Pronunciation |
 | HTML, Markdown | Plain text with line breaks; CSS, templates and scripts dropped |
 | First `<img>` or attachment | The card's picture, without a description, so picture modes wait for one |
-| The term's `[sound:]` or audio attachment | The card's recording, kept until the term changes; generated speech fills only cards without one, and a published deck's page plays it. Sentence clips, second clips and formats other than MP3, M4A, AAC and WAV up to 2 MB are left out and counted |
+| The term's `[sound:]` or audio attachment | The card's recording, kept until the term changes; generated speech fills only cards without one, and a published deck's page plays it. A sentence's clip is the example's recording, played from the example's control. Second clips and formats other than MP3, M4A, AAC and WAV up to 2 MB are left out and counted |
 | Pitch accent field | One notes line, such as `はꜜし [1]`; a graph alone is left out and counted |
 | Sentence translation | One notes line |
 | Frequency, rank and sort fields | Skipped |
@@ -53,4 +53,4 @@ Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is 
 
 ## Out of scope
 
-Pasted lists and spreadsheets, sentence audio, AnkiWeb sync, and importing into a shared deck one does not own. Each is a later adapter or proposal, not a change to the foundation.
+Pasted lists and spreadsheets, AnkiWeb sync, and importing into a shared deck one does not own. Each is a later adapter or proposal, not a change to the foundation.

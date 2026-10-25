@@ -7,7 +7,7 @@ import { CircleAlert, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import type { ConnectedApp, Readwise } from "../lib/api";
 import { errorMessage } from "../lib/api";
-import { ASSISTANTS, type Assistant, appPageParam, assistantOf } from "../lib/assistants";
+import { ASSISTANTS, type Assistant, appPageParams, assistantOf } from "../lib/assistants";
 import { connectedAppsQuery, keysQuery, readwiseQuery } from "../lib/queries";
 import { yomitanKey } from "../lib/yomitan";
 import { lastUsed, shortDate } from "./api-keys-section";
@@ -40,6 +40,7 @@ export function AppsSection() {
   const connectedKeys = new Set(consents.map((c) => assistantOf(c)?.key));
   const toAdd = ASSISTANTS.filter((a) => a.key === "custom" || !connectedKeys.has(a.key));
   const none = consents.length === 0 && !connection && !yomitan;
+  const pages = appPageParams(consents);
 
   return (
     <SettingsGroup id="apps" title={t`Apps`} description={t`Apps that add cards to your decks.`}>
@@ -50,7 +51,7 @@ export function AppsSection() {
       ) : (
         <ul aria-label={t`Your apps`} className="edge grid rounded-xl bg-plate">
           {consents.map((item) => (
-            <AssistantRow key={item.id} item={item} />
+            <AssistantRow key={item.id} item={item} page={pages.get(item.id) ?? item.id} />
           ))}
           {connection && (
             <Row
@@ -225,14 +226,14 @@ function Row({
   );
 }
 
-function AssistantRow({ item }: { item: ConnectedApp }) {
+function AssistantRow({ item, page }: { item: ConnectedApp; page: string }) {
   const { t, i18n } = useLingui();
   const app = identifyApp(item.clientId, item.name);
   const listed = listedApp(app);
   const connected = i18n.date(item.createdAt, { day: "numeric", month: "short" });
   return (
     <Row
-      link={{ to: "/settings/apps/$app", params: { app: appPageParam(item) } }}
+      link={{ to: "/settings/apps/$app", params: { app: page } }}
       mark={<AppMark app={{ ...app, name: listed.title }} className="size-9" />}
       name={listed.title ?? t`An app`}
     >

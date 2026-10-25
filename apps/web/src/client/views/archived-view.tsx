@@ -3,7 +3,6 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { isolate } from "@lymi/core";
 import { Archive } from "lucide-react";
 import type { ReactNode } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
@@ -132,10 +131,7 @@ function Row({
   return (
     <li className="flex min-h-[72px] items-center gap-3 border-edge px-4 py-3 [&:not(:first-child)]:border-t">
       <span className="grid min-w-0 flex-1 gap-0.5">
-        <span
-          className={`${PRIVATE_TEXT} truncate text-md font-medium`}
-          lang={language ?? undefined}
-        >
+        <span className="truncate text-md font-medium" lang={language ?? undefined}>
           {name}
         </span>
         <span className="truncate text-sm text-muted tabular-nums">{detail}</span>

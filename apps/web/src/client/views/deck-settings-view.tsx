@@ -22,7 +22,6 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
@@ -410,15 +409,13 @@ function DeckAbout({
                 <Avatar name={ownerName} size={32} />
               )}
               <div className="grid min-w-0 gap-0.5">
-                <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
-                  {ownerName}
-                </p>
+                <p className="truncate text-base font-medium text-text">{ownerName}</p>
                 <p className="text-sm text-muted">
                   <Trans>Owns this deck and writes its cards</Trans>
                 </p>
               </div>
             </div>
-            <p className={clsx(PRIVATE_TEXT, "max-w-[60ch] text-sm text-muted")}>
+            <p className="max-w-[60ch] text-sm text-muted">
               <Trans>
                 You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
                 schedule. Nobody else sees your reviews or progress.
@@ -437,9 +434,7 @@ function DeckAbout({
           <Fact label={t`Review modes`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
-              {direction && (
-                <span className={clsx(PRIVATE_TEXT, "text-sm text-muted")}>{direction}</span>
-              )}
+              {direction && <span className="text-sm text-muted">{direction}</span>}
             </span>
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
@@ -534,9 +529,7 @@ function MembersGroup({
           <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
             <Avatar name={owner.name} size={36} />
             <div className="min-w-0 flex-1">
-              <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
-                {owner.name}
-              </p>
+              <p className="truncate text-base font-medium text-text">{owner.name}</p>
             </div>
             <Chip size="sm">
               <Trans>Owner</Trans>
@@ -589,17 +582,12 @@ function InvitationRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <span
         aria-hidden="true"
-        className={clsx(
-          PRIVATE_TEXT,
-          "grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint",
-        )}
+        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint"
       >
         {invitation.email.slice(0, 1).toUpperCase()}
       </span>
       <div className="min-w-0 flex-1">
-        <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
-          {invitation.email}
-        </p>
+        <p className="truncate text-base font-medium text-text">{invitation.email}</p>
         <p className="text-sm text-muted tabular-nums">
           <Trans>invited {invited}</Trans>
         </p>
@@ -645,9 +633,7 @@ function MemberRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <Avatar name={member.name} size={36} />
       <div className="min-w-0 flex-1">
-        <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
-          {member.name}
-        </p>
+        <p className="truncate text-base font-medium text-text">{member.name}</p>
         <p className="text-sm text-muted tabular-nums">
           <Trans>joined {joined}</Trans>
         </p>

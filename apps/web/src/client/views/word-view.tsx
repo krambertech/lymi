@@ -36,7 +36,6 @@ import {
   Volume2,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
@@ -341,7 +340,6 @@ function ReadField({
           <p
             lang={lang}
             className={clsx(
-              PRIVATE_TEXT,
               "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
               empty ? "text-muted" : "text-text",
             )}
@@ -620,7 +618,7 @@ export function WordView({
     <article className="@container flex min-w-0 flex-col gap-6">
       <PlaceBar parent={deckName} actions={controls} onClose={onClose} />
 
-      <header className={clsx(PRIVATE_TEXT, "grid gap-1.5")}>
+      <header className="grid gap-1.5">
         <h1
           id={titleId}
           // Takes focus when a sheet or drawer opens on it, so the first stop is the word, not a control.
@@ -823,9 +821,7 @@ export function WordView({
 
       <Dialog open={moving} onOpenChange={setMoving}>
         <DialogContent>
-          <DialogTitle className={PRIVATE_TEXT}>
-            {t`Move “${isolate(shortQuote(card.term))}” to`}
-          </DialogTitle>
+          <DialogTitle>{t`Move “${isolate(shortQuote(card.term))}” to`}</DialogTitle>
           <ul className="grid gap-1">
             {elsewhere.map((d) => (
               <li key={d.id}>

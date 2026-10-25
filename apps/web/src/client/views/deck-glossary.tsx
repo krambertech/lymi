@@ -46,7 +46,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button, IconButton } from "../components/button";
 import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";
@@ -227,13 +226,13 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
           <div className="flex h-full w-full origin-left scale-[1.02] cursor-grabbing items-center gap-3 rounded-lg bg-plate px-4 edge-2 @xl/list:px-5">
             <StateIcon state={rowState(activeRow)} className="size-[15px] shrink-0" />
             <span
-              className={clsx(PRIVATE_TEXT, "min-w-0 truncate text-lg font-medium text-text")}
+              className="min-w-0 truncate text-lg font-medium text-text"
               lang={activeRow.card.language ?? undefined}
             >
               {splitForms(activeRow.card.term).word}
             </span>
             {activeRow.card.meaning && (
-              <span className={clsx(PRIVATE_TEXT, "min-w-0 flex-1 truncate text-md text-text-2")}>
+              <span className="min-w-0 flex-1 truncate text-md text-text-2">
                 {activeRow.card.meaning}
               </span>
             )}
@@ -637,7 +636,6 @@ const GlossaryRow = memo(function GlossaryRow({
       </span>
       <span
         className={clsx(
-          PRIVATE_TEXT,
           "hyphenate col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
           waiting ? "text-text-2" : "text-text",
         )}
@@ -660,7 +658,6 @@ const GlossaryRow = memo(function GlossaryRow({
       </span>
       <span
         className={clsx(
-          PRIVATE_TEXT,
           "hyphenate col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
           !card.meaning ? "text-faint" : waiting ? "text-muted" : "text-text-2",
         )}

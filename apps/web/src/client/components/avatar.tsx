@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import { UserX } from "lucide-react";
 import { type ComponentProps, useState } from "react";
-import { PRIVATE_BOX } from "@/lib/replay";
 
 interface Props extends Omit<ComponentProps<"span">, "children"> {
   name: string | undefined;
@@ -23,7 +22,6 @@ export function Avatar({ name, src, pending, size = 32, className, style, ...res
       // Beside the learner's name by default, so a screen reader skips it.
       aria-hidden="true"
       className={clsx(
-        PRIVATE_BOX,
         "relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-plate-2 font-semibold text-text-2",
         !photo && "edge",
         className,

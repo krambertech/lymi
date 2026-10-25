@@ -4,7 +4,6 @@ import { isolate } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { CalendarClock, EyeOff, History, Languages, Layers } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { AuthNotice } from "../components/auth-notice";
 import { Avatar } from "../components/avatar";
 import { Button } from "../components/button";
@@ -122,7 +121,7 @@ function LiveLink({
   return (
     <div className="mx-auto grid w-full max-w-[26rem] grid-cols-[minmax(0,1fr)] @4xl:max-w-none @4xl:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] @4xl:grid-rows-[auto_auto] @4xl:gap-x-20">
       <div className="grid justify-items-center text-center @4xl:col-start-1 @4xl:row-start-1 @4xl:self-end @4xl:justify-items-start @4xl:text-start">
-        <p className={`${PRIVATE_TEXT} flex items-center gap-2 text-md text-text-2`}>
+        <p className="flex items-center gap-2 text-md text-text-2">
           {published ? (
             <PublisherMark name={deck.owner.name} src={deck.owner.avatarUrl} size={24} />
           ) : (

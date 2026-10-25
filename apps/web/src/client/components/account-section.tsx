@@ -5,7 +5,6 @@ import { useIsMutating, useMutation, useQuery, useQueryClient } from "@tanstack/
 import { clsx } from "clsx";
 import { Camera, ImageMinus, ImageUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { ApiError, api } from "../lib/api";
 import {
   type Avatar as AvatarState,
@@ -121,14 +120,12 @@ export function AccountGroup({
         )}
         <div className="grid min-w-0 gap-0.5">
           {name ? (
-            <span className={clsx(PRIVATE_TEXT, "truncate text-md font-medium text-text")}>
-              {name}
-            </span>
+            <span className="truncate text-md font-medium text-text">{name}</span>
           ) : (
             <Skeleton className="h-5 w-32" />
           )}
           {email ? (
-            <span className={clsx(PRIVATE_TEXT, "truncate text-sm text-muted")}>{email}</span>
+            <span className="truncate text-sm text-muted">{email}</span>
           ) : (
             <Skeleton className="h-4 w-48" />
           )}

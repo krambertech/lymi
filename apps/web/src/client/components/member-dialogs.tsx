@@ -1,7 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { InviteInput, isolate } from "@lymi/core";
 import { useId, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import type { Invitation, Member } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { useOpenKey } from "../lib/use-open-key";
@@ -121,9 +120,7 @@ export function CancelInvitationDialog({
     <ConfirmDialog
       subject={invitation}
       onOpenChange={onOpenChange}
-      title={({ email }) => (
-        <span className={PRIVATE_TEXT}>{t`Cancel the invitation to ${email}?`}</span>
-      )}
+      title={({ email }) => t`Cancel the invitation to ${email}?`}
       description={
         <Trans>Their invitation link stops working. You can invite them again any time.</Trans>
       }

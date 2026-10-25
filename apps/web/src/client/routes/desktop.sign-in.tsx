@@ -6,7 +6,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { createAuthClient } from "better-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { cookiePrefix } from "../../shared/cookies";
 import { DESKTOP_APP_SCHEME } from "../../shared/origins";
 import { AuthFrame } from "../components/auth-frame";
@@ -118,7 +117,7 @@ function DesktopSignIn() {
           </>
         ) : (
           <>
-            <p className={`${PRIVATE_TEXT} text-text-2`}>
+            <p className="text-text-2">
               {me.isSuccess
                 ? t`Continue as ${{ email: isolate(email) }}`
                 : t`Checking your account…`}

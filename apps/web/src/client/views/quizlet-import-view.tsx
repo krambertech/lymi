@@ -10,7 +10,6 @@ import {
 } from "@lymi/core";
 import { FileText } from "lucide-react";
 import { useDeferredValue, useId, useMemo, useRef, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { InlineError } from "../components/inline-error";
 import type { Back } from "../components/layout/screen";
@@ -243,7 +242,7 @@ export function QuizletImportView({
                       </th>
                     </tr>
                   </thead>
-                  <tbody className={PRIVATE_TEXT}>
+                  <tbody>
                     {parsed.cards.slice(0, PREVIEW_ROWS).map((card, i) => (
                       // biome-ignore lint/suspicious/noArrayIndexKey: rows have no id, and repeats are allowed.
                       <tr key={i} className="border-edge border-t align-top">

@@ -109,9 +109,9 @@ test("the real browser SDK records a product page through the proxy with every w
       contentType: "text/html",
       body: `<html lang="en"><head></head><body>
         <button type="button">Show answer</button>
-        <p class="ph-mask">private-card-term</p>
+        <p>private-card-term</p>
         <span role="img" aria-label="private-learner-name">K</span>
-        <img class="ph-no-capture" alt="private-picture-description" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
+        <img alt="private-picture-description" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
       </body></html>`,
     }),
   );

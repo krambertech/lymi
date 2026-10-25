@@ -55,7 +55,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { CardPlace } from "../components/card-place";
@@ -210,7 +209,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
       ) : (
         <Avatar name={owner} size={18} />
       )}
-      <span className={`${PRIVATE_TEXT} min-w-0 truncate`}>
+      <span className="min-w-0 truncate">
         <Trans>Shared by {{ owner: isolate(owner) }}</Trans>
       </span>
     </>
@@ -220,11 +219,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
 /** What a member sees in a shared deck with nothing in it yet. */
 function OwnerAddsCards({ owner, former }: { owner: string; former: boolean }) {
   if (former) return <Trans>Its owner left Lymi, so no cards will be added.</Trans>;
-  return (
-    <span className={PRIVATE_TEXT}>
-      <Trans>Cards appear here when {{ owner: isolate(owner) }} adds them.</Trans>
-    </span>
-  );
+  return <Trans>Cards appear here when {{ owner: isolate(owner) }} adds them.</Trans>;
 }
 
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */

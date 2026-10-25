@@ -6,7 +6,6 @@ import type { FieldRole, ImportFailure, ImportSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { Image as ImageIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import type { Import, ImportPreview } from "../lib/api";
 import { Button } from "./button";
 import { Chip } from "./chip";
@@ -190,17 +189,9 @@ export function SampleCard({
     [t`Notes`, sample.notes],
   ];
   return (
-    <div
-      className={clsx(
-        PRIVATE_TEXT,
-        "grid gap-3 transition-opacity duration-150",
-        loading && "opacity-60",
-      )}
-    >
+    <div className={clsx("grid gap-3 transition-opacity duration-150", loading && "opacity-60")}>
       <p
-        className={clsx(
-          "text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
-        )}
+        className="text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]"
         dir="auto"
       >
         {sample.term}
@@ -328,7 +319,7 @@ export function FieldsDialog({
               >
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-text">{field}</p>
-                  <p className={clsx(PRIVATE_TEXT, "truncate text-sm text-muted")}>
+                  <p className="truncate text-sm text-muted">
                     {example[i] ||
                       (source !== "anki" ? t`Empty in the first card` : t`Empty in the first note`)}
                   </p>

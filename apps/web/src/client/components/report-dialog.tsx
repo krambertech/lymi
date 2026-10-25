@@ -9,7 +9,6 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { ApiError, api } from "../lib/api";
 import { Button } from "./button";
 import {
@@ -43,7 +42,7 @@ export function ReportDialog({ open, onOpenChange, target, name }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent size="md">
         <DialogHeader>
-          <DialogTitle className={PRIVATE_TEXT}>{t`Report “${isolate(name)}”`}</DialogTitle>
+          <DialogTitle>{t`Report “${isolate(name)}”`}</DialogTitle>
           <DialogDescription>
             <Trans>We read every report within a day. The owner isn’t told who sent it.</Trans>
           </DialogDescription>

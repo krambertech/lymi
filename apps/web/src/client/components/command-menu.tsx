@@ -11,7 +11,6 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { clsx } from "clsx";
 import {
   Archive,
   ArrowUpRight,
@@ -34,7 +33,6 @@ import {
   SunMoon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import type { CardHit, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { bidi } from "../lib/bidi";
@@ -595,7 +593,7 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
     return (
       <>
         <RectangleHorizontal className="size-4 text-text" aria-hidden="true" />
-        <span className={clsx(PRIVATE_TEXT, "min-w-0 flex-1 truncate")}>
+        <span className="min-w-0 flex-1 truncate">
           <bdi className="font-medium">{row.card.term}</bdi>
           {row.card.meaning && (
             <span className="text-muted">
@@ -648,7 +646,7 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
       )}
       <span className="flex min-w-0 flex-1 text-base">
         {row.existing ? (
-          <span className={clsx(PRIVATE_TEXT, "truncate text-text")}>
+          <span className="truncate text-text">
             {bidi(
               t`Open “${isolate(shortQuote(row.existing.term))}” in ${isolate(row.existing.deckName)}`,
             )}
@@ -656,17 +654,13 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
         ) : deckName ? (
           // A long term gives way first: the deck is where the card lands.
           <>
-            <span className={clsx(PRIVATE_TEXT, "min-w-0 truncate font-medium text-text")}>
-              {term}
-            </span>
+            <span className="min-w-0 truncate font-medium text-text">{term}</span>
             {!checking && (
               <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-muted">→ {deckName}</span>
             )}
           </>
         ) : (
-          <span className={clsx(PRIVATE_TEXT, "truncate text-text")}>
-            {bidi(t`Add “${isolate(shortQuote(term))}”`)}
-          </span>
+          <span className="truncate text-text">{bidi(t`Add “${isolate(shortQuote(term))}”`)}</span>
         )}
       </span>
       {!row.existing && deckName && (

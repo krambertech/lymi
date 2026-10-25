@@ -2,7 +2,6 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type InsightsOut, localDate, textDirection } from "@lymi/core";
 import { clsx } from "clsx";
-import { PRIVATE_TEXT } from "@/lib/replay";
 import { Button } from "../components/button";
 import { DAY_GRID_HEIGHT, DayGrid } from "../components/day-grid";
 import { ErrorState } from "../components/empty-state";
@@ -353,12 +352,7 @@ export function InsightsView({
                 className="flex items-center justify-between gap-4 border-t border-edge px-5 py-3"
               >
                 {/* The card in its deck holds the whole text; this row only has to be recognised. */}
-                <span
-                  className={clsx(
-                    PRIVATE_TEXT,
-                    "hyphenate line-clamp-3 min-w-0 [overflow-wrap:anywhere]",
-                  )}
-                >
+                <span className="hyphenate line-clamp-3 min-w-0 [overflow-wrap:anywhere]">
                   <span
                     className="font-medium text-text"
                     lang={c.language ?? undefined}

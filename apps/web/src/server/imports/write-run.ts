@@ -98,6 +98,7 @@ export async function writeImport(
     stored: resumed?.pictures.stored ?? 0,
     skipped: resumed?.pictures.skipped ?? 0,
     recordings: { ...(resumed?.pictures.recordings ?? { stored: 0, skipped: 0 }) },
+    exampleRecordings: { ...(resumed?.pictures.exampleRecordings ?? { stored: 0, skipped: 0 }) },
   };
   let chunk = resumed?.chunk ?? 0;
   let pending = resumed?.pending ?? [];
@@ -127,6 +128,8 @@ export async function writeImport(
       pictures.skipped += done.skipped;
       pictures.recordings.stored += done.recordings.stored;
       pictures.recordings.skipped += done.recordings.skipped;
+      pictures.exampleRecordings.stored += done.exampleRecordings.stored;
+      pictures.exampleRecordings.skipped += done.exampleRecordings.skipped;
       pending = pending.slice(PICTURES_PER_STEP);
       continue;
     }

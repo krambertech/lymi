@@ -533,10 +533,12 @@ export async function attachImportPictures(
     attached = await attachPictures(ctx, work, file, pending, storage);
   } else {
     const recordings = pending.filter((item) => item.kind === "recording").length;
+    const exampleRecordings = pending.filter((item) => item.kind === "exampleRecording").length;
     attached = {
       stored: 0,
-      skipped: pending.length - recordings,
+      skipped: pending.length - recordings - exampleRecordings,
       recordings: { stored: 0, skipped: recordings },
+      exampleRecordings: { stored: 0, skipped: exampleRecordings },
     };
   }
   await ctx.db.run(sql`update imports set media_done = max(media_done, ${handled}),
@@ -560,6 +562,8 @@ export async function finishImport(
   counts.picturesSkipped = pictures.skipped;
   counts.recordings = pictures.recordings?.stored ?? 0;
   counts.recordingsSkipped = pictures.recordings?.skipped ?? 0;
+  counts.exampleRecordings = pictures.exampleRecordings?.stored ?? 0;
+  counts.exampleRecordingsSkipped = pictures.exampleRecordings?.skipped ?? 0;
   const now = new Date();
   const eligible = and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))!;
   const [, completed] = await ctx.db.batch([
@@ -589,6 +593,8 @@ export async function finishImport(
     outcome: "done",
     recordings: counts.recordings,
     recordings_skipped: counts.recordingsSkipped,
+    example_recordings: counts.exampleRecordings,
+    example_recordings_skipped: counts.exampleRecordingsSkipped,
     sounds_left_out: counts.soundsLeftOut,
     pictures: counts.pictures,
     pictures_skipped: counts.picturesSkipped,

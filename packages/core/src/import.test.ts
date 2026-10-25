@@ -9,10 +9,10 @@ import {
   imageSources,
   importFieldText,
   importTags,
+  noteRecordings,
   pitchNotation,
   soundCount,
   soundSources,
-  termRecording,
 } from "./import";
 
 /** A mora as Yomitan writes pitch accent for Anki: the kana, then an empty span drawing its line. */
@@ -289,40 +289,56 @@ describe("fieldsFromRoles", () => {
   });
 });
 
-describe("termRecording", () => {
+describe("noteRecordings", () => {
   const names = ["Word", "Word Meaning", "Word Audio", "Sentence", "Sentence Audio"];
   const roles = guessFieldRoles(names);
 
-  it("takes the term's clip and leaves the sentence's out", () => {
-    expect(termRecording(names, roles, [[], [], ["word.mp3"], [], ["sentence.mp3"]])).toEqual({
+  it("takes the term's clip and the sentence's, each for its own field", () => {
+    expect(noteRecordings(names, roles, [[], [], ["word.mp3"], [], ["sentence.mp3"]])).toEqual({
       recording: "word.mp3",
-      leftOut: 1,
+      exampleRecording: "sentence.mp3",
+      leftOut: 0,
     });
   });
-  it("falls back to a clip in the term field and never takes the example's", () => {
+  it("falls back to a clip in the term field, and gives the example field's clip to the example", () => {
     expect(
-      termRecording(
+      noteRecordings(
         ["Front", "Back", "Example"],
         ["term", "meaning", "example"],
         [["hund.mp3"], [], ["satz.mp3"]],
       ),
-    ).toEqual({ recording: "hund.mp3", leftOut: 1 });
+    ).toEqual({ recording: "hund.mp3", exampleRecording: "satz.mp3", leftOut: 0 });
     expect(
-      termRecording(
+      noteRecordings(
         ["Front", "Back", "Example"],
         ["term", "meaning", "example"],
         [[], [], ["satz.mp3"]],
       ),
-    ).toEqual({ recording: undefined, leftOut: 1 });
+    ).toEqual({ recording: undefined, exampleRecording: "satz.mp3", leftOut: 0 });
   });
-  it("keeps one clip per term and ignores Lymi's own speech", () => {
-    expect(termRecording(names, roles, [[], [], ["a.mp3", "b.mp3"], [], []])).toEqual({
-      recording: "a.mp3",
-      leftOut: 1,
-    });
+  it("follows the field the learner chose as the example", () => {
     expect(
-      termRecording(["Term", "Sound"], ["term", "skip"], [[], ["lymi-card1-speech.mp3"]]),
-    ).toEqual({ recording: undefined, leftOut: 0 });
+      noteRecordings(
+        ["Front", "Back", "Extra"],
+        ["term", "meaning", "skip"],
+        [[], [], ["satz.mp3"]],
+      ),
+    ).toEqual({ recording: undefined, exampleRecording: undefined, leftOut: 1 });
+    expect(
+      noteRecordings(
+        ["Front", "Back", "Extra"],
+        ["term", "meaning", "example"],
+        [[], [], ["satz.mp3"]],
+      ),
+    ).toEqual({ recording: undefined, exampleRecording: "satz.mp3", leftOut: 0 });
+  });
+  it("keeps one clip each and ignores Lymi's own speech", () => {
+    expect(
+      noteRecordings(names, roles, [[], [], ["a.mp3", "b.mp3"], [], ["c.mp3", "d.mp3"]]),
+    ).toEqual({ recording: "a.mp3", exampleRecording: "c.mp3", leftOut: 2 });
+    expect(
+      noteRecordings(["Term", "Sound"], ["term", "skip"], [[], ["lymi-card1-speech.mp3"]]),
+    ).toEqual({ recording: undefined, exampleRecording: undefined, leftOut: 0 });
   });
   it("reads every sound reference in a field", () => {
     expect(soundSources("[sound:a b.mp3] text [sound:R&amp;B.mp3]")).toEqual([

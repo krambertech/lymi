@@ -408,9 +408,11 @@ export async function deleteAccount(
     sql`${schema.cards.deckId} not in ${studied}`,
   );
   const audio = await db
-    .select({ key: schema.cards.audioKey })
+    .select({ key: schema.cards.audioKey, example: schema.cards.exampleRecordingKey })
     .from(schema.cards)
-    .where(and(going, isNotNull(schema.cards.audioKey)));
+    .where(
+      and(going, or(isNotNull(schema.cards.audioKey), isNotNull(schema.cards.exampleRecordingKey))),
+    );
   const imports = await db
     .select({ objectKey: schema.imports.objectKey, uploadId: schema.imports.uploadId })
     .from(schema.imports)
@@ -563,7 +565,7 @@ export async function deleteAccount(
       ...images.map((image) => image.key),
       ...[avatar?.custom, avatar?.google].filter((key): key is string => Boolean(key)),
     ],
-    audioKeys: audio.flatMap((card) => (card.key ? [card.key] : [])),
+    audioKeys: audio.flatMap((card) => [card.key, card.example].filter((key) => key !== null)),
     imports,
     exports,
     sessionsEnded,

@@ -25,7 +25,12 @@ export interface CardImageView {
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
 export type CardView = Omit<
   Card,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
+  | "reviewModeKeys"
+  | "revision"
+  | "hookDraft"
+  | "audioApprovedKey"
+  | "exampleTranslationOf"
+  | "exampleRecordingKey"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
@@ -59,6 +64,8 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     hookDraft: _draft,
     audioApprovedKey: _approved,
     exampleTranslationOf: _of,
+    // The example's play control finds its recording on the server, so no client reads the key.
+    exampleRecordingKey: _recording,
     ...rest
   } = card;
   return {

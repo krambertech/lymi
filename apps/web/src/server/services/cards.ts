@@ -25,6 +25,7 @@ import {
   normaliseTerm,
   normalizeCardText,
   readingKey,
+  sameExample,
   sameReading,
   speechInputs,
   stripReadings,
@@ -309,6 +310,7 @@ export async function addCards(
       audioKey: null,
       audioSource: null,
       audioApprovedKey: null,
+      exampleRecordingKey: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -1150,6 +1152,11 @@ function editWrite(
         speechInputs(current.language).some(
           (field) => patch[field] !== undefined && patch[field] !== current[field],
         );
+  // An example's recording says its sentence, so only a new sentence drops it. CONTEXT.md, Recording.
+  const exampleRecordingStale =
+    current.exampleRecordingKey !== null &&
+    patch.example !== undefined &&
+    !sameExample(language, current.example, patch.example);
   // The translation's source is written with its text, in `translationAfter`, never on its own.
   const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
@@ -1188,6 +1195,7 @@ function editWrite(
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(audioStale ? { audioKey: null, audioSource: null } : {}),
+      ...(exampleRecordingStale ? { exampleRecordingKey: null } : {}),
       ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })

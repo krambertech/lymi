@@ -12,6 +12,7 @@ import {
   revealsAnswer,
   SPOKEN_EXAMPLE_MAX,
   SPOKEN_TERM_MAX,
+  sameExample,
   sameReading,
   spokenExample,
   spokenText,
@@ -233,5 +234,19 @@ describe("spokenExample", () => {
     expect(canSpeakExample({ example: "a".repeat(SPOKEN_EXAMPLE_MAX + 1), language: "de" })).toBe(
       false,
     );
+  });
+});
+
+describe("sameExample", () => {
+  it("keeps the sentence through reading, stress, spacing and case fixes", () => {
+    expect(sameExample("ja", "箸で食べます。", "箸[はし]で 食[た]べます。")).toBe(true);
+    expect(sameExample("ru", "Это мой замок.", "Это мой за́мок.")).toBe(true);
+    expect(sameExample("de", "ich esse  Brot.", "Ich esse Brot.")).toBe(true);
+  });
+
+  it("tells a new sentence, or none, apart", () => {
+    expect(sameExample("ja", "箸で食べます。", "箸で食べました。")).toBe(false);
+    expect(sameExample("de", "Ich esse Brot.", "")).toBe(false);
+    expect(sameExample("de", null, null)).toBe(false);
   });
 });

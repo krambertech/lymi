@@ -263,6 +263,10 @@
     {
       "name": "0065_fresh_talon.sql",
       "sha256": "d6bccf81926876832b549c25281ee50f09d5ba82faf61ae153020e8411bc6eca"
+    },
+    {
+      "name": "0066_silky_hardball.sql",
+      "sha256": "cf7ac811b3962a2f9a9a4485c5cd83e3ba7f42ff90e3a1be4f4b36186ba06ca9"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import {
   boldStress,
+  cardRecordings,
   examplesCarryReadings,
   type FieldRole,
   fieldsFromRoles,
@@ -14,13 +15,13 @@ import {
   importTags,
   isPitchField,
   isSentencePinyinField,
+  noteRecordings,
   parseReadings,
   type Rating,
   type ReviewModeKey,
   readingEngine,
   soundCount,
   soundSources,
-  termRecording,
 } from "@lymi/core";
 import { stripPinyin } from "@lymi/core/pinyin";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
@@ -510,11 +511,15 @@ export const anki: SourceAdapter<AnkiNote> = {
     const tags = importTags(note.tags);
     const picture = note.fields.flatMap(imageSources)[0];
     const clips = note.fields.map(soundSources);
-    // A cloze's clips speak its sentence, not the word it hides.
+    // A cloze's clips speak its sentence, which is the card's example, not the word it hides.
     const sounds =
       type.kind === "cloze"
-        ? { recording: undefined, leftOut: clips.flat().length }
-        : termRecording(type.fields, roles, clips);
+        ? noteRecordings(
+            type.fields,
+            type.fields.map(() => "example"),
+            clips,
+          )
+        : noteRecordings(type.fields, roles, clips);
     const pitchLeftOut = type.fields.some(
       (name, i) =>
         roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),
@@ -567,8 +572,7 @@ export const anki: SourceAdapter<AnkiNote> = {
           modes: [...progress.keys()],
           archived: active.length === 0,
           picture,
-          recording: sounds.recording,
-          soundsLeftOut: sounds.leftOut,
+          ...cardRecordings(sounds, fitted.fields.example),
           pitchLeftOut,
           progress: [...progress.values()],
           shortened: fitted.shortened || tags.shortened,

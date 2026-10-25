@@ -1,4 +1,5 @@
 import {
+  cardRecordings,
   type FieldRole,
   fieldsFromRoles,
   fitFields,
@@ -8,8 +9,8 @@ import {
   importTags,
   isPitchField,
   namedFieldRole,
+  noteRecordings,
   type ReviewModeKey,
-  termRecording,
 } from "@lymi/core";
 import type { SourceAdapter, SourceDeck, SourceNoteType, SourceSummary } from "../adapter";
 import { ImportFileError, openZip, type RandomAccess, readZipEntry, type ZipEntry } from "../files";
@@ -390,7 +391,7 @@ export const mochi: SourceAdapter<MochiNote> = {
       importFieldText(type.fields[i] ?? "", field, markdownToText),
     );
     const raw = fieldsFromRoles(values, roles);
-    const sounds = termRecording(
+    const sounds = noteRecordings(
       type.fields,
       roles,
       note.fields.map((field) => [...new Set(attachments(field).filter(isAudio))]),
@@ -422,8 +423,7 @@ export const mochi: SourceAdapter<MochiNote> = {
         modes: progress.map((p) => p.mode),
         archived: note.archived,
         picture: note.picture,
-        recording: sounds.recording,
-        soundsLeftOut: sounds.leftOut,
+        ...cardRecordings(sounds, fitted.fields.example),
         pitchLeftOut: type.fields.some(
           (name, i) =>
             roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),

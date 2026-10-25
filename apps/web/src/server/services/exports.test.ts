@@ -151,7 +151,12 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
   const preview = await previewImportChoices(ctx, started.id, choices, env.IMPORTS);
   await confirmImport(ctx, started.id, choices, env.IMPORTS, async () => {});
   const decks = await prepareImportDecks(ctx, started.id, env.IMPORTS);
-  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
+  const pictures = {
+    stored: 0,
+    skipped: 0,
+    recordings: { stored: 0, skipped: 0 },
+    exampleRecordings: { stored: 0, skipped: 0 },
+  };
   let handled = 0;
   const { progress } = await getImport(ctx, started.id);
   for (let chunk = 0; chunk < progress.chunks; chunk++) {
@@ -175,6 +180,8 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
     pictures.skipped += done.skipped;
     pictures.recordings.stored += done.recordings.stored;
     pictures.recordings.skipped += done.recordings.skipped;
+    pictures.exampleRecordings.stored += done.exampleRecordings.stored;
+    pictures.exampleRecordings.skipped += done.exampleRecordings.skipped;
   }
   await finishImport(ctx, started.id, pictures, env.IMPORTS);
   return { preview, result: await getImport(ctx, started.id) };
@@ -634,6 +641,50 @@ describe("a recording on export", () => {
     expect(cards.map((card) => [card.fields.term, card.recording ?? null]).sort()).toEqual([
       ["桜", null],
       ["箸", `lymi-${hashi}-recording.mp3`],
+    ]);
+  }, 60_000);
+
+  it("carries an example's recording out in both formats and back to the example", async () => {
+    const owner = await fresh("Owner");
+    const deck = await createDeck(owner, { name: "Japanese", defaultLanguage: "ja" });
+    const [added] = await addCards(owner, [
+      { deckId: deck.id, term: "箸", meaning: "chopsticks", example: "箸[はし]で食[た]べます。" },
+    ]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const hashi = added.card.id;
+    const clip = new Uint8Array([0x49, 0x44, 0x33, ...new Array(61).fill(5)]);
+    const key = `cards/${hashi}/example-recorded/clip.mp3`;
+    await env.AUDIO.put(key, clip, { httpMetadata: { contentType: "audio/mpeg" } });
+    await db
+      .update(schema.cards)
+      .set({ exampleRecordingKey: key })
+      .where(eq(schema.cards.id, hashi));
+
+    const lymiFile = await runExport(owner, { format: "lymi", deckId: deck.id });
+    expect(lymiFile.view.counts).toMatchObject({ cards: 1, sounds: 1 });
+    expect((await entries(lymiFile.bytes)).names).toContain(`media/${hashi}-example.mp3`);
+    const copy = await fresh("Copy");
+    const { preview, result } = await runImport(copy, "japanese.zip", lymiFile.bytes);
+    expect(preview).toMatchObject({ added: 1, exampleRecordings: 1, recordings: 0 });
+    expect(result.counts).toMatchObject({ exampleRecordings: 1, exampleRecordingsSkipped: 0 });
+    const [copied] = await db
+      .select()
+      .from(schema.cards)
+      .where(eq(schema.cards.userId, copy.userId));
+    expect(copied?.audioKey).toBeNull();
+    const bytes = await env.AUDIO.get(copied?.exampleRecordingKey as string);
+    expect(new Uint8Array((await bytes?.arrayBuffer()) as ArrayBuffer)).toEqual(clip);
+
+    const package_ = await runExport(owner, { format: "anki", deckId: deck.id });
+    expect(package_.view.counts).toMatchObject({ cards: 1, sounds: 1 });
+    const media = JSON.parse(
+      new TextDecoder().decode(await (await entries(package_.bytes)).read("media")),
+    );
+    expect(Object.values(media)).toEqual([`lymi-${hashi}-example-recording.mp3`]);
+    const { summary, notes } = await anki.inspect(bytesSource(package_.bytes));
+    const cards = [...notes].flatMap((n) => anki.cards(n, summary, { languages: {}, roles: {} }));
+    expect(cards.map((card) => [card.recording ?? null, card.exampleRecording ?? null])).toEqual([
+      [null, `lymi-${hashi}-example-recording.mp3`],
     ]);
   }, 60_000);
 

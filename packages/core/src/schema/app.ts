@@ -228,6 +228,8 @@ export const cards = sqliteTable(
     audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
     /** Retired: recordings follow their deck without approval. Nothing reads it; a later migration drops it. */
     audioApprovedKey: text("audio_approved_key"),
+    /** R2 key of the example's recording an import brought, which its play control plays; null without one. */
+    exampleRecordingKey: text("example_recording_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()

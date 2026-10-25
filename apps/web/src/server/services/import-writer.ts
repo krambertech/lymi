@@ -22,6 +22,7 @@ import {
   readingKey,
   replayProgress,
   revealedAnswer,
+  sameExample,
   sameReading,
   serializeState,
   stateDirection,
@@ -40,7 +41,7 @@ import { selectIn } from "./batch";
 import { type CardImageStorage, storeImportedImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
-import { MAX_RECORDING_BYTES, storeRecording } from "./recordings";
+import { MAX_RECORDING_BYTES, storeExampleRecording, storeRecording } from "./recordings";
 import { syncTagStatements } from "./tags";
 
 /**
@@ -101,8 +102,22 @@ function deckExternalId(source: string, key: string, name: string) {
 type Held = Map<string, { reading: string | null; deckName: string }[]>;
 
 type Lookup = {
-  /** `recorded` when the card already has a recording, which an import never reads again. */
-  byExternal: Map<string, { id: string; deckId: string; term: string; recorded: boolean }>;
+  /**
+   * `recorded` when the card already has a recording, which an import never reads again, and
+   * `exampleRecorded` likewise for its example's.
+   */
+  byExternal: Map<
+    string,
+    {
+      id: string;
+      deckId: string;
+      term: string;
+      example: string | null;
+      language: string | null;
+      recorded: boolean;
+      exampleRecorded: boolean;
+    }
+  >;
   active: Held;
 };
 
@@ -137,6 +152,9 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
           externalId: schema.cards.externalId,
           audioSource: schema.cards.audioSource,
           term: schema.cards.term,
+          example: schema.cards.example,
+          language: schema.cards.language,
+          exampleRecordingKey: schema.cards.exampleRecordingKey,
         })
         .from(schema.cards)
         .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.externalId, ids))),
@@ -172,7 +190,10 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
         id: row.id,
         deckId: row.deckId,
         term: row.term,
+        example: row.example,
+        language: row.language,
         recorded: row.audioSource === "recorded",
+        exampleRecorded: row.exampleRecordingKey !== null,
       });
     }
   }
@@ -201,6 +222,9 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
         externalId: schema.cards.externalId,
         audioSource: schema.cards.audioSource,
         term: schema.cards.term,
+        example: schema.cards.example,
+        language: schema.cards.language,
+        exampleRecordingKey: schema.cards.exampleRecordingKey,
       })
       .from(schema.cards)
       .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
@@ -223,7 +247,10 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
         id: row.id,
         deckId: row.deckId,
         term: row.term,
+        example: row.example,
+        language: row.language,
         recorded: row.audioSource === "recorded",
+        exampleRecorded: row.exampleRecordingKey !== null,
       });
     }
   }
@@ -245,6 +272,8 @@ type Classified =
       id: string;
       /** The file's recording goes on the card: it has none, and it still says the same word. */
       takesRecording: boolean;
+      /** The file's example recording goes on the card: it has none, and its example is the file's. */
+      takesExampleRecording: boolean;
     }
   | { kind: "duplicate"; card: ImportedCard; deckName: string }
   | { kind: "added"; card: ImportedCard; language: string | null };
@@ -268,7 +297,12 @@ function classify(
       // A card whose word the learner changed since never gets the old word's clip.
       const takesRecording =
         !existing.recorded && normaliseTerm(existing.term) === normaliseTerm(card.fields.term);
-      return { kind: "existing", card, id: existing.id, takesRecording };
+      // A blank example is filled with the file's, so the clip says it too.
+      const takesExampleRecording =
+        !existing.exampleRecorded &&
+        (!existing.example?.trim() ||
+          sameExample(existing.language, existing.example, card.fields.example));
+      return { kind: "existing", card, id: existing.id, takesRecording, takesExampleRecording };
     }
     const language = cardLanguage(card, languages);
     const key = dupKey(language, card.fields.term);
@@ -296,6 +330,7 @@ function tally(
     if (item.kind === "existing") {
       counts.existing++;
       if (pictures && item.takesRecording) countRecording(counts, item.card);
+      if (pictures && item.takesExampleRecording) countExampleRecording(counts, item.card);
     } else if (item.kind === "duplicate") {
       counts.duplicates++;
       if (counts.duplicateExamples.length < DUPLICATE_EXAMPLES) {
@@ -308,6 +343,7 @@ function tally(
       counts.reviews += item.card.progress.reduce((sum, p) => sum + p.reviews.length, 0);
       if (pictures && item.card.picture) counts.pictures++;
       if (pictures) countRecording(counts, item.card);
+      if (pictures) countExampleRecording(counts, item.card);
       counts.soundsLeftOut += item.card.soundsLeftOut ?? 0;
       if (item.card.pitchLeftOut) counts.pitchSkipped++;
       if (converted.get(item.card)?.includes("pronunciation")) {
@@ -322,6 +358,15 @@ function countRecording(counts: ImportCounts, card: ImportedCard) {
   if (!card.recording) return;
   if (playableRecording(card.recording)) counts.recordings++;
   else counts.recordingsSkipped++;
+}
+
+function countExampleRecording(counts: ImportCounts, card: ImportedCard) {
+  if (!card.exampleRecording) return;
+  if (playableRecording(card.exampleRecording)) {
+    counts.exampleRecordings = (counts.exampleRecordings ?? 0) + 1;
+  } else {
+    counts.exampleRecordingsSkipped = (counts.exampleRecordingsSkipped ?? 0) + 1;
+  }
 }
 
 export type ImportWork<Note> = {
@@ -509,9 +554,13 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
     );
     for (const item of classified) {
       if (item.kind === "existing" && item.takesRecording && item.card.recording) media++;
+      if (item.kind === "existing" && item.takesExampleRecording && item.card.exampleRecording) {
+        media++;
+      }
       if (item.kind !== "added") continue;
       if (item.card.picture) media++;
       if (item.card.recording) media++;
+      if (item.card.exampleRecording) media++;
       const tallyByDeck = modes.get(item.card.deckKey) ?? new Map<Directions, number>();
       const directions = directionsFromModes(item.card.modes);
       tallyByDeck.set(directions, (tallyByDeck.get(directions) ?? 0) + 1);
@@ -603,12 +652,12 @@ async function reviewId(stateId: string, at: Date): Promise<string> {
   return at.getTime().toString(36).padStart(9, "0") + hash;
 }
 
-/** A picture, or the term's recording when `kind` says so, stored after its card is written. */
+/** A picture, or the term's or the example's recording when `kind` says so, stored after its card is written. */
 export type PendingPicture = {
   cardId: string;
   name: string;
   description?: string | undefined;
-  kind?: "recording" | undefined;
+  kind?: "recording" | "exampleRecording" | undefined;
 };
 
 /**
@@ -669,6 +718,13 @@ export async function writeChunk<Note>(
       // A recording replaces generated speech on a card an earlier import brought without it.
       if (item.card.recording && item.takesRecording) {
         pictures.push({ cardId: item.id, name: item.card.recording, kind: "recording" });
+      }
+      if (item.card.exampleRecording && item.takesExampleRecording) {
+        pictures.push({
+          cardId: item.id,
+          name: item.card.exampleRecording,
+          kind: "exampleRecording",
+        });
       }
       existingRows.push({
         id: item.id,
@@ -734,6 +790,9 @@ export async function writeChunk<Note>(
     }
     if (item.card.recording) {
       pictures.push({ cardId: id, name: item.card.recording, kind: "recording" });
+    }
+    if (item.card.exampleRecording) {
+      pictures.push({ cardId: id, name: item.card.exampleRecording, kind: "exampleRecording" });
     }
 
     for (const progress of item.card.progress) {
@@ -896,15 +955,17 @@ type Totals = { stored: number; skipped: number };
 export type MediaTotals = Totals & {
   /** Absent in a run handed over before recordings were kept. */
   recordings?: Totals | undefined;
+  /** Absent in a run handed over before examples' recordings were kept. */
+  exampleRecordings?: Totals | undefined;
 };
-export type AttachedMedia = Totals & { recordings: Totals };
+export type AttachedMedia = Totals & { recordings: Totals; exampleRecordings: Totals };
 
 /** Pictures and recordings stored at once, matching the six connections a Worker keeps open. */
 export const MEDIA_CONCURRENCY = 6;
 
 /**
- * Stores pictures for cards this import added, and recordings for cards it added or met again,
- * several at a time. Returns how many of each landed and how many did not.
+ * Stores pictures for cards this import added, and the term's and the example's recordings for
+ * cards it added or met again, several at a time. Returns how many of each landed and how many did not.
  */
 export async function attachPictures<Note>(
   ctx: ServiceContext,
@@ -916,7 +977,7 @@ export async function attachPictures<Note>(
   const read = await work.adapter.media(file);
   const images = imageStorage(storage);
   const pictureIds = images
-    ? pending.filter((item) => item.kind !== "recording").map((item) => item.cardId)
+    ? pending.filter((item) => item.kind === undefined).map((item) => item.cardId)
     : [];
   // One read for the step's cards, rather than one per picture.
   const cards = new Map(
@@ -938,13 +999,15 @@ export async function attachPictures<Note>(
   let stored = 0;
   let skipped = 0;
   const recordings = { stored: 0, skipped: 0 };
+  const exampleRecordings = { stored: 0, skipped: 0 };
 
   const attach = async (picture: PendingPicture) => {
-    if (picture.kind === "recording") {
+    if (picture.kind !== undefined) {
       const { audio } = storage;
+      const store = picture.kind === "recording" ? storeRecording : storeExampleRecording;
       // A damaged clip is left out like an unplayable one; a storage failure still retries.
       const outcome = audio
-        ? await storeRecording(
+        ? await store(
             ctx,
             picture.cardId,
             () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null),
@@ -952,7 +1015,9 @@ export async function attachPictures<Note>(
           )
         : "skipped";
       // A card a retried step already recorded was counted then.
-      if (outcome !== "kept") recordings[outcome]++;
+      if (outcome !== "kept") {
+        (picture.kind === "recording" ? recordings : exampleRecordings)[outcome]++;
+      }
       return;
     }
     const card = cards.get(picture.cardId);
@@ -998,7 +1063,7 @@ export async function attachPictures<Note>(
   };
   await Promise.all(Array.from({ length: Math.min(MEDIA_CONCURRENCY, pending.length) }, worker));
   if (failure) throw (failure as { error: unknown }).error;
-  return { stored, skipped, recordings };
+  return { stored, skipped, recordings, exampleRecordings };
 }
 
 function imageStorage(storage: Partial<CardImageStorage>): CardImageStorage | null {

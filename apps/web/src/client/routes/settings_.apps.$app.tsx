@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { listedApp } from "@lymi/client/app-marks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { identifyApp } from "../components/app-mark";
@@ -28,9 +29,11 @@ function AssistantRoute() {
         byKey ? byKey.key !== "custom" && assistantOf(item)?.key === byKey.key : item.id === app,
       ) ?? null)
     : undefined;
-  const assistant = byKey ?? (connected ? assistantOf(connected) : undefined);
+  // An app Lymi does not know connected the way any MCP client does, so it gets Custom MCP's steps.
+  const assistant =
+    byKey ?? (connected ? (assistantOf(connected) ?? assistantByKey("custom")) : undefined);
   const identity = connected ? identifyApp(connected.clientId, connected.name) : null;
-  useDocumentTitle(byKey?.app?.name ?? identity?.name ?? t`Apps`);
+  useDocumentTitle(byKey?.app?.name ?? (identity && listedApp(identity).title) ?? t`Apps`);
 
   const disconnect = useMutation({
     mutationFn: (id: string) => api.disconnect(id),

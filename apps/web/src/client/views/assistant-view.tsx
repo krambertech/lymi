@@ -1,7 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type AppIdentity, listedApp } from "@lymi/client/app-marks";
 import { isolate } from "@lymi/core";
-import { ArrowUpRight, Plug } from "lucide-react";
+import { clsx } from "clsx";
+import { ArrowUpRight, CircleAlert, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import { AppMark } from "../components/app-mark";
 import { AppActivity, AppConnect, type AppKey, AppPage, AppStop } from "../components/app-page";
@@ -37,7 +38,9 @@ export function AssistantView(props: Props) {
   const { assistant, connected } = props;
   const identity = props.identity ?? assistant?.app ?? null;
   const listed = identity ? listedApp(identity) : null;
-  const name = assistant?.key === "custom" ? t`Custom MCP` : (listed?.title ?? t`An app`);
+  // A connected app keeps its own name, even one that came in through Custom MCP.
+  const custom = assistant?.key === "custom" && !props.identity;
+  const name = custom ? t`Custom MCP` : (listed?.title ?? t`An app`);
   const appKey: AppKey =
     assistant?.key === "claude" || assistant?.key === "chatgpt" ? assistant.key : "other";
   const since = connected && i18n.date(connected.createdAt, { day: "numeric", month: "short" });
@@ -64,13 +67,31 @@ export function AssistantView(props: Props) {
                 tone: "good",
                 detail: (
                   <>
-                    {listed?.host ? (
-                      <Trans>
-                        Since {since} · <span className="font-mono">{listed.host}</span>
-                      </Trans>
-                    ) : (
-                      <Trans>Since {since}</Trans>
-                    )}
+                    <span className="flex flex-wrap items-center gap-x-1">
+                      {listed?.unverified && (
+                        <>
+                          <span
+                            className={clsx(
+                              "flex items-center gap-1",
+                              listed.borrowed && "text-danger",
+                            )}
+                          >
+                            <CircleAlert className="size-3.5" aria-hidden="true" />
+                            <Trans>Unverified</Trans>
+                          </span>
+                          <span aria-hidden="true">·</span>
+                        </>
+                      )}
+                      <span>
+                        {listed?.host ? (
+                          <Trans>
+                            Since {since} · <span className="font-mono">{listed.host}</span>
+                          </Trans>
+                        ) : (
+                          <Trans>Since {since}</Trans>
+                        )}
+                      </span>
+                    </span>
                     <span className="block">
                       {connected.scope === "write" ? (
                         <Trans>Can read and change your decks</Trans>
@@ -84,7 +105,7 @@ export function AssistantView(props: Props) {
             : { label: t`Not connected`, tone: "muted" }
       }
       does={
-        assistant?.key === "custom" ? (
+        custom ? (
           <Trans>
             Any app that can use a remote MCP server can add cards to your decks and tell you what’s
             due.
@@ -176,7 +197,8 @@ function Connect({
   const steps = stepsFor(assistant.key, signIn);
   return (
     <AppConnect
-      name={name}
+      // Custom MCP's guide is the general one, whatever the app is called.
+      name={assistant.key === "custom" ? "MCP" : name}
       intro={
         assistant.key === "custom" ? (
           <Trans>

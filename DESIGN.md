@@ -345,6 +345,7 @@ Read the file for what you are building. Each is short enough to read whole.
 - [Review completion](docs/design/review-completion.md)
 - [Imports and exports](docs/design/imports.md)
 - [Activity](docs/design/activity.md)
+- [App pages](docs/design/app-pages.md)
 - [Explore](docs/design/explore.md)
 - [Getting started](docs/design/onboarding.md)
 - [The changelog](docs/design/changelog.md)

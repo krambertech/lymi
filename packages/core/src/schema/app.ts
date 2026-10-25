@@ -966,6 +966,8 @@ export const auditLog = sqliteTable(
     index("audit_user_idx").on(t.userId, t.createdAt),
     // Activity reads everything but the grades, which outnumber the rest many times over.
     index("audit_activity_idx").on(t.userId, t.createdAt).where(sql`entity <> 'review'`),
+    // An app's page reads only that app's rows; grades never show there, as in `audit_activity_idx`.
+    index("audit_app_idx").on(t.userId, t.actorClient, t.createdAt).where(sql`entity <> 'review'`),
   ],
 );
 
@@ -1217,3 +1219,66 @@ export const sharingSuspensions = sqliteTable("sharing_suspensions", {
     .notNull()
     .default(sql`(unixepoch() * 1000)`),
 });
+
+/**
+ * A learner's Readwise connection: the token they pasted, encrypted, and where the hourly pull
+ * stands. Deleted on Disconnect; the cards it added stay. docs/proposals/readwise-highlights.md.
+ */
+export const readwiseConnections = sqliteTable("readwise_connections", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** AES-GCM under a key derived from the auth secret; never sent to a client. */
+  tokenCipher: text("token_cipher").notNull(),
+  /** The token's last four characters, so Settings can show which one is in use. */
+  tokenHint: text("token_hint").notNull(),
+  /**
+   * `refused` once Readwise turns the token down, `unreadable` once Lymi can't open it after the auth
+   * secret changed; either way pulls stop until a token is pasted again.
+   */
+  status: text("status", { enum: ["active", "refused", "unreadable"] }).notNull(),
+  /** Each language's deck, keyed by primary subtag, such as `{ "et": "<deck id>" }`. */
+  decks: text("decks", { mode: "json" }).$type<Record<string, string>>().notNull(),
+  /** Highlights updated after this are what the next pull asks for. */
+  pulledThrough: integer("pulled_through", { mode: "timestamp_ms" }).notNull(),
+  /** Readwise's page cursor when a pull stopped at its page cap, so the next one carries on. */
+  pullCursor: text("pull_cursor"),
+  /** When the pull that left the cursor began, which `pulledThrough` moves to once it is done. */
+  pullCursorFrom: integer("pull_cursor_from", { mode: "timestamp_ms" }),
+  nextPullAt: integer("next_pull_at", { mode: "timestamp_ms" }).notNull(),
+  /** Held while a pull runs, so the cron, Check now and a follow never pull at once. */
+  pullingUntil: integer("pulling_until", { mode: "timestamp_ms" }),
+  lastPullAt: integer("last_pull_at", { mode: "timestamp_ms" }),
+  lastPullHighlights: integer("last_pull_highlights").notNull().default(0),
+  lastPullCards: integer("last_pull_cards").notNull().default(0),
+  lastPullSkipped: integer("last_pull_skipped").notNull().default(0),
+  ...timestamps,
+});
+
+/** A book or article in the learner's Readwise, with the language its highlights are in. */
+export const readwiseBooks = sqliteTable(
+  "readwise_books",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Readwise's `user_book_id`. */
+    bookId: text("book_id").notNull(),
+    title: text("title").notNull(),
+    author: text("author"),
+    /** Null until its highlights say, or when they are in no one language. */
+    language: text("language"),
+    /** Whether its new highlights become cards. */
+    followed: integer("followed", { mode: "boolean" }).notNull(),
+    /** Followed for the first time since the last pull, so its highlights since connecting are read in full. */
+    pending: integer("pending", { mode: "boolean" }).notNull().default(false),
+    /** Once followed, turning it back on brings only new highlights. */
+    everFollowed: integer("ever_followed", { mode: "boolean" }).notNull().default(false),
+    highlights: integer("highlights").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.bookId] })],
+);
+
+export type ReadwiseConnection = typeof readwiseConnections.$inferSelect;
+export type ReadwiseBook = typeof readwiseBooks.$inferSelect;

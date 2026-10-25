@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: in_progress
 date: 2026-10-23
 decision: "Every highlight through Smart add's reader; books in a learned language; hourly pull; rely on Readwise for Kindle"
 ---

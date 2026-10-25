@@ -75,7 +75,7 @@ Run these on a reviewer account seeded like the local `learner` persona, which h
 Run each check in MCP Inspector and in both clients, against a production custom connector:
 
 - Connect with write, then with write unticked, and run every tool on each grant.
-- Disconnect under **Settings → Connected apps**. The next call fails and asks for a new sign-in.
+- Disconnect from the app's page under **Settings → Apps**. The next call fails and asks for a new sign-in.
 - Let an access token expire, which takes an hour. The client refreshes without a prompt.
 - Send malformed input, such as an empty `cards` array or an unknown deck id. Each error says what to fix.
 - Find an archived card with `search_cards` and `archived: true`, then restore it.

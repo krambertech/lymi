@@ -90,7 +90,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Connected app**: An MCP client the learner let in on the consent screen, listed in Settings. The grant behind it is an OAuth consent; "connected app" is what the learner is shown, because the client is the thing they recognise. _Avoid_: Integration (that is the actor), authorized client, OAuth client (in the interface)
 
-**Disconnect**: Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again. _Avoid_: Revoke (that is for API keys), remove, delete
+**Disconnect**: Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again. For Readwise, Lymi forgets the token the learner pasted and stops pulling; the cards it added stay. _Avoid_: Revoke (that is for API keys), remove, delete
+
+**Highlight**: A word or passage the learner marked while reading, which Lymi pulls from Readwise every hour. It becomes a card in the deck for its book's language, or nothing; it is never kept on its own. A highlight of a few words is the term; a passage needs the word in its note until Lymi extracts from passages. _Avoid_: Clipping, annotation, quote
 
 **Import**: One file brought in from another app, such as an Anki package, a Mochi export or a Lymi file from another account. It is listed in Activity with its source, counts and warnings, and archiving it archives every card it added and each deck it made that is left empty; restore brings back exactly those. Each imported card keeps the source's id for it, so importing the same file again updates rather than duplicates. A recall from the source's log is history: it shows in Insights and never counts toward a daily goal or the streak. _Avoid_: Migration, sync, upload (for the thing itself)
 
@@ -98,7 +100,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Activity**: The list of what came into the learner's decks from outside the app — imports, and writes made by integrations and the AI — with the files they took out and who is in their shared decks: joins, leaves, removals, and the join link going on or off. Nothing lands unseen. Writes of one kind by one caller in one deck on one day are one row, which opens the cards it wrote so they can be inspected, edited or archived without leaving. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
-**Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps and API keys, then exporting the library and importing from another app. Nothing else lives there. The phone has no Settings screen; You holds the same settings there. _Avoid_: You, profile, account, preferences
+**Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps, the apps that add cards from what the learner reads, such as Readwise and Yomitan, and API keys, then exporting the library and importing from another app. Nothing else lives there. The phone has no Settings screen; You holds the same settings there. _Avoid_: You, profile, account, preferences
 
 **Learner menu**: The menu behind the learner's name in the rail and their avatar on the phone. It leads to Settings, Archived, the docs, feedback and sign-out, and on the phone to Activity and Insights as well; keyboard shortcuts appear where there is a keyboard and Install where the browser can do it. _Avoid_: Profile menu, account menu, user menu
 

@@ -3,6 +3,7 @@ import { msg, ph } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { clsx } from "clsx";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api, errorMessage } from "../lib/api";
@@ -11,10 +12,11 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
 import { useConfirmStep } from "../lib/use-confirm-step";
+import { YOMITAN_KEY_NAME } from "../lib/yomitan";
 import { Button } from "./button";
 import { Chip } from "./chip";
-import { DocLink } from "./connected-apps-section";
 import { CopyField } from "./copy-field";
+import { DocLink } from "./doc-link";
 import { EmptySection } from "./empty-state";
 import { InlineError } from "./inline-error";
 import { Lantern } from "./lantern";
@@ -53,15 +55,15 @@ export function ApiKeysSection() {
     },
   });
 
-  // The new key has its own panel above; listing it as well reads as two keys.
-  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
+  // The new key has its own panel above, and Yomitan's is on Yomitan's page; listing either here reads as two keys.
+  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id && k.name !== YOMITAN_KEY_NAME);
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
     <SettingsGroup
       id="api-keys"
       title={t`API keys`}
-      description={t`For scripts and curl. For AI apps, use Connected apps instead.`}
+      description={t`For scripts and curl. For AI assistants, use Apps instead.`}
     >
       {fresh && (
         <FreshKey
@@ -75,7 +77,7 @@ export function ApiKeysSection() {
       {keys.isPending && <Skeleton className="h-14 w-full" />}
 
       {rest.length > 0 && (
-        <ul className="grid">
+        <ul className="edge grid rounded-xl bg-plate">
           {rest.map((k) => (
             <KeyRow
               key={k.id}
@@ -251,8 +253,9 @@ function KeyRow({
   const confirm = useConfirmStep();
 
   return (
-    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
-      <div className="min-w-0 flex-1">
+    <li className="flex min-h-16 flex-wrap items-center gap-x-3 gap-y-1 border-edge px-4 py-3 [&:not(:first-child)]:border-t">
+      {/* Wide enough to keep the name when Revoke's confirm takes the row; the buttons wrap below. */}
+      <div className="min-w-48 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate text-base font-medium">{item.name ?? t`Untitled key`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
@@ -295,23 +298,29 @@ function KeyRow({
  * The one moment in Settings where something is handed over. The lantern takes one breath, the
  * way it does when a review lands, and the key is the only thing on the panel worth pressing.
  */
-function FreshKey({
+export function FreshKey({
   name,
   value,
   onDone,
   onRevoke,
+  inPlate,
 }: {
   name: string;
   value: string;
   onDone: () => void;
   onRevoke: () => void;
+  /** Already on a plate, such as a card, so it draws no plate of its own. */
+  inPlate?: boolean | undefined;
 }) {
   const { t } = useLingui();
   const [fed, setFed] = useState(0);
   useEffect(() => setFed(1), []);
 
   return (
-    <div className="enter-card edge grid gap-3 rounded-md bg-plate p-4" role="status">
+    <div
+      className={clsx("enter-card grid gap-3", !inPlate && "edge rounded-md bg-plate p-4")}
+      role="status"
+    >
       <div className="flex items-start gap-2.5">
         <Lantern className="size-8 shrink-0" glow fed={fed} />
         <p className="text-base text-text">
@@ -334,7 +343,7 @@ function FreshKey({
   );
 }
 
-function lastUsed(i18n: I18n, iso: string | null): string {
+export function lastUsed(i18n: I18n, iso: string | null): string {
   if (!iso) return i18n._(msg`never used`);
   const ms = Date.now() - new Date(iso).getTime();
   const m = Math.round(ms / 60_000);
@@ -348,6 +357,6 @@ function lastUsed(i18n: I18n, iso: string | null): string {
   return i18n._(msg`used ${date}`);
 }
 
-function shortDate(i18n: I18n, iso: string): string {
+export function shortDate(i18n: I18n, iso: string): string {
   return i18n.date(iso, { day: "numeric", month: "short" });
 }

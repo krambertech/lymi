@@ -3,24 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { ArrowRight, Plug, X } from "lucide-react";
 import { type CSSProperties, useState } from "react";
-import { publicSiteUrl } from "../lib/origins";
+import { ASSISTANTS as ALL } from "../lib/assistants";
 import { connectedAppsQuery } from "../lib/queries";
 import { useReduceMotion } from "../lib/use-reduce-motion";
-import { type AppIdentity, identifyApp } from "./app-mark";
+import type { AppIdentity } from "./app-mark";
 import { IconButton } from "./button";
+import { NavLink } from "./nav-link";
 import { DropdownMenuLinkItem } from "./ui/dropdown-menu";
 
 const KEY = "lymi-assistant-offer-dismissed";
 
-/** The assistants with a setup guide, in the order a learner is likeliest to have one. */
-const ASSISTANTS: { app: AppIdentity; guide: string }[] = [
-  { app: identifyApp("https://claude.ai/"), guide: "/docs/mcp/claude" },
-  { app: identifyApp("https://chatgpt.com/"), guide: "/docs/mcp/chatgpt" },
-  { app: identifyApp("https://accountlinking.google.com/"), guide: "/docs/mcp/gemini" },
-  { app: identifyApp("https://grok.com/"), guide: "/docs/mcp/grok" },
-];
-
-const GUIDES = publicSiteUrl("/docs/mcp");
+/** The assistants shown, in the order a learner is likeliest to have one; each opens its page in Settings. */
+const ASSISTANTS = ALL.slice(0, 4).flatMap((a) => (a.app ? [{ app: a.app, key: a.key }] : []));
 
 /**
  * Whether to offer connecting an AI assistant: only once the learner's connected apps have loaded
@@ -77,7 +71,7 @@ function Mark({ app }: { app: AppIdentity }) {
 const SPREAD =
   "[--dir:1] rtl:[--dir:-1] [translate:0] transition-[translate] duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] hoverable:group-hover/offer:[translate:calc(var(--i)*8px*var(--dir))_0]";
 
-/** The card above the learner on the rail. Each mark opens its own guide; the title opens them all. */
+/** The card above the learner on the rail. Each mark opens its page in Settings; the title opens the Apps group. */
 export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
   const { t } = useLingui();
   const still = useReduceMotion();
@@ -88,18 +82,19 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
     >
       <div className="flex items-center">
         <ul className="-ms-0.5 me-auto flex -space-x-1 rtl:space-x-reverse">
-          {ASSISTANTS.map(({ app, guide }, i) => {
+          {ASSISTANTS.map(({ app, key }, i) => {
             const name = app.name;
             return (
               <li key={name} className="flex">
-                <a
-                  href={publicSiteUrl(guide)}
+                <NavLink
+                  to="/settings/apps/$app"
+                  params={{ app: key }}
                   aria-label={t`Connect ${name}`}
                   style={{ "--i": i } as CSSProperties}
                   className={clsx("rounded-[10px]", !still && SPREAD)}
                 >
                   <Mark app={app} />
-                </a>
+                </NavLink>
               </li>
             );
           })}
@@ -111,7 +106,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
           </IconButton>
         </span>
       </div>
-      <a href={GUIDES} className="mt-2.5 block rounded-xs">
+      <NavLink to="/settings" hash="apps" className="mt-2.5 block rounded-xs">
         <span id="assistant-offer-title" className="text-sm font-medium text-text">
           <Trans>Connect your AI assistant</Trans>
           <ArrowRight
@@ -126,7 +121,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
         <span className="mt-0.5 block text-sm text-muted text-pretty">
           <Trans>Ask Claude or ChatGPT to create cards and decks for you.</Trans>
         </span>
-      </a>
+      </NavLink>
     </section>
   );
 }
@@ -134,7 +129,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
 /** The learner menu's row beside Docs, on both the rail and the phone. */
 export function AssistantMenuItem() {
   return (
-    <DropdownMenuLinkItem render={<a href={GUIDES} />}>
+    <DropdownMenuLinkItem render={<NavLink to="/settings" hash="apps" />}>
       <Plug aria-hidden="true" />
       <Trans>Connect AI assistant</Trans>
     </DropdownMenuLinkItem>

@@ -53,6 +53,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | First run for a Ukrainian beginner | [first-run-ukrainian.md](features/first-run-ukrainian.md) |
 | First run for a Russian beginner | [first-run-russian.md](features/first-run-russian.md) |
 | AI services | [ai-services.md](features/ai-services.md) |
+| Assistant offer | [assistant-offer.md](features/assistant-offer.md) |
 
 ## Launch
 

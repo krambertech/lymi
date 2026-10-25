@@ -54,23 +54,28 @@ test("a learner can filter, sort and open the words in a deck", async ({
 
   await test.step("narrow the list by section and remove the filter from its chip", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "Lesson 4", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Section", exact: true }).click();
+    // Each value says how many cards it keeps, and its name says they are cards.
+    await page.getByRole("menuitemcheckbox", { name: "Lesson 4, 2 cards", exact: true }).click();
     await page.keyboard.press("Escape");
 
     await expect(row("piim")).toBeVisible();
     await expect(row("õppima")).toHaveCount(0);
-    await page.getByRole("button", { name: "Remove filter: Lesson 4", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Remove filter: Section: Lesson 4", exact: true })
+      .click();
     await expect(row("õppima")).toBeVisible();
   });
 
   await test.step("narrow the list by a tag", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "food 2", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Tags", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: "food, 2 cards", exact: true }).click();
     await page.keyboard.press("Escape");
 
     await expect(row("piim")).toBeVisible();
     await expect(row("õppima")).toHaveCount(0);
-    await page.getByRole("button", { name: "Remove filter: Tag: food", exact: true }).click();
+    await page.getByRole("button", { name: "Remove filter: Tags: food", exact: true }).click();
     await expect(row("õppima")).toBeVisible();
   });
 
@@ -87,7 +92,10 @@ test("a learner can filter, sort and open the words in a deck", async ({
 
     await page.reload();
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await expect(page.getByRole("menuitemcheckbox", { name: "food 3", exact: true })).toBeVisible();
+    await page.getByRole("menuitem", { name: "Tags", exact: true }).click();
+    await expect(
+      page.getByRole("menuitemcheckbox", { name: "food, 3 cards", exact: true }),
+    ).toBeVisible();
     await page.keyboard.press("Escape");
   });
 
@@ -120,12 +128,14 @@ test("a learner can filter, sort and open the words in a deck", async ({
 
   await test.step("say so when no word matches, and clear back to the deck", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "Known", exact: true }).click();
-    await page.getByRole("menuitemradio", { name: "Due today", exact: true }).click();
-    await expect(
-      page.getByRole("menuitemradio", { name: "Any time", exact: true }),
-    ).toHaveAttribute("aria-checked", "false");
+    await page.getByRole("menuitem", { name: "State", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: /^Known/ }).click();
+    // Back to the fields without leaving the menu, then into a second one.
+    await page.getByRole("menuitem", { name: "Back to all filters, State", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Due", exact: true }).click();
+    await page.getByRole("menuitemradio", { name: /^Today/ }).click();
     await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", { name: "Clear filters", exact: true })).toBeVisible();
 
     await expect(page.getByText("No cards match these filters", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Show all", exact: true }).click();

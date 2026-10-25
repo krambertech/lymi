@@ -45,7 +45,7 @@ test("offers each assistant's page in Settings while no app is connected", async
     .element(page.getByRole("link", { name: "Connect Claude" }))
     .toHaveAttribute("href", "/settings/apps/claude");
   await expect
-    .element(page.getByRole("link", { name: "Connect", exact: true }))
+    .element(page.getByRole("link", { name: /^Connect your AI assistant/ }))
     .toHaveAttribute("href", "/settings#apps");
 });
 

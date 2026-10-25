@@ -508,6 +508,9 @@ msgstr "{categoryCount, plural, one {Твоя # категория Pleco ста�
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Выбрать карточки} one {Выбрано: #} few {Выбрано: #} many {Выбрано: #} other {Выбрано: #}}"
 
+msgid "{count, plural, one {{label}, # card} other {{label}, # cards}}"
+msgstr "{count, plural, one {{label}, # карточка} few {{label}, # карточки} many {{label}, # карточек} other {{label}, # карточки}}"
+
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# новая} few {# новые} many {# новых} other {# новой}}"
 
@@ -634,6 +637,15 @@ msgstr "{due, plural, one {Повтори # на сегодня} few {Повто
 msgid "{field} becomes"
 msgstr "{field} становится"
 
+msgid "{field}, {count} chosen"
+msgstr "{field}, выбрано: {count}"
+
+msgid "{field}: {values}"
+msgstr "{field}: {values}"
+
+msgid "{field}: <0>{values}</0>"
+msgstr "{field}: <0>{values}</0>"
+
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {термин найден} few {термина найдено} many {терминов найдено} other {термина найдено}}"
 
@@ -718,6 +730,9 @@ msgstr "{name} больше не в колоде «{deck}»"
 
 msgid "{nextName} is ready"
 msgstr "Можно начинать {nextName}"
+
+msgid "{on, plural, one {Filter, # filter on} other {Filter, # filters on}}"
+msgstr "{on, plural, one {Фильтр, включён # фильтр} few {Фильтр, включено # фильтра} many {Фильтр, включено # фильтров} other {Фильтр, включено # фильтра}}"
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {В # карточке нет строки ---, поэтому она импортируется с термином и без значения.} few {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} many {В # карточках нет строки ---, поэтому они импортируются с термином и без значения.} other {В # карточки нет строки ---, поэтому они импортируются с термином и без значения.}}"
@@ -1385,6 +1400,9 @@ msgstr "снова позже сегодня"
 
 msgid "back the same day"
 msgstr "снова в тот же день"
+
+msgid "Back to all filters, {field}"
+msgstr "Назад ко всем фильтрам, {field}"
 
 msgid "Back to Explore"
 msgstr "Назад в Каталог"
@@ -2309,12 +2327,6 @@ msgstr "Пора повторить"
 
 msgid "due this week"
 msgstr "к повторению на этой неделе"
-
-msgid "Due this week"
-msgstr "Повторить на этой неделе"
-
-msgid "Due today"
-msgstr "Повторить сегодня"
 
 msgid "Each block is one day you reviewed."
 msgstr "Каждый блок — день с повторениями."
@@ -4893,9 +4905,6 @@ msgstr "Системная"
 
 msgid "Tab"
 msgstr "Табуляция"
-
-msgid "Tag: {tagName}"
-msgstr "Тег: {tagName}"
 
 msgid "Tags"
 msgstr "Теги"

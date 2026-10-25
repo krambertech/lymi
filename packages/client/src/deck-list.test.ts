@@ -130,7 +130,13 @@ describe("tags", () => {
 });
 
 describe("live filters", () => {
-  const filters = { states: [], due: null, sections: ["s1", "gone", ""], tags: ["food", "old"] };
+  const filters = {
+    states: [],
+    due: null,
+    sections: ["s1", "gone", ""],
+    tags: ["food", "old"],
+    important: false,
+  };
 
   it("drops the tags and sections the deck no longer has, keeping No section", () => {
     expect(liveFilters(filters, new Set(["food"]), new Set(["s1"]))).toEqual({

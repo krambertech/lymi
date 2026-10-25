@@ -45,9 +45,11 @@ function useDropdownMenu(part: string) {
 
 const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
+// A row a click focused keeps Base UI's highlight but not its fill: the pointer's fill is the one
+// cursor, and the keyboard's focus brings the fill back.
 const itemClassName = cn(
   listRowClassName,
-  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
+  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-highlighted:not-focus-visible:bg-transparent data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
 );
 
 /** The drawer's rows are buttons and the anchored ones divs, so a row's ref names their common type. */
@@ -142,8 +144,25 @@ function AnchoredContent({
   ...props
 }: ContentProps) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: ITEM, dividers: '[role="separator"]' });
+  const { hide, remeasure } = hover;
+  // A menu in steps swaps its rows under a still pointer; the fill waits for the next move.
+  const observe = React.useCallback(
+    (popup: HTMLDivElement | null) => {
+      if (!popup) return;
+      const isRows = (node: Node) =>
+        !(node instanceof HTMLElement && node.classList.contains("fluid-highlight"));
+      const observer = new MutationObserver((records) => {
+        if (!records.some((r) => [...r.addedNodes, ...r.removedNodes].some(isRows))) return;
+        hide();
+        remeasure();
+      });
+      observer.observe(popup, { childList: true });
+      return () => observer.disconnect();
+    },
+    [hide, remeasure],
+  );
+  const refs = useMergedRefs(useMergedRefs(ref, observe), refProp);
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
@@ -393,6 +412,8 @@ interface CheckboxItemProps extends RowProps {
     | ((checked: boolean, details?: MenuPrimitive.CheckboxItem.ChangeEventDetails) => void)
     | undefined;
   disabled?: boolean | undefined;
+  /** The row's own icon, which takes the start slot and moves the tick to the end. */
+  icon?: React.ReactNode;
 }
 
 /** A tick in the start slot every row keeps, so checked and unchecked rows line up. */
@@ -404,6 +425,36 @@ function ItemCheck({ checked }: { checked: boolean }) {
   );
 }
 
+/** A checkbox row's start slot and end: the tick alone, or the row's icon with the tick at the end. */
+function CheckboxParts({
+  checked,
+  icon,
+  children,
+}: {
+  checked: boolean;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  if (!icon)
+    return (
+      <>
+        <ItemCheck checked={checked} />
+        {children}
+      </>
+    );
+  return (
+    <>
+      <span className="pointer-events-none absolute start-2.5 flex size-4 items-center justify-center">
+        {icon}
+      </span>
+      {children}
+      <span className="flex size-4 shrink-0 items-center justify-center">
+        {checked && <Check className="text-text!" strokeWidth={2.5} aria-hidden="true" />}
+      </span>
+    </>
+  );
+}
+
 /** A row that turns something on or off and leaves the menu open, so several can be chosen. */
 function DropdownMenuCheckboxItem({
   ref,
@@ -411,6 +462,7 @@ function DropdownMenuCheckboxItem({
   defaultChecked = false,
   onCheckedChange,
   disabled,
+  icon,
   className,
   children,
   ...props
@@ -432,8 +484,9 @@ function DropdownMenuCheckboxItem({
         closeOnClick={false}
         className={cn(itemClassName, "ps-9", className)}
       >
-        <ItemCheck checked={checked} />
-        {children}
+        <CheckboxParts checked={checked} icon={icon}>
+          {children}
+        </CheckboxParts>
       </MenuPrimitive.CheckboxItem>
     );
   }
@@ -457,8 +510,9 @@ function DropdownMenuCheckboxItem({
       data-disabled={disabled ? "" : undefined}
       className={cn(itemClassName, touchRowClassName, "ps-9", className)}
     >
-      <ItemCheck checked={checked} />
-      {children}
+      <CheckboxParts checked={checked} icon={icon}>
+        {children}
+      </CheckboxParts>
     </button>
   );
 }

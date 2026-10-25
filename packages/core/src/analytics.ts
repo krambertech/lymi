@@ -531,7 +531,9 @@ export const analyticsEvents = {
     field: z.enum(FORM_FIELDS),
     form: z.enum(["add", "edit"]),
   }),
-  deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  deck_filter_added: z.object({
+    kind: z.enum(["state", "due", "section", "tag", "important"]),
+  }),
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
   app_page_viewed: z.object({ app: z.enum(["readwise", "yomitan", "claude", "chatgpt", "other"]) }),

@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
+import { desktop } from "../lib/desktop";
 import { Lantern } from "./lantern";
 import { Wordmark } from "./logo";
 import { PublicPolicyLinks } from "./public-policy-links";
@@ -16,21 +17,32 @@ interface Props {
  */
 export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
   const { t } = useLingui();
+  const mac = !!desktop();
+  const mark = (
+    <>
+      <Lantern
+        className="size-24 [@media(min-height:720px)]:size-18 [@media(min-height:920px)]:size-28 mac:size-12!"
+        flicker
+      />
+      {/* The lantern already carries the flame, so the wordmark stays plain. */}
+      <Wordmark size={30} className="mt-3 mac:hidden" />
+    </>
+  );
   return (
     <div className="@container min-h-dvh flex-1 bg-canvas text-text">
       <main className="mx-auto flex min-h-dvh w-full flex-col items-center justify-start px-4 pt-[calc(2rem+var(--inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))] @xl:px-8 [@media(min-height:720px)]:pt-[calc(0.5rem+var(--inset-top))] [@media(min-height:720px)]:pb-[calc(0.5rem+env(safe-area-inset-bottom))] [@media(min-height:920px)]:pt-[calc(2rem+var(--inset-top))] [@media(min-height:920px)]:pb-[calc(2rem+env(safe-area-inset-bottom))] mac:px-5 mac:pt-(--inset-top)! mac:pb-5!">
-        <a
-          href={homeHref}
-          aria-label={t`Lymi home`}
-          className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-text mac:pointer-events-none mac:py-0"
-        >
-          <Lantern
-            className="size-24 [@media(min-height:720px)]:size-18 [@media(min-height:920px)]:size-28 mac:size-12!"
-            flicker
-          />
-          {/* The lantern already carries the flame, so the wordmark stays plain. */}
-          <Wordmark size={30} className="mt-3 mac:hidden" />
-        </a>
+        {/* The Mac's sign-in window has no home to go to, so there the mark is only a mark. */}
+        {mac ? (
+          <span className="mx-auto flex w-fit flex-col items-center px-4 text-text">{mark}</span>
+        ) : (
+          <a
+            href={homeHref}
+            aria-label={t`Lymi home`}
+            className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-text"
+          >
+            {mark}
+          </a>
+        )}
 
         <div className="mx-auto mt-8 grid w-full max-w-[500px] [@media(min-height:720px)]:mt-3 mac:mt-4!">
           {children}

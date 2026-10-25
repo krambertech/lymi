@@ -96,7 +96,7 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 The light spills into the room in four places: as `lamplit` on the lantern's plate on Today, a pool from the lantern's side; around the lantern at the end of a review and at Welcome's first screen, under Motion, both drawn by `LanternLight`; and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. On the public site, the hero scene of a page for one way of learning (tutor lessons, notes) stands in a still pool of the lantern's light, so the material and its cards read as one moment. All of them go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
 
-Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, the lantern's pool of light at the end of a review, at Welcome and on Today, and the light in `lit` and `key-light`. No surface carries grain or noise.
+Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, the lantern's pool of light at the end of a review, at Welcome and on Today, the light in `lit` and `key-light`, and the flame's own light (brand.md). No surface carries grain or noise.
 
 ## The deck tray
 

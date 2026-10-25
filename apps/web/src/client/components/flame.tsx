@@ -8,7 +8,7 @@ import {
 import { clsx } from "clsx";
 import { motion } from "motion/react";
 import { useFlame } from "../lib/use-flame";
-import { draw, FLAME_PARTS } from "./lantern-geometry";
+import { draw, FlameParts } from "./lantern-geometry";
 
 const { left, right, top, bottom } = FLAME_BOUNDS;
 
@@ -53,7 +53,7 @@ export function Flame({ state = "lit", flicker = false, className, title }: Prop
         <g transform={EMBER_AT_FLAME_SIZE}>{draw(EMBER, "ember")}</g>
       </motion.g>
       <motion.g style={{ transform, opacity: flameOpacity, originX: 0.5, originY: 1 }}>
-        {FLAME_PARTS()}
+        <FlameParts />
       </motion.g>
     </svg>
   );

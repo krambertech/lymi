@@ -42,6 +42,16 @@ export const FLAME_CORE = {
   fill: "flame-core",
 } satisfies Shape;
 
+/**
+ * What gives the flat flame its depth, in the 120 unit box. The amber is an elliptical radial from
+ * `flame-heart` by the core through `amber` to `flame-rim` at the edge, and the core's light spills
+ * into it: the core again, scaled about its base, faint and feathered under the sharp one.
+ */
+export const FLAME_DEPTH = {
+  body: { cx: 60, cy: 86.5, rx: 17.1, ry: 23.9, stops: [0, 0.55, 1] },
+  spill: { scaleX: 1.3, scaleY: 1.22, opacity: 0.45, blur: 1.8 },
+} as const;
+
 /** Where the flame's core sits, the point it flickers from; the flame itself grows from its bounds' bottom. */
 export const FLAME_CORE_BASE = 90.5;
 

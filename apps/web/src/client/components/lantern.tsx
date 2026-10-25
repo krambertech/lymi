@@ -14,7 +14,7 @@ import { interpolate, type MotionStyle, motion, useTransform } from "motion/reac
 import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
 import { useFlame } from "../lib/use-flame";
 import { useReduceMotion } from "../lib/use-reduce-motion";
-import { draw, FLAME_PARTS } from "./lantern-geometry";
+import { draw, FlameParts } from "./lantern-geometry";
 
 function startSize(from: Props["from"], target: number) {
   if (from === undefined) return target;
@@ -104,7 +104,7 @@ export function Lantern({
             // Motion writes the SVG origin itself, so the base is named here rather than in CSS.
             style={{ transform, opacity: flameOpacity, originX: 0.5, originY: 1 }}
           >
-            {FLAME_PARTS()}
+            <FlameParts />
           </motion.g>
         </motion.g>
         {LANTERN_FRAME.map((s, i) => draw(s, `frame-${i}`))}

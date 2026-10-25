@@ -98,7 +98,7 @@ const DrawCardOut = z
     card: CardOut,
     modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
     slipping: slipping.meta({
-      description: "Often forgotten: review offers a hook for it when it has none",
+      description: "Often forgotten: review offers a hint for it when it has none",
     }),
   })
   .meta({ id: "DrawCard" });

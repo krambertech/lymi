@@ -27,7 +27,7 @@ Why: the meaning says 行 is read hang4 here, not hong4 as in 銀行. Every exam
   },
   lesson:
     "Jyutping over, under or beside the characters, with tone numbers, sometimes raised (hok6 zaap6, hok⁶zaap⁶)",
-  hook: "Many words join characters whose own meanings build the word's: 電腦 is electric + brain, 雪櫃 is snow + cupboard, a fridge. Try that route first. A sound-alike follows the Jyutping syllable by syllable, tone numbers included. Never write characters or Jyutping in the hook.",
+  hint: "Many words join characters whose own meanings build the word's: 電腦 is electric + brain, 雪櫃 is snow + cupboard, a fridge. Try that route first. A sound-alike follows the Jyutping syllable by syllable, tone numbers included. Never write characters or Jyutping in the hook.",
   checks: [
     {
       field: "pronunciation",

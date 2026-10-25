@@ -275,6 +275,10 @@
     {
       "name": "0068_cooing_medusa.sql",
       "sha256": "cf7ac811b3962a2f9a9a4485c5cd83e3ba7f42ff90e3a1be4f4b36186ba06ca9"
+    },
+    {
+      "name": "0069_rename_hook_to_hint.sql",
+      "sha256": "9c0660a870ee7c22cad44170eaca1dc313565449108ec9192303037e4482e86e"
     }
   ]
 }

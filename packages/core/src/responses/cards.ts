@@ -61,7 +61,7 @@ export const CardOut = z
       description: "Set while the AI is translating the example, and null once it settles",
     }),
     notes: z.string().nullable().meta({ description: "Markdown source in the notes subset" }),
-    hook: z.string().nullable().meta({
+    hint: z.string().nullable().meta({
       description:
         "A short association that leads back to the answer without giving any of it away. Review shows it under the cue. Null for a reader of another edition, whose meanings are in another language.",
     }),
@@ -89,7 +89,7 @@ export const CardOut = z
     exampleTranslationSource: FieldSource.nullable().meta(OPEN),
     pronunciationSource: FieldSource.nullable().meta(OPEN),
     notesSource: FieldSource.nullable().meta(OPEN),
-    hookSource: FieldSource.nullable().meta(OPEN),
+    hintSource: FieldSource.nullable().meta(OPEN),
     enrichmentStatus: EnrichmentStatus.nullable().meta({
       ...OPEN,
       description: "Set while the AI is filling the card's empty fields, and null once it settles",
@@ -136,16 +136,16 @@ export const CardOut = z
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
 
-/** The AI's draft for a card's memory hook, shown greyed in the owner's hook editor until kept. */
-export const HookDraftOut = z
+/** The AI's draft for a card's hint, shown greyed in the owner's hint editor until kept. */
+export const HintDraftOut = z
   .object({
-    hook: z.string().nullable().meta({
+    hint: z.string().nullable().meta({
       description:
-        "A short mnemonic in the meaning's language, or null for a card the keyword method does not fit, such as a sentence or a term in the learner's own language. Saving exactly this text marks the hook as the AI's.",
+        "A short mnemonic in the meaning's language, or null for a card the keyword method does not fit, such as a sentence or a term in the learner's own language. Saving exactly this text marks the hint as the AI's.",
     }),
   })
-  .meta({ id: "HookDraft" });
-export type HookDraftOut = z.infer<typeof HookDraftOut>;
+  .meta({ id: "HintDraft" });
+export type HintDraftOut = z.infer<typeof HintDraftOut>;
 
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),

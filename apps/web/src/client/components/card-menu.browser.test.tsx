@@ -27,14 +27,14 @@ function Menu({
         open={open}
         onOpenChange={setOpen}
         visible
-        hasHook={false}
+        hasHint={false}
         important={important}
         onImportantChange={(on) => {
           setImportant(on);
           onImportantChange(on);
         }}
         canEdit={canEdit}
-        onHook={() => undefined}
+        onHint={() => undefined}
         onEdit={() => undefined}
         onView={() => undefined}
         onArchive={onArchive}
@@ -43,11 +43,11 @@ function Menu({
   );
 }
 
-test("the owner can write a hook, edit, view and archive the card", async () => {
+test("the owner can write a hint, edit, view and archive the card", async () => {
   const archived = vi.fn();
   await render(<Menu canEdit onArchive={archived} />);
   await page.getByRole("button", { name: "Card options" }).click();
-  await expect.element(page.getByRole("menuitem", { name: "Add hook" })).toBeVisible();
+  await expect.element(page.getByRole("menuitem", { name: "Add hint" })).toBeVisible();
   await expect.element(page.getByRole("menuitem", { name: "Edit card" })).toBeVisible();
   await expect.element(page.getByRole("menuitem", { name: "View card" })).toBeVisible();
   await page.getByRole("menuitem", { name: "Archive card" }).click();
@@ -65,5 +65,5 @@ test("a member of a shared deck can only view the card and mark it important", a
   await page.getByRole("menuitem", { name: "Unmark important" }).click();
   expect(marked).toHaveBeenLastCalledWith(false);
   expect(page.getByRole("menuitem", { name: "Archive card" }).elements()).toHaveLength(0);
-  expect(page.getByRole("menuitem", { name: "Add hook" }).elements()).toHaveLength(0);
+  expect(page.getByRole("menuitem", { name: "Add hint" }).elements()).toHaveLength(0);
 });

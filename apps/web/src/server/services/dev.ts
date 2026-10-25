@@ -201,7 +201,7 @@ export async function seedPersona(
           ...(c.source !== undefined && { source: c.source }),
           ...(c.meaningSource !== undefined && { meaningSource: c.meaningSource }),
           ...(c.exampleSource !== undefined && { exampleSource: c.exampleSource }),
-          ...(c.hook !== undefined && { hook: c.hook }),
+          ...(c.hint !== undefined && { hint: c.hint }),
           ...(c.section && { sectionId: sections.get(c.section) }),
         })),
       );
@@ -1056,31 +1056,31 @@ export async function slipCards(ctx: ServiceContext, count: number): Promise<num
 /** The deck `seedOftenForgotten` writes. */
 const OFTEN_FORGOTTEN_DECK = "Tricky Estonian";
 
-/** Cards with no hook yet, so review offers to write one. */
+/** Cards with no hint yet, so review offers to write one. */
 const OFTEN_FORGOTTEN: PersonaCard[] = [
   { term: "kõrvits", meaning: "pumpkin" },
   { term: "vaatama", meaning: "to look, to watch" },
 ];
 
-/** A card that already has a hook, recalled once before, so review can show the peek. */
-const HOOKED: PersonaCard & { hook: string } = {
+/** A card that already has a hint, recalled once before, so review can show the peek. */
+const HINTED: PersonaCard & { hint: string } = {
   term: "lumi",
   meaning: "snow",
-  hook: "Fresh snow makes the whole street luminous.",
+  hint: "Fresh snow makes the whole street luminous.",
 };
 
 /**
- * Often-forgotten cards with no hook, asked meaning first, forgotten as the first grade on just
- * enough past days to slip, and due now. With `hooked`, a card that already has a hook is due
+ * Often-forgotten cards with no hint, asked meaning first, forgotten as the first grade on just
+ * enough past days to slip, and due now. With `hinted`, a card that already has a hint is due
  * beside them. A second run replaces the first.
  */
 export async function seedOftenForgotten(
   ctx: ServiceContext,
-  { hooked = true }: { hooked?: boolean | undefined } = {},
+  { hinted = true }: { hinted?: boolean | undefined } = {},
   now = new Date(),
-): Promise<{ deckId: string; cardIds: string[]; hookedCardId: string | null }> {
+): Promise<{ deckId: string; cardIds: string[]; hintedCardId: string | null }> {
   const { db, userId } = ctx;
-  const terms = [HOOKED, ...OFTEN_FORGOTTEN].map((c) => c.term);
+  const terms = [HINTED, ...OFTEN_FORGOTTEN].map((c) => c.term);
   await db.batch([
     db
       .delete(schema.cards)
@@ -1094,9 +1094,9 @@ export async function seedOftenForgotten(
     defaultLanguage: "et",
     reviewModes: [{ cue: "meaning", target: "term" }],
   });
-  const seeds: (PersonaCard & { hook?: string })[] = [
+  const seeds: (PersonaCard & { hint?: string })[] = [
     ...OFTEN_FORGOTTEN,
-    ...(hooked ? [HOOKED] : []),
+    ...(hinted ? [HINTED] : []),
   ];
   const outcomes = await addCards(
     ctx,
@@ -1106,14 +1106,14 @@ export async function seedOftenForgotten(
       meaning: card.meaning,
       meaningSource: "lesson" as const,
       source: "Tund 7",
-      ...(card.hook ? { hook: card.hook } : {}),
+      ...(card.hint ? { hint: card.hint } : {}),
     })),
   );
   const idOf = new Map(
     outcomes.flatMap((o) => (o.status === "added" ? [[o.card.term, o.card.id] as const] : [])),
   );
   const cardIds = OFTEN_FORGOTTEN.flatMap((card) => idOf.get(card.term) ?? []);
-  const hookedCardId = idOf.get(HOOKED.term) ?? null;
+  const hintedCardId = idOf.get(HINTED.term) ?? null;
 
   const states = await db
     .select()
@@ -1121,7 +1121,7 @@ export async function seedOftenForgotten(
     .where(
       and(
         eq(schema.cardStates.userId, userId),
-        inArray(schema.cardStates.cardId, [...cardIds, ...(hookedCardId ? [hookedCardId] : [])]),
+        inArray(schema.cardStates.cardId, [...cardIds, ...(hintedCardId ? [hintedCardId] : [])]),
       ),
     );
   const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
@@ -1132,8 +1132,8 @@ export async function seedOftenForgotten(
     (_, i) => SLIPPING_FORGOTTEN_DAYS - i,
   );
   for (const state of states) {
-    // The hooked card was recalled once, a few days ago; the others were forgotten day after day.
-    const recalled = state.cardId === hookedCardId;
+    // The hinted card was recalled once, a few days ago; the others were forgotten day after day.
+    const recalled = state.cardId === hintedCardId;
     let fsrs = emptyState(new Date(today - (SLIPPING_FORGOTTEN_DAYS + 1) * DAY));
     const rating = recalled ? 3 : 1;
     const days = recalled ? [SLIPPING_FORGOTTEN_DAYS] : slippedDays;
@@ -1174,5 +1174,5 @@ export async function seedOftenForgotten(
     );
   }
   await runBatched(db, statements);
-  return { deckId: deck.id, cardIds, hookedCardId };
+  return { deckId: deck.id, cardIds, hintedCardId };
 }

@@ -514,14 +514,14 @@ msgstr "Додавай картку з будь-якого застосунку 
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Додай фото, PDF або транскрипт і познач потрібні слова."
 
-msgid "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
-msgstr "Додай слово з сьогоднішнього заняття, і AI допише значення, три форми, приклад і зачіпку, щоб легше запам’ятати. Він заповнює лише порожні поля й позначає, що написав сам."
+msgid "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgstr "Додай слово з сьогоднішнього заняття, і AI допише значення, три форми, приклад і підказку, щоб легше запам’ятати. Він заповнює лише порожні поля й позначає, що написав сам."
 
-msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
-msgstr "Додай слово із сьогоднішнього уроку, і AI допише читання, значення, приклад і зачіпку, щоб легше запам’ятати. Він заповнює лише те, що ти лишаєш порожнім, і позначає, що написав сам."
+msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
+msgstr "Додай слово із сьогоднішнього уроку, і AI допише читання, значення, приклад і підказку, щоб легше запам’ятати. Він заповнює лише те, що ти лишаєш порожнім, і позначає, що написав сам."
 
-msgid "Add a word from today’s lesson. AI fills in the pinyin, an example and a hook to help you remember it. It fills only what you left empty and marks what it wrote."
-msgstr "Додай слово з сьогоднішнього уроку. AI допише піньїнь, приклад і зачіпку, щоб легше запам’ятати. Він заповнює лише порожні поля й позначає, що написав сам."
+msgid "Add a word from today’s lesson. AI fills in the pinyin, an example and a hint to help you remember it. It fills only what you left empty and marks what it wrote."
+msgstr "Додай слово з сьогоднішнього уроку. AI допише піньїнь, приклад і підказку, щоб легше запам’ятати. Він заповнює лише порожні поля й позначає, що написав сам."
 
 msgid "Add a word from today’s lesson. AI marks its stress, writes an example in Ukrainian with every stress marked, and says when a word looks Russian but means something else. It fills only what you left empty and marks what it wrote."
 msgstr "Додай слово з сьогоднішнього уроку. AI позначить наголос, напише приклад українською з наголосами в кожному слові й підкаже, коли слово схоже на російське, але означає інше. Він заповнює лише порожні поля й позначає те, що написав сам."
@@ -535,8 +535,8 @@ msgstr "Додай обидві колоди"
 msgid "Add cards yourself"
 msgstr "Додати картки вручну"
 
-msgid "Add hook"
-msgstr "Додати зачіпку"
+msgid "Add hint"
+msgstr "Додати підказку"
 
 msgid "Add it to your assistant"
 msgstr "Додай її до свого асистента"
@@ -1032,7 +1032,7 @@ msgstr "Тест на громадянство Канади"
 msgid "Canadian citizenship test: practice questions on every chapter"
 msgstr "Тест на громадянство Канади: тренувальні питання з кожної глави"
 
-msgid "Card enrichment, example translations, memory hooks and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
+msgid "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
 msgstr "Доповнення карток, переклад прикладів, підказки для запам’ятовування й стиль колоди використовують поля карток, доречні картки з колоди, її опис та інструкції, а також твої виправлення AI-тексту. Доповнення може запускатися під час додавання карток або на твій запит; стиль колоди оновлюється у фоновому режимі. Ці текстові функції використовують OpenAI."
 
 msgid "Cards"
@@ -2053,6 +2053,9 @@ msgstr "Ось чат із сьогоднішнього уроку з Марто
 msgid "Hi"
 msgstr "Привіт"
 
+msgid "Hint"
+msgstr "Підказка"
+
 msgid "hiragana"
 msgstr "хіраґана"
 
@@ -2764,9 +2767,6 @@ msgstr "Пам’ять слабне. Якщо пригадати щось вч�
 
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
 msgstr "Пам’ять згасає. Якщо згадати щось вчасно, спогад міцнішає, а наступна перерва може бути довшою. Lymi за оцінками кожного учня вирішує, коли повернути кожну картку."
-
-msgid "Memory hook"
-msgstr "Зачіпка"
 
 msgid "Menu"
 msgstr "Меню"

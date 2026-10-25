@@ -29,7 +29,7 @@ Why: Lymi reads the spelling பஸ் as pas, but the word is said bas, so its 
   },
   lesson:
     "Latin letters beside or under the Tamil word, with or without marks (vaṇakkam, vanakkam)",
-  hook: "Many everyday words are loans from English or Sanskrit (பஸ் bus, ஜன்னல் window); when the word is one, try that route first. Otherwise a sound-alike follows the word's sound, written in English letters. Never write Tamil script in the hook.",
+  hint: "Many everyday words are loans from English or Sanskrit (பஸ் bus, ஜன்னல் window); when the word is one, try that route first. Otherwise a sound-alike follows the word's sound, written in English letters. Never write Tamil script in the hook.",
   checks: [
     {
       field: "pronunciation",

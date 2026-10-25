@@ -1,4 +1,4 @@
-// The HTTP contract of a card's hook and of a grade the hook helped; the rules are service tests.
+// The HTTP contract of a card's hint and of a grade the hint helped; the rules are service tests.
 import { AddCardOutcomeOut, CardHistoryOut, CardOut, DeckOut, GradeOut, UndoOut } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
 import { json, type Session, type TestApp, testApp } from "../test-app";
@@ -8,17 +8,17 @@ let learner: Session;
 
 beforeAll(async () => {
   app = await testApp();
-  learner = await app.signUp("hook-route");
+  learner = await app.signUp("hint-route");
 }, 60_000);
 
-async function hookedCard(term: string) {
+async function hintedCard(term: string) {
   const deck = await app.fetch("/api/decks", {
-    ...json({ name: `Hooks ${term}`, defaultLanguage: "et" }),
+    ...json({ name: `Hints ${term}`, defaultLanguage: "et" }),
     as: learner,
   });
   const deckId = DeckOut.parse(await deck.json()).id;
   const added = await app.fetch("/api/cards", {
-    ...json({ deckId, term, meaning: "snow", hook: " A luminous street ", enrich: false }),
+    ...json({ deckId, term, meaning: "snow", hint: " A luminous street ", enrich: false }),
     as: learner,
   });
   const outcome = AddCardOutcomeOut.parse(await added.json());
@@ -43,48 +43,48 @@ const history = async (cardId: string) =>
     await (await app.fetch(`/api/cards/${cardId}/history`, { as: learner })).json(),
   );
 
-describe("hooks", () => {
-  it("takes a hook on add and edit, the learner's unless the caller names the lesson", async () => {
-    const card = await hookedCard("lumi");
-    expect(card).toMatchObject({ hook: "A luminous street", hookSource: "manual" });
+describe("hints", () => {
+  it("takes a hint on add and edit, the learner's unless the caller names the lesson", async () => {
+    const card = await hintedCard("lumi");
+    expect(card).toMatchObject({ hint: "A luminous street", hintSource: "manual" });
 
     const patched = await app.fetch(`/api/cards/${card.id}`, {
-      ...json({ hook: "Lumi lights the street", hookSource: "lesson" }, { method: "PATCH" }),
+      ...json({ hint: "Lumi lights the street", hintSource: "lesson" }, { method: "PATCH" }),
       as: learner,
     });
     expect(CardOut.parse(await patched.json())).toMatchObject({
-      hook: "Lumi lights the street",
-      hookSource: "lesson",
+      hint: "Lumi lights the street",
+      hintSource: "lesson",
     });
 
     const cleared = await app.fetch(`/api/cards/${card.id}`, {
-      ...json({ hook: "" }, { method: "PATCH" }),
+      ...json({ hint: "" }, { method: "PATCH" }),
       as: learner,
     });
-    expect(CardOut.parse(await cleared.json())).toMatchObject({ hook: null, hookSource: null });
+    expect(CardOut.parse(await cleared.json())).toMatchObject({ hint: null, hintSource: null });
 
     const ai = await app.fetch(`/api/cards/${card.id}`, {
-      ...json({ hook: "Mine", hookSource: "ai" }, { method: "PATCH" }),
+      ...json({ hint: "Mine", hintSource: "ai" }, { method: "PATCH" }),
       as: learner,
     });
     expect(ai.status).toBe(400);
 
-    // A source alone says nothing about a hook that is not there.
+    // A source alone says nothing about a hint that is not there.
     const sourceOnly = await app.fetch(`/api/cards/${card.id}`, {
-      ...json({ hookSource: "lesson" }, { method: "PATCH" }),
+      ...json({ hintSource: "lesson" }, { method: "PATCH" }),
       as: learner,
     });
-    expect(CardOut.parse(await sourceOnly.json())).toMatchObject({ hook: null, hookSource: null });
+    expect(CardOut.parse(await sourceOnly.json())).toMatchObject({ hint: null, hintSource: null });
   });
 
   it("records a peek with the grade, refuses Easy after one, and Undo takes both back", async () => {
-    const card = await hookedCard("lumi2");
-    const easy = await grade(card.id, 4, { aid: "hook" });
+    const card = await hintedCard("lumi2");
+    const easy = await grade(card.id, 4, { aid: "hint" });
     expect(easy.status).toBe(400);
     expect((await history(card.id)).reviews).toEqual([]);
 
-    const good = GradeOut.parse(await (await grade(card.id, 3, { aid: "hook" })).json());
-    expect((await history(card.id)).reviews).toMatchObject([{ rating: 3, aid: "hook" }]);
+    const good = GradeOut.parse(await (await grade(card.id, 3, { aid: "hint" })).json());
+    expect((await history(card.id)).reviews).toMatchObject([{ rating: 3, aid: "hint" }]);
 
     const undone = await app.fetch("/api/review/undo", {
       ...json({ reviewId: good.reviewId }),

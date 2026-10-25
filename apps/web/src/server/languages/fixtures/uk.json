@@ -1,5 +1,5 @@
 {
-  "about": "Invented cases for the uk module's lesson, hook and check slots, led by the stress homographs and the words that look Russian; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Ukrainian reader, reviews these with ukrainian.ts.",
+  "about": "Invented cases for the uk module's lesson, hint and check slots, led by the stress homographs and the words that look Russian; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Ukrainian reader, reviews these with ukrainian.ts.",
   "lesson": [
     {
       "term": "замок",
@@ -112,7 +112,7 @@
       "reading": "дя́кую"
     }
   ],
-  "hook": [
+  "hint": [
     {
       "term": "неділя",
       "meaning": "Sunday",

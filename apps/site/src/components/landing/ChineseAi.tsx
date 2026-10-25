@@ -15,7 +15,7 @@ const Zh = ({ children, className }: { children: ReactNode; className?: string }
   </span>
 );
 
-const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, hook: 3200 };
+const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, hint: 3200 };
 
 /** A word typed after a lesson; AI fills each empty field and marks it, and known characters lose their pinyin. */
 export function EnrichChinese() {
@@ -69,10 +69,10 @@ export function EnrichChinese() {
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Memory hook</Trans>} wrote={at("hook")}>
+      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
         <motion.span
           initial={false}
-          animate={appear(at("hook"))}
+          animate={appear(at("hint"))}
           className="min-h-[1.5em] text-md text-text"
         >
           <Trans>

@@ -906,8 +906,8 @@ msgstr "Додай картки з останнього уроку, а поті�
 msgid "Add cards from your next lesson"
 msgstr "Додай картки з наступного уроку"
 
-msgid "Add hook"
-msgstr "Додати зачіпку"
+msgid "Add hint"
+msgstr "Додати підказку"
 
 msgid "Add more"
 msgstr "Додати ще"
@@ -975,8 +975,8 @@ msgstr "AI доповнить"
 msgid "AI follows these when filling cards. Only you see them."
 msgstr "ШІ дотримується їх, коли заповнює картки. Бачиш їх лише ти."
 
-msgid "AI hook"
-msgstr "Зачіпка від AI"
+msgid "AI hint"
+msgstr "Підказка від AI"
 
 msgid "AI meaning"
 msgstr "Значення від AI"
@@ -1645,8 +1645,8 @@ msgstr "Не вдалося видалити акаунт. Перевір з’�
 msgid "Couldn’t download the file. Check your connection and try again."
 msgstr "Не вдалося завантажити файл. Перевір з’єднання і спробуй ще раз."
 
-msgid "Couldn’t draft a hook. Try again in a moment."
-msgstr "Не вдалося підготувати зачіпку. Спробуй ще раз за мить."
+msgid "Couldn’t draft a hint. Try again in a moment."
+msgstr "Не вдалося підготувати підказку. Спробуй ще раз за мить."
 
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не вдалося доповнити «{term}». Перевір з’єднання й повтори спробу."
@@ -1788,8 +1788,8 @@ msgstr "Не вдалося зберегти картку."
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
 
-msgid "Couldn’t save the hook."
-msgstr "Не вдалося зберегти зачіпку."
+msgid "Couldn’t save the hint."
+msgstr "Не вдалося зберегти підказку."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
@@ -2024,7 +2024,7 @@ msgstr "Готово"
 msgid "Draft"
 msgstr "Чернетка"
 
-msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgid "Drafting a hint uses AI. Turn on AI services in You to draft one."
 msgstr "Підказку складає AI. Увімкни AI-сервіси в розділі Ти, щоб скласти її."
 
 msgid "Drag a series by its handle. Library shows them in this order."
@@ -2070,8 +2070,8 @@ msgstr "Змінити"
 msgid "Edit card"
 msgstr "Редагувати картку"
 
-msgid "Edit hook"
-msgstr "Змінити зачіпку"
+msgid "Edit hint"
+msgstr "Змінити підказку"
 
 msgid "Edit term"
 msgstr "Редагувати термін"
@@ -2467,14 +2467,20 @@ msgctxt "language"
 msgid "Hindi"
 msgstr "Гінді"
 
+msgid "Hint"
+msgstr "Підказка"
+
+msgid "Hint by you"
+msgstr "Твоя підказка"
+
+msgid "Hint from lesson"
+msgstr "Підказка з уроку"
+
+msgid "Hint: {text}"
+msgstr "Підказка: {text}"
+
 msgid "History"
 msgstr "Історія"
-
-msgid "Hook by you"
-msgstr "Твоя зачіпка"
-
-msgid "Hook from lesson"
-msgstr "Зачіпка з уроку"
 
 msgid "How cards are asked"
 msgstr "Як запитуються картки"
@@ -2954,12 +2960,6 @@ msgstr "Значення з уроку"
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медична французька для медсестер. Бери медичне значення."
 
-msgid "Memory hook"
-msgstr "Зачіпка"
-
-msgid "Memory hook: {text}"
-msgstr "Зачіпка: {text}"
-
 msgid "Merge"
 msgstr "Об’єднати"
 
@@ -3186,8 +3186,8 @@ msgstr "Розділів ще немає"
 msgid "No series"
 msgstr "Без серії"
 
-msgid "No strong hook for this one. Try again, or write your own."
-msgstr "Для цієї картки немає вдалої зачіпки. Спробуй ще раз або напиши свою."
+msgid "No strong hint for this one. Try again, or write your own."
+msgstr "Для цієї картки немає вдалої підказки. Спробуй ще раз або напиши свою."
 
 msgid "No tags match “{query}”"
 msgstr "Немає тегів за запитом «{query}»"
@@ -3428,8 +3428,8 @@ msgstr "Встав нотатки або транскрипт"
 msgid "PDF"
 msgstr "PDF"
 
-msgid "Peek at your hook"
-msgstr "Підглянути зачіпку"
+msgid "Peek at your hint"
+msgstr "Підглянути підказку"
 
 msgid "People"
 msgstr "Люди"
@@ -4001,8 +4001,8 @@ msgstr "Показати всі"
 msgid "Show another"
 msgstr "Показати іншу"
 
-msgid "Show hook"
-msgstr "Показати зачіпку"
+msgid "Show hint"
+msgstr "Показати підказку"
 
 msgid "Show in Library"
 msgstr "Показати в Бібліотеці"
@@ -4557,8 +4557,8 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Подорожі"
 
-msgid "Try a memory hook"
-msgstr "Спробуй зачіпку"
+msgid "Try a hint"
+msgstr "Спробуй підказку"
 
 msgid "Try a word from a card, or a language."
 msgstr "Спробуй слово з картки або назву мови."
@@ -4770,8 +4770,8 @@ msgstr "Слова й фрази мови, яку вчиш."
 msgid "Work and study"
 msgstr "Робота й навчання"
 
-msgid "Write a hook."
-msgstr "Напиши зачіпку."
+msgid "Write a hint."
+msgstr "Напиши підказку."
 
 msgid "Write to Lymi"
 msgstr "Написати в Lymi"
@@ -4828,8 +4828,8 @@ msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} по�
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
 
-msgid "You can’t choose Easy after peeking at your hook."
-msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
+msgid "You can’t choose Easy after peeking at your hint."
+msgstr "Після того як підглянеш підказку, «Легко» вибрати не можна."
 
 msgid "You cannot add this deck."
 msgstr "Ти не можеш додати цю колоду."

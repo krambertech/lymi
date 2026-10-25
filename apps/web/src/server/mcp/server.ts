@@ -1173,7 +1173,7 @@ const CardOut = z.object({
     .boolean()
     .describe("True when the translation was written for an earlier example"),
   notes: z.string().nullable().describe("Markdown source in the notes subset"),
-  hook: z
+  hint: z
     .string()
     .nullable()
     .describe(
@@ -1204,7 +1204,7 @@ const CardOut = z.object({
   exampleTranslationSource: FieldSource.nullable(),
   pronunciationSource: FieldSource.nullable(),
   notesSource: FieldSource.nullable(),
-  hookSource: FieldSource.nullable(),
+  hintSource: FieldSource.nullable(),
   enrichmentStatus: EnrichmentStatus.nullable().describe(
     "Set while Lymi is filling the card's empty fields, and null once it settles",
   ),
@@ -1236,7 +1236,7 @@ function cardOut(card: CardView): CardOut {
     exampleTranslation: card.exampleTranslation,
     exampleTranslationStale: card.exampleTranslationStale,
     notes: card.notes,
-    hook: card.hook,
+    hint: card.hint,
     language: card.language,
     tags: card.tags,
     source: card.source,
@@ -1257,7 +1257,7 @@ function cardOut(card: CardView): CardOut {
     exampleTranslationSource: card.exampleTranslationSource,
     pronunciationSource: card.pronunciationSource,
     notesSource: card.notesSource,
-    hookSource: card.hookSource,
+    hintSource: card.hintSource,
     enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),

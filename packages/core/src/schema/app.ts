@@ -207,14 +207,14 @@ export const cards = sqliteTable(
     exampleTranslationOf: text("example_translation_of"),
     /** Set while the AI is translating the example, and cleared once it settles. */
     exampleTranslationStatus: text("example_translation_status", { enum: ["working", "failed"] }),
-    /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
-    hook: text("hook"),
-    hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
+    /** A hint. Not an edition field, so writing one leaves `revision` and every edition alone. */
+    hint: text("hint"),
+    hintSource: text("hint_source", { enum: ["lesson", "ai", "manual"] }),
     /**
-     * The hook the AI drafted for the owner's editor, kept until the term or meaning changes; empty
-     * when it had none. Saving exactly this text marks the hook as the AI's.
+     * The hint the AI drafted for the owner's editor, kept until the term or meaning changes; empty
+     * when it had none. Saving exactly this text marks the hint as the AI's.
      */
-    hookDraft: text("hook_draft"),
+    hintDraft: text("hint_draft"),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** The fields the outstanding run may fill, so a screen holds space for those alone. */

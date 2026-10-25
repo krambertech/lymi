@@ -88,7 +88,7 @@ const fieldName: Record<string, MessageDescriptor> = {
   example: msg`the example`,
   exampleTranslation: msg`the example’s translation`,
   notes: msg`the notes`,
-  hook: msg`the memory hook`,
+  hint: msg`the hint`,
   source: msg`the source`,
   language: msg`the language`,
   tags: msg`the tags`,
@@ -111,7 +111,7 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   example: (value) => msg`Example changed to “${value}”`,
   exampleTranslation: (value) => msg`Translation changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
-  hook: (value) => msg`Memory hook changed to “${value}”`,
+  hint: (value) => msg`Hint changed to “${value}”`,
 };
 
 const eventIcon: Record<WordEvent["kind"], LucideIcon> = {
@@ -779,11 +779,11 @@ export function WordView({
         ) : (
           waiting("notes") && <ReadField label={t`Notes`} value="" working />
         )}
-        {card.hook && (
+        {card.hint && (
           <ReadField
-            label={t`Memory hook`}
-            aside={card.hookSource === "ai" && <SourceChip source="ai" field="hook" size="xs" />}
-            value={card.hook}
+            label={t`Hint`}
+            aside={card.hintSource === "ai" && <SourceChip source="ai" field="hint" size="xs" />}
+            value={card.hint}
           />
         )}
         {/* One quiet line, only here: a row that says "No meaning yet" is already saying enough. */}

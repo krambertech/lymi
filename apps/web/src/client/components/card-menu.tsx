@@ -1,5 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
-import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, Flag, SquarePen, Star } from "lucide-react";
+import {
+  Archive,
+  ChartNoAxesColumn,
+  Ellipsis,
+  Flag,
+  Lightbulb,
+  SquarePen,
+  Star,
+} from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -14,13 +22,13 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   /** A ⋯ beside the card with a mouse; on touch the trigger is for a screen reader alone. */
   visible: boolean;
-  hasHook: boolean;
+  hasHint: boolean;
   /** The learner's own mark, so a member of a shared deck sets it too. */
   important: boolean;
   onImportantChange: (important: boolean) => void;
   /** Only the deck's owner changes its cards, so a member can only view the card. */
   canEdit: boolean;
-  onHook: () => void;
+  onHint: () => void;
   onEdit: () => void;
   /** Opens the card as a place over review: its fields, schedule and history. */
   onView: () => void;
@@ -39,11 +47,11 @@ export function CardMenu({
   open,
   onOpenChange,
   visible,
-  hasHook,
+  hasHint,
   important,
   onImportantChange,
   canEdit,
-  onHook,
+  onHint,
   onEdit,
   onView,
   onArchive,
@@ -72,9 +80,9 @@ export function CardMenu({
       />
       <DropdownMenuContent aria-label={t`Card options`} align="end" finalFocus={finalFocus}>
         {canEdit && (
-          <DropdownMenuItem onClick={onHook}>
-            <Anchor aria-hidden="true" />
-            {hasHook ? t`Edit hook` : t`Add hook`}
+          <DropdownMenuItem onClick={onHint}>
+            <Lightbulb aria-hidden="true" />
+            {hasHint ? t`Edit hint` : t`Add hint`}
           </DropdownMenuItem>
         )}
         {canEdit && (

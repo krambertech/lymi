@@ -28,7 +28,7 @@ function envWith(secret: unknown): Bindings {
   } as unknown as Bindings;
 }
 
-it("shows what the after hook sees, and what a missing secret does", async () => {
+it("shows what the after hint sees, and what a missing secret does", async () => {
   const log = vi.spyOn(console, "error").mockImplementation(() => {});
   const auth = createAuth(envWith("a-test-secret-that-is-long-enough-for-better-auth"), db);
   const created = await auth.api.signUpEmail({

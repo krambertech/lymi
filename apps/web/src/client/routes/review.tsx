@@ -50,7 +50,7 @@ import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { GRADES } from "../components/grade";
-import { HookEditor } from "../components/hook-editor";
+import { HintEditor } from "../components/hint-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
 import { ReportDialog } from "../components/report-dialog";
 import { toast } from "../components/ui/toast";
@@ -70,7 +70,7 @@ import {
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
-import { recordReveal, useRevealHint } from "../lib/reveal-hint";
+import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { stepReviewLeg } from "../lib/review-leg";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
@@ -234,15 +234,15 @@ function Review() {
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
-  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  // Whether the card on screen offers a hint, decided as it arrives and held until its grade.
   const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
   // How far into the card's aids the learner went before the reveal, and whether they asked to see
   // them after it, held for the card on screen.
   const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
   // Presses of a locked grade's key, counted per card so an earlier card's never show its tip.
   const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
-  // The card whose hook is being written, so the editor never outlives its card.
-  const [hookFor, setHookFor] = useState<string | null>(null);
+  // The card whose hint is being written, so the editor never outlives its card.
+  const [hintFor, setHintFor] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   // Cards archived from review, gone from it at once rather than when the draw is fetched again.
   const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
@@ -339,7 +339,7 @@ function Review() {
   const sectionName = sectionId
     ? sections.data?.sections.find((s) => s.id === sectionId)?.name
     : undefined;
-  const hint = useRevealHint(
+  const nudge = useRevealNudge(
     current ? `${current.stateId}-${done}` : undefined,
     revealed,
     streak.data?.reviewedDays,
@@ -773,7 +773,7 @@ function Review() {
   const showing = current ? `${itemKey(current)}-${done}` : "";
   const recallTimes = useRecallClock(showing || null, revealed);
   const knownReadings = useKnownReadings();
-  const writingHook = !!showing && hookFor === showing;
+  const writingHint = !!showing && hintFor === showing;
   const revealedAt = useRef(0);
   useEffect(() => {
     if (revealed) revealedAt.current = performance.now();
@@ -793,12 +793,12 @@ function Review() {
     setRevealedFor(showing);
     if (revealed) setRevealed(false);
   }
-  const hook = current?.card.hook ?? null;
-  const hookSource = current?.card.hookSource ?? null;
-  const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
+  const hint = current?.card.hint ?? null;
+  const hintSource = current?.card.hintSource ?? null;
+  const steps = useMemo(() => aidSteps({ hint, hintSource }), [hint, hintSource]);
   const taken = aidState.key === showing ? aidState.taken : 0;
   const shownAfter = aidState.key === showing && aidState.shown;
-  // Only a step taken before the reveal is help with recall; seeing the hook after it is not.
+  // Only a step taken before the reveal is help with recall; seeing the hint after it is not.
   const aid = aidTaken(steps, taken);
   // This mode's grades earlier today: on a second try Easy counts as Good, ADR 0031.
   const gradedToday = useMemo(() => {
@@ -921,7 +921,7 @@ function Review() {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (add.open || writingHook || menuOpen || editing || placeOpen) return;
+      if (add.open || writingHint || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
         leave();
         return;
@@ -973,30 +973,30 @@ function Review() {
     showAid,
     leave,
     add.open,
-    writingHook,
+    writingHint,
     menuOpen,
     editing,
     placeOpen,
     current,
   ]);
 
-  // A card often forgotten, or forgotten twice today, with no hook offers one, in a deck the learner
+  // A card often forgotten, or forgotten twice today, with no hint offers one, in a deck the learner
   // owns, since only the owner changes its cards. It waits for the card's deck, which a deck list
   // cached before the deck existed lacks, and once decided it holds, so a refetch never moves it mid-card.
   if (cardOffer.key !== showing && (!current || currentDeck)) {
     const stuck = !!current?.slipping || gradedToday.filter((e) => e.rating === 1).length >= 2;
     setCardOffer({
       key: showing,
-      offer: stuck && !current?.card.hook && currentDeck?.role === "owner",
+      offer: stuck && !current?.card.hint && currentDeck?.role === "owner",
       parked: false,
     });
   }
   const offer = cardOffer.key === showing && cardOffer.offer;
   const owned = currentDeck?.role === "owner";
   const [reporting, setReporting] = useState(false);
-  // Writing a hook parks the offer, and the panel fades, so it never stands beside the editor.
+  // Writing a hint parks the offer, and the panel fades, so it never stands beside the editor.
   // Where focus goes as the menu closes: the grades, unless the chosen row opened something that
-  // takes focus itself, such as the hook editor, the card editor or the card's place.
+  // takes focus itself, such as the hint editor, the card editor or the card's place.
   const menuHandsFocus = useRef(false);
   const menuFinalFocus = () => {
     if (menuHandsFocus.current) {
@@ -1005,12 +1005,12 @@ function Review() {
     }
     return gradesFocus();
   };
-  const openHook = () => {
-    setHookFor(showing);
+  const openHint = () => {
+    setHintFor(showing);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
-  const closeHook = () => {
-    setHookFor(null);
+  const closeHint = () => {
+    setHintFor(null);
     gradesFocus();
   };
 
@@ -1079,7 +1079,7 @@ function Review() {
   // On touch the revealed card is the menu's handle: a tap opens it. A tap this soon after the
   // reveal is the reveal's own tap doubled, not a second one.
   const openFromCard = (e: React.MouseEvent<HTMLElement>) => {
-    if (mouse || !revealed || writingHook) return;
+    if (mouse || !revealed || writingHint) return;
     // A tap in a portal, such as the drawer's own backdrop, still bubbles here through React.
     if (!e.currentTarget.contains(e.target as Node)) return;
     if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
@@ -1095,14 +1095,14 @@ function Review() {
       open={menuOpen}
       onOpenChange={setMenuOpen}
       visible={mouse}
-      hasHook={!!current.card.hook}
+      hasHint={!!current.card.hint}
       important={importantOf(current.card)}
       onImportantChange={(important) => void markImportant(current.card, important)}
       canEdit={owned}
       finalFocus={menuFinalFocus}
-      onHook={() => {
+      onHint={() => {
         menuHandsFocus.current = true;
-        openHook();
+        openHint();
       }}
       onEdit={() => {
         menuHandsFocus.current = true;
@@ -1225,7 +1225,7 @@ function Review() {
               revealed={revealed}
               animateReveal={animateReveal}
               animateIn={animateNextCard}
-              hint={hint}
+              nudge={nudge}
               focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
@@ -1245,12 +1245,12 @@ function Review() {
                       delay: animateReveal ? (reduce ? 0.7 : 0.95) : 0.5,
                       animate: animateReveal,
                       parked: cardOffer.parked,
-                      onOpen: openHook,
+                      onOpen: openHint,
                     }
                   : undefined
               }
               aid={
-                steps.length > 0 && !writingHook
+                steps.length > 0 && !writingHint
                   ? {
                       steps,
                       taken,
@@ -1267,14 +1267,14 @@ function Review() {
                   <span className="enter-fade">{cardMenu}</span>
                 ) : undefined
               }
-              hookEditor={
-                writingHook ? (
-                  <HookEditor
+              hintEditor={
+                writingHint ? (
+                  <HintEditor
                     card={current.card}
-                    onCancel={closeHook}
+                    onCancel={closeHint}
                     onSaved={() => {
-                      closeHook();
-                      // Written after the reveal, it shows at once where Show hook would have put it.
+                      closeHint();
+                      // Written after the reveal, it shows at once where Show hint would have put it.
                       setAidState({
                         key: showing,
                         taken,

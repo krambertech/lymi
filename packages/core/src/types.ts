@@ -578,8 +578,8 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
-  // A hook is a phrase that leads back to the answer, never a paragraph.
-  hook: 200,
+  // A hint is a phrase that leads back to the answer, never a paragraph.
+  hint: 200,
 } as const;
 
 /** How many tags a card may carry, and how long each may be. */
@@ -641,10 +641,10 @@ export const CardInput = z.object({
     .max(CARD_LIMITS.notes)
     .optional()
     .meta({ description: `${NOTES_FORMAT} The limit counts the Markdown source.` }),
-  hook: z
+  hint: z
     .string()
     .trim()
-    .max(CARD_LIMITS.hook, "Keep the hook under 200 characters.")
+    .max(CARD_LIMITS.hint, "Keep the hint under 200 characters.")
     .optional()
     .meta({
       description:
@@ -671,7 +671,7 @@ export const CardInput = z.object({
   exampleTranslationSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
   notesSource: StatedFieldSource.optional(),
-  hookSource: StatedFieldSource.optional(),
+  hintSource: StatedFieldSource.optional(),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
@@ -706,7 +706,7 @@ export const cardLimits = {
   exampleTranslation: CardInput.shape.exampleTranslation.unwrap().maxLength,
   notes: CardInput.shape.notes.unwrap().maxLength,
   source: CardInput.shape.source.unwrap().maxLength,
-  hook: CardInput.shape.hook.unwrap().maxLength,
+  hint: CardInput.shape.hint.unwrap().maxLength,
 } satisfies Record<string, number | null>;
 
 /** A learner's own answer to a Smart add question, checked against the terms on the list. */
@@ -824,10 +824,10 @@ export const ResponseShapeQuery = z.object({ response: ResponseShape.optional() 
  * What helped a recall before the reveal, in the order review offers them, so a later step such as
  * a hint joins the end. Easy means recall without help, so no aided grade may be Easy.
  */
-export const REVIEW_AIDS = ["hook"] as const;
+export const REVIEW_AIDS = ["hint"] as const;
 export const ReviewAid = z.enum(REVIEW_AIDS).meta({
   id: "ReviewAid",
-  description: "hook: the learner peeked at the card's memory hook before the reveal.",
+  description: "hint: the learner peeked at the card's hint before the reveal.",
 });
 export type ReviewAid = z.infer<typeof ReviewAid>;
 
@@ -979,7 +979,7 @@ export const AI_CONSENT_PLACES = [
   "add",
   "smart_add",
   "speech",
-  "hook",
+  "hint",
   "enrich",
   "settings",
 ] as const;

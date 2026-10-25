@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { refusedForAiConsent } from "@lymi/client/ai-consent";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS, hookable } from "@lymi/core";
+import { CARD_LIMITS, hintable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Anchor, Loader2, Sparkle } from "lucide-react";
+import { Lightbulb, Loader2, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
@@ -18,20 +18,20 @@ interface Props {
   card: Card;
   /** Closed without saving: Cancel, or Escape in the field. */
   onCancel: () => void;
-  /** The hook is on the card; the editor closes with its toast. */
+  /** The hint is on the card; the editor closes with its toast. */
   onSaved: () => void;
 }
 
 /**
- * The card's memory hook, written in its own place under the cue, like a message composer: the
+ * The card's hint, written in its own place under the cue, like a message composer: the
  * field on top and its actions along the foot. Enter saves and Escape lets go. Undo in the toast
- * puts back the hook the card had. Draft a hook asks the AI for one and puts it in the field to
+ * puts back the hint the card had. Draft a hint asks the AI for one and puts it in the field to
  * edit; while the field still holds that draft, the button asks for another.
  */
-export function HookEditor({ card, onCancel, onSaved }: Props) {
+export function HintEditor({ card, onCancel, onSaved }: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
-  const [text, setText] = useState(card.hook ?? "");
+  const [text, setText] = useState(card.hint ?? "");
   const [problem, setProblem] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const field = useRef<HTMLTextAreaElement>(null);
@@ -47,7 +47,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   // Only where the server drafts at all, and never over the learner's own words.
   const draftable =
     !!settings.data &&
-    hookable(card, settings.data.meaningLanguage) &&
+    hintable(card, settings.data.meaningLanguage) &&
     (empty || untouched || drafting);
 
   const draft = async () => {
@@ -60,24 +60,24 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
     const started = performance.now();
     const waited = () => Math.min(60_000, Math.round(performance.now() - started));
     try {
-      const { hook } = await api.draftHook(card.id);
-      captureAnalytics("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      const { hint } = await api.draftHint(card.id);
+      captureAnalytics("hint_drafted", { outcome: hint ? "drafted" : "none", wait_ms: waited() });
       // Words typed while the draft was on its way are the learner's, so the draft gives way.
       if (latest.current !== before) return;
-      if (hook) {
-        setText(hook);
-        setDrafted(hook);
+      if (hint) {
+        setText(hint);
+        setDrafted(hint);
         setProblem(null);
         field.current?.focus();
       } else {
-        setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
+        setDraftNote(t`No strong hint for this one. Try again, or write your own.`);
       }
     } catch (failure) {
-      captureAnalytics("hook_drafted", { outcome: "failed", wait_ms: waited() });
+      captureAnalytics("hint_drafted", { outcome: "failed", wait_ms: waited() });
       setDraftNote(
         refusedForAiConsent(failure)
-          ? t`AI services are off for your account. Turn them on in Settings to draft hooks.`
-          : t`Couldn’t draft a hook. Try again in a moment.`,
+          ? t`AI services are off for your account. Turn them on in Settings to draft hints.`
+          : t`Couldn’t draft a hint. Try again in a moment.`,
       );
     } finally {
       setDrafting(false);
@@ -91,14 +91,14 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
     node.setSelectionRange(node.value.length, node.value.length);
   }, []);
 
-  const undo = async (written: Card, before: string | null, source: Card["hookSource"]) => {
-    toast.close(`hook-${written.id}`);
+  const undo = async (written: Card, before: string | null, source: Card["hintSource"]) => {
+    toast.close(`hint-${written.id}`);
     try {
-      // A lesson or learner's hook comes back with its source. The AI's own cannot be claimed by a
+      // A lesson or learner's hint comes back with its source. The AI's own cannot be claimed by a
       // client, so the server derives it again from the draft it kept, where it has one.
       await writes.updateCard(written, {
-        hook: before ?? "",
-        ...(source && source !== "ai" ? { hookSource: source } : {}),
+        hint: before ?? "",
+        ...(source && source !== "ai" ? { hintSource: source } : {}),
       });
     } catch (e) {
       toast.add({ type: "error", title: errorMessage(e) });
@@ -107,13 +107,13 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   };
 
   const save = async () => {
-    const hook = text.trim();
-    if (!hook) {
-      setProblem(t`Write a hook.`);
+    const hint = text.trim();
+    if (!hint) {
+      setProblem(t`Write a hint.`);
       field.current?.focus();
       return;
     }
-    if (hook === card.hook) {
+    if (hint === card.hint) {
       onCancel();
       return;
     }
@@ -121,23 +121,23 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
     setPending(true);
     try {
       const { card: written, queued } = await writes.updateCard(card, {
-        hook,
-        hookSource: "manual",
+        hint,
+        hintSource: "manual",
       });
       toast.add({
-        id: `hook-${card.id}`,
+        id: `hint-${card.id}`,
         title: queued
           ? t`Saved on this device until Lymi can be reached.`
-          : card.hook
-            ? t`Hook saved`
-            : t`Hook added`,
+          : card.hint
+            ? t`Hint saved`
+            : t`Hint added`,
         actionProps: {
           children: t`Undo`,
-          onClick: () => void undo(written, card.hook, card.hookSource),
+          onClick: () => void undo(written, card.hint, card.hintSource),
         },
       });
       onSaved();
-      // Not awaited, so the editor closes with the toast and the hook lands in its place.
+      // Not awaited, so the editor closes with the toast and the hint lands in its place.
       void refreshAfterCardWrite(qc, card.id);
     } catch (e) {
       setProblem(errorMessage(e));
@@ -156,13 +156,13 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
       }}
     >
       <label className="flex min-w-0 items-start gap-2 pe-2.5">
-        <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
-        <span className="sr-only">{t`Memory hook`}</span>
+        <Lightbulb className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+        <span className="sr-only">{t`Hint`}</span>
         <textarea
           ref={field}
           rows={1}
           value={text}
-          maxLength={CARD_LIMITS.hook}
+          maxLength={CARD_LIMITS.hint}
           placeholder={t`A sound-alike, or something to picture`}
           aria-invalid={!!problem || undefined}
           onChange={(e) => {
@@ -178,7 +178,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
               onCancel();
               return;
             }
-            // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
+            // A hint is one phrase, so Enter keeps it; Shift Enter still breaks the line.
             if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
             e.preventDefault();
             e.currentTarget.form?.requestSubmit();
@@ -202,12 +202,12 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
             size="sm"
             variant="ghost"
             aria-label={
-              drafting ? t`Drafting a hook…` : untouched ? t`Another draft` : t`Draft a hook`
+              drafting ? t`Drafting a hint…` : untouched ? t`Another draft` : t`Draft a hint`
             }
-            // Not `loading`, which centres its spinner: the sparkle's own place keeps it under the anchor.
+            // Not `loading`, which centres its spinner: the sparkle's own place keeps it under the lightbulb.
             aria-busy={drafting || undefined}
             aria-disabled={drafting}
-            // Sits 6 px in like Save, which puts its icon under the anchor.
+            // Sits 6 px in like Save, which puts its icon under the lightbulb.
             className="-ms-2.5 @md:-order-1"
             onClick={() => void draft()}
           >

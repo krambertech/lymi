@@ -103,8 +103,8 @@ const card: CardView = {
   exampleRecorded: false,
   exampleTranslationStatus: null,
   notes: null,
-  hook: null,
-  hookSource: null,
+  hint: null,
+  hintSource: null,
   language: "it",
   tags: [],
   source: null,
@@ -580,7 +580,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a mentioned deck like get_deck, not as every card's fields", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);
@@ -1231,7 +1231,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a large deck in a few kilobytes and points to search_cards for the rest", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);

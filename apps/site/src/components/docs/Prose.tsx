@@ -103,7 +103,7 @@ export function Note({
 export function Steps({ children }: { children: ReactNode }) {
   const items = Children.toArray(children);
   return (
-    <ol className="my-6 grid list-none gap-6 !pl-0">
+    <ol className="my-6 grid list-none gap-6 !ps-0">
       {items.map((child, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: the steps are a fixed, ordered list
         <li key={i} className="relative grid grid-cols-[26px_1fr] gap-x-3.5">
@@ -152,7 +152,7 @@ export function Defs({ items }: { items: { term: ReactNode; def: ReactNode }[] }
 /** Links onward, as rows of one plate, so a hovered row fills inside the lines around it. */
 export function NextLinks({ items }: { items: { to: DocPath; title: string; blurb: string }[] }) {
   return (
-    <ul className="my-6 grid list-none overflow-hidden rounded-md bg-plate !pl-0 edge">
+    <ul className="my-6 grid list-none overflow-hidden rounded-md bg-plate !ps-0 edge">
       {items.map((it) => (
         <li key={it.to} className="border-edge [&:not(:first-child)]:border-t">
           <a

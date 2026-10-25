@@ -16,7 +16,7 @@ function Directory({ counts }: { counts: Map<string, number> | undefined }) {
           <h3 id={`group-${group}`} className="!mb-2 !mt-0 !text-sm !font-medium !text-muted">
             {group}
           </h3>
-          <ul className="grid list-none overflow-hidden rounded-md bg-plate !pl-0 edge">
+          <ul className="grid list-none overflow-hidden rounded-md bg-plate !ps-0 edge">
             {API_RESOURCES.filter((r) => r.group === group).map((r) => (
               <li key={r.slug} className="border-edge [&:not(:first-child)]:border-t">
                 <a

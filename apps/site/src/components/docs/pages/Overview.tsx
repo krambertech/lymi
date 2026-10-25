@@ -81,8 +81,8 @@ function Paths() {
       </Path>
       <Path
         to="/docs/import"
-        title="Bring your cards"
-        blurb="Decks and history from another flashcard app or a word list."
+        title="Import and export"
+        blurb="Bring decks from another app or a word list, or take yours out."
       >
         <span className="flex flex-wrap gap-1.5">
           {["Anki", "Mochi", "Noji", "Pleco", "Quizlet"].map((app) => (
@@ -123,16 +123,6 @@ export function Overview() {
             to: "/docs/scheduling",
             title: "Review scheduling",
             blurb: "When a card returns and how Lymi chooses what comes next.",
-          },
-        ]}
-      />
-      <H2>Take your cards out</H2>
-      <NextLinks
-        items={[
-          {
-            to: "/docs/export",
-            title: "Export your decks",
-            blurb: "Choose an Anki package, a Lymi file or a spreadsheet.",
           },
         ]}
       />

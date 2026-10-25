@@ -75,7 +75,7 @@ CI's artifact boundary check fails if the public build contains service-worker o
 
 ## Documentation structure
 
-Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. The sidebar separates Start, Using Lymi, Imports, Exports, Integrations, MCP assistants and API. File imports are separate from ongoing reading-app connections; every assistant setup guide stays under MCP assistants. Technical card fields and language formats live under API.
+Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. A Guides | API switch at the top of the sidebar picks which half it shows. Guides separates Start, Using Lymi, Import and export, Integrations and MCP assistants. File imports are separate from ongoing reading-app connections; every assistant setup guide stays under MCP assistants. API holds Using the API, with technical card fields and language formats, then the reference by resource group. Previous and next links stay within the half being read.
 
 | Path | Purpose |
 | --- | --- |

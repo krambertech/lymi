@@ -160,7 +160,7 @@ export function Endpoint({ route }: { route: Route }) {
       {failures.length > 0 && (
         <div>
           <Label>Errors</Label>
-          <ul className="grid list-none gap-1.5 !pl-0">
+          <ul className="grid list-none gap-1.5 !ps-0">
             {failures.map(([code, res]) => (
               <li key={code} className="flex items-baseline gap-2.5">
                 <StatusTag code={code} />
@@ -207,7 +207,7 @@ export function Endpoint({ route }: { route: Route }) {
 /** Every route of a resource on its own line, method and path in columns that line up. */
 export function EndpointIndex({ routes }: { routes: Route[] }) {
   return (
-    <ul className="grid list-none grid-cols-[auto_minmax(0,1fr)] rounded-md bg-plate !pl-0 edge sm:grid-cols-[auto_minmax(0,auto)_minmax(0,1fr)]">
+    <ul className="grid list-none grid-cols-[auto_minmax(0,1fr)] rounded-md bg-plate !ps-0 edge sm:grid-cols-[auto_minmax(0,auto)_minmax(0,1fr)]">
       {routes.map((route) => (
         <li
           key={`${route.method} ${route.path}`}

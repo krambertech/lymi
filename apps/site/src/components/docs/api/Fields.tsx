@@ -137,7 +137,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   }
   const required = new Set(resolved.required ?? []);
   return (
-    <ul className="grid list-none !pl-0">
+    <ul className="grid list-none !ps-0">
       {props.map(([name, prop]) => (
         <Field key={name} name={name} schema={prop} required={required.has(name)} />
       ))}
@@ -149,7 +149,7 @@ export function Params({ params, where }: { params: Param[]; where: "path" | "qu
   const list = params.filter((p) => p.in === where);
   if (list.length === 0) return null;
   return (
-    <ul className="grid list-none !pl-0">
+    <ul className="grid list-none !ps-0">
       {list.map((p) => (
         <Field
           key={p.name}

@@ -265,7 +265,15 @@
       "sha256": "d6bccf81926876832b549c25281ee50f09d5ba82faf61ae153020e8411bc6eca"
     },
     {
-      "name": "0066_silky_hardball.sql",
+      "name": "0066_regular_thor_girl.sql",
+      "sha256": "1866aee57145e40a422e7aea42804620677406bf976da4ce1d33c2dd525fe78d"
+    },
+    {
+      "name": "0067_stiff_devos.sql",
+      "sha256": "2f6a1d650887e0d19e310f2721c23246e90b1489f94813ce09d4e563c8728df9"
+    },
+    {
+      "name": "0068_cooing_medusa.sql",
       "sha256": "cf7ac811b3962a2f9a9a4485c5cd83e3ba7f42ff90e3a1be4f4b36186ba06ca9"
     }
   ]

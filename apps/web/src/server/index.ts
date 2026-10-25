@@ -7,7 +7,9 @@ import type { Bindings } from "./env";
 import { leadInDependencies } from "./lead-ins";
 import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
+import { readwiseDeps } from "./readwise/deps";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
+import { sweepAnkiConnectUploads } from "./services/anki-connect";
 import { retryAppleRevocations } from "./services/apple-revocations";
 import { purgeCardAudio } from "./services/audio";
 import { purgeExpiredAuthRows } from "./services/auth-retention";
@@ -15,6 +17,7 @@ import { copyFormerDecks } from "./services/deck-copies";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
+import { pullDueReadwise } from "./services/readwise";
 import { runStressBackfill } from "./services/stress-backfill";
 
 export type { AppEnv } from "./app";
@@ -61,6 +64,7 @@ export default {
         if (failed > 0) throw new Error(`${failed} copies of a former owner's deck failed`);
       }),
     );
+    run("anki-connect-uploads", sweepAnkiConnectUploads(env.IMPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     run(
@@ -98,6 +102,23 @@ export default {
         runStressBackfill(createDb(env.DB), { dryRun: false }).then((counts) =>
           console.log(JSON.stringify({ job: "stress-backfill", ...counts })),
         ),
+      );
+    }
+    {
+      const db = createDb(env.DB);
+      const analytics = ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work));
+      run(
+        "readwise",
+        pullDueReadwise(
+          db,
+          (userId) => {
+            const writer = analytics(userId);
+            return { deps: readwiseDeps(env, writer), analytics: writer };
+          },
+          at,
+        ).then(({ failed }) => {
+          if (failed > 0) throw new Error(`${failed} Readwise pulls failed`);
+        }),
       );
     }
     if (runsCanary(env)) run("canary", runCanary(env, at));

@@ -27,13 +27,17 @@ export type Unauthenticated =
 
 export async function resolvePrincipal(c: Context<AppEnv>): Promise<Principal | Unauthenticated> {
   const auth = c.get("auth");
-  const db = c.get("db");
   const key = c.req.header("x-api-key");
-  if (key) return fromApiKey(auth, db, key, publisherEmails(c.env));
+  if (key) return principalForKey(c, key);
 
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
   if (!session) return { error: "Sign in required", status: 401 };
   return { user: session.user, actor: "user", scope: "write" };
+}
+
+/** A personal key sent some other way than `x-api-key`, such as in an AnkiConnect body. */
+export function principalForKey(c: Context<AppEnv>, key: string) {
+  return fromApiKey(c.get("auth"), c.get("db"), key, publisherEmails(c.env));
 }
 
 async function fromApiKey(

@@ -180,6 +180,10 @@ xcrun simctl install <udid> ios/build/release/Build/Products/Release-iphonesimul
 
 A JavaScript change needs no native build: `npx expo export:embed --platform ios --dev false --bytecode --entry-file node_modules/expo-router/entry.js --bundle-output <dir>/main.jsbundle --assets-dest <dir>` writes a new `main.jsbundle` to copy into the app before the three steps above. Sign in with **Dev sign-in as heavy** to measure at a devoted learner's size. Release Hermes has no sampling profiler; `sample <pid> 5` samples every thread of the running app with native symbols, and `performance.now()` marks logged with `console.error` reach `xcrun simctl spawn <udid> log stream`. Reinstall the dev client with `stim ios` before running verify-phone.
 
+## Connect Readwise without an account
+
+On a loopback or preview server, the token `lymi-dev-readwise-0000` reaches a fake Readwise with three invented books (Italian, Estonian, English) instead of readwise.io. Paste it in Settings → Apps → Readwise. A book's language comes from the AI, so without `AI_GATEWAY_URL` and `AI_GATEWAY_TOKEN` every book stays unknown until a later pull reads it again.
+
 ## Call the routes directly
 
 The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.

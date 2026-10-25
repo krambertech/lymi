@@ -50,7 +50,7 @@ These belong to one feature and are listed so nothing is drawn twice.
 - Sharing: `InviteDialog`, `RemoveMemberDialog`, `TurnOffLinkDialog`, `CancelInvitationDialog`.
 - The streak: `StreakButton`, `StreakPanel`, `StreakPlace`, `StreakWeek`, `StreakCalendar`, `SevenLights`, `GoalPicker`, `RestDayBanner`.
 - Navigation: `NavLink`, `PillNav`, `AddMenu`, `LearnerMenu`, `AssistantOffer`, `AssistantMenuItem`.
-- Settings: `AccountSection`, `ApiKeysSection`, `ConnectedAppsSection`, `NotificationsSection`, `ExportSheet`, `ImportSources`.
+- Settings: `AccountSection`, `ApiKeysSection`, `AppsSection`, `NotificationsSection`, `ExportSheet`, `ImportSources`.
 - Auth: `AuthFrame`, `AuthNotice`, `PasswordField`, `Connection`, `PublicPolicyLinks`.
 - Dialogs: `FeedbackDialog`, `InstallDialog`, `ShortcutsDialog`.
 - Motion helpers: `FluidHighlight` (the sliding hover fill), `ErrorTip`.

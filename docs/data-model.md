@@ -38,6 +38,8 @@ erDiagram
   decks ||--o{ content_reports : "reported"
   user ||--o| sharing_suspensions : "stopped from sharing after a report"
   user ||--o{ lesson_reads : "counts Smart add"
+  user ||--o| readwise_connections : "pulls highlights"
+  user ||--o{ readwise_books : "follows"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
@@ -420,6 +422,10 @@ A note a learner sends from the learner menu is stored before it is emailed, so 
 ### Smart add reads
 
 `lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. The insert carries its own count, so two reads started together can't both take the last one. Checking a learner's own answer to a read's question needs a read in the last two hours and adds nothing to the count. Operators have no limit.
+
+### Readwise
+
+`readwise_connections` holds one row per learner who pasted a Readwise token: the token sealed with AES-GCM under a key derived from `BETTER_AUTH_SECRET`, its last four characters, its status (`active`, `refused` or `unreadable`), the deck for each language keyed by primary subtag, and where the hourly pull stands, with Readwise's page cursor when a pull stopped at its ten-page cap so the next one carries on. `readwise_books` holds the learner's Readwise books with the language read from their highlights, or chosen by the learner when Lymi could not tell, and whether Lymi follows them. A book followed for the first time since the last pull is `pending`: the next pull that has a live deck for its language reads all its highlights since connecting, so highlights that arrived while its language was unknown are not lost. `ever_followed` keeps a book turned off and on again to new highlights only. A pull holds `pulling_until` on the connection for up to five minutes, so the cron, Check now and a follow never pull at once and add the same highlight twice. Disconnect deletes both; the cards a pull added keep `created_by` `system` and an `external_id` of `readwise:<highlight id>`, which stops a later pull adding the same highlight twice. Rotating the auth secret makes stored tokens unreadable: the next pull marks each connection `unreadable`, and its page asks the learner to paste the token again rather than saying Readwise refused it.
 
 ### Tags and source
 

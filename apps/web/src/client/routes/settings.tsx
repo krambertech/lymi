@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { AiServicesSection } from "../components/ai-services-section";
 import { ApiKeysSection } from "../components/api-keys-section";
-import { ConnectedAppsSection } from "../components/connected-apps-section";
+import { AppsSection } from "../components/apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
 import { ThisMacSection } from "../components/this-mac-section";
@@ -83,7 +83,7 @@ function SettingsRoute() {
       <ThisMacSection />
       <NotificationsSection />
       <AiServicesSection />
-      <ConnectedAppsSection />
+      <AppsSection />
       <ApiKeysSection />
       <ExportSheet
         open={exporting}

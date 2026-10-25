@@ -111,6 +111,9 @@ export async function resetAccount(
         ),
       ),
     db.delete(schema.userSettings).where(eq(schema.userSettings.userId, userId)),
+    // The connection names decks by id, which the reseed replaces.
+    db.delete(schema.readwiseBooks).where(eq(schema.readwiseBooks.userId, userId)),
+    db.delete(schema.readwiseConnections).where(eq(schema.readwiseConnections.userId, userId)),
   ]);
 }
 

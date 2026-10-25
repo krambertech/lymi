@@ -11,7 +11,7 @@ What is empty?
  ├── Today, before the first review → FirstRunGuide (web), StartGuide (phone)
  ├── A whole screen with nothing in it yet (Library, a deck, Insights) → StartPanel
  │     └── and the layout is worth previewing (Insights) → also its real components with ghost
- ├── A group inside a screen (API keys, Connected apps) → EmptySection
+ ├── A group inside a screen (API keys) → EmptySection
  └── A search or filter with no match → NoResults
 ```
 

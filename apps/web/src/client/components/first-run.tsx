@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 import type { DeckSummary } from "../lib/api";
-import { publicSiteUrl } from "../lib/origins";
+import { ASSISTANTS as ALL_ASSISTANTS } from "../lib/assistants";
 import { connectedAppsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
@@ -33,12 +33,9 @@ import { NavLink, useStaticNav } from "./nav-link";
 
 // Today until the first review. docs/design/onboarding.md.
 
-const ASSISTANTS = [
-  { app: identifyApp("https://claude.ai/"), guide: "/docs/mcp/claude" },
-  { app: identifyApp("https://chatgpt.com/"), guide: "/docs/mcp/chatgpt" },
-  { app: identifyApp("https://accountlinking.google.com/"), guide: "/docs/mcp/gemini" },
-  { app: identifyApp("https://grok.com/"), guide: "/docs/mcp/grok" },
-];
+const ASSISTANTS = ALL_ASSISTANTS.slice(0, 4).flatMap((a) =>
+  a.app ? [{ app: a.app, key: a.key }] : [],
+);
 const IMPORTS = ["Anki", "Mochi", "Noji", "Quizlet"];
 const LIT_KEY = "lymi-first-run-lit";
 const STEP_NAMES = ["deck", "cards", "review"] as const;
@@ -306,12 +303,12 @@ function pick(option: "typed" | "lesson" | "ai_mcp" | "import" | "create_deck" |
   captureAnalytics("empty_state_option_picked", { option });
 }
 
-/** The assistants' marks, each leading to its own setup guide; they pop in on the first visit. */
+/** The assistants' marks, each leading to its page in Settings; they pop in on the first visit. */
 function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
   const { t } = useLingui();
   return (
     <ul className="-ms-0.5 flex -space-x-1 rtl:space-x-reverse">
-      {ASSISTANTS.map(({ app, guide }, i) => {
+      {ASSISTANTS.map(({ app, key }, i) => {
         const name = app.name;
         return (
           <motion.li
@@ -326,8 +323,9 @@ function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
               damping: 26,
             }}
           >
-            <a
-              href={publicSiteUrl(guide)}
+            <NavLink
+              to="/settings/apps/$app"
+              params={{ app: key }}
               aria-label={t`Connect ${name}`}
               onClick={() => pick("ai_mcp")}
               className="relative rounded-[13px] transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none"
@@ -345,7 +343,7 @@ function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
                   </svg>
                 </span>
               </span>
-            </a>
+            </NavLink>
           </motion.li>
         );
       })}
@@ -506,19 +504,17 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
             </div>
           </div>
           {connected ? (
-            <Button
-              className="justify-self-start"
-              render={<NavLink to="/settings" hash="connected-apps" />}
-            >
+            <Button className="justify-self-start" render={<NavLink to="/settings" hash="apps" />}>
               <Plug data-icon="inline-start" aria-hidden="true" />
-              <Trans>Connected apps</Trans>
+              <Trans>Your apps</Trans>
             </Button>
           ) : (
             <Button
               className="justify-self-start"
               render={
-                <a
-                  href={publicSiteUrl("/docs/mcp")}
+                <NavLink
+                  to="/settings"
+                  hash="apps"
                   onClick={(e) => {
                     if (st) e.preventDefault();
                     else pick("ai_mcp");

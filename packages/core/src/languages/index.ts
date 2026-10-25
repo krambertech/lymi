@@ -133,6 +133,13 @@ export function speechLocale(language: string | null | undefined): string | null
   return (script && languageSupport(language)?.speech.locales?.[script]) ?? null;
 }
 
+/** Words sent silently before every term of this language, from its record or its configured row, or null. */
+export function speechContext(language: string | null | undefined): string | null {
+  return (
+    languageSupport(language)?.speech.context ?? configuredLanguage(language)?.speechContext ?? null
+  );
+}
+
 /** Whether speech, and the phone's screen reader, says the Reading in place of the term. */
 export function saysReading(language: string | null | undefined): boolean {
   return !!languageSupport(language)?.speech.saysReading;

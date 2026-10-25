@@ -11,6 +11,7 @@ import {
   localizedPages,
   localizedPath,
   localizedRuntimePages,
+  pageLocales,
 } from "./routes";
 
 // Keys only; the Astro pages are never loaded.
@@ -102,5 +103,14 @@ describe("public routes", () => {
       changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
     );
     expect(new Set(listed)).toEqual(new Set([...routes, ...updates]));
+  });
+});
+
+describe("pageLocales", () => {
+  it("leaves a language's page out of the locales that aren't offered it", () => {
+    expect(pageLocales("russian")).toEqual(["en"]);
+    expect(pageLocales("ukrainian")).toEqual(["en", "ru"]);
+    expect(pageLocales("japanese")).toEqual(["en", "uk", "ru"]);
+    expect(pageLocales("languages")).toEqual(["en", "uk", "ru"]);
   });
 });

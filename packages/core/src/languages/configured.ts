@@ -17,6 +17,8 @@ export interface LanguageConfig {
   /** Other primary subtags learners use for the same language, such as `tl` for Filipino. */
   aliases?: readonly string[];
   starts: readonly StartingField[];
+  /** Words sent silently before every term, so the voice hears the language and not a neighbour's. */
+  speechContext?: string;
   /**
    * Whether enrichment fills a new language deck's cards unasked. True only while the language's
    * recorded evaluation passes the bar, which recorded-run.test.ts in apps/web holds it to.
@@ -186,6 +188,8 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
     scripts: ["Latn"],
     format: null,
     starts: ["notes"],
+    // As Ukrainian's «Українською:» did in PR #910, so a short word is read with Polish sounds.
+    speechContext: "Po polsku:",
     enrichByDefault: true,
   },
   nl: {

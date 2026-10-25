@@ -2,6 +2,7 @@ import "@fontsource/caveat/500.css";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { offersLanguage } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
@@ -257,13 +258,13 @@ const classCards = (language: LearningLanguage): SampleCard[] => [
 
 /** The page for anyone learning a language from lessons, tutors and reading. */
 export function LanguagesView() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const spanish = LEARNING_LANGUAGES.find((l) => l.id === "es") as LearningLanguage;
 
   return (
     <LanguagePage
       page="languages"
-      frames={WORD_FRAMES}
+      frames={WORD_FRAMES.filter((frame) => offersLanguage(i18n.locale, frame.language))}
       heroLabel={t`Keep what you learn in any language.`}
       heroLede={
         <Trans>

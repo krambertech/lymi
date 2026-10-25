@@ -25,13 +25,21 @@ export interface CardImageView {
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
 export type CardView = Omit<
   Card,
-  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey" | "exampleTranslationOf"
+  | "reviewModeKeys"
+  | "revision"
+  | "hintDraft"
+  | "audioApprovedKey"
+  | "exampleTranslationOf"
+  | "exampleRecordingKey"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
   /** The viewer's own mark, never the owner's. */
   important: boolean;
   exampleTranslationStale: boolean;
+  exampleRecorded: boolean;
+  hook: Card["hint"];
+  hookSource: Card["hintSource"];
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -56,9 +64,11 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
   const {
     reviewModeKeys,
     revision,
-    hookDraft: _draft,
+    hintDraft: _draft,
     audioApprovedKey: _approved,
     exampleTranslationOf: _of,
+    // A client needs only whether there is one; the example's route finds the clip itself.
+    exampleRecordingKey: _recording,
     ...rest
   } = card;
   return {
@@ -71,9 +81,13 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
         ? "failed"
         : card.exampleTranslationStatus,
     exampleTranslationStale: translationStale(card),
+    exampleRecorded: card.exampleRecordingKey !== null,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,
+    // An older app or API client still reads the hint under its old name.
+    hook: card.hint,
+    hookSource: card.hintSource,
   };
 }
 
@@ -204,10 +218,10 @@ export async function presentCards(
     // A card in an archived section reads as having none, as a deck in an archived series does.
     const placed =
       card.sectionId && !activeSections.has(card.sectionId) ? { ...card, sectionId: null } : card;
-    // A hook is in the deck's own meaning language and no edition carries one, so a reader of
+    // A hint is in the deck's own meaning language and no edition carries one, so a reader of
     // another edition gets none.
     const read = seenIn(placed, editions);
-    const seen = text ? { ...read, hook: null, hookSource: null } : read;
+    const seen = text ? { ...read, hint: null, hintSource: null } : read;
     // A reader of another edition sees that edition's translation while it is current, never the original's.
     if (editions.pinned.has(card.deckId)) {
       const current = text && text.sourceRevision >= card.revision;

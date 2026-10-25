@@ -117,8 +117,8 @@ msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
 
 #. placeholder {0}: preview.audio
-msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
-msgstr "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
+msgid "{0, plural, one {# clip is left out. A card keeps one recording of its term and one of its example.} other {# clips are left out. A card keeps one recording of its term and one of its example.}}"
+msgstr "{0, plural, one {# clip is left out. A card keeps one recording of its term and one of its example.} other {# clips are left out. A card keeps one recording of its term and one of its example.}}"
 
 #. placeholder {0}: s.deckIds.length
 #. placeholder {0}: s.decks.length
@@ -129,6 +129,22 @@ msgstr "{0, plural, one {# deck} other {# decks}}"
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: preview.exampleRecordings ?? 0
+msgid "{0, plural, one {# example brings its recording. Lymi plays it instead of reading the example aloud.} other {# examples bring their recordings. Lymi plays them instead of reading the examples aloud.}}"
+msgstr "{0, plural, one {# example brings its recording. Lymi plays it instead of reading the example aloud.} other {# examples bring their recordings. Lymi plays them instead of reading the examples aloud.}}"
+
+#. placeholder {0}: counts.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording couldn’t be read or played, so Lymi reads that example aloud itself.} other {# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# example recording couldn’t be read or played, so Lymi reads that example aloud itself.} other {# example recordings couldn’t be read or played, so Lymi reads those examples aloud itself.}}"
+
+#. placeholder {0}: preview.exampleRecordingsSkipped ?? 0
+msgid "{0, plural, one {# example recording is in a format Lymi can’t play, so Lymi reads that example aloud itself.} other {# example recordings are in a format Lymi can’t play, so Lymi reads those examples aloud itself.}}"
+msgstr "{0, plural, one {# example recording is in a format Lymi can’t play, so Lymi reads that example aloud itself.} other {# example recordings are in a format Lymi can’t play, so Lymi reads those examples aloud itself.}}"
+
+#. placeholder {0}: counts.exampleRecordings ?? 0
+msgid "{0, plural, one {# example recording was imported.} other {# example recordings were imported.}}"
+msgstr "{0, plural, one {# example recording was imported.} other {# example recordings were imported.}}"
 
 #. placeholder {0}: filled.length
 msgid "{0, plural, one {# field} other {# fields}}"
@@ -890,8 +906,8 @@ msgstr "Add cards from your last lesson, then review them here."
 msgid "Add cards from your next lesson"
 msgstr "Add cards from your next lesson"
 
-msgid "Add hook"
-msgstr "Add hook"
+msgid "Add hint"
+msgstr "Add hint"
 
 msgid "Add more"
 msgstr "Add more"
@@ -956,8 +972,8 @@ msgstr "AI fills in"
 msgid "AI follows these when filling cards. Only you see them."
 msgstr "AI follows these when filling cards. Only you see them."
 
-msgid "AI hook"
-msgstr "AI hook"
+msgid "AI hint"
+msgstr "AI hint"
 
 msgid "AI meaning"
 msgstr "AI meaning"
@@ -1623,8 +1639,8 @@ msgstr "Couldn’t delete your account. Check your connection and try again."
 msgid "Couldn’t download the file. Check your connection and try again."
 msgstr "Couldn’t download the file. Check your connection and try again."
 
-msgid "Couldn’t draft a hook. Try again in a moment."
-msgstr "Couldn’t draft a hook. Try again in a moment."
+msgid "Couldn’t draft a hint. Try again in a moment."
+msgstr "Couldn’t draft a hint. Try again in a moment."
 
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
@@ -1766,8 +1782,8 @@ msgstr "Couldn’t save the card."
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
 
-msgid "Couldn’t save the hook."
-msgstr "Couldn’t save the hook."
+msgid "Couldn’t save the hint."
+msgstr "Couldn’t save the hint."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -2002,8 +2018,8 @@ msgstr "Done"
 msgid "Draft"
 msgstr "Draft"
 
-msgid "Drafting a hook uses AI. Turn on AI services in You to draft one."
-msgstr "Drafting a hook uses AI. Turn on AI services in You to draft one."
+msgid "Drafting a hint uses AI. Turn on AI services in You to draft one."
+msgstr "Drafting a hint uses AI. Turn on AI services in You to draft one."
 
 msgid "Drafting…"
 msgstr "Drafting…"
@@ -2051,8 +2067,8 @@ msgstr "Edit"
 msgid "Edit card"
 msgstr "Edit card"
 
-msgid "Edit hook"
-msgstr "Edit hook"
+msgid "Edit hint"
+msgstr "Edit hint"
 
 msgid "Edit term"
 msgstr "Edit term"
@@ -2448,14 +2464,20 @@ msgctxt "language"
 msgid "Hindi"
 msgstr "Hindi"
 
+msgid "Hint"
+msgstr "Hint"
+
+msgid "Hint by you"
+msgstr "Hint by you"
+
+msgid "Hint from lesson"
+msgstr "Hint from lesson"
+
+msgid "Hint: {text}"
+msgstr "Hint: {text}"
+
 msgid "History"
 msgstr "History"
-
-msgid "Hook by you"
-msgstr "Hook by you"
-
-msgid "Hook from lesson"
-msgstr "Hook from lesson"
 
 msgid "How cards are asked"
 msgstr "How cards are asked"
@@ -2935,12 +2957,6 @@ msgstr "Meaning from lesson"
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Medical French for nurses. Use the clinical meaning."
 
-msgid "Memory hook"
-msgstr "Memory hook"
-
-msgid "Memory hook: {text}"
-msgstr "Memory hook: {text}"
-
 msgid "Merge"
 msgstr "Merge"
 
@@ -3167,8 +3183,8 @@ msgstr "No sections yet"
 msgid "No series"
 msgstr "No series"
 
-msgid "No strong hook for this one. Try again, or write your own."
-msgstr "No strong hook for this one. Try again, or write your own."
+msgid "No strong hint for this one. Try again, or write your own."
+msgstr "No strong hint for this one. Try again, or write your own."
 
 msgid "No tags match “{query}”"
 msgstr "No tags match “{query}”"
@@ -3409,8 +3425,8 @@ msgstr "Paste notes or a transcript"
 msgid "PDF"
 msgstr "PDF"
 
-msgid "Peek at your hook"
-msgstr "Peek at your hook"
+msgid "Peek at your hint"
+msgstr "Peek at your hint"
 
 msgid "People"
 msgstr "People"
@@ -3982,8 +3998,8 @@ msgstr "Show all"
 msgid "Show another"
 msgstr "Show another"
 
-msgid "Show hook"
-msgstr "Show hook"
+msgid "Show hint"
+msgstr "Show hint"
 
 msgid "Show in Library"
 msgstr "Show in Library"
@@ -4538,8 +4554,8 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Travel"
 
-msgid "Try a memory hook"
-msgstr "Try a memory hook"
+msgid "Try a hint"
+msgstr "Try a hint"
 
 msgid "Try a word from a card, or a language."
 msgstr "Try a word from a card, or a language."
@@ -4751,8 +4767,8 @@ msgstr "Words and phrases in a language you’re learning."
 msgid "Work and study"
 msgstr "Work and study"
 
-msgid "Write a hook."
-msgstr "Write a hook."
+msgid "Write a hint."
+msgstr "Write a hint."
 
 msgid "Write to Lymi"
 msgstr "Write to Lymi"
@@ -4809,8 +4825,8 @@ msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
 
-msgid "You can’t choose Easy after peeking at your hook."
-msgstr "You can’t choose Easy after peeking at your hook."
+msgid "You can’t choose Easy after peeking at your hint."
+msgstr "You can’t choose Easy after peeking at your hint."
 
 msgid "You cannot add this deck."
 msgstr "You cannot add this deck."

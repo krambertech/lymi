@@ -1,5 +1,5 @@
 {
-  "about": "Invented cases for the yue module's lesson, hook and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent reader of written Cantonese should review these with cantonese.ts.",
+  "about": "Invented cases for the yue module's lesson, hint and check slots, led by the traps; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent reader of written Cantonese should review these with cantonese.ts.",
   "lesson": [
     {
       "term": "學習",
@@ -117,7 +117,7 @@
       "reading": "hou3"
     }
   ],
-  "hook": [
+  "hint": [
     {
       "term": "電腦",
       "pronunciation": "din6 nou5",

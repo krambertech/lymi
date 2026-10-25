@@ -17,7 +17,7 @@ Kanji carry meaning and are read differently from word to word (日 in 日本, �
 - **Fields.** No new ones. The term is written as natives write it, in dictionary form. Its reading stays in the pronunciation field in hiragana, and furigana is derived by aligning the two. Examples carry readings inline in Anki's notation, `食[た]べます`; plain-text uses strip the brackets. CONTEXT.md names this a **Reading**.
 - **Furigana.** Over the term on the cue while the card is New or Learning, gone once it is Known; always over the term in the answer. Over an example's kanji except where the kanji and reading match one of the learner's Known cards.
 - **The AI.** It writes example readings, and adds them to a learner's example only when the text without brackets is unchanged.
-- **Audio.** Spoken from the reading. A recorded clip from an import is the card's audio and is never replaced; generated speech fills only cards without one. Sentence audio waits.
+- **Audio.** Spoken from the reading. A recorded clip from an import is the card's audio and is never replaced; generated speech fills only cards without one. An imported sentence clip is the example's recording and plays from the example's control ([#828](https://github.com/krambertech/lymi/issues/828)).
 - **Import.** Pitch accent and the sentence translation each become one notes line; a frequency number is dropped.
 - **Left out.** Romaji as a reading aid, extra review modes, kanji cards as a type, handwriting and typed answers.
 

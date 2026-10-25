@@ -2,7 +2,7 @@ import { I18nProvider } from "@lingui/react";
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { pageI18n } from "../lib/i18n";
-import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
+import { type Locale, type LocalizedPage, localizedPath, pageLocales } from "../lib/routes";
 
 const languages = [
   { locale: "en", label: "English" },
@@ -10,8 +10,8 @@ const languages = [
   { locale: "ru", label: "Русский" },
 ] as const;
 
-/** A fixed page, or the paths of a page rendered per request, such as a published deck. */
-export type LanguageTarget = { page: LocalizedPage } | { paths: Record<Locale, string> };
+/** A fixed page, or a page rendered per request, such as a published deck, by the locales that have it. */
+export type LanguageTarget = { page: LocalizedPage } | { paths: Partial<Record<Locale, string>> };
 
 /** Language names stay in their own language so every visitor can find theirs. */
 export function LanguageLinks({
@@ -26,10 +26,17 @@ export function LanguageLinks({
       className={clsx("flex flex-wrap gap-4 text-xs text-muted", className)}
     >
       {languages.map(({ locale, label }) => {
+        const href =
+          "paths" in target
+            ? target.paths[locale]
+            : pageLocales(target.page).includes(locale)
+              ? localizedPath(target.page, locale)
+              : undefined;
+        if (!href) return null;
         return (
           <a
             key={locale}
-            href={"paths" in target ? target.paths[locale] : localizedPath(target.page, locale)}
+            href={href}
             hrefLang={locale}
             lang={locale}
             aria-current={i18n.locale === locale ? "page" : undefined}

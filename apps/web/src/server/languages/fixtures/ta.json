@@ -1,5 +1,5 @@
 {
-  "about": "Invented cases for the ta module's lesson, hook and check slots, led by the traps: loanwords said against their spelling, chat spellings of a word said as spelled, and Latin letters in an example; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Tamil reader should review these with tamil.ts.",
+  "about": "Invented cases for the ta module's lesson, hint and check slots, led by the traps: loanwords said against their spelling, chat spellings of a word said as spelled, and Latin letters in an example; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. A fluent Tamil reader should review these with tamil.ts.",
   "lesson": [
     {
       "term": "வணக்கம்",
@@ -127,7 +127,7 @@
       "stored": "bēg"
     }
   ],
-  "hook": [
+  "hint": [
     {
       "term": "வணக்கம்",
       "pronunciation": "",

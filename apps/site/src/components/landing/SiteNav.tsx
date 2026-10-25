@@ -20,6 +20,7 @@ import { shelfLabel } from "../explore/explore-labels";
 import { Lockup } from "../Logo";
 import {
   isUseCasePage,
+  linksIn,
   MENU_FEATURE,
   POPULAR_LINKS,
   USE_CASE_GROUPS,
@@ -190,7 +191,7 @@ function PopularLinks({ className }: { className?: string }) {
   const { i18n } = useLingui();
   return (
     <div className={clsx("flex flex-wrap items-center gap-1.5", className)}>
-      {POPULAR_LINKS.map((link) => (
+      {linksIn(POPULAR_LINKS, i18n.locale).map((link) => (
         <a key={link.href("en")} href={link.href(i18n.locale)} className={chipClass}>
           {i18n._(link.label)}
         </a>

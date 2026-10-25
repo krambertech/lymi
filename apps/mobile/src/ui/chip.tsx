@@ -108,7 +108,7 @@ type SourceField =
   | "exampleTranslation"
   | "exampleAndTranslation"
   | "pronunciation"
-  | "hook";
+  | "hint";
 
 // Whole sentences per field, so each language can inflect the field word on its own.
 const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
@@ -130,7 +130,7 @@ const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDes
     ai: msg`AI pronunciation`,
     manual: msg`Pronunciation by you`,
   },
-  hook: { lesson: msg`Hook from lesson`, ai: msg`AI hook`, manual: msg`Hook by you` },
+  hint: { lesson: msg`Hint from lesson`, ai: msg`AI hint`, manual: msg`Hint by you` },
 };
 
 /**

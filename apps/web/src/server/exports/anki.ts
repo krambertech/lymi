@@ -42,6 +42,8 @@ export type AnkiCardInput = {
   modes: ReviewModeKey[];
   picture: string | null;
   sound: string | null;
+  /** The example's recording, absent for one with none. */
+  exampleSound?: string | null | undefined;
 };
 
 // A field added later goes last, so notes an earlier export wrote keep their fields in order.
@@ -54,6 +56,7 @@ const FIELDS = [
   "Picture",
   "Audio",
   "Example translation",
+  "Example audio",
 ];
 
 const BACK = (answer: string) =>
@@ -66,6 +69,7 @@ const BACK = (answer: string) =>
     '{{#Pronunciation}}<div class="pronunciation">{{Pronunciation}}</div>{{/Pronunciation}}',
     '{{#Example}}<div class="example">{{furigana:Example}}</div>{{/Example}}',
     '{{#Example translation}}<div class="example-translation">({{Example translation}})</div>{{/Example translation}}',
+    "{{Example audio}}",
     '{{#Notes}}<div class="notes">{{Notes}}</div>{{/Notes}}',
     '{{#Picture}}<div class="picture">{{Picture}}</div>{{/Picture}}',
     "{{Audio}}",
@@ -427,7 +431,7 @@ export class AnkiCollection {
     return this.db.byteLength + this.revlog.byteLength;
   }
 
-  async add({ card, modes, picture, sound }: AnkiCardInput) {
+  async add({ card, modes, picture, sound, exampleSound }: AnkiCardInput) {
     const deck = this.decks.get(card.deck);
     if (!deck) throw new Error("A card's deck is not in the collection");
     const kind = directionsFromModes(modes);
@@ -441,6 +445,7 @@ export class AnkiCollection {
       picture ? `<img src="${ankiField(picture)}">` : "",
       sound ? `[sound:${sound}]` : "",
       card.example ? ankiField(card.exampleTranslation ?? null) : "",
+      card.example && exampleSound ? `[sound:${exampleSound}]` : "",
     ];
     const noteId = this.noteIds.next(card.createdAt);
     this.notes.insert(noteId, [

@@ -93,7 +93,9 @@ export type ImportedCard = {
   picture?: string | undefined;
   /** The adapter's name for the term's own recording, fetched only while writing. */
   recording?: string | undefined;
-  /** Clips the note held besides the term's recording, such as a sentence's, which are left out. */
+  /** The adapter's name for the example's own recording, fetched only while writing. */
+  exampleRecording?: string | undefined;
+  /** Clips the note held besides the term's and the example's recordings, which are left out. */
   soundsLeftOut?: number | undefined;
   /** The note had a pitch accent that could not be read as text, which is left out. */
   pitchLeftOut?: boolean | undefined;
@@ -118,8 +120,8 @@ export type ImportedCard = {
   pictureDescription?: string | undefined;
   /** The translation was written for an earlier example, from a Lymi zip. */
   translationStale?: boolean | undefined;
-  /** The card's memory hook and who wrote it, from a Lymi zip. */
-  hook?: { text: string; source: FieldSource } | undefined;
+  /** The card's hint and who wrote it, from a Lymi zip. */
+  hint?: { text: string; source: FieldSource } | undefined;
 };
 
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
@@ -130,7 +132,7 @@ export const IMPORT_LIMITS = {
   example: 2000,
   exampleTranslation: EXAMPLE_LENGTH,
   notes: 2000,
-  hook: 200,
+  hint: 200,
   tags: 20,
   tag: 40,
   deckName: 80,
@@ -259,29 +261,77 @@ const AUDIO_FIELD = /\b(audio|sound|voice|recording)s?\b|音声/i;
 const SENTENCE_FIELD = /\b(sentence|example|context|usage)s?\b|例文/i;
 
 /**
- * The term's own recording among the clips a note's fields hold, by field: the first clip of a
- * field named for audio and not for a sentence, then of the term, reading or meaning field.
- * Every other clip, such as a sentence's, is left out and counted. Lymi's own speech is neither.
+ * The term's and the example's own recordings among the clips a note's fields hold, by field.
+ * The term's is the first clip of a field named for audio and not for a sentence, then of the
+ * term, reading or meaning field; the example's is the first clip of a field named for both a
+ * sentence and audio, then of the example field. Every other clip is left out and counted. Lymi's
+ * own speech is neither.
  */
-export function termRecording(
+export function noteRecordings(
   names: readonly string[],
   roles: readonly FieldRole[],
   clips: readonly (readonly string[])[],
-): { recording: string | undefined; leftOut: number } {
+): { recording: string | undefined; exampleRecording: string | undefined; leftOut: number } {
   const own = clips.map((list) => list.filter((name) => !LYMI_SPEECH.test(name)));
   const total = own.reduce((sum, list) => sum + list.length, 0);
   const sentence = names.map(
     (name, i) => SENTENCE_FIELD.test(fieldWords(name)) || roles[i] === "example",
   );
-  const order = [
-    ...names.flatMap((name, i) => (AUDIO_FIELD.test(fieldWords(name)) && !sentence[i] ? [i] : [])),
+  const audio = names.map((name) => AUDIO_FIELD.test(fieldWords(name)));
+  const first = (order: number[]) => {
+    const field = order.find((i) => (own[i]?.length ?? 0) > 0);
+    return field === undefined ? undefined : own[field]?.[0];
+  };
+  const recording = first([
+    ...names.flatMap((_, i) => (audio[i] && !sentence[i] ? [i] : [])),
     ...(["term", "pronunciation", "meaning"] as const).flatMap((role) =>
       roles.flatMap((r, i) => (r === role && !sentence[i] ? [i] : [])),
     ),
-  ];
-  const field = order.find((i) => (own[i]?.length ?? 0) > 0);
-  const recording = field === undefined ? undefined : own[field]?.[0];
-  return { recording, leftOut: total - (recording ? 1 : 0) };
+  ]);
+  const exampleRecording = first([
+    ...names.flatMap((_, i) => (audio[i] && sentence[i] ? [i] : [])),
+    ...roles.flatMap((role, i) => (role === "example" ? [i] : [])),
+  ]);
+  return {
+    recording,
+    exampleRecording,
+    leftOut: total - (recording ? 1 : 0) - (exampleRecording ? 1 : 0),
+  };
+}
+
+/**
+ * A cloze note's sentence clip: the first in a field named for a sentence, then in `text`, the
+ * field the cloze is written in. Any other clip, such as a word's in Back Extra, says the hidden
+ * word or something else, so it is left out, and the note has no term recording.
+ */
+export function clozeRecordings(
+  names: readonly string[],
+  clips: readonly (readonly string[])[],
+  text: number,
+): ReturnType<typeof noteRecordings> {
+  const roles = names.map(
+    (name, i): FieldRole =>
+      i === text || SENTENCE_FIELD.test(fieldWords(name)) ? "example" : "skip",
+  );
+  const sounds = noteRecordings(names, roles, clips);
+  return {
+    recording: undefined,
+    exampleRecording: sounds.exampleRecording,
+    leftOut: sounds.leftOut + (sounds.recording ? 1 : 0),
+  };
+}
+
+/** A card's share of its note's recordings: the example's only while the card has an example to play it. */
+export function cardRecordings(
+  sounds: ReturnType<typeof noteRecordings>,
+  example: string | undefined,
+): Pick<ImportedCard, "recording" | "exampleRecording" | "soundsLeftOut"> {
+  const exampleRecording = example ? sounds.exampleRecording : undefined;
+  return {
+    recording: sounds.recording,
+    exampleRecording,
+    soundsLeftOut: sounds.leftOut + (sounds.exampleRecording && !exampleRecording ? 1 : 0),
+  };
 }
 
 type PitchUnit = { text: string; high: boolean; drop: boolean };
@@ -820,8 +870,17 @@ export const ImportCounts = z
       description:
         "Recordings that could not be read or stored: past 2 MB, or not MP3, M4A, AAC or WAV",
     }),
+    exampleRecordings: z.number().int().optional().meta({
+      description:
+        "Examples' own recordings, which their play control plays instead of generated speech; absent for imports written before they were kept",
+    }),
+    exampleRecordingsSkipped: z.number().int().optional().meta({
+      description:
+        "Examples' recordings that could not be read or stored: past 2 MB, or not MP3, M4A, AAC or WAV; absent for imports written before they were kept",
+    }),
     soundsLeftOut: z.number().int().meta({
-      description: "Clips that are not a term's recording, such as sentence audio, left out",
+      description:
+        "Clips that are neither a term's nor an example's recording, such as a second clip or a sentence clip on a card with no example, left out",
     }),
     pitchSkipped: z
       .number()
@@ -849,6 +908,8 @@ export const emptyImportCounts = (): ImportCounts => ({
   picturesSkipped: 0,
   recordings: 0,
   recordingsSkipped: 0,
+  exampleRecordings: 0,
+  exampleRecordingsSkipped: 0,
   soundsLeftOut: 0,
   pitchSkipped: 0,
   readingsConverted: 0,

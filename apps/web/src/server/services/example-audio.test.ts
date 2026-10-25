@@ -30,9 +30,9 @@ function card(patch: Partial<Card> = {}): Card {
     exampleTranslationOf: null,
     exampleTranslationStatus: null,
     notes: null,
-    hook: null,
-    hookSource: null,
-    hookDraft: null,
+    hint: null,
+    hintSource: null,
+    hintDraft: null,
     language: "ja",
     tags: [],
     source: null,
@@ -51,6 +51,7 @@ function card(patch: Partial<Card> = {}): Card {
     audioKey: null,
     audioSource: null,
     audioApprovedKey: null,
+    exampleRecordingKey: null,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,
@@ -142,6 +143,42 @@ const sound = () => new Response(new Uint8Array([1, 2, 3]));
 const free = () => ({ left: async () => null, spend: vi.fn(async () => undefined) });
 
 describe("example audio", () => {
+  it("plays an imported recording as it is, with no provider, allowance or AI consent", async () => {
+    const { bucket, put } = memoryBucket();
+    const key = "cards/card-1/example-recorded/clip.mp3";
+    await bucket.put(key, new Uint8Array([9, 9, 9]));
+    put.mockClear();
+    const consentChecks = vi.mocked(aiAllowedForOwner).mock.calls.length;
+    const speech = vi.fn(async () => sound());
+    const allowance = { left: vi.fn(async () => 60), spend: vi.fn(async () => undefined) };
+
+    const played = await exampleAudio(
+      context(card({ exampleRecordingKey: key, language: null })),
+      "card-1",
+      { bucket, providers: () => [provider("google-gemini", speech)] },
+      allowance,
+    );
+    expect("clip" in played && played.clip.key).toBe(key);
+    expect(speech).not.toHaveBeenCalled();
+    expect(allowance.left).not.toHaveBeenCalled();
+    expect(vi.mocked(aiAllowedForOwner).mock.calls).toHaveLength(consentChecks);
+    expect(put).not.toHaveBeenCalled();
+  });
+
+  it("never stands generated speech in for a missing recording", async () => {
+    const { bucket } = memoryBucket();
+    const speech = vi.fn(async () => sound());
+    await expect(
+      exampleAudio(
+        context(card({ exampleRecordingKey: "cards/card-1/example-recorded/gone.mp3" })),
+        "card-1",
+        { bucket, providers: () => [provider("google-gemini", speech)] },
+        free(),
+      ),
+    ).rejects.toMatchObject({ code: "unavailable" });
+    expect(speech).not.toHaveBeenCalled();
+  });
+
   it("reads a Japanese example from its readings once, then plays the stored clip", async () => {
     const { bucket, clips } = memoryBucket();
     const speech = vi.fn(async (_request: SpeechRequest) => sound());

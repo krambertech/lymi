@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { revealHintDelayMs } from "@lymi/client/reveal-hint";
+import { revealNudgeDelayMs } from "@lymi/client/reveal-nudge";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import Animated, {
@@ -17,25 +17,25 @@ import { useStreak } from "../data/queries";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
-import { PEEK_ROOM } from "./hooks";
+import { PEEK_ROOM } from "./hints";
 
 const REVEALS_KEY = "reveals";
-/** Reveals on this phone after which the hint stops coming soon and waits for an idle card. */
+/** Reveals on this phone after which the nudge stops coming soon and waits for an idle card. */
 const LEARNING_REVEALS = 1;
 
-/** Counts a reveal on this phone, so the hint stops leading once the learner has found the card. */
+/** Counts a reveal on this phone, so the nudge stops leading once the learner has found the card. */
 export const countReveal = () =>
   reviewStore.set(REVEALS_KEY, (reviewStore.getNumber(REVEALS_KEY) ?? 0) + 1);
 
 /** Whether the pointing hand shows on this card yet, by the web's rules. motion.md "Review". */
-export function useRevealHint(card: string | null, revealed: boolean) {
+export function useRevealNudge(card: string | null, revealed: boolean) {
   const reviewedDays = useStreak().data?.reviewedDays;
   const [shown, setShown] = useState(false);
   useEffect(() => {
     setShown(false);
     if (!card || revealed) return;
     const learning = (reviewStore.getNumber(REVEALS_KEY) ?? 0) < LEARNING_REVEALS;
-    const delay = revealHintDelayMs(reviewedDays, learning);
+    const delay = revealNudgeDelayMs(reviewedDays, learning);
     if (delay === null) return;
     const timer = setTimeout(() => setShown(true), delay);
     return () => clearTimeout(timer);
@@ -46,9 +46,9 @@ export function useRevealHint(card: string | null, revealed: boolean) {
 /**
  * The pointing hand at the card's foot taps three times and rests with a line saying how to reveal.
  * Under reduced motion it appears without tapping. It floats over the card's foot, so the cue never
- * moves when it comes and goes; `lifted` keeps it clear of Peek at your hook.
+ * moves when it comes and goes; `lifted` keeps it clear of Peek at your hint.
  */
-export function RevealHint({ lifted = false }: { lifted?: boolean }) {
+export function RevealNudge({ lifted = false }: { lifted?: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();

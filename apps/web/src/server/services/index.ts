@@ -24,7 +24,7 @@ export * from "./example-translation";
 export * from "./explore";
 export * from "./exports";
 export * from "./feedback";
-export * from "./hook-draft";
+export * from "./hint-draft";
 export * from "./important";
 export * from "./imports";
 export * from "./invitations";

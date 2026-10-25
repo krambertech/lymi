@@ -50,16 +50,16 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
-import { ExampleAudioButton, ExamplePlace } from "../components/example-audio";
+import { ExampleAudioButton, ExamplePlace, useExampleAudio } from "../components/example-audio";
 import { ExampleLines } from "../components/example-lines";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import {
-  HOOK_OFFER_BOX,
-  HookOffer,
-  HookOfferFace,
-  type HookOfferProps,
-} from "../components/hook-offer";
+  HINT_OFFER_BOX,
+  HintOffer,
+  HintOfferFace,
+  type HintOfferProps,
+} from "../components/hint-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
@@ -190,10 +190,10 @@ export function ReviewHeader({
 
 /**
  * A pointing hand at the foot of an unrevealed card, for the learner who has not yet found that
- * the plate is the button. It taps three times, then rests. When it appears is `useRevealHint`'s
+ * the plate is the button. It taps three times, then rests. When it appears is `useRevealNudge`'s
  * decision.
  */
-function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
+function TapNudge({ lifted, aided }: { lifted: boolean; aided: boolean }) {
   const reduce = useReduceMotion();
   return (
     <motion.div
@@ -294,7 +294,7 @@ export interface ReviewCardProps {
   /** The words fade in as the card arrives. Off when the grade before it came from the keyboard. */
   animateIn?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
-  hint?: boolean | undefined;
+  nudge?: boolean | undefined;
   /** Focus the reveal, for a learner who graded the card before this one from the grade buttons. */
   focusOnMount?: boolean | undefined;
   onReveal: () => void;
@@ -302,12 +302,12 @@ export interface ReviewCardProps {
   audioState?: "idle" | "loading" | "playing" | undefined;
   /** Why the pronunciation did not play. Shown on the button, never as a line in the card. */
   audioError?: string | null | undefined;
-  /** The offer to write a hook, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
-  offer?: HookOfferProps | undefined;
+  /** The offer to write a hint, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
+  offer?: HintOfferProps | undefined;
   /** Help before the reveal, from `aidSteps`, and how many steps the learner has taken. */
   aid?: RecallAidProps | undefined;
-  /** The hook's editor, in the hook's own place under the cue, while the learner writes one. */
-  hookEditor?: ReactNode | undefined;
+  /** The hint's editor, in the hint's own place under the cue, while the learner writes one. */
+  hintEditor?: ReactNode | undefined;
   /** A control after the state chip; the chip slides aside as it arrives. */
   headEnd?: ReactNode | undefined;
   /** Give the head a slot for `headEnd`, empty and closed until it holds one. */
@@ -340,7 +340,7 @@ const AID_LEAVE: Variants = {
   }),
 };
 
-/** The Show hook button's height, `sm`, which the aid's place under the cue never drops below. */
+/** The Show hint button's height, `sm`, which the aid's place under the cue never drops below. */
 const AID_SHOW_HEIGHT = 32;
 
 /** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
@@ -430,6 +430,9 @@ function measureFit(els: FitElements, offerFoot: number, pillFoot: number, aidRo
  * A long card keeps its grades in view: its cue and target step down in size, and what still does
  * not fit scrolls inside the plate.
  */
+/** How long after the reveal a tap on the card still counts as the reveal's. */
+export const REVEAL_TAP_GUARD_MS = 400;
+
 export function ReviewCard({
   item,
   deck,
@@ -438,7 +441,7 @@ export function ReviewCard({
   revealed,
   animateReveal = true,
   animateIn = false,
-  hint = false,
+  nudge = false,
   focusOnMount = false,
   onReveal,
   onPlayAudio,
@@ -446,7 +449,7 @@ export function ReviewCard({
   audioError = null,
   offer,
   aid,
-  hookEditor,
+  hintEditor,
   headEnd,
   headSlot = false,
   className,
@@ -454,6 +457,12 @@ export function ReviewCard({
   const { t, i18n } = useLingui();
   const reduce = useReduceMotion();
   const { card, mode } = item;
+  const exampleSound = useExampleAudio(card, "review");
+  // A tap that lands on the sentence just after the reveal is the reveal's own tap doubled.
+  const revealedAt = useRef(0);
+  useEffect(() => {
+    if (revealed) revealedAt.current = performance.now();
+  }, [revealed]);
   const picture = mode.cue === "image" ? card.image : null;
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
@@ -484,7 +493,7 @@ export function ReviewCard({
   const revealRef = useRef<HTMLButtonElement>(null);
   const pillRoom = useRef<HTMLDivElement>(null);
   const tookAidAt = useRef(Number.NEGATIVE_INFINITY);
-  // An aid taken away, as Undo does to a hook kept from the fix sheet, leaves in motion unless a key asked.
+  // An aid taken away, as Undo does to a hint kept from the fix sheet, leaves in motion unless a key asked.
   const [hadAid, setHadAid] = useState(!!aid);
   const [aidGone, setAidGone] = useState<{ animate: boolean } | null>(null);
   if (hadAid !== !!aid) {
@@ -623,12 +632,21 @@ export function ReviewCard({
             language={card.language}
             known={knownReadings}
             translation={translation}
-            after={
+            speaker={
               measure ? (
                 <ExamplePlace card={card} />
               ) : (
-                <ExampleAudioButton card={card} surface="review" />
+                exampleSound && <ExampleAudioButton sound={exampleSound} />
               )
+            }
+            speakerAfterLastWord
+            onPlay={
+              measure || !exampleSound
+                ? undefined
+                : () => {
+                    if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
+                    exampleSound.play("sentence");
+                  }
             }
             className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
@@ -819,7 +837,7 @@ export function ReviewCard({
             )}
           >
             <span className="flex min-w-0 items-center gap-1.5">
-              {/* The section waits for the answer, at the foot: before it, a lesson's topic is a hint. */}
+              {/* The section waits for the answer, at the foot: before it, a lesson's topic gives part of the answer away. */}
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
@@ -930,7 +948,7 @@ export function ReviewCard({
                   }
                 />
               )}
-              {hookEditor}
+              {hintEditor}
               {aid && (
                 // The aid's lines, out of the flow, so the fit keeps their room before they show.
                 <div
@@ -1007,7 +1025,7 @@ export function ReviewCard({
             </div>
           )}
           <AnimatePresence>
-            {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
+            {!revealed && nudge && <TapNudge lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
         {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
@@ -1020,7 +1038,7 @@ export function ReviewCard({
           // A sibling of the scroller, so a wheel over it is handed on to the card under it.
           onWheel={(e) => scrollerRef.current?.scrollBy({ top: e.deltaY, left: 0 })}
         >
-          <HookOffer
+          <HintOffer
             {...offer}
             onShown={() => {
               setOfferSeen(true);
@@ -1037,17 +1055,17 @@ export function ReviewCard({
           inert
           className="pointer-events-none invisible absolute inset-x-0 bottom-0 px-2 pb-2"
         >
-          <div className={HOOK_OFFER_BOX}>
-            <HookOfferFace />
+          <div className={HINT_OFFER_BOX}>
+            <HintOfferFace />
           </div>
         </div>
       )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {spokenAid && (!revealed || shownAfter)
-          ? t`Memory hook: ${spokenAid}`
+          ? t`Hint: ${spokenAid}`
           : revealed
             ? offer && offerSeen
-              ? t`Answer: ${back}. You can add a memory hook.`
+              ? t`Answer: ${back}. You can add a hint.`
               : t`Answer: ${back}`
             : ""}
       </p>
@@ -1168,7 +1186,7 @@ function LockedGrade({
   const [pressed, setPressed] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [tipOpen, setTipOpen] = useState(false);
-  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const why = t`You can’t choose Easy after peeking at your hint.`;
   const shown = pressed + nudge;
   return (
     <>

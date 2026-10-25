@@ -3,7 +3,7 @@ import { aiChoice } from "@lymi/client/ai-consent";
 import { api, type Card } from "@lymi/client/api";
 import { settingsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS, type FieldSource, hookable } from "@lymi/core";
+import { CARD_LIMITS, type FieldSource, hintable } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { GlassView } from "expo-glass-effect";
@@ -39,12 +39,12 @@ const arrive = (ms: number, y: number, delay = 0) =>
     .delay(delay)
     .reduceMotion(ALWAYS);
 
-/** What Peek at your hook takes at the card's foot: its 32 pt button over a 20 pt margin. */
+/** What Peek at your hint takes at the card's foot: its 32 pt button over a 20 pt margin. */
 export const PEEK_ROOM = 52;
 
 /**
- * The quiet control at the foot of an unrevealed card that peeks at its hook, as quiet as Show hook
- * after the reveal, since recall comes first. A tap on it never turns the card, and once the hook
+ * The quiet control at the foot of an unrevealed card that peeks at its hint, as quiet as Show hint
+ * after the reveal, since recall comes first. A tap on it never turns the card, and once the hint
  * shows it goes, since there is nothing more to take. It floats over the foot, whose room the card
  * keeps until the reveal, so the cue stays put as it goes.
  */
@@ -55,32 +55,32 @@ export function PeekButton({ onPeek }: { onPeek: () => void }) {
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="absolute inset-x-0 bottom-0 items-center px-5 pb-5"
     >
-      <Button size="sm" variant="ghost" icon="hook" label={t`Peek at your hook`} onPress={onPeek} />
+      <Button size="sm" variant="ghost" icon="hint" label={t`Peek at your hint`} onPress={onPeek} />
     </Animated.View>
   );
 }
 
 /**
- * After a reveal without a peek, the quiet control in the hook's own place under the cue. Seeing it
+ * After a reveal without a peek, the quiet control in the hint's own place under the cue. Seeing it
  * once the answer is out is no help with recall, so it records nothing.
  */
-export function ShowHookButton({ still, onShow }: { still: boolean; onShow: () => void }) {
+export function ShowHintButton({ still, onShow }: { still: boolean; onShow: () => void }) {
   const { t } = useLingui();
   const reduce = useReduceMotion();
   return (
     <Animated.View
       entering={still ? undefined : reduce ? CROSSFADE : arrive(260, 10, 120)}
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
-      // Pulled to the start edge, so its anchor stands where the hook's will.
+      // Pulled to the start edge, so its lightbulb stands where the hint's will.
       className="-ms-3 flex-row"
     >
-      <Button size="sm" variant="ghost" icon="hook" label={t`Show hook`} onPress={onShow} />
+      <Button size="sm" variant="ghost" icon="hint" label={t`Show hint`} onPress={onShow} />
     </Animated.View>
   );
 }
 
-/** The hook under the cue: its anchor and its words. Who wrote it is the card page's to say, not review's. */
-export function HookLine({ text, still }: { text: string; still: boolean }) {
+/** The hint under the cue: its lightbulb and its words. Who wrote it is the card page's to say, not review's. */
+export function HintLine({ text, still }: { text: string; still: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();
@@ -88,11 +88,11 @@ export function HookLine({ text, still }: { text: string; still: boolean }) {
     <Animated.View
       entering={still ? undefined : reduce ? CROSSFADE : arrive(360, 4)}
       accessible
-      accessibilityLabel={t`Memory hook: ${text}`}
+      accessibilityLabel={t`Hint: ${text}`}
       className="flex-row items-start gap-2"
     >
       <View className="pt-1">
-        <Icon name="hook" size={16} colour={p.muted} />
+        <Icon name="hint" size={16} colour={p.muted} />
       </View>
       <Text className="min-w-0 flex-1 text-md text-text-2">{text}</Text>
     </Animated.View>
@@ -109,12 +109,12 @@ const offerOut = new Keyframe({
   .reduceMotion(ALWAYS);
 
 /**
- * The offer to write a hook for an often-forgotten card. It floats in clear glass over the card's foot,
+ * The offer to write a hint for an often-forgotten card. It floats in clear glass over the card's foot,
  * so a long card scrolls on under it rather than stopping at its edge. It asks for nothing, so it
  * is never amber and never in the way of a grade. Glass that starts transparent never draws, so it
  * rises in from under the card's edge rather than fading. phone.md "Glass".
  */
-export function HookOffer({
+export function HintOffer({
   still,
   onOpen,
   onLayout,
@@ -147,15 +147,15 @@ export function HookOffer({
       disabled={!ready}
       onPress={onOpen}
       accessibilityRole="button"
-      accessibilityLabel={t`Try a memory hook`}
+      accessibilityLabel={t`Try a hint`}
       accessibilityHint={t`A short phrase that helps you remember it`}
       className="flex-row items-center gap-2 py-3 ps-4 pe-3"
       style={({ pressed }) => (pressed && !glass ? { backgroundColor: p.hover } : null)}
     >
-      <Icon name="hook" size={16} colour={p["text-2"]} />
-      {/* One line, so a long card keeps its room; what a hook is stays in the hint. */}
+      <Icon name="hint" size={16} colour={p["text-2"]} />
+      {/* One line, so a long card keeps its room; what a hint is stays in the hint. */}
       <Text className="min-w-0 flex-1 text-base font-medium text-text" numberOfLines={1}>
-        {t`Try a memory hook`}
+        {t`Try a hint`}
       </Text>
       <Icon name="forward" size={16} colour={p.muted} />
     </Pressable>
@@ -190,12 +190,12 @@ export function HookOffer({
 const OFFER_SHAPE = { borderRadius: 18 } as const;
 
 /**
- * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.
- * ✓ and the keyboard's done key save; Close and a swipe down let go. Draft a hook asks the AI for
+ * The card's hint, written in a sheet with the keyboard up, as the card's other fields are.
+ * ✓ and the keyboard's done key save; Close and a swipe down let go. Draft a hint asks the AI for
  * one and puts it in the field to edit, as the web's editor does; while the field still holds that
  * draft, the button asks for another.
  */
-export function HookSheet({
+export function HintSheet({
   card,
   open,
   onClose,
@@ -204,14 +204,14 @@ export function HookSheet({
   card: Card | null;
   open: boolean;
   onClose: () => void;
-  /** The hook as the server keeps it, which marks a saved AI draft as the AI's. */
-  onSaved: (hook: { text: string; source: FieldSource | null }) => void;
+  /** The hint as the server keeps it, which marks a saved AI draft as the AI's. */
+  onSaved: (hint: { text: string; source: FieldSource | null }) => void;
 }) {
   const { t } = useLingui();
   const p = usePalette();
   // The sheet keeps its card while it slides away, so it does not empty on the way out.
   const [shown, setShown] = useState(card);
-  const [text, setText] = useState(card?.hook ?? "");
+  const [text, setText] = useState(card?.hint ?? "");
   const [pending, setPending] = useState(false);
   const [drafted, setDrafted] = useState<string | null>(null);
   const [drafting, setDrafting] = useState(false);
@@ -227,7 +227,7 @@ export function HookSheet({
     if (!open || !card) return;
     opening.current += 1;
     setShown(card);
-    setText(card.hook ?? "");
+    setText(card.hint ?? "");
     setDrafted(null);
     setDrafting(false);
     setDraftNote(null);
@@ -240,14 +240,14 @@ export function HookSheet({
   const draftable =
     !!editing &&
     !!settings.data &&
-    hookable(editing, settings.data.meaningLanguage) &&
+    hintable(editing, settings.data.meaningLanguage) &&
     (empty || untouched || drafting);
 
   const draft = async () => {
     if (!editing || drafting) return;
     // This sheet can't hold the ask over itself, so it says where AI is allowed.
     if (aiChoice(settings.data) !== true) {
-      setDraftNote(t`Drafting a hook uses AI. Turn on AI services in You to draft one.`);
+      setDraftNote(t`Drafting a hint uses AI. Turn on AI services in You to draft one.`);
       return;
     }
     const asked = opening.current;
@@ -257,18 +257,18 @@ export function HookSheet({
     const started = performance.now();
     const waited = () => Math.min(60_000, Math.round(performance.now() - started));
     try {
-      const { hook } = await api.draftHook(editing.id);
-      captureEvent("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      const { hint } = await api.draftHint(editing.id);
+      captureEvent("hint_drafted", { outcome: hint ? "drafted" : "none", wait_ms: waited() });
       if (opening.current !== asked || latest.current !== before) return;
-      if (hook) {
-        setText(hook);
-        setDrafted(hook);
+      if (hint) {
+        setText(hint);
+        setDrafted(hint);
       } else {
-        setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
+        setDraftNote(t`No strong hint for this one. Try again, or write your own.`);
       }
     } catch {
-      captureEvent("hook_drafted", { outcome: "failed", wait_ms: waited() });
-      if (opening.current === asked) setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+      captureEvent("hint_drafted", { outcome: "failed", wait_ms: waited() });
+      if (opening.current === asked) setDraftNote(t`Couldn’t draft a hint. Try again in a moment.`);
     } finally {
       if (opening.current === asked) setDrafting(false);
     }
@@ -276,21 +276,21 @@ export function HookSheet({
 
   const save = async () => {
     if (!editing || pending) return;
-    const hook = text.trim();
-    if (!hook) {
-      Alert.alert(t`Write a hook.`);
+    const hint = text.trim();
+    if (!hint) {
+      Alert.alert(t`Write a hint.`);
       return;
     }
-    if (hook === editing.hook) {
+    if (hint === editing.hint) {
       onClose();
       return;
     }
     setPending(true);
     try {
-      const { card: written } = await writes.updateCard(editing, { hook, hookSource: "manual" });
-      onSaved({ text: written.hook ?? hook, source: written.hookSource ?? "manual" });
+      const { card: written } = await writes.updateCard(editing, { hint, hintSource: "manual" });
+      onSaved({ text: written.hint ?? hint, source: written.hintSource ?? "manual" });
     } catch (e) {
-      Alert.alert(t`Couldn’t save the hook.`, e instanceof Error ? e.message : undefined);
+      Alert.alert(t`Couldn’t save the hint.`, e instanceof Error ? e.message : undefined);
     } finally {
       setPending(false);
     }
@@ -300,22 +300,22 @@ export function HookSheet({
     <Sheet
       open={open}
       onOpenChange={(o) => !o && onClose()}
-      // Named as it opened, so a saved first hook never retitles the sheet on its way out.
-      title={shown?.hook ? t`Edit hook` : t`Add hook`}
+      // Named as it opened, so a saved first hint never retitles the sheet on its way out.
+      title={shown?.hint ? t`Edit hint` : t`Add hint`}
       save={{ label: t`Save`, onPress: () => void save(), busy: pending }}
     >
       <View className="rounded-xl bg-glass-plate px-4 pb-3">
         <TextInput
           {...focus}
           value={text}
-          maxLength={CARD_LIMITS.hook}
+          maxLength={CARD_LIMITS.hint}
           onChangeText={(next) => {
             setText(next);
             setDraftNote(null);
           }}
           placeholder={t`A sound-alike, or something to picture`}
           placeholderTextColor={p.muted}
-          accessibilityLabel={t`Memory hook`}
+          accessibilityLabel={t`Hint`}
           multiline
           submitBehavior="blurAndSubmit"
           returnKeyType="done"

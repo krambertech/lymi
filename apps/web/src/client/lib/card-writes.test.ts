@@ -13,7 +13,7 @@ const values = (p: Partial<CardFormValues> = {}): CardFormValues => ({
   example: "",
   exampleTranslation: "",
   notes: "",
-  hook: "",
+  hint: "",
   source: "",
   tags: [],
   language: "it",
@@ -38,8 +38,8 @@ const card: Card = {
   exampleTranslationStale: false,
   exampleTranslationStatus: null,
   notes: null,
-  hook: null,
-  hookSource: null,
+  hint: null,
+  hintSource: null,
   language: "it",
   tags: ["verbs"],
   source: "Lesson 14",
@@ -105,21 +105,21 @@ describe("cardPatch", () => {
     });
   });
 
-  it("makes a changed hook the learner's, even one the AI drafted", () => {
-    const drafted: Card = { ...card, hook: "Hurry up the brigade", hookSource: "ai" };
+  it("makes a changed hint the learner's, even one the AI drafted", () => {
+    const drafted: Card = { ...card, hint: "Hurry up the brigade", hintSource: "ai" };
     const kept = values({
       meaning: "to hurry up",
       tags: ["verbs"],
       source: "Lesson 14",
-      hook: "Hurry up the brigade",
+      hint: "Hurry up the brigade",
     });
     expect(cardPatch(drafted, kept)).toEqual({});
-    expect(cardPatch(drafted, { ...kept, hook: "Brigade, hurry" })).toEqual({
-      hook: "Brigade, hurry",
-      hookSource: "manual",
+    expect(cardPatch(drafted, { ...kept, hint: "Brigade, hurry" })).toEqual({
+      hint: "Brigade, hurry",
+      hintSource: "manual",
     });
-    // A cleared hook has no source to claim.
-    expect(cardPatch(drafted, { ...kept, hook: "" })).toEqual({ hook: "" });
+    // A cleared hint has no source to claim.
+    expect(cardPatch(drafted, { ...kept, hint: "" })).toEqual({ hint: "" });
   });
 });
 

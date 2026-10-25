@@ -316,9 +316,14 @@ describe("deleting an account", () => {
     const { card: own } = await deckWithCard(owner, "lill");
     const { card: kept } = await deckWithCard(owner, "meri", member);
     const current = `cards/${own.id}/recorded/term.mp3`;
-    await raw.prepare("update cards set audio_key = ? where id = ?").bind(current, own.id).run();
+    const sentence = `cards/${own.id}/example-recorded/sentence.mp3`;
+    await raw
+      .prepare("update cards set audio_key = ?, example_recording_key = ? where id = ?")
+      .bind(current, sentence, own.id)
+      .run();
     for (const key of [
       current,
+      sentence,
       `cards/${own.id}/v1/old.mp3`,
       `cards/${kept.id}/recorded/term.mp3`,
     ]) {
@@ -331,7 +336,7 @@ describe("deleting an account", () => {
       deps,
     );
     // The current clip goes straight away; the cron clears the rest of the folder.
-    expect(leftovers.audioKeys).toEqual([current]);
+    expect(leftovers.audioKeys).toEqual([current, sentence]);
     expect(await count("card_audio_purges", "card_id", own.id)).toBe(1);
     expect(await count("card_audio_purges", "card_id", kept.id)).toBe(0);
     await bindings.AUDIO.delete(leftovers.audioKeys);

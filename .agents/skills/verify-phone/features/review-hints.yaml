@@ -1,6 +1,6 @@
-# Hooks in review: Show hook glides the answer down for a long hook, no AI badge shows, and Draft is one button from first draft to saved.
+# Hints in review: Show hint glides the answer down for a long hint, no AI badge shows, and Draft is one button from first draft to saved.
 appId: app.lymi
-name: Hooks in review
+name: Hints in review
 ---
 - runFlow: _open.yaml
 - openLink: lymi://review?deck=${GLIDE_DECK}
@@ -16,11 +16,11 @@ name: Hooks in review
     timeout: 10000
 - waitForAnimationToEnd
 - takeScreenshot: 02-revealed
-# The revealed card is one element to VoiceOver, so Show hook, under the one-line cue, is tapped where it sits.
+# The revealed card is one element to VoiceOver, so Show hint, under the one-line cue, is tapped where it sits.
 - tapOn:
     point: "24%,52%"
 - waitForAnimationToEnd
-- takeScreenshot: 03-hook-shown
+- takeScreenshot: 03-hint-shown
 - tapOn: "^Good.*"
 - extendedWaitUntil:
     visible: "^Done$"
@@ -39,7 +39,7 @@ name: Hooks in review
 - waitForAnimationToEnd
 - tapOn:
     point: "50%,81%"
-# The hook sheet is native, so Maestro's hierarchy leaves its contents out: Draft, at the field's foot, and ✓ are tapped where they sit.
+# The hint sheet is native, so Maestro's hierarchy leaves its contents out: Draft, at the field's foot, and ✓ are tapped where they sit.
 - waitForAnimationToEnd
 - takeScreenshot: 04-sheet-empty
 - tapOn:

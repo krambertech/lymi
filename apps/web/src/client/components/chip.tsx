@@ -86,7 +86,7 @@ type SourceField =
   | "exampleAndTranslation"
   | "notes"
   | "pronunciation"
-  | "hook";
+  | "hint";
 
 // Whole sentences per field, so each language can inflect the field word on its own. `field`
 // is the form for a place that does not name the field next to the chip.
@@ -126,10 +126,10 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
     ai: msg`AI pronunciation`,
     manual: msg`Pronunciation by you`,
   },
-  hook: {
-    lesson: msg`Hook from lesson`,
-    ai: msg`AI hook`,
-    manual: msg`Hook by you`,
+  hint: {
+    lesson: msg`Hint from lesson`,
+    ai: msg`AI hint`,
+    manual: msg`Hint by you`,
   },
 };
 

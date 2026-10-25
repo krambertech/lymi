@@ -100,21 +100,23 @@ describe("hints", () => {
 });
 
 describe("the hint's old name", () => {
-  it("neither takes nor returns a hook", async () => {
+  it("takes a hook queued before the rename as the hint, and returns only hint", async () => {
     const card = await hintedCard("lumi3");
     const patched = await app.fetch(`/api/cards/${card.id}`, {
-      ...json({ meaning: "snowfall", hook: "Lumi lights the street" }, { method: "PATCH" }),
+      ...json({ hook: "Lumi lights the street", hookSource: "lesson" }, { method: "PATCH" }),
       as: learner,
     });
     const body = await patched.json();
-    expect(body).toMatchObject({ meaning: "snowfall", hint: "A luminous street" });
+    expect(body).toMatchObject({ hint: "Lumi lights the street", hintSource: "lesson" });
     expect(body).not.toHaveProperty("hook");
     expect(body).not.toHaveProperty("hookSource");
   });
 
-  it("refuses a grade that names its aid hook", async () => {
+  it("keeps a queued grade that names its aid hook, stored as hint", async () => {
     const card = await hintedCard("lumi4");
-    expect((await grade(card.id, 3, { aid: "hook" })).status).toBe(400);
+    expect((await grade(card.id, 4, { aid: "hook" })).status).toBe(400);
+    expect((await grade(card.id, 3, { aid: "hook" })).status).toBe(200);
+    expect((await history(card.id)).reviews).toMatchObject([{ rating: 3, aid: "hint" }]);
   });
 
   it("no longer answers the old draft path", async () => {

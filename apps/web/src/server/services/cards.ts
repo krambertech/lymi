@@ -32,6 +32,7 @@ import {
   TEXT_MODES,
   termKey,
   wantsTranslation,
+  withHint,
 } from "@lymi/core";
 import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
@@ -197,11 +198,12 @@ export async function addCard(
  */
 export async function addCards(
   ctx: ServiceContext,
-  inputs: ServerCardInput[],
+  received: ServerCardInput[],
   enrichment?: EnrichmentQueue | null,
   options: AddCardsOptions = {},
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
+  const inputs = received.map((card) => withHint(card));
   if (inputs.length === 0) return [];
   // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
   const enrichAllowed =
@@ -924,7 +926,7 @@ export async function updateCard(
   patch: ServerCardPatch,
   enrichment?: EnrichmentQueue | null,
 ) {
-  const edit = { ...patch, cardId: id };
+  const edit = { ...withHint(patch), cardId: id };
   const lookups = await editLookups(ctx, [edit], enrichment);
   const now = new Date();
   const write = editWrite(ctx, lookups, edit, now);
@@ -958,7 +960,7 @@ export type EditCardOutcome =
  */
 export async function updateCards(
   ctx: ServiceContext,
-  edits: CardEditInput[],
+  received: CardEditInput[],
   /** Tags the edits take off that are archived rather than dropped, for Restore. */
   options: {
     archiveTags?: readonly string[];
@@ -966,6 +968,7 @@ export async function updateCards(
   } = {},
 ): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
+  const edits = received.map((edit) => withHint(edit));
   if (edits.length === 0) return [];
   const lookups = await editLookups(ctx, edits, options.enrichment);
   const now = new Date();

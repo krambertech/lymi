@@ -1593,7 +1593,16 @@
           "maxLength": 64
          },
          "aid": {
-          "$ref": "#/components/schemas/ReviewAid"
+          "anyOf": [
+           {
+            "$ref": "#/components/schemas/ReviewAid"
+           },
+           {
+            "type": "string",
+            "const": "hook",
+            "deprecated": true
+           }
+          ]
          },
          "recallMs": {
           "type": "integer",
@@ -3906,6 +3915,19 @@
            "manual"
           ]
          },
+         "hook": {
+          "deprecated": true,
+          "type": "string",
+          "maxLength": 200
+         },
+         "hookSource": {
+          "deprecated": true,
+          "type": "string",
+          "enum": [
+           "lesson",
+           "manual"
+          ]
+         },
          "sectionId": {
           "anyOf": [
            {
@@ -4186,6 +4208,19 @@
           ]
          },
          "hintSource": {
+          "type": "string",
+          "enum": [
+           "lesson",
+           "manual"
+          ]
+         },
+         "hook": {
+          "deprecated": true,
+          "type": "string",
+          "maxLength": 200
+         },
+         "hookSource": {
+          "deprecated": true,
           "type": "string",
           "enum": [
            "lesson",

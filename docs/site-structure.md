@@ -1,6 +1,6 @@
 # Lymi website and product
 
-Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-site` serves the public website and documentation at `https://lymi.app`. The existing `lymi` Worker serves the product, authentication and backend at `https://my.lymi.app`. The repository configuration is ready for this split, but production remains unverified until OAuth, both Workers Builds pipelines, the custom-domain handoff and signed-in smoke checks are confirmed.
+Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-site` serves the public website and documentation at `https://lymi.app`. The `lymi` Worker serves the product, authentication and backend at `https://my.lymi.app`. The repository configuration is ready for this split, but production remains unverified until OAuth, both Workers Builds pipelines, the custom-domain handoff and signed-in smoke checks are confirmed.
 
 ## Origin contract
 
@@ -37,7 +37,7 @@ The product Worker permanently redirects `/docs`, `/docs/*`, `/join`, `/privacy`
 
 Public addresses never end in a slash except the root, so the served URL, the canonical, `hreflang` and the sitemap name the same address. A slash form such as `/languages/` or `/uk/` redirects to the bare path with its query: Wrangler's `html_handling: "drop-trailing-slash"` does it for prerendered pages, and Astro's `trailingSlash: "never"` for pages rendered per request.
 
-Having an account is different from being signed in. Outside Explore, an existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Anyone may create an account: Lymi is in public beta and no allowlist gates sign-up.
+Having an account is different from being signed in. Outside Explore, an existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. A return path is always an internal product route; a protocol-relative, external, malformed, hashed or authentication route falls back to Today. Anyone may create an account: Lymi is in public beta and no allowlist gates sign-up.
 
 The public landing page's Open Lymi link always goes to the product root and lets that origin resolve session state. The product's You screen links back to the public website. Authentication cookies remain host-only on `my.lymi.app` and are never sent to the website.
 
@@ -45,7 +45,7 @@ The public landing page's Open Lymi link always goes to the product root and let
 
 Every public marketing page and the privacy policy ship in English, Ukrainian and Russian. English lives at the path, and the other editions live under `/uk/` and `/ru/`, rendered by the same island with the page locale. The web and phone apps open the privacy policy in the app language. Terms, support and the documentation stay in English on purpose.
 
-`apps/site/src/lib/routes.ts` lists the translated pages, the English-only paths, the pages built from content and the pages rendered per request. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `/sitemap.xml` is a prerendered index of `/sitemap-pages.xml`, built from that list, and `/sitemap-decks.xml`, which lists every published deck in each locale at request time.
+`apps/site/src/lib/routes.ts` lists the translated pages, the English-only paths, the pages built from content and the pages rendered per request. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `/sitemap.xml` is a prerendered index of `/sitemap-pages.xml`, built from that list, and `/sitemap-decks.xml`, which lists every published deck in each locale at request time. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
 
 A published deck page translates its own chrome, title, description and structured data, while the deck's name, summary, sections and cards stay in the deck's one meaning language.
 
@@ -55,15 +55,17 @@ A published deck page translates its own chrome, title, description and structur
 
 `/llms.txt` gives an assistant one definition of Lymi, taken word for word from the homepage description, and the URLs worth following. It holds no count, and `llms.test.ts` fails when one appears.
 
-Use case pages sit under one **Use cases** menu in the header rather than as links of their own, so the header stays the same width as pages are added. `apps/site/src/components/landing/site-links.ts` lists them in menu order, with a narrower page such as Estonian under its broader one; the header menu, the phone menu and the footer all read that list. A menu entry carries an icon on a tray in the hue of its landing tile, never violet, so the menu and the landing's use cases read as one set. Privacy, terms and support use the same header. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
+## Header and footer links
+
+Use case pages sit under one **Use cases** menu in the header rather than as links of their own, so the header stays the same width as pages are added. `apps/site/src/components/landing/site-links.ts` lists them in menu order, with a narrower page such as Estonian under its broader one; the header menu, the phone menu and the footer all read that list. A menu entry carries an icon on a tray in the hue of its landing tile, never violet, so the menu and the landing's use cases read as one set. Privacy, terms and support use the same header.
 
 ## Deployment and PWA boundary
 
 `apps/site` is built with `@astrojs/cloudflare`: every page is prerendered except published deck pages and the deck sitemap, and a small Worker answers health and the legacy redirects before Astro's handler. It has no SPA fallback, service worker, PWA manifest, authentication, product API, MCP, R2, KV or cron. It writes nothing. Its only data binding is D1, and it reads published decks only through `loadPublicDeck` in `packages/core/src/catalog.ts`, which selects allowlisted columns and parses them through `PublicDeckOut`. Astro owns canonical metadata, sitemaps and public indexing for both kinds of page.
 
-`apps/web` remains the Vite React PWA and Hono Worker. It owns the product SPA fallback, Workbox service worker, manifest, offline cache, review outbox, notification icons and reminder destinations. Product HTML always sends `noindex, nofollow`, and product `robots.txt` disallows all crawling.
+`apps/web` is the Vite React PWA and Hono Worker. It owns the product SPA fallback, Workbox service worker, manifest, offline cache, review outbox, notification icons and reminder destinations. Product HTML always sends `noindex, nofollow`, and product `robots.txt` disallows all crawling.
 
-CI's artifact boundary check fails if the public build contains service-worker or manifest markers, or if the product build contains known landing or documentation markers. That structural check complements browser coverage of the route and indexing contracts.
+CI's artifact boundary check fails if the public build contains service-worker or manifest markers, or if the product build contains known landing or documentation markers.
 
 ## Documentation structure
 
@@ -97,7 +99,7 @@ The product OpenAPI route permits CORS only for the exact public website origin 
 - `pnpm deploy:health:site` checks `lymi.app` for the `lymi-site` health identity.
 - `pnpm deploy:health:product` checks `my.lymi.app` for the `lymi-product` health identity.
 - `apps/site/wrangler.jsonc` owns the `lymi-site` Worker, apex custom domain, static assets, beta D1 binding and preview URLs.
-- `apps/web/wrangler.jsonc` owns the existing `lymi` Worker, product custom domain, backend bindings, secrets, cron and disabled preview URLs.
+- `apps/web/wrangler.jsonc` owns the `lymi` Worker, product custom domain, backend bindings, secrets, cron and disabled preview URLs.
 - `apps/web/src/server/origin-routing.ts` enforces product-only paths and public-route redirects before the product SPA fallback.
 
 Browser E2E gives the website, the interactive product journeys and the production-built product package a port each, from the base in `e2e/ports.mjs` (4173 by default, `E2E_PORT` to move all three). It builds both apps, starts each Worker with isolated local state, and exercises the route boundary, product journeys, installed service worker and offline shell in one test run.
@@ -117,6 +119,6 @@ The deploy and production migration commands remain user-owned. A green build or
 
 ## One-time browser recovery
 
-If an existing `my.lymi.app` tab or installed app still renders the old public shell, clear the stored site data for `my.lymi.app`, including its service worker and caches, then close and reopen the tab or app. Unregistering a worker does not stop it from controlling its current open document, so reopening is required. Sign in again and re-enable reminders if the browser discarded the push subscription.
+If an existing `my.lymi.app` tab or installed app still renders the old public shell, clear the stored site data for `my.lymi.app`, including its service worker and caches, then close and reopen the tab or app. Closing matters, because an unregistered worker keeps controlling the document it already has open. Sign in again and re-enable reminders if the browser discarded the push subscription.
 
 This sequence is explicitly covered by browser tests. There is no permanent recovery endpoint because Lymi currently has one learner and the stale state is a one-time deployment migration.

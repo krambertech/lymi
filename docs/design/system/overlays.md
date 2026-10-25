@@ -10,14 +10,14 @@ What is opening?
  ├── A form the learner asked for (New deck, Edit card) → a sheet: Dialog, kind "moment"
  ├── A question before something that cannot be undone → a question: Dialog, kind "moment"
  │     (only when Undo is impossible; otherwise act at once and offer Undo in a toast)
- ├── A page read over the current screen (a word, the streak) → a place: Dialog kind="place", open state in the URL
+ ├── A page read over the current screen (a card, the streak) → a place: Dialog kind="place", open state in the URL
  ├── What just happened, after the fact → toast
  ├── Finding something or running a command from the keyboard → the command palette (⌘K)
  ├── The name of an icon control → Tooltip, which IconButton already does
  └── Why one control failed, or cannot act (a pronunciation that would not play, Easy after a peek) → a tip over that control (ErrorTip)
 ```
 
-**A modal that asks a question is a last resort; Undo replaces confirmation.** A sheet is not that modal: it is a form the learner asked for.
+**Undo replaces confirmation**, so a question is a last resort. A sheet is not a question: it is a form the learner asked for.
 
 "Desktop" means `DESKTOP_QUERY` in `lib/device.ts`, `(min-width: 768px) and (hover: hover) and (pointer: fine)`, read by `useOverlayShape` as the overlay opens and held until it closes. The pointer counts as well as the width, so a tablet held in two hands still gets the drawer at 900 px. The shape is frozen while it is open, because crossing the breakpoint mid-edit would remount the form and take the half-typed word with it.
 
@@ -54,7 +54,7 @@ No field takes focus as the drawer opens: the drawer settles first, and the keyb
 
 ## Places
 
-A place is a page that opens over the screen the learner was on: a word, the streak. It looks like a page, so its open state lives in the address (`?streak`, `?card`): the system back gesture closes it, and a reload or a shared link reopens it.
+A place is a page that opens over the screen the learner was on: a card, the streak. It looks like a page, so its open state lives in the address (`?streak`, `?card`): the system back gesture closes it, and a reload or a shared link reopens it.
 
 - On touch it fills the screen, arrives from the end edge and leaves by back, which names the screen under it. The phone has no X anywhere, and the motion says how to leave: from the side means back, from below means a drawer to swipe down.
 - On a desktop the same place is a side sheet at the end edge (`placement="end"`), a centred dialog, or a panel beside its list when both fit, and ends in an X.
@@ -69,7 +69,7 @@ On a desktop a menu is anchored to its trigger. On touch the same rows rise in a
 
 A menu's surface, like a popover's and a list's, is the slight `glass` ([surfaces.md](surfaces.md#on-glass)); a dialog or a drawer stays solid.
 
-`DropdownMenuItem` variants: `default` and `destructive`, for Archive, Remove or Leave. Nothing else exists. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
+`DropdownMenuItem` has two variants: `default`, and `destructive` for Archive, Remove or Leave. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
 
 A checkbox row keeps its tick in the start slot, so checked and unchecked rows line up; one with its own icon, such as Important among Filter's fields, puts the icon there and the tick at the end, where the rows beside it have their chevron.
 

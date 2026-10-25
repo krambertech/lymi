@@ -17,13 +17,7 @@ What is empty?
 
 ## First-run guide
 
-`FirstRunGuide` in `components/first-run.tsx` is Today until the first review ([onboarding.md](../onboarding.md)): dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps, **Create a deck**, **Add cards**, **Finish your first review**.
-
-The phone uses `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`; its entry flow and guide differences are in [onboarding.md](../onboarding.md#on-the-phone).
-
-- Each step is done by the learner's own data, never by a dismissal.
-- A done step shows an amber check and a struck-through title, the current step holds its action, and a later step stays muted. No progress bars.
-- **Create your first deck** (three cards, each with its own button) and **Explore ready-made decks about** … (the choice is the heading's last words, over a row of decks) follow it, and Today's own cards wait.
+`FirstRunGuide` in `components/first-run.tsx` is Today until the first review: dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps. Each step is done by the learner's own data, never by a dismissal. [onboarding.md](../onboarding.md) owns the steps, what follows them, and the phone's `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`.
 
 ## StartPanel
 

@@ -1,6 +1,6 @@
 # Reveal nudge
 
-The pointing hand and the line at the foot of an unrevealed card that say how to reveal it. Only an account that has reviewed on fewer than three days sees it: after a second on its first cards on a device, and after a minute on an idle card. `revealNudgeDelayMs` in `packages/client/src/reveal-nudge.ts` holds the rule; motion.md "Review" describes it.
+The pointing hand and the line at the foot of an unrevealed card that say how to reveal it. Only an account that has reviewed on fewer than three days sees it: after a second on its first cards on a device, and after a minute on an idle card. `revealNudgeDelayMs` in `packages/client/src/reveal-nudge.ts` holds the rule; [motion.md](../../../../docs/design/system/motion.md#review) describes it.
 
 ## Reach
 

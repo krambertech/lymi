@@ -35,7 +35,7 @@ The flame shows how far today has come. **Whether the streak is alive is the num
 
 - It is out only when there is no streak and no review yet today: a new learner, or the morning after a day that ended short of its goal.
 - The first accepted review lights it small, it grows through the day, and it is full at the goal. A live streak keeps its flame lit from the start of the day.
-- Nothing due, an ended session and an unfinished morning never put it out. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
+- Nothing due, an ended review and an unfinished morning never put it out. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
 
 `Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak and no review yet today, and `fed` goes up by one for every accepted review. `lanternFor` in `@lymi/design` turns the streak summary into those props. A screen never asks the lantern to celebrate.
 
@@ -90,6 +90,6 @@ Carried, the lantern swings from the bail at app launch and on pull to refresh: 
 
 The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets are in `apps/web/public/brand/` and regenerate with `node scripts/brand.mjs && sh scripts/icons.sh`.
 
-The link preview, `apps/site/public/share.png`, is the app icon's room widened to 1200 × 630: the lit row lockup over “Keep what you learn.” in the same warm centre. Everything sits in the middle 630 px, so an app that crops the preview to a square keeps the whole picture.
+The link preview, `apps/site/public/share.png`, is the app icon's room widened to 1200 × 630: the lit row lockup over "Keep what you learn." in the same warm centre. Everything sits in the middle 630 px, so an app that crops the preview to a square keeps the whole picture.
 
 No display serif, no sparkle icon outside the AI badge, no confetti.

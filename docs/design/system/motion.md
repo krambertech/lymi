@@ -46,11 +46,11 @@ Press scales over 150 ms. Nothing moves up on press.
 
 Hover lasts 150 ms and applies to pointer devices only, through the `hoverable:` variant.
 
-In a menu, a list of options and the rail the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows. It never slides across a separator or a heading: past one, it fades in at the new row instead, because a fill passing over a heading reads as a flash. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. In the rail the fill passes under the current row, whose own fill is opaque, so hover never outranks where the learner is ([rail.md](rail.md#hover)).
+In a menu, a list of options and the rail the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows. It never slides across a separator or a heading: past one, it fades in at the new row instead, because a fill passing over a heading reads as a flash. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. In the rail it passes under the current row ([rail.md](rail.md#hover)).
 
 ## Choices
 
-The chosen plate of a segmented control and of the pill nav springs to the new option in about 340 ms with a trace of overshoot, so the choice reads as one thing moving rather than two things blinking. Chosen from the keyboard, it jumps.
+The chosen plate of a segmented control and of the pill nav springs to the new option (see Timing), so the choice reads as one thing moving rather than two things blinking. Chosen from the keyboard, it jumps.
 
 A choice control answers the press it was given:
 
@@ -62,19 +62,19 @@ Those share one set of springs, the `CHOICE_` presets in `@lymi/design`, and eac
 
 ## The keyboard does not animate
 
-Keyboard-initiated actions do not animate the interface they change: a card graded from the keyboard arrives at once, with no closing strip and no fade. The flame is the exception, because it is not the interface responding to a key but the fire being fed, and it never delays the next card. The theme switch suspends transitions for one frame so the room swaps at once.
+An action from the keyboard changes the interface at once: a card graded from the keyboard arrives at once, with no closing strip and no fade. The flame is the exception, because it is not the interface responding to a key but the fire being fed, and it never delays the next card. The theme switch suspends transitions for one frame so the room swaps at once.
 
 ## Review
 
 Reveal is the one choreographed moment of a card, built with Motion.
 
-1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the word alone.
-2. On reveal the word glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick. On the phone it draws in `edge-2` from the start, with no amber. Under reduced motion the rule appears as a hairline.
+1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the cue alone.
+2. On reveal the cue glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick. On the phone it draws in `edge-2` from the start, with no amber.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 
-A grade plays it backwards: the strip closes over 300 ms, its grades fading in the first 120, and the card grows back into the room while the next card's words fade in over 160 ms. The card is not replaced, because its place on the screen is the same; only what it asks changes. The next card never waits for the server: the grade is kept on the device and sent behind it. The session count rolls up as each card lands.
+A grade plays it backwards: the strip closes over 300 ms, its grades fading in the first 120, and the card grows back into the room while the next card's words fade in over 160 ms. The card is not replaced, because its place on the screen is the same; only what it asks changes. The next card never waits for the server: the grade is kept on the device and sent behind it. The header's count rolls up as each card lands.
 
 The hint offer at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades, and after a reveal from the keyboard it appears without moving. It cannot be pressed until it has arrived. Left for later, it fades out over 140 ms, at once under reduced motion, and keeps its room until the grade so the answer never moves.
 
@@ -113,7 +113,7 @@ The spark is the goal's one celebration: it plays once a day, on the review that
 
 ## Numbers
 
-A count that changes in front of the learner rolls digit by digit, like a departure board, rather than snapping: the due count, the streak, today's reviews, and the count that ends a review. Each digit settles on a spring with a trace of overshoot, and a digit that does not change stays still. Under reduced motion the new number appears at once.
+A count that changes in front of the learner rolls digit by digit, like a departure board, rather than snapping: the due count, the streak, today's reviews, and the count that ends a review. Each digit settles on a spring with a trace of overshoot, and a digit that does not change stays still.
 
 ## The welcome
 

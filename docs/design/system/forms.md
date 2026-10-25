@@ -21,13 +21,13 @@ What is the learner giving?
       └── A fixed list longer than 15 that is searched by name (languages) → Combobox
 ```
 
-A short list is picked from and a long one is searched. `ToggleGroup multiple` has no product use yet, so raise a new multi-choice shape before building one. Never the platform `<select>`: its list is the one thing in a form the palette does not reach.
+A short list is picked from and a long one is searched. `ToggleGroup multiple` has no product use yet, so raise a new multi-choice shape before building one. Use `Select`, never the platform `<select>`, whose list is the one thing in a form the palette does not reach.
 
 ## The control box
 
-Every control is 44 px tall on the phone and 40 px on a desktop, with 16 px text on any touch screen, a tablet included, so iOS does not zoom on focus. Input, Select and Combobox take this from `controlSize` in `components/ui/input.tsx`; Textarea takes only its text size from `controlText`, so its height follows its content. Never resize a control with `className`, and never make a larger cut for "the one field that matters": a form with three type sizes looks unfinished, and the field that matters is already first.
+Every control is 44 px tall on the phone and 40 px on a desktop, with 16 px text on any touch screen, a tablet included, so iOS does not zoom on focus. Input, Select and Combobox take this from `controlSize` in `components/ui/input.tsx`; Textarea takes only its text size from `controlText`, so its height follows its content. Every control in a form keeps this size, including "the one field that matters": a form with three type sizes looks unfinished, and the field that matters is already first.
 
-Controls size by the **viewport**, not the container. A phone is a phone whatever it is nested in, and a sheet renders in a portal where a container query has nothing to measure and would silently never fire.
+Controls size by the **viewport**, not the container: a phone is a phone whatever it is nested in, and a sheet renders in a portal where a container query has nothing to measure and would silently never fire.
 
 ## A form row is a Field
 
@@ -73,9 +73,7 @@ A Save, Create or Add button belongs to a sheet: a form the learner opened to ma
 
 ## Validation
 
-Forms stay pressable and validate on submit, never by disabling the submit button ([buttons.md](buttons.md#states)). Parse with the same Zod schema the route uses, show the message under the field with its icon, and move the caret to the first thing that is wrong. The messages live on the schema in `packages/core`, so what the API says on a 400 is what the field says under the control.
-
-A field error says how to fix it: "Keep the term under 500 characters."
+Forms stay pressable and validate on submit ([buttons.md](buttons.md#states)). Parse with the same Zod schema the route uses, show the message under the field with its icon, and move the caret to the first thing that is wrong. The messages live on the schema in `packages/core`, so what the API says on a 400 is what the field says under the control; [voice.md](voice.md) has how to word one.
 
 ## Select and Combobox
 
@@ -93,7 +91,7 @@ A card's tags are chosen from a chip, `TagsChip`: a `Combobox` with `multiple`, 
 
 ## Text language and direction
 
-`Input` and `Textarea` default to `dir="auto"`, so learner text finds its own direction without turning the form around. Content in a known language carries that language where the control supports it; the example and its translation each keep their own direction. Do not force every field to the app's direction. Read text follows [type.md](type.md#text-direction).
+`Input` and `Textarea` default to `dir="auto"`, so learner text finds its own direction without turning the form around; keep that default rather than setting the app's direction. Content in a known language carries that language where the control supports it; the example and its translation each keep their own direction. Read text follows [type.md](type.md#text-direction).
 
 ## Optional card fields
 

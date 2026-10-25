@@ -4,7 +4,7 @@ A Chinese card's pinyin is drawn over its hanzi, one syllable per character, on 
 
 ## Reach
 
-No persona has Chinese cards, so [`chinese.mjs`](chinese.mjs) adds to `learner` a 中文 deck holding 一点儿 sent as `yi4 dian3r` a `zh-TW` 國語 deck holding 學習 read xuéxí, a 银行 deck whose 银行 is graded Easy yesterday so it is Known and not due, and a 行长 deck holding a New 行长 with the example `行长说不行[hángzhǎng shuō bù xíng]。`; the flow opens each from Library and presses its **Review**.
+No persona has Chinese cards, so [`chinese.mjs`](chinese.mjs) adds to `learner` a 中文 deck holding 一点儿 sent as `yi4 dian3r`, a `zh-TW` 國語 deck holding 學習 read xuéxí, a 银行 deck whose 银行 is graded Easy yesterday so it is Known and not due, and a 行长 deck holding a New 行长 with the example `行长说不行[hángzhǎng shuō bù xíng]。`; the flow opens each from Library and presses its **Review**.
 
 ## Drive
 

@@ -13,7 +13,7 @@ A good card asks one thing and has one normal answer. Everything else on it is o
 5. **The example is one short sentence in the language being learned, where every other word is easier than the term, at most 250 characters as shown.** It shows the word in use; it is not what the learner recalls. Its translation goes in its own field, never in brackets after it or in the notes, and is one natural sentence in the meaning language that uses the card's meaning for the term.
 6. **Nothing on the cue side gives the answer away.** An example, note or hint that spells the term turns production into reading.
 7. **Look-alikes get a contrast line on both cards.** Similar words and near-synonyms learned together are the most common cause of forgetting. One line ("Сравни: *arvama*, считать") is cheaper than splitting the lesson.
-8. **A hint is for a word that keeps failing, not for every card.** Mnemonics help when chosen, so the learner writes one, often when review offers it for an often-forgotten card. A hint leads back to the term without spelling it.
+8. **A hint is for a card that keeps failing, not for every card.** It helps when the learner chose it, so the learner writes one, often when review offers it for an often-forgotten card. A hint leads back to the term without spelling it.
 9. **A card that keeps failing is split or rewritten, not given more notes.**
 10. **One format per deck.** The same term shape, the same meaning style and the same note labels on every card, so the deck reads as one voice and the AI can copy it.
 
@@ -87,7 +87,6 @@ Notes labels are written here in English; a card writes them in its meaning lang
 - **Icelandic** notes give Gender, Genitive and Plural, and a strong verb's Past and Participle; þ, ð, æ and ö stay as written.
 - **Polish** notes give "Perfective: *zrobić*", "Present: *robię, robisz*", a gender the ending hides, a genitive that changes the stem and an irregular or masculine-personal plural, "Plural: *studenci*"; for a Ukrainian or Russian reader, a false friend, *dywan*, a carpet. Where Polish only looks like Ukrainian, the notes also give the case or preposition that differs, *tęsknić za domem*, not по. A word not stressed on the second-to-last syllable gets the term with a grave accent on that vowel as its pronunciation, as one composed letter: mùzyka, never an acute, which turns o into the letter ó.
 - **Czech** keeps háček, čárka and ů; notes give "Perfective: *udělat*", "Present: *dělám*", a hidden gender, the Genitive and an irregular "Plural: *lidé*".
-
 - **German** notes give a noun's Plural, a strong verb's Present only when the vowel changes, Past and "Perfect: *ist gefahren*", a separable prefix, *ein|kaufen*, and a fixed preposition with its case; the term keeps its article, and duplicates still compare it.
 - **French** pronunciation is IPA, with each liaison in a phrase marked ‿; notes give a gender the article hides, an irregular Plural, an adjective's irregular "Feminine: *belle*", a verb's irregular Present, its Participle, and a "With *être*" line.
 - **Spanish** and **Italian** keep every written accent, *árbol*, *città*. Spanish notes give "Present: *tengo, tienes*", an irregular Preterite, a hidden gender and the word Spain or Latin America says instead. Italian notes give an irregular Present and Participle, "Past with *essere*: *sono venuto*" and an irregular "Plural: *le uova*"; a word stressed before its second-to-last syllable gets the term with a grave accent as its pronunciation, telèfono.
@@ -128,7 +127,7 @@ The reading belongs in the pronunciation and an example in the example field; an
 1. What the lesson marks first: glossed, bold, highlighted, underlined, drilled, or written in by hand.
 2. Then frequent, useful words the learner does not have.
 3. A term already in the learner's decks is skipped (ADR 0004). A second card for the same word is added only for a clearly different sense, with its own cue.
-4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
+4. Page furniture is never a card: headings, row numbers, transcriptions, memory-aid columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
 
 ## Examples
 

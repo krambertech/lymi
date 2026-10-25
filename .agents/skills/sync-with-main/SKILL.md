@@ -1,12 +1,12 @@
 ---
 name: sync-with-main
 description: |
-  Rebase the current branch onto `origin/main` and resolve routine conflicts so an out-of-date or conflicted pull request can move again. Use when GitHub reports the branch is not mergeable, or when someone says "my PR has conflicts", "update my branch with main", "sync with main", or "resolve the conflicts". Handles lockfiles and generated files conservatively, and stops before merging the pull request.
+  Rebase the current branch onto `origin/main` and resolve routine conflicts so an out-of-date or conflicted pull request can move again. Use when GitHub reports the branch is not mergeable, or someone asks to sync or update the branch with main or resolve its conflicts. Handles lockfiles and generated files conservatively, and stops before merging the pull request.
 ---
 
-# sync-with-main
+# Sync with main
 
-A branch open for a while collides with `main`, GitHub shows **"This branch has conflicts that must be resolved"**, and the merge button disappears. [`docs/git-workflow.md`](../../../docs/git-workflow.md) is the source of truth; this skill covers the careful execution and routine conflicts.
+[`docs/git-workflow.md`](../../../docs/git-workflow.md) owns the rules; this skill is the order of work and the routine conflicts.
 
 ## Establish a recovery point
 
@@ -18,11 +18,11 @@ git status --short
 git log --oneline origin/main..HEAD
 ```
 
-Record the branch, HEAD, upstream, working-tree changes, and unpushed commits before changing history. The working tree must be clean. Commit the intended work first; in a worktree, avoid `git stash` because every worktree shares the same stash stack.
+Record the branch, HEAD, upstream, working-tree changes, and unpushed commits before changing history. The working tree must be clean: commit the intended work first rather than stash it, because every worktree shares one stash stack.
 
-A branch in a native stack is a separate case: when `gh stack view` lists it, sync with `gh stack sync` and resolve conflicts layer by layer with `gh stack rebase`, following the stacked section in `docs/git-workflow.md`. A plain `git rebase origin/main` on one layer leaves it out of step with the layers around it. The conflict rules below still apply to each layer.
+A branch in a native stack is a separate case: when `gh stack view` lists it, sync with `gh stack sync` and resolve conflicts layer by layer with `gh stack rebase`, following [the stacked section](../../../docs/git-workflow.md#stack-pull-requests-that-depend-on-each-other) of the Git workflow. A plain `git rebase origin/main` on one layer leaves it out of step with the layers around it. The conflict rules below still apply to each layer.
 
-Branches based on Lymi's pre-2026-09-06 history are a separate case. Create a fresh branch from `origin/main` and transplant only the unique commits or net diff, following the migration section in `docs/git-workflow.md`. Keep the original branch until the replacement is verified.
+Branches based on Lymi's pre-2026-09-06 history are a separate case. Create a fresh branch from `origin/main` and transplant only the unique commits or net diff, following [the migration section](../../../docs/git-workflow.md#branches-from-before-the-history-migration) of the Git workflow. Keep the original branch until the replacement is verified.
 
 ## Rebase onto main
 

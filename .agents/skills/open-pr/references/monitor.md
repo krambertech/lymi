@@ -1,6 +1,6 @@
 # Supervise an open PR
 
-The goal is to supervise the initial automated pipeline until the PR is review-ready, not to wait indefinitely for a human merge.
+Supervise the first automated pipeline until the PR is review-ready; the human merge after it is outside this workflow.
 
 ## Observe
 
@@ -18,8 +18,8 @@ The goal is to supervise the initial automated pipeline until the PR is review-r
 
 ## Finish
 
-Report **review-ready** only when required checks pass, the branch is mergeable, and no blocking automated feedback remains. Review-ready is not mergeable: a product change also needs a live verdict of PASS or PASS+NOTES against its head SHA ([verify](../../verify/SKILL.md#review-a-pull-request)), and a push that changes the patch needs a new one. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
+Report **review-ready** only when the PR meets [the definition in SKILL.md](../SKILL.md). Review-ready is not mergeable: a product change also needs a live verdict of PASS or PASS+NOTES against its head SHA ([verify](../../verify/SKILL.md#review-a-pull-request)), and a push that changes the patch needs a new one. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
 
-Report **blocked** with the exact failing state and the decision, permission, or external change needed. If the runtime cannot continue observing a pending check, say so explicitly rather than calling the PR ready.
+Report **blocked** with the exact failing state and the decision, permission, or external change needed. If the runtime cannot keep observing a pending check, say so; a pending check is never ready.
 
-Later human feedback is outside the opening workflow. Continue monitoring beyond review-ready only when the user requests an ongoing watch using the runtime's supported background mechanism. Stop immediately if the PR is merged, closed, or the user asks to stop.
+Later human feedback is outside this workflow. Keep monitoring past review-ready only when the user asks for an ongoing watch, using the runtime's background mechanism. Stop as soon as the PR is merged or closed, or the user asks you to stop.

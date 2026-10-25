@@ -4,7 +4,7 @@ Warm neutrals, nearly grey, with amber as the only saturated accent. Amber is th
 
 ## Use a token, never a value
 
-**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value is right in one room and wrong in the other. The values live in `packages/design/tokens.css`, which the web and the site import; DESIGN.md's frontmatter and the phone's hex values are generated from them, and `pnpm check:design` fails when either drifts.
+**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value is right in one room and wrong in the other. The values live in `packages/design/tokens.css`; every copy of them is generated, and `pnpm check:design` fails on drift.
 
 ```tsx
 // Correct
@@ -74,7 +74,6 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 5. A day the learner reviewed: the seven lights, the streak modal's month and goal track, the thirty-day strip and the Insights day grid. It is the same lit glass at every size, which makes it the flame rather than a sixth thing.
 6. The Easy grade's icon, `text-grade-easy`, which is `amber-mark`.
 7. The star of a card the learner marked important, `amber-mark` and always filled, beside the term in a deck's list and before the word Important on the card page. It is the learner's own choice of what to keep lit, so it borrows the lantern's light; it is a mark, never a button, and the word or the screen reader's label carries it.
-
 8. A warning that an action is out of reach for now, as `Notice tone="warning"`: an `amber-mark` icon and ink text on `amber-soft`, above the controls it disables. It asks the learner to come back, so it is the one notice that is not neutral.
 9. The phone's chosen tab: its filled icon in `amber-mark` and its label in `amber-text`. It is the one selected state that is amber, because native tab bars tint the tab the learner is on and ink alone barely parts it from the muted rest; the web's rail keeps its ink row ([phone.md](phone.md)).
 
@@ -94,7 +93,7 @@ Each card state has one colour and one icon, the same everywhere a state shows:
 
 They come from `stateMarks` and `StateIcon` in `components/state-mark.tsx`, which also hold the state words, so New, Learning and Known are written once. Never draw a state mark by hand.
 
-The icon, in its colour, marks the counts on a deck's split plate, the deck's filter menu, each word in a deck's list, every state chip, each row of Insights' Cards plate and the New cards tile on Today. On Insights each state is a row of its mark, its word, a bar in its colour against all the learner's cards, and its count, so the colour is never read alone. A deck carries no stripe: its split is the counts on its plate.
+The icon, in its colour, marks the counts on a deck's split plate, the deck's filter menu, each card in a deck's list, every state chip, each row of Insights' Cards plate and the New cards tile on Today. On Insights each state is a row of its mark, its word, a bar in its colour against all the learner's cards, and its count, so the colour is never read alone. A deck carries no stripe: its split is the counts on its plate.
 
 Text stays ink: a state chip is a plain `plate-2` chip, and the colour lives on its icon. Each state colour is a [mark](#fill-text-and-mark): it holds 3:1 against `plate-2` in both rooms. Known is a brighter green than `good` by day, because `good` also colours words and has to hold 4.5:1; in the dark room Known is `good`.
 
@@ -102,7 +101,7 @@ Learning is blue because blue is furthest from amber, `danger` and `good`, so a 
 
 ## Grades
 
-Forgot is a grade, not a state. Its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgotten today tile on Today, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgotten** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a word's schedule table may be months old.
+Forgot is a grade, not a state. Its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgotten today tile on Today, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgotten** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a card's schedule table may be months old.
 
 The grade icons use `grade-forgot` (`danger`), `grade-hard` (`muted`), `grade-good` (`good`) and `grade-easy` (`amber-mark`), from `GRADES` in `components/grade.tsx`.
 
@@ -110,7 +109,7 @@ The grade icons use `grade-forgot` (`danger`), `grade-hard` (`muted`), `grade-go
 
 What the AI wrote is the fourth mark, and the one hue outside the states. A meaning, example or pronunciation it filled carries `ai`, a violet badge of the sparkle and the word AI, beside the field's label rather than at the far edge of the panel. It is `SourceChip size="xs"` in `components/chip.tsx`.
 
-**The badge marks the AI and nothing else.** The learner's own words and the lesson's carry no badge, and that silence is what makes the violet one carry. Violet is the last hue that is not amber, a card state or `danger`, so the badge reads as "not from you or the lesson" without reading as act, progress or error. The colour lives on the badge alone: enriched text is ordinary text, because the learner is meant to read the meaning, not the label.
+**The badge marks the AI and nothing else** ([CONTEXT.md](../../../CONTEXT.md) has why). Violet is the last hue that is not amber, a card state or `danger`, so the badge reads as "not from you or the lesson" without reading as act, progress or error. The colour lives on the badge alone; enriched text stays ordinary text.
 
 ## Status is never colour alone
 

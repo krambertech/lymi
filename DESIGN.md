@@ -1,6 +1,6 @@
 ---
 name: Lymi
-description: A vocabulary app with a storm lantern. Two rooms, one flame. Warm, calm, quick.
+description: Cards to remember what you learn, lit by a storm lantern. Two rooms, one flame. Warm, calm, quick.
 colors:
   canvas: "#f8f6f4"
   rail: "#f2f0ec"
@@ -291,7 +291,7 @@ components:
 
 # Lymi design system
 
-Lymi is a vocabulary app lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. The light room is flat and the dark one sits each plate a little off the room on a soft shadow; both are warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
+Lymi is lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. The light room is flat and the dark one sits each plate a little off the room on a soft shadow; both are warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
 
 The frontmatter above is generated from `packages/design/tokens.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
 
@@ -337,6 +337,8 @@ Read the file for what you are building. Each is short enough to read whole.
 | The phone app: tabs, capture, how screens arrive, which sheet a task gets, review gestures, haptics, widgets | [phone.md](docs/design/system/phone.md) |
 
 ## Feature design
+
+What each feature does and where it runs is in [the feature map](PRODUCT.md#features). These files hold how a feature looks and behaves on screen.
 
 - [The streak](docs/design/streak.md)
 - [Letting an app in](docs/design/connected-apps.md)

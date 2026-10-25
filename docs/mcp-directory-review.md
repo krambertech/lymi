@@ -1,10 +1,10 @@
 # MCP directory review
 
-How to get Lymi's MCP server at `https://my.lymi.app/mcp` through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI; Lymi has one ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)), so both review it. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
+This is how Lymi's MCP server at `https://my.lymi.app/mcp` gets through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI; Lymi has one ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)), so both review it. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
 
 ## Accounts
 
-A reviewer can now sign in: sign-up is open to anyone, with Google or an email address and a password. Card audio comes from a paid speech API, so watch per-learner cost as public traffic arrives.
+Sign-up is open to anyone, with Google or an email address and a password, so a reviewer can sign in. Card audio comes from a paid speech API, so watch per-learner cost as public traffic arrives.
 
 ## What each directory checks
 

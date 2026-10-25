@@ -1,8 +1,9 @@
 # Lymi
 
-A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
+Cards for remembering what you learn, with a storm lantern. Collect cards from lessons and other material, let AI enrich them, and remember them with spaced repetition. Languages come first.
 
-- [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
+- [PRODUCT.md](PRODUCT.md): who it is for, what it does on each surface, how it should feel
+- [docs/review.md](docs/review.md): how a review, the daily goal and the streak work
 - [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
 - [design.lymi.app](https://design.lymi.app): the design system rendered with the real components; also `/design` on the local dev server
 - [docs/stack.md](docs/stack.md): the technical decisions and why
@@ -41,7 +42,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
-apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+apps/mobile       iPhone app: Expo React Native (see its README)
 apps/desktop      Mac app: Electron shell around the product (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.

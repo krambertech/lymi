@@ -1,6 +1,6 @@
 # Surfaces
 
-By day every surface is flat: depth comes from one hairline edge and nothing lifts. At night plates sit a little off the room on a soft shadow, with no lit lip along the top, which read as a ridge. Texture goes only where something is lit or holds a level, never across a whole screen.
+By day every surface is flat: depth comes from tone and one hairline edge, and nothing lifts. At night plates sit a little off the room on a soft shadow, with no lit lip along the top, which read as a ridge. Texture goes only where something is lit or holds a level, never across a whole screen.
 
 ## Which background
 
@@ -31,7 +31,7 @@ The rail is recessive by day and a step up at night, and it carries the hairline
 
 ## Elevation
 
-The light room is noon: nothing casts a shadow, so depth is tone and one hairline. The dark room sits each plate a little off the room on a soft shadow under it. Every level comes from a utility; a hand-written `shadow-*` is never right.
+Every level comes from a utility; a hand-written `shadow-*` is never right.
 
 | Level | What | By day | At night |
 | --- | --- | --- | --- |
@@ -50,9 +50,7 @@ Hover follows what the thing is at rest. Something with a fill and a hairline, s
 
 ### The rail's rows
 
-The rail shows where the learner is, so its current row is the strongest row in it and hover always sits below it. The current row is `bg-rail-chosen` with `edge-inset`; a row under the pointer fills with `bg-rail-hover`. By day these match a plate and `bg-hover`. At night the current row is flat, a step above the rail with a hairline drawn inside it, and hover is a faint white wash.
-
-Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer outranked the one the learner is on. Anything else in the rail that hovers, such as the learner row and the streak pill, uses `rail-hover` too. Both rails draw their rows with `RailRow` ([rail.md](rail.md)).
+The rail shows where the learner is, so its current row is the strongest row in it and hover always sits below it. The current row is `bg-rail-chosen` with `edge-inset`; a row under the pointer fills with `bg-rail-hover`. Each state in both rooms, and why the current row never takes `edge` or `bg-plate`, is in [rail.md](rail.md#states).
 
 ### The chosen option
 
@@ -78,7 +76,7 @@ An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the
 
 ## Sets
 
-A set read together, such as Today's rounds, a series in Library or a day on Activity, is a heading above its plates or a list of rows in one plate. It never sits in a tray: a well with tiles in it read as a box around things the heading already groups, so the trays tried in #430 were taken out.
+A set read together, such as Today's rounds, a series in Library or a day on Activity, is a heading above its plates or a list of rows in one plate. It never sits in a tray, because a well with tiles in it reads as a box around things the heading already groups.
 
 ## Lit and set in
 
@@ -92,7 +90,7 @@ The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2x
 
 ## The glow
 
-The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it. A lit fill's faint night glow is the flame's too, and it comes from `lit`, never from `glow`.
+The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. A lit fill's faint night glow is the flame's too, and it comes from `lit`, never from `glow`.
 
 The light spills into the room in four places: as `lamplit` on the lantern's plate on Today, a pool from the lantern's side; around the lantern at the end of a review and at Welcome's first screen, under Motion, both drawn by `LanternLight`; and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. On the public site, the hero scene of a page for one way of learning (tutor lessons, notes) stands in a still pool of the lantern's light, so the material and its cards read as one moment. All of them go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
 

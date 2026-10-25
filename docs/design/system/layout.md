@@ -24,7 +24,7 @@ Two destinations, Today and Library, in one centred column. Review is the primar
 
 ## The column
 
-The column is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest. Reading screens narrow to 672 px.
+The column is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest.
 
 Spacing is Tailwind's 4 px scale. DESIGN.md's frontmatter names `xs` 4, `sm` 8, `md` 16, `lg` 24, `xl` 32 and `2xl` 48, which are `1`, `2`, `4`, `6`, `8` and `12` in class names (`gap-4`, `p-6`).
 

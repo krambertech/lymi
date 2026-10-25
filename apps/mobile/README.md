@@ -1,6 +1,6 @@
-# Lymi for iOS (proof of concept)
+# Lymi for iOS
 
-An Expo app that shows the phone's design language and stack. It signs in to a real Lymi account and runs Today, Review and Library on the learner's own data; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
+The iPhone app, in Expo React Native, signed in to a real Lymi account and run on the learner's own data. Why it is React Native sharing `packages/core` is [ADR 0029](../../docs/adr/0029-the-phone-app-is-expo-react-native-sharing-core.md); where it differs from the web is [the phone design file](../../docs/design/system/phone.md); how it ships is [the phone release guide](../../docs/phone-release.md).
 
 ## Run it
 
@@ -21,7 +21,7 @@ Better Auth's Expo plugin keeps the session cookie in SecureStore, and `sessionH
 
 ## Design choices
 
-The proof of concept compared options side by side and kept one of each: the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them. The tabs are iOS's own tab bar and capture sits in the top bar ([ADR 0034](../../docs/adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
+Of the options the proof of concept compared side by side, the app keeps the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them. The tabs are iOS's own tab bar and capture sits in the top bar ([ADR 0034](../../docs/adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
 
 ## What is shared with the web
 

@@ -4,7 +4,7 @@ Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Cont
 
 ## What watches production
 
-The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English or, for ElevenLabs, which has no native English voice, in Estonian, and asks the lead-in writer for one Japanese word's lead-in, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
+The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English, or in Estonian for ElevenLabs, which has no native English voice. It asks the lead-in writer for one Japanese word's lead-in every hour too, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
 
 Every real call to an outside service records its outcome too: `meteredFetch` and `metered` in `apps/web/src/server/dependency-health.ts`, covering AI text, the lesson reader, Workers AI, speech, email and web push. Both write to the `lymi_health` Analytics Engine dataset, which holds no account, card or request content.
 
@@ -100,11 +100,11 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 
 `$ai_generation` events with `$ai_is_error` are piling up: enrichment, hint drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
 
+Lead-ins have their own log instead: Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than buying a duplicate ([lead-ins](lead-ins.md#what-is-stored-and-when-it-is-asked-again)). `pronunciation_lease_release_failed` names a storage failure without the private object key.
+
 ## Nobody reviewed yesterday
 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
-
-Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
 
 ## A content report arrives
 

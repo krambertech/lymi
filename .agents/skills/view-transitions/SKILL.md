@@ -1,7 +1,7 @@
 ---
 name: view-transitions
 description: |
-  Animate between screens and UI states with the browser's View Transitions API in Lymi's TanStack Router app. Use when adding or fixing page transitions, directional forward/back navigation, shared element morphs (a card in a list becoming the card on its own screen), list reorder animation, or the reveal when data lands. Also use when someone mentions view transitions, `startViewTransition`, `view-transition-name`, transition types, or asks why a navigation animates wrong, animates twice, or does not animate at all. For gestures, springs, drags, and the lantern, reach for Motion instead.
+  Animate between screens and UI states with the browser's View Transitions API in Lymi's TanStack Router app. Use when adding or fixing page transitions, forward and back direction, shared element morphs (a card in a list becoming the card on its own screen), list reorder, or the reveal when data lands; when someone names view transitions, `startViewTransition`, `view-transition-name` or transition types; or when a navigation animates wrong, twice, or not at all. Gestures, springs, drags and the lantern use Motion instead.
 ---
 
 # View transitions in Lymi
@@ -78,7 +78,7 @@ html:active-view-transition-type(nav-forward)::view-transition-old(root) { … }
 html:active-view-transition-type(nav-forward)::view-transition-new(root) { … }
 ```
 
-The comma-separated list inside the parentheses is an OR. The ready-made recipes — directional slides, morph, reveal, reduced motion — are in [`references/css-recipes.md`](references/css-recipes.md). Copy them into a new `styles/view-transitions.css` rather than writing your own; the timing, the blur through the middle of a morph, and the reduced-motion escape are all easy to get subtly wrong.
+The comma-separated list inside the parentheses is an OR. Copy the ready-made recipes — directional slides, morph, reveal, reduced motion — from [`references/css-recipes.md`](references/css-recipes.md) rather than writing your own; the timing, the blur through the middle of a morph, and the reduced-motion escape are all easy to get wrong.
 
 ## Naming an element
 

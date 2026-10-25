@@ -161,4 +161,4 @@ If the element uses `backdrop-filter`, animating the pair flashes. Hide the old 
 }
 ```
 
-View transitions ignore `prefers-reduced-motion` on their own — without this block, a learner who asked the OS for less motion gets every slide anyway. This is not optional.
+View transitions ignore `prefers-reduced-motion` on their own — without this block, a learner who asked the OS for less motion gets every slide anyway. Every copy includes it.

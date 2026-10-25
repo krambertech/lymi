@@ -2,7 +2,7 @@
 
 **Status:** Early draft, direction only. Everything here is changeable. **Initial release:** Private, single-user web app **Potential future:** Product for other language learners
 
-This is the original brief, lightly edited. PRODUCT.md and DESIGN.md at the repo root carry the decisions made since.
+This is the original brief, kept as history. Much of it no longer holds, including its scope and its out-of-scope list; [PRODUCT.md](../PRODUCT.md) and [DESIGN.md](../DESIGN.md) are the current product.
 
 ## Overview
 

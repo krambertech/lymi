@@ -4,9 +4,7 @@ Each step depends on the one before it. Step 1 is the one people skip and the on
 
 ## Step 1 — map the navigations
 
-Before writing anything, list every way the learner moves through the app. Read the route files under `apps/web/src/client/routes/`, then grep for every `<Link`, `useNavigate`, and `router.navigate` in the client.
-
-List the routes from the filenames under `apps/web/src/client/routes/` rather than from memory; the set changes. Leave out `design*`, which are reference surfaces rather than screens the learner navigates. Produce a table like this and show it to the user before touching code:
+Before writing anything, list every way the learner moves through the app. Take the routes from the filenames under `apps/web/src/client/routes/`, not from memory, because the set changes; then grep the client for every `<Link`, `useNavigate`, and `router.navigate`. Leave out `design*`, which are reference surfaces rather than screens the learner navigates. Produce a table like this and show it to the user before touching code:
 
 ```
 | From             | To                  | Relationship | Transition          |
@@ -22,7 +20,7 @@ Then note, per row: does a shared element exist on both sides? Does the route co
 
 ## Step 2 — copy the CSS
 
-Take the complete recipe set from [`css-recipes.md`](css-recipes.md) into a new `apps/web/src/client/styles/view-transitions.css`, imported from `styles.css` beside the other feature files. Copy all of it, including reduced motion, before tuning a single duration.
+Copy the complete recipe set from [`css-recipes.md`](css-recipes.md) into the file it names, including reduced motion, before tuning a single duration.
 
 ## Step 3 — type the router
 
@@ -50,10 +48,7 @@ Only for pairs where the *same thing* appears on both screens: a deck row in Lib
 <header style={{ viewTransitionName: `deck-${deck.id}`, viewTransitionClass: "morph" }}>
 ```
 
-Two rules that cause most of the bugs:
-
-- The name must be unique among elements **currently on screen**. A list of 40 cards all named `card` breaks every transition.
-- Carry the name only while the element can transition. If a component is rendered both in a route and inside a drawer, both mount at once and the pair breaks — make the name conditional on where it is used.
+Most of the bugs break one of the two rules in [Naming an element](../SKILL.md#naming-an-element). A list of 40 cards all named `card` breaks every transition. A component rendered both in a route and inside a drawer mounts the name twice and breaks the pair, so make the name conditional on where it is used.
 
 ## Step 6 — reveals
 

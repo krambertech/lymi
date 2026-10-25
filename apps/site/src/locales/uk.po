@@ -172,6 +172,12 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
 
+msgid "*Bread* and butter."
+msgstr "*Хліб* з маслом."
+
+msgid "*Come* here!"
+msgstr "*Іди* сюди!"
+
 msgid "*Dear* friend!"
 msgstr "*Дорогий* друже!"
 
@@ -420,6 +426,9 @@ msgstr "Безкоштовний застосунок для вивчення у
 msgid "A full flashcard in seconds."
 msgstr "Готова флеш-картка за кілька секунд."
 
+msgid "A glass of *water*, please."
+msgstr "Склянку *води*, будь ласка."
+
 msgid "A hobby"
 msgstr "Хобі"
 
@@ -435,6 +444,9 @@ msgstr "Мовна група"
 
 msgid "A lesson transcript"
 msgstr "Розшифровка уроку"
+
+msgid "A loaf of *bread*, please."
+msgstr "*Хліб*, будь ласка."
 
 msgid "A longing for someone or something that is gone"
 msgstr "Туга за кимось або чимось, чого вже немає"
@@ -871,6 +883,9 @@ msgstr "Колоди безплатні?"
 
 msgid "Are these the official questions?"
 msgstr "Це офіційні питання?"
+
+msgid "Are you *coming* today?"
+msgstr "Ти сьогодні *прийдеш*?"
 
 msgid "Arts"
 msgstr "Мистецтво"
@@ -1545,6 +1560,9 @@ msgstr "Завантажити Lymi для Mac"
 msgid "Drag Lymi to Applications"
 msgstr "Перетягни Lymi до «Програм»"
 
+msgid "Drink more *water*!"
+msgstr "Пий більше *води*!"
+
 msgid "Drinking at home in your underwear"
 msgstr "Випивати вдома в спідньому"
 
@@ -1691,6 +1709,9 @@ msgstr "Навіть начальнику?"
 
 msgid "Evening"
 msgstr "Вечір"
+
+msgid "Every *person* is different."
+msgstr "Кожна *людина* інша."
 
 msgid "Every card in the deck"
 msgstr "Усі картки колоди"
@@ -2153,6 +2174,9 @@ msgstr "Він не *любить* дощових днів."
 msgid "He’s a good *friend* of mine."
 msgstr "Він мій добрий *друг*."
 
+msgid "He’s a good *person*."
+msgstr "Він добра *людина*."
+
 msgid "Head ööd! Good night."
 msgstr "Head ööd! На добраніч."
 
@@ -2333,11 +2357,20 @@ msgstr "Я *думаю*, це чудово."
 msgid "I ate an *apple*."
 msgstr "Я з’їв *яблуко*."
 
+msgid "I bought a big *pumpkin*."
+msgstr "Я купила великий *гарбуз*."
+
 msgid "I bought a new *lock*."
 msgstr "Я купив новий *замок*."
 
 msgid "I bought bread at the *shop*."
 msgstr "Я купила хліб у *магазині*."
+
+msgid "I bought fresh *bread*."
+msgstr "Я купила свіжий *хліб*."
+
+msgid "I can’t *come* today."
+msgstr "Я не можу сьогодні *прийти*."
 
 msgid "I can’t get to the *phone*."
 msgstr "Я не можу підійти до *телефону*."
@@ -2378,8 +2411,14 @@ msgstr "Мені *дзвонила* мама."
 msgid "I have a *dog*."
 msgstr "У мене є *собака*."
 
+msgid "I have a backpack on my *back*."
+msgstr "У мене рюкзак на *спині*."
+
 msgid "I have a Japanese *friend*."
 msgstr "У мене є *друг* — японець."
+
+msgid "I have lots of *friends*."
+msgstr "У мене багато *друзів*."
 
 msgid "I hope so; if only"
 msgstr "Сподіваюся; якби ж то"
@@ -2389,6 +2428,9 @@ msgstr "Я вчу потроху *щодня*."
 
 msgid "I like *reading* books."
 msgstr "Я люблю *читати* книжки."
+
+msgid "I like *taking* photos."
+msgstr "Я люблю *робити* фото."
 
 msgid "I like Polish *music*."
 msgstr "Я люблю польську *музику*."
@@ -2402,11 +2444,23 @@ msgstr "Мені цього бракує"
 msgid "I pay"
 msgstr "Я плачу (гроші)"
 
+msgid "I play in a football *team*."
+msgstr "Я граю у футбольній *команді*."
+
 msgid "I really *like* this book."
 msgstr "Мені дуже *подобається* ця книжка."
 
+msgid "I sleep on my *back*."
+msgstr "Я сплю на *спині*."
+
+msgid "I slept the whole *night*."
+msgstr "Я спав усю *ніч*."
+
 msgid "I study Japanese *every day*."
 msgstr "Я вчу японську *щодня*."
+
+msgid "I support this *team*."
+msgstr "Я вболіваю за цю *команду*."
 
 msgid "I take a walk in the *park*."
 msgstr "Я гуляю в *парку*."
@@ -2456,8 +2510,17 @@ msgstr "Я йду в *банк* зняти гроші."
 msgid "I’m going to the *shop*."
 msgstr "Я йду в *магазин*."
 
+msgid "I’m going to the cinema with a *friend*."
+msgstr "Іду в кіно з *другом*."
+
 msgid "I’m listening to *music*."
 msgstr "Я слухаю *музику*."
+
+msgid "I’m making *pumpkin* soup."
+msgstr "Варю *гарбузовий* суп."
+
+msgid "I’m not *doing* anything."
+msgstr "Я нічого не *роблю*."
 
 msgid "I’m reading a fashion *magazine*."
 msgstr "Я читаю *журнал* про моду."
@@ -2525,6 +2588,9 @@ msgstr "У багатьох реальних наборах даних близ�
 msgid "in Polish"
 msgstr "польською"
 
+msgid "In summer the *nights* stay light."
+msgstr "Улітку *ночі* світлі."
+
 msgid "In the end"
 msgstr "Зрештою"
 
@@ -2563,6 +2629,9 @@ msgstr "Тут поблизу є *банк*?"
 
 msgid "Is there a ready-made deck for my certification?"
 msgstr "Чи є готова колода для моєї сертифікації?"
+
+msgid "Is this *chair* free?"
+msgstr "Цей *стілець* вільний?"
 
 msgid "It comes back just before you’d forget."
 msgstr "Слово повертається саме тоді, коли ти от-от забудеш."
@@ -2770,6 +2839,9 @@ msgstr "Засвоєні"
 
 msgid "Korean"
 msgstr "Корейська"
+
+msgid "Kraków is a beautiful *city*."
+msgstr "Краків — гарне *місто*."
 
 msgid "Krambertech OÜ, an Estonian company, provides Lymi and is responsible for your personal data. Contact <0>hello@lymi.app</0> with questions or privacy requests."
 msgstr "Lymi надає естонська компанія Krambertech OÜ, яка відповідає за твої персональні дані. Запитання й запити щодо приватності надсилай на <0>hello@lymi.app</0>."
@@ -3196,6 +3268,9 @@ msgstr "Уроки музики"
 msgid "Music theory"
 msgstr "Теорія музики"
 
+msgid "My *back* hurts."
+msgstr "У мене болить *спина*."
+
 msgid "My dad runs *every day*."
 msgstr "Тато бігає *щодня*."
 
@@ -3483,6 +3558,9 @@ msgstr "Інші іспити"
 
 msgid "Other subjects"
 msgstr "Інші теми"
+
+msgid "Our *team* won!"
+msgstr "Наша *команда* виграла!"
 
 msgid "Page not found"
 msgstr "Сторінку не знайдено"
@@ -4107,8 +4185,17 @@ msgstr "Спільні колоди й підключені застосунки
 msgid "She came back from *town*."
 msgstr "Вона повернулася з *міста*."
 
+msgid "She works at *night*."
+msgstr "Вона працює *вночі*."
+
 msgid "She works at a *bank*."
 msgstr "Вона працює в *банку*."
+
+msgid "She’s *coming* back tomorrow."
+msgstr "Вона *повернеться* завтра."
+
+msgid "She’s a good *friend* of mine."
+msgstr "Вона моя добра *подруга*."
 
 msgid "Shelves"
 msgstr "Полиці"
@@ -4164,6 +4251,9 @@ msgstr "Спрощені чи традиційні"
 
 msgid "Simplified or traditional?"
 msgstr "Спрощені чи традиційні ієрогліфи?"
+
+msgid "Sit on the *chair*."
+msgstr "Сідай на *стілець*."
 
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Додивлятися поганий фільм лише через уже куплений квиток."
@@ -4534,6 +4624,12 @@ msgstr "*Молоко* в холодильнику."
 msgid "The *morning* was sunny."
 msgstr "*Ранок* був сонячний."
 
+msgid "The *night* was long and cold."
+msgstr "*Ніч* була довга й холодна."
+
+msgid "The *pumpkin* is orange."
+msgstr "*Гарбуз* помаранчевий."
+
 msgid "The *road* leads to the city."
 msgstr "*Дорога* веде до міста."
 
@@ -4542,6 +4638,9 @@ msgstr "*Магазин* зачинений."
 
 msgid "The *train* is running a little late."
 msgstr "*Поїзд* трохи запізнюється."
+
+msgid "The *water* is cold."
+msgstr "*Вода* холодна."
 
 msgid "The *water* is very cold."
 msgstr "*Вода* дуже холодна."
@@ -4885,6 +4984,9 @@ msgstr "Це *молоко* свіже."
 msgid "This *music* is too loud."
 msgstr "Ця *музика* надто гучна."
 
+msgid "This *person* helped me."
+msgstr "Ця *людина* мені допомогла."
+
 msgid "This *road* is very long."
 msgstr "Ця *дорога* дуже довга."
 
@@ -4908,6 +5010,9 @@ msgstr "Ця колода більше не опублікована."
 
 msgid "This is my *book*."
 msgstr "Це моя *книжка*."
+
+msgid "This is my *friend’s* car."
+msgstr "Це машина мого *друга*."
 
 msgid "This is my Chinese *friend*."
 msgstr "Це мій *друг* із Китаю."
@@ -5341,6 +5446,9 @@ msgstr "Ми купили *килим* у вітальню."
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "Ми не продаємо твої персональні дані, не показуємо рекламу й не відстежуємо тебе в застосунках і на сайтах інших компаній. Описані нижче дані потрібні, щоб надавати, захищати й удосконалювати Lymi."
 
+msgid "We need two *chairs*."
+msgstr "Нам потрібні два *стільці*."
+
 msgid "We process account and learning data to perform our agreement with you and provide the features you use. Security, error diagnosis, support and limited product analytics serve our legitimate interests in operating and improving Lymi. We process data to meet legal obligations where they apply. Where we rely on consent, you can withdraw it without affecting earlier lawful processing. Optional features need only the data relevant to them."
 msgstr "Ми обробляємо дані облікового запису й навчання, щоб виконувати нашу угоду з тобою та надавати функції, якими ти користуєшся. Безпека, діагностика помилок, підтримка й обмежена продуктова аналітика слугують нашим законним інтересам у роботі та вдосконаленні Lymi. За потреби ми обробляємо дані для виконання законних обов’язків. Там, де підставою є згода, ти можеш відкликати її без впливу на попередню законну обробку. Необов’язковим функціям потрібні лише пов’язані з ними дані."
 
@@ -5352,6 +5460,9 @@ msgstr "Ми використовуємо контроль доступу й з�
 
 msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 msgstr "Ми використовуємо файли cookie й сховище пристрою для входу, уподобань, роботи офлайн і синхронізації незавершених змін та повторень. Публічний сайт зберігає вподобання в браузері, але не використовує аналітичних cookie. Вихід очищає кешовані застосунком дані облікового запису, хоча деякі вподобання й кешоване аудіо можуть залишитися."
+
+msgid "We’re going into *town*."
+msgstr "Ми їдемо в *місто*."
 
 msgid "We’re old *friends*."
 msgstr "Ми давні *друзі*."
@@ -5382,6 +5493,9 @@ msgstr "А як щодо ё?"
 
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
+
+msgid "What are you *doing*?"
+msgstr "Що ти *робиш*?"
 
 msgid "What are you going to *eat*?"
 msgstr "Що ти *їстимеш*?"
@@ -5715,6 +5829,9 @@ msgstr "У тебе вийде!"
 
 msgid "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
 msgstr "Ти можеш редагувати вміст і налаштування, експортувати бібліотеку, керувати AI-сервісами й нагадуваннями, відкликати ключі та відключати застосунки. Ти також можеш попросити доступ, виправлення, стирання, обмеження обробки чи перенесення персональних даних або заперечити проти обробки на підставі законних інтересів. Ці права залежать від обставин і застосовного закону. Напиши на <0>hello@lymi.app</0>; перед виконанням запиту ми можемо перевірити твою особу. Ти можеш подати скаргу до <1>Інспекції із захисту даних Естонії</1> або місцевого наглядового органу."
+
+msgid "You can’t live without *water*."
+msgstr "Без *води* не прожити."
 
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "Ти знаєш <0>{term}</0>. Його піньїнь зникає з прикладів на всіх твоїх картках."

@@ -99,19 +99,17 @@ const handCard = (
   ...extra,
 });
 
-/** Look-alikes first, each with the note its edition carries; the Known ones last. Half ask from the meaning. */
+/** Look-alikes first, each with the note its edition carries; the Known ones last. */
 const HAND_UK: HandCard[] = [
   handCard("sklep", "A1", "sklep", "магазин", "new", {
     note: "Не склеп. Склеп польською — grobowiec.",
   }),
   handCard("dynia", "A2", "dynia", "гарбуз", "learning", {
     note: "Не диня. Диня польською — melon.",
-    mode: "meaning_to_term",
   }),
   handCard("dywan", "A1", "dywan", "килим", "new", { note: "Не диван. Диван польською — kanapa." }),
   handCard("druzyna", "A2", "drużyna", "команда", "learning", {
     note: "Не дружина. Дружина польською — żona.",
-    mode: "meaning_to_term",
   }),
   handCard("owoc", "A1", "owoc", "фрукт", "new", { note: "Не овоч. Овоч польською — warzywo." }),
   handCard("dziekuje", "A1", "dziękuję", "дякую", "known", {
@@ -120,7 +118,6 @@ const HAND_UK: HandCard[] = [
   }),
   handCard("czlowiek", "A1", "człowiek", "людина", "known", {
     note: "Не чоловік. Чоловік польською — mężczyzna, а чоловік-подружжя — mąż.",
-    mode: "meaning_to_term",
   }),
   handCard("magazyn", "A2", "magazyn", "склад; журнал", "known", {
     note: "Не магазин. Магазин польською — sklep.",
@@ -133,14 +130,12 @@ const HAND_RU: HandCard[] = [
   }),
   handCard("dynia", "A2", "dynia", "тыква", "learning", {
     note: "Не дыня. Дыня по-польски — melon.",
-    mode: "meaning_to_term",
   }),
   handCard("dywan", "A1", "dywan", "ковёр", "new", {
     note: "Не диван. Диван по-польски — kanapa.",
   }),
   handCard("krzeslo", "A1", "krzesło", "стул", "learning", {
     note: "Не кресло. Кресло по-польски — fotel.",
-    mode: "meaning_to_term",
   }),
   handCard("owoc", "A1", "owoc", "фрукт", "new", { note: "Не овощ. Овощ по-польски — warzywo." }),
   handCard("dziekuje", "A1", "dziękuję", "спасибо", "known", {
@@ -149,7 +144,6 @@ const HAND_RU: HandCard[] = [
   }),
   handCard("plecy", "A2", "plecy", "спина", "known", {
     note: "Не плечи. Плечи по-польски — ramiona.",
-    mode: "meaning_to_term",
   }),
   handCard("magazyn", "A2", "magazyn", "склад; журнал", "known", {
     note: "Не магазин. Магазин по-польски — sklep.",
@@ -166,7 +160,6 @@ const HAND_EN: HandCard[] = [
     kind: verb,
     forms: "robić · zrobić",
     note: "Zrobić is for something done and finished: zrobię to jutro, I’ll do it tomorrow.",
-    mode: "meaning_to_term",
   }),
   handCard("muzyka", "A1", "muzyka", "music", "new", {
     forms: "mùzyka",
@@ -175,7 +168,6 @@ const HAND_EN: HandCard[] = [
   handCard("miasto", "A1", "miasto", "town; city", "learning", {
     forms: "miasto · miasta · w mieście",
     note: "In town is w mieście: st turns into ść.",
-    mode: "meaning_to_term",
   }),
   handCard("sklep", "A1", "sklep", "shop", "new", {
     forms: "sklep · sklepu · w sklepie",
@@ -188,7 +180,6 @@ const HAND_EN: HandCard[] = [
   handCard("chleb", "A1", "chleb", "bread", "known", {
     forms: "chleb · chleba",
     note: "Nie ma chleba, there’s no bread: no takes the genitive.",
-    mode: "meaning_to_term",
   }),
   handCard("dzien-dobry", "A1", "dzień dobry", "hello (polite); good morning", "known", {
     kind: phrase,
@@ -202,7 +193,7 @@ export function polishHand(locale: Locale): HandCard[] {
 
 /**
  * Sentences that use the front card's word, drawn faintly behind the hand. The marked run, between
- * asterisks, is the word in the form the sentence needs. A card that asks from the meaning has none.
+ * asterisks, is the word in the form the sentence needs.
  */
 export const POLISH_EXAMPLES: Record<string, Example[]> = {
   sklep: [
@@ -241,6 +232,46 @@ export const POLISH_EXAMPLES: Record<string, Example[]> = {
     { text: "Lubię polską *muzykę*.", meaning: msg`I like Polish *music*.` },
     { text: "Ta *muzyka* jest za głośna.", meaning: msg`This *music* is too loud.` },
     { text: "Słucham *muzyki*.", meaning: msg`I’m listening to *music*.` },
+  ],
+  dynia: [
+    { text: "*Dynia* jest pomarańczowa.", meaning: msg`The *pumpkin* is orange.` },
+    { text: "Kupiłam dużą *dynię*.", meaning: msg`I bought a big *pumpkin*.` },
+    { text: "Robię zupę z *dyni*.", meaning: msg`I’m making *pumpkin* soup.` },
+  ],
+  druzyna: [
+    { text: "Nasza *drużyna* wygrała!", meaning: msg`Our *team* won!` },
+    { text: "Gram w *drużynie* piłkarskiej.", meaning: msg`I play in a football *team*.` },
+    { text: "Kibicuję tej *drużynie*.", meaning: msg`I support this *team*.` },
+  ],
+  czlowiek: [
+    { text: "To dobry *człowiek*.", meaning: msg`He’s a good *person*.` },
+    { text: "Ten *człowiek* mi pomógł.", meaning: msg`This *person* helped me.` },
+    { text: "Każdy *człowiek* jest inny.", meaning: msg`Every *person* is different.` },
+  ],
+  krzeslo: [
+    { text: "Czy to *krzesło* jest wolne?", meaning: msg`Is this *chair* free?` },
+    { text: "Usiądź na *krześle*.", meaning: msg`Sit on the *chair*.` },
+    { text: "Potrzebujemy dwóch *krzeseł*.", meaning: msg`We need two *chairs*.` },
+  ],
+  plecy: [
+    { text: "Bolą mnie *plecy*.", meaning: msg`My *back* hurts.` },
+    { text: "Śpię na *plecach*.", meaning: msg`I sleep on my *back*.` },
+    { text: "Mam plecak na *plecach*.", meaning: msg`I have a backpack on my *back*.` },
+  ],
+  robic: [
+    { text: "Co *robisz*?", meaning: msg`What are you *doing*?` },
+    { text: "Nic nie *robię*.", meaning: msg`I’m not *doing* anything.` },
+    { text: "Lubię *robić* zdjęcia.", meaning: msg`I like *taking* photos.` },
+  ],
+  miasto: [
+    { text: "Kraków to piękne *miasto*.", meaning: msg`Kraków is a beautiful *city*.` },
+    { text: "Jedziemy do *miasta*.", meaning: msg`We’re going into *town*.` },
+    { text: "Mieszkam w *mieście*.", meaning: msg`I live in the *city*.` },
+  ],
+  chleb: [
+    { text: "Poproszę *chleb*.", meaning: msg`A loaf of *bread*, please.` },
+    { text: "Kupiłam świeży *chleb*.", meaning: msg`I bought fresh *bread*.` },
+    { text: "*Chleb* z masłem.", meaning: msg`*Bread* and butter.` },
   ],
   "dzien-dobry": [
     { text: "*Dzień dobry*, pani Anno!", meaning: msg`*Good morning*, Ms Anna!` },

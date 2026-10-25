@@ -4222,9 +4222,6 @@ msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "The 1648 treaties that ended the Thirty Years’ War"
 
-msgid "The 300 general questions and the 10 for your state, as they appear on the test."
-msgstr "The 300 general questions and the 10 for your state, as they appear on the test."
-
 msgid "The 3rd of the month"
 msgstr "The 3rd of the month"
 

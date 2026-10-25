@@ -4222,9 +4222,6 @@ msgstr "Восстание в Праге 1618 года, с которого на
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "Договоры 1648 года, завершившие Тридцатилетнюю войну"
 
-msgid "The 300 general questions and the 10 for your state, as they appear on the test."
-msgstr "300 общих вопросов и 10 о твоей земле — как на тесте."
-
 msgid "The 3rd of the month"
 msgstr "Третье число месяца"
 

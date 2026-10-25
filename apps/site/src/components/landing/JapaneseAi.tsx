@@ -96,7 +96,7 @@ export function EnrichJapanese() {
           lang="ja"
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[2.2em] text-lg leading-[2.2] text-text"
+          className="min-h-[2.2em] text-md leading-[2.2] text-text"
         >
           <ruby>
             次<rt className={clsx("text-[0.5em] text-text-2", fade(known))}>つぎ</rt>

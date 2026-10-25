@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { adjective, noun, phrase, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
@@ -118,26 +119,34 @@ export const ESTONIAN_PAGE_HAND: HandCard[] = [
  * asterisks, is the word in the form the sentence needs: kallist in “Ma ei osta nii kallist telefoni”.
  * A card that asks from the meaning has none, since they would give its answer away.
  */
-export const ESTONIAN_EXAMPLES: Record<string, string[]> = {
+export const ESTONIAN_EXAMPLES: Record<string, Example[]> = {
   kallis: [
-    "See kohvik on *kallis*.",
-    "*Kallis* sõber!",
-    "Ma ei osta nii *kallist* telefoni.",
-    "Tallinnas on korterid *kallid*.",
+    { text: "See kohvik on *kallis*.", meaning: msg`This café is *expensive*.` },
+    { text: "*Kallis* sõber!", meaning: msg`*Dear* friend!` },
+    {
+      text: "Ma ei osta nii *kallist* telefoni.",
+      meaning: msg`I won’t buy such an *expensive* phone.`,
+    },
+    { text: "Tallinnas on korterid *kallid*.", meaning: msg`Flats in Tallinn are *expensive*.` },
   ],
   monus: [
-    "Täna on *mõnus* ilm.",
-    "See oli väga *mõnus* õhtu.",
-    "Saunas on *mõnus*.",
-    "*Mõnusat* nädalavahetust!",
+    { text: "Täna on *mõnus* ilm.", meaning: msg`The weather is *lovely* today.` },
+    { text: "See oli väga *mõnus* õhtu.", meaning: msg`It was a really *pleasant* evening.` },
+    { text: "Saunas on *mõnus*.", meaning: msg`It’s *cosy* in the sauna.` },
+    { text: "*Mõnusat* nädalavahetust!", meaning: msg`Have a *lovely* weekend!` },
   ],
   linn: [
-    "Ma elan *linnas*.",
-    "Lähme *linna*!",
-    "Tartu on ilus *linn*.",
-    "Ta tuli *linnast* tagasi.",
+    { text: "Ma elan *linnas*.", meaning: msg`I live in the *city*.` },
+    { text: "Lähme *linna*!", meaning: msg`Let’s go into *town*!` },
+    { text: "Tartu on ilus *linn*.", meaning: msg`Tartu is a beautiful *city*.` },
+    { text: "Ta tuli *linnast* tagasi.", meaning: msg`She came back from *town*.` },
   ],
-  aitah: ["*Aitäh*, väga maitsev!", "Suur *aitäh*!", "*Aitäh* abi eest!", "Ei, *aitäh*."],
+  aitah: [
+    { text: "*Aitäh*, väga maitsev!", meaning: msg`*Thanks*, it’s delicious!` },
+    { text: "Suur *aitäh*!", meaning: msg`*Thanks* a lot!` },
+    { text: "*Aitäh* abi eest!", meaning: msg`*Thanks* for the help!` },
+    { text: "Ei, *aitäh*.", meaning: msg`No, *thanks*.` },
+  ],
 };
 
 export type FormKind = "noun" | "verb";

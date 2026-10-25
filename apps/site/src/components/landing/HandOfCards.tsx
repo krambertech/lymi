@@ -372,8 +372,11 @@ function spoken(card: HandCard, say: (d: string | MessageDescriptor) => string) 
 interface Props {
   /** A vertical page can deal from its own field. Changing them tosses the hand and deals again. */
   cards?: readonly HandCard[] | undefined;
-  /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
-  layout?: "fan" | "stack" | undefined;
+  /**
+   * A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. A side
+   * stack steps the cards behind out to one side, leaving room above and below.
+   */
+  layout?: "fan" | "stack" | "side" | undefined;
   /** Hold these from the first render, so the hand is in the server's HTML and needs no script to be there. */
   dealt?: readonly HandCard[] | undefined;
   /** Deal each card once; after the last, this takes the hand's place and can deal them again. */

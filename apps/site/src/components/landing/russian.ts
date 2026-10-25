@@ -1,4 +1,5 @@
 import { msg } from "@lingui/core/macro";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
@@ -45,24 +46,52 @@ export const RUSSIAN_HAND: HandCard[] = [
 ];
 
 /** Sentences that use the front card's word, drawn faintly behind the hand; the word sits between asterisks. */
-export const RUSSIAN_EXAMPLES: Record<string, string[]> = {
+export const RUSSIAN_EXAMPLES: Record<string, Example[]> = {
   "zamok-castle": [
-    "Ста́рый *за́мок* стои́т на холме́.",
-    "Э́тот *за́мок* о́чень ста́рый.",
-    "*За́мок* откры́т для тури́стов.",
+    { text: "Ста́рый *за́мок* стои́т на холме́.", meaning: msg`An old *castle* stands on the hill.` },
+    { text: "Э́тот *за́мок* о́чень ста́рый.", meaning: msg`This *castle* is very old.` },
+    { text: "*За́мок* откры́т для тури́стов.", meaning: msg`The *castle* is open to tourists.` },
   ],
   "zamok-lock": [
-    "*Замо́к* опя́ть слома́лся.",
-    "Я купи́л но́вый *замо́к*.",
-    "Э́тот *замо́к* не открыва́ется.",
+    { text: "*Замо́к* опя́ть слома́лся.", meaning: msg`The *lock* is broken again.` },
+    { text: "Я купи́л но́вый *замо́к*.", meaning: msg`I bought a new *lock*.` },
+    { text: "Э́тот *замо́к* не открыва́ется.", meaning: msg`This *lock* won’t open.` },
   ],
-  muka: ["*Мука́* на ве́рхней по́лке.", "Для блино́в нужна́ *мука́*.", "Где здесь *мука́*?"],
-  spasibo: ["*Спаси́бо* за по́мощь!", "*Спаси́бо*, всё хорошо́.", "Большо́е *спаси́бо*!"],
-  yozhik: ["*Ёжик* спит под кусто́м.", "В лесу́ живёт *ёжик*.", "Како́й ма́ленький *ёжик*!"],
-  moloko: ["Я пью *молоко́* у́тром.", "*Молоко́* в холоди́льнике.", "Э́то *молоко́* све́жее."],
-  voda: ["*Вода́* о́чень холо́дная.", "Где здесь *вода́*?", "Э́та *вода́* чи́стая."],
-  utro: ["До́брое *у́тро*!", "*У́тро* бы́ло со́лнечным.", "Ка́ждое *у́тро* я пью ко́фе."],
-  kniga: ["Э́то моя́ *кни́га*.", "*Кни́га* лежи́т на столе́.", "Э́та *кни́га* о́чень интере́сная."],
+  muka: [
+    { text: "*Мука́* на ве́рхней по́лке.", meaning: msg`The *flour* is on the top shelf.` },
+    { text: "Для блино́в нужна́ *мука́*.", meaning: msg`You need *flour* for pancakes.` },
+    { text: "Где здесь *мука́*?", meaning: msg`Where’s the *flour*?` },
+  ],
+  spasibo: [
+    { text: "*Спаси́бо* за по́мощь!", meaning: msg`*Thanks* for your help!` },
+    { text: "*Спаси́бо*, всё хорошо́.", meaning: msg`*Thanks*, everything’s fine.` },
+    { text: "Большо́е *спаси́бо*!", meaning: msg`*Thank you* so much!` },
+  ],
+  yozhik: [
+    { text: "*Ёжик* спит под кусто́м.", meaning: msg`The *hedgehog* is asleep under a bush.` },
+    { text: "В лесу́ живёт *ёжик*.", meaning: msg`A *hedgehog* lives in the forest.` },
+    { text: "Како́й ма́ленький *ёжик*!", meaning: msg`What a little *hedgehog*!` },
+  ],
+  moloko: [
+    { text: "Я пью *молоко́* у́тром.", meaning: msg`I drink *milk* in the morning.` },
+    { text: "*Молоко́* в холоди́льнике.", meaning: msg`The *milk* is in the fridge.` },
+    { text: "Э́то *молоко́* све́жее.", meaning: msg`This *milk* is fresh.` },
+  ],
+  voda: [
+    { text: "*Вода́* о́чень холо́дная.", meaning: msg`The *water* is very cold.` },
+    { text: "Где здесь *вода́*?", meaning: msg`Where’s the *water*?` },
+    { text: "Э́та *вода́* чи́стая.", meaning: msg`This *water* is clean.` },
+  ],
+  utro: [
+    { text: "До́брое *у́тро*!", meaning: msg`Good *morning*!` },
+    { text: "*У́тро* бы́ло со́лнечным.", meaning: msg`The *morning* was sunny.` },
+    { text: "Ка́ждое *у́тро* я пью ко́фе.", meaning: msg`I drink coffee every *morning*.` },
+  ],
+  kniga: [
+    { text: "Э́то моя́ *кни́га*.", meaning: msg`This is my *book*.` },
+    { text: "*Кни́га* лежи́т на столе́.", meaning: msg`The *book* is on the table.` },
+    { text: "Э́та *кни́га* о́чень интере́сная.", meaning: msg`This *book* is really interesting.` },
+  ],
 };
 
 /** Words that only their stress tells apart, each form with its clip. */

@@ -40,15 +40,12 @@ export function EnrichUkrainian() {
         <span className="min-h-[1.5em] text-md text-text">
           <Trans>Sunday</Trans>
         </span>
-        <span className="text-xs text-muted">
-          <Trans>From your lesson</Trans>
-        </span>
       </Field>
       <Field label={<Trans>Example</Trans>} wrote={at("example")}>
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[1.5em] text-lg text-text"
+          className="min-h-[1.5em] text-md text-text"
         >
           <Uk>У неді́лю ми відпочива́ємо.</Uk>
         </motion.span>

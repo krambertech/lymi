@@ -1,31 +1,34 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "motion/react";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { EASE, useStill } from "./playback";
+
+/** A sentence using a card's word, with the word marked `*like this*` in it and in its meaning. */
+export interface Example {
+  text: string;
+  meaning: MessageDescriptor;
+}
 
 interface Props {
   /** The front card's id; its sentences replace the last card's. */
   front: string | undefined;
-  examples: Record<string, string[]>;
+  examples: Record<string, Example[]>;
   /** The sentences' language. */
   lang: string;
 }
 
 /**
- * Places around the hand a sentence can drift in. Each card takes every other one from a different
- * start, so the sentences move about between cards. Either half holds two places above the hand,
- * which are all a phone shows.
+ * Places in the bands above and below the stack. Each card starts from a different one, so the
+ * sentences move about between cards; a meaning opens away from the stack.
  */
 const SPOTS = [
-  { at: "top-0 start-[2%]", phone: true },
-  { at: "top-[4%] end-[2%] text-end", phone: true },
-  { at: "top-[8%] end-[6%] text-end", phone: true },
-  { at: "top-0 start-[8%]", phone: true },
-  { at: "top-[44%] start-[-10%]", phone: false },
-  { at: "bottom-[10%] end-[-2%] text-end", phone: false },
-  { at: "top-[52%] end-[-10%] text-end", phone: false },
-  { at: "bottom-0 start-[6%]", phone: false },
-];
+  { at: "top-0 start-0", align: "start", above: true },
+  { at: "bottom-0 end-0 text-end", align: "end", above: false },
+  { at: "top-[2%] end-0 text-end", align: "end", above: true },
+  { at: "bottom-[1%] start-[4%]", align: "start", above: false },
+] as const;
 
 /** A stable number per card, so the server and the browser pick the same places. */
 function seed(id: string): number {
@@ -34,8 +37,8 @@ function seed(id: string): number {
   return h;
 }
 
-/** A sentence with its marked run, the word as the sentence bends it, lit. */
-function Sentence({ text }: { text: string }) {
+/** Text with its marked run, the word as the sentence bends it, lit. */
+function Marked({ text }: { text: string }) {
   return text.split("*").map((run, i) =>
     i % 2 ? (
       <span key={run + String(i)} className="text-amber-text">
@@ -47,45 +50,93 @@ function Sentence({ text }: { text: string }) {
   );
 }
 
-/** Faint sentences drifting behind a hand of cards, each using the word on top; they sharpen as they arrive and blur as they leave. */
+/**
+ * Faint sentences drifting around a hand of cards, each using the word on top; they sharpen as
+ * they arrive and blur as they leave. Pointing at one, or tapping it, shows what it means.
+ */
 export function HandExamples({ front, examples, lang }: Props) {
+  const { i18n } = useLingui();
   const still = useStill();
+  const [open, setOpen] = useState<string | null>(null);
+  const [hover, setHover] = useState(true);
   const lines = (front && examples[front]) || [];
   const start = front ? seed(front) : 0;
+  // A page read in the sentences' own language has nothing to translate them into.
+  const translated = !i18n.locale.startsWith(lang.split("-")[0] ?? lang);
+
+  useEffect(() => setHover(window.matchMedia("(hover: hover)").matches), []);
+
+  // A tapped meaning closes on the next tap anywhere.
+  useEffect(() => {
+    if (!open || hover) return;
+    const close = () => setOpen(null);
+    window.addEventListener("pointerdown", close);
+    return () => window.removeEventListener("pointerdown", close);
+  }, [open, hover]);
 
   return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute -inset-x-4 -inset-y-2 select-none"
-    >
+    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -inset-y-2">
       <AnimatePresence initial={false}>
         {lines.map((line, i) => {
-          const spot = SPOTS[(start + i * 2) % SPOTS.length] ?? SPOTS[0];
+          const spot = SPOTS[(start + i) % SPOTS.length] ?? SPOTS[0];
+          const key = `${front}-${line.text}`;
+          const shown = open === key;
           return (
-            <motion.p
-              key={`${front}-${line}`}
-              lang={lang}
+            <motion.div
+              key={key}
               initial={still ? false : { opacity: 0, filter: "blur(8px)" }}
-              animate={{ opacity: 0.7, filter: "blur(0px)" }}
+              animate={{ opacity: shown ? 1 : open ? 0.3 : 0.7, filter: "blur(0px)" }}
               exit={
                 still
                   ? { opacity: 0, transition: { duration: 0 } }
                   : { opacity: 0, filter: "blur(6px)" }
               }
-              transition={{ duration: 1.1, ease: EASE, delay: still ? 0 : 0.3 + i * 0.18 }}
-              className={clsx(
-                "absolute max-w-[14em] text-sm leading-relaxed text-faint @4xl:text-[15px]",
-                spot?.at,
-                !spot?.phone && "hidden @5xl:block",
-              )}
+              transition={{
+                duration: open ? 0.25 : 1.1,
+                ease: EASE,
+                delay: still || open ? 0 : 0.3 + i * 0.18,
+              }}
+              className={clsx("absolute max-w-[min(17em,48%)]", spot.at)}
             >
-              <span
-                className="hand-drift block"
+              <div
+                className={clsx("hand-drift relative", shown && "[animation-play-state:paused]")}
                 style={{ animationDelay: `${-(i * 2.3 + start) % 9}s` }}
               >
-                <Sentence text={line} />
-              </span>
-            </motion.p>
+                <p
+                  lang={lang}
+                  onPointerEnter={(e) => translated && e.pointerType === "mouse" && setOpen(key)}
+                  onPointerLeave={(e) => e.pointerType === "mouse" && setOpen(null)}
+                  // A touch opens it on lifting, so a scroll that starts on a sentence leaves it shut.
+                  onPointerDown={(e) => !hover && e.stopPropagation()}
+                  onPointerUp={(e) =>
+                    translated && e.pointerType !== "mouse" && setOpen(shown ? null : key)
+                  }
+                  className={clsx(
+                    "pointer-events-auto relative cursor-default text-sm leading-relaxed text-balance transition-colors duration-200 ease-out [word-break:auto-phrase] before:absolute before:-inset-2 before:content-[''] @4xl:text-[15px]",
+                    shown ? "text-text-2" : "text-faint",
+                  )}
+                >
+                  <Marked text={line.text} />
+                </p>
+                <AnimatePresence>
+                  {shown && (
+                    <motion.p
+                      initial={still ? false : { opacity: 0, y: spot.above ? 4 : -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, transition: { duration: 0.12 } }}
+                      transition={{ duration: 0.2, ease: EASE }}
+                      className={clsx(
+                        "absolute w-max max-w-[16em] text-sm leading-snug text-balance text-muted",
+                        spot.above ? "bottom-full mb-1" : "top-full mt-1",
+                        spot.align === "end" ? "end-0" : "start-0",
+                      )}
+                    >
+                      <Marked text={i18n._(line.meaning)} />
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
           );
         })}
       </AnimatePresence>

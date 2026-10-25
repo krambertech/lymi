@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
@@ -44,21 +45,61 @@ export const CHINESE_HAND: HandCard[] = [
 ];
 
 /** Sentences that use the front card's word, drawn faintly behind the hand; the word sits between asterisks. */
-export const CHINESE_EXAMPLES: Record<string, string[]> = {
-  xihuan: ["我很*喜欢*这本书。", "你*喜欢*喝茶吗？", "我*喜欢*在家看电影。", "他不*喜欢*下雨天。"],
-  dongxi: ["你买了什么*东西*？", "这个*东西*很好用。", "我忘了带*东西*。", "*东西*太多了。"],
-  dache: ["我们*打车*去吧。", "太晚了，*打车*回家。", "*打车*要多少钱？", "下雨了，我想*打车*。"],
-  shuijiao: ["我十一点*睡觉*。", "孩子已经*睡觉*了。", "*睡觉*前别喝咖啡。", "我想*睡觉*。"],
-  juede: ["我*觉得*很好。", "你*觉得*怎么样？", "我*觉得*他是对的。", "今天我*觉得*有点累。"],
-  ditie: ["我每天坐*地铁*上班。", "*地铁*站在哪儿？", "*地铁*比公共汽车快。", "坐*地铁*去机场。"],
-  pengyou: [
-    "他是我的好*朋友*。",
-    "我和*朋友*去吃饭。",
-    "这是我的中国*朋友*。",
-    "我们是老*朋友*了。",
+export const CHINESE_EXAMPLES: Record<string, Example[]> = {
+  xihuan: [
+    { text: "我很*喜欢*这本书。", meaning: msg`I really *like* this book.` },
+    { text: "你*喜欢*喝茶吗？", meaning: msg`Do you *like* tea?` },
+    { text: "我*喜欢*在家看电影。", meaning: msg`I *like* watching films at home.` },
+    { text: "他不*喜欢*下雨天。", meaning: msg`He doesn’t *like* rainy days.` },
   ],
-  mingtian: ["*明天*见！", "*明天*会下雨吗？", "我*明天*去北京。", "*明天*是星期六。"],
-  yinhang: ["我去*银行*取钱。", "*银行*几点开门？", "她在*银行*工作。", "附近有*银行*吗？"],
+  dongxi: [
+    { text: "你买了什么*东西*？", meaning: msg`What *things* did you buy?` },
+    { text: "这个*东西*很好用。", meaning: msg`This *thing* is really handy.` },
+    { text: "我忘了带*东西*。", meaning: msg`I forgot to bring my *things*.` },
+    { text: "*东西*太多了。", meaning: msg`There are too many *things*.` },
+  ],
+  dache: [
+    { text: "我们*打车*去吧。", meaning: msg`Let’s *take a taxi*.` },
+    { text: "太晚了，*打车*回家。", meaning: msg`It’s late, so I’ll *take a taxi* home.` },
+    { text: "*打车*要多少钱？", meaning: msg`How much is a *taxi*?` },
+    { text: "下雨了，我想*打车*。", meaning: msg`It’s raining, so I want to *take a taxi*.` },
+  ],
+  shuijiao: [
+    { text: "我十一点*睡觉*。", meaning: msg`I *go to bed* at eleven.` },
+    { text: "孩子已经*睡觉*了。", meaning: msg`The children are already *asleep*.` },
+    { text: "*睡觉*前别喝咖啡。", meaning: msg`Don’t drink coffee before *bed*.` },
+    { text: "我想*睡觉*。", meaning: msg`I want to *sleep*.` },
+  ],
+  juede: [
+    { text: "我*觉得*很好。", meaning: msg`I *think* it’s great.` },
+    { text: "你*觉得*怎么样？", meaning: msg`What do you *think*?` },
+    { text: "我*觉得*他是对的。", meaning: msg`I *think* he’s right.` },
+    { text: "今天我*觉得*有点累。", meaning: msg`I *feel* a bit tired today.` },
+  ],
+  ditie: [
+    { text: "我每天坐*地铁*上班。", meaning: msg`I take the *metro* to work every day.` },
+    { text: "*地铁*站在哪儿？", meaning: msg`Where’s the *metro* station?` },
+    { text: "*地铁*比公共汽车快。", meaning: msg`The *metro* is faster than the bus.` },
+    { text: "坐*地铁*去机场。", meaning: msg`Take the *metro* to the airport.` },
+  ],
+  pengyou: [
+    { text: "他是我的好*朋友*。", meaning: msg`He’s a good *friend* of mine.` },
+    { text: "我和*朋友*去吃饭。", meaning: msg`I’m going out to eat with a *friend*.` },
+    { text: "这是我的中国*朋友*。", meaning: msg`This is my Chinese *friend*.` },
+    { text: "我们是老*朋友*了。", meaning: msg`We’re old *friends*.` },
+  ],
+  mingtian: [
+    { text: "*明天*见！", meaning: msg`See you *tomorrow*!` },
+    { text: "*明天*会下雨吗？", meaning: msg`Will it rain *tomorrow*?` },
+    { text: "我*明天*去北京。", meaning: msg`I’m going to Beijing *tomorrow*.` },
+    { text: "*明天*是星期六。", meaning: msg`*Tomorrow* is Saturday.` },
+  ],
+  yinhang: [
+    { text: "我去*银行*取钱。", meaning: msg`I’m going to the *bank* to get money.` },
+    { text: "*银行*几点开门？", meaning: msg`What time does the *bank* open?` },
+    { text: "她在*银行*工作。", meaning: msg`She works at a *bank*.` },
+    { text: "附近有*银行*吗？", meaning: msg`Is there a *bank* nearby?` },
+  ],
 };
 
 /** The order to take the HSK decks in. */

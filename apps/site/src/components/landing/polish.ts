@@ -1,5 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import type { Locale } from "../../lib/routes";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
@@ -203,20 +204,48 @@ export function polishHand(locale: Locale): HandCard[] {
  * Sentences that use the front card's word, drawn faintly behind the hand. The marked run, between
  * asterisks, is the word in the form the sentence needs. A card that asks from the meaning has none.
  */
-export const POLISH_EXAMPLES: Record<string, string[]> = {
+export const POLISH_EXAMPLES: Record<string, Example[]> = {
   sklep: [
-    "Idę do *sklepu*.",
-    "*Sklep* jest zamknięty.",
-    "Ten *sklep* jest czynny do 22.",
-    "Kupiłam chleb w *sklepie*.",
+    { text: "Idę do *sklepu*.", meaning: msg`I’m going to the *shop*.` },
+    { text: "*Sklep* jest zamknięty.", meaning: msg`The *shop* is closed.` },
+    { text: "Ten *sklep* jest czynny do 22.", meaning: msg`This *shop* is open until 10 pm.` },
+    { text: "Kupiłam chleb w *sklepie*.", meaning: msg`I bought bread at the *shop*.` },
   ],
-  dywan: ["Kot śpi na *dywanie*.", "Nowy *dywan* jest miękki.", "Kupiliśmy *dywan* do salonu."],
-  owoc: ["Jem *owoce* codziennie.", "Jaki to *owoc*?", "Ten *owoc* jest bardzo słodki."],
-  dziekuje: ["*Dziękuję* bardzo!", "*Dziękuję* za pomoc.", "Nie, *dziękuję*."],
-  magazyn: ["Towar jest w *magazynie*.", "Pracuję w *magazynie*.", "Czytam *magazyn* o modzie."],
-  pies: ["Mam *psa*.", "Ten *pies* jest duży.", "Idę na spacer z *psem*.", "Nie mam *psa*."],
-  muzyka: ["Lubię polską *muzykę*.", "Ta *muzyka* jest za głośna.", "Słucham *muzyki*."],
-  "dzien-dobry": ["*Dzień dobry*, pani Anno!", "*Dzień dobry*, poproszę kawę."],
+  dywan: [
+    { text: "Kot śpi na *dywanie*.", meaning: msg`The cat is asleep on the *rug*.` },
+    { text: "Nowy *dywan* jest miękki.", meaning: msg`The new *rug* is soft.` },
+    { text: "Kupiliśmy *dywan* do salonu.", meaning: msg`We bought a *rug* for the living room.` },
+  ],
+  owoc: [
+    { text: "Jem *owoce* codziennie.", meaning: msg`I eat *fruit* every day.` },
+    { text: "Jaki to *owoc*?", meaning: msg`What *fruit* is this?` },
+    { text: "Ten *owoc* jest bardzo słodki.", meaning: msg`This *fruit* is very sweet.` },
+  ],
+  dziekuje: [
+    { text: "*Dziękuję* bardzo!", meaning: msg`*Thank you* very much!` },
+    { text: "*Dziękuję* za pomoc.", meaning: msg`*Thank you* for your help.` },
+    { text: "Nie, *dziękuję*.", meaning: msg`No, *thank you*.` },
+  ],
+  magazyn: [
+    { text: "Towar jest w *magazynie*.", meaning: msg`The goods are in the *warehouse*.` },
+    { text: "Pracuję w *magazynie*.", meaning: msg`I work in a *warehouse*.` },
+    { text: "Czytam *magazyn* o modzie.", meaning: msg`I’m reading a fashion *magazine*.` },
+  ],
+  pies: [
+    { text: "Mam *psa*.", meaning: msg`I have a *dog*.` },
+    { text: "Ten *pies* jest duży.", meaning: msg`This *dog* is big.` },
+    { text: "Idę na spacer z *psem*.", meaning: msg`I’m taking the *dog* for a walk.` },
+    { text: "Nie mam *psa*.", meaning: msg`I don’t have a *dog*.` },
+  ],
+  muzyka: [
+    { text: "Lubię polską *muzykę*.", meaning: msg`I like Polish *music*.` },
+    { text: "Ta *muzyka* jest za głośna.", meaning: msg`This *music* is too loud.` },
+    { text: "Słucham *muzyki*.", meaning: msg`I’m listening to *music*.` },
+  ],
+  "dzien-dobry": [
+    { text: "*Dzień dobry*, pani Anno!", meaning: msg`*Good morning*, Ms Anna!` },
+    { text: "*Dzień dobry*, poproszę kawę.", meaning: msg`*Hello*, a coffee, please.` },
+  ],
 };
 
 /** A word and the three forms a learner keeps with it, as the decks' notes list them. */

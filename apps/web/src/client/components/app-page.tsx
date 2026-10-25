@@ -48,7 +48,12 @@ export function AppPage({
     captureAnalytics("app_page_viewed", { app: appKey });
   }, [appKey]);
   return (
-    <Screen width="md" back={{ label: t`Settings`, to: "/settings", hash: "apps" }} backOnDesktop ownTitle>
+    <Screen
+      width="md"
+      back={{ label: t`Settings`, to: "/settings", hash: "apps" }}
+      backOnDesktop
+      ownTitle
+    >
       <header className="grid gap-4 pb-8">
         <div className="flex items-center gap-4">
           <span className="grid size-14 shrink-0">{mark}</span>

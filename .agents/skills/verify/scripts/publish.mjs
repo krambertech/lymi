@@ -76,12 +76,25 @@ export const uploadName = (feature, screenshot) =>
   `${feature.feature}-${feature.where}-${screenshot}`;
 
 const code = (text) => `\`${text}\``;
-const fence = (text) => ["```text", text.replaceAll("```", "'''").trimEnd(), "```"].join("\n");
+function fence(text) {
+  const longest = Math.max(2, ...[...text.matchAll(/`+/g)].map(([run]) => run.length));
+  const delimiter = "`".repeat(longest + 1);
+  return [`${delimiter}text`, text.trimEnd(), delimiter].join("\n");
+}
 
 function result(f) {
   if (!f.ok) return `**FAIL** at step ${failingStep(f).number}`;
   return f.problems.length > 0 ? "PASS with notes" : "PASS";
 }
+
+function location(feature) {
+  const phone = feature.where.endsWith("-phone");
+  const instance = phone ? feature.where.slice(0, -6) : feature.where;
+  return `${instance === "local" ? "Local" : instance} · ${phone ? "phone" : "desktop"}`;
+}
+
+const html = (text) =>
+  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
 /** The screenshot a compact comment keeps: the failing step's, or the last one. */
 function keyShot(f) {
@@ -96,9 +109,9 @@ export function render({ features, sha, compact = false }) {
     marker,
     `## Verify: ${overall(features)} at ${code(sha.slice(0, 8))}`,
     "",
-    "| Feature | Where | Result |",
+    "| Feature | Tested on | Result |",
     "| --- | --- | --- |",
-    ...features.map((f) => `| ${f.title} | ${f.where} | ${result(f)} |`),
+    ...features.map((f) => `| ${f.title} | ${location(f)} | ${result(f)} |`),
   ];
   for (const f of features.filter((f) => !f.ok)) {
     const step = failingStep(f);
@@ -121,20 +134,22 @@ export function render({ features, sha, compact = false }) {
     const shots = compact ? [keyShot(f)].filter(Boolean) : f.screenshots;
     lines.push(
       "",
-      `<details><summary>${f.title} (${f.where}): verdict.md and ${shots.length === 1 ? "1 screenshot" : `${shots.length} screenshots`}</summary>`,
+      `<details><summary>${html(f.title)} (${html(location(f))}): steps and ${shots.length === 1 ? "1 screenshot" : `${shots.length} screenshots`}</summary>`,
       "",
-      // Four backticks, so the fences verdict.md holds for each error stay intact.
-      ["````markdown", f.markdown.trimEnd(), "````"].join("\n"),
+      ...f.steps.map((step, i) => `${i + 1}. **${step.ok ? "PASS" : "FAIL"}** ${step.action}`),
       "",
       ...shots.map((s) => `![${f.title}, ${s.slice(0, -".png".length)}](./${uploadName(f, s)})`),
+      "",
+      "<details><summary>Full run log</summary>",
+      "",
+      fence(f.markdown),
+      "",
+      "</details>",
       "",
       "</details>",
     );
   }
-  lines.push(
-    "",
-    `Posted by the verify skill's ${code("publish.mjs")}; the next run at a new head edits this comment.`,
-  );
+  lines.push("", "This is the author's verification run. A later run updates this comment.");
   return lines.join("\n");
 }
 
@@ -208,6 +223,17 @@ export function upsert({ repo, pr, bodyFile, api = gh }) {
   return { action: "created", url: made.html_url };
 }
 
+export function publish({ repo, pr, bodyFile, screenshots, upload = execFileSync, api = gh }) {
+  if (screenshots.length > 0) {
+    upload(
+      process.execPath,
+      [join(repoRoot, "scripts/pr-media.mjs"), "--body", bodyFile, ...screenshots],
+      { cwd: repoRoot, stdio: "inherit" },
+    );
+  }
+  return upsert({ repo, pr, bodyFile, api });
+}
+
 function defaultRoot() {
   return existsSync("/mnt/project-files")
     ? "/mnt/project-files/evidence"
@@ -266,21 +292,12 @@ function main() {
         if (shots.includes(name)) copyFileSync(join(f.folder, s), join(staging, name));
       }
     }
-    // pr:media pushes the screenshots to the shared pr-media branch and rewrites each ./name to its pinned link.
-    execFileSync(
-      process.execPath,
-      [
-        join(repoRoot, "scripts/pr-media.mjs"),
-        "--body",
-        bodyFile,
-        ...shots.map((s) => join(staging, s)),
-      ],
-      {
-        cwd: repoRoot,
-        stdio: "inherit",
-      },
-    );
-    const { action, url } = upsert({ repo, pr: values.pr, bodyFile });
+    const { action, url } = publish({
+      repo,
+      pr: values.pr,
+      bodyFile,
+      screenshots: shots.map((s) => join(staging, s)),
+    });
     process.stdout.write(`Verify comment ${action}: ${url}\n`);
   } finally {
     rmSync(staging, { recursive: true, force: true });

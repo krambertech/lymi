@@ -11,6 +11,7 @@ import {
   marker,
   overall,
   postedLength,
+  publish,
   render,
   resolveSha,
   upsert,
@@ -85,12 +86,36 @@ test("a failing step makes the comment FAIL and names the step and its error", (
     const body = render({ features, sha });
     assert.ok(body.startsWith(marker));
     assert.match(body, /## Verify: FAIL at `f82f0b4a`/);
-    assert.match(body, /\| Add a card \| preview-lymi-app-pr-7 \| \*\*FAIL\*\* at step 2 \|/);
-    assert.match(body, /\| Review \| local \| PASS \|/);
+    assert.match(
+      body,
+      /\| Add a card \| preview-lymi-app-pr-7 · desktop \| \*\*FAIL\*\* at step 2 \|/,
+    );
+    assert.match(body, /\| Review \| Local · desktop \| PASS \|/);
     assert.match(body, /\*\*Add a card\*\* failed at step 2, Fill the term:/);
     assert.match(body, /toBeVisible\(\) failed/);
     assert.match(body, /# Review: PASS/);
     assert.match(body, /\]\(\.\/review-local-02-start-the-review\.png\)/);
+  } finally {
+    rmSync(dir, { recursive: true });
+  }
+});
+
+test("readable steps and screenshots are folded, with failures visible before the folds", () => {
+  const dir = evidence([review, addCard, { ...review, folder: "review-local-phone-f82f0b4a" }]);
+  try {
+    const body = render({ features: collect(dir, sha), sha });
+    const firstFold = body.indexOf("<details>");
+    assert.ok(body.indexOf("failed at step 2, Fill the term:") < firstFold);
+    assert.match(body, /\| Review \| Local · phone \| PASS \|/);
+    assert.match(body, /<summary>Review \(Local · desktop\): steps and 2 screenshots<\/summary>/);
+    assert.match(body, /1\. \*\*PASS\*\* Open Today\n2\. \*\*PASS\*\* Start the review/);
+    assert.match(body, /<details><summary>Full run log<\/summary>\n\n```text/);
+    assert.ok(body.indexOf("1. **PASS** Open Today") < body.lastIndexOf("<summary>Full run log"));
+    assert.match(body, /This is the author's verification run/);
+    assert.equal(
+      (body.match(/<details>/g) ?? []).length,
+      (body.match(/<\/details>/g) ?? []).length,
+    );
   } finally {
     rmSync(dir, { recursive: true });
   }
@@ -161,6 +186,77 @@ test("the first run creates the comment", () => {
   const { api, calls } = fakeGh([{ id: 1, user: { login: "someone" }, body: `${marker}\nx` }]);
   assert.equal(upsert({ repo: "o/r", pr: "7", bodyFile: "/tmp/b.md", api }).action, "created");
   assert.deepEqual(calls.at(-1), ["api", "repos/o/r/issues/7/comments", "-F", "body=@/tmp/b.md"]);
+});
+
+test("a setup failure without screenshots still publishes its failure comment", () => {
+  const { api, calls } = fakeGh([]);
+  const body = render({
+    sha,
+    features: [
+      {
+        ...review.verdict,
+        ok: false,
+        where: "local",
+        steps: [{ action: "set up", ok: false, error: "The app did not start" }],
+        screenshots: [],
+        markdown: "# Review: FAIL\nThe app did not start\n",
+      },
+    ],
+  });
+  assert.match(body, /Verify: FAIL/);
+  assert.match(body, /The app did not start/);
+  const result = publish({
+    repo: "o/r",
+    pr: "7",
+    bodyFile: "/tmp/failure.md",
+    screenshots: [],
+    api,
+    upload: () => assert.fail("A failure without screenshots must not call the media uploader"),
+  });
+  assert.equal(result.action, "created");
+  assert.deepEqual(calls.at(-1), [
+    "api",
+    "repos/o/r/issues/7/comments",
+    "-F",
+    "body=@/tmp/failure.md",
+  ]);
+});
+
+test("screenshots are uploaded before the comment is posted", () => {
+  const { api } = fakeGh([]);
+  let uploaded = false;
+  const result = publish({
+    repo: "o/r",
+    pr: "7",
+    bodyFile: "/tmp/pass.md",
+    screenshots: ["/tmp/step.png"],
+    upload: (_node, args) => {
+      assert.deepEqual(args.slice(1), ["--body", "/tmp/pass.md", "/tmp/step.png"]);
+      uploaded = true;
+    },
+    api: (args) => {
+      assert.ok(uploaded);
+      return api(args);
+    },
+  });
+  assert.equal(result.action, "created");
+});
+
+test("a failed media upload leaves the existing comment untouched", () => {
+  assert.throws(
+    () =>
+      publish({
+        repo: "o/r",
+        pr: "7",
+        bodyFile: "/tmp/pass.md",
+        screenshots: ["/tmp/step.png"],
+        upload: () => {
+          throw new Error("Upload failed");
+        },
+        api: () => assert.fail("The comment must not change when its screenshots did not upload"),
+      }),
+    /Upload failed/,
+  );
 });
 
 test("the size check counts each screenshot's full link, so a body that fits only before upload goes compact", () => {

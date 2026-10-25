@@ -5,7 +5,7 @@ description: Shape an ambiguous Lymi feature before implementation. Use when the
 
 # Shape a feature
 
-Turn a rough idea into a clear next artifact without implementing it. Follow [`AGENTS.md`](../../../AGENTS.md) for product invariants, owning sources, and permissions.
+Turn a rough idea into a clear next artifact without implementing it.
 
 ## Ground the idea
 
@@ -31,14 +31,14 @@ Lean: b, <the reason in one clause>
 4 settled, 3 open
 ```
 
-- Offer two to four concrete options when the decision permits them. For a genuinely open question, omit the options but keep the lean and progress count.
+- Offer two to four concrete options when the decision permits them. For an open question with no fixed options, omit them but keep the lean and the progress count.
 - State a lean even when confidence is low; name the uncertainty in one clause instead of adding a long preamble.
 - Update the count after every answer. The number of open decisions may change as the shape becomes clearer.
-- Find facts in the repository or available tools instead of asking the user. Ask only for decisions that require their judgment.
-- Treat a delegated reversible choice as settled using the smallest reasonable default. Return irreversible or high-risk choices to the user.
+- Ask the user only for decisions that need their judgment; find facts in the repository or the available tools.
+- Treat a delegated reversible choice as settled using the smallest default. Return irreversible or high-risk choices to the user.
 - Probe a second-order effect only when it could change the outcome, a product invariant, a public contract, the smallest coherent slice, or its acceptance evidence.
 
-Stop when the outcome, boundaries, smallest vertical slice, and acceptance evidence are clear. Do not continue interviewing to fill a template. If a necessary decision remains unresolved, name it precisely.
+Stop when the outcome, boundaries, smallest vertical slice, and acceptance evidence are clear, even if a template has empty fields. If a necessary decision remains unresolved, name it.
 
 ## Route the result
 

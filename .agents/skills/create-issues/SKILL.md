@@ -5,14 +5,14 @@ description: Turn a completed Lymi feature shape into GitHub implementation issu
 
 # Create issues
 
-Turn a settled feature shape into GitHub work that an implementing agent can pick up without reconstructing the conversation. Follow [`AGENTS.md`](../../../AGENTS.md) for product sources, writing, permissions, and repository hygiene.
+Turn a settled feature shape into GitHub work that an implementing agent can pick up without reconstructing the conversation.
 
 ## Compile the shape
 
 - Read the completed shape, its owning product documents and decisions, the current code, and existing GitHub issues.
 - Return to [`shape-feature`](../shape-feature/SKILL.md) when an unresolved product decision can change the outcome, boundary, or acceptance evidence.
 - Separate what is already built from what remains. Merged foundations are context, not open acceptance work.
-- Use canonical product vocabulary and link durable decisions instead of duplicating them.
+- Use [`CONTEXT.md`](../../../CONTEXT.md)'s terms, and link durable decisions instead of copying them.
 
 ## Choose the issue shape
 
@@ -21,7 +21,7 @@ Turn a settled feature shape into GitHub work that an implementing agent can pic
 - Make each sub-issue a tracer bullet: one narrow, complete path through the affected layers, demonstrable on its own and sized for one fresh implementation context.
 - Use GitHub's native parent and blocking relationships. Parentage groups the outcome; blockers express execution order.
 
-When the shape does not make the intended issue count clear, show the proposed tree and get approval before publishing it. Do not re-interview settled product behavior.
+When the shape leaves the issue count unclear, show the proposed tree and get approval before publishing it. Ask only about the tree; settled product behavior stays settled.
 
 ## Write for implementation
 

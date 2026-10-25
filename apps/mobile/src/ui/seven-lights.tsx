@@ -65,7 +65,7 @@ export function SevenLights({
   const letters = weekLetters(dates, i18n.locale);
   const reference = lightReference(days);
   const lit = daysReviewed(days, days.length);
-  // Rest is named, never counted. PRODUCT.md.
+  // Rest is named, never counted. docs/review.md.
   const label = rest?.some(Boolean)
     ? t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}, including a rest day`
     : t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}`;

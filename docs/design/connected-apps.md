@@ -1,17 +1,23 @@
 # Letting an app in
 
-Three screens carry the connection between Lymi and an MCP client: the door (`/login`), the decision (`/consent`), and the ending (the same route, after the decision).
+MCP connections use sign-in at `/login`, authorization at `/consent` and a completion state on the consent route. Product access rules live in [MCP directory review](../mcp-directory-review.md#access-follows-the-live-grant).
 
-Who is asking is answered by the **host of the `client_id`**, and by nothing else the client sent. A recognised host is named ("Claude"); every other app is titled by its address, and its own `client_name` appears only as a claim, in the form "it calls itself X". Putting an unverified name in the headline of a permission screen is the same mistake as rendering an unverified logo. A client identifies itself with a Client ID Metadata Document that has to be served from that HTTPS host, so the host is the one claim in the request that cannot be forged. It is shown in mono, in a pill under the app's name, with a check when it is a host we ship a mark for. An app we do not recognise says so in words and shows the address to check.
+## Identify the client
 
-Marks for known clients are bundled and drawn in their own brand colour, which is what makes one recognisable at a glance. A vendor's colour is a quotation, not a token: it lives inside the mark and nowhere else, the tile around it stays a plain plate, and amber remains Lymi's only accent. A brand that is monochrome takes the room's ink. `logo_uri` from the client's metadata is never rendered: an attacker-controlled image on a permission screen, shown with the confidence of a verified one, is how consent phishing works. An unrecognised client gets a monogram, so it can never borrow a known app's appearance.
+The consent screen identifies the app by the HTTPS host of its `client_id` metadata document. Use a known app’s name only for a recognized host. Otherwise use the address as the title and present `client_name` as a claim: “it calls itself X”. Show the host in monospace and state when it is unrecognized. The metadata host establishes domain control, not trust in an arbitrary app name.
 
-Read access is stated, not offered, because a connector cannot work without it. Write is the only decision on the screen, so it is the only control: a switch, with a grant dot that mirrors the read row so what the app ends up with reads at a glance. Under both, a plain list of what it can never do, whatever is chosen.
+Bundle known client marks in their brand colours. Keep those colours inside the mark, with a neutral surrounding panel; monochrome marks use the text token. Never render a client-supplied `logo_uri`. Unknown clients use a monogram so they cannot copy a trusted client’s appearance through metadata.
 
-The ending is not optional. An MCP client's redirect is usually a custom scheme, so the browser hands off to the app and leaves the tab where it was; without this screen that tab sits on a blank form. It says what happened, what the app got, and that the tab is finished with.
+## Ask for access
 
-Until the learner has connected one, the rail offers the setup guides and the learner menu has a Connect AI assistant row ([rail.md](system/rail.md#the-offer-to-connect-an-assistant)).
+Read access is required and explained without a toggle. Write access is the choice, shown as a switch. The grant indicators summarize the resulting access. Below them, state the operations integrations can never perform, including review grading.
 
-A grant lasts until it is taken back, so Settings lists each connected app as a row in its Apps group, with name, host and when it connected, and the app's page holds what it may do and the confirm to cut it off. The phone has the same group as You → Apps, each app's page pushed from it, and cutting an app off asks in iOS's alert ([phone.md](system/phone.md#navigation)).
+After Allow or refusal, show what happened and whether the tab can be closed. A custom-scheme redirect can open the client while leaving the browser tab visible, so redirect alone is insufficient feedback.
 
-The list titles apps differently from the consent screen, because its job is recognising an app already let in, not deciding whether to let one in. Every row leads with the app's name: a recognised app's own, else the name the app gave, else its host. Under it is the host, which for an app Lymi did not recognise starts with an alert mark and **Unverified**, since the host is what was not recognised, then when it was connected. A long host loses its middle, so the domain that identifies it stays. When the name borrows a known app's as a word, such as "Claude Desktop" from another host, Unverified is in the danger colour, so the learner can tell it is not the app it names. `listedApp` in `packages/client` holds the rule for both apps.
+Before the first connection, the rail offers setup guides and the learner menu offers Connect AI assistant ([rail.md](system/rail.md#the-offer-to-connect-an-assistant)).
+
+## List connected apps
+
+Settings lists grants in Apps. Each app page shows its access and Disconnect, on web and phone ([app-pages.md](app-pages.md)). Access lasts until disconnected.
+
+List titles help identify an existing connection: use the recognized name, otherwise the supplied name, otherwise its host. Show the host below, with an alert and **Unverified** when unrecognized, followed by the connection date. Truncate long hosts in the middle so the domain remains visible. If an unrecognized host claims a known app’s name, such as Claude Desktop, use danger colour for Unverified. `listedApp` in `packages/client` owns this rule for both clients.

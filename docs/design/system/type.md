@@ -21,7 +21,7 @@ Use the Tailwind size classes below; the role names are what DESIGN.md's frontma
 | caption | `text-xs` | 12 | 500 | Chips, uppercase labels, timestamps |
 | kbd | `text-2xs` | 11 | 600 | Keyboard hints, the AI badge |
 
-The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px from 11 to 17, display sizes by about 1.2 to 1.27 from 20 to 46, and the count that ends a review alone goes to 60 and 72. On any touch screen a form control's text is 16 px (`text-[1rem]` through `controlSize`) so iOS does not zoom on focus; see [forms.md](forms.md).
+The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px from 11 to 17, display sizes by about 1.2 to 1.27 from 20 to 46, and the count that ends a review alone goes to 60 and 72. A form control's text on touch is 16 px, off the scale (`text-[1rem]` through `controlSize`, [forms.md](forms.md#the-control-box)).
 
 ```tsx
 // Correct: a section heading
@@ -40,7 +40,6 @@ The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px fro
 - Headings track −0.02em (`tracking-[-0.02em]`), the word −0.03em, body never.
 - Tabular figures (`tabular-nums`) on figures that line up in a column, never on a control whose label happens to hold a digit: Onest's tabular 1 carries side bearings wide enough to pull "Lezione 12" apart. `Button` leaves them off for that reason.
 - Uppercase only at 12 px (`text-xs`), tracked +0.06em, weight 500, in `muted`.
-- Curly quotes and the ellipsis character in copy: “ ” ’ …, never straight quotes or three dots.
 
 ## Long words
 
@@ -69,7 +68,7 @@ On the phone, `Text` takes `lang` for writing direction and script faces; a stan
 - Code on the docs site.
 - Strings in the app that are proofread character by character rather than read: an API key, a client's hostname, a header name in copy. Onest draws 0 and O, and 1 and l, too alike for a secret where a mistyped character is a silent 401.
 
-Nothing else uses it: not numbers, not code-like labels, not UI text. The design system page sets its state annotations in it for the same reason as the docs, so a note about a component never reads as part of the component.
+The design system page sets its state annotations in it for the same reason as the docs, so a note about a component never reads as part of the component. Numbers, code-like labels and other interface text stay in Onest.
 
 ## Wordmark
 

@@ -1,6 +1,6 @@
 # Readwise
 
-Readwise sends the learner's book highlights to Lymi, which follows the books in a language one of their decks teaches and turns new highlights into cards every hour or on **Check now**. Its page is the first on the app page template.
+Readwise sends the learner's book highlights to Lymi, which follows the books in a language one of their decks teaches and turns new highlights into cards every hour or on **Check now**.
 
 ## Reach
 

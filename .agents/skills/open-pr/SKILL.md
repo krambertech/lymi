@@ -7,14 +7,14 @@ description: Open or update a Lymi pull request and supervise it until it is rev
 
 Turn the intended local change into a review-ready pull request. Opening the PR is the midpoint, not completion.
 
-Review-ready means the PR contains only the intended diff, required checks pass, the branch is mergeable, and no blocking automated feedback remains. Follow [`AGENTS.md`](../../../AGENTS.md) and [`docs/git-workflow.md`](../../../docs/git-workflow.md). Opening a PR does not authorize merging, deploying, or migrating production data.
+Review-ready means the PR contains only the intended diff, required checks pass, the branch is mergeable, and no blocking automated feedback remains. [`docs/git-workflow.md`](../../../docs/git-workflow.md) owns branches, commit messages and titles. Opening a PR does not authorize merging, deploying, or migrating production data.
 
 ## Resolve the scope
 
 - Fetch `origin`, then inspect the branch, upstream, working tree, commits, and diff against `origin/main`.
 - Preserve unrelated work and isolate the intended change on a focused branch. Include uncommitted changes that clearly belong to the requested PR; ask only when ownership is ambiguous.
 - Update the existing PR for the branch when one exists instead of creating a duplicate.
-- Follow the repository's recovery workflow for branches based on the pre-migration history.
+- Move a branch based on the history from before 2026-09-06 as [the Git workflow's migration section](../../../docs/git-workflow.md#branches-from-before-the-history-migration) says.
 - Base the PR on `main` unless the change needs the code of another open PR. Then make it a layer of a native stack with `gh stack`, following the stacked section of the Git workflow; never pass `--base <branch>` to `gh pr create`.
 
 Continue only when the intended PR diff is isolated and understood.
@@ -29,7 +29,7 @@ Continue only when the intended PR diff is isolated and understood.
 - Write the body to the pull-request-description rules in `AGENTS.md`: copy [the template](../../../.github/pull_request_template.md) to a temporary file, fill it, and remove every guidance comment and unused optional section.
 - For any rendered UI change, capture and attach screenshots with [`references/screenshots.md`](references/screenshots.md). A screenshot visible only in the agent conversation is not attached.
 
-Continue only when the final diff is reviewable and every available required local check passes. Report unavailable or intentionally skipped checks honestly.
+Continue only when the final diff is reviewable and every available required local check passes. Name each check that was unavailable or skipped, and why.
 
 ## Open or update the PR
 
@@ -39,6 +39,6 @@ Continue only when the final diff is reviewable and every available required loc
 
 ## Supervise the PR
 
-Follow [the monitoring workflow](references/monitor.md) immediately after opening or updating the PR. Remain active while required checks are pending. Do not report completion merely because the PR exists.
+Follow [the monitoring workflow](references/monitor.md) immediately after opening or updating the PR, and stay with it while required checks are pending.
 
 Finish in exactly one state: **review-ready**, with the PR URL and verification evidence; or **blocked**, with the failing check, unresolved feedback, conflict, or permission needed. A pending required check is neither state.

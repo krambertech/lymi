@@ -17,4 +17,4 @@ The group lists **Apps you can add** with Custom MCP. Grok's page has the headin
 ## Gotchas
 
 - A reseed keeps OAuth grants, so an assistant connected earlier is a row rather than a chip; the recipe finds Grok either way.
-- The connected state needs a real grant; locally insert an `oauth_client` and `oauth_consent` row with `wrangler d1 execute lymi --local`, as the PR describes.
+- The connected state needs a real grant; locally insert an `oauth_client` row (it needs `redirect_uris` of `'[]'`, or `INSERT OR IGNORE` drops it silently) and an `oauth_consent` row with `wrangler d1 execute lymi --local` in `apps/web`.

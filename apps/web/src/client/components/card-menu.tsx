@@ -1,14 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
-import {
-  Archive,
-  ChartNoAxesColumn,
-  Ellipsis,
-  Flag,
-  Lightbulb,
-  SquarePen,
-  Star,
-} from "lucide-react";
+import { Archive, ChartNoAxesColumn, Ellipsis, Flag, SquarePen, Star } from "lucide-react";
 import { IconButton } from "./button";
+import { HintIcon } from "./hint-icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,7 +74,7 @@ export function CardMenu({
       <DropdownMenuContent aria-label={t`Card options`} align="end" finalFocus={finalFocus}>
         {canEdit && (
           <DropdownMenuItem onClick={onHint}>
-            <Lightbulb aria-hidden="true" />
+            <HintIcon aria-hidden="true" />
             {hasHint ? t`Edit hint` : t`Add hint`}
           </DropdownMenuItem>
         )}

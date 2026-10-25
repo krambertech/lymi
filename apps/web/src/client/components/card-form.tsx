@@ -28,7 +28,6 @@ import {
   Image as ImageIcon,
   Languages,
   Library,
-  Lightbulb,
   type LucideIcon,
   NotebookPen,
   Plus,
@@ -49,6 +48,7 @@ import { LanguageChip, ModesChip, SectionChip, TagsChip } from "./card-form-pick
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { SourceChip } from "./chip";
 import { FieldChipButton, FieldChipRow } from "./field-chip";
+import { HintIcon } from "./hint-icon";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
 import { ExampleText, TermText } from "./term-text";
@@ -858,7 +858,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: { icon: AudioLines, label: pronunciationLabel },
     source: { icon: Library, label: t`Source` },
     picture: { icon: ImageIcon, label: t`Picture` },
-    hint: { icon: Lightbulb, label: t`Hint` },
+    hint: { icon: HintIcon, label: t`Hint` },
   };
   const chipFor = (key: ChipKey) => {
     if (key === "tags")

@@ -37,6 +37,7 @@ interface Props {
 
 /** The page for people learning Japanese, from their first kana to N4 and their own lessons. */
 export function JapaneseView({ decks, locale }: Props) {
+  // Unlike `pathSteps`, this adds without the page's edition; whether Japanese should pass one is undecided.
   const steps = JAPANESE_PATH.flatMap((step) => {
     const deck = decks.find((d) => d.slug === step.slug);
     return deck ? [{ ...step, name: deck.name, count: deck.cardCount }] : [];

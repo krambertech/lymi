@@ -8,13 +8,13 @@ Settings, **Apps**, any assistant's chip or row, which opens `/settings/apps/<ap
 
 ## Drive
 
-[`apps.mjs`](apps.mjs), as `learner` from Settings: find the Apps group, press the **Grok** chip, read the page's status, steps and the two copy fields, follow **Settings** back, then open **Custom MCP**.
+[`apps.mjs`](apps.mjs), as `learner` from Settings: find the Apps group, open **Grok** from its chip or row, read the page's status, steps and the two copy fields, follow **Settings** back, then open **Custom MCP**.
 
 ## End state
 
-The group lists **Apps you can add** with Grok and Custom MCP. Grok's page has the heading **Grok**, says **Not connected**, has three steps, an **MCP server address** ending in `/mcp`, a **Client ID** ending in `/oauth/grok.json`, and **Read the Grok guide**. Custom MCP's page has the address and no client ID. The API keys list never shows a key named Yomitan.
+The group lists **Apps you can add** with Custom MCP. Grok's page has the heading **Grok**, three steps, an **MCP server address** ending in `/mcp`, a **Client ID** ending in `/oauth/grok.json`, and **Read the Grok guide**. Custom MCP's page has the address and no client ID. The API keys list never shows a key named Yomitan.
 
 ## Gotchas
 
-- A reseed keeps OAuth grants, so a persona that connected an assistant earlier shows it as a row and leaves its chip out of the strip; the recipe uses Grok, which local personas never connect.
+- A reseed keeps OAuth grants, so an assistant connected earlier is a row rather than a chip; the recipe finds Grok either way.
 - The connected state needs a real grant; locally insert an `oauth_client` and `oauth_consent` row with `wrangler d1 execute lymi --local`, as the PR describes.

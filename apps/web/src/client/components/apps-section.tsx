@@ -8,12 +8,10 @@ import type { ReactNode } from "react";
 import type { ConnectedApp, Readwise } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { ASSISTANTS, type Assistant, appPageParam, assistantOf } from "../lib/assistants";
-import { localizedSiteUrl, publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery, keysQuery, readwiseQuery } from "../lib/queries";
 import { yomitanKey } from "../lib/yomitan";
 import { lastUsed, shortDate } from "./api-keys-section";
 import { AppMark, identifyApp } from "./app-mark";
-import { DocLink } from "./doc-link";
 import { Go } from "./next-steps";
 import { ReadwiseMark } from "./readwise-mark";
 import { SettingsGroup } from "./settings-group";
@@ -91,14 +89,6 @@ export function AppsSection() {
           {errorMessage(apps.error)}
         </p>
       )}
-
-      <p className="text-sm text-muted">
-        <Trans>
-          Read Lymi’s{" "}
-          <DocLink href={localizedSiteUrl("/privacy", i18n.locale)}>privacy policy</DocLink> or get
-          help from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
-        </Trans>
-      </p>
     </SettingsGroup>
   );
 }

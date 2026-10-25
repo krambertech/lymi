@@ -1246,6 +1246,9 @@ msgstr "Ключ API"
 msgid "API key for {name}"
 msgstr "Ключ API для {name}"
 
+msgid "API key for Yomitan"
+msgstr "Ключ API для Yomitan"
+
 msgid "API keys"
 msgstr "Ключі API"
 
@@ -2910,9 +2913,6 @@ msgstr "{name} запрошено до «{deck}»"
 msgid "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 msgstr "Він називає себе «{claimed}», але Lymi не може це підтвердити. Перевірено лише адресу вище."
 
-msgid "It can add cards. Lymi shows it once."
-msgstr "Він може додавати картки. Lymi покаже його лише один раз."
-
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "Він може читати твої картки, а також додавати, редагувати й архівувати їх."
 
@@ -4155,9 +4155,6 @@ msgstr "«Читання» переглядає колоди й картки. «
 
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
 msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Доступ ти вибираєш, коли застосунок входить. Щоб змінити його, відключи застосунок і увійди знову."
-
-msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
-msgstr "Прочитай <0>політику конфіденційності</0> Lymi або звернися до <1>служби підтримки</1>."
 
 msgid "Read the {app} guide"
 msgstr "Відкрити посібник для {app}"
@@ -5774,6 +5771,9 @@ msgstr "Знову показуємо фото з Google"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
+
+msgid "Your key is ready. Copy it now. You won’t see it again."
+msgstr "Ключ готовий. Скопіюй його зараз. Більше ти його не побачиш."
 
 msgid "Your Lymi account is deleted"
 msgstr "Твій акаунт Lymi видалено"

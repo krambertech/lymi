@@ -1246,6 +1246,9 @@ msgstr "API key"
 msgid "API key for {name}"
 msgstr "API key for {name}"
 
+msgid "API key for Yomitan"
+msgstr "API key for Yomitan"
+
 msgid "API keys"
 msgstr "API keys"
 
@@ -2910,9 +2913,6 @@ msgstr "Invited {name} to {deck}"
 msgid "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 msgstr "It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above is checked."
 
-msgid "It can add cards. Lymi shows it once."
-msgstr "It can add cards. Lymi shows it once."
-
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "It can read your cards, and add, edit and archive them."
 
@@ -4155,9 +4155,6 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
-
-msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
-msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 
 msgid "Read the {app} guide"
 msgstr "Read the {app} guide"
@@ -5774,6 +5771,9 @@ msgstr "Your Google photo is back"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
+
+msgid "Your key is ready. Copy it now. You won’t see it again."
+msgstr "Your key is ready. Copy it now. You won’t see it again."
 
 msgid "Your Lymi account is deleted"
 msgstr "Your Lymi account is deleted"

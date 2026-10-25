@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Copy, KeyRound } from "lucide-react";
-import { FreshKey, lastUsed, shortDate } from "../components/api-keys-section";
+import { lastUsed, shortDate } from "../components/api-keys-section";
 import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
@@ -104,13 +104,7 @@ function Settings(props: Props & { current: ApiKeySummary }) {
     <AppSection title={t`Settings`}>
       <div className="edge grid justify-items-start gap-3 rounded-xl bg-plate px-4 py-4">
         {props.fresh ? (
-          <FreshKey
-            name={props.fresh.name}
-            value={props.fresh.key}
-            onDone={props.onDone}
-            onRevoke={() => props.fresh && props.onRevoke(props.fresh.id)}
-            inPlate
-          />
+          <KeyReady value={props.fresh.key} onDone={props.onDone} />
         ) : (
           <>
             <div className="grid gap-0.5">
@@ -171,14 +165,27 @@ function Connect(props: Props) {
               <KeyRound data-icon="inline-start" aria-hidden="true" />
               <Trans>Make a key for Yomitan</Trans>
             </Button>
-            <p className="text-sm text-muted">
-              <Trans>It can add cards. Lymi shows it once.</Trans>
-            </p>
             <KeyError error={props.error} />
           </div>
         )}
       </div>
     </AppConnect>
+  );
+}
+
+/** The key just made: shown once, to copy into Yomitan, with Stop below for taking it back. */
+function KeyReady({ value, onDone }: { value: string; onDone: () => void }) {
+  const { t } = useLingui();
+  return (
+    <div role="status" className="enter-card grid w-full justify-items-start gap-3">
+      <p className="text-base text-text">
+        <Trans>Your key is ready. Copy it now. You won’t see it again.</Trans>
+      </p>
+      <CopyField value={value} label={t`API key for Yomitan`} className="w-full" />
+      <Button variant="secondary" onClick={onDone}>
+        <Trans>Done</Trans>
+      </Button>
+    </div>
   );
 }
 

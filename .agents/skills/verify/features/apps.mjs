@@ -7,14 +7,13 @@ export default async function drive({ page, step, expect }) {
 
   await step("Find the Apps group with apps to add", async () => {
     await expect(page.getByRole("heading", { level: 2, name: "Apps", exact: true })).toBeVisible();
-    await expect(addable().getByRole("link", { name: "Grok" })).toBeVisible();
     await expect(addable().getByRole("link", { name: "Custom MCP" })).toBeVisible();
   });
 
   await step("Open Grok and read how to connect it", async () => {
-    await addable().getByRole("link", { name: "Grok" }).click();
+    // A chip until Grok connects, then a row; its page shows how it connects either way.
+    await page.getByRole("link", { name: /^Grok/ }).first().click();
     await expect(page.getByRole("heading", { level: 1, name: "Grok" })).toBeVisible();
-    await expect(page.getByText("Not connected")).toBeVisible();
     const address = await page.getByLabel("MCP server address").innerText();
     const clientId = await page.getByLabel("Client ID").innerText();
     expect(address).toMatch(/\/mcp$/);

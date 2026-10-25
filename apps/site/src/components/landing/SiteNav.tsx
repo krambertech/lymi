@@ -219,7 +219,7 @@ function MenuPopular() {
   const list = useOneLine();
   return (
     <div className="mx-1 mt-1.5 flex items-center gap-2 border-t border-edge px-1.5 pt-2.5 pb-1">
-      <p className="shrink-0 pe-1 text-sm text-muted">
+      <p className="shrink-0 text-sm text-muted">
         <Trans>Popular</Trans>
       </p>
       <div ref={list} className="min-w-0 flex-1">

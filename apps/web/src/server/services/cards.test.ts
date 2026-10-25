@@ -489,6 +489,7 @@ describe("bulk edits and archives", () => {
     expect(states.length).toBeGreaterThan(0);
   });
 
+  // 200 adds, an archive and a restore run past 15 s on a busy CI runner.
   it("restores as many cards as a bulk call carries", async () => {
     const ctx = await learner(db, "bulk-restore-200", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
@@ -503,7 +504,7 @@ describe("bulk edits and archives", () => {
 
     expect(outcomes.filter((outcome) => outcome.status === "restored")).toHaveLength(200);
     expect((await showCard(ctx, ids[199] as string)).archivedAt).toBeNull();
-  });
+  }, 60_000);
 
   it("reduces an add to the card's id and enrichment, the existing card's when skipped", async () => {
     const ctx = await learner(db, "bulk-terse-1", "Kateryna");

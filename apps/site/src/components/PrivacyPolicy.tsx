@@ -6,7 +6,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy covers Lymi’s website, apps, API and connected assistants.`;
-export const PRIVACY_UPDATED = msg`25 October 2026`;
+export const PRIVACY_UPDATED = msg`26 October 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -172,11 +172,12 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          Website visits are counted without a persistent device identifier, using a daily visitor
-          code derived from the IP address and browser. Referral and campaign information can follow
-          links into sign-up. Error reports contain scrubbed technical details, country and an
-          account or app identifier; they continue if you object to product analytics. Hosting logs
-          and aggregate performance measures also help keep Lymi working and secure.
+          Website visits, and where visitors click and scroll, are counted without a persistent
+          device identifier, using a daily visitor code derived from the IP address and browser.
+          Referral and campaign information can follow links into sign-up. Error reports contain
+          scrubbed technical details, country and an account or app identifier; they continue if you
+          object to product analytics. Hosting logs and aggregate performance measures also help
+          keep Lymi working and secure.
         </Trans>
       </p>
       <p>

@@ -136,3 +136,47 @@ test("the real browser SDK records a product page through the proxy with every w
   expect(direct).toEqual([]);
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
+
+test("the real browser SDK sends public-site heatmaps and page leaves with routes only", async ({
+  page,
+  context,
+}) => {
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => false });
+    Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+  });
+  const sent: string[] = [];
+  await context.route("**/ingest/**", async (route) => {
+    const raw = route.request().postData() ?? "";
+    const encoded = new URLSearchParams(raw).get("data");
+    sent.push(encoded ? Buffer.from(encoded, "base64").toString("utf8") : raw);
+    await route.fulfill({ status: 200, contentType: "application/json", body: '{"status":1}' });
+  });
+  const direct: string[] = [];
+  await context.route("https://*.posthog.com/**", async (route) => {
+    direct.push(route.request().url());
+    await route.abort();
+  });
+  await page.route("**/explore?token=private-query-token", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: '<html lang="en"><head></head><body><button type="button">Browse decks</button><a href="/other-page">Away</a></body></html>',
+    }),
+  );
+  await page.goto("/explore?token=private-query-token");
+  await page.evaluate(async (path) => {
+    const analytics = await import(path);
+    analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  }, modulePath);
+  await expect(async () => {
+    await page.getByRole("button", { name: "Browse decks" }).click();
+    expect(sent.join(" ")).toContain("$$heatmap");
+  }).toPass({ timeout: 20_000 });
+  await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
+  await expect.poll(() => sent.join(" ")).toContain("$pageleave");
+  const payload = sent.join(" ");
+  expect(payload).toContain('"$viewport_width"');
+  expect(payload).toContain("/explore");
+  expect(payload).not.toContain("private-query-token");
+  expect(direct).toEqual([]);
+});

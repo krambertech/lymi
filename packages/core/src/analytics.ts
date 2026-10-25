@@ -138,6 +138,12 @@ const source_fields = {
   utm_campaign: campaign.optional().catch(undefined),
 };
 export const Attribution = z.object({ first_landing_page: path, ...source_fields });
+/** How long the previous page was open, in seconds, and how far down it was scrolled, from 0 to 1. */
+const page_leave_fields = {
+  $prev_pageview_duration: z.number().min(0).max(86_400).optional().catch(undefined),
+  $prev_pageview_max_scroll_percentage: z.number().min(0).max(1).optional().catch(undefined),
+};
+const vital = z.number().min(0).max(600_000).optional().catch(undefined);
 export const Backlog = z.enum(["0", "1-20", "21-100", "100+"]);
 export type Backlog = z.infer<typeof Backlog>;
 
@@ -244,7 +250,32 @@ export const COMMAND_MENU_COMMANDS = [
 ] as const;
 
 export const analyticsEvents = {
-  $pageview: z.object({ pathname: path, ...source_fields }),
+  $pageview: z.object({ pathname: path, ...source_fields, ...page_leave_fields }),
+  $pageleave: z.object({ pathname: path, ...page_leave_fields }),
+  $web_vitals: z.object({
+    pathname: path,
+    $web_vitals_LCP_value: vital,
+    $web_vitals_FCP_value: vital,
+    $web_vitals_INP_value: vital,
+    $web_vitals_CLS_value: vital,
+  }),
+  $$heatmap: z.object({
+    $heatmap_data: z.record(
+      z.string().max(300),
+      z
+        .array(
+          z.object({
+            x: z.number(),
+            y: z.number(),
+            target_fixed: z.boolean(),
+            type: z.enum(["click", "rageclick", "mousemove"]),
+          }),
+        )
+        .max(500),
+    ),
+    $viewport_width: z.number().int().min(0).max(20_000),
+    $viewport_height: z.number().int().min(0).max(20_000),
+  }),
   app_opened: z.object({
     entry: z.enum(["reminder", "link", "direct"]).optional(),
     backlog: Backlog.optional(),
@@ -609,6 +640,9 @@ export type ProductAnalyticsEvent = {
 export type AnalyticsProducer = "browser" | "phone" | "worker";
 export const analyticsProducers = {
   $pageview: ["browser", "phone"],
+  $pageleave: ["browser"],
+  $web_vitals: ["browser"],
+  $$heatmap: ["browser"],
   app_opened: ["browser", "phone"],
   signed_up: ["worker"],
   signed_in: ["worker"],

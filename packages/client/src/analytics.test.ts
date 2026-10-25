@@ -10,6 +10,8 @@ type Payload = {
 };
 type Options = {
   before_send: (event: Payload) => Payload | null;
+  enable_heatmaps?: boolean;
+  capture_pageleave?: boolean;
   session_recording?: {
     maskAllInputs?: boolean;
     maskTextSelector?: string;
@@ -38,7 +40,8 @@ const sdk = vi.hoisted(() => {
         distinct_id: cookieless ? "$posthog_cookieless" : id,
         email: "never@example.com",
         $raw_user_agent: "Test/1.0",
-        $current_url: "https://my.lymi.app/private?token=secret",
+        // The SDK lets an event name its own address, as web vitals do.
+        $current_url: properties.$current_url ?? "https://my.lymi.app/private?token=secret",
         ...(cookieless ? { $cookieless_mode: true } : {}),
       },
     });
@@ -70,6 +73,7 @@ const sdk = vi.hoisted(() => {
 });
 vi.mock("posthog-js/no-external", () => ({ default: sdk }));
 vi.mock("posthog-js/dist/posthog-recorder", () => ({}));
+vi.mock("posthog-js/dist/web-vitals", () => ({}));
 let cookieWrites: string[];
 let analytics: typeof import("./analytics");
 
@@ -377,6 +381,57 @@ it("never records the public site", async () => {
   const before = sdk.sent.length;
   sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
   expect(sdk.sent).toHaveLength(before);
+});
+
+it("keeps only the route and numbers from page leaves, web vitals and site heatmaps", async () => {
+  await load("https://lymi.app/explore/eesti-a1?token=secret", "");
+  vi.stubGlobal("window", Object.assign(new EventTarget(), { innerWidth: 1280, innerHeight: 720 }));
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  expect(sdk.options()).toMatchObject({ enable_heatmaps: true, capture_pageleave: true });
+  sdk.capture("$pageleave", {
+    $prev_pageview_pathname: "/explore/eesti-a1?token=secret",
+    $prev_pageview_duration: 42.5,
+    $prev_pageview_max_scroll_percentage: 0.8,
+    $prev_pageview_last_content: 900,
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    pathname: "/explore/eesti-a1",
+    $pathname: "/explore/eesti-a1",
+    $prev_pageview_duration: 42.5,
+    $prev_pageview_max_scroll_percentage: 0.8,
+  });
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("$prev_pageview_last_content");
+  sdk.capture("$web_vitals", {
+    $current_url: "https://lymi.app/explore/eesti-a1?token=secret",
+    $web_vitals_LCP_value: 1800,
+    $web_vitals_LCP_event: { attribution: { element: "h1.private" } },
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    pathname: "/explore/eesti-a1",
+    $web_vitals_LCP_value: 1800,
+  });
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("$web_vitals_LCP_event");
+  sdk.capture("$$heatmap", {
+    $heatmap_data: {
+      "https://lymi.app/explore/eesti-a1?token=secret": [
+        { x: 10, y: 20, target_fixed: false, type: "click" },
+      ],
+    },
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    $heatmap_data: {
+      "https://lymi.app/explore/eesti-a1": [{ x: 10, y: 20, target_fixed: false, type: "click" }],
+    },
+    $viewport_width: 1280,
+    $viewport_height: 720,
+  });
+  expect(JSON.stringify(sdk.sent)).not.toContain("secret");
+});
+
+it("leaves heatmaps to the public site", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect(sdk.options()?.enable_heatmaps).toBe(false);
 });
 
 it("links events and errors to the recording only while the session is recorded", async () => {

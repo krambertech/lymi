@@ -1,9 +1,9 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ArrowRight } from "lucide-react";
 import { useId } from "react";
 import { localizedPath } from "../../lib/routes";
+import { ArrowLink } from "./ArrowLink";
 
 type Gradient = {
   from: [x: number, y: number];
@@ -210,13 +210,9 @@ export function AssistantMarksWithMore() {
   return (
     <>
       <AssistantMarks />
-      <a
-        href={localizedPath("assistants", i18n.locale)}
-        className="mt-5 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-      >
+      <ArrowLink href={localizedPath("assistants", i18n.locale)} className="mt-5">
         <Trans>Lymi with AI assistants</Trans>
-        <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-      </a>
+      </ArrowLink>
     </>
   );
 }

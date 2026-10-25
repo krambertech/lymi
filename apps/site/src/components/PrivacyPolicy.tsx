@@ -1,7 +1,6 @@
 import { msg } from "@lingui/core/macro";
-import { I18nProvider } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
-import { pageI18n } from "../lib/i18n";
+import { Localized } from "./Localized";
 
 export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
@@ -289,8 +288,8 @@ function PrivacyPolicyContent() {
 
 export function PrivacyPolicy({ locale }: { locale: string }) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <PrivacyPolicyContent />
-    </I18nProvider>
+    </Localized>
   );
 }

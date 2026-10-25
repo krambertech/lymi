@@ -49,6 +49,12 @@ Every public marketing page and the privacy policy ship in English, Ukrainian an
 
 A published deck page translates its own chrome, title, description and structured data, while the deck's name, summary, sections and cards stay in the deck's one meaning language.
 
+## Building a marketing page
+
+A marketing page is one view, one island and a short route file in each locale. The route in `src/pages` wraps its island in `layouts/MarketingLayout.astro`, which takes the page key, title, blurb and questions and writes the head, canonical path and structured data. The island in `components/islands` wraps its view in `Island`, which supplies the page language and a query client. The view in `components/landing` draws its sections inside `LandingLayout`, which owns the nav, the footer and the page frame.
+
+Reach for an existing section before writing markup. `FeatureSection` puts a claim beside its demo and `Wide` puts it above a wide one; `Questions`, `SignUpSection`, `UseCases` and `RightMoment` close most pages. A language page builds from `LanguageSections.tsx`: its hero, the return lane, the start path, the voice tiles, the enrich demo, the assistant chat, the class deck and the bento, each taking only the copy and words that differ by language. `language-decks.ts` turns a page's published decks into add links and path steps. A link onward under a section's copy is an `ArrowLink`. An Astro page that renders a React part on the server wraps it in `Localized`.
+
 ## Structured data and llms.txt
 
 `apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which carries the same `@id` wherever it appears, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.

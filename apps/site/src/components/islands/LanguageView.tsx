@@ -1,7 +1,5 @@
-import { I18nProvider } from "@lingui/react";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ComponentType } from "react";
-import { pageI18n } from "../../lib/i18n";
 import type { LanguagePageTag } from "../../lib/language-pages";
 import type { Locale } from "../../lib/routes";
 import { ChineseView } from "../landing/ChineseView";
@@ -9,7 +7,7 @@ import { JapaneseView } from "../landing/JapaneseView";
 import { PolishView } from "../landing/PolishView";
 import { RussianView } from "../landing/RussianView";
 import { UkrainianView } from "../landing/UkrainianView";
-import { Queries } from "./Queries";
+import { Island } from "./Island";
 
 interface ViewProps {
   locale: Locale;
@@ -33,10 +31,8 @@ interface Props extends ViewProps {
 export default function LanguageView({ language, locale, decks }: Props) {
   const View = VIEWS[language];
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
-      <Queries>
-        <View decks={decks} locale={locale} />
-      </Queries>
-    </I18nProvider>
+    <Island locale={locale}>
+      <View decks={decks} locale={locale} />
+    </Island>
   );
 }

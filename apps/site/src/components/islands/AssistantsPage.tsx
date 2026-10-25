@@ -1,7 +1,5 @@
-import { I18nProvider } from "@lingui/react";
-import { pageI18n } from "../../lib/i18n";
 import { AssistantsView } from "../landing/AssistantsView";
-import { Queries } from "./Queries";
+import { Island } from "./Island";
 
 interface Props {
   locale?: string | undefined;
@@ -9,10 +7,8 @@ interface Props {
 
 export default function AssistantsPage({ locale }: Props) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
-      <Queries>
-        <AssistantsView />
-      </Queries>
-    </I18nProvider>
+    <Island locale={locale}>
+      <AssistantsView />
+    </Island>
   );
 }

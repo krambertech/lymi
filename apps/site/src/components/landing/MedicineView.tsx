@@ -1,7 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight, RotateCcw, Star } from "lucide-react";
-import { openLymiUrl } from "../../lib/origins";
 import { Added, AssistantChat } from "./AssistantChat";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
@@ -9,11 +8,10 @@ import { MEDICINE_QUESTIONS } from "./faq";
 import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { ImportDemo } from "./ImportDemo";
+import { LandingLayout } from "./LandingLayout";
 import { Questions } from "./Questions";
 import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const MEDICINE_TITLE = msg`Lymi for medical students · Flashcards with spaced repetition`;
@@ -68,7 +66,6 @@ const METFORMIN: SampleCard = {
 
 /** A medical student's semester: anatomy, drugs, bugs and numbers, each its own deck. */
 export function MedicineView() {
-  const openAppUrl = openLymiUrl();
   const subjects: UseCase[] = [
     {
       id: "anatomy",
@@ -109,9 +106,9 @@ export function MedicineView() {
   ];
 
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="medicine" />
+    <LandingLayout
+      page="medicine"
+      hero={
         <Hero
           title={<Trans>Keep the nerves, the drugs and the numbers.</Trans>}
           lede={
@@ -123,109 +120,102 @@ export function MedicineView() {
           }
           cards={HAND}
         />
-      </header>
+      }
+    >
+      <UseCases title={<Trans>Every subject on one schedule.</Trans>} items={subjects} />
 
-      <main>
-        <UseCases title={<Trans>Every subject on one schedule.</Trans>} items={subjects} />
-
-        <FeatureSection
-          id="anki"
-          title={<Trans>Bring your Anki decks.</Trans>}
-          body={
-            <Trans>
-              Import an Anki package with its cards, tags, pictures and review history. Years of
-              reviews carry on where they stopped, so nothing you already know starts over.
-            </Trans>
-          }
-          after={
-            <GuideLink href="/docs/import-from-anki" label={<Trans>Moving from Anki</Trans>} />
-          }
-        >
-          <ImportDemo
-            collection={{
-              app: "Anki",
-              fileName: "Pharmacology.apkg",
-              megabytes: 38,
-              cards: 3120,
-              reviews: 48210,
-              decks: 6,
-              pictures: 410,
-            }}
-          />
-        </FeatureSection>
-
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>Turn tonight’s lecture into cards.</Trans>}
-          body={
-            <Trans>
-              Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the
-              cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks
-              what it wrote, so it’s never mistaken for your notes.
-            </Trans>
-          }
-        >
-          <AssistantChat
-            conversation={[
-              {
-                from: "you",
-                body: (
-                  <Trans>Here are my notes from today’s pharmacology lecture. Add the drugs.</Trans>
-                ),
-              },
-              {
-                from: "them",
-                body: (
-                  <Added card={METFORMIN}>
-                    <Trans>
-                      Added 14 cards to Pharmacology, each with its mechanism from your notes.
-                    </Trans>
-                  </Added>
-                ),
-              },
-              { from: "you", body: <Trans>What’s due tonight?</Trans> },
-              {
-                from: "them",
-                body: <Trans>32 cards: 20 from pharmacology and 12 from anatomy.</Trans>,
-              },
-            ]}
-          />
-        </FeatureSection>
-
-        <RightMoment
-          title={<Trans>Review less, remember longer.</Trans>}
-          body={
-            <Trans>
-              Remember a card, and Lymi waits longer before showing it again. Forget it, and it
-              comes back soon.
-            </Trans>
-          }
+      <FeatureSection
+        id="anki"
+        title={<Trans>Bring your Anki decks.</Trans>}
+        body={
+          <Trans>
+            Import an Anki package with its cards, tags, pictures and review history. Years of
+            reviews carry on where they stopped, so nothing you already know starts over.
+          </Trans>
+        }
+        after={<GuideLink href="/docs/import-from-anki" label={<Trans>Moving from Anki</Trans>} />}
+      >
+        <ImportDemo
+          collection={{
+            app: "Anki",
+            fileName: "Pharmacology.apkg",
+            megabytes: 38,
+            cards: 3120,
+            reviews: 48210,
+            decks: 6,
+            pictures: 410,
+          }}
         />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Mark what’s high-yield.</Trans>}
-          body={
-            <Trans>
-              Mark a card important and it comes up four times as often, while its schedule stays
-              the same. The cards you keep forgetting gather in Often forgotten, a round of their
-              own.
-            </Trans>
-          }
-        >
-          <FocusDemo />
-        </FeatureSection>
-
-        <Questions
-          title={<Trans>Questions from medical students.</Trans>}
-          items={MEDICINE_QUESTIONS}
+      <FeatureSection
+        demoFirst
+        tinted
+        title={<Trans>Turn tonight’s lecture into cards.</Trans>}
+        body={
+          <Trans>
+            Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the
+            cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what
+            it wrote, so it’s never mistaken for your notes.
+          </Trans>
+        }
+      >
+        <AssistantChat
+          conversation={[
+            {
+              from: "you",
+              body: (
+                <Trans>Here are my notes from today’s pharmacology lecture. Add the drugs.</Trans>
+              ),
+            },
+            {
+              from: "them",
+              body: (
+                <Added card={METFORMIN}>
+                  <Trans>
+                    Added 14 cards to Pharmacology, each with its mechanism from your notes.
+                  </Trans>
+                </Added>
+              ),
+            },
+            { from: "you", body: <Trans>What’s due tonight?</Trans> },
+            {
+              from: "them",
+              body: <Trans>32 cards: 20 from pharmacology and 12 from anatomy.</Trans>,
+            },
+          ]}
         />
+      </FeatureSection>
 
-        <SignUpSection title={<Trans>Start with tonight’s lecture.</Trans>} />
-      </main>
+      <RightMoment
+        title={<Trans>Review less, remember longer.</Trans>}
+        body={
+          <Trans>
+            Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes
+            back soon.
+          </Trans>
+        }
+      />
 
-      <SiteFooter openAppUrl={openAppUrl} page="medicine" />
-    </div>
+      <FeatureSection
+        title={<Trans>Mark what’s high-yield.</Trans>}
+        body={
+          <Trans>
+            Mark a card important and it comes up four times as often, while its schedule stays the
+            same. The cards you keep forgetting gather in Often forgotten, a round of their own.
+          </Trans>
+        }
+      >
+        <FocusDemo />
+      </FeatureSection>
+
+      <Questions
+        title={<Trans>Questions from medical students.</Trans>}
+        items={MEDICINE_QUESTIONS}
+      />
+
+      <SignUpSection title={<Trans>Start with tonight’s lecture.</Trans>} />
+    </LandingLayout>
   );
 }
 

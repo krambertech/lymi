@@ -1,17 +1,9 @@
-import { I18nProvider } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
-import type { ReactNode } from "react";
-import { pageI18n } from "../../lib/i18n";
-import { openLymiUrl } from "../../lib/origins";
 import type { Locale } from "../../lib/routes";
-import { SiteFooter } from "../landing/SiteFooter";
+import { Localized } from "../Localized";
 
 interface LocaleProps {
   locale: Locale;
-}
-
-function Localized({ locale, children }: LocaleProps & { children: ReactNode }) {
-  return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
 /** The page's one idea: search. The light behind it is the lantern's, and nothing here is amber. */
@@ -45,14 +37,6 @@ export function ExploreEmpty({ locale }: LocaleProps) {
           </Trans>
         </p>
       </div>
-    </Localized>
-  );
-}
-
-export function ExploreFooter({ locale, paths }: LocaleProps & { paths: Record<Locale, string> }) {
-  return (
-    <Localized locale={locale}>
-      <SiteFooter openAppUrl={openLymiUrl()} paths={paths} />
     </Localized>
   );
 }

@@ -1,13 +1,11 @@
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ChevronRight, List } from "lucide-react";
-import type { ReactNode } from "react";
 import { isExamShelf } from "../../lib/exams";
 import { explorePath, type Shelf, type ShelfRoute, shelfPath, shelfRoute } from "../../lib/explore";
-import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { trayHue } from "../../lib/tray";
 import { ExamPageLink } from "../exams/ExamPageLink";
+import { Localized } from "../Localized";
 import { Questions } from "../landing/Questions";
 import { DeckTile } from "./DeckTile";
 import { shelfLabel } from "./explore-labels";
@@ -15,10 +13,6 @@ import type { ShelfCopy } from "./shelf-copy";
 
 interface LocaleProps {
   locale: Locale;
-}
-
-function Localized({ locale, children }: LocaleProps & { children: ReactNode }) {
-  return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
 /**

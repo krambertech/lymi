@@ -1,4 +1,3 @@
-import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import {
   type PublicDeckOut,
@@ -13,7 +12,6 @@ import type { DeckLinks } from "../../lib/deck-links";
 import { type DeckCard, deckPath, languageName, type RecallCue } from "../../lib/deck-page";
 import { examOfDeck } from "../../lib/exams";
 import { shelfPath } from "../../lib/explore";
-import { pageI18n } from "../../lib/i18n";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { deckSubject } from "../../lib/subjects";
@@ -21,6 +19,7 @@ import { buttonClass } from "../Button";
 import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
+import { Localized } from "../Localized";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
 import { PreviewFace } from "./PreviewFace";
@@ -31,11 +30,6 @@ interface LocaleProps {
 
 interface DeckProps extends LocaleProps {
   deck: PublicDeckOut;
-}
-
-/** Server-rendered parts of the page share one provider each; only the nav, sections and stack hydrate. */
-function Localized({ locale, children }: LocaleProps & { children: ReactNode }) {
-  return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
 /** The edition the page was read in rides to the product, which pins it on the membership. */

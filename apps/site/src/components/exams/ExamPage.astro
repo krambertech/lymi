@@ -8,7 +8,7 @@ import { locales } from "../../lib/routes";
 import { exploreStructuredData, faqPage, softwareApplication } from "../../lib/structured-data";
 import PublicNav from "../islands/PublicNav";
 import StateDecksIsland from "../islands/StateDecksIsland";
-import { ExploreFooter } from "../explore/ExploreView";
+import { PageFooter } from "../PageFooter";
 import { EINBUERGERUNGSTEST_QUESTIONS } from "../landing/faq";
 import {
   EINBUERGERUNGSTEST_BLURB,
@@ -82,6 +82,6 @@ const structuredData = [
       <OtherExams locale={locale} exam={exam} listed={listed} />
       <ExamSources locale={locale} exam={exam} updated={updated} />
     </main>
-    <ExploreFooter locale={locale} paths={paths} />
+    <PageFooter locale={locale} paths={paths} />
   </div>
 </BaseLayout>

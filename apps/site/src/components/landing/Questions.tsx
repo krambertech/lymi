@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
-import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { ArrowLink } from "./ArrowLink";
 import { SectionTitle } from "./FeatureSection";
 import type { Question } from "./faq";
 
@@ -27,13 +27,9 @@ export function Questions({ title, items }: Props) {
               <dd className="mt-2 max-w-[60ch] text-md text-pretty text-text-2">
                 <p>{i18n._(item.answer)}</p>
                 {item.link && (
-                  <a
-                    href={item.link.href}
-                    className="mt-2 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-                  >
+                  <ArrowLink href={item.link.href} className="mt-2">
                     {i18n._(item.link.label)}
-                    <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-                  </a>
+                  </ArrowLink>
                 )}
               </dd>
             </div>

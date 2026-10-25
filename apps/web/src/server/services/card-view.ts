@@ -38,8 +38,6 @@ export type CardView = Omit<
   important: boolean;
   exampleTranslationStale: boolean;
   exampleRecorded: boolean;
-  hook: Card["hint"];
-  hookSource: Card["hintSource"];
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -85,9 +83,6 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,
-    // An older app or API client still reads the hint under its old name.
-    hook: card.hint,
-    hookSource: card.hintSource,
   };
 }
 

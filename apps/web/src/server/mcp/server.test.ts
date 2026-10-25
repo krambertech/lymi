@@ -105,8 +105,6 @@ const card: CardView = {
   notes: null,
   hint: null,
   hintSource: null,
-  hook: null,
-  hookSource: null,
   language: "it",
   tags: [],
   source: null,
@@ -735,9 +733,8 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({
       hint: "Sbrigati!",
       hintSource: "manual",
-      hook: "Sbrigati!",
-      hookSource: "manual",
     });
+    expect(res.structuredContent).not.toHaveProperty("hook");
   });
 
   it("archives many cards in one call and reports each card's outcome in order", async () => {

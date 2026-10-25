@@ -15,7 +15,6 @@ import {
   drawKey,
   drawOrder,
   exampleReadings,
-  gradeAid,
   languageSupport,
   legacyDirection,
   markedTerm,
@@ -423,7 +422,7 @@ export async function gradeCard(
         source: "web",
         reviewDayId: reviewDay.id,
         stateBefore: JSON.stringify(before),
-        aid: gradeAid(input.aid) ?? null,
+        aid: input.aid ?? null,
         recallMs: input.recallMs ?? null,
         gradeMs: input.gradeMs ?? null,
       }),
@@ -441,7 +440,7 @@ export async function gradeCard(
     mode: key,
     grade: rating,
     ...(CARD_STATES[state.state] ? { state: CARD_STATES[state.state] } : {}),
-    ...(input.aid ? { aid: gradeAid(input.aid) } : {}),
+    ...(input.aid ? { aid: input.aid } : {}),
     ...readingsDrawn(
       row,
       termDrawn(row, draws) ? readingShown(key, state.state) : null,
@@ -456,7 +455,7 @@ export async function gradeCard(
     entity: "review",
     action: "grade",
     id: cardId,
-    details: { rating, direction, mode: key, ...(input.aid ? { aid: gradeAid(input.aid) } : {}) },
+    details: { rating, direction, mode: key, ...(input.aid ? { aid: input.aid } : {}) },
   });
 
   return {

@@ -10,6 +10,15 @@ export default async function drive({ page, base, step, api, expect }) {
   };
   const find = async (term) =>
     (await api(`/api/cards?term=${encodeURIComponent(term)}`)).cards.find((c) => c.term === term);
+  const enriched = async (terms) => {
+    const statuses = async () =>
+      (await Promise.all(terms.map(find))).map((card) => card?.enrichmentStatus ?? null);
+    await expect.poll(statuses, { timeout: 120_000 }).not.toContain("working");
+    expect(
+      await statuses(),
+      "enrichment failed: does apps/web/.dev.vars have OPENAI_API_KEY and AI_GATEWAY_TOKEN?",
+    ).toEqual(terms.map(() => null));
+  };
   let deck;
 
   await step("Ask /api/languages: Korean writes pronounced Hangul", async () => {
@@ -33,11 +42,7 @@ export default async function drive({ page, base, step, api, expect }) {
       ],
     });
     expect(results.map((r) => r.status)).toEqual(["added", "added"]);
-    const settled = async () => {
-      const cards = await Promise.all(["학교", "사랑"].map(find));
-      return cards.map((card) => card?.enrichmentStatus ?? null);
-    };
-    await expect.poll(settled, { timeout: 120_000 }).toEqual([null, null]);
+    await enriched(["학교", "사랑"]);
   });
 
   await step("학교 holds 학꾜 and its root 學; 사랑 needs none", async () => {

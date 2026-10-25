@@ -1,6 +1,6 @@
 # Assistant offer
 
-While no app is connected, the rail shows a card above the learner offering to connect an AI assistant. It holds the Claude, ChatGPT, Gemini and Grok marks, each linking to its own setup guide, and a title and line that open all the guides. It has no button, so in a short window the places stay above it. Its Dismiss shows on hover and hides the card on this device; the learner menu keeps Connect AI assistant until an app connects.
+While no app is connected, the rail shows a card above the learner offering to connect an AI assistant. It holds the Claude, ChatGPT, Gemini and Grok marks, each linking to its own page in Settings, and a title and line that open the Apps group in Settings. It has no button, so in a short window the places stay above it. Its Dismiss shows on hover and hides the card on this device; the learner menu keeps Connect AI assistant until an app connects.
 
 ## Reach
 

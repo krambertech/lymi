@@ -28,7 +28,7 @@ import {
   Image as ImageIcon,
   Languages,
   Library,
-  Lightbulb,
+  LifeBuoy,
   type LucideIcon,
   NotebookPen,
   Plus,
@@ -858,7 +858,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: { icon: AudioLines, label: pronunciationLabel },
     source: { icon: Library, label: t`Source` },
     picture: { icon: ImageIcon, label: t`Picture` },
-    hint: { icon: Lightbulb, label: t`Hint` },
+    hint: { icon: LifeBuoy, label: t`Hint` },
   };
   const chipFor = (key: ChipKey) => {
     if (key === "tags")

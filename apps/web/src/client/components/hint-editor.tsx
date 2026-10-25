@@ -3,7 +3,7 @@ import { refusedForAiConsent } from "@lymi/client/ai-consent";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hintable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Lightbulb, Loader2, Sparkle } from "lucide-react";
+import { LifeBuoy, Loader2, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
@@ -156,7 +156,7 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
       }}
     >
       <label className="flex min-w-0 items-start gap-2 pe-2.5">
-        <Lightbulb className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+        <LifeBuoy className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
         <span className="sr-only">{t`Hint`}</span>
         <textarea
           ref={field}
@@ -204,10 +204,10 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
             aria-label={
               drafting ? t`Drafting a hint…` : untouched ? t`Another draft` : t`Draft a hint`
             }
-            // Not `loading`, which centres its spinner: the sparkle's own place keeps it under the lightbulb.
+            // Not `loading`, which centres its spinner: the sparkle's own place keeps it under the life buoy.
             aria-busy={drafting || undefined}
             aria-disabled={drafting}
-            // Sits 6 px in like Save, which puts its icon under the lightbulb.
+            // Sits 6 px in like Save, which puts its icon under the life buoy.
             className="-ms-2.5 @md:-order-1"
             onClick={() => void draft()}
           >

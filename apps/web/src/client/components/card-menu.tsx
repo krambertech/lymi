@@ -4,7 +4,7 @@ import {
   ChartNoAxesColumn,
   Ellipsis,
   Flag,
-  Lightbulb,
+  LifeBuoy,
   SquarePen,
   Star,
 } from "lucide-react";
@@ -81,7 +81,7 @@ export function CardMenu({
       <DropdownMenuContent aria-label={t`Card options`} align="end" finalFocus={finalFocus}>
         {canEdit && (
           <DropdownMenuItem onClick={onHint}>
-            <Lightbulb aria-hidden="true" />
+            <LifeBuoy aria-hidden="true" />
             {hasHint ? t`Edit hint` : t`Add hint`}
           </DropdownMenuItem>
         )}

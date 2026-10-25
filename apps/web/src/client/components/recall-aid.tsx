@@ -4,7 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
-import { Lightbulb, type LucideIcon } from "lucide-react";
+import { LifeBuoy, type LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
@@ -32,7 +32,7 @@ const STEPS: Record<
     take: msg`Peek at your hint`,
     show: msg`Show hint`,
     name: msg`Hint:`,
-    icon: Lightbulb,
+    icon: LifeBuoy,
   },
 };
 
@@ -115,7 +115,7 @@ export function RecallAidShow({ steps, animate, onShow }: ShowProps) {
       transition={{ duration: reduce ? 0.2 : 0.26, delay: 0.12, ease: EASE_OUT }}
       onAnimationComplete={() => setReady(true)}
     >
-      {/* Pulled to the start edge, so its lightbulb stands where the hint's will. */}
+      {/* Pulled to the start edge, so its life buoy stands where the hint's will. */}
       <Button
         variant="ghost"
         size="sm"
@@ -150,7 +150,8 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
       ? { opacity: 0 }
       : { opacity: 0, y: 4, filter: "blur(4px)" };
   return (
-    <div className="grid gap-2">
+    // 5 px centres the first line in Show hint's 32 px, so the hint lands where the control stood.
+    <div className="grid gap-2 pt-[5px]">
       {steps.slice(0, taken).map((step) => (
         // Blur settles to `none` rather than `blur(0)`, which Safari rasterises soft.
         <motion.div

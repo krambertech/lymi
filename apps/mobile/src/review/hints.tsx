@@ -71,7 +71,7 @@ export function ShowHintButton({ still, onShow }: { still: boolean; onShow: () =
     <Animated.View
       entering={still ? undefined : reduce ? CROSSFADE : arrive(260, 10, 120)}
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
-      // Pulled to the start edge, so its lightbulb stands where the hint's will.
+      // Pulled to the start edge, so its life buoy stands where the hint's will.
       className="-ms-3 flex-row"
     >
       <Button size="sm" variant="ghost" icon="hint" label={t`Show hint`} onPress={onShow} />
@@ -79,7 +79,7 @@ export function ShowHintButton({ still, onShow }: { still: boolean; onShow: () =
   );
 }
 
-/** The hint under the cue: its lightbulb and its words. Who wrote it is the card page's to say, not review's. */
+/** The hint under the cue: its life buoy and its words. Who wrote it is the card page's to say, not review's. */
 export function HintLine({ text, still }: { text: string; still: boolean }) {
   const { t } = useLingui();
   const p = usePalette();

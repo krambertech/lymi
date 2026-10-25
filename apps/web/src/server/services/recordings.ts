@@ -123,7 +123,7 @@ export async function storeExampleRecording(
     .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
   if (!card) return "skipped";
   if (card.exampleRecordingKey) return "kept";
-  if (!sameExample(card.language, card.example, said)) return "skipped";
+  if (!card.example || !sameExample(card.language, card.example, said)) return "skipped";
   const put = await putRecording(bucket, cardId, "example-recorded", await load());
   if (!put) return "skipped";
   const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.exampleRecordingKey, put.key))!;

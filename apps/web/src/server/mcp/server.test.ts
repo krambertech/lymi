@@ -100,6 +100,7 @@ const card: CardView = {
   exampleTranslation: null,
   exampleTranslationSource: null,
   exampleTranslationStale: false,
+  exampleRecorded: false,
   exampleTranslationStatus: null,
   notes: null,
   hook: null,

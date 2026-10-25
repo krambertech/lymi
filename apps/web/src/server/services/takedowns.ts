@@ -1,5 +1,6 @@
 import { and, eq, inArray, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { selectIn } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
 
 /** Refuses a share from an account Lymi suspended from sharing after a report. */
@@ -50,15 +51,17 @@ export async function assertDeckRestorable(db: Db, deckId: string, ownerId: stri
 /** The cards among `ids` that Lymi archived after a report, which stay archived. */
 export async function takenDownCards(db: Db, ids: readonly string[]): Promise<Set<string>> {
   if (ids.length === 0) return new Set();
-  const rows = await db
-    .select({ cardId: schema.contentReports.cardId })
-    .from(schema.contentReports)
-    .where(
-      and(
-        inArray(schema.contentReports.cardId, [...ids]),
-        eq(schema.contentReports.action, "archive_card"),
+  const rows = await selectIn([...new Set(ids)], (slice) =>
+    db
+      .select({ cardId: schema.contentReports.cardId })
+      .from(schema.contentReports)
+      .where(
+        and(
+          inArray(schema.contentReports.cardId, slice),
+          eq(schema.contentReports.action, "archive_card"),
+        ),
       ),
-    );
+  );
   return new Set(rows.map((row) => row.cardId).filter((id): id is string => !!id));
 }
 

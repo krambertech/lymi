@@ -190,10 +190,15 @@ export function SampleCard({
     [t`Notes`, sample.notes],
   ];
   return (
-    <div className={clsx("grid gap-3 transition-opacity duration-150", loading && "opacity-60")}>
+    <div
+      className={clsx(
+        PRIVATE_TEXT,
+        "grid gap-3 transition-opacity duration-150",
+        loading && "opacity-60",
+      )}
+    >
       <p
         className={clsx(
-          PRIVATE_TEXT,
           "text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
         )}
         dir="auto"
@@ -323,7 +328,7 @@ export function FieldsDialog({
               >
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-text">{field}</p>
-                  <p className="truncate text-sm text-muted">
+                  <p className={clsx(PRIVATE_TEXT, "truncate text-sm text-muted")}>
                     {example[i] ||
                       (source !== "anki" ? t`Empty in the first card` : t`Empty in the first note`)}
                   </p>

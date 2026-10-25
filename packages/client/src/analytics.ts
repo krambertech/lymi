@@ -181,6 +181,8 @@ export function initAnalytics(options: {
       disable_session_recording: true,
       session_recording: {
         maskAllInputs: true,
+        // dnd-kit's live region announces the dragged card by its term.
+        maskTextSelector: '[id^="DndLiveRegion"]',
         maskAttributeFn: (name, value) =>
           HIDDEN_ATTRIBUTES.has(name) ? "*".repeat(value.length) : value,
         // A recorded address keeps only its route, so tokens and IDs in it never leave.

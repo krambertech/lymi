@@ -648,7 +648,7 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
       )}
       <span className="flex min-w-0 flex-1 text-base">
         {row.existing ? (
-          <span className="truncate text-text">
+          <span className={clsx(PRIVATE_TEXT, "truncate text-text")}>
             {bidi(
               t`Open “${isolate(shortQuote(row.existing.term))}” in ${isolate(row.existing.deckName)}`,
             )}
@@ -664,7 +664,9 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
             )}
           </>
         ) : (
-          <span className="truncate text-text">{bidi(t`Add “${isolate(shortQuote(term))}”`)}</span>
+          <span className={clsx(PRIVATE_TEXT, "truncate text-text")}>
+            {bidi(t`Add “${isolate(shortQuote(term))}”`)}
+          </span>
         )}
       </span>
       {!row.existing && deckName && (

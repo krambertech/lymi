@@ -1012,7 +1012,7 @@ function ListStep({
                     <FieldLabel className="text-base font-medium text-text [overflow-wrap:anywhere]">
                       <bdi className={PRIVATE_TEXT}>{term.term}</bdi>
                     </FieldLabel>
-                    <span className="text-sm text-text-2">{term.gloss}</span>
+                    <span className={cn(PRIVATE_TEXT, "text-sm text-text-2")}>{term.gloss}</span>
                     <TermNote term={term} />
                   </div>
                 </Field>

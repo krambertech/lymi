@@ -410,13 +410,15 @@ function DeckAbout({
                 <Avatar name={ownerName} size={32} />
               )}
               <div className="grid min-w-0 gap-0.5">
-                <p className="truncate text-base font-medium text-text">{ownerName}</p>
+                <p className={clsx(PRIVATE_TEXT, "truncate text-base font-medium text-text")}>
+                  {ownerName}
+                </p>
                 <p className="text-sm text-muted">
                   <Trans>Owns this deck and writes its cards</Trans>
                 </p>
               </div>
             </div>
-            <p className="max-w-[60ch] text-sm text-muted">
+            <p className={clsx(PRIVATE_TEXT, "max-w-[60ch] text-sm text-muted")}>
               <Trans>
                 You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
                 schedule. Nobody else sees your reviews or progress.
@@ -435,7 +437,9 @@ function DeckAbout({
           <Fact label={t`Review modes`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
-              {direction && <span className="text-sm text-muted">{direction}</span>}
+              {direction && (
+                <span className={clsx(PRIVATE_TEXT, "text-sm text-muted")}>{direction}</span>
+              )}
             </span>
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>

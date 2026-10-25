@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { isolate, REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
 import { ArrowLeftRight, Languages, Layers, Plus, Tag } from "lucide-react";
 import { type ReactElement, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { bidi } from "../lib/bidi";
 import { MODE_LABELS } from "../lib/review-modes";
 import { LanguageCombobox, languageName } from "./deck-fields";
@@ -363,7 +364,7 @@ export function ModesChip({
           >
             <span className="min-w-0">
               <span className="block">{modeName(key)}</span>
-              <span className="block text-sm text-muted [overflow-wrap:anywhere]">
+              <span className={`${PRIVATE_TEXT} block text-sm text-muted [overflow-wrap:anywhere]`}>
                 {key.startsWith("image_") && !pictureDescribed
                   ? t`Asked once the picture has a description.`
                   : blurb(key)}

@@ -18,6 +18,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import type { DeckSummary } from "../lib/api";
 import { ASSISTANTS as ALL_ASSISTANTS } from "../lib/assistants";
 import { connectedAppsQuery } from "../lib/queries";
@@ -216,7 +217,13 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
               className={clsx("text-xl font-medium text-balance @3xl:text-2xl", play && "seq")}
               style={play ? at(T.heading) : undefined}
             >
-              {first ? <Trans>Welcome, {first}</Trans> : <Trans>Welcome to Lymi</Trans>}
+              {first ? (
+                <span className={PRIVATE_TEXT}>
+                  <Trans>Welcome, {first}</Trans>
+                </span>
+              ) : (
+                <Trans>Welcome to Lymi</Trans>
+              )}
             </h2>
             <span
               className={clsx("shrink-0 text-sm text-muted tabular-nums", play && "seq")}

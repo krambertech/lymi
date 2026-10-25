@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { isolate, SectionInput, sectionLimits } from "@lymi/core";
 import { useId, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import type { Section } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { Button } from "./button";
@@ -308,7 +309,7 @@ export function MoveToSectionDialog({ term, count, sections, ...rest }: MoveToSe
     <MoveToDialog
       title={
         term && count === 1 ? (
-          t`Move “${{ term: isolate(term) }}” to`
+          <span className={PRIVATE_TEXT}>{t`Move “${{ term: isolate(term) }}” to`}</span>
         ) : (
           <Plural value={count} one="Move # card to" other="Move # cards to" />
         )

@@ -819,7 +819,9 @@ export function WordView({
 
       <Dialog open={moving} onOpenChange={setMoving}>
         <DialogContent>
-          <DialogTitle>{t`Move “${isolate(shortQuote(card.term))}” to`}</DialogTitle>
+          <DialogTitle className={PRIVATE_TEXT}>
+            {t`Move “${isolate(shortQuote(card.term))}” to`}
+          </DialogTitle>
           <ul className="grid gap-1">
             {elsewhere.map((d) => (
               <li key={d.id}>

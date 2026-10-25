@@ -4,6 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { type DeckPurpose, type Directions, isolate, LANGUAGE_TAGS } from "@lymi/core";
 import { ClipboardCheck, Languages, Shapes } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
+import { PRIVATE_TEXT } from "@/lib/replay";
 import { bidi } from "../lib/bidi";
 import { RadioCard } from "./radio-card";
 import {
@@ -253,7 +254,12 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
         disabled={disabled}
       >
         {DIRECTIONS.map((o) => (
-          <RadioCard key={o.value} value={o.value} title={i18n._(o.label)} description={shown(o)} />
+          <RadioCard
+            key={o.value}
+            value={o.value}
+            title={i18n._(o.label)}
+            description={<span className={PRIVATE_TEXT}>{shown(o)}</span>}
+          />
         ))}
       </RadioGroup>
       <p id={noteId} className="pt-1 text-sm text-muted">

@@ -637,6 +637,7 @@ const GlossaryRow = memo(function GlossaryRow({
       </span>
       <span
         className={clsx(
+          PRIVATE_TEXT,
           "hyphenate col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
           waiting ? "text-text-2" : "text-text",
         )}

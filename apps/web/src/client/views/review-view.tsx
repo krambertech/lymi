@@ -1055,7 +1055,7 @@ export function ReviewCard({
           </div>
         </div>
       )}
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      <p className={`${PRIVATE_TEXT} sr-only`} role="status" aria-live="polite" aria-atomic="true">
         {spokenAid && (!revealed || shownAfter)
           ? t`Memory hook: ${spokenAid}`
           : revealed

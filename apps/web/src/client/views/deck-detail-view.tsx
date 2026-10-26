@@ -734,7 +734,13 @@ export function DeckDetailView({
     () =>
       scoped
         ? {
-            rows: filterRows(cards ?? [], scopedFilters(noFilters, { sectionId }), "", now, sections),
+            rows: filterRows(
+              cards ?? [],
+              scopedFilters(noFilters, { sectionId }),
+              "",
+              now,
+              sections,
+            ),
             sections: NO_SECTIONS,
             now,
             query: q,

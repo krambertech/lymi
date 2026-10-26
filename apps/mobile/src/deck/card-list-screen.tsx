@@ -275,18 +275,6 @@ export function CardListScreen({
             ],
           ]
     : [
-        ...(deck
-          ? [
-              [
-                {
-                  label: t`Report deck`,
-                  icon: "report" as const,
-                  onSelect: () => router.push(reportHref("deck", id, deck.name)),
-                },
-              ],
-            ]
-          : []),
-        // A deck added from Explore or shared with the learner is left, not archived.
         [
           ...(owner
             ? [
@@ -353,6 +341,17 @@ export function CardListScreen({
               ],
             ]
           : [
+              ...(deck
+                ? [
+                    [
+                      {
+                        label: t`Report deck`,
+                        icon: "report" as const,
+                        onSelect: () => router.push(reportHref("deck", id, deck.name)),
+                      },
+                    ],
+                  ]
+                : []),
               // A deck added from Explore or shared with the learner is left, not archived.
               [
                 {

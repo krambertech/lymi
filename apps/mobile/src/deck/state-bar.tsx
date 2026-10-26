@@ -5,7 +5,7 @@ import { usePalette } from "../theme/palette";
 import { Text } from "../ui/primitives";
 import { StateIcon, stateMarks } from "../ui/state-mark";
 
-export type StateCountsOf = Record<StateKey, number>;
+type StateCountsOf = Record<StateKey, number>;
 
 /** Known, learning and new as one bar, as a deck's and a section's summary draw it. */
 export function StateBar({ counts }: { counts: StateCountsOf }) {

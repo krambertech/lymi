@@ -56,14 +56,20 @@ export default function DeckSections() {
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [choosingOrder, setChoosingOrder] = useState(false);
-  const [editing, setEditing] = useState(params.edit === "1");
+  const [editState, setEditing] = useState(params.edit === "1");
+  // Edit is the owner's, and only while there are two sections to order.
+  const editing = owner && editState && sections.length > 1;
+  // Archiving down to one section ends Edit, so a later second section does not reopen it.
+  useEffect(() => {
+    if (query.data && sections.length <= 1) setEditing(false);
+  }, [query.data, sections.length]);
   const [asked, setAsked] = useState(params.rename);
   useEffect(() => {
-    const section = asked ? sections.find((s) => s.id === asked) : undefined;
+    const section = owner && asked ? sections.find((s) => s.id === asked) : undefined;
     if (!section) return;
     setAsked(undefined);
     setNaming({ section });
-  }, [asked, sections]);
+  }, [owner, asked, sections]);
   const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id && owner });
   const archivedCount = archived.data?.sections.length ?? 0;
   // Restoring the last archived section leaves nothing to show, so its sheet goes too.
@@ -227,7 +233,7 @@ export default function DeckSections() {
             columns={columns}
             focus={focus}
             owner={owner}
-            editing={editing && sections.length > 1}
+            editing={editing}
             inOrder={deck?.sectionProgression !== "open"}
             onOpen={open}
             onNew={() => setNaming({})}

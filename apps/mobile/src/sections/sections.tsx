@@ -73,7 +73,7 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
 }
 
 /** What a section's menu does, wherever it opens: a heading's ⋯, its long press, or its page's ⋯. */
-export interface SectionMenuHandlers {
+interface SectionMenuHandlers {
   onStart: (section: Section) => void;
   onSelectCards: (section: Section) => void;
   onArchive: (section: Section) => void;

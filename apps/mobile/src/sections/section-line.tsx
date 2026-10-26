@@ -150,15 +150,16 @@ export function SectionLine({
   const ref = useRef<ScrollView>(null);
   const [width, setWidth] = useState(0);
   const [content, setContent] = useState(0);
-  const opened = useRef(false);
+  // The width last centred at, so a resize, such as iPad's split view, centres again.
+  const centred = useRef(0);
   const at = focusIndex(columns, state);
   // A tile widens with the text size, so a name breaks between words rather than inside one.
   const { fontScale } = useWindowDimensions();
   const tile = Math.round(TILE * Math.min(Math.max(fontScale, 1), 1.8));
   // Opens on the learner's section, centred, once both widths are known, so the scroll is not clamped short.
   useEffect(() => {
-    if (opened.current || !width || content <= width) return;
-    opened.current = true;
+    if (centred.current === width || !width || content <= width) return;
+    centred.current = width;
     const x = BLEED + at * (tile + GAP) - (width - tile) / 2;
     ref.current?.scrollTo({ x: Math.max(0, Math.min(x, content - width)), animated: false });
   }, [width, content, at, tile]);
@@ -330,7 +331,8 @@ export function SectionColumns({
   const p = usePalette();
   const ref = useRef<ScrollView>(null);
   const [width, setWidth] = useState(0);
-  const opened = useRef(false);
+  // The width last centred at, so a resize, such as iPad's split view, centres again.
+  const centred = useRef(0);
   const n = columns.length;
   const shared = (width - COLUMN_GAP * (n - 1)) / n;
   const scrolls = n >= 5 && shared < MIN_COLUMN;
@@ -338,8 +340,8 @@ export function SectionColumns({
   const content = BLEED * 2 + n * column + COLUMN_GAP * (n - 1);
   // Opens on the learner's column, centred, once the chart knows its width.
   useEffect(() => {
-    if (opened.current || !width || !scrolls || focus < 0) return;
-    opened.current = true;
+    if (centred.current === width || !width || !scrolls || focus < 0) return;
+    centred.current = width;
     const viewport = width + BLEED * 2;
     const x = BLEED + focus * (column + COLUMN_GAP) - (viewport - column) / 2;
     ref.current?.scrollTo({ x: Math.max(0, Math.min(x, content - viewport)), animated: false });

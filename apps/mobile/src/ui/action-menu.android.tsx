@@ -48,6 +48,7 @@ interface ActionMenuProps {
   look?: "bar" | "primary" | "row";
   items: MenuItem[] | MenuItem[][];
   disabled?: boolean;
+  target?: number;
 }
 
 type Anchor = { x: number; y: number; w: number; h: number };
@@ -77,6 +78,7 @@ export function ActionMenu({
   look = "bar",
   items,
   disabled = false,
+  target = 32,
 }: ActionMenuProps) {
   const p = usePalette();
   const anchor = useRef<View>(null);
@@ -106,7 +108,12 @@ export function ActionMenu({
             accessibilityLabel={unisolate(label)}
             accessibilityState={{ disabled, expanded }}
             hitSlop={8}
-            style={{ width: 32, height: 32, alignItems: "center", justifyContent: "center" }}
+            style={{
+              width: target,
+              height: target,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             <Icon name={icon} size={18} colour={p.muted} />
           </Pressable>

@@ -1,52 +1,76 @@
 import { plural } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
 import { archivedSectionsQuery, sectionsQuery } from "@lymi/client/queries";
+import { focusIndex, lineColumns, opening } from "@lymi/client/section-line";
 import { writes } from "@lymi/client/writes";
 import type { SectionProgression } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type Href, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { type Href, useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
-import { useDecks, useSections } from "../../../data/queries";
-import { useArchiveSection } from "../../../sections/archive-section";
-import { NameSheet } from "../../../sections/name-sheet";
-import { SectionPath } from "../../../sections/section-path";
-import { EmptyState } from "../../../ui/empty-state";
-import { Button, Plate, Text } from "../../../ui/primitives";
-import { Row, Rows } from "../../../ui/row";
-import { BarText, Screen } from "../../../ui/screen";
-import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../ui/sheet";
-import { Skeleton } from "../../../ui/skeleton";
-import { toast } from "../../../ui/toast-host";
+import { useDeckCards, useDecks, useSections } from "../../../../../data/queries";
+import { useArchiveSection } from "../../../../../sections/archive-section";
+import { NameSheet } from "../../../../../sections/name-sheet";
+import { OpeningLine, SectionColumns, sectionPage } from "../../../../../sections/section-line";
+import { SectionPath } from "../../../../../sections/section-path";
+import { useStartSection } from "../../../../../sections/sections";
+import { captureEvent } from "../../../../../telemetry/posthog";
+import { EmptyState } from "../../../../../ui/empty-state";
+import { Button, Plate, Text } from "../../../../../ui/primitives";
+import { Row, RowFace, Rows, useAccessibilitySizes } from "../../../../../ui/row";
+import { BarText, Screen } from "../../../../../ui/screen";
+import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../../../ui/sheet";
+import { Skeleton } from "../../../../../ui/skeleton";
+import { toast } from "../../../../../ui/toast-host";
 
 /**
- * A deck's sections, for its owner, drawn as the path every learner walks. Edit in the bar shows
- * handles to drag, so the order never changes by a stray drag; at rest a row swipes open on Rename
- * and Archive. New section is the path's next stop. Archive asks about a section's cards and has
- * Undo; how sections open sits below.
+ * Every section of a deck with its progress, for everyone studying it: how many are known, a column
+ * each, then the sections as the path a learner walks, each opening its own page. For the owner it
+ * is also where sections are managed: Edit in the bar shows handles to drag, so the order never
+ * changes by a stray drag; at rest a row swipes open on Rename and Archive, and New section is the
+ * path's next stop. docs/proposals/section-pages.md.
  */
 export default function DeckSections() {
   const { t, i18n } = useLingui();
   // A section heading's menu opens the page renaming one section, or in Edit to reorder them.
-  const params = useLocalSearchParams<{ id: string; rename?: string; edit?: string }>();
-  const { id } = params;
+  const params = useLocalSearchParams<{ deck: string; rename?: string; edit?: string }>();
+  const id = params.deck;
+  const router = useRouter();
   const deck = useDecks().data?.find((d) => d.id === id);
+  const owner = deck?.role === "owner";
+  // At accessibility sizes the count to review moves under the known count, as a row's value does.
+  const large = useAccessibilitySizes();
   const query = useSections(id);
   const sections = query.data?.sections ?? [];
+  const cards = useDeckCards(id);
+  const columns = useMemo(() => lineColumns(sections, cards.data ?? []), [sections, cards.data]);
+  const state = opening(sections, query.data?.progress ?? null);
+  const focus = focusIndex(columns, state);
+  const sectionStart = useStartSection(id, sections);
+  const open = (sectionId: string) => {
+    captureEvent("section_page_opened", { from: "sections" });
+    router.push(sectionPage(id, sectionId, true));
+  };
   const qc = useQueryClient();
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [choosingOrder, setChoosingOrder] = useState(false);
-  const [editing, setEditing] = useState(params.edit === "1");
+  const [editState, setEditing] = useState(params.edit === "1");
+  // Edit is the owner's, and only while there are two sections to order.
+  const editing = owner && editState && sections.length > 1;
+  // Archiving down to one section ends Edit, so a later second section does not reopen it.
+  useEffect(() => {
+    if (query.data && sections.length <= 1) setEditing(false);
+  }, [query.data, sections.length]);
   const [asked, setAsked] = useState(params.rename);
   useEffect(() => {
-    const section = asked ? sections.find((s) => s.id === asked) : undefined;
+    const section = owner && asked ? sections.find((s) => s.id === asked) : undefined;
     if (!section) return;
     setAsked(undefined);
     setNaming({ section });
-  }, [asked, sections]);
-  const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id });
+  }, [owner, asked, sections]);
+  const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id && owner });
   const archivedCount = archived.data?.sections.length ?? 0;
   // Restoring the last archived section leaves nothing to show, so its sheet goes too.
   useEffect(() => {
@@ -127,10 +151,9 @@ export default function DeckSections() {
     },
   ];
   const order = orders.find((o) => o.value === deck?.sectionProgression);
-  const back = {
-    label: deck?.name ?? t`Deck settings`,
-    to: `/library/deck-settings?id=${id}` as Href,
-  };
+  const back = { label: deck?.name ?? t`Library`, to: `/library/${id}` as Href };
+  const learned = sections.filter((s) => s.total > 0 && s.known >= s.total).length;
+  const due = sections.reduce((sum, s) => sum + s.due, 0);
 
   if (!query.data) {
     return (
@@ -147,6 +170,7 @@ export default function DeckSections() {
       onRefresh={() => Promise.all([query.refetch(), archived.refetch()])}
       description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
       actions={
+        owner &&
         sections.length > 1 && (
           <BarText
             label={editing ? t`Done` : t`Edit`}
@@ -163,34 +187,86 @@ export default function DeckSections() {
             size="inline"
             icon="section"
             title={t`No sections yet`}
-            body={t`Make one per lesson, then move cards into it from the deck.`}
-            action={{ label: t`New section`, onPress: () => setNaming({}) }}
+            body={
+              owner ? t`Make one per lesson, then move cards into it from the deck.` : undefined
+            }
+            action={owner ? { label: t`New section`, onPress: () => setNaming({}) } : undefined}
           />
         </Plate>
       ) : (
-        <SectionPath
-          sections={sections}
-          editing={editing && sections.length > 1}
-          inOrder={deck?.sectionProgression !== "open"}
-          onNew={() => setNaming({})}
-          onRename={(section) => setNaming({ section })}
-          onArchive={archive.archive}
-          onReorder={(ids) => reorder.mutate(ids)}
-          // One order at a time, so the server never receives two that cross.
-          busy={reorder.isPending}
-        />
+        <>
+          {!editing && (
+            <Plate className="gap-4 p-5">
+              <View className={large ? "gap-1" : "flex-row items-baseline justify-between gap-3"}>
+                <Text className="shrink text-base text-text-2">
+                  <Trans>
+                    <Text
+                      className="text-4xl font-semibold text-text"
+                      style={{ letterSpacing: -1, fontVariant: ["tabular-nums"] }}
+                    >
+                      {i18n.number(learned)}
+                    </Text>{" "}
+                    of {i18n.number(sections.length)} known
+                  </Trans>
+                </Text>
+                {due > 0 && (
+                  <Text className="text-base text-muted">{t`${i18n.number(due)} to review`}</Text>
+                )}
+              </View>
+              {/* The path's sections only: the cards with no section are not a step anyone takes. */}
+              <SectionColumns
+                columns={columns.filter((c) => c.section)}
+                focus={focus}
+                onOpen={(c) => open(c.id)}
+              />
+              {state && (
+                <OpeningLine
+                  state={state}
+                  due={deck?.due ?? 0}
+                  starting={sectionStart.starting}
+                  onStart={sectionStart.start}
+                />
+              )}
+            </Plate>
+          )}
+          <SectionPath
+            columns={columns}
+            focus={focus}
+            owner={owner}
+            editing={editing}
+            inOrder={deck?.sectionProgression !== "open"}
+            onOpen={open}
+            onNew={() => setNaming({})}
+            onRename={(section) => setNaming({ section })}
+            onArchive={archive.archive}
+            onReorder={(ids) => reorder.mutate(ids)}
+            // One order at a time, so the server never receives two that cross.
+            busy={reorder.isPending}
+          />
+        </>
       )}
       <Rows>
-        {sections.length > 0 && (
-          <Row
-            icon="section"
-            label={t`How sections open`}
-            value={order?.label}
-            stacked
-            onPress={() => setChoosingOrder(true)}
-          />
-        )}
-        {archivedCount > 0 && (
+        {sections.length > 0 &&
+          (owner ? (
+            <Row
+              icon="section"
+              label={t`How sections open`}
+              value={order?.label}
+              stacked
+              onPress={() => setChoosingOrder(true)}
+            />
+          ) : (
+            <View accessible accessibilityLabel={`${t`How sections open`}, ${order?.label ?? ""}`}>
+              <RowFace
+                icon="section"
+                label={t`How sections open`}
+                value={order?.label}
+                stacked
+                end="none"
+              />
+            </View>
+          ))}
+        {owner && archivedCount > 0 && (
           <Row
             icon="restore"
             label={t`Archived sections`}

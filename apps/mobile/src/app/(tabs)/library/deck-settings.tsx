@@ -23,6 +23,7 @@ import { languageName } from "../../../data/languages";
 import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { reportHref } from "../../../sharing/report";
+import { captureEvent } from "../../../telemetry/posthog";
 import { usePalette } from "../../../theme/palette";
 import { inputCap, MULTILINE } from "../../../theme/type";
 import { FieldError } from "../../../ui/field";
@@ -420,7 +421,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? plural(sectionCount, { one: "# section", other: "# sections" })
                   : t`None`
               }
-              onPress={() => router.push(`/library/sections?id=${deck.id}` as Href)}
+              onPress={() => {
+                captureEvent("sections_opened", { from: "settings" });
+                router.push(`/library/${deck.id}/sections` as Href);
+              }}
             />
             <Row
               icon="tags"

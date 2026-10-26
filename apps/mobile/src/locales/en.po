@@ -35,6 +35,22 @@ msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
+#. placeholder {0}: c.total
+msgid "{0, plural, one {{known} of # card known} other {{known} of # cards known}}"
+msgstr "{0, plural, one {{known} of # card known} other {{known} of # cards known}}"
+
+#. placeholder {0}: rows.length
+msgid "{0, plural, one {{known} of # card} other {{known} of # cards}}"
+msgstr "{0, plural, one {{known} of # card} other {{known} of # cards}}"
+
+#. placeholder {0}: c.total
+msgid "{0, plural, one {{name}, {known} of # card known} other {{name}, {known} of # cards known}}"
+msgstr "{0, plural, one {{name}, {known} of # card known} other {{name}, {known} of # cards known}}"
+
+#. placeholder {0}: state.notStarted
+msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
+msgstr "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
+
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
@@ -106,13 +122,17 @@ msgstr "{0, plural, one {# card you froze in Noji arrives archived.} other {# ca
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
 msgstr "{0, plural, one {# card, known} other {# cards, all known}}"
 
+#. placeholder {0}: c.total
+msgid "{0, plural, one {# card, not open yet} other {# cards, not open yet}}"
+msgstr "{0, plural, one {# card, not open yet} other {# cards, not open yet}}"
+
 #. placeholder {0}: preview.pitchSkipped
 msgid "{0, plural, one {# card’s pitch accent can’t be read as text, so it’s skipped.} other {# cards’ pitch accents can’t be read as text, so they’re skipped.}}"
 msgstr "{0, plural, one {# card’s pitch accent can’t be read as text, so it’s skipped.} other {# cards’ pitch accents can’t be read as text, so they’re skipped.}}"
 
+#. placeholder {0}: c.total
 #. placeholder {0}: d.total
 #. placeholder {0}: deck.cardCount
-#. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
 
@@ -315,14 +335,6 @@ msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, one {Start section} other {Start # sections}}"
 
-#. placeholder {0}: current.notStarted
-msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
-msgstr "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
-msgstr "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
-
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
@@ -334,14 +346,6 @@ msgstr "{0, plural, one {Update # card} other {Update # cards}}"
 #. placeholder {0}: unplaced.length
 msgid "{0, plural, one {What language is this deck in?} other {What language are these decks in?}}"
 msgstr "{0, plural, one {What language is this deck in?} other {What language are these decks in?}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
-msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
-msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
 #. placeholder {0}: summary.decks.length
 #. placeholder {1}: chosenDecks.length
@@ -424,6 +428,10 @@ msgstr "{0} remembered, {1} forgotten."
 #. placeholder {0}: isolate(deck.owner.name)
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
+
+#. placeholder {0}: i18n.number(due)
+msgid "{0} to review"
+msgstr "{0} to review"
 
 #. placeholder {0}: s.title
 msgid "{0}, done"
@@ -670,8 +678,14 @@ msgstr "{name} left {deck}"
 msgid "{name}, {cards}"
 msgstr "{name}, {cards}"
 
-msgid "{nextName} is ready"
-msgstr "{nextName} is ready"
+msgid "{name}, not open yet"
+msgstr "{name}, not open yet"
+
+msgid "{nextName} is ready."
+msgstr "{nextName} is ready."
+
+msgid "{nextName} opens when you know {needed} of {total} in {currentName}. {left} to go."
+msgstr "{nextName} opens when you know {needed} of {total} in {currentName}. {left} to go."
 
 msgid "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
 msgstr "{oneSided, plural, one {# card has no --- line, so it’s imported with a term and no meaning.} other {# cards have no --- line, so they’re imported with a term and no meaning.}}"
@@ -795,6 +809,14 @@ msgstr "{words, plural, one {# word} other {# words}}"
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
+
+#. placeholder {0}: i18n.number(learned)
+#. placeholder {1}: i18n.number(sections.length)
+msgid "<0>{0}</0> of {1} known"
+msgstr "<0>{0}</0> of {1} known"
+
+msgid "<0>{percent}</0> known"
+msgstr "<0>{percent}</0> known"
 
 msgid "30 days"
 msgstr "30 days"
@@ -1049,6 +1071,13 @@ msgstr "All"
 msgid "All at once"
 msgstr "All at once"
 
+msgid "All sections"
+msgstr "All sections"
+
+#. placeholder {0}: i18n.number(count)
+msgid "All sections, {0}"
+msgstr "All sections, {0}"
+
 msgid "All shelves"
 msgstr "All shelves"
 
@@ -1191,6 +1220,9 @@ msgstr "Archive deck"
 msgid "Archive import"
 msgstr "Archive import"
 
+msgid "Archive section"
+msgstr "Archive section"
+
 msgid "Archive the decks"
 msgstr "Archive the decks"
 
@@ -1277,6 +1309,9 @@ msgstr "Automatically"
 
 msgid "Back"
 msgstr "Back"
+
+msgid "Back to {deckName}"
+msgstr "Back to {deckName}"
 
 msgid "Back to Library"
 msgstr "Back to Library"
@@ -2296,14 +2331,17 @@ msgstr "Estonian"
 msgid "Every card"
 msgstr "Every card"
 
+msgid "Every card has a section"
+msgstr "Every card has a section"
+
 msgid "Every endpoint, with examples"
 msgstr "Every endpoint, with examples"
 
-msgid "Every section is open"
-msgstr "Every section is open"
-
 msgid "Every section is open, so any card can come up in review."
 msgstr "Every section is open, so any card can come up in review."
+
+msgid "Every section is open."
+msgstr "Every section is open."
 
 msgid "Every shelf"
 msgstr "Every shelf"
@@ -2533,17 +2571,11 @@ msgstr "Give the series a name."
 msgid "Give the tag a name."
 msgstr "Give the tag a name."
 
-msgid "Go to {currentName}"
-msgstr "Go to {currentName}"
-
 msgid "Go to import"
 msgstr "Go to import"
 
 msgid "Go to Lymi"
 msgstr "Go to Lymi"
-
-msgid "Go to section"
-msgstr "Go to section"
 
 msgid "Go to Today"
 msgstr "Go to Today"
@@ -2820,6 +2852,9 @@ msgstr "It was archived or moved since you opened the deck."
 
 msgid "It was archived, or you left it."
 msgstr "It was archived, or you left it."
+
+msgid "It was archived."
+msgstr "It was archived."
 
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
@@ -3309,11 +3344,17 @@ msgstr "New series"
 msgid "New to Lymi?"
 msgstr "New to Lymi?"
 
+msgid "Next"
+msgstr "Next"
+
 msgid "Next card due {next}."
 msgstr "Next card due {next}."
 
 msgid "Next month"
 msgstr "Next month"
+
+msgid "Next section, {name}"
+msgstr "Next section, {name}"
 
 msgid "Next: choose decks"
 msgstr "Next: choose decks"
@@ -3326,6 +3367,9 @@ msgstr "No books in a language you’re learning yet. One appears here when you 
 
 msgid "No card of this kind has a term."
 msgstr "No card of this kind has a term."
+
+msgid "No cards in this section yet"
+msgstr "No cards in this section yet"
 
 msgid "No cards match “{query}”"
 msgstr "No cards match “{query}”"
@@ -3602,6 +3646,9 @@ msgstr "Open Settings"
 msgid "Open You"
 msgstr "Open You"
 
+msgid "Opens after {beforeName}."
+msgstr "Opens after {beforeName}."
+
 msgid "Optional. Anything that helps us understand."
 msgstr "Optional. Anything that helps us understand."
 
@@ -3738,8 +3785,14 @@ msgstr "Press <0>Save & Connect</0>, then sign in to Lymi and allow it."
 msgid "Press Copy text, then paste it here."
 msgstr "Press Copy text, then paste it here."
 
+msgid "Previous"
+msgstr "Previous"
+
 msgid "Previous month"
 msgstr "Previous month"
+
+msgid "Previous section, {name}"
+msgstr "Previous section, {name}"
 
 msgid "Privacy policy"
 msgstr "Privacy policy"
@@ -4115,6 +4168,12 @@ msgstr "Section"
 
 msgid "Section {number}: {name}, {cards}"
 msgstr "Section {number}: {name}, {cards}"
+
+msgid "Section {place} of {total}"
+msgstr "Section {place} of {total}"
+
+msgid "Section options"
+msgstr "Section options"
 
 msgid "Sections"
 msgstr "Sections"
@@ -4737,6 +4796,9 @@ msgstr "This join link is turned off"
 
 msgid "This join link stopped working. Ask the owner for a new one."
 msgstr "This join link stopped working. Ask the owner for a new one."
+
+msgid "This section isn’t in the deck"
+msgstr "This section isn’t in the deck"
 
 msgid "This series is no longer here."
 msgstr "This series is no longer here."

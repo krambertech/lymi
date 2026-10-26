@@ -73,9 +73,10 @@ msgstr "{0, plural, one {Повтори всі #} few {Повтори всі #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твої колоди} many {Твої колоди} other {Твої колоди}}"
 
-#. placeholder {0}: i18n.number(GOAL)
-msgid "{0} a day"
-msgstr "{0} на день"
+#. placeholder {0}: i18n.number(done)
+#. placeholder {1}: i18n.number(GOAL)
+msgid "{0} of {1} today"
+msgstr "{0} з {1} сьогодні"
 
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
@@ -112,8 +113,8 @@ msgstr "{count, plural, one {# безкоштовна картка} few {# бе�
 msgid "{count, plural, one {# free flashcard} other {# free flashcards}}."
 msgstr "{count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}."
 
-msgid "{days, plural, one {day} other {days}}"
-msgstr "{days, plural, one {день} few {дні} many {днів} other {дня}}"
+msgid "{days, plural, one {day in a row} other {days in a row}}"
+msgstr "{days, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
 msgid "{decks, plural, one {# free deck} other {# free decks}} with {cards, plural, one {# card} other {# cards}} in all."
 msgstr "{decks, plural, one {# безкоштовна колода} few {# безкоштовні колоди} many {# безкоштовних колод} other {# безкоштовної колоди}}, усього {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
@@ -351,6 +352,9 @@ msgstr "40 і 60 питань. 120 з 200 балів для складання."
 
 msgid "500 feet in either direction"
 msgstr "500 футів (близько 150 м) в обидва боки"
+
+msgid "6 reviews to sync"
+msgstr "6 повторень до синхронізації"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% у читанні, письмі й аудіюванні та 60% у говорінні."
@@ -817,6 +821,9 @@ msgstr "Усі колоди з російської"
 
 msgid "All shelves"
 msgstr "Усі полиці"
+
+msgid "All synced"
+msgstr "Усе синхронізовано"
 
 msgid "All Ukrainian decks"
 msgstr "Усі колоди з української"
@@ -2188,6 +2195,9 @@ msgstr "Охоче"
 msgid "Go home"
 msgstr "На головну"
 
+msgid "Goal reached"
+msgstr "Мету досягнуто"
+
 msgid "God willing"
 msgstr "Дасть Бог"
 
@@ -2703,9 +2713,6 @@ msgstr "Lymi планує кожну картку за методом інтер
 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
-
-msgid "It syncs when you’re back."
-msgstr "Синхронізується, щойно повернешся онлайн."
 
 msgid "It was a really *pleasant* evening."
 msgstr "Це був дуже *приємний* вечір."
@@ -4584,6 +4591,9 @@ msgstr "Підтримка й пошта: ми зберігаємо надісл
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
+msgid "Syncing…"
+msgstr "Синхронізація…"
+
 msgid "table"
 msgstr "стіл"
 
@@ -5768,9 +5778,6 @@ msgstr "AI не перейде на російську?"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
-
-msgid "With their pictures and history."
-msgstr "З картинками та історією."
 
 msgid "won’t do, no"
 msgstr "не можна, ні"

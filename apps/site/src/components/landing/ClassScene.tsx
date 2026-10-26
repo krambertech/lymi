@@ -246,7 +246,7 @@ export function ClassScene() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.3, ease: EASE }}
-              className="absolute -top-4 start-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-text py-1 ps-1 pe-3 text-xs whitespace-nowrap text-canvas shadow-lg rtl:translate-x-1/2"
+              className="absolute -top-4 start-1/2 flex w-max max-w-[calc(100%-1rem)] -translate-x-1/2 items-center gap-1.5 rounded-full bg-text py-1 ps-1 pe-3 text-xs text-canvas shadow-lg rtl:translate-x-1/2"
             >
               <img
                 src={`/avatars/${event.who}.svg`}

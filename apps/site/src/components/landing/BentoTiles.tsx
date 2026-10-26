@@ -2,7 +2,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
-import { Check, Download, FileArchive, LifeBuoy, Tag, WifiOff } from "lucide-react";
+import { Check, Download, FileArchive, LifeBuoy, RefreshCw, Tag, WifiOff } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 import { FLAME_PARTS } from "../lantern-geometry";
@@ -24,6 +24,16 @@ const swap = {
   transition: SWAP,
 };
 
+/**
+ * A demo's beats while it plays. When play stops, every beat reads as not reached, so a hovered tile
+ * settles back to its resting frame; with reduced motion every beat reads as reached at once.
+ */
+function useBeats<Beat extends string>(beats: Record<Beat, number>, play: boolean) {
+  const still = useStill();
+  const { at } = usePlayback(beats, play, still);
+  return (beat: Beat) => still || (play && at(beat));
+}
+
 function Plate({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={clsx("rounded-xl bg-plate edge", className)}>{children}</div>;
 }
@@ -31,7 +41,7 @@ function Plate({ children, className }: { children: ReactNode; className?: strin
 /* Hints: the hint opens on a card, a way in rather than the answer. */
 
 export function HintTile({ play }: TileDemoProps) {
-  const { at } = usePlayback({ press: 500, open: 750, lit: 1150 }, play, useStill());
+  const at = useBeats({ press: 500, open: 750, lit: 1150 }, play);
   return (
     <Plate className="w-[188px] px-3 pt-2.5 pb-3 text-center">
       <p lang="ja" className="text-2xl font-medium text-text">
@@ -102,7 +112,7 @@ const SCRIPTS = [
 ];
 
 export function ScriptsTile({ play }: TileDemoProps) {
-  const { at } = usePlayback({ s0: 100, s1: 450, s2: 800, s3: 1150, s4: 1600 }, play, useStill());
+  const at = useBeats({ s0: 100, s1: 450, s2: 800, s3: 1150, s4: 1600 }, play);
   const lit = at("s4") ? -1 : at("s3") ? 3 : at("s2") ? 2 : at("s1") ? 1 : at("s0") ? 0 : -1;
   return (
     <div className="grid w-[204px] grid-cols-2 gap-1.5">
@@ -145,7 +155,7 @@ const ASKS = [
 
 export function ModesTile({ play }: TileDemoProps) {
   const { i18n, t } = useLingui();
-  const { at } = usePlayback({ m1: 900, m2: 1900, m3: 2900, back: 3900 }, play, useStill());
+  const at = useBeats({ m1: 900, m2: 1900, m3: 2900, back: 3900 }, play);
   const ask = ASKS[at("back") ? 0 : at("m3") ? 3 : at("m2") ? 2 : at("m1") ? 1 : 0];
   const face = (side: "picture" | "term" | "meaning") =>
     side === "picture" ? (
@@ -204,59 +214,87 @@ const GOAL = 25;
 
 export function StreakTile({ play }: TileDemoProps) {
   const { i18n, t } = useLingui();
-  const { at } = usePlayback({ lit: 450 }, play, useStill());
+  const at = useBeats({ fill: 250, lit: 1300 }, play);
+  const done = at("fill") ? GOAL : 18;
   const days = at("lit") ? 13 : 12;
   return (
-    <div className="flex items-end justify-between gap-4">
-      <div className="flex items-end gap-2">
-        <motion.span
-          animate={{ scale: at("lit") ? [1, 1.18, 1] : 1 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="mb-2 block origin-bottom"
-        >
-          <Flame className="h-10 w-auto" />
-        </motion.span>
-        <span className="relative h-[64px] overflow-hidden">
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.span
-              key={days}
-              initial={{ y: 48, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -48, opacity: 0 }}
-              transition={{ duration: 0.55, ease: EASE }}
-              className="block text-[64px] leading-none font-medium tracking-[-0.04em] text-text"
-            >
-              {i18n.number(days)}
-            </motion.span>
-          </AnimatePresence>
-        </span>
-        <span className="mb-1.5 text-sm text-text-2">
-          {t`${plural(days, { one: "day", other: "days" })}`}
-        </span>
+    <div className="grid min-w-0 gap-5">
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-sm font-medium whitespace-nowrap text-text">
+            <Trans>
+              {i18n.number(done)} of {i18n.number(GOAL)} today
+            </Trans>
+          </span>
+          <span className="flex gap-1">
+            {WEEK.map((state, i) => {
+              const lit = state === "kept" || (state === "today" && at("lit"));
+              return (
+                <motion.span
+                  // biome-ignore lint/suspicious/noArrayIndexKey: a fixed week
+                  key={i}
+                  animate={{ scale: state === "today" && at("lit") ? [1, 1.4, 1] : 1 }}
+                  transition={{ duration: 0.5, ease: EASE }}
+                  className={clsx(
+                    "size-3.5 rounded-full transition-colors duration-500",
+                    lit && "bg-amber",
+                    state === "rest" && "border-2 border-dashed border-amber",
+                    state === "today" && !lit && "border border-dashed border-text/30",
+                  )}
+                />
+              );
+            })}
+          </span>
+        </div>
+        <div className="mt-2 h-3 overflow-hidden rounded-full bg-text/10">
+          <motion.div
+            className="h-full origin-left rounded-full bg-amber rtl:origin-right"
+            initial={false}
+            animate={{ scaleX: done / GOAL }}
+            transition={{ duration: 0.9, ease: EASE }}
+          />
+        </div>
       </div>
-      <div className="grid justify-items-end gap-2">
-        <span className="rounded-full bg-plate px-2.5 py-1 text-xs whitespace-nowrap text-text edge">
-          <Trans>{i18n.number(GOAL)} a day</Trans>
-        </span>
-        <span className="flex gap-1">
-          {WEEK.map((state, i) => {
-            const lit = state === "kept" || (state === "today" && at("lit"));
-            return (
+      <div className="flex items-end justify-between gap-3">
+        <div className="flex min-w-0 items-end gap-2.5">
+          <motion.span
+            animate={{ scale: at("lit") ? [1, 1.2, 1] : 1 }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="mb-2 block shrink-0 origin-bottom"
+          >
+            <Flame className="h-11 w-auto" />
+          </motion.span>
+          <span className="relative h-[72px] shrink-0 overflow-hidden">
+            <AnimatePresence mode="popLayout" initial={false}>
               <motion.span
-                // biome-ignore lint/suspicious/noArrayIndexKey: a fixed week
-                key={i}
-                animate={{ scale: state === "today" && at("lit") ? [1, 1.35, 1] : 1 }}
-                transition={{ duration: 0.5, ease: EASE }}
-                className={clsx(
-                  "size-3.5 rounded-full transition-colors duration-500",
-                  lit && "bg-amber",
-                  state === "rest" && "border-2 border-dashed border-amber",
-                  state === "today" && !lit && "border border-dashed border-text/30",
-                )}
-              />
-            );
-          })}
-        </span>
+                key={days}
+                initial={{ y: 52, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -52, opacity: 0 }}
+                transition={{ duration: 0.55, ease: EASE }}
+                className="block text-[72px] leading-none font-medium tracking-[-0.045em] text-text"
+              >
+                {i18n.number(days)}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <span className="mb-2 max-w-[9ch] text-sm leading-tight text-text-2">
+            {t`${plural(days, { one: "day in a row", other: "days in a row" })}`}
+          </span>
+        </div>
+        <AnimatePresence initial={false}>
+          {at("lit") && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.6, y: 6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={SETTLE}
+              className="mb-2 flex shrink-0 items-center gap-1 rounded-full bg-plate px-2.5 py-1 text-xs whitespace-nowrap text-text edge"
+            >
+              <Check aria-hidden="true" className="size-3.5 text-good" />
+              <Trans>Goal reached</Trans>
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -275,7 +313,7 @@ const STICKERS = [
 export function TagsTile({ play }: TileDemoProps) {
   const { i18n } = useLingui();
   const still = useStill();
-  const { at } = usePlayback({ line: 150, pick: 800 }, play, still);
+  const at = useBeats({ line: 150, pick: 800 }, play);
   const lined = at("line");
   return (
     <div className="relative h-[104px]">
@@ -330,7 +368,7 @@ function Key({ down, children }: { down: boolean; children: ReactNode }) {
 }
 
 export function KeysTile({ play }: TileDemoProps) {
-  const { at } = usePlayback({ k0: 150, k1: 320, k2: 490, up: 950 }, play, useStill());
+  const at = useBeats({ k0: 150, k1: 320, k2: 490, up: 950 }, play);
   return (
     <span className="flex gap-1.5">
       <Key down={at("k0") && !at("up")}>⌃</Key>
@@ -340,35 +378,45 @@ export function KeysTile({ play }: TileDemoProps) {
   );
 }
 
-/* Works offline: six reviews waiting, then synced. */
+/* Works offline: reviews wait with the signal off, then sync. */
 
 export function OfflineTile({ play }: TileDemoProps) {
-  const { at } = usePlayback({ synced: 700 }, play, useStill());
-  const synced = at("synced");
+  const at = useBeats({ online: 150, synced: 1000 }, play);
+  const state = at("synced") ? "synced" : at("online") ? "syncing" : "waiting";
   return (
-    <span className="relative grid size-14 place-items-center rounded-2xl bg-plate edge">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={synced ? "on" : "off"}
-          initial={{ scale: 0.5, opacity: 0, rotate: -20 }}
-          animate={{ scale: 1, opacity: 1, rotate: 0 }}
-          exit={{ scale: 0.5, opacity: 0 }}
-          transition={SETTLE}
-        >
-          {synced ? (
-            <Check aria-hidden="true" className="size-7 text-good" />
-          ) : (
-            <WifiOff aria-hidden="true" className="size-7 text-amber-text" />
-          )}
-        </motion.span>
-      </AnimatePresence>
-      <motion.span
-        animate={{ scale: synced ? 0.4 : 1, opacity: synced ? 0 : 1 }}
-        transition={SETTLE}
-        className="absolute -end-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-amber px-1 text-2xs font-medium text-amber-ink"
-      >
-        6
-      </motion.span>
+    <span className="flex h-12 w-fit items-center gap-2.5 rounded-xl bg-plate py-2 ps-2 pe-3.5 edge">
+      <span className="grid size-8 place-items-center overflow-hidden rounded-lg bg-amber-soft">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={state}
+            initial={{ scale: 0.5, opacity: 0, rotate: -30 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            transition={SETTLE}
+          >
+            {state === "synced" ? (
+              <Check aria-hidden="true" className="size-4 text-good" />
+            ) : state === "syncing" ? (
+              <RefreshCw aria-hidden="true" className="size-4 animate-spin text-amber-text" />
+            ) : (
+              <WifiOff aria-hidden="true" className="size-4 text-amber-text" />
+            )}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      <span className="grid text-sm whitespace-nowrap text-text">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span key={state} {...swap}>
+            {state === "synced" ? (
+              <Trans>All synced</Trans>
+            ) : state === "syncing" ? (
+              <Trans>Syncing…</Trans>
+            ) : (
+              <Trans>6 reviews to sync</Trans>
+            )}
+          </motion.span>
+        </AnimatePresence>
+      </span>
     </span>
   );
 }
@@ -394,38 +442,35 @@ const APPS: { name: string; path?: string; color?: string }[] = [
 ];
 
 export function ImportTile({ play }: TileDemoProps) {
-  const { at } = usePlayback(
-    { a0: 80, a1: 230, a2: 380, a3: 530, a4: 680, done: 1150 },
-    play,
-    useStill(),
-  );
+  const at = useBeats({ a0: 60, a1: 160, a2: 260, a3: 360, a4: 460, done: 900 }, play);
   return (
-    <span className="flex">
+    <ul className="flex flex-wrap gap-1">
       {APPS.map((app, i) => (
-        <motion.span
+        <motion.li
           key={app.name}
-          title={app.name}
-          animate={{ y: at(`a${i}` as "a0") && !at("done") ? -6 : 0 }}
+          animate={{ y: at(`a${i}` as "a0") && !at("done") ? -5 : 0 }}
           transition={SETTLE}
-          className="-ms-2.5 grid size-10 place-items-center rounded-xl bg-plate shadow-[0_0_0_2px_oklch(var(--tray-l)_var(--tray-c)_var(--tray-h))] edge first:ms-0"
+          className={clsx(
+            "flex h-7 items-center gap-1 rounded-full bg-plate pe-2 text-[11px] font-medium text-text edge",
+            app.path ? "ps-1.5" : "ps-2",
+          )}
         >
-          {app.path ? (
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6" fill={app.color}>
+          {app.path && (
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5" fill={app.color}>
               <path d={app.path} />
             </svg>
-          ) : (
-            <span className="text-md font-medium text-text-2">{app.name.charAt(0)}</span>
           )}
-        </motion.span>
+          {app.name}
+        </motion.li>
       ))}
-    </span>
+    </ul>
   );
 }
 
 /* Your data is yours: a deck saved as a file. */
 
 export function ExportTile({ play }: TileDemoProps) {
-  const { at } = usePlayback({ going: 100, saved: 800 }, play, useStill());
+  const at = useBeats({ going: 100, saved: 800 }, play);
   const state = at("saved") ? "saved" : at("going") ? "going" : "file";
   return (
     <span className="flex h-12 items-center gap-2 rounded-xl bg-plate py-2 ps-2 pe-3 edge">
@@ -529,7 +574,7 @@ const HISTORY = ["forgot", "knew", "forgot", "forgot", "knew"] as const;
 
 export function SlippingTile({ play }: TileDemoProps) {
   const { t } = useLingui();
-  const { at } = usePlayback({ back: 300 }, play, useStill());
+  const at = useBeats({ back: 300 }, play);
   return (
     <div className="w-full">
       <div className="flex items-center justify-between gap-3">

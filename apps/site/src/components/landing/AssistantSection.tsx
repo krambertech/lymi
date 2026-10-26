@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { FileText } from "lucide-react";
 import { type MotionValue, motion, useScroll, useSpring, useTransform } from "motion/react";
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import { localizedPath } from "../../lib/routes";
@@ -12,13 +13,27 @@ import { useStill } from "./playback";
 interface Ask {
   id: string;
   from: AssistantName;
+  /** The bubble's tint, a tray hue, so each assistant reads as its own conversation. */
+  hue: number;
   ask: ReactNode;
+  /** Something sent with the request, such as a file. */
+  attachment?: ReactNode;
   /** What Lymi did, as the assistant reports it. */
   did: ReactNode;
+  /** A detail under the reply: the deck's sections, the words, a button. */
+  detail?: ReactNode;
   /** Where the bubble floats around the heading on a wide screen. */
   place: CSSProperties;
   /** How far it drifts against the scroll, in px; opposite signs pull bubbles apart. */
   drift: number;
+}
+
+function Chip({ children, lang }: { children: ReactNode; lang?: string }) {
+  return (
+    <span lang={lang} className="rounded-full bg-plate-2 px-2 py-0.5 text-2xs text-text">
+      {children}
+    </span>
+  );
 }
 
 function useAsks(): Ask[] {
@@ -26,19 +41,39 @@ function useAsks(): Ask[] {
     {
       id: "pdf",
       from: "Claude",
+      hue: 25,
       ask: <Trans>Make cards from the new terms in this PDF.</Trans>,
+      attachment: (
+        <span className="mb-2 flex w-fit items-center gap-2 rounded-lg bg-plate py-1.5 ps-1.5 pe-3 edge">
+          <span className="grid size-6 place-items-center rounded-md bg-amber-soft text-amber-text">
+            <FileText aria-hidden="true" className="size-3.5" />
+          </span>
+          <span className="text-xs font-medium text-text">Lecture 6.pdf</span>
+        </span>
+      ),
       did: <Trans>Added 8 cards to Biology</Trans>,
-      place: { insetInlineStart: "0%", top: "4%" },
+      place: { insetInlineStart: "0%", top: "0%" },
       drift: 36,
     },
     {
       id: "deck",
       from: "ChatGPT",
+      hue: 150,
       ask: <Trans>Make me a Portuguese deck for a week in Lisbon, a section a day.</Trans>,
       did: (
         <Trans>
           Made <span lang="pt">Lisboa a dois</span>: 42 cards in 5 sections
         </Trans>
+      ),
+      detail: (
+        <span className="flex flex-wrap gap-1">
+          {["Chegada", "No café", "O metro"].map((section) => (
+            <Chip key={section} lang="pt">
+              {section}
+            </Chip>
+          ))}
+          <Chip>+2</Chip>
+        </span>
       ),
       place: { insetInlineEnd: "0%", top: "0%" },
       drift: -28,
@@ -46,42 +81,55 @@ function useAsks(): Ask[] {
     {
       id: "due",
       from: "Gemini",
+      hue: 235,
       ask: <Trans>What should I review tonight?</Trans>,
       did: <Trans>12 cards due, about five minutes</Trans>,
-      place: { insetInlineStart: "0%", top: "41%" },
+      detail: (
+        <span className="flex h-7 w-fit items-center rounded-md bg-amber px-2.5 text-2xs font-medium text-amber-ink key-light">
+          <Trans>Review in Lymi</Trans>
+        </span>
+      ),
+      place: { insetInlineStart: "0%", top: "42%" },
       drift: -22,
     },
     {
       id: "forget",
       from: "Grok",
+      hue: 280,
       ask: <Trans>Which words do I keep forgetting?</Trans>,
-      did: (
-        <Trans>
-          <span lang="de">aufhören</span>, <span lang="de">Schnapsidee</span> and{" "}
-          <span lang="de">die Gewerkschaft</span>
-        </Trans>
+      did: <Trans>These three keep slipping</Trans>,
+      detail: (
+        <span className="flex flex-wrap gap-1">
+          {["aufhören", "Schnapsidee", "die Gewerkschaft"].map((word) => (
+            <Chip key={word} lang="de">
+              {word}
+            </Chip>
+          ))}
+        </span>
       ),
-      place: { insetInlineEnd: "0%", top: "43%" },
+      place: { insetInlineEnd: "0%", top: "44%" },
       drift: 30,
     },
     {
       id: "quiz",
       from: "Claude",
+      hue: 25,
       ask: <Trans>Quiz me on this week’s Portuguese.</Trans>,
       did: <Trans>Ten questions from your due cards</Trans>,
-      place: { insetInlineStart: "11%", bottom: "0%" },
+      place: { insetInlineStart: "12%", bottom: "0%" },
       drift: 24,
     },
     {
       id: "tidy",
       from: "ChatGPT",
+      hue: 150,
       ask: <Trans>Move the food words into their own section.</Trans>,
       did: (
         <Trans>
           Moved 9 cards to <span lang="pt">Comida</span>
         </Trans>
       ),
-      place: { insetInlineEnd: "9%", bottom: "4%" },
+      place: { insetInlineEnd: "10%", bottom: "2%" },
       drift: -34,
     },
   ];
@@ -102,13 +150,14 @@ function Bubble({
   wide: boolean;
 }) {
   // Each bubble arrives at its own point in the scroll, and its reply a moment after.
-  const start = 0.16 + index * 0.045;
-  const opacity = useTransform(progress, [start, start + 0.08], [0, 1]);
-  const scale = useTransform(progress, [start, start + 0.1], [0.92, 1]);
-  const rise = useTransform(progress, [start, start + 0.1], [18, 0]);
+  const start = 0.06 + index * 0.04;
+  const opacity = useTransform(progress, [start, start + 0.07], [0, 1]);
+  const scale = useTransform(progress, [start, start + 0.09], [0.9, 1]);
+  const rise = useTransform(progress, [start, start + 0.09], [20, 0]);
   const drift = useTransform(progress, [0, 1], [ask.drift, -ask.drift]);
   const y = useTransform(() => rise.get() + (wide ? drift.get() : 0));
-  const reply = useTransform(progress, [start + 0.07, start + 0.13], [0, 1]);
+  const reply = useTransform(progress, [start + 0.06, start + 0.12], [0, 1]);
+  const replyRise = useTransform(progress, [start + 0.06, start + 0.12], [8, 0]);
 
   return (
     <motion.div
@@ -117,27 +166,36 @@ function Bubble({
         still ? { ...ask.place, opacity: 1, scale: 1, y: 0 } : { ...ask.place, opacity, scale, y }
       }
       className={clsx(
-        "w-max max-w-[268px] @4xl:absolute",
+        "w-max max-w-[292px] @4xl:absolute",
         index % 2 ? "self-end" : "self-start",
         index >= NARROW_COUNT && "@max-4xl:hidden",
       )}
     >
-      <div className="rounded-[18px] rounded-es-md bg-plate px-3.5 py-2.5 shadow-[0_14px_32px_-20px_oklch(0.3_0.04_280/0.45)] edge">
-        <p className="flex items-center gap-1.5 text-2xs text-muted">
-          <span className="grid size-4 place-items-center [&_svg]:size-3.5">
-            <AssistantMark name={ask.from} />
-          </span>
-          {ask.from}
-        </p>
-        <p className="mt-1 text-sm text-pretty text-text">{ask.ask}</p>
+      <div className="flex items-end gap-2">
+        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate shadow-[0_6px_14px_-8px_oklch(0.3_0.04_280/0.5)] edge [&_svg]:size-4">
+          <AssistantMark name={ask.from} />
+        </span>
+        <div
+          style={{ "--tray-h": ask.hue } as CSSProperties}
+          className="use-case-tile rounded-[20px] rounded-es-md px-3.5 py-2.5 shadow-[0_16px_34px_-22px_oklch(0.3_0.05_280/0.5)]"
+        >
+          <p className="text-2xs font-medium text-text-2">{ask.from}</p>
+          <div className="mt-1">
+            {ask.attachment}
+            <p className="text-sm text-pretty text-text">{ask.ask}</p>
+          </div>
+        </div>
       </div>
-      <motion.p
-        style={{ opacity: still ? 1 : reply }}
-        className="mt-1.5 flex items-start gap-1.5 ps-2 text-xs text-pretty text-text-2"
+      <motion.div
+        style={still ? { opacity: 1 } : { opacity: reply, y: replyRise }}
+        className="ms-10 mt-2 grid w-fit max-w-[244px] gap-2 rounded-xl bg-plate px-3 py-2 shadow-[0_12px_28px_-20px_oklch(0.3_0.04_60/0.55)] edge"
       >
-        <Lantern className="mt-px size-3.5 shrink-0" />
-        <span>{ask.did}</span>
-      </motion.p>
+        <p className="flex items-start gap-1.5 text-xs text-pretty text-text">
+          <Lantern className="mt-px size-3.5 shrink-0" />
+          <span>{ask.did}</span>
+        </p>
+        {ask.detail}
+      </motion.div>
     </motion.div>
   );
 }
@@ -163,7 +221,8 @@ const GUIDE_MARKS: AssistantName[] = ["Claude", "ChatGPT", "Gemini", "Grok"];
 function Heading() {
   const { i18n } = useLingui();
   return (
-    <div className="mx-auto max-w-[440px] text-center">
+    <div className="relative mx-auto max-w-[420px] text-center">
+      <Lantern glow flicker className="mx-auto mb-6 size-12" />
       <SectionTitle>
         <Trans>Bring your own AI.</Trans>
       </SectionTitle>
@@ -208,10 +267,10 @@ export function AssistantSection() {
     <section
       ref={ref}
       data-nav="landing"
-      className="overflow-x-clip px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       {/* Wide, the heading sits in the middle with the bubbles around it; narrow, they run below it. */}
-      <div className="relative mx-auto max-w-[480px] @4xl:grid @4xl:h-[560px] @4xl:max-w-[1040px] @4xl:place-items-center">
+      <div className="relative mx-auto max-w-[480px] @4xl:grid @4xl:h-[600px] @4xl:max-w-[1040px] @4xl:place-items-center">
         <Heading />
         <div aria-hidden="true" className="mt-10 flex flex-col gap-4 @4xl:contents">
           {asks.map((ask, i) => (

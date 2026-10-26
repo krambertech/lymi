@@ -245,9 +245,6 @@ msgstr "<0>Активний транспорт</0> переносить речо
 msgid "<0>Aiko</0> finished Week 3"
 msgstr "<0>Aiko</0> пройшла тиждень 3"
 
-msgid "<0>aufhören</0>, <1>Schnapsidee</1> and <2>die Gewerkschaft</2>"
-msgstr "<0>aufhören</0>, <1>Schnapsidee</1> і <2>die Gewerkschaft</2>"
-
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Дифузія</0>: частинки рухаються від вищої концентрації до нижчої."
 
@@ -4077,6 +4074,9 @@ msgstr "Повторюй кілька хвилин на день"
 msgid "Review a few minutes a day."
 msgstr "Повторюй кілька хвилин на день."
 
+msgid "Review in Lymi"
+msgstr "Повторити в Lymi"
+
 msgid "Review less, remember longer."
 msgstr "Повторюй менше, пам’ятай довше."
 
@@ -5055,6 +5055,9 @@ msgstr "Поки що нічого не опубліковано."
 
 msgid "There’s a *park* near the station."
 msgstr "Біля вокзалу є *парк*."
+
+msgid "These three keep slipping"
+msgstr "Ці три постійно вислизають"
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."

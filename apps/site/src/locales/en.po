@@ -245,9 +245,6 @@ msgstr "<0>Active transport</0> moves substances against the gradient."
 msgid "<0>Aiko</0> finished Week 3"
 msgstr "<0>Aiko</0> finished Week 3"
 
-msgid "<0>aufhören</0>, <1>Schnapsidee</1> and <2>die Gewerkschaft</2>"
-msgstr "<0>aufhören</0>, <1>Schnapsidee</1> and <2>die Gewerkschaft</2>"
-
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 
@@ -4077,6 +4074,9 @@ msgstr "Review a few minutes a day"
 msgid "Review a few minutes a day."
 msgstr "Review a few minutes a day."
 
+msgid "Review in Lymi"
+msgstr "Review in Lymi"
+
 msgid "Review less, remember longer."
 msgstr "Review less, remember longer."
 
@@ -5055,6 +5055,9 @@ msgstr "There is nothing published yet."
 
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
+
+msgid "These three keep slipping"
+msgstr "These three keep slipping"
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."

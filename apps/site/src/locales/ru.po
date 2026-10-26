@@ -1383,8 +1383,8 @@ msgstr "Подключи Claude, ChatGPT или другого ассистен�
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s page and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Один раз подключи Claude, ChatGPT или другого ассистента. Отправь ему фото сегодняшней страницы, и он добавит новые слова, или спроси, что ждёт тебя вечером."
 
-msgid "Connect Claude, ChatGPT, Gemini or Grok once, then do most of it from the chat. You still review in Lymi."
-msgstr "Подключи Claude, ChatGPT, Gemini или Grok один раз — и почти всё делай прямо в чате. А повторяешь ты в Lymi."
+msgid "Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed right from the chat. You still review in Lymi."
+msgstr "Подключи Claude, ChatGPT, Gemini или Grok один раз. Дальше создавай карточки, собирай колоды и проходи викторины прямо в чате. А повторяешь ты в Lymi."
 
 msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Подключи Claude, ChatGPT, Gemini или Grok к Lymi один раз. Потом вставь расшифровку урока и попроси выписать новые слова, спроси, что ждёт сегодня, или наведи порядок в колоде обычными словами. Делаешь что-то своё? Всё это работает и через публичный API."
@@ -3316,8 +3316,14 @@ msgstr "Переход с Anki"
 msgid "Move from Mochi"
 msgstr "Переход с Mochi"
 
+msgid "Move the food words into their own section."
+msgstr "Перенеси слова про еду в отдельный раздел."
+
 msgid "Move to section…"
 msgstr "Переместить в раздел…"
+
+msgid "Moved 9 cards to <0>Comida</0>"
+msgstr "Перенесено 9 карточек в <0>Comida</0>"
 
 msgid "Moving a substance against its concentration gradient, using energy"
 msgstr "Перенос вещества против градиента концентрации с затратой энергии"
@@ -3955,6 +3961,9 @@ msgstr "Хорошее нунчи — уловить настроение, по�
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
+
+msgid "Quiz me on this week’s Portuguese."
+msgstr "Проверь меня по португальскому за эту неделю."
 
 msgid "rain"
 msgstr "дождь"
@@ -4662,6 +4671,9 @@ msgstr "Технологии"
 
 msgid "Ten minutes between meetings."
 msgstr "Десять минут между встречами."
+
+msgid "Ten questions from your due cards"
+msgstr "Десять вопросов из карточек к повторению"
 
 msgid "Term"
 msgstr "Термин"
@@ -5832,9 +5844,6 @@ msgstr "Работает без интернета"
 
 msgid "Works with"
 msgstr "Работает с"
-
-msgid "Works with the AI you already use."
-msgstr "Работает с AI, которым ты уже пользуешься."
 
 msgid "Writing"
 msgstr "Письмо"

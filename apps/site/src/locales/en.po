@@ -1383,8 +1383,8 @@ msgstr "Connect Claude, ChatGPT or another assistant once. Send it a photo of to
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s page and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s page and it adds the new words, or ask what’s waiting for you tonight."
 
-msgid "Connect Claude, ChatGPT, Gemini or Grok once, then do most of it from the chat. You still review in Lymi."
-msgstr "Connect Claude, ChatGPT, Gemini or Grok once, then do most of it from the chat. You still review in Lymi."
+msgid "Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed right from the chat. You still review in Lymi."
+msgstr "Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed right from the chat. You still review in Lymi."
 
 msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
@@ -3316,8 +3316,14 @@ msgstr "Move from Anki"
 msgid "Move from Mochi"
 msgstr "Move from Mochi"
 
+msgid "Move the food words into their own section."
+msgstr "Move the food words into their own section."
+
 msgid "Move to section…"
 msgstr "Move to section…"
+
+msgid "Moved 9 cards to <0>Comida</0>"
+msgstr "Moved 9 cards to <0>Comida</0>"
 
 msgid "Moving a substance against its concentration gradient, using energy"
 msgstr "Moving a substance against its concentration gradient, using energy"
@@ -3955,6 +3961,9 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 
 msgid "Quickstart"
 msgstr "Quickstart"
+
+msgid "Quiz me on this week’s Portuguese."
+msgstr "Quiz me on this week’s Portuguese."
 
 msgid "rain"
 msgstr "rain"
@@ -4662,6 +4671,9 @@ msgstr "Technology"
 
 msgid "Ten minutes between meetings."
 msgstr "Ten minutes between meetings."
+
+msgid "Ten questions from your due cards"
+msgstr "Ten questions from your due cards"
 
 msgid "Term"
 msgstr "Term"
@@ -5832,9 +5844,6 @@ msgstr "Works offline"
 
 msgid "Works with"
 msgstr "Works with"
-
-msgid "Works with the AI you already use."
-msgstr "Works with the AI you already use."
 
 msgid "Writing"
 msgstr "Writing"

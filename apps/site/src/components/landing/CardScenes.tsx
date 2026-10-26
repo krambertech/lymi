@@ -201,7 +201,7 @@ export function LessonScene({ play }: SceneProps) {
       <div className="justify-self-center">
         <NotesPage lit={(i) => at(`l${i}` as keyof typeof LESSON_BEATS)} />
       </div>
-      <div className="grid min-h-[196px] content-start gap-1.5">
+      <div className="grid min-h-[196px] grid-cols-[minmax(0,1fr)] content-start gap-1.5">
         {NOTES.map((note, i) => (
           <Appear key={note.term} on={at(`c${i}` as keyof typeof LESSON_BEATS)}>
             {note.meaning ? (

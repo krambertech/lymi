@@ -233,71 +233,6 @@ export function LessonScene({ play }: SceneProps) {
   );
 }
 
-/* Your AI: a chat that adds cards. */
-
-const CHAT_BEATS = { ask: 200, typing: 1000, reply: 2000 };
-
-export function ChatScene({ play }: SceneProps) {
-  const { at } = useScene(CHAT_BEATS, play);
-  return (
-    <div className="flex w-full max-w-[440px] flex-col gap-3">
-      <Appear
-        on={at("ask")}
-        className="max-w-[86%] self-end rounded-[14px] bg-plate-2 px-3.5 py-2.5 text-sm text-text edge"
-      >
-        <Attachment name="Lecture 6 - Cell transport.pdf" kind={<Trans>PDF · 12 pages</Trans>} />
-        <Trans>Make cards from the new terms in this.</Trans>
-      </Appear>
-      <AnimatePresence mode="wait" initial={false}>
-        {at("typing") && !at("reply") && (
-          <motion.div
-            key="typing"
-            exit={{ opacity: 0 }}
-            className="flex w-16 gap-1 self-start rounded-[14px] bg-plate px-3.5 py-3.5 edge"
-          >
-            {[0, 1, 2].map((d) => (
-              <span
-                key={d}
-                className="size-1.5 animate-pulse rounded-full bg-faint motion-reduce:animate-none"
-                style={{ animationDelay: `${d * 150}ms` }}
-              />
-            ))}
-          </motion.div>
-        )}
-        {at("reply") && (
-          <motion.div
-            key="reply"
-            {...ENTER}
-            className="max-w-[92%] self-start rounded-[14px] bg-plate px-3.5 py-2.5 text-sm text-text-2 edge"
-          >
-            <Added
-              card={{
-                label: msg`Biology · new`,
-                term: "homeostasis",
-                meaning: msg`Keeping the body’s inside conditions steady`,
-              }}
-            >
-              <Trans>Added 8 cards to Biology. I skipped 2 you already have.</Trans>
-            </Added>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-/* From anywhere: the Mac's quick add. */
-
-const QUICK = "Weltschmerz";
-const QUICK_BEATS = {
-  k0: 300,
-  k1: 500,
-  k2: 700,
-  panel: 1000,
-  ...Object.fromEntries(Array.from(QUICK, (_, i) => [`c${i}`, 1400 + i * 70])),
-  added: 2600,
-} as Record<string, number>;
-
 export function Key({ down = false, children }: { down?: boolean; children: ReactNode }) {
   return (
     <kbd
@@ -310,44 +245,5 @@ export function Key({ down = false, children }: { down?: boolean; children: Reac
     >
       {children}
     </kbd>
-  );
-}
-
-export function QuickAddScene({ play }: SceneProps) {
-  const { at } = useScene(QUICK_BEATS, play);
-  const typed = Array.from(QUICK)
-    .filter((_, i) => at(`c${i}`))
-    .join("");
-  const pressing = !at("panel");
-  return (
-    <div className="grid w-full max-w-[300px] justify-items-center gap-5">
-      <div className="flex gap-1.5" aria-hidden="true">
-        <Key down={at("k0") && pressing}>⌃</Key>
-        <Key down={at("k1") && pressing}>⌥</Key>
-        <Key down={at("k2") && pressing}>L</Key>
-      </div>
-      <div
-        className={clsx(
-          "w-full rounded-xl bg-plate p-3 shadow-[0_18px_40px_-18px_oklch(0.3_0.03_60/0.45)] edge transition-[opacity,translate,scale] duration-300",
-          at("panel") ? "opacity-100" : "translate-y-2 scale-95 opacity-0",
-        )}
-      >
-        <p lang="de" className="flex h-9 items-center rounded-md bg-plate-2 px-3 text-md text-text">
-          {typed}
-          {!at("added") && <Caret />}
-        </p>
-        <p className="mt-2 flex items-center justify-between text-xs text-muted">
-          <span lang="de">Deutsch</span>
-          {at("added") ? (
-            <span className="flex items-center gap-1 text-good">
-              <Check aria-hidden="true" className="size-3.5" />
-              <Trans>Added</Trans>
-            </span>
-          ) : (
-            <span aria-hidden="true">⌘↩</span>
-          )}
-        </p>
-      </div>
-    </div>
   );
 }

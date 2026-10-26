@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers";
+import { env, waitUntil } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
 import {
   hasShelfPage,
@@ -87,23 +87,38 @@ export async function menuShelvesResponse(context: APIContext): Promise<Response
 
 /**
  * The homepage's free decks as JSON, for `?locale=` or English. The homepage is prerendered, so it
- * reads them after loading, cached like Explore.
+ * reads them after loading. Every visit asks, so one copy per locale and release is kept at the edge
+ * for as long as a browser keeps it.
  */
 export async function featuredDecksResponse(context: APIContext): Promise<Response> {
   const asked = context.url.searchParams.get("locale");
   const locale: Locale = locales.find((each) => each === asked) ?? "en";
-  const decks = featuredDecks(await catalogIn(drizzle(env.DB), locale));
-  const etag = catalogEtag({
-    content: catalogContentHash(decks),
-    locale,
-    version: env.CF_VERSION_METADATA?.id,
-    page: "featured",
-  });
-  const headers = { "cache-control": DECK_CACHE_CONTROL, etag };
-  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
-    return new Response(null, { status: 304, headers });
+  const version = env.CF_VERSION_METADATA?.id;
+  const key = new Request(
+    `${context.url.origin}/explore/featured.json?locale=${locale}&version=${version ?? "dev"}`,
+  );
+  // The site's types are the browser's, which lack the Workers runtime's default cache.
+  const edge = typeof caches === "undefined" ? undefined : (caches as { default?: Cache }).default;
+  let response = await edge?.match(key);
+  if (!response) {
+    const decks = featuredDecks(await catalogIn(drizzle(env.DB), locale));
+    const etag = catalogEtag({
+      content: catalogContentHash(decks),
+      locale,
+      version,
+      page: "featured",
+    });
+    response = Response.json(decks, { headers: { "cache-control": DECK_CACHE_CONTROL, etag } });
+    if (edge) waitUntil(edge.put(key, response.clone()));
   }
-  return Response.json(decks, { headers });
+  const etag = response.headers.get("etag") ?? "";
+  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { "cache-control": DECK_CACHE_CONTROL, etag },
+    });
+  }
+  return response;
 }
 
 export interface ShelfPage {

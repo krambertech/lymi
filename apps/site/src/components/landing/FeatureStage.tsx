@@ -258,6 +258,7 @@ export function VoiceDemo({ play }: DemoProps) {
   const [peaks, setPeaks] = useState<Record<string, number[]>>({});
   const [playing, setPlaying] = useState<{ id: string; at: number } | null>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
+  const frame = useRef(0);
 
   useEffect(() => {
     if (!play) return;
@@ -267,20 +268,28 @@ export function VoiceDemo({ play }: DemoProps) {
         .catch(() => {});
     }
   }, [play]);
-  useEffect(() => () => audio.current?.pause(), []);
+  useEffect(
+    () => () => {
+      const clip = audio.current;
+      audio.current = null;
+      clip?.pause();
+      cancelAnimationFrame(frame.current);
+    },
+    [],
+  );
 
   const start = (id: string, url: string) => {
     audio.current?.pause();
     const clip = new Audio(url);
     audio.current = clip;
-    let frame = 0;
+    cancelAnimationFrame(frame.current);
     const tick = () => {
       if (audio.current !== clip) return;
       setPlaying({ id, at: clip.duration ? clip.currentTime / clip.duration : 0 });
-      frame = requestAnimationFrame(tick);
+      frame.current = requestAnimationFrame(tick);
     };
     const done = () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(frame.current);
       if (audio.current === clip) setPlaying(null);
     };
     clip.addEventListener("ended", done);
@@ -543,10 +552,9 @@ export function FeatureStage({ items }: { items: StageItem[] }) {
           <span
             aria-hidden="true"
             key={`${item.id}-bar`}
+            data-paused={!inView || undefined}
             onAnimationEnd={() => setIndex((i) => (i + 1) % items.length)}
-            style={{
-              animationDuration: `${DWELL_MS}ms`,
-            }}
+            style={{ animationDuration: `${DWELL_MS}ms` }}
             className="landing-dwell absolute inset-x-0 bottom-0 h-0.5 bg-text/20 ltr:origin-left rtl:origin-right"
           />
         )}

@@ -29,6 +29,12 @@ describe("featuredDecks", () => {
     expect(picked.map((d) => d.slug)).toEqual(["estonian", "finnish"]);
   });
 
+  it("leaves out a featured deck with no card to show", () => {
+    const [first, second] = FEATURED_DECKS as [string, string];
+    const picked = featuredDecks([deck(first, false), deck(second)]);
+    expect(picked.map((d) => d.slug)).toEqual([second]);
+  });
+
   it("shows at most eight", () => {
     const many = Array.from({ length: 12 }, (_, i) => deck(`deck-${i}`));
     expect(featuredDecks(many)).toHaveLength(8);

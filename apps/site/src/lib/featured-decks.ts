@@ -13,9 +13,11 @@ export const FEATURED_DECKS = [
 ];
 const FEATURED_COUNT = 8;
 
-/** The featured decks this locale offers, topped up from the catalogue when a slug is missing. */
+/** The featured decks this locale offers with a card to show, topped up from the catalogue. */
 export function featuredDecks(decks: readonly PublicDeckSummary[]): PublicDeckSummary[] {
-  const picked = FEATURED_DECKS.flatMap((slug) => decks.find((deck) => deck.slug === slug) ?? []);
+  const picked = FEATURED_DECKS.flatMap(
+    (slug) => decks.find((deck) => deck.slug === slug && deck.card) ?? [],
+  );
   const rest = decks.filter((deck) => deck.card && !picked.includes(deck));
   return [...picked, ...rest].slice(0, FEATURED_COUNT);
 }

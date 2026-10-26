@@ -5,7 +5,7 @@ import { focusIndex, type LineColumn, type Opening } from "@lymi/client/section-
 import { isolate } from "@lymi/core";
 import type { Href } from "expo-router";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, useWindowDimensions, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { usePalette } from "../theme/palette";
 import { Icon } from "../ui/icons";
@@ -152,13 +152,16 @@ export function SectionLine({
   const [content, setContent] = useState(0);
   const opened = useRef(false);
   const at = focusIndex(columns, state);
+  // A tile widens with the text size, so a name breaks between words rather than inside one.
+  const { fontScale } = useWindowDimensions();
+  const tile = Math.round(TILE * Math.min(Math.max(fontScale, 1), 1.8));
   // Opens on the learner's section, centred, once both widths are known, so the scroll is not clamped short.
   useEffect(() => {
     if (opened.current || !width || content <= width) return;
     opened.current = true;
-    const x = BLEED + at * (TILE + GAP) - (width - TILE) / 2;
+    const x = BLEED + at * (tile + GAP) - (width - tile) / 2;
     ref.current?.scrollTo({ x: Math.max(0, Math.min(x, content - width)), animated: false });
-  }, [width, content, at]);
+  }, [width, content, at, tile]);
   return (
     <View
       style={{ marginHorizontal: -BLEED }}
@@ -170,7 +173,7 @@ export function SectionLine({
         showsHorizontalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         decelerationRate="fast"
-        snapToInterval={TILE + GAP}
+        snapToInterval={tile + GAP}
         contentContainerStyle={{ gap: GAP, paddingHorizontal: BLEED }}
         onContentSizeChange={(w) => setContent(w)}
       >
@@ -188,7 +191,7 @@ export function SectionLine({
               onPress={() => onOpen(c)}
               accessibilityRole="button"
               accessibilityLabel={`${c.waiting ? t`${name}, not open yet` : counted}${here && state ? `, ${t`You are here`}` : ""}`}
-              style={{ width: TILE }}
+              style={{ width: tile }}
             >
               <View
                 className="flex-1 justify-between gap-3 rounded-lg"

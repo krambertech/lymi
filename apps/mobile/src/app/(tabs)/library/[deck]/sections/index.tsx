@@ -18,7 +18,7 @@ import { useStartSection } from "../../../../../sections/sections";
 import { captureEvent } from "../../../../../telemetry/posthog";
 import { EmptyState } from "../../../../../ui/empty-state";
 import { Button, Plate, Text } from "../../../../../ui/primitives";
-import { Row, RowFace, Rows } from "../../../../../ui/row";
+import { Row, RowFace, Rows, useAccessibilitySizes } from "../../../../../ui/row";
 import { BarText, Screen } from "../../../../../ui/screen";
 import { Sheet, SheetError, SheetGroup, SheetRow } from "../../../../../ui/sheet";
 import { Skeleton } from "../../../../../ui/skeleton";
@@ -39,6 +39,8 @@ export default function DeckSections() {
   const router = useRouter();
   const deck = useDecks().data?.find((d) => d.id === id);
   const owner = deck?.role === "owner";
+  // At accessibility sizes the count to review moves under the known count, as a row's value does.
+  const large = useAccessibilitySizes();
   const query = useSections(id);
   const sections = query.data?.sections ?? [];
   const cards = useDeckCards(id);
@@ -189,7 +191,7 @@ export default function DeckSections() {
         <>
           {!editing && (
             <Plate className="gap-4 p-5">
-              <View className="flex-row items-baseline justify-between gap-3">
+              <View className={large ? "gap-1" : "flex-row items-baseline justify-between gap-3"}>
                 <Text className="shrink text-base text-text-2">
                   <Trans>
                     <Text

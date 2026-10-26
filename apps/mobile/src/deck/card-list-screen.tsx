@@ -54,6 +54,7 @@ import { LoadFailed, useLoadFailed } from "../ui/load-failed";
 import type { MenuItem } from "../ui/menu";
 import { OfflineNote } from "../ui/offline-note";
 import { Button, LIFT, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
+import { useAccessibilitySizes } from "../ui/row";
 import { RowMenu, type RowMenuItem } from "../ui/row-menu";
 import { BarButton, Screen } from "../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
@@ -652,11 +653,12 @@ function Top({
   const counts = useCounts(rows);
   const next = useNextDue(rows);
   const due = deck.due;
+  const large = useAccessibilitySizes();
   const line =
     due > 0 ? null : next ? t`Next card due ${next}.` : rows.length ? t`Nothing scheduled.` : null;
   return (
     <Plate className="gap-4 p-5">
-      <View className="flex-row items-baseline justify-between gap-3">
+      <View className={large ? "gap-1" : "flex-row items-baseline justify-between gap-3"}>
         <View className="shrink flex-row items-baseline gap-2">
           <Text className="text-4xl font-semibold text-text" style={{ letterSpacing: -1 }}>
             {due}
@@ -757,6 +759,7 @@ function SectionTop({
   opening: ReactNode;
 }) {
   const { t, i18n } = useLingui();
+  const large = useAccessibilitySizes();
   const counts = useCounts(rows);
   const percent = i18n.number(rows.length ? counts.known / rows.length : 0, {
     style: "percent",
@@ -766,7 +769,7 @@ function SectionTop({
   const total = i18n.number(count);
   return (
     <Plate className="gap-4 p-5">
-      <View className="flex-row items-end justify-between gap-3">
+      <View className={large ? "gap-1" : "flex-row items-end justify-between gap-3"}>
         <View className="shrink gap-1">
           {section && (
             <Text className="text-base text-muted">{t`Section ${place} of ${total}`}</Text>
@@ -783,7 +786,7 @@ function SectionTop({
             </Trans>
           </Text>
         </View>
-        <Text className="shrink pb-1 text-base text-text-2" style={TEXT_END}>
+        <Text className="shrink pb-1 text-base text-text-2" style={large ? undefined : TEXT_END}>
           {plural(rows.length, { one: `${known} of # card`, other: `${known} of # cards` })}
         </Text>
       </View>

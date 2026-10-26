@@ -35,10 +35,6 @@ msgstr "{0, plural, one {# картка} few {# картки} many {# карто
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
 
-#. placeholder {0}: deck.due
-msgid "{0, plural, one {# due} other {# due}}"
-msgstr "{0, plural, one {# на повторення} few {# на повторення} many {# на повторення} other {# на повторення}}"
-
 #. placeholder {0}: rest.length
 msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {Ще # розділ} few {Ще # розділи} many {Ще # розділів} other {Ще # розділу}}"
@@ -61,10 +57,6 @@ msgstr "{0, plural, one {Вибрано: #} few {Вибрано: #} many {Виб
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
 msgstr "{0, plural, one {Додати # картку} few {Додати # картки} many {Додати # карток} other {Додати # картки}}"
 
-#. placeholder {0}: word.times
-msgid "{0, plural, one {Forgot # time} other {Forgot # times}}"
-msgstr "{0, plural, one {Забуто # раз} few {Забуто # рази} many {Забуто # разів} other {Забуто # рази}}"
-
 #. placeholder {0}: step.cards.length - shownCards.length
 msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
 msgstr "{0, plural, one {Ще одна картка цього розділу — у Lymi.} few {Ще # картки цього розділу — у Lymi.} many {Ще # карток цього розділу — у Lymi.} other {Ще # картки цього розділу — у Lymi.}}"
@@ -80,6 +72,10 @@ msgstr "{0, plural, one {Повтори всі #} few {Повтори всі #} 
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твої колоди} many {Твої колоди} other {Твої колоди}}"
+
+#. placeholder {0}: i18n.number(GOAL)
+msgid "{0} a day"
+msgstr "{0} на день"
 
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
@@ -116,6 +112,9 @@ msgstr "{count, plural, one {# безкоштовна картка} few {# бе�
 msgid "{count, plural, one {# free flashcard} other {# free flashcards}}."
 msgstr "{count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}."
 
+msgid "{days, plural, one {day} other {days}}"
+msgstr "{days, plural, one {день} few {дні} many {днів} other {дня}}"
+
 msgid "{decks, plural, one {# free deck} other {# free decks}} with {cards, plural, one {# card} other {# cards}} in all."
 msgstr "{decks, plural, one {# безкоштовна колода} few {# безкоштовні колоди} many {# безкоштовних колод} other {# безкоштовної колоди}}, усього {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
 
@@ -136,6 +135,9 @@ msgstr "{language} · {name} · {count, plural, one {# безкоштовна к
 
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# учень} few {# учні} many {# учнів} other {# учня}}"
+
+msgid "{LEARNERS, plural, one {# learner} other {# learners}}"
+msgstr "{LEARNERS, plural, one {# учень} few {# учні} many {# учнів} other {# учня}}"
 
 msgid "{learners, plural, one {Reached # learner} other {Reached all # learners}}"
 msgstr "{learners, plural, one {Доставлено # учню} few {Доставлено всім # учням} many {Доставлено всім # учням} other {Доставлено всім # учням}}"
@@ -239,11 +241,26 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активний транспорт</0> переносить речовини проти градієнта."
 
+msgid "<0>Aiko</0> finished Week 3"
+msgstr "<0>Aiko</0> пройшла тиждень 3"
+
+msgid "<0>aufhören</0>, <1>Schnapsidee</1> and <2>die Gewerkschaft</2>"
+msgstr "<0>aufhören</0>, <1>Schnapsidee</1> і <2>die Gewerkschaft</2>"
+
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Дифузія</0>: частинки рухаються від вищої концентрації до нижчої."
 
+msgid "<0>Jonas</0> added 4 cards to Week 4"
+msgstr "<0>Jonas</0> додав 4 картки в тиждень 4"
+
+msgid "<0>Jonas</0> finished Week 2"
+msgstr "<0>Jonas</0> пройшов тиждень 2"
+
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>граничні витрати</0> <1>= ціна ще 1 шт.</1>"
+
+msgid "<0>Mari</0> finished Week 3"
+msgstr "<0>Mari</0> пройшла тиждень 3"
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативна вартість</0> <1>= чим жертвуєш</1>"
@@ -272,14 +289,17 @@ msgstr "<0>换</0> — міняти, <1>乘</1> — їхати: міняєш л�
 msgid "10 min"
 msgstr "10 хв"
 
-msgid "12 cards, about five minutes."
-msgstr "12 карток, приблизно п’ять хвилин."
+msgid "12 cards due, about five minutes"
+msgstr "12 карток на повторення, приблизно п’ять хвилин"
 
 msgid "135–145 mmol/L in adults"
 msgstr "135–145 ммоль/л у дорослих"
 
 msgid "17."
 msgstr "17."
+
+msgid "18 cards tagged exam, from 3 decks"
+msgstr "18 карток з тегом «іспит» з 3 колод"
 
 msgid "180 points. 80 to pass N5, 90 to pass N4."
 msgstr "180 балів. 80 для складання N5, 90 — для N4."
@@ -332,9 +352,6 @@ msgstr "40 і 60 питань. 120 з 200 балів для складання."
 msgid "500 feet in either direction"
 msgstr "500 футів (близько 150 м) в обидва боки"
 
-msgid "6 reviews waiting to sync"
-msgstr "6 повторень чекають на синхронізацію"
-
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% у читанні, письмі й аудіюванні та 60% у говорінні."
 
@@ -358,9 +375,6 @@ msgstr "Книжка"
 
 msgid "A brilliant first round rarely repeats in the second."
 msgstr "Блискучий перший раунд рідко вдається повторити в другому."
-
-msgid "A café terrace?"
-msgstr "Літня тераса кафе?"
 
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig буває і кафе, і вечір, і людина."
@@ -486,9 +500,6 @@ msgstr "Сторінка, якої немає там, куди веде поси
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "Союз грибів і коренів рослин: вода в обмін на цукор"
 
-msgid "A person leaning on a tree is taking a rest."
-msgstr "Людина, що сперлася на дерево, відпочиває."
-
 msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 msgstr "Фото нотаток з уроку німецької надходить асистентові з проханням «Зроби з цього картки». Він використовує Lymi й додає чотири картки: das Mädchen, aufhören, Feierabend і Schnapsidee."
 
@@ -552,8 +563,8 @@ msgstr "Річ; щось"
 msgid "A translation beside each one"
 msgstr "Переклад біля кожного питання"
 
-msgid "A whole deck"
-msgstr "Цілу колоду"
+msgid "A way in, never the answer."
+msgstr "Зачіпка, а не відповідь."
 
 msgid "a, as in “father”"
 msgstr "а, як у слові «мама»"
@@ -591,20 +602,11 @@ msgstr "Додати {name} в Lymi"
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
-msgid "Add a card"
-msgstr "Додати картку"
-
-msgid "Add a card from any app on your Mac, or press ⌘K in the browser. Grade a review with 1 to 4."
-msgstr "Додавай картки з будь-якого застосунку на Mac або натисни ⌘K у браузері. Оцінюй повторення клавішами від 1 до 4."
-
 msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
 msgstr "Додавай картку з будь-якого застосунку клавішами ⌃⌥L, а Lymi завжди під рукою у смузі меню."
 
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Додай фото, PDF або транскрипт і познач потрібні слова."
-
-msgid "Add a picture to any card, then choose how a deck asks."
-msgstr "Додай зображення до будь-якої картки й обери, як колода питатиме."
 
 msgid "Add a word from today’s class and AI fills in the meaning, the three forms, an example and a hint to help you remember it. It only fills what you left empty, and marks what it wrote."
 msgstr "Додай слово з сьогоднішнього заняття, і AI допише значення, три форми, приклад і підказку, щоб легше запам’ятати. Він заповнює лише порожні поля й позначає, що написав сам."
@@ -635,6 +637,9 @@ msgstr "Додати картки вручну"
 
 msgid "Add deck"
 msgstr "Додати колоду"
+
+msgid "Add from any app on your Mac."
+msgstr "Додавай з будь-якого застосунку на Mac."
 
 msgid "Add hint"
 msgstr "Додати підказку"
@@ -702,8 +707,8 @@ msgstr "Додав 7 карток із наголосами. Пропустив 
 msgid "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
 msgstr "Додав 7 карток із наголосами. Пропустив <0>квито́к</0>, він у тебе вже є."
 
-msgid "Added 8 cards to Biology. I skipped 2 you already have."
-msgstr "Додано 8 карток до «Біології». 2 картки, які вже є, пропущено."
+msgid "Added 8 cards to Biology"
+msgstr "Додано 8 карток до «Біології»"
 
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Додав 8 карток у колоду «Іспанська». Пропустив «ojalá»: така картка в тебе вже є."
@@ -850,9 +855,6 @@ msgstr "Файл .ofc з Noji"
 msgid "An amateur"
 msgstr "Аматор"
 
-msgid "An apple"
-msgstr "Яблуко"
-
 msgid "An example deck"
 msgstr "Приклад колоди"
 
@@ -879,9 +881,6 @@ msgstr "Анатомія, препарати й терміни, які учні 
 
 msgid "And what am I due to review tonight?"
 msgstr "А що мені сьогодні ввечері повторити?"
-
-msgid "Anki package"
-msgstr "Пакет Anki"
 
 msgid "Anki package · ready for a day"
 msgstr "Пакет Anki · доступний добу"
@@ -988,6 +987,9 @@ msgstr "Повернеться через 4 дні."
 msgid "Back in 9 days."
 msgstr "Повернеться через 9 днів."
 
+msgid "Back in today’s Often forgotten round"
+msgstr "Сьогодні знову в раунді «Часто забуваються»"
+
 msgid "Back to {name}"
 msgstr "Назад до {name}"
 
@@ -1048,9 +1050,6 @@ msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна л
 msgid "Bring Lymi to your next class."
 msgstr "Спробуй Lymi на наступному уроці."
 
-msgid "Bring the decks you have"
-msgstr "Перенеси свої колоди"
-
 msgid "Bring your Anki deck"
 msgstr "Перенеси колоду з Anki"
 
@@ -1059,6 +1058,9 @@ msgstr "Перенеси свої колоди з Anki."
 
 msgid "Bring your assistant to Lymi."
 msgstr "Підключи свого асистента до Lymi."
+
+msgid "Bring your decks"
+msgstr "Перенось свої колоди"
 
 msgid "Bring your decks across with their review history."
 msgstr "Перенеси колоди разом з історією повторень."
@@ -1196,9 +1198,6 @@ msgstr "Доповнення карток, переклад прикладів, 
 msgid "Cards"
 msgstr "Картки"
 
-msgid "Cards from a PDF"
-msgstr "Картки з PDF"
-
 msgid "Cards from this deck"
 msgstr "Картки з цієї колоди"
 
@@ -1210,6 +1209,9 @@ msgstr "Картки збережуть дати повторення, які м
 
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
+
+msgid "Cards you keep forgetting get a round of their own."
+msgstr "Картки, які постійно забуваються, отримують окремий раунд."
 
 msgid "Cards you wrote"
 msgstr "Твої картки"
@@ -1374,8 +1376,8 @@ msgstr "Під’єднай Claude, ChatGPT чи іншого асистента
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s page and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Один раз підключи Claude, ChatGPT чи іншого асистента. Надішли йому фото сьогоднішньої сторінки, і він додасть нові слова, або запитай, що чекає на тебе ввечері."
 
-msgid "Connect Claude, ChatGPT, Gemini or Grok once. Then do most of it from the chat: make cards from a photo or a PDF, build whole decks, see what’s due and practise. You still review in Lymi."
-msgstr "Підключи Claude, ChatGPT, Gemini чи Grok один раз. Далі майже все можна робити просто в чаті: створювати картки з фото чи PDF, складати цілі колоди, дивитися, що на повторення, і практикуватися. А повторюєш ти в Lymi."
+msgid "Connect Claude, ChatGPT, Gemini or Grok once, then do most of it from the chat. You still review in Lymi."
+msgstr "Підключи Claude, ChatGPT, Gemini чи Grok один раз — і майже все роби просто в чаті. А повторюєш ти в Lymi."
 
 msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Підключи Claude, ChatGPT, Gemini або Grok до Lymi один раз. Потім встав розшифровку уроку й попроси виписати нові слова, запитай, що чекає сьогодні, або наведи лад у колоді звичайними словами. Робиш щось своє? Усе це працює й через публічний API."
@@ -1607,12 +1609,6 @@ msgstr "Не пий каву перед *сном*."
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
 
-msgid "Done. 9 cards are in a new section, <0>Comida</0>."
-msgstr "Готово. 9 карток тепер у новому розділі <0>Comida</0>."
-
-msgid "Done. Lisboa a dois has 42 cards in 5 sections."
-msgstr "Готово. У колоді «Lisboa a dois» 42 картки в 5 розділах."
-
 msgid "Download for Mac"
 msgstr "Завантажити для Mac"
 
@@ -1787,6 +1783,9 @@ msgstr "Кожну картку озвучує AI-голос носія япон
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Кожна картка вимовляє своє слово мовою оригіналу. На звороті — рядок, що допомагає запам’ятати: хибний друг, рід, тон, що змінює значення."
 
+msgid "Every card, read aloud."
+msgstr "Кожна картка — вголос."
+
 msgid "Every day"
 msgstr "Щодня"
 
@@ -1813,6 +1812,9 @@ msgstr "Усі питання з посібника Instituto Cervantes — іс
 
 msgid "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
 msgstr "Усі питання громадянознавчого тесту 2025 року з прийнятними відповідями, а також слова для тесту з читання й письма."
+
+msgid "Every script"
+msgstr "Будь-яке письмо"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
@@ -1852,6 +1854,9 @@ msgstr "Усе готове й під рукою, перш ніж почати"
 
 msgid "Everything the test can ask."
 msgstr "Усе, про що може спитати тест."
+
+msgid "exam"
+msgstr "іспит"
 
 msgid "Exam prep"
 msgstr "Підготовка до іспитів"
@@ -1895,8 +1900,8 @@ msgstr "Переглянути колоди"
 msgid "Explore ready-made decks."
 msgstr "Готові колоди."
 
-msgid "Export any deck to Anki, with its pictures and review history."
-msgstr "Експортуй будь-яку колоду в Anki разом із картинками та історією повторень."
+msgid "Export any deck."
+msgstr "Експортуй будь-яку колоду."
 
 msgid "Exported your library"
 msgstr "Бібліотеку експортовано"
@@ -1989,6 +1994,9 @@ msgstr "Борошно"
 msgid "Follow with RSS"
 msgstr "Стежити через RSS"
 
+msgid "food"
+msgstr "їжа"
+
 msgid "Food and drink"
 msgstr "Їжа й напої"
 
@@ -2042,14 +2050,17 @@ msgstr "Для тестів на громадянство Німеччини, С
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
+msgid "Forgot on 3 of the last 5 days"
+msgstr "Забуто в 3 з останніх 5 днів"
+
 msgid "Format from 11 April 2026"
 msgstr "Формат від 11 квітня 2026 року"
 
+msgid "Four ways to ask"
+msgstr "Чотири способи питати"
+
 msgid "Français · phrase"
 msgstr "Français · фраза"
-
-msgid "Free"
-msgstr "Безкоштовно"
 
 msgid "Free Chinese decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Безкоштовні колоди з китайської з голосом на кожній картці. Додай будь-яку одним дотиком. Скоро буде більше."
@@ -2114,11 +2125,8 @@ msgstr "Від сьогодні до дня тесту"
 msgid "From your notes"
 msgstr "З твоїх нотаток"
 
-msgid "Furigana"
-msgstr "Фурігана"
-
-msgid "Furigana and pinyin over the characters, stress marks for Russian and Ukrainian, right-to-left text, and meanings in English, Ukrainian or Russian."
-msgstr "Фурігана й піньїнь над ієрогліфами, наголоси для російської та української, письмо справа наліво та значення англійською, українською чи російською."
+msgid "Furigana, pinyin, stress marks."
+msgstr "Фурігана, піньїнь, наголоси."
 
 msgid "Future, “I”"
 msgstr "Майбутній час, «я»"
@@ -2217,9 +2225,6 @@ msgstr "До побачення"
 msgid "Got it."
 msgstr "Зрозуміло."
 
-msgid "Grade"
-msgstr "Оцінка"
-
 msgid "Gram-positive cocci in clusters; coagulase-positive"
 msgstr "Грампозитивні коки, що утворюють скупчення; коагулазопозитивний"
 
@@ -2292,6 +2297,9 @@ msgstr "Добрий день (ввічливо)"
 msgid "Hello!"
 msgstr "Привіт!"
 
+msgid "Help with the ones that slip"
+msgstr "Допомога з тим, що вислизає"
+
 msgid "Here are my notes from today’s pharmacology lecture. Add the drugs."
 msgstr "Ось мої нотатки з сьогоднішньої лекції з фармакології. Додай препарати."
 
@@ -2315,6 +2323,9 @@ msgstr "Привіт; бувай"
 
 msgid "Hint"
 msgstr "Підказка"
+
+msgid "Hints"
+msgstr "Підказки"
 
 msgid "hiragana"
 msgstr "хіраґана"
@@ -2633,6 +2644,9 @@ msgstr "У тому порядку, в якому ти їх вчиш: розді
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Ушкоджується біля ліктя; слабкий хват і оніміння мізинця"
 
+msgid "Insights"
+msgstr "Огляд"
+
 msgid "Instructions"
 msgstr "Інструкції"
 
@@ -2689,6 +2703,9 @@ msgstr "Lymi планує кожну картку за методом інтер
 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
+
+msgid "It syncs when you’re back."
+msgstr "Синхронізується, щойно повернешся онлайн."
 
 msgid "It was a really *pleasant* evening."
 msgstr "Це був дуже *приємний* вечір."
@@ -2857,9 +2874,6 @@ msgstr "Бережи свою <0>українську.</0>"
 msgid "Keep what you learn in any language."
 msgstr "Бережи вивчене будь-якою мовою."
 
-msgid "Keeping the body’s inside conditions steady"
-msgstr "Підтримання сталих умов усередині організму"
-
 msgid "Keyboard first"
 msgstr "Усе з клавіатури"
 
@@ -2881,6 +2895,9 @@ msgstr "Lymi надає естонська компанія Krambertech OÜ, я�
 
 msgid "Lab values"
 msgstr "Лабораторні норми"
+
+msgid "Label cards across decks, then review just those."
+msgstr "Позначай картки в різних колодах і повторюй лише їх."
 
 msgid "Language"
 msgstr "Мова"
@@ -2932,6 +2949,9 @@ msgstr "Російські слова на флешкартках · Lymi"
 
 msgid "Learn the questions once. Keep them until exam day."
 msgstr "Вивчи питання один раз. Пам’ятай їх до іспиту."
+
+msgid "Learn the same deck together"
+msgstr "Вчіть одну колоду разом"
 
 msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
 msgstr "Українські слова на флешкартках · Lymi"
@@ -3043,14 +3063,8 @@ msgstr "Lymi питає, що означає фраза, і як сказати 
 msgid "Lymi changelog"
 msgstr "Що нового в Lymi"
 
-msgid "Lymi connected"
-msgstr "Lymi під’єднано"
-
 msgid "Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a day."
 msgstr "Lymi не підключається до сайтів з репетиторами. Розумне додавання в бета-версії, тому читає до 5 уроків на день."
-
-msgid "Lymi file"
-msgstr "Файл Lymi"
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
@@ -3136,14 +3150,14 @@ msgstr "ma-інфінітив"
 msgid "macOS 13 or later"
 msgstr "macOS 13 або новіша"
 
+msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
+msgstr "Створено колоду <0>Lisboa a dois</0>: 42 картки в 5 розділах"
+
 msgid "Made by Lymi"
 msgstr "Від Lymi"
 
 msgid "Made by Ukrainians"
 msgstr "Створено українцями"
-
-msgid "Made for every script"
-msgstr "Для будь-якого письма"
 
 msgid "Main navigation"
 msgstr "Основна навігація"
@@ -3157,8 +3171,8 @@ msgstr "Створи картку за кілька секунд і повтор
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Створи колоду для групи й надішли посилання для приєднання. Кожна картка, яку ти додаси після уроку, з’явиться в усіх, хто приєднався, а розклад повторень у кожного свій."
 
-msgid "Make cards from the new terms in this."
-msgstr "Зроби картки з нових термінів звідси."
+msgid "Make cards from the new terms in this PDF."
+msgstr "Зроби картки з нових термінів у цьому PDF."
 
 msgid "Make cards from this."
 msgstr "Зроби з цього картки."
@@ -3172,8 +3186,8 @@ msgstr "Створюй картки з Claude, ChatGPT, Gemini чи Grok · Lymi
 msgid "Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything"
 msgstr "Створюй картки з Claude, ChatGPT, Gemini, Grok, Codex чи своїм кодом"
 
-msgid "Make me a Portuguese deck for a week in Lisbon, with a section for each day."
-msgstr "Склади мені португальську колоду на тиждень у Лісабоні, з розділом на кожен день."
+msgid "Make me a Portuguese deck for a week in Lisbon, a section a day."
+msgstr "Склади мені португальську колоду на тиждень у Лісабоні, по розділу на день."
 
 msgid "Make your first card tonight."
 msgstr "Створи першу картку вже сьогодні."
@@ -3205,9 +3219,6 @@ msgstr "Значення"
 msgid "Meaning → word"
 msgstr "Значення → слово"
 
-msgid "Meanings in"
-msgstr "Мови значень:"
-
 msgid "Meanings in your language"
 msgstr "Значення твоєю мовою"
 
@@ -3234,9 +3245,6 @@ msgstr "Пам’ять слабне. Якщо пригадати щось вч�
 
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
 msgstr "Пам’ять згасає. Якщо згадати щось вчасно, спогад міцнішає, а наступна перерва може бути довшою. Lymi за оцінками кожного учня вирішує, коли повернути кожну картку."
-
-msgid "Memory hooks and hints"
-msgstr "Підказки й асоціації"
 
 msgid "Menu"
 msgstr "Меню"
@@ -3300,12 +3308,6 @@ msgstr "Перехід з Anki"
 
 msgid "Move from Mochi"
 msgstr "Перехід з Mochi"
-
-msgid "Move over from another app in a few minutes. Pictures come too, and so does your review history where the app keeps one."
-msgstr "Переходь з іншого застосунку за кілька хвилин. Зображення переносяться теж, а історія повторень — якщо застосунок її зберігає."
-
-msgid "Move the food words in my Portuguese deck into their own section."
-msgstr "Перенеси слова про їжу з моєї португальської колоди в окремий розділ."
 
 msgid "Move to section…"
 msgstr "Перемістити в розділ…"
@@ -3429,9 +3431,6 @@ msgstr "Над <0>我们在这里</0> піньїню немає: ці ієрог
 msgid "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgstr "Над <0>次</0> і <1>駅</1> читання немає: ти їх уже знаєш."
 
-msgid "No trial, and no payment details to sign up."
-msgstr "Без пробного періоду й без платіжних даних під час реєстрації."
-
 msgid "No, *thank you*."
 msgstr "Ні, *дякую*."
 
@@ -3534,9 +3533,6 @@ msgstr "Гаразд"
 
 msgid "Older"
 msgstr "Раніше"
-
-msgid "On your Mac too"
-msgstr "І на Mac"
 
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Щойно колода потрапляє у твій Lymi, він повертає кожну картку саме перед тим, як ти її забудеш, — кілька хвилин на день."
@@ -3658,9 +3654,6 @@ msgstr "Встав текст або прикріпи фото й попроси
 msgid "PDF"
 msgstr "PDF"
 
-msgid "PDF · 12 pages"
-msgstr "PDF · 12 сторінок"
-
 msgid "PDF · 30 pages"
 msgstr "PDF · 30 сторінок"
 
@@ -3712,6 +3705,9 @@ msgstr "Фізика"
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Обери курс у бібліотеці колод, додай його своїй групі й доповнюй по ходу. А свій поширюй, коли він буде готовий."
 
+msgid "Pick a daily goal. A rest day keeps the run going."
+msgstr "Обери денну мету. День відпочинку не обриває дні поспіль."
+
 msgid "Pick your assistant for its steps."
 msgstr "Обери свого асистента, щоб побачити інструкцію."
 
@@ -3723,9 +3719,6 @@ msgstr "Зображення → значення"
 
 msgid "Picture → word"
 msgstr "Зображення → слово"
-
-msgid "Pictures and four ways to ask"
-msgstr "Зображення й чотири способи питати"
 
 msgid "Pinyin"
 msgstr "Піньїнь"
@@ -3956,12 +3949,6 @@ msgstr "Мати добре нунчі — відчувати настрій, п
 msgid "Quickstart"
 msgstr "Швидкий старт"
 
-msgid "Quiz me"
-msgstr "Перевір мене"
-
-msgid "Quiz me on this week’s Portuguese."
-msgstr "Перевір мене з португальської за цей тиждень."
-
 msgid "rain"
 msgstr "дощ"
 
@@ -4074,14 +4061,8 @@ msgstr "Повторюй кілька хвилин на день"
 msgid "Review a few minutes a day."
 msgstr "Повторюй кілька хвилин на день."
 
-msgid "Review in Lymi"
-msgstr "Повторити в Lymi"
-
 msgid "Review less, remember longer."
 msgstr "Повторюй менше, пам’ятай довше."
-
-msgid "Review on the train. Everything syncs when you’re back online."
-msgstr "Повторюй у потязі. Усе синхронізується, щойно з’явиться інтернет."
 
 msgid "Review on your phone or your computer, for free, even without a connection."
 msgstr "Повторюй на телефоні чи комп’ютері, безплатно, навіть без інтернету."
@@ -4109,9 +4090,6 @@ msgstr "Правильна відповідь"
 
 msgid "right away"
 msgstr "одразу"
-
-msgid "Right to left"
-msgstr "Справа наліво"
 
 msgid "Road"
 msgstr "Дорога (шлях)"
@@ -4218,6 +4196,9 @@ msgstr "Переглянути колоди"
 msgid "See what you know"
 msgstr "Видно, що ти вже знаєш"
 
+msgid "See what you remember, and how steady you’ve been."
+msgstr "Дивись, що ти пам’ятаєш і наскільки регулярно вчишся."
+
 msgid "See you *tomorrow*, then."
 msgstr "Ну, до *завтра*."
 
@@ -4278,8 +4259,8 @@ msgstr "Сім карток: чотири з фінської, дві шахов
 msgid "Shall we *eat* together?"
 msgstr "*Поїмо* разом?"
 
-msgid "Share a deck with your class, your team or a friend. One of you adds the cards after each lesson, and everyone reviews on their own schedule."
-msgstr "Поділися колодою з групою, командою чи другом. Хтось один додає картки після кожного уроку, а кожен повторює у своєму темпі."
+msgid "Share a deck with your class, your team or a friend. One of you adds the cards, and everyone reviews on their own schedule."
+msgstr "Поділися колодою з класом, командою чи другом. Хтось один додає картки, а повторює кожен у своєму ритмі."
 
 msgid "Share one deck with your class."
 msgstr "Одна колода на всю групу."
@@ -4546,9 +4527,6 @@ msgstr "Зупинити відтворення"
 msgid "Stress"
 msgstr "Наголос"
 
-msgid "Stress marks"
-msgstr "Наголоси"
-
 msgid "Stubborn grit"
 msgstr "Уперта витримка"
 
@@ -4557,9 +4535,6 @@ msgstr "Уперта витривалість; не здаватися попр�
 
 msgid "Stubborn grit; carrying on when it gets hard"
 msgstr "Уперта витривалість; не здаватися, коли важко"
-
-msgid "Stuck on a card? Its hint gives you a way in, like a word root or a picture to imagine, without giving the answer away."
-msgstr "Не згадуєш картку? Підказка дає зачіпку: корінь слова чи образ, який легко уявити, і не видає відповіді."
 
 msgid "Studied Estonian in Anki before? Your cards keep their recordings and their schedule, so nothing starts over."
 msgstr "Маєш естонські картки в Anki? Вони збережуть записи й розклад повторень, тож нічого не доведеться починати спочатку."
@@ -5059,9 +5034,6 @@ msgstr "Поки що нічого не опубліковано."
 msgid "There’s a *park* near the station."
 msgstr "Біля вокзалу є *парк*."
 
-msgid "These three keep slipping:"
-msgstr "Ці три постійно вислизають:"
-
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."
 
@@ -5070,9 +5042,6 @@ msgstr "Вони відповідають джерелу {source}, дослів�
 
 msgid "They say it’ll rain *tomorrow*."
 msgstr "Кажуть, *завтра* буде дощ."
-
-msgid "Things to ask"
-msgstr "Що можна запитати"
 
 msgid "This *apple* is very sweet."
 msgstr "Це *яблуко* дуже солодке."
@@ -5151,9 +5120,6 @@ msgstr "квиток"
 
 msgid "Ticket"
 msgstr "Квиток"
-
-msgid "Tidy a deck"
-msgstr "Упорядкувати колоду"
 
 msgid "tip"
 msgstr "чайові"
@@ -5280,6 +5246,9 @@ msgstr "Сказати"
 
 msgid "To sleep; to go to bed"
 msgstr "Спати; лягати спати"
+
+msgid "to stop"
+msgstr "припиняти"
 
 msgid "To stop"
 msgstr "Припиняти; зупинятися"
@@ -5518,6 +5487,9 @@ msgstr "Зазвичай"
 msgid "verb"
 msgstr "дієслово"
 
+msgid "verbs"
+msgstr "дієслова"
+
 msgid "Version of 5 January 2026"
 msgstr "Версія від 5 січня 2026 року"
 
@@ -5541,9 +5513,6 @@ msgstr "Чекаємо на нотатки"
 
 msgid "Waits for its turn"
 msgstr "Чекає своєї черги"
-
-msgid "Want a hint for each?"
-msgstr "Написати підказку до кожного?"
 
 msgid "Water"
 msgstr "Вода"
@@ -5583,6 +5552,21 @@ msgstr "Відвідування сайту, а також те, куди від
 
 msgid "Websites"
 msgstr "Сайти"
+
+msgid "Week 1"
+msgstr "Тиждень 1"
+
+msgid "Week 2"
+msgstr "Тиждень 2"
+
+msgid "week 3"
+msgstr "тиждень 3"
+
+msgid "Week 3"
+msgstr "Тиждень 3"
+
+msgid "Week 4"
+msgstr "Тиждень 4"
 
 msgid "What *fruit* is this?"
 msgstr "Що це за *фрукт*?"
@@ -5629,9 +5613,6 @@ msgstr "Що дає кожна колода для іспиту"
 msgid "What goes"
 msgstr "Що буде видалено"
 
-msgid "What I keep forgetting"
-msgstr "Що я забуваю"
-
 msgid "What if I already use Anki?"
 msgstr "А якщо я вже користуюся Anki?"
 
@@ -5676,15 +5657,6 @@ msgstr "Те, що треба знати для заняття чи іспиту
 
 msgid "What you send"
 msgstr "Що ти надсилаєш"
-
-msgid "What’s <0>a esplanada</0>?"
-msgstr "Що таке <0>a esplanada</0>?"
-
-msgid "What’s due"
-msgstr "Що на повторення"
-
-msgid "What’s due sits in the menu bar, and a new card is one shortcut away."
-msgstr "Що на повторення, видно в рядку меню, а нова картка — за одне поєднання клавіш."
 
 msgid "What’s due tonight?"
 msgstr "Що на сьогоднішній вечір?"
@@ -5797,6 +5769,9 @@ msgstr "AI не перейде на російську?"
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
 
+msgid "With their pictures and history."
+msgstr "З картинками та історією."
+
 msgid "won’t do, no"
 msgstr "не можна, ні"
 
@@ -5832,6 +5807,9 @@ msgstr "Слова з твоєї колоди"
 
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Над кандзі показано читання каною. Ромадзі є лише в колоді кани, бо там звучання і є відповіддю."
+
+msgid "Words, meanings or a picture."
+msgstr "Слова, значення чи картинка."
 
 msgid "Work"
 msgstr "Робота"
@@ -5923,9 +5901,6 @@ msgstr "Так. Експортуй їх із Pleco текстовим файло
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Так. Lymi працює в браузері на телефоні й комп’ютері, його можна додати на головний екран. Картки й прогрес на обох однакові."
 
-msgid "Yes. Next one: <0>o sumo</0>."
-msgstr "Так. Наступне: <0>o sumo</0>."
-
 msgid "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
 msgstr "Так. Відкрий Lymi один раз, поки є інтернет, а далі можна повторювати без зв’язку. Відповіді надішлються, щойно ти знову будеш онлайн."
 
@@ -6013,6 +5988,12 @@ msgstr "Асистент читає файл, вибирає терміни й �
 msgid "Your cards, as you learn them"
 msgstr "Твої картки, у міру вивчення"
 
+msgid "Your data is yours"
+msgstr "Твої дані — твої"
+
+msgid "Your goal, your streak"
+msgstr "Твоя мета й дні поспіль"
+
 msgid "Your own app"
 msgstr "Власний застосунок"
 
@@ -6033,9 +6014,6 @@ msgstr "Твій сайт"
 
 msgid "Your words, not a course."
 msgstr "Твої слова, а не чужий курс."
-
-msgid "Yours to take"
-msgstr "Можна забрати з собою"
 
 msgid "Русский · new"
 msgstr "Русский · нова"

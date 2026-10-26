@@ -4,7 +4,6 @@ import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { AiGallery } from "./AiGallery";
 import { ApiSection } from "./ApiSection";
-import { ArrowLink } from "./ArrowLink";
 import { WorksWith } from "./AssistantMarks";
 import { AssistantSection } from "./AssistantSection";
 import { USE_CASE_CARDS } from "./cards";
@@ -13,19 +12,14 @@ import { Wide } from "./FeatureSection";
 import { FreeDecks } from "./FreeDecks";
 import { Furigana } from "./Furigana";
 import { Hero } from "./Hero";
-import { CLASS_CARDS } from "./japanese";
 import { LandingLayout } from "./LandingLayout";
 import { ReturnLane } from "./ReturnLane";
-import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
-import { Tray } from "./Tray";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
 export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
-
-const CLASS_DECK = msg`Tuesday Japanese class`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
 export function LandingView() {
@@ -104,35 +98,9 @@ export function LandingView() {
 
       <AiGallery />
       <AssistantSection />
-      <FreeDecks />
-
-      <section data-nav="landing" className="px-5 pt-20 @2xl:px-10 @4xl:pt-28">
-        <div className="mx-auto max-w-[1040px]">
-          <Tray
-            side
-            hue={150}
-            title={<Trans>Learning is more fun together.</Trans>}
-            body={
-              <Trans>
-                Share a deck with your class, your team or a friend. One of you adds the cards after
-                each lesson, and everyone reviews on their own schedule.
-              </Trans>
-            }
-            after={
-              <ArrowLink href={localizedPath("teachers", i18n.locale)}>
-                <Trans>Lymi for teachers</Trans>
-              </ArrowLink>
-            }
-          >
-            <div className="w-full max-w-[420px]">
-              <SharedDeckDemo name={CLASS_DECK} language="ja" cards={CLASS_CARDS} />
-            </div>
-          </Tray>
-        </div>
-      </section>
-
       <FeatureBento />
       <ApiSection />
+      <FreeDecks />
       <SignUpSection title={<Trans>Make your first card tonight.</Trans>} />
     </LandingLayout>
   );

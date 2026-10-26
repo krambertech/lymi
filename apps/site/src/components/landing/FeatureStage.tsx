@@ -1,12 +1,11 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { LifeBuoy, type LucideIcon, Volume2 } from "lucide-react";
+import { type LucideIcon, Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import { AiChip } from "./CardScenes";
-import { Furigana } from "./Furigana";
-import { EASE, usePlayback, useStill } from "./playback";
+import { EASE, useStill } from "./playback";
 
 interface DemoProps {
   play: boolean;
@@ -150,83 +149,6 @@ export function LeadDemo({ play }: DemoProps) {
   );
 }
 
-/* Memory tricks: a hint gives a way in, not the answer. 休 is a person leaning on a tree. */
-
-const TRICK_BEATS = { press: 1100, shown: 1350, split: 1700 };
-
-export function TrickDemo({ play }: DemoProps) {
-  const { at } = usePlayback(TRICK_BEATS, play, useStill());
-  const [opened, setOpened] = useState(false);
-  const shown = opened || at("shown");
-  return (
-    <div className="w-full max-w-[340px] rounded-2xl bg-plate p-5 edge">
-      <p lang="ja" className="text-xs text-muted">
-        日本語
-      </p>
-      <p lang="ja" className="mt-4 text-center text-4xl font-medium text-text">
-        休む
-      </p>
-      <div className="mt-6 grid min-h-[120px] place-items-center">
-        <AnimatePresence mode="wait" initial={false}>
-          {shown ? (
-            <motion.div
-              key="hint"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="w-full rounded-xl bg-plate-2 px-4 py-3"
-            >
-              <p
-                lang="ja"
-                aria-hidden="true"
-                className="flex items-center justify-center gap-2.5 text-3xl text-text"
-              >
-                <span
-                  className={clsx(
-                    "transition-colors duration-500",
-                    (opened || at("split")) && "text-amber-text",
-                  )}
-                >
-                  亻
-                </span>
-                <span className="text-lg text-muted">+</span>
-                <span
-                  className={clsx(
-                    "transition-colors duration-500",
-                    (opened || at("split")) && "text-amber-text",
-                  )}
-                >
-                  木
-                </span>
-                <span className="text-lg text-muted">=</span>
-                <span>休</span>
-              </p>
-              <p className="mt-2 flex items-start gap-2 text-sm text-pretty text-text-2">
-                <LifeBuoy aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-text" />
-                <Trans>A person leaning on a tree is taking a rest.</Trans>
-              </p>
-            </motion.div>
-          ) : (
-            <motion.button
-              key="button"
-              type="button"
-              exit={{ opacity: 0 }}
-              onClick={() => setOpened(true)}
-              className={clsx(
-                "flex h-10 items-center gap-2 rounded-full bg-plate-2 px-4 text-sm text-text transition-transform hoverable:hover:bg-hover",
-                at("press") && "scale-95",
-              )}
-            >
-              <LifeBuoy aria-hidden="true" className="size-4" />
-              <Trans>Show hint</Trans>
-            </motion.button>
-          )}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
 /* Native AI voice: real clips, each drawing its own waveform. */
 
 const CLIPS = [
@@ -235,7 +157,9 @@ const CLIPS = [
   { id: "pt", lang: "pt-PT", term: "saudade", clip: "/audio/hand/saudade.mp3" },
   { id: "ko", lang: "ko", term: "눈치", clip: "/audio/hand/nunchi.mp3" },
 ];
+const COMPACT_CLIPS = CLIPS.slice(0, 2);
 const BARS = 28;
+const SWEEP_MS = 1600;
 
 /** A clip's loudness in even slices, so the waveform is drawn from the recording itself. */
 async function peaksOf(url: string): Promise<number[]> {
@@ -253,21 +177,42 @@ async function peaksOf(url: string): Promise<number[]> {
   return peaks.map((p) => Math.max(0.1, p / top));
 }
 
-export function VoiceDemo({ play }: DemoProps) {
+interface VoiceProps extends DemoProps {
+  /** Two clips in small rows, for a bento tile. */
+  compact?: boolean;
+  /** Runs the first clip's line once, without sound, when play turns on. */
+  sweep?: boolean;
+}
+
+export function VoiceDemo({ play, compact, sweep }: VoiceProps) {
   const { t } = useLingui();
+  const still = useStill();
+  const clips = compact ? COMPACT_CLIPS : CLIPS;
   const [peaks, setPeaks] = useState<Record<string, number[]>>({});
   const [playing, setPlaying] = useState<{ id: string; at: number } | null>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
   const frame = useRef(0);
 
   useEffect(() => {
-    if (!play) return;
-    for (const c of CLIPS) {
+    if (!play && !compact) return;
+    for (const c of clips) {
       peaksOf(c.clip)
         .then((p) => setPeaks((all) => ({ ...all, [c.id]: p })))
         .catch(() => {});
     }
-  }, [play]);
+  }, [play, compact, clips]);
+  useEffect(() => {
+    if (!sweep || !play || still) return;
+    const startedAt = performance.now();
+    const tick = (now: number) => {
+      const at = (now - startedAt) / SWEEP_MS;
+      if (at >= 1) return setPlaying(null);
+      setPlaying({ id: "de", at });
+      frame.current = requestAnimationFrame(tick);
+    };
+    frame.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame.current);
+  }, [sweep, play, still]);
   useEffect(
     () => () => {
       const clip = audio.current;
@@ -298,8 +243,8 @@ export function VoiceDemo({ play }: DemoProps) {
   };
 
   return (
-    <div className="grid w-full max-w-[380px] gap-2">
-      {CLIPS.map((c) => {
+    <div className={clsx("grid w-full gap-2", compact ? "max-w-[220px] gap-1.5" : "max-w-[380px]")}>
+      {clips.map((c) => {
         const on = playing?.id === c.id;
         return (
           <button
@@ -307,23 +252,33 @@ export function VoiceDemo({ play }: DemoProps) {
             type="button"
             onClick={() => start(c.id, c.clip)}
             aria-label={t`Hear ${c.term}`}
-            className="flex h-14 items-center gap-3 rounded-xl bg-plate ps-2 pe-4 text-start edge transition-[background-color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-hover"
+            className={clsx(
+              "flex items-center rounded-xl bg-plate text-start edge transition-[background-color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-hover",
+              compact ? "h-10 gap-2 ps-1.5 pe-3" : "h-14 gap-3 ps-2 pe-4",
+            )}
           >
             <span
               className={clsx(
-                "grid size-10 shrink-0 place-items-center rounded-full transition-colors",
+                "grid shrink-0 place-items-center rounded-full transition-colors",
+                compact ? "size-7" : "size-10",
                 on ? "bg-amber text-amber-ink" : "bg-plate-2 text-text",
               )}
             >
-              <Volume2 aria-hidden="true" className="size-4" />
+              <Volume2 aria-hidden="true" className={compact ? "size-3.5" : "size-4"} />
             </span>
             <span
               lang={c.lang}
-              className="w-[104px] shrink-0 truncate text-lg font-medium text-text"
+              className={clsx(
+                "shrink-0 truncate font-medium text-text",
+                compact ? "w-[78px] text-sm" : "w-[104px] text-lg",
+              )}
             >
               {c.term}
             </span>
-            <span aria-hidden="true" className="flex h-6 flex-1 items-center gap-[2px]">
+            <span
+              aria-hidden="true"
+              className={clsx("flex flex-1 items-center gap-[2px]", compact ? "h-5" : "h-6")}
+            >
               {(peaks[c.id] ?? Array.from({ length: BARS }, () => 0.1)).map((p, i) => (
                 <span
                   // biome-ignore lint/suspicious/noArrayIndexKey: bars in a fixed order
@@ -339,173 +294,6 @@ export function VoiceDemo({ play }: DemoProps) {
           </button>
         );
       })}
-    </div>
-  );
-}
-
-/* Multilingual: each script drawn the way a learner needs it. */
-
-/** The stressed vowel and its mark lit, so the eye lands where the voice does. */
-function Stressed({ term }: { term: string }) {
-  const mark = term.indexOf("́");
-  if (mark < 1) return <>{term}</>;
-  return (
-    <>
-      {term.slice(0, mark - 1)}
-      <span className="text-amber-text">{term.slice(mark - 1, mark + 1)}</span>
-      {term.slice(mark + 1)}
-    </>
-  );
-}
-
-export function MultiDemo(_: DemoProps) {
-  const tiles = [
-    {
-      lang: "ja",
-      word: <Furigana term="木漏れ日" reading="こもれび" lang="ja" />,
-      note: <Trans>Furigana</Trans>,
-    },
-    {
-      lang: "zh",
-      word: <Furigana term="朋友" reading="péng you" lang="zh" />,
-      note: <Trans>Pinyin</Trans>,
-    },
-    { lang: "ru", word: <Stressed term="молоко́" />, note: <Trans>Stress marks</Trans> },
-    { lang: "ar", word: <span dir="rtl">مرحبا</span>, note: <Trans>Right to left</Trans> },
-  ];
-  return (
-    <div className="grid w-full max-w-[360px] gap-3">
-      <div className="grid grid-cols-2 gap-2">
-        {tiles.map((tile) => (
-          <div
-            key={tile.lang}
-            className="flex flex-col items-center gap-2 rounded-xl bg-plate px-2 pt-4 pb-3 edge"
-          >
-            <span lang={tile.lang} className="text-[26px] leading-[1.6] font-medium text-text">
-              {tile.word}
-            </span>
-            <span className="text-xs text-muted">{tile.note}</span>
-          </div>
-        ))}
-      </div>
-      <p className="flex flex-wrap items-center justify-center gap-1.5 text-xs text-text-2">
-        <Trans>Meanings in</Trans>
-        {[
-          ["en", "English"],
-          ["uk", "Українська"],
-          ["ru", "Русский"],
-        ].map(([lang, name]) => (
-          <span key={lang} lang={lang} className="rounded-full bg-plate px-2.5 py-1 text-text edge">
-            {name}
-          </span>
-        ))}
-      </p>
-    </div>
-  );
-}
-
-/* Pictures and four ways to ask: one card, asked each way a deck can ask it. */
-
-const MODES = ["term_to_meaning", "meaning_to_term", "image_to_term", "image_to_meaning"] as const;
-type Mode = (typeof MODES)[number];
-const MODE_MS = 1800;
-
-function Apple({ className }: { className?: string }) {
-  const { t } = useLingui();
-  return (
-    <svg viewBox="0 0 64 64" role="img" aria-label={t`An apple`} className={className}>
-      <path d="M33 17c3-7 9-9 13-8-1 5-5 9-13 8Z" fill="oklch(0.62 0.13 145)" />
-      <path
-        d="M32 19c-2-4-3-7-3-10"
-        fill="none"
-        stroke="oklch(0.42 0.05 60)"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M32 21c-5-4-14-4-19 2-6 7-4 19 1 26 4 6 9 9 13 8 2-1 3-1 5-1s3 0 5 1c4 1 9-2 13-8 5-7 7-19 1-26-5-6-14-6-19-2Z"
-        fill="oklch(0.62 0.18 28)"
-      />
-      <path
-        d="M20 29c-2 3-2 8 0 11"
-        fill="none"
-        stroke="oklch(1 0 0 / 0.45)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-export function PicturesDemo({ play }: DemoProps) {
-  const still = useStill();
-  const [mode, setMode] = useState<Mode>("term_to_meaning");
-  const [picked, setPicked] = useState(false);
-  useEffect(() => {
-    if (!play || still || picked) return;
-    const timer = window.setInterval(
-      () => setMode((m) => MODES[(MODES.indexOf(m) + 1) % MODES.length] as Mode),
-      MODE_MS,
-    );
-    return () => window.clearInterval(timer);
-  }, [play, still, picked]);
-
-  const term = <span lang="es">la manzana</span>;
-  const meaning = <Trans>apple</Trans>;
-  const picture = <Apple className="size-16" />;
-  const faces: Record<Mode, { cue: ReactNode; answer: ReactNode }> = {
-    term_to_meaning: { cue: term, answer: meaning },
-    meaning_to_term: { cue: meaning, answer: term },
-    image_to_term: { cue: picture, answer: term },
-    image_to_meaning: { cue: picture, answer: meaning },
-  };
-  const labels: Record<Mode, ReactNode> = {
-    term_to_meaning: <Trans>Word → meaning</Trans>,
-    meaning_to_term: <Trans>Meaning → word</Trans>,
-    image_to_term: <Trans>Picture → word</Trans>,
-    image_to_meaning: <Trans>Picture → meaning</Trans>,
-  };
-  const face = faces[mode];
-
-  return (
-    <div className="grid w-full max-w-[340px] gap-3">
-      <div className="rounded-2xl bg-plate p-5 text-center edge">
-        <div className="grid h-24 place-items-center text-3xl font-medium tracking-[-0.025em] text-text">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={mode}
-              initial={still ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25, ease: EASE }}
-            >
-              {face.cue}
-            </motion.span>
-          </AnimatePresence>
-        </div>
-        <p className="mt-3 border-t border-edge pt-3 text-md text-text-2">{face.answer}</p>
-      </div>
-      <div className="grid grid-cols-2 gap-1.5">
-        {MODES.map((each) => (
-          <button
-            key={each}
-            type="button"
-            aria-pressed={mode === each}
-            onClick={() => {
-              setPicked(true);
-              setMode(each);
-            }}
-            className={clsx(
-              "h-9 rounded-full px-2 text-xs transition-colors",
-              mode === each
-                ? "bg-text font-medium text-canvas"
-                : "bg-plate text-text-2 edge hoverable:hover:text-text",
-            )}
-          >
-            {labels[each]}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

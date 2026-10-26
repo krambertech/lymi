@@ -4,7 +4,6 @@ import { clsx } from "clsx";
 import { Check, Copy } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
-import { Added, Attachment } from "./AssistantChat";
 import { Pick } from "./MaterialToCards";
 import { EASE, usePlayback, useStill } from "./playback";
 
@@ -230,20 +229,5 @@ export function LessonScene({ play }: SceneProps) {
         ))}
       </div>
     </div>
-  );
-}
-
-export function Key({ down = false, children }: { down?: boolean; children: ReactNode }) {
-  return (
-    <kbd
-      className={clsx(
-        "grid h-9 min-w-9 place-items-center rounded-md bg-plate px-2 text-md text-text transition-[translate,box-shadow] duration-150",
-        down
-          ? "translate-y-px shadow-[inset_0_0_0_1px_var(--edge-2)]"
-          : "shadow-[0_0_0_1px_var(--edge),0_2px_0_var(--edge-2)]",
-      )}
-    >
-      {children}
-    </kbd>
   );
 }

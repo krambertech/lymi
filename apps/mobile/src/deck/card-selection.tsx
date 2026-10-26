@@ -22,6 +22,7 @@ import type { useTagCards } from "./tag-cards";
  */
 export function useCardSelection({
   deckId,
+  scoped = false,
   rows,
   shown,
   owner,
@@ -31,6 +32,8 @@ export function useCardSelection({
   moveToDeck,
 }: {
   deckId: string;
+  /** A section's page, which shares the deck's id but not its Review accessory. */
+  scoped?: boolean;
   /** Every card in the deck, which Review reads the chosen ones from. */
   rows: readonly DeckRow[];
   /** The cards the list shows, in its order, which Select all chooses. */
@@ -151,9 +154,10 @@ export function useCardSelection({
       ].filter((group) => group.length > 0)
     : [];
   useEffect(() => {
+    if (scoped) return;
     setDeckSelecting(deckId, choosing);
     return () => setDeckSelecting(deckId, false);
-  }, [deckId, choosing]);
+  }, [deckId, scoped, choosing]);
   useFloatingBar(
     selection && (
       <Animated.View

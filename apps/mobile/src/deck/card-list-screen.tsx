@@ -51,6 +51,7 @@ import { ActionMenu } from "../ui/action-menu";
 import { EmptyState } from "../ui/empty-state";
 import { Icon } from "../ui/icons";
 import { LoadFailed, useLoadFailed } from "../ui/load-failed";
+import type { MenuItem } from "../ui/menu";
 import { OfflineNote } from "../ui/offline-note";
 import { Button, LIFT, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../ui/row-menu";
@@ -174,6 +175,7 @@ export function CardListScreen({
     toggle: toggleSelected,
   } = useCardSelection({
     deckId: id,
+    scoped,
     rows,
     shown: ordered,
     owner,
@@ -225,7 +227,11 @@ export function CardListScreen({
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
   const onReviewPast = useCallback((hidden: boolean) => setDeckReviewHidden(id, hidden), [id]);
-  useEffect(() => () => setDeckReviewHidden(id, false), [id]);
+  // Only the deck's own page carries its Review accessory, so a section page leaves the flag alone.
+  useEffect(() => {
+    if (scoped) return;
+    return () => setDeckReviewHidden(id, false);
+  }, [id, scoped]);
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
@@ -253,6 +259,110 @@ export function CardListScreen({
   const deckName = deck?.name;
   const title = scoped ? (section?.name ?? (sectionId === "" ? t`No section` : "")) : deck?.name;
 
+  const pageMenu: MenuItem[][] = scoped
+    ? section
+      ? sectionMenu(section)
+      : selection || scopeRows.length === 0
+        ? []
+        : [
+            [
+              {
+                label: t`Select cards`,
+                icon: "check" as const,
+                onSelect: () => startSelecting(),
+              },
+            ],
+          ]
+    : [
+        ...(deck
+          ? [
+              [
+                {
+                  label: t`Report deck`,
+                  icon: "report" as const,
+                  onSelect: () => router.push(reportHref("deck", id, deck.name)),
+                },
+              ],
+            ]
+          : []),
+        // A deck added from Explore or shared with the learner is left, not archived.
+        [
+          ...(owner
+            ? [
+                {
+                  label: t`Add a card`,
+                  icon: "plus" as const,
+                  onSelect: addCard,
+                },
+                {
+                  label: t`Smart add`,
+                  icon: "ai" as const,
+                  onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
+                },
+              ]
+            : []),
+          ...(owner
+            ? [
+                {
+                  label: t`Share deck`,
+                  icon: "share" as const,
+                  onSelect: () => router.push(`/share?id=${id}` as Href),
+                },
+                {
+                  label: t`Move to series`,
+                  icon: "series" as const,
+                  onSelect: () => setMoving(true),
+                },
+                {
+                  label: t`New section`,
+                  icon: "section" as const,
+                  onSelect: () => newSection.open(),
+                },
+                {
+                  label: t`Export deck`,
+                  icon: "export" as const,
+                  onSelect: () => setExporting(true),
+                },
+              ]
+            : []),
+          ...(rows.length > 0 && !selection
+            ? [
+                {
+                  label: t`Select cards`,
+                  icon: "check" as const,
+                  onSelect: () => startSelecting(),
+                },
+              ]
+            : []),
+          {
+            label: owner ? t`Deck settings` : t`About this deck`,
+            icon: "settings",
+            onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
+          },
+        ],
+        ...(owner
+          ? [
+              [
+                {
+                  label: t`Archive deck`,
+                  icon: "archive" as const,
+                  destructive: true,
+                  onSelect: exits.archive,
+                },
+              ],
+            ]
+          : [
+              // A deck added from Explore or shared with the learner is left, not archived.
+              [
+                {
+                  label: t`Leave deck`,
+                  icon: "signOut" as const,
+                  destructive: true,
+                  onSelect: exits.leave,
+                },
+              ],
+            ]),
+      ];
   return (
     <Screen
       title={title ?? ""}
@@ -320,117 +430,15 @@ export function CardListScreen({
               label={t`Search this deck`}
               onPress={() => router.push(`/search?deck=${id}` as Href)}
             />
-            <ActionMenu
-              label={scoped ? t`Section options` : t`Deck options`}
-              symbol="ellipsis"
-              look="bar"
-              items={
-                scoped
-                  ? section
-                    ? sectionMenu(section)
-                    : selection || scopeRows.length === 0
-                      ? []
-                      : [
-                          [
-                            {
-                              label: t`Select cards`,
-                              icon: "check" as const,
-                              onSelect: () => startSelecting(),
-                            },
-                          ],
-                        ]
-                  : [
-                      ...(deck
-                        ? [
-                            [
-                              {
-                                label: t`Report deck`,
-                                icon: "report" as const,
-                                onSelect: () => router.push(reportHref("deck", id, deck.name)),
-                              },
-                            ],
-                          ]
-                        : []),
-                      // A deck added from Explore or shared with the learner is left, not archived.
-                      [
-                        ...(owner
-                          ? [
-                              {
-                                label: t`Add a card`,
-                                icon: "plus" as const,
-                                onSelect: addCard,
-                              },
-                              {
-                                label: t`Smart add`,
-                                icon: "ai" as const,
-                                onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
-                              },
-                            ]
-                          : []),
-                        ...(owner
-                          ? [
-                              {
-                                label: t`Share deck`,
-                                icon: "share" as const,
-                                onSelect: () => router.push(`/share?id=${id}` as Href),
-                              },
-                              {
-                                label: t`Move to series`,
-                                icon: "series" as const,
-                                onSelect: () => setMoving(true),
-                              },
-                              {
-                                label: t`New section`,
-                                icon: "section" as const,
-                                onSelect: () => newSection.open(),
-                              },
-                              {
-                                label: t`Export deck`,
-                                icon: "export" as const,
-                                onSelect: () => setExporting(true),
-                              },
-                            ]
-                          : []),
-                        ...(rows.length > 0 && !selection
-                          ? [
-                              {
-                                label: t`Select cards`,
-                                icon: "check" as const,
-                                onSelect: () => startSelecting(),
-                              },
-                            ]
-                          : []),
-                        {
-                          label: owner ? t`Deck settings` : t`About this deck`,
-                          icon: "settings",
-                          onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
-                        },
-                      ],
-                      ...(owner
-                        ? [
-                            [
-                              {
-                                label: t`Archive deck`,
-                                icon: "archive" as const,
-                                destructive: true,
-                                onSelect: exits.archive,
-                              },
-                            ],
-                          ]
-                        : [
-                            // A deck added from Explore or shared with the learner is left, not archived.
-                            [
-                              {
-                                label: t`Leave deck`,
-                                icon: "signOut" as const,
-                                destructive: true,
-                                onSelect: exits.leave,
-                              },
-                            ],
-                          ]),
-                    ]
-              }
-            />
+            {/* A member on a section with nothing to do, or a list mid-selection, gets no empty ⋯. */}
+            {pageMenu.length > 0 && (
+              <ActionMenu
+                label={scoped ? t`Section options` : t`Deck options`}
+                symbol="ellipsis"
+                look="bar"
+                items={pageMenu}
+              />
+            )}
           </View>
         )
       }

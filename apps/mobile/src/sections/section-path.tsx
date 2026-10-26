@@ -69,6 +69,7 @@ export function SectionPath({
       column={column}
       at={at}
       here={!editing && at === focus}
+      swipes={owner && column.section !== null}
       line={line && column.section !== null}
       lineBelow={at < sections.length - 1 || owner}
       editing={editing}
@@ -127,6 +128,7 @@ function Stop({
   column: c,
   at,
   here,
+  swipes,
   line,
   lineBelow,
   editing,
@@ -140,6 +142,8 @@ function Stop({
   column: LineColumn;
   at: number;
   here: boolean;
+  /** The owner's stop at rest swipes to Rename and Archive, which VoiceOver gets as actions. */
+  swipes: boolean;
   /** The path's line runs into this stop. */
   line: boolean;
   /** And on down to the next. */
@@ -219,6 +223,19 @@ function Stop({
         scale={0.99}
         accessibilityRole="link"
         accessibilityLabel={`${c.section ? t`Section ${number}: ${name}, ${cards}` : `${name}, ${cards}`}${here ? `, ${t`You are here`}` : ""}`}
+        accessibilityActions={
+          swipes
+            ? [
+                { name: "rename", label: t`Rename` },
+                { name: "archive", label: t`Archive` },
+              ]
+            : undefined
+        }
+        onAccessibilityAction={(e) => {
+          const action = e.nativeEvent.actionName;
+          if (action === "rename") onRename();
+          if (action === "archive") onArchive();
+        }}
         className={className}
         style={style}
       >

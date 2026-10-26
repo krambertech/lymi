@@ -109,3 +109,11 @@ name: Section pages
     visible: "(?i)section 1 of 3"
     timeout: 20000
 - takeScreenshot: 11-stop-opens
+# Opened from a stop, Back returns to the Sections page rather than the deck; a tap mid-push is dropped.
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn: "Sections"
+- extendedWaitUntil:
+    visible: ".* of 3 known"
+    timeout: 20000
+- takeScreenshot: 12-back-to-sections

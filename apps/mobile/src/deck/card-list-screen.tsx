@@ -93,7 +93,14 @@ type Item =
  * section scope is the same page with its list kept to that section, its own summary, its menu and
  * Previous and Next. docs/proposals/section-pages.md.
  */
-export function CardListScreen({ scope }: { scope: DeckScope }) {
+export function CardListScreen({
+  scope,
+  fromSections = false,
+}: {
+  scope: DeckScope;
+  /** A section's page opened from the Sections page goes back there, not to the deck. */
+  fromSections?: boolean;
+}) {
   const { t, i18n } = useLingui();
   const router = useRouter();
   const { deckId: id, sectionId } = scope;
@@ -234,7 +241,7 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
       column: c,
       onPress: () => {
         captureEvent("section_page_opened", { from: "step" });
-        router.replace(sectionPage(id, c.id));
+        router.replace(sectionPage(id, c.id, fromSections));
       },
     };
   const steps = scoped && at >= 0 && (
@@ -252,7 +259,9 @@ export function CardListScreen({ scope }: { scope: DeckScope }) {
       onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
       back={
         scoped
-          ? { label: deck?.name ?? t`Deck`, to: `/library/${id}` as Href }
+          ? fromSections
+            ? { label: t`Sections`, to: sectionsPage(id) }
+            : { label: deck?.name ?? t`Deck`, to: `/library/${id}` as Href }
           : { label: t`Library`, to: "/library" }
       }
       list={

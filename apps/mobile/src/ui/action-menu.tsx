@@ -34,6 +34,8 @@ interface ActionMenuProps {
   disabled?: boolean;
   /** What a tap does, so the menu opens only on a long press, as capture's does. */
   onPrimaryAction?: () => void;
+  /** A `row` glyph's square to tap, in points, where the row has room for more than its 32. */
+  target?: number;
 }
 
 /**
@@ -48,6 +50,7 @@ export function ActionMenu({
   items,
   disabled = false,
   onPrimaryAction,
+  target = 32,
 }: ActionMenuProps) {
   const p = usePalette();
   const room = useRoom();
@@ -57,7 +60,7 @@ export function ActionMenu({
   return (
     // A fixed box that React Native lays out: a self-measuring host keeps a stale place when the
     // list around it moves, and its button drifts off its row.
-    <Host colorScheme={room} style={{ width: bar ? 40 : 32, height: bar ? 40 : 32 }}>
+    <Host colorScheme={room} style={{ width: bar ? 40 : target, height: bar ? 40 : target }}>
       <Menu
         {...(onPrimaryAction ? { onPrimaryAction } : {})}
         label={
@@ -65,7 +68,7 @@ export function ActionMenu({
             assetName={symbolOf(TRIGGERS[symbol])}
             size={bar ? 18 : 16}
             color={glyph}
-            modifiers={[frame({ width: bar ? 24 : 32, height: bar ? 24 : 32 })]}
+            modifiers={[frame({ width: bar ? 24 : target, height: bar ? 24 : target })]}
           />
         }
         modifiers={[

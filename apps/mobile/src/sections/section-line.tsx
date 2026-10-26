@@ -15,8 +15,9 @@ import { Button, Press, Text } from "../ui/primitives";
 export const NO_SECTION = "none";
 
 /** A section's page: the deck's page kept to that section, or to the cards with no section. */
-export function sectionPage(deckId: string, sectionId: string) {
-  return `/library/${deckId}/sections/${sectionId || NO_SECTION}` as Href;
+export function sectionPage(deckId: string, sectionId: string, fromSections = false) {
+  const page = `/library/${deckId}/sections/${sectionId || NO_SECTION}`;
+  return (fromSections ? `${page}?from=sections` : page) as Href;
 }
 
 /** Every section of a deck, with its progress; the owner edits them there too. */
@@ -218,7 +219,9 @@ export function SectionLine({
                   <Text className="text-xs text-muted" style={{ fontVariant: ["tabular-nums"] }}>
                     {c.waiting
                       ? plural(c.total, { one: "# card", other: "# cards" })
-                      : `${known}/${i18n.number(c.total)}`}
+                      : c.total === 0
+                        ? t`No cards yet`
+                        : `${known}/${i18n.number(c.total)}`}
                   </Text>
                 </View>
               </View>
@@ -231,8 +234,8 @@ export function SectionLine({
 }
 
 /**
- * The one sentence under the section line about what opens the next section, with a meter while
- * it waits and Start once it is ready. It counts cards, never a percentage.
+ * The one sentence under the section tiles about what opens the next section, with Start once it
+ * is ready. It counts cards, never a percentage; the tiles already draw each section's progress.
  */
 export function OpeningLine({
   state,
@@ -247,7 +250,6 @@ export function OpeningLine({
   onStart: (section: Section) => void;
 }) {
   const { t, i18n } = useLingui();
-  const p = usePalette();
   const { current } = state;
   // Isolated, so a right-to-left name never reorders the sentence around it.
   const currentName = isolate(current.name);
@@ -277,33 +279,7 @@ export function OpeningLine({
           one: `${nextName} opens once the last card of ${currentName} comes up in review.`,
           other: `${nextName} opens once the last # cards of ${currentName} come up in review.`,
         });
-  const share = current.total > 0 ? Math.min(1, current.known / current.total) : 0;
-  const tick = current.total > 0 ? Math.min(1, current.knownNeeded / current.total) : 0;
-  return (
-    <View className="gap-2.5">
-      <Line icon="lock" sentence={sentence} />
-      {current.total > 0 && (
-        <View className="h-1.5 justify-center" accessibilityElementsHidden>
-          <View className="h-1.5 overflow-hidden rounded-full bg-plate-2">
-            <View
-              className="h-full rounded-full bg-state-known"
-              style={{ width: `${share * 100}%` }}
-            />
-          </View>
-          <View
-            className="absolute w-0.5 rounded-full"
-            style={{
-              start: `${tick * 100}%`,
-              top: -4,
-              bottom: -4,
-              marginStart: -1,
-              backgroundColor: p["text-2"],
-            }}
-          />
-        </View>
-      )}
-    </View>
-  );
+  return <Line icon="lock" sentence={sentence} />;
 }
 
 /** A waiting section past the next one: it opens after the section before it. */

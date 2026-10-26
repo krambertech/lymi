@@ -193,7 +193,7 @@ export function SectionHeading({
     : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` });
   const label = here ? `${headingLabel}, ${t`You are here`}` : headingLabel;
   const heading = (
-    <View className="flex-row items-start gap-2.5 bg-canvas px-1 pb-3 pt-2">
+    <View className="flex-row items-start gap-2.5 py-2 ps-1">
       <View className="h-7 justify-center">
         {locked ? (
           <Icon name="lock" size={16} colour={p.muted} />
@@ -225,35 +225,43 @@ export function SectionHeading({
           </View>
         )}
       </View>
-      {items.length > 0 && (
-        <ActionMenu
-          items={items}
-          label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
-          symbol="ellipsis"
-          look="row"
-          disabled={starting}
-        />
-      )}
     </View>
   );
-  if (rows.length === 0) {
-    return (
-      <Press scale={0.99} onPress={open} accessibilityRole="header" accessibilityLabel={label}>
-        {heading}
-      </Press>
-    );
-  }
+  // The ⋯ sits beside the heading's link rather than inside it, so a tap near it opens the menu
+  // instead of the section's page.
   return (
-    <RowMenu
-      surface="section_heading"
-      href={href}
-      onPress={open}
-      label={label}
-      kind="heading"
-      items={rows}
-    >
-      {heading}
-    </RowMenu>
+    <View className="flex-row items-start bg-canvas pb-1">
+      <View className="flex-1">
+        {rows.length === 0 ? (
+          <Press scale={0.99} onPress={open} accessibilityRole="header" accessibilityLabel={label}>
+            {heading}
+          </Press>
+        ) : (
+          <RowMenu
+            surface="section_heading"
+            href={href}
+            onPress={open}
+            label={label}
+            kind="heading"
+            items={rows}
+          >
+            {heading}
+          </RowMenu>
+        )}
+      </View>
+      {items.length > 0 && (
+        <View className="items-center justify-center" style={{ height: 44, marginTop: 0 }}>
+          <ActionMenu
+            items={items}
+            label={t`Options for ${{ sectionName: isolate(sectionName) }}`}
+            symbol="ellipsis"
+            look="row"
+            target={44}
+            disabled={starting}
+          />
+        </View>
+      )}
+    </View>
   );
 }
 

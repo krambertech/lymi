@@ -48,7 +48,7 @@ export default function DeckSections() {
   const sectionStart = useStartSection(id, sections);
   const open = (sectionId: string) => {
     captureEvent("section_page_opened", { from: "sections" });
-    router.push(sectionPage(id, sectionId));
+    router.push(sectionPage(id, sectionId, true));
   };
   const qc = useQueryClient();
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);

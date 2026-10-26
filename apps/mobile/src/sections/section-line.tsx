@@ -300,10 +300,18 @@ function Line({ icon, sentence }: { icon: "lock" | "unlock"; sentence: string })
   );
 }
 
+/** Under five sections a column keeps this width rather than stretching into a slab. */
+const FEW_COLUMN = 32;
+/** Narrower than this a column stops reading as a bar, so the chart scrolls instead. */
+const MIN_COLUMN = 12;
+const COLUMN_GAP = 3;
+
 /**
- * Every section as a column, filled from its foot with known and then learning, side by side across
- * the width, so a deck's progress reads at a glance on the Sections page. A section that waits is a
- * dashed outline, and a short ink bar marks the learner's section. A column opens its section.
+ * Every section as a column, filled from its foot with known and then learning, so a deck's
+ * progress reads at a glance on the Sections page. Under five sections the columns keep a fixed
+ * width; from five they share the width, and past what fits at 12 pt each the chart scrolls under
+ * the plate's padding, opening on the learner's column. A section that waits is a dashed outline,
+ * and a short ink bar marks the learner's. A column opens its section.
  */
 export function SectionColumns({
   columns,
@@ -317,59 +325,90 @@ export function SectionColumns({
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const gap = columns.length > 24 ? 2 : 3;
+  const ref = useRef<ScrollView>(null);
+  const [width, setWidth] = useState(0);
+  const opened = useRef(false);
+  const n = columns.length;
+  const shared = (width - COLUMN_GAP * (n - 1)) / n;
+  const scrolls = n >= 5 && shared < MIN_COLUMN;
+  const column = n < 5 ? FEW_COLUMN : Math.max(MIN_COLUMN, shared);
+  const content = BLEED * 2 + n * column + COLUMN_GAP * (n - 1);
+  // Opens on the learner's column, centred, once the chart knows its width.
+  useEffect(() => {
+    if (opened.current || !width || !scrolls || focus < 0) return;
+    opened.current = true;
+    const viewport = width + BLEED * 2;
+    const x = BLEED + focus * (column + COLUMN_GAP) - (viewport - column) / 2;
+    ref.current?.scrollTo({ x: Math.max(0, Math.min(x, content - viewport)), animated: false });
+  }, [scrolls, focus, width, column, content]);
+  const bars = columns.map((c, i) => (
+    <Press
+      key={c.id || NO_SECTION}
+      onPress={() => onOpen(c)}
+      haptic={false}
+      scale={1}
+      accessibilityRole="button"
+      accessibilityLabel={c.section?.name ?? t`No section`}
+      className="gap-1.5"
+      style={{ width: column }}
+    >
+      <View
+        className="justify-end overflow-hidden"
+        style={{
+          height: 56,
+          borderRadius: 4,
+          backgroundColor: c.waiting ? "transparent" : p["plate-2"],
+          borderWidth: c.waiting ? 1 : 0,
+          borderStyle: "dashed",
+          borderColor: p["edge-2"],
+        }}
+      >
+        {!c.waiting && (
+          <>
+            <View
+              style={{
+                height: `${share(c.learning, c.total) * 100}%`,
+                backgroundColor: p["state-learning"],
+              }}
+            />
+            <View
+              style={{
+                height: `${share(c.known, c.total) * 100}%`,
+                backgroundColor: p["state-known"],
+              }}
+            />
+          </>
+        )}
+      </View>
+      <View
+        className="self-center rounded-full"
+        style={{
+          height: 3,
+          width: Math.min(column * 0.7, 16),
+          backgroundColor: i === focus ? p.text : "transparent",
+        }}
+      />
+    </Press>
+  ));
   return (
-    <View className="flex-row" style={{ gap }}>
-      {columns.map((c, i) => (
-        <Press
-          key={c.id || NO_SECTION}
-          onPress={() => onOpen(c)}
-          haptic={false}
-          scale={1}
-          accessibilityRole="button"
-          accessibilityLabel={c.section?.name ?? t`No section`}
-          className="gap-1.5"
-          style={{ flex: 1 }}
-        >
-          <View
-            className="justify-end overflow-hidden"
-            style={{
-              height: 56,
-              borderRadius: 4,
-              backgroundColor: c.waiting ? "transparent" : p["plate-2"],
-              borderWidth: c.waiting ? 1 : 0,
-              borderStyle: "dashed",
-              borderColor: p["edge-2"],
-            }}
+    <View onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
+      {width > 0 &&
+        (scrolls ? (
+          <ScrollView
+            ref={ref}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            style={{ marginHorizontal: -BLEED }}
+            contentContainerStyle={{ gap: COLUMN_GAP, paddingHorizontal: BLEED }}
           >
-            {!c.waiting && (
-              <>
-                <View
-                  style={{
-                    height: `${share(c.learning, c.total) * 100}%`,
-                    backgroundColor: p["state-learning"],
-                  }}
-                />
-                <View
-                  style={{
-                    height: `${share(c.known, c.total) * 100}%`,
-                    backgroundColor: p["state-known"],
-                  }}
-                />
-              </>
-            )}
+            {bars}
+          </ScrollView>
+        ) : (
+          <View className="flex-row" style={{ gap: COLUMN_GAP }}>
+            {bars}
           </View>
-          <View
-            className="self-center rounded-full"
-            style={{
-              height: 3,
-              width: "70%",
-              maxWidth: 16,
-              backgroundColor: i === focus ? p.text : "transparent",
-            }}
-          />
-        </Press>
-      ))}
+        ))}
     </View>
   );
 }

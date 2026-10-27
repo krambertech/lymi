@@ -1421,6 +1421,18 @@ function CardPlate({
   const type = typeAt(fit.step, target, room);
   let line = 0;
   const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
+  // After the reveal, under the term wherever it stands, unless the term draws it over itself or in
+  // place, which VoiceOver reads out. A term cue carries it under the cue instead.
+  const pronunciationLine = () =>
+    card.pronunciation &&
+    (!furigana || separate) &&
+    mode.cue !== "term" && (
+      <Animated.View entering={arrive()}>
+        <Text className="text-md text-muted" lang={card.language}>
+          {card.pronunciation}
+        </Text>
+      </Animated.View>
+    );
   const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
 
   return (
@@ -1616,6 +1628,8 @@ function CardPlate({
                           </CardLine>
                         )}
                       </Animated.View>
+                      {/* A picture card's term is its answer here, so its line follows it, above the meaning. */}
+                      {picture && mode.target === "term" && pronunciationLine()}
                       {picture && (
                         <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                           <View className="shrink">
@@ -1638,15 +1652,7 @@ function CardPlate({
                           )}
                         </Animated.View>
                       )}
-                      {/* After the reveal unless the term draws it, over it or in place, which
-                    VoiceOver reads out. A term cue carries it under the cue instead. */}
-                      {card.pronunciation && (!furigana || separate) && mode.cue !== "term" && (
-                        <Animated.View entering={arrive()}>
-                          <Text className="text-md text-muted" lang={card.language}>
-                            {card.pronunciation}
-                          </Text>
-                        </Animated.View>
-                      )}
+                      {!(picture && mode.target === "term") && pronunciationLine()}
                       {!picture && card.image && (
                         <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
                           <Picture card={card} maxHeight={120} />

@@ -752,8 +752,8 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
-              {/* A line of its own stands under the cue's term; the measuring copy keeps its room here. */}
-              {mode.cue === "term" && (measure || (reading && !separate)) && pronunciation}
+              {/* A line of its own stands under the cue's term, which keeps its room; this is only a drawn reading's screen-reader line. */}
+              {mode.cue === "term" && reading && !separate && pronunciation}
               {picture && (
                 <>
                   <motion.p

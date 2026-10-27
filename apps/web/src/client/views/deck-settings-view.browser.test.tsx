@@ -1,6 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import type { FrontPronunciation } from "@lymi/core";
+import type { PronunciationDisplay } from "@lymi/core";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -24,7 +24,7 @@ const deck = (over: Partial<DeckSummary> = {}): DeckSummary => ({
 const renderSettings = (
   value: DeckSummary,
   onSave: (patch: DeckSettingsPatch) => void,
-  onFrontPronunciation: (value: FrontPronunciation) => void = vi.fn(),
+  onPronunciationDisplay: (value: PronunciationDisplay) => void = vi.fn(),
 ) =>
   render(
     <I18nProvider i18n={i18n}>
@@ -34,7 +34,7 @@ const renderSettings = (
             <DeckSettingsView
               deck={value}
               onSave={onSave}
-              onFrontPronunciation={onFrontPronunciation}
+              onPronunciationDisplay={onPronunciationDisplay}
             />
           </div>
         </StaticNavProvider>
@@ -111,13 +111,13 @@ test("says what the AI will learn while a deck has nothing learned yet", async (
 });
 
 test("offers adaptive pronunciation on a language that draws it, and turns it off", async () => {
-  const onFrontPronunciation = vi.fn();
-  await renderSettings(deck({ defaultLanguage: "zh-CN" }), vi.fn(), onFrontPronunciation);
+  const onPronunciationDisplay = vi.fn();
+  await renderSettings(deck({ defaultLanguage: "zh-CN" }), vi.fn(), onPronunciationDisplay);
   const toggle = page.getByRole("switch", { name: "Adaptive pronunciation" });
   await expect.element(toggle).toBeChecked();
   await expect.element(page.getByText(/Pinyin shows over the term/)).toBeVisible();
   await toggle.click();
-  expect(onFrontPronunciation).toHaveBeenCalledWith("hidden");
+  expect(onPronunciationDisplay).toHaveBeenCalledWith("separate");
 });
 
 test("shows a member their own pronunciation choice", async () => {
@@ -125,7 +125,7 @@ test("shows a member their own pronunciation choice", async () => {
     deck({
       role: "learner",
       defaultLanguage: "ja",
-      frontPronunciation: "hidden",
+      pronunciationDisplay: "separate",
       owner: { id: "u2", name: "Haruka", avatarUrl: null },
     }),
     vi.fn(),
@@ -133,7 +133,11 @@ test("shows a member their own pronunciation choice", async () => {
   await expect
     .element(page.getByRole("switch", { name: "Adaptive pronunciation" }))
     .not.toBeChecked();
-  await expect.element(page.getByText(/Furigana shows only with the answer/)).toBeVisible();
+  await expect
+    .element(
+      page.getByText(/The reading shows on its own line with the answer, so you read the kanji/),
+    )
+    .toBeVisible();
   await expect.element(page.getByText(/Only for you/)).toBeVisible();
 });
 

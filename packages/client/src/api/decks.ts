@@ -3,8 +3,8 @@ import type {
   DeckInput,
   DeckPreferencesInput,
   DeckPurpose,
-  FrontPronunciation,
   MemberRole,
+  PronunciationDisplay,
   ReviewMode,
 } from "@lymi/core";
 import type { Deck as DeckRow } from "@lymi/core/schema";
@@ -33,8 +33,8 @@ export type DeckSummary = Pick<
   enrichInstructions: string | null;
   /** What the AI learned from the owner's cards. Null for a member; a cache from before it lacks it. */
   enrichStyle?: string | null;
-  /** The learner's own choice for the front of a card. A cache from before it lacks it, which reads as until-known. */
-  frontPronunciation?: FrontPronunciation;
+  /** The learner's own adaptive pronunciation choice. A cache from before it lacks it, which reads as adaptive. */
+  pronunciationDisplay?: PronunciationDisplay;
   total: number;
   due: number;
   /** When the deck was archived, null while it is active. */

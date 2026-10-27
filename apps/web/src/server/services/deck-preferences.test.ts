@@ -22,14 +22,14 @@ afterAll(async () => {
   await dispose();
 });
 
-const front = async (ctx: ServiceContext, deckId: string) =>
-  (await listDecks(ctx)).find((d) => d.id === deckId)?.frontPronunciation;
+const display = async (ctx: ServiceContext, deckId: string) =>
+  (await listDecks(ctx)).find((d) => d.id === deckId)?.pronunciationDisplay;
 
 describe("a learner's pronunciation choice for a deck", () => {
   it("defaults to showing pronunciation until a card is Known", async () => {
     const deck = await createDeck(owner, { name: "汉语", defaultLanguage: "zh-CN" });
-    expect(deck.frontPronunciation).toBe("until-known");
-    expect(await front(owner, deck.id)).toBe("until-known");
+    expect(deck.pronunciationDisplay).toBe("adaptive");
+    expect(await display(owner, deck.id)).toBe("adaptive");
   });
 
   it("stays each learner's own on a shared deck", async () => {
@@ -37,22 +37,24 @@ describe("a learner's pronunciation choice for a deck", () => {
     await join(member, deck.id);
     await join(other, deck.id);
 
-    const hidden = await setDeckPreferences(member, deck.id, { frontPronunciation: "hidden" });
-    expect(hidden.frontPronunciation).toBe("hidden");
-    expect(await front(member, deck.id)).toBe("hidden");
-    expect(await front(owner, deck.id)).toBe("until-known");
-    expect(await front(other, deck.id)).toBe("until-known");
+    const separate = await setDeckPreferences(member, deck.id, {
+      pronunciationDisplay: "separate",
+    });
+    expect(separate.pronunciationDisplay).toBe("separate");
+    expect(await display(member, deck.id)).toBe("separate");
+    expect(await display(owner, deck.id)).toBe("adaptive");
+    expect(await display(other, deck.id)).toBe("adaptive");
 
-    await setDeckPreferences(owner, deck.id, { frontPronunciation: "hidden" });
-    await setDeckPreferences(member, deck.id, { frontPronunciation: "until-known" });
-    expect((await getDeck(owner, deck.id)).frontPronunciation).toBe("hidden");
-    expect((await getDeck(member, deck.id)).frontPronunciation).toBe("until-known");
+    await setDeckPreferences(owner, deck.id, { pronunciationDisplay: "separate" });
+    await setDeckPreferences(member, deck.id, { pronunciationDisplay: "adaptive" });
+    expect((await getDeck(owner, deck.id)).pronunciationDisplay).toBe("separate");
+    expect((await getDeck(member, deck.id)).pronunciationDisplay).toBe("adaptive");
   });
 
   it("is refused for a deck the learner cannot see", async () => {
     const deck = await createDeck(owner, { name: "Русский", defaultLanguage: "ru" });
     await expect(
-      setDeckPreferences(other, deck.id, { frontPronunciation: "hidden" }),
+      setDeckPreferences(other, deck.id, { pronunciationDisplay: "separate" }),
     ).rejects.toThrow("Deck not found");
   });
 
@@ -61,16 +63,16 @@ describe("a learner's pronunciation choice for a deck", () => {
     const ctx = { ...owner, analytics: { capture, writeDataPoint: vi.fn() } };
     const deck = await createDeck(owner, { name: "粵語", defaultLanguage: "zh-yue" });
     const plain = await createDeck(owner, { name: "Español", defaultLanguage: "es" });
-    await setDeckPreferences(ctx, deck.id, { frontPronunciation: "hidden" });
-    await setDeckPreferences(ctx, deck.id, { frontPronunciation: "hidden" });
-    await setDeckPreferences(ctx, plain.id, { frontPronunciation: "hidden" });
+    await setDeckPreferences(ctx, deck.id, { pronunciationDisplay: "separate" });
+    await setDeckPreferences(ctx, deck.id, { pronunciationDisplay: "separate" });
+    await setDeckPreferences(ctx, plain.id, { pronunciationDisplay: "separate" });
     const set = capture.mock.calls
       .map(([event]) => event)
-      .filter((event) => event.name === "front_pronunciation_set");
+      .filter((event) => event.name === "pronunciation_display_set");
     expect(set).toEqual([
       {
-        name: "front_pronunciation_set",
-        front: "hidden",
+        name: "pronunciation_display_set",
+        display: "separate",
         notation: "jyutping",
         owner: true,
         channel: "app",

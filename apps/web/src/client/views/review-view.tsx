@@ -4,10 +4,10 @@ import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   cueShowsPronunciation,
   drawsTermReading,
-  type FrontPronunciation,
   gradeAllowed,
   isolate,
   type KnownReadings,
+  type PronunciationDisplay,
   type Rating,
   type ReviewAid,
   shownTranslation,
@@ -291,7 +291,7 @@ export interface ReviewCardProps {
         name: string;
         language?: string | null | undefined;
         /** The learner's choice for this deck; absent reads as the default. */
-        frontPronunciation?: FrontPronunciation | undefined;
+        pronunciationDisplay?: PronunciationDisplay | undefined;
       }
     | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
@@ -476,16 +476,24 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always on the answer.
   const reading = useMemo(() => termShowsPronunciation(card), [card]);
+  // The learner asked for the pronunciation as its own line, so the term is drawn as written.
+  const separate = deck?.pronunciationDisplay === "separate";
   // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
   const cueReading = cueShowsPronunciation({
     revealed,
     known: stateKey(item.fsrsState) === "known",
-    front: deck?.frontPronunciation,
+    display: deck?.pronunciationDisplay,
   });
-  const term = <TermText card={card} />;
+  const term = separate ? (
+    <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+      {card.term}
+    </span>
+  ) : (
+    <TermText card={card} />
+  );
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -644,6 +652,7 @@ export function ReviewCard({
             example={card.example}
             language={card.language}
             known={knownReadings}
+            plain={separate}
             translation={translation}
             speaker={
               measure ? (
@@ -680,7 +689,7 @@ export function ReviewCard({
     // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&
-      (reading ? (
+      (reading && !separate ? (
         readingOver && (
           <p className="sr-only" lang={card.language ?? undefined}>
             {card.pronunciation}
@@ -922,7 +931,15 @@ export function ReviewCard({
                         CUE_SIZE[step],
                       )}
                     >
-                      {mode.cue === "term" ? <TermText card={card} hidden={!cueReading} /> : front}
+                      {mode.cue === "term" ? (
+                        separate ? (
+                          term
+                        ) : (
+                          <TermText card={card} hidden={!cueReading} />
+                        )
+                      ) : (
+                        front
+                      )}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
                     {/* A drawn reading is hidden from a screen reader, which hears the reading here while

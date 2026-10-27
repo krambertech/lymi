@@ -161,18 +161,18 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
-/** Whether a review's cue draws the term's pronunciation before the reveal. Each learner's own, per deck. */
-export const FRONT_PRONUNCIATIONS = ["until-known", "hidden"] as const;
-export const FrontPronunciation = z.enum(FRONT_PRONUNCIATIONS).meta({
+/** Where review draws the term's pronunciation. Each learner's own, per deck. */
+export const PRONUNCIATION_DISPLAYS = ["adaptive", "separate"] as const;
+export const PronunciationDisplay = z.enum(PRONUNCIATION_DISPLAYS).meta({
   ...OPEN,
-  id: "FrontPronunciation",
+  id: "PronunciationDisplay",
   description:
-    "Whether the front of a card shows the term's furigana, pinyin, Jyutping, reading or stress marks. until-known, the default: until the card is Known. hidden: never. The answer always shows it.",
+    "Where review shows the term's furigana, pinyin, Jyutping, reading or stress marks. adaptive, the default: drawn on the term, before the reveal only until the card is Known. separate: never on the term, and on its own line with the answer.",
 });
-export type FrontPronunciation = z.infer<typeof FrontPronunciation>;
+export type PronunciationDisplay = z.infer<typeof PronunciationDisplay>;
 
 /** The caller's own choices for one deck, which never change it for anyone else. */
-export const DeckPreferencesInput = z.object({ frontPronunciation: FrontPronunciation });
+export const DeckPreferencesInput = z.object({ pronunciationDisplay: PronunciationDisplay });
 export type DeckPreferencesInput = z.infer<typeof DeckPreferencesInput>;
 
 /**

@@ -33,7 +33,7 @@ export default async function drive({ page, base, step, expect }) {
         },
       ],
     });
-    expect(deck.frontPronunciation).toBe("until-known");
+    expect(deck.pronunciationDisplay).toBe("adaptive");
     return { deck };
   });
 
@@ -49,10 +49,10 @@ export default async function drive({ page, base, step, expect }) {
     await expect(page.getByText(/Pinyin shows over the term/)).toBeVisible();
     await toggle.click();
     await expect(toggle).not.toBeChecked();
-    await expect(page.getByText(/Pinyin shows only with the answer/)).toBeVisible();
+    await expect(page.getByText(/Pinyin shows on its own line/)).toBeVisible();
     await expect
-      .poll(async () => (await read(`/api/decks/${deck.id}`)).frontPronunciation)
-      .toBe("hidden");
+      .poll(async () => (await read(`/api/decks/${deck.id}`)).pronunciationDisplay)
+      .toBe("separate");
     return { deck: await read(`/api/decks/${deck.id}`) };
   });
 
@@ -62,9 +62,13 @@ export default async function drive({ page, base, step, expect }) {
     await expect(pinyin()).toHaveCount(0);
   });
 
-  await step("The reveal shows the pinyin", async () => {
+  await step("The reveal shows the pinyin as its own line, not over the term", async () => {
     await reveal();
-    await expect(pinyin()).toHaveText(["xué", "xí"]);
+    await expect(
+      page.getByText("to study", { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
+    await expect(page.getByText("xuéxí", { exact: true }).filter({ visible: true })).toBeVisible();
+    await expect(pinyin()).toHaveCount(0);
   });
 
   await step("A Spanish deck offers no switch", async () => {

@@ -80,7 +80,7 @@ export async function listDecks(
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
       meaningLanguage: schema.deckMembers.meaningLanguage,
-      frontPronunciation: schema.deckPreferences.frontPronunciation,
+      pronunciationDisplay: schema.deckPreferences.pronunciationDisplay,
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       ...publisherColumns,
@@ -143,7 +143,7 @@ export async function listDecks(
         ...deck,
         name: editionName ?? deck.name,
         description: editionDescription ?? deck.description,
-        frontPronunciation: deck.frontPronunciation ?? "until-known",
+        pronunciationDisplay: deck.pronunciationDisplay ?? "adaptive",
         reviewModes: deckModes(deck.directions),
         purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
         enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
@@ -344,22 +344,22 @@ export async function setDeckPreferences(
 ) {
   const { db, userId } = ctx;
   const deck = await deckAccess(ctx, id);
-  if (input.frontPronunciation === deck.frontPronunciation) return deck;
+  if (input.pronunciationDisplay === deck.pronunciationDisplay) return deck;
   const now = new Date();
   await db
     .insert(schema.deckPreferences)
-    .values({ deckId: id, userId, frontPronunciation: input.frontPronunciation })
+    .values({ deckId: id, userId, pronunciationDisplay: input.pronunciationDisplay })
     .onConflictDoUpdate({
       target: [schema.deckPreferences.deckId, schema.deckPreferences.userId],
-      set: { frontPronunciation: input.frontPronunciation, updatedAt: now },
+      set: { pronunciationDisplay: input.pronunciationDisplay, updatedAt: now },
     });
   await audit(ctx, { entity: "deck", action: "set_preferences", id, details: input });
   const engine = readingEngine(deck.defaultLanguage);
   const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
   if (engine && channel) {
     track(ctx.analytics, {
-      name: "front_pronunciation_set",
-      front: input.frontPronunciation,
+      name: "pronunciation_display_set",
+      display: input.pronunciationDisplay,
       notation: engine,
       owner: deck.role === "owner",
       channel,

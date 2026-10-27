@@ -62,7 +62,7 @@ const owned = {
   role: "owner" as const,
   owner: { id: "user-1", name: "Kateryna", avatarUrl: null, former: false },
   published: false,
-  frontPronunciation: "until-known" as const,
+  pronunciationDisplay: "adaptive" as const,
 };
 
 const deck: Awaited<ReturnType<typeof getDeck>> = {

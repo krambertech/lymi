@@ -2545,9 +2545,6 @@ msgstr "С урока"
 msgid "Front and back"
 msgstr "Лицевая и обратная сторона"
 
-msgid "Furigana shows only with the answer, so you read the kanji yourself."
-msgstr "Фуригана видна только с ответом, так что кандзи вы читаете сами."
-
 msgid "Furigana shows over the term until a card is Known, then only with the answer."
 msgstr "Фуригана видна над термином, пока карточка не выучена, а потом только с ответом."
 
@@ -2913,8 +2910,8 @@ msgstr "В колоде с {joined}"
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Чтобы присоединиться к колоде, нужно соединение. Подключись и попробуй ещё раз."
 
-msgid "Jyutping shows only with the answer, so you read the characters yourself."
-msgstr "Jyutping виден только с ответом, так что иероглифы вы читаете сами."
+msgid "Jyutping shows on its own line with the answer, so you read the characters yourself."
+msgstr "Jyutping виден отдельной строкой с ответом, так что иероглифы вы читаете сами."
 
 msgid "Jyutping shows over the term until a card is Known, then only with the answer."
 msgstr "Jyutping виден над термином, пока карточка не выучена, а потом только с ответом."
@@ -3783,8 +3780,8 @@ msgstr "Картинка изменена"
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
 
-msgid "Pinyin shows only with the answer, so you read the characters yourself."
-msgstr "Пиньинь виден только с ответом, так что иероглифы вы читаете сами."
+msgid "Pinyin shows on its own line with the answer, so you read the characters yourself."
+msgstr "Пиньинь виден отдельной строкой с ответом, так что иероглифы вы читаете сами."
 
 msgid "Pinyin shows over the term until a card is Known, then only with the answer."
 msgstr "Пиньинь виден над термином, пока карточка не выучена, а потом только с ответом."
@@ -4534,8 +4531,8 @@ msgstr "Ударение"
 msgid "Stress marks show on the term until a card is Known, then only with the answer."
 msgstr "Ударения видны на термине, пока карточка не выучена, а потом только с ответом."
 
-msgid "Stress marks show only with the answer, so you recall the stress yourself."
-msgstr "Ударения видны только с ответом, так что ударение вы вспоминаете сами."
+msgid "Stress marks show on their own line with the answer, so you recall the stress yourself."
+msgstr "Ударения видны отдельной строкой с ответом, так что ударение вы вспоминаете сами."
 
 msgid "Stuck? Read the guide"
 msgstr "Что-то не получается? Прочитай руководство"
@@ -4677,8 +4674,11 @@ msgstr "Ссылка перестанет работать навсегда. Т�
 msgid "The pages and text you added aren’t kept."
 msgstr "Добавленные страницы и текст не сохранятся."
 
-msgid "The reading shows only with the answer, so you read the term yourself."
-msgstr "Чтение видно только с ответом, так что термин вы читаете сами."
+msgid "The reading shows on its own line with the answer, so you read the kanji yourself."
+msgstr "Чтение видно отдельной строкой с ответом, так что кандзи вы читаете сами."
+
+msgid "The reading shows on its own line with the answer, so you read the term yourself."
+msgstr "Чтение видно отдельной строкой с ответом, так что термин вы читаете сами."
 
 msgid "The reading shows over the term until a card is Known, then only with the answer."
 msgstr "Чтение видно над термином, пока карточка не выучена, а потом только с ответом."

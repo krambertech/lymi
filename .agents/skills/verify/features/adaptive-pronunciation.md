@@ -1,6 +1,6 @@
 # Adaptive pronunciation
 
-A deck switch, each learner's own, for a language whose pronunciation Lymi draws on the term: Japanese, Chinese, Cantonese, Tamil, Russian and Ukrainian. On, the default, review's cue draws it until the card is Known. Off, the cue never draws it and the answer always does. It closes the Deck group of deck settings, and of About this deck for a member.
+A deck switch, each learner's own, for a language whose pronunciation Lymi draws on the term: Japanese, Chinese, Cantonese, Tamil, Russian and Ukrainian. On, the default, review's cue draws it until the card is Known. Off, review never draws it on the term: the answer shows it as its own line. It closes the Deck group of deck settings, and of About this deck for a member.
 
 ## Reach
 
@@ -12,7 +12,7 @@ The recipe signs in as `fresh` and makes a Chinese deck with one New card, 学�
 
 ## End state
 
-With the switch on, the cue shows the `rt` syllables xué and xí. After it is turned off, `GET /api/decks/<id>` reports `frontPronunciation: "hidden"`, the line under the switch says pinyin shows only with the answer, the cue shows no `rt`, and the reveal shows both syllables. The Spanish deck's settings have no **Adaptive pronunciation** switch.
+With the switch on, the cue shows the `rt` syllables xué and xí. After it is turned off, `GET /api/decks/<id>` reports `pronunciationDisplay: "separate"`, the line under the switch says pinyin shows on its own line, the cue shows no `rt`, and the reveal shows xuéxí as a line of its own with still no `rt`. The Spanish deck's settings have no **Adaptive pronunciation** switch.
 
 ## Gotchas
 

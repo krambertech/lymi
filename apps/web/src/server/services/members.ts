@@ -96,7 +96,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       meaningLanguage: schema.deckMembers.meaningLanguage,
-      frontPronunciation: schema.deckPreferences.frontPronunciation,
+      pronunciationDisplay: schema.deckPreferences.pronunciationDisplay,
       ...publisherColumns,
     })
     .from(schema.decks)
@@ -136,7 +136,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     description: row.editionDescription ?? deck.description,
     // The edition this caller reads the deck in, or null for the deck's own words.
     meaningLanguage: row.meaningLanguage,
-    frontPronunciation: row.frontPronunciation ?? "until-known",
+    pronunciationDisplay: row.pronunciationDisplay ?? "adaptive",
     seriesId: row.seriesId,
     position: row.position,
     reviewModes: deckModes(row.deck.directions),

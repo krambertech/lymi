@@ -29,7 +29,7 @@ name: Adaptive pronunciation
     text: "Adaptive pronunciation"
     checked: true
 - extendedWaitUntil:
-    visible: "Pinyin shows only with the answer.*"
+    visible: "Pinyin shows on its own line.*"
     timeout: 15000
 - takeScreenshot: 02-switch-off
 - tapOn: "Library"
@@ -47,4 +47,5 @@ name: Adaptive pronunciation
 - tapOn:
     point: "50%,80%"
 - assertVisible: ".*${MEANING}.*"
+- assertVisible: "${READING}"
 - takeScreenshot: 04-revealed

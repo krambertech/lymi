@@ -26,8 +26,8 @@ export async function env({ api }) {
 /** The switch the flow turned off is stored as the learner's own choice for the deck. */
 export async function check({ api }) {
   const deck = (await api("/api/decks")).find((d) => d.name === DECK);
-  if (deck?.frontPronunciation !== "hidden") {
-    throw new Error(`“${DECK}” stores ${deck?.frontPronunciation}, not hidden`);
+  if (deck?.pronunciationDisplay !== "separate") {
+    throw new Error(`“${DECK}” stores ${deck?.pronunciationDisplay}, not separate`);
   }
   return { deck };
 }

@@ -1,6 +1,6 @@
 # Adaptive pronunciation
 
-The deck switch, each learner's own, that decides whether review's cue draws the term's pronunciation. On, the default, the cue draws it until the card is Known; off, only the answer does. It is the last of the deck's rows in deck settings and in About this deck, for a deck whose language draws pronunciation on the term.
+The deck switch, each learner's own, that decides whether review's cue draws the term's pronunciation. On, the default, the cue draws it until the card is Known; off, the answer shows it as its own line and the term is plain. It is the last of the deck's rows in deck settings and in About this deck, for a deck whose language draws pronunciation on the term.
 
 ## Reach
 
@@ -12,7 +12,7 @@ The deck switch, each learner's own, that decides whether review's cue draws the
 
 ## End state
 
-The first cue's label says the term is read xuéxí. After the switch, its line says pinyin shows only with the answer, the cue's label is the term alone, and `check()` reads `frontPronunciation: "hidden"` on the deck.
+The first cue's label says the term is read xuéxí. After the switch, its line says pinyin shows on its own line, the cue's label is the term alone, the revealed card shows xuéxí as a line of its own, and `check()` reads `pronunciationDisplay: "separate"` on the deck.
 
 ## Gotchas
 

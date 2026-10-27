@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ef98a4eb-111d-4802-965e-0547a64bedfd",
+  "id": "6db4ec1b-c1b8-4279-b683-0cc22560683f",
   "prevId": "28d90f53-9e91-4fb6-8f47-f0b86ad259e2",
   "tables": {
     "account_deletions": {
@@ -2277,13 +2277,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "front_pronunciation": {
-          "name": "front_pronunciation",
+        "pronunciation_display": {
+          "name": "pronunciation_display",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'until-known'"
+          "default": "'adaptive'"
         },
         "created_at": {
           "name": "created_at",

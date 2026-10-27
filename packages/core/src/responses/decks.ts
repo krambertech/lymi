@@ -4,8 +4,8 @@ import {
   DeckEnrichInstructions,
   DeckPurpose,
   Directions,
-  FrontPronunciation,
   MemberRole,
+  PronunciationDisplay,
   ReviewMode,
   SectionProgression,
 } from "../types";
@@ -51,7 +51,7 @@ const Enrichment = {
 };
 
 const Preferences = {
-  frontPronunciation: FrontPronunciation.default("until-known").meta({
+  pronunciationDisplay: PronunciationDisplay.default("adaptive").meta({
     description:
       "The caller's own choice of whether the front of a card shows the term's pronunciation in this deck",
   }),

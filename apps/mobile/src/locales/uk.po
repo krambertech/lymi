@@ -2545,9 +2545,6 @@ msgstr "З уроку"
 msgid "Front and back"
 msgstr "Лицевий і зворотний бік"
 
-msgid "Furigana shows only with the answer, so you read the kanji yourself."
-msgstr "Фурігану видно лише з відповіддю, тож кандзі ви читаєте самі."
-
 msgid "Furigana shows over the term until a card is Known, then only with the answer."
 msgstr "Фурігану видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
@@ -2913,8 +2910,8 @@ msgstr "У колоді з {joined}"
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Щоб приєднатися до колоди, потрібне з’єднання. Підключися й спробуй ще раз."
 
-msgid "Jyutping shows only with the answer, so you read the characters yourself."
-msgstr "Jyutping видно лише з відповіддю, тож ієрогліфи ви читаєте самі."
+msgid "Jyutping shows on its own line with the answer, so you read the characters yourself."
+msgstr "Jyutping видно окремим рядком з відповіддю, тож ієрогліфи ви читаєте самі."
 
 msgid "Jyutping shows over the term until a card is Known, then only with the answer."
 msgstr "Jyutping видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
@@ -3783,8 +3780,8 @@ msgstr "Зображення змінено"
 msgid "Pictures of the pages"
 msgstr "Знімки сторінок"
 
-msgid "Pinyin shows only with the answer, so you read the characters yourself."
-msgstr "Піньїнь видно лише з відповіддю, тож ієрогліфи ви читаєте самі."
+msgid "Pinyin shows on its own line with the answer, so you read the characters yourself."
+msgstr "Піньїнь видно окремим рядком з відповіддю, тож ієрогліфи ви читаєте самі."
 
 msgid "Pinyin shows over the term until a card is Known, then only with the answer."
 msgstr "Піньїнь видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
@@ -4534,8 +4531,8 @@ msgstr "Наголос"
 msgid "Stress marks show on the term until a card is Known, then only with the answer."
 msgstr "Наголоси видно на терміні, доки картка не засвоєна, а потім лише з відповіддю."
 
-msgid "Stress marks show only with the answer, so you recall the stress yourself."
-msgstr "Наголоси видно лише з відповіддю, тож наголос ви пригадуєте самі."
+msgid "Stress marks show on their own line with the answer, so you recall the stress yourself."
+msgstr "Наголоси видно окремим рядком з відповіддю, тож наголос ви пригадуєте самі."
 
 msgid "Stuck? Read the guide"
 msgstr "Щось не виходить? Прочитай посібник"
@@ -4677,8 +4674,11 @@ msgstr "Посилання перестане працювати назавжд�
 msgid "The pages and text you added aren’t kept."
 msgstr "Додані сторінки й текст не збережуться."
 
-msgid "The reading shows only with the answer, so you read the term yourself."
-msgstr "Читання видно лише з відповіддю, тож термін ви читаєте самі."
+msgid "The reading shows on its own line with the answer, so you read the kanji yourself."
+msgstr "Читання видно окремим рядком з відповіддю, тож кандзі ви читаєте самі."
+
+msgid "The reading shows on its own line with the answer, so you read the term yourself."
+msgstr "Читання видно окремим рядком з відповіддю, тож термін ви читаєте самі."
 
 msgid "The reading shows over the term until a card is Known, then only with the answer."
 msgstr "Читання видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."

@@ -2652,9 +2652,6 @@ msgstr "From your notes"
 msgid "Front and back"
 msgstr "Front and back"
 
-msgid "Furigana shows only with the answer, so you read the kanji yourself."
-msgstr "Furigana shows only with the answer, so you read the kanji yourself."
-
 msgid "Furigana shows over the term until a card is Known, then only with the answer."
 msgstr "Furigana shows over the term until a card is Known, then only with the answer."
 
@@ -3020,8 +3017,8 @@ msgstr "joined {joined}"
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP or still GIF, up to 10 MB."
 
-msgid "Jyutping shows only with the answer, so you read the characters yourself."
-msgstr "Jyutping shows only with the answer, so you read the characters yourself."
+msgid "Jyutping shows on its own line with the answer, so you read the characters yourself."
+msgstr "Jyutping shows on its own line with the answer, so you read the characters yourself."
 
 msgid "Jyutping shows over the term until a card is Known, then only with the answer."
 msgstr "Jyutping shows over the term until a card is Known, then only with the answer."
@@ -4104,8 +4101,8 @@ msgstr "Pictures need a connection. Add it once you’re back online."
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
 
-msgid "Pinyin shows only with the answer, so you read the characters yourself."
-msgstr "Pinyin shows only with the answer, so you read the characters yourself."
+msgid "Pinyin shows on its own line with the answer, so you read the characters yourself."
+msgstr "Pinyin shows on its own line with the answer, so you read the characters yourself."
 
 msgid "Pinyin shows over the term until a card is Known, then only with the answer."
 msgstr "Pinyin shows over the term until a card is Known, then only with the answer."
@@ -4936,8 +4933,8 @@ msgstr "Stress"
 msgid "Stress marks show on the term until a card is Known, then only with the answer."
 msgstr "Stress marks show on the term until a card is Known, then only with the answer."
 
-msgid "Stress marks show only with the answer, so you recall the stress yourself."
-msgstr "Stress marks show only with the answer, so you recall the stress yourself."
+msgid "Stress marks show on their own line with the answer, so you recall the stress yourself."
+msgstr "Stress marks show on their own line with the answer, so you recall the stress yourself."
 
 msgctxt "Password strength"
 msgid "Strong"
@@ -5138,8 +5135,11 @@ msgstr "the notes"
 msgid "the pronunciation"
 msgstr "the pronunciation"
 
-msgid "The reading shows only with the answer, so you read the term yourself."
-msgstr "The reading shows only with the answer, so you read the term yourself."
+msgid "The reading shows on its own line with the answer, so you read the kanji yourself."
+msgstr "The reading shows on its own line with the answer, so you read the kanji yourself."
+
+msgid "The reading shows on its own line with the answer, so you read the term yourself."
+msgstr "The reading shows on its own line with the answer, so you read the term yourself."
 
 msgid "The reading shows over the term until a card is Known, then only with the answer."
 msgstr "The reading shows over the term until a card is Known, then only with the answer."

@@ -545,24 +545,21 @@ describe("toneRuns", () => {
 });
 
 describe("cueShowsPronunciation", () => {
-  const shows = (front: "until-known" | "hidden" | undefined, known: boolean, revealed: boolean) =>
-    cueShowsPronunciation({ front, known, revealed });
+  const shows = (display: "adaptive" | "separate" | undefined, known: boolean, revealed: boolean) =>
+    cueShowsPronunciation({ display, known, revealed });
 
-  it("shows it on the front until the card is Known, by default", () => {
-    expect(shows("until-known", false, false)).toBe(true);
-    expect(shows("until-known", true, false)).toBe(false);
+  it("draws it on the term until the card is Known, and on the answer, by default", () => {
+    expect(shows("adaptive", false, false)).toBe(true);
+    expect(shows("adaptive", true, false)).toBe(false);
+    expect(shows("adaptive", true, true)).toBe(true);
     expect(shows(undefined, false, false)).toBe(true);
+    expect(shows(undefined, true, true)).toBe(true);
   });
 
-  it("never shows it on the front once the learner hides it", () => {
-    expect(shows("hidden", false, false)).toBe(false);
-    expect(shows("hidden", true, false)).toBe(false);
-  });
-
-  it("always shows it on the answer", () => {
-    for (const front of ["until-known", "hidden", undefined] as const) {
-      expect(shows(front, false, true)).toBe(true);
-      expect(shows(front, true, true)).toBe(true);
+  it("never draws it on the term once the learner shows it separately", () => {
+    for (const known of [false, true]) {
+      expect(shows("separate", known, false)).toBe(false);
+      expect(shows("separate", known, true)).toBe(false);
     }
   });
 });

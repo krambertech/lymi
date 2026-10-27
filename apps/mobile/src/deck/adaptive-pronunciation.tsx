@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
-import { type FrontPronunciation, type ReadingEngine, readingEngine } from "@lymi/core";
+import { type PronunciationDisplay, type ReadingEngine, readingEngine } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { View } from "react-native";
@@ -16,23 +16,23 @@ import { Switch } from "../ui/switch";
 const DESCRIPTION: Record<ReadingEngine, [on: MessageDescriptor, off: MessageDescriptor]> = {
   furigana: [
     msg`Furigana shows over the term until a card is Known, then only with the answer.`,
-    msg`Furigana shows only with the answer, so you read the kanji yourself.`,
+    msg`The reading shows on its own line with the answer, so you read the kanji yourself.`,
   ],
   pinyin: [
     msg`Pinyin shows over the term until a card is Known, then only with the answer.`,
-    msg`Pinyin shows only with the answer, so you read the characters yourself.`,
+    msg`Pinyin shows on its own line with the answer, so you read the characters yourself.`,
   ],
   jyutping: [
     msg`Jyutping shows over the term until a card is Known, then only with the answer.`,
-    msg`Jyutping shows only with the answer, so you read the characters yourself.`,
+    msg`Jyutping shows on its own line with the answer, so you read the characters yourself.`,
   ],
   indic: [
     msg`The reading shows over the term until a card is Known, then only with the answer.`,
-    msg`The reading shows only with the answer, so you read the term yourself.`,
+    msg`The reading shows on its own line with the answer, so you read the term yourself.`,
   ],
   stress: [
     msg`Stress marks show on the term until a card is Known, then only with the answer.`,
-    msg`Stress marks show only with the answer, so you recall the stress yourself.`,
+    msg`Stress marks show on their own line with the answer, so you recall the stress yourself.`,
   ],
 };
 
@@ -45,16 +45,16 @@ export function useAdaptivePronunciation(deck: DeckSummary) {
   const [failed, setFailed] = useState(false);
   const notation = readingEngine(deck.defaultLanguage);
   if (!notation) return null;
-  const change = async (frontPronunciation: FrontPronunciation) => {
+  const change = async (pronunciationDisplay: PronunciationDisplay) => {
     setFailed(false);
     try {
-      await writes.setDeckPreferences(deck.id, { frontPronunciation });
+      await writes.setDeckPreferences(deck.id, { pronunciationDisplay });
       void qc.invalidateQueries({ queryKey: ["decks"] });
     } catch {
       setFailed(true);
     }
   };
-  return { deck, notation, on: deck.frontPronunciation !== "hidden", change, failed };
+  return { deck, notation, on: deck.pronunciationDisplay !== "separate", change, failed };
 }
 
 type Choice = NonNullable<ReturnType<typeof useAdaptivePronunciation>>;
@@ -69,7 +69,7 @@ export function AdaptivePronunciationRow({ choice }: { choice: Choice }) {
       control={
         <Switch
           checked={choice.on}
-          onCheckedChange={(next) => void choice.change(next ? "until-known" : "hidden")}
+          onCheckedChange={(next) => void choice.change(next ? "adaptive" : "separate")}
           accessibilityLabel={t`Adaptive pronunciation`}
         />
       }

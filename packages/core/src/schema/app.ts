@@ -17,9 +17,9 @@ import {
 import {
   EDITION_STATUSES,
   type EditionCardField,
-  FRONT_PRONUNCIATIONS,
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
+  PRONUNCIATION_DISPLAYS,
   PUBLICATION_CATEGORIES,
   type PublicationTag,
   REVIEW_AIDS,
@@ -733,9 +733,9 @@ export const deckPreferences = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    frontPronunciation: text("front_pronunciation", { enum: FRONT_PRONUNCIATIONS })
+    pronunciationDisplay: text("pronunciation_display", { enum: PRONUNCIATION_DISPLAYS })
       .notNull()
-      .default("until-known"),
+      .default("adaptive"),
     ...timestamps,
   },
   (t) => [

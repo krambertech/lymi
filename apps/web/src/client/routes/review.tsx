@@ -1216,7 +1216,7 @@ function Review() {
                 currentDeck && {
                   name: currentDeck.name,
                   language: currentDeck.defaultLanguage ?? null,
-                  frontPronunciation: currentDeck.frontPronunciation,
+                  pronunciationDisplay: currentDeck.pronunciationDisplay,
                 }
               }
               section={sectionName}

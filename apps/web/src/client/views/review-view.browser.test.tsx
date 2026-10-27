@@ -1,6 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { type FrontPronunciation, knownReadings } from "@lymi/core";
+import { knownReadings, type PronunciationDisplay } from "@lymi/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
@@ -114,13 +114,13 @@ const shown = (text: string) =>
 async function reviewCue(
   card: Partial<QueueItem["card"]>,
   fsrsState: number,
-  front?: FrontPronunciation,
+  front?: PronunciationDisplay,
 ) {
   const cue = (revealed: boolean) => (
     <I18nProvider i18n={i18n}>
       <ReviewCard
         item={{ ...item(card), fsrsState }}
-        deck={{ name: "汉语", language: "zh", frontPronunciation: front }}
+        deck={{ name: "汉语", language: "zh", pronunciationDisplay: front }}
         revealed={revealed}
         animateReveal={false}
         onReveal={noop}
@@ -161,15 +161,17 @@ test("a New or Learning Chinese card draws its pinyin over each character on the
   expect(pinyinShown()).toEqual(["xué", "xí"]);
 });
 
-test("a New Chinese card keeps its pinyin for the reveal once the learner turns adaptive pronunciation off", async () => {
+test("a Chinese card shows its pinyin as its own line once the learner turns adaptive pronunciation off", async () => {
   const { reveal } = await reviewCue(
     { term: "学习", language: "zh", pronunciation: "xuéxí" },
     1,
-    "hidden",
+    "separate",
   );
   expect(pinyinShown()).toEqual([]);
+  expect(pinyinLine()).toHaveLength(0);
   await reveal();
-  await expect.poll(pinyinShown).toEqual(["xué", "xí"]);
+  await expect.poll(pinyinLine).toHaveLength(1);
+  expect(pinyinShown()).toEqual([]);
 });
 
 test("一点儿 gives 儿 to the erhua syllable before it", async () => {

@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { FrontPronunciation, ReadingEngine } from "@lymi/core";
+import type { PronunciationDisplay, ReadingEngine } from "@lymi/core";
 import { InlineError } from "./inline-error";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "./ui/field";
 import { Switch } from "./ui/switch";
@@ -10,38 +10,38 @@ import { Switch } from "./ui/switch";
 const DESCRIPTION: Record<ReadingEngine, [on: MessageDescriptor, off: MessageDescriptor]> = {
   furigana: [
     msg`Furigana shows over the term until a card is Known, then only with the answer.`,
-    msg`Furigana shows only with the answer, so you read the kanji yourself.`,
+    msg`The reading shows on its own line with the answer, so you read the kanji yourself.`,
   ],
   pinyin: [
     msg`Pinyin shows over the term until a card is Known, then only with the answer.`,
-    msg`Pinyin shows only with the answer, so you read the characters yourself.`,
+    msg`Pinyin shows on its own line with the answer, so you read the characters yourself.`,
   ],
   jyutping: [
     msg`Jyutping shows over the term until a card is Known, then only with the answer.`,
-    msg`Jyutping shows only with the answer, so you read the characters yourself.`,
+    msg`Jyutping shows on its own line with the answer, so you read the characters yourself.`,
   ],
   indic: [
     msg`The reading shows over the term until a card is Known, then only with the answer.`,
-    msg`The reading shows only with the answer, so you read the term yourself.`,
+    msg`The reading shows on its own line with the answer, so you read the term yourself.`,
   ],
   stress: [
     msg`Stress marks show on the term until a card is Known, then only with the answer.`,
-    msg`Stress marks show only with the answer, so you recall the stress yourself.`,
+    msg`Stress marks show on their own line with the answer, so you recall the stress yourself.`,
   ],
 };
 
 interface Props {
   /** How the deck's language draws pronunciation on the term. */
   notation: ReadingEngine;
-  value: FrontPronunciation;
-  onChange: (value: FrontPronunciation) => void;
+  value: PronunciationDisplay;
+  onChange: (value: PronunciationDisplay) => void;
   error?: boolean | undefined;
 }
 
 /** Adaptive pronunciation: the learner's own choice of whether a card's cue carries its pronunciation in this deck. */
-export function FrontPronunciationChoice({ notation, value, onChange, error }: Props) {
+export function AdaptivePronunciationChoice({ notation, value, onChange, error }: Props) {
   const { i18n } = useLingui();
-  const on = value !== "hidden";
+  const on = value !== "separate";
   const [onText, offText] = DESCRIPTION[notation];
   return (
     <div className="grid">
@@ -56,7 +56,7 @@ export function FrontPronunciationChoice({ notation, value, onChange, error }: P
           <Switch
             className="self-center"
             checked={on}
-            onCheckedChange={(next) => onChange(next ? "until-known" : "hidden")}
+            onCheckedChange={(next) => onChange(next ? "adaptive" : "separate")}
           />
         </Field>
       </div>

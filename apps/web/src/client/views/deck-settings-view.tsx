@@ -4,8 +4,8 @@ import {
   type DeckPurpose,
   type Directions,
   deckLimits,
-  type FrontPronunciation,
   isolate,
+  type PronunciationDisplay,
   readingEngine,
   type SectionProgression,
 } from "@lymi/core";
@@ -24,6 +24,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { AdaptivePronunciationChoice } from "../components/adaptive-pronunciation-choice";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
@@ -37,7 +38,6 @@ import {
   languageName,
   PurposeField,
 } from "../components/deck-fields";
-import { FrontPronunciationChoice } from "../components/front-pronunciation-choice";
 import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
 import { TurnOffLinkDialog } from "../components/member-dialogs";
@@ -93,8 +93,8 @@ export interface DeckSettingsProps {
   /** How many tags the deck's cards carry, for the owner's way to its Tags page; undefined while loading. */
   tags?: { count: number | undefined } | undefined;
   /** The learner's own pronunciation choice, owner or member. */
-  onFrontPronunciation: (value: FrontPronunciation) => void;
-  frontPronunciationError?: boolean | undefined;
+  onPronunciationDisplay: (value: PronunciationDisplay) => void;
+  pronunciationDisplayError?: boolean | undefined;
 }
 
 export interface MembersProps {
@@ -143,8 +143,8 @@ export function DeckSettingsView({
   sharing,
   members,
   tags,
-  onFrontPronunciation,
-  frontPronunciationError,
+  onPronunciationDisplay,
+  pronunciationDisplayError,
 }: DeckSettingsProps) {
   const { t } = useLingui();
   const reading = !!deck && deck.role !== "owner";
@@ -239,8 +239,8 @@ export function DeckSettingsView({
           pronunciation={
             <AdaptivePronunciationField
               deck={deck}
-              onChange={onFrontPronunciation}
-              error={frontPronunciationError}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
             />
           }
         />
@@ -289,8 +289,8 @@ export function DeckSettingsView({
             />
             <AdaptivePronunciationField
               deck={deck}
-              onChange={onFrontPronunciation}
-              error={frontPronunciationError}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
             />
           </SettingsGroup>
 
@@ -699,16 +699,16 @@ function AdaptivePronunciationField({
   error,
 }: {
   deck: DeckSummary;
-  onChange: (value: FrontPronunciation) => void;
+  onChange: (value: PronunciationDisplay) => void;
   error?: boolean | undefined;
 }) {
   const notation = readingEngine(deck.defaultLanguage);
   if (!notation) return null;
   return (
     <div className="grid gap-2">
-      <FrontPronunciationChoice
+      <AdaptivePronunciationChoice
         notation={notation}
-        value={deck.frontPronunciation ?? "until-known"}
+        value={deck.pronunciationDisplay ?? "adaptive"}
         onChange={onChange}
         error={error}
       />

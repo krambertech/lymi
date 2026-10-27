@@ -1535,13 +1535,27 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {separate && revealed && mode.cue === "term" && card.pronunciation && (
-                    <Animated.View entering={arrive()} className="pt-1">
-                      <Text className="text-md text-muted" lang={card.language}>
-                        {card.pronunciation}
-                      </Text>
-                    </Animated.View>
-                  )}
+                  {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
+                  {(!furigana || separate) &&
+                    mode.cue === "term" &&
+                    card.pronunciation &&
+                    (revealed ? (
+                      <Animated.View entering={arrive()} className="pt-1">
+                        <Text className="text-md text-muted" lang={card.language}>
+                          {card.pronunciation}
+                        </Text>
+                      </Animated.View>
+                    ) : (
+                      <View
+                        className="pt-1 opacity-0"
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                      >
+                        <Text className="text-md text-muted" lang={card.language}>
+                          {card.pronunciation}
+                        </Text>
+                      </View>
+                    ))}
                   {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
                   {hint && hintShown ? (
                     <View className="pt-3">
@@ -1625,16 +1639,14 @@ function CardPlate({
                         </Animated.View>
                       )}
                       {/* After the reveal unless the term draws it, over it or in place, which
-                    VoiceOver reads out. Under a term cue it reads the term out. */}
-                      {card.pronunciation &&
-                        (!furigana || separate) &&
-                        !(separate && mode.cue === "term") && (
-                          <Animated.View entering={arrive()}>
-                            <Text className="text-md text-muted" lang={card.language}>
-                              {card.pronunciation}
-                            </Text>
-                          </Animated.View>
-                        )}
+                    VoiceOver reads out. A term cue carries it under the cue instead. */}
+                      {card.pronunciation && (!furigana || separate) && mode.cue !== "term" && (
+                        <Animated.View entering={arrive()}>
+                          <Text className="text-md text-muted" lang={card.language}>
+                            {card.pronunciation}
+                          </Text>
+                        </Animated.View>
+                      )}
                       {!picture && card.image && (
                         <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
                           <Picture card={card} maxHeight={120} />

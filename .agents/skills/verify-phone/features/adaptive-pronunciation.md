@@ -1,6 +1,6 @@
 # Adaptive pronunciation
 
-The deck switch, each learner's own, that decides whether review's cue draws the term's pronunciation. On, the default, the cue draws it until the card is Known; off, the answer shows it as its own line and the term is plain. It is the last of the deck's rows in deck settings and in About this deck, for a deck whose language draws pronunciation on the term.
+The deck switch, each learner's own, that decides whether review's cue draws the term's pronunciation. On, the default, the cue draws it until the card is Known; off, the term is plain and after the reveal the pronunciation is its own line under it. It is the last of the deck's rows in deck settings and in About this deck, for a deck whose language draws pronunciation on the term.
 
 ## Reach
 

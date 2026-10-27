@@ -685,7 +685,7 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
-    // Under the rule: a reading under a term cue reads the term out. Where it is drawn on the
+    // The pronunciation's own line, under the term wherever it stands. Where it is drawn on the
     // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&
@@ -752,8 +752,8 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
-              {/* Shown under the cue when separate; the measuring copy keeps its room here. */}
-              {mode.cue === "term" && (!separate || measure) && pronunciation}
+              {/* A line of its own stands under the cue's term; the measuring copy keeps its room here. */}
+              {mode.cue === "term" && (measure || (reading && !separate)) && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -943,9 +943,14 @@ export function ReviewCard({
                       )}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
-                    {mode.cue === "term" && separate && revealed && card.pronunciation && (
+                    {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
+                    {mode.cue === "term" && (!reading || separate) && card.pronunciation && (
                       <p
-                        className="enter-fade pt-1 text-md text-muted [overflow-wrap:anywhere]"
+                        aria-hidden={!revealed || undefined}
+                        className={clsx(
+                          "pt-1 text-md text-muted [overflow-wrap:anywhere]",
+                          revealed ? "enter-fade" : "invisible",
+                        )}
                         lang={card.language ?? undefined}
                       >
                         {card.pronunciation}

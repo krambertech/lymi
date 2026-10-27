@@ -1,6 +1,6 @@
 # Adaptive pronunciation
 
-A deck switch, each learner's own, for a language whose pronunciation Lymi draws on the term: Japanese, Chinese, Cantonese, Tamil, Russian and Ukrainian. On, the default, review's cue draws it until the card is Known. Off, review never draws it on the term: the answer shows it as its own line. It closes the Deck group of deck settings, and of About this deck for a member.
+A deck switch, each learner's own, for a language whose pronunciation Lymi draws on the term: Japanese, Chinese, Cantonese, Tamil, Russian and Ukrainian. On, the default, review's cue draws it until the card is Known. Off, review never draws it on the term: after the reveal it is its own line under the term. It closes the Deck group of deck settings, and of About this deck for a member.
 
 ## Reach
 

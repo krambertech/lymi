@@ -219,8 +219,10 @@ export function initAnalytics(options: {
             ? { $session_id: sessionId }
             : {};
         if (event.event === "$exception") {
+          const exception = exceptionProperties(event.properties);
+          if (GLOBAL_HANDLERS.has(event.properties.caught_by) && !fromLymi(exception)) return null;
           event.properties = {
-            ...exceptionProperties(event.properties),
+            ...exception,
             token: options.token,
             distinct_id:
               surface === "product" && learner && allowed() ? posthog.get_distinct_id() : "browser",
@@ -479,6 +481,30 @@ function sdkEventProperties(
 /** Which handler caught a browser error, so a report without a stack still says where it surfaced. */
 export type CaughtBy = "window" | "rejection" | "router" | "react";
 const CAUGHT_BY = new Set<unknown>(["window", "rejection", "router", "react"] satisfies CaughtBy[]);
+
+const GLOBAL_HANDLERS = new Set<unknown>(["window", "rejection"] satisfies CaughtBy[]);
+const LYMI_ASSET = "https://my.lymi.app/assets/";
+
+/**
+ * Whether an error the page's global handlers caught came from Lymi: a frame in Lymi's own bundle,
+ * or a runtime network or chunk failure message. Extensions and injected scripts throw on the page
+ * too, with neither. A thrown non-error gets a synthetic stack of the reporting code itself.
+ */
+function fromLymi(properties: Record<string, unknown>): boolean {
+  const exceptions = properties.$exception_list as {
+    value: string;
+    mechanism: { synthetic: boolean };
+    stacktrace: { frames: { filename?: string; chunk_id?: string }[] };
+  }[];
+  return exceptions.some(
+    (exception) =>
+      exception.value !== "Unexpected error" ||
+      (!exception.mechanism.synthetic &&
+        exception.stacktrace.frames.some(
+          (frame) => frame.chunk_id || frame.filename?.startsWith(LYMI_ASSET),
+        )),
+  );
+}
 
 export function reportBrowserException(error: unknown, caughtBy?: CaughtBy): void {
   if (!initialized) return;

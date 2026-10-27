@@ -179,10 +179,37 @@ it("tags an error with its route pattern and the release that threw it", async (
 it("names the handler that caught an error and drops any other label", async () => {
   await load("https://my.lymi.app/review");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-  analytics.reportBrowserException(new TypeError("private"), "rejection");
-  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "rejection" });
+  analytics.reportBrowserException(new TypeError("private"), "router");
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "router" });
   sdk.captureException(new TypeError("private"), { caught_by: "private label" });
   expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("caught_by");
+});
+
+const thrown = (frames: Record<string, unknown>[], value = "private", synthetic = false) => ({
+  $exception_list: [
+    { type: "TypeError", value, mechanism: { synthetic }, stacktrace: { type: "raw", frames } },
+  ],
+});
+const extensionFrame = { filename: "chrome-extension://abcdef/inpage.js", function: "send" };
+const lymiFrame = { filename: "https://my.lymi.app/assets/index-abcd.js", function: "save" };
+
+it("drops what an extension throws on the page but keeps Lymi's own errors", async () => {
+  await load("https://my.lymi.app/review");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  const sent = () => sdk.sent.filter((event) => event.event === "$exception").length;
+  const before = sent();
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "window" });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "rejection" });
+  // A rejected non-error's stack is the reporting code's own, even though it is Lymi's bundle.
+  sdk.capture("$exception", { ...thrown([lymiFrame], "private", true), caught_by: "rejection" });
+  expect(sent()).toBe(before);
+
+  sdk.capture("$exception", { ...thrown([extensionFrame, lymiFrame]), caught_by: "window" });
+  sdk.capture("$exception", { ...thrown([{ chunk_id: "chunk-1" }]), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([], "Load failed"), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "react" });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "router" });
+  expect(sent()).toBe(before + 5);
 });
 
 it("counts a signed-out visitor anonymously and joins them to the account they create", async () => {

@@ -161,6 +161,20 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
+/** Whether a review's cue draws the term's pronunciation before the reveal. Each learner's own, per deck. */
+export const FRONT_PRONUNCIATIONS = ["until-known", "hidden"] as const;
+export const FrontPronunciation = z.enum(FRONT_PRONUNCIATIONS).meta({
+  ...OPEN,
+  id: "FrontPronunciation",
+  description:
+    "Whether the front of a card shows the term's furigana, pinyin, Jyutping, reading or stress marks. until-known, the default: until the card is Known. hidden: never. The answer always shows it.",
+});
+export type FrontPronunciation = z.infer<typeof FrontPronunciation>;
+
+/** The caller's own choices for one deck, which never change it for anyone else. */
+export const DeckPreferencesInput = z.object({ frontPronunciation: FrontPronunciation });
+export type DeckPreferencesInput = z.infer<typeof DeckPreferencesInput>;
+
 /**
  * An id the caller chose for what it creates, in `newId`'s alphabet. Sending the same create
  * again returns what the first one made instead of making a second, so an offline write replays safely.

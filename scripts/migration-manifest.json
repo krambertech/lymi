@@ -287,6 +287,10 @@
     {
       "name": "0071_pale_solo.sql",
       "sha256": "6ccc7488de90d8e1dd499ac1dd10b04f41b3f0f43d4abd30f77c496912f6229d"
+    },
+    {
+      "name": "0072_panoramic_nitro.sql",
+      "sha256": "38b2a0d413419f7e338e8ee98478b99929cd65926d68e8948a243b2616895639"
     }
   ]
 }

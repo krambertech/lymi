@@ -19,9 +19,11 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
+  cueShowsPronunciation,
   type Drawn,
   drawKey,
   type FieldSource,
+  type FrontPronunciation,
   gradeAllowed,
   interval,
   isolate,
@@ -176,7 +178,14 @@ interface ListCards {
 }
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
 /** The deck a card came from, named first on the card. A review can mix every deck. */
-type CardDeck = { name: string; language?: string | null | undefined } | undefined;
+type CardDeck =
+  | {
+      name: string;
+      language?: string | null | undefined;
+      /** The learner's adaptive pronunciation choice for the deck; absent reads as the default. */
+      frontPronunciation?: FrontPronunciation | undefined;
+    }
+  | undefined;
 /** A card's hint as review shows it: its words and who wrote them. */
 type Hint = { text: string; source: FieldSource | null };
 /** A tap this soon after the reveal is the reveal's own tap doubled, not one for the menu. */
@@ -764,7 +773,11 @@ function Run({
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
   const deckRow = decks?.find((d) => d.id === card.deckId);
-  const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
+  const cardDeck = deckRow && {
+    name: deckRow.name,
+    language: deckRow.defaultLanguage ?? null,
+    frontPronunciation: deckRow.frontPronunciation,
+  };
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
   const showing = `${keyOf(current)}:${done}`;
   const hint: Hint | null =
@@ -1358,9 +1371,13 @@ function CardPlate({
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const reading = card.pronunciation;
-  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
   const furigana = useMemo(() => termShowsPronunciation(card), [card]);
-  const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
+  const cueFurigana = cueShowsPronunciation({
+    revealed,
+    known: stateKey(forgotten ? 3 : fsrsState) === "known",
+    front: deck?.frontPronunciation,
+  });
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
   const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);

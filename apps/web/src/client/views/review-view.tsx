@@ -2,7 +2,9 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
+  cueShowsPronunciation,
   drawsTermReading,
+  type FrontPronunciation,
   gradeAllowed,
   isolate,
   type KnownReadings,
@@ -284,7 +286,14 @@ const answerLine: Variants = {
 export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
-  deck?: { name: string; language?: string | null | undefined } | undefined;
+  deck?:
+    | {
+        name: string;
+        language?: string | null | undefined;
+        /** The learner's choice for this deck; absent reads as the default. */
+        frontPronunciation?: FrontPronunciation | undefined;
+      }
+    | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
   /** The learner's Known pairs, whose readings fade in the example. */
@@ -467,11 +476,15 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
   const reading = useMemo(() => termShowsPronunciation(card), [card]);
   // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
-  const cueReading = revealed || stateKey(item.fsrsState) !== "known";
+  const cueReading = cueShowsPronunciation({
+    revealed,
+    known: stateKey(item.fsrsState) === "known",
+    front: deck?.frontPronunciation,
+  });
   const term = <TermText card={card} />;
   const label =
     mode.cue === "term"

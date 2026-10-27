@@ -54,6 +54,8 @@ const SENTENCES: Sentences = {
     cancel_invite: "invitation_cancelled",
     turn_on_join_link: "link_on",
     turn_off_join_link: "link_off",
+    // The learner's own view of a deck, which changes nothing anyone else sees.
+    set_preferences: null,
     import_edition: null,
     approve_edition: null,
     publish_edition: null,

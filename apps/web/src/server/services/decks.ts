@@ -1,5 +1,17 @@
-import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lymi/core";
-import { deckEnrichFields, deckPurpose, newDeckEnrichFields, newId } from "@lymi/core";
+import type {
+  DeckEnrichField,
+  DeckInput,
+  DeckPreferencesInput,
+  DeckPurpose,
+  NewDeckInput,
+} from "@lymi/core";
+import {
+  deckEnrichFields,
+  deckPurpose,
+  newDeckEnrichFields,
+  newId,
+  readingEngine,
+} from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
@@ -14,6 +26,7 @@ import {
   memberOf,
   ownedDeck,
   ownerAvatar,
+  ownPreferences,
   publisherColumns,
   publisherOf,
 } from "./members";
@@ -67,6 +80,7 @@ export async function listDecks(
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
       meaningLanguage: schema.deckMembers.meaningLanguage,
+      frontPronunciation: schema.deckPreferences.frontPronunciation,
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       ...publisherColumns,
@@ -75,6 +89,7 @@ export async function listDecks(
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
     .leftJoin(schema.deckPublications, livePublication)
     .leftJoin(schema.userAvatars, ownerAvatar)
+    .leftJoin(schema.deckPreferences, ownPreferences(userId))
     .leftJoin(
       schema.deckMembers,
       and(
@@ -128,6 +143,7 @@ export async function listDecks(
         ...deck,
         name: editionName ?? deck.name,
         description: editionDescription ?? deck.description,
+        frontPronunciation: deck.frontPronunciation ?? "until-known",
         reviewModes: deckModes(deck.directions),
         purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
         enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
@@ -316,6 +332,38 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
   };
   if (after.fields.join() !== before.fields.join() || after.instructions !== before.instructions) {
     trackEnrichmentChoice(ctx, after.fields, after.instructions);
+  }
+  return getDeck(ctx, id);
+}
+
+/** The caller's own choices for a deck, owner or member, which change it for nobody else. */
+export async function setDeckPreferences(
+  ctx: ServiceContext,
+  id: string,
+  input: DeckPreferencesInput,
+) {
+  const { db, userId } = ctx;
+  const deck = await deckAccess(ctx, id);
+  if (input.frontPronunciation === deck.frontPronunciation) return deck;
+  const now = new Date();
+  await db
+    .insert(schema.deckPreferences)
+    .values({ deckId: id, userId, frontPronunciation: input.frontPronunciation })
+    .onConflictDoUpdate({
+      target: [schema.deckPreferences.deckId, schema.deckPreferences.userId],
+      set: { frontPronunciation: input.frontPronunciation, updatedAt: now },
+    });
+  await audit(ctx, { entity: "deck", action: "set_preferences", id, details: input });
+  const engine = readingEngine(deck.defaultLanguage);
+  const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
+  if (engine && channel) {
+    track(ctx.analytics, {
+      name: "front_pronunciation_set",
+      front: input.frontPronunciation,
+      notation: engine,
+      owner: deck.role === "owner",
+      channel,
+    });
   }
   return getDeck(ctx, id);
 }

@@ -42,6 +42,7 @@ export type {
   StressRules,
   SupportedTag,
 } from "./types";
+export { READING_ENGINES } from "./types";
 
 /** Each record keeps its literal type, so a registry elsewhere can follow what a record turns on. */
 export const SUPPORTED_LANGUAGES = {

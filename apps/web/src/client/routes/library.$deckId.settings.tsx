@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
+import { type FrontPronunciation, type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -90,6 +90,12 @@ function DeckSettingsPage() {
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setSaved(false), 2500);
     },
+  });
+
+  const prefer = useMutation({
+    mutationFn: (frontPronunciation: FrontPronunciation) =>
+      writes.setDeckPreferences(deckId, { frontPronunciation }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["decks"] }),
   });
 
   const archive = useArchiveDeck(deckId, deck?.name);
@@ -196,6 +202,8 @@ function DeckSettingsPage() {
         saving={save.isPending}
         saved={saved}
         error={save.isError ? errorMessage(save.error) : undefined}
+        onFrontPronunciation={(value) => prefer.mutate(value)}
+        frontPronunciationError={prefer.isError}
         onArchive={isOwner ? () => archive.mutate() : undefined}
         onLeave={isMember ? () => setLeaving(true) : undefined}
         tags={isOwner ? { count: deckTags.data?.tags.length } : undefined}

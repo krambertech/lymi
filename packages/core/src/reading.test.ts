@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   addsReadingsOnly,
   alignReading,
+  cueShowsPronunciation,
   exampleReadings,
   exampleSegments,
   formatReadings,
@@ -540,5 +541,28 @@ describe("toneRuns", () => {
     expect(toneRuns("xuéxí")).toEqual([{ text: "xuéxí", tone: false }]);
     expect(toneRuns("たべる")).toEqual([{ text: "たべる", tone: false }]);
     expect(toneRuns("3")).toEqual([{ text: "3", tone: false }]);
+  });
+});
+
+describe("cueShowsPronunciation", () => {
+  const shows = (front: "until-known" | "hidden" | undefined, known: boolean, revealed: boolean) =>
+    cueShowsPronunciation({ front, known, revealed });
+
+  it("shows it on the front until the card is Known, by default", () => {
+    expect(shows("until-known", false, false)).toBe(true);
+    expect(shows("until-known", true, false)).toBe(false);
+    expect(shows(undefined, false, false)).toBe(true);
+  });
+
+  it("never shows it on the front once the learner hides it", () => {
+    expect(shows("hidden", false, false)).toBe(false);
+    expect(shows("hidden", true, false)).toBe(false);
+  });
+
+  it("always shows it on the answer", () => {
+    for (const front of ["until-known", "hidden", undefined] as const) {
+      expect(shows(front, false, true)).toBe(true);
+      expect(shows(front, true, true)).toBe(true);
+    }
   });
 });

@@ -171,6 +171,16 @@ function copyStatements(
       .update(schema.sectionStarts)
       .set({ sectionId: newIdOf(schema.sectionStarts.sectionId) })
       .where(and(eq(schema.sectionStarts.userId, userId), copied(schema.sectionStarts.sectionId))),
+    db
+      .update(schema.deckPreferences)
+      .set({ deckId: copyId })
+      .where(
+        and(
+          eq(schema.deckPreferences.deckId, deckId),
+          eq(schema.deckPreferences.userId, userId),
+          member,
+        ),
+      ),
     // Second to last: whether it removed a row says whether this run made the copy.
     db
       .delete(schema.deckMembers)

@@ -921,6 +921,9 @@ msgstr "Activity"
 msgid "Activity needs a connection"
 msgstr "Activity needs a connection"
 
+msgid "Adaptive pronunciation"
+msgstr "Adaptive pronunciation"
+
 msgid "Add"
 msgstr "Add"
 
@@ -1945,6 +1948,9 @@ msgstr "Couldn’t save that."
 msgid "Couldn’t save the card."
 msgstr "Couldn’t save the card."
 
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Couldn’t save the choice. Check your connection and try again."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
 
@@ -2539,6 +2545,12 @@ msgstr "From the lesson"
 msgid "Front and back"
 msgstr "Front and back"
 
+msgid "Furigana shows only with the answer, so you read the kanji yourself."
+msgstr "Furigana shows only with the answer, so you read the kanji yourself."
+
+msgid "Furigana shows over the term until a card is Known, then only with the answer."
+msgstr "Furigana shows over the term until a card is Known, then only with the answer."
+
 msgid "Geography"
 msgstr "Geography"
 
@@ -2900,6 +2912,12 @@ msgstr "Joined {joined}"
 
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Joining a deck needs a connection. Connect and try again."
+
+msgid "Jyutping shows only with the answer, so you read the characters yourself."
+msgstr "Jyutping shows only with the answer, so you read the characters yourself."
+
+msgid "Jyutping shows over the term until a card is Known, then only with the answer."
+msgstr "Jyutping shows over the term until a card is Known, then only with the answer."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -3583,6 +3601,9 @@ msgstr "One import takes up to 5,000 cards. Split the set and import it in parts
 msgid "One side only"
 msgstr "One side only"
 
+msgid "Only for you. The owner and others studying this deck choose their own."
+msgstr "Only for you. The owner and others studying this deck choose their own."
+
 msgid "Only one app’s writes"
 msgstr "Only one app’s writes"
 
@@ -3761,6 +3782,12 @@ msgstr "Picture changed"
 
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
+
+msgid "Pinyin shows only with the answer, so you read the characters yourself."
+msgstr "Pinyin shows only with the answer, so you read the characters yourself."
+
+msgid "Pinyin shows over the term until a card is Known, then only with the answer."
+msgstr "Pinyin shows over the term until a card is Known, then only with the answer."
 
 msgid "Play example"
 msgstr "Play example"
@@ -4504,6 +4531,12 @@ msgctxt "which syllable of a term is stressed"
 msgid "Stress"
 msgstr "Stress"
 
+msgid "Stress marks show on the term until a card is Known, then only with the answer."
+msgstr "Stress marks show on the term until a card is Known, then only with the answer."
+
+msgid "Stress marks show only with the answer, so you recall the stress yourself."
+msgstr "Stress marks show only with the answer, so you recall the stress yourself."
+
 msgid "Stuck? Read the guide"
 msgstr "Stuck? Read the guide"
 
@@ -4643,6 +4676,12 @@ msgstr "The link stops working for good. People who joined stay."
 
 msgid "The pages and text you added aren’t kept."
 msgstr "The pages and text you added aren’t kept."
+
+msgid "The reading shows only with the answer, so you read the term yourself."
+msgstr "The reading shows only with the answer, so you read the term yourself."
+
+msgid "The reading shows over the term until a card is Known, then only with the answer."
+msgstr "The reading shows over the term until a card is Known, then only with the answer."
 
 msgid "The series is deleted for good."
 msgstr "The series is deleted for good."

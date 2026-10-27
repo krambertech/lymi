@@ -947,6 +947,9 @@ msgstr "Дії"
 msgid "Activity"
 msgstr "Активність"
 
+msgid "Adaptive pronunciation"
+msgstr "Адаптивна вимова"
+
 msgid "Add"
 msgstr "Додати"
 
@@ -2649,6 +2652,12 @@ msgstr "З твоїх нотаток"
 msgid "Front and back"
 msgstr "Лицевий і зворотний бік"
 
+msgid "Furigana shows only with the answer, so you read the kanji yourself."
+msgstr "Фурігану видно лише з відповіддю, тож кандзі ви читаєте самі."
+
+msgid "Furigana shows over the term until a card is Known, then only with the answer."
+msgstr "Фурігану видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
+
 msgid "Geography"
 msgstr "Географія"
 
@@ -3010,6 +3019,12 @@ msgstr "у колоді з {joined}"
 
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP або статичний GIF, до 10 МБ."
+
+msgid "Jyutping shows only with the answer, so you read the characters yourself."
+msgstr "Jyutping видно лише з відповіддю, тож ієрогліфи ви читаєте самі."
+
+msgid "Jyutping shows over the term until a card is Known, then only with the answer."
+msgstr "Jyutping видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -3831,6 +3846,9 @@ msgstr "Лише один бік"
 msgid "Only continue if you just chose Sign in in Lymi for Mac."
 msgstr "Продовжуйте, лише якщо ви щойно вибрали «Увійти» в Lymi для Mac."
 
+msgid "Only for you. The owner and others studying this deck choose their own."
+msgstr "Лише для вас. Власник та інші, хто вивчає цю колоду, обирають самі."
+
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
 
@@ -4085,6 +4103,12 @@ msgstr "Для зображень потрібне з’єднання. Дода
 
 msgid "Pictures of the pages"
 msgstr "Знімки сторінок"
+
+msgid "Pinyin shows only with the answer, so you read the characters yourself."
+msgstr "Піньїнь видно лише з відповіддю, тож ієрогліфи ви читаєте самі."
+
+msgid "Pinyin shows over the term until a card is Known, then only with the answer."
+msgstr "Піньїнь видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgid "Play example"
 msgstr "Відтворити приклад"
@@ -4909,6 +4933,12 @@ msgctxt "which syllable of a term is stressed"
 msgid "Stress"
 msgstr "Наголос"
 
+msgid "Stress marks show on the term until a card is Known, then only with the answer."
+msgstr "Наголоси видно на терміні, доки картка не засвоєна, а потім лише з відповіддю."
+
+msgid "Stress marks show only with the answer, so you recall the stress yourself."
+msgstr "Наголоси видно лише з відповіддю, тож наголос ви пригадуєте самі."
+
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Надійний"
@@ -5107,6 +5137,12 @@ msgstr "нотатки"
 
 msgid "the pronunciation"
 msgstr "вимову"
+
+msgid "The reading shows only with the answer, so you read the term yourself."
+msgstr "Читання видно лише з відповіддю, тож термін ви читаєте самі."
+
+msgid "The reading shows over the term until a card is Known, then only with the answer."
+msgstr "Читання видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgid "the source"
 msgstr "джерело"

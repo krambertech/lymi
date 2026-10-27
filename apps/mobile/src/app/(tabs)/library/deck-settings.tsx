@@ -22,6 +22,11 @@ import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
+import {
+  AdaptivePronunciationNote,
+  AdaptivePronunciationRow,
+  useAdaptivePronunciation,
+} from "../../../deck/adaptive-pronunciation";
 import { reportHref } from "../../../sharing/report";
 import { captureEvent } from "../../../telemetry/posthog";
 import { usePalette } from "../../../theme/palette";
@@ -63,6 +68,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const owner = deck.role === "owner";
+  const pronunciation = useAdaptivePronunciation(deck);
   const router = useRouter();
   const sectionCount = useSections(owner ? deck.id : undefined).data?.sections.length ?? 0;
   const tagCount = useQuery({ ...deckTagsQuery(deck.id), enabled: owner }).data?.tags.length;
@@ -297,7 +303,9 @@ function Settings({ deck }: { deck: DeckSummary }) {
           <Rows>
             <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
             <RowFace icon="modes" label={t`Modes`} value={way?.label} end="none" />
+            {pronunciation && <AdaptivePronunciationRow choice={pronunciation} />}
           </Rows>
+          {pronunciation && <AdaptivePronunciationNote choice={pronunciation} />}
           <Rows>
             <Row
               icon="report"
@@ -335,7 +343,9 @@ function Settings({ deck }: { deck: DeckSummary }) {
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
             <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />
+            {pronunciation && <AdaptivePronunciationRow choice={pronunciation} />}
           </Rows>
+          {pronunciation && <AdaptivePronunciationNote choice={pronunciation} />}
           <Group title={t`AI`}>
             <Rows>
               <Row

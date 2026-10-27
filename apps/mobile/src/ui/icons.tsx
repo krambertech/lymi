@@ -77,6 +77,7 @@ import {
   Star,
   Sun,
   SunMoon,
+  Superscript,
   Tag,
   TextQuote,
   Trash2,
@@ -143,6 +144,8 @@ const ICONS = {
   picture: ImageIcon,
   example: TextQuote,
   pronunciation: Volume2,
+  // Small text over the term, as furigana and pinyin are drawn; the speaker would read as audio.
+  reading: Superscript,
   source: Library,
   notes: NotebookPen,
   hint: LifeBuoy,

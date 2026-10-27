@@ -1,4 +1,10 @@
-import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
+import type {
+  CardInput,
+  CardPatch,
+  DeckInput,
+  DeckPreferencesInput,
+  NewDeckInput,
+} from "@lymi/core";
 import {
   duplicateKey,
   newId,
@@ -36,6 +42,7 @@ export type Write =
   | { kind: "card.important"; id: string; important: boolean }
   | { kind: "deck.create"; input: NewDeckInput & { id: string } }
   | { kind: "deck.update"; id: string; patch: DeckPatch }
+  | { kind: "deck.preferences"; id: string; preferences: DeckPreferencesInput }
   | { kind: "deck.archive"; id: string }
   | { kind: "deck.restore"; id: string };
 
@@ -70,6 +77,7 @@ const KINDS = new Set<Write["kind"]>([
   "card.important",
   "deck.create",
   "deck.update",
+  "deck.preferences",
   "deck.archive",
   "deck.restore",
 ]);
@@ -217,6 +225,8 @@ function send(w: Write): Promise<Result> {
       return api.createDeck(w.input);
     case "deck.update":
       return api.updateDeck(w.id, w.patch);
+    case "deck.preferences":
+      return api.setDeckPreferences(w.id, w.preferences);
     case "deck.archive":
       return api.archiveDeck(w.id);
     case "deck.restore":
@@ -546,6 +556,8 @@ export const writes = {
     return { id: w.input.id, queued: written.status === "queued" };
   },
   updateDeck: (id: string, patch: DeckPatch) => queued(make({ kind: "deck.update", id, patch })),
+  setDeckPreferences: (id: string, preferences: DeckPreferencesInput) =>
+    queued(make({ kind: "deck.preferences", id, preferences })),
   archiveCard: (id: string) => queued(make({ kind: "card.archive", id })),
   restoreCard: (id: string) => queued(make({ kind: "card.restore", id })),
   setImportant: (card: Card, important: boolean) =>

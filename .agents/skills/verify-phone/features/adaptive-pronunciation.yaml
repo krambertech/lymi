@@ -1,0 +1,50 @@
+# Adaptive pronunciation: a New Chinese card's cue draws pinyin, the switch in deck settings turns
+# it off, and the same cue then keeps the pinyin for the reveal.
+appId: app.lymi
+name: Adaptive pronunciation
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- extendedWaitUntil:
+    visible: "^Review$"
+    timeout: 15000
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*${TERM}, read ${READING}. Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 01-cue-with-pinyin
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "Deck options"
+    timeout: 15000
+- tapOn: "Deck options"
+- tapOn: "Deck settings"
+- extendedWaitUntil:
+    visible: "Adaptive pronunciation"
+    timeout: 30000
+- assertVisible: "Pinyin shows over the term.*"
+# The row's text and its switch share the label; only the switch is checked.
+- tapOn:
+    text: "Adaptive pronunciation"
+    checked: true
+- extendedWaitUntil:
+    visible: "Pinyin shows only with the answer.*"
+    timeout: 15000
+- takeScreenshot: 02-switch-off
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- extendedWaitUntil:
+    visible: "^Review$"
+    timeout: 15000
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: "Recognition card for ${TERM}. Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*read ${READING}.*"
+- takeScreenshot: 03-cue-without-pinyin
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${MEANING}.*"
+- takeScreenshot: 04-revealed

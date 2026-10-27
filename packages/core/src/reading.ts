@@ -17,6 +17,7 @@ import {
 import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 import { addsStress, markedForm, missingStress, stressKey } from "./stress";
+import type { FrontPronunciation } from "./types";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -282,6 +283,23 @@ export function termShowsPronunciation(card: {
   pronunciation?: string | null | undefined;
 }): boolean {
   return termReading(card) !== null || markedTerm(card) !== null;
+}
+
+/**
+ * Whether a review's cue draws the term's pronunciation: always on the answer, and on the front
+ * until the card is Known unless the learner hid it for the deck.
+ */
+export function cueShowsPronunciation({
+  revealed,
+  known,
+  front,
+}: {
+  revealed: boolean;
+  known: boolean;
+  /** Undefined from a deck cached before the choice existed, which reads as the default. */
+  front: FrontPronunciation | undefined;
+}): boolean {
+  return revealed || (front !== "hidden" && !known);
 }
 
 /** Whether a drawn reading is written in letters, as pinyin and Jyutping are, so it needs room from the reading beside it. */

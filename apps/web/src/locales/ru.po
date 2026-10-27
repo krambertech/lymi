@@ -947,6 +947,9 @@ msgstr "Действия"
 msgid "Activity"
 msgstr "Активность"
 
+msgid "Adaptive pronunciation"
+msgstr "Адаптивное произношение"
+
 msgid "Add"
 msgstr "Добавить"
 
@@ -2649,6 +2652,12 @@ msgstr "Из твоих заметок"
 msgid "Front and back"
 msgstr "Лицевая и обратная сторона"
 
+msgid "Furigana shows only with the answer, so you read the kanji yourself."
+msgstr "Фуригана видна только с ответом, так что кандзи вы читаете сами."
+
+msgid "Furigana shows over the term until a card is Known, then only with the answer."
+msgstr "Фуригана видна над термином, пока карточка не выучена, а потом только с ответом."
+
 msgid "Geography"
 msgstr "География"
 
@@ -3010,6 +3019,12 @@ msgstr "в колоде с {joined}"
 
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP или статичный GIF, до 10 МБ."
+
+msgid "Jyutping shows only with the answer, so you read the characters yourself."
+msgstr "Jyutping виден только с ответом, так что иероглифы вы читаете сами."
+
+msgid "Jyutping shows over the term until a card is Known, then only with the answer."
+msgstr "Jyutping виден над термином, пока карточка не выучена, а потом только с ответом."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -3831,6 +3846,9 @@ msgstr "Только одна сторона"
 msgid "Only continue if you just chose Sign in in Lymi for Mac."
 msgstr "Продолжайте, только если вы только что выбрали «Войти» в Lymi для Mac."
 
+msgid "Only for you. The owner and others studying this deck choose their own."
+msgstr "Только для вас. Владелец и другие, кто изучает эту колоду, выбирают сами."
+
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
 
@@ -4085,6 +4103,12 @@ msgstr "Для изображений нужно соединение. Доба�
 
 msgid "Pictures of the pages"
 msgstr "Снимки страниц"
+
+msgid "Pinyin shows only with the answer, so you read the characters yourself."
+msgstr "Пиньинь виден только с ответом, так что иероглифы вы читаете сами."
+
+msgid "Pinyin shows over the term until a card is Known, then only with the answer."
+msgstr "Пиньинь виден над термином, пока карточка не выучена, а потом только с ответом."
 
 msgid "Play example"
 msgstr "Воспроизвести пример"
@@ -4909,6 +4933,12 @@ msgctxt "which syllable of a term is stressed"
 msgid "Stress"
 msgstr "Ударение"
 
+msgid "Stress marks show on the term until a card is Known, then only with the answer."
+msgstr "Ударения видны на термине, пока карточка не выучена, а потом только с ответом."
+
+msgid "Stress marks show only with the answer, so you recall the stress yourself."
+msgstr "Ударения видны только с ответом, так что ударение вы вспоминаете сами."
+
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Надёжный"
@@ -5107,6 +5137,12 @@ msgstr "заметки"
 
 msgid "the pronunciation"
 msgstr "произношение"
+
+msgid "The reading shows only with the answer, so you read the term yourself."
+msgstr "Чтение видно только с ответом, так что термин вы читаете сами."
+
+msgid "The reading shows over the term until a card is Known, then only with the answer."
+msgstr "Чтение видно над термином, пока карточка не выучена, а потом только с ответом."
 
 msgid "the source"
 msgstr "источник"

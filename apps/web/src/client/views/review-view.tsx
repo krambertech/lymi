@@ -639,7 +639,7 @@ export function ReviewCard({
                 exampleSound && <ExampleAudioButton sound={exampleSound} />
               )
             }
-            speakerAfterLastWord
+            block
             onPlay={
               measure || !exampleSound
                 ? undefined
@@ -648,7 +648,8 @@ export function ReviewCard({
                     exampleSound.play("sentence");
                   }
             }
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
+            translationClassName="hyphenate whitespace-pre-line text-base leading-relaxed [overflow-wrap:anywhere]"
           />
         </motion.div>
       )}

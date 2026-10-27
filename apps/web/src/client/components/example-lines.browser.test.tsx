@@ -22,19 +22,31 @@ async function renderSentence() {
           language="it"
           translation="I booked a table for two."
           speaker={<button type="button">Play example</button>}
-          speakerAfterLastWord
+          block
           onPlay={onPlay}
         />
       </div>
     </I18nProvider>,
   );
-  return { onPlay, onCard, sentence: page.getByText("Ho prenotato un tavolo per due.") };
+  return {
+    onPlay,
+    onCard,
+    sentence: page.getByText("Ho prenotato un tavolo per due."),
+    translation: page.getByText("I booked a table for two."),
+  };
 }
 
-describe("the example sentence in review", () => {
+describe("the example block in review", () => {
   test("a click on the sentence plays it and stays off the card, so a touch never opens the card's menu", async () => {
     const { onPlay, onCard, sentence } = await renderSentence();
     await userEvent.click(sentence);
+    expect(onPlay).toHaveBeenCalledTimes(1);
+    expect(onCard).not.toHaveBeenCalled();
+  });
+
+  test("a click on the translation plays the example too, since the whole block is its target", async () => {
+    const { onPlay, onCard, translation } = await renderSentence();
+    await userEvent.click(translation);
     expect(onPlay).toHaveBeenCalledTimes(1);
     expect(onCard).not.toHaveBeenCalled();
   });

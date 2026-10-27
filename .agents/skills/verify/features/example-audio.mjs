@@ -30,4 +30,27 @@ export default async function drive({ page, step, api, expect }) {
     }
     return { status: response.status(), state: await api("/api/dev/state") };
   });
+
+  await step("In review, a click on the example's translation plays the example", async () => {
+    await page.goto("/today");
+    await main.getByRole("link", { name: /^Review/ }).click();
+    const translation = page.getByText("The dog is sleeping.", { exact: true });
+    // The deck's six cards come in the draw's order, so grade until the one with a translation shows.
+    for (let card = 0; card < 12; card++) {
+      await page
+        .getByRole("button", { name: "Reveal the card" })
+        .click({ position: { x: 24, y: 24 } });
+      if (await translation.isVisible()) break;
+      await page.getByRole("button", { name: /^Good/ }).click();
+    }
+    await expect(page.getByRole("button", { name: "Play example", exact: true })).toBeVisible();
+    // A tap within 400 ms of the reveal is the reveal's own second tap, which review ignores.
+    await page.waitForTimeout(500);
+    const asked = page.waitForResponse((response) =>
+      /\/api\/audio\/[^/]+\/example\?/.test(response.url()),
+    );
+    await translation.click({ force: true });
+    const response = await asked;
+    return { status: response.status() };
+  });
 }

@@ -10,8 +10,7 @@ import {
 import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { textStart } from "../theme/type";
-import { Furigana, useFirstLineMiddle, useLineMetrics } from "./furigana";
-import { INLINE_ROOM, InlineControl, RunControl } from "./inline-control";
+import { Furigana, useFirstLineMiddle } from "./furigana";
 import { Text } from "./primitives";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
@@ -59,47 +58,28 @@ export function TermText({
 
 /**
  * An example over its translation, with its inline readings drawn in its language's notation:
- * furigana, or pinyin and Jyutping for Chinese and Cantonese. `after` follows the last word and
- * centres on that line's letters, under any readings, as the term's speaker does.
+ * furigana, or pinyin and Jyutping for Chinese and Cantonese.
  */
 export function ExampleText({
   text,
   known,
   translation,
-  after,
   ...props
 }: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
   /** The example's translation, on its own line under it in its own classes. */
   translation?: { text: string; className: string; lines?: number } | null | undefined;
-  /** A 32 pt control after the example's last word, such as its speaker in review. */
-  after?: ReactNode;
 }) {
   const { i18n } = useLingui();
   const { lang } = props;
   const segments = useExampleSegments(text, known, lang);
-  const { line, ruby } = useLineMetrics({ segments, ...props });
   return (
     <View className="gap-1">
       <Furigana
         segments={segments}
         {...props}
-        style={[
-          StyleSheet.flatten(props.style),
-          textStart(lang),
-          after && !ruby ? INLINE_ROOM : null,
-        ]}
-        after={
-          !after ? undefined : ruby ? (
-            <RunControl line={line} start={QUIET_START}>
-              {after}
-            </RunControl>
-          ) : (
-            // An example is reading size, where iOS already centres the button on the line.
-            <InlineControl start={QUIET_START}>{after}</InlineControl>
-          )
-        }
+        style={[StyleSheet.flatten(props.style), textStart(lang)]}
       />
       {translation && (
         <Text
@@ -113,9 +93,6 @@ export function ExampleText({
     </View>
   );
 }
-
-/** The room before the example's speaker, whose bare glyph already sits inside its 32 pt box. */
-const QUIET_START = 4;
 
 /** The speaker's drawn height, whose box the card page centres on the example's first line. */
 export const EXAMPLE_END_BOX = 32;

@@ -4,10 +4,11 @@ import { canPlayExample } from "@lymi/core";
 import { fetch } from "expo/fetch";
 import { File, Paths } from "expo-file-system";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import { useSessionHeaders } from "../auth/client";
 import { useAiConsent } from "../privacy/ai-consent";
 import { captureEvent } from "../telemetry/posthog";
+import { usePalette } from "../theme/palette";
 import { audio, type ExpoAudio, SpeakerButton } from "./pronounce";
 
 /** Past this from a clip in hand to no sound, the play counts as failed. */
@@ -173,7 +174,7 @@ export const useExampleAudio = player
   : noExample;
 export type ExampleAudio = NonNullable<ReturnType<typeof useAudioExample>>;
 
-/** The example's speaker at its first line's far edge: a bare glyph a step quieter than the term's. */
+/** The example's speaker: a bare glyph a step quieter than the term's. */
 export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
   const { t } = useLingui();
   return (
@@ -186,11 +187,11 @@ export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
 }
 
 /**
- * The example as a play control in review too, beside its speaker: a tap reads it aloud, and a hold
- * still opens the card's menu. The speaker says why a play failed, and VoiceOver plays it as the
- * card's action.
+ * Review's example and its translation as one block with the speaker in its top corner. A tap
+ * anywhere on the block reads the example aloud, and a hold still opens the card's menu. The speaker
+ * says why a play failed, and VoiceOver plays it as the card's action.
  */
-export function ExamplePress({
+export function ExampleBlock({
   sound,
   onLongPress,
   children,
@@ -199,15 +200,31 @@ export function ExamplePress({
   onLongPress?: (() => void) | undefined;
   children: ReactNode;
 }) {
-  if (!sound) return children;
+  const p = usePalette();
+  const content = (
+    <>
+      <View className="flex-1">{children}</View>
+      {sound && (
+        // Level with the example's first line, whose 17 pt text stands taller than the speaker's box.
+        <View className="mt-1">
+          <ExampleAudioButton sound={sound} />
+        </View>
+      )}
+    </>
+  );
+  if (!sound) {
+    return <View className="flex-row rounded-lg bg-plate-2 px-4 py-3">{content}</View>;
+  }
   return (
     <Pressable
       accessible={false}
       onPress={() => sound.play("sentence")}
       onLongPress={onLongPress}
       delayLongPress={400}
+      className="flex-row items-start gap-1 rounded-lg bg-plate-2 py-3 ps-4 pe-1.5"
+      style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
     >
-      {children}
+      {content}
     </Pressable>
   );
 }

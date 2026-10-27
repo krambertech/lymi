@@ -99,12 +99,7 @@ import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
-import {
-  type ExampleAudio,
-  ExampleAudioButton,
-  ExamplePress,
-  useExampleAudio,
-} from "../review/example-audio";
+import { type ExampleAudio, ExampleBlock, useExampleAudio } from "../review/example-audio";
 import {
   HintLine,
   HintOffer,
@@ -1598,20 +1593,19 @@ function CardPlate({
                       )}
                       {card.example && (
                         <Animated.View entering={arrive()}>
-                          <ExamplePress sound={exampleSound} onLongPress={hold}>
+                          <ExampleBlock sound={exampleSound} onLongPress={hold}>
                             <ExampleText
                               text={card.example ?? ""}
                               known={known}
-                              className="text-md text-text-2"
+                              className="text-md text-text"
                               lang={card.language}
                               translation={
                                 translation
-                                  ? { text: translation, className: "text-md text-muted" }
+                                  ? { text: translation, className: "text-base text-muted" }
                                   : null
                               }
-                              after={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                             />
-                          </ExamplePress>
+                          </ExampleBlock>
                         </Animated.View>
                       )}
                       {card.notes && (

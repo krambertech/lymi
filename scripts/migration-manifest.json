@@ -287,6 +287,10 @@
     {
       "name": "0071_pale_solo.sql",
       "sha256": "6ccc7488de90d8e1dd499ac1dd10b04f41b3f0f43d4abd30f77c496912f6229d"
+    },
+    {
+      "name": "0072_lying_ink.sql",
+      "sha256": "87a46bec21bb9a46526eb41b8d27ab724a55bc95da7f5b5e21f214b26c277088"
     }
   ]
 }

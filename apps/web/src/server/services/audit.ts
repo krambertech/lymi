@@ -51,6 +51,7 @@ export type AuditEvent =
       details?: Details;
     }
   | { entity: "deck"; action: "turn_on_join_link" | "turn_off_join_link"; id: string }
+  | { entity: "deck"; action: "set_preferences"; id: string; details?: Details }
   | { entity: "series"; action: Change | "reorder"; id: string; details?: Details }
   | {
       entity: "section";

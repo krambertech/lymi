@@ -5,6 +5,7 @@ import {
   DeckPurpose,
   Directions,
   MemberRole,
+  PronunciationDisplay,
   ReviewMode,
   SectionProgression,
 } from "../types";
@@ -49,6 +50,13 @@ const Enrichment = {
   }),
 };
 
+const Preferences = {
+  pronunciationDisplay: PronunciationDisplay.default("adaptive").meta({
+    description:
+      "The caller's own choice of whether the front of a card shows the term's pronunciation in this deck",
+  }),
+};
+
 const SeriesId = z.string().nullable().meta({
   description:
     "The owner's active series the deck is in. Always null for a member, and while the series is archived.",
@@ -69,6 +77,7 @@ export const DeckOut = z
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
     ...Enrichment,
+    ...Preferences,
     meaningLanguage: z.string().nullable().meta({
       description:
         "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",
@@ -97,6 +106,7 @@ export const DeckSummaryOut = z
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
     ...Enrichment,
+    ...Preferences,
     meaningLanguage: z.string().nullable().meta({
       description:
         "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
-import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
+import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
+import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -484,6 +484,12 @@ export const analyticsEvents = {
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  pronunciation_display_set: z.object({
+    display: z.enum(PRONUNCIATION_DISPLAYS),
+    notation: z.enum(READING_ENGINES),
+    owner: z.boolean(),
+    channel: z.enum(["app", "api", "mcp"]),
+  }),
   lesson_read_limited: z.object({}),
   ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
   ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
@@ -726,6 +732,7 @@ export const analyticsProducers = {
   cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
+  pronunciation_display_set: ["worker"],
   entry_opened: ["phone"],
   account_deleted: ["worker"],
   former_deck_copied: ["worker"],

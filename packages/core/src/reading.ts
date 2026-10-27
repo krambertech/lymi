@@ -17,6 +17,7 @@ import {
 import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 import { addsStress, markedForm, missingStress, stressKey } from "./stress";
+import type { PronunciationDisplay } from "./types";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -282,6 +283,24 @@ export function termShowsPronunciation(card: {
   pronunciation?: string | null | undefined;
 }): boolean {
   return termReading(card) !== null || markedTerm(card) !== null;
+}
+
+/**
+ * Whether review draws the term's pronunciation on the term: adaptive draws it always on the answer
+ * and before the reveal until the card is Known; separate never does, and gives it its own line.
+ */
+export function cueShowsPronunciation({
+  revealed,
+  known,
+  display,
+}: {
+  revealed: boolean;
+  known: boolean;
+  /** Undefined from a deck cached before the choice existed, which reads as adaptive. */
+  display: PronunciationDisplay | undefined;
+}): boolean {
+  if (display === "separate") return false;
+  return revealed || !known;
 }
 
 /** Whether a drawn reading is written in letters, as pinyin and Jyutping are, so it needs room from the reading beside it. */

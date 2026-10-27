@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { type KnownReadings, textDirection } from "@lymi/core";
+import { type KnownReadings, stripReadings, textDirection } from "@lymi/core";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { ExampleText } from "./term-text";
@@ -8,6 +8,8 @@ interface Props {
   example: string;
   language?: string | null | undefined;
   known?: KnownReadings | undefined;
+  /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
+  plain?: boolean | undefined;
   translation?: string | null | undefined;
   /** Follows the translation, such as the AI's badge when the AI wrote only the translation. */
   badge?: ReactNode;
@@ -29,6 +31,7 @@ export function ExampleLines({
   example,
   language,
   known,
+  plain,
   translation,
   badge,
   speaker,
@@ -56,7 +59,11 @@ export function ExampleLines({
           })
         }
       >
-        <ExampleText text={example} lang={lang} known={known} />
+        {plain ? (
+          stripReadings(example, language)
+        ) : (
+          <ExampleText text={example} lang={lang} known={known} />
+        )}
         {inline}
       </p>
       {translation && (

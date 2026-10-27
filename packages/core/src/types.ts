@@ -161,6 +161,20 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
+/** Where review draws the term's pronunciation. Each learner's own, per deck. */
+export const PRONUNCIATION_DISPLAYS = ["adaptive", "separate"] as const;
+export const PronunciationDisplay = z.enum(PRONUNCIATION_DISPLAYS).meta({
+  ...OPEN,
+  id: "PronunciationDisplay",
+  description:
+    "Where review shows the term's furigana, pinyin, Jyutping, reading or stress marks. adaptive, the default: drawn on the term, before the reveal only until the card is Known. separate: never on the term, and on its own line with the answer.",
+});
+export type PronunciationDisplay = z.infer<typeof PronunciationDisplay>;
+
+/** The caller's own choices for one deck, which never change it for anyone else. */
+export const DeckPreferencesInput = z.object({ pronunciationDisplay: PronunciationDisplay });
+export type DeckPreferencesInput = z.infer<typeof DeckPreferencesInput>;
+
 /**
  * An id the caller chose for what it creates, in `newId`'s alphabet. Sending the same create
  * again returns what the first one made instead of making a second, so an offline write replays safely.

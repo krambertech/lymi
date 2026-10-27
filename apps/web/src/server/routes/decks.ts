@@ -2,6 +2,7 @@ import {
   CardWithStateOut,
   DeckInput,
   DeckOut,
+  DeckPreferencesInput,
   DeckSummaryOut,
   EditionApprovalInput,
   EditionImportInput,
@@ -49,6 +50,7 @@ import {
   publishEdition,
   removeMember,
   restoreDeck,
+  setDeckPreferences,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
@@ -141,6 +143,20 @@ decks.patch(
     }
     return c.json(await updateDeck(ctx, c.req.param("id"), input));
   },
+);
+
+decks.put(
+  "/:id/preferences",
+  describe({
+    tags: ["Decks"],
+    summary: "Set your preferences for a deck",
+    description:
+      "The caller's own choices for a deck they own or study, such as whether the front of a card shows the term's pronunciation. They change the deck for nobody else. Needs the write scope.",
+    ok: { schema: DeckOut, description: "The deck with the caller's preferences" },
+    errors: [400, 404],
+  }),
+  body(DeckPreferencesInput, "preferences"),
+  async (c) => c.json(await setDeckPreferences(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
 decks.post(

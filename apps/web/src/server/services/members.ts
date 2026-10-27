@@ -76,6 +76,14 @@ export function publisherOf(row: {
   return { published: true, avatarUrl: version ? publisherAvatarPath(slug, version) : null };
 }
 
+/** The caller's own preferences row for each deck, joined beside it. */
+export function ownPreferences(userId: string) {
+  return and(
+    eq(schema.deckPreferences.deckId, schema.decks.id),
+    eq(schema.deckPreferences.userId, userId),
+  );
+}
+
 /** The deck with the caller's role, or not found when they cannot see it. */
 export async function deckAccess({ db, userId }: ServiceContext, deckId: string) {
   const [row] = await db
@@ -88,12 +96,14 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       meaningLanguage: schema.deckMembers.meaningLanguage,
+      pronunciationDisplay: schema.deckPreferences.pronunciationDisplay,
       ...publisherColumns,
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
     .leftJoin(schema.deckPublications, livePublication)
     .leftJoin(schema.userAvatars, ownerAvatar)
+    .leftJoin(schema.deckPreferences, ownPreferences(userId))
     .leftJoin(
       schema.deckMembers,
       and(
@@ -126,6 +136,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     description: row.editionDescription ?? deck.description,
     // The edition this caller reads the deck in, or null for the deck's own words.
     meaningLanguage: row.meaningLanguage,
+    pronunciationDisplay: row.pronunciationDisplay ?? "adaptive",
     seriesId: row.seriesId,
     position: row.position,
     reviewModes: deckModes(row.deck.directions),

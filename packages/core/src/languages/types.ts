@@ -15,7 +15,8 @@ export type Script = "Jpan" | "Hans" | "Hant" | "Taml";
  * each Han character, all aligned at display; stress draws the term with its marks in place; indic
  * works each word's reading out from its spelling and draws it over the whole word.
  */
-export type ReadingEngine = "furigana" | "pinyin" | "jyutping" | "stress" | "indic";
+export const READING_ENGINES = ["furigana", "pinyin", "jyutping", "stress", "indic"] as const;
+export type ReadingEngine = (typeof READING_ENGINES)[number];
 
 /** Where a stress mark may stand, for the marks-in-place engine. */
 export interface StressRules {

@@ -921,6 +921,9 @@ msgstr "Активність"
 msgid "Activity needs a connection"
 msgstr "Для активності потрібне з’єднання"
 
+msgid "Adaptive pronunciation"
+msgstr "Адаптивна вимова"
+
 msgid "Add"
 msgstr "Додати"
 
@@ -1945,6 +1948,9 @@ msgstr "Не вдалося зберегти."
 msgid "Couldn’t save the card."
 msgstr "Не вдалося зберегти картку."
 
+msgid "Couldn’t save the choice. Check your connection and try again."
+msgstr "Не вдалося зберегти вибір. Перевір з’єднання і спробуй ще раз."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
 
@@ -2539,6 +2545,9 @@ msgstr "З уроку"
 msgid "Front and back"
 msgstr "Лицевий і зворотний бік"
 
+msgid "Furigana shows over the term until a card is Known, then only with the answer."
+msgstr "Фурігану видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
+
 msgid "Geography"
 msgstr "Географія"
 
@@ -2900,6 +2909,12 @@ msgstr "У колоді з {joined}"
 
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Щоб приєднатися до колоди, потрібне з’єднання. Підключися й спробуй ще раз."
+
+msgid "Jyutping shows on its own line with the answer, so you read the characters yourself."
+msgstr "Jyutping видно окремим рядком з відповіддю, тож ієрогліфи ви читаєте самі."
+
+msgid "Jyutping shows over the term until a card is Known, then only with the answer."
+msgstr "Jyutping видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -3583,6 +3598,9 @@ msgstr "За один імпорт можна додати до 5000 карто�
 msgid "One side only"
 msgstr "Лише один бік"
 
+msgid "Only for you. The owner and others studying this deck choose their own."
+msgstr "Лише для вас. Власник та інші, хто вивчає цю колоду, обирають самі."
+
 msgid "Only one app’s writes"
 msgstr "Лише зміни одного застосунку"
 
@@ -3761,6 +3779,12 @@ msgstr "Зображення змінено"
 
 msgid "Pictures of the pages"
 msgstr "Знімки сторінок"
+
+msgid "Pinyin shows on its own line with the answer, so you read the characters yourself."
+msgstr "Піньїнь видно окремим рядком з відповіддю, тож ієрогліфи ви читаєте самі."
+
+msgid "Pinyin shows over the term until a card is Known, then only with the answer."
+msgstr "Піньїнь видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgid "Play example"
 msgstr "Відтворити приклад"
@@ -4504,6 +4528,12 @@ msgctxt "which syllable of a term is stressed"
 msgid "Stress"
 msgstr "Наголос"
 
+msgid "Stress marks show on the term until a card is Known, then only with the answer."
+msgstr "Наголоси видно на терміні, доки картка не засвоєна, а потім лише з відповіддю."
+
+msgid "Stress marks show on their own line with the answer, so you recall the stress yourself."
+msgstr "Наголоси видно окремим рядком з відповіддю, тож наголос ви пригадуєте самі."
+
 msgid "Stuck? Read the guide"
 msgstr "Щось не виходить? Прочитай посібник"
 
@@ -4643,6 +4673,15 @@ msgstr "Посилання перестане працювати назавжд�
 
 msgid "The pages and text you added aren’t kept."
 msgstr "Додані сторінки й текст не збережуться."
+
+msgid "The reading shows on its own line with the answer, so you read the kanji yourself."
+msgstr "Читання видно окремим рядком з відповіддю, тож кандзі ви читаєте самі."
+
+msgid "The reading shows on its own line with the answer, so you read the term yourself."
+msgstr "Читання видно окремим рядком з відповіддю, тож термін ви читаєте самі."
+
+msgid "The reading shows over the term until a card is Known, then only with the answer."
+msgstr "Читання видно над терміном, доки картка не засвоєна, а потім лише з відповіддю."
 
 msgid "The series is deleted for good."
 msgstr "Серію буде видалено назавжди."

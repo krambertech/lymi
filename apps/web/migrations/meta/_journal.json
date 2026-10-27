@@ -505,6 +505,13 @@
       "when": 1792948822533,
       "tag": "0071_pale_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 72,
+      "version": "6",
+      "when": 1793129480893,
+      "tag": "0072_lying_ink",
+      "breakpoints": true
     }
   ]
 }

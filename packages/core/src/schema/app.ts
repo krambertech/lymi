@@ -19,6 +19,7 @@ import {
   type EditionCardField,
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
+  PRONUNCIATION_DISPLAYS,
   PUBLICATION_CATEGORIES,
   type PublicationTag,
   REVIEW_AIDS,
@@ -719,6 +720,27 @@ export const importantCards = sqliteTable(
   (t) => [
     uniqueIndex("important_cards_card_user_idx").on(t.cardId, t.userId),
     index("important_cards_user_idx").on(t.userId),
+  ],
+);
+
+/** One learner's own choices for a deck, owner or member. No row means every default. */
+export const deckPreferences = sqliteTable(
+  "deck_preferences",
+  {
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    pronunciationDisplay: text("pronunciation_display", { enum: PRONUNCIATION_DISPLAYS })
+      .notNull()
+      .default("adaptive"),
+    ...timestamps,
+  },
+  (t) => [
+    primaryKey({ columns: [t.deckId, t.userId] }),
+    index("deck_preferences_user_idx").on(t.userId),
   ],
 );
 

@@ -19,6 +19,7 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
+  cueShowsPronunciation,
   type Drawn,
   drawKey,
   type FieldSource,
@@ -27,6 +28,7 @@ import {
   isolate,
   type KnownReadings,
   modeKey,
+  type PronunciationDisplay,
   type Rating,
   ROUNDS,
   type Round,
@@ -176,7 +178,14 @@ interface ListCards {
 }
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
 /** The deck a card came from, named first on the card. A review can mix every deck. */
-type CardDeck = { name: string; language?: string | null | undefined } | undefined;
+type CardDeck =
+  | {
+      name: string;
+      language?: string | null | undefined;
+      /** The learner's adaptive pronunciation choice for the deck; absent reads as the default. */
+      pronunciationDisplay?: PronunciationDisplay | undefined;
+    }
+  | undefined;
 /** A card's hint as review shows it: its words and who wrote them. */
 type Hint = { text: string; source: FieldSource | null };
 /** A tap this soon after the reveal is the reveal's own tap doubled, not one for the menu. */
@@ -764,7 +773,11 @@ function Run({
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
   const deckRow = decks?.find((d) => d.id === card.deckId);
-  const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
+  const cardDeck = deckRow && {
+    name: deckRow.name,
+    language: deckRow.defaultLanguage ?? null,
+    pronunciationDisplay: deckRow.pronunciationDisplay,
+  };
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
   const showing = `${keyOf(current)}:${done}`;
   const hint: Hint | null =
@@ -1358,9 +1371,16 @@ function CardPlate({
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const reading = card.pronunciation;
-  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
   const furigana = useMemo(() => termShowsPronunciation(card), [card]);
-  const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
+  // The learner asked for the pronunciation as its own line under the term, so the term is drawn as written.
+  const separate = furigana && deck?.pronunciationDisplay === "separate";
+  const termCard = separate ? null : card;
+  const cueFurigana = cueShowsPronunciation({
+    revealed,
+    known: stateKey(forgotten ? 3 : fsrsState) === "known",
+    display: deck?.pronunciationDisplay,
+  });
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
   const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);
@@ -1401,6 +1421,18 @@ function CardPlate({
   const type = typeAt(fit.step, target, room);
   let line = 0;
   const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
+  // After the reveal, under the term wherever it stands, unless the term draws it over itself or in
+  // place, which VoiceOver reads out. A term cue carries it under the cue instead.
+  const pronunciationLine = () =>
+    card.pronunciation &&
+    (!furigana || separate) &&
+    mode.cue !== "term" && (
+      <Animated.View entering={arrive()}>
+        <Text className="text-md text-muted" lang={card.language}>
+          {card.pronunciation}
+        </Text>
+      </Animated.View>
+    );
   const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
 
   return (
@@ -1503,7 +1535,7 @@ function CardPlate({
                     <CardLine
                       style={type.cue}
                       lang={mode.cue === "term" ? card.language : null}
-                      term={mode.cue === "term" ? card : null}
+                      term={mode.cue === "term" ? termCard : null}
                       hidden={!cueFurigana}
                       // The term can be heard as soon as it is the question.
                       after={
@@ -1515,6 +1547,27 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
+                  {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
+                  {(!furigana || separate) &&
+                    mode.cue === "term" &&
+                    card.pronunciation &&
+                    (revealed ? (
+                      <Animated.View entering={arrive()} className="pt-1">
+                        <Text className="text-md text-muted" lang={card.language}>
+                          {card.pronunciation}
+                        </Text>
+                      </Animated.View>
+                    ) : (
+                      <View
+                        className="pt-1 opacity-0"
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                      >
+                        <Text className="text-md text-muted" lang={card.language}>
+                          {card.pronunciation}
+                        </Text>
+                      </View>
+                    ))}
                   {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
                   {hint && hintShown ? (
                     <View className="pt-3">
@@ -1535,7 +1588,17 @@ function CardPlate({
                           <View className="flex-row items-center gap-3">
                             <View className="shrink">
                               {mode.target === "term" ? (
-                                <TermText card={card} className="text-2xl font-medium text-text" />
+                                separate ? (
+                                  <Furigana
+                                    segments={[{ text: card.term }]}
+                                    className="text-2xl font-medium text-text"
+                                  />
+                                ) : (
+                                  <TermText
+                                    card={card}
+                                    className="text-2xl font-medium text-text"
+                                  />
+                                )
                               ) : (
                                 <Furigana
                                   segments={[{ text: back }]}
@@ -1553,7 +1616,7 @@ function CardPlate({
                             style={type.answer}
                             grows
                             lang={mode.target === "term" ? card.language : null}
-                            term={mode.target === "term" ? card : null}
+                            term={mode.target === "term" ? termCard : null}
                             muted={back === noMeaning ? p.muted : undefined}
                             after={
                               pronounce && mode.target === "term" ? (
@@ -1565,12 +1628,19 @@ function CardPlate({
                           </CardLine>
                         )}
                       </Animated.View>
+                      {/* A picture card's term is its answer here, so its line follows it, above the meaning. */}
+                      {picture && mode.target === "term" && pronunciationLine()}
                       {picture && (
                         <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                           <View className="shrink">
                             {mode.target === "term" ? (
                               <Furigana
                                 segments={[{ text: card.meaning ?? "" }]}
+                                className="text-lg text-text-2"
+                              />
+                            ) : separate ? (
+                              <Furigana
+                                segments={[{ text: card.term }]}
                                 className="text-lg text-text-2"
                               />
                             ) : (
@@ -1582,15 +1652,7 @@ function CardPlate({
                           )}
                         </Animated.View>
                       )}
-                      {/* After the reveal unless the term draws it, over it or in place, which
-                    VoiceOver reads out. Under a term cue it reads the term out. */}
-                      {card.pronunciation && !furigana && (
-                        <Animated.View entering={arrive()}>
-                          <Text className="text-md text-muted" lang={card.language}>
-                            {card.pronunciation}
-                          </Text>
-                        </Animated.View>
-                      )}
+                      {!(picture && mode.target === "term") && pronunciationLine()}
                       {!picture && card.image && (
                         <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
                           <Picture card={card} maxHeight={120} />
@@ -1602,6 +1664,7 @@ function CardPlate({
                             <ExampleText
                               text={card.example ?? ""}
                               known={known}
+                              plain={separate}
                               className="text-md text-text-2"
                               lang={card.language}
                               translation={
@@ -1657,7 +1720,7 @@ function CardPlate({
                     <CardLine
                       style={at.cue}
                       after={mode.cue === "term" ? speaker : undefined}
-                      term={mode.cue === "term" ? card : null}
+                      term={mode.cue === "term" ? termCard : null}
                     >
                       {cue}
                     </CardLine>
@@ -1672,7 +1735,7 @@ function CardPlate({
                         style={at.answer}
                         grows
                         after={mode.target === "term" ? speaker : undefined}
-                        term={mode.target === "term" ? card : null}
+                        term={mode.target === "term" ? termCard : null}
                       >
                         {back}
                       </CardLine>

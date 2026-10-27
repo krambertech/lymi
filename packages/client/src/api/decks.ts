@@ -1,4 +1,12 @@
-import type { DeckEnrichField, DeckInput, DeckPurpose, MemberRole, ReviewMode } from "@lymi/core";
+import type {
+  DeckEnrichField,
+  DeckInput,
+  DeckPreferencesInput,
+  DeckPurpose,
+  MemberRole,
+  PronunciationDisplay,
+  ReviewMode,
+} from "@lymi/core";
 import type { Deck as DeckRow } from "@lymi/core/schema";
 import { request } from "./request";
 
@@ -25,6 +33,8 @@ export type DeckSummary = Pick<
   enrichInstructions: string | null;
   /** What the AI learned from the owner's cards. Null for a member; a cache from before it lacks it. */
   enrichStyle?: string | null;
+  /** The learner's own adaptive pronunciation choice. A cache from before it lacks it, which reads as adaptive. */
+  pronunciationDisplay?: PronunciationDisplay;
   total: number;
   due: number;
   /** When the deck was archived, null while it is active. */
@@ -47,6 +57,8 @@ export const decksApi = {
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),
   updateDeck: (id: string, body: { [K in keyof DeckInput]?: DeckInput[K] | undefined }) =>
     request<Deck>(`/api/decks/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+  setDeckPreferences: (id: string, body: DeckPreferencesInput) =>
+    request<Deck>(`/api/decks/${id}/preferences`, { method: "PUT", body: JSON.stringify(body) }),
   archiveDeck: (id: string) =>
     request<{ ok: true }>(`/api/decks/${id}/archive`, { method: "POST" }),
   restoreDeck: (id: string) =>

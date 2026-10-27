@@ -5,6 +5,8 @@ import {
   type Directions,
   deckLimits,
   isolate,
+  type PronunciationDisplay,
+  readingEngine,
   type SectionProgression,
 } from "@lymi/core";
 import { clsx } from "clsx";
@@ -22,6 +24,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { AdaptivePronunciationChoice } from "../components/adaptive-pronunciation-choice";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
@@ -89,6 +92,9 @@ export interface DeckSettingsProps {
   sharing?: SharingProps | undefined;
   /** How many tags the deck's cards carry, for the owner's way to its Tags page; undefined while loading. */
   tags?: { count: number | undefined } | undefined;
+  /** The learner's own pronunciation choice, owner or member. */
+  onPronunciationDisplay: (value: PronunciationDisplay) => void;
+  pronunciationDisplayError?: boolean | undefined;
 }
 
 export interface MembersProps {
@@ -137,6 +143,8 @@ export function DeckSettingsView({
   sharing,
   members,
   tags,
+  onPronunciationDisplay,
+  pronunciationDisplayError,
 }: DeckSettingsProps) {
   const { t } = useLingui();
   const reading = !!deck && deck.role !== "owner";
@@ -223,7 +231,20 @@ export function DeckSettingsView({
         </div>
       )}
 
-      {deck && reading && <DeckAbout deck={deck} example={example} onLeave={onLeave} />}
+      {deck && reading && (
+        <DeckAbout
+          deck={deck}
+          example={example}
+          onLeave={onLeave}
+          pronunciation={
+            <AdaptivePronunciationField
+              deck={deck}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
+            />
+          }
+        />
+      )}
 
       {deck && !reading && (
         <>
@@ -265,6 +286,11 @@ export function DeckSettingsView({
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
               description={t`The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language.`}
               descriptionFirst
+            />
+            <AdaptivePronunciationField
+              deck={deck}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
             />
           </SettingsGroup>
 
@@ -358,17 +384,19 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 }
 
 /**
- * What a member sees where the owner has settings. Nothing on this deck is theirs to change, so
- * the screen states the facts and offers the one move they have: leaving.
+ * What a member sees where the owner has settings. The deck is not theirs to change, so the
+ * screen states the facts and offers what is theirs: how they review it, and leaving.
  */
 function DeckAbout({
   deck,
   example,
   onLeave,
+  pronunciation,
 }: {
   deck: DeckSummary;
   example?: DirectionExample | undefined;
   onLeave?: (() => void) | undefined;
+  pronunciation: ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const [reporting, setReporting] = useState(false);
@@ -439,6 +467,7 @@ function DeckAbout({
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
         </dl>
+        {pronunciation}
       </SettingsGroup>
 
       <SettingsGroup
@@ -660,6 +689,35 @@ function MemberRow({
         </DropdownMenuContent>
       </DropdownMenu>
     </li>
+  );
+}
+
+/** Shown only for a language that draws pronunciation on the term, and only ever the caller's own. */
+function AdaptivePronunciationField({
+  deck,
+  onChange,
+  error,
+}: {
+  deck: DeckSummary;
+  onChange: (value: PronunciationDisplay) => void;
+  error?: boolean | undefined;
+}) {
+  const notation = readingEngine(deck.defaultLanguage);
+  if (!notation) return null;
+  return (
+    <div className="grid gap-2">
+      <AdaptivePronunciationChoice
+        notation={notation}
+        value={deck.pronunciationDisplay ?? "adaptive"}
+        onChange={onChange}
+        error={error}
+      />
+      {deck.role !== "owner" && (
+        <p className="text-sm text-muted">
+          <Trans>Only for you. The owner and others studying this deck choose their own.</Trans>
+        </p>
+      )}
+    </div>
   );
 }
 

@@ -5,6 +5,7 @@ import {
   type KnownReadings,
   markedTerm,
   markKnownReadings,
+  stripReadings,
   termReading,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
@@ -65,12 +66,15 @@ export function TermText({
 export function ExampleText({
   text,
   known,
+  plain,
   translation,
   after,
   ...props
 }: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
+  /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
+  plain?: boolean | undefined;
   /** The example's translation, on its own line under it in its own classes. */
   translation?: { text: string; className: string; lines?: number } | null | undefined;
   /** A 32 pt control after the example's last word, such as its speaker in review. */
@@ -78,7 +82,9 @@ export function ExampleText({
 }) {
   const { i18n } = useLingui();
   const { lang } = props;
-  const segments = useExampleSegments(text, known, lang);
+  const drawn = useExampleSegments(text, known, lang);
+  const written = useMemo(() => [{ text: stripReadings(text, lang) }], [text, lang]);
+  const segments = plain ? written : drawn;
   const { line, ruby } = useLineMetrics({ segments, ...props });
   return (
     <View className="gap-1">

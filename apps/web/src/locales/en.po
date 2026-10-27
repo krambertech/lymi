@@ -947,6 +947,9 @@ msgstr "Actions"
 msgid "Activity"
 msgstr "Activity"
 
+msgid "Adaptive pronunciation"
+msgstr "Adaptive pronunciation"
+
 msgid "Add"
 msgstr "Add"
 
@@ -2649,6 +2652,9 @@ msgstr "From your notes"
 msgid "Front and back"
 msgstr "Front and back"
 
+msgid "Furigana shows over the term until a card is Known, then only with the answer."
+msgstr "Furigana shows over the term until a card is Known, then only with the answer."
+
 msgid "Geography"
 msgstr "Geography"
 
@@ -3010,6 +3016,12 @@ msgstr "joined {joined}"
 
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP or still GIF, up to 10 MB."
+
+msgid "Jyutping shows on its own line with the answer, so you read the characters yourself."
+msgstr "Jyutping shows on its own line with the answer, so you read the characters yourself."
+
+msgid "Jyutping shows over the term until a card is Known, then only with the answer."
+msgstr "Jyutping shows over the term until a card is Known, then only with the answer."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -3831,6 +3843,9 @@ msgstr "One side only"
 msgid "Only continue if you just chose Sign in in Lymi for Mac."
 msgstr "Only continue if you just chose Sign in in Lymi for Mac."
 
+msgid "Only for you. The owner and others studying this deck choose their own."
+msgstr "Only for you. The owner and others studying this deck choose their own."
+
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
 
@@ -4085,6 +4100,12 @@ msgstr "Pictures need a connection. Add it once you’re back online."
 
 msgid "Pictures of the pages"
 msgstr "Pictures of the pages"
+
+msgid "Pinyin shows on its own line with the answer, so you read the characters yourself."
+msgstr "Pinyin shows on its own line with the answer, so you read the characters yourself."
+
+msgid "Pinyin shows over the term until a card is Known, then only with the answer."
+msgstr "Pinyin shows over the term until a card is Known, then only with the answer."
 
 msgid "Play example"
 msgstr "Play example"
@@ -4909,6 +4930,12 @@ msgctxt "which syllable of a term is stressed"
 msgid "Stress"
 msgstr "Stress"
 
+msgid "Stress marks show on the term until a card is Known, then only with the answer."
+msgstr "Stress marks show on the term until a card is Known, then only with the answer."
+
+msgid "Stress marks show on their own line with the answer, so you recall the stress yourself."
+msgstr "Stress marks show on their own line with the answer, so you recall the stress yourself."
+
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Strong"
@@ -5107,6 +5134,15 @@ msgstr "the notes"
 
 msgid "the pronunciation"
 msgstr "the pronunciation"
+
+msgid "The reading shows on its own line with the answer, so you read the kanji yourself."
+msgstr "The reading shows on its own line with the answer, so you read the kanji yourself."
+
+msgid "The reading shows on its own line with the answer, so you read the term yourself."
+msgstr "The reading shows on its own line with the answer, so you read the term yourself."
+
+msgid "The reading shows over the term until a card is Known, then only with the answer."
+msgstr "The reading shows over the term until a card is Known, then only with the answer."
 
 msgid "the source"
 msgstr "the source"

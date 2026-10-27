@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import type { Locale } from "../../lib/routes";
 import { addUrl } from "../deck/DeckView";
 import { Attachment } from "./AssistantChat";
+import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { JAPANESE_QUESTIONS } from "./faq";
 import { EnrichJapanese, PageToCards } from "./JapaneseAi";
@@ -20,11 +21,10 @@ import {
   LanguageName,
   OwnAiSection,
   ReturnSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { pathSteps } from "./language-decks";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
@@ -38,6 +38,7 @@ interface Props {
 
 /** The page for people learning Japanese, from their first kana to N4 and their own lessons. */
 export function JapaneseView({ decks, locale }: Props) {
+  const kana = decks.find((d) => d.slug === KANA);
   const steps = pathSteps(JAPANESE_PATH, decks);
 
   return (
@@ -55,7 +56,10 @@ export function JapaneseView({ decks, locale }: Props) {
               the help.
             </Trans>
           }
-          start={{ href: addUrl(KANA), label: <Trans>Start with kana</Trans> }}
+          start={{
+            href: kana ? addDeckUrl(kana) : addUrl(KANA),
+            label: <Trans>Start with kana</Trans>,
+          }}
           cards={JAPANESE_HAND}
           examples={HAND_EXAMPLES}
           lang="ja"
@@ -87,7 +91,8 @@ export function JapaneseView({ decks, locale }: Props) {
       </Wide>
 
       {steps.length > 0 && (
-        <StartSection
+        <Wide
+          id="start"
           title={
             <Trans>
               Start at <span lang="ja">あ</span>. Keep going.
@@ -99,9 +104,9 @@ export function JapaneseView({ decks, locale }: Props) {
               your reviews.
             </Trans>
           }
-          steps={steps}
-          lang="ja"
-        />
+        >
+          <DeckPath steps={steps} lang="ja" />
+        </Wide>
       )}
 
       <VoiceSection

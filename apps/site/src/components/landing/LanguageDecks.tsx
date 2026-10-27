@@ -1,11 +1,11 @@
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { shelfPath } from "../../lib/explore";
 import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
-import { ArrowLink } from "./ArrowLink";
 import { SectionTitle } from "./FeatureSection";
 
 interface Props {
@@ -33,9 +33,13 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
           </div>
           <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
         </div>
-        <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
+        <a
+          href={shelfPath({ kind: "languages", name: shelf }, locale)}
+          className="inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-text-2 hoverable:hover:text-text"
+        >
           {all}
-        </ArrowLink>
+          <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+        </a>
       </div>
 
       <ul className="mx-auto mt-12 flex max-w-[1040px] snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pb-4 @2xl:scroll-px-10 @2xl:px-10">

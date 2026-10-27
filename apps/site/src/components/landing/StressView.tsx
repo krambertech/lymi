@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import type { LanguagePageName } from "../../lib/language-pages";
 import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
+import { DeckPath } from "./DeckPath";
 import { Wide } from "./FeatureSection";
 import type { Question } from "./faq";
 import type { Example } from "./HandExamples";
@@ -18,7 +19,6 @@ import {
   LanguageHero,
   LanguageName,
   OwnAiSection,
-  StartSection,
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
@@ -126,12 +126,13 @@ export function StressView({ page, decks, locale }: Props) {
       />
 
       {steps.length > 0 && (
-        <StartSection
+        <Wide
+          id="start"
           title={<Trans>Start with the alphabet. Keep going.</Trans>}
           body={page.copy.start}
-          steps={steps}
-          lang={page.lang}
-        />
+        >
+          <DeckPath steps={steps} lang={page.lang} />
+        </Wide>
       )}
 
       <VoiceSection

@@ -498,7 +498,7 @@ function fromLymi(properties: Record<string, unknown>): boolean {
   }[];
   return exceptions.some(
     (exception) =>
-      exception.value !== "Unexpected error" ||
+      (exception.stacktrace.frames.length === 0 && exception.value !== "Unexpected error") ||
       (!exception.mechanism.synthetic &&
         exception.stacktrace.frames.some(
           (frame) => frame.chunk_id || frame.filename?.startsWith(LYMI_ASSET),

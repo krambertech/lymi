@@ -199,6 +199,10 @@ it("drops what an extension throws on the page but keeps Lymi's own errors", asy
   const sent = () => sdk.sent.filter((event) => event.event === "$exception").length;
   const before = sent();
   sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "window" });
+  sdk.capture("$exception", {
+    ...thrown([extensionFrame], "Failed to fetch"),
+    caught_by: "rejection",
+  });
   sdk.capture("$exception", { ...thrown([]), caught_by: "rejection" });
   // A rejected non-error's stack is the reporting code's own, even though it is Lymi's bundle.
   sdk.capture("$exception", { ...thrown([lymiFrame], "private", true), caught_by: "rejection" });

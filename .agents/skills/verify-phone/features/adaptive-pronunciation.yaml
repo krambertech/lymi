@@ -47,5 +47,6 @@ name: Adaptive pronunciation
 - tapOn:
     point: "50%,80%"
 - assertVisible: ".*${MEANING}.*"
-- assertVisible: "${READING}"
+# The revealed card is one element to VoiceOver, which reads the term, then the reading, then the meaning.
+- assertVisible: ".*${TERM}, ${READING}, ${MEANING}.*"
 - takeScreenshot: 04-revealed

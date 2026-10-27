@@ -478,8 +478,8 @@ export function ReviewCard({
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always on the answer.
   const reading = useMemo(() => termShowsPronunciation(card), [card]);
-  // The learner asked for the pronunciation as its own line, so the term is drawn as written.
-  const separate = deck?.pronunciationDisplay === "separate";
+  // The learner asked for the pronunciation as its own line under the term, so the term is drawn as written.
+  const separate = reading && deck?.pronunciationDisplay === "separate";
   // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
   const cueReading = cueShowsPronunciation({
@@ -752,7 +752,8 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
-              {mode.cue === "term" && pronunciation}
+              {/* Shown under the cue when separate; the measuring copy keeps its room here. */}
+              {mode.cue === "term" && (!separate || measure) && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -942,6 +943,14 @@ export function ReviewCard({
                       )}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
+                    {mode.cue === "term" && separate && revealed && card.pronunciation && (
+                      <p
+                        className="enter-fade pt-1 text-md text-muted [overflow-wrap:anywhere]"
+                        lang={card.language ?? undefined}
+                      >
+                        {card.pronunciation}
+                      </p>
+                    )}
                     {/* A drawn reading is hidden from a screen reader, which hears the reading here while
                         it shows on the cue; after the reveal the answer's line says it. */}
                     {mode.cue === "term" && readingOver && cueReading && !revealed && (

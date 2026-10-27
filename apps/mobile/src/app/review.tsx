@@ -1373,8 +1373,8 @@ function CardPlate({
   const reading = card.pronunciation;
   // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
   const furigana = useMemo(() => termShowsPronunciation(card), [card]);
-  // The learner asked for the pronunciation as its own line, so the term is drawn as written.
-  const separate = deck?.pronunciationDisplay === "separate";
+  // The learner asked for the pronunciation as its own line under the term, so the term is drawn as written.
+  const separate = furigana && deck?.pronunciationDisplay === "separate";
   const termCard = separate ? null : card;
   const cueFurigana = cueShowsPronunciation({
     revealed,
@@ -1535,6 +1535,13 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
+                  {separate && revealed && mode.cue === "term" && card.pronunciation && (
+                    <Animated.View entering={arrive()} className="pt-1">
+                      <Text className="text-md text-muted" lang={card.language}>
+                        {card.pronunciation}
+                      </Text>
+                    </Animated.View>
+                  )}
                   {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}
                   {hint && hintShown ? (
                     <View className="pt-3">
@@ -1619,13 +1626,15 @@ function CardPlate({
                       )}
                       {/* After the reveal unless the term draws it, over it or in place, which
                     VoiceOver reads out. Under a term cue it reads the term out. */}
-                      {card.pronunciation && (!furigana || separate) && (
-                        <Animated.View entering={arrive()}>
-                          <Text className="text-md text-muted" lang={card.language}>
-                            {card.pronunciation}
-                          </Text>
-                        </Animated.View>
-                      )}
+                      {card.pronunciation &&
+                        (!furigana || separate) &&
+                        !(separate && mode.cue === "term") && (
+                          <Animated.View entering={arrive()}>
+                            <Text className="text-md text-muted" lang={card.language}>
+                              {card.pronunciation}
+                            </Text>
+                          </Animated.View>
+                        )}
                       {!picture && card.image && (
                         <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
                           <Picture card={card} maxHeight={120} />

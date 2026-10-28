@@ -18,7 +18,7 @@ Supervise the first automated pipeline until the PR is review-ready; the human m
 
 ## Finish
 
-Report **review-ready** only when the PR meets [the definition in SKILL.md](../SKILL.md). Review-ready is not mergeable: a product change also needs a live verdict of PASS or PASS+NOTES against its head SHA ([verify](../../verify/SKILL.md#review-a-pull-request)), and a push that changes the patch needs a new one. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
+Report **review-ready** only when the PR meets [the definition in SKILL.md](../SKILL.md). A product change also needs the author's published [verify verdict](../../verify/SKILL.md#review-a-pull-request) of PASS or PASS+NOTES at its head commit, covering every affected feature; inspect any notes before calling it ready. A new head needs a new run. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
 
 Report **blocked** with the exact failing state and the decision, permission, or external change needed. If the runtime cannot keep observing a pending check, say so; a pending check is never ready.
 

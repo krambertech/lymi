@@ -72,7 +72,7 @@ const s = {
     fontSize: "24px",
     lineHeight: "1.3",
     fontWeight: 500,
-    color: light.text,
+    color: light.ink,
   },
   text: {
     margin: "0 0 16px",
@@ -85,7 +85,7 @@ const s = {
     margin: "0 0 12px",
     fontSize: "13px",
     lineHeight: "1.55",
-    color: light.muted,
+    color: light["ink-muted"],
     whiteSpace: "pre-line",
   },
   button: {
@@ -107,7 +107,7 @@ const s = {
     padding: "16px",
     borderRadius: "14px",
     backgroundColor: light["plate-nested"],
-    color: light.text,
+    color: light.ink,
     fontSize: "32px",
     fontWeight: 500,
     letterSpacing: "0.3em",
@@ -120,7 +120,7 @@ const s = {
     padding: "16px 8px 0",
     fontSize: "12px",
     lineHeight: "1.7",
-    color: light.muted,
+    color: light["ink-muted"],
     textAlign: "center",
   },
 } satisfies Record<string, CSSProperties>;
@@ -133,11 +133,11 @@ function darkStyles(hero: Hero | undefined): string {
 @media (prefers-color-scheme: dark) {
   .lx-body, .lx-body > table > tbody > tr > td { background-color: ${dark.canvas} !important; }
   .lx-plate { background-color: ${dark.plate} !important; }
-  .lx-strong { color: ${dark.text} !important; }
+  .lx-strong { color: ${dark.ink} !important; }
   .lx-text { color: ${dark["ink-secondary"]} !important; }
-  .lx-muted { color: ${dark.muted} !important; }
+  .lx-muted { color: ${dark["ink-muted"]} !important; }
   .lx-button { background-color: ${dark.amber} !important; color: ${dark["amber-ink"]} !important; }
-  .lx-code { background-color: ${dark["plate-nested"]} !important; color: ${dark.text} !important; }
+  .lx-code { background-color: ${dark["plate-nested"]} !important; color: ${dark.ink} !important; }
   .lx-link { color: ${dark["amber-text"]} !important; }
   .lx-avatar { background-color: ${dark.plate} !important; color: ${dark["amber-text"]} !important; }
   ${hue ? `.lx-hue { background-color: ${hue} !important; }` : ""}
@@ -230,7 +230,7 @@ function Byline({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
   return (
     <>
       {before}
-      <span className="lx-strong" style={{ color: light.text, fontWeight: 500 }}>
+      <span className="lx-strong" style={{ color: light.ink, fontWeight: 500 }}>
         {hero.inviter}
       </span>
       {before.trim() ? " " : <br />}

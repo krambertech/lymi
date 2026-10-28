@@ -43,6 +43,13 @@ test("leaves the type scale, other tokens and ordinary words alone", () => {
     ".map((p) => p.text)",
   );
   assert.equal(
+    renameTokens(
+      "color: light.text, border: dark.muted, n: dark.length",
+      "apps/web/src/server/email/template.tsx",
+    ),
+    'color: light.ink, border: dark["ink-muted"], n: dark.length',
+  );
+  assert.equal(
     renameTokens('fill: "flame-core", "glass-unlit": x'),
     'fill: "flame-core", "glass-unlit": x',
   );

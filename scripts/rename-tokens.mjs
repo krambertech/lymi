@@ -51,14 +51,15 @@ const QUOTED = alternatives(
 );
 const quoted = new RegExp(String.raw`(?<=\x60)(${QUOTED})(?=\x60)`, "g");
 const paletteDot = new RegExp(
-  String.raw`(?<![\w.])(p|palette\.(?:light|dark))\.(${NAMED})\b(?!\s*\()`,
+  String.raw`(?<![\w.])(p|light|dark|palette\.(?:light|dark))\.(${NAMED})\b(?!\s*\()`,
   "g",
 );
 const paletteIndex = new RegExp(
-  String.raw`(?<![\w.])(p|palette\.(?:light|dark))\["(${NAMED})"\]`,
+  String.raw`(?<![\w.])(p|light|dark|palette\.(?:light|dark))\["(${NAMED})"\]`,
   "g",
 );
 
+const PALETTE_READERS = /^apps\/mobile\/|^apps\/web\/src\/server\/email\//;
 const access = (owner, name) =>
   KEY.test(RENAMED[name]) ? `${owner}.${RENAMED[name]}` : `${owner}["${RENAMED[name]}"]`;
 
@@ -68,16 +69,16 @@ const RULES = [
   { pattern: utility, replace: (_, prefix, name) => `${prefix}-${RENAMED[name]}` },
   // In docs, a name in backticks is the token.
   { pattern: quoted, replace: (_, name) => RENAMED[name], files: /\.mdx?$/ },
-  // Only the phone and its share extension read the palette as `p`.
+  // The phone reads the palette as `p`, and the email template as `light` and `dark`.
   {
     pattern: paletteDot,
     replace: (_, owner, name) => access(owner, name),
-    files: /^apps\/mobile\//,
+    files: PALETTE_READERS,
   },
   {
     pattern: paletteIndex,
     replace: (_, owner, name) => access(owner, name),
-    files: /^apps\/mobile\//,
+    files: PALETTE_READERS,
   },
 ];
 
@@ -100,7 +101,7 @@ export function oldTokens(line, file = "") {
 
 const EDITED = /\.(tsx?|mts|mjs|jsx?|astro|css|html|mdx?)$/;
 const SKIPPED =
-  /(^|\/)(node_modules|locales|migrations|contract|runs)\/|\.gen\.|uniwind\.gen\.css$|^scripts\/rename-tokens\.(test\.)?mjs$/;
+  /(^|\/)(node_modules|locales|migrations|contract|runs)\/|\.gen\.|uniwind\.gen\.css$|^scripts\/(rename-tokens|rename-tokens\.test|check-styling\.test)\.mjs$/;
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const listed = spawnSync("git", ["ls-files"], {

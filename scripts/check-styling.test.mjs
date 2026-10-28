@@ -17,13 +17,10 @@ test("names the token fix for raw and stock colours", () => {
 
 test("names the new token for each renamed one", () => {
   assert.deepEqual(
-    problemsIn(
-      "apps/mobile/src/x.tsx",
-      '<Icon colour={p["ink-secondary"]} className="bg-plate-hover" />',
-    ),
+    problemsIn("apps/mobile/src/x.tsx", '<Icon colour={p["text-2"]} className="bg-hover" />'),
     [
-      "renamed token ink-secondary: use ink-secondary, as colour.md names tokens",
-      "renamed token bg-plate-hover: use bg-plate-hover, as colour.md names tokens",
+      "renamed token text-2: use ink-secondary, as colour.md names tokens",
+      "renamed token bg-hover: use bg-plate-hover, as colour.md names tokens",
     ],
   );
   assert.deepEqual(problemsIn("apps/web/src/client/x.tsx", 'className="text-ink-muted"'), []);

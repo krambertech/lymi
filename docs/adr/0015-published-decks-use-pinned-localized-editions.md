@@ -3,15 +3,15 @@ status: accepted
 date: 2026-09-13
 ---
 
-# Published decks use pinned localized editions and learner-controlled updates
+# Published decks pin editions; learners approve major updates
 
-A published deck remains the one live deck decided by [ADR 0011](0011-a-shared-deck-is-one-deck-with-many-learners.md). Its existing text is the original meaning-language edition, optional typed localization rows provide additional editions, and each member pins one meaning language when adding it. Owners edit current canonical content; learners keep personal progress and choose when new or materially changed learning behind that progress enters review.
+A published deck remains the one live deck decided by [ADR 0011](0011-a-shared-deck-is-one-deck-with-many-learners.md). Its existing text is the original meaning-language edition, optional typed localization rows provide additional editions, and each member pins one meaning language when adding it. Owners edit current canonical content; learners keep personal progress and choose when new or materially changed content in sections they have already passed enters review.
 
 ## Context
 
 First-party catalog content needs maintained meanings in every language Lymi claims to support without copying a deck and synchronizing its structure several times. Community decks should remain ordinary decks with one owner-chosen meaning language. Learners also need corrections promptly without an owner silently expanding or replacing material they already passed.
 
-[ADR 0013](0013-app-language-is-one-setting-that-meaning-language-follows.md) correctly makes personal AI enrichment follow app language. Published editions need a narrow exception because the visitor chooses an already-authored content edition before adding it and changing that choice later would mutate learned prompts beneath existing progress.
+[ADR 0013](0013-app-language-is-one-setting-that-meaning-language-follows.md) correctly makes personal AI enrichment follow app language. Published editions need a narrow exception because the visitor chooses an already-authored content edition before adding it and changing that choice later would change prompts the learner has already studied.
 
 ## Decision
 

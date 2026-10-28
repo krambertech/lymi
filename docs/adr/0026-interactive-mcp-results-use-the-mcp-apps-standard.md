@@ -3,13 +3,13 @@ status: accepted
 date: 2026-10-01
 ---
 
-# Interactive MCP results use the MCP Apps standard, with host extensions on top
+# Interactive MCP results use MCP Apps
 
-Lymi's interactive MCP results are one React bundle served by the product Worker as a `ui://` resource under the MCP Apps extension (`io.modelcontextprotocol/ui`, spec `2026-01-26`). Tools link to it through `_meta.ui.resourceUri`, and the view talks to the host only through the standard bridge: tool input and result notifications, `tools/call`, `ui/update-model-context`, `ui/open-link` and `ui/message`. A host extension, such as ChatGPT's side panel, mentions and settings, is declared beside the standard metadata and never replaces it. Every tool keeps its full text and structured result, so a host that renders nothing loses the view and nothing else.
+Lymi's interactive MCP results are one React bundle served by the product Worker as a `ui://` resource under the MCP Apps extension (`io.modelcontextprotocol/ui`, spec `2026-01-26`). Tools link to it through `_meta.ui.resourceUri`, and the view talks to the host only through the standard bridge: tool input and result notifications, `tools/call`, `ui/update-model-context`, `ui/open-link` and `ui/message`. A host extension, such as ChatGPT's side panel, mentions and settings, is declared beside the standard metadata and never replaces it. Every tool keeps its full text and structured result, so hosts without UI support still receive the full result.
 
 ## Context
 
-As of 1 October 2026 the same MCP Apps resource renders in ChatGPT, Claude on web, desktop and mobile, VS Code Copilot, Cursor, Microsoft 365 Copilot and Goose. OpenAI documents `window.openai` and `openai/outputTemplate` as compatibility aliases and tells new work to use the standard. ChatGPT alone offers side panels, a sidebar entry, composer mentions and native settings, announced on 29 September 2026. Lymi's rule is one product contract across the app, the API and MCP, so a second contract per host would drift.
+As of 1 October 2026 the same MCP Apps resource renders in ChatGPT, Claude on web, desktop and mobile, VS Code Copilot, Cursor, Microsoft 365 Copilot and Goose. OpenAI documents `window.openai` and `openai/outputTemplate` as compatibility aliases and tells new work to use the standard. ChatGPT alone offers side panels, a sidebar entry, composer mentions and native settings, announced on 29 September 2026. Lymi's rule is one product contract across the app, the API and MCP, so separate host contracts would be harder to keep consistent.
 
 ## Considered options
 

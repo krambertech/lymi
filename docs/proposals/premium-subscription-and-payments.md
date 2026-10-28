@@ -14,13 +14,13 @@ Should Lymi add an inexpensive subscription to pay for AI, starting with [adding
 
 Core card creation, decks, review, enrichment, audio and access to learning data stay free. Reading lesson photos, and later AI features that cost real money per use, sit behind a monthly allowance: a small free one and a larger one on the paid plan. Extraction through a connected app stays free, because the client's model does the work.
 
-Enrichment stays free because it is part of typing a card and costs about $0.003 per ten cards on GPT-6 Luna at high effort. Gating it would make the core worse to save almost nothing.
+Enrichment stays free because it is part of typing a card and costs about $0.003 per ten cards on GPT-6 Luna at high effort. Charging for it would restrict core card creation for a small saving.
 
 A price around €4 a month with an annual option is a hypothesis. A €4 charge in Germany leaves €3.36 after VAT and about €2.88 after fees. A photo costs about €0.005 to read, so even 200 photos a month cost under €1.
 
 ## Provider: Stripe Managed Payments
 
-Stripe Managed Payments makes Stripe the merchant of record, so it collects and files VAT and sales tax worldwide. It was the cheapest merchant of record at this price on 11 October 2026, and it works with the first-party `@better-auth/stripe` plugin, which runs on Workers.
+Stripe Managed Payments makes Stripe the merchant of record, so it collects and files VAT and sales tax worldwide. It had the lowest monthly fee among the merchant-of-record options compared on 11 October 2026, and it works with the first-party `@better-auth/stripe` plugin, which runs on Workers.
 
 | Option | Fee | On €4 a month | On €36 a year |
 |---|---|---|---|
@@ -31,7 +31,7 @@ Stripe Managed Payments makes Stripe the merchant of record, so it collects and 
 | Polar, Starter | 5% + $0.50, + 1.5% non-US card | €0.69 (17.3%) | €2.77 (7.7%) |
 | Stripe Billing and Tax, Lymi as seller | 1.5% + €0.25, + 0.7%, + 0.5% | €0.36 (9%) | €1.22 (3.4%) |
 
-Selling directly saves €0.12 a charge and costs quarterly OSS filings once cross-border EU sales pass €10,000 a year, plus a UK registration from the first sale. Not worth it for one person.
+Selling directly saves €0.12 a charge and costs quarterly OSS filings once cross-border EU sales pass €10,000 a year, plus a UK registration from the first sale. The small saving does not justify that administration for one maintainer.
 
 Risks to check before building:
 
@@ -44,7 +44,7 @@ Creem is the runner-up: cheapest on the annual charge and close on the monthly, 
 
 ## The allowance lives in D1
 
-No provider gates usage in real time. Polar's credits, Stripe's billing credits and Autumn all leave enforcement to the app, and Autumn puts an API call in front of every check. So Lymi keeps it:
+The providers compared here leave real-time usage limits to the app. Polar's credits, Stripe's billing credits and Autumn all leave enforcement to the app, and Autumn puts an API call in front of every check. Lymi therefore enforces usage in D1:
 
 - The plugin's subscription row says which plan a learner is on.
 - A usage row per learner, month and kind counts photo reads. A read checks and increments it in the same statement, so a retry cannot spend twice.

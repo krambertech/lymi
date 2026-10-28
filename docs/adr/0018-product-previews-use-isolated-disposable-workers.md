@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-13
 ---
 
-# Product previews use isolated disposable Workers and synthetic learners
+# Product previews use isolated Workers and storage
 
 Product-affecting pull requests deploy an authenticated product preview to a stable Cloudflare alias after CI quality checks pass. Each pull request receives its own temporary Worker, D1 database, KV namespace and R2 bucket, named from the pull request number and deleted when the pull request closes. The GitHub deployment link carries a derived capability, establishes a host-only preview cookie, signs in a synthetic learner and seeds representative data.
 

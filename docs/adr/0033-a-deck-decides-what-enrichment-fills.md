@@ -3,9 +3,11 @@ status: accepted
 date: 2026-10-11
 ---
 
-# A deck decides what enrichment fills
+# Deck settings control enrichment fields
 
-Each deck lists the fields the AI may fill: meaning, example, notes and pronunciation. The language is always filled, because audio needs it. A deck whose owner never chose follows a default set by its language: meaning alone without a language, meaning and example for most languages, notes too where words are learned with their forms (Estonian, Finnish, German, Dutch, Swedish), and pronunciation too where spelling does not show how a word is said or stressed (Chinese, Japanese, Korean, Russian, Ukrainian). The list is what the AI may fill, not what it must: it fills a field only when it suits the card and the deck's own cards fill it too. Adds in the app, adds sent with `enrich: true`, and Enrich on one card all follow the same list. This refines [ADR 0002](0002-mcp-client-extracts-server-enriches.md), which still holds: enrichment fills only empty fields and never overwrites text.
+Each deck lists the fields the AI may fill: meaning, example, notes and pronunciation. The language is always filled, because audio needs it. A deck whose owner never chose follows a default set by its language: meaning alone without a language, meaning and example for most languages, notes too where words are learned with their forms (Estonian, Finnish, German, Dutch, Swedish), and pronunciation too where spelling does not show how a word is said or stressed (Chinese, Japanese, Korean, Russian, Ukrainian).
+
+The list allows fields without requiring them: it fills a field only when it suits the card and the deck's own cards fill it too. Adds in the app, adds sent with `enrich: true`, and Enrich on one card all follow the same list. This refines [ADR 0002](0002-mcp-client-extracts-server-enriches.md), which still holds: enrichment fills only empty fields and never overwrites text.
 
 The owner may also give the deck instructions to the AI, up to 1000 characters. Only the owner sees them.
 
@@ -22,7 +24,7 @@ Every add filled meaning, example, pronunciation and language, and the meaning r
 
 ## Consequences
 
-- `decks.enrich_fields` is null until the owner chooses, so a better default reaches every deck nobody changed. `decks.enrich_instructions` is the owner's alone and reads as null for a member.
+- `decks.enrich_fields` is null until the owner chooses, so updated defaults apply to decks whose owners have not chosen fields. `decks.enrich_instructions` is the owner's alone and reads as null for a member.
 - Notes join the field sources. `cards.notes_source` lets AI notes carry the AI badge, and an edit makes them the learner's.
 - `cards.enrichment_fields` records what an outstanding run may fill, so a screen holds space only for those fields and a field the AI skips settles empty.
 - Each model call carries the deck's name, description, language, a short guide for that language, the owner's instructions, and up to five recent cards whose meaning a person wrote. Text the AI wrote is never shown to it as an example. Order of precedence: instructions, then the deck's cards, then the language guide, then the prompt's defaults. Instructions cannot change which fields are filled, the reply's shape, or the language meanings are written in.

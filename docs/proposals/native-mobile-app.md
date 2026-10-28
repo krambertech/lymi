@@ -6,11 +6,11 @@ decision: An Expo React Native app in apps/mobile sharing Lymi's packages; ADR 0
 
 # Native mobile app
 
-A phone app is worth building when it is better than the PWA at the two daily jobs: catching a word while the lesson is fresh, and reviewing every evening without being asked. The proof of concept in [`apps/mobile`](../../apps/mobile/README.md) showed that on iOS 26 with demo data, and [ADR 0029](../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) records the decision: Expo React Native, with screens written for the phone and everything under them shared with the web.
+The phone app should improve on the PWA for adding cards during or after a lesson and completing daily reviews. The proof of concept in [`apps/mobile`](../../apps/mobile/README.md) showed that on iOS 26 with demo data, and [ADR 0029](../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) records the decision: Expo React Native, with screens written for the phone and everything under them shared with the web.
 
 ## Why not the September leaning
 
-The September version of this proposal leaned to Capacitor around the existing React app. The proof of concept argued the other way. The system chrome, sheets, peek menus, haptics and widgets are what made it feel native, and a WebView can only imitate them. `packages/core` already ran unchanged under Hermes, so the cost is two sets of screens, not two products.
+The September version of this proposal leaned to Capacitor around the existing React app. The proof of concept favored React Native. The system chrome, sheets, peek menus, haptics and widgets are what made it feel native, and a WebView can only imitate them. `packages/core` already ran unchanged under Hermes, so screens are built separately while product rules stay shared.
 
 ## Stack
 
@@ -53,7 +53,7 @@ Product rules stay in `packages/core`. Screens keep the web's component names, s
 
 ## Design language
 
-Unchanged from the web: both rooms and their colours, Onest, the lantern and every flame rule, amber meaning act, one primary per view, the reveal, the end of a review, the seven lights and Lucide icons. The phone's own rules are in [phone.md](../design/system/phone.md); the moments it shares with the web and the site are in [motion.md](../design/system/motion.md) and [brand.md](../design/system/brand.md).
+Unchanged from the web: the light and dark palettes, Onest, the lantern and every flame rule, amber for primary actions, one primary per view, the reveal, the end of a review, the seven lights and Lucide icons. The phone's own rules are in [phone.md](../design/system/phone.md); the moments it shares with the web and the site are in [motion.md](../design/system/motion.md) and [brand.md](../design/system/brand.md).
 
 Decided in the proof of concept: the title in the top bar, the lit room on Today, plate grades, Onest everywhere, display type in a 1.2 line box, and no Undo toast while grading.
 
@@ -70,7 +70,7 @@ Decided on 12 October ([ADR 0034](../adr/0034-the-phone-uses-the-system-tab-bar-
 
 Still open, with options to compare:
 
-- **Add a word.** How several words in a row and the optional fields work on a phone. The pattern to beat is Reminders' Return-adds-the-next with Linear's chips above the keyboard.
+- **Add a word.** How several words in a row and the optional fields work on a phone. Compare Reminders' Return-to-add behavior and Linear's chips above the keyboard.
 - **Widget actions.** The widgets show state but offer no action. The medium size may carry Add a word and Review as two links.
 - **Controls.** Their look, and whether Review shows the count and the goal. Controls take a custom symbol, a title and a value; there is no ring.
 - **Choosing the deck when sharing.** Apple's on-device model does not support Estonian, Ukrainian or Russian, and its language detector has no Estonian, so the pick likely comes from the last deck used, the deck languages, and the server.
@@ -79,7 +79,7 @@ Still open, with options to compare:
 ## Native features, in order of value
 
 1. **Widget and Lock Screen.** Built in the proof of concept; two sizes chosen.
-2. **Share to Lymi** from Safari, Notes or a transcript, the biggest win for capture.
+2. **Share to Lymi** from Safari, Notes or a transcript, so capture stays in the app the learner is reading.
 3. **Reminders** at a chosen time, with no streak pressure.
 4. **Controls:** Add a word and Review, for Control Center, the Lock Screen and the Action button.
 5. **Shortcuts and Spotlight:** "Start review", "How many are due", find a card from search.

@@ -659,12 +659,12 @@ function Top({
     <Plate className="gap-4 p-5">
       <View className={large ? "gap-1" : "flex-row items-baseline justify-between gap-3"}>
         <View className="shrink flex-row items-baseline gap-2">
-          <Text className="text-4xl font-semibold text-text" style={{ letterSpacing: -1 }}>
+          <Text className="text-4xl font-semibold text-ink" style={{ letterSpacing: -1 }}>
             {due}
           </Text>
-          <Text className="shrink text-base text-text-2">{t`to review`}</Text>
+          <Text className="shrink text-base text-ink-secondary">{t`to review`}</Text>
         </View>
-        <Text className="text-base text-muted">
+        <Text className="text-base text-ink-muted">
           {plural(rows.length, { one: "# card", other: "# cards" })}
         </Text>
       </View>
@@ -672,7 +672,7 @@ function Top({
         <StateBar counts={counts} />
         <StateCounts counts={counts} />
       </View>
-      {line && <Text className="text-sm text-muted">{line}</Text>}
+      {line && <Text className="text-sm text-ink-muted">{line}</Text>}
       {section}
     </Plate>
   );
@@ -702,7 +702,7 @@ function DeckSections({
   const count = columns.filter((c) => c.section).length;
   return (
     <View className="gap-4 border-t border-edge pt-4">
-      <Text className="text-md font-medium text-text" accessibilityRole="header">
+      <Text className="text-md font-medium text-ink" accessibilityRole="header">
         {t`Sections`}
       </Text>
       <SectionLine
@@ -728,8 +728,8 @@ function DeckSections({
         className="flex-row items-center gap-3 border-t border-edge"
         style={{ minHeight: 52, marginHorizontal: -20, marginBottom: -20, paddingHorizontal: 20 }}
       >
-        <Text className="flex-1 text-base text-text">{t`All sections`}</Text>
-        <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="flex-1 text-base text-ink">{t`All sections`}</Text>
+        <Text className="text-base text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
           {i18n.number(count)}
         </Text>
         <RowArrow />
@@ -771,12 +771,12 @@ function SectionTop({
       <View className={large ? "gap-1" : "flex-row items-end justify-between gap-3"}>
         <View className="shrink gap-1">
           {section && (
-            <Text className="text-base text-muted">{t`Section ${place} of ${total}`}</Text>
+            <Text className="text-base text-ink-muted">{t`Section ${place} of ${total}`}</Text>
           )}
-          <Text className="text-lg text-muted">
+          <Text className="text-lg text-ink-muted">
             <Trans>
               <Text
-                className="text-3xl font-medium tracking-tight text-text"
+                className="text-3xl font-medium tracking-tight text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {percent}
@@ -785,7 +785,10 @@ function SectionTop({
             </Trans>
           </Text>
         </View>
-        <Text className="shrink pb-1 text-base text-text-2" style={large ? undefined : TEXT_END}>
+        <Text
+          className="shrink pb-1 text-base text-ink-secondary"
+          style={large ? undefined : TEXT_END}
+        >
           {plural(rows.length, { one: `${known} of # card`, other: `${known} of # cards` })}
         </Text>
       </View>
@@ -894,11 +897,11 @@ function Step({
       className={`flex-1 gap-0.5 rounded-xl border border-edge px-4 py-3 ${forward ? "items-end" : "items-start"}`}
     >
       <View className="flex-row items-center gap-1">
-        {!forward && <Icon name="back" size={14} colour={p.muted} />}
-        <Text className="text-sm text-muted">{forward ? t`Next` : t`Previous`}</Text>
-        {forward && <Icon name="forward" size={14} colour={p.muted} />}
+        {!forward && <Icon name="back" size={14} colour={p["ink-muted"]} />}
+        <Text className="text-sm text-ink-muted">{forward ? t`Next` : t`Previous`}</Text>
+        {forward && <Icon name="forward" size={14} colour={p["ink-muted"]} />}
       </View>
-      <Text className="text-base font-medium text-text" numberOfLines={1}>
+      <Text className="text-base font-medium text-ink" numberOfLines={1}>
         {name}
       </Text>
     </Press>
@@ -959,7 +962,7 @@ function Heading({
         >
           <SectionTitle
             end={
-              <Text className="text-base text-muted">
+              <Text className="text-base text-ink-muted">
                 {plural(g.rows.length, { one: "# card", other: "# cards" })}
               </Text>
             }
@@ -971,7 +974,7 @@ function Heading({
         title && (
           <SectionTitle
             end={
-              <Text className="text-base text-muted">
+              <Text className="text-base text-ink-muted">
                 {plural(g.rows.length, { one: "# card", other: "# cards" })}
               </Text>
             }
@@ -1043,13 +1046,13 @@ const WordRow = memo(function WordRow({
   const face = (
     <View
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
-      style={selected ? { backgroundColor: p.hover } : { backgroundColor: p.plate }}
+      style={selected ? { backgroundColor: p["plate-hover"] } : { backgroundColor: p.plate }}
     >
       <View className="pt-[5px]">
         {selecting ? (
           <SelectBox checked={selected} />
         ) : waiting ? (
-          <Icon name="lock" size={15} colour={p.faint} />
+          <Icon name="lock" size={15} colour={p["ink-faint"]} />
         ) : (
           <StateIcon state={state} size={15} />
         )}
@@ -1059,9 +1062,11 @@ const WordRow = memo(function WordRow({
         <TermText
           card={{ ...row.card, term: word }}
           room
-          className="text-md font-medium text-text"
+          className="text-md font-medium text-ink"
           lines={3}
-          tail={forms ? { text: ` · ${forms}`, className: "text-md text-text-2" } : undefined}
+          tail={
+            forms ? { text: ` · ${forms}`, className: "text-md text-ink-secondary" } : undefined
+          }
           after={
             row.card.important && (
               <Text className="text-md" style={{ color: p["amber-mark"] }}>
@@ -1070,7 +1075,7 @@ const WordRow = memo(function WordRow({
             )
           }
         />
-        <Text className="text-base text-text-2" numberOfLines={2}>
+        <Text className="text-base text-ink-secondary" numberOfLines={2}>
           {row.card.meaning || t`No meaning yet`}
         </Text>
       </View>

@@ -26,14 +26,14 @@ export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
   return (
     <div className="grid w-full gap-3">
       {!fine && (
-        <p className="font-mono text-xs text-muted">
+        <p className="font-mono text-xs text-ink-muted">
           This device has no fine pointer, so both frames take the touch shape. Open this page on a
           desktop to see the desktop one.
         </p>
       )}
       <div className="grid w-full items-start gap-4 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,300px)]">
         <figure className="grid min-w-0 gap-2">
-          <figcaption className="font-mono text-xs text-muted">Desktop</figcaption>
+          <figcaption className="font-mono text-xs text-ink-muted">Desktop</figcaption>
           <ScaledFrame
             src={frameSrc(specimen)}
             title={`${name} on a desktop`}
@@ -42,7 +42,7 @@ export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
           />
         </figure>
         <figure className="grid min-w-0 gap-2">
-          <figcaption className="font-mono text-xs text-muted">Touch</figcaption>
+          <figcaption className="font-mono text-xs text-ink-muted">Touch</figcaption>
           <ScaledFrame
             src={frameSrc(specimen)}
             title={`${name} on a touch device`}
@@ -148,10 +148,11 @@ export function FrameDocument({ specimen }: { specimen: string }) {
   useMirroredAttribute(canvasAround, "data-theme");
   const motion = useMirroredAttribute(motionAround, "data-motion");
   const entry = specimen in SPECIMENS ? SPECIMENS[specimen as SpecimenId] : undefined;
-  if (!entry) return <p className="p-5 text-base text-muted">No specimen named “{specimen}”.</p>;
+  if (!entry)
+    return <p className="p-5 text-base text-ink-muted">No specimen named “{specimen}”.</p>;
   return (
     <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
-      <div className="min-h-dvh bg-canvas p-5 text-text">
+      <div className="min-h-dvh bg-canvas p-5 text-ink">
         <StaticNavProvider path="/design">
           <entry.Scene />
         </StaticNavProvider>

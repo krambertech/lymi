@@ -54,7 +54,7 @@ function within(el: Element | null | undefined, frame: DOMRect): Box | null {
   return { x: r.left - frame.left, y: r.top - frame.top, w: r.width, h: r.height };
 }
 
-const TERM = "text-2xl leading-tight font-medium tracking-[-0.03em] text-text @lg:text-[1.75rem]";
+const TERM = "text-2xl leading-tight font-medium tracking-[-0.03em] text-ink @lg:text-[1.75rem]";
 
 function WordCard({
   word,
@@ -65,13 +65,13 @@ function WordCard({
 }) {
   return (
     <div className="flex h-full flex-col p-5 @2xl:p-6">
-      <p className="text-xs tracking-[0.07em] text-muted uppercase">{word.label}</p>
+      <p className="text-xs tracking-[0.07em] text-ink-muted uppercase">{word.label}</p>
       <p ref={termRef} lang={word.lang} className={`mt-2 text-balance hyphens-auto ${TERM}`}>
         {word.term}
       </p>
-      {word.say && <p className="mt-1 text-sm text-muted">{word.say}</p>}
+      {word.say && <p className="mt-1 text-sm text-ink-muted">{word.say}</p>}
       <div className="mt-5 border-t border-edge pt-3">
-        <p className="text-md text-pretty text-text-2">{word.meaning}</p>
+        <p className="text-md text-pretty text-ink-secondary">{word.meaning}</p>
       </div>
     </div>
   );
@@ -241,7 +241,7 @@ export function HeroLiftOff({
             {/* The word as written, handing over to the card's own type halfway. */}
             <motion.span
               lang={flying.lang}
-              className={`absolute start-0 top-0 px-0.5 whitespace-nowrap text-text ${chip}`}
+              className={`absolute start-0 top-0 px-0.5 whitespace-nowrap text-ink ${chip}`}
               initial={{ x: 0, y: 0, opacity: 1 }}
               animate={{ x: flight.termAt.x, y: flight.termAt.y, opacity: 0 }}
               transition={{

@@ -252,11 +252,11 @@ function DesktopAdd() {
   }
 
   const status = line && (
-    <p className="flex min-w-0 items-start gap-2 text-sm text-text-2">
+    <p className="flex min-w-0 items-start gap-2 text-sm text-ink-secondary">
       {line.kind === "added" && (
         <Check
           aria-hidden
-          className="mt-[calc(0.5lh-0.5rem)] size-4 shrink-0 text-good"
+          className="mt-[calc(0.5lh-0.5rem)] size-4 shrink-0 text-success"
           strokeWidth={2.5}
         />
       )}
@@ -275,7 +275,7 @@ function DesktopAdd() {
           type="button"
           onClick={() => void undo()}
           aria-keyshortcuts="Meta+Z"
-          className="shrink-0 rounded-xs font-medium text-text underline underline-offset-3 focus-visible:outline-2 focus-visible:outline-ring"
+          className="shrink-0 rounded-xs font-medium text-ink underline underline-offset-3 focus-visible:outline-2 focus-visible:outline-ring"
         >
           {t`Undo`}
         </button>
@@ -285,7 +285,7 @@ function DesktopAdd() {
 
   return (
     // The window is the plate: macOS rounds its corners and draws its shadow.
-    <div ref={root} className="flex flex-col bg-plate text-text">
+    <div ref={root} className="flex flex-col bg-plate text-ink">
       <div className="flex h-14 items-center gap-2 ps-4.5 pe-3">
         <input
           ref={input}
@@ -303,7 +303,7 @@ function DesktopAdd() {
           spellCheck={false}
           autoComplete="off"
           dir="auto"
-          className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-faint"
+          className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-ink-faint"
         />
         {target && (
           <button
@@ -318,7 +318,7 @@ function DesktopAdd() {
             aria-expanded={picking}
             aria-controls={picking ? listId : undefined}
             aria-label={t`Deck: ${{ deckName: isolate(deckName) }}`}
-            className="flex min-w-0 max-w-48 shrink-0 items-center gap-1 rounded-xs px-1.5 py-0.5 text-sm text-muted hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-ring"
+            className="flex min-w-0 max-w-48 shrink-0 items-center gap-1 rounded-xs px-1.5 py-0.5 text-sm text-ink-muted hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-ring"
           >
             <span className="truncate">{deckName}</span>
             <ChevronsUpDown aria-hidden className="size-3.5 shrink-0 opacity-70" />
@@ -351,11 +351,11 @@ function DesktopAdd() {
               onMouseMove={() => setActive(i)}
               className={clsx(
                 "flex cursor-default items-center gap-2 rounded-sm px-2.5 py-1.5 text-md",
-                i === active && "bg-hover",
+                i === active && "bg-plate-hover",
               )}
             >
               <span className="min-w-0 flex-1 truncate">{d.name}</span>
-              {d.id === target?.id && <Check aria-hidden className="size-4 text-text-2" />}
+              {d.id === target?.id && <Check aria-hidden className="size-4 text-ink-secondary" />}
             </div>
           ))}
         </div>
@@ -363,7 +363,7 @@ function DesktopAdd() {
       {!picking && (status || signedOut || noDeck) && (
         <div className="border-t border-edge px-4.5 py-2.5">
           {status || (
-            <p className="text-sm text-text-2">
+            <p className="text-sm text-ink-secondary">
               {signedOut
                 ? t`Open Lymi to sign in`
                 : t`Make a deck in Lymi first. Enter opens Library.`}

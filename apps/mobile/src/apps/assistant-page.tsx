@@ -140,7 +140,7 @@ function TryAsking() {
   if (!clipboard) return null;
   return (
     <View className="gap-2 border-t border-edge pt-4">
-      <Text className="px-1 text-sm font-medium text-text-2">{t`Then try asking`}</Text>
+      <Text className="px-1 text-sm font-medium text-ink-secondary">{t`Then try asking`}</Text>
       <View className="flex-row flex-wrap gap-2">
         {prompts.map((prompt) => (
           <Press
@@ -192,7 +192,7 @@ function Connect({ assistant, name, address }: Props & { assistant: Assistant; n
 }
 
 const Code = ({ children }: { children: ReactNode }) => (
-  <Text className="text-sm text-text" style={{ fontFamily: "Menlo" }}>
+  <Text className="text-sm text-ink" style={{ fontFamily: "Menlo" }}>
     {children}
   </Text>
 );

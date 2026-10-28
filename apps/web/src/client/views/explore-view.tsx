@@ -51,7 +51,7 @@ function ShelfSection({
         <h2
           id={headingId}
           tabIndex={-1}
-          className="scroll-mt-20 text-lg font-medium text-text focus:outline-none"
+          className="scroll-mt-20 text-lg font-medium text-ink focus:outline-none"
         >
           {label}
         </h2>
@@ -59,14 +59,14 @@ function ShelfSection({
           <NavLink
             to="/explore/$kind/$name"
             params={{ kind: page.kind, name: page.name }}
-            className="inline-flex shrink-0 items-center gap-1 rounded-xs text-sm font-medium whitespace-nowrap text-text-2 transition-colors duration-150 hoverable:hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex shrink-0 items-center gap-1 rounded-xs text-sm font-medium whitespace-nowrap text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <Trans>See all</Trans>
-            <span className="font-normal text-muted tabular-nums">{shelf.decks.length}</span>
-            <ChevronRight aria-hidden="true" className="size-4 text-muted rtl:-scale-x-100" />
+            <span className="font-normal text-ink-muted tabular-nums">{shelf.decks.length}</span>
+            <ChevronRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
           </NavLink>
         ) : (
-          <p className="text-sm whitespace-nowrap text-muted tabular-nums">
+          <p className="text-sm whitespace-nowrap text-ink-muted tabular-nums">
             <Plural value={shelf.decks.length} one="# deck" other="# decks" />
           </p>
         )}
@@ -109,7 +109,7 @@ export function ExploreView({ data, failed, busy, onRetry, onAdd, adding }: Prop
       kind="tab"
       title={<Trans>Explore</Trans>}
       lede={
-        <p className="mt-2 max-w-[52ch] text-base text-text-2">
+        <p className="mt-2 max-w-[52ch] text-base text-ink-secondary">
           <Trans>Ready-made decks from Lymi. Add one to study it in your language.</Trans>
         </p>
       }

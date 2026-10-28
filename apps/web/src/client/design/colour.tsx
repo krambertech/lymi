@@ -17,23 +17,26 @@ const TOKENS: Token[] = [
   { name: "canvas", role: "The room. Page background." },
   { name: "rail", role: "The navigation rail: one surface off the room, so chrome reads apart." },
   { name: "plate", role: "A thing in the room: cards, rows, inputs, the active nav item." },
-  { name: "plate-2", role: "A well inside a plate: segmented tracks, chips, kbd." },
-  { name: "hover", role: "Plate on hover." },
+  { name: "plate-nested", role: "A well inside a plate: segmented tracks, chips, kbd." },
+  { name: "plate-hover", role: "Plate on hover." },
   { name: "edge", role: "The one hairline. Alpha, so it sits on any plate." },
-  { name: "edge-2", role: "Stronger hairline: focused or hovered edges, dividers that must read." },
+  {
+    name: "edge-strong",
+    role: "Stronger hairline: focused or hovered edges, dividers that must read.",
+  },
   {
     name: "image-edge",
     role: "A photo's edge, inside its bounds: untinted black by day, white at night.",
   },
   {
-    name: "text",
+    name: "ink",
     role: "Words. Also the metal of the lantern in the light room.",
     on: "canvas",
   },
-  { name: "text-2", role: "Secondary words: meanings, examples, nav.", on: "canvas" },
-  { name: "muted", role: "Labels, counts, hints. Still 4.5:1 on canvas.", on: "canvas" },
+  { name: "ink-secondary", role: "Secondary words: meanings, examples, nav.", on: "canvas" },
+  { name: "ink-muted", role: "Labels, counts, hints. Still 4.5:1 on canvas.", on: "canvas" },
   {
-    name: "faint",
+    name: "ink-faint",
     role: "Decorative only: dashes, unlit day letters. Never for words.",
     on: "canvas",
     kind: "decorative",
@@ -53,7 +56,7 @@ const TOKENS: Token[] = [
   {
     name: "amber-mark",
     role: "Amber icons beside a word: the Easy grade, the streak tick. Amber itself at night.",
-    on: "plate-2",
+    on: "plate-nested",
     kind: "graphic",
   },
   { name: "amber-tint", role: "Behind a due count." },
@@ -61,11 +64,11 @@ const TOKENS: Token[] = [
   { name: "amber-soft", role: "Text selection." },
   {
     name: "toast-action",
-    role: "Undo on the toast. The toast is the text colour, so this is the amber that reads on it.",
-    on: "text",
+    role: "Undo on the toast. The toast is ink, so this is the amber that reads on it.",
+    on: "ink",
   },
-  { name: "good", role: "Success and a 2xx. Always with a word or an icon.", on: "canvas" },
-  { name: "good-soft", role: "Tint behind success notices." },
+  { name: "success", role: "Success and a 2xx. Always with a word or an icon.", on: "canvas" },
+  { name: "success-soft", role: "Tint behind success notices." },
   {
     name: "state-new",
     role: "New: its icon and bar segment. Never words.",
@@ -74,7 +77,7 @@ const TOKENS: Token[] = [
   },
   {
     name: "state-learning",
-    role: "Learning: its icon and bar segment. Blue, well away from amber, danger and good.",
+    role: "Learning: its icon and bar segment. Blue, well away from amber, danger and success.",
     on: "canvas",
     kind: "graphic",
   },
@@ -89,7 +92,7 @@ const TOKENS: Token[] = [
   },
   {
     name: "state-known",
-    role: "Known: its icon and bar segment. Lighter than good by day; good at night.",
+    role: "Known: its icon and bar segment. Lighter than success by day; success at night.",
     on: "canvas",
     kind: "graphic",
   },
@@ -143,7 +146,7 @@ function Swatch({ name, on, ink, kind }: Token) {
           </span>
         )}
       </div>
-      <code className="text-2xs text-muted">--{name}</code>
+      <code className="text-2xs text-ink-muted">--{name}</code>
     </div>
   );
 }
@@ -160,7 +163,7 @@ export function Colour() {
             <div
               key={t}
               data-theme={t}
-              className="@container edge rounded-lg bg-canvas p-5 text-text"
+              className="@container edge rounded-lg bg-canvas p-5 text-ink"
             >
               <h3 className="mb-4 text-sm font-medium">
                 {t === "light" ? "Light room" : "Dark room"}
@@ -180,22 +183,22 @@ export function Colour() {
           {TOKENS.map((t) => (
             <div key={t.name} className="flex gap-3 border-b border-edge py-2">
               <dt className="w-28 shrink-0">
-                <code className="text-sm text-text-2">--{t.name}</code>
+                <code className="text-sm text-ink-secondary">--{t.name}</code>
               </dt>
-              <dd className="text-text-2">{t.role}</dd>
+              <dd className="text-ink-secondary">{t.role}</dd>
             </div>
           ))}
         </dl>
       </Sub>
 
       <Sub title="Rules">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Amber twice per screen at most: the flame and the primary action. A due count, ink on amber-tint, is the third allowed use.",
             "Status is never colour alone. New, Learning and Known carry a label and their icon.",
-            "Depth is one edge. Cards, inputs and rows get --edge; on hover or focus it becomes --edge-2. Nothing casts a shadow.",
-            "No gradient on any surface. The app icon is the one exception. If something needs to feel lit, it is the lantern, and it uses --glow.",
-            "Text on canvas meets 4.5:1 in both rooms, including --muted. --faint is decorative and never carries words.",
+            "Depth is one edge. Cards, inputs and rows get --edge; on hover or focus it becomes --edge-strong. Nothing casts a shadow.",
+            "No gradient on any surface. The app icon is the one exception. If something needs to feel lit, it is the lantern, and it uses --lantern-glow.",
+            "Text on canvas meets 4.5:1 in both rooms, including --ink-muted. --ink-faint is decorative and never carries words.",
             "Dark is not inverted light. The plate is lighter than the canvas in both rooms, so a card always comes forward.",
           ].map((t) => (
             <li key={t} className="edge rounded-md bg-plate px-4 py-3">

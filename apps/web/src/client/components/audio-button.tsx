@@ -70,7 +70,7 @@ export function AudioButton({
               ? // A bare glyph in muted, a size down, so the term's speaker stays the card's main one.
                 [
                   "absolute! start-0 top-[calc(-0.35em-12px)]",
-                  !error && "text-muted! hoverable:hover:text-text!",
+                  !error && "text-ink-muted! hoverable:hover:text-ink!",
                 ]
               : // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
                 "[--hit-x:-12px] before:-inset-y-3!",

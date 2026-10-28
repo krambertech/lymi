@@ -92,9 +92,9 @@ export function HintLine({ text, still }: { text: string; still: boolean }) {
       className="flex-row items-start gap-2"
     >
       <View className="pt-1">
-        <Icon name="hint" size={16} colour={p.muted} />
+        <Icon name="hint" size={16} colour={p["ink-muted"]} />
       </View>
-      <Text className="min-w-0 flex-1 text-md text-text-2">{text}</Text>
+      <Text className="min-w-0 flex-1 text-md text-ink-secondary">{text}</Text>
     </Animated.View>
   );
 }
@@ -150,14 +150,14 @@ export function HintOffer({
       accessibilityLabel={t`Try a hint`}
       accessibilityHint={t`A short phrase that helps you remember it`}
       className="flex-row items-center gap-2 py-3 ps-4 pe-3"
-      style={({ pressed }) => (pressed && !glass ? { backgroundColor: p.hover } : null)}
+      style={({ pressed }) => (pressed && !glass ? { backgroundColor: p["plate-hover"] } : null)}
     >
-      <Icon name="hint" size={16} colour={p["text-2"]} />
+      <Icon name="hint" size={16} colour={p["ink-secondary"]} />
       {/* One line, so a long card keeps its room; what a hint is stays in the hint. */}
-      <Text className="min-w-0 flex-1 text-base font-medium text-text" numberOfLines={1}>
+      <Text className="min-w-0 flex-1 text-base font-medium text-ink" numberOfLines={1}>
         {t`Try a hint`}
       </Text>
-      <Icon name="forward" size={16} colour={p.muted} />
+      <Icon name="forward" size={16} colour={p["ink-muted"]} />
     </Pressable>
   );
   return (
@@ -173,13 +173,13 @@ export function HintOffer({
           isInteractive
           glassEffectStyle="clear"
           // Untinted clear glass on the white card glows past the card's white on device, so it takes the fallback's grey.
-          tintColor={`${p["plate-2"]}b3`}
+          tintColor={`${p["plate-nested"]}b3`}
           style={OFFER_SHAPE}
         >
           {face}
         </GlassView>
       ) : (
-        <View className="overflow-hidden bg-plate-2" style={OFFER_SHAPE}>
+        <View className="overflow-hidden bg-plate-nested" style={OFFER_SHAPE}>
           {face}
         </View>
       )}
@@ -314,19 +314,19 @@ export function HintSheet({
             setDraftNote(null);
           }}
           placeholder={t`A sound-alike, or something to picture`}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={t`Hint`}
           multiline
           submitBehavior="blurAndSubmit"
           returnKeyType="done"
           onSubmitEditing={() => void save()}
-          selectionColor={p.text}
-          className="min-h-16 pt-3 pb-1 font-sans text-text"
+          selectionColor={p.ink}
+          className="min-h-16 pt-3 pb-1 font-sans text-ink"
           style={{ fontSize: 17, textAlignVertical: "top" }}
           maxFontSizeMultiplier={inputCap(17)}
         />
         {/* The sheet sits on the keyboard and grows upward, so a note above Draft leaves the button under the finger that pressed it. */}
-        {draftNote && <Text className="pt-1 text-sm text-muted">{draftNote}</Text>}
+        {draftNote && <Text className="pt-1 text-sm text-ink-muted">{draftNote}</Text>}
         {/* Its room kept, so a draft arriving or the button going never changes the sheet's height. */}
         <View className="min-h-8 flex-row items-center">
           {/* One control throughout, as on the web: its label says what a press does, and its loader turns in the sparkle's place. */}

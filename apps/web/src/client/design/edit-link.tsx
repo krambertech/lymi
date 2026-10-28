@@ -15,7 +15,7 @@ export function EditLink({ path }: { path: string }) {
             target="_blank"
             rel="noreferrer"
             aria-label={label}
-            className="relative grid size-8 shrink-0 place-items-center rounded-sm text-muted transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text"
+            className="relative grid size-8 shrink-0 place-items-center rounded-sm text-ink-muted transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-plate-hover hoverable:hover:text-ink"
           />
         }
       >

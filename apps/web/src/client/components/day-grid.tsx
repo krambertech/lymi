@@ -261,7 +261,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
             the month row, and the table's spacing either side of that row. */}
         <div
           aria-hidden="true"
-          className="grid shrink-0 gap-1 text-2xs text-faint"
+          className="grid shrink-0 gap-1 text-2xs text-ink-faint"
           style={{
             gridTemplateRows: `repeat(7, ${CELL}px)`,
             paddingTop: GAP + GAP + MONTH_ROW + GAP,
@@ -294,7 +294,9 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                     style={{ height: MONTH_ROW }}
                     className={clsx(
                       "p-0 text-start align-middle text-2xs font-normal whitespace-nowrap",
-                      g.month === today.slice(0, 7) ? "font-medium text-text-2" : "text-muted",
+                      g.month === today.slice(0, 7)
+                        ? "font-medium text-ink-secondary"
+                        : "text-ink-muted",
                       // The start of a month is where a swipe comes to rest.
                       g.month && "snap-start",
                     )}
@@ -341,16 +343,17 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                                 // Hover veils the cell in ink, which is light in the dark room, so
                                 // every state answers the pointer without a second ring beside the
                                 // ones that already mean today and a day kept.
-                                "after:absolute after:inset-0 after:rounded-[inherit] after:bg-text after:opacity-0 after:transition-opacity after:duration-150 hoverable:hover:after:opacity-10",
+                                "after:absolute after:inset-0 after:rounded-[inherit] after:bg-ink after:opacity-0 after:transition-opacity after:duration-150 hoverable:hover:after:opacity-10",
                                 future
                                   ? // Dashed is this system's mark for "not here yet", so a day
                                     // still to come never reads as a day that was missed.
-                                    "border border-dashed border-edge-2"
+                                    "border border-dashed border-edge-strong"
                                   : l === 0
-                                    ? "edge-inset bg-plate-2"
+                                    ? "edge-inset bg-plate-nested"
                                     : LIGHT_FILL[l],
                                 kept && "shadow-[inset_0_0_0_1.5px_var(--amber)]",
-                                date === today && "outline-1 outline-offset-2 outline-text-2",
+                                date === today &&
+                                  "outline-1 outline-offset-2 outline-ink-secondary",
                               )}
                             />
                           }

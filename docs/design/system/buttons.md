@@ -77,7 +77,7 @@ In a screen's top bar every control is a square ghost `IconButton` at 40 px, exc
 
 Every button has default, hover, focus, active and disabled, and `loading` where a request runs.
 
-- Hover uses the `hoverable:` variant (`hoverable:hover:bg-hover`), so a touch screen never keeps a stuck hover. Never write a bare `hover:` on a control.
+- Hover uses the `hoverable:` variant (`hoverable:hover:bg-plate-hover`), so a touch screen never keeps a stuck hover. Never write a bare `hover:` on a control.
 - Press scales to 0.97 over 150 ms. Nothing moves up on press.
 - `loading` keeps the button's width, shows a spinner and swallows a second press.
 - `kbd="N"` shows a keyboard hint beside the label, on desktop only.

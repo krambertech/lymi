@@ -18,7 +18,7 @@ const spec = (s: Spring) =>
   `spring ${Math.round(s.visualDuration * 1000)} ms${s.bounce ? `, bounce ${s.bounce}` : ""}`;
 
 const link =
-  "font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current";
+  "font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current";
 
 /** The flame where the product uses it: the streak modal, the phone pill and the rail pill. */
 function Sizes({
@@ -149,8 +149,8 @@ function MovementCard({ m }: { m: (typeof MOVEMENTS)[number] }) {
             Play
           </Button>
         </div>
-        <p className="font-mono text-xs text-muted tabular-nums">{m.timing}</p>
-        <p className="mt-1 text-sm text-pretty text-text-2">{m.note}</p>
+        <p className="font-mono text-xs text-ink-muted tabular-nums">{m.timing}</p>
+        <p className="mt-1 text-sm text-pretty text-ink-secondary">{m.note}</p>
       </div>
     </div>
   );
@@ -174,7 +174,7 @@ function ReducedSideBySide() {
             <MotionConfig reducedMotion={mode}>
               <Sizes state={state} flicker={mode === "never" && state === "full"} />
             </MotionConfig>
-            <figcaption className="font-mono text-xs text-muted">
+            <figcaption className="font-mono text-xs text-ink-muted">
               {mode === "never" ? "Motion" : "Reduced motion"}
             </figcaption>
           </figure>
@@ -218,8 +218,8 @@ export function FlamePage() {
           {STATES.map((s) => (
             <div key={s.state} className="grid gap-2">
               <Pair>{() => <Sizes state={s.state} />}</Pair>
-              <p className="px-1 text-sm text-text-2">
-                <span className="font-medium text-text">{s.name}.</span> {s.note}
+              <p className="px-1 text-sm text-ink-secondary">
+                <span className="font-medium text-ink">{s.name}.</span> {s.note}
               </p>
             </div>
           ))}
@@ -235,7 +235,7 @@ export function FlamePage() {
             const state = streakFlameFor(s);
             return (
               <Row key={label}>
-                <span className="text-sm text-text-2">{label}</span>
+                <span className="text-sm text-ink-secondary">{label}</span>
                 <span className="flex items-center gap-2.5">
                   <Flame className="h-5 w-4" state={state} flicker={state === "full"} />
                   <span className="font-mono text-sm">{state}</span>
@@ -274,7 +274,7 @@ export function FlamePage() {
               {STATES.map((s) => (
                 <Flame
                   key={s.state}
-                  className="h-28 w-[91px] outline-1 outline-edge-2 outline-dashed"
+                  className="h-28 w-[91px] outline-1 outline-edge-strong outline-dashed"
                   state={s.state}
                 />
               ))}
@@ -291,16 +291,16 @@ export function FlamePage() {
               className="grid gap-1 border-b border-edge px-5 py-3 text-base last:border-b-0 @3xl:grid-cols-[120px_200px_1fr] @3xl:gap-4"
             >
               <span className="font-mono text-sm font-medium">{name}</span>
-              <span className="font-mono text-sm text-text-2">{type}</span>
-              <span className="text-sm text-muted">{what}</span>
+              <span className="font-mono text-sm text-ink-secondary">{type}</span>
+              <span className="text-sm text-ink-muted">{what}</span>
             </div>
           ))}
         </div>
-        <pre className="edge overflow-x-auto rounded-lg bg-plate-2 p-4 font-mono text-sm text-text-2">
+        <pre className="edge overflow-x-auto rounded-lg bg-plate-nested p-4 font-mono text-sm text-ink-secondary">
           {`const state = streakFlameFor(streak);
 <Flame state={state} flicker={state === "full"} />`}
         </pre>
-        <p className="text-base text-text-2">
+        <p className="text-base text-ink-secondary">
           What the streak itself means is on{" "}
           <DocLink to={{ kind: "page", page: "streak" }} className={link}>
             Streak
@@ -314,7 +314,7 @@ export function FlamePage() {
       </Sub>
 
       <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Don’t grow it or spark it with each review. That is the lantern’s job.",
             "Don’t put it out for nothing due, an ended session or an unfinished morning.",

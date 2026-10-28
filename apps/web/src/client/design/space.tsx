@@ -14,7 +14,7 @@ export function Space() {
           {[4, 8, 16, 24, 32, 48].map((n) => (
             <div key={n} className="grid justify-items-center gap-2">
               <div className="bg-amber-soft" style={{ width: n, height: n }} />
-              <span className="text-2xs text-muted tabular-nums">{n}</span>
+              <span className="text-2xs text-ink-muted tabular-nums">{n}</span>
             </div>
           ))}
         </Specimen>
@@ -34,11 +34,14 @@ export function Space() {
             ["2xl", 30, "the deck plate, the landing page's closing plate"],
           ].map(([name, r, use]) => (
             <div key={name} className="grid justify-items-center gap-2 text-center">
-              <div className="edge-2 size-16 bg-plate-2" style={{ borderRadius: Number(r) }} />
-              <span className="text-2xs text-muted">
+              <div
+                className="edge-strong size-16 bg-plate-nested"
+                style={{ borderRadius: Number(r) }}
+              />
+              <span className="text-2xs text-ink-muted">
                 {name} · {r}
               </span>
-              <span className="max-w-[12ch] text-2xs text-muted">{use}</span>
+              <span className="max-w-[12ch] text-2xs text-ink-muted">{use}</span>
             </div>
           ))}
         </Specimen>
@@ -49,23 +52,23 @@ export function Space() {
         note="The rail is 240 and runs the full height of the window. The content column beside it caps at 880 and centres in what is left; it never stretches. Reading screens narrow to 672. The review column is 448 on the phone and 672 on desktop, where the card fills the height between 460 and 600 so the word has room at its size."
       >
         <Specimen layout="block">
-          <div className="grid gap-2 text-2xs text-muted">
+          <div className="grid gap-2 text-2xs text-ink-muted">
             <div className="flex gap-2">
-              <div className="edge flex h-28 w-[22%] items-end rounded-sm bg-plate-2 p-2">
+              <div className="edge flex h-28 w-[22%] items-end rounded-sm bg-plate-nested p-2">
                 rail 240
               </div>
               <div className="edge flex h-28 flex-1 items-end justify-center rounded-sm p-2">
-                <div className="edge flex h-20 w-[62%] items-end justify-center rounded-sm bg-plate-2 p-2">
+                <div className="edge flex h-20 w-[62%] items-end justify-center rounded-sm bg-plate-nested p-2">
                   column 880, 672 when reading
                 </div>
               </div>
             </div>
             <div className="flex gap-2">
               <div className="edge flex h-20 w-[36%] flex-col justify-end rounded-sm p-2">
-                <div className="edge mb-1 flex h-10 items-end rounded-sm bg-plate-2 p-1">
+                <div className="edge mb-1 flex h-10 items-end rounded-sm bg-plate-nested p-1">
                   phone: one column
                 </div>
-                <div className="h-3 rounded-sm bg-plate-2" />
+                <div className="h-3 rounded-sm bg-plate-nested" />
               </div>
               <div className="edge flex h-20 flex-1 items-end rounded-sm p-2">
                 Screens break at 768 px of the container, so a screen inside a phone frame still

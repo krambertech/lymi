@@ -10,7 +10,7 @@ import { StateIcon, stateKey, stateMarks } from "./state-mark";
 export type ChipTone = "default" | "ai" | "danger";
 
 const tones: Record<ChipTone, string> = {
-  default: "bg-plate-2 text-text-2",
+  default: "bg-plate-nested text-ink-secondary",
   ai: "bg-ai-soft text-ai",
   danger: "bg-danger-soft text-danger",
 };

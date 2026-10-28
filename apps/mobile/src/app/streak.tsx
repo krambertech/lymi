@@ -137,20 +137,20 @@ function StreakPanel({
           {current > 0 ? (
             <View className="flex-row items-baseline gap-2.5">
               <Text
-                className="text-5xl font-semibold text-text"
+                className="text-5xl font-semibold text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {current}
               </Text>
-              <Text className="text-lg font-medium text-text-2">
+              <Text className="text-lg font-medium text-ink-secondary">
                 {plural(current, { one: "day in a row", other: "days in a row" })}
               </Text>
             </View>
           ) : (
-            <Text className="text-2xl font-semibold text-text">{start}</Text>
+            <Text className="text-2xl font-semibold text-ink">{start}</Text>
           )}
         </View>
-        <Text className="text-base text-text-2">{status}</Text>
+        <Text className="text-base text-ink-secondary">{status}</Text>
       </View>
 
       <Plate className="overflow-hidden">
@@ -160,7 +160,7 @@ function StreakPanel({
               {done && <DoneMark />}
               {/* "of" holds only up to the goal; a round past it counts on and still names the goal. */}
               <Text
-                className="text-md font-medium text-text"
+                className="text-md font-medium text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {today.attempts > today.goal
@@ -226,9 +226,9 @@ function GoalLine({ connected, status }: { connected: boolean; status: GoalStatu
       <Icon
         name={status === "saved" ? "check" : "alert"}
         size={16}
-        colour={status === "saved" ? p.muted : p.danger}
+        colour={status === "saved" ? p["ink-muted"] : p.danger}
       />
-      <Text className={`text-base ${status === "saved" ? "text-muted" : "text-danger"}`}>
+      <Text className={`text-base ${status === "saved" ? "text-ink-muted" : "text-danger"}`}>
         {line}
       </Text>
     </View>
@@ -253,7 +253,7 @@ function GoalTrack({ today, label }: { today: StreakOut["today"]; label: string 
       accessibilityRole="progressbar"
       accessibilityLabel={label}
       accessibilityValue={{ min: 0, max: today.goal, now: reached }}
-      className="h-1.5 overflow-hidden rounded-full bg-plate-2"
+      className="h-1.5 overflow-hidden rounded-full bg-plate-nested"
       style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
     >
       <View
@@ -274,10 +274,10 @@ function Figure({ icon, value, label }: { icon: IconName; value: number; label: 
       accessibilityLabel={`${label}: ${value}`}
     >
       <View className="flex-row items-center gap-1.5">
-        <Icon name={icon} size={14} colour={p.muted} />
-        <Text className="text-sm text-muted">{label}</Text>
+        <Icon name={icon} size={14} colour={p["ink-muted"]} />
+        <Text className="text-sm text-ink-muted">{label}</Text>
       </View>
-      <Text className="text-md font-medium text-text" style={{ fontVariant: ["tabular-nums"] }}>
+      <Text className="text-md font-medium text-ink" style={{ fontVariant: ["tabular-nums"] }}>
         {value}
       </Text>
     </View>

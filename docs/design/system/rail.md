@@ -29,11 +29,11 @@ The header, assistant offer and learner row stay fixed while the navigation and 
 
 ## Rows
 
-A row is `RailRow`, rendered as the router's link: 40 px tall, `text-base` in `text-2`, an 18 px icon in `muted`, and a 10 px radius. A deck row has no icon and ends in its `DueCount` while cards are due, and nothing when none are. A long name truncates; it never wraps. On the design pages a row is 36 px from a tablet up, because a list of documentation pages is denser than a learner's decks.
+A row is `RailRow`, rendered as the router's link: 40 px tall, `text-base` in `ink-secondary`, an 18 px icon in `ink-muted`, and a 10 px radius. A deck row has no icon and ends in its `DueCount` while cards are due, and nothing when none are. A long name truncates; it never wraps. On the design pages a row is 36 px from a tablet up, because a list of documentation pages is denser than a learner's decks.
 
 ## Sections and series
 
-`RailHeading` uses 12 px tracked capitals in `muted`, with 28 px above it. It is a label, not an `h2`, so it does not alter the content screen’s heading outline. Series headings use the same style as Decks. Show Decks only when ungrouped decks exist, and omit series with no decks.
+`RailHeading` uses 12 px tracked capitals in `ink-muted`, with 28 px above it. It is a label, not an `h2`, so it does not alter the content screen’s heading outline. Series headings use the same style as Decks. Show Decks only when ungrouped decks exist, and omit series with no decks.
 
 Series headings do not navigate or collapse. Keep their deck rows unindented. A series has no dedicated page.
 
@@ -41,9 +41,9 @@ Series headings do not navigate or collapse. Keep their deck rows unindented. A 
 
 | State | Row | Light theme | Dark theme |
 | --- | --- | --- | --- |
-| Rest | no fill, `text-2` | | |
-| Hover | the `RailNav` fill, `text` | `rail-hover`, the same as `hover` | a 4% white wash |
-| Current | `bg-rail-chosen edge-inset`, `text` | white with a hairline, as a plate | a flat step above the rail with a hairline inside, never lifted |
+| Rest | no fill, `ink-secondary` | | |
+| Hover | the `RailNav` fill, `ink` | `rail-hover`, the same as `plate-hover` | a 4% white wash |
+| Current | `bg-rail-chosen edge-inset`, `ink` | white with a hairline, as a plate | a flat step above the rail with a hairline inside, never lifted |
 | Focus | the neutral 2 px `ring` outline | | |
 
 Selection must remain more prominent than hover. Use `bg-rail-chosen edge-inset` rather than `edge` or `bg-plate`: those panel treatments add unwanted elevation or weaker contrast in dark theme. Learner and streak controls hover with `rail-hover`. While the learner menu is open, its row uses the selected treatment.

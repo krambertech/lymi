@@ -14,8 +14,8 @@ const MEANINGS = [
 function Face({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
     <div className="grid min-h-[104px] content-between gap-3 rounded-md bg-plate p-3.5 edge">
-      <span className="text-xs font-medium text-muted">{label}</span>
-      <span className="text-2xl font-medium tracking-[-0.02em] text-text">{children}</span>
+      <span className="text-xs font-medium text-ink-muted">{label}</span>
+      <span className="text-2xl font-medium tracking-[-0.02em] text-ink">{children}</span>
     </div>
   );
 }
@@ -36,7 +36,7 @@ export function EstonianBento() {
         <div aria-hidden="true" className="rounded-md bg-plate edge">
           <p
             lang="et"
-            className="border-b border-edge px-3.5 py-3 text-xl font-medium tracking-[-0.02em] text-text"
+            className="border-b border-edge px-3.5 py-3 text-xl font-medium tracking-[-0.02em] text-ink"
           >
             kallis
           </p>
@@ -45,10 +45,10 @@ export function EstonianBento() {
               key={m.lang}
               className="flex items-baseline justify-between gap-3 px-3.5 py-2.5 not-last:border-b not-last:border-edge"
             >
-              <span lang={m.lang} className="text-md text-text">
+              <span lang={m.lang} className="text-md text-ink">
                 {m.meaning}
               </span>
-              <span lang={m.lang} className="text-sm text-muted">
+              <span lang={m.lang} className="text-sm text-ink-muted">
                 {m.language}
               </span>
             </p>
@@ -69,7 +69,7 @@ export function EstonianBento() {
           <Face label={<Trans>What does it mean?</Trans>}>
             <span lang="et">Tere!</span>
           </Face>
-          <ArrowRight className="size-4 text-muted rtl:-scale-x-100" />
+          <ArrowRight className="size-4 text-ink-muted rtl:-scale-x-100" />
           <Face label={<Trans>How do you say it?</Trans>}>
             <Trans>Hello!</Trans>
           </Face>
@@ -87,18 +87,18 @@ export function EstonianBento() {
       >
         <div aria-hidden="true" className="grid grid-cols-2 gap-2">
           <p className="grid gap-1 rounded-md bg-plate px-4 py-3 edge">
-            <span lang="et" className="text-3xl font-medium text-text">
+            <span lang="et" className="text-3xl font-medium text-ink">
               tuli
             </span>
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               <Trans>Fire</Trans>
             </span>
           </p>
           <p className="grid gap-1 rounded-md bg-plate px-4 py-3 edge">
-            <span lang="et" className="text-3xl font-medium text-text">
+            <span lang="et" className="text-3xl font-medium text-ink">
               t<span className="text-amber-mark">ü</span>li
             </span>
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               <Trans>A quarrel</Trans>
             </span>
           </p>
@@ -114,14 +114,14 @@ export function EstonianBento() {
           </Trans>
         }
       >
-        <ul className="grid gap-1.5 text-md text-text">
+        <ul className="grid gap-1.5 text-md text-ink">
           {[
             <Trans key="r">Recordings</Trans>,
             <Trans key="s">Review schedule</Trans>,
             <Trans key="n">Notes and forms</Trans>,
           ].map((item) => (
             <li key={item.key} className="flex items-center gap-2.5">
-              <span className="grid size-5 place-items-center rounded-full bg-good-soft text-good">
+              <span className="grid size-5 place-items-center rounded-full bg-success-soft text-success">
                 <Check aria-hidden="true" className="size-3" strokeWidth={3} />
               </span>
               {item}

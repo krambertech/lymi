@@ -35,14 +35,14 @@ interface Props {
  * learner already knows and likes seeing.
  *
  * The steps run from the lantern's glass to its flame, which is what a light does as it comes
- * up. Mixing toward `--glass` rather than toward transparency or the plate keeps the chroma:
+ * up. Mixing toward `--lantern-glass` rather than toward transparency or the plate keeps the chroma:
  * a translucent amber lands on whatever is behind it, and in the dark room that is the same
  * lightness as an unlit day, so "a little" and "nothing" become one picture. Mixing toward the
  * neutral plate separates them but turns the low step to mud.
  */
 export const LIGHT_FILL: Record<1 | 2 | 3, string> = {
-  1: "bg-light-1",
-  2: "bg-light-2",
+  1: "bg-lit-low",
+  2: "bg-lit-high",
   3: "bg-amber",
 };
 
@@ -132,14 +132,14 @@ export function SevenLights({
                 // Tinted like the month's rest band, so the two read as one mark.
                 resting
                   ? clsx(
-                      "border-dashed border-amber bg-[color-mix(in_oklab,var(--amber)_7%,var(--plate-2))]",
+                      "border-dashed border-amber bg-[color-mix(in_oklab,var(--amber)_7%,var(--plate-nested))]",
                       large ? "border-2" : "border",
                     )
-                  : "well bg-plate-2",
+                  : "well bg-plate-nested",
                 large
                   ? "aspect-[8/11] w-8 rounded-[6px_6px_8px_8px]"
                   : "aspect-[13/18] w-[13px] rounded-[4px_4px_5px_5px]",
-                isToday && l === 0 && "edge-2",
+                isToday && l === 0 && "edge-strong",
                 isToday && flare && l === 3 && "light-flare",
               )}
             >
@@ -159,7 +159,7 @@ export function SevenLights({
               className={clsx(
                 "tabular-nums",
                 large ? "text-xs" : "text-2xs",
-                isToday ? "font-medium text-text-2" : "text-faint",
+                isToday ? "font-medium text-ink-secondary" : "text-ink-faint",
               )}
             >
               {day?.[0]}

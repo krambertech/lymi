@@ -126,9 +126,9 @@ function Root() {
       ...base.colors,
       background: p.canvas,
       card: p.canvas,
-      text: p.text,
+      text: p.ink,
       border: p.edge,
-      primary: p.text,
+      primary: p.ink,
     },
   };
   return (

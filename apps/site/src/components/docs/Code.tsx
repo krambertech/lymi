@@ -24,18 +24,18 @@ function CopyButton({ text, className }: { text: string; className?: string | un
         }
       }}
       className={clsx(
-        "inline-flex h-7 items-center gap-1.5 rounded-xs px-2 text-2xs font-medium text-muted",
+        "inline-flex h-7 items-center gap-1.5 rounded-xs px-2 text-2xs font-medium text-ink-muted",
         "transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97]",
-        "hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+        "hoverable:hover:bg-plate-nested hoverable:hover:text-ink",
         className,
       )}
     >
       {done ? (
-        <Check className="size-3.5 text-good" aria-hidden="true" />
+        <Check className="size-3.5 text-success" aria-hidden="true" />
       ) : (
         <Copy className="size-3.5" aria-hidden="true" />
       )}
-      <span className={done ? "text-good" : undefined}>{done ? "Copied" : "Copy"}</span>
+      <span className={done ? "text-success" : undefined}>{done ? "Copied" : "Copy"}</span>
     </button>
   );
 }
@@ -58,7 +58,7 @@ export function Code({ code, lang = "bash", label, className }: CodeProps) {
     <div className={clsx("group relative my-4 rounded-md bg-plate edge", className)}>
       {label ? (
         <div className="flex h-9 items-center justify-between gap-3 border-b border-edge pl-3.5 pr-1.5">
-          <span className="truncate font-mono text-2xs text-muted">{label}</span>
+          <span className="truncate font-mono text-2xs text-ink-muted">{label}</span>
           <CopyButton text={body} />
         </div>
       ) : (
@@ -122,7 +122,7 @@ export function CodeTabs({ samples, label }: { samples: Sample[]; label?: string
                 }}
                 className={clsx(
                   "h-7 shrink-0 rounded-xs px-2 font-mono text-2xs transition-[background-color,color] duration-150",
-                  on ? "bg-plate-2 text-text" : "text-muted hoverable:hover:text-text",
+                  on ? "bg-plate-nested text-ink" : "text-ink-muted hoverable:hover:text-ink",
                 )}
               >
                 {s.name}

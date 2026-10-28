@@ -52,7 +52,7 @@ const SOURCES: Source[] = [
     meaning: msg`To agree`,
     render: (picked) => (
       <div className="w-[88%] rotate-[-2deg] rounded-md bg-plate px-4 py-3.5 edge">
-        <ul lang="es" className="notes-hand text-xl leading-[1.2] text-text">
+        <ul lang="es" className="notes-hand text-xl leading-[1.2] text-ink">
           <li>ser → quién</li>
           <li>estar → cómo</li>
           <li>
@@ -71,10 +71,10 @@ const SOURCES: Source[] = [
     meaning: msg`I miss it`,
     render: (picked) => (
       <div className="w-[92%] rotate-[1.5deg] rounded-lg bg-plate p-3 edge">
-        <p className="text-2xs text-muted">Camille</p>
+        <p className="text-2xs text-ink-muted">Camille</p>
         <p
           lang="fr"
-          className="mt-1.5 bg-plate-2 px-3 py-2 text-sm text-text"
+          className="mt-1.5 bg-plate-nested px-3 py-2 text-sm text-ink"
           style={{ borderRadius: 12 }}
         >
           On dit «&nbsp;<Pick on={picked}>ça me manque</Pick>&nbsp;», pas «&nbsp;je manque
@@ -93,8 +93,8 @@ const SOURCES: Source[] = [
     render: (picked) => (
       <div className="w-[92%] rotate-[-1.5deg] rounded-md bg-plate px-3.5 py-3 text-xs edge">
         <dl className="grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1.5">
-          <dt className="text-muted tabular-nums">14:02</dt>
-          <dd className="text-text">
+          <dt className="text-ink-muted tabular-nums">14:02</dt>
+          <dd className="text-ink">
             <span className="font-medium">Yuki</span>{" "}
             <Trans>
               When colleagues leave, you say{" "}
@@ -104,16 +104,16 @@ const SOURCES: Source[] = [
               .
             </Trans>
           </dd>
-          <dt className="text-muted tabular-nums">14:02</dt>
-          <dd className="text-text-2">
-            <span className="font-medium text-text">
+          <dt className="text-ink-muted tabular-nums">14:02</dt>
+          <dd className="text-ink-secondary">
+            <span className="font-medium text-ink">
               <Trans>You</Trans>
             </span>{" "}
             <Trans>Even to my boss?</Trans>
           </dd>
-          <dt className="text-muted tabular-nums">14:03</dt>
-          <dd className="text-text-2">
-            <span className="font-medium text-text">Yuki</span> <Trans>Yes, to everyone.</Trans>
+          <dt className="text-ink-muted tabular-nums">14:03</dt>
+          <dd className="text-ink-secondary">
+            <span className="font-medium text-ink">Yuki</span> <Trans>Yes, to everyone.</Trans>
           </dd>
         </dl>
       </div>
@@ -128,10 +128,10 @@ const SOURCES: Source[] = [
     meaning: msg`Longing`,
     render: (picked) => (
       <div className="w-[90%] rotate-[2deg] rounded-sm bg-plate px-4 pt-3.5 pb-2 edge">
-        <p lang="et" className="text-sm leading-[1.6] text-pretty text-text">
+        <p lang="et" className="text-sm leading-[1.6] text-pretty text-ink">
           Ta vaatas aknast välja ja tundis <Pick on={picked}>igatsust</Pick> kodu järele.
         </p>
-        <p className="mt-1.5 text-center text-2xs text-muted tabular-nums">118</p>
+        <p className="mt-1.5 text-center text-2xs text-ink-muted tabular-nums">118</p>
       </div>
     ),
   },
@@ -153,7 +153,7 @@ export function SendAnything() {
             <Trans>Send it anything.</Trans>
           </SectionTitle>
         </div>
-        <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
+        <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
           <Trans>
             A photo of the board, your tutor’s message, a lesson transcript, the book on your
             nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi.
@@ -174,8 +174,8 @@ export function SendAnything() {
               key={source.id}
               className="flex w-[74%] max-w-[280px] shrink-0 snap-start flex-col @xl:w-[46%] @4xl:w-auto @4xl:max-w-none"
             >
-              <p className="text-sm text-muted">{i18n._(source.from)}</p>
-              <div className="mt-3 grid h-[184px] place-items-center rounded-xl bg-plate-2 pb-5">
+              <p className="text-sm text-ink-muted">{i18n._(source.from)}</p>
+              <div className="mt-3 grid h-[184px] place-items-center rounded-xl bg-plate-nested pb-5">
                 {source.render(picked)}
               </div>
               <motion.div
@@ -191,16 +191,18 @@ export function SendAnything() {
                 }
                 transition={{ duration: still ? 0 : STEP_MS / 1000, ease: EASE }}
               >
-                <p className="text-xs tracking-[0.06em] text-muted uppercase">
+                <p className="text-xs tracking-[0.06em] text-ink-muted uppercase">
                   {i18n._(source.label)}
                 </p>
                 <p
                   lang={source.lang}
-                  className="mt-1 truncate text-xl font-medium tracking-[-0.025em] text-text"
+                  className="mt-1 truncate text-xl font-medium tracking-[-0.025em] text-ink"
                 >
                   {source.term}
                 </p>
-                <p className="mt-0.5 truncate text-sm text-text-2">{i18n._(source.meaning)}</p>
+                <p className="mt-0.5 truncate text-sm text-ink-secondary">
+                  {i18n._(source.meaning)}
+                </p>
               </motion.div>
             </li>
           );

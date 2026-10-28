@@ -540,11 +540,11 @@ export function CardForm(props: CardFormProps) {
           role="status"
           className={cn(
             "flex items-start gap-1.5 text-sm empty:hidden",
-            notice?.kind === "warn" ? "text-text" : "text-text-2",
+            notice?.kind === "warn" ? "text-ink" : "text-ink-secondary",
           )}
         >
           {notice?.kind === "ok" && (
-            <Check className="mt-0.5 size-3.5 shrink-0 text-good" aria-hidden="true" />
+            <Check className="mt-0.5 size-3.5 shrink-0 text-success" aria-hidden="true" />
           )}
           {notice?.kind === "warn" && (
             <AlertCircle className="mt-0.5 size-3.5 shrink-0 text-danger" aria-hidden="true" />
@@ -649,7 +649,7 @@ export function CardForm(props: CardFormProps) {
         {options.description}
         {options.lines && options.chin !== undefined ? (
           // One box: the field and its chin hover and take focus together, with a seam between them.
-          <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-2 hoverable:hover:edge-2 has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
+          <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-strong hoverable:hover:edge-strong has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
             <Textarea
               maxLength={maxLength}
               value={value}
@@ -703,15 +703,15 @@ export function CardForm(props: CardFormProps) {
       key="reading-preview"
       aria-hidden="true"
       lang={language ?? undefined}
-      className="grid gap-1.5 rounded-lg bg-plate-2 px-3 py-2.5"
+      className="grid gap-1.5 rounded-lg bg-plate-nested px-3 py-2.5"
     >
       {termDrawn && (
-        <p className="text-lg font-medium text-text">
+        <p className="text-lg font-medium text-ink">
           <TermText card={termCard} />
         </p>
       )}
       {exampleDrawn && (
-        <p className="text-md text-text-2 [overflow-wrap:anywhere]">
+        <p className="text-md text-ink-secondary [overflow-wrap:anywhere]">
           <ExampleText text={example} lang={language ?? undefined} />
         </p>
       )}
@@ -751,9 +751,9 @@ export function CardForm(props: CardFormProps) {
   const translationChin = (
     <div
       data-extra="exampleTranslation"
-      className="flex items-start gap-2.5 border-edge border-t bg-plate-2 px-3.5 py-2"
+      className="flex items-start gap-2.5 border-edge border-t bg-plate-nested px-3.5 py-2"
     >
-      <Languages aria-hidden="true" className="mt-[5px] size-4 shrink-0 text-muted" />
+      <Languages aria-hidden="true" className="mt-[5px] size-4 shrink-0 text-ink-muted" />
       <textarea
         id={translationId}
         aria-label={t`Translation`}
@@ -765,7 +765,7 @@ export function CardForm(props: CardFormProps) {
         placeholder={aiTranslates ? t`AI translates it after you save` : t`Add a translation`}
         className={cn(
           controlText,
-          "min-h-0 w-full resize-none bg-transparent leading-relaxed text-text-2 outline-none placeholder:text-muted [field-sizing:content]",
+          "min-h-0 w-full resize-none bg-transparent leading-relaxed text-ink-secondary outline-none placeholder:text-ink-muted [field-sizing:content]",
         )}
         onChange={(e) => {
           setTranslation(e.target.value);
@@ -778,7 +778,7 @@ export function CardForm(props: CardFormProps) {
         </span>
       )}
       {roomLeft(translation, cardLimits.exampleTranslation) && (
-        <span className="mt-0.5 shrink-0 text-sm text-muted">
+        <span className="mt-0.5 shrink-0 text-sm text-ink-muted">
           {roomLeft(translation, cardLimits.exampleTranslation)}
         </span>
       )}
@@ -829,7 +829,7 @@ export function CardForm(props: CardFormProps) {
       }),
     picture: () => (
       <div key="picture" data-extra="picture" className="grid gap-1.5">
-        <span className="text-sm font-medium text-text-2">
+        <span className="text-sm font-medium text-ink-secondary">
           <Trans>Picture</Trans>
         </span>
         <CardPictureField
@@ -960,7 +960,7 @@ export function CardForm(props: CardFormProps) {
         {adding && onCreateMoreChange && (
           <Field orientation="horizontal" className="me-auto w-auto gap-2">
             <Checkbox checked={!!createMore} onCheckedChange={onCreateMoreChange} />
-            <FieldLabel className="text-sm whitespace-nowrap text-text-2">{t`Create more`}</FieldLabel>
+            <FieldLabel className="text-sm whitespace-nowrap text-ink-secondary">{t`Create more`}</FieldLabel>
           </Field>
         )}
         {!chips && (

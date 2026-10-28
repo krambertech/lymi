@@ -12,7 +12,7 @@ export function StateBar({ counts }: { counts: StateCountsOf }) {
   const p = usePalette();
   return (
     <View
-      className="h-2.5 w-full flex-row overflow-hidden rounded-full bg-plate-2"
+      className="h-2.5 w-full flex-row overflow-hidden rounded-full bg-plate-nested"
       style={{ gap: 2 }}
     >
       {(["known", "learning", "new"] as const)
@@ -35,8 +35,8 @@ export function StateCounts({ counts }: { counts: StateCountsOf }) {
       {(["new", "learning", "known"] as const).map((k) => (
         <View key={k} className="flex-row items-center gap-1.5">
           <StateIcon state={k} size={14} />
-          <Text className="text-sm font-medium text-text">{i18n.number(counts[k])}</Text>
-          <Text className="text-sm text-muted">{i18n._(stateMarks[k].groupLabel)}</Text>
+          <Text className="text-sm font-medium text-ink">{i18n.number(counts[k])}</Text>
+          <Text className="text-sm text-ink-muted">{i18n._(stateMarks[k].groupLabel)}</Text>
         </View>
       ))}
     </View>

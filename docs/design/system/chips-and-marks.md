@@ -16,7 +16,7 @@ What does the label say?
 
 ## Chip
 
-`Chip` in `components/chip.tsx` is a pill on `plate-2`.
+`Chip` in `components/chip.tsx` is a pill on `plate-nested`.
 
 Supported tones are `default`, `ai` and `danger`, with `default` as the default. Use `SourceChip` for AI provenance rather than setting `ai` at a call site.
 
@@ -60,20 +60,20 @@ Review omits source badges on both answers and hints. Show field provenance on t
 
 A descriptive `Chip` never acquires an `onClick`. A filter chip is a control that changes or clears a filter; a card-form chip reveals a field or opens a choice; a shelf chip is a link. Keep the corresponding button, picker-trigger or link semantics and an accessible name for the action. Their sizes and states do not extend `Chip`'s closed set.
 
-On the web, card-form chips use `FieldChipButton` and the matching picker triggers in `card-form-pickers.tsx`, inside `FieldChipRow`. They have a neutral `plate-2` fill, an icon and a field name or chosen value, with a 32 px visible height and a hit area that reaches 44 px. A chosen value strengthens the text rather than turning the control into a selected filter. The interaction is in [forms.md](forms.md#optional-card-fields).
+On the web, card-form chips use `FieldChipButton` and the matching picker triggers in `card-form-pickers.tsx`, inside `FieldChipRow`. They have a neutral `plate-nested` fill, an icon and a field name or chosen value, with a 32 px visible height and a hit area that reaches 44 px. A chosen value strengthens the text rather than turning the control into a selected filter. The interaction is in [forms.md](forms.md#optional-card-fields).
 
 ## The chosen chip
 
-Selected filter chips use `bg-text text-canvas`, with their count at 60% opacity. Use this single selected state rather than amber. The segmented control’s selected fill has insufficient contrast at chip size on the canvas. Filter chips are rendered by their feature, not by descriptive `Chip`.
+Selected filter chips use `bg-ink text-canvas`, with their count at 60% opacity. Use this single selected state rather than amber. The segmented control’s selected fill has insufficient contrast at chip size on the canvas. Filter chips are rendered by their feature, not by descriptive `Chip`.
 
 ```tsx
 // Correct
-chosen ? "bg-text text-canvas" : "bg-plate-2 text-text-2 hoverable:hover:bg-hover"
+chosen ? "bg-ink text-canvas" : "bg-plate-nested text-ink-secondary hoverable:hover:bg-plate-hover"
 
 // Incorrect: amber marks what to press, not what is chosen
-chosen ? "bg-amber text-amber-ink" : "bg-plate-2"
+chosen ? "bg-amber text-amber-ink" : "bg-plate-nested"
 ```
 
 ## Shelf chips
 
-Explore shelf chips are links. Each scrolls to its shelf and focuses the heading. Once the navigation bar is sticky, the visible shelf’s chip uses `bg-text text-canvas` and `aria-current="location"`. Chips are 40 px on the site, 36 px in the product and 44 px for coarse pointers. Unselected chips use `plate-2`, normal text and a muted deck count. Both surfaces render them through `ShelfBar`. [explore.md](../explore.md)
+Explore shelf chips are links. Each scrolls to its shelf and focuses the heading. Once the navigation bar is sticky, the visible shelf’s chip uses `bg-ink text-canvas` and `aria-current="location"`. Chips are 40 px on the site, 36 px in the product and 44 px for coarse pointers. Unselected chips use `plate-nested`, normal text and a muted deck count. Both surfaces render them through `ShelfBar`. [explore.md](../explore.md)

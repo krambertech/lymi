@@ -57,7 +57,7 @@ function UseCaseMark({ link, size = "md" }: { link: UseCaseLink; size?: "sm" | "
       )}
     >
       <Icon
-        className={clsx("text-text-2", size === "sm" ? "size-4" : "size-[1.125rem]")}
+        className={clsx("text-ink-secondary", size === "sm" ? "size-4" : "size-[1.125rem]")}
         strokeWidth={1.75}
       />
     </span>
@@ -168,7 +168,7 @@ function HoverRows({
       <Fill
         rect={row?.rect ?? null}
         transition={reduce ? { duration: 0 } : ROW_GLIDE}
-        className={clsx("bg-plate-2", fillClass)}
+        className={clsx("bg-plate-nested", fillClass)}
       />
       {children}
     </div>
@@ -176,10 +176,10 @@ function HoverRows({
 }
 
 const chipClass =
-  "rounded-full bg-plate-2 px-2.5 py-1 text-sm text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text";
+  "rounded-full bg-plate-nested px-2.5 py-1 text-sm text-ink-secondary transition-colors duration-150 hoverable:hover:bg-plate-hover hoverable:hover:text-ink";
 
 // As tall as a chip: its padding round one line of its text.
-const chipPlaceholderClass = "h-[calc(1lh+0.5rem)] w-24 rounded-full bg-plate-2 text-sm";
+const chipPlaceholderClass = "h-[calc(1lh+0.5rem)] w-24 rounded-full bg-plate-nested text-sm";
 
 function PopularLinks({ className }: { className?: string }) {
   const { i18n } = useLingui();
@@ -219,7 +219,7 @@ function MenuPopular() {
   const list = useOneLine();
   return (
     <div className="mx-1 mt-1.5 flex items-center gap-2 border-t border-edge px-1.5 pt-2.5 pb-1">
-      <p className="shrink-0 text-sm text-muted">
+      <p className="shrink-0 text-sm text-ink-muted">
         <Trans>Popular</Trans>
       </p>
       <div ref={list} className="min-w-0 flex-1">
@@ -229,7 +229,7 @@ function MenuPopular() {
               key={link.href("en")}
               data-row
               href={link.href(i18n.locale)}
-              className="relative rounded-full px-2 py-1 text-sm whitespace-nowrap text-text-2 transition-colors duration-150 hoverable:hover:text-text"
+              className="relative rounded-full px-2 py-1 text-sm whitespace-nowrap text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
             >
               {i18n._(link.label)}
             </a>
@@ -247,7 +247,7 @@ function UseCasesPanel({ current }: { current: LocalizedPage | undefined }) {
       <div className="grid grid-cols-2 gap-1">
         {USE_CASE_GROUPS.map((group) => (
           <HoverRows key={group.title.id}>
-            <p className="px-2.5 pt-2 pb-1.5 text-sm text-muted">{i18n._(group.title)}</p>
+            <p className="px-2.5 pt-2 pb-1.5 text-sm text-ink-muted">{i18n._(group.title)}</p>
             <ul className="grid gap-0.5">
               {group.links.map((link) => (
                 <li key={link.page}>
@@ -255,7 +255,7 @@ function UseCasesPanel({ current }: { current: LocalizedPage | undefined }) {
                     data-row
                     href={localizedPath(link.page, i18n.locale)}
                     aria-current={current === link.page ? "page" : undefined}
-                    className="relative flex items-center gap-3 rounded-md px-2.5 py-1.5 text-base font-medium text-text aria-[current=page]:bg-plate-2"
+                    className="relative flex items-center gap-3 rounded-md px-2.5 py-1.5 text-base font-medium text-ink aria-[current=page]:bg-plate-nested"
                   >
                     <UseCaseMark link={link} size="sm" />
                     {i18n._(link.label)}
@@ -277,11 +277,11 @@ function ShelfRow({ shelf }: { shelf: MenuShelf }) {
     <a
       data-row
       href={shelf.path}
-      className="relative flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-base text-text"
+      className="relative flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-base text-ink"
     >
       <span aria-hidden="true" data-hue={shelf.hue} className="shelf-swatch size-3 rounded-[4px]" />
       <span className="truncate">{shelfLabel(i18n, shelf)}</span>
-      <span className="text-sm text-muted">{shelf.decks}</span>
+      <span className="text-sm text-ink-muted">{shelf.decks}</span>
     </a>
   );
 }
@@ -292,7 +292,7 @@ function ShelfPlaceholder({ rows }: { rows: number }) {
       {Array.from({ length: rows }, (_, at) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: placeholder rows have nothing else to key on
         <span key={at} className="flex h-8 items-center px-2.5" aria-hidden="true">
-          <span className="h-3 w-20 rounded-xs bg-plate-2" />
+          <span className="h-3 w-20 rounded-xs bg-plate-nested" />
         </span>
       ))}
     </>
@@ -313,7 +313,7 @@ function ExplorePanel({ shelves }: { shelves: MenuShelves | null | undefined }) 
           aria-busy={shelves === undefined}
         >
           <div>
-            <p className="px-2.5 pt-2 pb-1.5 text-sm text-muted">
+            <p className="px-2.5 pt-2 pb-1.5 text-sm text-ink-muted">
               <Trans>Languages</Trans>
             </p>
             <HoverRows className="grid grid-cols-2">
@@ -326,7 +326,7 @@ function ExplorePanel({ shelves }: { shelves: MenuShelves | null | undefined }) 
           </div>
           {subjects && (
             <div>
-              <p className="px-2.5 pt-2 pb-1.5 text-sm text-muted">
+              <p className="px-2.5 pt-2 pb-1.5 text-sm text-ink-muted">
                 <Trans>Subjects</Trans>
               </p>
               <HoverRows>
@@ -343,7 +343,7 @@ function ExplorePanel({ shelves }: { shelves: MenuShelves | null | undefined }) 
       <a
         href={explorePath(i18n.locale)}
         className={clsx(
-          "group flex items-center gap-1.5 rounded-sm px-2.5 py-2 text-base font-medium text-text transition-colors duration-150 hoverable:hover:bg-plate-2",
+          "group flex items-center gap-1.5 rounded-sm px-2.5 py-2 text-base font-medium text-ink transition-colors duration-150 hoverable:hover:bg-plate-nested",
           listed && "mt-1.5",
         )}
       >
@@ -600,7 +600,7 @@ function DesktopMenus({ current }: { current: LocalizedPage | undefined }) {
           "sm",
           clsx(
             "gap-1",
-            (open || current) && "text-text",
+            (open || current) && "text-ink",
             // While the panel is open the shared fill marks the button, so the hover's own stays off.
             active && "hoverable:hover:bg-transparent",
           ),
@@ -611,7 +611,7 @@ function DesktopMenus({ current }: { current: LocalizedPage | undefined }) {
           data-icon="inline-end"
           aria-hidden="true"
           className={clsx(
-            "text-muted transition-transform duration-150 ease-out",
+            "text-ink-muted transition-transform duration-150 ease-out",
             open && "rotate-180",
           )}
         />
@@ -624,7 +624,7 @@ function DesktopMenus({ current }: { current: LocalizedPage | undefined }) {
       <Fill
         rect={triggerRect}
         transition={still ? STILL : TRIGGER_GLIDE}
-        className="rounded-sm bg-plate-2"
+        className="rounded-sm bg-plate-nested"
       />
       {trigger("use_cases_menu", <Trans>Use cases</Trans>, isUseCasePage(current))}
       {trigger("explore_menu", <Trans>Explore</Trans>)}
@@ -713,8 +713,8 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
   };
 
   const rowClass =
-    "flex min-h-12 items-center rounded-md px-3 transition-colors duration-150 hoverable:hover:bg-plate-2 aria-[current=page]:bg-plate-2";
-  const headingClass = "px-3 text-sm text-muted";
+    "flex min-h-12 items-center rounded-md px-3 transition-colors duration-150 hoverable:hover:bg-plate-nested aria-[current=page]:bg-plate-nested";
+  const headingClass = "px-3 text-sm text-ink-muted";
 
   return (
     <>
@@ -727,7 +727,7 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
           setOpened(true);
           dialog.current?.showModal();
         }}
-        className="relative grid size-10 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 before:absolute before:-inset-1 active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+        className="relative grid size-10 place-items-center rounded-sm text-ink-secondary transition-[background-color,color,scale] duration-150 before:absolute before:-inset-1 active:scale-[0.97] hoverable:hover:bg-plate-nested hoverable:hover:text-ink"
       >
         <Menu className="size-5" aria-hidden="true" />
       </button>
@@ -736,7 +736,7 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
         aria-label={t`Menu`}
         data-nav="phone_menu"
         onClose={unlockScroll}
-        className="enter-fade m-0 h-dvh max-h-none w-full max-w-none bg-canvas text-text backdrop:bg-transparent"
+        className="enter-fade m-0 h-dvh max-h-none w-full max-w-none bg-canvas text-ink backdrop:bg-transparent"
       >
         <div className="flex min-h-full flex-col px-5 pt-5 pb-8">
           <div className="flex items-center justify-between">
@@ -752,7 +752,7 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
               type="button"
               aria-label={t`Close menu`}
               onClick={close}
-              className="relative grid size-10 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 before:absolute before:-inset-1 active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+              className="relative grid size-10 place-items-center rounded-sm text-ink-secondary transition-[background-color,color,scale] duration-150 before:absolute before:-inset-1 active:scale-[0.97] hoverable:hover:bg-plate-nested hoverable:hover:text-ink"
             >
               <X className="size-5" aria-hidden="true" />
             </button>

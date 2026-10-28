@@ -27,13 +27,13 @@ export function ReplayChoice() {
           className="relative gap-3 px-4 py-3.5"
         >
           <span
-            className="grid size-9 shrink-0 place-items-center self-center rounded-full bg-plate-2 text-text-2"
+            className="grid size-9 shrink-0 place-items-center self-center rounded-full bg-plate-nested text-ink-secondary"
             aria-hidden="true"
           >
             <MousePointerClick className="size-4" />
           </span>
           <FieldContent className="gap-0.5">
-            <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+            <FieldLabel className="text-base text-ink after:absolute after:inset-0 after:content-['']">
               <Trans>Help improve Lymi</Trans>
             </FieldLabel>
             <FieldDescription>

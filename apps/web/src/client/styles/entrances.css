@@ -70,7 +70,7 @@
     filter: drop-shadow(0 0 0 transparent);
   }
   30% {
-    filter: drop-shadow(0 0 15px var(--glow)) drop-shadow(0 0 4px var(--glow));
+    filter: drop-shadow(0 0 15px var(--lantern-glow)) drop-shadow(0 0 4px var(--lantern-glow));
     scale: 1.08;
   }
   100% {
@@ -81,8 +81,8 @@
 .light-pool {
   background: radial-gradient(
     closest-side,
-    var(--glow),
-    color-mix(in oklab, var(--glow) 40%, transparent) 45%,
+    var(--lantern-glow),
+    color-mix(in oklab, var(--lantern-glow) 40%, transparent) 45%,
     transparent
   );
   animation: pool-bloom 1600ms var(--ease-out) var(--at, 0ms) both;
@@ -97,8 +97,8 @@
 .room-light {
   background: radial-gradient(
     circle farthest-corner at var(--x) var(--y),
-    color-mix(in oklab, var(--glow) var(--room, 34%), transparent),
-    color-mix(in oklab, var(--glow) calc(var(--room, 34%) * 0.4), transparent) 45%,
+    color-mix(in oklab, var(--lantern-glow) var(--room, 34%), transparent),
+    color-mix(in oklab, var(--lantern-glow) calc(var(--room, 34%) * 0.4), transparent) 45%,
     transparent
   );
   animation: room-bloom 1600ms var(--ease-out) var(--at, 0ms) both;
@@ -131,7 +131,7 @@
 }
 /* A grade's spark: embers out of the lantern's hood, wearing the flame's glow. */
 .lantern-sparks {
-  filter: drop-shadow(0 0 3px var(--glow));
+  filter: drop-shadow(0 0 3px var(--lantern-glow));
 }
 /* Embers lift off the flame as it rises: a handful, once. */
 .ember {

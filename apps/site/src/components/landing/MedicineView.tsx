@@ -223,7 +223,7 @@ function GuideLink({ href, label }: { href: string; label: React.ReactNode }) {
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-text"
+      className="group inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-ink"
     >
       {label}
       <ArrowRight
@@ -264,26 +264,28 @@ function FocusDemo() {
             className="flex items-start gap-3 border-t border-edge px-5 py-4 first:border-t-0"
           >
             <div className="min-w-0 flex-1">
-              <p className="text-md font-medium text-text">{card.term}</p>
-              <p className="mt-0.5 text-sm text-pretty text-text-2">{i18n._(card.meaning)}</p>
+              <p className="text-md font-medium text-ink">{card.term}</p>
+              <p className="mt-0.5 text-sm text-pretty text-ink-secondary">
+                {i18n._(card.meaning)}
+              </p>
             </div>
             <Star
               aria-label={card.important ? t`Important` : t`Not marked important`}
               className={
                 card.important
                   ? "mt-0.5 size-5 shrink-0 fill-amber text-amber"
-                  : "mt-0.5 size-5 shrink-0 text-faint"
+                  : "mt-0.5 size-5 shrink-0 text-ink-faint"
               }
             />
           </li>
         ))}
       </ul>
       <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-plate px-5 py-4 edge">
-        <span className="flex items-center gap-2.5 text-md font-medium text-text">
-          <RotateCcw aria-hidden="true" className="size-4 text-text-2" />
+        <span className="flex items-center gap-2.5 text-md font-medium text-ink">
+          <RotateCcw aria-hidden="true" className="size-4 text-ink-secondary" />
           <Trans>Often forgotten</Trans>
         </span>
-        <span className="text-sm text-muted tabular-nums">
+        <span className="text-sm text-ink-muted tabular-nums">
           <Plural value={6} one="# card" other="# cards" />
         </span>
       </div>

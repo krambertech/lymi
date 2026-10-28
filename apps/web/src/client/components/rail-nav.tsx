@@ -60,10 +60,10 @@ export function RailRow({ render, icon, end, className, children, ...rest }: Rai
   const own: ComponentProps<"a"> & { "data-rail-row": "" } = {
     "data-rail-row": "",
     className: cn(
-      "relative flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2",
-      "transition-[background-color,color,box-shadow] duration-150 ease-out hoverable:hover:text-text",
-      "[&.active]:edge-inset [&.active]:bg-rail-chosen [&.active]:text-text",
-      "[&_svg]:size-[18px] [&_svg]:shrink-0 [&_svg]:text-muted [&.active_svg]:text-text",
+      "relative flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-ink-secondary",
+      "transition-[background-color,color,box-shadow] duration-150 ease-out hoverable:hover:text-ink",
+      "[&.active]:edge-inset [&.active]:bg-rail-chosen [&.active]:text-ink",
+      "[&_svg]:size-[18px] [&_svg]:shrink-0 [&_svg]:text-ink-muted [&.active_svg]:text-ink",
       className,
     ),
     children: (
@@ -83,7 +83,7 @@ export function RailHeading({ className, ...rest }: ComponentProps<"div">) {
     <div
       data-rail-break=""
       className={clsx(
-        "relative mx-2.5 mt-7 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-muted",
+        "relative mx-2.5 mt-7 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-ink-muted",
         className,
       )}
       {...rest}

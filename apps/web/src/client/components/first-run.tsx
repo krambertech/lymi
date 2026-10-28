@@ -164,7 +164,7 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
                 pick("lesson");
                 onSmartAdd();
               }}
-              className="text-base font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text"
+              className="text-base font-medium text-ink-secondary underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:text-ink hoverable:hover:decoration-ink"
             >
               <Trans>Turn your notes into cards</Trans>
             </button>
@@ -190,7 +190,7 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
   return (
     <section
       aria-labelledby="first-run-title"
-      className="relative isolate overflow-hidden rounded-xl border-[1.5px] border-dashed border-edge-2 p-5 @3xl:p-6"
+      className="relative isolate overflow-hidden rounded-xl border-[1.5px] border-dashed border-edge-strong p-5 @3xl:p-6"
     >
       {/* The panel clips the lantern's pool, so its light stays on the guide rather than the rail. */}
       {/* One column for the lantern and the numbers, one for the words, so every line starts at one edge. */}
@@ -219,14 +219,14 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
               {first ? <Trans>Welcome, {first}</Trans> : <Trans>Welcome to Lymi</Trans>}
             </h2>
             <span
-              className={clsx("shrink-0 text-sm text-muted tabular-nums", play && "seq")}
+              className={clsx("shrink-0 text-sm text-ink-muted tabular-nums", play && "seq")}
               style={play ? at(T.lede) : undefined}
             >
               {t`${current} of 3 done`}
             </span>
           </div>
           <p
-            className={clsx("text-md text-text-2 text-pretty", play && "seq")}
+            className={clsx("text-md text-ink-secondary text-pretty", play && "seq")}
             style={play ? at(T.lede) : undefined}
           >
             {current === 2 && deck ? (
@@ -256,8 +256,8 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
                       done
                         ? "bg-amber text-amber-ink"
                         : here
-                          ? "bg-text text-canvas"
-                          : "edge bg-plate text-muted",
+                          ? "bg-ink text-canvas"
+                          : "edge bg-plate text-ink-muted",
                     )}
                   >
                     {done ? <Check className="size-4" aria-label={t`Done`} /> : i + 1}
@@ -281,13 +281,15 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
                   <span
                     className={clsx(
                       "text-md font-medium",
-                      here ? "text-text" : "text-text-2",
-                      done && "line-through decoration-edge-2",
+                      here ? "text-ink" : "text-ink-secondary",
+                      done && "line-through decoration-edge-strong",
                     )}
                   >
                     {step.title}
                   </span>
-                  <span className="max-w-[52ch] text-sm text-muted text-pretty">{step.detail}</span>
+                  <span className="max-w-[52ch] text-sm text-ink-muted text-pretty">
+                    {step.detail}
+                  </span>
                   {here && step.action && <div className="mt-3">{step.action}</div>}
                 </div>
               </li>
@@ -363,7 +365,7 @@ function NotesMarks() {
     <ul aria-hidden="true" className="-ms-0.5 flex -space-x-1 rtl:space-x-reverse">
       {NOTE_MARKS.map(({ key, Icon }) => (
         <li key={key} className="block rounded-[13px] bg-plate p-0.5">
-          <span className="edge grid size-9 place-items-center rounded-[11px] bg-plate text-text">
+          <span className="edge grid size-9 place-items-center rounded-[11px] bg-plate text-ink">
             <Icon className="size-[18px]" />
           </span>
         </li>
@@ -376,7 +378,10 @@ function ImportNames() {
   return (
     <ul className="flex flex-wrap gap-1.5">
       {IMPORTS.map((n) => (
-        <li key={n} className="edge rounded-md bg-plate px-2 py-1 text-sm font-medium text-text-2">
+        <li
+          key={n}
+          className="edge rounded-md bg-plate px-2 py-1 text-sm font-medium text-ink-secondary"
+        >
           {n}
         </li>
       ))}
@@ -428,7 +433,7 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
               onCreateDeck?.();
             }}
             aria-disabled={!onCreateDeck}
-            className="text-sm font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text"
+            className="text-sm font-medium text-ink-secondary underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:text-ink hoverable:hover:decoration-ink"
           >
             <Trans>Or start an empty deck</Trans>
           </button>
@@ -442,7 +447,7 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
               <h3 className="text-md font-medium">
                 <Trans>From your notes</Trans>
               </h3>
-              <p className="text-sm text-muted text-pretty">
+              <p className="text-sm text-ink-muted text-pretty">
                 <Trans>
                   Photograph a page, upload a PDF or paste text. Lymi turns it into cards.
                 </Trans>
@@ -475,7 +480,7 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
                       <Trans>Your assistant is connected</Trans>
                     )}
                   </h3>
-                  <p className="text-sm text-muted text-pretty">
+                  <p className="text-sm text-ink-muted text-pretty">
                     {assistant ? (
                       <Trans>
                         Ask {assistant} to make cards from your lesson. You’ll find them in your
@@ -494,7 +499,7 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
                   <h3 className="text-md font-medium">
                     <Trans>Connect your AI assistant</Trans>
                   </h3>
-                  <p className="text-sm text-muted text-pretty">
+                  <p className="text-sm text-ink-muted text-pretty">
                     <Trans>
                       Ask Claude, ChatGPT, Gemini or Grok to make cards for you in the chat.
                     </Trans>
@@ -534,7 +539,7 @@ export function CreateFirstDeck({ started, joined, play, onSmartAdd, onCreateDec
               <h3 className="text-md font-medium">
                 <Trans>Import a deck</Trans>
               </h3>
-              <p className="text-sm text-muted text-pretty">
+              <p className="text-sm text-ink-muted text-pretty">
                 <Trans>
                   Bring a deck from Anki, Mochi, Noji or Quizlet, with its review history.
                 </Trans>
@@ -653,7 +658,7 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
         <NavLink
           to="/explore"
           onClick={() => pick("explore")}
-          className="relative -mx-1.5 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
+          className="relative -mx-1.5 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
         >
           <Trans>All decks</Trans>
           <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />

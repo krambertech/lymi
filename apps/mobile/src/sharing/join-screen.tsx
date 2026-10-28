@@ -309,14 +309,14 @@ function LiveLink({
     <View className="items-center gap-5">
       {hand.length > 0 && <DeckHand cards={hand} gathered={false} ground={ground} />}
       <View className="items-center gap-2.5">
-        <Text className="text-sm text-text-2">{byline}</Text>
+        <Text className="text-sm text-ink-secondary">{byline}</Text>
         <Text
-          className="text-center text-2xl font-medium tracking-tight text-text"
+          className="text-center text-2xl font-medium tracking-tight text-ink"
           accessibilityRole="header"
         >
           {deck.name}
         </Text>
-        <Text className="text-center text-sm text-muted">
+        <Text className="text-center text-sm text-ink-muted">
           {language ? t`${language} · ${cards}` : cards}
         </Text>
       </View>
@@ -352,9 +352,9 @@ function Assurance({ icon, children }: { icon: IconName; children: string }) {
   return (
     <View className="flex-row items-start gap-3">
       <View className="pt-0.5">
-        <Icon name={icon} size={18} colour={p.muted} />
+        <Icon name={icon} size={18} colour={p["ink-muted"]} />
       </View>
-      <Text className="flex-1 text-base text-text-2">{children}</Text>
+      <Text className="flex-1 text-base text-ink-secondary">{children}</Text>
     </View>
   );
 }
@@ -362,8 +362,8 @@ function Assurance({ icon, children }: { icon: IconName; children: string }) {
 function Note({ tone, children }: { tone: "neutral" | "good" | "danger"; children: string }) {
   const p = usePalette();
   const look = {
-    neutral: { box: "bg-plate-2", icon: "alert" as const, ink: p["text-2"] },
-    good: { box: "bg-good-soft", icon: "check" as const, ink: p.good },
+    neutral: { box: "bg-plate-nested", icon: "alert" as const, ink: p["ink-secondary"] },
+    good: { box: "bg-success-soft", icon: "check" as const, ink: p.success },
     danger: { box: "bg-danger-soft", icon: "alert" as const, ink: p.danger },
   }[tone];
   return (
@@ -375,7 +375,7 @@ function Note({ tone, children }: { tone: "neutral" | "good" | "danger"; childre
       <View className="pt-0.5">
         <Icon name={look.icon} size={16} colour={look.ink} />
       </View>
-      <Text className="flex-1 text-base text-text">{children}</Text>
+      <Text className="flex-1 text-base text-ink">{children}</Text>
     </View>
   );
 }

@@ -46,7 +46,7 @@ export function CopyField({
   return (
     <div
       className={clsx(
-        "edge flex min-w-0 items-center gap-2 rounded-md bg-plate-2 py-1.5 ps-3 pe-1.5",
+        "edge flex min-w-0 items-center gap-2 rounded-md bg-plate-nested py-1.5 ps-3 pe-1.5",
         className,
       )}
     >
@@ -56,7 +56,7 @@ export function CopyField({
         aria-live="off"
         aria-label={label}
         className={clsx(
-          "min-w-0 flex-1 select-all font-mono text-sm text-text",
+          "min-w-0 flex-1 select-all font-mono text-sm text-ink",
           singleLine ? "truncate" : "break-all py-1",
         )}
       >

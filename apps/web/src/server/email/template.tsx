@@ -78,7 +78,7 @@ const s = {
     margin: "0 0 16px",
     fontSize: "15px",
     lineHeight: "1.6",
-    color: light["text-2"],
+    color: light["ink-secondary"],
     whiteSpace: "pre-line",
   },
   note: {
@@ -106,7 +106,7 @@ const s = {
     margin: "4px 0 20px",
     padding: "16px",
     borderRadius: "14px",
-    backgroundColor: light["plate-2"],
+    backgroundColor: light["plate-nested"],
     color: light.text,
     fontSize: "32px",
     fontWeight: 500,
@@ -134,10 +134,10 @@ function darkStyles(hero: Hero | undefined): string {
   .lx-body, .lx-body > table > tbody > tr > td { background-color: ${dark.canvas} !important; }
   .lx-plate { background-color: ${dark.plate} !important; }
   .lx-strong { color: ${dark.text} !important; }
-  .lx-text { color: ${dark["text-2"]} !important; }
+  .lx-text { color: ${dark["ink-secondary"]} !important; }
   .lx-muted { color: ${dark.muted} !important; }
   .lx-button { background-color: ${dark.amber} !important; color: ${dark["amber-ink"]} !important; }
-  .lx-code { background-color: ${dark["plate-2"]} !important; color: ${dark.text} !important; }
+  .lx-code { background-color: ${dark["plate-nested"]} !important; color: ${dark.text} !important; }
   .lx-link { color: ${dark["amber-text"]} !important; }
   .lx-avatar { background-color: ${dark.plate} !important; color: ${dark["amber-text"]} !important; }
   ${hue ? `.lx-hue { background-color: ${hue} !important; }` : ""}
@@ -268,7 +268,12 @@ function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
             <td style={{ verticalAlign: "middle" }}>
               <Text
                 className="lx-text"
-                style={{ ...s.note, fontSize: "14px", lineHeight: "1.4", color: light["text-2"] }}
+                style={{
+                  ...s.note,
+                  fontSize: "14px",
+                  lineHeight: "1.4",
+                  color: light["ink-secondary"],
+                }}
               >
                 <Byline hero={hero} />
               </Text>
@@ -279,7 +284,7 @@ function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
       <Text className="lx-strong" style={{ ...s.heading, fontSize: "28px", margin: "0 0 8px" }}>
         {hero.name}
       </Text>
-      <Text className="lx-text" style={{ ...s.note, color: light["text-2"], margin: 0 }}>
+      <Text className="lx-text" style={{ ...s.note, color: light["ink-secondary"], margin: 0 }}>
         {hero.meta}
       </Text>
     </Section>

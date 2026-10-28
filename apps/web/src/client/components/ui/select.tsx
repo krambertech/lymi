@@ -165,7 +165,7 @@ function SelectTrigger({
       : cn(
           controlBase,
           controlSize,
-          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
+          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-strong data-placeholder:text-ink-muted",
           className,
         );
   const chevron = look === "box" && <TriggerChevron />;
@@ -418,7 +418,7 @@ function SelectLabel({
 }) {
   const { shape } = useSelect("SelectLabel");
   const labelId = React.useContext(GroupLabelContext);
-  const classes = cn("px-2.5 py-1.5 text-xs text-muted", className);
+  const classes = cn("px-2.5 py-1.5 text-xs text-ink-muted", className);
   return shape === "desktop" ? (
     <SelectPrimitive.GroupLabel data-slot="select-label" className={classes}>
       {children}
@@ -448,7 +448,7 @@ function Described({ name, description }: { name: React.ReactNode; description: 
   return (
     <>
       {name}
-      <span className="block text-sm whitespace-normal text-muted">{description}</span>
+      <span className="block text-sm whitespace-normal text-ink-muted">{description}</span>
     </>
   );
 }

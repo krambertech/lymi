@@ -66,14 +66,14 @@ function Bubble({ from, children }: { from: "tutor" | "you"; children: ReactNode
   return from === "tutor" ? (
     <p
       lang="es"
-      className="max-w-[88%] rounded-2xl rounded-ss-sm bg-plate-2 px-3.5 py-2 text-sm text-text"
+      className="max-w-[88%] rounded-2xl rounded-ss-sm bg-plate-nested px-3.5 py-2 text-sm text-ink"
     >
       {children}
     </p>
   ) : (
     <p
       lang="es"
-      className="max-w-[80%] self-end rounded-2xl rounded-se-sm bg-amber-soft px-3.5 py-2 text-sm text-text"
+      className="max-w-[80%] self-end rounded-2xl rounded-se-sm bg-amber-soft px-3.5 py-2 text-sm text-ink"
     >
       {children}
     </p>
@@ -95,7 +95,7 @@ const MATERIALS: Material[] = [
     ],
     render: (lit) => (
       <div className="flex w-full max-w-[400px] -rotate-1 flex-col gap-2 rounded-2xl bg-plate p-4 edge">
-        <p className="mb-1 flex items-center gap-2 text-xs text-muted">
+        <p className="mb-1 flex items-center gap-2 text-xs text-ink-muted">
           <span
             aria-hidden="true"
             className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text"
@@ -133,34 +133,34 @@ const MATERIALS: Material[] = [
     ],
     render: (lit) => (
       <div className="w-full max-w-[420px] rotate-1 rounded-md bg-plate px-5 pt-4 pb-5 edge">
-        <p className="text-xs text-muted">
+        <p className="text-xs text-ink-muted">
           <Trans>Transcript · Spanish lesson</Trans>
         </p>
         <dl className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-2.5 text-sm">
-          <dt className="text-muted tabular-nums">14:02</dt>
-          <dd lang="es" className="text-text">
+          <dt className="text-ink-muted tabular-nums">14:02</dt>
+          <dd lang="es" className="text-ink">
             <span className="font-medium">Marta</span> Si no tienes tiempo: «
             <Pick on={lit(0)}>tengo prisa</Pick>».
           </dd>
-          <dt className="text-muted tabular-nums">14:03</dt>
-          <dd className="text-text-2">
-            <span className="font-medium text-text">
+          <dt className="text-ink-muted tabular-nums">14:03</dt>
+          <dd className="text-ink-secondary">
+            <span className="font-medium text-ink">
               <Trans>You</Trans>
             </span>{" "}
             <span lang="es">¿Y si necesito algo?</span>
           </dd>
-          <dt className="text-muted tabular-nums">14:03</dt>
-          <dd lang="es" className="text-text">
+          <dt className="text-ink-muted tabular-nums">14:03</dt>
+          <dd lang="es" className="text-ink">
             <span className="font-medium">Marta</span> Entonces: «Me{" "}
             <Pick on={lit(1)}>hace falta</Pick> un café».
           </dd>
-          <dt className="text-muted tabular-nums">14:05</dt>
-          <dd lang="es" className="text-text">
+          <dt className="text-ink-muted tabular-nums">14:05</dt>
+          <dd lang="es" className="text-ink">
             <span className="font-medium">Marta</span> «<Pick on={lit(2)}>Al final</Pick> llegué
             tarde».
           </dd>
-          <dt className="text-muted tabular-nums">14:06</dt>
-          <dd lang="es" className="text-text">
+          <dt className="text-ink-muted tabular-nums">14:06</dt>
+          <dd lang="es" className="text-ink">
             <span className="font-medium">Marta</span> Mañana tienes que{" "}
             <Pick on={lit(3)}>madrugar</Pick>.
           </dd>
@@ -181,15 +181,15 @@ const MATERIALS: Material[] = [
     ],
     render: (lit) => (
       <div className="notes-hand w-full max-w-[400px] rotate-[1.2deg] rounded-md bg-plate px-7 pt-6 pb-8 edge">
-        <p lang="es" className="text-2xl text-muted">
+        <p lang="es" className="text-2xl text-ink-muted">
           Clase 12 · martes
         </p>
-        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-text @2xl:text-[1.625rem]">
+        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-ink @2xl:text-[1.625rem]">
           <li>
             <Pick on={lit(0)}>
               <span lang="es">me da igual</span>
             </Pick>{" "}
-            <span className="text-text-2">
+            <span className="text-ink-secondary">
               = <Trans>I don’t mind</Trans>
             </span>
           </li>
@@ -197,7 +197,7 @@ const MATERIALS: Material[] = [
             <Pick on={lit(1)}>
               <span lang="es">tener ganas de</span>
             </Pick>{" "}
-            <span className="text-text-2">
+            <span className="text-ink-secondary">
               = <Trans>to feel like</Trans>
             </span>
           </li>
@@ -224,7 +224,7 @@ const HERO_CARDS = HERO_IDS.map(
 function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 pb-16 edge">
-      <p className="mb-1 flex items-center gap-2 text-xs text-muted">
+      <p className="mb-1 flex items-center gap-2 text-xs text-ink-muted">
         <span
           aria-hidden="true"
           className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text"
@@ -273,7 +273,7 @@ export function TutorLessonsView() {
               <Trans>Turn your lesson into cards.</Trans>
             </SectionTitle>
           </div>
-          <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
+          <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
             <Trans>
               Your assistant picks out the new words, keeps the meanings from the lesson and skips
               the ones already in your deck.
@@ -302,14 +302,14 @@ export function TutorLessonsView() {
                 Add Lymi to Claude, Grok or another assistant.{" "}
                 <a
                   href="#connect"
-                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
                 >
                   It takes three steps
                 </a>
                 . No assistant?{" "}
                 <a
                   href="#guide-without"
-                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
                 >
                   Start another way
                 </a>

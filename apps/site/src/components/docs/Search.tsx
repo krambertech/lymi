@@ -270,7 +270,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
     >
       <div className="enter-card relative mx-auto w-full max-w-xl overflow-hidden rounded-lg bg-plate edge">
         <div className="flex h-12 items-center gap-2.5 border-b border-edge px-3.5">
-          <SearchIcon className="size-4 shrink-0 text-muted" aria-hidden="true" />
+          <SearchIcon className="size-4 shrink-0 text-ink-muted" aria-hidden="true" />
           <input
             ref={inputRef}
             value={q}
@@ -280,12 +280,12 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
             }}
             placeholder="Search the docs"
             aria-label="Search the docs"
-            className="min-w-0 flex-1 bg-transparent text-base text-text outline-none placeholder:text-muted"
+            className="min-w-0 flex-1 bg-transparent text-base text-ink outline-none placeholder:text-ink-muted"
           />
           <Kbd>Esc</Kbd>
         </div>
         {results.length === 0 ? (
-          <p className="px-3.5 py-6 text-base text-muted">
+          <p className="px-3.5 py-6 text-base text-ink-muted">
             No page matches “{q.trim()}”. Try “key”, “duplicate” or “Claude”.
           </p>
         ) : (
@@ -299,16 +299,19 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                   onClick={() => go(p)}
                   className={clsx(
                     "flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-start",
-                    n === i ? "bg-plate-2" : "bg-transparent",
+                    n === i ? "bg-plate-nested" : "bg-transparent",
                   )}
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-base text-text">{p.title}</span>
-                    <span className="block truncate text-sm text-muted">{p.blurb}</span>
+                    <span className="block truncate text-base text-ink">{p.title}</span>
+                    <span className="block truncate text-sm text-ink-muted">{p.blurb}</span>
                   </span>
-                  <span className="shrink-0 text-xs text-faint">{p.section}</span>
+                  <span className="shrink-0 text-xs text-ink-faint">{p.section}</span>
                   {n === i && (
-                    <CornerDownLeft className="size-3.5 shrink-0 text-muted" aria-hidden="true" />
+                    <CornerDownLeft
+                      className="size-3.5 shrink-0 text-ink-muted"
+                      aria-hidden="true"
+                    />
                   )}
                 </button>
               </li>

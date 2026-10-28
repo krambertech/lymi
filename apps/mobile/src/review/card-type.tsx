@@ -96,7 +96,7 @@ export function CardLine({
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
   const plain = (text: string) => (
     <Text
-      className="text-text"
+      className="text-ink"
       style={[style, textStart(lang), after ? INLINE_ROOM : null, muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       lang={lang}
@@ -116,7 +116,7 @@ export function CardLine({
       plain={plain}
       hidden={hidden}
       lang={lang}
-      className="text-text"
+      className="text-ink"
       style={[style, textStart(lang), muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       after={after ? <RunControl line={line}>{after}</RunControl> : undefined}

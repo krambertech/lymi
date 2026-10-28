@@ -39,10 +39,12 @@ export function Hero({ title, lede, cards, layout, behind, visual, secondary, af
     >
       <div className="min-w-0 max-w-[540px]">
         <OriginBadge />
-        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {title}
         </h1>
-        <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
+        <p className="mt-6 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
+          {lede}
+        </p>
         <div data-nav="hero">
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a href={signUpUrl()} className={buttonClass("primary", "lg")}>

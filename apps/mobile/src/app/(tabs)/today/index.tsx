@@ -180,7 +180,7 @@ function LitDue({
         className="absolute -inset-x-5 -top-56 bottom-10"
         style={
           {
-            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${p.pool}, ${clear(p.pool)} ${room === "dark" ? 70 : 100}%)`,
+            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${p["lantern-pool"]}, ${clear(p["lantern-pool"])} ${room === "dark" ? 70 : 100}%)`,
           } as ViewStyle
         }
       />
@@ -251,10 +251,10 @@ function DueHeading({
   if (nothingYet) {
     return (
       <View className="items-center gap-1.5 px-4" accessible accessibilityRole="header">
-        <Text className="text-3xl font-medium text-text">
+        <Text className="text-3xl font-medium text-ink">
           {noDecks ? t`Start with a deck` : t`No cards yet`}
         </Text>
-        <Text className="text-center text-lg text-text-2">
+        <Text className="text-center text-lg text-ink-secondary">
           {noDecks
             ? t`Make one for each course or topic.`
             : t`Add cards from your last lesson, then review them here.`}
@@ -265,7 +265,7 @@ function DueHeading({
   if (due === 0) {
     // Not "You’re done for today": a round below can still have cards to review.
     return (
-      <Text className="text-3xl font-medium text-text" accessibilityRole="header">
+      <Text className="text-3xl font-medium text-ink" accessibilityRole="header">
         {t`Nothing due`}
       </Text>
     );
@@ -281,12 +281,12 @@ function DueHeading({
       accessibilityLabel={`${due} ${what}`}
     >
       <Text
-        className="text-6xl font-medium text-text"
+        className="text-6xl font-medium text-ink"
         style={{ fontVariant: ["tabular-nums"], letterSpacing: -2 }}
       >
         {due}
       </Text>
-      <Text className="text-center text-lg text-text-2">{what}</Text>
+      <Text className="text-center text-lg text-ink-secondary">{what}</Text>
     </View>
   );
 }
@@ -329,20 +329,20 @@ function StreakPlate({ summary }: { summary: StreakOut }) {
             {streak > 0 ? (
               <>
                 <Text
-                  className="text-3xl font-medium text-text"
+                  className="text-3xl font-medium text-ink"
                   style={{ fontVariant: ["tabular-nums"] }}
                 >
                   {streak}
                 </Text>
-                <Text className="text-lg text-text-2">
+                <Text className="text-lg text-ink-secondary">
                   {plural(streak, { one: "day in a row", other: "days in a row" })}
                 </Text>
               </>
             ) : (
-              <Text className="text-xl font-medium text-text">{start}</Text>
+              <Text className="text-xl font-medium text-ink">{start}</Text>
             )}
           </View>
-          <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-base text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
             {status}
           </Text>
         </View>
@@ -364,11 +364,11 @@ function StreakPlate({ summary }: { summary: StreakOut }) {
 function RestDayBanner({ current, onDismiss }: { current: number; onDismiss: () => void }) {
   const { t } = useLingui();
   return (
-    <View className="flex-row items-center gap-4 rounded-xl bg-plate-2 py-3.5 ps-5 pe-2">
+    <View className="flex-row items-center gap-4 rounded-xl bg-plate-nested py-3.5 ps-5 pe-2">
       <RestGlyph />
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text">{t`Yesterday was a rest day`}</Text>
-        <Text className="text-base text-text-2">
+        <Text className="text-md font-medium text-ink">{t`Yesterday was a rest day`}</Text>
+        <Text className="text-base text-ink-secondary">
           {plural(current, {
             one: "Your #-day streak carries on.",
             other: "Your #-day streak carries on.",
@@ -415,7 +415,7 @@ function Rounds({ rounds }: { rounds: RoundsData }) {
       empty: t`No cards you keep forgetting`,
       line: t`Forgotten on ${SLIPPING_FORGOTTEN_DAYS} of the last ${plural(SLIPPING_RECENT_DAYS, { one: "# day", other: "# days" })} seen`,
       mark: undefined,
-      tint: p.muted,
+      tint: p["ink-muted"],
       href: "/review?round=slipping" as const,
     },
   ];
@@ -555,8 +555,8 @@ function DecksToReview({ decks }: { decks: Deck[] }) {
             hitSlop={12}
             className="flex-row items-center gap-0.5 py-1"
           >
-            <Text className="text-base font-medium text-text-2">{t`Library`}</Text>
-            <Icon name="forward" size={16} colour={p["text-2"]} strokeWidth={2.5} />
+            <Text className="text-base font-medium text-ink-secondary">{t`Library`}</Text>
+            <Icon name="forward" size={16} colour={p["ink-secondary"]} strokeWidth={2.5} />
           </Press>
         }
       >
@@ -576,10 +576,10 @@ function LoadFailed({ onRetry, retrying }: { onRetry: () => void; retrying: bool
       <View className="mb-3 size-11 items-center justify-center rounded-full bg-danger-soft">
         <Icon name="alert" size={20} colour={p.danger} />
       </View>
-      <Text className="text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="text-lg font-medium text-ink" accessibilityRole="header">
         {t`Couldn’t load Today`}
       </Text>
-      <Text className="text-center text-base text-text-2">
+      <Text className="text-center text-base text-ink-secondary">
         {t`Check your connection and try again.`}
       </Text>
       <View className="mt-4">

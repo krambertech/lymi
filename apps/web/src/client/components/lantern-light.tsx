@@ -58,7 +58,7 @@ export function LanternLight({
           {embers.map((e) => (
             <i
               key={e.at}
-              className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-flame-core shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--glow)]"
+              className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-lantern-flame shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--lantern-glow)]"
               style={
                 {
                   width: e.size,

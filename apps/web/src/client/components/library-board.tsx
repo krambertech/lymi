@@ -324,7 +324,7 @@ export function LibraryBoard({
       {body}
       <DragOverlay dropAnimation={still ? null : undefined}>
         {active ? (
-          <div className="edge-2 flex min-w-0 scale-[1.02] cursor-grabbing overflow-hidden rounded-xl bg-plate">
+          <div className="edge-strong flex min-w-0 scale-[1.02] cursor-grabbing overflow-hidden rounded-xl bg-plate">
             {renderDeck(active, undefined)}
           </div>
         ) : null}
@@ -352,7 +352,7 @@ function Group({
       className={clsx(
         "grid rounded-xl transition-[background-color] duration-150",
         !bare && "edge relative z-1 overflow-hidden",
-        over ? "bg-plate-2" : !bare && "bg-plate",
+        over ? "bg-plate-nested" : !bare && "bg-plate",
       )}
     >
       {children}

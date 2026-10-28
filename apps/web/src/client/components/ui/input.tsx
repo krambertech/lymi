@@ -4,9 +4,9 @@ import { useField, useFieldControl } from "./field";
 
 /** The box every form control shares. An invalid box keeps its red edge under hover, focus and an open list. */
 export const controlBase =
-  "w-full min-w-0 rounded-md bg-plate text-text edge [--lift:0_0_#0000] transition-[box-shadow,background-color] duration-150 " +
-  "placeholder:text-muted hoverable:hover:not-aria-invalid:edge-2 focus-visible:not-aria-invalid:edge-2 " +
-  "disabled:cursor-not-allowed disabled:bg-plate-2 disabled:text-muted " +
+  "w-full min-w-0 rounded-md bg-plate text-ink edge [--lift:0_0_#0000] transition-[box-shadow,background-color] duration-150 " +
+  "placeholder:text-ink-muted hoverable:hover:not-aria-invalid:edge-strong focus-visible:not-aria-invalid:edge-strong " +
+  "disabled:cursor-not-allowed disabled:bg-plate-nested disabled:text-ink-muted " +
   "aria-invalid:shadow-[0_0_0_1px_var(--danger)]";
 
 /** The control height and text size; docs/design/system/forms.md says why they follow the viewport. */

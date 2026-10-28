@@ -68,7 +68,7 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
               <Trans>Turn your notes into cards.</Trans>
             </SectionTitle>
           </div>
-          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-text-2">
+          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-ink-secondary">
             <Trans>
               Take a photo of your notebook or the whiteboard and send it to your assistant. It
               reads the handwriting, adds the new words to your deck and leaves out the ones you
@@ -127,8 +127,8 @@ function HandSection({
     clsx(
       "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
       active
-        ? "bg-text font-medium text-canvas"
-        : "bg-plate text-text-2 edge hoverable:hover:bg-hover hoverable:hover:text-text",
+        ? "bg-ink font-medium text-canvas"
+        : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
     );
 
   return (

@@ -208,7 +208,7 @@ export function DeckSettingsView({
       }
       status={
         reading ? undefined : (
-          <p className="min-h-5 text-sm text-muted" role="status">
+          <p className="min-h-5 text-sm text-ink-muted" role="status">
             {error ? (
               <InlineError>{error}</InlineError>
             ) : saving ? (
@@ -327,7 +327,7 @@ export function DeckSettingsView({
               <NavLink
                 to="/library/$deckId/settings/tags"
                 params={{ deckId: deck.id }}
-                className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
+                className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-strong hoverable:hover:veil"
               >
                 <span className="font-medium">
                   {tags.count === undefined ? (
@@ -336,9 +336,9 @@ export function DeckSettingsView({
                     <Plural value={tags.count} _0="No tags yet" one="# tag" other="# tags" />
                   )}
                 </span>
-                <span className="flex items-center gap-1 text-sm text-muted">
+                <span className="flex items-center gap-1 text-sm text-ink-muted">
                   <Trans>Manage</Trans>
-                  <ChevronRight className="size-4 text-faint" aria-hidden="true" />
+                  <ChevronRight className="size-4 text-ink-faint" aria-hidden="true" />
                 </span>
               </NavLink>
             </SettingsGroup>
@@ -377,8 +377,8 @@ export function DeckSettingsView({
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="grid gap-0.5 border-t border-edge py-3 first:border-t-0 first:pt-0 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-4">
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className="text-base text-text">{children}</dd>
+      <dt className="text-sm text-ink-muted">{label}</dt>
+      <dd className="text-base text-ink">{children}</dd>
     </div>
   );
 }
@@ -415,13 +415,13 @@ function DeckAbout({
             <div className="flex items-center gap-2.5">
               <FormerOwnerMark size={32} />
               <div className="grid min-w-0 gap-0.5">
-                <p className="truncate text-base font-medium text-text">{t`Former owner`}</p>
-                <p className="text-sm text-muted">
+                <p className="truncate text-base font-medium text-ink">{t`Former owner`}</p>
+                <p className="text-sm text-ink-muted">
                   <Trans>Left Lymi, so nobody can change this deck</Trans>
                 </p>
               </div>
             </div>
-            <p className="max-w-[60ch] text-sm text-muted">
+            <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
                 You keep studying these cards on your own schedule. Nobody else sees your reviews or
                 progress.
@@ -437,13 +437,13 @@ function DeckAbout({
                 <Avatar name={ownerName} size={32} />
               )}
               <div className="grid min-w-0 gap-0.5">
-                <p className="truncate text-base font-medium text-text">{ownerName}</p>
-                <p className="text-sm text-muted">
+                <p className="truncate text-base font-medium text-ink">{ownerName}</p>
+                <p className="text-sm text-ink-muted">
                   <Trans>Owns this deck and writes its cards</Trans>
                 </p>
               </div>
             </div>
-            <p className="max-w-[60ch] text-sm text-muted">
+            <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
                 You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
                 schedule. Nobody else sees your reviews or progress.
@@ -462,7 +462,7 @@ function DeckAbout({
           <Fact label={t`Review modes`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
-              {direction && <span className="text-sm text-muted">{direction}</span>}
+              {direction && <span className="text-sm text-ink-muted">{direction}</span>}
             </span>
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
@@ -558,7 +558,7 @@ function MembersGroup({
           <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
             <Avatar name={owner.name} size={36} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-base font-medium text-text">{owner.name}</p>
+              <p className="truncate text-base font-medium text-ink">{owner.name}</p>
             </div>
             <Chip size="sm">
               <Trans>Owner</Trans>
@@ -611,13 +611,13 @@ function InvitationRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <span
         aria-hidden="true"
-        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint"
+        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-strong text-sm font-medium text-ink-faint"
       >
         {invitation.email.slice(0, 1).toUpperCase()}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{invitation.email}</p>
-        <p className="text-sm text-muted tabular-nums">
+        <p className="truncate text-base font-medium text-ink">{invitation.email}</p>
+        <p className="text-sm text-ink-muted tabular-nums">
           <Trans>invited {invited}</Trans>
         </p>
       </div>
@@ -662,8 +662,8 @@ function MemberRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <Avatar name={member.name} size={36} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{member.name}</p>
-        <p className="text-sm text-muted tabular-nums">
+        <p className="truncate text-base font-medium text-ink">{member.name}</p>
+        <p className="text-sm text-ink-muted tabular-nums">
           <Trans>joined {joined}</Trans>
         </p>
       </div>
@@ -713,7 +713,7 @@ function AdaptivePronunciationField({
         error={error}
       />
       {deck.role !== "owner" && (
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           <Trans>Only for you. The owner and others studying this deck choose their own.</Trans>
         </p>
       )}
@@ -733,7 +733,7 @@ function ProgressionField({
   const name = useId();
   return (
     <div className="grid gap-2 pt-2">
-      <p className="text-base font-medium text-text" id={`${name}-label`}>
+      <p className="text-base font-medium text-ink" id={`${name}-label`}>
         <Trans>How sections open</Trans>
       </p>
       <RadioGroup<SectionProgression>
@@ -758,7 +758,7 @@ function ProgressionField({
           description={t`Every section is open, so any card can come up in review.`}
         />
       </RadioGroup>
-      <p className="text-sm text-muted">
+      <p className="text-sm text-ink-muted">
         <Trans>Anyone studying the deck can start a later section early.</Trans>
       </p>
     </div>
@@ -808,7 +808,7 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
           <div
             className={clsx(
               "rounded-md bg-plate transition-[box-shadow] duration-150",
-              shared ? "edge-2" : "edge",
+              shared ? "edge-strong" : "edge",
             )}
           >
             <RadioCard

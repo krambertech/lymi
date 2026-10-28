@@ -65,7 +65,7 @@ export default function DeleteAccount() {
 }
 
 function Note({ children }: { children: ReactNode }) {
-  return <Text className="px-1 pt-2 text-base text-muted">{children}</Text>;
+  return <Text className="px-1 pt-2 text-base text-ink-muted">{children}</Text>;
 }
 
 /** Lymi's own publisher accounts hold the decks in Explore, so the server refuses them. */
@@ -74,7 +74,7 @@ function Publisher() {
   return (
     <View className="gap-4">
       <Plate className="px-4 py-3.5">
-        <Text className="text-md text-text">
+        <Text className="text-md text-ink">
           {t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`}
         </Text>
       </Plate>
@@ -111,8 +111,8 @@ function Count({ label, value }: { label: string; value: string }) {
       accessible
       accessibilityLabel={`${label}: ${value}`}
     >
-      <Text className="text-sm text-muted">{label}</Text>
-      <Text className="text-lg font-medium text-text">{value}</Text>
+      <Text className="text-sm text-ink-muted">{label}</Text>
+      <Text className="text-lg font-medium text-ink">{value}</Text>
     </Plate>
   );
 }
@@ -128,10 +128,10 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
             key={deck.id}
             className={`flex-row items-baseline justify-between gap-4 py-3.5 ${index > 0 ? "border-t border-edge" : ""}`}
           >
-            <Text className="flex-1 text-md text-text" numberOfLines={1}>
+            <Text className="flex-1 text-md text-ink" numberOfLines={1}>
               {deck.name}
             </Text>
-            <Text className="text-base text-muted">
+            <Text className="text-base text-ink-muted">
               {plural(deck.members, { one: "# person", other: "# people" })}
             </Text>
           </View>
@@ -181,7 +181,7 @@ function Confirm({ apple }: { apple: boolean }) {
     <View className="gap-3">
       <View>
         <SectionTitle>{t`Confirm it’s you`}</SectionTitle>
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {nativeApple
             ? t`Confirm with Apple to delete your account for good.`
             : t`We’ll email you a 6-digit code. The account is deleted only once you enter it.`}

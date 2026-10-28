@@ -256,7 +256,7 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
           <RadioCard key={o.value} value={o.value} title={i18n._(o.label)} description={shown(o)} />
         ))}
       </RadioGroup>
-      <p id={noteId} className="pt-1 text-sm text-muted">
+      <p id={noteId} className="pt-1 text-sm text-ink-muted">
         {total ? (
           <Trans>
             New modes apply to cards that follow this deck. Turning a mode off keeps its progress.

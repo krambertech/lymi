@@ -19,18 +19,18 @@ export function SheetPreview({
   return (
     <div
       className={clsx(
-        "edge-2 bg-plate text-text",
+        "edge-strong bg-plate text-ink",
         shape === "drawer" ? "mx-auto w-full max-w-md rounded-t-xl" : "rounded-xl",
         className,
       )}
     >
       {shape === "drawer" && (
         <div className="flex h-4 items-end justify-center" aria-hidden="true">
-          <i className="h-1 w-9 rounded-full bg-edge-2" />
+          <i className="h-1 w-9 rounded-full bg-edge-strong" />
         </div>
       )}
       <div className={clsx("grid gap-4", shape === "drawer" ? "px-4 pt-2 pb-5" : "p-5")}>
-        <h2 className="text-lg font-medium text-text">{title}</h2>
+        <h2 className="text-lg font-medium text-ink">{title}</h2>
         {children}
       </div>
     </div>

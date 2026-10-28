@@ -13,7 +13,10 @@ function Directory({ counts }: { counts: Map<string, number> | undefined }) {
     <div className="my-6 grid gap-8">
       {API_RESOURCE_GROUPS.map((group) => (
         <section key={group} aria-labelledby={`group-${slug(group)}`}>
-          <h3 id={`group-${slug(group)}`} className="!mb-2 !mt-0 !text-sm !font-medium !text-muted">
+          <h3
+            id={`group-${slug(group)}`}
+            className="!mb-2 !mt-0 !text-sm !font-medium !text-ink-muted"
+          >
             {group}
           </h3>
           <ul className="grid list-none overflow-hidden rounded-md bg-plate !ps-0 edge">
@@ -21,18 +24,20 @@ function Directory({ counts }: { counts: Map<string, number> | undefined }) {
               <li key={r.slug} className="border-edge [&:not(:first-child)]:border-t">
                 <a
                   href={`/docs/api/${r.slug}`}
-                  className="doc-plain group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 px-4 py-3 transition-colors duration-150 hoverable:hover:bg-plate-2 sm:grid-cols-[9rem_minmax(0,1fr)_auto]"
+                  className="doc-plain group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 px-4 py-3 transition-colors duration-150 hoverable:hover:bg-plate-nested sm:grid-cols-[9rem_minmax(0,1fr)_auto]"
                 >
-                  <span className="font-medium text-text">{r.name}</span>
-                  <span className="col-start-1 row-start-2 text-base text-muted sm:col-start-2 sm:row-start-1">
+                  <span className="font-medium text-ink">{r.name}</span>
+                  <span className="col-start-1 row-start-2 text-base text-ink-muted sm:col-start-2 sm:row-start-1">
                     {r.description}
                   </span>
                   <span className="col-start-2 row-span-2 row-start-1 flex items-center gap-3 sm:col-start-3 sm:row-span-1">
                     {counts?.has(r.name) && (
-                      <span className="text-sm tabular-nums text-faint">{counts.get(r.name)}</span>
+                      <span className="text-sm tabular-nums text-ink-faint">
+                        {counts.get(r.name)}
+                      </span>
                     )}
                     <ArrowRight
-                      className="size-4 text-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-text"
+                      className="size-4 text-ink-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-ink"
                       aria-hidden="true"
                     />
                   </span>

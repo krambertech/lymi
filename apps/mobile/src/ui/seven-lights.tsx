@@ -19,7 +19,7 @@ import { Text } from "./primitives";
 
 /** Three steps of amber from the lantern's glass to its flame. streak.md. */
 function fill(p: Palette, level: Exclude<LightLevel, 0>) {
-  return level === 3 ? p.amber : p[`light-${level}`];
+  return level === 3 ? p.amber : level === 2 ? p["lit-high"] : p["lit-low"];
 }
 
 /** The last seven days as seven glasses; the light climbs each one with what the day held. */
@@ -98,7 +98,9 @@ export function SevenLights({
               fillAt={landing?.at}
               glassRef={i === today ? todayRef : undefined}
             />
-            <Text className={`text-xs ${i === today ? "font-medium text-text-2" : "text-faint"}`}>
+            <Text
+              className={`text-xs ${i === today ? "font-medium text-ink-secondary" : "text-ink-faint"}`}
+            >
               {letters[i]}
             </Text>
           </View>
@@ -167,10 +169,10 @@ function Glass({
     borderBottomLeftRadius: bottom,
     borderBottomRightRadius: bottom,
     overflow: "hidden",
-    backgroundColor: p["plate-2"],
+    backgroundColor: p["plate-nested"],
     borderWidth: resting && lg ? 2 : 1,
     borderStyle: resting ? "dashed" : "solid",
-    borderColor: resting ? p.amber : today && l === 0 ? p["edge-2"] : p.edge,
+    borderColor: resting ? p.amber : today && l === 0 ? p["edge-strong"] : p.edge,
   };
   return (
     <Animated.View ref={glassRef} style={[box, swell]}>

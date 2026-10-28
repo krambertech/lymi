@@ -116,7 +116,7 @@ export function QuizletStart() {
       description={t`Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new.`}
     >
       <View className="gap-3">
-        <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+        <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
           {t`Copying from Quizlet`}
         </Text>
         <Steps
@@ -153,7 +153,7 @@ export function QuizletStart() {
       {parsed && (
         <>
           <View className="gap-3">
-            <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+            <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
               {t`Separators`}
             </Text>
             {doubtful && (
@@ -191,7 +191,7 @@ export function QuizletStart() {
           </View>
 
           <View className="gap-3">
-            <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+            <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
               {plural(cards, { one: "# card", other: "# cards" })}
             </Text>
             {cards > 0 && (
@@ -202,15 +202,15 @@ export function QuizletStart() {
                     key={i}
                     className={`gap-0.5 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
                   >
-                    <Text className="text-md font-medium text-text">{card.term}</Text>
-                    <Text className="text-base text-text-2">{card.definition}</Text>
+                    <Text className="text-md font-medium text-ink">{card.term}</Text>
+                    <Text className="text-base text-ink-secondary">{card.definition}</Text>
                   </View>
                 ))}
               </Plate>
             )}
             <View className="gap-1 px-1">
               {cards > PREVIEW_ROWS && (
-                <Text className="text-sm text-text-2">
+                <Text className="text-sm text-ink-secondary">
                   {plural(cards - PREVIEW_ROWS, {
                     one: "and # more card",
                     other: "and # more cards",
@@ -218,7 +218,7 @@ export function QuizletStart() {
                 </Text>
               )}
               {parsed.oneSided > 0 && (
-                <Text className="text-sm text-text-2">
+                <Text className="text-sm text-ink-secondary">
                   {plural(parsed.oneSided, {
                     one: "# row has only one side, so it’s skipped.",
                     other: "# rows have only one side, so they’re skipped.",
@@ -226,7 +226,7 @@ export function QuizletStart() {
                 </Text>
               )}
               {parsed.repeated > 0 && (
-                <Text className="text-sm text-text-2">
+                <Text className="text-sm text-ink-secondary">
                   {plural(parsed.repeated, {
                     one: "# term appears more than once. Every card is imported.",
                     other: "# terms appear more than once. Every card is imported.",
@@ -247,7 +247,7 @@ export function QuizletStart() {
           </View>
 
           <View className="gap-3">
-            <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+            <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
               {t`Where the cards go`}
             </Text>
             <Plate className="overflow-hidden">
@@ -307,11 +307,11 @@ function ChoiceFace({ label, value }: { label: string; value: string }) {
   const p = usePalette();
   return (
     <View className="min-h-[52px] flex-row items-center gap-3 px-4 py-3">
-      <Text className="flex-1 text-md text-text">{label}</Text>
-      <Text className="shrink text-md text-text-2" numberOfLines={1}>
+      <Text className="flex-1 text-md text-ink">{label}</Text>
+      <Text className="shrink text-md text-ink-secondary" numberOfLines={1}>
         {value}
       </Text>
-      <Icon name="down" size={16} colour={p.muted} />
+      <Icon name="down" size={16} colour={p["ink-muted"]} />
     </View>
   );
 }

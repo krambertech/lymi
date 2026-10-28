@@ -21,9 +21,9 @@ Use the plain wordmark whenever the lantern is also visible. The standalone stre
 
 `packages/design/src/lantern.ts` owns the geometry used by web, site and phone. It uses a 120-unit viewBox with a handle, pivots, hood, side rods, glass and base. Keep the complete drawing at every size; the rods and flame preserve recognition at small sizes. The favicon uses the same drawing with a square viewBox around its bounds.
 
-- Metal uses `metal`: dark in light theme and ivory in dark theme.
-- Glass uses the opaque `glass` token. Metal overlaps its edges to contain the fill.
-- An unlit lantern uses `glass-unlit` and an ember in `edge-2`.
+- Metal uses `lantern-metal`: dark in light theme and ivory in dark theme.
+- Glass uses the opaque `lantern-glass` token. Metal overlaps its edges to contain the fill.
+- An unlit lantern uses `lantern-glass-unlit` and an ember in `edge-strong`.
 - Preserve the shared geometry and flat treatment. Do not add an outline, bevel, translucent glass, extra flame or background fill inside the mark. Rotation is limited to the shared launch and pull-to-refresh animation below.
 
 ## Review progress

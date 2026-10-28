@@ -43,10 +43,10 @@ const updates = await changelogUpdates(locale);
     title={i18n._(CHANGELOG_FEED_TITLE)}
     href={feedPath}
   />
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <a
       href="#updates"
-      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
+      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-ink edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
     >
       {i18n._(CHANGELOG_SKIP)}
     </a>
@@ -56,10 +56,10 @@ const updates = await changelogUpdates(locale);
 
     <main>
       <div class="mx-auto max-w-[1040px] px-5 pt-14 pb-12 @2xl:px-10 @4xl:pt-20 @4xl:pb-16">
-        <h1 class="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+        <h1 class="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {i18n._(CHANGELOG_HEADING)}
         </h1>
-        <p class="mt-5 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+        <p class="mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           {i18n._(CHANGELOG_LEDE)}
         </p>
         <a href={feedPath} class={buttonClass("ghost", "sm", "-ms-3 mt-6")}>
@@ -78,7 +78,7 @@ const updates = await changelogUpdates(locale);
               <div>
                 <a
                   href={changelogUpdatePath(update.slug, locale)}
-                  class="rounded-xs text-sm text-muted hoverable:hover:text-text @4xl:sticky @4xl:top-8"
+                  class="rounded-xs text-sm text-ink-muted hoverable:hover:text-ink @4xl:sticky @4xl:top-8"
                 >
                   <time datetime={update.date.toISOString().slice(0, 10)}>{changelogDate(update.date, locale)}</time>
                 </a>

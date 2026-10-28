@@ -40,21 +40,21 @@ function ShelfRow({ shelf, locale, trimmed }: { shelf: Shelf; locale: Locale; tr
         <h2
           id={headingId}
           tabIndex={-1}
-          className="scroll-mt-24 text-2xl font-medium tracking-[-0.03em] text-text focus:outline-none"
+          className="scroll-mt-24 text-2xl font-medium tracking-[-0.03em] text-ink focus:outline-none"
         >
           {label}
         </h2>
         {page ? (
           <a
             href={page}
-            className="inline-flex shrink-0 items-center gap-1 rounded-xs text-sm font-medium whitespace-nowrap text-text-2 transition-colors duration-150 hoverable:hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex shrink-0 items-center gap-1 rounded-xs text-sm font-medium whitespace-nowrap text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <Trans>See all</Trans>
-            <span className="font-normal text-muted tabular-nums">{shelf.decks.length}</span>
-            <ChevronRight aria-hidden="true" className="size-4 text-muted rtl:-scale-x-100" />
+            <span className="font-normal text-ink-muted tabular-nums">{shelf.decks.length}</span>
+            <ChevronRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
           </a>
         ) : (
-          <p className="text-sm whitespace-nowrap text-muted tabular-nums">
+          <p className="text-sm whitespace-nowrap text-ink-muted tabular-nums">
             <Plural value={shelf.decks.length} one="# deck" other="# decks" />
           </p>
         )}
@@ -126,7 +126,7 @@ function Catalog({ locale, decks }: Props) {
         <div className="relative flex items-center">
           <Search
             aria-hidden="true"
-            className="pointer-events-none absolute start-4 size-[18px] text-faint"
+            className="pointer-events-none absolute start-4 size-[18px] text-ink-faint"
           />
           <input
             ref={field}
@@ -136,7 +136,7 @@ function Catalog({ locale, decks }: Props) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t`Search decks`}
             aria-label={t`Search decks`}
-            className="h-12 w-full rounded-md border border-edge bg-plate ps-12 pe-4 text-md text-text transition-colors duration-150 placeholder:text-muted focus:outline-2 focus:-outline-offset-1 focus:outline-ring"
+            className="h-12 w-full rounded-md border border-edge bg-plate ps-12 pe-4 text-md text-ink transition-colors duration-150 placeholder:text-ink-muted focus:outline-2 focus:-outline-offset-1 focus:outline-ring"
           />
         </div>
       </div>
@@ -155,10 +155,10 @@ function Catalog({ locale, decks }: Props) {
           <div className="mx-auto grid max-w-[44ch] justify-items-center py-16 text-center">
             {/* The lantern with its flame out: the search looked here and found nothing. */}
             <Lantern variant="unlit" className="size-16" />
-            <p className="mt-6 text-xl font-medium tracking-[-0.02em] text-balance text-text">
+            <p className="mt-6 text-xl font-medium tracking-[-0.02em] text-balance text-ink">
               <Trans>Nothing here by that name.</Trans>
             </p>
-            <p className="mt-3 text-md text-pretty text-text-2">
+            <p className="mt-3 text-md text-pretty text-ink-secondary">
               <Trans>
                 Try a word you would find on a card, or the language you are learning. Lymi
                 publishes a deck as soon as it is written and checked.
@@ -167,7 +167,7 @@ function Catalog({ locale, decks }: Props) {
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="mt-6 rounded-sm px-3 py-2 text-md font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-text"
+              className="mt-6 rounded-sm px-3 py-2 text-md font-medium text-ink underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-ink"
             >
               <Trans>Show every deck</Trans>
             </button>

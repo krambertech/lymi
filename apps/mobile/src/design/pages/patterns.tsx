@@ -27,10 +27,10 @@ function Rules({ items }: { items: [string, string][] }) {
     <View className="gap-3">
       {items.map(([name, rule]) => (
         <View key={name} className="gap-0.5">
-          <Text className="text-sm font-medium text-text" style={MONO}>
+          <Text className="text-sm font-medium text-ink" style={MONO}>
             {name}
           </Text>
-          <Text className="text-base text-text-2">{rule}</Text>
+          <Text className="text-base text-ink-secondary">{rule}</Text>
         </View>
       ))}
     </View>
@@ -54,10 +54,10 @@ export function Pages() {
               render: () => (
                 <View className="gap-1">
                   <View className="h-11 flex-row items-center gap-1">
-                    <Icon name="back" size={20} colour={p.text} />
-                    <Text className="text-md font-medium text-text-2">Library</Text>
+                    <Icon name="back" size={20} colour={p.ink} />
+                    <Text className="text-md font-medium text-ink-secondary">Library</Text>
                   </View>
-                  <Text className="text-3xl font-medium text-text">Lezione 12</Text>
+                  <Text className="text-3xl font-medium text-ink">Lezione 12</Text>
                 </View>
               ),
             },
@@ -96,11 +96,11 @@ export function Pages() {
               note: "Today, Library, You. No back: the tab bar is the way around.",
               render: () => (
                 <View className="h-14 flex-row items-center justify-between">
-                  <Text className="text-3xl font-medium text-text">Today</Text>
+                  <Text className="text-3xl font-medium text-ink">Today</Text>
                   <View className="flex-row items-center gap-2.5">
                     <View className="h-10 flex-row items-center gap-1.5 rounded-full bg-plate px-3.5">
                       <Flame height={18} />
-                      <Text className="text-md font-medium text-text">5</Text>
+                      <Text className="text-md font-medium text-ink">5</Text>
                     </View>
                     <View className="size-10 items-center justify-center rounded-full bg-amber">
                       <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
@@ -115,10 +115,10 @@ export function Pages() {
               render: () => (
                 <View className="gap-1">
                   <View className="h-11 flex-row items-center gap-1">
-                    <Icon name="back" size={20} colour={p.text} />
-                    <Text className="text-md font-medium text-text-2">Design system</Text>
+                    <Icon name="back" size={20} colour={p.ink} />
+                    <Text className="text-md font-medium text-ink-secondary">Design system</Text>
                   </View>
-                  <Text className="text-3xl font-medium text-text">Sheets</Text>
+                  <Text className="text-3xl font-medium text-ink">Sheets</Text>
                 </View>
               ),
             },
@@ -303,8 +303,8 @@ export function Sheets() {
                         onSubmitEditing={keep}
                         accessibilityLabel="Name"
                         returnKeyType="done"
-                        selectionColor={p.text}
-                        className="min-h-11 py-2 font-sans text-text"
+                        selectionColor={p.ink}
+                        className="min-h-11 py-2 font-sans text-ink"
                         style={{ fontSize: 17 }}
                         maxFontSizeMultiplier={inputCap(17)}
                       />

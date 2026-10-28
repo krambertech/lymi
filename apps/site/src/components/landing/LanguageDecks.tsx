@@ -31,7 +31,7 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
               <Trans>Explore ready-made decks.</Trans>
             </SectionTitle>
           </div>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
         </div>
         <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
           {all}

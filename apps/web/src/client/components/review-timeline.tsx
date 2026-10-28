@@ -87,7 +87,7 @@ export function ReviewTimeline({ start, reviews, dues, now = new Date() }: Props
               ([from, to]) => (
                 <span
                   key={`past-${from}`}
-                  className="absolute top-1/2 h-px bg-edge-2"
+                  className="absolute top-1/2 h-px bg-edge-strong"
                   style={{ insetInlineStart: from, width: to - from }}
                 />
               ),
@@ -95,16 +95,16 @@ export function ReviewTimeline({ start, reviews, dues, now = new Date() }: Props
             {segments(layout.today, width, stops).map(([from, to]) => (
               <span
                 key={`ahead-${from}`}
-                className="absolute top-1/2 border-t border-dashed border-edge-2"
+                className="absolute top-1/2 border-t border-dashed border-edge-strong"
                 style={{ insetInlineStart: from, width: to - from }}
               />
             ))}
             <span
-              className="absolute inset-y-1 w-px bg-text-2"
+              className="absolute inset-y-1 w-px bg-ink-secondary"
               style={{ insetInlineStart: layout.today }}
             />
             {layout.hidden > 0 && (
-              <span className="absolute start-0 top-1/2 -translate-y-1/2 pe-1 text-2xs font-medium text-muted tabular-nums">
+              <span className="absolute start-0 top-1/2 -translate-y-1/2 pe-1 text-2xs font-medium text-ink-muted tabular-nums">
                 +{i18n.number(layout.hidden)}
               </span>
             )}
@@ -132,7 +132,7 @@ export function ReviewTimeline({ start, reviews, dues, now = new Date() }: Props
           </>
         )}
       </div>
-      <div aria-hidden="true" className="relative h-4 text-2xs text-muted tabular-nums">
+      <div aria-hidden="true" className="relative h-4 text-2xs text-ink-muted tabular-nums">
         {width > 0 && (
           <>
             {addedToday ? (

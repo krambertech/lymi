@@ -5,7 +5,7 @@ export function FieldName({ children }: { children: string }) {
   return (
     // The input below carries the same name, so VoiceOver and TalkBack read it once.
     <Text
-      className="text-sm font-medium text-muted"
+      className="text-sm font-medium text-ink-muted"
       accessible={false}
       accessibilityElementsHidden
       importantForAccessibility="no"

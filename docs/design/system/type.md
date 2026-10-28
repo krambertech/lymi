@@ -39,7 +39,7 @@ The scale uses smaller increments for reading sizes, 1–1.5 px from 11 to 17, a
 
 - Headings track −0.02em (`tracking-[-0.02em]`), the word −0.03em, body never.
 - Tabular figures (`tabular-nums`) on figures that line up in a column, never on a control whose label happens to hold a digit: Onest's tabular 1 carries side bearings wide enough to pull "Lezione 12" apart. `Button` leaves them off for that reason.
-- Uppercase only at 12 px (`text-xs`), tracked +0.06em, weight 500, in `muted`.
+- Uppercase only at 12 px (`text-xs`), tracked +0.06em, weight 500, in `ink-muted`.
 
 ## Long words
 

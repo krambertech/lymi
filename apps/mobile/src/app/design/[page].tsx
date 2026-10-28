@@ -18,8 +18,8 @@ export default function DesignPageScreen() {
   return (
     <Screen title={page.title} back={{ label: "Design system", to: "/design" }}>
       <View className="-mt-4 gap-2">
-        <Text className="text-md text-text-2">{page.lede}</Text>
-        <Text className="text-xs text-muted" style={MONO}>
+        <Text className="text-md text-ink-secondary">{page.lede}</Text>
+        <Text className="text-xs text-ink-muted" style={MONO}>
           docs/design/system/{page.doc}
         </Text>
       </View>

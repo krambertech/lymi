@@ -59,13 +59,13 @@ export function AppPage({
           <span className="grid size-14 shrink-0">{mark}</span>
           <div className="grid min-w-0 gap-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-medium text-text">{name}</h1>
+              <h1 className="text-2xl font-medium text-ink">{name}</h1>
               {status ? (
                 <span
                   className={clsx(
                     "inline-flex h-[22px] items-center rounded-full px-2 text-2xs font-medium",
-                    status.tone === "good" && "bg-good-soft text-good",
-                    status.tone === "muted" && "bg-plate-2 text-text-2",
+                    status.tone === "good" && "bg-success-soft text-success",
+                    status.tone === "muted" && "bg-plate-nested text-ink-secondary",
                     status.tone === "danger" && "bg-danger-soft text-danger",
                   )}
                 >
@@ -75,10 +75,12 @@ export function AppPage({
                 <Skeleton className="h-[22px] w-20 rounded-full" />
               )}
             </div>
-            {status?.detail && <p className="text-sm text-muted tabular-nums">{status.detail}</p>}
+            {status?.detail && (
+              <p className="text-sm text-ink-muted tabular-nums">{status.detail}</p>
+            )}
           </div>
         </div>
-        <p className="max-w-[60ch] text-base text-text-2 text-pretty">{does}</p>
+        <p className="max-w-[60ch] text-base text-ink-secondary text-pretty">{does}</p>
         {action && <div>{action}</div>}
       </header>
       <div className="grid">{children}</div>
@@ -103,7 +105,7 @@ export function AppSection({
         className,
       )}
     >
-      <h2 className="text-md font-medium text-text">{title}</h2>
+      <h2 className="text-md font-medium text-ink">{title}</h2>
       {children}
     </section>
   );
@@ -171,7 +173,7 @@ export function AppActivity({
               to="/activity"
               search={{ app }}
               onClick={() => captureAnalytics("app_activity_opened", { app: appKey, how: "all" })}
-              className="group flex items-center gap-1 rounded-b-xl px-4 py-3 text-sm font-medium text-text hoverable:hover:veil"
+              className="group flex items-center gap-1 rounded-b-xl px-4 py-3 text-sm font-medium text-ink hoverable:hover:veil"
             >
               <span className="flex-1">
                 <Trans>Everything {{ app: isolate(name) }} did, in Activity</Trans>
@@ -205,13 +207,13 @@ export function AppConnect({
   return (
     <AppSection title={t`How it connects`}>
       <div className="edge grid gap-4 rounded-xl bg-plate p-5">
-        <p className="max-w-[60ch] text-base text-text-2 text-pretty">{intro}</p>
-        <ol className="grid gap-3 text-base text-text-2">
+        <p className="max-w-[60ch] text-base text-ink-secondary text-pretty">{intro}</p>
+        <ol className="grid gap-3 text-base text-ink-secondary">
           {steps.map((step, i) => (
             <li key={String(i)} className="grid grid-cols-[26px_1fr] gap-3">
               <span
                 aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+                className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
               >
                 {i + 1}
               </span>
@@ -253,7 +255,7 @@ export function AppStop({
   const confirm = useConfirmStep();
   return (
     <AppSection title={t`Stop`}>
-      <p className="max-w-[60ch] text-sm text-muted">{consequence}</p>
+      <p className="max-w-[60ch] text-sm text-ink-muted">{consequence}</p>
       {confirm.confirming ? (
         <div {...confirm.groupProps} className="enter-fade flex flex-wrap gap-3">
           <Button ref={confirm.safe} variant="ghost" onClick={confirm.cancel}>

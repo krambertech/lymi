@@ -38,16 +38,16 @@ export function CardPicture({
     return (
       <div
         className={cn(
-          "grid min-h-24 content-center justify-items-start gap-2 rounded-lg bg-plate-2 p-4",
+          "grid min-h-24 content-center justify-items-start gap-2 rounded-lg bg-plate-nested p-4",
           className,
         )}
       >
-        <span className="flex items-center gap-2 text-sm text-muted">
+        <span className="flex items-center gap-2 text-sm text-ink-muted">
           <ImageOff className="size-4 shrink-0" aria-hidden="true" />
           <Trans>Couldn’t load the picture</Trans>
         </span>
         {fallback === "description" && image.description && (
-          <p className="hyphenate text-xl leading-snug text-text [overflow-wrap:anywhere]">
+          <p className="hyphenate text-xl leading-snug text-ink [overflow-wrap:anywhere]">
             {image.description}
           </p>
         )}
@@ -60,7 +60,7 @@ export function CardPicture({
   return (
     <div
       style={box}
-      className={cn("relative overflow-hidden rounded-lg", !src && "bg-plate-2", className)}
+      className={cn("relative overflow-hidden rounded-lg", !src && "bg-plate-nested", className)}
     >
       {src ? (
         <img

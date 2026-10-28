@@ -109,7 +109,7 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
     <View className="gap-2">
       <View className="flex-row items-center justify-between">
         <Text
-          className="ps-1 text-md font-medium text-text"
+          className="ps-1 text-md font-medium text-ink"
           accessibilityRole="header"
           accessibilityLiveRegion="polite"
         >
@@ -134,7 +134,7 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
         <View className="flex-row pb-1.5" importantForAccessibility="no-hide-descendants">
           {heads.map((h, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a weekday's place is its identity.
-            <Text key={i} className="flex-1 text-center text-xs font-medium text-muted">
+            <Text key={i} className="flex-1 text-center text-xs font-medium text-ink-muted">
               {h}
             </Text>
           ))}
@@ -170,7 +170,7 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
       {restInMonth && (
         <View className="flex-row items-center gap-3 pt-1">
           <RestGlyph />
-          <Text className="flex-1 text-base text-text-2">
+          <Text className="flex-1 text-base text-ink-secondary">
             {t`A rest day keeps the streak through one missed day a week.`}
           </Text>
         </View>
@@ -292,15 +292,17 @@ function DayCell({
           style={{ ...ring, borderWidth: 2, borderColor: p.amber, backgroundColor: fill.run }}
         />
       )}
-      {isToday && !on && <View style={{ ...ring, borderWidth: 1, borderColor: p["edge-2"] }} />}
+      {isToday && !on && (
+        <View style={{ ...ring, borderWidth: 1, borderColor: p["edge-strong"] }} />
+      )}
       {/* Dashed is the mark for "not here yet", so a day to come never reads as one that was missed. */}
       {future && (
         <View
-          style={{ ...ring, borderWidth: 1, borderStyle: "dashed", borderColor: p["edge-2"] }}
+          style={{ ...ring, borderWidth: 1, borderStyle: "dashed", borderColor: p["edge-strong"] }}
         />
       )}
       <Text
-        className={`text-sm ${on ? "font-medium text-text" : future ? "text-faint" : "text-muted"} ${isToday ? "font-semibold" : ""}`}
+        className={`text-sm ${on ? "font-medium text-ink" : future ? "text-ink-faint" : "text-ink-muted"} ${isToday ? "font-semibold" : ""}`}
         style={{ fontVariant: ["tabular-nums"] }}
         maxFontSizeMultiplier={1.4}
       >

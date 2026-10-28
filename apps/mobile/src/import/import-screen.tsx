@@ -208,10 +208,10 @@ function Working({
     return (
       <ImportShell title={t`Import from ${app}`} description={description}>
         <Plate className="gap-3 p-5">
-          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="text-lg font-medium text-ink" accessibilityRole="header">
             {t`The upload stopped partway`}
           </Text>
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             {t`Lymi was closed before the text arrived. Paste the set again to start over.`}
           </Text>
           <Button
@@ -242,10 +242,10 @@ function Working({
     return (
       <ImportShell title={t`Import from ${app}`} description={description}>
         <Plate className="gap-3 p-5">
-          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="text-lg font-medium text-ink" accessibilityRole="header">
             {t`The upload stopped partway`}
           </Text>
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             {t`${Math.round((item.upload.received / Math.max(item.upload.parts, 1)) * 100)}% of the file arrived. Choose the same file to send the rest.`}
           </Text>
           {refused && <Text className="text-base text-danger">{refused}</Text>}
@@ -291,14 +291,14 @@ function Working({
     <ImportShell title={t`Import from ${app}`} description={description}>
       <Plate className="gap-3 p-5">
         <Text
-          className="text-lg font-medium text-text"
+          className="text-lg font-medium text-ink"
           accessibilityRole="header"
           accessibilityLiveRegion="polite"
         >
           {heading}
         </Text>
         {value === null ? <Sweep label={heading} /> : <Progress value={value} label={heading} />}
-        <Text className="text-base text-text-2">{detail}</Text>
+        <Text className="text-base text-ink-secondary">{detail}</Text>
         {upload?.status === "failed" && (
           <View className="gap-3">
             <Text className="text-base text-danger">{upload.error}</Text>
@@ -353,12 +353,12 @@ function Done({
     <ImportShell title={t`Import from ${app}`} description={t`${isolate(item.fileName)} · ${date}`}>
       <Plate className="gap-4 p-5">
         <View className="gap-1">
-          <Text className="text-xl font-medium text-text" accessibilityRole="header">
+          <Text className="text-xl font-medium text-ink" accessibilityRole="header">
             {archived
               ? t`This import is archived`
               : plural(counts?.added ?? 0, { one: "Imported # card", other: "Imported # cards" })}
           </Text>
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             {archived
               ? t`Its cards and the decks it made are hidden. Restore brings them back with their history.`
               : plural(counts?.decks ?? 0, {
@@ -452,10 +452,10 @@ function Done({
       </Plate>
 
       <View className="gap-3">
-        <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+        <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
           {archived ? t`Restore` : t`Undo this import`}
         </Text>
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {archived
             ? t`Brings back every card this import added and the decks it made.`
             : t`Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it.`}
@@ -515,7 +515,7 @@ function Stopped({
       )}
       {item.status === "failed" && added > 0 && !item.archivedAt && (
         <Plate className="gap-3 p-5">
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             {plural(added, {
               one: "# card was added before the import stopped.",
               other: "# cards were added before the import stopped.",

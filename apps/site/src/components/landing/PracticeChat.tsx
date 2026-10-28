@@ -19,8 +19,8 @@ export function PracticeChat() {
   const inView = useInView(ref, { amount: 0.35 });
   const { at } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
-  const you = "self-end max-w-[85%] bg-text px-3.5 py-2 text-md text-canvas";
-  const them = "self-start max-w-[88%] bg-plate-2 px-3.5 py-2 text-md text-text";
+  const you = "self-end max-w-[85%] bg-ink px-3.5 py-2 text-md text-canvas";
+  const them = "self-start max-w-[88%] bg-plate-nested px-3.5 py-2 text-md text-ink";
 
   return (
     <div ref={ref} className="mx-auto flex w-full max-w-[460px] flex-col gap-3">
@@ -36,7 +36,7 @@ export function PracticeChat() {
         </motion.p>
 
         <motion.p
-          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-2 ps-1 pe-3 text-sm text-text-2"
+          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-nested ps-1 pe-3 text-sm text-ink-secondary"
           initial={false}
           animate={appear(at("read"))}
           transition={move}
@@ -45,7 +45,7 @@ export function PracticeChat() {
             <Lantern className="size-4" />
           </span>
           <Trans>Read your German deck</Trans>
-          <Check aria-hidden="true" className="size-4 text-good" />
+          <Check aria-hidden="true" className="size-4 text-success" />
         </motion.p>
 
         <motion.p
@@ -92,7 +92,7 @@ export function PracticeChat() {
         </motion.div>
       </div>
 
-      <p className="flex items-center gap-2 text-xs text-muted">
+      <p className="flex items-center gap-2 text-xs text-ink-muted">
         <span aria-hidden="true" className="h-3 w-4 rounded-xs bg-amber-soft" />
         <Trans>Words from your deck</Trans>
       </p>

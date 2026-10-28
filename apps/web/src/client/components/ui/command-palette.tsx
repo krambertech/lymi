@@ -59,10 +59,10 @@ function CommandPalette({
           data-slot="command-palette"
           initialFocus={compact ? popupRef : undefined}
           className={cn(
-            "fixed z-(--z-sheet) flex flex-col overflow-hidden bg-plate text-text outline-none",
+            "fixed z-(--z-sheet) flex flex-col overflow-hidden bg-plate text-ink outline-none",
             compact
               ? "inset-0 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
-              : "inset-x-0 top-[12vh] mx-auto max-h-[min(560px,76dvh)] w-[min(620px,calc(100vw-32px))] rounded-xl edge-2 shadow-[0_24px_64px_-16px_var(--scrim)]",
+              : "inset-x-0 top-[12vh] mx-auto max-h-[min(560px,76dvh)] w-[min(620px,calc(100vw-32px))] rounded-xl edge-strong shadow-[0_24px_64px_-16px_var(--scrim)]",
             skin === "dev" && "dev-skin",
             skin === "dev" && !compact && "rounded-lg",
           )}
@@ -182,17 +182,17 @@ function CommandInput({ lead, trail, className, ...props }: InputProps) {
       className={cn(
         "flex shrink-0 items-center",
         compact
-          ? "mx-4 my-2 h-11 gap-2 rounded-lg bg-plate-2 px-3"
+          ? "mx-4 my-2 h-11 gap-2 rounded-lg bg-plate-nested px-3"
           : "h-14 gap-3 border-b border-edge px-4",
       )}
     >
-      <span aria-hidden="true" className="flex shrink-0 text-muted">
+      <span aria-hidden="true" className="flex shrink-0 text-ink-muted">
         {lead}
       </span>
       <input
         dir="auto"
         className={cn(
-          "h-full min-w-0 flex-1 bg-transparent text-text caret-amber outline-none placeholder:text-muted",
+          "h-full min-w-0 flex-1 bg-transparent text-ink caret-amber outline-none placeholder:text-ink-muted",
           skin === "dev" ? "font-mono text-base md:text-sm" : "text-base sm:text-lg",
           className,
         )}
@@ -246,7 +246,7 @@ function CommandGroup({
         <p
           id={id}
           className={cn(
-            "px-2.5 pt-1.5 pb-1 text-muted",
+            "px-2.5 pt-1.5 pb-1 text-ink-muted",
             skin === "dev" ? "font-mono text-2xs tracking-wider uppercase" : "text-xs font-medium",
           )}
         >
@@ -264,8 +264,8 @@ function CommandItem({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex cursor-default items-center gap-2.5 rounded-sm px-2.5 text-base text-text select-none data-active:bg-hover [&_svg]:shrink-0",
-        compact ? "min-h-12 py-2 active:bg-hover" : "min-h-10 py-1.5",
+        "flex cursor-default items-center gap-2.5 rounded-sm px-2.5 text-base text-ink select-none data-active:bg-plate-hover [&_svg]:shrink-0",
+        compact ? "min-h-12 py-2 active:bg-plate-hover" : "min-h-10 py-1.5",
         className,
       )}
       {...props}
@@ -274,7 +274,9 @@ function CommandItem({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CommandEmpty({ className, ...props }: React.ComponentProps<"p">) {
-  return <p className={cn("px-2.5 py-6 text-center text-base text-muted", className)} {...props} />;
+  return (
+    <p className={cn("px-2.5 py-6 text-center text-base text-ink-muted", className)} {...props} />
+  );
 }
 
 /** Key hints and status under the list. */
@@ -283,7 +285,7 @@ function CommandFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex min-h-10 shrink-0 items-center gap-4 border-t border-edge px-4 py-2 text-sm text-muted",
+        "flex min-h-10 shrink-0 items-center gap-4 border-t border-edge px-4 py-2 text-sm text-ink-muted",
         skin === "dev" && "font-mono text-xs",
         className,
       )}

@@ -43,7 +43,7 @@ export function ErrorLine({ children }: { children: string | null }) {
 export function AppleNote() {
   const { t } = useLingui();
   return (
-    <Text className="px-1 text-base text-muted">
+    <Text className="px-1 text-base text-ink-muted">
       {t`You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings.`}
     </Text>
   );

@@ -62,7 +62,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
 
   return (
     <div className="rounded-md outline-offset-4">
-      <div className="mx-auto flex max-w-[380px] items-center justify-between text-xs tracking-[0.06em] text-muted uppercase">
+      <div className="mx-auto flex max-w-[380px] items-center justify-between text-xs tracking-[0.06em] text-ink-muted uppercase">
         <span>
           <Trans>Tonight</Trans>
         </span>
@@ -89,7 +89,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
               {i18n._(card.label)}
             </p>
             <motion.p
-              className="mt-2 text-3xl font-medium tracking-[-0.03em] text-text"
+              className="mt-2 text-3xl font-medium tracking-[-0.03em] text-ink"
               animate={{ scale: revealed ? 1 : 1.06 }}
               transition={still ? { duration: 0 } : SPRING}
             >
@@ -107,9 +107,9 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
                     transition={still ? { duration: 0 } : { duration: 0.44 }}
                     className="mt-3 border-t border-edge pt-3"
                   >
-                    <p className="text-lg text-text-2">{i18n._(card.meaning)}</p>
+                    <p className="text-lg text-ink-secondary">{i18n._(card.meaning)}</p>
                     {card.example && (
-                      <p className="mt-2 text-xs text-muted italic">{card.example}</p>
+                      <p className="mt-2 text-xs text-ink-muted italic">{card.example}</p>
                     )}
                   </motion.div>
                 ) : (
@@ -121,7 +121,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.2 }}
                     onClick={() => setRevealedFor(index)}
-                    className="mt-5 w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
+                    className="mt-5 w-full rounded-sm border border-edge-strong border-dashed py-2.5 text-sm text-ink-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-ink-secondary"
                   >
                     <Trans>Show the meaning</Trans>
                   </motion.button>
@@ -140,19 +140,21 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
                   transition={still ? { duration: 0 } : { duration: 0.22 }}
                   className={clsx(
                     "flex flex-1 flex-col items-center gap-0.5 py-2 edge disabled:cursor-default",
-                    answered === n ? "bg-amber-soft" : "bg-plate-2 hoverable:hover:bg-hover",
+                    answered === n
+                      ? "bg-amber-soft"
+                      : "bg-plate-nested hoverable:hover:bg-plate-hover",
                   )}
                   style={{ borderRadius: 10 }}
                 >
                   <span
                     className={clsx(
                       "text-sm font-medium",
-                      answered === n ? "text-amber-text" : "text-text",
+                      answered === n ? "text-amber-text" : "text-ink",
                     )}
                   >
                     {g.name}
                   </span>
-                  <span className="text-2xs tabular-nums text-muted">{g.when}</span>
+                  <span className="text-2xs tabular-nums text-ink-muted">{g.when}</span>
                 </motion.button>
               ))}
             </div>

@@ -122,7 +122,7 @@ export function ImportStartView({
 
   return (
     <ImportShell title={t`Import from ${app}`} back={back}>
-      <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
+      <p className="-mt-4 max-w-[60ch] text-md text-ink-secondary text-pretty">
         {source === "lymi" ? (
           <Trans>
             Import decks from another Lymi account, with their pictures, tags and review history.
@@ -160,11 +160,11 @@ export function ImportStartView({
         }}
         className={clsx(
           "grid justify-items-center gap-3 rounded-xl border-[1.5px] border-dashed px-5 py-9 text-center transition-colors duration-150",
-          over ? "border-text-2 bg-plate" : "border-edge-2",
+          over ? "border-ink-secondary bg-plate" : "border-edge-strong",
         )}
       >
         <span
-          className="grid size-12 place-items-center rounded-full bg-plate-2 text-text-2"
+          className="grid size-12 place-items-center rounded-full bg-plate-nested text-ink-secondary"
           aria-hidden="true"
         >
           <FileUp className="size-5" />
@@ -173,7 +173,7 @@ export function ImportStartView({
           <h2 className="text-lg font-medium text-balance">
             <Trans>Choose the file you exported from {app}</Trans>
           </h2>
-          <p id={hintId} className="text-base text-muted">
+          <p id={hintId} className="text-base text-ink-muted">
             {source === "mochi" ? (
               <Trans>A .mochi file, up to 1 GB. You can also drop it here.</Trans>
             ) : source === "noji" ? (
@@ -218,12 +218,12 @@ export function ImportStartView({
         <h2 id="export-steps" className="text-md font-medium">
           <Trans>Exporting from {app}</Trans>
         </h2>
-        <ol className="grid gap-3 text-base text-text-2">
+        <ol className="grid gap-3 text-base text-ink-secondary">
           {STEPS[source].map((step, i) => (
             <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
               <span
                 aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+                className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
               >
                 {i + 1}
               </span>
@@ -234,7 +234,7 @@ export function ImportStartView({
         {guideUrl && (
           <a
             href={guideUrl}
-            className="justify-self-start text-base font-medium text-text underline underline-offset-4"
+            className="justify-self-start text-base font-medium text-ink underline underline-offset-4"
           >
             {source !== "anki" ? (
               <Trans>Stuck? Read the guide</Trans>
@@ -253,8 +253,8 @@ const ANKI_STEPS = [
     id: "menu",
     node: (
       <Trans>
-        In Anki on a computer, choose <strong className="font-medium text-text">File</strong>, then{" "}
-        <strong className="font-medium text-text">Export</strong>.
+        In Anki on a computer, choose <strong className="font-medium text-ink">File</strong>, then{" "}
+        <strong className="font-medium text-ink">Export</strong>.
       </Trans>
     ),
   },
@@ -262,9 +262,9 @@ const ANKI_STEPS = [
     id: "options",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">Anki Deck Package</strong>, and tick{" "}
-        <strong className="font-medium text-text">Include Scheduling Information</strong> and{" "}
-        <strong className="font-medium text-text">Include Media</strong>.
+        Choose <strong className="font-medium text-ink">Anki Deck Package</strong>, and tick{" "}
+        <strong className="font-medium text-ink">Include Scheduling Information</strong> and{" "}
+        <strong className="font-medium text-ink">Include Media</strong>.
       </Trans>
     ),
   },
@@ -276,8 +276,8 @@ const MOCHI_STEPS = [
     id: "deck",
     node: (
       <Trans>
-        In Mochi, open a deck, open its <strong className="font-medium text-text">…</strong> menu
-        and choose <strong className="font-medium text-text">Export deck</strong>.
+        In Mochi, open a deck, open its <strong className="font-medium text-ink">…</strong> menu and
+        choose <strong className="font-medium text-ink">Export deck</strong>.
       </Trans>
     ),
   },
@@ -286,8 +286,8 @@ const MOCHI_STEPS = [
     node: (
       <Trans>
         To export every deck at once, open{" "}
-        <strong className="font-medium text-text">Settings</strong> and choose{" "}
-        <strong className="font-medium text-text">Export everything</strong> instead.
+        <strong className="font-medium text-ink">Settings</strong> and choose{" "}
+        <strong className="font-medium text-ink">Export everything</strong> instead.
       </Trans>
     ),
   },
@@ -300,8 +300,8 @@ const LYMI_STEPS = [
     node: (
       <Trans>
         In the other account, open a deck’s menu and choose{" "}
-        <strong className="font-medium text-text">Export</strong>, or choose{" "}
-        <strong className="font-medium text-text">Export library</strong> in Settings.
+        <strong className="font-medium text-ink">Export</strong>, or choose{" "}
+        <strong className="font-medium text-ink">Export library</strong> in Settings.
       </Trans>
     ),
   },
@@ -309,7 +309,7 @@ const LYMI_STEPS = [
     id: "format",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">Lymi file</strong>, then download it when
+        Choose <strong className="font-medium text-ink">Lymi file</strong>, then download it when
         it’s ready.
       </Trans>
     ),
@@ -326,8 +326,8 @@ const NOJI_STEPS = [
     node: (
       <Trans>
         In Noji, open a deck you made, open its{" "}
-        <strong className="font-medium text-text">Settings</strong> and choose{" "}
-        <strong className="font-medium text-text">Export deck</strong>. Its sub-decks come too.
+        <strong className="font-medium text-ink">Settings</strong> and choose{" "}
+        <strong className="font-medium text-ink">Export deck</strong>. Its sub-decks come too.
       </Trans>
     ),
   },
@@ -335,7 +335,7 @@ const NOJI_STEPS = [
     id: "format",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">OFC</strong> and turn on learning progress,
+        Choose <strong className="font-medium text-ink">OFC</strong> and turn on learning progress,
         then enter your email.
       </Trans>
     ),
@@ -351,9 +351,9 @@ const PLECO_STEPS = [
     id: "menu",
     node: (
       <Trans>
-        In Pleco’s menu, under <strong className="font-medium text-text">Flashcards</strong>, choose{" "}
-        <strong className="font-medium text-text">Import / Export</strong>, then{" "}
-        <strong className="font-medium text-text">Export Cards</strong>.
+        In Pleco’s menu, under <strong className="font-medium text-ink">Flashcards</strong>, choose{" "}
+        <strong className="font-medium text-ink">Import / Export</strong>, then{" "}
+        <strong className="font-medium text-ink">Export Cards</strong>.
       </Trans>
     ),
   },
@@ -361,12 +361,12 @@ const PLECO_STEPS = [
     id: "options",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">Text File</strong>,{" "}
-        <strong className="font-medium text-text">UTF-8</strong> and the character set{" "}
-        <strong className="font-medium text-text">Both</strong>. Turn on{" "}
-        <strong className="font-medium text-text">Categories</strong>,{" "}
-        <strong className="font-medium text-text">Card definitions</strong> and{" "}
-        <strong className="font-medium text-text">Dictionary definitions</strong>.
+        Choose <strong className="font-medium text-ink">Text File</strong>,{" "}
+        <strong className="font-medium text-ink">UTF-8</strong> and the character set{" "}
+        <strong className="font-medium text-ink">Both</strong>. Turn on{" "}
+        <strong className="font-medium text-ink">Categories</strong>,{" "}
+        <strong className="font-medium text-ink">Card definitions</strong> and{" "}
+        <strong className="font-medium text-ink">Dictionary definitions</strong>.
       </Trans>
     ),
   },
@@ -374,7 +374,7 @@ const PLECO_STEPS = [
     id: "save",
     node: (
       <Trans>
-        Press <strong className="font-medium text-text">Export now</strong>, save the file, then
+        Press <strong className="font-medium text-ink">Export now</strong>, save the file, then
         choose it here.
       </Trans>
     ),
@@ -422,7 +422,7 @@ export function ImportWorkingView({
           <h2 className="text-lg font-medium">
             <Trans>The upload stopped partway</Trans>
           </h2>
-          <p className="text-base text-text-2">
+          <p className="text-base text-ink-secondary">
             {t`${Math.round((item.upload.received / item.upload.parts) * 100)}% of the file arrived. Choose the same file to send the rest.`}
           </p>
           <input
@@ -489,12 +489,12 @@ export function ImportWorkingView({
         <h2 className="text-lg font-medium">{heading}</h2>
         {value === null ? (
           <div className="h-2 overflow-hidden rounded-full bg-edge">
-            <i className="block h-full w-1/3 animate-[import-sweep_1.4s_ease-in-out_infinite] rounded-full bg-text-2 motion-reduce:w-full motion-reduce:animate-none motion-reduce:opacity-40" />
+            <i className="block h-full w-1/3 animate-[import-sweep_1.4s_ease-in-out_infinite] rounded-full bg-ink-secondary motion-reduce:w-full motion-reduce:animate-none motion-reduce:opacity-40" />
           </div>
         ) : (
           <Progress value={value} label={heading} />
         )}
-        <p className="text-base text-text-2 tabular-nums">{detail}</p>
+        <p className="text-base text-ink-secondary tabular-nums">{detail}</p>
         {upload?.status === "failed" && (
           <div className="flex flex-wrap items-center gap-2">
             <p className="flex-1 text-sm" role="alert">
@@ -530,11 +530,11 @@ export function ImportWorkingView({
 
 function Line({ tone, children }: { tone: "good" | "skip"; children: ReactNode }) {
   return (
-    <li className="flex gap-2.5 text-base text-text-2">
+    <li className="flex gap-2.5 text-base text-ink-secondary">
       {tone === "good" ? (
-        <CircleCheck className="mt-0.5 size-[18px] shrink-0 text-good" aria-hidden="true" />
+        <CircleCheck className="mt-0.5 size-[18px] shrink-0 text-success" aria-hidden="true" />
       ) : (
-        <CircleMinus className="mt-0.5 size-[18px] shrink-0 text-muted" aria-hidden="true" />
+        <CircleMinus className="mt-0.5 size-[18px] shrink-0 text-ink-muted" aria-hidden="true" />
       )}
       <span className="min-w-0 text-pretty">{children}</span>
     </li>
@@ -560,7 +560,7 @@ function Figure({
           {i18n.number(value)}
         </span>
       )}
-      <span className="text-sm text-muted">{label}</span>
+      <span className="text-sm text-ink-muted">{label}</span>
     </div>
   );
 }
@@ -582,7 +582,9 @@ function Question({ title, children }: { title: ReactNode; children?: ReactNode 
       >
         {title}
       </h2>
-      {children && <p className="max-w-[60ch] text-base text-text-2 text-pretty">{children}</p>}
+      {children && (
+        <p className="max-w-[60ch] text-base text-ink-secondary text-pretty">{children}</p>
+      )}
     </div>
   );
 }
@@ -618,7 +620,7 @@ function StepActions({
           {children}
         </div>
       </div>
-      {note && <div className="text-center text-sm text-muted text-pretty">{note}</div>}
+      {note && <div className="text-center text-sm text-ink-muted text-pretty">{note}</div>}
       {back("justify-self-center sm:hidden", "ghost")}
     </div>
   );
@@ -758,13 +760,13 @@ function ImportLines({
               {preview.duplicateExamples.map((d) => (
                 <li key={`${d.term}-${d.deckName}`}>
                   <Trans>
-                    <span className="font-medium text-text">{isolate(d.term)}</span> in{" "}
+                    <span className="font-medium text-ink">{isolate(d.term)}</span> in{" "}
                     {isolate(d.deckName)}
                   </Trans>
                 </li>
               ))}
               {preview.duplicates > preview.duplicateExamples.length && (
-                <li className="text-muted">
+                <li className="text-ink-muted">
                   {plural(preview.duplicates - preview.duplicateExamples.length, {
                     one: "and # more",
                     other: "and # more",
@@ -1011,7 +1013,7 @@ export function ImportPreviewView({
           onRetry={onPreviewRetry}
           tail={
             step.type === asked.at(-1) && !showRest && rest.length > 0 ? (
-              <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
+              <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-ink-secondary">
                 <p className="text-pretty">
                   {plural(restNotes, {
                     one: "# more note of a less common kind is imported as it is.",
@@ -1224,7 +1226,7 @@ function DecksStep({
                     <FieldLabel className="truncate text-base font-normal after:absolute after:inset-0 after:content-['']">
                       {deck.name.split("::").join(" / ")}
                     </FieldLabel>
-                    <span className="text-sm text-muted">
+                    <span className="text-sm text-ink-muted">
                       {known === 0
                         ? plural(deck.cards, { one: "# card", other: "# cards" })
                         : known >= deck.cards
@@ -1323,7 +1325,7 @@ function CardStep({
           {list.length > 1 && (
             <button
               type="button"
-              className="text-sm text-muted underline-offset-4 hoverable:hover:text-text hoverable:hover:underline"
+              className="text-sm text-ink-muted underline-offset-4 hoverable:hover:text-ink hoverable:hover:underline"
               onClick={() => setIndex(index + 1)}
             >
               <Trans>Show another</Trans>
@@ -1376,8 +1378,8 @@ function AnswerRow({
   return (
     <div className="flex items-center gap-4 px-4 py-3 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-edge">
       <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="text-sm text-muted">{title}</span>
-        <span className="truncate text-base text-text">{detail}</span>
+        <span className="text-sm text-ink-muted">{title}</span>
+        <span className="truncate text-base text-ink">{detail}</span>
       </span>
       <Button
         variant="ghost"
@@ -1433,7 +1435,7 @@ export function ImportDoneView({
               ? t`This import is archived`
               : plural(counts?.added ?? 0, { one: "Imported # card", other: "Imported # cards" })}
           </h2>
-          <p className="text-base text-text-2 text-pretty">
+          <p className="text-base text-ink-secondary text-pretty">
             {archived ? (
               <Trans>
                 Its cards and the decks it made are hidden. Restore brings them back with their
@@ -1533,7 +1535,7 @@ export function ImportDoneView({
         <h2 id="undo-import" className="text-md font-medium">
           {archived ? <Trans>Restore</Trans> : <Trans>Undo this import</Trans>}
         </h2>
-        <p className="text-base text-text-2 text-pretty">
+        <p className="text-base text-ink-secondary text-pretty">
           {archived ? (
             <Trans>Brings back every card this import added and the decks it made.</Trans>
           ) : (
@@ -1611,7 +1613,7 @@ export function ImportStoppedView({
               {guideUrl && (
                 <a
                   href={guideUrl}
-                  className="inline-flex h-10 items-center px-3 text-base font-medium text-text underline underline-offset-4"
+                  className="inline-flex h-10 items-center px-3 text-base font-medium text-ink underline underline-offset-4"
                 >
                   <Trans>Read the guide</Trans>
                 </a>
@@ -1622,7 +1624,7 @@ export function ImportStoppedView({
       )}
       {item.status === "failed" && added > 0 && !item.archivedAt && (
         <section className="edge grid gap-2 rounded-xl bg-plate p-5">
-          <p className="text-base text-text-2">
+          <p className="text-base text-ink-secondary">
             {plural(added, {
               one: "# card was added before the import stopped.",
               other: "# cards were added before the import stopped.",

@@ -38,7 +38,7 @@ function Switch({ className, disabled, onPointerDown, ...props }: SwitchPrimitiv
       }}
       className={cn(
         "group/switch relative inline-flex h-[26px] w-[44px] shrink-0 cursor-pointer rounded-full",
-        "edge-2 bg-plate-2 transition-[background-color,box-shadow] duration-200 ease-(--ease-out) data-checked:bg-amber data-checked:shadow-none",
+        "edge-strong bg-plate-nested transition-[background-color,box-shadow] duration-200 ease-(--ease-out) data-checked:bg-amber data-checked:shadow-none",
         // Carries the touch target to 44 px tall without moving anything around it.
         "after:absolute after:-inset-y-[9px] after:inset-x-0 after:content-['']",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
@@ -74,7 +74,7 @@ function SwitchThumb({ checked, held }: { checked: boolean; held: boolean }) {
       transition={reduce ? INSTANT : CHOICE_SLIDE}
       className={cn(
         "block h-5 rounded-full transition-[background-color,box-shadow] duration-200",
-        checked ? "bg-amber-ink" : "edge-2 bg-plate",
+        checked ? "bg-amber-ink" : "edge-strong bg-plate",
       )}
     />
   );

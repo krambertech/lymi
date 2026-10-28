@@ -36,7 +36,7 @@ function Room({ children, className }: { children: ReactNode; className?: string
   return (
     <div
       data-theme={theme}
-      className={clsx("edge relative overflow-hidden rounded-lg bg-canvas text-text", className)}
+      className={clsx("edge relative overflow-hidden rounded-lg bg-canvas text-ink", className)}
     >
       <div className="absolute end-3 top-3 z-10">
         <IconToggle
@@ -133,10 +133,10 @@ function DayAtTheLantern() {
             />
           </MotionConfig>
           <div className="grid max-w-[40ch] gap-1 text-center">
-            <p className="font-mono text-xs text-muted tabular-nums">
+            <p className="font-mono text-xs text-ink-muted tabular-nums">
               Day {day.number} · {day.reviewed} of {target} · streak {day.streak}
             </p>
-            <p className="text-sm text-pretty text-text-2" aria-live="polite">
+            <p className="text-sm text-pretty text-ink-secondary" aria-live="polite">
               {describe(day, target)}
             </p>
           </div>
@@ -231,7 +231,7 @@ function DayAtTheLantern() {
 function Control({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="grid gap-2">
-      <p className="font-mono text-xs text-muted">{label}</p>
+      <p className="font-mono text-xs text-ink-muted">{label}</p>
       {children}
     </div>
   );
@@ -348,8 +348,8 @@ function MovementCard({ m }: { m: Movement }) {
             </Button>
           )}
         </div>
-        <p className="font-mono text-xs text-muted tabular-nums">{m.timing}</p>
-        <p className="mt-1 text-sm text-pretty text-text-2">{m.note}</p>
+        <p className="font-mono text-xs text-ink-muted tabular-nums">{m.timing}</p>
+        <p className="mt-1 text-sm text-pretty text-ink-secondary">{m.note}</p>
       </div>
     </div>
   );
@@ -386,7 +386,7 @@ function ReducedSideBySide() {
                 glow
               />
             </MotionConfig>
-            <figcaption className="font-mono text-xs text-muted">
+            <figcaption className="font-mono text-xs text-ink-muted">
               {mode === "never" ? "Motion" : "Reduced motion"}
             </figcaption>
           </figure>
@@ -502,12 +502,12 @@ export function LanternPage() {
               className="grid gap-1 border-b border-edge px-5 py-3 text-base last:border-b-0 @3xl:grid-cols-[120px_200px_1fr] @3xl:gap-4"
             >
               <span className="font-mono text-sm font-medium">{name}</span>
-              <span className="font-mono text-sm text-text-2">{type}</span>
-              <span className="text-sm text-muted">{what}</span>
+              <span className="font-mono text-sm text-ink-secondary">{type}</span>
+              <span className="text-sm text-ink-muted">{what}</span>
             </div>
           ))}
         </div>
-        <pre className="edge overflow-x-auto rounded-lg bg-plate-2 p-4 font-mono text-sm text-text-2">
+        <pre className="edge overflow-x-auto rounded-lg bg-plate-nested p-4 font-mono text-sm text-ink-secondary">
           {`<Lantern
   {...lanternFor(streak)}
   fed={reviewedToday}
@@ -518,7 +518,7 @@ export function LanternPage() {
       </Sub>
 
       <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Don’t reward a grade. Forgot feeds and sparks the flame exactly as Easy does.",
             "Don’t put the flame out for nothing due, an ended session or an unfinished morning.",

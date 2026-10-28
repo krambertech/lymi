@@ -27,13 +27,13 @@ export function TypeName({
   const ref = useReference();
   const label = typeLabel(schema, ref.defs);
   const named = refName(schema) ?? refName(schema?.items);
-  const size = inSentence ? "!bg-transparent !p-0 text-[0.9em] text-text" : "text-xs text-muted";
+  const size = inSentence ? "!bg-transparent !p-0 text-[0.9em] text-ink" : "text-xs text-ink-muted";
   if (!named) return <span className={clsx("font-mono", size)}>{label}</span>;
   return (
     <a
       href={schemaHref(named, ref)}
       className={clsx(
-        "doc-plain font-mono underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text hoverable:hover:decoration-current",
+        "doc-plain font-mono underline decoration-edge-strong underline-offset-2 hoverable:hover:text-ink hoverable:hover:decoration-current",
         size,
       )}
     >
@@ -65,23 +65,27 @@ function Field({ name, schema, required }: { name: string; schema: Schema; requi
   return (
     <li className="border-edge py-3 first:pt-0 last:pb-0 [&:not(:first-child)]:border-t">
       <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-        <code className="break-all !bg-transparent !p-0 font-mono !text-[0.8125rem] font-medium text-text">
+        <code className="break-all !bg-transparent !p-0 font-mono !text-[0.8125rem] font-medium text-ink">
           {name}
         </code>
         <TypeName schema={schema} />
         {required && <span className="text-2xs font-medium text-amber-text">required</span>}
       </div>
-      {description && <p className="!mb-0 mt-1 text-base text-text-2">{inline(description)}</p>}
-      {limits.length > 0 && <p className="!mb-0 mt-0.5 text-sm text-muted">{limits.join(", ")}</p>}
+      {description && (
+        <p className="!mb-0 mt-1 text-base text-ink-secondary">{inline(description)}</p>
+      )}
+      {limits.length > 0 && (
+        <p className="!mb-0 mt-0.5 text-sm text-ink-muted">{limits.join(", ")}</p>
+      )}
       {child && (
         <details className="group mt-2">
-          <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-xs text-sm text-muted hoverable:hover:text-text [&::-webkit-details-marker]:hidden">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-xs text-sm text-ink-muted hoverable:hover:text-ink [&::-webkit-details-marker]:hidden">
             <ChevronRight
               className="size-3.5 transition-transform duration-150 group-open:rotate-90"
               aria-hidden="true"
             />
             Child fields
-            {count > 0 && <span className="tabular-nums text-faint">{count}</span>}
+            {count > 0 && <span className="tabular-nums text-ink-faint">{count}</span>}
           </summary>
           <div className="mt-2 rounded-md px-3.5 py-3 edge">
             <Fields schema={child} expand />
@@ -105,7 +109,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   const named = refName(schema);
   if (!expand && named) {
     return (
-      <p className="!mb-0 text-base text-text-2">
+      <p className="!mb-0 text-base text-ink-secondary">
         A <TypeName schema={schema} inSentence /> object.
       </p>
     );
@@ -116,11 +120,11 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   if (variants) {
     return (
       <div className="grid gap-3">
-        <p className="!mb-0 text-base text-text-2">One of these shapes:</p>
+        <p className="!mb-0 text-base text-ink-secondary">One of these shapes:</p>
         {variants.map((v, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: variants have no id of their own
-          <div key={i} className="rounded-md bg-plate-2 p-3.5">
-            {v.label && <p className="!mb-2 font-mono text-xs text-text">{v.label}</p>}
+          <div key={i} className="rounded-md bg-plate-nested p-3.5">
+            {v.label && <p className="!mb-2 font-mono text-xs text-ink">{v.label}</p>}
             <Fields schema={v.schema} expand />
           </div>
         ))}
@@ -132,7 +136,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
     const inner = resolved.items;
     return (
       <div className="grid gap-2">
-        <p className="!mb-0 text-base text-text-2">
+        <p className="!mb-0 text-base text-ink-secondary">
           An array of <TypeName schema={inner} inSentence />.
         </p>
         {!refName(inner) && <Fields schema={inner} expand />}
@@ -143,7 +147,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
   const props = Object.entries(resolved.properties ?? {});
   if (props.length === 0) {
     return (
-      <p className="!mb-0 text-base text-text-2">
+      <p className="!mb-0 text-base text-ink-secondary">
         <TypeName schema={resolved} inSentence />
       </p>
     );
@@ -178,6 +182,8 @@ export function Params({ params, where }: { params: Param[]; where: "path" | "qu
 /** A small heading inside an endpoint or object: what the list under it is. */
 export function Label({ children, className }: { children: string; className?: string }) {
   return (
-    <h4 className={clsx("!mb-3 !mt-0 !text-sm !font-medium !text-muted", className)}>{children}</h4>
+    <h4 className={clsx("!mb-3 !mt-0 !text-sm !font-medium !text-ink-muted", className)}>
+      {children}
+    </h4>
   );
 }

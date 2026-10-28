@@ -4,7 +4,7 @@ import { Doc, Sub, Variants } from "./frame";
 import { streakDaysOpen, streakFrom, streak as streakSummary } from "./mock";
 
 const link =
-  "font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current";
+  "font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current";
 
 const PARTS: [string, string][] = [
   [
@@ -78,11 +78,11 @@ export function StreakPage() {
               className="grid gap-1 border-b border-edge px-5 py-3 last:border-b-0 @3xl:grid-cols-[160px_1fr] @3xl:gap-4"
             >
               <span className="text-base font-medium">{name}</span>
-              <span className="text-sm text-text-2">{what}</span>
+              <span className="text-sm text-ink-secondary">{what}</span>
             </div>
           ))}
         </div>
-        <p className="text-base text-text-2">
+        <p className="text-base text-ink-secondary">
           The pill and the modal carry the flame, which says how far today has come; the number says
           whether the streak is alive. Its states are on{" "}
           <DocLink to={{ kind: "page", page: "flame" }} className={link}>
@@ -100,7 +100,7 @@ export function StreakPage() {
         title="How a day counts"
         note="The rules the server applies. The screens only show the result."
       >
-        <ul className="grid gap-2 text-base text-text-2">
+        <ul className="grid gap-2 text-base text-ink-secondary">
           {RULES.map((r) => (
             <li key={r} className="edge rounded-md bg-plate px-4 py-3">
               {r}
@@ -160,7 +160,7 @@ export function StreakPage() {
       </Sub>
 
       <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Don’t make the number the largest thing on the screen.",
             "Don’t celebrate the goal. No confetti, no badge, no toast.",

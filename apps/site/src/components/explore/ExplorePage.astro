@@ -30,7 +30,7 @@ const description = exploreDescription(i18n);
     type="application/ld+json"
     set:html={jsonForScript(exploreStructuredData(decks, locale, { name: title, description }))}
   />
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <header class="explore-hero over-tint">
       <PublicNav client:load locale={locale} />
       <div class="mx-auto max-w-[1160px] px-5 pt-10 pb-4 text-center @2xl:px-10 @4xl:pt-16">

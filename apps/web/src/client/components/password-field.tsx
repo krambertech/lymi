@@ -76,7 +76,7 @@ export function PasswordField({
           type="button"
           onClick={() => setShown((was) => !was)}
           // The box is 44 px on a phone, and this reaches the whole of its end edge.
-          className="absolute inset-y-0 end-0 flex w-12 items-center justify-center rounded-e-md text-muted transition-colors duration-150 hoverable:hover:text-text-2"
+          className="absolute inset-y-0 end-0 flex w-12 items-center justify-center rounded-e-md text-ink-muted transition-colors duration-150 hoverable:hover:text-ink-secondary"
           aria-pressed={shown}
           aria-label={shown ? t`Hide password` : t`Show password`}
         >
@@ -113,12 +113,12 @@ function StrengthMeter({ id, strength }: { id: string; strength: PasswordStrengt
             className={clsx(
               "h-1 flex-1 rounded-full transition-colors duration-150",
               step > filled
-                ? "bg-plate-2"
+                ? "bg-plate-nested"
                 : strength === "weak"
                   ? "bg-danger"
                   : strength === "fair"
-                    ? "bg-muted"
-                    : "bg-good",
+                    ? "bg-ink-muted"
+                    : "bg-success",
             )}
           />
         ))}
@@ -126,7 +126,11 @@ function StrengthMeter({ id, strength }: { id: string; strength: PasswordStrengt
       <span
         className={clsx(
           "text-xs",
-          strength === "weak" ? "text-danger" : strength === "strong" ? "text-good" : "text-muted",
+          strength === "weak"
+            ? "text-danger"
+            : strength === "strong"
+              ? "text-success"
+              : "text-ink-muted",
         )}
       >
         {LABELS[strength]}

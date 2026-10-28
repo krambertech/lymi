@@ -101,16 +101,16 @@ export function LoginView({
         {app ? (
           <div className="flex flex-col items-center text-center">
             <AppMark app={app} className="size-12" />
-            <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-text">
+            <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-ink">
               <Trans>Continue to {{ appName: isolate(appName) }}</Trans>
             </h1>
-            <p className="mt-2 max-w-[36ch] text-md text-text-2">
+            <p className="mt-2 max-w-[36ch] text-md text-ink-secondary">
               <Trans>Sign in, then choose what it can do.</Trans>
             </p>
           </div>
         ) : (
           <div className="text-center">
-            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
+            <h1 className="text-2xl font-medium tracking-[-0.02em] text-ink">
               {mode === "sign-up" ? (
                 <Trans>Create your Lymi account</Trans>
               ) : mode === "forgot" ? (
@@ -119,7 +119,7 @@ export function LoginView({
                 <Trans>Sign in to Lymi</Trans>
               )}
             </h1>
-            <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
+            <p className="mx-auto mt-2 max-w-[38ch] text-md text-ink-secondary">
               {mode === "forgot" ? (
                 <Trans>We’ll email you a link to set a new one.</Trans>
               ) : mode === "sign-up" ? (
@@ -156,7 +156,7 @@ export function LoginView({
                   loading={pending === "apple"}
                   disabled={Boolean(pending && pending !== "apple")}
                   onClick={onApple}
-                  className="mt-7 w-full edge-2 font-medium mac:mt-5"
+                  className="mt-7 w-full edge-strong font-medium mac:mt-5"
                 >
                   <AppleMark data-icon="inline-start" className="size-5" />
                   <Trans>Continue with Apple</Trans>
@@ -169,14 +169,14 @@ export function LoginView({
                   onClick={onGoogle}
                   // A stronger edge than the usual secondary: this is the way in most learners
                   // take, and the one amber belongs to the form they are filling.
-                  className="mt-3 w-full edge-2 font-medium"
+                  className="mt-3 w-full edge-strong font-medium"
                 >
                   <GoogleMark data-icon="inline-start" className="size-5" />
                   <Trans>Continue with Google</Trans>
                 </Button>
                 <div
                   aria-hidden="true"
-                  className="my-6 mac:my-4 flex items-center gap-3 text-sm text-muted before:h-px before:flex-1 before:bg-edge before:content-[''] after:h-px after:flex-1 after:bg-edge after:content-['']"
+                  className="my-6 mac:my-4 flex items-center gap-3 text-sm text-ink-muted before:h-px before:flex-1 before:bg-edge before:content-[''] after:h-px after:flex-1 after:bg-edge after:content-['']"
                 >
                   <Trans context="Between two ways to sign in">or</Trans>
                 </div>
@@ -228,7 +228,7 @@ export function LoginView({
                       <button
                         type="button"
                         onClick={() => onModeChange?.("forgot")}
-                        className="-me-1 self-end rounded-sm px-1 py-1 text-sm text-muted underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text-2 hoverable:hover:decoration-current"
+                        className="-me-1 self-end rounded-sm px-1 py-1 text-sm text-ink-muted underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:text-ink-secondary hoverable:hover:decoration-current"
                       >
                         <Trans>Forgot your password?</Trans>
                       </button>
@@ -255,7 +255,7 @@ export function LoginView({
               </Button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-muted mac:mt-4">
+            <p className="mt-6 text-center text-sm text-ink-muted mac:mt-4">
               {mode === "sign-in" ? (
                 <>
                   <Trans>New to Lymi?</Trans>{" "}
@@ -284,11 +284,11 @@ export function LoginView({
 /** Said on the web, where a newcomer may not know Lymi yet; the Mac app was installed on purpose. */
 function AccessNote() {
   return (
-    <p className="mt-6 text-center text-sm text-muted mac:hidden">
+    <p className="mt-6 text-center text-sm text-ink-muted mac:hidden">
       <Trans>Lymi is in public beta.</Trans>{" "}
       <a
         href={publicSiteUrl()}
-        className="rounded-sm text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
+        className="rounded-sm text-ink-secondary underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
       >
         <Trans>What is Lymi?</Trans>
       </a>
@@ -301,7 +301,7 @@ function SwitchLink({ onClick, children }: { onClick: () => void; children: Reac
     <button
       type="button"
       onClick={onClick}
-      className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
+      className="rounded-sm font-medium text-ink underline decoration-edge-strong underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
     >
       {children}
     </button>

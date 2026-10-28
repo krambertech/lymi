@@ -32,7 +32,7 @@ export function RecallTally({
   const label = t`${passed} remembered, ${failed} forgotten`;
   // Measured on the plate in both rooms: 3.5:1 and 4.7:1 for a remembered mark, far more
   // for a forgotten one. A mark is a meaningful figure, so it clears 3:1 like any other.
-  const tone = (ok: boolean) => (ok ? "bg-text/50" : "bg-text/85");
+  const tone = (ok: boolean) => (ok ? "bg-ink/50" : "bg-ink/85");
 
   if (graded > COUNTABLE) {
     return (

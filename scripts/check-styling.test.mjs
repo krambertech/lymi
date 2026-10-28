@@ -15,6 +15,20 @@ test("names the token fix for raw and stock colours", () => {
   );
 });
 
+test("names the new token for each renamed one", () => {
+  assert.deepEqual(
+    problemsIn(
+      "apps/mobile/src/x.tsx",
+      '<Icon colour={p["ink-secondary"]} className="bg-plate-hover" />',
+    ),
+    [
+      "renamed token ink-secondary: use ink-secondary, as colour.md names tokens",
+      "renamed token bg-plate-hover: use bg-plate-hover, as colour.md names tokens",
+    ],
+  );
+  assert.deepEqual(problemsIn("apps/web/src/client/x.tsx", 'className="text-ink-muted"'), []);
+});
+
 test("names the logical utility for each physical one", () => {
   const found = problemsIn(
     "apps/site/src/x.tsx",
@@ -59,7 +73,7 @@ test("checks only added lines, and honours the allow comment", () => {
   ].join("\n");
   assert.deepEqual(check(diff), [
     "apps/site/src/mark.tsx:12: physical pl-2: use ps-2",
-    "apps/site/src/mark.tsx:13: raw colour #34A853: use a Lymi token such as bg-plate or text-text-2; dark mode is its own palette, not an inversion",
+    "apps/site/src/mark.tsx:13: raw colour #34A853: use a Lymi token such as bg-plate or text-ink-secondary; dark mode is its own palette, not an inversion",
   ]);
 });
 

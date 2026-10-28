@@ -130,8 +130,8 @@ export function Cards() {
         <tbody>
           {FIELDS.map((f) => (
             <tr key={f.name}>
-              <Td className="whitespace-nowrap font-mono text-sm text-text">{f.name}</Td>
-              <Td className="font-mono text-xs text-muted">{f.type}</Td>
+              <Td className="whitespace-nowrap font-mono text-sm text-ink">{f.name}</Td>
+              <Td className="font-mono text-xs text-ink-muted">{f.type}</Td>
               <Td>{f.note}</Td>
             </tr>
           ))}

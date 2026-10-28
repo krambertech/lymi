@@ -158,7 +158,7 @@ function useFigures(data: InsightsOut, period: Period, onPeriod: (p: Period) => 
 
 function Label({ children }: { children: string }) {
   return (
-    <Text className="text-sm font-medium uppercase text-muted" style={{ letterSpacing: 0.8 }}>
+    <Text className="text-sm font-medium uppercase text-ink-muted" style={{ letterSpacing: 0.8 }}>
       {children}
     </Text>
   );
@@ -175,11 +175,11 @@ function Value({
 }) {
   return (
     <Text
-      className={`${size === "lg" ? "text-3xl" : "text-2xl"} font-medium tracking-tight text-text`}
+      className={`${size === "lg" ? "text-3xl" : "text-2xl"} font-medium tracking-tight text-ink`}
     >
       {value}
       {unit && (
-        <Text className={`${size === "lg" ? "text-lg" : "text-base"} font-normal text-muted`}>
+        <Text className={`${size === "lg" ? "text-lg" : "text-base"} font-normal text-ink-muted`}>
           {" "}
           {unit}
         </Text>
@@ -196,7 +196,7 @@ function StatPlate({ f }: { f: Figure }) {
       {f.control}
       <Value value={f.value} unit={f.unit} />
       <View className="min-h-[74px] justify-center">{f.figure}</View>
-      <Text className="text-base text-muted">{f.note}</Text>
+      <Text className="text-base text-ink-muted">{f.note}</Text>
     </Plate>
   );
 }
@@ -222,7 +222,7 @@ function Figures({ figures }: { figures: Figure[] }) {
               </View>
               <View className="flex-1 items-end">{f.small}</View>
             </View>
-            <Text className="text-base text-muted">{f.note}</Text>
+            <Text className="text-base text-ink-muted">{f.note}</Text>
           </View>
         ))}
       </Plate>
@@ -256,7 +256,7 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
   return (
     <View>
       <SectionTitle>{t`Often forgotten`}</SectionTitle>
-      <Text className="-mt-2 px-1 pb-3 text-base text-muted">
+      <Text className="-mt-2 px-1 pb-3 text-base text-ink-muted">
         <Trans>
           Forgotten on {leeches.forgottenDays} of the last{" "}
           <Plural value={leeches.recentDays} one="# day" other="# days" /> seen
@@ -274,10 +274,10 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
               className={`min-h-[52px] flex-row items-center gap-3 ps-4 pe-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
             >
               {/* The term and how often it slipped: the card in its deck holds the rest. */}
-              <Text className="flex-1 text-md text-text" numberOfLines={2}>
+              <Text className="flex-1 text-md text-ink" numberOfLines={2}>
                 {c.term}
               </Text>
-              <Text className="text-md text-muted">{t`${plural(c.lapses, { one: "# forgotten", other: "# forgotten" })}`}</Text>
+              <Text className="text-md text-ink-muted">{t`${plural(c.lapses, { one: "# forgotten", other: "# forgotten" })}`}</Text>
               <RowArrow />
             </View>
           </Press>
@@ -324,7 +324,7 @@ function Loaded({
       <DayByDay activity={data.activity} />
       <OftenForgotten leeches={data.leeches} />
       {graded > 0 && graded < 30 && (
-        <Text className="px-1 text-base text-muted">
+        <Text className="px-1 text-base text-ink-muted">
           <Plural
             value={graded}
             one="Recall is based on only # review, so it can swing a lot for the first few weeks."
@@ -360,7 +360,7 @@ function Failed({ onRetry, busy }: { onRetry: () => void; busy: boolean }) {
   const { t } = useLingui();
   return (
     <Plate className="items-start gap-3 p-5">
-      <Text className="text-md font-medium text-text">{t`Couldn’t load Insights`}</Text>
+      <Text className="text-md font-medium text-ink">{t`Couldn’t load Insights`}</Text>
       <Button label={t`Try again`} onPress={onRetry} loading={busy} />
     </Plate>
   );
@@ -370,8 +370,8 @@ function NothingYet() {
   const { t } = useLingui();
   return (
     <Plate className="gap-2 p-5">
-      <Text className="text-md font-medium text-text">{t`Insights start after your first review`}</Text>
-      <Text className="text-base text-muted">
+      <Text className="text-md font-medium text-ink">{t`Insights start after your first review`}</Text>
+      <Text className="text-base text-ink-muted">
         {t`Add cards and review them to see your progress here.`}
       </Text>
     </Plate>

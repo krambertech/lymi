@@ -23,13 +23,13 @@ const rect = (s, fill) =>
 function unlit(p) {
   const frame = LANTERN_FRAME.map((s) =>
     s.d
-      ? `<path d="${s.d}" fill="${p.metal}"${s.stroke ? ` stroke="${p.metal}" stroke-width="${s.strokeWidth}" stroke-linejoin="round"` : ""}/>`
-      : rect(s, p.metal),
+      ? `<path d="${s.d}" fill="${p["lantern-metal"]}"${s.stroke ? ` stroke="${p["lantern-metal"]}" stroke-width="${s.strokeWidth}" stroke-linejoin="round"` : ""}/>`
+      : rect(s, p["lantern-metal"]),
   ).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="${PX}" height="${PX}">
-<path d="${LANTERN_BAIL.d}" fill="none" stroke="${p.metal}" stroke-width="${LANTERN_BAIL.strokeWidth}" stroke-linecap="round"/>
-${rect(LANTERN_GLASS, p["glass-unlit"])}
-<path d="${EMBER.d}" fill="${p["edge-2"]}"/>
+<path d="${LANTERN_BAIL.d}" fill="none" stroke="${p["lantern-metal"]}" stroke-width="${LANTERN_BAIL.strokeWidth}" stroke-linecap="round"/>
+${rect(LANTERN_GLASS, p["lantern-glass-unlit"])}
+<path d="${EMBER.d}" fill="${p["edge-strong"]}"/>
 ${frame}
 </svg>`;
 }

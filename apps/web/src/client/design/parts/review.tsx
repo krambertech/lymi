@@ -26,7 +26,7 @@ function Shot({
   return (
     <figure className="grid gap-3">
       <div className="flex items-center justify-between gap-3 px-1">
-        <figcaption className="text-sm text-text-2">{caption}</figcaption>
+        <figcaption className="text-sm text-ink-secondary">{caption}</figcaption>
         {toggle}
       </div>
       {children(theme)}

@@ -12,12 +12,12 @@ interface RowProps {
 function Row({ label, source, children }: RowProps) {
   return (
     <div className="col-span-full grid min-h-[46px] grid-cols-subgrid items-start gap-x-3 border-b border-edge py-2.5 last:border-b-0">
-      <span className="pt-1 text-xs tracking-[0.06em] text-muted uppercase">{label}</span>
-      <div className="min-w-0 text-sm text-text-2">{children}</div>
+      <span className="pt-1 text-xs tracking-[0.06em] text-ink-muted uppercase">{label}</span>
+      <div className="min-w-0 text-sm text-ink-secondary">{children}</div>
       <span
         className={clsx(
           "mt-0.5 justify-self-end rounded-xs px-1.5 py-px text-xs tracking-[0.06em] uppercase",
-          source === "AI" ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
+          source === "AI" ? "bg-amber-soft text-amber-text" : "bg-plate-nested text-ink-muted",
         )}
       >
         {source === "AI" ? <Trans>AI</Trans> : <Trans>Lesson</Trans>}
@@ -42,7 +42,7 @@ export function EnrichDemo({ card = SAMPLE_CARDS[0] }: Props) {
         style={{ borderRadius: 14 }}
       >
         <Row label={<Trans>Term</Trans>} source="Lesson">
-          <span lang={card.language} className="text-xl font-medium tracking-[-0.026em] text-text">
+          <span lang={card.language} className="text-xl font-medium tracking-[-0.026em] text-ink">
             {card.term}
           </span>
         </Row>

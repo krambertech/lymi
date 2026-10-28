@@ -196,20 +196,20 @@ export function SectionHeading({
     <View className="flex-row items-start gap-2.5 py-2 ps-1">
       <View className="h-7 justify-center">
         {locked ? (
-          <Icon name="lock" size={16} colour={p.muted} />
+          <Icon name="lock" size={16} colour={p["ink-muted"]} />
         ) : (
           <SectionRing known={section.known} total={section.total} />
         )}
       </View>
       <View className="flex-1 flex-row flex-wrap items-center gap-x-2 gap-y-1">
         <Text
-          className={`text-lg font-medium ${locked ? "text-text-2" : "text-text"}`}
+          className={`text-lg font-medium ${locked ? "text-ink-secondary" : "text-ink"}`}
           accessibilityRole="header"
           accessibilityLabel={headingLabel}
         >
           {sectionName}
           <Text
-            className="text-base font-normal text-muted"
+            className="text-base font-normal text-ink-muted"
             style={{ fontVariant: ["tabular-nums"] }}
           >
             {`  ${i18n.number(count)}`}
@@ -217,7 +217,7 @@ export function SectionHeading({
         </Text>
         {here && (
           // Green, not amber: it says where the learner is and asks for nothing.
-          <View className="h-6 flex-row items-center gap-1 rounded-full bg-good pe-2.5 ps-1.5">
+          <View className="h-6 flex-row items-center gap-1 rounded-full bg-success pe-2.5 ps-1.5">
             <Icon name="here" size={13} colour={p.canvas} strokeWidth={2.25} />
             <Text className="text-sm font-medium" style={{ color: p.canvas }}>
               {t`You are here`}
@@ -278,8 +278,8 @@ export function ReadyNote({
   const { t } = useLingui();
   const sectionName = section.name;
   return (
-    <View className="mb-1 mt-2 gap-3 rounded-lg bg-plate-2 p-4">
-      <Text className="text-base text-text-2">
+    <View className="mb-1 mt-2 gap-3 rounded-lg bg-plate-nested p-4">
+      <Text className="text-base text-ink-secondary">
         {t`${{ sectionName: isolate(sectionName) }} is ready. Start it to review its cards.`}
       </Text>
       <Button
@@ -302,7 +302,7 @@ export function SectionRing({ known, total }: { known: number; total: number }) 
   const p = usePalette();
   const share = total > 0 ? Math.min(1, known / total) : 0;
   const done = total > 0 && known >= total;
-  const colour = share > 0 ? p["state-known"] : p.muted;
+  const colour = share > 0 ? p["state-known"] : p["ink-muted"];
   const knownN = i18n.number(known);
   return (
     <View

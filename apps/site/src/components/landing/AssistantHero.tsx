@@ -44,7 +44,7 @@ function Headline() {
     <h1
       ref={ref}
       aria-label={t`Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything`}
-      className="text-5xl font-medium tracking-[-0.038em] text-text @4xl:text-[4.25rem]"
+      className="text-5xl font-medium tracking-[-0.038em] text-ink @4xl:text-[4.25rem]"
     >
       <span aria-hidden="true" className="block leading-[1.05]">
         <Trans>Make cards with</Trans>
@@ -110,15 +110,15 @@ function Conversation() {
             animate={appear(at("photo"))}
             transition={move}
           >
-            <p className="text-2xs text-muted">Dienstag</p>
-            <ul lang="de" className="notes-hand mt-0.5 text-lg leading-[1.1] text-text-2">
+            <p className="text-2xs text-ink-muted">Dienstag</p>
+            <ul lang="de" className="notes-hand mt-0.5 text-lg leading-[1.1] text-ink-secondary">
               {NOTES.map((line) => (
                 <li key={line}>{line}</li>
               ))}
             </ul>
           </motion.div>
           <motion.p
-            className="bg-text px-3.5 py-2 text-md text-canvas"
+            className="bg-ink px-3.5 py-2 text-md text-canvas"
             style={{ borderRadius: 16 }}
             initial={false}
             animate={appear(at("ask"))}
@@ -129,7 +129,7 @@ function Conversation() {
         </div>
 
         <motion.p
-          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-2 ps-1 pe-3 text-sm text-text-2"
+          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-nested ps-1 pe-3 text-sm text-ink-secondary"
           initial={false}
           animate={appear(at("calling"))}
           transition={move}
@@ -140,18 +140,18 @@ function Conversation() {
           {at("called") ? (
             <>
               <Trans>Used Lymi</Trans>
-              <Check aria-hidden="true" className="size-4 text-good" />
+              <Check aria-hidden="true" className="size-4 text-success" />
             </>
           ) : (
             <>
               <Trans>Using Lymi</Trans>
-              <LoaderCircle aria-hidden="true" className="size-4 animate-spin text-muted" />
+              <LoaderCircle aria-hidden="true" className="size-4 animate-spin text-ink-muted" />
             </>
           )}
         </motion.p>
 
         <motion.p
-          className="text-md text-text"
+          className="text-md text-ink"
           initial={false}
           animate={appear(at("reply"))}
           transition={move}
@@ -172,14 +172,14 @@ function Conversation() {
               }
               transition={{ ...move, delay: still || !at("cards") ? 0 : i * 0.12 }}
             >
-              <p className="text-2xs text-muted">{i18n._(card.label)}</p>
+              <p className="text-2xs text-ink-muted">{i18n._(card.label)}</p>
               <p
                 lang="de"
-                className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-text"
+                className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-ink"
               >
                 {card.term}
               </p>
-              <p className="truncate text-xs text-text-2">{i18n._(card.meaning)}</p>
+              <p className="truncate text-xs text-ink-secondary">{i18n._(card.meaning)}</p>
             </motion.li>
           ))}
         </ul>
@@ -193,7 +193,7 @@ export function AssistantHero() {
     <div className="mx-auto grid max-w-[1120px] items-center gap-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @4xl:gap-16 @4xl:pt-14">
       <div className="min-w-0 max-w-[560px]">
         <Headline />
-        <p className="mt-6 max-w-[40ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+        <p className="mt-6 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           <Trans>
             Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings
             each one back right before you’d forget.

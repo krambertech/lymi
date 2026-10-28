@@ -1132,10 +1132,10 @@ function ReviewError({
       style={{ paddingTop: insets.top + 24, paddingBottom: Math.max(insets.bottom, 16) }}
     >
       <View className="flex-1 items-center justify-center gap-3 px-2">
-        <Text className="text-center text-xl font-medium text-text" accessibilityRole="header">
+        <Text className="text-center text-xl font-medium text-ink" accessibilityRole="header">
           {title}
         </Text>
-        <Text className="text-center text-md text-text-2">{body}</Text>
+        <Text className="text-center text-md text-ink-secondary">{body}</Text>
       </View>
       <View className="gap-3">
         <Button label={action} size="lg" onPress={onAction} />
@@ -1262,16 +1262,16 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
         <Lantern size={44} progress={progress} out={out} fed={fed} />
       </View>
       <View
-        className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
+        className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-nested"
         style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
       >
-        <Animated.View className="h-full rounded-full bg-text-2" style={fill} />
+        <Animated.View className="h-full rounded-full bg-ink-secondary" style={fill} />
       </View>
       {/* Sized to its own figures, so the gap after the bar never holds digits not yet reached. */}
       <Text
         // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
         maxFontSizeMultiplier={1.3}
-        className="ms-1 text-base text-text-2"
+        className="ms-1 text-base text-ink-secondary"
         style={{ fontVariant: ["tabular-nums"] }}
       >
         {done}/{total}
@@ -1428,7 +1428,7 @@ function CardPlate({
     (!furigana || separate) &&
     mode.cue !== "term" && (
       <Animated.View entering={arrive()}>
-        <Text className="text-md text-muted" lang={card.language}>
+        <Text className="text-md text-ink-muted" lang={card.language}>
           {card.pronunciation}
         </Text>
       </Animated.View>
@@ -1487,8 +1487,8 @@ function CardPlate({
             className={`flex-row items-center justify-between gap-2 px-5 pt-4 ${stackHeader ? "flex-wrap" : ""}`}
           >
             <View className="min-w-0 shrink flex-row items-center gap-1.5">
-              <Icon name="deck" size={14} colour={p.muted} />
-              <Text className="shrink text-sm font-medium text-text-2" numberOfLines={1}>
+              <Icon name="deck" size={14} colour={p["ink-muted"]} />
+              <Text className="shrink text-sm font-medium text-ink-secondary" numberOfLines={1}>
                 {[isolate(deck?.name), ...tail].filter(Boolean).join(" · ")}
               </Text>
             </View>
@@ -1529,7 +1529,7 @@ function CardPlate({
                     card.image ? (
                       <Picture card={card} />
                     ) : (
-                      <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
+                      <Text className="text-md text-ink-muted">{t`This card’s picture was removed.`}</Text>
                     )
                   ) : (
                     <CardLine
@@ -1553,7 +1553,7 @@ function CardPlate({
                     card.pronunciation &&
                     (revealed ? (
                       <Animated.View entering={arrive()} className="pt-1">
-                        <Text className="text-md text-muted" lang={card.language}>
+                        <Text className="text-md text-ink-muted" lang={card.language}>
                           {card.pronunciation}
                         </Text>
                       </Animated.View>
@@ -1563,7 +1563,7 @@ function CardPlate({
                         accessibilityElementsHidden
                         importantForAccessibility="no-hide-descendants"
                       >
-                        <Text className="text-md text-muted" lang={card.language}>
+                        <Text className="text-md text-ink-muted" lang={card.language}>
                           {card.pronunciation}
                         </Text>
                       </View>
@@ -1591,19 +1591,16 @@ function CardPlate({
                                 separate ? (
                                   <Furigana
                                     segments={[{ text: card.term }]}
-                                    className="text-2xl font-medium text-text"
+                                    className="text-2xl font-medium text-ink"
                                   />
                                 ) : (
-                                  <TermText
-                                    card={card}
-                                    className="text-2xl font-medium text-text"
-                                  />
+                                  <TermText card={card} className="text-2xl font-medium text-ink" />
                                 )
                               ) : (
                                 <Furigana
                                   segments={[{ text: back }]}
-                                  className="text-2xl font-medium text-text"
-                                  style={back === noMeaning ? { color: p.muted } : undefined}
+                                  className="text-2xl font-medium text-ink"
+                                  style={back === noMeaning ? { color: p["ink-muted"] } : undefined}
                                 />
                               )}
                             </View>
@@ -1617,7 +1614,7 @@ function CardPlate({
                             grows
                             lang={mode.target === "term" ? card.language : null}
                             term={mode.target === "term" ? termCard : null}
-                            muted={back === noMeaning ? p.muted : undefined}
+                            muted={back === noMeaning ? p["ink-muted"] : undefined}
                             after={
                               pronounce && mode.target === "term" ? (
                                 <PronounceButton pronounce={pronounce} />
@@ -1636,15 +1633,15 @@ function CardPlate({
                             {mode.target === "term" ? (
                               <Furigana
                                 segments={[{ text: card.meaning ?? "" }]}
-                                className="text-lg text-text-2"
+                                className="text-lg text-ink-secondary"
                               />
                             ) : separate ? (
                               <Furigana
                                 segments={[{ text: card.term }]}
-                                className="text-lg text-text-2"
+                                className="text-lg text-ink-secondary"
                               />
                             ) : (
-                              <TermText card={card} className="text-lg text-text-2" />
+                              <TermText card={card} className="text-lg text-ink-secondary" />
                             )}
                           </View>
                           {pronounce && mode.target !== "term" && (
@@ -1665,11 +1662,11 @@ function CardPlate({
                               text={card.example ?? ""}
                               known={known}
                               plain={separate}
-                              className="text-md text-text-2"
+                              className="text-md text-ink-secondary"
                               lang={card.language}
                               translation={
                                 translation
-                                  ? { text: translation, className: "text-md text-muted" }
+                                  ? { text: translation, className: "text-md text-ink-muted" }
                                   : null
                               }
                               after={exampleSound && <ExampleAudioButton sound={exampleSound} />}
@@ -1679,7 +1676,7 @@ function CardPlate({
                       )}
                       {card.notes && (
                         <Animated.View entering={arrive()}>
-                          <CardNotes source={card.notes} className="text-base text-muted" />
+                          <CardNotes source={card.notes} className="text-base text-ink-muted" />
                         </Animated.View>
                       )}
                       {place && (
@@ -1828,7 +1825,7 @@ function GradeStrip({
           entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
           exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
           pointerEvents="none"
-          className="absolute bottom-full end-4 mb-2 max-w-64 flex-row items-start gap-2 rounded-lg bg-text px-3 py-2"
+          className="absolute bottom-full end-4 mb-2 max-w-64 flex-row items-start gap-2 rounded-lg bg-ink px-3 py-2"
         >
           <View className="pt-0.5">
             <Icon name="lock" size={14} colour={p.canvas} />
@@ -1864,14 +1861,17 @@ function GradeStrip({
               style={dark ? LIFT : undefined}
             >
               <View className="items-center gap-1.5" style={lock ? { opacity: 0.45 } : undefined}>
-                <Icon name={g.icon} size={20} colour={lock ? p.muted : p[g.tint]} />
-                <Text maxFontSizeMultiplier={1.3} className="text-sm font-medium text-text-2">
+                <Icon name={g.icon} size={20} colour={lock ? p["ink-muted"] : p[g.tint]} />
+                <Text
+                  maxFontSizeMultiplier={1.3}
+                  className="text-sm font-medium text-ink-secondary"
+                >
                   {label}
                 </Text>
               </View>
               {lock && (
                 <View className="absolute end-2.5 top-2.5">
-                  <Icon name="lock" size={12} colour={p.muted} />
+                  <Icon name="lock" size={12} colour={p["ink-muted"]} />
                 </View>
               )}
             </Press>
@@ -2079,7 +2079,7 @@ function Completion({
             <Animated.View style={heading$}>
               {/* A long deck name stops at three lines, so the count and Done stay in view. */}
               <Text
-                className="text-center text-2xl font-medium text-text"
+                className="text-center text-2xl font-medium text-ink"
                 accessibilityRole="header"
                 numberOfLines={3}
               >
@@ -2100,7 +2100,7 @@ function Completion({
                   <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
                 </Animated.View>
                 <Animated.View style={label$}>
-                  <Text className="text-md text-muted">
+                  <Text className="text-md text-ink-muted">
                     {/* While the goal is open the count says it, so Continue's count explains itself. */}
                     {screen.satisfied
                       ? t`${plural(to, { one: "review today", other: "reviews today" })}`
@@ -2110,7 +2110,7 @@ function Completion({
               </View>
             ) : (
               <Animated.View style={count$}>
-                <Text className="text-center text-md text-text-2">
+                <Text className="text-center text-md text-ink-secondary">
                   {t`Come back later, or add new cards.`}
                 </Text>
               </Animated.View>
@@ -2140,7 +2140,7 @@ function Completion({
                 <>
                   {/* The new run rolls up warm, then cools to its ink. */}
                   <Animated.View key={streak} style={ticked ? tick$ : undefined}>
-                    <Text className="text-md font-semibold text-text" style={styles.figures}>
+                    <Text className="text-md font-semibold text-ink" style={styles.figures}>
                       {streak}
                     </Text>
                     {ticked && (
@@ -2154,12 +2154,12 @@ function Completion({
                       </Animated.View>
                     )}
                   </Animated.View>
-                  <Text className="text-md text-text-2">
+                  <Text className="text-md text-ink-secondary">
                     {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
                   </Text>
                 </>
               ) : (
-                <Text className="text-md font-medium text-text">{start}</Text>
+                <Text className="text-md font-medium text-ink">{start}</Text>
               )}
             </Animated.View>
           </View>
@@ -2307,7 +2307,7 @@ function RollingCount({
         style={[
           styles.count,
           {
-            color: p.text,
+            color: p.ink,
             fontSize: fit.drawn,
             lineHeight: fit.drawn * 1.2,
             letterSpacing: fit.letterSpacing,

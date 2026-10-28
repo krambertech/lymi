@@ -150,14 +150,14 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
   return (
     <form
       noValidate
-      className="@container relative z-20 grid gap-1 rounded-md bg-plate-2 ps-4 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
+      className="@container relative z-20 grid gap-1 rounded-md bg-plate-nested ps-4 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-strong"
       onSubmit={(e) => {
         e.preventDefault();
         if (!pending) void save();
       }}
     >
       <label className="flex min-w-0 items-start gap-2 pe-2.5">
-        <HintIcon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+        <HintIcon className="mt-[3px] size-4 shrink-0 text-ink-muted" aria-hidden="true" />
         <span className="sr-only">{t`Hint`}</span>
         <textarea
           ref={field}
@@ -186,7 +186,7 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
           }}
           autoComplete="off"
           enterKeyHint="done"
-          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
+          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-ink outline-none placeholder:text-ink-faint"
         />
       </label>
       {/* Like a composer: the field's helper at the start, the answer to it at the end. */}
@@ -194,7 +194,7 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
         <p
           role="status"
           // A narrow card puts the status on its own line under the text, a wide one right after Draft; a note wraps rather than lose its end.
-          className={`order-first min-w-0 basis-full ps-6 text-xs text-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:ps-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
+          className={`order-first min-w-0 basis-full ps-6 text-xs text-ink-muted empty:hidden @md:order-none @md:flex-1 @md:basis-0 @md:ps-0 @md:empty:block ${draftNote || problem ? "" : "@md:truncate"}`}
         >
           {problem ? <InlineError>{problem}</InlineError> : draftNote ? draftNote : null}
         </p>

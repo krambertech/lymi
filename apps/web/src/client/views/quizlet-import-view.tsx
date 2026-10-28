@@ -113,7 +113,7 @@ export function QuizletImportView({
 
   return (
     <ImportShell title={t`Import from Quizlet`} back={back}>
-      <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
+      <p className="-mt-4 max-w-[60ch] text-md text-ink-secondary text-pretty">
         <Trans>
           Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and
           progress don’t, so every card starts as new.
@@ -124,27 +124,26 @@ export function QuizletImportView({
         <h2 id="quizlet-steps" className="text-md font-medium">
           <Trans>Copying from Quizlet</Trans>
         </h2>
-        <ol className="grid gap-3 text-base text-text-2">
+        <ol className="grid gap-3 text-base text-ink-secondary">
           {[
             <Trans key="open">
               On quizlet.com, open your set, open its{" "}
-              <strong className="font-medium text-text">…</strong> menu and choose{" "}
-              <strong className="font-medium text-text">Export</strong>.
+              <strong className="font-medium text-ink">…</strong> menu and choose{" "}
+              <strong className="font-medium text-ink">Export</strong>.
             </Trans>,
             <Trans key="seps">
-              Keep <strong className="font-medium text-text">Tab</strong> and{" "}
-              <strong className="font-medium text-text">New line</strong>. If a card has line
-              breaks, set a custom row separator such as ##.
+              Keep <strong className="font-medium text-ink">Tab</strong> and{" "}
+              <strong className="font-medium text-ink">New line</strong>. If a card has line breaks,
+              set a custom row separator such as ##.
             </Trans>,
             <Trans key="copy">
-              Press <strong className="font-medium text-text">Copy text</strong>, then paste it
-              here.
+              Press <strong className="font-medium text-ink">Copy text</strong>, then paste it here.
             </Trans>,
           ].map((node, i) => (
             <li key={node.key} className="grid grid-cols-[26px_1fr] gap-3">
               <span
                 aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+                className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
               >
                 {i + 1}
               </span>
@@ -232,7 +231,7 @@ export function QuizletImportView({
             {cards > 0 && (
               <div className="edge overflow-hidden rounded-xl bg-plate">
                 <table className="w-full table-fixed text-start text-base">
-                  <thead className="text-sm text-muted">
+                  <thead className="text-sm text-ink-muted">
                     <tr>
                       <th scope="col" className="px-4 py-2 font-medium">
                         <Trans>Term</Trans>
@@ -251,7 +250,7 @@ export function QuizletImportView({
                         </td>
                         <td
                           dir="auto"
-                          className="px-4 py-2 break-words whitespace-pre-wrap text-text-2"
+                          className="px-4 py-2 break-words whitespace-pre-wrap text-ink-secondary"
                         >
                           {card.definition}
                         </td>
@@ -261,7 +260,7 @@ export function QuizletImportView({
                 </table>
               </div>
             )}
-            <ul className="grid gap-1 text-sm text-text-2">
+            <ul className="grid gap-1 text-sm text-ink-secondary">
               {cards > PREVIEW_ROWS && (
                 <li>
                   {plural(cards - PREVIEW_ROWS, {

@@ -70,7 +70,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the cue alone.
 2. On reveal the cue glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the reveal-divider animation. On the phone it draws in `edge-2` from the start, with no amber.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-strong` over the next 700 ms. This is the reveal-divider animation. On the phone it draws in `edge-strong` from the start, with no amber.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 

@@ -69,7 +69,7 @@ function PublisherMark({
   const letter = (
     <span
       aria-hidden="true"
-      className="grid size-7 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
+      className="grid size-7 place-items-center rounded-full bg-ink text-sm font-semibold text-canvas"
     >
       {publisher.trim().charAt(0).toLocaleUpperCase(locale)}
     </span>
@@ -110,11 +110,11 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
       <PublisherMark publisher={publisher} photo={photo} locale={i18n.locale} />
-      <span className="font-medium text-text">
+      <span className="font-medium text-ink">
         <Trans>By {publisher}</Trans>
       </span>
       {checked && (
-        <span className="text-muted before:me-2.5 before:text-faint before:content-['·']">
+        <span className="text-ink-muted before:me-2.5 before:text-ink-faint before:content-['·']">
           <Trans>Checked {checked}</Trans>
         </span>
       )}
@@ -128,11 +128,11 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const shelf =
     languageName(taughtLanguage(deck), i18n.locale, { label: true }) ?? deckSubject(i18n, deck);
   return (
-    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-muted">
+    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-ink-muted">
       {shelf && (
         <>
           <span>{shelf}</span>
-          <span aria-hidden="true" className="text-faint">
+          <span aria-hidden="true" className="text-ink-faint">
             ·
           </span>
         </>
@@ -153,7 +153,7 @@ function DeckTags({ deck }: { deck: PublicDeckOut }) {
       {deck.tags.map((tag) => (
         <li
           key={tag}
-          className="inline-flex h-7 items-center rounded-full bg-plate-2 px-3 text-sm font-medium text-text-2"
+          className="inline-flex h-7 items-center rounded-full bg-plate-nested px-3 text-sm font-medium text-ink-secondary"
         >
           {tagLabel(i18n, tag)}
         </li>
@@ -174,7 +174,7 @@ export function DeckRelated({ decks, locale }: LocaleProps & { decks: PublicDeck
         <div className="mx-auto max-w-[1040px]">
           <h2
             id="related-title"
-            className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+            className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
           >
             <Trans>More like this</Trans>
           </h2>
@@ -192,7 +192,7 @@ export function DeckRelated({ decks, locale }: LocaleProps & { decks: PublicDeck
 }
 
 const LINK_CHIP =
-  "inline-flex h-10 items-center gap-2 rounded-full bg-plate-2 px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
+  "inline-flex h-10 items-center gap-2 rounded-full bg-plate-nested px-4 text-md font-medium text-ink transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
 
 /** One row of plain links to other decks, each named as Explore names it, with its card count. */
 function DeckLinkRow({
@@ -204,7 +204,7 @@ function DeckLinkRow({
   if (decks.length === 0) return null;
   return (
     <div>
-      <h2 id={id} className="text-sm text-muted">
+      <h2 id={id} className="text-sm text-ink-muted">
         {title}
       </h2>
       <ul aria-labelledby={id} className="mt-3 flex flex-wrap gap-2">
@@ -212,7 +212,7 @@ function DeckLinkRow({
           <li key={deck.slug}>
             <a href={deckPath(deck.slug, locale)} className={LINK_CHIP}>
               <span lang={deck.meaningLanguage}>{deck.name}</span>
-              <span className="text-sm text-muted tabular-nums">{deck.cardCount}</span>
+              <span className="text-sm text-ink-muted tabular-nums">{deck.cardCount}</span>
             </a>
           </li>
         ))}
@@ -257,10 +257,10 @@ function DeckNeighboursBody({ deck, links, locale }: DeckProps & { links: DeckLi
           <p>
             <a
               href={shelfPath(links.shelf.route, locale)}
-              className={`${LINK_CHIP} bg-transparent shadow-[inset_0_0_0_1px_var(--edge-2)]`}
+              className={`${LINK_CHIP} bg-transparent shadow-[inset_0_0_0_1px_var(--edge-strong)]`}
             >
               <Trans>All {shelfName} decks</Trans>
-              <ChevronRight aria-hidden="true" className="size-4 text-muted rtl:rotate-180" />
+              <ChevronRight aria-hidden="true" className="size-4 text-ink-muted rtl:rotate-180" />
             </a>
           </p>
         )}
@@ -281,7 +281,7 @@ export function DeckFooterFacts({ deck, locale }: DeckProps) {
 function DeckFooterFactsLine({ deck }: { deck: PublicDeckOut }) {
   const date = useDate();
   return (
-    <p className="px-5 pb-16 text-center text-sm text-muted @2xl:px-10">
+    <p className="px-5 pb-16 text-center text-sm text-ink-muted @2xl:px-10">
       <Trans>Published {date(deck.publishedAt)}</Trans>
     </p>
   );
@@ -371,13 +371,13 @@ export function DeckHero({
         <DeckByline deck={deck} />
         <h1
           lang={deck.meaningLanguage}
-          className="mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-text @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
+          className="mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
         >
           {deck.name}
         </h1>
         <p
           lang={deck.meaningLanguage}
-          className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl"
+          className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl"
         >
           {deck.summary}
         </p>
@@ -395,7 +395,7 @@ export function DeckHero({
             </a>
           )}
         </div>
-        <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-muted">
+        <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted">
           <Trans>
             Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to
             use.
@@ -459,7 +459,7 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
       <div className="min-w-0">
         <h2
           id="how-title"
-          className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+          className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
         >
           <Trans>How it works</Trans>
         </h2>
@@ -468,13 +468,15 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
             <li key={item.key} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3">
               <span
                 aria-hidden="true"
-                className="grid size-8 place-items-center rounded-full bg-plate-2 text-sm font-semibold text-text-2 tabular-nums"
+                className="grid size-8 place-items-center rounded-full bg-plate-nested text-sm font-semibold text-ink-secondary tabular-nums"
               >
                 {index + 1}
               </span>
               <div className="pt-1">
-                <h3 className="text-lg font-medium tracking-[-0.02em] text-text">{item.title}</h3>
-                <p className="mt-1 max-w-[40ch] text-md text-pretty text-text-2">{item.body}</p>
+                <h3 className="text-lg font-medium tracking-[-0.02em] text-ink">{item.title}</h3>
+                <p className="mt-1 max-w-[40ch] text-md text-pretty text-ink-secondary">
+                  {item.body}
+                </p>
               </div>
             </li>
           ))}
@@ -493,14 +495,14 @@ export function DeckGone({ status, locale }: GoneProps) {
   return (
     <Localized locale={locale}>
       <main className="mx-auto grid w-full max-w-xl content-center px-5 py-20 text-center">
-        <h1 className="text-3xl font-medium tracking-[-0.02em] text-balance text-text @2xl:text-4xl">
+        <h1 className="text-3xl font-medium tracking-[-0.02em] text-balance text-ink @2xl:text-4xl">
           {status === 410 ? (
             <Trans>This deck is no longer published.</Trans>
           ) : (
             <Trans>There is no deck at this address.</Trans>
           )}
         </h1>
-        <p className="mt-4 text-md text-pretty text-text-2">
+        <p className="mt-4 text-md text-pretty text-ink-secondary">
           {status === 410 ? (
             <Trans>
               Its publisher took it off Lymi’s public pages. Anyone who already added it keeps

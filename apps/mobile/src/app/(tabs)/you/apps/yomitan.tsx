@@ -100,8 +100,8 @@ export default function Yomitan() {
               ) : (
                 <>
                   <View className="gap-0.5">
-                    <Text className="text-md font-medium text-text">{t`API key`}</Text>
-                    <Text className="text-sm text-muted">
+                    <Text className="text-md font-medium text-ink">{t`API key`}</Text>
+                    <Text className="text-sm text-ink-muted">
                       {t`A new key replaces this one, and this one stops working.`}
                     </Text>
                   </View>
@@ -220,7 +220,7 @@ function KeyReady({ value, onDone }: { value: string; onDone: () => void }) {
   const { t } = useLingui();
   return (
     <View className="gap-3 self-stretch">
-      <Text className="text-base text-text" accessibilityLiveRegion="polite">
+      <Text className="text-base text-ink" accessibilityLiveRegion="polite">
         {t`Your key is ready. Copy it now. You won’t see it again.`}
       </Text>
       <CopyField label={t`API key for Yomitan`} value={value} />

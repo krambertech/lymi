@@ -5,7 +5,11 @@
  * connection is the one thing on these screens that actually happens.
  */
 .rail-track {
-  background-image: repeating-linear-gradient(to right, var(--edge-2) 0 3px, transparent 3px 7px);
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--edge-strong) 0 3px,
+    transparent 3px 7px
+  );
 }
 /* The fill only exists once the grant lands, so it draws from its starting style. */
 .rail-fill {

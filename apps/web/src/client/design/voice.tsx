@@ -25,7 +25,7 @@ export function Voice() {
       lede="Plain and friendly. It counts cards, not points. It never nags and never celebrates for you. Undo replaces confirmation wherever it can. Anything the AI wrote says so."
     >
       <Sub title="Rules">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Sentence case everywhere. Title Case only for proper nouns.",
             "Say what happens: a button reads “Review 11 due” or “Add to Lesson 14”, a toast reads Archived “sbrigarsi”. Not “Submit”, “OK”, “Start”.",
@@ -48,7 +48,7 @@ export function Voice() {
       </Sub>
       <Sub title="Say, don’t say">
         <div className="edge overflow-hidden rounded-lg bg-plate">
-          <div className="hidden grid-cols-[120px_1fr_1fr] gap-4 border-b border-edge px-5 py-2 text-xs font-medium text-muted @3xl:grid">
+          <div className="hidden grid-cols-[120px_1fr_1fr] gap-4 border-b border-edge px-5 py-2 text-xs font-medium text-ink-muted @3xl:grid">
             <span>Where</span>
             <span>Lymi says</span>
             <span>Not</span>
@@ -58,9 +58,9 @@ export function Voice() {
               key={where}
               className="grid grid-cols-[minmax(0,1fr)] gap-1 border-b border-edge px-5 py-3 text-base last:border-b-0 @3xl:grid-cols-[120px_1fr_1fr] @3xl:gap-4"
             >
-              <span className="text-sm text-muted">{where}</span>
-              <span className="text-text">{yes}</span>
-              <span className="text-muted line-through decoration-muted">{no}</span>
+              <span className="text-sm text-ink-muted">{where}</span>
+              <span className="text-ink">{yes}</span>
+              <span className="text-ink-muted line-through decoration-ink-muted">{no}</span>
             </div>
           ))}
         </div>

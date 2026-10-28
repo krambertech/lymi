@@ -122,13 +122,13 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
             onAccessibilityAction={(e) => step(e.nativeEvent.actionName === "increment" ? 1 : -1)}
           >
             <View className="w-5 items-center">
-              {custom && <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />}
+              {custom && <Icon name="check" size={20} colour={p.ink} strokeWidth={2.25} />}
             </View>
             <View className="flex-1 gap-0.5 py-2.5">
-              <Text className={`text-md text-text ${custom ? "font-medium" : ""}`}>
+              <Text className={`text-md text-ink ${custom ? "font-medium" : ""}`}>
                 {t`Your own`}
               </Text>
-              <Text className="text-sm text-muted">
+              <Text className="text-sm text-ink-muted">
                 {plural(own, { one: "review a day", other: "reviews a day" })}
               </Text>
             </View>
@@ -142,7 +142,7 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
                 onPress={() => step(-1)}
               />
               <Text
-                className="min-w-10 text-center text-lg font-medium text-text"
+                className="min-w-10 text-center text-lg font-medium text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {i18n.number(own)}

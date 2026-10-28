@@ -17,9 +17,9 @@ export function EnrichEstonian() {
   const { at } = usePlayback(beats, inView, still);
 
   return (
-    <div ref={root} className="grid gap-2 rounded-xl bg-plate-2 p-3 edge-inset @2xl:p-4">
+    <div ref={root} className="grid gap-2 rounded-xl bg-plate-nested p-3 edge-inset @2xl:p-4">
       <Field label={<Trans>Term</Trans>}>
-        <span lang="et" className="min-h-[1.4em] text-2xl font-medium text-text">
+        <span lang="et" className="min-h-[1.4em] text-2xl font-medium text-ink">
           {at("typed") ? "sõber" : "sõb"}
         </span>
       </Field>
@@ -27,7 +27,7 @@ export function EnrichEstonian() {
         <motion.span
           initial={false}
           animate={appear(at("meaning"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Trans>Friend</Trans>
         </motion.span>
@@ -37,7 +37,7 @@ export function EnrichEstonian() {
           lang="et"
           initial={false}
           animate={appear(at("forms"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           sõber · sõbra · sõpra
         </motion.span>
@@ -47,7 +47,7 @@ export function EnrichEstonian() {
           lang="et"
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           Ma lähen <span className="text-amber-text">sõbraga</span> kinno.
         </motion.span>
@@ -56,7 +56,7 @@ export function EnrichEstonian() {
         <motion.span
           initial={false}
           animate={appear(at("hint"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Trans>
             <span lang="et">Sõber</span> sounds like “sober”: the friend who gets you home.
@@ -147,16 +147,16 @@ export function NotesToCardsEstonian() {
             transition={{ duration: 0.5, ease: EASE }}
             className="flex items-baseline justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 edge"
           >
-            <span lang="et" className="truncate text-xl font-medium text-text">
+            <span lang="et" className="truncate text-xl font-medium text-ink">
               {card.term}
             </span>
-            <span className="shrink-0 text-md text-text-2">{card.meaning}</span>
+            <span className="shrink-0 text-md text-ink-secondary">{card.meaning}</span>
           </motion.div>
         ))}
         <motion.p
           initial={false}
           animate={appear(at("skip"))}
-          className="flex items-baseline justify-between gap-3 px-4 pt-1 text-sm text-muted"
+          className="flex items-baseline justify-between gap-3 px-4 pt-1 text-sm text-ink-muted"
         >
           <span lang="et">palun</span>
           <Trans>Already in your deck, so it’s skipped</Trans>

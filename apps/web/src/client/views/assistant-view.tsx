@@ -54,7 +54,7 @@ export function AssistantView(props: Props) {
           <AppMark app={{ ...identity, name }} className="size-14" />
         ) : (
           <span className="edge grid size-14 place-items-center rounded-lg bg-plate">
-            <Plug className="size-1/2 text-text-2" aria-hidden="true" />
+            <Plug className="size-1/2 text-ink-secondary" aria-hidden="true" />
           </span>
         )
       }
@@ -163,7 +163,7 @@ function TryAsking({ onCopy }: { onCopy: (prompt: string) => void }) {
   ];
   return (
     <div className="grid gap-2 border-t border-edge pt-4">
-      <span className="text-sm font-medium text-text-2">
+      <span className="text-sm font-medium text-ink-secondary">
         <Trans>Then try asking</Trans>
       </span>
       <ul className="flex flex-wrap gap-2">
@@ -217,14 +217,14 @@ function Connect({
     >
       <div className="grid gap-4 border-t border-edge pt-4">
         <div className="grid gap-1.5">
-          <span className="text-sm font-medium text-text-2">
+          <span className="text-sm font-medium text-ink-secondary">
             <Trans>MCP server address</Trans>
           </span>
           <CopyField value={address} label={t`MCP server address`} singleLine />
         </div>
         {assistant.clientId && (
           <div className="grid gap-1.5">
-            <span className="text-sm font-medium text-text-2">
+            <span className="text-sm font-medium text-ink-secondary">
               <Trans>Client ID</Trans>
             </span>
             <CopyField value={assistant.clientId} label={t`Client ID`} singleLine />
@@ -237,7 +237,7 @@ function Connect({
 }
 
 const B = ({ children }: { children: ReactNode }) => (
-  <span className="font-medium text-text">{children}</span>
+  <span className="font-medium text-ink">{children}</span>
 );
 const Code = ({ children }: { children: ReactNode }) => (
   <code className="font-mono text-sm">{children}</code>

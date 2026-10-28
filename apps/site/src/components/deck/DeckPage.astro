@@ -57,7 +57,7 @@ const shelf =
         type="application/ld+json"
         set:html={jsonForScript(deckBreadcrumbs(page.deck, locale, i18n._(EXPLORE_NAME), shelf))}
       />
-      <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+      <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
         <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>
           <PublicNav client:load locale={locale} />
           <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} canTry={stack.length > 0} />
@@ -108,7 +108,7 @@ const shelf =
       canonicalPath={localizedPath("landing", locale)}
     >
       <meta slot="head" name="robots" content="noindex" />
-      <div class="@container flex min-h-dvh flex-col overflow-x-clip bg-canvas text-text">
+      <div class="@container flex min-h-dvh flex-col overflow-x-clip bg-canvas text-ink">
         <header>
           <PublicNav client:load locale={locale} />
         </header>

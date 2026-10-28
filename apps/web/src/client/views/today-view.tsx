@@ -256,7 +256,7 @@ export function TodayView({
                 </h2>
                 <NavLink
                   to="/library"
-                  className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-2 before:content-[''] hoverable:hover:text-text"
+                  className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-ink-secondary transition-colors duration-150 before:absolute before:-inset-2 before:content-[''] hoverable:hover:text-ink"
                 >
                   <Trans>Library</Trans>
                   <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
@@ -276,7 +276,7 @@ export function TodayView({
                         <span dir="auto" className="truncate text-md font-medium">
                           {d.name}
                         </span>
-                        <span className="text-sm text-muted">
+                        <span className="text-sm text-ink-muted">
                           {d.decks > 0 ? (
                             t`${plural(d.due, { one: "card due", other: "cards due" })} in ${plural(d.decks, { one: "# deck", other: "# decks" })}`
                           ) : (
@@ -317,7 +317,7 @@ function DueHeading({
         <h2 className="text-2xl font-medium leading-tight">
           {noDecks ? <Trans>Start with a deck</Trans> : <Trans>No cards yet</Trans>}
         </h2>
-        <p className="text-md text-text-2">
+        <p className="text-md text-ink-secondary">
           {noDecks ? (
             <Trans>Make one for each course or topic.</Trans>
           ) : (
@@ -342,7 +342,7 @@ function DueHeading({
       <span className="text-5xl font-medium leading-none tracking-[-0.03em] tabular-nums">
         <RollingNumber value={due} />
       </span>
-      <span className="text-md text-text-2">
+      <span className="text-md text-ink-secondary">
         {deckName ? (
           <Plural value={due} one={`card due in ${deckName}`} other={`cards due in ${deckName}`} />
         ) : (
@@ -391,13 +391,13 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
   const tile =
     "edge flex w-full items-center gap-4 rounded-xl bg-plate py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
   const pressable =
-    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil";
+    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-strong hoverable:hover:veil";
   const face = (item: (typeof tiles)[number], live: boolean) => (
     <>
       <span
         className={clsx(
           "min-w-10 text-4xl font-medium leading-none tracking-[-0.03em] tabular-nums @3xl:px-5 @3xl:pt-5 @3xl:pb-3 @3xl:text-5xl",
-          !live && "text-muted",
+          !live && "text-ink-muted",
         )}
       >
         {i18n.number(item.count)}
@@ -407,7 +407,9 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
           {item.mark && <StateIcon state={item.mark} className="size-4" />}
           {item.label}
         </span>
-        <span className="text-sm text-balance text-muted">{live ? item.detail : item.empty}</span>
+        <span className="text-sm text-balance text-ink-muted">
+          {live ? item.detail : item.empty}
+        </span>
       </span>
     </>
   );

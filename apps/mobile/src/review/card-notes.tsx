@@ -12,7 +12,7 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }): ReactNode {
         <Text
           // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
           key={i}
-          className="text-text underline"
+          className="text-ink underline"
           accessibilityRole="link"
           onPress={() => void Linking.openURL(node.href)}
         >

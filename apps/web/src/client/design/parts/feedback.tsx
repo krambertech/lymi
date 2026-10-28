@@ -144,7 +144,7 @@ export const feedback: Group = {
       slug: "notice",
       name: "Notice",
       source: "components/notice.tsx",
-      note: "A short notice inside a screen: a title and at most one line more. Neutral on plate-2 says something worth knowing; warning on amber-soft says an action is out of reach for now and sits above the controls it disables, which stay in view and disabled. It is announced once.",
+      note: "A short notice inside a screen: a title and at most one line more. Neutral on plate-nested says something worth knowing; warning on amber-soft says an action is out of reach for now and sits above the controls it disables, which stay in view and disabled. It is announced once.",
       Demo: () => (
         <Variants
           items={[

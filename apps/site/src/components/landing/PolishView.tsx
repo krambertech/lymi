@@ -152,7 +152,7 @@ export function PolishView({ decks, locale }: Props) {
           }
           after={
             <>
-              <p className="text-md text-pretty text-text-2">
+              <p className="text-md text-pretty text-ink-secondary">
                 <Trans>
                   Polish citizenship asks for Polish at B1. Since 1 July 2025 a post-secondary
                   school certificate no longer shows it, so most people take the state B1 exam. The

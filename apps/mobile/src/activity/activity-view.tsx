@@ -330,15 +330,15 @@ function ActivityRow({ entry, time, first, caller: named = true, onCards, onExpo
 
   const face = (
     <View className="min-h-[72px] flex-row items-center gap-3 py-3 ps-4 pe-4">
-      <View className="size-9 items-center justify-center rounded-full bg-plate-2">
-        <Icon name={MARK_ICONS[activityMark(entry.kind)]} size={17} colour={p["text-2"]} />
+      <View className="size-9 items-center justify-center rounded-full bg-plate-nested">
+        <Icon name={MARK_ICONS[activityMark(entry.kind)]} size={17} colour={p["ink-secondary"]} />
       </View>
       <View className="flex-1 gap-1">
-        <Text className="text-md font-medium text-text" numberOfLines={3}>
+        <Text className="text-md font-medium text-ink" numberOfLines={3}>
           <Sentence entry={entry} />
         </Text>
         <FileChip entry={entry} />
-        <Text className="text-sm text-muted" numberOfLines={1}>
+        <Text className="text-sm text-ink-muted" numberOfLines={1}>
           {meta}
         </Text>
       </View>
@@ -434,10 +434,10 @@ function CardsSheet({
     >
       {entry && (
         <View className="gap-1 px-4 pb-1">
-          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="text-lg font-medium text-ink" accessibilityRole="header">
             <Sentence entry={entry} />
           </Text>
-          <Text className="text-sm text-muted">{meta}</Text>
+          <Text className="text-sm text-ink-muted">{meta}</Text>
         </View>
       )}
       <SheetGroup>{rows(cards.slice(0, PEEK))}</SheetGroup>
@@ -452,17 +452,17 @@ function CardRow({ card, onPress }: { card: ActivityCard; onPress: () => void })
   const face = (
     <View className="min-h-[52px] flex-row items-center gap-3 py-2.5 ps-4 pe-3.5">
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={1}>
+        <Text className="text-md font-medium text-ink" numberOfLines={1}>
           {card.term}
         </Text>
         {card.meaning && (
-          <Text className="text-sm text-muted" numberOfLines={1}>
+          <Text className="text-sm text-ink-muted" numberOfLines={1}>
             {card.meaning}
           </Text>
         )}
       </View>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
-      {!card.deckArchived && <Icon name="forward" size={18} colour={p.faint} />}
+      {!card.deckArchived && <Icon name="forward" size={18} colour={p["ink-faint"]} />}
     </View>
   );
   if (card.deckArchived) return face;
@@ -536,7 +536,7 @@ export function ActivityView({
   const p = usePalette();
   const only = filter && (
     <View className="flex-row flex-wrap items-center gap-x-3 gap-y-1 px-1">
-      <Text className="text-base text-text-2">
+      <Text className="text-base text-ink-secondary">
         {filter.name ? t`Only what ${{ app: isolate(filter.name) }} did` : t`Only one app’s writes`}
       </Text>
       <Button label={t`Show everything`} variant="ghost" size="sm" onPress={filter.onClear} />
@@ -545,13 +545,13 @@ export function ActivityView({
   if (offline) {
     return (
       <View className="items-center gap-3 pt-20">
-        <View className="size-16 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="activity" size={28} colour={p["text-2"]} strokeWidth={1.75} />
+        <View className="size-16 items-center justify-center rounded-full bg-plate-nested">
+          <Icon name="activity" size={28} colour={p["ink-secondary"]} strokeWidth={1.75} />
         </View>
-        <Text className="text-center text-lg font-medium text-text">
+        <Text className="text-center text-lg font-medium text-ink">
           {t`Activity needs a connection`}
         </Text>
-        <Text className="max-w-72 text-center text-base text-text-2">
+        <Text className="max-w-72 text-center text-base text-ink-secondary">
           {t`It loads as soon as you’re back online.`}
         </Text>
       </View>
@@ -560,7 +560,7 @@ export function ActivityView({
   if (failed && !entries) {
     return (
       <Plate className="items-start gap-3 p-5">
-        <Text className="text-md font-medium text-text">{t`Couldn’t load Activity`}</Text>
+        <Text className="text-md font-medium text-ink">{t`Couldn’t load Activity`}</Text>
         <Button label={t`Try again`} onPress={onRetry} loading={retrying} />
       </Plate>
     );
@@ -574,7 +574,7 @@ export function ActivityView({
         <Plate className="gap-5 p-4">
           {[0, 1].map((i) => (
             <View key={i} className="flex-row gap-3">
-              <View className="size-9 rounded-full bg-plate-2" />
+              <View className="size-9 rounded-full bg-plate-nested" />
               <View className="flex-1 gap-2">
                 <Skeleton width="80%" height={16} />
                 <Skeleton width="40%" height={12} />
@@ -590,7 +590,7 @@ export function ActivityView({
       <>
         {only}
         <Plate className="p-4">
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             {filter.name
               ? t`Nothing from ${{ app: isolate(filter.name) }} yet. What it adds, edits or archives shows here.`
               : t`Nothing from this app yet. What it adds, edits or archives shows here.`}
@@ -603,11 +603,11 @@ export function ActivityView({
     // An empty Activity is the good news that nothing landed unseen, so it asks for nothing.
     return (
       <View className="items-center gap-3 pt-20">
-        <View className="size-16 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="activity" size={28} colour={p["text-2"]} strokeWidth={1.75} />
+        <View className="size-16 items-center justify-center rounded-full bg-plate-nested">
+          <Icon name="activity" size={28} colour={p["ink-secondary"]} strokeWidth={1.75} />
         </View>
-        <Text className="text-center text-lg font-medium text-text">{t`No activity yet`}</Text>
-        <Text className="max-w-72 text-center text-base text-text-2">
+        <Text className="text-center text-lg font-medium text-ink">{t`No activity yet`}</Text>
+        <Text className="max-w-72 text-center text-base text-ink-secondary">
           {t`Changes from AI apps, imports, AI enrichment and shared decks show up here.`}
         </Text>
       </View>
@@ -627,7 +627,7 @@ export function ActivityView({
       {only}
       {days.map((day) => (
         <View key={day.key} className="gap-2">
-          <Text className="px-1 text-base font-medium text-muted" accessibilityRole="header">
+          <Text className="px-1 text-base font-medium text-ink-muted" accessibilityRole="header">
             {day.label}
           </Text>
           <Plate className="overflow-hidden">
@@ -777,7 +777,7 @@ function Foot({
           <ActivityIndicator accessibilityLabel={t`Loading more`} />
         )
       ) : (
-        <Text className="text-base text-muted" accessibilityLiveRegion="polite">
+        <Text className="text-base text-ink-muted" accessibilityLiveRegion="polite">
           {t`That’s everything.`}
         </Text>
       )}

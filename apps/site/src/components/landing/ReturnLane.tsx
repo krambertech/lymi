@@ -60,7 +60,7 @@ export function ReturnLane({ term, lang }: Props) {
         {/* Across on a wide screen: the line runs through the flames, lit as far as the reviews have come. */}
         <span
           aria-hidden="true"
-          className="absolute inset-x-[8.33%] top-[125px] hidden h-0.5 rounded-full bg-edge-2 @3xl:block"
+          className="absolute inset-x-[8.33%] top-[125px] hidden h-0.5 rounded-full bg-edge-strong @3xl:block"
         />
         <span
           aria-hidden="true"
@@ -78,7 +78,7 @@ export function ReturnLane({ term, lang }: Props) {
               <span
                 lang={lang}
                 className={clsx(
-                  "grid h-[86px] min-w-[76px] place-items-center rounded-md bg-plate px-3 text-2xl leading-[1.6] font-medium whitespace-nowrap text-text edge-2 transition-[opacity,translate] duration-500 @3xl:h-[104px] @3xl:min-w-[92px] @3xl:text-[22px] @5xl:text-[26px]",
+                  "grid h-[86px] min-w-[76px] place-items-center rounded-md bg-plate px-3 text-2xl leading-[1.6] font-medium whitespace-nowrap text-ink edge-strong transition-[opacity,translate] duration-500 @3xl:h-[104px] @3xl:min-w-[92px] @3xl:text-[22px] @5xl:text-[26px]",
                   !on && "translate-y-1.5 opacity-35",
                 )}
               >
@@ -94,8 +94,8 @@ export function ReturnLane({ term, lang }: Props) {
                 />
               </span>
               <span className="grid">
-                <span className="text-md font-medium text-text">{label(stop.day)}</span>
-                <span className="text-sm text-muted">{stateName[stop.state]}</span>
+                <span className="text-md font-medium text-ink">{label(stop.day)}</span>
+                <span className="text-sm text-ink-muted">{stateName[stop.state]}</span>
               </span>
             </li>
           );

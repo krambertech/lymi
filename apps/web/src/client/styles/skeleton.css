@@ -6,7 +6,7 @@
   }
 }
 .skeleton {
-  background: var(--plate-2);
+  background: var(--plate-nested);
   position: relative;
   overflow: hidden;
 }

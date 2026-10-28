@@ -51,14 +51,14 @@ export default function Feedback() {
   if (send.isSuccess) {
     return (
       <View className="gap-5 px-6 pt-10 pb-8" accessibilityLiveRegion="polite">
-        <View className="size-12 items-center justify-center rounded-full bg-good-soft">
-          <Icon name="check" size={22} colour={p.good} strokeWidth={2.25} />
+        <View className="size-12 items-center justify-center rounded-full bg-success-soft">
+          <Icon name="check" size={22} colour={p.success} strokeWidth={2.25} />
         </View>
         <View className="gap-1.5">
-          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+          <Text className="text-2xl font-medium text-ink" accessibilityRole="header">
             {t`Feedback sent`}
           </Text>
-          <Text className="text-base text-text-2">
+          <Text className="text-base text-ink-secondary">
             <Trans>Thank you. Replies come to your email.</Trans>
           </Text>
         </View>
@@ -78,11 +78,11 @@ export default function Feedback() {
         contentContainerClassName="gap-6 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"
       >
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           <Trans>Tell Lymi what broke or what it should do. Replies come to your email.</Trans>
         </Text>
         <View className="gap-1.5">
-          <Text className="px-1 text-sm font-medium text-text-2">
+          <Text className="px-1 text-sm font-medium text-ink-secondary">
             <Trans>What this is about</Trans>
           </Text>
           <Segmented<FeedbackKind>
@@ -123,7 +123,7 @@ export default function Feedback() {
                 {t`Couldn’t send your feedback`}
               </Text>
             </View>
-            <Text className="text-base text-text-2">
+            <Text className="text-base text-ink-secondary">
               {overDailyLimit ? (
                 <Trans>
                   You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow.

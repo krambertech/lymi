@@ -70,7 +70,7 @@ export function LanguagePicker({ choices, value, onChange }: Props) {
         // The label replaces the trigger's text, so it carries the choice too.
         aria-label={t`What the decks are about: ${chosen?.label ?? ""}`}
         className={
-          "group inline-flex cursor-pointer items-center gap-0.5 rounded-xs align-baseline text-[length:inherit] font-[inherit] text-text " +
+          "group inline-flex cursor-pointer items-center gap-0.5 rounded-xs align-baseline text-[length:inherit] font-[inherit] text-ink " +
           "transition-colors duration-150 ease-out hoverable:hover:text-amber-text data-[popup-open]:text-amber-text " +
           "outline-none focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-solid focus-visible:outline-ring"
         }
@@ -80,7 +80,7 @@ export function LanguagePicker({ choices, value, onChange }: Props) {
           {chosen?.inline ?? chosen?.label}
         </span>
         <ChevronDown
-          className="size-4 shrink-0 text-text-2 transition-[rotate,color] duration-200 ease-out group-hover:text-amber-text group-data-[popup-open]:rotate-180 group-data-[popup-open]:text-amber-text motion-reduce:transition-none"
+          className="size-4 shrink-0 text-ink-secondary transition-[rotate,color] duration-200 ease-out group-hover:text-amber-text group-data-[popup-open]:rotate-180 group-data-[popup-open]:text-amber-text motion-reduce:transition-none"
           aria-hidden="true"
         />
       </ComboboxTrigger>

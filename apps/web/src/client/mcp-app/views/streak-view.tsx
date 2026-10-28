@@ -11,7 +11,7 @@ export function StreakView({ result }: { result: StreakOut }) {
     <ViewFrame title={t`Your week`}>
       <StreakWeek summary={result} size="lg" className="py-2" />
       {/* The streak panel's own wording, so the two never disagree. */}
-      <p className="text-sm tabular-nums text-text-2">
+      <p className="text-sm tabular-nums text-ink-secondary">
         {today.attempts > today.goal ? (
           <Plural
             value={today.attempts}

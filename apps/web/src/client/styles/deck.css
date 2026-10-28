@@ -28,23 +28,23 @@
 /* White rather than amber, which stops reading as the thing to press on a coloured ground. */
 .deck-cover-action {
   background: var(--plate);
-  color: var(--text);
+  color: var(--ink);
 }
 /* Hover keeps the white and strengthens the edge, as every control's hover does. */
 @media (hover: hover) and (pointer: fine) {
   .deck-cover-action:hover {
     background: var(--plate);
-    box-shadow: 0 0 0 1px var(--edge-2);
+    box-shadow: 0 0 0 1px var(--edge-strong);
   }
 }
 [data-theme="dark"] .deck-cover-action {
-  background: var(--text);
+  background: var(--ink);
   color: var(--canvas);
   box-shadow: none;
 }
 @media (hover: hover) and (pointer: fine) {
   [data-theme="dark"] .deck-cover-action:hover {
-    background: color-mix(in oklch, var(--text) 88%, var(--canvas));
+    background: color-mix(in oklch, var(--ink) 88%, var(--canvas));
     box-shadow: none;
   }
 }

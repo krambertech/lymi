@@ -3,15 +3,15 @@
   color-scheme: dark;
 
   --plate: oklch(0.2 0.012 265);
-  --plate-2: oklch(0.255 0.014 265);
-  --hover: oklch(0.29 0.016 265);
+  --plate-nested: oklch(0.255 0.014 265);
+  --plate-hover: oklch(0.29 0.016 265);
   --edge: oklch(1 0 0 / 0.09);
-  --edge-2: oklch(1 0 0 / 0.16);
+  --edge-strong: oklch(1 0 0 / 0.16);
 
-  --text: oklch(0.96 0.005 265);
-  --text-2: oklch(0.83 0.012 265);
-  --muted: oklch(0.7 0.016 265);
-  --faint: oklch(0.5 0.016 265);
+  --ink: oklch(0.96 0.005 265);
+  --ink-secondary: oklch(0.83 0.012 265);
+  --ink-muted: oklch(0.7 0.016 265);
+  --ink-faint: oklch(0.5 0.016 265);
 
   --amber: oklch(0.82 0.15 74);
   --amber-hover: oklch(0.86 0.15 76);

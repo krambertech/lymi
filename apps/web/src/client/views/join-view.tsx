@@ -50,7 +50,7 @@ export function JoinView({
 }: JoinProps) {
   const { t } = useLingui();
   return (
-    <div className="@container min-h-dvh flex-1 bg-canvas text-text">
+    <div className="@container min-h-dvh flex-1 bg-canvas text-ink">
       <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-5 pt-[calc(1.25rem+var(--inset-top))] pb-[calc(1.5rem+env(safe-area-inset-bottom))] @4xl:px-10 @4xl:pt-[calc(2rem+var(--inset-top))]">
         <header className="flex justify-center @4xl:justify-start">
           <a href={publicSiteUrl()} aria-label={t`Lymi home`} className="rounded-sm p-1.5">
@@ -121,7 +121,7 @@ function LiveLink({
   return (
     <div className="mx-auto grid w-full max-w-[26rem] grid-cols-[minmax(0,1fr)] @4xl:max-w-none @4xl:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] @4xl:grid-rows-[auto_auto] @4xl:gap-x-20">
       <div className="grid justify-items-center text-center @4xl:col-start-1 @4xl:row-start-1 @4xl:self-end @4xl:justify-items-start @4xl:text-start">
-        <p className="flex items-center gap-2 text-md text-text-2">
+        <p className="flex items-center gap-2 text-md text-ink-secondary">
           {published ? (
             <PublisherMark name={deck.owner.name} src={deck.owner.avatarUrl} size={24} />
           ) : (
@@ -143,7 +143,7 @@ function LiveLink({
         </h1>
         <ul
           aria-label={t`About this deck`}
-          className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-base text-muted @4xl:justify-start"
+          className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-base text-ink-muted @4xl:justify-start"
         >
           {deck.language && (
             <li className="flex items-center gap-1.5">
@@ -183,12 +183,12 @@ function LiveLink({
 
       <div className="grid @4xl:col-start-1 @4xl:row-start-2 @4xl:self-start">
         {newcomer && (
-          <ul className="mt-9 grid gap-3 text-base text-text-2 @4xl:mt-8">
+          <ul className="mt-9 grid gap-3 text-base text-ink-secondary @4xl:mt-8">
             <li className="flex items-start gap-3">
               <CalendarClock
                 aria-hidden="true"
                 strokeWidth={1.75}
-                className="mt-0.5 size-[18px] shrink-0 text-muted"
+                className="mt-0.5 size-[18px] shrink-0 text-ink-muted"
               />
               <Trans>Review on your own schedule. New cards appear as they are added.</Trans>
             </li>
@@ -196,7 +196,7 @@ function LiveLink({
               <EyeOff
                 aria-hidden="true"
                 strokeWidth={1.75}
-                className="mt-0.5 size-[18px] shrink-0 text-muted"
+                className="mt-0.5 size-[18px] shrink-0 text-ink-muted"
               />
               <Trans>Only your name is shared, never your progress.</Trans>
             </li>
@@ -305,7 +305,7 @@ function DeadLink({
   const published = kind === "publication";
   return (
     <div className="mx-auto w-full max-w-[26rem] text-center">
-      <h1 className="text-balance text-2xl font-medium tracking-[-0.02em] text-text">
+      <h1 className="text-balance text-2xl font-medium tracking-[-0.02em] text-ink">
         {published ? (
           preview.status === "off" ? (
             <Trans>This deck is no longer published</Trans>
@@ -322,7 +322,7 @@ function DeadLink({
           <Trans>This join link does not work</Trans>
         )}
       </h1>
-      <p className="mx-auto mt-2 max-w-[40ch] text-pretty text-md text-text-2">
+      <p className="mx-auto mt-2 max-w-[40ch] text-pretty text-md text-ink-secondary">
         {published ? (
           preview.status === "off" ? (
             <Trans>Nobody new can add it.</Trans>
@@ -341,7 +341,7 @@ function DeadLink({
       </p>
       {deckId ? (
         <>
-          <p className="mx-auto mt-4 max-w-[40ch] text-pretty text-sm text-muted">
+          <p className="mx-auto mt-4 max-w-[40ch] text-pretty text-sm text-ink-muted">
             <Trans>You are still in the deck.</Trans>
           </p>
           <Button

@@ -55,27 +55,27 @@ function SourceLine({ source, changed }: { source: ExamSource; changed: string |
   const date = useDate();
   const title = source.title;
   return (
-    <div className="grid gap-1 text-sm text-pretty text-muted">
+    <div className="grid gap-1 text-sm text-pretty text-ink-muted">
       <p>
         <Trans>
           Questions from{" "}
           <a
             href={source.url}
             rel="noopener"
-            className="font-medium text-text-2 underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text"
+            className="font-medium text-ink-secondary underline decoration-edge-strong underline-offset-2 hoverable:hover:text-ink"
           >
             {title}
           </a>
         </Trans>
         {source.more?.map((doc) => (
           <span key={doc.url}>
-            <span aria-hidden="true" className="px-1.5 text-faint">
+            <span aria-hidden="true" className="px-1.5 text-ink-faint">
               ·
             </span>
             <a
               href={doc.url}
               rel="noopener"
-              className="font-medium text-text-2 underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text"
+              className="font-medium text-ink-secondary underline decoration-edge-strong underline-offset-2 hoverable:hover:text-ink"
             >
               {doc.title}
             </a>
@@ -83,7 +83,7 @@ function SourceLine({ source, changed }: { source: ExamSource; changed: string |
         ))}
         {source.edition && (
           <>
-            <span aria-hidden="true" className="px-1.5 text-faint">
+            <span aria-hidden="true" className="px-1.5 text-ink-faint">
               ·
             </span>
             {i18n._(source.edition)}
@@ -115,7 +115,7 @@ function SampleCard({ exam }: { exam: Exam }) {
         </p>
         <p
           lang={sample.language}
-          className="mt-3 text-xl leading-snug font-medium tracking-[-0.02em] text-pretty text-text"
+          className="mt-3 text-xl leading-snug font-medium tracking-[-0.02em] text-pretty text-ink"
         >
           {sample.question}
         </p>
@@ -127,28 +127,28 @@ function SampleCard({ exam }: { exam: Exam }) {
                 lang={sample.language}
                 className={
                   option === sample.answer
-                    ? "flex items-center justify-between gap-3 rounded-md bg-good-soft px-3 py-2 text-md text-text"
-                    : "rounded-md bg-plate-2 px-3 py-2 text-md text-text-2 opacity-60"
+                    ? "flex items-center justify-between gap-3 rounded-md bg-success-soft px-3 py-2 text-md text-ink"
+                    : "rounded-md bg-plate-nested px-3 py-2 text-md text-ink-secondary opacity-60"
                 }
               >
                 <span>{option}</span>
                 {option === sample.answer && (
-                  <Check aria-label={t`Right answer`} className="size-4 shrink-0 text-good" />
+                  <Check aria-label={t`Right answer`} className="size-4 shrink-0 text-success" />
                 )}
               </li>
             ))}
           </ul>
         ) : (
           sample.answer !== sample.question && (
-            <p lang={sample.language} className="mt-3 border-t border-edge pt-3 text-lg text-text">
+            <p lang={sample.language} className="mt-3 border-t border-edge pt-3 text-lg text-ink">
               {sample.answer}
             </p>
           )
         )}
         {translated && sample.translation && (
-          <p className="mt-4 border-t border-edge pt-3 text-md text-pretty text-text-2">
+          <p className="mt-4 border-t border-edge pt-3 text-md text-pretty text-ink-secondary">
             {sample.translation.question && <>{i18n._(sample.translation.question)} </>}
-            <span className="font-medium text-text">{i18n._(sample.translation.answer)}</span>
+            <span className="font-medium text-ink">{i18n._(sample.translation.answer)}</span>
           </p>
         )}
       </article>
@@ -160,17 +160,17 @@ function Breadcrumb({ locale, here }: LocaleProps & { here: string }) {
   const { t } = useLingui();
   return (
     <nav aria-label={t`Breadcrumb`}>
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
+      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-muted">
         <li>
           <a
             href={examsPath(locale)}
-            className="rounded-xs font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
+            className="rounded-xs font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
           >
             <Trans>Exam prep</Trans>
           </a>
         </li>
         <li aria-hidden="true">
-          <ChevronRight className="size-3.5 text-faint rtl:-scale-x-100" />
+          <ChevronRight className="size-3.5 text-ink-faint rtl:-scale-x-100" />
         </li>
         <li aria-current="page">{here}</li>
       </ol>
@@ -202,10 +202,10 @@ function ExamHeroContent({
     <div className="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-8 pb-14 @2xl:px-10 @4xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] @4xl:gap-16 @4xl:pt-12 @4xl:pb-20">
       <div>
         <Breadcrumb locale={locale} here={i18n._(exam.name)} />
-        <h1 className="mt-5 max-w-[20ch] text-4xl leading-[1.02] font-medium tracking-[-0.04em] text-balance text-text @xl:text-5xl @xl:leading-[0.98] @4xl:text-[3.75rem]">
+        <h1 className="mt-5 max-w-[20ch] text-4xl leading-[1.02] font-medium tracking-[-0.04em] text-balance text-ink @xl:text-5xl @xl:leading-[0.98] @4xl:text-[3.75rem]">
           {i18n._(exam.heading)}
         </h1>
-        <p className="mt-5 max-w-[52ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+        <p className="mt-5 max-w-[52ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           {i18n._(exam.lede)}
         </p>
         <div className="mt-7 flex flex-wrap gap-2">
@@ -255,7 +255,7 @@ function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="format-title"
-          className="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl"
+          className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
         >
           <Trans>What the test looks like</Trans>
         </h2>
@@ -265,15 +265,17 @@ function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode
               key={fact.value + fact.label.id}
               className="grid content-start gap-1 border-t border-edge pt-4"
             >
-              <dt className="order-2 text-md text-pretty text-text-2">{i18n._(fact.label)}</dt>
-              <dd className="order-1 text-5xl font-medium tracking-[-0.04em] text-text tabular-nums">
+              <dt className="order-2 text-md text-pretty text-ink-secondary">
+                {i18n._(fact.label)}
+              </dt>
+              <dd className="order-1 text-5xl font-medium tracking-[-0.04em] text-ink tabular-nums">
                 {fact.value}
               </dd>
             </div>
           ))}
         </dl>
         {(exam.factsNote || children) && (
-          <div className="mt-8 grid max-w-[62ch] gap-3 text-md text-pretty text-text-2">
+          <div className="mt-8 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
             {exam.factsNote && <p>{i18n._(exam.factsNote)}</p>}
             {children}
           </div>
@@ -339,7 +341,7 @@ export function ExamSources({
     <Localized locale={locale}>
       <section aria-labelledby="sources-title" className="px-5 pb-10 @2xl:px-10">
         <div className="mx-auto max-w-[1040px] border-t border-edge pt-6">
-          <h2 id="sources-title" className="text-sm font-medium text-text-2">
+          <h2 id="sources-title" className="text-sm font-medium text-ink-secondary">
             <Trans>Sources</Trans>
           </h2>
           <div className="mt-2">
@@ -400,18 +402,16 @@ function ExamPlanContent({ several }: { several: boolean }) {
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="plan-title"
-          className="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl"
+          className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
         >
           <Trans>From now until your test date</Trans>
         </h2>
         <ol className="mt-8 grid gap-x-10 gap-y-7 @2xl:grid-cols-3">
           {steps.map((step, index) => (
             <li key={step.id} className="border-t border-edge pt-5">
-              <p className="text-sm text-muted tabular-nums">{index + 1}</p>
-              <h3 className="mt-1 text-lg font-medium tracking-[-0.02em] text-text">
-                {step.title}
-              </h3>
-              <p className="mt-1.5 text-md text-pretty text-text-2">{step.body}</p>
+              <p className="text-sm text-ink-muted tabular-nums">{index + 1}</p>
+              <h3 className="mt-1 text-lg font-medium tracking-[-0.02em] text-ink">{step.title}</h3>
+              <p className="mt-1.5 text-md text-pretty text-ink-secondary">{step.body}</p>
             </li>
           ))}
         </ol>
@@ -476,17 +476,17 @@ function OtherExamsLinks({ locale, exam, listed }: ExamProps & { listed: readonl
   const { i18n } = useLingui();
   const others = EXAMS.filter((other) => other !== exam && listed.includes(other.id));
   const chip =
-    "inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
+    "inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap px-4 text-md font-medium text-ink transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
   return (
     <nav aria-labelledby="more-exams" className="border-b border-edge px-5 py-12 @2xl:px-10">
       <div className="mx-auto max-w-[1040px]">
-        <h2 id="more-exams" className="text-sm text-muted">
+        <h2 id="more-exams" className="text-sm text-ink-muted">
           <Trans>Other exams</Trans>
         </h2>
         <ul className="mt-3 flex flex-wrap gap-2">
           {others.map((other) => (
             <li key={other.id}>
-              <a href={examPath(other, locale)} className={`${chip} bg-plate-2`}>
+              <a href={examPath(other, locale)} className={`${chip} bg-plate-nested`}>
                 {i18n._(other.name)}
               </a>
             </li>
@@ -494,9 +494,9 @@ function OtherExamsLinks({ locale, exam, listed }: ExamProps & { listed: readonl
           <li>
             <a
               href={examsPath(locale)}
-              className={`${chip} shadow-[inset_0_0_0_1px_var(--edge-2)]`}
+              className={`${chip} shadow-[inset_0_0_0_1px_var(--edge-strong)]`}
             >
-              <List aria-hidden="true" className="size-4 text-muted" />
+              <List aria-hidden="true" className="size-4 text-ink-muted" />
               <Trans>All exams</Trans>
             </a>
           </li>

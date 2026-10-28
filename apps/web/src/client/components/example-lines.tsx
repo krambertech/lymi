@@ -69,7 +69,7 @@ export function ExampleLines({
       {translation && (
         // In the meaning language, like the meaning, so it takes its language and direction from it.
         <p lang={i18n.locale} dir="auto" className={className}>
-          <span className="text-muted">{translation}</span>
+          <span className="text-ink-muted">{translation}</span>
           {badge && <span className="ms-1.5 inline-flex align-[0.0625em]">{badge}</span>}
         </p>
       )}

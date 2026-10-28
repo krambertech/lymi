@@ -94,8 +94,8 @@ export function CardPeek({
         <View className="min-w-0 shrink flex-row items-center gap-1.5">
           {deckName && (
             <>
-              <Icon name="deck" size={14} colour={p.muted} />
-              <Text className="shrink text-sm font-medium text-text-2" numberOfLines={1}>
+              <Icon name="deck" size={14} colour={p["ink-muted"]} />
+              <Text className="shrink text-sm font-medium text-ink-secondary" numberOfLines={1}>
                 {deckName}
               </Text>
             </>
@@ -106,13 +106,13 @@ export function CardPeek({
       <View className="gap-1">
         <TermText
           card={{ ...card, term: word }}
-          className="text-text"
+          className="text-ink"
           lines={2}
           style={WORD}
           after={card.important && <Text style={[WORD, { color: p["amber-mark"] }]}>{" ★"}</Text>}
         />
         {forms && (
-          <Text className="text-md text-text-2" numberOfLines={1}>
+          <Text className="text-md text-ink-secondary" numberOfLines={1}>
             {forms}
           </Text>
         )}
@@ -120,14 +120,14 @@ export function CardPeek({
       <View className="h-px bg-edge" />
       <View className="gap-2">
         <Text
-          className="text-xl text-text"
+          className="text-xl text-ink"
           numberOfLines={3}
-          style={card.meaning ? undefined : { color: p.muted }}
+          style={card.meaning ? undefined : { color: p["ink-muted"] }}
         >
           {card.meaning || t`No meaning yet`}
         </Text>
         {card.pronunciation && !reading && (
-          <Text className="text-md text-muted" numberOfLines={1}>
+          <Text className="text-md text-ink-muted" numberOfLines={1}>
             {card.pronunciation}
           </Text>
         )}
@@ -135,11 +135,13 @@ export function CardPeek({
           <ExampleText
             text={card.example}
             known={known}
-            className="text-md text-text-2"
+            className="text-md text-ink-secondary"
             lines={2}
             lang={card.language}
             translation={
-              translation ? { text: translation, className: "text-md text-muted", lines: 1 } : null
+              translation
+                ? { text: translation, className: "text-md text-ink-muted", lines: 1 }
+                : null
             }
           />
         )}

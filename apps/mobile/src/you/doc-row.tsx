@@ -25,12 +25,12 @@ export function DocRow({
       accessibilityLabel={`${label}, ${line}`}
     >
       <View className="min-h-[60px] flex-row items-center gap-3 py-3 ps-4 pe-4">
-        <Icon name={icon} size={20} colour={p["text-2"]} />
+        <Icon name={icon} size={20} colour={p["ink-secondary"]} />
         <View className="flex-1 gap-0.5">
-          <Text className="text-md text-text">{label}</Text>
-          <Text className="text-sm text-muted">{line}</Text>
+          <Text className="text-md text-ink">{label}</Text>
+          <Text className="text-sm text-ink-muted">{line}</Text>
         </View>
-        <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />
+        <Icon name="web" size={18} colour={p["ink-muted"]} strokeWidth={2.25} />
       </View>
     </Press>
   );

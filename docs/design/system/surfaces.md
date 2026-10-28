@@ -10,10 +10,10 @@ Light-theme surfaces use colour and thin borders for separation. Dark-theme pane
 | Desktop navigation | `bg-rail` |
 | Native phone sheet | Platform glass, or `bg-sheet` on older iOS |
 | Panel, card, grouped rows or filled control | `edge bg-plate` |
-| Nested group, chip or track | `bg-plate-2` |
-| Selected option inside a `plate-2` track | `bg-chosen` |
+| Nested group, chip or track | `bg-plate-nested` |
+| Selected option inside a `plate-nested` track | `bg-plate-chosen` |
 | Current rail row | `bg-rail-chosen edge-inset` |
-| Empty content placeholder | No fill, dashed `border-edge-2` ([empty-states.md](empty-states.md)) |
+| Empty content placeholder | No fill, dashed `border-edge-strong` ([empty-states.md](empty-states.md)) |
 | Published-deck preview on Explore | Deck tray, defined below |
 
 ```tsx
@@ -33,16 +33,16 @@ Use shared utilities rather than handwritten shadows.
 | Sheet fallback | Canvas tone, separated by a scrim | Lighter than canvas |
 | Panel (`edge bg-plate`) | White with a thin border | Thin border and `--lift` shadow |
 | Inset (`well`) | Inset border and top shading | Same treatment on a lighter fill |
-| Selected option (`bg-chosen`) | White | Lighter warm grey than its track |
+| Selected option (`bg-plate-chosen`) | White | Lighter warm grey than its track |
 | Current rail row | Thin inset border | Thin inset border, without shadow |
 
 Form fields clear `--lift` so they remain visually distinct from buttons. Unfilled controls, navigation and menu rows, chips and inset groups also have no elevation. Overlays own their borders and scrims ([overlays.md](overlays.md)).
 
 ### Hover
 
-Filled interactive panels, secondary buttons and grades strengthen to `edge-2` and apply `veil` over their existing fill. List rows inside a panel also hover with `veil`.
+Filled interactive panels, secondary buttons and grades strengthen to `edge-strong` and apply `veil` over their existing fill. List rows inside a panel also hover with `veil`.
 
-Unfilled controls and items on `plate-2` use `bg-hover`. Do not use `plate-2` as their hover fill; it is indistinguishable from the light-theme rail. Rail rows use the separate states below.
+Unfilled controls and items on `plate-nested` use `bg-plate-hover`. Do not use `plate-nested` as their hover fill; it is indistinguishable from the light-theme rail. Rail rows use the separate states below.
 
 ### The rail’s rows
 
@@ -50,21 +50,21 @@ The current row uses `bg-rail-chosen edge-inset`; hover uses `bg-rail-hover`. Se
 
 ### The chosen option
 
-Use `bg-chosen` for a selected option inside a `plate-2` track. `bg-plate` is darker than that track in dark theme and makes selection unclear.
+Use `bg-plate-chosen` for a selected option inside a `plate-nested` track. `bg-plate` is darker than that track in dark theme and makes selection unclear.
 
 ## On glass
 
 Native iOS 26 sheets, corner buttons and the tab bar use Liquid Glass without a background tint. The standing capture action keeps its amber tint, and peek sheets use frost ([phone.md](phone.md#sheets)). Content on glass uses `bg-glass-plate` and `bg-glass-chosen` without elevation. `OnGlass` in `apps/mobile/src/ui/surface.tsx` supplies these fills to `Plate`, `Segmented`, `Input` and field chips; every `Sheet` wraps its content in it.
 
-Web `glass` is for menus, popovers, select and combobox lists, and pill navigation. It combines a nearly opaque panel, 12 px blur, top highlight, `edge-2` and shadow. Dialogs, drawers and side sheets remain opaque. Under reduced transparency or without `backdrop-filter`, use the opaque panel fallback.
+Web `glass` is for menus, popovers, select and combobox lists, and pill navigation. It combines a nearly opaque panel, 12 px blur, top highlight, `edge-strong` and shadow. Dialogs, drawers and side sheets remain opaque. Under reduced transparency or without `backdrop-filter`, use the opaque panel fallback.
 
-Use `frost` for controls floating over scrolling text inside a panel, such as a hint offer: `plate-2` at 65%, 4 px blur, and no border, highlight or shadow. Clip the underlying scroller at the control’s bottom and omit its bottom fade so text cannot show in the inset below it. The reduced-transparency fallback is solid `plate-2`.
+Use `frost` for controls floating over scrolling text inside a panel, such as a hint offer: `plate-nested` at 65%, 4 px blur, and no border, highlight or shadow. Clip the underlying scroller at the control’s bottom and omit its bottom fade so text cannot show in the inset below it. The reduced-transparency fallback is solid `plate-nested`.
 
 ## Edges
 
-`edge` draws a 1 px ring using box-shadow without changing dimensions. `edge-2` strengthens it on hover, and `edge-inset` draws inside the bounds when content reaches the edge. Use `border-edge` for dividers between rows. Focus adds the neutral 2 px `ring` outline. Forced-colour mode replaces the shadow with a system-colour outline.
+`edge` draws a 1 px ring using box-shadow without changing dimensions. `edge-strong` strengthens it on hover, and `edge-inset` draws inside the bounds when content reaches the edge. Use `border-edge` for dividers between rows. Focus adds the neutral 2 px `ring` outline. Forced-colour mode replaces the shadow with a system-colour outline.
 
-In dark theme `edge` and `edge-2` include `--lift`; in light theme they do not. Form fields clear that elevation.
+In dark theme `edge` and `edge-strong` include `--lift`; in light theme they do not. Form fields clear that elevation.
 
 Pictures use `image-edge`, a neutral 1 px inset outline, black in light theme and white in dark theme. Apply it only to opaque pictures; transparent artwork keeps its shape without a rectangular frame.
 

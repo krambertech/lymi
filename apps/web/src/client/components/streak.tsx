@@ -82,7 +82,7 @@ function GoalTrack({
             "aria-valuenow": reached,
           }
         : { "aria-hidden": true })}
-      className={clsx("well block h-1.5 overflow-hidden rounded-full bg-plate-2", className)}
+      className={clsx("well block h-1.5 overflow-hidden rounded-full bg-plate-nested", className)}
     >
       <i
         className="streak-fill lit block h-full origin-left rounded-full bg-amber rtl:origin-right"
@@ -105,17 +105,17 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
           {current > 0 ? (
             <>
               <RollingNumber value={current} className="text-3xl font-medium leading-none" />
-              <span className="text-md font-medium text-text-2">
+              <span className="text-md font-medium text-ink-secondary">
                 <Plural value={current} one="day in a row" other="days in a row" />
               </span>
             </>
           ) : (
-            <span className="text-xl font-medium tracking-[-0.01em] text-text">
+            <span className="text-xl font-medium tracking-[-0.01em] text-ink">
               <StreakStart summary={summary} />
             </span>
           )}
         </span>
-        <span className="text-sm text-text-2 tabular-nums">{status}</span>
+        <span className="text-sm text-ink-secondary tabular-nums">{status}</span>
       </span>
       <SevenLights
         days={week.attempts}
@@ -154,11 +154,11 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
 function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number; label: string }) {
   return (
     <div className="grid gap-0.5 px-4 py-3.5 not-first:border-s not-first:border-edge">
-      <dt className="flex items-center gap-1.5 text-xs text-muted">
+      <dt className="flex items-center gap-1.5 text-xs text-ink-muted">
         <Icon className="size-3.5 shrink-0" aria-hidden="true" />
         {label}
       </dt>
-      <dd className="text-md font-medium text-text">
+      <dd className="text-md font-medium text-ink">
         <RollingNumber value={value} />
       </dd>
     </div>
@@ -240,7 +240,7 @@ export function StreakPanel({
           title={titleInBar ? goalTitle : undefined}
           onClose={onClose}
           status={
-            <p className="min-h-5 text-sm text-muted" role="status">
+            <p className="min-h-5 text-sm text-ink-muted" role="status">
               {goalStatus === "saved" && (
                 <span className="enter-fade inline-flex items-center gap-1.5">
                   <Check className="size-4" aria-hidden="true" />
@@ -255,8 +255,8 @@ export function StreakPanel({
             </p>
           }
         />
-        {!titleInBar && <div className="text-xl font-medium text-text">{goalTitle}</div>}
-        <p className="text-sm text-text-2">
+        {!titleInBar && <div className="text-xl font-medium text-ink">{goalTitle}</div>}
+        <p className="text-sm text-ink-secondary">
           <Trans>Choose how many reviews to do each day. Every grade counts, even Forgot.</Trans>
         </p>
         <GoalPicker value={summary.goal} onValueChange={(n) => onGoalChange?.(n)} />
@@ -291,7 +291,7 @@ export function StreakPanel({
       )}
       <header className="grid gap-1.5">
         {/* The flame sits on the number's line, the words on its baseline. */}
-        <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-text outline-none">
+        <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-ink outline-none">
           <Flame className="h-11 w-[35px] shrink-0" state={flame} flicker={flame === "full"} />
           {current > 0 ? (
             <span className="flex items-baseline gap-2.5">
@@ -299,7 +299,7 @@ export function StreakPanel({
                 value={current}
                 className="text-5xl font-semibold leading-none tracking-tight"
               />
-              <span className="text-lg font-medium text-text-2">
+              <span className="text-lg font-medium text-ink-secondary">
                 <Plural value={current} one="day in a row" other="days in a row" />
               </span>
             </span>
@@ -309,14 +309,14 @@ export function StreakPanel({
             </span>
           )}
         </h2>
-        <p className="text-sm text-text-2">{status}</p>
+        <p className="text-sm text-ink-secondary">{status}</p>
       </header>
 
-      <section className="grid rounded-lg bg-plate-2" aria-label={t`Today`}>
+      <section className="grid rounded-lg bg-plate-nested" aria-label={t`Today`}>
         <div className="grid gap-2.5 px-4 py-3.5">
           <div className="flex items-center gap-2">
             {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
-            <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-text">
+            <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-ink">
               {done && <Check className="size-4 shrink-0 text-amber-mark" aria-hidden="true" />}
               {/* "of" only holds up to the goal; a round past it counts on and still names what it passed. */}
               {today.attempts > today.goal ? (
@@ -411,14 +411,14 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
   const face = card
     ? clsx(
         // A wide single-column card puts the week beside the run; the desktop column stacks them again.
-        "edge grid w-full grid-cols-1 content-between @xl:grid-cols-[minmax(0,1fr)_auto] @xl:items-center @xl:gap-x-6 @3xl:grid-cols-none @3xl:items-stretch gap-4 rounded-xl bg-plate p-5 text-start text-text transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil",
+        "edge grid w-full grid-cols-1 content-between @xl:grid-cols-[minmax(0,1fr)_auto] @xl:items-center @xl:gap-x-6 @3xl:grid-cols-none @3xl:items-stretch gap-4 rounded-xl bg-plate p-5 text-start text-ink transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-strong hoverable:hover:veil",
         className,
       )
     : clsx(
-        "relative inline-flex shrink-0 items-center rounded-full font-semibold text-text transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100",
+        "relative inline-flex shrink-0 items-center rounded-full font-semibold text-ink transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100",
         rail
           ? "h-8 gap-1.5 px-2.5 text-sm before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-rail-hover"
-          : "h-10 gap-2 px-2.5 text-base before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
+          : "h-10 gap-2 px-2.5 text-base before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-plate-hover",
         className,
       );
 

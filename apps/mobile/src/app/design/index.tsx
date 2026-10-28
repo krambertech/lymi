@@ -10,7 +10,7 @@ import { Screen } from "../../ui/screen";
 export default function DesignIndex() {
   return (
     <Screen title="Design system">
-      <Text className="-mt-4 text-md text-text-2">
+      <Text className="-mt-4 text-md text-ink-secondary">
         The phone’s components under the web’s names, each in every state and both rooms. The rules
         are in docs/design/system; phone.md has where the phone differs.
       </Text>
@@ -35,8 +35,8 @@ function Group({ title, pages }: { title: string; pages: DesignPage[] }) {
             className={`min-h-16 flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
           >
             <View className="flex-1 gap-0.5">
-              <Text className="text-md font-medium text-text">{page.title}</Text>
-              <Text className="text-base text-muted">{page.summary}</Text>
+              <Text className="text-md font-medium text-ink">{page.title}</Text>
+              <Text className="text-base text-ink-muted">{page.summary}</Text>
             </View>
             <RowArrow />
           </Press>

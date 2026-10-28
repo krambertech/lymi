@@ -16,7 +16,7 @@ import { type RefObject, useEffect, useRef } from "react";
 const BURST = lightBurst(10);
 const flight = cubicBezier(...SPARK_FLIGHT);
 const drift = cubicBezier(...EMBER_DRIFT);
-const TONES = ["--light-1", "--light-2", "--flame-core"] as const;
+const TONES = ["--lit-low", "--lit-high", "--lantern-flame"] as const;
 /** The canvas reaches this far past the column, so a fleck thrown sideways is never cut off. */
 const BLEED = 64;
 
@@ -45,8 +45,8 @@ export function TurnSpark({ lantern, room }: Props) {
     };
     const ink = {
       amber: colour("--amber"),
-      core: colour("--flame-core"),
-      glow: colour("--glow"),
+      core: colour("--lantern-flame"),
+      glow: colour("--lantern-glow"),
       tones: TONES.map(colour),
     };
     const start = performance.now();

@@ -1,6 +1,6 @@
 # Insights
 
-Insights contains the learner’s review charts. Use neutral ink at graded opacity over `plate-2` for series. Amber is reserved for review-day indicators, today’s bar in Ahead and the Recall endpoint dot. Keep numeric labels neutral. Name the busiest upcoming day in text rather than highlighting it.
+Insights contains the learner’s review charts. Use neutral ink at graded opacity over `plate-nested` for series. Amber is reserved for review-day indicators, today’s bar in Ahead and the Recall endpoint dot. Keep numeric labels neutral. Name the busiest upcoming day in text rather than highlighting it.
 
 ## Summary charts
 

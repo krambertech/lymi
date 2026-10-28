@@ -26,8 +26,8 @@ export function SharedDeckDemo({ name, language, cards }: Props) {
     <div className="mx-auto max-w-[440px] rounded-xl bg-plate p-5 edge @2xl:p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-lg font-medium tracking-[-0.02em] text-text">{i18n._(name)}</p>
-          <p className="mt-0.5 text-sm text-muted tabular-nums">
+          <p className="text-lg font-medium tracking-[-0.02em] text-ink">{i18n._(name)}</p>
+          <p className="mt-0.5 text-sm text-ink-muted tabular-nums">
             <Plural value={learners} one="# learner" other="# learners" />
           </p>
         </div>
@@ -42,29 +42,29 @@ export function SharedDeckDemo({ name, language, cards }: Props) {
               className="-ms-2 size-8 rounded-full ring-2 ring-plate first:ms-0"
             />
           ))}
-          <span className="-ms-2 flex h-8 items-center justify-center rounded-full bg-plate-2 px-2 text-2xs font-medium text-muted tabular-nums ring-2 ring-plate">
+          <span className="-ms-2 flex h-8 items-center justify-center rounded-full bg-plate-nested px-2 text-2xs font-medium text-ink-muted tabular-nums ring-2 ring-plate">
             +{MORE_MEMBERS}
           </span>
         </div>
       </div>
 
-      <p className="mt-6 text-xs text-muted">
+      <p className="mt-6 text-xs text-ink-muted">
         <Trans>Added after this week’s lesson</Trans>
       </p>
       <ul className="mt-2 flex flex-col">
         {cards.map((card) => (
           <li key={card.term} className="flex items-center gap-3 py-2.5">
             <div className="min-w-0 flex-1">
-              <p lang={language} className="truncate text-md font-medium text-text">
+              <p lang={language} className="truncate text-md font-medium text-ink">
                 {card.reading ? (
                   <Furigana term={card.term} reading={card.reading} lang={language} />
                 ) : (
                   card.term
                 )}
               </p>
-              <p className="truncate text-sm text-muted">{i18n._(card.meaning)}</p>
+              <p className="truncate text-sm text-ink-muted">{i18n._(card.meaning)}</p>
             </div>
-            <span className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-plate-2 px-2.5 text-xs text-text-2">
+            <span className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-plate-nested px-2.5 text-xs text-ink-secondary">
               <span aria-hidden="true" className="size-1.5 rounded-full bg-state-new" />
               <Trans>New</Trans>
             </span>

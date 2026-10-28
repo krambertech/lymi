@@ -52,10 +52,10 @@ export function AssistantOffer({ onConnect }: { onConnect: () => void }) {
         ))}
       </View>
       <View className="gap-0.5">
-        <Text className="text-md font-medium text-text" accessibilityRole="header">
+        <Text className="text-md font-medium text-ink" accessibilityRole="header">
           {t`Connect your AI assistant`}
         </Text>
-        <Text className="text-base text-text-2">
+        <Text className="text-base text-ink-secondary">
           {t`Ask Claude or ChatGPT to create cards and decks for you.`}
         </Text>
       </View>

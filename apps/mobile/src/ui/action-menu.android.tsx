@@ -115,7 +115,7 @@ export function ActionMenu({
               justifyContent: "center",
             }}
           >
-            <Icon name={icon} size={18} colour={p.muted} />
+            <Icon name={icon} size={18} colour={p["ink-muted"]} />
           </Pressable>
         ) : (
           // The bar's own button, so it matches the search and streak beside it.
@@ -224,7 +224,7 @@ function Popover({
             maxWidth: Math.min(MAX_WIDTH, width - 2 * MARGIN),
             transformOrigin: `${corner} ${below ? "top" : "bottom"}`,
             // The web's glass: a sheen along the top, a hairline ring and a soft drop.
-            boxShadow: `inset 0 1px 0 ${p["glass-sheen"]}, 0 0 0 1px ${p["edge-2"]}, ${drop}`,
+            boxShadow: `inset 0 1px 0 ${p["glass-sheen"]}, 0 0 0 1px ${p["edge-strong"]}, ${drop}`,
             backgroundColor: frosted ? undefined : p.plate,
           },
           grow,
@@ -264,14 +264,18 @@ function MenuRow({ item, onPress }: { item: MenuItem; onPress: () => void }) {
       onPress={onPress}
       accessibilityRole="menuitem"
       className="min-h-12 flex-row items-center gap-3 rounded-sm ps-3 pe-4"
-      style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+      style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
     >
       {item.icon && (
-        <Icon name={item.icon} size={20} colour={item.destructive ? p.danger : p["text-2"]} />
+        <Icon
+          name={item.icon}
+          size={20}
+          colour={item.destructive ? p.danger : p["ink-secondary"]}
+        />
       )}
       <Text
         className="shrink text-md"
-        style={{ color: item.destructive ? p.danger : p.text }}
+        style={{ color: item.destructive ? p.danger : p.ink }}
         numberOfLines={1}
       >
         {item.label}

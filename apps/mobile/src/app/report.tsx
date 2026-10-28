@@ -87,7 +87,7 @@ export default function Report() {
         contentContainerClassName="gap-6 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"
       >
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {t`Tell Lymi what’s wrong with “${isolate(name)}”. We read every report within a day, and the owner isn’t told who sent it.`}
         </Text>
         <View className="gap-2.5">
@@ -108,9 +108,9 @@ export default function Report() {
                   accessibilityState={{ checked: chosen }}
                   accessibilityLabel={o.label}
                   className={`min-h-12 flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-                  style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                  style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
                 >
-                  <Text className="flex-1 text-md text-text">{o.label}</Text>
+                  <Text className="flex-1 text-md text-ink">{o.label}</Text>
                   <Radio on={chosen} />
                 </Pressable>
               );
@@ -134,7 +134,7 @@ export default function Report() {
                 {t`Couldn’t send your report`}
               </Text>
             </View>
-            <Text className="text-base text-text-2">
+            <Text className="text-base text-ink-secondary">
               {overDailyLimit ? (
                 <Trans>
                   You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app

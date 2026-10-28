@@ -72,7 +72,7 @@ export function CardStream({ cards, language, direction, className }: Props) {
             {card.term}
           </span>
           {card.meaning && (
-            <span className={clsx("line-clamp-2 text-text-2", up ? "text-md" : "text-base")}>
+            <span className={clsx("line-clamp-2 text-ink-secondary", up ? "text-md" : "text-base")}>
               {card.meaning}
             </span>
           )}
@@ -122,7 +122,7 @@ export function CardStream({ cards, language, direction, className }: Props) {
           className="absolute inset-0 cursor-pointer rounded-lg motion-reduce:hidden"
         >
           {paused && (
-            <span className="edge absolute bottom-3 end-3 grid size-8 place-items-center rounded-full bg-plate text-muted">
+            <span className="edge absolute bottom-3 end-3 grid size-8 place-items-center rounded-full bg-plate text-ink-muted">
               <Play aria-hidden="true" strokeWidth={1.75} className="size-4" />
             </span>
           )}

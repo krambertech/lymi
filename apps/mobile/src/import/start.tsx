@@ -44,8 +44,8 @@ export function ImportSources() {
               className={`min-h-16 flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
             >
               <View className="flex-1 gap-0.5">
-                <Text className="text-md font-medium text-text">{SOURCE_NAMES[source]}</Text>
-                <Text className="text-sm text-muted">{i18n._(detail)}</Text>
+                <Text className="text-md font-medium text-ink">{SOURCE_NAMES[source]}</Text>
+                <Text className="text-sm text-ink-muted">{i18n._(detail)}</Text>
               </View>
               <RowArrow />
             </View>
@@ -96,7 +96,7 @@ export function ImportStart({ source }: { source: FileSource }) {
       }
     >
       <View className="gap-3">
-        <Text className="px-1 text-md font-medium text-text" accessibilityRole="header">
+        <Text className="px-1 text-md font-medium text-ink" accessibilityRole="header">
           {t`Exporting from ${app}`}
         </Text>
         <Steps steps={STEPS[source].map((step) => i18n._(step))} />
@@ -122,7 +122,7 @@ export function ImportStart({ source }: { source: FileSource }) {
           loading={start.isPending}
           onPress={() => void choose()}
         />
-        <Text className="px-1 text-center text-sm text-muted">{hint}</Text>
+        <Text className="px-1 text-center text-sm text-ink-muted">{hint}</Text>
         {message && (
           <Text className="px-1 text-center text-base text-danger" accessibilityLiveRegion="polite">
             {message}
@@ -141,17 +141,17 @@ export function Steps({ steps }: { steps: string[] }) {
       {steps.map((step, i) => (
         <View key={step} className="flex-row items-start gap-3">
           <View
-            className="size-[26px] items-center justify-center rounded-full bg-plate-2"
+            className="size-[26px] items-center justify-center rounded-full bg-plate-nested"
             accessibilityElementsHidden
           >
             <Text
               className="text-xs font-semibold"
-              style={{ color: p.text, fontVariant: ["tabular-nums"] }}
+              style={{ color: p.ink, fontVariant: ["tabular-nums"] }}
             >
               {i + 1}
             </Text>
           </View>
-          <Text className="flex-1 pt-0.5 text-base text-text-2">{step}</Text>
+          <Text className="flex-1 pt-0.5 text-base text-ink-secondary">{step}</Text>
         </View>
       ))}
     </Plate>

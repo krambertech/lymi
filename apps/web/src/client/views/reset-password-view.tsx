@@ -50,11 +50,11 @@ export function ResetPasswordView({
     <AuthFrame homeHref={publicSiteUrl()}>
       <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
         <div className="text-center">
-          <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
+          <h1 className="text-2xl font-medium tracking-[-0.02em] text-ink">
             {done ? <Trans>Your password is set</Trans> : <Trans>Set a new password</Trans>}
           </h1>
           {/* The form's instruction is wrong once there is no form, so each state says its own. */}
-          <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
+          <p className="mx-auto mt-2 max-w-[38ch] text-md text-ink-secondary">
             {done ? (
               <Trans>We signed out your other devices.</Trans>
             ) : expired ? (

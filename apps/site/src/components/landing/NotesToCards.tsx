@@ -19,7 +19,7 @@ function SourceTag({ ai }: { ai: boolean }) {
     <span
       className={clsx(
         "shrink-0 rounded-xs px-1.5 py-px text-xs tracking-[0.06em] uppercase",
-        ai ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
+        ai ? "bg-amber-soft text-amber-text" : "bg-plate-nested text-ink-muted",
       )}
     >
       {ai ? <Trans>AI</Trans> : <Trans>Notes</Trans>}
@@ -34,12 +34,12 @@ function Row({ line, language }: { line: NoteLine; language: LearningLanguage })
   if (line.duplicate) {
     return (
       <div className="flex items-start gap-3 py-3">
-        <Copy aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted" />
+        <Copy aria-hidden="true" className="mt-1 size-4 shrink-0 text-ink-muted" />
         <div className="min-w-0 flex-1">
-          <p lang={language.tag} className="truncate text-md font-medium text-muted">
+          <p lang={language.tag} className="truncate text-md font-medium text-ink-muted">
             {line.term}
           </p>
-          <p className="mt-0.5 text-sm text-muted">
+          <p className="mt-0.5 text-sm text-ink-muted">
             <Trans>Already in your deck, so it’s skipped</Trans>
           </p>
         </div>
@@ -49,13 +49,13 @@ function Row({ line, language }: { line: NoteLine; language: LearningLanguage })
 
   return (
     <div className="flex items-start gap-3 py-3">
-      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-good" />
+      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-success" />
       <div className="min-w-0 flex-1">
-        <p lang={language.tag} className="truncate text-md font-medium text-text">
+        <p lang={language.tag} className="truncate text-md font-medium text-ink">
           {line.term}
         </p>
         {meaning && (
-          <p className="mt-0.5 flex items-center gap-2 text-sm text-text-2">
+          <p className="mt-0.5 flex items-center gap-2 text-sm text-ink-secondary">
             <span className="truncate">{i18n._(meaning)}</span>
             <SourceTag ai={!line.gloss} />
           </p>
@@ -115,8 +115,8 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
               className={clsx(
                 "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
                 n.id === language.id
-                  ? "bg-text font-medium text-canvas"
-                  : "bg-plate text-text-2 edge hoverable:hover:bg-hover hoverable:hover:text-text",
+                  ? "bg-ink font-medium text-canvas"
+                  : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
               )}
             >
               {i18n._(n.name)}
@@ -155,14 +155,14 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
                 key={corner}
                 aria-hidden="true"
                 className={clsx(
-                  "absolute size-6 border-text/70 transition-transform duration-300 ease-out motion-reduce:transition-none",
+                  "absolute size-6 border-ink/70 transition-transform duration-300 ease-out motion-reduce:transition-none",
                   read === IDLE && inward,
                   corner,
                 )}
               />
             ))}
             <div className="notes-hand relative -rotate-[1.2deg] overflow-hidden rounded-md bg-plate px-7 pt-6 pb-9 edge">
-              <p lang={language.tag} className="text-2xl text-muted">
+              <p lang={language.tag} className="text-2xl text-ink-muted">
                 {language.notes.heading}
               </p>
               <ul className="mt-4 flex flex-col gap-3.5">
@@ -176,15 +176,17 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
                         className={clsx(
                           "absolute -inset-x-2 -inset-y-0.5 rounded-sm border transition-[border-color,background-color] duration-300",
                           current
-                            ? "border-text/50 bg-text/5"
+                            ? "border-ink/50 bg-ink/5"
                             : seen
-                              ? "border-edge-2"
+                              ? "border-edge-strong"
                               : "border-transparent",
                         )}
                       />
-                      <span className="relative flex flex-wrap items-baseline gap-x-2 text-[1.625rem] leading-tight text-text @2xl:text-[2rem]">
+                      <span className="relative flex flex-wrap items-baseline gap-x-2 text-[1.625rem] leading-tight text-ink @2xl:text-[2rem]">
                         <span lang={language.tag}>{line.term}</span>
-                        {line.gloss && <span className="text-text-2">= {i18n._(line.gloss)}</span>}
+                        {line.gloss && (
+                          <span className="text-ink-secondary">= {i18n._(line.gloss)}</span>
+                        )}
                       </span>
                     </li>
                   );
@@ -231,7 +233,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
               >
                 <span
                   className={clsx(
-                    "grid size-16 place-items-center rounded-full bg-text text-canvas ring-4 ring-canvas transition-[scale,opacity] duration-200 ease-out",
+                    "grid size-16 place-items-center rounded-full bg-ink text-canvas ring-4 ring-canvas transition-[scale,opacity] duration-200 ease-out",
                     read === IDLE
                       ? "hoverable:group-hover/photo:scale-110 active:scale-[0.97]"
                       : "scale-90 opacity-60",
@@ -239,7 +241,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
                 >
                   <Camera aria-hidden="true" className="size-7" />
                 </span>
-                <span className="text-sm font-medium text-text">
+                <span className="text-sm font-medium text-ink">
                   {read === IDLE ? <Trans>Take a photo</Trans> : <Trans>Reading your notes…</Trans>}
                 </span>
               </button>
@@ -249,10 +251,10 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
 
         <div className="min-w-0 rounded-xl bg-plate p-5 edge @2xl:p-6">
           <div className="flex items-baseline justify-between gap-4">
-            <p className="text-lg font-medium tracking-[-0.02em] text-text">
+            <p className="text-lg font-medium tracking-[-0.02em] text-ink">
               {i18n._(language.name)}
             </p>
-            <p className="text-xs text-muted tabular-nums" aria-live="polite">
+            <p className="text-xs text-ink-muted tabular-nums" aria-live="polite">
               {done ? (
                 <Plural value={added} one="# card added" other="# cards added" />
               ) : (
@@ -278,7 +280,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
               )}
             </AnimatePresence>
             {read < 0 && (
-              <p className="py-10 text-center text-sm text-muted">
+              <p className="py-10 text-center text-sm text-ink-muted">
                 <Trans>The cards from this page will land here.</Trans>
               </p>
             )}

@@ -54,7 +54,12 @@ export function ProgressRing({
     <View className="absolute inset-0 items-center justify-center">
       {children ??
         (c.waiting ? (
-          <Icon name="lock" size={Math.round(size * 0.42)} colour={p.muted} strokeWidth={2.25} />
+          <Icon
+            name="lock"
+            size={Math.round(size * 0.42)}
+            colour={p["ink-muted"]}
+            strokeWidth={2.25}
+          />
         ) : null)}
     </View>
   );
@@ -81,7 +86,7 @@ export function ProgressRing({
             cy={half}
             r={r}
             fill="none"
-            stroke={p["edge-2"]}
+            stroke={p["edge-strong"]}
             strokeWidth={1.5}
             strokeDasharray="3 3"
           />
@@ -92,7 +97,7 @@ export function ProgressRing({
               cy={half}
               r={r}
               fill="none"
-              stroke={p["edge-2"]}
+              stroke={p["edge-strong"]}
               strokeWidth={stroke}
             />
             {learning > 0 && (
@@ -199,28 +204,34 @@ export function SectionLine({
                 style={{
                   padding: 12,
                   minHeight: 108,
-                  backgroundColor: c.waiting ? "transparent" : here ? p.plate : p["plate-2"],
+                  backgroundColor: c.waiting ? "transparent" : here ? p.plate : p["plate-nested"],
                   borderWidth: c.waiting || here ? 1.5 : 0,
                   borderStyle: c.waiting ? "dashed" : "solid",
-                  borderColor: here ? p.text : p["edge-2"],
+                  borderColor: here ? p.ink : p["edge-strong"],
                 }}
               >
                 <View className="flex-row items-start justify-between">
                   <ProgressRing column={c} size={24} />
                   {c.section && (
-                    <Text className="text-xs text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                    <Text
+                      className="text-xs text-ink-muted"
+                      style={{ fontVariant: ["tabular-nums"] }}
+                    >
                       {i18n.number(i + 1)}
                     </Text>
                   )}
                 </View>
                 <View className="gap-0.5">
                   <Text
-                    className={`text-sm font-medium ${c.waiting ? "text-text-2" : "text-text"}`}
+                    className={`text-sm font-medium ${c.waiting ? "text-ink-secondary" : "text-ink"}`}
                     numberOfLines={2}
                   >
                     {name}
                   </Text>
-                  <Text className="text-xs text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                  <Text
+                    className="text-xs text-ink-muted"
+                    style={{ fontVariant: ["tabular-nums"] }}
+                  >
                     {c.waiting
                       ? plural(c.total, { one: "# card", other: "# cards" })
                       : c.total === 0
@@ -297,9 +308,9 @@ function Line({ icon, sentence }: { icon: "lock" | "unlock"; sentence: string })
   return (
     <View className="flex-row items-start gap-2">
       <View className="pt-0.5">
-        <Icon name={icon} size={16} colour={p.muted} />
+        <Icon name={icon} size={16} colour={p["ink-muted"]} />
       </View>
-      <Text className="flex-1 text-sm text-text-2">{sentence}</Text>
+      <Text className="flex-1 text-sm text-ink-secondary">{sentence}</Text>
     </View>
   );
 }
@@ -362,10 +373,10 @@ export function SectionColumns({
         style={{
           height: 56,
           borderRadius: 4,
-          backgroundColor: c.waiting ? "transparent" : p["plate-2"],
+          backgroundColor: c.waiting ? "transparent" : p["plate-nested"],
           borderWidth: c.waiting ? 1 : 0,
           borderStyle: "dashed",
-          borderColor: p["edge-2"],
+          borderColor: p["edge-strong"],
         }}
       >
         {!c.waiting && (
@@ -390,7 +401,7 @@ export function SectionColumns({
         style={{
           height: 3,
           width: Math.min(column * 0.7, 16),
-          backgroundColor: i === focus ? p.text : "transparent",
+          backgroundColor: i === focus ? p.ink : "transparent",
         }}
       />
     </Press>

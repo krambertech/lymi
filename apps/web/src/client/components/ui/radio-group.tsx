@@ -57,7 +57,7 @@ function RadioGroupItem({ className, disabled, ...props }: RadioPrimitive.Root.P
       disabled={disabled || field?.disabled}
       className={cn(
         "group/radio relative inline-grid size-[18px] shrink-0 cursor-pointer place-items-center rounded-full",
-        "edge-2 transition-[box-shadow,scale] duration-150 ease-(--ease-out) data-checked:shadow-[0_0_0_1px_var(--text)]",
+        "edge-strong transition-[box-shadow,scale] duration-150 ease-(--ease-out) data-checked:shadow-[0_0_0_1px_var(--ink)]",
         "active:scale-95 motion-reduce:active:scale-100",
         // Carries the touch target to 44 px without moving anything around it.
         "after:absolute after:-inset-[13px] after:content-['']",
@@ -97,7 +97,7 @@ function RadioDot({ checked }: { checked: boolean }) {
             ? { scale: CHOICE_POP, opacity: { duration: 0.08 } }
             : CHOICE_LEAVE
       }
-      className="block size-2.5 rounded-full bg-text"
+      className="block size-2.5 rounded-full bg-ink"
     />
   );
 }

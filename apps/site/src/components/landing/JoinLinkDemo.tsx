@@ -13,10 +13,10 @@ export function JoinLinkDemo() {
     <div className="mx-auto w-full max-w-[420px] rounded-2xl bg-plate p-5 edge @2xl:p-6">
       <div className="relative flex items-start gap-3">
         <span className="grid flex-1 gap-0.5">
-          <span id={labelId} className="text-md font-medium text-text">
+          <span id={labelId} className="text-md font-medium text-ink">
             <Trans>Join link</Trans>
           </span>
-          <span className="text-sm text-muted">
+          <span className="text-sm text-ink-muted">
             {on ? (
               <Trans>Anyone with the link can join this deck.</Trans>
             ) : (
@@ -36,13 +36,15 @@ export function JoinLinkDemo() {
           <span
             className={clsx(
               "flex h-[26px] w-11 items-center rounded-full p-[3px] transition-colors duration-200 ease-out",
-              on ? "bg-amber" : "bg-plate-2 edge-2",
+              on ? "bg-amber" : "bg-plate-nested edge-strong",
             )}
           >
             <span
               className={clsx(
                 "size-5 rounded-full transition-transform duration-200 ease-out",
-                on ? "translate-x-[18px] bg-amber-ink rtl:-translate-x-[18px]" : "bg-plate edge-2",
+                on
+                  ? "translate-x-[18px] bg-amber-ink rtl:-translate-x-[18px]"
+                  : "bg-plate edge-strong",
               )}
             />
           </span>
@@ -52,21 +54,21 @@ export function JoinLinkDemo() {
       <div
         aria-hidden={!on}
         className={clsx(
-          "mt-4 flex h-11 items-center gap-2.5 rounded-md bg-plate-2 px-3.5 transition-opacity duration-200",
+          "mt-4 flex h-11 items-center gap-2.5 rounded-md bg-plate-nested px-3.5 transition-opacity duration-200",
           !on && "opacity-40",
         )}
       >
-        <Link2 aria-hidden="true" className="size-4 shrink-0 text-muted" />
-        <span className="min-w-0 flex-1 truncate font-mono text-sm text-text-2">
+        <Link2 aria-hidden="true" className="size-4 shrink-0 text-ink-muted" />
+        <span className="min-w-0 flex-1 truncate font-mono text-sm text-ink-secondary">
           my.lymi.app/join/k7Qm2x
         </span>
-        <span className="shrink-0 text-sm font-medium text-text">
+        <span className="shrink-0 text-sm font-medium text-ink">
           <Trans>Copy</Trans>
         </span>
       </div>
 
       <div className="mt-6 border-t border-edge pt-4">
-        <p className="text-sm text-text-2 tabular-nums">
+        <p className="text-sm text-ink-secondary tabular-nums">
           <Plural value={CLASS_LEARNERS} one="# learner joined" other="# learners joined" />
         </p>
       </div>

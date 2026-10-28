@@ -18,27 +18,27 @@ test("converts OKLCH to the hex DESIGN.md records, with alpha as a fourth byte",
 test("reads both rooms and gives a Tailwind alias its own entry", () => {
   const css = `:root,
 [data-theme="light"] {
-  --text: oklch(0.2 0.016 55);
+  --ink: oklch(0.2 0.016 55);
   /* a comment */
-  --metal: var(--text);
+  --lantern-metal: var(--ink);
 }
 
 [data-theme="dark"] {
-  --text: oklch(1 0 0);
-  --metal: var(--text);
+  --ink: oklch(1 0 0);
+  --lantern-metal: var(--ink);
 }
 
 @theme inline {
-  --color-text: var(--text);
-  --color-grade-easy: var(--text);
+  --color-ink: var(--ink);
+  --color-grade-easy: var(--ink);
 }
 `;
   assert.deepEqual(paletteFrom(css), [
-    ["text", "#1c140f"],
-    ["metal", "#1c140f"],
+    ["ink", "#1c140f"],
+    ["lantern-metal", "#1c140f"],
     ["grade-easy", "#1c140f"],
-    ["dark-text", "#ffffff"],
-    ["dark-metal", "#ffffff"],
+    ["dark-ink", "#ffffff"],
+    ["dark-lantern-metal", "#ffffff"],
     ["dark-grade-easy", "#ffffff"],
   ]);
 });
@@ -73,7 +73,7 @@ test("mixes in oklab, lowers lightness relatively, and lets the dark room inheri
 
 test("generates the phone's values from tokens.css", () => {
   const generated = outputs();
-  assert.match(generated["packages/design/src/tokens.gen.ts"], /"light-1": "#[0-9a-f]{6}"/);
+  assert.match(generated["packages/design/src/tokens.gen.ts"], /"lit-low": "#[0-9a-f]{6}"/);
   assert.match(generated["packages/design/uniwind.gen.css"], /--color-amber: #/);
   assert.doesNotMatch(generated["packages/design/uniwind.gen.css"], /--text-/);
 });
@@ -94,6 +94,6 @@ test("reads the colours out of the frontmatter", () => {
 
 test("names components in code font, but not strings quoted in examples", () => {
   const markdown =
-    "Use `StartPanel` or `NoResults`, not `text-muted`.\n\n```tsx\n<NoResults title={t`Nothing`} />\n```\n";
+    "Use `StartPanel` or `NoResults`, not `text-ink-muted`.\n\n```tsx\n<NoResults title={t`Nothing`} />\n```\n";
   assert.deepEqual(namedComponents(markdown), ["StartPanel", "NoResults"]);
 });

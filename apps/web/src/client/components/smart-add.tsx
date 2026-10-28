@@ -273,7 +273,7 @@ function SmartAdd({
   };
 
   const title = (
-    <h2 id={titleId} className="flex items-center gap-2 text-lg font-medium text-text">
+    <h2 id={titleId} className="flex items-center gap-2 text-lg font-medium text-ink">
       <Trans>Smart add</Trans>
       <Chip size="sm">
         <Trans>Beta</Trans>
@@ -286,7 +286,7 @@ function SmartAdd({
       <div className={titleInBar ? "px-5 pt-4 pb-3" : undefined}>
         <PlaceBar returnsTo={t`Back`} title={titleInBar ? title : undefined} onClose={onClose} />
       </div>
-      {!titleInBar && <div className="-mt-2 text-2xl font-medium text-text">{title}</div>}
+      {!titleInBar && <div className="-mt-2 text-2xl font-medium text-ink">{title}</div>}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={step}
@@ -394,7 +394,7 @@ function ActionBar({ children, note }: { children: React.ReactNode; note?: React
           : "py-4",
       )}
     >
-      <div className="min-w-0 flex-1 text-sm text-muted">{note}</div>
+      <div className="min-w-0 flex-1 text-sm text-ink-muted">{note}</div>
       <div className="flex shrink-0 items-center gap-2">{children}</div>
     </div>
   );
@@ -569,7 +569,7 @@ function InputStep(props: {
         {atLimit && daily ? (
           <LimitNotice daily={daily} />
         ) : (
-          <p className="text-base text-pretty text-text-2">
+          <p className="text-base text-pretty text-ink-secondary">
             <Trans>
               Add photos, PDFs or text from your lesson. Then choose which terms to add as cards.
             </Trans>
@@ -577,7 +577,7 @@ function InputStep(props: {
         )}
 
         {!empty && (
-          <ul className="edge grid divide-y divide-edge rounded-xl bg-plate-2">
+          <ul className="edge grid divide-y divide-edge rounded-xl bg-plate-nested">
             {pages.map((page, i) => {
               // Photos are numbered among themselves, so a PDF ahead of them takes no number.
               const n = pages.slice(0, i + 1).filter((p) => p.kind === "photo").length;
@@ -586,8 +586,8 @@ function InputStep(props: {
                 <li key={page.id} className="flex items-center gap-3 px-3 py-2.5">
                   <Thumb page={page} name={name} />
                   <span className="grid min-w-0 flex-1">
-                    <span className="truncate text-base text-text">{name}</span>
-                    <span className="text-sm text-muted">
+                    <span className="truncate text-base text-ink">{name}</span>
+                    <span className="text-sm text-ink-muted">
                       {page.kind === "pdf" ? t`PDF` : t`Photo`}
                     </span>
                   </span>
@@ -609,8 +609,8 @@ function InputStep(props: {
                   onClick={textItem.edit}
                   className="grid min-w-0 flex-1 text-start"
                 >
-                  <span className="truncate text-base text-text">{textItem.preview}</span>
-                  <span className="text-sm text-muted">
+                  <span className="truncate text-base text-ink">{textItem.preview}</span>
+                  <span className="text-sm text-ink-muted">
                     {t`Text · ${plural(textItem.words, { one: "# word", other: "# words" })}`}
                   </span>
                 </button>
@@ -627,13 +627,13 @@ function InputStep(props: {
         )}
         <div className="grid gap-2">
           {!empty && (
-            <h3 className="text-sm font-medium text-muted">
+            <h3 className="text-sm font-medium text-ink-muted">
               <Trans>Add more</Trans>
             </h3>
           )}
           <div
             className={cn(
-              "edge grid divide-y divide-edge rounded-xl bg-plate-2",
+              "edge grid divide-y divide-edge rounded-xl bg-plate-nested",
               over && "bg-amber-soft",
             )}
           >
@@ -643,16 +643,19 @@ function InputStep(props: {
                 type="button"
                 onClick={source.onClick}
                 disabled={atLimit}
-                className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl disabled:opacity-45 hoverable:enabled:hover:bg-hover"
+                className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl disabled:opacity-45 hoverable:enabled:hover:bg-plate-hover"
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-ink">
                   <source.icon className="size-5" aria-hidden="true" />
                 </span>
                 <span className="grid min-w-0 flex-1">
-                  <span className="text-base font-medium text-text">{source.label}</span>
-                  <span className="text-sm text-muted">{source.hint}</span>
+                  <span className="text-base font-medium text-ink">{source.label}</span>
+                  <span className="text-sm text-ink-muted">{source.hint}</span>
                 </span>
-                <ChevronRight className="size-5 text-faint rtl:-scale-x-100" aria-hidden="true" />
+                <ChevronRight
+                  className="size-5 text-ink-faint rtl:-scale-x-100"
+                  aria-hidden="true"
+                />
               </button>
             ))}
           </div>
@@ -731,7 +734,7 @@ function Thumb({ page, name }: { page: Page; name: string }) {
 
 function IconTile({ icon: Icon }: { icon: typeof FileText }) {
   return (
-    <span className="grid size-10 shrink-0 place-items-center rounded-md bg-plate text-text-2">
+    <span className="grid size-10 shrink-0 place-items-center rounded-md bg-plate text-ink-secondary">
       <Icon className="size-5" aria-hidden="true" />
     </span>
   );
@@ -779,8 +782,8 @@ export function ReadingStep({
         <ScanStage pages={pages} text={text} finished={finished} current={current} />
 
         <div className="grid justify-items-center gap-1 text-center">
-          <RollingCount value={found} className="text-4xl font-medium text-text" />
-          <p className="text-sm text-muted" aria-live="polite">
+          <RollingCount value={found} className="text-4xl font-medium text-ink" />
+          <p className="text-sm text-ink-muted" aria-live="polite">
             {t`${plural(found, { one: "term found", other: "terms found" })}`}
           </p>
         </div>
@@ -789,7 +792,7 @@ export function ReadingStep({
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={stage}
-              className="flex items-center gap-2 text-sm text-text-2"
+              className="flex items-center gap-2 text-sm text-ink-secondary"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease: EASE } }}
               exit={{ opacity: 0, y: -4, transition: { duration: 0.15 } }}
@@ -842,7 +845,7 @@ function QuestionsStep({
           const own = answers[index] === OWN_ANSWER;
           return (
             <FieldSet key={question.id} className="gap-2.5">
-              <FieldLegend variant="label" className="text-base font-medium text-pretty text-text">
+              <FieldLegend variant="label" className="text-base font-medium text-pretty text-ink">
                 {question.question}
               </FieldLegend>
               <RadioGroup
@@ -866,7 +869,7 @@ function QuestionsStep({
                     }}
                     placeholder={t`Something else…`}
                     maxLength={300}
-                    className="min-w-0 flex-1 bg-transparent text-base font-medium text-text outline-none placeholder:font-normal placeholder:text-muted"
+                    className="min-w-0 flex-1 bg-transparent text-base font-medium text-ink outline-none placeholder:font-normal placeholder:text-ink-muted"
                   />
                 </RadioCard>
               </RadioGroup>
@@ -930,10 +933,10 @@ function ListStep({
       <>
         <DialogBody className="grid content-start gap-5">
           <div className="grid gap-1">
-            <p className="text-md font-medium text-text">
+            <p className="text-md font-medium text-ink">
               <Trans>No new terms found</Trans>
             </p>
-            <p className="text-base text-text-2">
+            <p className="text-base text-ink-secondary">
               {existing.length > 0 ? (
                 <Trans>The terms Lymi found are already in your decks. Try another lesson.</Trans>
               ) : (
@@ -978,13 +981,13 @@ function ListStep({
         </Field>
         <div className="grid">
           <div className="flex items-baseline justify-between gap-3 pb-1">
-            <p className="text-sm text-text-2 tabular-nums">
+            <p className="text-sm text-ink-secondary tabular-nums">
               {t`${ticked.size} of ${fresh.length} chosen`}
             </p>
             <button
               type="button"
               onClick={() => setTicked(all ? new Set() : new Set(fresh.map((term) => term.id)))}
-              className="-my-2 min-h-11 shrink-0 text-sm font-medium text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text md:min-h-0"
+              className="-my-2 min-h-11 shrink-0 text-sm font-medium text-ink-secondary underline decoration-edge-strong underline-offset-3 transition-colors hoverable:hover:text-ink md:min-h-0"
             >
               {all ? <Trans>Clear all</Trans> : <Trans>Select all</Trans>}
             </button>
@@ -1008,10 +1011,10 @@ function ListStep({
                     className="mt-0.5"
                   />
                   <div className="grid min-w-0">
-                    <FieldLabel className="text-base font-medium text-text [overflow-wrap:anywhere]">
+                    <FieldLabel className="text-base font-medium text-ink [overflow-wrap:anywhere]">
                       <bdi>{term.term}</bdi>
                     </FieldLabel>
-                    <span className="text-sm text-text-2">{term.gloss}</span>
+                    <span className="text-sm text-ink-secondary">{term.gloss}</span>
                     <TermNote term={term} />
                   </div>
                 </Field>
@@ -1022,7 +1025,7 @@ function ListStep({
 
         {existing.length > 0 && <ExistingList terms={existing} />}
 
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           <Trans>After you add them, Lymi writes each card’s example and pronunciation.</Trans>
         </p>
       </DialogBody>
@@ -1057,7 +1060,7 @@ function ListStep({
 function TermNote({ term }: { term: LessonTerm }) {
   if (term.formOf) {
     return (
-      <span className="text-xs text-muted">
+      <span className="text-xs text-ink-muted">
         <Trans>
           Another form of {isolate(term.formOf.term)}, in {isolate(term.formOf.deckName)}
         </Trans>
@@ -1066,14 +1069,14 @@ function TermNote({ term }: { term: LessonTerm }) {
   }
   if (term.keep !== null && !term.ticked) {
     return (
-      <span className="text-xs text-muted">
+      <span className="text-xs text-ink-muted">
         <Trans>May belong on another card</Trans>
       </span>
     );
   }
   if (term.handwritten) {
     return (
-      <span className="text-xs text-muted">
+      <span className="text-xs text-ink-muted">
         <Trans>Handwritten</Trans>
       </span>
     );
@@ -1084,18 +1087,18 @@ function TermNote({ term }: { term: LessonTerm }) {
 function ExistingList({ terms }: { terms: LessonTerm[] }) {
   return (
     <section className="grid" aria-labelledby="lesson-existing">
-      <h2 id="lesson-existing" className="pt-2 pb-1 text-sm text-muted">
+      <h2 id="lesson-existing" className="pt-2 pb-1 text-sm text-ink-muted">
         <Trans>Already in your decks</Trans>
       </h2>
       <ul className="grid">
         {terms.map((term) => (
           <li key={term.id} className="flex items-start gap-3 py-2">
-            <span className="grid size-5 shrink-0 place-items-center text-faint">
+            <span className="grid size-5 shrink-0 place-items-center text-ink-faint">
               <Check className="size-4" aria-hidden="true" />
             </span>
             <div className="grid min-w-0 gap-0.5">
-              <bdi className="text-base text-muted">{term.term}</bdi>
-              <span className="text-sm text-muted">
+              <bdi className="text-base text-ink-muted">{term.term}</bdi>
+              <span className="text-sm text-ink-muted">
                 <Trans>In {isolate(term.existing?.deckName)}</Trans>
               </span>
             </div>

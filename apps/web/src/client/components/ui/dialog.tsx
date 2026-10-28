@@ -210,7 +210,7 @@ function DialogContent({
           {...props}
           className={cn(
             // Slides in from the end edge over 260 ms and out in 200; under reduced motion it fades.
-            "fixed inset-y-0 end-0 z-(--z-sheet) flex w-[min(92vw,400px)] flex-col overflow-y-auto overscroll-contain bg-plate text-text shadow-[-1px_0_0_var(--edge-2)] outline-none transition-[opacity,translate] duration-260 ease-(--ease-out) rtl:shadow-[1px_0_0_var(--edge-2)] data-starting-style:translate-x-full data-ending-style:translate-x-full data-ending-style:duration-200 rtl:data-starting-style:-translate-x-full rtl:data-ending-style:-translate-x-full motion-reduce:data-starting-style:translate-x-0 motion-reduce:data-starting-style:opacity-0 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-ending-style:opacity-0",
+            "fixed inset-y-0 end-0 z-(--z-sheet) flex w-[min(92vw,400px)] flex-col overflow-y-auto overscroll-contain bg-plate text-ink shadow-[-1px_0_0_var(--edge-strong)] outline-none transition-[opacity,translate] duration-260 ease-(--ease-out) rtl:shadow-[1px_0_0_var(--edge-strong)] data-starting-style:translate-x-full data-ending-style:translate-x-full data-ending-style:duration-200 rtl:data-starting-style:-translate-x-full rtl:data-ending-style:-translate-x-full motion-reduce:data-starting-style:translate-x-0 motion-reduce:data-starting-style:opacity-0 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-ending-style:opacity-0",
             className,
           )}
         >
@@ -228,7 +228,7 @@ function DialogContent({
         className={cn(
           sizes[size],
           // The card's 6 px rise over 200 ms, leaving in 140.
-          "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+          "edge-strong fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-ink outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
           // The frame holds still and only the body scrolls, so the title and the actions stay in view.
           scroll === "body" && "flex flex-col gap-0 overflow-hidden p-0",
           className,
@@ -288,7 +288,7 @@ function DialogTitle({ className, children, ...props }: DialogPrimitive.Title.Pr
   return useDialogShape("DialogTitle") === "desktop" ? (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn("text-lg font-medium text-text", className)}
+      className={cn("text-lg font-medium text-ink", className)}
       {...props}
     >
       {bidi(children)}
@@ -310,7 +310,7 @@ function DialogDescription({ className, ...props }: DialogPrimitive.Description.
   return useDialogShape("DialogDescription") === "desktop" ? (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn("text-base text-text-2", className)}
+      className={cn("text-base text-ink-secondary", className)}
       {...props}
     />
   ) : (

@@ -70,7 +70,9 @@ export function ErrorTip({ anchor, message, nudge = 0, reason, sideOffset, onOpe
         >
           <Icon
             className={
-              reason ? "mt-0.5 size-4 shrink-0 text-muted" : "mt-0.5 size-4 shrink-0 text-danger"
+              reason
+                ? "mt-0.5 size-4 shrink-0 text-ink-muted"
+                : "mt-0.5 size-4 shrink-0 text-danger"
             }
             aria-hidden="true"
           />

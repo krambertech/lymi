@@ -22,7 +22,7 @@ export function LanguageLinks({
   return (
     <nav
       aria-label={t`Language`}
-      className={clsx("flex flex-wrap gap-4 text-xs text-muted", className)}
+      className={clsx("flex flex-wrap gap-4 text-xs text-ink-muted", className)}
     >
       {languages.map(({ locale, label }) => {
         const href =
@@ -39,7 +39,7 @@ export function LanguageLinks({
             hrefLang={locale}
             lang={locale}
             aria-current={i18n.locale === locale ? "page" : undefined}
-            className="rounded-xs hoverable:hover:text-text aria-[current=page]:font-medium aria-[current=page]:text-text"
+            className="rounded-xs hoverable:hover:text-ink aria-[current=page]:font-medium aria-[current=page]:text-ink"
           >
             {label}
           </a>

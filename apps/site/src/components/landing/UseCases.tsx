@@ -72,13 +72,13 @@ function CardStack({ card, shape }: { card: SampleCard; shape: Shape }) {
             stack.card,
           )}
         >
-          <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">
+          <p className="text-xs font-medium tracking-[0.06em] text-ink-muted uppercase">
             {i18n._(card.label)}
           </p>
           <p
             lang={card.language}
             className={clsx(
-              "mt-2.5 mb-5 leading-[1.05] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]",
+              "mt-2.5 mb-5 leading-[1.05] font-medium tracking-[-0.03em] text-balance text-ink [overflow-wrap:anywhere]",
               TERM[shape],
             )}
           >
@@ -86,7 +86,7 @@ function CardStack({ card, shape }: { card: SampleCard; shape: Shape }) {
           </p>
           <p
             className={clsx(
-              "mt-auto border-t border-edge-2 pt-3 text-pretty text-text-2",
+              "mt-auto border-t border-edge-strong pt-3 text-pretty text-ink-secondary",
               shape === "lead" ? "text-md" : "text-sm",
             )}
           >
@@ -108,7 +108,7 @@ export function UseCases({ title, items }: Props) {
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="use-cases-title"
-          className="max-w-[20ch] text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl @4xl:max-w-none"
+          className="max-w-[20ch] text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl @4xl:max-w-none"
         >
           {title}
         </h2>
@@ -127,12 +127,14 @@ export function UseCases({ title, items }: Props) {
                 )}
               >
                 <div className="pb-7 @2xl:pb-8">
-                  <h3 className="text-xl font-medium tracking-[-0.02em] text-text">{item.title}</h3>
-                  <p className="mt-2 max-w-[34ch] text-sm text-pretty text-text-2">{item.body}</p>
+                  <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{item.title}</h3>
+                  <p className="mt-2 max-w-[34ch] text-sm text-pretty text-ink-secondary">
+                    {item.body}
+                  </p>
                   {item.link && (
                     <a
                       href={item.link.href}
-                      className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-text after:absolute after:inset-0 after:z-10 focus-visible:outline-none"
+                      className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink after:absolute after:inset-0 after:z-10 focus-visible:outline-none"
                     >
                       {item.link.label}
                       <ArrowRight

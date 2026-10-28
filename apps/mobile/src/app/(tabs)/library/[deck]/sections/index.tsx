@@ -198,10 +198,10 @@ export default function DeckSections() {
           {!editing && (
             <Plate className="gap-4 p-5">
               <View className={large ? "gap-1" : "flex-row items-baseline justify-between gap-3"}>
-                <Text className="shrink text-base text-text-2">
+                <Text className="shrink text-base text-ink-secondary">
                   <Trans>
                     <Text
-                      className="text-4xl font-semibold text-text"
+                      className="text-4xl font-semibold text-ink"
                       style={{ letterSpacing: -1, fontVariant: ["tabular-nums"] }}
                     >
                       {i18n.number(learned)}
@@ -210,7 +210,7 @@ export default function DeckSections() {
                   </Trans>
                 </Text>
                 {due > 0 && (
-                  <Text className="text-base text-muted">{t`${i18n.number(due)} to review`}</Text>
+                  <Text className="text-base text-ink-muted">{t`${i18n.number(due)} to review`}</Text>
                 )}
               </View>
               {/* The path's sections only: the cards with no section are not a step anyone takes. */}
@@ -326,8 +326,8 @@ export default function DeckSections() {
               className={`min-h-14 flex-row items-center gap-3 px-4 py-2 ${at > 0 ? "border-t border-edge" : ""}`}
             >
               <View className="flex-1">
-                <Text className="text-md font-medium text-text">{s.name}</Text>
-                <Text className="text-sm text-muted">
+                <Text className="text-md font-medium text-ink">{s.name}</Text>
+                <Text className="text-sm text-ink-muted">
                   {s.archivedCards > 0
                     ? plural(s.archivedCards, {
                         one: "# card comes back with it",

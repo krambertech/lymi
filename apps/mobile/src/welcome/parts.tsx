@@ -15,7 +15,7 @@ export function Tick() {
   return (
     <Animated.View
       entering={reduce ? undefined : springIn(new ZoomIn(), CHOICE_POP)}
-      className="size-6 items-center justify-center rounded-full bg-text"
+      className="size-6 items-center justify-center rounded-full bg-ink"
     >
       <Icon name="check" size={14} colour={p.canvas} strokeWidth={3} />
     </Animated.View>
@@ -50,15 +50,15 @@ export function ChoiceTile({
     >
       <Plate
         className="flex-row items-center gap-3.5 px-4 py-4"
-        style={chosen ? { borderColor: p.text, borderWidth: 1.5 } : undefined}
+        style={chosen ? { borderColor: p.ink, borderWidth: 1.5 } : undefined}
       >
-        {icon && <Icon name={icon} size={22} colour={p.text} strokeWidth={1.75} />}
+        {icon && <Icon name={icon} size={22} colour={p.ink} strokeWidth={1.75} />}
         <View className="flex-1 gap-0.5">
           <View className="flex-row flex-wrap items-center gap-2">
-            <Text className="text-md font-medium text-text">{title}</Text>
+            <Text className="text-md font-medium text-ink">{title}</Text>
             {aside}
           </View>
-          {detail && <Text className="text-base text-text-2">{detail}</Text>}
+          {detail && <Text className="text-base text-ink-secondary">{detail}</Text>}
         </View>
         {chosen ? <Tick /> : <View className="size-6" />}
       </Plate>
@@ -79,7 +79,7 @@ export function HowItWorks() {
   ];
   return (
     <Plate className="gap-4 p-5">
-      <Text className="text-sm font-medium text-muted" accessibilityRole="header">
+      <Text className="text-sm font-medium text-ink-muted" accessibilityRole="header">
         {t`How it works`}
       </Text>
       <View className="gap-5">
@@ -123,7 +123,7 @@ function HowStep({ n, last, children }: { n: number; last: boolean; children: st
           {n}
         </Text>
       </View>
-      <Text className="flex-1 pt-0.5 text-base text-text">{children}</Text>
+      <Text className="flex-1 pt-0.5 text-base text-ink">{children}</Text>
     </View>
   );
 }

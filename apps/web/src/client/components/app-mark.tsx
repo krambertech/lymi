@@ -20,7 +20,7 @@ export function AppMark({ app, className }: { app: AppIdentity; className?: stri
     <span
       aria-hidden="true"
       className={clsx(
-        "edge grid shrink-0 place-items-center rounded-lg bg-plate text-text",
+        "edge grid shrink-0 place-items-center rounded-lg bg-plate text-ink",
         className,
       )}
     >
@@ -29,10 +29,12 @@ export function AppMark({ app, className }: { app: AppIdentity; className?: stri
           <path d={app.path} />
         </svg>
       ) : app.name ? (
-        <span className="text-lg font-semibold uppercase text-text-2">{app.name.slice(0, 1)}</span>
+        <span className="text-lg font-semibold uppercase text-ink-secondary">
+          {app.name.slice(0, 1)}
+        </span>
       ) : (
         // Nothing to take an initial from, so the tile says "an app" rather than inventing a letter.
-        <Plug className="size-1/2 text-muted" />
+        <Plug className="size-1/2 text-ink-muted" />
       )}
     </span>
   );

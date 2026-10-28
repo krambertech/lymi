@@ -35,14 +35,14 @@ export function OfficeDeck({ deck, words, locale }: Props) {
     <div className="mx-auto max-w-[480px] rounded-xl bg-plate p-5 edge @2xl:p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-lg font-medium tracking-[-0.02em] text-text">{deck.name}</p>
-          <p className="mt-0.5 text-sm text-muted tabular-nums">
+          <p className="text-lg font-medium tracking-[-0.02em] text-ink">{deck.name}</p>
+          <p className="mt-0.5 text-sm text-ink-muted tabular-nums">
             <Plural value={deck.cardCount} one="# card" other="# cards" />
           </p>
         </div>
         <a
           href={addDeckUrl(deck)}
-          className="inline-flex h-8 shrink-0 items-center rounded-full bg-plate-2 px-3 text-sm font-medium text-text edge hoverable:hover:bg-hover"
+          className="inline-flex h-8 shrink-0 items-center rounded-full bg-plate-nested px-3 text-sm font-medium text-ink edge hoverable:hover:bg-plate-hover"
         >
           <Trans>Add deck</Trans>
         </a>
@@ -55,17 +55,17 @@ export function OfficeDeck({ deck, words, locale }: Props) {
               onClick={() => play(w.id)}
               aria-label={t`Hear ${w.term}`}
               className={clsx(
-                "inline-flex size-8 shrink-0 items-center justify-center rounded-full edge hoverable:hover:bg-hover",
-                playing === w.id ? "text-amber-text" : "text-text-2",
+                "inline-flex size-8 shrink-0 items-center justify-center rounded-full edge hoverable:hover:bg-plate-hover",
+                playing === w.id ? "text-amber-text" : "text-ink-secondary",
               )}
             >
               <Volume2 aria-hidden="true" className="size-4" />
             </button>
             <div className="min-w-0 flex-1">
-              <p lang="pl" className="text-md font-medium text-pretty text-text">
+              <p lang="pl" className="text-md font-medium text-pretty text-ink">
                 {w.term}
               </p>
-              <p lang={locale} className="text-sm text-pretty text-muted">
+              <p lang={locale} className="text-sm text-pretty text-ink-muted">
                 {w.meaning[locale]}
               </p>
             </div>

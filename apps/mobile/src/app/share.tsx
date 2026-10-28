@@ -214,7 +214,7 @@ export default function ShareDeck() {
       >
         <SheetHeading>{t`People`}</SheetHeading>
         {full ? (
-          <Text className="px-4 text-base text-text-2">
+          <Text className="px-4 text-base text-ink-secondary">
             {plural(waiting, {
               one: "# invitation is waiting. Cancel it to invite someone else.",
               other: "# invitations are waiting. Cancel one to invite someone else.",
@@ -225,7 +225,7 @@ export default function ShareDeck() {
             <View
               className={`min-h-[52px] flex-row items-center gap-2.5 rounded-2xl bg-glass-plate ps-3.5 pe-1.5 ${online ? "" : "opacity-45"}`}
             >
-              <Icon name="email" size={18} colour={p.muted} />
+              <Icon name="email" size={18} colour={p["ink-muted"]} />
               <TextInput
                 value={draft}
                 onChangeText={(next) => {
@@ -242,10 +242,10 @@ export default function ShareDeck() {
                 autoCorrect={false}
                 autoComplete="email"
                 placeholder={t`Email address`}
-                placeholderTextColor={p.muted}
+                placeholderTextColor={p["ink-muted"]}
                 accessibilityLabel={t`Email address`}
-                selectionColor={p.text}
-                className="min-h-11 flex-1 py-2 font-sans text-text"
+                selectionColor={p.ink}
+                className="min-h-11 flex-1 py-2 font-sans text-ink"
                 style={{ fontSize: 17 }}
                 maxFontSizeMultiplier={inputCap(17)}
               />
@@ -255,14 +255,14 @@ export default function ShareDeck() {
                 accessibilityRole="button"
                 accessibilityLabel={t`Invite`}
                 accessibilityState={{ disabled: !online, busy: invite.isPending }}
-                className={`min-h-10 min-w-[76px] py-2 items-center justify-center rounded-xl px-4 ${ready ? "bg-amber" : "bg-plate-2"}`}
+                className={`min-h-10 min-w-[76px] py-2 items-center justify-center rounded-xl px-4 ${ready ? "bg-amber" : "bg-plate-nested"}`}
               >
                 {invite.isPending ? (
-                  <ActivityIndicator size="small" color={p.muted} />
+                  <ActivityIndicator size="small" color={p["ink-muted"]} />
                 ) : (
                   <Text
                     className="text-md font-semibold"
-                    style={{ color: ready ? p["amber-ink"] : p.faint }}
+                    style={{ color: ready ? p["amber-ink"] : p["ink-faint"] }}
                   >
                     {t`Invite`}
                   </Text>
@@ -272,7 +272,7 @@ export default function ShareDeck() {
             {error ? (
               <SheetError>{error}</SheetError>
             ) : (
-              <Text className="px-4 text-sm text-text-2">
+              <Text className="px-4 text-sm text-ink-secondary">
                 {!online
                   ? t`Inviting needs a connection.`
                   : sent
@@ -400,10 +400,10 @@ export default function ShareDeck() {
                 {link ? (
                   <>
                     <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
-                      <Icon name="linkOn" size={16} colour={p.muted} />
+                      <Icon name="linkOn" size={16} colour={p["ink-muted"]} />
                       {/* Android clips a selectable line rather than ending it in an ellipsis; Copy link is beside it. */}
                       <Text
-                        className="flex-1 text-md text-text"
+                        className="flex-1 text-md text-ink"
                         numberOfLines={1}
                         selectable={Platform.OS === "ios"}
                       >
@@ -479,8 +479,8 @@ function LinkButton({
       accessibilityLabel={label}
       className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-[14px] bg-glass-plate px-3 py-2"
     >
-      <Icon name={icon} size={18} colour={p.text} />
-      <Text className="text-md font-medium text-text" numberOfLines={1}>
+      <Icon name={icon} size={18} colour={p.ink} />
+      <Text className="text-md font-medium text-ink" numberOfLines={1}>
         {label}
       </Text>
     </Press>
@@ -502,17 +502,19 @@ function PersonRow({
   return (
     <View className="min-h-16 flex-row items-center gap-3 py-2.5 ps-4 pe-2">
       <View
-        className={`size-9 items-center justify-center rounded-full ${pending ? "border border-dashed border-edge-2" : "bg-glass-plate"}`}
+        className={`size-9 items-center justify-center rounded-full ${pending ? "border border-dashed border-edge-strong" : "bg-glass-plate"}`}
       >
-        <Text className={`text-sm font-medium ${pending ? "text-faint" : "text-text-2"}`}>
+        <Text
+          className={`text-sm font-medium ${pending ? "text-ink-faint" : "text-ink-secondary"}`}
+        >
           {initial(name)}
         </Text>
       </View>
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={1}>
+        <Text className="text-md font-medium text-ink" numberOfLines={1}>
           {name}
         </Text>
-        <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
           {line}
         </Text>
       </View>

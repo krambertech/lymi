@@ -22,10 +22,10 @@ export function ImportSourcesFigure() {
           )}
         >
           <span className="grid min-w-0 flex-1 gap-0.5">
-            <span className="text-md font-medium text-text">{source.name}</span>
-            <span className="text-sm text-muted">{source.detail}</span>
+            <span className="text-md font-medium text-ink">{source.name}</span>
+            <span className="text-sm text-ink-muted">{source.detail}</span>
           </span>
-          <span className="grid size-8 place-items-center rounded-full bg-plate-2 text-text edge-inset">
+          <span className="grid size-8 place-items-center rounded-full bg-plate-nested text-ink edge-inset">
             <ChevronRight className="size-4 rtl:-scale-x-100" />
           </span>
         </li>

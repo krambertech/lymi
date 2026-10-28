@@ -215,7 +215,7 @@ export function ExploreDeckView({
         <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">
           {/* Centred while it stacks under the hand, level with the column once they sit side by side. */}
           <div className="grid justify-items-center text-center @4xl:justify-items-start @4xl:text-start">
-            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-text-2 @4xl:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-ink-secondary @4xl:justify-start">
               <p className="flex items-center gap-2">
                 {/* Served by the deck's slug rather than the account. ADR 0016. */}
                 <PublisherMark
@@ -229,7 +229,7 @@ export function ExploreDeckView({
                 />
                 <Trans>By {deck.publisher}</Trans>
               </p>
-              <span aria-hidden="true" className="text-faint">
+              <span aria-hidden="true" className="text-ink-faint">
                 ·
               </span>
               <DeckMeta
@@ -240,13 +240,13 @@ export function ExploreDeckView({
             <h1
               dir="auto"
               lang={deck.meaningLanguage}
-              className="mt-3 text-2xl font-medium tracking-[-0.02em] text-balance text-text @4xl:text-3xl"
+              className="mt-3 text-2xl font-medium tracking-[-0.02em] text-balance text-ink @4xl:text-3xl"
             >
               {deck.name}
             </h1>
             <p
               lang={deck.meaningLanguage}
-              className="mt-2.5 max-w-[52ch] text-md text-pretty text-text-2"
+              className="mt-2.5 max-w-[52ch] text-md text-pretty text-ink-secondary"
             >
               {deck.summary}
             </p>
@@ -321,28 +321,30 @@ export function ExploreDeckView({
       <div className="@3xl/shell:-mt-1">
         {sections.length > 0 && (
           <section aria-labelledby="deck-path" className="pb-9">
-            <h2 id="deck-path" className="text-lg font-medium text-text">
+            <h2 id="deck-path" className="text-lg font-medium text-ink">
               <Trans>What you learn, in order</Trans>
             </h2>
             <ol className="edge mt-4 grid gap-px overflow-hidden rounded-md bg-edge">
               {keyed(sections, (section) => section.name ?? "").map(
                 ({ item: section, key }, at) => (
                   <li key={key} className="flex items-center gap-3 bg-plate px-4 py-3 text-base">
-                    <span className="w-5 shrink-0 text-sm text-muted tabular-nums">{at + 1}</span>
+                    <span className="w-5 shrink-0 text-sm text-ink-muted tabular-nums">
+                      {at + 1}
+                    </span>
                     <span
                       lang={section.nameLanguage ?? deck.meaningLanguage}
-                      className="min-w-0 flex-1 truncate text-text"
+                      className="min-w-0 flex-1 truncate text-ink"
                     >
                       {section.name}
                     </span>
-                    <span className="shrink-0 text-sm text-muted tabular-nums">
+                    <span className="shrink-0 text-sm text-ink-muted tabular-nums">
                       <Plural value={section.cards.length} one="# card" other="# cards" />
                     </span>
                   </li>
                 ),
               )}
             </ol>
-            <p className="mt-3 text-sm text-muted">
+            <p className="mt-3 text-sm text-ink-muted">
               <SectionOrder progression={deck.sectionProgression} />
             </p>
           </section>
@@ -350,14 +352,14 @@ export function ExploreDeckView({
 
         {/* The full list is what a learner checks before committing, so it is here and closed. */}
         <section aria-labelledby="deck-cards">
-          <h2 id="deck-cards" className="text-lg font-medium text-text">
+          <h2 id="deck-cards" className="text-lg font-medium text-ink">
             <Trans>Every card</Trans>
           </h2>
           <div className="mt-4 grid gap-2">
             {keyed(deck.sections, (section) => section.name ?? "loose").map(
               ({ item: section, key }) => (
                 <details key={key} className="group edge overflow-hidden rounded-md bg-plate">
-                  <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-ink transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
                     {/* The fallback label is interface copy, so only a named section carries a lang. */}
                     <span
                       lang={
@@ -369,12 +371,12 @@ export function ExploreDeckView({
                     >
                       {section.name ?? <Trans>Cards outside a section</Trans>}
                     </span>
-                    <span className="shrink-0 text-sm text-muted tabular-nums">
+                    <span className="shrink-0 text-sm text-ink-muted tabular-nums">
                       <Plural value={section.cards.length} one="# card" other="# cards" />
                     </span>
                     <ChevronDown
                       aria-hidden="true"
-                      className="size-[18px] shrink-0 text-muted transition-transform duration-150 group-open:rotate-180"
+                      className="size-[18px] shrink-0 text-ink-muted transition-transform duration-150 group-open:rotate-180"
                     />
                   </summary>
                   <ul className="grid gap-px border-t border-edge bg-edge">
@@ -386,13 +388,13 @@ export function ExploreDeckView({
                         <span
                           lang={deck.language ?? undefined}
                           dir={textDirection(deck.language)}
-                          className="whitespace-pre-line text-base text-text [overflow-wrap:anywhere]"
+                          className="whitespace-pre-line text-base text-ink [overflow-wrap:anywhere]"
                         >
                           {card.term}
                         </span>
                         <span
                           lang={deck.meaningLanguage}
-                          className="whitespace-pre-line text-base text-text-2 [overflow-wrap:anywhere]"
+                          className="whitespace-pre-line text-base text-ink-secondary [overflow-wrap:anywhere]"
                         >
                           {card.meaning}
                         </span>
@@ -407,7 +409,7 @@ export function ExploreDeckView({
 
         {data.related.length > 0 && (
           <section aria-labelledby="deck-related" className="pt-10">
-            <h2 id="deck-related" className="text-lg font-medium text-text">
+            <h2 id="deck-related" className="text-lg font-medium text-ink">
               <Trans>More like this</Trans>
             </h2>
             <ul className="deck-shelf pt-4!">

@@ -54,7 +54,7 @@ export function Phone({
       data-theme={theme}
       className={clsx(
         // Paint containment holds fixed children too, so the end of a review lights this screen, not the page.
-        "@container/shell edge-2 relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-text contain-paint",
+        "@container/shell edge-strong relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-ink contain-paint",
         className,
       )}
     >
@@ -67,7 +67,7 @@ export function Phone({
       <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">{children}</div>
       {bottom}
       <div className="flex h-6 shrink-0 items-center justify-center">
-        <i className="block h-[5px] w-[120px] rounded-full bg-edge-2" aria-hidden="true" />
+        <i className="block h-[5px] w-[120px] rounded-full bg-edge-strong" aria-hidden="true" />
       </div>
     </div>
   );
@@ -105,7 +105,8 @@ export function Desktop({
     >
       <div
         data-theme={theme}
-        className="@container/shell edge-2 absolute left-0 top-0 flex origin-top-left overflow-hidden rounded-xl bg-canvas text-text"
+        // check-styling: allow: scaled from the top-left corner, as the measured width is.
+        className="@container/shell edge-strong absolute left-0 top-0 flex origin-top-left overflow-hidden rounded-xl bg-canvas text-ink"
         style={{ width: W, height, transform: `scale(${scale})` }}
       >
         {children}
@@ -134,12 +135,12 @@ export function Doc({
   return (
     <article>
       <header className="pb-12">
-        {crumb && <div className="mb-2 text-sm text-muted">{crumb}</div>}
+        {crumb && <div className="mb-2 text-sm text-ink-muted">{crumb}</div>}
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-3xl font-medium text-balance">{title}</h1>
           {source && <EditLink path={source} />}
         </div>
-        {lede && <p className="mt-3 max-w-[64ch] text-md text-pretty text-text-2">{lede}</p>}
+        {lede && <p className="mt-3 max-w-[64ch] text-md text-pretty text-ink-secondary">{lede}</p>}
       </header>
       <div className="grid">{children}</div>
     </article>
@@ -174,7 +175,7 @@ export function Sub({
               {source && <EditLink path={source} />}
             </div>
           )}
-          {note && <p className="max-w-[68ch] text-base text-pretty text-muted">{note}</p>}
+          {note && <p className="max-w-[68ch] text-base text-pretty text-ink-muted">{note}</p>}
         </div>
       )}
       {children}
@@ -206,7 +207,7 @@ export function Specimen({
       >
         {children}
       </div>
-      {label && <p className="px-1 text-xs text-muted">{label}</p>}
+      {label && <p className="px-1 text-xs text-ink-muted">{label}</p>}
     </div>
   );
 }
@@ -225,7 +226,7 @@ export function Pair({
         <div
           key={t}
           data-theme={t}
-          className="@container edge min-w-0 rounded-lg bg-canvas p-5 text-text"
+          className="@container edge min-w-0 rounded-lg bg-canvas p-5 text-ink"
         >
           {children(t)}
         </div>
@@ -272,7 +273,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
     <div
       data-theme={theme}
       data-motion={reduced ? "reduce" : undefined}
-      className="edge relative overflow-hidden rounded-lg bg-canvas text-text"
+      className="edge relative overflow-hidden rounded-lg bg-canvas text-ink"
     >
       <MotionConfig reducedMotion={reduced ? "always" : "user"}>
         {/* Reduced motion reaches what renders inside the canvas and its frames; a portal follows the system. */}
@@ -313,9 +314,9 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
                 i === 0 && (stack ? "pe-24" : "pe-24 @3xl:pe-5"),
               )}
             >
-              <p className="font-semibold text-text">{v.label}</p>
+              <p className="font-semibold text-ink">{v.label}</p>
               {v.note && (
-                <p className="max-w-[80ch] leading-relaxed text-pretty text-muted">{v.note}</p>
+                <p className="max-w-[80ch] leading-relaxed text-pretty text-ink-muted">{v.note}</p>
               )}
             </div>
             <div

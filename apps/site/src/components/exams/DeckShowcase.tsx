@@ -50,24 +50,24 @@ export function DeckShowcase({ deck, locale, eyebrow, layout = "wide" }: Props) 
         )}
       </div>
       <div className="flex flex-col p-6 @2xl:p-8">
-        {eyebrow && <p className="text-sm font-medium text-text-2">{eyebrow}</p>}
+        {eyebrow && <p className="text-sm font-medium text-ink-secondary">{eyebrow}</p>}
         <h3
           lang={deck.meaningLanguage}
-          className="mt-1.5 text-2xl leading-tight font-medium tracking-[-0.025em] text-balance text-text @2xl:text-3xl"
+          className="mt-1.5 text-2xl leading-tight font-medium tracking-[-0.025em] text-balance text-ink @2xl:text-3xl"
         >
           {deck.name}
         </h3>
         <p
           lang={deck.meaningLanguage}
-          className="mt-2.5 max-w-[46ch] text-md text-pretty text-text-2"
+          className="mt-2.5 max-w-[46ch] text-md text-pretty text-ink-secondary"
         >
           {deck.summary}
         </p>
-        <p className="mt-3 text-sm text-muted tabular-nums">
+        <p className="mt-3 text-sm text-ink-muted tabular-nums">
           <Plural value={deck.cardCount} one="# card" other="# cards" />
           {deck.sectionCount > 0 && (
             <>
-              <span aria-hidden="true" className="px-1.5 text-faint">
+              <span aria-hidden="true" className="px-1.5 text-ink-faint">
                 ·
               </span>
               <Plural value={deck.sectionCount} one="# section" other="# sections" />

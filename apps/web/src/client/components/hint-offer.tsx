@@ -15,8 +15,8 @@ export const HINT_OFFER_BOX =
 export function HintOfferFace({ icon }: { icon?: ReactNode }) {
   return (
     <>
-      {icon ?? <HintIcon className="size-4 shrink-0 text-text-2" aria-hidden="true" />}
-      <span className="min-w-0 flex-1 truncate text-base font-medium text-text">
+      {icon ?? <HintIcon className="size-4 shrink-0 text-ink-secondary" aria-hidden="true" />}
+      <span className="min-w-0 flex-1 truncate text-base font-medium text-ink">
         <Trans>Try a hint</Trans>
         {/* What a hint is stays in the name, so the panel keeps to one line. */}
         <span className="sr-only">
@@ -25,7 +25,7 @@ export function HintOfferFace({ icon }: { icon?: ReactNode }) {
         </span>
       </span>
       <ChevronRight
-        className="size-4 shrink-0 text-faint transition-colors duration-150 hoverable:group-hover:text-muted rtl:-scale-x-100"
+        className="size-4 shrink-0 text-ink-faint transition-colors duration-150 hoverable:group-hover:text-ink-muted rtl:-scale-x-100"
         aria-hidden="true"
       />
     </>
@@ -74,7 +74,7 @@ export function HintOffer({ delay, animate, parked, onOpen, onShown }: HintOffer
       }}
       className={cn(
         HINT_OFFER_BOX,
-        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-hover active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
+        "group transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-plate-hover active:scale-[0.99] motion-reduce:active:scale-100 focus-visible:-outline-offset-2",
         idle ? "pointer-events-none" : "pointer-events-auto",
       )}
     >
@@ -82,7 +82,7 @@ export function HintOffer({ delay, animate, parked, onOpen, onShown }: HintOffer
         icon={
           <motion.span
             aria-hidden="true"
-            className="grid shrink-0 text-text-2"
+            className="grid shrink-0 text-ink-secondary"
             initial={{ scale: travel ? 0.85 : 1 }}
             animate={{ scale: 1 }}
             transition={{ delay: delay + 0.04, duration: travel ? 0.24 : 0, ease: EASE_OUT }}

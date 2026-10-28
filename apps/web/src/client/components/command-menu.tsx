@@ -560,7 +560,7 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
     const Icon = row.command.icon;
     return (
       <>
-        <Icon className="size-4 text-text" aria-hidden="true" />
+        <Icon className="size-4 text-ink" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate">{i18n._(row.command.title)}</span>
         {row.command.keys && <Kbd>{row.command.keys}</Kbd>}
       </>
@@ -569,12 +569,12 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
   if (row.kind === "deck") {
     return (
       <>
-        <Layers className="size-4 text-text" aria-hidden="true" />
+        <Layers className="size-4 text-ink" aria-hidden="true" />
         <span dir="auto" className="min-w-0 flex-1 truncate">
           {row.deck.name}
         </span>
         {active ? (
-          <span className="flex shrink-0 items-center gap-1 text-sm text-muted">
+          <span className="flex shrink-0 items-center gap-1 text-sm text-ink-muted">
             <Kbd>{modKey()}</Kbd>
             <Kbd>
               <CornerDownLeft className="size-3" aria-hidden="true" />
@@ -582,7 +582,7 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
             {t`Review`}
           </span>
         ) : (
-          <span className="shrink-0 text-sm text-muted tabular-nums">
+          <span className="shrink-0 text-sm text-ink-muted tabular-nums">
             {row.deck.due > 0 ? t`${i18n.number(row.deck.due)} due` : null}
           </span>
         )}
@@ -592,17 +592,17 @@ function RowBody({ row, active }: { row: Row; active: boolean }) {
   if (row.kind === "card") {
     return (
       <>
-        <RectangleHorizontal className="size-4 text-text" aria-hidden="true" />
+        <RectangleHorizontal className="size-4 text-ink" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate">
           <bdi className="font-medium">{row.card.term}</bdi>
           {row.card.meaning && (
-            <span className="text-muted">
+            <span className="text-ink-muted">
               {" · "}
               <bdi>{row.card.meaning}</bdi>
             </span>
           )}
         </span>
-        <span className="max-w-[40%] shrink-0 truncate text-sm text-muted">
+        <span className="max-w-[40%] shrink-0 truncate text-sm text-ink-muted">
           {row.card.deckName}
         </span>
       </>
@@ -628,15 +628,15 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
   return (
     <div
       {...option}
-      className="flex min-h-14 shrink-0 cursor-default items-center gap-3 border-edge bg-plate-2 not-first:border-t px-4 py-2.5 data-active:bg-hover"
+      className="flex min-h-14 shrink-0 cursor-default items-center gap-3 border-edge bg-plate-nested not-first:border-t px-4 py-2.5 data-active:bg-plate-hover"
     >
       {row.existing ? (
-        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-text edge">
+        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-ink edge">
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </span>
       ) : checking ? (
         // Amber only once the deck is known to lack the term: until then it may still be an Open.
-        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-muted edge">
+        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-ink-muted edge">
           <Plus className="size-4" strokeWidth={2.5} aria-hidden="true" />
         </span>
       ) : (
@@ -646,7 +646,7 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
       )}
       <span className="flex min-w-0 flex-1 text-base">
         {row.existing ? (
-          <span className="truncate text-text">
+          <span className="truncate text-ink">
             {bidi(
               t`Open “${isolate(shortQuote(row.existing.term))}” in ${isolate(row.existing.deckName)}`,
             )}
@@ -654,17 +654,19 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
         ) : deckName ? (
           // A long term gives way first: the deck is where the card lands.
           <>
-            <span className="min-w-0 truncate font-medium text-text">{term}</span>
+            <span className="min-w-0 truncate font-medium text-ink">{term}</span>
             {!checking && (
-              <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-muted">→ {deckName}</span>
+              <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-ink-muted">
+                → {deckName}
+              </span>
             )}
           </>
         ) : (
-          <span className="truncate text-text">{bidi(t`Add “${isolate(shortQuote(term))}”`)}</span>
+          <span className="truncate text-ink">{bidi(t`Add “${isolate(shortQuote(term))}”`)}</span>
         )}
       </span>
       {!row.existing && deckName && (
-        <span className="flex shrink-0 items-center gap-1.5 text-sm text-muted">
+        <span className="flex shrink-0 items-center gap-1.5 text-sm text-ink-muted">
           {adding ? (
             t`Adding…`
           ) : waiting ? (

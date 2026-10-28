@@ -18,18 +18,18 @@ export function Brand() {
             <div className="flex items-end justify-around gap-4 py-4">
               <figure className="grid justify-items-center gap-3 text-center">
                 <Lantern className="size-24 @2xl:size-28" flicker glow />
-                <figcaption className="text-xs text-muted">
+                <figcaption className="text-xs text-ink-muted">
                   The brand flame. Login, the app icon, public pages.
                 </figcaption>
               </figure>
             </div>
           )}
         </Pair>
-        <p className="text-base text-text-2">
+        <p className="text-base text-ink-secondary">
           Inside the product the flame follows the learner’s day and streak.{" "}
           <DocLink
             to={{ kind: "page", page: "lantern" }}
-            className="font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+            className="font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
           >
             Lantern
           </DocLink>{" "}
@@ -47,7 +47,7 @@ export function Brand() {
               {[16, 20, 24, 28, 40, 56, 80].map((s) => (
                 <figure key={s} className="grid justify-items-center gap-2">
                   <Lantern style={{ width: s, height: s }} glow={s >= 40} />
-                  <figcaption className="text-2xs text-muted tabular-nums">{s}</figcaption>
+                  <figcaption className="text-2xs text-ink-muted tabular-nums">{s}</figcaption>
                 </figure>
               ))}
             </div>
@@ -94,7 +94,7 @@ export function Brand() {
             [<AppTile key="b" size={64} />, "64 px"],
             [<AppTile key="c" size={28} />, "Sidebar, 28 px"],
             [
-              <div key="d" className="flex items-center gap-2 rounded-sm bg-plate-2 px-3 py-2">
+              <div key="d" className="flex items-center gap-2 rounded-sm bg-plate-nested px-3 py-2">
                 <Lantern className="size-4" />
                 <span className="text-sm">Lymi · Lesson 14</span>
               </div>,
@@ -103,14 +103,14 @@ export function Brand() {
           ].map(([node, label]) => (
             <figure key={String(label)} className="grid justify-items-center gap-3">
               <div className="flex h-[120px] items-end">{node}</div>
-              <figcaption className="text-xs text-muted">{label}</figcaption>
+              <figcaption className="text-xs text-ink-muted">{label}</figcaption>
             </figure>
           ))}
         </Specimen>
       </Sub>
 
       <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
+        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
           {[
             "Don’t put a gradient on any surface. The app icon is the one exception; the lantern is the only thing that glows.",
             "Don’t colour the metal grey. It is ink in the light room and ivory in the dark one.",

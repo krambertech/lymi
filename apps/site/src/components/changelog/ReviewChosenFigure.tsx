@@ -13,7 +13,7 @@ const CARDS = [
 
 function Item({ icon, label }: { icon: ReactNode; label: ReactNode }) {
   return (
-    <span className="flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm text-text first:bg-hover [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-text-2">
+    <span className="flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm text-ink first:bg-plate-hover [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-ink-secondary">
       {icon}
       {label}
     </span>
@@ -24,11 +24,11 @@ function Item({ icon, label }: { icon: ReactNode; label: ReactNode }) {
 export function ReviewChosenFigure() {
   return (
     <div aria-hidden="true" className="relative mx-auto max-w-[400px]">
-      <div className="flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5 edge-2">
-        <span className="grid size-8 place-items-center text-text-2">
+      <div className="flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5 edge-strong">
+        <span className="grid size-8 place-items-center text-ink-secondary">
           <X className="size-4" />
         </span>
-        <span className="me-auto ps-1 text-base font-medium text-text tabular-nums">
+        <span className="me-auto ps-1 text-base font-medium text-ink tabular-nums">
           <Plural value={3} one="# selected" other="# selected" />
         </span>
         <span className={buttonClass("ghost", "sm")}>
@@ -48,21 +48,21 @@ export function ReviewChosenFigure() {
             <span
               className={clsx(
                 "grid size-5 shrink-0 place-items-center rounded-[6px]",
-                card.chosen ? "bg-amber text-amber-ink" : "bg-plate edge-2",
+                card.chosen ? "bg-amber text-amber-ink" : "bg-plate edge-strong",
               )}
             >
               {card.chosen && <Check className="size-3.5" strokeWidth={3} />}
             </span>
             <span className="grid min-w-0 gap-0.5">
-              <span lang="et" className="text-md leading-snug font-medium text-text">
+              <span lang="et" className="text-md leading-snug font-medium text-ink">
                 {card.term}
               </span>
-              <span className="truncate text-sm text-text-2">{card.meaning}</span>
+              <span className="truncate text-sm text-ink-secondary">{card.meaning}</span>
             </span>
           </li>
         ))}
       </ul>
-      <div className="absolute end-0 top-[50px] grid w-56 rounded-md bg-sheet p-1 edge-2 shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute end-0 top-[50px] grid w-56 rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
         <Item
           icon={<RotateCcw />}
           label={<Plural value={2} one="Review # due" other="Review # due" />}

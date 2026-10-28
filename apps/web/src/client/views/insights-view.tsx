@@ -324,7 +324,7 @@ export function InsightsView({
             firstDay={activity.firstDay}
             goal={activity.goal}
             header={
-              <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+              <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
                 <Trans>Day by day</Trans>
               </h2>
             }
@@ -335,10 +335,10 @@ export function InsightsView({
       {leeches.cards.length > 0 && (
         <section className="edge mt-4 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
-            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
               <Trans>Often forgotten</Trans>
             </h2>
-            <span className="text-xs text-muted">
+            <span className="text-xs text-ink-muted">
               <Trans>
                 Forgotten on {leeches.forgottenDays} of the last{" "}
                 <Plural value={leeches.recentDays} one="# day" other="# days" /> seen
@@ -354,19 +354,19 @@ export function InsightsView({
                 {/* The card in its deck holds the whole text; this row only has to be recognised. */}
                 <span className="hyphenate line-clamp-3 min-w-0 [overflow-wrap:anywhere]">
                   <span
-                    className="font-medium text-text"
+                    className="font-medium text-ink"
                     lang={c.language ?? undefined}
                     dir={textDirection(c.language)}
                   >
                     {c.term}
                   </span>
-                  {c.meaning && <span className="ms-2 text-sm text-muted">{c.meaning}</span>}
+                  {c.meaning && <span className="ms-2 text-sm text-ink-muted">{c.meaning}</span>}
                 </span>
                 {/* Both numbers carry their unit: "7 of 12" alone leaves the reader to
                     guess which is which, even under the heading. */}
-                <span className="shrink-0 text-end text-sm text-muted tabular-nums">
+                <span className="shrink-0 text-end text-sm text-ink-muted tabular-nums">
                   <Trans>
-                    {c.lapses} forgotten <span className="text-muted/60">·</span>{" "}
+                    {c.lapses} forgotten <span className="text-ink-muted/60">·</span>{" "}
                     <Plural value={c.reviews} one="# review" other="# reviews" />
                   </Trans>
                 </span>
@@ -377,7 +377,7 @@ export function InsightsView({
       )}
 
       {graded > 0 && graded < 30 && (
-        <p className="mt-5 px-1 text-sm text-muted">
+        <p className="mt-5 px-1 text-sm text-ink-muted">
           <Plural
             value={graded}
             one="Recall is based on only # review, so it can swing a lot for the first few weeks."
@@ -407,17 +407,17 @@ function CardStates({ cards }: CardCountsProps) {
           key={k}
           className="grid grid-cols-[6.5rem_minmax(0,1fr)_2.5rem] items-center gap-3 text-sm"
         >
-          <span className="flex min-w-0 items-center gap-1.5 text-text-2">
+          <span className="flex min-w-0 items-center gap-1.5 text-ink-secondary">
             <StateIcon state={k} className="size-4 shrink-0" />
             <span className="truncate">{i18n._(stateMarks[k].label)}</span>
           </span>
-          <span className="well block h-2 overflow-hidden rounded-full bg-plate-2">
+          <span className="well block h-2 overflow-hidden rounded-full bg-plate-nested">
             <span
               className={clsx("block h-full rounded-full", stateMarks[k].bg)}
               style={{ width: `${(cards[k] / total) * 100}%` }}
             />
           </span>
-          <span className="text-end font-medium tabular-nums text-text">{cards[k]}</span>
+          <span className="text-end font-medium tabular-nums text-ink">{cards[k]}</span>
         </li>
       ))}
     </ul>
@@ -456,21 +456,21 @@ function ForecastBars({ forecast }: ForecastBarsProps) {
           <span
             className={clsx(
               "text-center text-2xs tabular-nums",
-              i === 0 ? "font-medium text-text" : d.count > 0 ? "text-muted" : "text-faint",
+              i === 0 ? "font-medium text-ink" : d.count > 0 ? "text-ink-muted" : "text-ink-faint",
             )}
           >
             {i18n.number(d.count)}
           </span>
           <div className="flex flex-1 items-end border-b border-edge">
             <i
-              className={clsx("block w-full rounded-t-[4px]", i === 0 ? "bg-amber" : "bg-text/35")}
+              className={clsx("block w-full rounded-t-[4px]", i === 0 ? "bg-amber" : "bg-ink/35")}
               style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
             />
           </div>
           <span
             className={clsx(
               "truncate text-center text-2xs",
-              i === 0 ? "font-medium text-text" : "text-muted",
+              i === 0 ? "font-medium text-ink" : "text-ink-muted",
             )}
           >
             {i === 0 ? dayName(d.date, i) : weekday(d.date).slice(0, 2)}

@@ -59,7 +59,7 @@ export function DeckRow({
     >
       <span className="grid min-w-0 flex-1 gap-0.5">
         <span className="truncate text-md font-medium">{name}</span>
-        <span className="flex min-w-0 flex-wrap items-center gap-x-1.5 text-sm text-muted tabular-nums">
+        <span className="flex min-w-0 flex-wrap items-center gap-x-1.5 text-sm text-ink-muted tabular-nums">
           {lang && (
             <>
               <span>{lang}</span>
@@ -79,7 +79,7 @@ export function DeckRow({
           )}
         </span>
         {ownerLeft ? (
-          <span className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
+          <span className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-ink-secondary">
             <FormerOwnerMark size={18} />
             <span className="min-w-0 truncate">
               <Trans>Its owner left Lymi</Trans>
@@ -87,7 +87,7 @@ export function DeckRow({
           </span>
         ) : (
           owner && (
-            <span className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
+            <span className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-ink-secondary">
               {published ? (
                 <PublisherMark name={owner} src={publisherPhoto} size={18} />
               ) : (

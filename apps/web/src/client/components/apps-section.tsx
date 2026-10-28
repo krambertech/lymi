@@ -21,7 +21,7 @@ import { YomitanMark } from "./yomitan-mark";
 const ROW =
   "group flex min-h-16 items-center gap-3 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil group-first/row:rounded-t-xl group-last/row:rounded-b-xl";
 const CHIP =
-  "edge inline-flex h-9 items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text transition-[background-color] duration-150 hoverable:hover:veil";
+  "edge inline-flex h-9 items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-ink transition-[background-color] duration-150 hoverable:hover:veil";
 
 /**
  * Every app that adds cards: the connected ones as rows, then the rest as chips. Each opens its
@@ -68,7 +68,7 @@ export function AppsSection() {
               mark={<YomitanMark className="size-9" />}
               name="Yomitan"
             >
-              <span className="text-sm text-muted tabular-nums">
+              <span className="text-sm text-ink-muted tabular-nums">
                 <Trans>
                   Key made {shortDate(i18n, yomitan.createdAt)} ·{" "}
                   {lastUsed(i18n, yomitan.lastRequest)}
@@ -77,7 +77,7 @@ export function AppsSection() {
             </Row>
           )}
           <li className="grid gap-2.5 border-edge border-t px-4 py-3.5">
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               <Trans>Add an app</Trans>
             </span>
             <Chips assistants={toAdd} readwise={!connection} yomitan={!yomitan} />
@@ -116,10 +116,10 @@ function Empty() {
         ))}
       </div>
       <div className="grid max-w-[40ch] gap-1">
-        <p className="text-md font-medium text-text">
+        <p className="text-md font-medium text-ink">
           <Trans>Connect your first app</Trans>
         </p>
-        <p className="text-sm text-muted text-pretty">
+        <p className="text-sm text-ink-muted text-pretty">
           <Trans>
             An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words
             as you read.
@@ -181,7 +181,7 @@ function Chips({
       )}
       <li>
         <Link to="/settings/apps/$app" params={{ app: "custom" }} className={CHIP}>
-          <Plug className="size-4 text-text-2" aria-hidden="true" />
+          <Plug className="size-4 text-ink-secondary" aria-hidden="true" />
           <Trans>Custom MCP</Trans>
         </Link>
       </li>
@@ -237,7 +237,7 @@ function AssistantRow({ item, page }: { item: ConnectedApp; page: string }) {
       mark={<AppMark app={{ ...app, name: listed.title }} className="size-9" />}
       name={listed.title ?? t`An app`}
     >
-      <span className="flex min-w-0 items-center gap-1 text-sm text-muted">
+      <span className="flex min-w-0 items-center gap-1 text-sm text-ink-muted">
         {listed.unverified && (
           <>
             <span
@@ -280,14 +280,14 @@ function ReadwiseStatus({ connection }: { connection: Readwise }) {
   const at = connection.lastPull?.at;
   if (!at) {
     return (
-      <span className="text-sm text-muted">
+      <span className="text-sm text-ink-muted">
         <Trans>Connected. Lymi checks every hour.</Trans>
       </span>
     );
   }
   const when = i18n.date(new Date(at), { hour: "numeric", minute: "2-digit" });
   return (
-    <span className="text-sm text-muted">
+    <span className="text-sm text-ink-muted">
       <Trans>Connected. Last checked at {when}.</Trans>
     </span>
   );

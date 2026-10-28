@@ -56,7 +56,7 @@ export function ActionMenu({
   const room = useRoom();
   const groups = (Array.isArray(items[0]) ? items : [items]) as MenuItem[][];
   const bar = look !== "row";
-  const glyph = look === "primary" ? p["amber-ink"] : look === "row" ? p.muted : p.text;
+  const glyph = look === "primary" ? p["amber-ink"] : look === "row" ? p["ink-muted"] : p.ink;
   return (
     // A fixed box that React Native lays out: a self-measuring host keeps a stale place when the
     // list around it moves, and its button drifts off its row.
@@ -90,7 +90,7 @@ export function ActionMenu({
                 key={item.label}
                 role={item.destructive ? "destructive" : "default"}
                 // Ink on ordinary rows and red on a removal, so an amber button's tint stays on the button.
-                modifiers={[tint(item.destructive ? p.danger : p.text)]}
+                modifiers={[tint(item.destructive ? p.danger : p.ink)]}
                 onPress={item.onSelect}
               >
                 <Label

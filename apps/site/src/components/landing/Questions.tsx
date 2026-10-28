@@ -21,10 +21,10 @@ export function Questions({ title, items }: Props) {
         <dl className="border-t border-edge">
           {items.map((item) => (
             <div key={item.id} className="border-b border-edge py-6">
-              <dt className="text-lg font-medium tracking-[-0.02em] text-text">
+              <dt className="text-lg font-medium tracking-[-0.02em] text-ink">
                 {i18n._(item.question)}
               </dt>
-              <dd className="mt-2 max-w-[60ch] text-md text-pretty text-text-2">
+              <dd className="mt-2 max-w-[60ch] text-md text-pretty text-ink-secondary">
                 <p>{i18n._(item.answer)}</p>
                 {item.link && (
                   <ArrowLink href={item.link.href} className="mt-2">

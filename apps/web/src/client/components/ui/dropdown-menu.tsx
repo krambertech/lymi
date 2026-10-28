@@ -49,7 +49,7 @@ const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio
 // cursor, and the keyboard's focus brings the fill back.
 const itemClassName = cn(
   listRowClassName,
-  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-highlighted:not-focus-visible:bg-transparent data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
+  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-plate-hover data-highlighted:not-focus-visible:bg-transparent data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
 );
 
 /** The drawer's rows are buttons and the anchored ones divs, so a row's ref names their common type. */
@@ -178,7 +178,7 @@ function AnchoredContent({
           data-slot="dropdown-menu-content"
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
-            "glass relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
+            "glass relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md p-1 text-ink outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
             className,
           )}
           {...mergeProps<"div">(
@@ -304,7 +304,7 @@ function DropdownMenuLabel({
   children: React.ReactNode;
 }) {
   const { shape } = useDropdownMenu("DropdownMenuLabel");
-  const classes = cn("px-2.5 py-1.5 text-xs text-muted data-inset:ps-9", className);
+  const classes = cn("px-2.5 py-1.5 text-xs text-ink-muted data-inset:ps-9", className);
   return shape === "desktop" ? (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
@@ -420,7 +420,7 @@ interface CheckboxItemProps extends RowProps {
 function ItemCheck({ checked }: { checked: boolean }) {
   return (
     <span className="pointer-events-none absolute start-2.5 flex size-4 items-center justify-center">
-      {checked && <Check className="text-text!" strokeWidth={2.5} aria-hidden="true" />}
+      {checked && <Check className="text-ink!" strokeWidth={2.5} aria-hidden="true" />}
     </span>
   );
 }
@@ -449,7 +449,7 @@ function CheckboxParts({
       </span>
       {children}
       <span className="flex size-4 shrink-0 items-center justify-center">
-        {checked && <Check className="text-text!" strokeWidth={2.5} aria-hidden="true" />}
+        {checked && <Check className="text-ink!" strokeWidth={2.5} aria-hidden="true" />}
       </span>
     </>
   );
@@ -682,7 +682,7 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={cn("ms-auto ps-3 text-xs text-muted", className)}
+      className={cn("ms-auto ps-3 text-xs text-ink-muted", className)}
       {...props}
     />
   );

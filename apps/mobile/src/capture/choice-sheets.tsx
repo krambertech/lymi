@@ -76,7 +76,7 @@ function DeckChoice({ onChosen }: ChoiceProps) {
           ))}
         </SheetGroup>
       ) : (
-        <Text className="px-4 py-3 text-md text-muted">{t`No matches`}</Text>
+        <Text className="px-4 py-3 text-md text-ink-muted">{t`No matches`}</Text>
       )}
     </>
   );

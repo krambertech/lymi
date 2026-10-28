@@ -51,20 +51,20 @@ function Row({ card, lang }: { card: MaterialCard; lang: string | undefined }) {
   return (
     <div className="flex items-start gap-3 py-3">
       {card.duplicate ? (
-        <Copy aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted" />
+        <Copy aria-hidden="true" className="mt-1 size-4 shrink-0 text-ink-muted" />
       ) : (
-        <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-good" />
+        <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-success" />
       )}
       <div className="min-w-0 flex-1">
         <p
           lang={termLang}
-          className={clsx("text-md font-medium", card.duplicate ? "text-muted" : "text-text")}
+          className={clsx("text-md font-medium", card.duplicate ? "text-ink-muted" : "text-ink")}
         >
           {term}
         </p>
-        <p className="mt-0.5 text-sm text-pretty text-text-2">
+        <p className="mt-0.5 text-sm text-pretty text-ink-secondary">
           {card.duplicate ? (
-            <span className="text-muted">
+            <span className="text-ink-muted">
               <Trans>Already in your deck, so it’s skipped</Trans>
             </span>
           ) : (
@@ -95,16 +95,14 @@ function Reading({ material, inView }: { material: Material; inView: boolean }) 
 
   return (
     <div className="grid items-start gap-6 @4xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] @4xl:gap-10">
-      <div className="grid min-h-[300px] place-items-center rounded-2xl bg-plate-2 px-4 py-8 @2xl:px-8 @4xl:min-h-[420px]">
+      <div className="grid min-h-[300px] place-items-center rounded-2xl bg-plate-nested px-4 py-8 @2xl:px-8 @4xl:min-h-[420px]">
         {material.render(lit)}
       </div>
 
       <div className="min-w-0 rounded-2xl bg-plate p-5 edge @2xl:p-6">
         <div className="flex items-baseline justify-between gap-4">
-          <p className="text-lg font-medium tracking-[-0.02em] text-text">
-            {i18n._(material.deck)}
-          </p>
-          <p className="shrink-0 text-xs text-muted tabular-nums">
+          <p className="text-lg font-medium tracking-[-0.02em] text-ink">{i18n._(material.deck)}</p>
+          <p className="shrink-0 text-xs text-ink-muted tabular-nums">
             {done ? (
               <Plural value={added} one="# card added" other="# cards added" />
             ) : (
@@ -126,7 +124,7 @@ function Reading({ material, inView }: { material: Material; inView: boolean }) 
             ) : null,
           )}
           {landed.length === 0 && (
-            <p className="py-10 text-center text-sm text-muted">
+            <p className="py-10 text-center text-sm text-ink-muted">
               <Trans>New cards land here.</Trans>
             </p>
           )}
@@ -161,8 +159,8 @@ export function MaterialToCards({ materials }: { materials: Material[] }) {
               className={clsx(
                 "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
                 m.id === material.id
-                  ? "bg-text font-medium text-canvas"
-                  : "bg-plate text-text-2 edge hoverable:hover:bg-hover hoverable:hover:text-text",
+                  ? "bg-ink font-medium text-canvas"
+                  : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
               )}
             >
               {i18n._(m.name)}

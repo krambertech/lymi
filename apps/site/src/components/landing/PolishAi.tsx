@@ -45,14 +45,14 @@ export function EnrichPolish({ locale }: { locale: Locale }) {
   const card = WRITTEN[locale];
 
   return (
-    <div ref={root} className="grid gap-2 rounded-xl bg-plate-2 p-3 edge-inset @2xl:p-4">
+    <div ref={root} className="grid gap-2 rounded-xl bg-plate-nested p-3 edge-inset @2xl:p-4">
       <Field label={<Trans>Term</Trans>}>
-        <Pl className="min-h-[1.4em] text-2xl font-medium text-text">
+        <Pl className="min-h-[1.4em] text-2xl font-medium text-ink">
           {at("typed") ? card.term : card.term.slice(0, 3)}
         </Pl>
       </Field>
       <Field label={<Trans>Meaning</Trans>}>
-        <span lang={locale} className="min-h-[1.5em] text-md text-text">
+        <span lang={locale} className="min-h-[1.5em] text-md text-ink">
           {card.meaning}
         </span>
       </Field>
@@ -60,7 +60,7 @@ export function EnrichPolish({ locale }: { locale: Locale }) {
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Pl>{card.example}</Pl>
         </motion.span>
@@ -70,7 +70,7 @@ export function EnrichPolish({ locale }: { locale: Locale }) {
           initial={false}
           animate={appear(at("notes"))}
           lang={locale}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           {card.notes}
         </motion.span>

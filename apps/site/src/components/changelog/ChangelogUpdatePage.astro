@@ -46,10 +46,10 @@ const listPath = localizedPath("changelog", locale);
     title={i18n._(CHANGELOG_FEED_TITLE)}
     href={`${listPath}/rss.xml`}
   />
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <a
       href="#update"
-      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
+      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-ink edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
     >
       {i18n._(CHANGELOG_SKIP)}
     </a>
@@ -63,7 +63,7 @@ const listPath = localizedPath("changelog", locale);
         {i18n._(CHANGELOG_ALL)}
       </a>
       <div class="mt-10 grid gap-x-12 gap-y-3 @4xl:grid-cols-[180px_minmax(0,1fr)]">
-        <p class="text-sm text-muted">
+        <p class="text-sm text-ink-muted">
           <time datetime={update.date.toISOString().slice(0, 10)}>{changelogDate(update.date, locale)}</time>
         </p>
         <ChangelogUpdate update={update} locale={locale} />
@@ -76,24 +76,24 @@ const listPath = localizedPath("changelog", locale);
             class="mt-16 grid gap-3 border-t border-edge pt-8 @xl:grid-cols-2 @4xl:ms-[calc(180px+3rem)]"
           >
             {older && (
-              <a href={changelogUpdatePath(older.slug, locale)} class="group rounded-lg bg-plate p-4 edge hoverable:hover:edge-2">
-                <span class="flex items-center gap-1.5 text-sm text-muted">
+              <a href={changelogUpdatePath(older.slug, locale)} class="group rounded-lg bg-plate p-4 edge hoverable:hover:edge-strong">
+                <span class="flex items-center gap-1.5 text-sm text-ink-muted">
                   <ArrowLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
                   {i18n._(CHANGELOG_OLDER)}
                 </span>
-                <span class="mt-1 block text-base font-medium text-text">{older.entry.data.title}</span>
+                <span class="mt-1 block text-base font-medium text-ink">{older.entry.data.title}</span>
               </a>
             )}
             {newer && (
               <a
                 href={changelogUpdatePath(newer.slug, locale)}
-                class="group rounded-lg bg-plate p-4 text-end edge hoverable:hover:edge-2 @xl:col-start-2"
+                class="group rounded-lg bg-plate p-4 text-end edge hoverable:hover:edge-strong @xl:col-start-2"
               >
-                <span class="flex items-center justify-end gap-1.5 text-sm text-muted">
+                <span class="flex items-center justify-end gap-1.5 text-sm text-ink-muted">
                   {i18n._(CHANGELOG_NEWER)}
                   <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
                 </span>
-                <span class="mt-1 block text-base font-medium text-text">{newer.entry.data.title}</span>
+                <span class="mt-1 block text-base font-medium text-ink">{newer.entry.data.title}</span>
               </a>
             )}
           </nav>

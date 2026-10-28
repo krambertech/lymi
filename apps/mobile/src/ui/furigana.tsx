@@ -189,7 +189,7 @@ function Ruby({
   );
   const readingText = (run: string, size: number, lineHeight: number, inset = 0) => (
     <Text
-      className="text-text-2"
+      className="text-ink-secondary"
       style={{
         fontSize: size,
         lineHeight,

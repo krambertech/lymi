@@ -208,7 +208,7 @@ export function NotificationsSection() {
       {/* No gap of the group's own, so an empty message line adds no space under the plate. */}
       <div className="grid">
         {!reminderAvailable ? (
-          <p className="text-base text-muted">
+          <p className="text-base text-ink-muted">
             <Trans>This browser can’t show reminders.</Trans>
           </p>
         ) : (
@@ -219,14 +219,14 @@ export function NotificationsSection() {
               className="relative gap-3 px-4 py-3.5"
             >
               <span
-                className="grid size-9 shrink-0 place-items-center self-center rounded-full bg-plate-2 text-text-2"
+                className="grid size-9 shrink-0 place-items-center self-center rounded-full bg-plate-nested text-ink-secondary"
                 aria-hidden="true"
               >
                 <Bell className="size-4" />
               </span>
               <FieldContent className="gap-0.5">
                 {/* Stretched over the row, so a tap on the bell or the sentence flips the switch too. */}
-                <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                <FieldLabel className="text-base text-ink after:absolute after:inset-0 after:content-['']">
                   <Trans>Daily reminder</Trans>
                 </FieldLabel>
                 <FieldDescription>
@@ -278,7 +278,7 @@ export function NotificationsSection() {
               <InlineError>{error}</InlineError>
             </p>
           ) : notice ? (
-            <p className="text-muted">{notice}</p>
+            <p className="text-ink-muted">{notice}</p>
           ) : null}
         </div>
       </div>

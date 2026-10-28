@@ -18,8 +18,8 @@ const Heading = href ? "h2" : "h1";
 ---
 
 <article class="min-w-0 max-w-[660px]">
-  <Heading class="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl">
-    {href ? <a href={href} class="rounded-xs hoverable:hover:text-text-2">{entry.data.title}</a> : entry.data.title}
+  <Heading class="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl">
+    {href ? <a href={href} class="rounded-xs hoverable:hover:text-ink-secondary">{entry.data.title}</a> : entry.data.title}
   </Heading>
   {
     screenshot && entry.data.screenshot ? (

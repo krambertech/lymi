@@ -79,8 +79,8 @@ export function ForgettingCurves({ curves, retention }: Props) {
               textAnchor="end"
               className={
                 r === retention
-                  ? "fill-text text-2xs font-medium tabular-nums"
-                  : "fill-muted text-2xs tabular-nums"
+                  ? "fill-ink text-2xs font-medium tabular-nums"
+                  : "fill-ink-muted text-2xs tabular-nums"
               }
             >
               {percent(r)}
@@ -93,7 +93,7 @@ export function ForgettingCurves({ curves, retention }: Props) {
           x2={PAD.left + plotW}
           y1={y(retention)}
           y2={y(retention)}
-          stroke="var(--text)"
+          stroke="var(--ink)"
           strokeOpacity={0.5}
           strokeWidth={1}
           strokeDasharray="5 4"
@@ -105,12 +105,17 @@ export function ForgettingCurves({ curves, retention }: Props) {
             x={x(t)}
             y={HEIGHT - PAD.bottom + 18}
             textAnchor="middle"
-            className="fill-muted text-2xs tabular-nums"
+            className="fill-ink-muted text-2xs tabular-nums"
           >
             {t}
           </text>
         ))}
-        <text x={PAD.left + plotW} y={HEIGHT - 2} textAnchor="end" className="fill-muted text-2xs">
+        <text
+          x={PAD.left + plotW}
+          y={HEIGHT - 2}
+          textAnchor="end"
+          className="fill-ink-muted text-2xs"
+        >
           Days since the review
         </text>
 
@@ -127,7 +132,7 @@ export function ForgettingCurves({ curves, retention }: Props) {
               <path
                 d={d}
                 fill="none"
-                stroke="var(--text)"
+                stroke="var(--ink)"
                 strokeOpacity={opacity(i)}
                 strokeWidth={1.75}
               />
@@ -136,17 +141,17 @@ export function ForgettingCurves({ curves, retention }: Props) {
                 cy={y(retention)}
                 r={3.5}
                 fill="var(--plate)"
-                stroke="var(--text)"
+                stroke="var(--ink)"
                 strokeWidth={1.5}
               />
               <text
                 x={PAD.left + plotW + 8}
                 y={y(Math.max(Y_MIN, end))}
                 dy="0.32em"
-                className="fill-text-2 text-2xs"
+                className="fill-ink-secondary text-2xs"
               >
-                <tspan className="font-medium fill-text">{days(s.interval)}</tspan>
-                <tspan className="fill-muted"> interval</tspan>
+                <tspan className="font-medium fill-ink">{days(s.interval)}</tspan>
+                <tspan className="fill-ink-muted"> interval</tspan>
               </text>
             </g>
           );
@@ -159,7 +164,7 @@ export function ForgettingCurves({ curves, retention }: Props) {
               x2={x(hover)}
               y1={PAD.top}
               y2={PAD.top + plotH}
-              stroke="var(--edge-2)"
+              stroke="var(--edge-strong)"
             />
             {curves.series.map((s, i) => (
               <circle
@@ -167,7 +172,7 @@ export function ForgettingCurves({ curves, retention }: Props) {
                 cx={x(hover)}
                 cy={y(Math.max(Y_MIN, at(s.points, hover)))}
                 r={3}
-                fill="var(--text)"
+                fill="var(--ink)"
                 fillOpacity={opacity(i)}
               />
             ))}
@@ -177,11 +182,11 @@ export function ForgettingCurves({ curves, retention }: Props) {
 
       <p
         aria-hidden="true"
-        className="pointer-events-none absolute start-10 top-0 text-2xs tabular-nums text-muted"
+        className="pointer-events-none absolute start-10 top-0 text-2xs tabular-nums text-ink-muted"
       >
         {hover !== null && (
           <>
-            <span className="text-text">Day {hover}</span>
+            <span className="text-ink">Day {hover}</span>
             {curves.series.map((s) => (
               <span key={s.interval}>
                 {" · "}

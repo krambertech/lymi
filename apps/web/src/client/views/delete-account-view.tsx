@@ -69,10 +69,10 @@ export function DeleteAccountView({
         </div>
       ) : summary.blocked === "publisher" ? (
         <SettingsGroup title={t`This is a Lymi publisher account`}>
-          <p className="max-w-[60ch] text-base text-text-2">
+          <p className="max-w-[60ch] text-base text-ink-secondary">
             <Trans>
               It publishes the decks in Explore, so it can’t be deleted here. Write to{" "}
-              <a className="font-medium text-text underline" href="mailto:hello@lymi.app">
+              <a className="font-medium text-ink underline" href="mailto:hello@lymi.app">
                 hello@lymi.app
               </a>{" "}
               to delete it.
@@ -124,7 +124,7 @@ function WhatGoes({ summary }: { summary: AccountDeletionOut }) {
         <Count label={t`Cards`}>{i18n.number(summary.cards)}</Count>
         <Count label={t`Reviews`}>{i18n.number(summary.reviews)}</Count>
       </dl>
-      <p className="max-w-[60ch] text-sm text-muted">
+      <p className="max-w-[60ch] text-sm text-ink-muted">
         <Trans>
           Archived decks and cards go too, with your settings, photo, connected apps and API keys.
           You leave every deck you joined, and every device is signed out.
@@ -137,8 +137,8 @@ function WhatGoes({ summary }: { summary: AccountDeletionOut }) {
 function Count({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="grid gap-0.5 rounded-lg bg-plate px-4 py-3 edge">
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className="text-lg font-medium text-text tabular-nums">{children}</dd>
+      <dt className="text-sm text-ink-muted">{label}</dt>
+      <dd className="text-lg font-medium text-ink tabular-nums">{children}</dd>
     </div>
   );
 }
@@ -156,17 +156,17 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
             key={deck.id}
             className="flex items-baseline justify-between gap-4 border-t border-edge py-3 first:border-t-0 first:pt-0"
           >
-            <span dir="auto" className="min-w-0 truncate text-base text-text">
+            <span dir="auto" className="min-w-0 truncate text-base text-ink">
               {deck.name}
             </span>
-            <span className="shrink-0 text-sm text-muted">
+            <span className="shrink-0 text-sm text-ink-muted">
               <Plural value={deck.members} one="# person" other="# people" />
             </span>
           </li>
         ))}
       </ul>
       {decks.some((deck) => deck.published) && (
-        <p className="max-w-[60ch] text-sm text-muted">
+        <p className="max-w-[60ch] text-sm text-ink-muted">
           <Trans>Published decks leave Explore, so nobody new can add them.</Trans>
         </p>
       )}
@@ -205,7 +205,7 @@ function Confirm({
 
   // A code delete cannot revoke Apple's grant; only the phone's Apple sheet can.
   const appleNote = apple && (
-    <p className="max-w-[60ch] text-sm text-muted">
+    <p className="max-w-[60ch] text-sm text-ink-muted">
       <Trans>
         You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with
         Apple in your Apple Account settings.

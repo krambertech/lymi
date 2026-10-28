@@ -50,7 +50,7 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
   };
 
   const seen = term?.seen ?? "";
-  const box = "rounded-xl bg-glass-plate px-4 font-sans text-md text-text";
+  const box = "rounded-xl bg-glass-plate px-4 font-sans text-md text-ink";
   return (
     <Sheet
       open={term !== null}
@@ -72,7 +72,7 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
           submitBehavior="submit"
           onSubmitEditing={() => meaningRef.current?.focus()}
           accessibilityLabel={t`Term`}
-          selectionColor={p.text}
+          selectionColor={p.ink}
           className={`${box} min-h-11 py-2.5`}
           maxFontSizeMultiplier={inputCap(17)}
         />
@@ -91,9 +91,9 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
           returnKeyType="done"
           onSubmitEditing={save}
           placeholder={t`Leave empty for Lymi to write it`}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={t`Meaning`}
-          selectionColor={p.text}
+          selectionColor={p.ink}
           className={`${box} min-h-11 py-2.5`}
           style={MULTILINE}
           maxFontSizeMultiplier={inputCap(17)}
@@ -102,7 +102,7 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
       {term?.seen ? (
         <View className="gap-1 pt-1">
           <SheetNote>{t`From the lesson`}</SheetNote>
-          <Text className="ps-4 text-base text-text-2" style={{ fontStyle: "italic" }}>
+          <Text className="ps-4 text-base text-ink-secondary" style={{ fontStyle: "italic" }}>
             {t`“${seen}”`}
           </Text>
         </View>

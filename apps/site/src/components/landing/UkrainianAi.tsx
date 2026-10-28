@@ -21,9 +21,9 @@ export function EnrichUkrainian() {
   const { at } = usePlayback(beats, inView, still);
 
   return (
-    <div ref={root} className="grid gap-2 rounded-xl bg-plate-2 p-3 edge-inset @2xl:p-4">
+    <div ref={root} className="grid gap-2 rounded-xl bg-plate-nested p-3 edge-inset @2xl:p-4">
       <Field label={<Trans>Term</Trans>}>
-        <Uk className="min-h-[1.4em] text-2xl font-medium text-text">
+        <Uk className="min-h-[1.4em] text-2xl font-medium text-ink">
           {at("typed") ? "неділя" : "неді"}
         </Uk>
       </Field>
@@ -31,13 +31,13 @@ export function EnrichUkrainian() {
         <motion.span
           initial={false}
           animate={appear(at("stress"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Uk>неді́ля</Uk>
         </motion.span>
       </Field>
       <Field label={<Trans>Meaning</Trans>}>
-        <span className="min-h-[1.5em] text-md text-text">
+        <span className="min-h-[1.5em] text-md text-ink">
           <Trans>Sunday</Trans>
         </span>
       </Field>
@@ -45,7 +45,7 @@ export function EnrichUkrainian() {
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Uk>У неді́лю ми відпочива́ємо.</Uk>
         </motion.span>
@@ -54,7 +54,7 @@ export function EnrichUkrainian() {
         <motion.span
           initial={false}
           animate={appear(at("notes"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Trans>
             Not a week, as Russian <Uk>неде́ля</Uk> is.

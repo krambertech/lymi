@@ -38,9 +38,10 @@ const iconSide =
 
 const variants: Record<ButtonVariant, string> = {
   primary: "key-light bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-  secondary: "edge bg-plate text-text hoverable:hover:veil",
-  // `hover`, not `plate-2`: in the light room plate-2 is the rail, so the fill vanished there.
-  ghost: "bg-transparent text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
+  secondary: "edge bg-plate text-ink hoverable:hover:veil",
+  // `hover`, not `plate-nested`: in the light room plate-nested is the rail, so the fill vanished there.
+  ghost:
+    "bg-transparent text-ink-secondary hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
@@ -134,7 +135,7 @@ interface IconButtonProps extends ComponentProps<"button"> {
 const iconVariants: Record<ButtonVariant, string> = {
   ...variants,
   // An icon on a plate sits a step quieter than a label would.
-  secondary: cn(variants.secondary, "text-text-2"),
+  secondary: cn(variants.secondary, "text-ink-secondary"),
 };
 
 const iconSizes: Record<IconButtonSize, string> = {

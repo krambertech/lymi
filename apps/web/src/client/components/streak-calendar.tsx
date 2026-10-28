@@ -91,7 +91,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-base font-medium text-text" aria-live="polite">
+        <h3 className="text-base font-medium text-ink" aria-live="polite">
           {title}
         </h3>
         {/* Pulled out like the place's close, so the chevron ends under the X, and out of the row's height. */}
@@ -124,7 +124,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
                 key={d.toISOString()}
                 scope="col"
                 abbr={weekdayLong.format(d)}
-                className="pb-1.5 text-center text-xs font-medium text-muted"
+                className="pb-1.5 text-center text-xs font-medium text-ink-muted"
               >
                 {weekday.format(d)}
               </th>
@@ -242,7 +242,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
                     {isToday && !on && (
                       <i
                         aria-hidden="true"
-                        className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full edge-2"
+                        className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full edge-strong"
                       />
                     )}
                     {/* Dashed is this system's mark for "not here yet", so a day still to come cannot
@@ -250,14 +250,14 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
                     {future && (
                       <i
                         aria-hidden="true"
-                        className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full border border-dashed border-edge-2"
+                        className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full border border-dashed border-edge-strong"
                       />
                     )}
                     <span
                       aria-hidden="true"
                       className={clsx(
                         "relative text-sm tabular-nums",
-                        on ? "font-medium text-text" : future ? "text-faint" : "text-muted",
+                        on ? "font-medium text-ink" : future ? "text-ink-faint" : "text-ink-muted",
                         isToday && "font-semibold",
                       )}
                     >
@@ -272,7 +272,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
         </tbody>
       </table>
       {restInMonth && (
-        <p className="flex items-center gap-3 pt-1 text-sm text-text-2">
+        <p className="flex items-center gap-3 pt-1 text-sm text-ink-secondary">
           <RestGlyph />
           <Trans>A rest day keeps the streak through one missed day a week.</Trans>
         </p>

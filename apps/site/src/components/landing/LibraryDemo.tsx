@@ -47,9 +47,9 @@ export function LibraryDemo() {
 
   return (
     <div className="mx-auto w-full max-w-[460px] rounded-2xl bg-plate p-4 edge @2xl:p-5">
-      <div className="flex h-11 items-center gap-2.5 rounded-md bg-plate-2 px-3.5">
-        <Search aria-hidden="true" className="size-4 text-muted" />
-        <span className="text-md text-text">Eesti</span>
+      <div className="flex h-11 items-center gap-2.5 rounded-md bg-plate-nested px-3.5">
+        <Search aria-hidden="true" className="size-4 text-ink-muted" />
+        <span className="text-md text-ink">Eesti</span>
       </div>
 
       <ul className="mt-3 flex flex-col">
@@ -62,12 +62,12 @@ export function LibraryDemo() {
               className="flex items-center gap-3 border-b border-edge py-3.5 last:border-b-0"
             >
               <div className="min-w-0 flex-1">
-                <p className="truncate text-md font-medium text-text">{title}</p>
-                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-muted">
+                <p className="truncate text-md font-medium text-ink">{title}</p>
+                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-ink-muted">
                   {deck.firstParty && <Lantern className="size-3.5 shrink-0" />}
                   <span className="min-w-0 truncate">{i18n._(deck.by)}</span>
                 </p>
-                <p className="mt-1 text-xs text-muted tabular-nums">
+                <p className="mt-1 text-xs text-ink-muted tabular-nums">
                   <Plural value={deck.sections} one="# section" other="# sections" /> ·{" "}
                   <Plural value={deck.cards} one="# card" other="# cards" />
                 </p>
@@ -84,8 +84,8 @@ export function LibraryDemo() {
                 className={clsx(
                   "flex h-9 shrink-0 items-center gap-1.5 rounded-md px-3 text-sm transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97]",
                   isAdded
-                    ? "bg-good-soft text-good"
-                    : "bg-plate text-text edge hoverable:hover:bg-hover",
+                    ? "bg-success-soft text-success"
+                    : "bg-plate text-ink edge hoverable:hover:bg-plate-hover",
                 )}
               >
                 {isAdded ? (

@@ -109,7 +109,7 @@ export function ApiKeysSection() {
       )}
 
       {rest.length > 0 && (
-        <p className="max-w-[60ch] text-sm text-muted">
+        <p className="max-w-[60ch] text-sm text-ink-muted">
           <Trans>
             Read lists decks and cards. Read and write also adds, edits and archives them. A key
             never grades reviews. <DocLink href={publicSiteUrl("/docs/api")}>API reference</DocLink>
@@ -217,11 +217,11 @@ function NewKeyForm({
         <FieldError>{invalid.name}</FieldError>
       </Field>
       <div className="grid gap-1.5">
-        <span className="text-sm font-medium text-text-2">
+        <span className="text-sm font-medium text-ink-secondary">
           <Trans>Access</Trans>
         </span>
         <Segmented value={scope} onValueChange={setScope} options={scopes} label={t`Access`} />
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           {scopes.find((s) => s.value === scope)?.hint} <Trans>A key never grades reviews.</Trans>
         </p>
       </div>
@@ -260,7 +260,7 @@ function KeyRow({
           <span className="truncate text-base font-medium">{item.name ?? t`Untitled key`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </div>
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           {item.start && <span className="font-mono">{item.start}…</span>}
           {item.start && " · "}
           <span className="tabular-nums">
@@ -323,7 +323,7 @@ export function FreshKey({
     >
       <div className="flex items-start gap-2.5">
         <Lantern className="size-8 shrink-0" glow fed={fed} />
-        <p className="text-base text-text">
+        <p className="text-base text-ink">
           <Trans>
             <span className="font-medium">{ph({ name: isolate(name) })}</span> is ready. Copy it
             now. You won’t see it again.

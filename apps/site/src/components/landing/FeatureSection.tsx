@@ -16,7 +16,7 @@ interface Props {
 
 export function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl">
+    <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl">
       {children}
     </h2>
   );
@@ -42,7 +42,7 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
       >
         <div className={clsx("max-w-[440px]", demoFirst && "@4xl:order-2 @4xl:justify-self-end")}>
           <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
           {after && <div className="mt-8">{after}</div>}
         </div>
         <div className={clsx("min-w-0 py-4", demoFirst ? "@4xl:order-1 @4xl:pr-6" : "@4xl:pl-6")}>
@@ -70,7 +70,7 @@ export function Wide({
       <div className="mx-auto max-w-[1040px]">
         <div className="max-w-[640px]">
           <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
         </div>
         {children}
       </div>

@@ -63,7 +63,7 @@ export function Pool({ className }: { className: string }) {
       className={`absolute ${className}`}
       style={[
         {
-          experimental_backgroundImage: `radial-gradient(closest-side at 50% 50%, ${p.pool}, ${clear(p.pool)} 100%)`,
+          experimental_backgroundImage: `radial-gradient(closest-side at 50% 50%, ${p["lantern-pool"]}, ${clear(p["lantern-pool"])} 100%)`,
         } as ViewStyle,
         style,
       ]}
@@ -86,13 +86,13 @@ export function Brand() {
       </View>
       <Animated.View entering={arrive(160)} className="items-center gap-2">
         <Text
-          className="text-4xl font-medium text-text"
+          className="text-4xl font-medium text-ink"
           style={{ letterSpacing: -1 }}
           accessibilityRole="header"
         >
           Lymi
         </Text>
-        <Text className="text-center text-md text-text-2">
+        <Text className="text-center text-md text-ink-secondary">
           {t`Your cards and your streak, on every device.`}
         </Text>
       </Animated.View>
@@ -143,7 +143,7 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
       <Animated.View entering={arrive(400)} className="gap-3 pt-3">
         <View className="flex-row items-center gap-3" accessibilityElementsHidden>
           <View className="h-px flex-1 bg-edge" />
-          <Text className="text-sm text-muted">{t`New to Lymi?`}</Text>
+          <Text className="text-sm text-ink-muted">{t`New to Lymi?`}</Text>
           <View className="h-px flex-1 bg-edge" />
         </View>
         <Button label={t`Create an account`} size="lg" onPress={() => open("sign-up")} />
@@ -164,7 +164,7 @@ export function PrivacyLink() {
         className="min-h-11 justify-center px-2"
         accessibilityRole="link"
       >
-        <Text className="text-sm text-muted">{t`Privacy policy`}</Text>
+        <Text className="text-sm text-ink-muted">{t`Privacy policy`}</Text>
       </Press>
     </Animated.View>
   );
@@ -183,10 +183,10 @@ export function EmailContent({ door }: { door: SignIn }) {
   return (
     <View key={step} className="gap-6">
       <Animated.View entering={arrive(0)} className="gap-1">
-        <Text className="text-3xl font-medium text-text" accessibilityRole="header">
+        <Text className="text-3xl font-medium text-ink" accessibilityRole="header">
           {i18n._(heading.title)}
         </Text>
-        <Text className="text-md text-text-2">
+        <Text className="text-md text-ink-secondary">
           {step === "code"
             ? t`Enter the 6-digit code we sent to ${email}.`
             : heading.line && i18n._(heading.line)}
@@ -220,14 +220,14 @@ function SwitchLinks({ door, step }: { door: SignIn; step: EmailStep }) {
   return (
     <View className="items-center">
       <View className="flex-row flex-wrap items-center justify-center gap-1">
-        {link.lead && <Text className="text-base text-muted">{link.lead}</Text>}
+        {link.lead && <Text className="text-base text-ink-muted">{link.lead}</Text>}
         <Press
           onPress={() => door.goTo(link.to)}
           haptic={false}
           className="py-2"
           accessibilityRole="button"
         >
-          <Text className="text-base font-medium text-text">{link.label}</Text>
+          <Text className="text-base font-medium text-ink">{link.label}</Text>
         </Press>
       </View>
     </View>
@@ -243,13 +243,13 @@ export function DevSignIn() {
   return (
     <View className="flex-row flex-wrap justify-center gap-2">
       <Press onPress={() => devSignIn()} haptic={false} className="px-2 py-2">
-        <Text className="text-xs text-faint">Dev sign-in as learner</Text>
+        <Text className="text-xs text-ink-faint">Dev sign-in as learner</Text>
       </Press>
       <Press onPress={() => devSignIn("heavy")} haptic={false} className="px-2 py-2">
-        <Text className="text-xs text-faint">Dev sign-in as heavy</Text>
+        <Text className="text-xs text-ink-faint">Dev sign-in as heavy</Text>
       </Press>
       <Press onPress={() => devSignIn("fresh", true)} haptic={false} className="px-2 py-2">
-        <Text className="text-xs text-faint">Dev sign-up as new</Text>
+        <Text className="text-xs text-ink-faint">Dev sign-up as new</Text>
       </Press>
     </View>
   );
@@ -306,7 +306,10 @@ function CredentialForm({ door }: { door: SignIn }) {
               className="-me-1 self-end px-1 py-2"
               accessibilityRole="button"
             >
-              <Text className="text-base text-muted" style={{ textDecorationColor: p["edge-2"] }}>
+              <Text
+                className="text-base text-ink-muted"
+                style={{ textDecorationColor: p["edge-strong"] }}
+              >
                 {t`Forgot your password?`}
               </Text>
             </Press>
@@ -365,13 +368,13 @@ function NoticeBlock({ notice }: { notice: NonNullable<SignIn["notice"]> }) {
   return (
     <Animated.View
       entering={FadeIn.duration(150)}
-      className="flex-row gap-3 rounded-md bg-good-soft p-4"
+      className="flex-row gap-3 rounded-md bg-success-soft p-4"
       accessibilityLiveRegion="polite"
     >
-      <Icon name="email" size={20} colour={p.good} />
+      <Icon name="email" size={20} colour={p.success} />
       <View className="flex-1 gap-1">
-        <Text className="text-md font-medium text-text">{notice.title}</Text>
-        <Text className="text-base text-text-2">{notice.body}</Text>
+        <Text className="text-md font-medium text-ink">{notice.title}</Text>
+        <Text className="text-base text-ink-secondary">{notice.body}</Text>
       </View>
     </Animated.View>
   );
@@ -388,7 +391,7 @@ function Alert({ children }: { children: ReactNode }) {
       <View className="pt-0.5">
         <Icon name="alert" size={16} colour={p.danger} />
       </View>
-      <Text className="flex-1 text-base text-text">{children}</Text>
+      <Text className="flex-1 text-base text-ink">{children}</Text>
     </Animated.View>
   );
 }

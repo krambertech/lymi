@@ -5,12 +5,12 @@ import type { ReactNode } from "react";
 function Row({ icon, title, meta }: { icon: ReactNode; title: ReactNode; meta: ReactNode }) {
   return (
     <div className="flex items-center gap-3 border-b border-edge px-4 py-3.5 last:border-b-0">
-      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-4">
+      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-4">
         {icon}
       </span>
       <span className="min-w-0">
-        <span className="block truncate text-base font-medium text-text">{title}</span>
-        <span className="block text-sm text-muted">{meta}</span>
+        <span className="block truncate text-base font-medium text-ink">{title}</span>
+        <span className="block text-sm text-ink-muted">{meta}</span>
       </span>
     </div>
   );
@@ -20,7 +20,7 @@ function Row({ icon, title, meta }: { icon: ReactNode; title: ReactNode; meta: R
 export function ActivityFigure() {
   return (
     <div aria-hidden="true" className="mx-auto max-w-[420px]">
-      <p className="mb-2 px-1 text-sm text-text-2">
+      <p className="mb-2 px-1 text-sm text-ink-secondary">
         <Trans>Today</Trans>
       </p>
       <div className="overflow-hidden rounded-xl bg-plate edge">

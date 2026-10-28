@@ -133,7 +133,7 @@ export const lists: Group = {
                   <div className="w-full">
                     <SettingsGroup title="Review" description="How a session sounds and moves.">
                       <Field orientation="horizontal" className="justify-between gap-4">
-                        <FieldLabel className="text-base text-text">
+                        <FieldLabel className="text-base text-ink">
                           Play audio automatically
                         </FieldLabel>
                         <Switch checked={audio} onCheckedChange={setAudio} />
@@ -142,7 +142,7 @@ export const lists: Group = {
                     <SettingsGroup title="Notifications">
                       <Field orientation="horizontal" className="gap-4">
                         <FieldContent className="gap-0.5">
-                          <FieldLabel className="text-base text-text">Evening reminder</FieldLabel>
+                          <FieldLabel className="text-base text-ink">Evening reminder</FieldLabel>
                           <FieldDescription>Only when cards are due.</FieldDescription>
                         </FieldContent>
                         <Switch
@@ -230,7 +230,7 @@ export const table: Group = {
                           className="group transition-colors hoverable:hover:bg-plate"
                         >
                           <Td className="whitespace-nowrap text-md font-medium">{card.term}</Td>
-                          <Td className="text-text-2">
+                          <Td className="text-ink-secondary">
                             <span className="flex flex-wrap items-center gap-2">
                               {card.meaning}
                               {card.meaningSource === "ai" && (
@@ -241,7 +241,7 @@ export const table: Group = {
                           <Td>
                             <StateChip state={state?.state} />
                           </Td>
-                          <Td align="right" className="text-muted">
+                          <Td align="right" className="text-ink-muted">
                             {state && state.due.getTime() <= Date.now() ? "today" : "6 d"}
                           </Td>
                           <Td className="py-1.5">

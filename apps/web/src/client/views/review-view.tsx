@@ -164,7 +164,7 @@ export function ReviewHeader({
         {loading ? (
           <Skeleton className="h-4 w-9 shrink-0" />
         ) : (
-          <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
+          <span className="shrink-0 text-sm font-medium tabular-nums text-ink-secondary">
             {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
             <span aria-hidden="true">
               <RollingNumber value={done} animate={animateCount} />/{size}
@@ -201,7 +201,7 @@ function TapNudge({ lifted, aided }: { lifted: boolean; aided: boolean }) {
     <motion.div
       aria-hidden="true"
       className={clsx(
-        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-muted",
+        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-ink-muted",
         // Clear of the aid's pill for the whole card, so it reads as its own line.
         lifted ? "bottom-20" : "bottom-5",
       )}
@@ -213,7 +213,7 @@ function TapNudge({ lifted, aided }: { lifted: boolean; aided: boolean }) {
       <span className="relative grid size-11 place-items-center">
         {!reduce && (
           <motion.span
-            className="absolute inset-0 rounded-full border border-edge-2"
+            className="absolute inset-0 rounded-full border border-edge-strong"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: [0.5, 1.2], opacity: [0.9, 0] }}
             transition={{
@@ -670,12 +670,12 @@ export function ReviewCard({
                     exampleSound.play("sentence");
                   }
             }
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+            className="hyphenate whitespace-pre-line text-md leading-relaxed text-ink-secondary [overflow-wrap:anywhere]"
           />
         </motion.div>
       )}
       {card.notes && (
-        <motion.div variants={answerLine} className="text-sm text-muted">
+        <motion.div variants={answerLine} className="text-sm text-ink-muted">
           <CardNotes source={card.notes} />
         </motion.div>
       )}
@@ -698,7 +698,7 @@ export function ReviewCard({
       ) : (
         <motion.p
           variants={answerLine}
-          className="text-md text-muted [overflow-wrap:anywhere]"
+          className="text-md text-ink-muted [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
           {card.pronunciation}
@@ -717,7 +717,7 @@ export function ReviewCard({
               <motion.p
                 variants={answerLine}
                 className={clsx(
-                  "hyphenate font-medium leading-[1.2] text-text [overflow-wrap:anywhere]",
+                  "hyphenate font-medium leading-[1.2] text-ink [overflow-wrap:anywhere]",
                   TERM_SIZE[step],
                 )}
                 lang={card.language ?? undefined}
@@ -731,7 +731,7 @@ export function ReviewCard({
                 <motion.p
                   variants={answerLine}
                   className={clsx(
-                    "hyphenate whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                    "hyphenate whitespace-pre-line leading-[1.35] text-ink-secondary [overflow-wrap:anywhere]",
                     CONTEXT_SIZE[step],
                   )}
                   dir="auto"
@@ -745,7 +745,7 @@ export function ReviewCard({
               <motion.p
                 variants={answerLine}
                 className={clsx(
-                  "hyphenate whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
+                  "hyphenate whitespace-pre-line leading-[1.3] text-ink [overflow-wrap:anywhere]",
                   picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
                 )}
                 dir="auto"
@@ -759,7 +759,7 @@ export function ReviewCard({
                   <motion.p
                     variants={answerLine}
                     className={clsx(
-                      "hyphenate leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                      "hyphenate leading-[1.35] text-ink-secondary [overflow-wrap:anywhere]",
                       CONTEXT_SIZE[step],
                     )}
                     lang={card.language ?? undefined}
@@ -821,7 +821,7 @@ export function ReviewCard({
       aria-label={label}
       className={clsx(
         "edge relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl bg-plate",
-        !revealed && "cursor-pointer hoverable:hover:edge-2",
+        !revealed && "cursor-pointer hoverable:hover:edge-strong",
         className,
       )}
     >
@@ -855,7 +855,7 @@ export function ReviewCard({
           <div
             ref={headRef}
             className={clsx(
-              "flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs",
+              "flex items-center justify-between gap-3 text-sm text-ink-muted @3xl:text-xs",
               animateIn && "enter-fade",
             )}
           >
@@ -864,7 +864,7 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span dir="auto" className="min-w-0 truncate font-medium text-text-2">
+                  <span dir="auto" className="min-w-0 truncate font-medium text-ink-secondary">
                     {deck.name}
                   </span>
                 </>
@@ -918,7 +918,7 @@ export function ReviewCard({
                     <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
                   ) : (
                     // A queue fetched before the picture was archived; the server no longer asks this mode.
-                    <p className="text-xl text-muted">
+                    <p className="text-xl text-ink-muted">
                       <Trans>This card’s picture was removed.</Trans>
                     </p>
                   )
@@ -928,7 +928,7 @@ export function ReviewCard({
                       lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
                       dir={mode.cue === "term" ? textDirection(card.language) : "auto"}
                       className={clsx(
-                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-ink [overflow-wrap:anywhere]",
                         CUE_SIZE[step],
                       )}
                     >
@@ -948,7 +948,7 @@ export function ReviewCard({
                       <p
                         aria-hidden={!revealed || undefined}
                         className={clsx(
-                          "pt-1 text-md text-muted [overflow-wrap:anywhere]",
+                          "pt-1 text-md text-ink-muted [overflow-wrap:anywhere]",
                           revealed ? "enter-fade" : "invisible",
                         )}
                         lang={card.language ?? undefined}
@@ -1249,7 +1249,7 @@ function LockedGrade({
                 if (e.detail > 0)
                   e.currentTarget.closest("fieldset")?.focus({ preventScroll: true });
               }}
-              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-ink-muted @2xl:text-base"
             />
           }
         >
@@ -1258,7 +1258,7 @@ function LockedGrade({
           </span>
           <span>{label}</span>
           <Lock
-            className="absolute end-2.5 top-2.5 size-3 text-muted"
+            className="absolute end-2.5 top-2.5 size-3 text-ink-muted"
             aria-hidden="true"
             strokeWidth={2}
           />
@@ -1347,9 +1347,9 @@ export function GradeBar({
                       aria-label={schedules ? t`${label}, next in ${schedules}` : undefined}
                       onClick={() => onGrade(g.rating)}
                       className={clsx(
-                        "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
+                        "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-ink-secondary",
                         "transition-[scale,background-color,box-shadow] duration-150 ease-out @2xl:text-base",
-                        "hoverable:hover:edge-2 hoverable:hover:veil hoverable:hover:text-text active:scale-[0.96] motion-reduce:active:scale-100",
+                        "hoverable:hover:edge-strong hoverable:hover:veil hoverable:hover:text-ink active:scale-[0.96] motion-reduce:active:scale-100",
                       )}
                     >
                       <span className={clsx("mx-auto grid size-5 place-items-center", g.iconClass)}>
@@ -1559,12 +1559,12 @@ export function ReviewComplete({
         {counted ? (
           <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
             <span
-              className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-text @3xl:text-7xl"
+              className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-ink @3xl:text-7xl"
               style={at(AT.count)}
             >
               <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
             </span>
-            <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
+            <span className="seq text-md text-ink-secondary" style={at(AT.count + 80)}>
               {/* While the goal is open the count says it, so Continue's count explains itself. */}
               {!screen.satisfied && goal ? (
                 <Plural value={goal} one="of # review today" other="of # reviews today" />
@@ -1574,7 +1574,10 @@ export function ReviewComplete({
             </span>
           </p>
         ) : (
-          <p className="seq mt-2 max-w-[32ch] text-pretty text-md text-text-2" style={at(AT.count)}>
+          <p
+            className="seq mt-2 max-w-[32ch] text-pretty text-md text-ink-secondary"
+            style={at(AT.count)}
+          >
             <Trans>Come back later, or add new cards.</Trans>
           </p>
         )}
@@ -1591,13 +1594,16 @@ export function ReviewComplete({
               sequence={AT.lights}
               flare={landed && turned}
             />
-            <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
+            <p
+              className="seq flex items-center gap-2 text-md text-ink-secondary"
+              style={at(AT.run)}
+            >
               <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
                 <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
               </span>
               {run ? (
                 <>
-                  <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
+                  <span className="inline-flex overflow-hidden font-semibold tabular-nums text-ink">
                     <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
                       {run}
                     </span>
@@ -1605,7 +1611,7 @@ export function ReviewComplete({
                   <Plural value={run} one="day in a row" other="days in a row" />
                 </>
               ) : (
-                <span className="font-medium text-text">
+                <span className="font-medium text-ink">
                   <StreakStart summary={streak ?? week} />
                 </span>
               )}
@@ -1642,7 +1648,7 @@ export function ReviewComplete({
                   <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
                     <Trans>Continue</Trans>
                     {note && (
-                      <span className="font-normal tabular-nums text-muted">
+                      <span className="font-normal tabular-nums text-ink-muted">
                         {note.kind === "goal" ? (
                           <Plural value={note.count} one="# to goal" other="# to goal" />
                         ) : note.kind === "cards" ? (

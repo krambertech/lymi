@@ -32,7 +32,7 @@ export function Wick({ still }: { still: boolean }) {
       // It draws from the start edge, which is the right in a right-to-left language.
       style={[
         {
-          backgroundColor: p["edge-2"],
+          backgroundColor: p["edge-strong"],
           transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%",
         },
         style,

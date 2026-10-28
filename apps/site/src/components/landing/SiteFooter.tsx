@@ -9,7 +9,7 @@ import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
 import { EXAM_LINKS, LANGUAGE_LINKS, linksIn, type SiteLink, USE_CASE_LINKS } from "./site-links";
 
-const linkClass = "rounded-xs hoverable:hover:text-text";
+const linkClass = "rounded-xs hoverable:hover:text-ink";
 
 interface GroupProps {
   title: ReactNode;
@@ -21,8 +21,10 @@ interface GroupProps {
 function Group({ title, children, className, listClassName }: GroupProps) {
   return (
     <div className={className}>
-      <p className="text-sm font-medium text-text">{title}</p>
-      <ul className={clsx("mt-3 grid gap-2.5 text-sm text-muted", listClassName)}>{children}</ul>
+      <p className="text-sm font-medium text-ink">{title}</p>
+      <ul className={clsx("mt-3 grid gap-2.5 text-sm text-ink-muted", listClassName)}>
+        {children}
+      </ul>
     </div>
   );
 }
@@ -43,7 +45,7 @@ function AllLink({ href, children }: { href: string; children: ReactNode }) {
     <li>
       <a
         href={href}
-        className="inline-flex items-center gap-1 rounded-xs text-text-2 hoverable:hover:text-text"
+        className="inline-flex items-center gap-1 rounded-xs text-ink-secondary hoverable:hover:text-ink"
       >
         {children}
         <ArrowRight aria-hidden="true" className="size-3.5" />
@@ -63,19 +65,19 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
       <div className="mx-auto grid max-w-[1040px] gap-10 @4xl:grid-cols-[13rem_1fr] @4xl:gap-12">
         <div>
           <Lockup size={22} />
-          <p className="mt-3.5 max-w-[26ch] text-sm text-pretty text-text-2">
+          <p className="mt-3.5 max-w-[26ch] text-sm text-pretty text-ink-secondary">
             <Trans>Flashcards that come back right before you'd forget.</Trans>
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <a
               href={localizedPath("download", i18n.locale)}
-              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-text edge-2"
+              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
             >
               <Trans>Lymi for Mac</Trans>
             </a>
             <a
               href={openAppUrl}
-              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-text edge-2"
+              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
             >
               <Trans>Open Lymi</Trans>
             </a>
@@ -153,7 +155,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
           </Group>
         </div>
       </div>
-      <div className="mx-auto mt-12 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-edge pt-5 text-xs text-muted">
+      <div className="mx-auto mt-12 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-edge pt-5 text-xs text-ink-muted">
         <p className="flex flex-wrap gap-x-4 gap-y-1">
           {/* Pages prerender where the clock reads 1970, so the year comes from the build. */}
           <span>© {import.meta.env.BUILD_DAY?.slice(0, 4)} Lymi</span>

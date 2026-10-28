@@ -196,9 +196,12 @@ function look(variant: ButtonVariant, p: Palette, strong = false) {
     case "primary":
       return { box: "bg-amber", ink: p["amber-ink"] };
     case "secondary":
-      return { box: `bg-plate border ${strong ? "border-edge-2" : "border-edge"}`, ink: p.text };
+      return {
+        box: `bg-plate border ${strong ? "border-edge-strong" : "border-edge"}`,
+        ink: p.ink,
+      };
     case "ghost":
-      return { box: "bg-transparent", ink: p["text-2"] };
+      return { box: "bg-transparent", ink: p["ink-secondary"] };
     case "danger":
       return { box: "bg-danger-soft", ink: p.danger };
   }
@@ -274,7 +277,7 @@ export function Button({
           <Text
             className={`${LABEL[size]} opacity-70`}
             style={{
-              color: variant === "secondary" ? p.muted : ink,
+              color: variant === "secondary" ? p["ink-muted"] : ink,
               fontVariant: ["tabular-nums"],
             }}
           >
@@ -434,13 +437,13 @@ export const LIFT = { boxShadow: shadows.dark.lift } as ViewStyle;
 /** A bare chevron: how a whole-row link ends; the row itself is the target. */
 export function RowArrow() {
   const p = usePalette();
-  return <Icon name="forward" size={18} colour={p.muted} strokeWidth={2.5} />;
+  return <Icon name="forward" size={18} colour={p["ink-muted"]} strokeWidth={2.5} />;
 }
 
 export function SectionTitle({ children, end }: { children: string; end?: ReactNode }) {
   return (
     <View className="flex-row items-baseline justify-between px-1 pb-3 pt-2">
-      <Text className="text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="text-lg font-medium text-ink" accessibilityRole="header">
         {children}
       </Text>
       {end}

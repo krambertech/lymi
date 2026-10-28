@@ -36,7 +36,7 @@ export function ExamsHub({ counts }: Props) {
   const reviewable = listed.filter((exam) => exam.group === "citizenship");
 
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
       <header className="shelf-hero over-tint" data-hue="3">
         <SiteNav openAppUrl={openAppUrl} current="exams" />
         <Hero exams={reviewable} />
@@ -127,13 +127,13 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-10 pb-16 @2xl:px-10 @4xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] @4xl:gap-16 @4xl:pt-16 @4xl:pb-24">
       <div>
-        <p className="text-sm font-medium text-text-2">
+        <p className="text-sm font-medium text-ink-secondary">
           <Trans>Exam prep</Trans>
         </p>
-        <h1 className="mt-4 max-w-[15ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-text @4xl:text-[4.25rem]">
+        <h1 className="mt-4 max-w-[15ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-ink @4xl:text-[4.25rem]">
           {i18n._(EXAMS_HEADING)}
         </h1>
-        <p className="mt-6 max-w-[48ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+        <p className="mt-6 max-w-[48ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           <Trans>
             Ready decks for citizenship, language and driving theory tests after a move. Each holds
             what the exam asks in its own language, with a translation alongside, and brings back
@@ -164,7 +164,7 @@ function ExamPicker({ exams, counts }: { exams: readonly Exam[]; counts: Record<
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="exams-title"
-          className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+          className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
         >
           <Trans>Pick your exam.</Trans>
         </h2>
@@ -206,7 +206,7 @@ function ExamGroup({
   if (own.length === 0) return null;
   return (
     <div id={group} className="mt-12 scroll-mt-6">
-      <h3 className="border-b border-edge pb-3 text-2xl font-medium tracking-[-0.03em] text-text">
+      <h3 className="border-b border-edge pb-3 text-2xl font-medium tracking-[-0.03em] text-ink">
         {title}
       </h3>
       <ul className="mt-5 grid gap-3 @xl:grid-cols-2 @2xl:gap-4 @4xl:grid-cols-3">
@@ -230,8 +230,8 @@ function ExamTile({ exam, cards }: { exam: Exam; cards: number }) {
       data-hue={hue}
       className="use-case-tile group relative flex min-h-[340px] flex-col overflow-hidden rounded-2xl p-6 pb-0 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring @2xl:pb-0"
     >
-      <p className="text-sm text-text-2">{i18n._(exam.country)}</p>
-      <h4 className="mt-1 text-xl leading-tight font-medium tracking-[-0.02em] text-balance text-text">
+      <p className="text-sm text-ink-secondary">{i18n._(exam.country)}</p>
+      <h4 className="mt-1 text-xl leading-tight font-medium tracking-[-0.02em] text-balance text-ink">
         <a
           href={examPath(exam, i18n.locale)}
           className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none"
@@ -239,8 +239,8 @@ function ExamTile({ exam, cards }: { exam: Exam; cards: number }) {
           {i18n._(exam.name)}
         </a>
       </h4>
-      <p className="mt-2 text-sm text-pretty text-text-2">{i18n._(exam.summary)}</p>
-      <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-text">
+      <p className="mt-2 text-sm text-pretty text-ink-secondary">{i18n._(exam.summary)}</p>
+      <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
         <Plural value={cards} one="# card" other="# cards" />
         <ArrowRight
           aria-hidden="true"
@@ -252,11 +252,11 @@ function ExamTile({ exam, cards }: { exam: Exam; cards: number }) {
         <div className="use-case-card relative flex flex-1 flex-col rounded-xl bg-plate p-5 pb-10 edge">
           <p
             lang={exam.sample.language}
-            className="line-clamp-2 text-md leading-snug font-medium text-pretty text-text"
+            className="line-clamp-2 text-md leading-snug font-medium text-pretty text-ink"
           >
             {exam.sample.question}
           </p>
-          <p className="mt-3 line-clamp-2 border-t border-edge-2 pt-2.5 text-sm text-pretty text-text-2">
+          <p className="mt-3 line-clamp-2 border-t border-edge-strong pt-2.5 text-sm text-pretty text-ink-secondary">
             {answer}
           </p>
         </div>
@@ -343,7 +343,7 @@ function ProgressDemo() {
     <div ref={root} className="mx-auto w-full max-w-[440px]" aria-hidden="true">
       <article className="rounded-xl bg-canvas p-6 edge">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-medium tracking-[0.07em] text-muted uppercase">
+          <p className="text-xs font-medium tracking-[0.07em] text-ink-muted uppercase">
             <Trans>An example deck</Trans>
           </p>
           <AnimatePresence mode="wait" initial={false}>
@@ -353,16 +353,14 @@ function ProgressDemo() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: still ? 0 : 0.25 }}
-              className="rounded-full bg-plate-2 px-2.5 py-1 text-xs font-medium text-text-2"
+              className="rounded-full bg-plate-nested px-2.5 py-1 text-xs font-medium text-ink-secondary"
             >
               {i18n._(stage.label)}
             </motion.p>
           </AnimatePresence>
         </div>
-        <p className="mt-2 text-xl font-medium tracking-[-0.02em] text-text">
-          Leben in Deutschland
-        </p>
-        <div className="mt-5 flex h-3 overflow-hidden rounded-full bg-plate-2">
+        <p className="mt-2 text-xl font-medium tracking-[-0.02em] text-ink">Leben in Deutschland</p>
+        <div className="mt-5 flex h-3 overflow-hidden rounded-full bg-plate-nested">
           {bars.map((bar) => (
             <motion.span
               key={bar.id}
@@ -376,11 +374,11 @@ function ProgressDemo() {
         <dl className="mt-5 grid grid-cols-3 gap-3">
           {bars.map((bar) => (
             <div key={bar.id}>
-              <dt className="flex items-center gap-1.5 text-sm text-text-2">
+              <dt className="flex items-center gap-1.5 text-sm text-ink-secondary">
                 <span aria-hidden="true" className={clsx("size-2 rounded-full", bar.className)} />
                 {bar.label}
               </dt>
-              <dd className="mt-0.5 text-2xl font-medium tracking-[-0.03em] text-text tabular-nums">
+              <dd className="mt-0.5 text-2xl font-medium tracking-[-0.03em] text-ink tabular-nums">
                 <Count value={bar.value} still={still} />
               </dd>
             </div>
@@ -392,7 +390,7 @@ function ProgressDemo() {
               key={each.id}
               className={clsx(
                 "h-1 flex-1 rounded-full transition-colors duration-300",
-                n <= at ? "bg-text-2" : "bg-plate-2",
+                n <= at ? "bg-ink-secondary" : "bg-plate-nested",
               )}
             />
           ))}
@@ -430,7 +428,7 @@ function DeckNotQuiz() {
         <SectionTitle>
           <Trans>A deck, not a quiz.</Trans>
         </SectionTitle>
-        <p className="mt-5 max-w-[56ch] text-md text-pretty text-text-2">
+        <p className="mt-5 max-w-[56ch] text-md text-pretty text-ink-secondary">
           <Trans>
             A practice quiz tells you how you did today. A deck keeps track of every question, so
             the review you do tomorrow is the one you need.
@@ -439,13 +437,13 @@ function DeckNotQuiz() {
         <div className="mt-10 overflow-hidden rounded-xl bg-plate edge">
           <div
             aria-hidden="true"
-            className="hidden grid-cols-3 gap-4 bg-plate-2 px-5 py-3 text-sm font-medium text-text-2 @2xl:grid"
+            className="hidden grid-cols-3 gap-4 bg-plate-nested px-5 py-3 text-sm font-medium text-ink-secondary @2xl:grid"
           >
             <span />
             <span>
               <Trans>A practice quiz</Trans>
             </span>
-            <span className="text-text">
+            <span className="text-ink">
               <Trans>A Lymi deck</Trans>
             </span>
           </div>
@@ -455,15 +453,15 @@ function DeckNotQuiz() {
                 key={row.id}
                 className="grid gap-3 border-t border-edge px-5 py-5 first:border-t-0 @2xl:grid-cols-3 @2xl:gap-4 @2xl:first:border-t"
               >
-                <p className="font-medium text-text">{row.topic}</p>
-                <p className="text-text-2">
-                  <span className="block text-xs tracking-[0.06em] text-muted uppercase @2xl:sr-only">
+                <p className="font-medium text-ink">{row.topic}</p>
+                <p className="text-ink-secondary">
+                  <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
                     <Trans>A practice quiz</Trans>
                   </span>
                   {row.quiz}
                 </p>
-                <p className="text-text">
-                  <span className="block text-xs tracking-[0.06em] text-muted uppercase @2xl:sr-only">
+                <p className="text-ink">
+                  <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
                     <Trans>A Lymi deck</Trans>
                   </span>
                   {row.deck}

@@ -60,7 +60,7 @@ function Mark({ app }: { app: AppIdentity }) {
   return (
     // The card's plate behind the tile cuts it out of the one it overlaps.
     <span className="block rounded-[10px] bg-plate p-[1.5px]">
-      <span className="edge grid size-7 place-items-center rounded-[9px] bg-plate text-text">
+      <span className="edge grid size-7 place-items-center rounded-[9px] bg-plate text-ink">
         <Glyph app={app} className="size-[15px]" />
       </span>
     </span>
@@ -107,18 +107,18 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
         </span>
       </div>
       <NavLink to="/settings" hash="apps" className="mt-2.5 block rounded-xs">
-        <span id="assistant-offer-title" className="text-sm font-medium text-text">
+        <span id="assistant-offer-title" className="text-sm font-medium text-ink">
           <Trans>Connect your AI assistant</Trans>
           <ArrowRight
             aria-hidden="true"
             className={clsx(
-              "ms-1 inline-block size-3.5 align-[-2px] text-muted rtl:-scale-x-100",
+              "ms-1 inline-block size-3.5 align-[-2px] text-ink-muted rtl:-scale-x-100",
               !still &&
-                "transition-[translate,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] hoverable:group-hover/offer:translate-x-0.5 hoverable:group-hover/offer:text-text rtl:hoverable:group-hover/offer:-translate-x-0.5",
+                "transition-[translate,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] hoverable:group-hover/offer:translate-x-0.5 hoverable:group-hover/offer:text-ink rtl:hoverable:group-hover/offer:-translate-x-0.5",
             )}
           />
         </span>
-        <span className="mt-0.5 block text-sm text-muted text-pretty">
+        <span className="mt-0.5 block text-sm text-ink-muted text-pretty">
           <Trans>Ask Claude or ChatGPT to create cards and decks for you.</Trans>
         </span>
       </NavLink>

@@ -29,15 +29,15 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
       <View className="flex-1 gap-0.5">
         <View className="flex-row items-center gap-1.5">
           {mark}
-          <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+          <Text className="shrink text-md font-medium text-ink" numberOfLines={1}>
             {title}
           </Text>
         </View>
-        {line && <Text className="text-base text-muted">{line}</Text>}
+        {line && <Text className="text-base text-ink-muted">{line}</Text>}
       </View>
       {count !== undefined && end !== "add" && (
         <Text
-          className={`text-2xl font-medium ${count > 0 ? "text-text" : "text-muted"}`}
+          className={`text-2xl font-medium ${count > 0 ? "text-ink" : "text-ink-muted"}`}
           style={{ fontVariant: ["tabular-nums"] }}
         >
           {count}
@@ -45,8 +45,8 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
       )}
       {end === "add" && (
         // In the count column, round, so it lines up with the counts above and below it.
-        <View className="size-8 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="plus" size={16} colour={p["text-2"]} strokeWidth={2.5} />
+        <View className="size-8 items-center justify-center rounded-full bg-plate-nested">
+          <Icon name="plus" size={16} colour={p["ink-secondary"]} strokeWidth={2.5} />
         </View>
       )}
       {end === "open" ? <RowArrow /> : <View className="w-[18px]" />}

@@ -317,13 +317,13 @@ function DeckPlates({
               {i18n.number(due)}
             </p>
             <div className="grid min-w-0 flex-1 gap-0.5">
-              <p className="text-md text-text">
+              <p className="text-md text-ink">
                 <Plural value={due} one="card to review now" other="cards to review now" />
               </p>
               {next ? (
-                <p className="text-sm text-muted">{t`Next card due ${next}.`}</p>
+                <p className="text-sm text-ink-muted">{t`Next card due ${next}.`}</p>
               ) : (
-                status && <p className="text-sm text-muted">{status}</p>
+                status && <p className="text-sm text-ink-muted">{status}</p>
               )}
             </div>
             {due > 0 ? (
@@ -349,7 +349,7 @@ function DeckPlates({
         {/* A narrow plate cannot fit four counts in the hundreds, so the total takes its own row there. */}
         <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 @md/plates:grid-cols-4">
           <div className="col-span-3 grid justify-items-center gap-0.5 border-b border-edge px-2 pb-3 @md/plates:col-span-1 @md/plates:border-b-0 @md/plates:pb-0">
-            <dt className="order-last text-sm text-muted">
+            <dt className="order-last text-sm text-ink-muted">
               <Trans context="cards in this deck">Total</Trans>
             </dt>
             <dd className="text-xl font-semibold proportional-nums">{i18n.number(total)}</dd>
@@ -362,13 +362,13 @@ function DeckPlates({
                 key !== "new" && "border-s",
               )}
             >
-              <dt className="order-last text-sm text-muted">
+              <dt className="order-last text-sm text-ink-muted">
                 {i18n._(stateMarks[key].groupLabel)}
               </dt>
               <dd
                 className={clsx(
                   "flex items-center gap-1.5 text-xl font-semibold proportional-nums",
-                  counts[key] === 0 && "text-muted",
+                  counts[key] === 0 && "text-ink-muted",
                 )}
               >
                 <StateIcon state={key} className="size-[18px]" />
@@ -448,7 +448,7 @@ function ListTools({
         {/* Desktop keeps search beside the tools, where "/" lands; the phone has it up top. */}
         <div className="relative ms-auto hidden w-56 min-w-0 @3xl/shell:block">
           <Search
-            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
             aria-hidden="true"
           />
           <Input
@@ -519,7 +519,7 @@ function SelectionToolbar({
   return (
     <section
       aria-label={t`Selected cards`}
-      className="@container/tools edge-2 flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
+      className="@container/tools edge-strong flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
     >
       <IconButton size="sm" label={t`Stop selecting`} onClick={onDone}>
         <X />
@@ -1056,7 +1056,7 @@ export function DeckDetailView({
             <ScreenBar>
               <div className="relative min-w-0 flex-1">
                 <Search
-                  className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                  className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
                   aria-hidden="true"
                 />
                 <Input

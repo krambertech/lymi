@@ -313,7 +313,7 @@ function ActivityRow({ entry, time, caller: named = true, link, deckLink, cardLi
   const face = (
     <>
       <span
-        className="edge-inset grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-4"
+        className="edge-inset grid size-9 shrink-0 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-4"
         aria-hidden="true"
       >
         <Icon />
@@ -328,7 +328,7 @@ function ActivityRow({ entry, time, caller: named = true, link, deckLink, cardLi
           {entry.export && <ExportChip item={entry.export} />}
         </span>
         {/* Only the file name gives way; the time is the one part that must stay readable. */}
-        <span className="flex min-w-0 gap-1 text-sm text-muted tabular-nums">
+        <span className="flex min-w-0 gap-1 text-sm text-ink-muted tabular-nums">
           {meta.length > 1 && <span className="truncate">{meta.slice(0, -1).join(" · ")}</span>}
           {meta.length > 1 && <span className="shrink-0">·</span>}
           <span className="shrink-0">{meta.at(-1)}</span>
@@ -411,7 +411,7 @@ function ActivityRow({ entry, time, caller: named = true, link, deckLink, cardLi
                 <li>
                   {deckLink(
                     entry.deck.id,
-                    "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-text-2 transition-[background-color] duration-150 hoverable:hover:veil",
+                    "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-ink-secondary transition-[background-color] duration-150 hoverable:hover:veil",
                     <>
                       <span className="flex-1">
                         <Plural
@@ -439,7 +439,7 @@ function CardRow({ card, link }: { card: ActivityCard; link: CardLink }) {
     <>
       <span className="grid min-w-0 flex-1 gap-0.5">
         <bdi className="truncate text-base font-medium">{card.term}</bdi>
-        {card.meaning && <bdi className="truncate text-sm text-muted">{card.meaning}</bdi>}
+        {card.meaning && <bdi className="truncate text-sm text-ink-muted">{card.meaning}</bdi>}
       </span>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
     </>
@@ -540,7 +540,7 @@ export function ActivityView({
     // Settings. The empty state still offers it, because there it teaches the screen.
     <Screen title={t`Activity`} width="md" back={{ label: t`Today`, to: "/today" }}>
       {filter && (
-        <div className="-mt-2 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-2">
+        <div className="-mt-2 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-secondary">
           <span>
             {filter.name ? (
               <Trans>Only what {{ app: isolate(filter.name) }} did</Trans>
@@ -549,7 +549,7 @@ export function ActivityView({
             )}
           </span>
           {filter.clear(
-            "font-medium text-text underline underline-offset-4",
+            "font-medium text-ink underline underline-offset-4",
             <Trans>Show everything</Trans>,
           )}
         </div>
@@ -563,7 +563,7 @@ export function ActivityView({
           <Skeleton className="h-[145px] rounded-xl" />
         </div>
       ) : entries.length === 0 && filter ? (
-        <p className="edge rounded-xl bg-plate px-4 py-4 text-base text-text-2">
+        <p className="edge rounded-xl bg-plate px-4 py-4 text-base text-ink-secondary">
           {filter.name ? (
             <Trans>
               Nothing from {{ app: isolate(filter.name) }} yet. What it adds, edits or archives
@@ -585,7 +585,7 @@ export function ActivityView({
         <div className="grid gap-6">
           {days.map((day) => (
             <section key={day.key} aria-labelledby={`day-${day.key}`} className="grid gap-2">
-              <h2 id={`day-${day.key}`} className="px-1 text-sm font-medium text-muted">
+              <h2 id={`day-${day.key}`} className="px-1 text-sm font-medium text-ink-muted">
                 {day.label}
               </h2>
               <ul className="edge grid rounded-xl bg-plate">
@@ -628,7 +628,7 @@ export function ActivityView({
                 {moreFailed ? <Trans>Try again</Trans> : <Trans>Show more</Trans>}
               </Button>
             ) : (
-              <p ref={foot} tabIndex={-1} role="status" className="text-sm text-muted">
+              <p ref={foot} tabIndex={-1} role="status" className="text-sm text-ink-muted">
                 <Trans>That’s everything.</Trans>
               </p>
             )}

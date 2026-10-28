@@ -25,8 +25,8 @@ function Item({
     <span
       className={clsx(
         "flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm [&_svg]:size-4 [&_svg]:shrink-0",
-        lit && "bg-hover",
-        danger ? "text-danger" : "text-text [&_svg]:text-text-2",
+        lit && "bg-plate-hover",
+        danger ? "text-danger" : "text-ink [&_svg]:text-ink-secondary",
       )}
     >
       {icon}
@@ -46,18 +46,18 @@ export function ImportantFigure() {
             className="flex items-center gap-3 px-4 py-3 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-edge"
           >
             <span className="grid min-w-0 flex-1 gap-0.5">
-              <span lang="et" className="text-lg leading-snug font-medium text-text">
+              <span lang="et" className="text-lg leading-snug font-medium text-ink">
                 {row.term}
                 {row.important && (
                   <Star className="ms-1.5 inline size-3.5 fill-current align-[-1px] text-amber-mark" />
                 )}
               </span>
-              <span className="truncate text-sm text-text-2">{row.meaning}</span>
+              <span className="truncate text-sm text-ink-secondary">{row.meaning}</span>
             </span>
             <span
               className={clsx(
-                "grid size-8 place-items-center rounded-md text-muted",
-                row.open && "bg-hover text-text-2",
+                "grid size-8 place-items-center rounded-md text-ink-muted",
+                row.open && "bg-plate-hover text-ink-secondary",
               )}
             >
               <Ellipsis className="size-4" />
@@ -65,7 +65,7 @@ export function ImportantFigure() {
           </li>
         ))}
       </ul>
-      <div className="absolute end-3 top-[124px] grid w-52 rounded-md bg-sheet p-1 edge-2 shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute end-3 top-[124px] grid w-52 rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
         <Item icon={<Lightbulb />} label={<Trans>Add hint</Trans>} />
         <Item icon={<SquarePen />} label={<Trans>Edit card</Trans>} />
         <Item icon={<Star />} label={<Trans>Mark important</Trans>} lit />

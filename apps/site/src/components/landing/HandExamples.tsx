@@ -113,7 +113,7 @@ export function HandExamples({ front, examples, lang }: Props) {
                   }
                   className={clsx(
                     "pointer-events-auto relative cursor-default text-sm leading-relaxed text-balance transition-colors duration-200 ease-out [word-break:auto-phrase] before:absolute before:-inset-2 before:content-[''] @4xl:text-[15px]",
-                    shown ? "text-text-2" : "text-faint",
+                    shown ? "text-ink-secondary" : "text-ink-faint",
                   )}
                 >
                   <Marked text={line.text} />
@@ -126,7 +126,7 @@ export function HandExamples({ front, examples, lang }: Props) {
                       exit={{ opacity: 0, transition: { duration: 0.12 } }}
                       transition={{ duration: 0.2, ease: EASE }}
                       className={clsx(
-                        "absolute w-max max-w-[16em] text-sm leading-snug text-balance text-muted",
+                        "absolute w-max max-w-[16em] text-sm leading-snug text-balance text-ink-muted",
                         spot.above ? "bottom-full mb-1" : "top-full mt-1",
                         spot.align === "end" ? "end-0" : "start-0",
                       )}

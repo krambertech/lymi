@@ -131,7 +131,7 @@ function Sections(props: Omit<Props, "locale">) {
         <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
           <h2
             id="sections-title"
-            className="min-w-0 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+            className="min-w-0 text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
           >
             <Trans>What’s inside</Trans>
           </h2>
@@ -150,7 +150,7 @@ function Sections(props: Omit<Props, "locale">) {
           </a>
         </div>
         {inOrder && (
-          <p className="mt-4 max-w-[62ch] text-md text-pretty text-text-2">
+          <p className="mt-4 max-w-[62ch] text-md text-pretty text-ink-secondary">
             <Progression
               progression={props.progression}
               first={first}
@@ -224,12 +224,12 @@ function SectionList({
               aria-hidden="true"
               className={clsx(
                 "grid size-8 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
-                start ? "bg-text text-canvas" : "text-text-2 edge-2",
+                start ? "bg-ink text-canvas" : "text-ink-secondary edge-strong",
               )}
             >
               {position ?? "·"}
             </span>
-            <h3 className="min-w-[8rem] flex-1 text-lg leading-tight font-medium tracking-[-0.012em] text-pretty text-text">
+            <h3 className="min-w-[8rem] flex-1 text-lg leading-tight font-medium tracking-[-0.012em] text-pretty text-ink">
               {position !== null && (
                 <span className="sr-only">
                   <Trans>Section {position}:</Trans>{" "}
@@ -240,11 +240,11 @@ function SectionList({
               </span>
             </h3>
             {start && (
-              <span className="shrink-0 text-sm font-medium text-good">
+              <span className="shrink-0 text-sm font-medium text-success">
                 <Trans>Start here</Trans>
               </span>
             )}
-            <span className="shrink-0 text-sm text-muted tabular-nums">
+            <span className="shrink-0 text-sm text-ink-muted tabular-nums">
               <Plural value={step.cards.length} one="# card" other="# cards" />
             </span>
           </li>
@@ -258,7 +258,7 @@ function SectionList({
               event.preventDefault();
               onOpen(event);
             }}
-            className="inline-flex items-center gap-1 rounded-xs text-lg font-medium tracking-[-0.012em] text-text hoverable:hover:underline hoverable:hover:underline-offset-4"
+            className="inline-flex items-center gap-1 rounded-xs text-lg font-medium tracking-[-0.012em] text-ink hoverable:hover:underline hoverable:hover:underline-offset-4"
           >
             <Plural value={rest.length} one="# more section" other="# more sections" />
             <ChevronRight aria-hidden="true" className="size-5 rtl:rotate-180" />
@@ -395,7 +395,7 @@ function CardsView({
               type="button"
               aria-label={t`Back to ${name}`}
               onClick={() => dialogRef.current?.close()}
-              className="relative -ms-1.5 inline-flex h-10 min-w-0 items-center gap-1.5 rounded-sm ps-1 pe-3 text-md text-text-2 transition-colors duration-150 before:absolute before:-inset-y-1 before:content-[''] hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+              className="relative -ms-1.5 inline-flex h-10 min-w-0 items-center gap-1.5 rounded-sm ps-1 pe-3 text-md text-ink-secondary transition-colors duration-150 before:absolute before:-inset-y-1 before:content-[''] hoverable:hover:bg-plate-nested hoverable:hover:text-ink"
             >
               <ChevronLeft aria-hidden="true" className="size-[22px] shrink-0 rtl:rotate-180" />
               <span lang={meaningLanguage} className="truncate">
@@ -426,17 +426,17 @@ function CardsView({
                 {steps.map((step, i) => (
                   <li
                     key={sectionId(i)}
-                    className="@4xl:relative @4xl:before:absolute @4xl:before:start-[15px] @4xl:before:top-9 @4xl:before:-bottom-1 @4xl:before:w-px @4xl:before:bg-edge-2 @4xl:last:before:hidden"
+                    className="@4xl:relative @4xl:before:absolute @4xl:before:start-[15px] @4xl:before:top-9 @4xl:before:-bottom-1 @4xl:before:w-px @4xl:before:bg-edge-strong @4xl:last:before:hidden"
                   >
                     <a
                       href={`#${sectionId(i)}`}
                       onClick={(event) => jump(event, i)}
                       aria-current={active === i ? "true" : undefined}
-                      className="group relative inline-flex h-8 items-center rounded-full bg-plate-2 px-3 text-sm whitespace-nowrap text-text-2 transition-[background-color,color] duration-150 before:absolute before:-inset-y-1.5 before:content-[''] aria-[current=true]:bg-text aria-[current=true]:text-canvas @4xl:grid @4xl:h-auto @4xl:grid-cols-[2rem_minmax(0,1fr)] @4xl:gap-3 @4xl:rounded-none @4xl:bg-transparent @4xl:px-0 @4xl:pb-3 @4xl:whitespace-normal @4xl:aria-[current=true]:bg-transparent @4xl:aria-[current=true]:text-text hoverable:@4xl:hover:text-text"
+                      className="group relative inline-flex h-8 items-center rounded-full bg-plate-nested px-3 text-sm whitespace-nowrap text-ink-secondary transition-[background-color,color] duration-150 before:absolute before:-inset-y-1.5 before:content-[''] aria-[current=true]:bg-ink aria-[current=true]:text-canvas @4xl:grid @4xl:h-auto @4xl:grid-cols-[2rem_minmax(0,1fr)] @4xl:gap-3 @4xl:rounded-none @4xl:bg-transparent @4xl:px-0 @4xl:pb-3 @4xl:whitespace-normal @4xl:aria-[current=true]:bg-transparent @4xl:aria-[current=true]:text-ink hoverable:@4xl:hover:text-ink"
                     >
                       <span
                         aria-hidden="true"
-                        className="hidden size-8 place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text-2 tabular-nums transition-colors duration-150 group-aria-[current=true]:bg-text group-aria-[current=true]:text-canvas @4xl:relative @4xl:grid"
+                        className="hidden size-8 place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink-secondary tabular-nums transition-colors duration-150 group-aria-[current=true]:bg-ink group-aria-[current=true]:text-canvas @4xl:relative @4xl:grid"
                       >
                         {step.position ?? "·"}
                       </span>
@@ -448,7 +448,7 @@ function CardsView({
                         >
                           {step.name ?? <Trans>Cards outside a section</Trans>}
                         </span>
-                        <span className="hidden text-xs text-muted tabular-nums @4xl:block">
+                        <span className="hidden text-xs text-ink-muted tabular-nums @4xl:block">
                           <Plural value={step.cards.length} one="# card" other="# cards" />
                         </span>
                       </span>
@@ -462,12 +462,12 @@ function CardsView({
           <div className={clsx("min-w-0 pt-8 @4xl:pt-12", !inOrder && "@4xl:col-span-2")}>
             <h2
               id={`${id}-title`}
-              className="text-4xl font-medium tracking-[-0.03em] text-balance text-text"
+              className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink"
             >
               <Plural value={cardCount} one="The one card" other="All # cards" />
             </h2>
             {inOrder && (
-              <p className="mt-2 text-md text-text-2">
+              <p className="mt-2 text-md text-ink-secondary">
                 <Trans>In the order you learn them, one section at a time.</Trans>
               </p>
             )}
@@ -488,10 +488,10 @@ function CardsView({
                   {inOrder && (
                     <h3
                       id={`${sectionId(i)}-title`}
-                      className="flex items-baseline gap-2.5 pb-3 text-xl font-medium tracking-[-0.02em] text-text"
+                      className="flex items-baseline gap-2.5 pb-3 text-xl font-medium tracking-[-0.02em] text-ink"
                     >
                       {step.position !== null && (
-                        <span className="text-md text-muted tabular-nums">{step.position}</span>
+                        <span className="text-md text-ink-muted tabular-nums">{step.position}</span>
                       )}
                       <span
                         lang={
@@ -501,7 +501,7 @@ function CardsView({
                       >
                         {step.name ?? <Trans>Cards outside a section</Trans>}
                       </span>
-                      <span className="ms-auto shrink-0 text-sm font-normal tracking-normal text-muted tabular-nums">
+                      <span className="ms-auto shrink-0 text-sm font-normal tracking-normal text-ink-muted tabular-nums">
                         <Plural value={step.cards.length} one="# card" other="# cards" />
                       </span>
                     </h3>
@@ -515,7 +515,7 @@ function CardsView({
                       >
                         <dt
                           lang={termLanguage ?? undefined}
-                          className="font-medium break-words text-text"
+                          className="font-medium break-words text-ink"
                         >
                           <span className="flex flex-wrap items-center gap-2">
                             <span className="whitespace-pre-line">{card.term}</span>
@@ -528,7 +528,7 @@ function CardsView({
                                     : t`Play pronunciation`
                                 }
                                 onClick={() => card.audio && toggleAudio(card.audio.cardId)}
-                                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-text-2 hoverable:hover:bg-hover"
+                                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-ink-secondary hoverable:hover:bg-plate-hover"
                               >
                                 {playing === card.audio.cardId ? (
                                   <Square
@@ -563,7 +563,7 @@ function CardsView({
                           )}
                         </dt>
                         {card.meaning === null ? (
-                          <dd className="text-faint">
+                          <dd className="text-ink-faint">
                             <span aria-hidden="true">—</span>
                             <span className="sr-only">
                               <Trans>No meaning yet</Trans>
@@ -572,7 +572,7 @@ function CardsView({
                         ) : (
                           <dd
                             lang={meaningLanguage}
-                            className="whitespace-pre-line break-words text-text-2"
+                            className="whitespace-pre-line break-words text-ink-secondary"
                           >
                             {card.meaning}
                           </dd>
@@ -581,7 +581,7 @@ function CardsView({
                     ))}
                   </dl>
                   {shownCards.length < step.cards.length && (
-                    <p className="border-t border-edge pt-2.5 text-md text-muted">
+                    <p className="border-t border-edge pt-2.5 text-md text-ink-muted">
                       <Plural
                         value={step.cards.length - shownCards.length}
                         one="One more card in this section, in Lymi."

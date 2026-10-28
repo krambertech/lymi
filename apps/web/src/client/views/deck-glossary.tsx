@@ -229,16 +229,16 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
       {/* No drop animation: the card is already in its new place, so the copy just goes. */}
       <DragOverlay dropAnimation={null}>
         {activeRow ? (
-          <div className="flex h-full w-full origin-left scale-[1.02] cursor-grabbing items-center gap-3 rounded-lg bg-plate px-4 edge-2 @xl/list:px-5">
+          <div className="flex h-full w-full origin-left scale-[1.02] cursor-grabbing items-center gap-3 rounded-lg bg-plate px-4 edge-strong @xl/list:px-5">
             <StateIcon state={rowState(activeRow)} className="size-[15px] shrink-0" />
             <span
-              className="min-w-0 truncate text-lg font-medium text-text"
+              className="min-w-0 truncate text-lg font-medium text-ink"
               lang={activeRow.card.language ?? undefined}
             >
               {splitForms(activeRow.card.term).word}
             </span>
             {activeRow.card.meaning && (
-              <span className="min-w-0 flex-1 truncate text-md text-text-2">
+              <span className="min-w-0 flex-1 truncate text-md text-ink-secondary">
                 {activeRow.card.meaning}
               </span>
             )}
@@ -305,10 +305,10 @@ function GroupList({
         const body = (
           <>
             {section?.status === "ready" && onStart && (
-              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-plate-2 px-4 py-3">
-                <p className="min-w-0 flex-1 basis-48 text-base text-text-2">
+              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-plate-nested px-4 py-3">
+                <p className="min-w-0 flex-1 basis-48 text-base text-ink-secondary">
                   <Trans>
-                    <span className="font-medium text-text">{isolate(section.name)} is ready.</span>{" "}
+                    <span className="font-medium text-ink">{isolate(section.name)} is ready.</span>{" "}
                     Start it to review its cards.
                   </Trans>
                 </p>
@@ -329,7 +329,7 @@ function GroupList({
               />
             )}
             {group.rows.length === 0 ? (
-              <p className="rounded-lg border border-dashed border-edge-2 px-5 py-4 text-base text-muted">
+              <p className="rounded-lg border border-dashed border-edge-strong px-5 py-4 text-base text-ink-muted">
                 {movable ? (
                   <Trans>No cards yet. Drag cards here, or select cards and move them.</Trans>
                 ) : (
@@ -400,7 +400,7 @@ function DropGroup({
       aria-label={label}
       className={clsx(
         "-mx-2 grid rounded-[26px] px-2 pb-2 transition-[background-color] duration-150 ease-out motion-reduce:transition-none",
-        !!active && isOver && "bg-plate-2",
+        !!active && isOver && "bg-plate-nested",
       )}
     >
       {children}
@@ -459,7 +459,7 @@ function SectionHeading({
     <div className="flex min-h-11 items-start gap-2 px-1 pt-6 pb-2">
       <span className="flex h-8 shrink-0 items-center">
         {locked ? (
-          <Lock className="size-4 text-muted" aria-hidden="true" />
+          <Lock className="size-4 text-ink-muted" aria-hidden="true" />
         ) : (
           section && <SectionRing known={section.known} total={section.total} />
         )}
@@ -470,7 +470,7 @@ function SectionHeading({
           tabIndex={section ? -1 : undefined}
           className={clsx(
             "min-w-0 scroll-mt-6 text-balance text-md font-medium [overflow-wrap:anywhere] focus-visible:outline-offset-4",
-            locked ? "text-text-2" : "text-text",
+            locked ? "text-ink-secondary" : "text-ink",
           )}
         >
           {label}
@@ -478,13 +478,13 @@ function SectionHeading({
           {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
           <span className="sr-only">, </span>
           {/* Inline, so a title that wraps keeps its count after the last word. */}
-          <span className="ms-2 whitespace-nowrap text-sm font-normal text-muted">
+          <span className="ms-2 whitespace-nowrap text-sm font-normal text-ink-muted">
             {i18n.number(count)}
           </span>
         </h2>
         {here && (
           // Green, not amber: it says where the learner is and asks for nothing.
-          <span className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-good ps-1.5 pe-2.5 text-sm font-medium text-canvas">
+          <span className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-success ps-1.5 pe-2.5 text-sm font-medium text-canvas">
             <MapPin className="size-3.5" aria-hidden="true" />
             <Trans>You are here</Trans>
           </span>
@@ -494,7 +494,7 @@ function SectionHeading({
         <Button
           size="sm"
           variant="ghost"
-          className="shrink-0 text-text-2"
+          className="shrink-0 text-ink-secondary"
           onClick={() => run.start_section(section)}
         >
           <Trans>Start anyway</Trans>
@@ -641,7 +641,7 @@ const GlossaryRow = memo(function GlossaryRow({
       className={clsx(
         "grid w-full items-start gap-x-3 gap-y-0.5 px-4 py-3 text-start transition-colors duration-150 focus-visible:outline-offset-[-2px] @xl/list:items-baseline @xl/list:gap-x-5 @xl/list:px-5",
         columns,
-        selected || (open && !selecting) ? "bg-hover" : "hoverable:hover:bg-plate-2",
+        selected || (open && !selecting) ? "bg-plate-hover" : "hoverable:hover:bg-plate-nested",
       )}
     >
       <span className="row-span-2 mt-[3px] self-start @xl/list:row-span-1">
@@ -651,13 +651,13 @@ const GlossaryRow = memo(function GlossaryRow({
             aria-hidden="true"
             className={clsx(
               "grid size-[15px] place-items-center rounded-[4px] border-[1.5px] transition-colors duration-150 ease-out motion-reduce:transition-none",
-              selected ? "border-text bg-text text-canvas" : "border-edge-2 bg-plate",
+              selected ? "border-ink bg-ink text-canvas" : "border-edge-strong bg-plate",
             )}
           >
             {selected && <Check className="size-[11px]" strokeWidth={3} />}
           </span>
         ) : waiting ? (
-          <Lock className="size-[15px] text-faint" aria-hidden="true" />
+          <Lock className="size-[15px] text-ink-faint" aria-hidden="true" />
         ) : (
           <StateIcon state={key} className="size-[15px]" />
         )}
@@ -669,14 +669,14 @@ const GlossaryRow = memo(function GlossaryRow({
       <span
         className={clsx(
           "hyphenate col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
-          waiting ? "text-text-2" : "text-text",
+          waiting ? "text-ink-secondary" : "text-ink",
         )}
         lang={card.language ?? undefined}
       >
         {/* A row without a reading keeps a reading's room, so every row in the deck is one height. */}
         <TermText card={{ ...card, term: word }} room />
         {forms && (
-          <span className="font-normal text-text-2">
+          <span className="font-normal text-ink-secondary">
             {" · "}
             {forms}
           </span>
@@ -691,13 +691,13 @@ const GlossaryRow = memo(function GlossaryRow({
       <span
         className={clsx(
           "hyphenate col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
-          !card.meaning ? "text-faint" : waiting ? "text-muted" : "text-text-2",
+          !card.meaning ? "text-ink-faint" : waiting ? "text-ink-muted" : "text-ink-secondary",
         )}
       >
         {card.meaning ?? <Trans>No meaning yet</Trans>}
       </span>
       {date && (
-        <span className="col-start-3 row-start-1 whitespace-nowrap text-end text-sm text-muted @xl/list:col-start-4">
+        <span className="col-start-3 row-start-1 whitespace-nowrap text-end text-sm text-ink-muted @xl/list:col-start-4">
           {date}
         </span>
       )}

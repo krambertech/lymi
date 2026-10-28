@@ -20,18 +20,18 @@ export function Go({ children, icon, glyph, className }: GoProps) {
   return (
     <span
       className={clsx(
-        "flex shrink-0 items-center gap-1.5 text-base font-medium text-text-2",
+        "flex shrink-0 items-center gap-1.5 text-base font-medium text-ink-secondary",
         className,
       )}
     >
       {/* The mark alone on a phone, where the label would squeeze the text beside it. */}
       {children && <span className="sr-only @3xl:not-sr-only">{children}</span>}
       {icon ? (
-        <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 hoverable:group-hover:bg-plate">
+        <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-nested text-ink transition-[background-color,box-shadow] duration-150 hoverable:group-hover:bg-plate">
           {icon}
         </span>
       ) : (
-        <span className="grid size-5 place-items-center text-muted transition-colors duration-150 hoverable:group-hover:text-text [&_svg]:size-[18px]">
+        <span className="grid size-5 place-items-center text-ink-muted transition-colors duration-150 hoverable:group-hover:text-ink [&_svg]:size-[18px]">
           {glyph ?? <ChevronRight className="rtl:-scale-x-100" aria-hidden="true" />}
         </span>
       )}
@@ -87,14 +87,14 @@ export function NextStep(props: NextStepProps) {
   const face = (
     <>
       <span
-        className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-text-2 [&_svg]:size-[18px]"
+        className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-ink-secondary [&_svg]:size-[18px]"
         aria-hidden="true"
       >
         {icon}
       </span>
       <span className="grid min-w-0 flex-1 gap-0.5">
         <span className="text-md font-medium">{title}</span>
-        <span className="text-sm text-muted">{detail}</span>
+        <span className="text-sm text-ink-muted">{detail}</span>
       </span>
       <Go />
     </>

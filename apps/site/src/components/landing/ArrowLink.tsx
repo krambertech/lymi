@@ -18,7 +18,7 @@ export function ArrowLink({ href, children, size = "sm", className }: Props) {
         className,
         "inline-flex items-center gap-1.5 rounded-xs",
         size === "sm" ? "text-sm" : "text-md",
-        "font-medium text-text-2 hoverable:hover:text-text",
+        "font-medium text-ink-secondary hoverable:hover:text-ink",
       )}
     >
       {children}

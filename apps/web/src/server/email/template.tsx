@@ -72,20 +72,20 @@ const s = {
     fontSize: "24px",
     lineHeight: "1.3",
     fontWeight: 500,
-    color: light.text,
+    color: light.ink,
   },
   text: {
     margin: "0 0 16px",
     fontSize: "15px",
     lineHeight: "1.6",
-    color: light["text-2"],
+    color: light["ink-secondary"],
     whiteSpace: "pre-line",
   },
   note: {
     margin: "0 0 12px",
     fontSize: "13px",
     lineHeight: "1.55",
-    color: light.muted,
+    color: light["ink-muted"],
     whiteSpace: "pre-line",
   },
   button: {
@@ -106,8 +106,8 @@ const s = {
     margin: "4px 0 20px",
     padding: "16px",
     borderRadius: "14px",
-    backgroundColor: light["plate-2"],
-    color: light.text,
+    backgroundColor: light["plate-nested"],
+    color: light.ink,
     fontSize: "32px",
     fontWeight: 500,
     letterSpacing: "0.3em",
@@ -120,7 +120,7 @@ const s = {
     padding: "16px 8px 0",
     fontSize: "12px",
     lineHeight: "1.7",
-    color: light.muted,
+    color: light["ink-muted"],
     textAlign: "center",
   },
 } satisfies Record<string, CSSProperties>;
@@ -133,11 +133,11 @@ function darkStyles(hero: Hero | undefined): string {
 @media (prefers-color-scheme: dark) {
   .lx-body, .lx-body > table > tbody > tr > td { background-color: ${dark.canvas} !important; }
   .lx-plate { background-color: ${dark.plate} !important; }
-  .lx-strong { color: ${dark.text} !important; }
-  .lx-text { color: ${dark["text-2"]} !important; }
-  .lx-muted { color: ${dark.muted} !important; }
+  .lx-strong { color: ${dark.ink} !important; }
+  .lx-text { color: ${dark["ink-secondary"]} !important; }
+  .lx-muted { color: ${dark["ink-muted"]} !important; }
   .lx-button { background-color: ${dark.amber} !important; color: ${dark["amber-ink"]} !important; }
-  .lx-code { background-color: ${dark["plate-2"]} !important; color: ${dark.text} !important; }
+  .lx-code { background-color: ${dark["plate-nested"]} !important; color: ${dark.ink} !important; }
   .lx-link { color: ${dark["amber-text"]} !important; }
   .lx-avatar { background-color: ${dark.plate} !important; color: ${dark["amber-text"]} !important; }
   ${hue ? `.lx-hue { background-color: ${hue} !important; }` : ""}
@@ -230,7 +230,7 @@ function Byline({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
   return (
     <>
       {before}
-      <span className="lx-strong" style={{ color: light.text, fontWeight: 500 }}>
+      <span className="lx-strong" style={{ color: light.ink, fontWeight: 500 }}>
         {hero.inviter}
       </span>
       {before.trim() ? " " : <br />}
@@ -268,7 +268,12 @@ function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
             <td style={{ verticalAlign: "middle" }}>
               <Text
                 className="lx-text"
-                style={{ ...s.note, fontSize: "14px", lineHeight: "1.4", color: light["text-2"] }}
+                style={{
+                  ...s.note,
+                  fontSize: "14px",
+                  lineHeight: "1.4",
+                  color: light["ink-secondary"],
+                }}
               >
                 <Byline hero={hero} />
               </Text>
@@ -279,7 +284,7 @@ function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
       <Text className="lx-strong" style={{ ...s.heading, fontSize: "28px", margin: "0 0 8px" }}>
         {hero.name}
       </Text>
-      <Text className="lx-text" style={{ ...s.note, color: light["text-2"], margin: 0 }}>
+      <Text className="lx-text" style={{ ...s.note, color: light["ink-secondary"], margin: 0 }}>
         {hero.meta}
       </Text>
     </Section>

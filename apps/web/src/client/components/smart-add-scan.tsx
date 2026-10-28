@@ -45,7 +45,7 @@ function PageFace({
     return (
       <div
         className={cn(
-          "grid size-full place-content-center justify-items-center gap-1.5 rounded-lg bg-plate-2 text-muted",
+          "grid size-full place-content-center justify-items-center gap-1.5 rounded-lg bg-plate-nested text-ink-muted",
           className,
         )}
       >
@@ -56,7 +56,7 @@ function PageFace({
   return (
     <p
       className={cn(
-        "size-full overflow-hidden rounded-lg bg-plate-2 p-3 text-[9px] leading-[1.45] whitespace-pre-wrap text-text-2",
+        "size-full overflow-hidden rounded-lg bg-plate-nested p-3 text-[9px] leading-[1.45] whitespace-pre-wrap text-ink-secondary",
         className,
       )}
     >
@@ -70,7 +70,7 @@ function Done({ finished, z }: { finished: boolean; z: number }) {
     <AnimatePresence>
       {finished && (
         <motion.span
-          className="absolute -end-2.5 -top-2.5 grid size-7 place-items-center rounded-full bg-good text-canvas"
+          className="absolute -end-2.5 -top-2.5 grid size-7 place-items-center rounded-full bg-success text-canvas"
           style={{ zIndex: z }}
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{
@@ -194,7 +194,7 @@ export function ScanStage({ pages, text, finished, current }: ScanProps) {
               exit={{ opacity: 0, transition: { duration: 0.4 } }}
             >
               <div className="size-full bg-[radial-gradient(75%_50%_at_50%_50%,var(--amber-tint),transparent)]" />
-              <div className="absolute inset-x-3 top-1/2 h-px bg-amber/70 shadow-[0_0_10px_2px_var(--glow)]" />
+              <div className="absolute inset-x-3 top-1/2 h-px bg-amber/70 shadow-[0_0_10px_2px_var(--lantern-glow)]" />
             </motion.div>
           )}
         </AnimatePresence>

@@ -13,12 +13,12 @@ export function WhyItWorks() {
   return (
     <figure className="m-0">
       <ul className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-xs">
-        <li className="flex items-center gap-2 text-text-2">
+        <li className="flex items-center gap-2 text-ink-secondary">
           <span className="h-px w-7 bg-amber" aria-hidden="true" />
           <Trans>Reviewed with Lymi</Trans>
         </li>
-        <li className="flex items-center gap-2 text-muted">
-          <span className="h-px w-7 bg-muted" aria-hidden="true" />
+        <li className="flex items-center gap-2 text-ink-muted">
+          <span className="h-px w-7 bg-ink-muted" aria-hidden="true" />
           <Trans>Learned once, never revisited</Trans>
         </li>
       </ul>
@@ -37,7 +37,7 @@ export function WhyItWorks() {
           <line x1="34" y1="78" x2="306" y2="78" />
         </g>
 
-        <g fill="var(--muted)" fontSize="4.2" textAnchor="end">
+        <g fill="var(--ink-muted)" fontSize="4.2" textAnchor="end">
           <text x="29" y="16">
             100%
           </text>
@@ -49,7 +49,13 @@ export function WhyItWorks() {
           </text>
         </g>
 
-        <path d={FADED} fill="none" stroke="var(--muted)" strokeWidth="0.9" strokeLinecap="round" />
+        <path
+          d={FADED}
+          fill="none"
+          stroke="var(--ink-muted)"
+          strokeWidth="0.9"
+          strokeLinecap="round"
+        />
         <path
           d={REVIEWED}
           fill="none"
@@ -65,13 +71,13 @@ export function WhyItWorks() {
             cx={x}
             cy={14}
             r="1.65"
-            fill="var(--flame-core)"
+            fill="var(--lantern-flame)"
             stroke="var(--amber)"
             strokeWidth="0.45"
           />
         ))}
 
-        <g fill="var(--muted)" fontSize="4.2">
+        <g fill="var(--ink-muted)" fontSize="4.2">
           <text x="34" y="92">
             {t`DAY 0`}
           </text>
@@ -81,7 +87,7 @@ export function WhyItWorks() {
         </g>
       </svg>
 
-      <figcaption className="mx-auto mt-3 max-w-[680px] text-center text-xs text-muted">
+      <figcaption className="mx-auto mt-3 max-w-[680px] text-center text-xs text-ink-muted">
         <Trans>Illustration only. Your review timing adapts to what you remember.</Trans>
       </figcaption>
 
@@ -90,16 +96,16 @@ export function WhyItWorks() {
           <p className="text-xs text-amber-text">
             <Trans>Recall</Trans>
           </p>
-          <h3 className="mt-2 text-lg font-medium text-text">
+          <h3 className="mt-2 text-lg font-medium text-ink">
             <Trans>Recalling beats rereading</Trans>
           </h3>
-          <p className="mt-2 text-base text-text-2">
+          <p className="mt-2 text-base text-ink-secondary">
             <Trans>
               Lymi asks before it shows the answer. Trying to remember something makes it stick
               better than reading it again, as{" "}
               <a
                 href="https://pubmed.ncbi.nlm.nih.gov/16507066/"
-                className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                className="underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
               >
                 Roediger and Karpicke found in 2006
               </a>
@@ -111,15 +117,15 @@ export function WhyItWorks() {
           <p className="text-xs text-amber-text">
             <Trans>Spacing</Trans>
           </p>
-          <h3 className="mt-2 text-lg font-medium text-text">
+          <h3 className="mt-2 text-lg font-medium text-ink">
             <Trans>Longer gaps, longer memory</Trans>
           </h3>
-          <p className="mt-2 text-base text-text-2">
+          <p className="mt-2 text-base text-ink-secondary">
             <Trans>
               Spreading reviews out helps you remember for longer. In 2013,{" "}
               <a
                 href="https://www.psychologicalscience.org/publications/journals/pspi/learning-techniques.html"
-                className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                className="underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
               >
                 Dunlosky and colleagues rated testing yourself and spacing out practice as highly
                 effective

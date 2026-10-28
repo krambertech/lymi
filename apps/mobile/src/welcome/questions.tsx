@@ -51,13 +51,13 @@ export function QuestionHeading({ title, lede }: { title: string; lede?: string 
   return (
     <View className="gap-2 pb-5">
       <Text
-        className="text-2xl font-medium text-text"
+        className="text-2xl font-medium text-ink"
         style={{ letterSpacing: -0.4 }}
         accessibilityRole="header"
       >
         {title}
       </Text>
-      {lede && <Text className="text-md text-text-2">{lede}</Text>}
+      {lede && <Text className="text-md text-ink-secondary">{lede}</Text>}
     </View>
   );
 }
@@ -73,13 +73,13 @@ export function Hello({ joined }: { joined: JoinedDeck | undefined }) {
       <Lantern size={120} />
       <View className="items-center gap-2">
         <Text
-          className="text-center text-3xl font-medium text-text"
+          className="text-center text-3xl font-medium text-ink"
           style={{ letterSpacing: -0.6 }}
           accessibilityRole="header"
         >
           {t`Welcome to Lymi`}
         </Text>
-        <Text className="text-center text-md text-text-2">
+        <Text className="text-center text-md text-ink-secondary">
           {joined
             ? t`Your deck is ready. Choose your daily goal, then review your first cards.`
             : t`A few quick questions, then your first review.`}
@@ -100,26 +100,26 @@ function JoinedPlate({ deck }: { deck: JoinedDeck }) {
   return (
     <Plate className="gap-3 p-5">
       <View className="flex-row items-center justify-between gap-2">
-        <Text className="flex-1 text-base text-text-2" numberOfLines={1}>
+        <Text className="flex-1 text-base text-ink-secondary" numberOfLines={1}>
           {deck.published
             ? t`From ${{ owner: isolate(owner) }}`
             : t`${{ owner: isolate(owner) }} shared a deck`}
         </Text>
         <Chip icon="check">{t`In Library`}</Chip>
       </View>
-      <Text className="text-xl font-medium text-text" accessibilityRole="header">
+      <Text className="text-xl font-medium text-ink" accessibilityRole="header">
         {deck.name}
       </Text>
       <View className="flex-row flex-wrap gap-x-4 gap-y-1">
         {deck.defaultLanguage && (
           <View className="flex-row items-center gap-1.5">
-            <Icon name="language" size={16} colour={p.muted} />
-            <Text className="text-base text-muted">{languageName(deck.defaultLanguage)}</Text>
+            <Icon name="language" size={16} colour={p["ink-muted"]} />
+            <Text className="text-base text-ink-muted">{languageName(deck.defaultLanguage)}</Text>
           </View>
         )}
         <View className="flex-row items-center gap-1.5">
-          <Icon name="series" size={16} colour={p.muted} />
-          <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          <Icon name="series" size={16} colour={p["ink-muted"]} />
+          <Text className="text-base text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
             {plural(deck.total, { one: "# card", other: "# cards" })}
           </Text>
         </View>
@@ -200,10 +200,10 @@ function Pill({
       scale={0.96}
       accessibilityRole="radio"
       accessibilityState={{ selected: chosen }}
-      className={`h-11 flex-row items-center gap-1.5 rounded-full px-4 ${chosen ? "bg-text" : "border border-edge bg-plate"}`}
+      className={`h-11 flex-row items-center gap-1.5 rounded-full px-4 ${chosen ? "bg-ink" : "border border-edge bg-plate"}`}
     >
-      {icon && <Icon name={icon} size={16} colour={chosen ? p.canvas : p["text-2"]} />}
-      <Text className="text-md font-medium" style={{ color: chosen ? p.canvas : p.text }}>
+      {icon && <Icon name={icon} size={16} colour={chosen ? p.canvas : p["ink-secondary"]} />}
+      <Text className="text-md font-medium" style={{ color: chosen ? p.canvas : p.ink }}>
         {label}
       </Text>
     </Press>
@@ -353,7 +353,7 @@ export function StartChoices({
   const tile = (width - 40 - 12) / 2;
   const deckSection = (
     <View className="gap-3">
-      <Text className="text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="text-lg font-medium text-ink" accessibilityRole="header">
         {language ? t`Ready-made decks in ${nameOf(language)}` : t`Ready-made decks`}
       </Text>
       {decks.length > 0 ? (
@@ -369,7 +369,7 @@ export function StartChoices({
           ))}
         </View>
       ) : (
-        <Text className="text-base text-muted">
+        <Text className="text-base text-ink-muted">
           {loading ? t`Loading decks…` : t`No ready-made decks yet.`}
         </Text>
       )}
@@ -407,7 +407,7 @@ export function StartChoices({
   ];
   const ownSection = (
     <View className="gap-3">
-      <Text className="text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="text-lg font-medium text-ink" accessibilityRole="header">
         {t`Bring your own`}
       </Text>
       <View className="gap-3" accessibilityRole="radiogroup">
@@ -456,14 +456,14 @@ function DeckChoice({
     >
       <Plate
         className="overflow-hidden"
-        style={chosen ? { borderColor: p.text, borderWidth: 1.5 } : undefined}
+        style={chosen ? { borderColor: p.ink, borderWidth: 1.5 } : undefined}
       >
         <DeckTray deck={deck} cw={width * 0.62} flush />
         <View className="gap-0.5 p-4">
-          <Text className="text-md font-medium text-text" numberOfLines={2}>
+          <Text className="text-md font-medium text-ink" numberOfLines={2}>
             {deck.name}
           </Text>
-          <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
             {cards}
           </Text>
         </View>

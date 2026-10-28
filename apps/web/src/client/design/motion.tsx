@@ -95,12 +95,12 @@ export function Motion() {
       >
         <DocLink
           to={{ kind: "page", page: "lantern" }}
-          className="edge flex items-center gap-4 rounded-lg bg-plate px-5 py-4 transition-[box-shadow,background-color] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+          className="edge flex items-center gap-4 rounded-lg bg-plate px-5 py-4 transition-[box-shadow,background-color] duration-150 hoverable:hover:edge-strong hoverable:hover:bg-plate-hover"
         >
           <Lantern className="size-14" progress={0.6} flicker glow />
           <span className="grid gap-0.5">
             <span className="text-base font-medium">Lantern</span>
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               Every state and movement, with a day to play through.
             </span>
           </span>
@@ -115,8 +115,8 @@ export function Motion() {
               className="grid gap-1 border-b border-edge px-5 py-3 text-base last:border-b-0 @3xl:grid-cols-[140px_260px_1fr] @3xl:gap-4"
             >
               <span className="font-medium">{what}</span>
-              <span className="text-text-2 tabular-nums">{how}</span>
-              <span className="text-sm text-muted">{where}</span>
+              <span className="text-ink-secondary tabular-nums">{how}</span>
+              <span className="text-sm text-ink-muted">{where}</span>
             </div>
           ))}
         </div>
@@ -158,7 +158,7 @@ export function Motion() {
         title="Reduced motion"
         note="Every animation has a quieter twin. With prefers-reduced-motion: reduce, the flame holds still and jumps to its new size, the card and toast crossfade with no travel, the skeleton stops shimmering, and the glow still appears, because a glow is a state, not a movement."
       >
-        <p className="text-base text-text-2">
+        <p className="text-base text-ink-secondary">
           Toggle it in your OS to see this page change. Nothing is gated on the animation: every
           reveal enhances an already visible default.
         </p>

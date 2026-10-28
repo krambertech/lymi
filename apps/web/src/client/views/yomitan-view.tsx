@@ -99,10 +99,10 @@ function Settings(props: Props & { current: ApiKeySummary }) {
         ) : (
           <>
             <div className="grid gap-0.5">
-              <span className="text-md font-medium text-text">
+              <span className="text-md font-medium text-ink">
                 <Trans>API key</Trans>
               </span>
-              <span className="text-sm text-muted text-pretty">
+              <span className="text-sm text-ink-muted text-pretty">
                 <Trans>A new key replaces this one, and this one stops working.</Trans>
               </span>
             </div>
@@ -133,19 +133,19 @@ function Connect(props: Props) {
       steps={[
         <Trans key="copy">Copy Lymi’s address and make a key for Yomitan.</Trans>,
         <Trans key="paste">
-          In Yomitan’s settings, turn on <span className="font-medium text-text">Anki</span> and
+          In Yomitan’s settings, turn on <span className="font-medium text-ink">Anki</span> and
           paste both.
         </Trans>,
         <Trans key="deck">
           For each dictionary, choose a Lymi deck and the note type{" "}
-          <span className="font-medium text-text">Lymi card</span>.
+          <span className="font-medium text-ink">Lymi card</span>.
         </Trans>,
       ]}
       guide={props.guide}
     >
       <div className="grid gap-4 border-t border-edge pt-4">
         <div className="grid gap-1.5">
-          <span className="text-sm font-medium text-text-2">
+          <span className="text-sm font-medium text-ink-secondary">
             <Trans>AnkiConnect server address</Trans>
           </span>
           <CopyField value={props.address} label={t`AnkiConnect server address`} singleLine />
@@ -169,7 +169,7 @@ function KeyReady({ value, onDone }: { value: string; onDone: () => void }) {
   const { t } = useLingui();
   return (
     <div role="status" className="enter-card grid w-full justify-items-start gap-3">
-      <p className="text-base text-text">
+      <p className="text-base text-ink">
         <Trans>Your key is ready. Copy it now. You won’t see it again.</Trans>
       </p>
       <CopyField value={value} label={t`API key for Yomitan`} className="w-full" />

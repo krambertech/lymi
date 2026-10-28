@@ -63,7 +63,7 @@ test("keeps a 44 px target in Lymi's ink, and disabled it does not move", async 
   expect(control && getComputedStyle(control).height).toBe("44px");
   const fill = document.querySelector<HTMLElement>('[data-slot="slider-range"]');
   const probe = document.body.appendChild(document.createElement("div"));
-  probe.className = "bg-text-2";
+  probe.className = "bg-ink-secondary";
   expect(fill && getComputedStyle(fill).backgroundColor).toBe(
     getComputedStyle(probe).backgroundColor,
   );

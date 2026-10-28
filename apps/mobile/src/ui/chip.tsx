@@ -13,9 +13,9 @@ export type ChipTone = "default" | "ai" | "good" | "danger";
 export type ChipSize = "sm" | "md";
 
 const TONE: Record<ChipTone, { box: string; ink: keyof Palette }> = {
-  default: { box: "bg-plate-2", ink: "text-2" },
+  default: { box: "bg-plate-nested", ink: "ink-secondary" },
   ai: { box: "bg-ai-soft", ink: "ai" },
-  good: { box: "bg-good-soft", ink: "good" },
+  good: { box: "bg-success-soft", ink: "success" },
   danger: { box: "bg-danger-soft", ink: "danger" },
 };
 

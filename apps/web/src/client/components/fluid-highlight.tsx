@@ -14,7 +14,8 @@ export function FluidHighlight({ hover, className }: { hover: FluidHover; classN
       aria-hidden="true"
       data-hidden={hover.shown ? undefined : ""}
       className={cn(
-        "fluid-highlight pointer-events-none absolute left-0 top-0 rounded-sm bg-hover",
+        // check-styling: allow: the translate is measured from the physical left.
+        "fluid-highlight pointer-events-none absolute left-0 top-0 rounded-sm bg-plate-hover",
         className,
       )}
       style={{ width, height, translate: `${x}px ${y}px` }}

@@ -35,7 +35,7 @@ export function Pinyin({ term, pinyin, hidden, lit, rt }: Props) {
           aria-hidden="true"
           className={clsx(
             "text-[max(0.36em,10px)] font-normal tracking-normal transition-[opacity,visibility,color] duration-500 ease-out motion-reduce:transition-none",
-            lit?.(at) ? "text-amber-text" : "text-text-2",
+            lit?.(at) ? "text-amber-text" : "text-ink-secondary",
             gone && "invisible opacity-0",
             rt,
           )}

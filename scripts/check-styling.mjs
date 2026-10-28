@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-// Fails on raw colours, stock Tailwind colours and physical directions added since the base branch.
+// Fails on raw colours, stock Tailwind colours, renamed tokens and physical directions added since the base branch.
 // Usage: node scripts/check-styling.mjs [base]; BASE_SHA or the merge base with origin/main by default.
 
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { oldTokens } from "./rename-tokens.mjs";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const SCOPE = ["apps/web/src/client", "apps/site/src", "apps/mobile/src"];
@@ -93,8 +94,11 @@ export function problemsIn(file, line) {
   for (const { 0: hex, index } of line.matchAll(rawHex)) {
     if (anchor.test(line.slice(0, index))) continue;
     problems.push(
-      `raw colour ${hex}: use a Lymi token such as bg-plate or text-text-2; dark mode is its own palette, not an inversion`,
+      `raw colour ${hex}: use a Lymi token such as bg-plate or text-ink-secondary; dark mode is its own palette, not an inversion`,
     );
+  }
+  for (const { found, fix } of oldTokens(line, file)) {
+    problems.push(`renamed token ${found}: use ${fix}, as colour.md names tokens`);
   }
   for (const [stock] of line.matchAll(stockColour)) {
     problems.push(
@@ -176,7 +180,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   }
   const found = check(diff);
   if (found.length === 0) {
-    console.log("check-styling: no raw colours, stock colours or physical directions added");
+    console.log(
+      "check-styling: no raw colours, stock colours, renamed tokens or physical directions added",
+    );
     process.exit(0);
   }
   console.error(found.join("\n"));

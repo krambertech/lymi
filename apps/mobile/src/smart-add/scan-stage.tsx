@@ -149,17 +149,17 @@ function Face({ page, text }: { page: Page | null; text: string }) {
     );
   if (page)
     return (
-      <View className="flex-1 items-center justify-center gap-1.5 rounded-lg bg-plate-2 px-2">
-        <Icon name="lesson" size={28} colour={p.muted} />
-        <Text className="text-xs text-muted" numberOfLines={1}>
+      <View className="flex-1 items-center justify-center gap-1.5 rounded-lg bg-plate-nested px-2">
+        <Icon name="lesson" size={28} colour={p["ink-muted"]} />
+        <Text className="text-xs text-ink-muted" numberOfLines={1}>
           {page.name}
         </Text>
       </View>
     );
   return (
-    <View className="flex-1 overflow-hidden rounded-lg bg-plate-2" style={{ padding: 12 }}>
+    <View className="flex-1 overflow-hidden rounded-lg bg-plate-nested" style={{ padding: 12 }}>
       <Text
-        className="text-text-2"
+        className="text-ink-secondary"
         style={{ fontSize: 9, lineHeight: 13 }}
         maxFontSizeMultiplier={1}
       >
@@ -205,7 +205,7 @@ function Light() {
       />
       <View
         className="absolute inset-x-3 top-1/2 h-px"
-        style={{ backgroundColor: p.amber, boxShadow: `0 0 10px 2px ${p.glow}` }}
+        style={{ backgroundColor: p.amber, boxShadow: `0 0 10px 2px ${p["lantern-glow"]}` }}
       />
     </Animated.View>
   );
@@ -216,7 +216,7 @@ function Done({ z, reduce }: { z: number; reduce: boolean }) {
   return (
     <Animated.View
       entering={reduce ? undefined : springIn(new ZoomIn(), CHOICE_POP)}
-      className="absolute size-7 items-center justify-center rounded-full bg-good"
+      className="absolute size-7 items-center justify-center rounded-full bg-success"
       style={{ top: -10, end: -10, zIndex: z }}
     >
       <Icon name="check" size={16} colour={p.canvas} strokeWidth={2.5} />
@@ -231,7 +231,7 @@ export function RollingCount({ value }: { value: number }) {
   return (
     <Swap id={value} height={ROLL_H} distance={ROLL_H} duration={360}>
       <Text
-        className="font-medium text-text"
+        className="font-medium text-ink"
         style={{ fontSize: 36, lineHeight: ROLL_H, fontVariant: ["tabular-nums"] }}
         maxFontSizeMultiplier={1.2}
       >

@@ -259,7 +259,7 @@ export function Kindling({ lands, onShown, onDone }: Props) {
             <RadialGradient
               c={poolCentre}
               r={poolRadius}
-              colors={[p.glow, fade(p.pool, 0.8), fade(p.pool, 0)]}
+              colors={[p["lantern-glow"], fade(p["lantern-pool"], 0.8), fade(p["lantern-pool"], 0)]}
               positions={[0, 0.45, 1]}
             />
           </Circle>

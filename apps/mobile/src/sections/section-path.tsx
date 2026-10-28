@@ -179,18 +179,18 @@ function Stop({
         <ProgressRing column={c} size={NODE} stroke={3}>
           {c.section ? (
             <Text
-              className={`text-sm font-medium ${c.waiting ? "text-muted" : "text-text-2"}`}
+              className={`text-sm font-medium ${c.waiting ? "text-ink-muted" : "text-ink-secondary"}`}
               style={{ fontVariant: ["tabular-nums"] }}
             >
               {number}
             </Text>
           ) : (
-            <Icon name="section" size={14} colour={p.muted} />
+            <Icon name="section" size={14} colour={p["ink-muted"]} />
           )}
         </ProgressRing>
         {c.waiting && c.section && (
           <View className="absolute -end-1.5 -bottom-1 h-[17px] w-[17px] items-center justify-center rounded-full border border-edge bg-plate">
-            <Icon name="lock" size={10} colour={p.muted} strokeWidth={2.5} />
+            <Icon name="lock" size={10} colour={p["ink-muted"]} strokeWidth={2.5} />
           </View>
         )}
       </View>
@@ -202,19 +202,19 @@ function Stop({
         className="flex-1"
       >
         <Text
-          className={`text-md text-text ${here ? "font-semibold" : "font-medium"}`}
+          className={`text-md text-ink ${here ? "font-semibold" : "font-medium"}`}
           numberOfLines={1}
         >
           {name}
         </Text>
-        <Text className="text-sm text-muted" numberOfLines={1}>
+        <Text className="text-sm text-ink-muted" numberOfLines={1}>
           {cards}
         </Text>
       </Press>
       {handle ?? (!editing && <RowArrow />)}
     </>
   );
-  const style = { height: row, backgroundColor: here ? p["plate-2"] : p.plate };
+  const style = { height: row, backgroundColor: here ? p["plate-nested"] : p.plate };
   const className = `flex-row items-center gap-3 px-4 ${!editing && at > 0 ? "border-t border-edge" : ""}`;
   if (!editing)
     return (
@@ -294,7 +294,7 @@ function SwipeStop({
             }}
             scale={1}
             accessibilityRole="button"
-            className="w-[74px] items-center justify-center gap-1 bg-muted"
+            className="w-[74px] items-center justify-center gap-1 bg-ink-muted"
           >
             <Icon name="edit" size={20} colour={p.plate} />
             <Text className="text-sm font-medium" style={{ color: p.plate }}>
@@ -338,12 +338,12 @@ function NewStop({ onPress, line }: { onPress: () => void; line: boolean }) {
     >
       {line && <Segment top={0} bottom={row / 2} />}
       <View
-        className="items-center justify-center rounded-full border-[1.5px] border-dashed border-edge-2 bg-plate"
+        className="items-center justify-center rounded-full border-[1.5px] border-dashed border-edge-strong bg-plate"
         style={{ width: NODE, height: NODE }}
       >
-        <Icon name="plus" size={16} colour={p.text} strokeWidth={2.25} />
+        <Icon name="plus" size={16} colour={p.ink} strokeWidth={2.25} />
       </View>
-      <Text className="text-md font-medium text-text">{t`New section`}</Text>
+      <Text className="text-md font-medium text-ink">{t`New section`}</Text>
     </Press>
   );
 }
@@ -351,6 +351,9 @@ function NewStop({ onPress, line }: { onPress: () => void; line: boolean }) {
 /** The path's line where it crosses one row, behind the stop's number. */
 function Segment({ top, bottom }: { top: number; bottom: number }) {
   return (
-    <View className="absolute w-0.5 bg-edge-2" style={{ start: 16 + NODE / 2 - 1, top, bottom }} />
+    <View
+      className="absolute w-0.5 bg-edge-strong"
+      style={{ start: 16 + NODE / 2 - 1, top, bottom }}
+    />
   );
 }

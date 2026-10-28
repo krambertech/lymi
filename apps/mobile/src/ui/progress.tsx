@@ -23,9 +23,9 @@ export function Progress({ value, label }: { value: number; label: string }) {
       accessibilityRole="progressbar"
       accessibilityLabel={label}
       accessibilityValue={{ min: 0, max: 100, now: Math.round(v * 100) }}
-      className="h-2 w-full overflow-hidden rounded-full bg-plate-2"
+      className="h-2 w-full overflow-hidden rounded-full bg-plate-nested"
     >
-      <Animated.View className="h-full rounded-full bg-text-2" style={style} />
+      <Animated.View className="h-full rounded-full bg-ink-secondary" style={style} />
     </View>
   );
 }

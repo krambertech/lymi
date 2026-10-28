@@ -174,11 +174,11 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
           <h3
             dir="auto"
             lang={deck.meaningLanguage}
-            className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-text"
+            className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-ink"
           >
             {deck.name}
           </h3>
-          <p lang={deck.meaningLanguage} className="line-clamp-2 text-sm text-text-2">
+          <p lang={deck.meaningLanguage} className="line-clamp-2 text-sm text-ink-secondary">
             {deck.summary}
           </p>
           <DeckMeta deck={deck} />
@@ -190,7 +190,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
             <NavLink
               to="/library/$deckId"
               params={{ deckId: addedTo }}
-              className="relative inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
+              className="relative inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-ink-secondary transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-plate-hover hoverable:hover:text-ink [&_svg]:size-4"
             >
               <Check aria-hidden="true" className="text-state-known" />
               <Trans>In Library</Trans>
@@ -224,7 +224,7 @@ export function DeckMeta({
   className?: string | undefined;
 }) {
   const dot = (
-    <span aria-hidden="true" className="text-faint">
+    <span aria-hidden="true" className="text-ink-faint">
       ·
     </span>
   );
@@ -232,7 +232,7 @@ export function DeckMeta({
     <p
       className={clsx(
         "flex flex-wrap items-center gap-x-1.5 gap-y-1 tabular-nums",
-        size === "sm" ? "text-sm text-text-2" : "text-xs text-muted",
+        size === "sm" ? "text-sm text-ink-secondary" : "text-xs text-ink-muted",
         className,
       )}
     >

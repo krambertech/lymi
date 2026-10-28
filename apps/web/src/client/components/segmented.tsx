@@ -54,13 +54,13 @@ export function Segmented<T extends string>({
         if (chosen !== undefined && chosen !== value) onValueChange(chosen);
       }}
       className={clsx(
-        "gap-0.5 rounded-md bg-plate-2 p-[3px]",
+        "gap-0.5 rounded-md bg-plate-nested p-[3px]",
         // Same box as an input, so a segmented control in a form is a row like every other.
         size === "md" ? "h-11 md:h-10" : smallControlHeight,
         className,
       )}
     >
-      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-chosen" />
+      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-plate-chosen" />
       {options.map((o) => (
         <ToggleGroupItem<T>
           key={o.value}

@@ -48,7 +48,7 @@ export function AdaptivePronunciationChoice({ notation, value, onChange, error }
       <div className="edge grid rounded-md bg-plate">
         <Field orientation="horizontal" className="relative gap-3 px-4 py-3.5">
           <FieldContent className="gap-0.5">
-            <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+            <FieldLabel className="text-base text-ink after:absolute after:inset-0 after:content-['']">
               <Trans>Adaptive pronunciation</Trans>
             </FieldLabel>
             <FieldDescription>{i18n._(on ? onText : offText)}</FieldDescription>

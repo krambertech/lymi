@@ -76,11 +76,11 @@ export function Toast({ title, error = false, action, announce = true }: ToastPr
     <View accessibilityRole="alert" accessibilityLiveRegion={error ? "assertive" : "polite"}>
       {glass ? (
         <GlassView glassEffectStyle="regular" style={style}>
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: `${p.text}${SMOKE[room]}` }]} />
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: `${p.ink}${SMOKE[room]}` }]} />
           {content}
         </GlassView>
       ) : (
-        <View className="bg-text" style={style}>
+        <View className="bg-ink" style={style}>
           {content}
         </View>
       )}

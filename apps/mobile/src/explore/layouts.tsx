@@ -24,14 +24,14 @@ export function DeckMeta({ deck, added }: { deck: PublicDeckSummary; added: bool
     return (
       <View className="flex-row items-center gap-1.5">
         <Icon name="check" size={14} colour={p["state-known"]} strokeWidth={2.5} />
-        <Text className="text-sm font-medium text-text-2">{t`In Library`}</Text>
+        <Text className="text-sm font-medium text-ink-secondary">{t`In Library`}</Text>
       </View>
     );
   }
   const cards = plural(deck.cardCount, { one: "# card", other: "# cards" });
   const sections = plural(deck.sectionCount, { one: "# section", other: "# sections" });
   return (
-    <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+    <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
       {deck.sectionCount > 0 ? t`${cards} · ${sections}` : cards}
     </Text>
   );
@@ -123,7 +123,7 @@ export function DeckTile({
         <View className="gap-2.5 bg-canvas">
           <DeckTray deck={deck} cw={width * 0.7} />
           <View className="gap-0.5 px-0.5">
-            <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
+            <Text className="text-md font-medium leading-snug text-ink" numberOfLines={2}>
               {deck.name}
             </Text>
             <DeckMeta deck={deck} added={added} />
@@ -142,7 +142,7 @@ function ShelfHeader({ shelf }: { shelf: Shelf }) {
   const router = useRouter();
   return (
     <View className="flex-row items-center justify-between gap-4">
-      <Text className="text-xl font-medium text-text" accessibilityRole="header" numberOfLines={1}>
+      <Text className="text-xl font-medium text-ink" accessibilityRole="header" numberOfLines={1}>
         {label}
       </Text>
       {hasShelfPage(shelf) ? (
@@ -157,14 +157,14 @@ function ShelfHeader({ shelf }: { shelf: Shelf }) {
           accessibilityLabel={t`See all ${label} decks`}
           className="-me-1 h-11 flex-row items-center gap-1 ps-2"
         >
-          <Text className="text-base font-medium text-text-2">{t`See all`}</Text>
-          <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-base font-medium text-ink-secondary">{t`See all`}</Text>
+          <Text className="text-base text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
             {shelf.decks.length}
           </Text>
-          <Icon name="forward" size={18} colour={p.muted} strokeWidth={2.5} />
+          <Icon name="forward" size={18} colour={p["ink-muted"]} strokeWidth={2.5} />
         </Press>
       ) : (
-        <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-base text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
           {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
         </Text>
       )}
@@ -249,8 +249,8 @@ function TrayMark({ slug }: { slug: string }) {
         className="h-12 w-9 gap-1 rounded-sm border border-edge px-1.5 pt-2"
         style={{ backgroundColor: p.plate }}
       >
-        <View className="h-1 w-5 rounded-full bg-edge-2" />
-        <View className="h-1 w-3 rounded-full bg-edge-2" />
+        <View className="h-1 w-5 rounded-full bg-edge-strong" />
+        <View className="h-1 w-3 rounded-full bg-edge-strong" />
       </View>
     </View>
   );
@@ -286,10 +286,10 @@ export function DeckList({
           >
             <TrayMark slug={deck.slug} />
             <View className="flex-1 gap-0.5">
-              <Text className="text-md font-medium text-text" numberOfLines={2}>
+              <Text className="text-md font-medium text-ink" numberOfLines={2}>
                 {deck.name}
               </Text>
-              <Text className="text-sm text-muted" numberOfLines={1}>
+              <Text className="text-sm text-ink-muted" numberOfLines={1}>
                 {added[deck.slug] ? t`${shelfOf(deck)} · In Library` : shelfOf(deck)}
               </Text>
             </View>
@@ -320,7 +320,7 @@ function ShelfMark({ shelf }: { shelf: Shelf }) {
       className="size-12 items-center justify-center rounded-md"
       style={{ backgroundColor: usePoolColour(shelfAddressName(shelf)) }}
     >
-      <Icon name="section" size={20} colour={p["text-2"]} />
+      <Icon name="section" size={20} colour={p["ink-secondary"]} />
     </View>
   );
 }
@@ -342,8 +342,8 @@ export function ShelfList({ shelves }: { shelves: Shelf[] }) {
         >
           <ShelfMark shelf={shelf} />
           <View className="flex-1 gap-0.5">
-            <Text className="text-md font-medium text-text">{label(shelf)}</Text>
-            <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+            <Text className="text-md font-medium text-ink">{label(shelf)}</Text>
+            <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
               {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
             </Text>
           </View>

@@ -41,7 +41,7 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
         <AppIdentityLine app={app} />
       </div>
 
-      <p className="max-w-[34ch] text-md text-text-2">
+      <p className="max-w-[34ch] text-md text-ink-secondary">
         {refused ? (
           appName ? (
             <Trans>
@@ -57,7 +57,7 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
         )}
       </p>
 
-      <p className="text-sm text-muted">
+      <p className="text-sm text-ink-muted">
         {refused ? (
           <Trans>You can close this tab.</Trans>
         ) : (

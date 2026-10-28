@@ -89,7 +89,7 @@ function TagCardsBody({
       >
         <div className="relative">
           <Search
-            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
             aria-hidden="true"
           />
           <Input
@@ -115,10 +115,10 @@ function TagCardsBody({
                     indeterminate={choice === "mixed"}
                     onCheckedChange={() => set(name, picker.next(name))}
                   />
-                  <FieldLabel className="min-w-0 flex-1 cursor-pointer truncate py-3 text-base font-normal text-text">
+                  <FieldLabel className="min-w-0 flex-1 cursor-pointer truncate py-3 text-base font-normal text-ink">
                     {name}
                   </FieldLabel>
-                  <span className="shrink-0 text-sm text-muted tabular-nums">
+                  <span className="shrink-0 text-sm text-ink-muted tabular-nums">
                     {total > 1 && (
                       <Trans>
                         {after} of {total}
@@ -131,7 +131,7 @@ function TagCardsBody({
           })}
           {fresh && (
             <li className="border-edge not-first:border-t">
-              <button type="submit" className={clsx(row, "text-text-2")}>
+              <button type="submit" className={clsx(row, "text-ink-secondary")}>
                 <Plus className="size-[18px]" aria-hidden="true" />
                 <span className="min-w-0 flex-1 truncate">
                   {bidi(t`Create “${{ typed: isolate(typed) }}”`)}
@@ -140,7 +140,7 @@ function TagCardsBody({
             </li>
           )}
           {shown.length === 0 && !fresh && (
-            <li className="px-4 py-3 text-base text-muted">
+            <li className="px-4 py-3 text-base text-ink-muted">
               <Trans>No tags yet. Type one to create it.</Trans>
             </li>
           )}

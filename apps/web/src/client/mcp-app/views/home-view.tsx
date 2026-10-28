@@ -46,7 +46,7 @@ export function HomeView({ result }: { result: HomeResult }) {
           {decks.map((deck) => (
             <li
               key={deck.id}
-              className="inline-flex items-center gap-2 rounded-full bg-plate-2 py-1 ps-3 pe-1 text-sm text-text-2"
+              className="inline-flex items-center gap-2 rounded-full bg-plate-nested py-1 ps-3 pe-1 text-sm text-ink-secondary"
             >
               {deck.name}
               <DueCount count={deck.due} />

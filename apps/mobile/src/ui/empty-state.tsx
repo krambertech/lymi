@@ -58,8 +58,8 @@ export function EmptyState({
   const glyph = icon ?? ICON[kind];
   const alarm = kind === "failed";
   const page = size === "page";
-  const ink = alarm ? p.danger : p["text-2"];
-  const disc = alarm ? "bg-danger-soft" : "bg-plate-2";
+  const ink = alarm ? p.danger : p["ink-secondary"];
+  const disc = alarm ? "bg-danger-soft" : "bg-plate-nested";
 
   // The icon sits in a soft disc, red for a failure: never the lantern, which only says the streak.
   const mark = (
@@ -89,13 +89,15 @@ export function EmptyState({
     >
       <View className={page ? "pb-4" : "pb-2"}>{mark}</View>
       <Text
-        className={`text-center font-medium text-text ${page ? "text-2xl tracking-tight" : "text-lg"}`}
+        className={`text-center font-medium text-ink ${page ? "text-2xl tracking-tight" : "text-lg"}`}
         accessibilityRole="header"
       >
         {title}
       </Text>
       {body && (
-        <Text className={`text-center text-text-2 ${page ? "text-md" : "text-base"}`}>{body}</Text>
+        <Text className={`text-center text-ink-secondary ${page ? "text-md" : "text-base"}`}>
+          {body}
+        </Text>
       )}
       {button && <View className={page ? "pt-5" : "pt-3"}>{button}</View>}
     </View>

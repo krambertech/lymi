@@ -129,7 +129,7 @@ export default function CardPage() {
   const exampleMiddle = useExampleFirstLine({
     text: card?.example ?? "",
     known,
-    className: "text-md text-text",
+    className: "text-md text-ink",
     lang: card?.language,
   });
   useEffect(() => {
@@ -232,7 +232,7 @@ export default function CardPage() {
       return {
         key: `e-${e.id}`,
         at: new Date(e.at),
-        mark: <Icon name={icon} size={15} colour={p["text-2"]} />,
+        mark: <Icon name={icon} size={15} colour={p["ink-secondary"]} />,
         title: i18n._(text),
         // An actor a newer Worker added goes unnamed rather than raw. ADR 0032.
         line: ACTOR[e.actor] ? i18n._(ACTOR[e.actor] as MessageDescriptor) : "",
@@ -258,7 +258,7 @@ export default function CardPage() {
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
-        <Text className="text-md text-text" lang={card.language}>
+        <Text className="text-md text-ink" lang={card.language}>
           {card.pronunciation}
         </Text>
       </Field>
@@ -279,7 +279,7 @@ export default function CardPage() {
       {waiting("meaning") ? (
         <Working />
       ) : (
-        <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
+        <Text className={`text-md ${card.meaning ? "text-ink" : "text-ink-muted"}`}>
           {card.meaning || t`No meaning yet`}
         </Text>
       )}
@@ -302,14 +302,14 @@ export default function CardPage() {
           card.exampleTranslationStatus === "failed" &&
           card.enrichmentStatus !== "failed" && (
             <View className="flex-row flex-wrap items-center gap-x-2">
-              <Text className="text-sm text-muted">{t`Couldn’t translate the example.`}</Text>
+              <Text className="text-sm text-ink-muted">{t`Couldn’t translate the example.`}</Text>
               <Press
                 // Enrich on the card writes the translation that failed; the card comes back working.
                 onPress={() => void enrich(card)}
                 accessibilityRole="button"
                 className="min-h-11 justify-center"
               >
-                <Text className="text-sm font-medium text-text-2 underline">{t`Try again`}</Text>
+                <Text className="text-sm font-medium text-ink-secondary underline">{t`Try again`}</Text>
               </Press>
             </View>
           )
@@ -318,9 +318,11 @@ export default function CardPage() {
         <ExampleText
           text={card.example}
           known={known}
-          className="text-md text-text"
+          className="text-md text-ink"
           lang={card.language}
-          translation={translation ? { text: translation, className: "text-md text-muted" } : null}
+          translation={
+            translation ? { text: translation, className: "text-md text-ink-muted" } : null
+          }
         />
         {translating && !translation && (
           <View className="h-5 justify-center" accessibilityElementsHidden>
@@ -328,7 +330,7 @@ export default function CardPage() {
           </View>
         )}
         {owner && translation && card.exampleTranslationStale && (
-          <Text className="text-sm text-muted">
+          <Text className="text-sm text-ink-muted">
             {t`Translated from an earlier example. Edit it to match.`}
           </Text>
         )}
@@ -342,7 +344,7 @@ export default function CardPage() {
     ),
     card.notes ? (
       <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"} onPress={edit("notes")}>
-        <CardNotes source={card.notes} className="text-md text-text" />
+        <CardNotes source={card.notes} className="text-md text-ink" />
       </Field>
     ) : (
       waiting("notes") && (
@@ -359,14 +361,14 @@ export default function CardPage() {
         field="hint"
         onPress={edit("hint")}
       >
-        <Text className="text-md text-text">{card.hint}</Text>
+        <Text className="text-md text-ink">{card.hint}</Text>
       </Field>
     ),
   ].filter(Boolean);
 
   const schedule =
     states.filter((s) => s.state !== 0).length === 0 ? (
-      <Text className="px-5 py-4 text-base text-text-2">
+      <Text className="px-5 py-4 text-base text-ink-secondary">
         {t`Not reviewed yet. It comes up in your next review.`}
       </Text>
     ) : (
@@ -385,14 +387,14 @@ export default function CardPage() {
               className={`flex-row items-start gap-3 px-5 py-3.5 ${i > 0 ? "border-t border-edge" : ""}`}
             >
               <View className="flex-1 gap-1.5">
-                <Text className="text-md font-medium text-text">{i18n._(modeLabel(st.mode))}</Text>
+                <Text className="text-md font-medium text-ink">{i18n._(modeLabel(st.mode))}</Text>
                 <StateChip state={st.state} size="sm" />
               </View>
               <View className="items-end gap-0.5">
-                <Text className="text-md text-text">
+                <Text className="text-md text-ink">
                   {st.state === 0 ? t`Not started` : when(new Date(st.due))}
                 </Text>
-                <Text className="text-sm text-muted">
+                <Text className="text-sm text-ink-muted">
                   {plural(reps, { one: "# review", other: "# reviews" })}
                   {lapses > 0
                     ? ` · ${plural(lapses, { one: "forgotten once", other: "forgotten # times" })}`
@@ -414,12 +416,12 @@ export default function CardPage() {
         >
           <View className="w-5 items-center pt-0.5">{item.mark}</View>
           <View className="flex-1 gap-0.5">
-            <Text className={`text-md text-text ${item.strong ? "font-medium" : ""}`}>
+            <Text className={`text-md text-ink ${item.strong ? "font-medium" : ""}`}>
               {item.title}
             </Text>
-            <Text className="text-sm text-muted">{item.line}</Text>
+            <Text className="text-sm text-ink-muted">{item.line}</Text>
           </View>
-          <Text className="text-sm text-muted">{dayLabel(item.at)}</Text>
+          <Text className="text-sm text-ink-muted">{dayLabel(item.at)}</Text>
         </View>
       ))}
       {/* The history is read on its own, so offline it can be missing for a card that has one. */}
@@ -446,7 +448,7 @@ export default function CardPage() {
           accessibilityRole="button"
           className="border-t border-edge px-5 py-3"
         >
-          <Text className="text-base font-medium text-text-2">
+          <Text className="text-base font-medium text-ink-secondary">
             {plural(items.length - HISTORY_ROWS, {
               one: "Show # older entry",
               other: "Show # older entries",
@@ -459,7 +461,7 @@ export default function CardPage() {
 
   const block = (title: string, body: ReactNode) => (
     <View>
-      <Text className="px-1 pb-2.5 text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="px-1 pb-2.5 text-lg font-medium text-ink" accessibilityRole="header">
         {title}
       </Text>
       <Plate className="overflow-hidden">{body}</Plate>
@@ -475,7 +477,7 @@ export default function CardPage() {
         reading ? (
           <TermText
             card={card}
-            className="text-3xl font-medium tracking-tight text-text"
+            className="text-3xl font-medium tracking-tight text-ink"
             accessibilityRole="header"
           />
         ) : undefined
@@ -592,13 +594,13 @@ export default function CardPage() {
       {/* One quiet line, only here: a field that says "No meaning yet" is already saying enough. */}
       {owner && card.enrichmentStatus === "failed" && (
         <View className="-mt-2 flex-row flex-wrap items-center gap-x-2 px-1">
-          <Text className="text-sm text-muted">{t`Couldn’t enrich this card.`}</Text>
+          <Text className="text-sm text-ink-muted">{t`Couldn’t enrich this card.`}</Text>
           <Press
             onPress={() => void enrich(card)}
             accessibilityRole="button"
             className="min-h-11 justify-center"
           >
-            <Text className="text-sm font-medium text-text-2 underline">{t`Try again`}</Text>
+            <Text className="text-sm font-medium text-ink-secondary underline">{t`Try again`}</Text>
           </Press>
         </View>
       )}
@@ -609,11 +611,11 @@ export default function CardPage() {
           const row = `min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`;
           const body = (
             <>
-              <Text className="text-md text-text-2">{d.label}</Text>
+              <Text className="text-md text-ink-secondary">{d.label}</Text>
               <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
                 {typeof d.value === "string" ? (
                   <Text
-                    className="text-md text-text"
+                    className="text-md text-ink"
                     numberOfLines={2}
                     style={stackDetails ? undefined : TEXT_END}
                   >
@@ -683,7 +685,7 @@ function Field({
         className="flex-row items-center gap-2"
         onLayout={(e) => setLabelHeight(e.nativeEvent.layout.height)}
       >
-        <Text className="text-sm font-medium text-muted">{label}</Text>
+        <Text className="text-sm font-medium text-ink-muted">{label}</Text>
         {ai && <SourceChip source="ai" field={field} badge={field !== "exampleTranslation"} />}
       </View>
       {children}
@@ -759,12 +761,12 @@ function Picture({
         source={{ uri: apiUrl(image.url), headers }}
         accessibilityLabel={image.description ?? undefined}
         resizeMode="contain"
-        className="rounded-lg bg-plate-2"
+        className="rounded-lg bg-plate-nested"
         style={{ height: 140, aspectRatio: image.width / Math.max(1, image.height) }}
       />
       {image.description && (
         <Text
-          className="text-sm text-muted"
+          className="text-sm text-ink-muted"
           style={{ maxWidth: (140 * image.width) / Math.max(1, image.height) }}
         >
           {image.description}

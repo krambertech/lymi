@@ -5,8 +5,8 @@ import { type ComponentProps, type ReactNode, useEffect, useRef, useState } from
 /** A chip's look, for a picker's trigger to share with the chips that add a field. */
 export function fieldChipClassName(filled: boolean) {
   return cn(
-    "relative inline-flex h-8 max-w-44 shrink-0 items-center gap-1.5 rounded-sm bg-plate-2 ps-2 pe-2.5 text-sm font-medium edge transition-[box-shadow,background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-2 aria-expanded:edge-2 data-popup-open:edge-2 aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
-    filled ? "text-text" : "text-text-2 hoverable:hover:text-text aria-invalid:text-danger",
+    "relative inline-flex h-8 max-w-44 shrink-0 items-center gap-1.5 rounded-sm bg-plate-nested ps-2 pe-2.5 text-sm font-medium edge transition-[box-shadow,background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-strong aria-expanded:edge-strong data-popup-open:edge-strong aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
+    filled ? "text-ink" : "text-ink-secondary hoverable:hover:text-ink aria-invalid:text-danger",
     // The hit area reaches 44 px without moving the row.
     "before:absolute before:-inset-1.5 before:content-['']",
   );
@@ -28,7 +28,7 @@ export function FieldChipContent({
     <>
       {thumbnail ?? (
         <Icon
-          className={cn("size-4 shrink-0", filled ? "text-text-2" : "text-muted")}
+          className={cn("size-4 shrink-0", filled ? "text-ink-secondary" : "text-ink-muted")}
           aria-hidden="true"
         />
       )}

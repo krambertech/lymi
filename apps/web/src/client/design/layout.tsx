@@ -19,21 +19,21 @@ function Mini({
     <figure className="grid w-36 gap-2">
       <div
         className={clsx(
-          "edge-2 relative flex h-56 flex-col overflow-hidden rounded-xl bg-canvas",
+          "edge-strong relative flex h-56 flex-col overflow-hidden rounded-xl bg-canvas",
           className,
         )}
         aria-hidden="true"
       >
         {children}
       </div>
-      <figcaption className="text-xs text-muted">{caption}</figcaption>
+      <figcaption className="text-xs text-ink-muted">{caption}</figcaption>
     </figure>
   );
 }
 
 function Bar({ start, end }: { start: ReactNode; end?: ReactNode | undefined }) {
   return (
-    <div className="flex h-8 shrink-0 items-center gap-1 px-2.5 text-2xs text-text-2 [&_svg]:size-3">
+    <div className="flex h-8 shrink-0 items-center gap-1 px-2.5 text-2xs text-ink-secondary [&_svg]:size-3">
       {start}
       <span className="ms-auto flex items-center gap-1">{end}</span>
     </div>
@@ -41,14 +41,14 @@ function Bar({ start, end }: { start: ReactNode; end?: ReactNode | undefined }) 
 }
 
 const Dot = ({ amber }: { amber?: boolean }) => (
-  <i className={clsx("block size-3 rounded-full", amber ? "bg-amber" : "bg-plate-2 edge")} />
+  <i className={clsx("block size-3 rounded-full", amber ? "bg-amber" : "bg-plate-nested edge")} />
 );
-const Square = () => <i className="edge block size-3 rounded-[3px] bg-plate-2" />;
+const Square = () => <i className="edge block size-3 rounded-[3px] bg-plate-nested" />;
 
 function Body({ title }: { title: string }) {
   return (
     <div className="grid gap-1.5 px-2.5">
-      <span className="text-sm font-medium text-text">{title}</span>
+      <span className="text-sm font-medium text-ink">{title}</span>
       <i className="edge block h-8 rounded-sm bg-plate" />
       <i className="edge block h-5 rounded-sm bg-plate" />
       <i className="edge block h-5 rounded-sm bg-plate" />
@@ -57,7 +57,7 @@ function Body({ title }: { title: string }) {
 }
 
 const Pill = () => (
-  <i className="edge absolute inset-x-0 bottom-2 mx-auto block h-4 w-16 rounded-full bg-plate-2" />
+  <i className="edge absolute inset-x-0 bottom-2 mx-auto block h-4 w-16 rounded-full bg-plate-nested" />
 );
 
 const Back = ({ to }: { to: string }) => (
@@ -80,7 +80,7 @@ export function Layout() {
         <Specimen className="items-start gap-6">
           <Mini caption="Tab: lockup, then streak, capture, avatar">
             <Bar
-              start={<i className="block size-4 rounded-[4px] bg-text" />}
+              start={<i className="block size-4 rounded-[4px] bg-ink" />}
               end={
                 <>
                   <Square />
@@ -112,9 +112,9 @@ export function Layout() {
           </Mini>
           <Mini caption="Moment: a drawer with its own actions and no bar">
             <div className="flex-1 bg-scrim" />
-            <div className="edge-2 grid gap-1.5 rounded-t-lg bg-plate px-2.5 pt-1.5 pb-3">
-              <i className="mx-auto block h-0.5 w-6 rounded-full bg-edge-2" />
-              <span className="text-xs font-medium text-text">New deck</span>
+            <div className="edge-strong grid gap-1.5 rounded-t-lg bg-plate px-2.5 pt-1.5 pb-3">
+              <i className="mx-auto block h-0.5 w-6 rounded-full bg-edge-strong" />
+              <span className="text-xs font-medium text-ink">New deck</span>
               <i className="edge block h-5 rounded-sm bg-canvas" />
               <i className="block h-5 rounded-sm bg-amber" />
             </div>
@@ -128,17 +128,17 @@ export function Layout() {
       >
         <Specimen layout="block">
           <div className="mx-auto grid max-w-sm gap-1">
-            <div className="flex h-14 items-center gap-2 text-sm text-text-2">
-              <span className="edge flex h-11 items-center gap-0.5 rounded-sm bg-plate-2 ps-1 pe-2.5 [&_svg]:size-5">
+            <div className="flex h-14 items-center gap-2 text-sm text-ink-secondary">
+              <span className="edge flex h-11 items-center gap-0.5 rounded-sm bg-plate-nested ps-1 pe-2.5 [&_svg]:size-5">
                 <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
                 way back
               </span>
-              <span className="edge ms-auto flex h-10 items-center rounded-sm bg-plate-2 px-2.5">
+              <span className="edge ms-auto flex h-10 items-center rounded-sm bg-plate-nested px-2.5">
                 controls
               </span>
             </div>
-            <span className="text-2xl font-medium text-text">Title</span>
-            <span className="text-sm text-muted">One line under it: a count, a date</span>
+            <span className="text-2xl font-medium text-ink">Title</span>
+            <span className="text-sm text-ink-muted">One line under it: a count, a date</span>
           </div>
         </Specimen>
       </Sub>
@@ -163,12 +163,15 @@ export function Layout() {
           </Mini>
           <Mini caption="From below: swipe down, or its actions">
             <div className="flex-1 bg-scrim" />
-            <div className="edge-2 relative grid gap-1.5 rounded-t-lg bg-plate px-2.5 pt-1.5 pb-3">
-              <i className="mx-auto block h-0.5 w-6 rounded-full bg-edge-2" />
-              <span className="text-xs font-medium text-text">Move card</span>
+            <div className="edge-strong relative grid gap-1.5 rounded-t-lg bg-plate px-2.5 pt-1.5 pb-3">
+              <i className="mx-auto block h-0.5 w-6 rounded-full bg-edge-strong" />
+              <span className="text-xs font-medium text-ink">Move card</span>
               <i className="edge block h-5 rounded-sm bg-canvas" />
               <i className="block h-5 rounded-sm bg-amber" />
-              <ArrowUp className="absolute end-2 top-1.5 size-4 text-text-2" aria-hidden="true" />
+              <ArrowUp
+                className="absolute end-2 top-1.5 size-4 text-ink-secondary"
+                aria-hidden="true"
+              />
             </div>
           </Mini>
         </Specimen>

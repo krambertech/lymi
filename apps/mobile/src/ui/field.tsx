@@ -102,7 +102,7 @@ export function FieldLabel({ children, aside }: { children: string; aside?: Reac
     <View className="flex-row items-baseline justify-between gap-3 px-1">
       {/* The control carries the label as its name, so the label itself is not read twice. */}
       <Text
-        className="text-sm font-medium text-text-2"
+        className="text-sm font-medium text-ink-secondary"
         accessible={false}
         accessibilityElementsHidden
         importantForAccessibility="no"
@@ -127,7 +127,7 @@ export function FieldDescription({ children }: { children: ReactNode }) {
   // A string reaches VoiceOver as the control's hint, so the line itself is not read twice.
   return (
     <Text
-      className="px-1 text-base text-muted"
+      className="px-1 text-base text-ink-muted"
       accessible={text ? false : undefined}
       accessibilityElementsHidden={!!text}
       importantForAccessibility={text ? "no" : "auto"}
@@ -192,7 +192,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
   const edge = field?.invalid
     ? "border-danger"
     : focused || forced
-      ? "border-edge-2"
+      ? "border-edge-strong"
       : "border-edge";
   return (
     <View
@@ -211,11 +211,11 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
           setFocused(false);
           onBlur?.(e);
         }}
-        placeholderTextColor={p.muted}
-        selectionColor={p.text}
+        placeholderTextColor={p["ink-muted"]}
+        selectionColor={p.ink}
         accessibilityLabel={props.accessibilityLabel ?? field?.label}
         accessibilityHint={field?.error ?? field?.description}
-        className={`flex-1 px-3.5 font-sans text-text ${multiline ? "py-2.5" : "h-full"}`}
+        className={`flex-1 px-3.5 font-sans text-ink ${multiline ? "py-2.5" : "h-full"}`}
         style={{ fontSize: 17, textAlignVertical: multiline ? "top" : "center" }}
         maxFontSizeMultiplier={inputCap(17)}
       />
@@ -250,7 +250,7 @@ export const PasswordInput = forwardRef<TextInput, Omit<InputProps, "end" | "sec
             accessibilityRole="button"
             accessibilityLabel={shown ? t`Hide password` : t`Show password`}
           >
-            <Icon name={shown ? "hide" : "show"} size={20} colour={p.muted} />
+            <Icon name={shown ? "hide" : "show"} size={20} colour={p["ink-muted"]} />
           </Press>
         }
       />

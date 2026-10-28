@@ -15,7 +15,7 @@ The overlays showed what that cost. `Sheet` decided "desktop" by width and a fin
 
 ## Decision
 
-A component added with `shadcn add` keeps its export names, compound anatomy, data attributes and `render` composition. Its classes are rewritten to Lymi tokens (`bg-plate`, `text-text`, `edge-2`) and DESIGN.md's sizes and motion. shadcn's colour variables are not added, because `muted` already names a text colour in Lymi and two vocabularies would drift. `Button`, `IconButton` and product components such as `Streak`, `LanguageField` and `GoalPicker` stay Lymi-owned and compose the primitives.
+A component added with `shadcn add` keeps its export names, compound anatomy, data attributes and `render` composition. Its classes are rewritten to Lymi tokens (`bg-plate`, `text-ink`, `edge-strong`) and DESIGN.md's sizes and motion. shadcn's colour variables are not added, because `ink-muted` already names a text colour in Lymi and two vocabularies would drift. `Button`, `IconButton` and product components such as `Streak`, `LanguageField` and `GoalPicker` stay Lymi-owned and compose the primitives.
 
 Every overlay is one of two kinds.
 
@@ -41,7 +41,7 @@ The adaptation lives inside the shadcn component itself: `DropdownMenu` and `Dia
 - **Adaptive composites such as `ResponsiveMenu` beside unchanged shadcn copies:** rejected. It kept the copies closer to upstream, but it left two components for every overlay and a choice nobody should have to make.
 - **Radix as the base:** rejected. Radix has no drawer, so vaul would stay, and shadcn now defaults to Base UI.
 - **Anchored menus and centred confirmations on touch:** rejected. On a phone they sit away from the thumb, and a drawer is how the forms already open.
-- **Alias shadcn's colour variables to Lymi tokens:** rejected because of the `muted` collision.
+- **Alias shadcn's colour variables to Lymi tokens:** rejected because of the `ink-muted` collision.
 
 ## Consequences
 

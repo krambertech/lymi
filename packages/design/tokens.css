@@ -22,13 +22,13 @@
   /* What rises over the room: a sheet. By day the room itself, as the scrim behind it sets it apart. */
   --sheet: var(--canvas);
   --plate: oklch(1 0 0);
-  --plate-2: oklch(0.955 0.006 80);
-  --hover: oklch(0.94 0.007 80);
-  /* A chosen option in a plate-2 track; at night the plate is darker than the track, so it lifts. */
-  --chosen: var(--plate);
+  --plate-nested: oklch(0.955 0.006 80);
+  --plate-hover: oklch(0.94 0.007 80);
+  /* A chosen option in a plate-nested track; at night the plate is darker than the track, so it lifts. */
+  --plate-chosen: var(--plate);
   /* The current row in the rail, and a row pointed at; at night both stay flat and hover stays under the current row. */
   --rail-chosen: var(--plate);
-  --rail-hover: var(--hover);
+  --rail-hover: var(--plate-hover);
   /* Laid over a filled plate on hover, so it darkens from whatever fill it has. */
   --veil: oklch(0.2 0.03 60 / 0.035);
   /* The phone's chosen tab on Liquid Glass: a veil of the room's ink, as iOS marks its own. */
@@ -43,7 +43,7 @@
   --glass-sheen: oklch(1 0 0 / 0.9);
   --glass-drop: 0 8px 24px -12px oklch(0.25 0.03 55 / 0.18);
   /* The lantern's light on the plate it stands on. */
-  --pool: oklch(0.9 0.09 78 / 0.5);
+  --lantern-pool: oklch(0.9 0.09 78 / 0.5);
   /* By day surfaces stay flat; the lift, the well under a track and a lit fill's glow are night-only. */
   --lift: 0 0 #0000;
   --well: inset 0 1px 1.5px oklch(0.25 0.03 55 / 0.1);
@@ -55,40 +55,40 @@
   --key-edge: oklch(1 0.03 90 / 0.4);
   --key-rim: oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
   --edge: oklch(0.2 0.03 60 / 0.1);
-  --edge-2: oklch(0.2 0.03 60 / 0.2);
+  --edge-strong: oklch(0.2 0.03 60 / 0.2);
   /* A photo's edge is untinted, because a warm line reads as grime on the picture. */
   --image-edge: oklch(0 0 0 / 0.1);
 
-  --text: oklch(0.2 0.016 55);
-  --text-2: oklch(0.38 0.016 55);
-  --muted: oklch(0.52 0.018 55);
-  --faint: oklch(0.7 0.014 60);
+  --ink: oklch(0.2 0.016 55);
+  --ink-secondary: oklch(0.38 0.016 55);
+  --ink-muted: oklch(0.52 0.018 55);
+  --ink-faint: oklch(0.7 0.014 60);
 
   --amber: oklch(0.8 0.15 72);
   --amber-hover: oklch(0.76 0.15 68);
   --amber-ink: oklch(0.25 0.05 60);
   --amber-text: oklch(0.5 0.14 50);
-  /* Amber for an icon beside a word: 3:1 on plate-2, where amber-text would read as brown. */
+  /* Amber for an icon beside a word: 3:1 on plate-nested, where amber-text would read as brown. */
   --amber-mark: oklch(0.64 0.16 56);
   --amber-soft: oklch(0.8 0.15 72 / 0.16);
   /* Behind a due count, whose number stays ink. */
   --amber-tint: oklch(0.8 0.15 72 / 0.26);
   --amber-tint-ink: var(--amber-ink);
-  --flame-core: oklch(0.97 0.08 92);
+  --lantern-flame: oklch(0.97 0.08 92);
   /* The lantern's glass. Opaque, so the mark carries its own interior onto any
      surface instead of painting a hole in the room behind it. */
-  --glass: oklch(0.932 0.044 76);
-  --glass-unlit: oklch(0.947 0.006 80);
-  --metal: var(--text);
-  --glow: oklch(0.8 0.15 72 / 0.45);
+  --lantern-glass: oklch(0.932 0.044 76);
+  --lantern-glass-unlit: oklch(0.947 0.006 80);
+  --lantern-metal: var(--ink);
+  --lantern-glow: oklch(0.8 0.15 72 / 0.45);
   /* The seven lights' middle steps, mixed from the lantern's glass toward its flame. */
-  --light-1: color-mix(in oklab, var(--amber) 45%, var(--glass));
-  --light-2: color-mix(in oklab, var(--amber) 75%, var(--glass));
+  --lit-low: color-mix(in oklab, var(--amber) 45%, var(--lantern-glass));
+  --lit-high: color-mix(in oklab, var(--amber) 75%, var(--lantern-glass));
 
-  --good: oklch(0.47 0.12 160);
-  --good-soft: oklch(0.47 0.12 160 / 0.12);
+  --success: oklch(0.47 0.12 160);
+  --success-soft: oklch(0.47 0.12 160 / 0.12);
   /* Card states, the same three everywhere: grey not yet asked, blue on the way, green known.
-     Each mark holds 3:1 against plate-2, the lightest ground it sits on; blue sits furthest from
+     Each mark holds 3:1 against plate-nested, the lightest ground it sits on; blue sits furthest from
      amber, danger and good. By day the marks are lighter than good, which is also a text colour. */
   --state-new: oklch(0.6 0.012 60);
   --state-learning: oklch(0.6 0.12 250);
@@ -117,9 +117,9 @@
   /* At night a scrim cannot darken the dark, so what rises is lighter than the room, as iOS's own sheets are. */
   --sheet: oklch(0.205 0.009 62);
   --plate: oklch(0.24 0.01 64);
-  --plate-2: oklch(0.275 0.011 66);
-  --hover: oklch(0.295 0.011 66);
-  --chosen: oklch(0.355 0.013 68);
+  --plate-nested: oklch(0.275 0.011 66);
+  --plate-hover: oklch(0.295 0.011 66);
+  --plate-chosen: oklch(0.355 0.013 68);
   --rail-chosen: oklch(0.255 0.01 64);
   --rail-hover: oklch(1 0 0 / 0.04);
   --veil: oklch(1 0 0 / 0.04);
@@ -130,22 +130,22 @@
   --glass-fill: oklch(0.24 0.01 64 / 0.86);
   --glass-sheen: oklch(1 0 0 / 0.07);
   --glass-drop: 0 12px 32px -14px oklch(0 0 0 / 0.7);
-  --pool: oklch(0.78 0.15 74 / 0.18);
+  --lantern-pool: oklch(0.78 0.15 74 / 0.18);
   /* At night a plate sits a little off the room on a soft shadow; no lit lip, which read as a ridge. */
   --lift: 0 1px 2px oklch(0 0 0 / 0.22), 0 8px 16px -12px oklch(0 0 0 / 0.4);
   --well: inset 0 1px 1px oklch(0 0 0 / 0.25);
-  --lit-glow: 0 0 10px -2px var(--glow);
+  --lit-glow: 0 0 10px -2px var(--lantern-glow);
   /* At night a bright lip on the amber reads as a ridge, so it is half as strong. */
   --key-edge: oklch(1 0.03 90 / 0.22);
   --key-rim: oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
   --edge: oklch(1 0 0 / 0.07);
-  --edge-2: oklch(1 0 0 / 0.13);
+  --edge-strong: oklch(1 0 0 / 0.13);
   --image-edge: oklch(1 0 0 / 0.1);
 
-  --text: oklch(0.95 0.01 85);
-  --text-2: oklch(0.8 0.014 75);
-  --muted: oklch(0.7 0.016 70);
-  --faint: oklch(0.48 0.014 65);
+  --ink: oklch(0.95 0.01 85);
+  --ink-secondary: oklch(0.8 0.014 75);
+  --ink-muted: oklch(0.7 0.016 70);
+  --ink-faint: oklch(0.48 0.014 65);
 
   --amber: oklch(0.82 0.15 74);
   --amber-hover: oklch(0.86 0.15 76);
@@ -155,21 +155,21 @@
   --amber-soft: oklch(0.82 0.15 74 / 0.14);
   --amber-tint: oklch(0.82 0.15 74 / 0.16);
   --amber-tint-ink: var(--amber-text);
-  --flame-core: oklch(0.97 0.08 92);
-  --glass: oklch(0.315 0.048 62);
-  --glass-unlit: oklch(0.265 0.01 64);
-  --metal: var(--text);
-  --glow: oklch(0.82 0.15 74 / 0.6);
-  --light-1: color-mix(in oklab, var(--amber) 45%, var(--glass));
-  --light-2: color-mix(in oklab, var(--amber) 75%, var(--glass));
+  --lantern-flame: oklch(0.97 0.08 92);
+  --lantern-glass: oklch(0.315 0.048 62);
+  --lantern-glass-unlit: oklch(0.265 0.01 64);
+  --lantern-metal: var(--ink);
+  --lantern-glow: oklch(0.82 0.15 74 / 0.6);
+  --lit-low: color-mix(in oklab, var(--amber) 45%, var(--lantern-glass));
+  --lit-high: color-mix(in oklab, var(--amber) 75%, var(--lantern-glass));
 
-  --good: oklch(0.76 0.1 155);
-  --good-soft: oklch(0.76 0.1 155 / 0.14);
+  --success: oklch(0.76 0.1 155);
+  --success-soft: oklch(0.76 0.1 155 / 0.14);
   --state-new: oklch(0.58 0.02 65);
   --state-learning: oklch(0.76 0.09 250);
   --state-learning-soft: oklch(0.76 0.09 250 / 0.14);
   --state-learning-text: oklch(0.82 0.07 250);
-  --state-known: var(--good);
+  --state-known: var(--success);
   --danger: oklch(0.74 0.15 28);
   --danger-soft: oklch(0.74 0.15 28 / 0.14);
   --ai: oklch(0.79 0.11 305);
@@ -201,17 +201,17 @@
   --color-glass-group: var(--glass-group);
   --color-glass-chosen: var(--glass-chosen);
   --color-plate: var(--plate);
-  --color-plate-2: var(--plate-2);
-  --color-hover: var(--hover);
-  --color-chosen: var(--chosen);
+  --color-plate-nested: var(--plate-nested);
+  --color-plate-hover: var(--plate-hover);
+  --color-plate-chosen: var(--plate-chosen);
   --color-rail-chosen: var(--rail-chosen);
   --color-rail-hover: var(--rail-hover);
   --color-edge: var(--edge);
-  --color-edge-2: var(--edge-2);
-  --color-text: var(--text);
-  --color-text-2: var(--text-2);
-  --color-muted: var(--muted);
-  --color-faint: var(--faint);
+  --color-edge-strong: var(--edge-strong);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
   --color-amber: var(--amber);
   --color-amber-hover: var(--amber-hover);
   --color-amber-ink: var(--amber-ink);
@@ -220,14 +220,14 @@
   --color-amber-soft: var(--amber-soft);
   --color-amber-tint: var(--amber-tint);
   --color-amber-tint-ink: var(--amber-tint-ink);
-  --color-flame-core: var(--flame-core);
-  --color-glass: var(--glass);
-  --color-glass-unlit: var(--glass-unlit);
-  --color-light-1: var(--light-1);
-  --color-light-2: var(--light-2);
-  --color-metal: var(--metal);
-  --color-good: var(--good);
-  --color-good-soft: var(--good-soft);
+  --color-lantern-flame: var(--lantern-flame);
+  --color-lantern-glass: var(--lantern-glass);
+  --color-lantern-glass-unlit: var(--lantern-glass-unlit);
+  --color-lit-low: var(--lit-low);
+  --color-lit-high: var(--lit-high);
+  --color-lantern-metal: var(--lantern-metal);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
   --color-state-new: var(--state-new);
   --color-state-learning: var(--state-learning);
   --color-state-learning-soft: var(--state-learning-soft);
@@ -238,8 +238,8 @@
   --color-ai: var(--ai);
   --color-ai-soft: var(--ai-soft);
   --color-grade-forgot: var(--danger);
-  --color-grade-hard: var(--muted);
-  --color-grade-good: var(--good);
+  --color-grade-hard: var(--ink-muted);
+  --color-grade-good: var(--success);
   --color-grade-easy: var(--amber-mark);
   --color-ring: var(--ring);
   --color-scrim: var(--scrim);

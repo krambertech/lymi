@@ -64,20 +64,20 @@ export function StreakWeek({
         size={size}
       />
       {summary.current === 0 ? (
-        <p className="shrink-0 text-sm font-medium text-text-2 @md:border-s @md:border-edge @md:ps-4">
+        <p className="shrink-0 text-sm font-medium text-ink-secondary @md:border-s @md:border-edge @md:ps-4">
           <StreakStart summary={summary} />
         </p>
       ) : (
         <p className="flex shrink-0 items-baseline gap-1.5 @md:grid @md:gap-0 @md:border-s @md:border-edge @md:ps-4 @md:text-start">
           <span
             className={clsx(
-              "font-semibold leading-none tabular-nums text-text",
+              "font-semibold leading-none tabular-nums text-ink",
               large ? "text-lg @md:text-2xl" : "text-lg",
             )}
           >
             <RollingNumber value={summary.current} />
           </span>
-          <span className="whitespace-nowrap text-sm text-muted @md:mt-1 @md:text-xs">
+          <span className="whitespace-nowrap text-sm text-ink-muted @md:mt-1 @md:text-xs">
             <Plural value={summary.current} one="day in a row" other="days in a row" />
           </span>
         </p>

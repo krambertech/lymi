@@ -146,10 +146,10 @@ export default function DevPanel() {
         }}
         className={clsx(
           "group fixed end-0 z-(--z-sticky) flex w-8 -translate-y-1/2 touch-none select-none flex-col items-center gap-2 rounded-s-lg py-2.5",
-          "edge-2 bg-plate text-muted outline-offset-2",
+          "edge-strong bg-plate text-ink-muted outline-offset-2",
           // The pseudo-element carries the touch target 16 px into the page.
           "before:absolute before:inset-y-0 before:-start-4 before:end-0 before:content-['']",
-          open ? "max-md:hidden" : "hoverable:hover:text-text",
+          open ? "max-md:hidden" : "hoverable:hover:text-ink",
         )}
       >
         <PersonaAvatar

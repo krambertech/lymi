@@ -14,12 +14,12 @@ import type { ReactNode } from "react";
 
 const PAINT: Record<Ink, string> = {
   metal: "currentColor",
-  glass: "var(--glass)",
-  "glass-unlit": "var(--glass-unlit)",
+  glass: "var(--lantern-glass)",
+  "glass-unlit": "var(--lantern-glass-unlit)",
   amber: "var(--amber)",
   flame: "var(--amber)",
-  "flame-core": "var(--flame-core)",
-  ember: "var(--edge-2)",
+  "flame-core": "var(--lantern-flame)",
+  ember: "var(--edge-strong)",
 };
 
 export function draw(s: Shape, key: string, className?: string) {

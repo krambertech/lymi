@@ -129,7 +129,7 @@ function DragRow({
       runOnJS(onDrop)(positions.value);
     });
   // Android draws no iOS shadow props, so the lifted row takes the same shadow as a box shadow.
-  const lift = `0 8px 14px ${p.text}2e`;
+  const lift = `0 8px 14px ${p.ink}2e`;
   const style = useAnimatedStyle(() => ({
     transform: [{ translateY: y.value }, { scale: withSpring(lifted.value ? 1.03 : 1, SETTLE) }],
     zIndex: lifted.value ? 1 : 0,
@@ -144,7 +144,7 @@ function DragRow({
       style={[
         {
           height: row,
-          shadowColor: p.text,
+          shadowColor: p.ink,
           shadowRadius: 14,
           shadowOffset: { width: 0, height: 8 },
         },
@@ -154,7 +154,7 @@ function DragRow({
       {render(
         <GestureDetector gesture={pan}>
           <View className="h-11 w-11 items-center justify-center">
-            <Icon name="grip" size={22} colour={busy ? p.edge : p.faint} />
+            <Icon name="grip" size={22} colour={busy ? p.edge : p["ink-faint"]} />
           </View>
         </GestureDetector>,
       )}

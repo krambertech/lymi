@@ -173,7 +173,7 @@ export function ThisMacSection() {
 }
 
 // Every row's name, so a row with a button reads the same as one with a switch.
-const LABEL = "text-base font-medium text-text";
+const LABEL = "text-base font-medium text-ink";
 
 interface RowProps {
   label: string;
@@ -187,7 +187,7 @@ function Row({ label, description, children, className }: RowProps) {
     <div className={cn("flex items-center gap-3 px-4 py-3.5", className)}>
       <div className="grid min-w-0 flex-1 gap-0.5">
         <p className={LABEL}>{label}</p>
-        <p className="text-sm text-muted">{description}</p>
+        <p className="text-sm text-ink-muted">{description}</p>
       </div>
       {children}
     </div>

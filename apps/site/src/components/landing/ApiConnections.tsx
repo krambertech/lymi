@@ -260,9 +260,9 @@ function Diagram({ g }: { g: Geometry }) {
       <place.icon
         aria-hidden="true"
         strokeWidth={1.75}
-        className="size-[18px] shrink-0 text-text-2"
+        className="size-[18px] shrink-0 text-ink-secondary"
       />
-      <span className={clsx("text-text", g.stacked ? "text-xs leading-4" : "text-sm")}>
+      <span className={clsx("text-ink", g.stacked ? "text-xs leading-4" : "text-sm")}>
         {i18n._(place.label)}
       </span>
     </>
@@ -275,7 +275,7 @@ function Diagram({ g }: { g: Geometry }) {
           <path
             key={place.id}
             d={inPath(g, i)}
-            className="fill-none stroke-edge-2"
+            className="fill-none stroke-edge-strong"
             strokeDasharray="3 5"
           />
         ))}
@@ -283,7 +283,7 @@ function Diagram({ g }: { g: Geometry }) {
           <path
             key={place.id}
             d={outPath(g, i)}
-            className="fill-none stroke-edge-2"
+            className="fill-none stroke-edge-strong"
             strokeDasharray="3 5"
           />
         ))}

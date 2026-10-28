@@ -119,10 +119,10 @@ const MATERIALS: Material[] = [
     render: (lit) => (
       <figure className="m-0 w-full max-w-[440px] -rotate-1">
         <div className="rounded-md bg-plate p-6 edge @2xl:p-7">
-          <p className="text-xs text-muted">
+          <p className="text-xs text-ink-muted">
             <Trans>Lecture 4 · Cell transport</Trans>
           </p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-pretty text-text @2xl:text-md">
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-pretty text-ink @2xl:text-md">
             <li>
               <Trans>
                 <Pick on={lit(0)}>Diffusion</Pick>: particles move from high to low concentration.
@@ -146,7 +146,7 @@ const MATERIALS: Material[] = [
             </li>
           </ul>
         </div>
-        <figcaption className="mt-3 text-center text-xs text-muted tabular-nums">
+        <figcaption className="mt-3 text-center text-xs text-ink-muted tabular-nums">
           <Trans>cell-transport.pdf · page 12 of 30</Trans>
         </figcaption>
       </figure>
@@ -169,20 +169,20 @@ const MATERIALS: Material[] = [
     ],
     render: (lit) => (
       <div className="notes-hand w-full max-w-[420px] rotate-[1.2deg] rounded-md bg-plate px-7 pt-6 pb-8 edge">
-        <p className="text-2xl text-muted">
+        <p className="text-2xl text-ink-muted">
           <Trans>Econ · week 3</Trans>
         </p>
-        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-text @2xl:text-[1.625rem]">
+        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-ink @2xl:text-[1.625rem]">
           <li>
             <Trans>
               <Pick on={lit(0)}>opportunity cost</Pick>{" "}
-              <span className="text-text-2">= what you give up</span>
+              <span className="text-ink-secondary">= what you give up</span>
             </Trans>
           </li>
           <li>
             <Trans>
               <Pick on={lit(1)}>marginal cost</Pick>{" "}
-              <span className="text-text-2">= cost of 1 more</span>
+              <span className="text-ink-secondary">= cost of 1 more</span>
             </Trans>
           </li>
           <li>
@@ -211,13 +211,13 @@ const MATERIALS: Material[] = [
     ],
     render: (lit) => (
       <div className="w-full max-w-[440px] rotate-1 rounded-md bg-plate px-6 pt-5 pb-7 edge">
-        <p className="text-xs text-muted">
+        <p className="text-xs text-ink-muted">
           <Trans>History notes</Trans>
         </p>
-        <p className="mt-3 text-xl font-medium tracking-[-0.02em] text-text">
+        <p className="mt-3 text-xl font-medium tracking-[-0.02em] text-ink">
           <Trans>The Thirty Years’ War</Trans>
         </p>
-        <ul className="mt-3 flex list-disc flex-col gap-2 ps-5 text-sm text-pretty text-text-2 @2xl:text-md">
+        <ul className="mt-3 flex list-disc flex-col gap-2 ps-5 text-sm text-pretty text-ink-secondary @2xl:text-md">
           <li>
             <Trans>
               Began in 1618 with the <Pick on={lit(0)}>Defenestration of Prague</Pick>.
@@ -246,10 +246,10 @@ function RevisionNotes({ mark }: { mark: (i: number, text: ReactNode) => ReactNo
   return (
     // Blank paper at the foot, where the card stack sits over the page.
     <div className="notes-hand rounded-md bg-plate px-6 pt-5 pb-24 edge">
-      <p className="text-2xl text-muted">
+      <p className="text-2xl text-ink-muted">
         <Trans>Exam revision</Trans>
       </p>
-      <ul className="mt-3 flex flex-col gap-2 text-2xl leading-tight text-text">
+      <ul className="mt-3 flex flex-col gap-2 text-2xl leading-tight text-ink">
         {HAND.map((card, i) => (
           <li key={card.id}>{mark(i, i18n._(card.term))}</li>
         ))}
@@ -302,7 +302,7 @@ export function NotesToFlashcardsView() {
               <Trans>Slides, photos or typed notes.</Trans>
             </SectionTitle>
           </div>
-          <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
+          <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
             <Trans>
               Your assistant picks out the terms, keeps the definitions from your notes and skips
               the ones already in your deck.
@@ -326,14 +326,14 @@ export function NotesToFlashcardsView() {
                 Add Lymi to Claude, Grok or another assistant.{" "}
                 <a
                   href="#connect"
-                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
                 >
                   It takes three steps
                 </a>
                 . No assistant?{" "}
                 <a
                   href="#guide-without"
-                  className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
                 >
                   Start another way
                 </a>

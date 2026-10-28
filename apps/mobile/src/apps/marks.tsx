@@ -36,12 +36,14 @@ export function AppMark({ app, size = 40 }: { app: AppIdentity; size?: number })
     <Tile size={size}>
       {app.path ? (
         <Svg width={size / 2} height={size / 2} viewBox="0 0 24 24">
-          <Path d={app.path} fill={app.brand ?? p.text} />
+          <Path d={app.path} fill={app.brand ?? p.ink} />
         </Svg>
       ) : app.name ? (
-        <Text className="text-lg font-semibold uppercase text-text-2">{app.name.slice(0, 1)}</Text>
+        <Text className="text-lg font-semibold uppercase text-ink-secondary">
+          {app.name.slice(0, 1)}
+        </Text>
       ) : (
-        <Icon name="apps" size={size / 2} colour={p.muted} />
+        <Icon name="apps" size={size / 2} colour={p["ink-muted"]} />
       )}
     </Tile>
   );
@@ -56,8 +58,8 @@ export function ReadwiseMark({ size = 40, bare = false }: { size?: number; bare?
       height={bare ? size : size * 0.6}
       viewBox="100 100 300 300"
     >
-      <Path d={R} fill={p.text} />
-      <Path d={BLOCK} fill={p.text} />
+      <Path d={R} fill={p.ink} />
+      <Path d={BLOCK} fill={p.ink} />
       <Path d={COUNTER} fill={p.plate} />
     </Svg>
   );
@@ -68,7 +70,7 @@ export function ReadwiseMark({ size = 40, bare = false }: { size?: number; bare?
 export function YomitanMark({ size = 40, bare = false }: { size?: number; bare?: boolean }) {
   const p = usePalette();
   const glyph = (
-    <BookA size={bare ? size : size / 2} color={p.text} strokeWidth={1.75} absoluteStrokeWidth />
+    <BookA size={bare ? size : size / 2} color={p.ink} strokeWidth={1.75} absoluteStrokeWidth />
   );
   return bare ? glyph : <Tile size={size}>{glyph}</Tile>;
 }
@@ -76,7 +78,7 @@ export function YomitanMark({ size = 40, bare = false }: { size?: number; bare?:
 /** Custom MCP, which is any app, as a plug. */
 export function CustomMark({ size = 40, bare = false }: { size?: number; bare?: boolean }) {
   const p = usePalette();
-  const glyph = <Icon name="apps" size={bare ? size : size / 2} colour={p["text-2"]} />;
+  const glyph = <Icon name="apps" size={bare ? size : size / 2} colour={p["ink-secondary"]} />;
   return bare ? glyph : <Tile size={size}>{glyph}</Tile>;
 }
 
@@ -86,7 +88,7 @@ export function AppGlyph({ app, size = 16 }: { app: AppIdentity; size?: number }
   if (!app.path) return null;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
-      <Path d={app.path} fill={app.brand ?? p.text} />
+      <Path d={app.path} fill={app.brand ?? p.ink} />
     </Svg>
   );
 }

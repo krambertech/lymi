@@ -14,7 +14,7 @@ const light = {
   metal: "#2f2823",
   amber: "#f5ad48",
   core: "#fff4c2",
-  // Opaque, like --glass in the app: the mark carries its own interior instead of
+  // Opaque, like --lantern-glass in the app: the mark carries its own interior instead of
   // punching a canvas-coloured hole in whatever it is placed on.
   glass: "#f7e4c8",
   glassUnlit: "#f1efec",

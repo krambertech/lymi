@@ -33,9 +33,9 @@ export function StageCounts({ stages, bar = false }: Props) {
       )}
       <ul aria-label={t`Cards by stage`} className="flex flex-wrap gap-x-5 gap-y-2 px-1 text-sm">
         {STAGES.map((stage) => (
-          <li key={stage} className="inline-flex items-center gap-1.5 text-text-2">
+          <li key={stage} className="inline-flex items-center gap-1.5 text-ink-secondary">
             <StateIcon state={stage} className="size-3.5" />
-            <span className="font-medium tabular-nums text-text">{i18n.number(stages[stage])}</span>
+            <span className="font-medium tabular-nums text-ink">{i18n.number(stages[stage])}</span>
             {i18n._(stateMarks[stage].groupLabel)}
           </li>
         ))}

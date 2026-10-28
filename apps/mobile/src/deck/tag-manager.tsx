@@ -215,10 +215,10 @@ function TagRow({
           if (action === "archive") onArchive();
         }}
       >
-        <Text className="flex-1 text-md font-medium text-text" numberOfLines={1}>
+        <Text className="flex-1 text-md font-medium text-ink" numberOfLines={1}>
           {name}
         </Text>
-        <Text className="text-base text-muted">{cards}</Text>
+        <Text className="text-base text-ink-muted">{cards}</Text>
       </View>
       <ActionMenu
         label={t`Options for ${{ name: isolate(name) }}`}
@@ -258,10 +258,10 @@ function ArchivedRow({
     <View
       className={`min-h-14 flex-row items-center gap-3 py-2 ps-4 pe-3 ${first ? "" : "border-t border-edge"}`}
     >
-      <Text className="flex-1 text-md text-text-2" numberOfLines={1}>
+      <Text className="flex-1 text-md text-ink-secondary" numberOfLines={1}>
         {tag.name}
       </Text>
-      <Text className="text-base text-muted">
+      <Text className="text-base text-ink-muted">
         {plural(tag.cards, { one: "# card", other: "# cards" })}
       </Text>
       <Button
@@ -345,8 +345,8 @@ function RenameSheet({
           autoCapitalize="none"
           autoCorrect={false}
           accessibilityLabel={t`Name`}
-          selectionColor={p.text}
-          className="min-h-11 py-2 font-sans text-text"
+          selectionColor={p.ink}
+          className="min-h-11 py-2 font-sans text-ink"
           style={{ fontSize: 17 }}
           maxFontSizeMultiplier={inputCap(17)}
         />
@@ -432,7 +432,7 @@ function MergeSheet({
             {shown.length > 0 ? (
               rows
             ) : (
-              <Text className="px-4 py-3 text-md text-muted">{t`No matches`}</Text>
+              <Text className="px-4 py-3 text-md text-ink-muted">{t`No matches`}</Text>
             )}
           </ScrollView>
         </>

@@ -162,10 +162,10 @@ function Profile({
         <Plate className="flex-row items-center gap-4 p-4">
           <Avatar name={name} size={56} pending={pending} />
           <View className="flex-1 gap-0.5">
-            <Text className="text-lg font-medium text-text" numberOfLines={1}>
+            <Text className="text-lg font-medium text-ink" numberOfLines={1}>
               {name}
             </Text>
-            <Text className="text-base text-muted" numberOfLines={1}>
+            <Text className="text-base text-ink-muted" numberOfLines={1}>
               {email}
             </Text>
           </View>
@@ -205,13 +205,13 @@ function InsightsPlate({ onPress }: { onPress: () => void }) {
     >
       <Plate className="gap-4 p-5">
         <View className="flex-row items-center gap-4">
-          <View className="size-11 items-center justify-center rounded-full bg-plate-2">
-            <Icon name="insights" size={22} colour={p["text-2"]} />
+          <View className="size-11 items-center justify-center rounded-full bg-plate-nested">
+            <Icon name="insights" size={22} colour={p["ink-secondary"]} />
           </View>
           <View className="flex-1 gap-0.5">
-            <Text className="text-lg font-medium text-text">{t`Insights`}</Text>
+            <Text className="text-lg font-medium text-ink">{t`Insights`}</Text>
             {!reviewed && (
-              <Text className="text-base text-muted">{t`How your memory is doing`}</Text>
+              <Text className="text-base text-ink-muted">{t`How your memory is doing`}</Text>
             )}
           </View>
           <RowArrow />
@@ -220,15 +220,15 @@ function InsightsPlate({ onPress }: { onPress: () => void }) {
           <View className="gap-3">
             <View className="flex-row gap-6">
               <View className="gap-0.5">
-                <Text className="text-2xl font-medium tracking-tight text-text">{recall}</Text>
-                <Text className="text-sm text-muted">{t`Recall`}</Text>
+                <Text className="text-2xl font-medium tracking-tight text-ink">{recall}</Text>
+                <Text className="text-sm text-ink-muted">{t`Recall`}</Text>
               </View>
               <View className="gap-0.5">
-                <Text className="text-2xl font-medium tracking-tight text-text">
+                <Text className="text-2xl font-medium tracking-tight text-ink">
                   {i18n.number(data.consistency.lit)}
-                  <Text className="text-base font-normal text-muted"> / 30</Text>
+                  <Text className="text-base font-normal text-ink-muted"> / 30</Text>
                 </Text>
-                <Text className="text-sm text-muted">{t`Days reviewed`}</Text>
+                <Text className="text-sm text-ink-muted">{t`Days reviewed`}</Text>
               </View>
             </View>
             <RunStrip days={data.consistency.days} height={20} />

@@ -15,9 +15,9 @@ export function Tile({
   children: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-plate-2 p-6 edge-inset @2xl:p-7">
-      <h3 className="text-xl font-medium tracking-[-0.02em] text-text">{title}</h3>
-      <p className="max-w-[40ch] text-md text-pretty text-text-2">{body}</p>
+    <div className="flex flex-col gap-2 rounded-xl bg-plate-nested p-6 edge-inset @2xl:p-7">
+      <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{title}</h3>
+      <p className="max-w-[40ch] text-md text-pretty text-ink-secondary">{body}</p>
       <div className="mt-auto pt-5">{children}</div>
     </div>
   );
@@ -49,7 +49,7 @@ function Shapes() {
             <span
               lang="zh-Hans"
               className={clsx(
-                "kanji-zh absolute text-muted transition-opacity duration-300",
+                "kanji-zh absolute text-ink-muted transition-opacity duration-300",
                 !chinese && "opacity-0",
               )}
             >
@@ -58,14 +58,14 @@ function Shapes() {
             <span
               lang="ja"
               className={clsx(
-                "absolute text-text transition-opacity duration-300",
+                "absolute text-ink transition-opacity duration-300",
                 chinese && "opacity-0",
               )}
             >
               {kanji}
             </span>
           </span>
-          <span className={clsx("text-xs", chinese ? "text-muted" : "text-amber-text")}>
+          <span className={clsx("text-xs", chinese ? "text-ink-muted" : "text-amber-text")}>
             {chinese ? <Trans>Chinese font</Trans> : <Trans>Japanese</Trans>}
           </span>
         </div>
@@ -101,16 +101,16 @@ export function JapaneseBento() {
       >
         <div aria-hidden="true" className="rounded-md bg-plate edge">
           <p className="flex items-center gap-2.5 border-b border-edge px-3.5 py-3 text-md">
-            <Search className="size-4 text-muted" />
-            <span lang="ja" className="text-text">
+            <Search className="size-4 text-ink-muted" />
+            <span lang="ja" className="text-ink">
               デンシャ
             </span>
           </p>
           <p className="flex items-baseline justify-between gap-3 px-3.5 py-3">
-            <span lang="ja" className="text-xl font-medium text-text">
+            <span lang="ja" className="text-xl font-medium text-ink">
               電車
             </span>
-            <span lang="ja" className="text-sm text-muted">
+            <span lang="ja" className="text-sm text-ink-muted">
               でんしゃ
             </span>
           </p>
@@ -129,7 +129,7 @@ export function JapaneseBento() {
         <p
           aria-hidden="true"
           lang="ja"
-          className="rounded-md bg-plate px-4 py-3 text-2xl leading-[2.2] text-text edge"
+          className="rounded-md bg-plate px-4 py-3 text-2xl leading-[2.2] text-ink edge"
         >
           <ruby>
             毎日<rt className="invisible text-[0.45em]">まいにち</rt>
@@ -159,14 +159,14 @@ export function JapaneseBento() {
           </Trans>
         }
       >
-        <ul className="grid gap-1.5 text-md text-text">
+        <ul className="grid gap-1.5 text-md text-ink">
           {[
             <Trans key="r">Word recordings</Trans>,
             <Trans key="p">Pitch accent</Trans>,
             <Trans key="f">Readings</Trans>,
           ].map((item) => (
             <li key={item.key} className="flex items-center gap-2.5">
-              <span className="grid size-5 place-items-center rounded-full bg-good-soft text-good">
+              <span className="grid size-5 place-items-center rounded-full bg-success-soft text-success">
                 <Check aria-hidden="true" className="size-3" strokeWidth={3} />
               </span>
               {item}

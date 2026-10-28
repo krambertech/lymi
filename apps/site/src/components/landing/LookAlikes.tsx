@@ -57,7 +57,7 @@ export function LookAlikes({ words, reader }: Props) {
   return (
     <div
       ref={stage}
-      className="mt-12 rounded-2xl bg-plate-2 px-4 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
+      className="mt-12 rounded-2xl bg-plate-nested px-4 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
     >
       <dl className="sr-only">
         {words.map((w) => (
@@ -79,7 +79,7 @@ export function LookAlikes({ words, reader }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8, transition: { duration: still ? 0 : 0.2 } }}
             transition={{ duration: 0.45, ease: EASE }}
-            className="col-start-1 row-start-1 text-[clamp(64px,13cqw,152px)] leading-[1.1] font-medium tracking-[-0.03em] whitespace-nowrap text-text"
+            className="col-start-1 row-start-1 text-[clamp(64px,13cqw,152px)] leading-[1.1] font-medium tracking-[-0.03em] whitespace-nowrap text-ink"
           >
             {current.term}
           </motion.p>
@@ -87,12 +87,12 @@ export function LookAlikes({ words, reader }: Props) {
 
         <div className="mt-6 grid w-full max-w-[560px] grid-cols-2 gap-px overflow-hidden rounded-xl bg-edge edge">
           <div className="grid gap-1 bg-plate px-4 py-4 @2xl:px-6">
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               <Trans>Looks like</Trans>
             </span>
             <span
               lang={reader}
-              className="relative w-fit text-2xl font-medium tracking-[-0.02em] text-text-2"
+              className="relative w-fit text-2xl font-medium tracking-[-0.02em] text-ink-secondary"
             >
               {current.looksLike}
               <motion.span
@@ -102,12 +102,12 @@ export function LookAlikes({ words, reader }: Props) {
                 className="absolute inset-x-[-4px] top-1/2 h-[3px] origin-left rounded-full bg-amber-mark rtl:origin-right"
               />
             </span>
-            <span lang="pl" className="text-sm text-muted">
+            <span lang="pl" className="text-sm text-ink-muted">
               <Trans>in Polish</Trans> {current.inPolish}
             </span>
           </div>
           <div className="grid gap-1 bg-plate px-4 py-4 @2xl:px-6">
-            <span className="text-sm text-muted">
+            <span className="text-sm text-ink-muted">
               <Trans>Means</Trans>
             </span>
             <motion.span
@@ -115,7 +115,7 @@ export function LookAlikes({ words, reader }: Props) {
               initial={false}
               animate={{ opacity: revealed ? 1 : 0, y: revealed ? 0 : 6 }}
               transition={{ duration: still ? 0 : 0.35, ease: EASE }}
-              className="text-2xl font-medium tracking-[-0.02em] text-text"
+              className="text-2xl font-medium tracking-[-0.02em] text-ink"
             >
               {current.meaning}
             </motion.span>
@@ -128,7 +128,7 @@ export function LookAlikes({ words, reader }: Props) {
           type="button"
           onClick={play}
           aria-label={t`Hear ${current.term}`}
-          className="me-2 inline-flex size-9 items-center justify-center rounded-full bg-plate text-text-2 edge hoverable:hover:text-text"
+          className="me-2 inline-flex size-9 items-center justify-center rounded-full bg-plate text-ink-secondary edge hoverable:hover:text-ink"
         >
           <Volume2 aria-hidden="true" className="size-4" />
         </button>
@@ -143,7 +143,7 @@ export function LookAlikes({ words, reader }: Props) {
               setBeat(i * 2 + 1);
             }}
             className={clsx(
-              "relative h-9 rounded-full px-3.5 text-md text-muted transition-colors duration-200 hoverable:hover:text-text aria-pressed:text-text",
+              "relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink",
             )}
           >
             {i === at && (

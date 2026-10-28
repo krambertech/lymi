@@ -163,7 +163,7 @@ export function SampleCard({
   const { t } = useLingui();
   if (!sample) {
     return (
-      <div className="grid min-h-40 place-items-center rounded-lg bg-plate-2 p-5 text-center text-base text-muted">
+      <div className="grid min-h-40 place-items-center rounded-lg bg-plate-nested p-5 text-center text-base text-ink-muted">
         {loading ? (
           <Trans>Getting a card ready…</Trans>
         ) : error ? (
@@ -191,7 +191,7 @@ export function SampleCard({
   return (
     <div className={clsx("grid gap-3 transition-opacity duration-150", loading && "opacity-60")}>
       <p
-        className="text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-text [overflow-wrap:anywhere]"
+        className="text-3xl font-medium leading-[1.05] tracking-[-0.03em] text-ink [overflow-wrap:anywhere]"
         dir="auto"
       >
         {sample.term}
@@ -201,13 +201,13 @@ export function SampleCard({
         <p
           className={clsx(
             "min-w-0 flex-1 text-xl leading-snug [overflow-wrap:anywhere]",
-            sample.meaning ? "text-text" : "text-muted",
+            sample.meaning ? "text-ink" : "text-ink-muted",
           )}
         >
           {sample.meaning ?? <Trans>No meaning</Trans>}
         </p>
         {sample.picture && (
-          <span className="grid size-14 shrink-0 place-items-center rounded-md bg-plate-2 text-muted">
+          <span className="grid size-14 shrink-0 place-items-center rounded-md bg-plate-nested text-ink-muted">
             <ImageIcon className="size-5" aria-hidden="true" />
             <span className="sr-only">
               <Trans>Has a picture</Trans>
@@ -220,8 +220,8 @@ export function SampleCard({
           {rows.map(([label, value]) =>
             value ? (
               <div key={label} className="grid gap-0.5">
-                <dt className="text-sm text-muted">{label}</dt>
-                <dd className="line-clamp-3 whitespace-pre-line text-text-2 [overflow-wrap:anywhere]">
+                <dt className="text-sm text-ink-muted">{label}</dt>
+                <dd className="line-clamp-3 whitespace-pre-line text-ink-secondary [overflow-wrap:anywhere]">
                   {value}
                 </dd>
               </div>
@@ -230,7 +230,7 @@ export function SampleCard({
         </dl>
       )}
       {sample.modes.length > 1 && (
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           <Trans>Asked both ways: from the term, and from the meaning.</Trans>
         </p>
       )}
@@ -318,8 +318,8 @@ export function FieldsDialog({
                 className="grid grid-cols-[1fr_minmax(9rem,auto)] items-end gap-3"
               >
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-text">{field}</p>
-                  <p className="truncate text-sm text-muted">
+                  <p className="text-sm font-medium text-ink">{field}</p>
+                  <p className="truncate text-sm text-ink-muted">
                     {example[i] ||
                       (source !== "anki" ? t`Empty in the first card` : t`Empty in the first note`)}
                   </p>
@@ -463,7 +463,7 @@ export function ImportSources({
             <>
               <span className="grid min-w-0 flex-1 gap-0.5">
                 <span className="text-md font-medium">{SOURCE_NAMES[source]}</span>
-                <span className="text-sm text-muted text-pretty">{detail}</span>
+                <span className="text-sm text-ink-muted text-pretty">{detail}</span>
               </span>
               <Go />
             </>,

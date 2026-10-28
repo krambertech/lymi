@@ -33,7 +33,7 @@ export function ClearText({ value, onClear }: { value: string; onClear: () => vo
       hitSlop={8}
       className="size-7 items-center justify-center"
     >
-      <Icon name="close" size={18} colour={p.muted} />
+      <Icon name="close" size={18} colour={p["ink-muted"]} />
     </Pressable>
   );
 }
@@ -83,7 +83,7 @@ export function SearchBar({
           paddingHorizontal: 14,
         }}
       >
-        <Icon name="search" size={18} colour={p.muted} />
+        <Icon name="search" size={18} colour={p["ink-muted"]} />
         <TextInput
           autoFocus
           value={value}
@@ -95,7 +95,7 @@ export function SearchBar({
             if (!value.trim()) close();
           }}
           placeholder={placeholder}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={placeholder}
           // What is searched is mostly in the language being learned, which the dictionary gets wrong.
           autoCapitalize="none"
@@ -103,8 +103,8 @@ export function SearchBar({
           spellCheck={false}
           returnKeyType="search"
           clearButtonMode="while-editing"
-          selectionColor={p.text}
-          className="flex-1 font-sans text-text"
+          selectionColor={p.ink}
+          className="flex-1 font-sans text-ink"
           style={{ fontSize: 17 }}
           maxFontSizeMultiplier={inputCap(17)}
         />

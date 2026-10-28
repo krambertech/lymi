@@ -398,8 +398,8 @@ function Composer() {
           ) : (
             <View className="items-start gap-4 px-5 pt-4">
               <View className="flex-row items-start gap-2">
-                <Icon name="alert" size={16} colour={p.muted} />
-                <Text className="flex-1 text-base text-muted">
+                <Icon name="alert" size={16} colour={p["ink-muted"]} />
+                <Text className="flex-1 text-base text-ink-muted">
                   {t`Cards go in a deck you own. Create one first.`}
                 </Text>
               </View>

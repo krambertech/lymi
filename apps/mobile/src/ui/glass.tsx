@@ -77,7 +77,7 @@ export function GlassButton({
 }: GlassButtonProps) {
   const p = usePalette();
   const lit = primary && !disabled;
-  const ink = disabled ? p.muted : lit ? p["amber-ink"] : p.text;
+  const ink = disabled ? p["ink-muted"] : lit ? p["amber-ink"] : p.ink;
   return (
     <Press
       onPress={onPress}
@@ -122,11 +122,11 @@ export function GlassPill({ icon, children }: { icon: IconName; children: string
         maxWidth: 220,
       }}
     >
-      <Icon name={icon} size={18} colour={p["text-2"]} />
-      <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+      <Icon name={icon} size={18} colour={p["ink-secondary"]} />
+      <Text className="shrink text-md font-medium text-ink" numberOfLines={1}>
         {children}
       </Text>
-      <Icon name="down" size={16} colour={p.muted} />
+      <Icon name="down" size={16} colour={p["ink-muted"]} />
     </GlassSurface>
   );
 }

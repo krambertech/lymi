@@ -26,10 +26,10 @@ const html = `<!doctype html>
   html, body { margin: 0; width: 640px; height: 400px; overflow: hidden; }
   body {
     background:
-      radial-gradient(circle 170px at 180px 214px, var(--pool), transparent 72%),
+      radial-gradient(circle 170px at 180px 214px, var(--lantern-pool), transparent 72%),
       radial-gradient(circle 300px at 180px 214px, var(--amber-soft), transparent 80%),
       var(--canvas);
-    color: var(--text); font-family: Onest, sans-serif; -webkit-font-smoothing: antialiased;
+    color: var(--ink); font-family: Onest, sans-serif; -webkit-font-smoothing: antialiased;
     position: relative;
   }
   h1 { position: absolute; inset: 64px 0 auto; margin: 0; text-align: center;
@@ -47,7 +47,7 @@ const html = `<!doctype html>
       </linearGradient>
     </defs>
     <!-- Where to let go: a drop target around the folder Finder draws. -->
-    <rect x="386" y="142" width="148" height="170" rx="30" stroke="var(--edge-2)" stroke-width="1.5" stroke-dasharray="5 6"/>
+    <rect x="386" y="142" width="148" height="170" rx="30" stroke="var(--edge-strong)" stroke-width="1.5" stroke-dasharray="5 6"/>
     <path d="M248 218 C286 188 336 188 370 212" stroke="url(#travel)" stroke-width="3.5" stroke-linecap="round"/>
     <path d="M367.2 201.8 L371.5 213 L359.5 213.3" stroke="var(--amber-mark)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>

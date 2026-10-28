@@ -16,7 +16,7 @@ const MONTH = "000000001111101110111110111110"
 
 /** A name under a specimen, in the room's own muted ink. */
 function Caption({ children }: { children: ReactNode }) {
-  return <span className="text-xs text-muted">{children}</span>;
+  return <span className="text-xs text-ink-muted">{children}</span>;
 }
 
 function Labelled({ label, children }: { label: ReactNode; children: ReactNode }) {
@@ -50,11 +50,11 @@ export function Surfaces() {
                 </div>
               </Labelled>
               <Labelled label="Field · never lifts">
-                <div className="edge grid h-11 items-center rounded-md bg-plate px-3.5 text-sm text-muted [--lift:0_0_#0000]">
+                <div className="edge grid h-11 items-center rounded-md bg-plate px-3.5 text-sm text-ink-muted [--lift:0_0_#0000]">
                   Search
                 </div>
               </Labelled>
-              <Labelled label="Chosen · bg-chosen in a track">
+              <Labelled label="Chosen · bg-plate-chosen in a track">
                 <Segmented
                   size="sm"
                   label="Theme"
@@ -74,7 +74,7 @@ export function Surfaces() {
 
       <Sub
         title="Hover"
-        note="Something with a fill and a hairline strengthens to edge-2 and lays veil over its own fill, so it darkens from whatever fill it has. Something with no fill at rest fills with bg-hover."
+        note="Something with a fill and a hairline strengthens to edge-strong and lays veil over its own fill, so it darkens from whatever fill it has. Something with no fill at rest fills with bg-plate-hover."
       >
         <Pair>
           {() => (
@@ -82,15 +82,15 @@ export function Surfaces() {
               <Labelled label="Plate · rest, then hovered">
                 <div className="grid gap-2">
                   <div className="edge h-12 rounded-lg bg-plate" />
-                  <div className="edge-2 veil h-12 rounded-lg bg-plate" />
+                  <div className="edge-strong veil h-12 rounded-lg bg-plate" />
                 </div>
               </Labelled>
               <Labelled label="Ghost · rest, then hovered">
                 <div className="grid gap-2">
-                  <div className="grid h-12 items-center rounded-md px-3 text-sm text-text-2">
+                  <div className="grid h-12 items-center rounded-md px-3 text-sm text-ink-secondary">
                     Cancel
                   </div>
-                  <div className="grid h-12 items-center rounded-md bg-hover px-3 text-sm text-text">
+                  <div className="grid h-12 items-center rounded-md bg-plate-hover px-3 text-sm text-ink">
                     Cancel
                   </div>
                 </div>
@@ -116,9 +116,9 @@ export function Surfaces() {
                   <div
                     className={clsx(
                       "flex h-10 items-center rounded-sm px-2.5 text-base",
-                      state === "current" && "edge-inset bg-rail-chosen text-text",
-                      state === "hovered" && "bg-rail-hover text-text",
-                      state === "rest" && "text-text-2",
+                      state === "current" && "edge-inset bg-rail-chosen text-ink",
+                      state === "hovered" && "bg-rail-hover text-ink",
+                      state === "rest" && "text-ink-secondary",
                     )}
                   >
                     {name}
@@ -142,7 +142,7 @@ export function Surfaces() {
                   <Lantern className="-my-3 -ms-3 size-20" progress={0.6} flicker glow />
                   <span className="grid gap-1">
                     <span className="text-4xl font-medium leading-none tabular-nums">9</span>
-                    <span className="text-md text-text-2">cards due today</span>
+                    <span className="text-md text-ink-secondary">cards due today</span>
                   </span>
                 </div>
                 <Button variant="primary" size="lg" className="w-full">

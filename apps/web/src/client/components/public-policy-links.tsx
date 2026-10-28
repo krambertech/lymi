@@ -5,11 +5,11 @@ import { localizedSiteUrl, publicSiteUrl } from "../lib/origins";
 export function PublicPolicyLinks({ className = "" }: { className?: string }) {
   const { t, i18n } = useLingui();
   const linkClass =
-    "rounded-xs underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text hoverable:hover:decoration-current";
+    "rounded-xs underline decoration-edge-strong underline-offset-2 hoverable:hover:text-ink hoverable:hover:decoration-current";
   return (
     <nav
       aria-label={t`Policies and support`}
-      className={`flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted ${className}`}
+      className={`flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-ink-muted ${className}`}
     >
       <a href={localizedSiteUrl("/privacy", i18n.locale)} className={linkClass}>
         <Trans>Privacy</Trans>

@@ -17,7 +17,7 @@ interface Props {
 export function LandingLayout({ page, hero, children }: Props) {
   const openAppUrl = openLymiUrl();
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
       <header>
         <SiteNav openAppUrl={openAppUrl} current={page} />
         {hero}

@@ -173,8 +173,8 @@ function AidLine({ step }: { step: AidStep }) {
   const { i18n } = useLingui();
   const { name, icon: Icon } = STEPS[step.aid];
   return (
-    <p className="flex items-start gap-2 text-md leading-snug text-text-2">
-      <Icon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+    <p className="flex items-start gap-2 text-md leading-snug text-ink-secondary">
+      <Icon className="mt-[3px] size-4 shrink-0 text-ink-muted" aria-hidden="true" />
       <span className="min-w-0 [overflow-wrap:anywhere]">
         <span className="sr-only">{i18n._(name)} </span>
         {step.text}

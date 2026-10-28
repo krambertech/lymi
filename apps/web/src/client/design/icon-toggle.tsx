@@ -29,7 +29,7 @@ export function IconToggle<T extends string>({
         const chosen = next[0];
         if (chosen !== undefined && chosen !== value) onChange(chosen);
       }}
-      className="edge gap-0.5 rounded-full bg-plate-2 p-0.5"
+      className="edge gap-0.5 rounded-full bg-plate-nested p-0.5"
     >
       <ToggleGroupIndicator className="edge inset-y-0.5 rounded-full bg-plate" />
       {options.map((o) => (

@@ -79,7 +79,7 @@ export function Lantern({
   const glowLevel = useTransform(() => glowFor(size.get()) + breath.get() * 0.45);
 
   const cls = clsx(
-    "lantern shrink-0 select-none overflow-visible text-metal",
+    "lantern shrink-0 select-none overflow-visible text-lantern-metal",
     !title && "pointer-events-none",
     className,
     flicker && "lantern-flicker",

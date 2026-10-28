@@ -190,7 +190,7 @@ function CropStage({ image, onCancel, onSave, pending, error }: Props & { image:
         onKeyDown={onKeyDown}
         // Moving the photo inside the phone's drawer must not swipe the drawer away.
         data-base-ui-swipe-ignore=""
-        className="edge relative mx-auto aspect-square w-full max-w-80 cursor-grab touch-none select-none overflow-hidden rounded-lg bg-plate-2 active:cursor-grabbing"
+        className="edge relative mx-auto aspect-square w-full max-w-80 cursor-grab touch-none select-none overflow-hidden rounded-lg bg-plate-nested active:cursor-grabbing"
       >
         <img
           ref={imgRef}
@@ -212,11 +212,11 @@ function CropStage({ image, onCancel, onSave, pending, error }: Props & { image:
         {/* The circle is the avatar; the dimmed corners are what gets cut away. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_0_100vmax_var(--scrim),inset_0_0_0_1px_var(--edge-2)]"
+          className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_0_100vmax_var(--scrim),inset_0_0_0_1px_var(--edge-strong)]"
         />
       </div>
 
-      <p id={hintId} className="text-center text-sm text-muted">
+      <p id={hintId} className="text-center text-sm text-ink-muted">
         {coarse ? (
           <Trans>Drag to move the photo. Pinch or use the slider to zoom.</Trans>
         ) : (

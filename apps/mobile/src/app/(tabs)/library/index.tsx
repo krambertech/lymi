@@ -93,7 +93,7 @@ export default function Library() {
             <ListRow
               first={groups.loose.length === 0}
               title={t`New deck`}
-              mark={<Icon name="plus" size={16} colour={p["text-2"]} strokeWidth={2.25} />}
+              mark={<Icon name="plus" size={16} colour={p["ink-secondary"]} strokeWidth={2.25} />}
               end="none"
               onPress={newDeck}
             />
@@ -146,13 +146,13 @@ function SeriesGroup({
       <View className="flex-row items-center gap-2 pb-3 ps-1 pt-2">
         <View className="flex-1 gap-0.5">
           <Text
-            className="text-lg font-medium text-text"
+            className="text-lg font-medium text-ink"
             accessibilityRole="header"
             numberOfLines={1}
           >
             {seriesName}
           </Text>
-          <Text className="text-base text-muted">
+          <Text className="text-base text-ink-muted">
             {t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(cards, { one: "# card", other: "# cards" })}`}
           </Text>
         </View>

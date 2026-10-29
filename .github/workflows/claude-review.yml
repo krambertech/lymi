@@ -1,0 +1,84 @@
+name: Claude review
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    if: >-
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/review' &&
+      github.event.comment.author_association == 'OWNER'
+    # Job-level, so comments that skip the job never cancel a review in progress.
+    concurrency:
+      group: claude-review-${{ github.event.issue.number }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Pin the head commit
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          head_repo=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER" --jq .head.repo.full_name)
+          if [[ "$head_repo" != "$REPOSITORY" ]]; then
+            echo "The /review command only supports branches in $REPOSITORY."
+            exit 1
+          fi
+          echo "sha=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER" --jq .head.sha)" >> "$GITHUB_OUTPUT"
+          gh api "repos/$REPOSITORY/issues/comments/$COMMENT_ID/reactions" -f content=eyes > /dev/null
+
+      # The rules come from main, so a pull request is never reviewed by its own edits to them.
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.pr.outputs.sha }}
+          path: pr
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Bills Kateryna's Claude subscription through a `claude setup-token` token; no API key.
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.issue.number }}
+            HEAD COMMIT: ${{ steps.pr.outputs.sha }}
+
+            Review this pull request at HEAD COMMIT by following .agents/skills/review-pr/SKILL.md exactly.
+            The workspace root is main: read the skill, REVIEW.md, AGENTS.md, CONTEXT.md and the design files from there.
+            The pull request is checked out at ./pr: review its code there, and run git commands with `git -C pr`.
+            Post inline comments with commit_id set to HEAD COMMIT, and one summary comment, as the skill says.
+            Never edit files, push, approve or merge.
+          claude_args: >-
+            --max-turns 80
+            --allowedTools "Read,Glob,Grep,Task,Agent,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr comment:*),Bash(gh issue view:*),Bash(git -C pr diff:*),Bash(git -C pr log:*),Bash(git -C pr show:*),mcp__github_inline_comment__create_inline_comment"
+            --disallowedTools "Read(//proc/**),Read(//home/runner/.claude/**),Read(//home/runner/work/_temp/**)"
+
+      - name: Say on the pull request that the review did not finish
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh pr comment "$PR_NUMBER" --repo "$REPOSITORY" --body "The Claude review did not finish ($JOB_STATUS): $RUN_URL"

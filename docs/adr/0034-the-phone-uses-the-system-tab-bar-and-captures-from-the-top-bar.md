@@ -15,7 +15,7 @@ Issue #549 asked for a tab bar and capture button that feel like iOS 26 glass ra
 
 - **iOS's own tab bar, capture in the top bar:** accepted. The lens, the press, Reduce Transparency and the bar before iOS 26 are the system's, and the tab bar's accessory carries a deck's review as a mini player. Unselected tabs take iOS's own monochrome style rather than Lymi's muted ink.
 - **A custom glass bar with capture as an amber circle beside it:** rejected. It keeps full control of colour and the capture circle in the thumb's reach, but the selection's motion stays an imitation, and capture sits in the place iOS gives search.
-- **The system bar with capture laid over its search slot:** rejected. It depends on matching where iOS draws that slot, making it fragile when system layout changes.
+- **The system bar with capture laid over its search slot:** rejected. It depends on matching where iOS draws that slot, and it looked out of place in the system bar.
 - **Capture inside the bar, between the tabs:** rejected. It mixes an action into navigation and puts glass on glass.
 
 ## Consequences

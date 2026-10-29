@@ -20,7 +20,7 @@ A price around €4 a month with an annual option is a hypothesis. A €4 charge
 
 ## Provider: Stripe Managed Payments
 
-Stripe Managed Payments makes Stripe the merchant of record, so it collects and files VAT and sales tax worldwide. It had the lowest monthly fee among the merchant-of-record options compared on 11 October 2026, and it works with the first-party `@better-auth/stripe` plugin, which runs on Workers.
+Stripe Managed Payments makes Stripe the merchant of record, so it collects and files VAT and sales tax worldwide. It had the lowest fee on a €4 monthly charge among the merchant-of-record options compared on 11 October 2026, and it works with the first-party `@better-auth/stripe` plugin, which runs on Workers.
 
 | Option | Fee | On €4 a month | On €36 a year |
 |---|---|---|---|

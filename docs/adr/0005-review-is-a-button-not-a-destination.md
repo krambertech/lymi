@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-06
 ---
 
-# Review starts from Today and Library
+# Review is a button; Settings and Activity live under You
 
 The navigation carries two destinations: Today and Library. Review is the primary button on both, never a tab. Settings, Activity and Archived live behind one profile screen at `/you`, reached from the avatar on the phone and the sidebar's profile row on desktop. On the phone the navigation is a floating frosted pill of two items; on desktop it is a sidebar inside a shell capped at 1120 px and centred.
 

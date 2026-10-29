@@ -6,7 +6,7 @@ decision: Light carries Lymi's character on every surface; the moments are in mo
 
 # Lit design language
 
-The lantern is small at 44 px, the light theme gives it little contrast, and touch interactions do not affect the flame. This proposal makes light more visible in the web app, phone app and site through a larger lantern, responses to learner actions and light that spreads across the screen at the end of a review. Flighty's departure board, Things' checkbox and Tide Guide's changing sky are references for using one visual idea consistently.
+Lymi's interface feels generic and forgettable. Its lantern is only 44 px, the light theme is a conventional warm near-white, and touch interactions do not affect the flame. This proposal makes light more visible in the web app, phone app and site through a larger lantern, responses to learner actions and light that spreads across the screen at the end of a review. Flighty's departure board, Things' checkbox and Tide Guide's changing sky are references for using one visual idea consistently.
 
 ## Decided
 

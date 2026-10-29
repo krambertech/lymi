@@ -10,7 +10,7 @@ A card added through the API or MCP is saved immediately, with `created_by` set 
 ## Considered options
 
 - A `proposals` table with approve and reject, written by MCP and the web. Rejected: a second lifecycle for the same content, a second screen to keep empty, and a "pending" state the review queue has to know about.
-- Temporary candidates the client edits and saves in one screen. Rejected: MCP clients have nowhere to store a candidate, and learners need to inspect cards on their phone after adding them on a laptop.
+- Temporary candidates the client edits and saves in one screen. Rejected: MCP clients have nowhere to store a candidate, and learners capture on a laptop and review on their phone.
 
 ## Consequences
 

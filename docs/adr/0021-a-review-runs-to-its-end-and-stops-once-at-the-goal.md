@@ -3,9 +3,9 @@ status: accepted
 date: 2026-09-19
 ---
 
-# The day's draw pauses once at the daily goal
+# The day's draw stops once at the daily goal
 
-A review runs until no cards remain in its scope. The day's draw pauses once at the daily goal. Every ending, including X, opens the same success screen and reports changes since the previous end screen. The ten-card round is gone.
+A review runs until no cards remain in its scope. The day's draw stops once at the daily goal. Every ending, including X, opens the same success screen and reports changes since the previous end screen. The ten-card round is gone.
 
 The draw, the return cap and the day rules in [ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md) do not change. [#333](https://github.com/krambertech/lymi/issues/333) tracks the work.
 

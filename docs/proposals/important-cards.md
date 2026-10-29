@@ -22,7 +22,7 @@ A learner can mark a card as important, and on a day with more to review than th
 | Memrise | Nothing; the app picks "difficult words" | A separate practice |
 | Readwise | Frequency tuning per source | How often a source resurfaces, as a weight |
 
-Among the apps compared here, only SuperMemo uses priority levels. A binary mark fits [PRODUCT.md](../../PRODUCT.md)'s limit on scheduling settings.
+Among the apps compared here, only SuperMemo uses priority levels. A binary mark fits [PRODUCT.md](../../PRODUCT.md)'s rule against excessive settings.
 
 **Our own decisions.** The draw is a weighted random pick, not a sorted list, and a weight of w makes a card w times as likely ([ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)). [ADR 0010](../adr/0010-the-review-queue-is-ordered-by-retrievability.md) rejected letting the learner choose the order, because it asks for an opinion about the scheduler.
 

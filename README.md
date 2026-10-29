@@ -79,6 +79,28 @@ pnpm run deploy:site # deploy the public Worker; user-owned production action
 pnpm run deploy:product # deploy the product Worker; user-owned production action
 ```
 
+## Generated files
+
+Edit the source and re-run its generator, because the next run overwrites a hand edit.
+
+| Generated | Regenerate after | With |
+| --- | --- | --- |
+| everything under `migrations/`, `scripts/migration-manifest.json` | a schema change | `pnpm db:generate` |
+| `packages/core/src/schema/auth.ts` | a Better Auth config change | `pnpm --filter @lymi/web auth:schema` |
+| both `worker-configuration.d.ts` files | a Wrangler binding change | that workspace's `cf-typegen` |
+| `apps/web/src/client/routeTree.gen.ts` | adding or renaming a file in `apps/web/src/client/routes` | `pnpm dev` or `pnpm build`, through the TanStack Router plugin |
+| `packages/core/simulation/results.json` | changing the draw, the scheduler or a year-long simulation | `pnpm --filter @lymi/core simulate` |
+| `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css`, `DESIGN.md`'s frontmatter | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
+| `packages/design/fonts/onest-cyrillic-wght-normal.woff2` | updating `@fontsource-variable/onest` | `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) |
+| `apps/mobile/assets/symbols/` | changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts` | `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) |
+| `apps/desktop/assets/trayTemplate.png`, `trayTemplate@2x.png` | changing `tray.svg` | `pnpm --filter @lymi/desktop tray-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/icon.png`, `icon.icns` | changing `icon.svg` | `pnpm --filter @lymi/desktop app-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/dmg-background.tiff` | changing the download window | `pnpm --filter @lymi/desktop dmg-background` |
+| the clips in `apps/site/public/audio/hand/` | changing a landing card's term | `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) |
+| recorded live runs in `apps/web/src/server/enrichment/runs/` | any change to what the enrichment model reads | `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) |
+
+For the phone's frozen API contracts, follow [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md).
+
 ## First deploy checklist
 
 1. `wrangler login`

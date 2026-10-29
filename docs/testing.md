@@ -2,6 +2,24 @@
 
 Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
 
+## Review coverage
+
+Choose the rows the change can affect. Feature verification proves the learner's outcome; interface review checks the quality and accessibility of the changed experience; automated gates check the contracts they execute. Reuse evidence across them instead of driving the same state repeatedly.
+
+| When the change touches | Check | Owning guidance |
+| --- | --- | --- |
+| A learner flow or its recovery | Complete the affected path and confirm stored state; cover the changed failure, offline, retry or resume paths | [verify](../.agents/skills/verify/SKILL.md) and its feature recipes |
+| Controls, forms or overlays | Names, labels, keyboard and focus behavior, validation, pending submission and duplicate actions | [review-ui checks](../.agents/skills/review-ui/references/checks.md#interaction-and-accessibility) |
+| Layout, content or themes | The viewports, input methods, themes, locales and data states selected by the diff | [review-ui coverage](../.agents/skills/review-ui/SKILL.md#choose-the-coverage) |
+| Motion, assets, loading or repeated work | Reduced motion, layout stability and cleanup; measure claims about speed or responsiveness | [review-ui checks](../.agents/skills/review-ui/references/checks.md#components-and-performance) and [motion](../.agents/skills/review-ui/references/checks.md#motion) |
+| API, persistence or shared client behavior | Validation, authorization, audit, compatibility and retry behavior at the cheapest layer that observes the change | [Test layers](#where-a-test-goes), [Workers runtime](#workers-runtime-tests) and [phone contracts](#the-phone-app) |
+| Public pages or their routing | Titles, descriptions, canonical links, indexing and share previews, including redirects between origins | [Site structure](site-structure.md) and the affected site's E2E assertions |
+| Build configuration, developer tooling or public assets | Production excludes developer controls, private fixtures and secrets; origin and package boundaries still hold | `pnpm check:boundaries` and [deployment checks](site-structure.md#build-configuration-and-release-checks) |
+| Measured behavior | The product question, event owner, allowed properties, privacy, failure and duplicate paths | [Analytics](analytics.md) |
+| Native or installed-phone behavior | The affected feature on the phone, supported API contracts and any release or device-specific checks | [verify-phone](../.agents/skills/verify-phone/SKILL.md) and [phone releases](phone-release.md) |
+
+For a launch or release sweep, include shared entry points, initial loading, fonts and theme initialization, and public landing pages even when the final diff is narrow. Keep ordinary PR review scoped to the change. Record relevant checks and missing evidence in the PR's existing Verification section, distinguishing source inspection, browser or Simulator observation, and real-device checks; emulation does not establish hardware behavior.
+
 ## Commands
 
 ```bash
@@ -66,11 +84,11 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
 - **Pull request** and **Main** run `pnpm verify` in CI's `quality` job, with the component instances and journeys that `scripts/ci-plan.mjs` selects.
 
-`scripts/test-plan.mjs` owns two path lists, and both gates read it. A diff that reaches `components/ui/`, a `*.browser.test.tsx` file or `design/forced-states.tsx` needs every component instance: the primitives adapt to the device, and nothing else can break the touch shape. A diff that reaches a file the tests depend on without importing it, such as a migration, a `.po` catalog, a stylesheet, the test setup or a workspace config, hands over to the full gate, because `vitest --changed` follows imports and would miss it. Add a path to that list when a test starts depending on one.
+`scripts/test-plan.mjs` owns two path lists, and both gates read it. A diff that reaches `components/ui/`, a `*.browser.test.tsx` file or `apps/web/src/client/design/forced-states.tsx` needs every component instance: the primitives adapt to the device, and nothing else can break the touch shape. A diff that reaches a file the tests depend on without importing it, such as a migration, a `.po` catalog, a stylesheet, the test setup or a workspace config, hands over to the full gate, because `vitest --changed` follows imports and would miss it. Add a path to that list when a test starts depending on one.
 
 `LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds keeps `pnpm verify` as its build command, so production still fails closed on the full gate.
 
-The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `scripts/launch-check.js` passes once a product page has the bridge.
+The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `apps/desktop/scripts/launch-check.js` passes once a product page has the bridge.
 
 ## Where a test goes
 
@@ -269,7 +287,7 @@ To run it on your Mac, build the Release app against a local Worker, install it 
 ```bash
 cd apps/mobile
 EXPO_PUBLIC_API_URL=http://localhost:5241 LANG=en_US.UTF-8 npx expo run:ios --configuration Release --device <udid> --no-bundler
-API_URL=http://localhost:5241 DEVICE=<udid> pnpm e2e
+API_URL=http://localhost:5241 DEVICE=<udid> pnpm --filter @lymi/mobile e2e
 ```
 
 Maestro needs Java 17 or later on `JAVA_HOME`.

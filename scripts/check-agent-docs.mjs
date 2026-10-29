@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Fails when an agent doc names a path, pnpm script or skill that does not exist, when the verify
+// Fails when agent guidance names a path, pnpm script or skill that does not exist, when the verify
 // skill's feature map and its files disagree, when a product route has no feature entry or reason,
 // or when an agent guide outgrows its budget. External links and whether the prose is true are out
 // of scope. Usage: node scripts/check-agent-docs.mjs
@@ -12,8 +12,8 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 
-/** Bytes every session loads; lower the root's once #991 moves area rules into nested guides. */
-export const BUDGET = { root: 18_432, nested: 8_192 };
+// Keep shared instructions small; area rules belong in nested guides.
+export const BUDGET = { root: 12_288, nested: 8_192 };
 
 const SKILLS = ".agents/skills";
 const VERIFY = `${SKILLS}/verify`;
@@ -216,13 +216,14 @@ export function pnpmScripts(text) {
   return found;
 }
 
-/** Agent docs: the root guide, every nested AGENTS.md, and every Markdown file in the skills. */
+/** Guides, skills and the reference docs that own their commands and PR rules. */
 export function agentDocs(tree) {
   const nested = tree.files.filter((file) => file.endsWith("/AGENTS.md")).sort();
   const skills = tree.files
     .filter((file) => file.startsWith(`${SKILLS}/`) && file.endsWith(".md"))
     .sort();
-  return { nested, docs: ["AGENTS.md", ...nested, ...skills] };
+  const references = ["README.md", "docs/git-workflow.md"].filter((file) => tree.exists(file));
+  return { nested, docs: ["AGENTS.md", ...nested, ...skills, ...references] };
 }
 
 function checkReferences(tree, doc, scripts, skills) {

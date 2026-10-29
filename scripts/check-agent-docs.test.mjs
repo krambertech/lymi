@@ -95,6 +95,19 @@ test("a renamed file fails for both a code path and a link", () => {
   ]);
 });
 
+test("commands and links stay checked after moving into reference docs", () => {
+  assert.deepEqual(
+    run({
+      "README.md": "Run `pnpm generate:gone`.",
+      "docs/git-workflow.md": "Read [the template](../missing-template.md).",
+    }),
+    [
+      "README.md:1: pnpm generate:gone: the root package.json has no such script; name the script it was renamed to",
+      "docs/git-workflow.md:1: link to ../missing-template.md, which does not exist: point it at the file's new path",
+    ],
+  );
+});
+
 test("a skill's relative link and a named skill must exist", () => {
   const found = run({
     ".agents/skills/local-dev/SKILL.md": "# Local dev\n\nThen use the verifier skill.\n",

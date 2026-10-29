@@ -2,6 +2,24 @@
 
 Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
 
+## Review coverage
+
+Choose the rows the change can affect. Feature verification proves the learner's outcome; interface review checks the quality and accessibility of the changed experience; automated gates check the contracts they execute. Reuse evidence across them instead of driving the same state repeatedly.
+
+| When the change touches | Check | Owning guidance |
+| --- | --- | --- |
+| A learner flow or its recovery | Complete the affected path and confirm stored state; cover the changed failure, offline, retry or resume paths | [verify](../.agents/skills/verify/SKILL.md) and its feature recipes |
+| Controls, forms or overlays | Names, labels, keyboard and focus behavior, validation, pending submission and duplicate actions | [review-ui checks](../.agents/skills/review-ui/references/checks.md#interaction-and-accessibility) |
+| Layout, content or themes | The viewports, input methods, themes, locales and data states selected by the diff | [review-ui coverage](../.agents/skills/review-ui/SKILL.md#choose-the-coverage) |
+| Motion, assets, loading or repeated work | Reduced motion, layout stability and cleanup; measure claims about speed or responsiveness | [review-ui checks](../.agents/skills/review-ui/references/checks.md#components-and-performance) and [motion](../.agents/skills/review-ui/references/checks.md#motion) |
+| API, persistence or shared client behavior | Validation, authorization, audit, compatibility and retry behavior at the cheapest layer that observes the change | [Test layers](#where-a-test-goes), [Workers runtime](#workers-runtime-tests) and [phone contracts](#the-phone-app) |
+| Public pages or their routing | Titles, descriptions, canonical links, indexing and share previews, including redirects between origins | [Site structure](site-structure.md) and the affected site's E2E assertions |
+| Build configuration, developer tooling or public assets | Production excludes developer controls, private fixtures and secrets; origin and package boundaries still hold | `pnpm check:boundaries` and [deployment checks](site-structure.md#build-configuration-and-release-checks) |
+| Measured behavior | The product question, event owner, allowed properties, privacy, failure and duplicate paths | [Analytics](analytics.md) |
+| Native or installed-phone behavior | The affected feature on the phone, supported API contracts and any release or device-specific checks | [verify-phone](../.agents/skills/verify-phone/SKILL.md) and [phone releases](phone-release.md) |
+
+For a launch or release sweep, include shared entry points, initial loading, fonts and theme initialization, and public landing pages even when the final diff is narrow. Keep ordinary PR review scoped to the change. Record relevant checks and missing evidence in the PR's existing Verification section, distinguishing source inspection, browser or Simulator observation, and real-device checks; emulation does not establish hardware behavior.
+
 ## Commands
 
 ```bash

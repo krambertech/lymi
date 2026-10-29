@@ -38,7 +38,7 @@ TanStack Query owns reads and caches. Shared API, query and response modules hav
 
 Use Tailwind v4 with Lymi tokens (`bg-plate`, `text-ink-secondary`, `border-edge`) and logical directions (`ms-`, `pe-`, `start-`, `text-start`). Raw hex, stock Tailwind colors and physical directions break themes or right-to-left layouts; `inset-x-0` and centering with `left-1/2` are allowed. `packages/design/tokens.css` owns the OKLCH values; regenerate its copies using the README's table.
 
-English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts. Localize complete sentences. Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`. Isolate learner text interpolated into messages, as `${{ term: isolate(term) }}`, to preserve right-to-left order. Run `pnpm i18n:extract` after string changes.
+English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts. Localize complete sentences; never build one from concatenated fragments or a ternary on `=== 1`. Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`. Isolate learner text interpolated into messages, as `${{ term: isolate(term) }}`, to preserve right-to-left order. Run `pnpm i18n:extract` after string changes.
 
 Edit a generated file's source and run its generator. Applied migrations are immutable. D1's `lower()` is ASCII-only; server SQL and new migrations must not use it to case-fold. Workers refuses `redirect: "error"` at runtime; reject unwanted redirects with `redirect: "manual"` and a `Location` check.
 

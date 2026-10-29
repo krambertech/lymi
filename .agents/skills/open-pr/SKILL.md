@@ -44,7 +44,9 @@ Continue only when the final diff is reviewable, required local checks pass and 
 
 Automatically reply to comments by other verified agents or bots on the PR being handled when a finding or question needs a response. Verify the target comment's author using GitHub bot/app metadata or an established agent-attribution convention; writing style alone is not evidence, and a human quoting an agent is still a human comment. Replies to humans, uncertain authors and unsolicited new comment threads require explicit, separate permission. Without it, continue authorized fixes and include the proposed response in the handoff.
 
-Resolve agent-only review threads after their findings are addressed or dismissed with evidence and any required reply is confirmed posted. A human-authored comment in a thread requires separate permission to resolve that thread, even when its original author was a bot. Automatic reply permission does not authorize dismissing a human review or approving the PR.
+Make at most two automatic replies per finding across pushes and related threads. If the disagreement remains, stop replying and hand both positions and their evidence to the user; a new push or thread does not reset the count.
+
+Automatically resolve only agent-only threads whose findings were fixed and whose required replies are confirmed posted. Leave declined findings open with the reason and evidence for human disposition, and summarize substantive disagreements in the PR's Verification section. A human-authored comment in a thread requires separate permission to resolve that thread, even when its original author was a bot. Automatic reply permission does not authorize dismissing a human review or approving the PR.
 
 For an authorized comment, lead with the defect or conclusion, cite the relevant code, check or reproduction, and give the smallest useful fix or reason for disagreement. Keep one actionable issue per inline comment and shared context in one top-level reply. Distinguish verified facts from judgment; skip filler, repeated status updates and rubber-stamp approvals.
 

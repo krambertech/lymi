@@ -222,7 +222,9 @@ export function agentDocs(tree) {
   const skills = tree.files
     .filter((file) => file.startsWith(`${SKILLS}/`) && file.endsWith(".md"))
     .sort();
-  const references = ["README.md", "docs/git-workflow.md"].filter((file) => tree.exists(file));
+  const references = ["README.md", "docs/git-workflow.md", "docs/testing.md"].filter((file) =>
+    tree.exists(file),
+  );
   return { nested, docs: ["AGENTS.md", ...nested, ...skills, ...references] };
 }
 
@@ -265,7 +267,12 @@ function checkReferences(tree, doc, scripts, skills) {
         }
       }
       // A bare script name such as `deploy:site`.
-      if (prose && /^[a-z][\w-]*(?::[\w-]+)+$/.test(span) && !allScripts.has(span)) {
+      if (
+        prose &&
+        /^[a-z][\w-]*(?::[\w-]+)+$/.test(span) &&
+        !/^(?:node|cloudflare):/.test(span) &&
+        !allScripts.has(span)
+      ) {
         at(
           number,
           `${span} is not a script in any package.json: name the script it was renamed to`,

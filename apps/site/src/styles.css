@@ -1728,3 +1728,45 @@ html:has(.deck-cards[open]) {
   font-family: "Kanji Chinese Forms", "PingFang SC", "Noto Sans SC", sans-serif;
   font-weight: 500;
 }
+
+/* The bar under a playing item on the homepage's stage; it runs out, and the next item comes up. */
+.landing-dwell {
+  animation-name: landing-dwell;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes landing-dwell {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+/* A stage holds still while the visitor points at it, focuses in it, or has scrolled it away. */
+.landing-dwell[data-paused],
+.landing-stage:hover .landing-dwell,
+.landing-stage:focus-within .landing-dwell {
+  animation-play-state: paused;
+}
+/* The ring the API diagram's lantern sends out, as if each request lit it. */
+.landing-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: landing-ring 2.6s var(--ease-out) infinite;
+}
+@keyframes landing-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-ring {
+    animation: none;
+  }
+}

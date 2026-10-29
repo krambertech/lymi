@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-19
 ---
 
-# A member catches up on card states at their next request
+# Members receive missing card states on request
 
 A change to a shared deck's cards writes states for the deck's owner only. Each member gets their missing states on their own next request that reads progress. Every reader still sees a row for every mode a learner is asked, so the draw, counts, stats, section gating and exports do not change.
 
@@ -25,7 +25,7 @@ Everything that reads progress assumes the row exists. The draw in [ADR 0019](00
 
 **When a caught-up state counts as added.** A state's `created_at` is when its card was created, or when the member joined if that was later. A state added at catch-up time would make a months-old card look new to the draw. The state is due from the catch-up, like any other new state.
 
-**Catch-up is not audited.** It writes rows every learner was already owed and changes nothing anyone chose, so it writes no Activity row. The change that raised the version is audited where it happened.
+**Catch-up is not audited.** It creates missing states for existing membership and changes no learner choices, so it writes no Activity row. The change that raised the version is audited where it happened.
 
 ## Considered options
 
@@ -39,7 +39,7 @@ Everything that reads progress assumes the row exists. The draw in [ADR 0019](00
 - A card write costs the same for a deck with 10,000 members as for a deck with none.
 - Members who never return get no new rows.
 - A member's first request after a change pays for that deck's insert. The cost is the same as joining: one statement per mode, over the deck's cards.
-- Requests that arrive together, such as the ones Today sends on open, can each run the same catch-up before any finishes. The inserts skip rows that exist, so the result is right, but the work repeats. A lock per membership would remove it if the cost ever shows.
+- Requests that arrive together, such as the ones Today sends on open, can each run the same catch-up before any finishes. The inserts skip rows that exist, so the result is right, but the work repeats. A lock per membership would remove it if repeated inserts become costly.
 - MCP catches up before every message, `initialize` and `tools/list` included, rather than per tool.
 - A new reader of progress outside the routes above must call `catchUpStates` first, or it shows a member's deck without the newest cards until they next open the app.
 - A mode turned on for an old card counts as added when the card was created, not when the mode was turned on. The owner's own rows still use the time of the change.

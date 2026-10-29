@@ -6,7 +6,7 @@ decision: "Every highlight through Smart add's reader; books in a learned langua
 
 # Cards from Readwise highlights
 
-A learner who reads in the language they are learning gets cards from what they mark while reading, without copying anything by hand. They paste their Readwise token into Settings once. From then on, Lymi pulls new highlights from the books they read in a language they learn, picks the term in each, and adds an ordinary card with the passage as its example. Activity lists every pull, so a wrong card is one archive away.
+A learner who reads in the language they are learning gets cards from what they mark while reading, without copying anything by hand. They paste their Readwise token into Settings once. From then on, Lymi pulls new highlights from the books they read in a language they learn, picks the term in each, and adds an ordinary card with the passage as its example. Activity lists the cards added by pulls so the learner can inspect or archive them.
 
 Readwise is the one connection that reaches Kindle (its phone app included), Kobo, Apple Books, Readwise Reader and Snipd. Kateryna accepted these decisions on 23 October 2026.
 
@@ -14,7 +14,7 @@ Readwise is the one connection that reaches Kindle (its phone app included), Kob
 
 Read on 23 October 2026 from [the API docs](https://readwise.io/api_deets), [the webhook docs](https://docs.readwise.io/readwise/docs/webhooks) and Readwise's help pages.
 
-- **A personal token is the only way in.** The learner copies it from `readwise.io/access_token`. `GET /api/v2/auth/` answers 204 for a valid one. There is no OAuth for third parties.
+- **Authentication uses a personal token.** The learner copies it from `readwise.io/access_token`. `GET /api/v2/auth/` answers 204 for a valid one. There is no OAuth for third parties.
 - **`GET /api/v2/export/` returns books with their highlights**, paged by `pageCursor`, filtered by `updatedAfter` and book `ids`. A book has `title`, `author` and `source`. A highlight has `text`, `note`, `tags`, `highlighted_at` and `is_deleted`. It has no tag filter, so following a tag means reading every new highlight.
 - **Lists allow 20 calls a minute per token**, with `Retry-After` on a 429. An incremental pull is usually one call.
 - **Webhooks exist but are manual.** The learner creates one at `readwise.io/webhook`, and the only highlight event is `readwise.highlight.created`. No API registers one.
@@ -35,7 +35,7 @@ A highlight is sometimes a word and usually a passage, so something has to pick 
 - A note that names a word overrides the reader. Text left after removing `.tags` is taken as the term.
 - A passage gets at most two terms, chosen against the deck's cards and the learner's Known cards. When the decision model is unsure, the passage adds nothing and counts as skipped.
 
-The alternative is to bring in only short highlights and highlights whose note names the term, with no model choosing anything. It is predictable, but it asks for exactly the manual step this feature exists to remove.
+The alternative accepts only short highlights and highlights whose note names the term. That avoids model selection but requires the learner to name a term in each longer passage.
 
 **The word is "extract", now in `CONTEXT.md`.** It is not enrichment, which fills fields on a card that already exists, and it is not a suggestion, because nothing waits to be accepted ([ADR 0001](../adr/0001-integration-cards-are-ordinary-cards.md)). ADR 0002 already says "extracts". A **Highlight** entry, for what the learner marked while reading, joins it when slice 1 ships.
 
@@ -51,7 +51,7 @@ The alternatives are a tag (`.lymi` on a Kindle note, `lymi` in Reader), which i
 
 ### How often Lymi pulls
 
-**Lymi pulls hourly, and Settings has Pull now.** The Worker's 15-minute cron picks connections due for a pull. Readwise itself syncs Kindle only a few times a day, so pulling more often buys nothing. A pull asks for highlights updated after the last pull and follows `pageCursor`. It waits out `Retry-After` on a 429.
+**Lymi pulls hourly, and Settings has Pull now.** The Worker's 15-minute cron picks connections due for a pull. Readwise itself syncs Kindle only a few times a day, so more frequent pulls would usually find no new Kindle highlights. A pull asks for highlights updated after the last pull and follows `pageCursor`. It waits out `Retry-After` on a 429.
 
 At connect the learner chooses **From now on** (the default) or **Everything so far**, with the count shown first. Everything so far runs as an import does, in a Workflow, with progress.
 
@@ -73,7 +73,7 @@ When Readwise refuses the token, pulls stop and the row says "Readwise no longer
 
 **Lymi builds no browser extension and relies on Readwise.** Our own reader of `read.amazon.com/notebook` would run only in desktop Chrome or Firefox, break whenever Amazon changes the page, still miss personal documents, and add a store listing to maintain.
 
-Kindle without Readwise belongs to the separate Mac proposal. A Kindle's `vocab.db` holds every word the learner looked up with the sentence it came from, which is closer to a card than any highlight. A `My Clippings.txt` import adapter is a cheap addition there, and it covers personal documents.
+Kindle without Readwise belongs to the separate Mac proposal. A Kindle's `vocab.db` holds every word the learner looked up with the sentence it came from, providing a term and example sentence directly. A `My Clippings.txt` import adapter can use the same pipeline, and it covers personal documents.
 
 ## The card
 
@@ -92,7 +92,7 @@ Lymi keeps the token encrypted with a Worker secret and never returns it to a cl
 
 ## Instrumentation
 
-The product question is whether reading feeds review: of cards from highlights, how many are reviewed within a week and how many are archived. It reuses `cards_added` with `source: readwise` and adds `readwise_connected`, `readwise_disconnected` and a server `readwise_pulled` with counts of highlights, cards, skipped and duplicates, never text.
+The product question is whether cards from reading lead to reviews: of cards from highlights, how many are reviewed within a week and how many are archived. It reuses `cards_added` with `source: readwise` and adds `readwise_connected`, `readwise_disconnected` and a server `readwise_pulled` with counts of highlights, cards, skipped and duplicates, never text.
 
 ## Delivery
 

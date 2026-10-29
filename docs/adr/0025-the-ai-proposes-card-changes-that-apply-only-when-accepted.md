@@ -3,9 +3,9 @@ status: withdrawn
 date: 2026-09-28
 ---
 
-# The AI proposes card changes that apply only when the learner accepts
+# AI card changes require learner approval
 
-Withdrawn on 11 October 2026. The diagnoses were rarely right, so review now offers an often-forgotten card with no hook a hook the learner writes, and the AI is back to enriching empty fields only ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)).
+Withdrawn on 11 October 2026. The diagnoses were rarely right, so review now lets the learner write a hook for an often-forgotten card that has none, and the AI is back to enriching empty fields only ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)).
 
 When a card turns often forgotten ([ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md)), the AI diagnoses it once: one likely cause and a drafted fix, or `unclear` with no fix. The fix may change text the learner already wrote, split the card, or add cards, so it never applies on its own. It waits until the learner accepts it. Accepting is the learner's write: its audit row names the learner as the actor, never the AI, so Activity treats it like any edit the learner makes in the app. Text the AI drafted is stored with source `ai`, and carries the AI badge, until the learner edits it. Until now the AI only filled empty fields ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)), and enrichment keeps that rule.
 
@@ -13,7 +13,7 @@ A diagnosis belongs to one learner and one revision of the card, and is stored o
 
 ## Context
 
-A card that keeps failing is usually a card that needs changing, not more drilling: two things on one card, a cue with more than one right answer, a pair the learner keeps mixing up, or nothing to connect the term to. Rules cannot see a missing anchor or an unnamed pair, and the learner cannot always say why a card will not stick. [Issue #401](https://github.com/krambertech/lymi/issues/401) has the causes, the fixes and the options it rejected.
+A card that keeps failing may have a problem more drilling will not fix: two things on one card, a cue with more than one right answer, a pair the learner keeps mixing up, or nothing to connect the term to. Rules cannot identify every missing association or pair of similar terms, and learners may not know why they keep forgetting a card. [Issue #401](https://github.com/krambertech/lymi/issues/401) has the causes, the fixes and the options it rejected.
 
 Enrichment can write without asking because it only fills what is empty, and the AI badge marks what it wrote. A fix rewrites the learner's own text, so a badge after the fact is not enough.
 
@@ -28,7 +28,7 @@ The same card fails for different reasons for different learners of a shared dec
 
 ## Consequences
 
-- The diagnosis runs in a Cloudflare Workflow after the draw that found the card, never inside the draw's latency. With no OpenAI key, nothing is written or queued.
+- The diagnosis runs in a Cloudflare Workflow after the draw that found the card, without delaying the draw. With no OpenAI key, nothing is written or queued.
 - The trigger is the first draw that sees the card often forgotten for a revision with no diagnosis. A card still often forgotten after a fix is accepted is diagnosed again for its new revision. Review offers that one only after the card's first grade was Forgot on `SLIPPING_FORGOTTEN_DAYS` more days since the last offer, so one fix never follows another at once.
 - `cards.revision` moves only when text an edition translates changes. Changing a card's language or review modes does not allow a new diagnosis.
 - A run that fails, or a Workflow that refuses the run, leaves its row at `failed`. A draw more than a day later moves it back to `working` and queues it once, and does the same for a row a cut-off run left `working`, so an outage delays a diagnosis rather than losing it.

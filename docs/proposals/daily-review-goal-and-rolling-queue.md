@@ -14,9 +14,9 @@ The learner chooses one daily goal measured in accepted, non-undone recall attem
 
 The review queue is not stored. Lymi derives the next card from the current cards, learner-local date, scope, and review log, so the same synced state produces the same next card after interruption or on another device. Weighted selection avoids turning capture order into a memorisation cue, while fixed slots keep new and older unseen material moving.
 
-Forgotten directions return at bounded intervals during the day. A sibling direction waits until tomorrow because the revealed answer would make its review dishonest. Continuing after the daily goal is optional and cannot undo completion.
+Forgotten directions return at bounded intervals during the day. A sibling direction waits until tomorrow because the learner has already seen both its cue and its answer. Continuing after the daily goal is optional and cannot undo completion.
 
-This shape preserves a calm learner-chosen commitment rather than introducing points, leaderboards, pressure, or punishment for difficult reviews.
+The daily goal remains the learner's choice. Difficult reviews count toward it; the feature adds no points or leaderboards.
 
 ## Rejected directions
 

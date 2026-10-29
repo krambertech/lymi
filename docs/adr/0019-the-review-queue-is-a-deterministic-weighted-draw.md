@@ -4,9 +4,9 @@ date: 2026-09-13
 supersedes: 0010
 ---
 
-# The review queue is a deterministic weighted draw with no saved state
+# Review uses a deterministic weighted draw
 
-A pure `draw` function in `packages/core` picks the next card. Its inputs are the drawable card modes, today's review log, the scope, and the learner-local date. Lymi stores no review session. The daily goal is the budget, and the draw spends it to keep the most cards remembered.
+A pure `draw` function in `packages/core` picks the next card. Its inputs are the drawable card modes, today's review log, the scope, and the learner-local date. Lymi stores no review session. The draw uses the daily goal to allocate attempts across cards.
 
 ## Context
 
@@ -48,7 +48,7 @@ All numbers are named constants in core.
 
 ## Considered options
 
-- **Stored server session:** rejected. Too much machinery for one learner.
+- **Stored server session:** rejected. It would require persistent session state for every scope.
 - **Bookmark on the device:** rejected. It goes stale across scopes and devices.
 - **Lowest retrievability first (ADR 0010):** rejected. Anki recommends it for a temporary backlog, but the goal caps attempts every day, and in [the simulation](../../packages/core/simulation/README.md) it left the most cards overdue.
 - **Highest retrievability first:** rejected. It remembered about 5% more, with no variety.

@@ -20,11 +20,11 @@ People can discover a useful public deck on `lymi.app`, choose its meaning langu
 - Existing personal and private shared decks remain flat unless they opt into series, sections, publication, or localization.
 - A series contains ordered decks; a deck may contain ordered sections. The first section starts active, and later sections become ready after the current material has been introduced and mostly learned. Learners may start a ready section manually.
 - First-party editions share canonical target-language content and localize meaning-side content. The selected meaning language is pinned when the learner adds the deck; changing the app language does not rewrite learned prompts.
-- Small corrections arrive without resetting progress. New or materially changed learning behind the learner's position waits for an explicit review of changes.
+- Small corrections arrive without resetting progress. New or materially changed content in sections the learner has already passed waits for an explicit review of changes.
 - Public pages show useful, crawlable information, representative previews, sources, publisher, language pair, scope, and editorial status without exposing learner data.
 - Adding crosses from the public origin to the product origin, survives sign-in, and is idempotent.
 
-The first content proof is Everyday Estonian: one A1 deck in eight sections, published with English meanings by a separate Lymi publisher account, with its full card list on the public page. A second meaning-language edition follows once editions exist. Adding a published deck admits sign-up ([ADR 0020](../adr/0020-a-published-deck-admits-anyone-who-adds-it.md)). Ukrainian driving material follows only when image support, authoritative sources, redistribution rights, jurisdiction, and editorial ownership are clear.
+The first deck for validating this flow is Everyday Estonian: one A1 deck in eight sections, published with English meanings by a separate Lymi publisher account, with its full card list on the public page. A second meaning-language edition follows once editions exist. Adding a published deck admits sign-up ([ADR 0020](../adr/0020-a-published-deck-admits-anyone-who-adds-it.md)). Ukrainian driving material follows only when image support, authoritative sources, redistribution rights, jurisdiction, and editorial ownership are clear.
 
 Community publishing, ranking, comments, collaborative editing, classes, assignments, creator payments, and automatic AI publication remain later directions.
 

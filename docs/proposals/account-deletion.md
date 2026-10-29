@@ -6,7 +6,7 @@ decision: delete at once; members keep a private copy of shared and published de
 
 # Deleting a Lymi account
 
-A learner can end their Lymi account from Settings on the web and on the phone, and what it held is erased for good. Apple's App Store Review Guideline 5.1.1(v) requires this in any app where people can make an account, and it must start inside the app, not as a link to a web form. Issue #588.
+A learner can end their Lymi account from Settings on the web and on the phone, and permanently erase its content. Apple's App Store Review Guideline 5.1.1(v) requires this in any app where people can make an account, and it must start inside the app, not as a link to a web form. Issue #588.
 
 ## What is decided by existing rules
 
@@ -21,14 +21,14 @@ These follow from the data model, `CONTEXT.md` and the web's precedents, so they
 - **Sign in with Apple.** Apple requires the app's tokens to be revoked through its REST API when an account ends. The phone's Apple sheet returns an authorization code; the server exchanges it for a refresh token and calls `/auth/revoke`. This needs a Sign in with Apple key from the Developer account (team id, key id, private key as Worker secrets), which waits on the Apple Developer enrolment. Every Apple account's delete writes an `apple_revocations` row in the same batch; a refused revoke is retried by the cron for about a day and a half, and one that never succeeds, or could not be tried without the key, stays on record and the goodbye email asks the person to remove Lymi themselves. The release checklist blocks App Store submission on the key.
 - **Export first.** The confirmation offers the existing library export as a link, never as a required step.
 - **Analytics.** PostHog's person and their events are deleted through PostHog's API, which needs a personal API key with person write scope as a Worker secret. Both clients reset their analytics identity, and the phone clears its usage queue (#630). Crash reports already carry no content.
-- **A record without content.** A new `account_deletions` row keeps the deleted user id, when, which client asked and the counts of what went, and nothing private: no email, name or text. It is what answers "did this account exist and when did it end". One `account_deleted` event, sent before the person is erased, carries the client and whether shared decks were kept, for the product question "how often do learners leave, and from where".
-- **After.** The session ends on every device, the client lands on the signed-out start screen, and a short email to the old address says the account was deleted. The email doubles as an alarm if someone else did it.
+- **A record without content.** A new `account_deletions` row keeps the deleted user id, when, which client asked and the counts of what went, and nothing private: no email, name or text. This records whether an account existed and when it was deleted. One `account_deleted` event, sent before the person is erased, carries the client and whether shared decks were kept, for the product question "how often do learners leave, and from where".
+- **After.** The session ends on every device, the client lands on the signed-out start screen, and a short email to the old address says the account was deleted. The email also alerts the learner if someone else deleted the account.
 
 ## Decided
 
 **Decks other people study** (24 October 2026). Apple's guidance counts shared content as the account's own, so the deleted person's decks no longer stay for their members under the former owner. Each member of an unarchived deck, shared or published, gets a private copy with their own progress, in the edition they pinned, without the owner's name, link or tags. The delete page says so and tells the owner to archive a deck first to take it from its members; an archived deck goes for everyone. Deleting outright for everyone and letting the owner choose per deck were the alternatives. A notice telling members their deck became a copy is a follow-up.
 
-**When it happens.** At once. The emailed code guards against a slip and against someone holding an open session.
+**When it happens.** At once. The emailed code reduces accidental deletion and prevents someone with only an open session from deleting the account.
 
 ## Flow
 
@@ -40,4 +40,4 @@ Settings ends with a **Delete account** row on both clients. It opens a page, no
 2. Web: the Settings row and page.
 3. Phone: the You → Settings row and page, replacing the Settings stub (#587).
 
-Production deletions of real accounts and any data clean-up beyond the normal deploy wait for Kateryna's yes.
+Deleting real accounts in production or cleaning up data beyond the normal deploy requires Kateryna's explicit approval.

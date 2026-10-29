@@ -3,17 +3,17 @@ status: accepted
 date: 2026-09-12
 ---
 
-# A shared deck is one deck with many learners, and its invitation is the front door
+# Shared decks keep shared content and private progress
 
 A learner can share a deck with a group. Every card the owner adds reaches every member. Members study. Only the owner writes.
 
 This record makes the four choices that are hard to reverse. [The proposal](../proposals/shared-decks.md) preserves the product boundary and delivery outline.
 
-## The deck is live, not copied
+## Members see the owner's current cards
 
 One deck has one owner and many members. Members see the owner's cards, including cards added after they joined. An edit changes the card for everyone. An archive removes it from every queue.
 
-A copy is a snapshot. A deck that grows after every lesson makes a snapshot stale within a week.
+A copied deck would miss cards added after each lesson.
 
 ## Each learner owns their learning state
 
@@ -23,11 +23,13 @@ The owner sees who is a member and when they joined. The owner sees nothing abou
 
 ## The deck's invitation admits one address to the deck
 
-Sign-up is open, so an invitation grants access to one deck and never to Lymi itself. It was the second gate beside `ALLOWED_EMAILS` while the beta was private; opening sign-up ended that, and nothing about a deck's door changed with it.
+Sign-up is open, so an invitation grants access to one deck and never to Lymi itself. During the private beta it also allowed account creation alongside `ALLOWED_EMAILS`. Opening sign-up removed that restriction without changing deck access.
 
 A deck has one join link. The owner can turn it off. A deck can also have named invitations, one per email address.
 
-A named invitation is a join link scoped to one address, so the token, the sign-in cookie and the join page are the same machinery. It admits that address and no other, and is spent when they join. Lymi sends it, as one more kind on the transactional email path, in the three interface languages. An owner may have twenty unaccepted invitations per deck at once, because the field sends mail in their name, and Lymi sends at most sixty invitations a day for one owner and three a day to one address, so cancelling and inviting again cannot flood a mailbox. The message is written in the reader's app language when they have an account, else in the owner's. Joining spends the invitation for that address however the learner came in, so People never lists somebody as waiting who is already there.
+A named invitation uses the join link's token, sign-in cookie and join page, scoped to one address. It admits that address and no other, and is spent when they join. Lymi sends it through the transactional email system in the three interface languages. An owner may have twenty unaccepted invitations per deck at once, because the field sends mail in their name, and Lymi sends at most sixty invitations a day for one owner and three a day to one address, so cancelling and inviting again cannot flood a mailbox.
+
+The message is written in the reader's app language when they have an account, else in the owner's. Joining spends the invitation for that address however the learner joined, so People does not list existing members as waiting.
 
 Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them for good: the join link no longer admits them, and nothing yet lets them back, not even a named invitation, so inviting a removed address is refused rather than sent. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
 
@@ -47,7 +49,7 @@ A learner reads the deck and grades their own states. Every write to the deck's 
 - **Keep `ALLOWED_EMAILS` and add classmates by hand.** Rejected. Every invitation would edit a production secret.
 - **Render the join page on `lymi.app`.** Rejected. Sign-in and sessions live only on `my.lymi.app` under [ADR 0008](0008-public-website-and-product-use-separate-origins.md).
 - **A `shared_decks` table next to `decks`.** Rejected. One table lets Library, the queue, and the API treat a shared deck as a deck.
-- **Let the owner deliver a named invitation by hand.** Reversed 19 September 2026. Lymi already sends account mail in all three languages, so an invitation it does not send is one the owner has to carry to a chat, which is what the join link is already for.
+- **Let the owner deliver a named invitation by hand.** Reversed 19 September 2026. Lymi already sends account mail in all three languages. Manual delivery would duplicate the join link's purpose.
 - **Show no cards before joining.** Rejected 13 September 2026. Anyone with the link can join and see every card, so hiding them protected only the chat preview, which stays card-free, and left the page with nothing to show a classmate what they would study.
 - **Show the owner how many cards each member knows.** Rejected. That is a classroom product with consent questions this decision does not take on.
 

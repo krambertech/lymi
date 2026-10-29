@@ -6,11 +6,11 @@ decision: An Electron shell for the Mac that loads my.lymi.app, with a menu bar 
 
 # Mac desktop app
 
-The web app already does the desktop jobs in [PRODUCT.md](../../PRODUCT.md): turning a lesson into cards, tidying a deck, reading Insights. What a browser tab cannot do is be there when Lymi is not open. The Mac app is a thin shell that adds only that: a lantern in the menu bar, a shortcut that adds a card from any app, launch at login, and later the selected text and the Kindle's lookups.
+The web app already does the desktop jobs in [PRODUCT.md](../../PRODUCT.md): turning a lesson into cards, tidying a deck, reading Insights. The Mac app makes capture available outside the browser through a lantern in the menu bar, a shortcut that adds a card from any app, launch at login, and later the selected text and the Kindle's lookups.
 
-Success looks like this: a term met in a book, a video or a chat lands in a deck in under five seconds without switching to the browser, and the app needs no release when the web changes.
+A learner should be able to save a term from a book, video or chat in under five seconds without switching to the browser. Web changes should reach the app without a desktop release.
 
-## The shell loads the product, not a copy of it
+## The shell loads the hosted product
 
 The window loads `https://my.lymi.app` (the product origin; `lymi.app` is the public site). A web deploy updates the app with no release, and the service worker the product already ships keeps the shell working offline, because Electron runs service workers on an HTTPS origin.
 
@@ -49,7 +49,7 @@ Only `my.lymi.app` loads inside a window: `will-navigate` and `will-redirect` se
 
 **Selected text.** The shortcut copies the front app's selection and fills the term. macOS gives no API for another app's selection without Accessibility permission, so the app asks for it once; with it, the app presses ⌘C through Core Graphics, reads the clipboard and puts every item back as it was. A paragraph or more than 120 characters is left out. A Mac App Store build cannot do this, which is one reason to ship outside the store. Reading `AXSelectedText` directly would leave the clipboard alone, but it needs native code and fails in many apps, so it can come later as a first try before the copy.
 
-**Kindle lookups (later).** When a volume holding `system/vocabulary/vocab.db` mounts, the shell offers to bring in the new lookups. Readwise imports Kindle highlights but never sees Vocabulary Builder, so this is the only way in. The brief assumed Lymi's importer reads SQLite with `sql.js`; it does not. It walks pages with its own reader in `apps/web/src/server/imports/sqlite.ts`, because `sql.js` copies a database into its heap. So the better shape is a `kindle` import adapter on the server, reading `WORDS` and `LOOKUPS` with that reader, keeping each lookup's sentence as the example and its id as the source id. Then the web's import page takes a `vocab.db` too, Activity lists it, and importing again updates rather than duplicates. The shell only uploads the file. A `My Clippings.txt` adapter for personal documents fits the same slot.
+**Kindle lookups (later).** When a volume holding `system/vocabulary/vocab.db` mounts, the shell offers to bring in the new lookups. Readwise imports Kindle highlights but never sees Vocabulary Builder, so this is the only way in. Lymi's importer walks SQLite pages with its reader in `apps/web/src/server/imports/sqlite.ts`, avoiding the heap copy `sql.js` would require. A `kindle` adapter on the server can reuse it, reading `WORDS` and `LOOKUPS` with that reader, keeping each lookup's sentence as the example and its id as the source id. Then the web's import page takes a `vocab.db` too, Activity lists it, and importing again updates rather than duplicates. The shell only uploads the file. A `My Clippings.txt` adapter for personal documents fits the same slot.
 
 ## Sign-in
 
@@ -70,9 +70,9 @@ Electron Forge packages the app (`apps/desktop/forge.config.js`), one build for 
 
 Builds live in the R2 bucket `lymi-downloads` behind `downloads.lymi.app`. Each chip's folder, `darwin/arm64/` and `darwin/x64/`, holds the update zips, the `RELEASES.json` feed `maker-zip` writes, and `Lymi.dmg`, the newest download. The app reads its own chip's feed with Electron's `autoUpdater` at launch and every hour, downloads in the background, and Squirrel installs the update the next time Lymi quits. Checking stops once an update is downloaded, because on macOS each check downloads it again. Until then the tray menu offers Restart to update. No dialog interrupts an add.
 
-Safari reports every Mac as Intel, so the site cannot pick a file. lymi.app's download button serves Apple silicon, and an Intel link sits below it. One universal build lost: about 230 MB for every download and every update, against about 115 MB.
+Safari reports every Mac as Intel, so the site cannot pick a file. lymi.app's download button serves Apple silicon, and an Intel link sits below it. A universal build was rejected because it would require about 230 MB for every download and every update, against about 115 MB.
 
-GitHub Releases with `update.electronjs.org` lost. The repository is public, so it would work, but the repository's Releases page would become the Mac app's, and updates would rest on a free service with no uptime promise. electron-builder lost too: it has an R2 publisher and differential updates, but it is a third-party tool with its own updater, and the shell changes so rarely that a full download per release does not matter.
+GitHub Releases with `update.electronjs.org` was rejected. The repository is public, so it would work, but the repository's Releases page would become the Mac app's, and updates would rest on a free service with no uptime promise. electron-builder was also rejected: it has an R2 publisher and differential updates, but it is a third-party tool with its own updater, and the shell changes so rarely that a full download per release does not matter.
 
 ## Releases
 
@@ -80,14 +80,14 @@ GitHub Releases with `update.electronjs.org` lost. The repository is public, so 
 
 Dependabot proposes Electron once a month, so learners update about once a month. An app that misses updates keeps working, because the bridge only gains methods.
 
-## Keeping it trivial to maintain
+## Maintenance and verification
 
 The app is a browser around the product, and the product has its own tests, so the app's checks cover only what is unique to it. All of them run on every pull request, in seconds, with nothing to start by hand.
 
 - **The contract between the app and the page** is one set of types in `packages/client/src/desktop.ts`: the bridge, each message and what it carries, and the menu's commands. The page, the preload and the app's handlers are typed by it, so a renamed message, a handler left out or a menu command the page does not answer fails to compile.
 - **The app's own rules** live in modules with no Electron in them (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`) and have unit tests: the origin boundary, the shortcut rule, saved settings, the sign-in link and cookie copy, telling a sign-in from a session refresh, and the selected text.
 - **The pages only the app shows**, the quick-add panel and This Mac, have component tests against a stand-in for the app, and the server's side of the sign-in hand-off has its own.
-- **Electron stays current by itself:** Dependabot opens one pull request a month for `electron` alone, and Electron's own types change with it, so TypeScript and the tests say whether an upgrade touched anything the app uses. A green one merges.
+- **Electron updates:** Dependabot opens one pull request a month for `electron` alone, and Electron's own types change with it, so TypeScript and the tests say whether an upgrade touched anything the app uses. Upgrade pull requests merge after the required checks pass.
 - **The packaged app launches:** a pull request that changes `apps/desktop` packages it and starts it on a Mac runner (`scripts/launch-check.js`), and the release does the same with the signed build. It must open a product page with the bridge in place, which catches an Electron upgrade, a fuse or a signature that breaks the app.
 
 No end-to-end suite: it would mostly test the browser again. A short check by hand is worth it only when a pull request changes the shortcut, the panel, the selected text or launch at login, which macOS's own interface decides and a runner cannot drive.
@@ -112,6 +112,6 @@ No end-to-end suite: it would mostly test the browser again. A short check by ha
 - **The app menu is the Mac's standard one** with Lymi's commands: File (New Card, New Deck, Smart Add, Import), Edit (the standard items, which make ⌘C and ⌘V work in fields, and Find for the command menu), View (Command Menu, light and dark, zoom), Go (Today to Activity, Back and Forward), Review (Start Review and the three rounds), Window (Quick Add) and Help. Each item sends a command to the page, which runs it as the command menu would. It shows only while a window is open. English only for now.
 - **The main window draws its own 40 px title bar on every screen**, holding only the traffic lights, centred in it 20 px in, so they never move between screens. Every screen starts below it: the rail's Lymi row, with the streak and the add button, and the screen's title sit level just under it. The whole bar moves the window. Full screen hides the lights, so the bar goes too. Tried and replaced: the lights on the rail's row 40 px down with an 18 px strip, which floated over Review, the sign-in form and the narrow window; and a 52 px bar holding the rail's row beside the lights, which squeezed the streak and the add button.
 - **Signed out, the main window is the sign-in window**: 440 by 720, fixed, with the form drawn on the window rather than as a plate inside it. Signing in, in it or through the browser, grows it to the app's size and moves it on to Today, or to where the learner was headed; signing out shrinks it again. The tray's Sign in… and a signed-out add open it rather than the browser.
-- **The download explains itself.** The DMG opens on the light room with the lantern lit: Lymi's icon sits in a pool of its own light, an amber arrow carries that light to a dashed place around the Applications folder, and the one heading says to drag Lymi into Applications. Lymi opened from anywhere else offers to move itself to Applications at each launch, since only there does it update itself and receive the browser's hand-back.
+- **Installation.** The DMG opens on the light room with the lantern lit: Lymi's icon sits in a pool of its own light, an amber arrow points to a dashed outline around the Applications folder, and the one heading says to drag Lymi into Applications. Lymi opened from anywhere else offers to move itself to Applications at each launch, since only there does it update itself and receive the browser's sign-in callback.
 - **The shortcut is ⌃⌥L.** ⌥⌘L is Finder's Downloads.
 - Mac only, outside the Mac App Store.

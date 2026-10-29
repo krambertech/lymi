@@ -8,7 +8,7 @@ decision: none
 
 A learner should see how each section of a deck is going and open one section's cards without losing the deck's full list. Today a deck shows sections as one block in its summary ("Every section is open", Go to section) and as headings in the card list. On 19 October 2026 Kateryna found the block clunky on the phone. Progress per section is hard to read, and how a section opens is confusing.
 
-The direction is a section line in the deck's summary, a page for each section, and one Sections page. The deck page keeps every card with Filter, Sort and Select. A section page is the deck page narrowed to one section and built from the same code, so neither page can do something the other can't.
+The direction is a section line in the deck's summary, a page for each section, and one Sections page. The deck page keeps every card with Filter, Sort and Select. A section page is the deck page narrowed to one section and built from the same code, so both pages support the same card actions.
 
 Not decided: whether owners select several sections at once, what members see on the Sections page, and where deck Insights lives. See [Open questions](#open-questions).
 
@@ -63,14 +63,14 @@ flowchart TD
 ## Three rules
 
 1. **One card list, two scopes.** The deck route and the section route render one screen that takes `{ deckId, sectionId? }`. Summary, Review, Filter, Sort, rows, long-press menus, Select cards and the selection bar are the same code. A section scope is the deck list with its Section filter fixed and hidden, through `filterRows` and `groupRows` in `packages/client/src/deck-list.ts`.
-2. **A page's ⋯ acts on what the page is.** One function builds a section's actions. The section page's ⋯, the section heading's ⋯ and its long press all call it, so the rows and their order match everywhere.
+2. **Menus use the page's scope.** One function builds a section's actions. The section page's ⋯, the section heading's ⋯ and its long press all call it, so the rows and their order match everywhere.
 3. **One place for sections.** The Sections page is the overview for everyone and, with Edit, where the owner manages sections. It replaces the manager in deck settings on the web (`/library/$deckId/settings#sections`) and the owner's Sections page on the phone (`library/sections?id=`).
 
 ## Phone and web
 
 Both apps get the same pages and routes and follow the same rules. Layout and input differ, as [PRODUCT.md](../../PRODUCT.md#surfaces) asks.
 
-This breaks the web-first default on purpose: the phone leads the screens. The clunky block is a phone-width problem, and checking progress and reviewing one section are daily jobs the phone leads. The shared parts come first because both apps need them. Section links, the opening rules and the stats are rules of the deck, so a link copied on the phone or Go to section in ⌘K must open on the web. The web gains as much from one place to manage sections, since today it hides them in deck settings.
+The phone screens ship first, as an exception to the web-first default. The section block is hard to use at phone width, and section progress and review are daily phone tasks. The shared parts come first because both apps need them. Section links, the opening rules and the stats are rules of the deck, so a link copied on the phone or Go to section in ⌘K must open on the web. The web also gains a dedicated place to manage sections, which currently sit in deck settings.
 
 The web may not need the Sections page as a separate destination. A laptop's deck page is wide enough to show every section beside the list, so the same URL can show the overview there.
 

@@ -4,9 +4,9 @@ date: 2026-10-11
 supersedes: 0024
 ---
 
-# A forgotten card returns once, after a while
+# Forgotten cards return once after 20 other attempts
 
-Forgot brings a mode back once in the day's draw, after 20 other attempts, ±2, and never sooner. Hard owes no return. When the draw runs out before the gap is reached, the card waits in Review forgotten. Easy on a mode already graded today counts as Good. This replaces the Returns rule in [ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md) and [ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md); the rest of ADR 0019 holds, and ADR 0024's definition of an often-forgotten card holds.
+Forgot brings a mode back once in the day's draw, after 20 other attempts, ±2, and never sooner. Hard does not schedule a return. When the draw runs out before the gap is reached, the card waits in Review forgotten. Easy on a mode already graded today counts as Good. This replaces the Returns rule in [ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md) and [ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md); the rest of ADR 0019 holds, and ADR 0024's definition of an often-forgotten card holds.
 
 ## Context
 
@@ -16,9 +16,9 @@ Anki waits 10 minutes, SuperMemo, Quizlet and Mochi hold misses to the end of th
 
 ## Decision
 
-**Returns.** Only Forgot owes a return. The mode returns once, when 20 ±2 other attempts have passed since the miss; the jitter is a hash of the date, card and mode, as before. A second Forgot leaves it to tomorrow, where it is a mode left learning. Every card gets the same one return, so the draw no longer reads whether a card is often forgotten.
+**Returns.** Only Forgot schedules a return. The mode returns once, when 20 ±2 other attempts have passed since the miss; the jitter is a hash of the date, card and mode, as before. A second Forgot leaves it to tomorrow, where it is a mode left learning. Every card gets the same one return, so the draw no longer reads whether a card is often forgotten.
 
-**Never early.** A return short of its gap is never drawn. When nothing else is drawable, the draw is exhausted, and the day counts as exhausted, whatever returns are waiting.
+**Minimum gap.** A return is drawn only after its required gap. When nothing else is drawable, the draw is exhausted, and the day counts as exhausted, whatever returns are waiting.
 
 **Re-review.** Review forgotten is where those cards go. It keeps its rule from ADR 0019: every mode whose latest grade today is Forgot, each once, earliest miss first.
 
@@ -32,7 +32,7 @@ Anki waits 10 minutes, SuperMemo, Quizlet and Mochi hold misses to the end of th
 - **One return after 10:** rejected. Half the gap for a third more return attempts.
 - **One return after 30:** rejected. Most returns would miss a 50-attempt review and bunch into Review forgotten.
 - **No same-day return:** rejected. One later try is still a real test, and Review forgotten would be the only second chance.
-- **Hard owes a return:** rejected. Hard is a recall, and it added a tenth more return attempts for no stated benefit.
+- **Return after Hard:** rejected. Hard is a recall, and it added a tenth more return attempts for no stated benefit.
 - **Return after 10 minutes, as Anki does:** rejected. The draw is a pure function of the log, ADR 0019, and a break would bring a card back with no cards between.
 - **Serve the waiting returns before the end screen, as SuperMemo's final drill does:** rejected. Review forgotten already offers them, and a forced drill would delay the end the learner chose.
 - **Lock Easy on a repeat, as after a peek at the hook:** rejected. A locked grade needs a reason on screen for a rule the learner should not have to think about.

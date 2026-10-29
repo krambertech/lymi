@@ -3,7 +3,7 @@ status: accepted
 date: 2026-10-01
 ---
 
-# Each assistant signs in with its own registered client
+# Assistants use separate registered OAuth clients
 
 An assistant that cannot identify itself with its own Client ID Metadata Document signs in to Lymi with a client Lymi registers for it. Where the assistant accepts a bare client ID, Lymi publishes a metadata document on `lymi.app` with the assistant's fixed redirect, as it already does for Gemini CLI. Where the assistant insists on a client secret, Lymi stores a confidential client for that one assistant. Dynamic client registration stays off. It is switched on for one assistant only when neither works there against a real connection.
 
@@ -15,7 +15,7 @@ With dynamic registration on, any program can register itself under any name, an
 
 ## Considered options
 
-- **A registered client per assistant, dynamic registration as a last resort:** accepted. It reaches the assistants the learner uses and keeps the list of apps short and honest.
+- **A registered client per assistant, dynamic registration as a last resort:** accepted. It reaches the assistants the learner uses and shows a known assistant identity in consent and Activity.
 - **Turn dynamic registration on for everyone:** rejected for now. It reaches every host at once, but the consent screen names whatever the registrant claims, and the spec is moving away from it.
 - **Support only assistants with their own metadata documents:** rejected. It leaves out Cursor and Grok, which the learner wants.
 

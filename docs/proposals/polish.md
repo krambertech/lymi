@@ -6,7 +6,7 @@ decision: none
 
 # Polish
 
-A Ukrainian living in Poland should find in Lymi the Polish they need first: the letters, everyday words, the office, and the words that look Ukrainian but mean something else. Polish stays a configured language, and gets its own page in English, Ukrainian and Russian and a beginner path in Welcome. The Ukrainian edition is the one that matters most.
+A Ukrainian living in Poland should find in Lymi the Polish they need first: the letters, everyday words, the office, and the words that look Ukrainian but mean something else. Polish stays a configured language, and gets its own page in English, Ukrainian and Russian and a beginner path in Welcome. The Ukrainian edition is the priority.
 
 ## Evidence
 
@@ -16,7 +16,7 @@ Research on Ukrainians learning Polish agrees on three things. The languages are
 
 Banach's list of false friends from a year of refugee classes in Łódź: *sklep* (shop; склеп is a crypt), *dynia* (pumpkin; диня is a melon), *arbuz* (watermelon; гарбуз is a pumpkin), *dywan* (rug; диван is a sofa), *krzesło* (chair; крісло is an armchair), *owoce* (fruit; овочі are vegetables), *magazyn* (warehouse; магазин is a shop), *łyżwy* (skates; лижі are skis), *czaszka* (skull; чашка is a cup), *człowiek* (person; чоловік is a man or husband), *drużyna* (team; дружина is a wife), *pensja* (salary; пенсія is a pension), *plecy* (back; плечі are shoulders), *recepta* (prescription; рецепт is a recipe), *zwyczajnie* (ordinarily; звичайно is of course).
 
-For every learner, Polish is hard in known places: seven cases, masculine-personal plurals (*studenci* but *studentki*), numbers that change the noun's case (*dwa koty*, *pięć kotów*), aspect pairs (*robić*, *zrobić*; *brać*, *wziąć*), verbs of motion, and stems that change (*pies*, *psa*; *ręka*, *ręce*). Spelling has letters that sound the same (*ó* and *u*, *rz* and *ż*, *ch* and *h*) and nasal vowels that change with what follows (*ząb* is said *zomp*, final *ę* is nearly *e*). Stress falls on the second-to-last syllable, with a few kinds of exception: *muzyka*, *matematyka*, *byliśmy*, *zrobiłabym*.
+Common difficulties in Polish include seven cases, masculine-personal plurals (*studenci* but *studentki*), numbers that change the noun's case (*dwa koty*, *pięć kotów*), aspect pairs (*robić*, *zrobić*; *brać*, *wziąć*), verbs of motion, and stems that change (*pies*, *psa*; *ręka*, *ręce*). Spelling has letters that sound the same (*ó* and *u*, *rz* and *ż*, *ch* and *h*) and nasal vowels that change with what follows (*ząb* is said *zomp*, final *ę* is nearly *e*). Stress falls on the second-to-last syllable, with a few kinds of exception: *muzyka*, *matematyka*, *byliśmy*, *zrobiłabym*.
 
 Today's code:
 
@@ -39,13 +39,13 @@ Today's code:
 
 **False friends.** A false friend depends on the reader's language, so each is its own deck in one meaning language with no editions: Ukrainian first, built from Banach's list and checked by Kateryna, then Russian and English (*aktualny*, *ewentualnie*, *ordynarny*). A deck written only in Ukrainian appears only on Ukrainian Explore. Inside the other decks, the warning lives in the edition's notes, so the Ukrainian edition's *sklep* says it is not склеп and the English one says nothing. A tag cannot do this, because tags belong to the deck and every edition shares them.
 
-**Speaking.** Recognition is nearly free for a Ukrainian reader and production is the gap, so the beginner decks are published with both directions.
+**Speaking.** Ukrainian readers often understand Polish before they can produce it, so the beginner decks are published with both directions.
 
 **Prompts.** The `pl` guide in `enrichment/languages.ts` asks, for a reader in Ukrainian or Russian, for a false friend with its look-alike and a case or preposition that differs (for Ukrainian *dzwonić do mamy*, not мамі; for Russian *tęsknić za*, not по), and names the words that trick each reader. `evaluation.json` holds a `pl-en` deck led by the stress exceptions and regular words, and a `pl-uk` deck led by the false friends, with a recorded run. Kateryna reviews.
 
-**Speech.** As with Ukrainian, the configured `pl` row names «Po polsku:» as its `speechContext`, so the voice hears the language and not a neighbour's. Only ElevenLabs takes previous text, so the context reaches Polish speech once `pl` is voiced there. A listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions, Gemini against the ElevenLabs voice, decides whether `pl` joins `DEFAULT_NATIVE_SPEECH_LANGUAGES`; that switch voices every Polish card again on ElevenLabs, so it waits for the test.
+**Speech.** As with Ukrainian, the configured `pl` row names «Po polsku:» as its `speechContext`, to help the speech provider identify Polish. Only ElevenLabs takes previous text, so the context reaches Polish speech once `pl` is voiced there. A listening test on final *ę*, *ą* before a consonant, *rz*, *szcz* and the stress exceptions, Gemini against the ElevenLabs voice, decides whether `pl` joins `DEFAULT_NATIVE_SPEECH_LANGUAGES`; that switch voices every Polish card again on ElevenLabs, so it waits for the test.
 
-**Page.** `/languages/polish` in three locales through `LANGUAGE_PAGES`. The showpiece differs by locale: in Ukrainian and Russian, the false friends (*sklep* against склеп, *dynia* and *arbuz* against диня and гарбуз); in English, a word's forms (*pies*, *psa*; *robić*, *zrobić*). Below it, the deck path from the alphabet, the office deck for people settling in Poland, the voice, enrichment, and the B1 certificate.
+**Page.** `/languages/polish` in three locales through `LANGUAGE_PAGES`. The main example differs by locale: in Ukrainian and Russian, the false friends (*sklep* against склеп, *dynia* and *arbuz* against диня and гарбуз); in English, a word's forms (*pies*, *psa*; *robić*, *zrobić*). Below it, the deck path from the alphabet, the office deck for people settling in Poland, the voice, enrichment, and the B1 certificate.
 
 **Instrumentation.** The question is whether Polish learners who start from Welcome keep reviewing after the first week, against the other languages with a beginner path; Welcome's existing events, by language, answer it.
 
@@ -63,5 +63,5 @@ Separate, because it touches every language: search that finds *żółw* from *z
 ## Open questions
 
 1. Does Estonian move onto the shared page when the page table opens to configured languages?
-2. Does the English edition need its own showpiece, or is the page mainly for Ukrainian and Russian readers?
+2. Does the English edition need its own main example, or is the page mainly for Ukrainian and Russian readers?
 3. Do the Russian and English false-friends decks come with this work, or after the page?

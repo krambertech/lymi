@@ -4,6 +4,12 @@ import { expect, test } from "./test";
 
 const modulePath = `/@fs/${resolve("packages/client/src/analytics.ts")}`;
 
+/** An ingest body as text: the SDK's base64 form body, or its JSON as sent. */
+function ingested(raw: string): string {
+  const encoded = new URLSearchParams(raw).get("data");
+  return encoded ? Buffer.from(encoded, "base64").toString("utf8") : raw;
+}
+
 /** A recording as text, with the gzipped parts of rrweb's events opened. */
 function unzipped(value: unknown): string {
   if (typeof value === "string" && value.startsWith("\u001f")) {
@@ -144,14 +150,32 @@ test("the real browser SDK sends public-site heatmaps and page leaves with route
   await context.addInitScript(() => {
     Object.defineProperty(navigator, "webdriver", { get: () => false });
     Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+    // The page leave goes out as a beacon, and Playwright's WebKit gives a routed beacon no body.
+    // The page keeps a copy of each beacon's body; the route below still sees where it went.
+    const beacons: Promise<string>[] = [];
+    Object.defineProperty(window, "__beacons", { value: beacons });
+    const send = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = (url, data) => {
+      beacons.push(data instanceof Blob ? data.text() : Promise.resolve(String(data ?? "")));
+      return send(url, data);
+    };
   });
   const sent: string[] = [];
+  const beaconUrls: string[] = [];
   await context.route("**/ingest/**", async (route) => {
-    const raw = route.request().postData() ?? "";
-    const encoded = new URLSearchParams(raw).get("data");
-    sent.push(encoded ? Buffer.from(encoded, "base64").toString("utf8") : raw);
+    // WebKit names a beacon's resource type "beacon" and Chromium names it "ping".
+    if (["beacon", "ping"].includes(route.request().resourceType())) {
+      beaconUrls.push(route.request().url());
+    }
+    sent.push(ingested(route.request().postData() ?? ""));
     await route.fulfill({ status: 200, contentType: "application/json", body: '{"status":1}' });
   });
+  const beaconed = async () =>
+    (
+      await page.evaluate(() =>
+        Promise.all((window as unknown as { __beacons: Promise<string>[] }).__beacons),
+      )
+    ).map(ingested);
   const direct: string[] = [];
   await context.route("https://*.posthog.com/**", async (route) => {
     direct.push(route.request().url());
@@ -173,8 +197,9 @@ test("the real browser SDK sends public-site heatmaps and page leaves with route
     expect(sent.join(" ")).toContain("$$heatmap");
   }).toPass({ timeout: 20_000 });
   await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
-  await expect.poll(() => sent.join(" ")).toContain("$pageleave");
-  const payload = sent.join(" ");
+  await expect.poll(async () => [...sent, ...(await beaconed())].join(" ")).toContain("$pageleave");
+  await expect.poll(() => beaconUrls.length).toBeGreaterThan(0);
+  const payload = [...sent, ...(await beaconed())].join(" ");
   expect(payload).toContain('"$viewport_width"');
   expect(payload).toContain("/explore");
   expect(payload).not.toContain("private-query-token");

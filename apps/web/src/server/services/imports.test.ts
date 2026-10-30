@@ -501,6 +501,44 @@ describe("an import that brings the account's first decks", () => {
     await createDeck(ctx, { name: "Mine" });
     expect(await deckFinishes()).toEqual(finished);
   });
+
+  it("finishes the step when the import's smallest deck id was inserted a second after a sibling", async () => {
+    const events: AnalyticsEvent[] = [];
+    const queued: (() => Promise<void>)[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        // Held back, so the decks' stored times can be set as a slow import would leave them.
+        later: (run: () => Promise<void>) => {
+          queued.push(run);
+        },
+      },
+    };
+    await runImport(ctx, "current.apkg");
+    const decks = await db
+      .select({ id: schema.decks.id })
+      .from(schema.decks)
+      .where(eq(schema.decks.userId, ctx.userId))
+      .orderBy(schema.decks.id);
+    expect(decks.length).toBeGreaterThan(1);
+    // `created_at` keeps whole seconds and ids made in one millisecond sort at random, so the
+    // smallest id can land in the next second while its siblings share the one before.
+    const second = 1_798_000_000_000;
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second) })
+      .where(eq(schema.decks.userId, ctx.userId));
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second + 1000) })
+      .where(eq(schema.decks.id, decks[0]?.id ?? ""));
+    await Promise.all(queued.splice(0).map((run) => run()));
+    expect(events.filter((e) => e.name === "welcome_step_finished")).toEqual([
+      { name: "welcome_step_finished", step_name: "deck", skipped: false },
+    ]);
+  });
 });
 
 describe("importing an HSK-shaped Anki deck", () => {

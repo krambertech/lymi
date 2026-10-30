@@ -1,13 +1,15 @@
-import { and, type Column, eq, lt, or, type SQL } from "@lymi/core/db";
+import { and, asc, type Column, eq, lt, or, type SQL } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
 import type { ServiceContext } from "./context";
 
 /**
- * The deck the account just created, or the first of an import's new decks, or the deck it
- * just joined.
+ * The deck the account just created, the import that just created decks for it, or the deck it
+ * just joined. An import counts as its earliest deck, read back by `created_at` and id: its ids
+ * are all made before the first insert, and `created_at` keeps whole seconds, so the smallest id
+ * can belong to a deck inserted a second after a sibling.
  */
-export type NewDeck = { created: string } | { joined: string };
+export type NewDeck = { created: string } | { imported: string } | { joined: string };
 
 /**
  * Finishes the welcome guide's `deck` step when the account gets its first deck, by creating
@@ -42,12 +44,21 @@ async function record(ctx: ServiceContext, deck: NewDeck) {
   const { db, userId } = ctx;
   const columns = { createdAt: schema.decks.createdAt, id: schema.decks.id };
   const memberColumns = { createdAt: schema.deckMembers.createdAt, id: schema.deckMembers.id };
-  const own = "created" in deck;
+  const own = !("joined" in deck);
   const [first] = own
     ? await db
         .select(columns)
         .from(schema.decks)
-        .where(and(eq(schema.decks.userId, userId), eq(schema.decks.id, deck.created)))
+        .where(
+          and(
+            eq(schema.decks.userId, userId),
+            "created" in deck
+              ? eq(schema.decks.id, deck.created)
+              : eq(schema.decks.importId, deck.imported),
+          ),
+        )
+        .orderBy(asc(schema.decks.createdAt), asc(schema.decks.id))
+        .limit(1)
     : await db
         .select(memberColumns)
         .from(schema.deckMembers)

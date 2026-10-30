@@ -571,8 +571,6 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
 
   const existing = await importedDecks(ctx, work.row, work.summary);
   const statements: Statement[] = [];
-  // Parallel to the deck inserts, the even statements.
-  const newIds: string[] = [];
   for (const deck of work.summary.decks) {
     const tallyByDeck = modes.get(deck.key);
     if (!tallyByDeck || existing.get(deck.key)) continue;
@@ -581,7 +579,6 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       ? directionsFromModes(deck.reviewModes)
       : ([...tallyByDeck].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "recognition");
     const id = newId();
-    newIds.push(id);
     const language = work.choices.languages[deck.key] ?? null;
     const enrichFields = newDeckEnrichFields(language);
     const externalId = deckExternalId(work.row.source, deck.key, deck.name);
@@ -603,19 +600,15 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
         where exists (select 1 from decks where id = ${id})`,
     );
   }
-  const createdIds: string[] = [];
+  let created = 0;
   for (let i = 0; i < statements.length; i += 50) {
     const results = await batchStatements(db, statements.slice(i, i + 50));
     // Deck inserts are the even statements; a retry inserts none and adds nothing here.
-    results.forEach((result, index) => {
-      const id = newIds[(i + index) / 2];
-      if (index % 2 === 0 && result.meta.changes === 1 && id) createdIds.push(id);
-    });
+    created += results.filter(
+      (result, index) => index % 2 === 0 && result.meta.changes === 1,
+    ).length;
   }
-  const created = createdIds.length;
-  // The smallest id is the earliest deck the way `recordFirstDeck` orders an account's decks.
-  const [firstCreated] = createdIds.sort();
-  if (firstCreated) recordFirstDeck(ctx, { created: firstCreated });
+  if (created > 0) recordFirstDeck(ctx, { imported: work.row.id });
   await batchStatements(db, [
     // A run handed over meets this import's own cards as existing, so the first count stands.
     sql`update imports set media_total = max(media_total, ${media}), updated_at = ${Date.now()}

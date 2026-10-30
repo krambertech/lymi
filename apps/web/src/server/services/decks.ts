@@ -16,6 +16,7 @@ import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
 import { track } from "./analytics";
+import { recordFirstDeck } from "./analytics-deck";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -200,6 +201,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
+  recordFirstDeck(ctx, id);
   if (input.purpose) trackPurpose(ctx, input.purpose, true);
   if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
     trackEnrichmentChoice(

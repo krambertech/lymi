@@ -147,8 +147,8 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
   const { t } = useLingui();
   return (
     <SettingsGroup
-      title={t`Decks other people study`}
-      description={t`Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
+      title={t`Decks other people review`}
+      description={t`Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
     >
       <ul className="grid">
         {decks.map((deck) => (

@@ -157,7 +157,7 @@ export function AssistantView(props: Props) {
 function TryAsking({ onCopy }: { onCopy: (prompt: string) => void }) {
   const { t } = useLingui();
   const prompts = [
-    t`Add the words from this lesson to my deck`,
+    t`Make cards from this lesson in my deck`,
     t`What’s due today?`,
     t`Make a deck from this article`,
   ];
@@ -207,8 +207,8 @@ function Connect({
           </Trans>
         ) : (
           <Trans>
-            {{ app: isolate(name) }} reaches Lymi as a remote MCP server and signs in with your Lymi
-            account. You choose what it may do when it signs in.
+            {{ app: isolate(name) }} connects to Lymi and signs in with your Lymi account. You
+            choose what it may do when it signs in.
           </Trans>
         )
       }

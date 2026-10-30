@@ -67,11 +67,11 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
         : t`This join link stopped working. Ask the owner for a new one.`;
     }
     if (err instanceof ApiError && err.status === 403) {
-      if (published) return t`You cannot add this deck.`;
+      if (published) return t`You can’t add this deck.`;
       const invited = refusalDetail(err, "invitedEmail");
       return invited
         ? t`This invitation was sent to ${invited}. Sign in with that address to join.`
-        : t`You cannot join this deck through this link.`;
+        : t`You can’t join this deck through this link.`;
     }
     return published
       ? t`Couldn’t add the deck. Check your connection and try again.`
@@ -274,11 +274,11 @@ function LiveLink({
       : viewer === "member"
         ? published
           ? t`This deck is already in Library.`
-          : t`You are already in this deck.`
+          : t`You’re already in this deck.`
         : viewer === "removed"
           ? published
-            ? t`You were removed from this deck, so you cannot add it again. Your reviews are kept.`
-            : t`You were removed from this deck, so this link cannot add you back. Your reviews are kept.`
+            ? t`You were removed from this deck, so you can’t add it again. Your reviews are kept.`
+            : t`You were removed from this deck, so this link can’t add you back. Your reviews are kept.`
           : null;
 
   const action = deckId ? (
@@ -403,7 +403,7 @@ function DeadLink({
       ? t`This join link is turned off`
       : status === "archived"
         ? t`This deck is archived`
-        : t`This join link does not work`;
+        : t`This join link doesn’t work`;
   const line = published
     ? status === "off"
       ? t`Nobody new can add it.`
@@ -420,7 +420,7 @@ function DeadLink({
       kind="start"
       icon={status === "off" ? "linkOff" : status === "archived" ? "archive" : "noMatch"}
       title={title}
-      body={deckId ? `${line} ${t`You are still in the deck.`}` : line}
+      body={deckId ? `${line} ${t`You’re still in the deck.`}` : line}
       action={
         deckId
           ? { label: t`Open deck`, onPress: () => onOpen(deckId) }

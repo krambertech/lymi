@@ -108,7 +108,7 @@ export function LandingView() {
 
       <FeatureSection
         demoFirst
-        title={<Trans>A full flashcard in seconds.</Trans>}
+        title={<Trans>A finished card in seconds.</Trans>}
         body={
           <Trans>
             Type the term, and AI adds the meaning, an example and the pronunciation. It never

@@ -24,7 +24,7 @@ Anki waits 10 minutes, SuperMemo, Quizlet and Mochi hold misses to the end of th
 
 **Easy on a repeat counts as Good.** Review offers the same four grades on every try. An Easy given to a mode already graded on the same learner-local day, in a return or in Review forgotten, is recorded as Good, by the client before it schedules and by the server for any client.
 
-**A second miss offers a hook.** A card forgotten twice today with no hook offers one in review, as an often-forgotten card does.
+**A second miss offers a hint.** A card forgotten twice today with no hint offers one in review, as an often-forgotten card does.
 
 ## Considered options
 
@@ -35,7 +35,7 @@ Anki waits 10 minutes, SuperMemo, Quizlet and Mochi hold misses to the end of th
 - **Return after Hard:** rejected. Hard is a recall, and it added a tenth more return attempts for no stated benefit.
 - **Return after 10 minutes, as Anki does:** rejected. The draw is a pure function of the log, ADR 0019, and a break would bring a card back with no cards between.
 - **Serve the waiting returns before the end screen, as SuperMemo's final drill does:** rejected. Review forgotten already offers them, and a forced drill would delay the end the learner chose.
-- **Lock Easy on a repeat, as after a peek at the hook:** rejected. A locked grade needs a reason on screen for a rule the learner should not have to think about.
+- **Lock Easy on a repeat, as after a peek at the hint:** rejected. A locked grade needs a reason on screen for a rule the learner should not have to think about.
 - **Reject an Easy repeat with a 400:** rejected. An offline grade from an older client would be lost.
 
 ## Consequences
@@ -43,6 +43,6 @@ Anki waits 10 minutes, SuperMemo, Quizlet and Mochi hold misses to the end of th
 - In the simulation, a year at a goal of 50 spends 6.0 attempts a day on returns, against 10.8, at a mean gap of 20 against 6.4, and no card is seen three times in a day. A 30-card deck reviewed to its end returns 0.6 cards itself and leaves 7.6 for Review forgotten.
 - A short review ends with its misses waiting, so Review forgotten is offered more often. The header's total counts a waiting return only once the cards still to come are sure to reach its gap.
 - `missed` keeps its meaning, a grade that leaves the mode in learning, for the state a client projects. `owesReturn` is the return rule.
-- `slipping` stays on `GET /api/review/draw` for the hook offer and the Often forgotten round; the draw ignores it.
+- `slipping` stays on `GET /api/review/draw` for the hint offer and the Often forgotten round; the draw ignores it.
 - The server compares the mode's last review with the grade's learner-local date to find a repeat, so a grade on either side of midnight counts as a new day.
 - The phone app's local queue follows the same rule: one return, at most 19 cards later.

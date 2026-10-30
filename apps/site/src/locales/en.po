@@ -399,6 +399,9 @@ msgstr "A few minutes a day"
 msgid "A few weeks in"
 msgstr "A few weeks in"
 
+msgid "A finished card in seconds."
+msgstr "A finished card in seconds."
+
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 
@@ -422,9 +425,6 @@ msgstr "A free flashcard app for Russian. Each card marks its stress until you k
 
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
-
-msgid "A full flashcard in seconds."
-msgstr "A full flashcard in seconds."
 
 msgid "A glass of *water*, please."
 msgstr "A glass of *water*, please."
@@ -1902,8 +1902,8 @@ msgstr "Flashcards for cloud, security, finance and project management certifica
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 
-msgid "Flashcards that come back right before you'd forget."
-msgstr "Flashcards that come back right before you'd forget."
+msgid "Flashcards that come back right before you’d forget."
+msgstr "Flashcards that come back right before you’d forget."
 
 msgid "Flashcards that stick."
 msgstr "Flashcards that stick."
@@ -3007,6 +3007,9 @@ msgstr "Lymi asks before it shows the answer. Trying to remember something makes
 msgid "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 msgstr "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 
+msgid "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+msgstr "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+
 msgid "Lymi changelog"
 msgstr "Lymi changelog"
 
@@ -3171,9 +3174,6 @@ msgstr "Medical students"
 
 msgid "Medicine and nursing"
 msgstr "Medicine and nursing"
-
-msgid "Medicine asks you to remember more than any other course. Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
-msgstr "Medicine asks you to remember more than any other course. Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
 
 msgid "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
 msgstr "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
@@ -3478,8 +3478,8 @@ msgstr "One card at a time, graded in a tap, even offline. Words you know wait l
 msgid "One card at a time, graded in a tap, on your phone or your laptop, even offline. The terms you know wait longer, and the ones you miss come back sooner."
 msgstr "One card at a time, graded in a tap, on your phone or your laptop, even offline. The terms you know wait longer, and the ones you miss come back sooner."
 
-msgid "One card's reviews over seven weeks"
-msgstr "One card's reviews over seven weeks"
+msgid "One card’s reviews over seven weeks"
+msgstr "One card’s reviews over seven weeks"
 
 msgid "One character, two sounds."
 msgstr "One character, two sounds."
@@ -3972,6 +3972,12 @@ msgstr "Reveal the meaning, then grade the recall."
 msgid "Revenue or cost recorded when it is earned or incurred, not when cash moves"
 msgstr "Revenue or cost recorded when it is earned or incurred, not when cash moves"
 
+msgid "Review a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+msgstr "Review a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+
+msgid "Review a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+msgstr "Review a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+
 msgid "Review a few minutes a day"
 msgstr "Review a few minutes a day"
 
@@ -4324,6 +4330,9 @@ msgstr "sovereignty"
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"
 
+msgid "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgstr "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+
 msgid "Spacing"
 msgstr "Spacing"
 
@@ -4449,12 +4458,6 @@ msgstr "Stubborn grit; carrying on when it gets hard"
 
 msgid "Studied Estonian in Anki before? Your cards keep their recordings and their schedule, so nothing starts over."
 msgstr "Studied Estonian in Anki before? Your cards keep their recordings and their schedule, so nothing starts over."
-
-msgid "Study a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
-msgstr "Study a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
-
-msgid "Study a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
-msgstr "Study a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
 
 msgid "Study for the certification. Keep what it taught you."
 msgstr "Study for the certification. Keep what it taught you."
@@ -5550,9 +5553,6 @@ msgstr "What we collect and why"
 
 msgid "What you can see"
 msgstr "What you can see"
-
-msgid "What you cram the night before fades within days. Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
-msgstr "What you cram the night before fades within days. Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "What you give up by choosing one option over the next best one"

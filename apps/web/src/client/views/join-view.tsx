@@ -216,7 +216,7 @@ function LiveLink({
             {published ? (
               <Trans>This deck is already in Library.</Trans>
             ) : (
-              <Trans>You are already in this deck.</Trans>
+              <Trans>You’re already in this deck.</Trans>
             )}
           </AuthNotice>
         )}
@@ -224,11 +224,11 @@ function LiveLink({
           <AuthNotice tone="neutral" role="status" className="mt-9 @4xl:mt-8">
             {published ? (
               <Trans>
-                You were removed from this deck, so you cannot add it again. Your reviews are kept.
+                You were removed from this deck, so you can’t add it again. Your reviews are kept.
               </Trans>
             ) : (
               <Trans>
-                You were removed from this deck, so this link cannot add you back. Your reviews are
+                You were removed from this deck, so this link can’t add you back. Your reviews are
                 kept.
               </Trans>
             )}
@@ -319,7 +319,7 @@ function DeadLink({
         ) : preview.status === "archived" ? (
           <Trans>This deck is archived</Trans>
         ) : (
-          <Trans>This join link does not work</Trans>
+          <Trans>This join link doesn’t work</Trans>
         )}
       </h1>
       <p className="mx-auto mt-2 max-w-[40ch] text-pretty text-md text-ink-secondary">
@@ -342,7 +342,7 @@ function DeadLink({
       {deckId ? (
         <>
           <p className="mx-auto mt-4 max-w-[40ch] text-pretty text-sm text-ink-muted">
-            <Trans>You are still in the deck.</Trans>
+            <Trans>You’re still in the deck.</Trans>
           </p>
           <Button
             variant="primary"

@@ -74,7 +74,7 @@ import Security
       switch self {
       case .update: "Update Lymi to add cards from Shortcuts."
       case .deckMissing: "That deck isn’t in Lymi anymore. Choose another one in the shortcut."
-      case .failed: "That didn’t work. Try again."
+      case .failed: "Couldn’t add the card. Try again."
       }
     }
   }

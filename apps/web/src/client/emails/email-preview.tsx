@@ -68,7 +68,7 @@ const KINDS: { group: string; kinds: { kind: string; name: string; when: string 
       {
         kind: "deck-invitation",
         name: "Deck invitation",
-        when: "A deck's owner invites an email address to study it.",
+        when: "A deck's owner invites an email address to join it.",
       },
     ],
   },

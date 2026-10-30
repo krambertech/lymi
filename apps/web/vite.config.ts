@@ -139,7 +139,7 @@ export default defineConfig({
         id: "/",
         name: "Lymi",
         short_name: "Lymi",
-        description: "Vocabulary you carry with you.",
+        description: "A flashcard app for learning any subject with spaced repetition.",
         start_url: "/today",
         display: "standalone",
         orientation: "portrait",

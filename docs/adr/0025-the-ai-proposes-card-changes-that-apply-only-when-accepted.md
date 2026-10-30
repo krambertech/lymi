@@ -5,7 +5,7 @@ date: 2026-09-28
 
 # AI card changes require learner approval
 
-Withdrawn on 11 October 2026. The diagnoses were rarely right, so review now lets the learner write a hook for an often-forgotten card that has none, and the AI is back to enriching empty fields only ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)).
+Withdrawn on 11 October 2026. The diagnoses were rarely right, so review now lets the learner write a hint for an often-forgotten card that has none, and the AI is back to enriching empty fields only ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)).
 
 When a card turns often forgotten ([ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md)), the AI diagnoses it once: one likely cause and a drafted fix, or `unclear` with no fix. The fix may change text the learner already wrote, split the card, or add cards, so it never applies on its own. It waits until the learner accepts it. Accepting is the learner's write: its audit row names the learner as the actor, never the AI, so Activity treats it like any edit the learner makes in the app. Text the AI drafted is stored with source `ai`, and carries the AI badge, until the learner edits it. Until now the AI only filled empty fields ([ADR 0002](0002-mcp-client-extracts-server-enriches.md)), and enrichment keeps that rule.
 

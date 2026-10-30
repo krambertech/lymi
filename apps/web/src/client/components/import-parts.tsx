@@ -451,7 +451,7 @@ export function ImportSources({
     { source: "noji", detail: t`An .ofc file from Noji` },
     { source: "lymi", detail: t`A Lymi file from another Lymi account` },
     { source: "quizlet", detail: t`Text you copy from a Quizlet set` },
-    { source: "pleco", detail: t`A text file of your Pleco flashcards` },
+    { source: "pleco", detail: t`A text file of your Pleco cards` },
   ];
   return (
     <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">

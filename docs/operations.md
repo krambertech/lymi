@@ -66,7 +66,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND
 
 ## A production check is failing
 
-The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage: 17 October 2026 was a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
+The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage, such as a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
 
 ## Production checks stopped
 

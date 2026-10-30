@@ -81,7 +81,7 @@ export default function Library() {
           kind="start"
           icon="library"
           title={t`No decks yet`}
-          body={t`A deck holds the words you learn together. Make one, or import decks from another app.`}
+          body={t`A deck holds the cards you review together. Make one, or import decks from another app.`}
           action={{ label: t`New deck`, onPress: newDeck }}
         />
       ) : (

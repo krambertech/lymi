@@ -48,7 +48,7 @@ CONTENT SAFEGUARDS
 [Paste the review note from docs/app-review.md here.]
 
 PERMISSIONS
-Camera and Photos are asked for only when you add a picture to a card or photograph lesson pages. Notifications are asked for only when you turn on the daily reminder. Lymi has no ads and no tracking.
+Camera and Photos are asked for only when you add a picture to a card or photograph lesson pages. Notifications are asked for only when you turn on the daily reminder. Lymi has no ads and doesn’t track you across other companies’ apps or websites.
 ```
 
 Check the screen and button names in the notes against the build under review before pasting.

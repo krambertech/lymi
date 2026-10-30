@@ -11,11 +11,7 @@ const REVIEW_NOW = "review-now";
 const LATER = "in-an-hour";
 const HOUR_MS = 60 * 60 * 1000;
 
-const LINES = [
-  msg`Review whenever you have a moment.`,
-  msg`They’re ready when you are.`,
-  msg`A few minutes keeps them fresh.`,
-] as const;
+const LINES = [msg`Review whenever you have a moment.`, msg`They’re ready when you are.`] as const;
 
 function content(due: number, at: Date): Notifications.NotificationContentInput {
   return {

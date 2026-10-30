@@ -91,7 +91,7 @@ The comma-separated list inside the parentheses is an OR. Copy the ready-made re
 
 The nav bar, the header, and anything else that survives a navigation needs a name too - otherwise it slides with the page it happens to be painted in. See "persistent elements" in the recipes.
 
-## The gotchas that cost an hour
+## Common failures
 
 - **Nothing animates.** The navigation did not go through the router (a raw `<a>`, `window.location`), or the types function returned `false`.
 - **Everything animates, all the time.** A revalidation or a param change is being typed. Return `false` for `!pathChanged`.

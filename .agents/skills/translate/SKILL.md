@@ -13,7 +13,7 @@ The phone's native extensions are not in Lingui: fill `uk` and `ru` in `apps/mob
 ## Workflow
 
 1. Read [`CONTEXT.md`](../../../CONTEXT.md). Its terms are the glossary; its avoid-list applies in every language.
-2. Read [the voice rules](../../../docs/design/system/voice.md): calm, direct and speaking to one learner.
+2. Read [the voice rules](../../../docs/design/system/voice.md): plain, friendly and speaking to one learner.
 3. Run `pnpm i18n:extract`. Fill empty or changed entries. Change an existing translation only when it contradicts the glossary, breaks a placeholder or plural form, or says something the English does not.
 
 ## Translation bar

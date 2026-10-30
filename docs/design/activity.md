@@ -32,10 +32,10 @@ Group writes by local day, actor, app, action and deck. Each group shows the cou
 
 Empty Activity uses `EmptySection`, its screen icon, **Nothing yet** and one explanatory line. Omit a start panel, action and screen subtitle; imports begin in Settings. Loading shows a day heading and two row placeholders at their final height. Keep the list footer stable: **Show more** when more pages exist, then **That’s everything**. Initial failure uses `ErrorState` with Try again. A later-page failure appears beside the pagination action and retains loaded rows.
 
-## What it costs to add an event
+## Adding an event
 
 Activity reads service audit rows rather than maintaining a separate event store. `services/audit.ts` defines write kinds; `services/activity.ts` maps each to a sentence or explicitly omits it. When a write is missing, check both the audit record and mapping. Background audio caching is intentionally omitted because it does not edit card content.
 
 The AI's own writes are here too: a run that fills empty fields after an add is "Enriched 3 cards in Verbi", never an edit.
 
-Store the app or key id and its name at write time from the service context. Fall back to “a connected app” when no name is available. Retain the recorded name after revocation so older events remain understandable.
+Store the app or key id and its name at write time from the service context. Fall back to “a connected app” when no name is available. Keep the recorded name after the app is disconnected or the key revoked, so older events stay readable.

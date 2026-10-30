@@ -53,7 +53,7 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
         ) : scopes?.write ? (
           <Trans>It can read your cards, and add, edit and archive them.</Trans>
         ) : (
-          <Trans>It can read your decks and cards. It cannot change anything.</Trans>
+          <Trans>It can read your decks and cards. It can’t change anything.</Trans>
         )}
       </p>
 

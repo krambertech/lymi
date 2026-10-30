@@ -168,7 +168,7 @@ export default function DeckSections() {
       title={t`Sections`}
       back={back}
       onRefresh={() => Promise.all([query.refetch(), archived.refetch()])}
-      description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
+      description={t`Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order.`}
       actions={
         owner &&
         sections.length > 1 && (

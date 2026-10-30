@@ -257,7 +257,7 @@ export async function inviteByEmail(
     // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(and(eq(schema.deckMembers.deckId, deckId), sql`lower(${schema.user.email}) = ${email}`));
   if (membership && !membership.removedAt) {
-    throw refused("conflict", "They are already studying this deck", "member");
+    throw refused("conflict", "They are already in this deck", "member");
   }
   // Removal is for good, so the message would carry a link the door refuses; a leaver may return.
   if (membership?.removedBy === "owner") {

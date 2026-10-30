@@ -61,7 +61,7 @@ function Add() {
       return t`This deck is no longer published.`;
     }
     if (err instanceof ApiError && err.status === 403) {
-      return t`You cannot add this deck.`;
+      return t`You can’t add this deck.`;
     }
     return t`Couldn’t add the deck. Check your connection and try again.`;
   };

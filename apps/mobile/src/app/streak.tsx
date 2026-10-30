@@ -113,7 +113,7 @@ function StreakPanel({
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
         : shownOutcome(today.outcome, due) === "nothing_due"
-          ? t`Nothing due today, so your streak is safe.`
+          ? t`Nothing due today, so your streak carries on.`
           : rest.has(addDays(today.date, -1))
             ? t`Yesterday was a rest day. Reach today’s goal to keep it going.`
             : current > 0

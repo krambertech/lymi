@@ -34,7 +34,7 @@ A backlog of two hundred reviews should not mean a week with nothing new in it. 
 
 - **Keep due-date ascending.** Rejected. It is the order the simulations single out as worst for exactly the case this matters in, and it has the specific failure of burying short-interval cards behind long-interval ones that have barely decayed.
 - **Relative overdueness computed from `elapsed_days / scheduled_days`.** This is the SM-2-era approximation of the same idea and needs no FSRS call. Rejected because the real quantity is already available: with FSRS the stability is stored, so the approximation buys nothing but a second formula to keep in step with the first.
-- **Let the learner choose the order.** Rejected. It is a setting that asks the learner to have an opinion about a scheduler they should not have to think about, and Lymi is not the app with a wall of scheduling options.
+- **Let the learner choose the order.** Rejected. It is a setting that asks the learner to have an opinion about a scheduler they should not have to think about.
 - **Sort in SQL by a stored retrievability column, refreshed on write.** Rejected for now. It would make the ordering a database concern and add a column that is wrong the moment time passes, which is the whole difficulty: retrievability is a function of *now*, not of the last write.
 
 ## Consequences
@@ -45,6 +45,8 @@ A backlog of two hundred reviews should not mean a week with nothing new in it. 
 - The API's queue endpoint changes order too. Nothing documented promises due-date ordering, and the scheduler preview it already exposes is a stronger contract than the sort was.
 
 ## Open question this does not settle
+
+[ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md) and [ADR 0031](0031-a-forgotten-card-returns-once-after-a-while.md) have since settled it.
 
 Whether a card graded **Forgot** returns inside the same session. Today it does not: grading writes a new due date about ten minutes out, the client keeps walking the array it was handed, and the card reappears only in a later batch. Anki relearns it in the same sitting, so the learner can try the forgotten card again.
 

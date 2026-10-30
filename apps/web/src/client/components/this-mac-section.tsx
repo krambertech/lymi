@@ -129,7 +129,7 @@ export function ThisMacSection() {
               description={
                 prefs.showInMenuBar
                   ? t`The lantern opens Lymi, quick add and review from the top of the screen.`
-                  : t`Lymi stays in the Dock instead, so it is always one click away.`
+                  : t`Lymi stays in the Dock instead.`
               }
               checked={prefs.showInMenuBar}
               onChange={(on) => void save("showInMenuBar", on)}

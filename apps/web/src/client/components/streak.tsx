@@ -141,7 +141,7 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
       return t`You’re done for today.`;
     case "nothing_due":
       return summary.current > 0
-        ? t`Nothing due today, so your streak is safe.`
+        ? t`Nothing due today, so your streak carries on.`
         : t`Nothing due today.`;
     default: {
       const left = Math.max(today.goal - today.attempts, 0);
@@ -271,7 +271,7 @@ export function StreakPanel({
         ? t`You’re done for today.`
         : today.outcome === "nothing_due"
           ? current > 0
-            ? t`Nothing due today, so your streak is safe.`
+            ? t`Nothing due today, so your streak carries on.`
             : t`Nothing due today.`
           : restedYesterday(summary)
             ? t`Yesterday was a rest day. Every grade counts toward today’s goal.`

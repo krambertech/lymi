@@ -659,7 +659,7 @@ export function AfterAction() {
                         "Leave Lezione 12?",
                         "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.",
                         [
-                          { text: "Keep studying", style: "cancel" },
+                          { text: "Stay in deck", style: "cancel" },
                           { text: "Leave deck", style: "destructive" },
                         ],
                       )

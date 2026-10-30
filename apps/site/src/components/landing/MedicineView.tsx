@@ -113,9 +113,8 @@ export function MedicineView() {
           title={<Trans>Keep the nerves, the drugs and the numbers.</Trans>}
           lede={
             <Trans>
-              Medicine asks you to remember more than any other course. Lymi brings each fact back
-              right before you’d forget it, so a few minutes a day carries it to your exams and onto
-              the ward. Free, and your Anki decks come with you.
+              Lymi brings each fact back right before you’d forget it, so a few minutes a day
+              carries it to your exams and onto the ward. Free, and your Anki decks come with you.
             </Trans>
           }
           cards={HAND}

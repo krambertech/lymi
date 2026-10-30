@@ -55,7 +55,7 @@ Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`
 
 A site page's controls are static HTML until their Astro island hydrates, and a click before then is lost. A journey calls `waitForIslands(page)` from `e2e/test.ts` before its first click on a site control.
 
-Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured: on 2026-09-16 the same commit failed 10 Chromium tests in 20.3 minutes under reduced motion and 24 in 27.4 at full motion, and the suite's 7.7 minutes on a developer's machine triple on a runner with no GPU, which is also why `timeout` doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
+Every page runs under `prefers-reduced-motion: reduce`, the product's reduced-motion mode, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured: full motion fails more than twice as many Chromium tests as reduced motion on the same commit, and the suite runs about three times slower on a runner with no GPU than on a developer's machine, which is also why `timeout` doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
 
 Analytics never initialize on loopback origins, so journeys need no analytics fixture; secondary browser windows still open through `newTestContext`. The SDK payload test intercepts `/ingest` in the browser, so the Worker never forwards to the production project.
 
@@ -63,7 +63,7 @@ A journey whose subject is not authentication starts already signed in. `startAs
 
 Six journeys keep driving the form, because arriving is their subject: the deep link that survives sign-in, which also proves the account being created on first use; the second learner on one browser, whose subject is the persisted cache that signing in throws away; both password journeys; the classmate who signs up from a join link; and the visitor who signs up from a published deck's add page. `signInAsTestLearner` and `createAccountThroughDevForm` are theirs.
 
-The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. Three workers were tried on 2026-09-16 and 49 of 63 Chromium tests failed, every one of them a signed-in journey whose screen never mounted inside the expect budget while the tests that touch no account passed. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
+The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. With three workers, most signed-in journeys never mount their screen inside the expect budget, while the tests that touch no account pass. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
 
 ## What runs when
 
@@ -158,7 +158,7 @@ The browser job is a matrix of Playwright shards, each a separate runner with it
 
 `workers` stays at one even with shards: a shard has its own server and D1, where a second worker would share them.
 
-A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. A shard's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
+A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so two queued pushes to `main` would cancel each other before either started; superseding the older run verifies the newest commit instead. A shard's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
@@ -198,7 +198,7 @@ Each Worker exposes its Cloudflare version ID, deployment timestamp and optional
 
 ## Workers-runtime tests
 
-`apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: on 2026-10-17 `redirect: "error"` passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.
+`apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: `redirect: "error"` once passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.
 
 Add a case there, and an answer to the stub, for any new outgoing fetch or any new use of an API only Workers provides. `biome-plugins/no-redirect-error.grit` catches the one option known to break; this project catches the next one. `scripts/test-plan.mjs` runs it in `pnpm verify:changed` and on pull requests that reach `apps/web/src/server/` or `packages/core/`, and `pnpm verify` and every push to `main` run it always.
 

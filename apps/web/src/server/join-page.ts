@@ -162,7 +162,7 @@ export function describePreview(preview: JoinPreviewOut, i18n: I18n, kind: DoorK
       };
     case "invalid":
       return {
-        title: i18n._(msg`This join link does not work`),
+        title: i18n._(msg`This join link doesn’t work`),
         description: i18n._(msg`Check that the whole link was copied, or ask for a new one.`),
       };
   }
@@ -183,7 +183,7 @@ function describePublication(preview: JoinPreviewOut, i18n: I18n) {
     case "off":
       return {
         title: i18n._(msg`This deck is no longer published`),
-        description: i18n._(msg`People who added it keep studying it, but nobody new can add it.`),
+        description: i18n._(msg`People who added it keep reviewing it, but nobody new can add it.`),
       };
     case "archived":
       return {

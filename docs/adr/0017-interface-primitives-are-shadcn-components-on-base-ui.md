@@ -15,7 +15,7 @@ The overlays showed what that cost. `Sheet` decided "desktop" by width and a fin
 
 ## Decision
 
-A component added with `shadcn add` keeps its export names, compound anatomy, data attributes and `render` composition. Its classes are rewritten to Lymi tokens (`bg-plate`, `text-ink`, `edge-strong`) and DESIGN.md's sizes and motion. shadcn's colour variables are not added, because `ink-muted` already names a text colour in Lymi and two vocabularies would drift. `Button`, `IconButton` and product components such as `Streak`, `LanguageField` and `GoalPicker` stay Lymi-owned and compose the primitives.
+A component added with `shadcn add` keeps its export names, compound anatomy, data attributes and `render` composition. Its classes are rewritten to Lymi tokens (`bg-plate`, `text-ink`, `edge-strong`) and Lymi's sizes and motion. shadcn's colour variables are not added, because `ink-muted` already names a text colour in Lymi and two vocabularies would drift. `Button`, `IconButton` and product components such as `Streak`, `LanguageField` and `GoalPicker` stay Lymi-owned and compose the primitives.
 
 Every overlay is one of two kinds.
 

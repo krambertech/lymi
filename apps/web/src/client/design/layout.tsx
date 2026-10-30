@@ -1,7 +1,9 @@
 import { clsx } from "clsx";
-import { ArrowLeft, ArrowUp, ChevronLeft, X } from "lucide-react";
+import { ArrowLeft, ArrowUp, ChevronLeft, ChevronRight, Ellipsis, Search, X } from "lucide-react";
 import type { ReactNode } from "react";
+import { Button, IconButton } from "../components/button";
 import { Table, Td, Th } from "../components/table";
+import { Rule, Rules } from "./do-dont";
 import { DocLink } from "./doc-link";
 import { Doc, Specimen, Sub } from "./frame";
 
@@ -258,6 +260,70 @@ export function Layout() {
           </>
         }
       />
+      <Sub title="Do and don’t" note="layout.md has the full rules.">
+        <Rules>
+          <Rule kind="do" title="Make the whole row the link.">
+            <RowLike
+              end={
+                <ChevronRight
+                  aria-hidden="true"
+                  className="size-4 text-ink-muted rtl:-scale-x-100"
+                />
+              }
+            />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put a button inside a row."
+            note="People tap the row and nothing happens."
+          >
+            <RowLike end={<Button size="sm">Open</Button>} />
+          </Rule>
+          <Rule kind="do" title="Use icon buttons in the top bar.">
+            <BarLike>
+              <IconButton label="Search">
+                <Search />
+              </IconButton>
+              <IconButton label="More">
+                <Ellipsis />
+              </IconButton>
+            </BarLike>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put a text button in the top bar."
+            note="Put a form’s submit button under the form."
+          >
+            <BarLike>
+              <Button size="sm" variant="primary">
+                Save
+              </Button>
+            </BarLike>
+          </Rule>
+        </Rules>
+      </Sub>
     </Doc>
+  );
+}
+
+function RowLike({ end }: { end: ReactNode }) {
+  return (
+    <div className="edge flex w-full max-w-80 items-center gap-3 rounded-lg bg-plate px-4 py-3">
+      <span className="grid min-w-0 flex-1 gap-0.5">
+        <span className="text-base font-medium">Italian with Giulia</span>
+        <span className="text-sm text-ink-muted">48 cards</span>
+      </span>
+      {end}
+    </div>
+  );
+}
+
+function BarLike({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex w-full max-w-80 items-center gap-1 border-b border-edge pb-2">
+      <ChevronLeft aria-hidden="true" className="size-5 text-ink-muted rtl:-scale-x-100" />
+      <span className="me-auto text-base">Library</span>
+      {children}
+    </div>
   );
 }

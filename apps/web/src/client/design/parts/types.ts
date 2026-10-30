@@ -15,6 +15,8 @@ export interface Group {
   title: string;
   lede: string;
   entries: Entry[];
+  /** The group's do and don't pairs, as `Rule`s; drawn last, under its own heading. */
+  Rules?: ComponentType | undefined;
 }
 
 export const noop = () => {};

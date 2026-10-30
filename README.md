@@ -56,7 +56,7 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
 pnpm check        # lint, formatting, design, styling, cache, agent-doc and phone-symbol checks
-pnpm check:design # DESIGN.md and the phone's values match packages/design; design docs name real components
+pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs
@@ -90,7 +90,7 @@ Edit the source and re-run its generator, because the next run overwrites a hand
 | both `worker-configuration.d.ts` files | a Wrangler binding change | that workspace's `cf-typegen` |
 | `apps/web/src/client/routeTree.gen.ts` | adding or renaming a file in `apps/web/src/client/routes` | `pnpm dev` or `pnpm build`, through the TanStack Router plugin |
 | `packages/core/simulation/results.json` | changing the draw, the scheduler or a year-long simulation | `pnpm --filter @lymi/core simulate` |
-| `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css`, `DESIGN.md`'s frontmatter | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
+| `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css` | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
 | `packages/design/fonts/onest-cyrillic-wght-normal.woff2` | updating `@fontsource-variable/onest` | `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) |
 | `apps/mobile/assets/symbols/` | changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts` | `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) |
 | `apps/desktop/assets/trayTemplate.png`, `trayTemplate@2x.png` | changing `tray.svg` | `pnpm --filter @lymi/desktop tray-icon` (needs `rsvg-convert`) |

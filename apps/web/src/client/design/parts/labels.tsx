@@ -1,6 +1,9 @@
 import { Avatar } from "../../components/avatar";
+import { Button } from "../../components/button";
 import { Chip, SourceChip, StateChip } from "../../components/chip";
+import { DueCount } from "../../components/due-count";
 import { Kbd } from "../../components/kbd";
+import { Rule } from "../do-dont";
 import { Variants } from "../frame";
 import type { Group } from "./types";
 
@@ -44,8 +47,8 @@ export const labels: Group = {
             },
             {
               label: "Danger",
-              note: "Out of review: an archived card or deck.",
-              render: () => <Chip tone="danger">Archived</Chip>,
+              note: "A status that failed, such as an import that stopped.",
+              render: () => <Chip tone="danger">Stopped</Chip>,
             },
           ]}
         />
@@ -128,14 +131,11 @@ export const labels: Group = {
             },
             {
               label: "On primary",
-              note: "Inside the amber button it takes the on-primary tone.",
+              note: "Inside the amber button it takes the on-primary tone. Button’s kbd prop picks it for you.",
               render: () => (
-                <span className="inline-flex items-center rounded-md bg-amber px-3 py-1.5 text-sm text-amber-ink">
+                <Button variant="primary" kbd="R">
                   Review
-                  <Kbd tone="on-primary" className="ms-2">
-                    R
-                  </Kbd>
-                </span>
+                </Button>
               ),
             },
           ]}
@@ -165,4 +165,31 @@ export const labels: Group = {
       ),
     },
   ],
+  Rules: LabelRules,
 };
+
+function LabelRules() {
+  return (
+    <>
+      <Rule kind="do" title="Put the AI badge next to what AI wrote.">
+        <span className="flex items-center gap-2 text-sm text-ink-muted">
+          Meaning <SourceChip source="ai" size="xs" />
+        </span>
+      </Rule>
+      <Rule kind="dont" title="Sell the AI." note="The badge only says who wrote it.">
+        <span className="text-base font-medium text-ai">✨ Magic suggestion</span>
+      </Rule>
+      <Rule kind="do" title="Use DueCount for due cards.">
+        <DueCount count={11} />
+        <DueCount count={11} size="lg" />
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Write the count in amber."
+        note="Amber text dark enough to read looks brown."
+      >
+        <span className="text-2xl font-medium text-amber-text">11</span>
+      </Rule>
+    </>
+  );
+}

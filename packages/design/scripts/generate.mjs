@@ -138,7 +138,7 @@ export function palettes(css) {
   return { light: room(light), dark: room(dark) };
 }
 
-/** Every colour as `name` and `dark-name`, in declaration order, as DESIGN.md records them. */
+/** Every colour as `name` and `dark-name`, in declaration order. */
 export function paletteFrom(css) {
   const { light, dark } = palettes(css);
   return [

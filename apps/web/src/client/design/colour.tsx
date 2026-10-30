@@ -1,6 +1,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { Button } from "../components/button";
+import { StateChip } from "../components/chip";
 import { contrast } from "./contrast";
+import { Rule, Rules } from "./do-dont";
 import { Doc, Sub } from "./frame";
+import { ChipLike, Snippet } from "./specimen-parts";
 
 interface Token {
   name: string;
@@ -155,9 +159,9 @@ export function Colour() {
   return (
     <Doc
       title="Colour"
-      lede="Two rooms, one flame. Neutrals are warm and nearly grey. Amber is the only saturated colour and appears at most twice per screen. Surfaces are flat: no gradients, no drop shadows, one hairline edge. Ratios are measured live against this page."
+      lede="Warm greys for surfaces, and amber for the main action and a few states. Card states, errors, success and AI each have their own colour. Dark mode has its own colours, not inverted ones. The contrast ratios below are measured live."
     >
-      <Sub title="Two rooms">
+      <Sub title="Both themes">
         <div className="grid gap-3 @3xl:grid-cols-2">
           {(["light", "dark"] as const).map((t) => (
             <div
@@ -165,9 +169,7 @@ export function Colour() {
               data-theme={t}
               className="@container edge rounded-lg bg-canvas p-5 text-ink"
             >
-              <h3 className="mb-4 text-sm font-medium">
-                {t === "light" ? "Light room" : "Dark room"}
-              </h3>
+              <h3 className="mb-4 text-sm font-medium">{t === "light" ? "Light" : "Dark"}</h3>
               <div className="grid grid-cols-3 gap-3 @xl:grid-cols-5">
                 {TOKENS.map((tk) => (
                   <Swatch key={tk.name} {...tk} />
@@ -179,10 +181,13 @@ export function Colour() {
       </Sub>
 
       <Sub title="Roles">
-        <dl className="grid gap-x-8 gap-y-2 text-base @3xl:grid-cols-2">
+        <dl className="grid text-base">
           {TOKENS.map((t) => (
-            <div key={t.name} className="flex gap-3 border-b border-edge py-2">
-              <dt className="w-28 shrink-0">
+            <div
+              key={t.name}
+              className="grid gap-1 border-b border-edge py-2.5 @xl:grid-cols-[11rem_minmax(0,1fr)] @xl:gap-4"
+            >
+              <dt>
                 <code className="text-sm text-ink-secondary">--{t.name}</code>
               </dt>
               <dd className="text-ink-secondary">{t.role}</dd>
@@ -191,21 +196,61 @@ export function Colour() {
         </dl>
       </Sub>
 
-      <Sub title="Rules">
-        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
-          {[
-            "Amber twice per screen at most: the flame and the primary action. A due count, ink on amber-tint, is the third allowed use.",
-            "Status is never colour alone. New, Learning and Known carry a label and their icon.",
-            "Depth is one edge. Cards, inputs and rows get --edge; on hover or focus it becomes --edge-strong. Nothing casts a shadow.",
-            "No gradient on any surface. The app icon is the one exception. If something needs to feel lit, it is the lantern, and it uses --lantern-glow.",
-            "Text on canvas meets 4.5:1 in both rooms, including --ink-muted. --ink-faint is decorative and never carries words.",
-            "Dark is not inverted light. The plate is lighter than the canvas in both rooms, so a card always comes forward.",
-          ].map((t) => (
-            <li key={t} className="edge rounded-md bg-plate px-4 py-3">
-              {t}
-            </li>
-          ))}
-        </ul>
+      <Sub title="Do and don’t" note="colour.md lists every place amber is allowed.">
+        <Rules>
+          <Rule kind="do" title="Use one amber button per screen.">
+            <Button variant="primary">Review 11 due</Button>
+            <Button>Add a card</Button>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Use two amber buttons."
+            note="People can’t tell which one matters. Make the second one a normal button."
+          >
+            <Button variant="primary">Review 11 due</Button>
+            <Button variant="primary">Add a card</Button>
+          </Rule>
+          <Rule kind="do" title="Show a selected chip in dark ink.">
+            <ChipLike selected>Learning</ChipLike>
+            <ChipLike>Known</ChipLike>
+            <ChipLike>New</ChipLike>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Make a selected chip amber."
+            note="Amber means act. Selected is not an action."
+          >
+            <ChipLike amber>Learning</ChipLike>
+            <ChipLike>Known</ChipLike>
+            <ChipLike>New</ChipLike>
+          </Rule>
+          <Rule kind="do" title="Show a card state with an icon and a word.">
+            <StateChip state={0} />
+            <StateChip state={1} />
+            <StateChip state={2} />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Show a card state with colour only."
+            note="Some people can’t see the difference, and screen readers can’t read a colour."
+          >
+            {["bg-state-new", "bg-state-learning", "bg-state-known"].map((c) => (
+              <span key={c} className={`size-3 rounded-full ${c}`} />
+            ))}
+          </Rule>
+          <Rule kind="do" title="Use a colour token." className="justify-start">
+            <Snippet>{'<p className="text-ink-muted">'}</Snippet>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Use a hex value or a Tailwind colour."
+            note="It breaks in dark mode. pnpm check:styling catches it."
+            className="justify-start"
+          >
+            {/* check-styling: allow: the mistake this don't shows, as text. */}
+            <Snippet>{'<p className="text-[#72665f]">'}</Snippet>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

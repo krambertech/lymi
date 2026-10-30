@@ -18,6 +18,7 @@ import {
   type Shape,
   touchRowClassName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Dropdown Menu, in the shape of the machine: anchored to its trigger on a desktop, a
@@ -163,8 +164,9 @@ function AnchoredContent({
     [hide, remeasure],
   );
   const refs = useMergedRefs(useMergedRefs(ref, observe), refProp);
+  const container = usePortalContainer();
   return (
-    <MenuPrimitive.Portal>
+    <MenuPrimitive.Portal container={container}>
       <MenuPrimitive.Positioner
         // A popup, not a dropdown layer: a menu can open from inside a sheet, such as a card's options.
         className="isolate z-(--z-popup) outline-none"

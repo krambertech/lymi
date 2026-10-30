@@ -15,7 +15,7 @@ function resolve(choice: ThemeChoice): "light" | "dark" {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-/** DESIGN.md's canvas in each theme, so the status bar and browser chrome meet the page. */
+/** The canvas token in each theme, so the status bar and browser chrome meet the page. */
 const CHROME = { light: "#f8f6f4", dark: "#130d09" } as const;
 
 export function applyTheme(choice: ThemeChoice) {

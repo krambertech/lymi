@@ -2,14 +2,14 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { outputs } from "../packages/design/scripts/generate.mjs";
 import {
-  frontmatterColours,
+  frontmatterKeys,
   namedComponents,
   oklchToHex,
   paletteFrom,
   stepNames,
 } from "./check-design-docs.mjs";
 
-test("converts OKLCH to the hex DESIGN.md records, with alpha as a fourth byte", () => {
+test("converts OKLCH to hex, with alpha as a fourth byte", () => {
   assert.equal(oklchToHex("oklch(1 0 0)"), "#ffffff");
   assert.equal(oklchToHex("oklch(0.2 0.016 55)"), "#1c140f");
   assert.equal(oklchToHex("oklch(0.8 0.15 72 / 0.16)"), "#f8ac3d29");
@@ -84,12 +84,9 @@ test("names the type steps a theme sets, without their line heights", () => {
   assert.deepEqual(stepNames(css, "@theme"), ["xs", "lg"]);
 });
 
-test("reads the colours out of the frontmatter", () => {
-  const markdown = '---\ncolors:\n  canvas: "#f8f6f4"\n  edge: "#2013081a"\ntypography:\n';
-  assert.deepEqual(frontmatterColours(markdown).entries, [
-    ["canvas", "#f8f6f4"],
-    ["edge", "#2013081a"],
-  ]);
+test("reads the top-level keys of the frontmatter, not the values under them", () => {
+  const markdown = '---\nname: Lymi\ncolors:\n  canvas: "#f8f6f4"\n---\n# Lymi\nnote: prose\n';
+  assert.deepEqual(frontmatterKeys(markdown), ["name", "colors"]);
 });
 
 test("names components in code font, but not strings quoted in examples", () => {

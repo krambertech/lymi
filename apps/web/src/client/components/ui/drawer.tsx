@@ -1,6 +1,7 @@
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { cn } from "cn";
 import * as React from "react";
+import { usePortalContainer } from "./portal-container";
 
 type DrawerContextProps = {
   hasSnapPoints: boolean;
@@ -202,9 +203,10 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
   const swipeAxis = swipeDirection === "down" || swipeDirection === "up" ? "y" : "x";
   const [popupEl, setPopupEl] = React.useState<HTMLElement | null>(null);
   useKeyboardInset(popupEl);
+  const container = usePortalContainer();
 
   return (
-    <DrawerPortal data-slot="drawer-portal">
+    <DrawerPortal data-slot="drawer-portal" container={container}>
       {modal === true && <DrawerOverlay data-snap-points={hasSnapPoints ? "" : undefined} />}
       <DrawerPrimitive.Viewport
         data-slot="drawer-viewport"

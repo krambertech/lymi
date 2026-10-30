@@ -1,4 +1,6 @@
+import { Rule, Rules } from "./do-dont";
 import { Doc, Specimen, Sub } from "./frame";
+import { Snippet } from "./specimen-parts";
 
 export function Space() {
   return (
@@ -13,7 +15,7 @@ export function Space() {
         <Specimen className="items-end gap-6">
           {[4, 8, 16, 24, 32, 48].map((n) => (
             <div key={n} className="grid justify-items-center gap-2">
-              <div className="bg-amber-soft" style={{ width: n, height: n }} />
+              <div className="bg-ink-faint" style={{ width: n, height: n }} />
               <span className="text-2xs text-ink-muted tabular-nums">{n}</span>
             </div>
           ))}
@@ -77,6 +79,33 @@ export function Space() {
             </div>
           </div>
         </Specimen>
+      </Sub>
+      <Sub title="Do and don’t">
+        <Rules>
+          <Rule
+            kind="do"
+            title="Set the gap on the parent."
+            note="Spacing stays in one place, and removing an item doesn’t leave a hole."
+            className="justify-start"
+          >
+            <Snippet>{'<div className="grid gap-3">'}</Snippet>
+          </Rule>
+          <Rule kind="dont" title="Add margins to each child." className="justify-start">
+            <Snippet>{'<Row className="mb-3" />'}</Snippet>
+          </Rule>
+          <Rule
+            kind="do"
+            title="Use start and end."
+            note="ms-, pe- and text-start flip on their own for Arabic and Hebrew."
+            className="justify-start"
+          >
+            <Snippet>{'className="ps-4 text-start"'}</Snippet>
+          </Rule>
+          <Rule kind="dont" title="Use left and right." className="justify-start">
+            {/* check-styling: allow: the mistake this don't shows, as text. */}
+            <Snippet>{'className="pl-4 text-left"'}</Snippet>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

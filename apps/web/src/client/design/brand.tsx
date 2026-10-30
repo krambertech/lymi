@@ -1,5 +1,6 @@
 import { Lantern } from "../components/lantern";
 import { AppTile, Lockup, Wordmark } from "../components/logo";
+import { Rule, Rules } from "./do-dont";
 import { DocLink } from "./doc-link";
 import { Doc, Pair, Specimen, Sub } from "./frame";
 
@@ -109,21 +110,45 @@ export function Brand() {
         </Specimen>
       </Sub>
 
-      <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-ink-secondary @3xl:grid-cols-2">
-          {[
-            "Don’t put a gradient on any surface. The app icon is the one exception; the lantern is the only thing that glows.",
-            "Don’t colour the metal grey. It is ink in the light room and ivory in the dark one.",
-            "Don’t add a second illustration. The lantern is the one drawing; everything else is a standard control.",
-            "Don’t outline, rotate or bevel the mark. Don’t put it in a circle unless the platform demands one.",
-            "Don’t show two flames at once. If the lantern is on the screen, the wordmark is plain.",
-            "Don’t let amber appear more than twice on a screen: the flame, and the one thing to press.",
-          ].map((t) => (
-            <li key={t} className="edge rounded-md bg-plate px-4 py-3">
-              {t}
-            </li>
-          ))}
-        </ul>
+      <Sub title="Do and don’t" note="brand.md has the full rules.">
+        <Rules>
+          <Rule kind="do" title="Use the plain wordmark next to the lantern.">
+            <Lockup size={36} />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Show two flames at once."
+            note="Use the lit wordmark only when the lantern isn’t on screen, like a share image."
+          >
+            <Lantern className="size-12" />
+            <Wordmark size={36} flame title="lymi, lit" />
+          </Rule>
+          <Rule kind="do" title="Put the glow around the flame.">
+            <Lantern className="size-16" glow />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put the glow around the whole lantern."
+            note="Only the flame glows."
+          >
+            <Lantern
+              className="size-16"
+              style={{ filter: "drop-shadow(0 0 14px var(--lantern-glow))" }}
+            />
+          </Rule>
+          <Rule kind="do" title="Use the lantern as it is drawn.">
+            <Lantern className="size-16" />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Outline, tilt or frame the lantern."
+            note="It only tilts in the shared launch and pull-to-refresh animation."
+          >
+            <span className="grid size-24 rotate-12 place-items-center rounded-full bg-amber-soft ring-2 ring-edge-strong">
+              <Lantern className="size-14" />
+            </span>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

@@ -1,7 +1,7 @@
 /*
  * Lymi tokens, the one source for the web, the site and the phone app. The web and the site
  * import this file; scripts/generate.mjs derives the phone's values from it, and
- * `pnpm check:design` fails when DESIGN.md or the phone's values drift.
+ * `pnpm check:design` fails when the phone's values drift.
  *
  * Two rooms: a dark one lit by the lantern, a light one at noon.
  * The theme follows the OS unless the user picks one in Settings. Tokens sit on

@@ -7,6 +7,7 @@ import { Progress } from "../components/progress";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { SevenLights } from "../components/seven-lights";
+import { Rule, Rules } from "./do-dont";
 import { Doc, Pair, Sub } from "./frame";
 
 const WEEK = [12, 0, 30, 50, 44, 51, 31];
@@ -186,6 +187,59 @@ export function Surfaces() {
             </div>
           )}
         </Pair>
+      </Sub>
+      <Sub title="Do and don’t" note="surfaces.md says which background each thing gets.">
+        <Rules>
+          <Rule kind="do" title="Put related rows in one panel.">
+            <div className="edge w-full max-w-72 divide-y divide-edge rounded-lg bg-plate">
+              {["Daily goal", "Reminders", "Theme"].map((r) => (
+                <div key={r} className="px-4 py-3 text-base">
+                  {r}
+                </div>
+              ))}
+            </div>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put panels inside a panel."
+            note="Group them with a heading and space instead."
+          >
+            <div className="edge grid w-full max-w-72 gap-2 rounded-xl bg-plate p-3">
+              {["Daily goal", "Reminders", "Theme"].map((r) => (
+                <div key={r} className="edge rounded-lg bg-plate px-4 py-3 text-base">
+                  {r}
+                </div>
+              ))}
+            </div>
+          </Rule>
+          <Rule kind="do" title="Use the edge utility.">
+            <div className="edge grid h-24 w-full max-w-60 place-items-center rounded-xl bg-plate text-base">
+              Italian with Giulia
+            </div>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Write your own drop shadow."
+            note="It looks heavy by day and muddy at night. edge is right in both themes."
+          >
+            <div
+              className="grid h-24 w-full max-w-60 place-items-center rounded-xl bg-plate text-base"
+              style={{ boxShadow: "0 14px 32px var(--scrim)" }}
+            >
+              Italian with Giulia
+            </div>
+          </Rule>
+          <Rule kind="do" title="Make inner corners smaller than outer ones.">
+            <div className="edge rounded-xl bg-plate p-2">
+              <div className="h-14 w-44 rounded-md bg-plate-nested" />
+            </div>
+          </Rule>
+          <Rule kind="dont" title="Use the same corner size inside and out.">
+            <div className="edge rounded-xl bg-plate p-2">
+              <div className="h-14 w-44 rounded-xl bg-plate-nested" />
+            </div>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

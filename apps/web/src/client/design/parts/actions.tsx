@@ -1,6 +1,8 @@
-import { Archive, MoreHorizontal, Volume2, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Archive, MoreHorizontal, Plus, Search, Volume2, X } from "lucide-react";
 import { AddMenu } from "../../components/add-menu";
 import { Button, IconButton } from "../../components/button";
+import { Rule } from "../do-dont";
 import { Variants } from "../frame";
 import { type Group, noop } from "./types";
 
@@ -79,15 +81,15 @@ export const actions: Group = {
               ),
             },
             {
-              label: "Disabled",
-              note: "Only when pressing could do nothing at all. A form’s submit stays pressable and says what is missing.",
-              render: () => <Button disabled>Disabled</Button>,
+              label: "Unavailable",
+              note: "Mid-request, or with no handler: aria-disabled keeps it focusable and swallows the press. A form’s submit stays pressable and says what’s missing.",
+              render: () => <Button aria-disabled>Saving</Button>,
             },
             {
               label: "Link",
               note: "A link that looks like a button passes itself as `render` and keeps the button's inside.",
               render: () => (
-                <Button render={<a href="/library" onClick={(e) => e.preventDefault()} />}>
+                <Button render={<Link to="/library" onClick={(e) => e.preventDefault()} />}>
                   Open Library
                 </Button>
               ),
@@ -114,8 +116,22 @@ export const actions: Group = {
               ),
             },
             {
+              label: "Ghost, medium",
+              note: "The default. Bar actions such as search and options.",
+              render: () => (
+                <>
+                  <IconButton label="Search">
+                    <Search />
+                  </IconButton>
+                  <IconButton label="Deck options">
+                    <MoreHorizontal />
+                  </IconButton>
+                </>
+              ),
+            },
+            {
               label: "Ghost, small",
-              note: "Row and header actions: options, close. The default.",
+              note: "Row actions and close, where a 40 px button would crowd the row.",
               render: () => (
                 <>
                   <IconButton label="Deck options" size="sm">
@@ -123,6 +139,33 @@ export const actions: Group = {
                   </IconButton>
                   <IconButton label="Leave review" size="sm">
                     <X />
+                  </IconButton>
+                </>
+              ),
+            },
+            {
+              label: "Sizes",
+              note: "xs 24, sm 32, md 40, lg 48. xs dismisses a card without pushing its content down.",
+              render: () => (
+                <>
+                  {(["xs", "sm", "md", "lg"] as const).map((size) => (
+                    <IconButton key={size} label={`Close, ${size}`} size={size}>
+                      <X />
+                    </IconButton>
+                  ))}
+                </>
+              ),
+            },
+            {
+              label: "Primary and danger",
+              note: "Primary for the page’s one action when it has no words; danger for a destructive one.",
+              render: () => (
+                <>
+                  <IconButton label="Add a card" variant="primary">
+                    <Plus />
+                  </IconButton>
+                  <IconButton label="Archive card" variant="danger">
+                    <Archive />
                   </IconButton>
                 </>
               ),
@@ -154,4 +197,48 @@ export const actions: Group = {
       ),
     },
   ],
+  Rules: ActionRules,
 };
+
+function ActionRules() {
+  return (
+    <>
+      <Rule
+        kind="do"
+        title="Keep the button active and show errors on submit."
+        note="The form checks itself and moves to the first error."
+      >
+        <Button variant="primary">Create deck</Button>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Disable the button until the form is ready."
+        note="A grey button can’t tell people what’s missing."
+      >
+        <Button variant="primary" disabled>
+          Create deck
+        </Button>
+      </Rule>
+      <Rule kind="do" title="Say what each button does.">
+        <Button variant="ghost">Keep key</Button>
+        <Button variant="danger">Revoke key</Button>
+      </Rule>
+      <Rule kind="dont" title="Use OK and Cancel.">
+        <Button>Cancel</Button>
+        <Button variant="primary">OK</Button>
+      </Rule>
+      <Rule kind="do" title="Pick one of the button sizes.">
+        <Button size="sm">Small</Button>
+        <Button>Medium</Button>
+        <Button size="lg">Large</Button>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Resize a button with className."
+        note="If no size fits, ask for a new one."
+      >
+        <Button className="h-14 rounded-full px-9 text-lg">Custom</Button>
+      </Rule>
+    </>
+  );
+}

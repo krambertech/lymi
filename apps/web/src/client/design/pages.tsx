@@ -1,9 +1,10 @@
 import { Navigate } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect } from "react";
+import { Rules } from "./do-dont";
 import { DocLink } from "./doc-link";
-import { Doc, DocSource, Sub } from "./frame";
-import { FOUNDATIONS, GROUPS, ORDER } from "./registry";
+import { Doc, DocGuide, DocSource, Sub } from "./frame";
+import { FOUNDATIONS, GROUPS, groupListing, ORDER } from "./registry";
 
 function useDocTitle(title: string | undefined) {
   useEffect(() => {
@@ -18,13 +19,15 @@ export function FoundationPage({ slug }: { slug: string }) {
     const firstGroup = GROUPS[0]?.slug ?? "actions";
     if (slug === "components")
       return <Navigate to="/design/components/$group" params={{ group: firstGroup }} replace />;
-    return <Navigate to="/design/$page" params={{ page: "brand" }} replace />;
+    return <Navigate to="/design" replace />;
   }
   return (
-    <DocSource.Provider value={page.source}>
-      <page.Page />
-      <DocFooter current={`page:${page.slug}`} />
-    </DocSource.Provider>
+    <DocGuide.Provider value={page.guide}>
+      <DocSource.Provider value={page.source}>
+        <page.Page />
+        <DocFooter current={`page:${page.slug}`} />
+      </DocSource.Provider>
+    </DocGuide.Provider>
   );
 }
 
@@ -34,22 +37,32 @@ export function GroupPage({ slug }: { slug: string }) {
   if (!group) return <Navigate to="/design/$page" params={{ page: "components" }} replace />;
   const single = group.entries.length === 1;
   return (
-    // A group of one takes its component's edit link in the page header.
-    <DocSource.Provider value={single ? group.entries[0]?.source : undefined}>
-      <Doc title={group.title} lede={group.lede} crumb="Components">
-        {group.entries.map((e) => (
-          <Sub
-            key={e.slug}
-            title={single ? undefined : e.name}
-            note={single ? undefined : e.note}
-            source={single ? undefined : e.source}
-          >
-            <e.Demo />
-          </Sub>
-        ))}
-      </Doc>
-      <DocFooter current={`group:${group.slug}`} />
-    </DocSource.Provider>
+    <DocGuide.Provider value={groupListing(group.slug).guide}>
+      {/* A group of one takes its component's source link in the page header. */}
+      <DocSource.Provider value={single ? group.entries[0]?.source : undefined}>
+        <Doc title={group.title} lede={group.lede} crumb="Components">
+          {group.entries.map((e) => (
+            <Sub
+              key={e.slug}
+              id={e.slug}
+              title={single ? undefined : e.name}
+              note={single ? undefined : e.note}
+              source={single ? undefined : e.source}
+            >
+              <e.Demo />
+            </Sub>
+          ))}
+          {group.Rules && (
+            <Sub title="Do and don’t" id="do-and-dont">
+              <Rules>
+                <group.Rules />
+              </Rules>
+            </Sub>
+          )}
+        </Doc>
+        <DocFooter current={`group:${group.slug}`} />
+      </DocSource.Provider>
+    </DocGuide.Provider>
   );
 }
 

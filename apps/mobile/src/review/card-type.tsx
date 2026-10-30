@@ -9,7 +9,7 @@ import { TermText } from "../ui/term-text";
 
 /** How many sizes the cue and the target have. */
 const STEPS = 3;
-/** The word at 38 (DESIGN.md word-phone), then 3xl and 2xl. */
+/** The word at 38 (the phone's word step in type.md), then 3xl and 2xl. */
 const CUE = [38, 34, 28];
 /** A term as the answer: 2xl, xl, lg, medium. */
 const TERM = [28, 22, 20];

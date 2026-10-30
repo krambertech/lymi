@@ -2,6 +2,7 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { cn } from "cn";
 import * as React from "react";
 import { composing } from "../../lib/composing";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * The shell both palettes draw with: ⌘K in the product and the developer palette on backtick.
@@ -42,9 +43,10 @@ function CommandPalette({
 }: PaletteProps) {
   const popupRef = React.useRef<HTMLDivElement>(null);
   const context = React.useMemo(() => ({ skin, compact }), [skin, compact]);
+  const container = usePortalContainer();
   return (
     <DialogPrimitive.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal container={container}>
         {!compact && (
           <DialogPrimitive.Backdrop
             className={cn(

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-// Keeps the design docs and every copy of the tokens true to packages/design/tokens.css: DESIGN.md's
-// colour frontmatter, the phone's generated values and its type ramp's step names. It also checks
-// that every component a design doc names in code font is exported somewhere. `--write` regenerates
-// the frontmatter colours and the generated files.
+// Keeps every copy of the tokens true to packages/design/tokens.css: the phone's generated values and
+// its type ramp's step names. DESIGN.md holds direction, not values, so its frontmatter may name the
+// system and nothing else. It also checks that every component a design doc names in code font is
+// exported somewhere. `--write` regenerates the generated files.
 
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -23,16 +23,10 @@ const read = (path) => readFileSync(resolve(root, path), "utf8");
 
 export { block, oklchToHex, paletteFrom };
 
-export function frontmatterColours(markdown) {
-  const section = markdown.match(/^colors:\n((?: {2}.+\n)+)/m);
-  if (!section) throw new Error("DESIGN.md has no colors: frontmatter");
-  return {
-    text: section[0],
-    entries: [...section[1].matchAll(/^ {2}([a-z0-9-]+): "(#[0-9a-f]+)"$/gm)].map((m) => [
-      m[1],
-      m[2],
-    ]),
-  };
+/** The keys of a Markdown file's frontmatter, in order. */
+export function frontmatterKeys(markdown) {
+  const front = markdown.match(/^---\n([\s\S]*?)\n---\n/);
+  return front ? [...front[1].matchAll(/^([A-Za-z][\w-]*):/gm)].map((m) => m[1]) : [];
 }
 
 function exportedNames() {
@@ -91,28 +85,15 @@ export function stepNames(css, selector) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const css = read("packages/design/tokens.css");
-  const palette = paletteFrom(css);
-  const design = read("DESIGN.md");
-  const current = frontmatterColours(design);
   const write = process.argv.includes("--write");
   const problems = [];
 
-  if (write) {
-    const text = `colors:\n${palette.map(([name, hex]) => `  ${name}: "${hex}"`).join("\n")}\n`;
-    writeFileSync(resolve(root, "DESIGN.md"), design.replace(current.text, text));
-    console.log(`DESIGN.md: wrote ${palette.length} colours from packages/design/tokens.css`);
-  } else if (JSON.stringify(current.entries) !== JSON.stringify(palette)) {
-    const want = new Map(palette);
-    const have = new Map(current.entries);
-    for (const [name, hex] of want)
-      if (have.get(name) !== hex)
-        problems.push(
-          `DESIGN.md colors.${name} is ${have.get(name) ?? "missing"}, tokens.css gives ${hex}`,
-        );
-    for (const name of have.keys())
-      if (!want.has(name)) problems.push(`DESIGN.md colors.${name} has no token in tokens.css`);
-    if (problems.length === 0) problems.push("DESIGN.md colors are out of order with tokens.css");
-  }
+  // A value copied into DESIGN.md drifts from tokens.css; the values live there and on /design.
+  for (const key of frontmatterKeys(read("DESIGN.md")))
+    if (key !== "name" && key !== "description")
+      problems.push(
+        `DESIGN.md frontmatter has ${key}:, but values live in packages/design/tokens.css`,
+      );
 
   for (const [path, content] of Object.entries(outputs(css))) {
     if (write) writeFileSync(resolve(root, path), content);

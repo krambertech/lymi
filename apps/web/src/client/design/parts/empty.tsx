@@ -1,10 +1,12 @@
-import { KeyRound, ListFilter, Plug, SearchX } from "lucide-react";
+import { KeyRound, ListFilter, LoaderCircle, Plug, SearchX } from "lucide-react";
 import { Button } from "../../components/button";
 import { EmptySection, ErrorState, NoResults } from "../../components/empty-state";
 import { FirstRunGuide } from "../../components/first-run";
 import { NextStep, NextSteps } from "../../components/next-steps";
+import { Skeleton } from "../../components/skeleton";
 import { StartPanel, StartPanelSection } from "../../components/start-panel";
 import { StatPlate } from "../../components/stat-plate";
+import { Rule } from "../do-dont";
 import { Variants } from "../frame";
 import { decks } from "../mock";
 import { type Group, noop } from "./types";
@@ -12,7 +14,7 @@ import { type Group, noop } from "./types";
 export const empty: Group = {
   slug: "empty-states",
   title: "Empty states",
-  lede: "What a screen or a group shows before it has anything in it, or when it could not load. Each says what is missing and how to fill it, and looks temporary so it is never mistaken for content. docs/design/system/empty-states.md has the rules.",
+  lede: "What a screen shows while it loads, before it has anything in it, or when it could not load. Each one says what’s missing and how to add it, and never looks like real content.",
   entries: [
     {
       slug: "first-run-guide",
@@ -237,5 +239,67 @@ export const empty: Group = {
         />
       ),
     },
+    {
+      slug: "skeleton",
+      name: "Skeleton",
+      source: "components/skeleton.tsx",
+      note: "Holds the loaded shape, so nothing jumps when the data lands. It stops shimmering under reduced motion.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "A list loading",
+              note: "A title line, then rows at their real height.",
+              render: () => (
+                <div className="grid w-full gap-2">
+                  <Skeleton className="h-9 w-2/3" />
+                  <Skeleton className="h-11" />
+                  <Skeleton className="h-11" />
+                </div>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
   ],
+  Rules: EmptyRules,
 };
+
+function EmptyRules() {
+  return (
+    <>
+      <Rule kind="do" title="Say what’s missing and how to add it.">
+        <div className="grid justify-items-center gap-3 text-center">
+          <p className="text-lg font-medium">No cards in Estonian A2 yet</p>
+          <Button variant="primary">Add a card</Button>
+        </div>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Write a big, vague message."
+        note="Keep it smaller than the page, with a normal-size button."
+      >
+        <div className="grid justify-items-center gap-3 text-center">
+          <p className="text-3xl font-medium">Nothing here</p>
+          <Button size="xl" variant="primary">
+            Get started
+          </Button>
+        </div>
+      </Rule>
+      <Rule kind="do" title="Show a skeleton while it loads.">
+        <div className="grid w-full max-w-72 gap-2">
+          <Skeleton className="h-14 rounded-lg" />
+          <Skeleton className="h-14 rounded-lg" />
+        </div>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Show a spinner or “no cards” while it loads."
+        note="If “no cards” flashes before the cards, it looks broken."
+      >
+        <LoaderCircle aria-hidden="true" className="size-6 animate-spin text-ink-muted" />
+      </Rule>
+    </>
+  );
+}

@@ -6,6 +6,7 @@ import { Button } from "../../components/button";
 import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
 import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../../views/review-view";
+import { Rule } from "../do-dont";
 import { type FrameTheme, Phone, useFrameTheme } from "../frame";
 import * as m from "../mock";
 import { type Group, noop } from "./types";
@@ -263,4 +264,29 @@ export const review: Group = {
       ),
     },
   ],
+  Rules: ReviewRules,
 };
+
+function ReviewRules() {
+  return (
+    <>
+      <Rule
+        kind="do"
+        title="Make all four grades look the same."
+        note="No grade is the right answer, so none stands out."
+      >
+        <div className="w-full max-w-96">
+          <GradeBar revealed next={m.queueItem.next} onGrade={noop} />
+        </div>
+      </Rule>
+      <Rule kind="dont" title="Make one grade amber.">
+        <Button size="sm">Forgot</Button>
+        <Button size="sm">Hard</Button>
+        <Button size="sm" variant="primary">
+          Good
+        </Button>
+        <Button size="sm">Easy</Button>
+      </Rule>
+    </>
+  );
+}

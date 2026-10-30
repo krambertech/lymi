@@ -23,21 +23,24 @@ describe("design deployment", () => {
     expect(response.headers.get("Cache-Control")).toBe("no-store");
     expect(fetch).not.toHaveBeenCalled();
   });
-  it.each(["/", "/design", "/design/"])("opens the brand page from %s", async (path) => {
+  it("opens the overview from the root", async () => {
     const { env } = setup();
-    const response = await worker.fetch(new Request(`https://design.lymi.app${path}`), env);
+    const response = await worker.fetch(new Request("https://design.lymi.app/"), env);
     expect(response.status).toBe(302);
-    expect(response.headers.get("Location")).toBe("/design/brand");
+    expect(response.headers.get("Location")).toBe("/design");
   });
-  it.each(["/design/brand", "/design/components/overlays", "/design/frame/menu"])(
-    "serves the design shell for a direct visit to %s",
-    async (path) => {
-      const { env, fetch } = setup();
-      const response = await worker.fetch(new Request(`https://design.lymi.app${path}`), env);
-      expect(response.status).toBe(200);
-      expect(new URL(fetch.mock.calls[0]?.[0]?.url ?? "").pathname).toBe("/index.html");
-    },
-  );
+  it.each([
+    "/design",
+    "/design/",
+    "/design/brand",
+    "/design/components/overlays",
+    "/design/frame/menu",
+  ])("serves the design shell for a direct visit to %s", async (path) => {
+    const { env, fetch } = setup();
+    const response = await worker.fetch(new Request(`https://design.lymi.app${path}`), env);
+    expect(response.status).toBe(200);
+    expect(new URL(fetch.mock.calls[0]?.[0]?.url ?? "").pathname).toBe("/index.html");
+  });
   it.each([
     "/api/me",
     "/api/dev/sign-in",

@@ -255,3 +255,36 @@ test("tests hold only test decks, and a search matches names, not hidden values"
   await expect.element(page.getByRole("option", { name: /^Anything/ })).not.toBeInTheDocument();
   await expect.element(page.getByRole("option", { name: /^For a test/ })).not.toBeInTheDocument();
 });
+
+test("the guide leaves the deck finish to the server, and still finishes cards", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("no mock deck");
+  vi.mocked(captureAnalytics).mockClear();
+  const guide = (list: typeof decks) => (
+    <FirstRunGuide
+      name="Kateryna"
+      decks={list}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />
+  );
+  const screen = await wrap(guide([]));
+  await expect.element(page.getByText("0 of 3 done")).toBeInTheDocument();
+  await screen.rerender(
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">{guide([{ ...deck, total: 0, due: 0 }])}</StaticNavProvider>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText("1 of 3 done")).toBeInTheDocument();
+  await screen.rerender(
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">{guide([deck])}</StaticNavProvider>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText("2 of 3 done")).toBeInTheDocument();
+  const finished = vi
+    .mocked(captureAnalytics)
+    .mock.calls.filter(([name]) => name === "welcome_step_finished");
+  expect(finished).toEqual([["welcome_step_finished", { step_name: "cards", skipped: false }]]);
+});

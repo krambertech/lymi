@@ -5,6 +5,7 @@ import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
 import { track } from "./analytics";
+import { recordFirstDeck } from "./analytics-deck";
 import { audit, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -308,6 +309,8 @@ export async function join(
   await spendNamedInvitations(db, deckId, userId, now);
   if (after.id === membershipId && after.joinedAt.getTime() === now.getTime()) {
     track(ctx.analytics, { name: "deck_joined" });
+    // A rejoin is not a first deck: the account had this one before.
+    if (!existing) recordFirstDeck(ctx, { joined: deckId });
     if (opts.publicationSlug)
       track(ctx.analytics, { name: "deck_added", deck_slug: opts.publicationSlug });
   }

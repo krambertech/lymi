@@ -473,6 +473,74 @@ describe("importing a Pleco export", () => {
   });
 });
 
+describe("an import that brings the account's first decks", () => {
+  it("finishes the welcome deck step once, and a later import or deck adds nothing", async () => {
+    const events: AnalyticsEvent[] = [];
+    const work: Promise<void>[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        later: (run: () => Promise<void>) => {
+          work.push(run());
+        },
+      },
+    };
+    const deckFinishes = async () => {
+      await Promise.all(work.splice(0));
+      return events.filter((e) => e.name === "welcome_step_finished");
+    };
+    const finished = [{ name: "welcome_step_finished", step_name: "deck", skipped: false }];
+    await runImport(ctx, "current.apkg");
+    expect(
+      (await db.select().from(schema.decks).where(eq(schema.decks.userId, ctx.userId))).length,
+    ).toBeGreaterThan(1);
+    expect(await deckFinishes()).toEqual(finished);
+    await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    await createDeck(ctx, { name: "Mine" });
+    expect(await deckFinishes()).toEqual(finished);
+  });
+
+  it("finishes the step when the import's smallest deck id was inserted a second after a sibling", async () => {
+    const events: AnalyticsEvent[] = [];
+    const queued: (() => Promise<void>)[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        // Held back, so the decks' stored times can be set as a slow import would leave them.
+        later: (run: () => Promise<void>) => {
+          queued.push(run);
+        },
+      },
+    };
+    await runImport(ctx, "current.apkg");
+    const decks = await db
+      .select({ id: schema.decks.id })
+      .from(schema.decks)
+      .where(eq(schema.decks.userId, ctx.userId))
+      .orderBy(schema.decks.id);
+    expect(decks.length).toBeGreaterThan(1);
+    // `created_at` keeps whole seconds and ids made in one millisecond sort at random, so the
+    // smallest id can land in the next second while its siblings share the one before.
+    const second = 1_798_000_000_000;
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second) })
+      .where(eq(schema.decks.userId, ctx.userId));
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second + 1000) })
+      .where(eq(schema.decks.id, decks[0]?.id ?? ""));
+    await Promise.all(queued.splice(0).map((run) => run()));
+    expect(events.filter((e) => e.name === "welcome_step_finished")).toEqual([
+      { name: "welcome_step_finished", step_name: "deck", skipped: false },
+    ]);
+  });
+});
+
 describe("importing an HSK-shaped Anki deck", () => {
   it("writes Chinese cards with pinyin Readings, notes and recordings, counting converted tones", async () => {
     const events: AnalyticsEvent[] = [];

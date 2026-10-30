@@ -36,6 +36,7 @@ import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
 import { track } from "./analytics";
+import { recordFirstDeck } from "./analytics-deck";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import { type CardImageStorage, storeImportedImage } from "./card-images";
@@ -607,6 +608,7 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       (result, index) => index % 2 === 0 && result.meta.changes === 1,
     ).length;
   }
+  if (created > 0) recordFirstDeck(ctx, { imported: work.row.id });
   await batchStatements(db, [
     // A run handed over meets this import's own cards as existing, so the first count stands.
     sql`update imports set media_total = max(media_total, ${media}), updated_at = ${Date.now()}

@@ -86,8 +86,10 @@ function useStepAnalytics(current: number) {
       const previous = observed.current;
       if (previous === current) return;
       if (previous !== null && current > previous) {
+        // The server finishes `deck` when the account gets its first deck, wherever that happens.
         for (const step_name of STEP_NAMES.slice(previous, current))
-          captureAnalytics("welcome_step_finished", { step_name, skipped: false });
+          if (step_name !== "deck")
+            captureAnalytics("welcome_step_finished", { step_name, skipped: false });
       }
       const step_name = STEP_NAMES[current];
       if (step_name && captureAnalytics("welcome_step_viewed", { step_name, skipped: false }))

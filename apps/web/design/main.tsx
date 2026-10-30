@@ -18,12 +18,10 @@ import { TooltipProvider } from "../src/client/components/ui/tooltip";
 import { DesignLayout } from "../src/client/design/design-layout";
 import { FrameDocument } from "../src/client/design/device-frame";
 import { FoundationPage, GroupPage } from "../src/client/design/pages";
-import { activate } from "../src/client/lib/i18n";
-import { initTheme } from "../src/client/lib/theme";
+import { bootDesign } from "./boot";
 import "./styles.css";
 
-activate("en");
-initTheme();
+bootDesign();
 const queryClient = new QueryClient({
   defaultOptions: { queries: { enabled: false, retry: false } },
 });

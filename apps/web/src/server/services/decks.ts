@@ -201,7 +201,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
-  recordFirstDeck(ctx, id);
+  recordFirstDeck(ctx, { created: id });
   if (input.purpose) trackPurpose(ctx, input.purpose, true);
   if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
     trackEnrichmentChoice(

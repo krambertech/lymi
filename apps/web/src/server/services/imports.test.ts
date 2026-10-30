@@ -473,6 +473,36 @@ describe("importing a Pleco export", () => {
   });
 });
 
+describe("an import that brings the account's first decks", () => {
+  it("finishes the welcome deck step once, and a later import or deck adds nothing", async () => {
+    const events: AnalyticsEvent[] = [];
+    const work: Promise<void>[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        later: (run: () => Promise<void>) => {
+          work.push(run());
+        },
+      },
+    };
+    const deckFinishes = async () => {
+      await Promise.all(work.splice(0));
+      return events.filter((e) => e.name === "welcome_step_finished");
+    };
+    const finished = [{ name: "welcome_step_finished", step_name: "deck", skipped: false }];
+    await runImport(ctx, "current.apkg");
+    expect(
+      (await db.select().from(schema.decks).where(eq(schema.decks.userId, ctx.userId))).length,
+    ).toBeGreaterThan(1);
+    expect(await deckFinishes()).toEqual(finished);
+    await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    await createDeck(ctx, { name: "Mine" });
+    expect(await deckFinishes()).toEqual(finished);
+  });
+});
+
 describe("importing an HSK-shaped Anki deck", () => {
   it("writes Chinese cards with pinyin Readings, notes and recordings, counting converted tones", async () => {
     const events: AnalyticsEvent[] = [];

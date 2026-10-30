@@ -79,3 +79,19 @@ it("does not finish the step for an account that already had a deck", async () =
       .where(eq(schema.analyticsReviewStarts.userId, rejoiner.userId)),
   ).toEqual([]);
 });
+
+it("finishes the step once when two first decks arrive at nearly the same moment", async () => {
+  const { ctx, deckFinishes } = await account("deck-step-race");
+  // Both runs read the account before either marks it, as two requests landing together do.
+  await Promise.all([
+    createDeck(ctx, { name: "Queued offline" }),
+    createDeck(ctx, { name: "Queued too" }),
+  ]);
+  expect(await deckFinishes()).toEqual(finished);
+
+  const owner = await learner(db, "deck-step-race-owner", "Owner");
+  const shared = await createDeck(owner, { name: "Shared" });
+  const { ctx: both, deckFinishes: bothFinished } = await account("deck-step-race-join");
+  await Promise.all([createDeck(both, { name: "Mine" }), join(both, shared.id)]);
+  expect(await bothFinished()).toEqual(finished);
+});

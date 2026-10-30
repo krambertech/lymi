@@ -310,7 +310,7 @@ export async function join(
   if (after.id === membershipId && after.joinedAt.getTime() === now.getTime()) {
     track(ctx.analytics, { name: "deck_joined" });
     // A rejoin is not a first deck: the account had this one before.
-    if (!existing) recordFirstDeck(ctx, deckId);
+    if (!existing) recordFirstDeck(ctx, { joined: deckId });
     if (opts.publicationSlug)
       track(ctx.analytics, { name: "deck_added", deck_slug: opts.publicationSlug });
   }

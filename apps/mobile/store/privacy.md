@@ -51,7 +51,7 @@ App Store Connect, Apps, Lymi, App Privacy, Get Started (or Edit next to Data Ty
 | Crash Data | App Functionality | Yes | No |
 | Coarse Location | App Functionality, Analytics | Yes | No |
 
-4. Publish.
+4. Publish only with the account holder’s approval.
 
 These classifications follow [Apple’s data-type definitions](https://developer.apple.com/app-store/app-privacy-details/):
 

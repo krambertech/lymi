@@ -25,7 +25,7 @@ Turn notes into cards for course concepts, useful facts or vocabulary. Add your 
 ### Keywords (100 bytes)
 
 ```text
-study,notes,exam,revision,spaced repetition,learn,memorize,recall,anki,srs,fsrs,vocabulary
+study,notes,exam,revision,spaced repetition,learn,memorize,recall,srs,fsrs,vocabulary
 ```
 
 ### Description (4000)

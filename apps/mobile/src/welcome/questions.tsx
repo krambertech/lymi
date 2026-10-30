@@ -159,7 +159,7 @@ export function KindChoices({
       value: "other",
       icon: "idea",
       title: t`Something else`,
-      detail: t`Your own material, whatever it is.`,
+      detail: t`Anything else you want to remember.`,
     },
   ];
   return (

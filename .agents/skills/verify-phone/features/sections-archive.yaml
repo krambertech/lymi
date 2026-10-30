@@ -15,7 +15,7 @@ name: Archive a section
     visible: "Keep the cards, .*"
     timeout: 10000
 - assertVisible: "Archive its 5 cards too, .*"
-- assertVisible: "Nothing is deleted. Restore it from Archived sections."
+- assertVisible: "You can restore it from Archived sections."
 - takeScreenshot: 01-archive-question
 - tapOn: "Archive its 5 cards too, .*"
 - extendedWaitUntil:

@@ -419,7 +419,7 @@ function compose(
         msg`You review on your own schedule, and ${ownerName} doesn’t see your progress.`,
       );
       return {
-        subject: i18n._(msg`${ownerName} invited you to study ${deckName}`),
+        subject: i18n._(msg`${ownerName} invited you to join ${deckName}`),
         preview: text,
         hero: {
           kind: "deck",
@@ -430,7 +430,7 @@ function compose(
           initials: initials(ownerName),
           byline: i18n._(
             msg({
-              message: "<0/> invited you to study this deck",
+              message: "<0/> invited you to join this deck",
               comment: "<0/> is the name of the person inviting",
             }),
           ),

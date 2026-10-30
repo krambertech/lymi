@@ -159,7 +159,7 @@ export function InviteDialog({ open, onOpenChange, ...body }: InviteDialogProps)
           <DialogTitle>{t`Invite by email`}</DialogTitle>
           <DialogDescription>
             <Trans>
-              They get an email with a link only they can use. They can study the deck but not
+              They get an email with a link only they can use. They can review the deck but not
               change it.
             </Trans>
           </DialogDescription>

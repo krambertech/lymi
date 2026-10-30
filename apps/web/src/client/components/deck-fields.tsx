@@ -293,7 +293,7 @@ export const PURPOSES: PurposeOption[] = [
     value: "other",
     icon: <Shapes />,
     label: msg`Something else`,
-    blurb: msg`Your own material, whatever it is.`,
+    blurb: msg`Anything else you want to remember.`,
   },
 ];
 

@@ -88,9 +88,9 @@ export function ExamsHub({ counts }: Props) {
             title={<Trans>Cramming fades. Spacing lasts.</Trans>}
             body={
               <Trans>
-                What you cram the night before fades within days. Spaced repetition asks each
-                question again just as you’re about to forget it, and every time you remember, the
-                next gap grows. Lymi uses your grade to decide when each question comes back.
+                Spaced repetition asks each question again just as you’re about to forget it, and
+                every time you remember, the next gap grows. Lymi uses your grade to decide when
+                each question comes back.
               </Trans>
             }
           />

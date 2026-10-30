@@ -157,9 +157,7 @@ export function ArchiveSectionDialog({
       onOpenChange={onOpenChange}
       size="md"
       title={({ name: sectionName }) => t`Archive “${{ sectionName: isolate(sectionName) }}”?`}
-      description={
-        <Trans>Nothing is deleted. Restore it from Archived sections in the deck’s menu.</Trans>
-      }
+      description={<Trans>You can restore it from Archived sections in the deck’s menu.</Trans>}
       dismiss={<Trans>Cancel</Trans>}
       confirm={<Trans>Archive section</Trans>}
       defaultValue="keep"

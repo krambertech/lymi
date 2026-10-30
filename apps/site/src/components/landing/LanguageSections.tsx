@@ -239,7 +239,7 @@ export function TogetherSection({ name, language, cards, body }: TogetherProps) 
       body={
         body ?? (
           <Trans>
-            Study a deck with your class, your tutor or a friend. One of you adds the words after
+            Review a deck with your class, your tutor or a friend. One of you adds the words after
             each lesson and shares a link, and everyone reviews on their own schedule.
           </Trans>
         )

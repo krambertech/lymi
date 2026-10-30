@@ -178,7 +178,7 @@ export function EstonianView({ decks, locale }: Props) {
         cards={ESTONIAN_CLASS_CARDS}
         body={
           <Trans>
-            Study a deck with your course group, your tutor or a friend. One of you adds the words
+            Review a deck with your course group, your tutor or a friend. One of you adds the words
             after each lesson and shares a link, and everyone reviews on their own schedule.
           </Trans>
         }

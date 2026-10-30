@@ -456,8 +456,8 @@ msgstr "{after} of {total}"
 msgid "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
 msgstr "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
 
-msgid "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
-msgstr "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
+msgid "{app} connects to Lymi and signs in with your Lymi account. You choose what it may do when it signs in."
+msgstr "{app} connects to Lymi and signs in with your Lymi account. You choose what it may do when it signs in."
 
 #. placeholder {0}: chosen.length
 #. placeholder {1}: decks.length
@@ -845,11 +845,8 @@ msgstr "A citizenship test, a driving test or another exam."
 msgid "A connected app"
 msgstr "A connected app"
 
-msgid "A deck holds the words you learn together. Make one, or import decks from another app."
-msgstr "A deck holds the words you learn together. Make one, or import decks from another app."
-
-msgid "A few minutes keeps them fresh."
-msgstr "A few minutes keeps them fresh."
+msgid "A deck holds the cards you review together. Make one, or import decks from another app."
+msgstr "A deck holds the cards you review together. Make one, or import decks from another app."
 
 msgid "A few quick questions, then your first review."
 msgstr "A few quick questions, then your first review."
@@ -981,12 +978,6 @@ msgstr "Add more"
 msgid "Add the lesson in any form, or several at once. You choose which terms become cards."
 msgstr "Add the lesson in any form, or several at once. You choose which terms become cards."
 
-msgid "Add the words from this lesson to my deck"
-msgstr "Add the words from this lesson to my deck"
-
-msgid "Add the words you want to learn, and they show here."
-msgstr "Add the words you want to learn, and they show here."
-
 msgid "Add to"
 msgstr "Add to"
 
@@ -998,6 +989,9 @@ msgstr "Add to {deckName}"
 
 msgid "Add to Library"
 msgstr "Add to Library"
+
+msgid "Add what you want to learn, and it shows here."
+msgstr "Add what you want to learn, and it shows here."
 
 msgid "Added “{name}” to Library"
 msgstr "Added “{name}” to Library"
@@ -1171,6 +1165,9 @@ msgstr "Anyone with the link"
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
+msgid "Anything else you want to remember."
+msgstr "Anything else you want to remember."
+
 msgid "API key"
 msgstr "API key"
 
@@ -1276,8 +1273,8 @@ msgstr "Archived the deck {deck}"
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
 
-msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
-msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
+msgid "Archives every card this import added, and each deck it made that has no other cards. You can restore it."
+msgstr "Archives every card this import added, and each deck it made that has no other cards. You can restore it."
 
 msgctxt "language"
 msgid "Armenian"
@@ -1752,6 +1749,9 @@ msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Core vocabulary"
 
+msgid "Couldn’t add the card. Try again."
+msgstr "Couldn’t add the card. Try again."
+
 msgid "Couldn’t add the deck. Check your connection and try again."
 msgstr "Couldn’t add the deck. Check your connection and try again."
 
@@ -2050,6 +2050,15 @@ msgstr "Create section"
 msgid "Create your Lymi account"
 msgstr "Create your Lymi account"
 
+msgid "Created the deck {deck}"
+msgstr "Created the deck {deck}"
+
+msgid "Created the section {name} in {deck}"
+msgstr "Created the section {name} in {deck}"
+
+msgid "Created the series {name}"
+msgstr "Created the series {name}"
+
 msgctxt "language"
 msgid "Croatian"
 msgstr "Croatian"
@@ -2111,14 +2120,14 @@ msgstr "Deck settings"
 msgid "Decks"
 msgstr "Decks"
 
-msgid "Decks from Lymi. Add one to study it in your language."
-msgstr "Decks from Lymi. Add one to study it in your language."
+msgid "Decks from Lymi. Add one to review it in your language."
+msgstr "Decks from Lymi. Add one to review it in your language."
 
 msgid "Decks in a series are reviewed together."
 msgstr "Decks in a series are reviewed together."
 
-msgid "Decks other people study"
-msgstr "Decks other people study"
+msgid "Decks other people review"
+msgstr "Decks other people review"
 
 msgid "Decks to review"
 msgstr "Decks to review"
@@ -2233,8 +2242,8 @@ msgstr "Each block is one day you reviewed."
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Each card is asked both ways, each way on its own schedule."
 
-msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
-msgstr "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgid "Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Each section opens once you know most of the one before it."
@@ -2941,9 +2950,6 @@ msgstr "Keep link"
 msgid "Keep member"
 msgstr "Keep member"
 
-msgid "Keep studying"
-msgstr "Keep studying"
-
 msgid "Keep Tab and New line. If a card has line breaks, set a custom row separator such as ##."
 msgstr "Keep Tab and New line. If a card has line breaks, set a custom row separator such as ##."
 
@@ -3150,15 +3156,6 @@ msgstr "Made a change"
 msgid "Made a change in {deck}"
 msgstr "Made a change in {deck}"
 
-msgid "Made the deck {deck}"
-msgstr "Made the deck {deck}"
-
-msgid "Made the section {name} in {deck}"
-msgstr "Made the section {name} in {deck}"
-
-msgid "Made the series {name}"
-msgstr "Made the series {name}"
-
 msgid "Make a deck"
 msgstr "Make a deck"
 
@@ -3170,6 +3167,9 @@ msgstr "Make a deck from this article"
 
 msgid "Make a key for Yomitan"
 msgstr "Make a key for Yomitan"
+
+msgid "Make cards from this lesson in my deck"
+msgstr "Make cards from this lesson in my deck"
 
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
@@ -3526,8 +3526,8 @@ msgstr "Nothing due"
 msgid "Nothing due in the next seven days."
 msgstr "Nothing due in the next seven days."
 
-msgid "Nothing due today, so your streak is safe."
-msgstr "Nothing due today, so your streak is safe."
+msgid "Nothing due today, so your streak carries on."
+msgstr "Nothing due today, so your streak carries on."
 
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
@@ -3540,9 +3540,6 @@ msgstr "Nothing from {app} yet. What it adds, edits or archives shows here."
 
 msgid "Nothing from this app yet. What it adds, edits or archives shows here."
 msgstr "Nothing from this app yet. What it adds, edits or archives shows here."
-
-msgid "Nothing is deleted. Restore it from Archived sections."
-msgstr "Nothing is deleted. Restore it from Archived sections."
 
 msgid "Nothing is due, and today’s goal is met."
 msgstr "Nothing is due, and today’s goal is met."
@@ -3598,8 +3595,8 @@ msgstr "One import takes up to 5,000 cards. Split the set and import it in parts
 msgid "One side only"
 msgstr "One side only"
 
-msgid "Only for you. The owner and others studying this deck choose their own."
-msgstr "Only for you. The owner and others studying this deck choose their own."
+msgid "Only for you. The owner and other members choose their own."
+msgstr "Only for you. The owner and other members choose their own."
 
 msgid "Only one app’s writes"
 msgstr "Only one app’s writes"
@@ -3700,8 +3697,8 @@ msgstr "Owner"
 msgid "Page {n}"
 msgstr "Page {n}"
 
-msgid "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
-msgstr "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
+msgid "Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order."
+msgstr "Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order."
 
 msgid "Password"
 msgstr "Password"
@@ -4502,6 +4499,9 @@ msgstr "State"
 msgid "Stay connected"
 msgstr "Stay connected"
 
+msgid "Stay in deck"
+msgstr "Stay in deck"
+
 msgid "Stay signed in"
 msgstr "Stay signed in"
 
@@ -4627,9 +4627,6 @@ msgstr "That didn’t go through"
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
-
-msgid "That didn’t work. Try again."
-msgstr "That didn’t work. Try again."
 
 msgid "That email and password don’t match."
 msgstr "That email and password don’t match."
@@ -4827,8 +4824,8 @@ msgstr "This isn’t an .apkg or .colpkg file. Choose the file you exported from
 msgid "This isn’t an .ofc file. Choose the file you exported from Noji."
 msgstr "This isn’t an .ofc file. Choose the file you exported from Noji."
 
-msgid "This join link does not work"
-msgstr "This join link does not work"
+msgid "This join link doesn’t work"
+msgstr "This join link doesn’t work"
 
 msgid "This join link is turned off"
 msgstr "This join link is turned off"
@@ -5227,20 +5224,17 @@ msgstr "Yomitan is disconnected"
 msgid "You"
 msgstr "You"
 
-msgid "You are already in this deck."
-msgstr "You are already in this deck."
-
 msgid "You are here"
 msgstr "You are here"
-
-msgid "You are still in the deck."
-msgstr "You are still in the deck."
 
 msgid "You can close Lymi now. Your decks appear in Library when the import finishes."
 msgstr "You can close Lymi now. Your decks appear in Library when the import finishes."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "You can download it until {until}. Then it’s deleted."
+
+msgid "You can restore it from Archived sections."
+msgstr "You can restore it from Archived sections."
 
 msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
 msgstr "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
@@ -5251,14 +5245,14 @@ msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
 
+msgid "You can’t add this deck."
+msgstr "You can’t add this deck."
+
 msgid "You can’t choose Easy after peeking at your hint."
 msgstr "You can’t choose Easy after peeking at your hint."
 
-msgid "You cannot add this deck."
-msgstr "You cannot add this deck."
-
-msgid "You cannot join this deck through this link."
-msgstr "You cannot join this deck through this link."
+msgid "You can’t join this deck through this link."
+msgstr "You can’t join this deck through this link."
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "You removed them from this deck, so you can’t invite them again."
@@ -5275,14 +5269,17 @@ msgstr "You start with the first section. The next opens as you learn this one."
 msgid "You start with the first section. When you know most of it, you choose when to start the next."
 msgstr "You start with the first section. When you know most of it, you choose when to start the next."
 
-msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
-msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
+msgid "You were removed from this deck, so this link can’t add you back. Your reviews are kept."
+msgstr "You were removed from this deck, so this link can’t add you back. Your reviews are kept."
 
-msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
-msgstr "You were removed from this deck, so you cannot add it again. Your reviews are kept."
+msgid "You were removed from this deck, so you can’t add it again. Your reviews are kept."
+msgstr "You were removed from this deck, so you can’t add it again. Your reviews are kept."
 
 msgid "You wrote this"
 msgstr "You wrote this"
+
+msgid "You’re already in this deck."
+msgstr "You’re already in this deck."
 
 msgid "You’re done for today"
 msgstr "You’re done for today"
@@ -5292,6 +5289,9 @@ msgstr "You’re done for today."
 
 msgid "You’re offline. Showing your cards as of {when}."
 msgstr "You’re offline. Showing your cards as of {when}."
+
+msgid "You’re still in the deck."
+msgstr "You’re still in the deck."
 
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "You’ve asked for several codes today. Try again tomorrow."
@@ -5343,9 +5343,6 @@ msgstr "Your own"
 
 msgid "Your own goal"
 msgstr "Your own goal"
-
-msgid "Your own material, whatever it is."
-msgstr "Your own material, whatever it is."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."

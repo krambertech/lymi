@@ -133,7 +133,7 @@ export function AssistantPage(props: Props) {
 function TryAsking() {
   const { t } = useLingui();
   const prompts = [
-    t`Add the words from this lesson to my deck`,
+    t`Make cards from this lesson in my deck`,
     t`What’s due today?`,
     t`Make a deck from this article`,
   ];
@@ -177,7 +177,7 @@ function Connect({ assistant, name, address }: Props & { assistant: Assistant; n
       intro={
         assistant.key === "custom"
           ? t`Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect.`
-          : t`${{ app: isolate(name) }} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in.`
+          : t`${{ app: isolate(name) }} connects to Lymi and signs in with your Lymi account. You choose what it may do when it signs in.`
       }
       steps={stepsFor(assistant.key, signIn)}
       guide={siteUrl(assistant.guide)}

@@ -136,9 +136,9 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
       key: "cards",
       title: <Trans>Add cards</Trans>,
       detail: empty ? (
-        <Trans>{isolate(empty.name)} is empty. Add the words you want to remember.</Trans>
+        <Trans>{isolate(empty.name)} is empty. Add what you want to remember.</Trans>
       ) : (
-        <Trans>The words you want to remember, one card each.</Trans>
+        <Trans>What you want to remember, one card each.</Trans>
       ),
       action: (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">

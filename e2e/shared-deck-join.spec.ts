@@ -198,7 +198,7 @@ test("an owner turns the join link off and a member leaves", async ({
 
   await test.step("opening the link again changes nothing", async () => {
     await classmate.goto(joinUrl);
-    await expect(classmate.getByText("You are already in this deck.")).toBeVisible();
+    await expect(classmate.getByText("You’re already in this deck.")).toBeVisible();
     await expect(classmate.getByRole("link", { name: "Open deck" })).toBeVisible();
     const again = await classmate.request.post(`/api/join/${joinUrl.split("/").at(-1)}`, {
       headers: { "content-type": "application/json" },

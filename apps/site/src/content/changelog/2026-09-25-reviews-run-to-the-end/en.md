@@ -5,8 +5,6 @@ summary: A review keeps going until what you opened is done, pauses once at your
 
 A review now runs until everything you opened it for is done: your whole day, one deck, one section or a series. If you started from the Review button, it pauses once when you reach your daily goal, so you can stop there or carry on. Every ending shows the same screen with what you did today.
 
-The lantern lights up with your first review of the day and grows as you go, and every grade sends up a few sparks.
-
 You can also review just one section of a deck.
 
 ## Your edits wait when you’re offline

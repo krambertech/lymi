@@ -399,6 +399,9 @@ msgstr "Несколько минут в день"
 msgid "A few weeks in"
 msgstr "Через несколько недель"
 
+msgid "A finished card in seconds."
+msgstr "Готовая карточка за несколько секунд."
+
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "Препарат первой линии при диабете 2 типа; снижает выработку глюкозы печенью"
 
@@ -422,9 +425,6 @@ msgstr "Бесплатное приложение для изучения рус
 
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "Бесплатное приложение для изучения украинского на карточках. Ударение отмечено, пока ты не знаешь слово, у слов, которые различаются только ударением, отдельные карточки, а озвучивает их носитель языка. Начни с алфавита, потом A1 и A2."
-
-msgid "A full flashcard in seconds."
-msgstr "Готовая флеш-карточка за несколько секунд."
 
 msgid "A glass of *water*, please."
 msgstr "Стакан *воды*, пожалуйста."
@@ -1902,7 +1902,7 @@ msgstr "Карточки для сертификаций по облачным �
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Карточки для теста на гражданство Германии (Einbürgerungstest), США, Канады, Чехии и Испании, лексики Goethe, HSK, JLPT и TOPIK, а также теории на права. На языке экзамена, с переводом рядом. Бесплатно."
 
-msgid "Flashcards that come back right before you'd forget."
+msgid "Flashcards that come back right before you’d forget."
 msgstr "Карточки, которые возвращаются, когда ты вот-вот забудешь."
 
 msgid "Flashcards that stick."
@@ -3007,6 +3007,9 @@ msgstr "Lymi сначала спрашивает, а потом показыва
 msgid "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 msgstr "Lymi спрашивает, что значит фраза, и как сказать её по значению. Второе пригодится на кассе."
 
+msgid "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+msgstr "Lymi возвращает каждый факт прямо перед тем, как ты его забудешь, так что нескольких минут в день хватит, чтобы донести его до экзаменов и до отделения. Бесплатно, и твои колоды из Anki переедут вместе с тобой."
+
 msgid "Lymi changelog"
 msgstr "Что нового в Lymi"
 
@@ -3171,9 +3174,6 @@ msgstr "Студентам-медикам"
 
 msgid "Medicine and nursing"
 msgstr "Медицина и сестринское дело"
-
-msgid "Medicine asks you to remember more than any other course. Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
-msgstr "Медицина требует помнить больше, чем любой другой курс. Lymi возвращает каждый факт прямо перед тем, как ты его забудешь, так что нескольких минут в день хватит, чтобы донести его до экзаменов и до отделения. Бесплатно, и твои колоды из Anki переедут вместе с тобой."
 
 msgid "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
 msgstr "Участники общей колоды видят имя владельца и содержимое колоды. Владелец видит имена участников, их роли и время присоединения, но не электронные адреса или прогресс повторений. Если тебя приглашают по электронной почте, мы получаем адрес от приглашающего и храним запись приглашения. Опубликованные колоды и имя издателя доступны на публичных страницах."
@@ -3478,7 +3478,7 @@ msgstr "Одна карточка за раз, оценка одним каса�
 msgid "One card at a time, graded in a tap, on your phone or your laptop, even offline. The terms you know wait longer, and the ones you miss come back sooner."
 msgstr "Одна карточка за раз, оценка одним касанием, на телефоне или ноутбуке, даже без интернета. Термины, которые знаешь, ждут дольше, а те, что упускаешь, возвращаются раньше."
 
-msgid "One card's reviews over seven weeks"
+msgid "One card’s reviews over seven weeks"
 msgstr "Повторения одной карточки за семь недель"
 
 msgid "One character, two sounds."
@@ -3972,6 +3972,12 @@ msgstr "Открой значение и оцени, насколько хоро
 msgid "Revenue or cost recorded when it is earned or incurred, not when cash moves"
 msgstr "Доход или расход, которые записываются, когда заработаны или понесены, а не когда движутся деньги"
 
+msgid "Review a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+msgstr "Повторяй колоду вместе с группой, репетитором или другом. Кто-то один добавляет слова после каждого урока и делится ссылкой, а повторяет каждый по своему расписанию."
+
+msgid "Review a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
+msgstr "Повторяй колоду вместе с группой на курсах, репетитором или другом. Кто-то один добавляет слова после каждого занятия и делится ссылкой, а каждый повторяет в своём ритме."
+
 msgid "Review a few minutes a day"
 msgstr "Повторяй несколько минут в день"
 
@@ -4324,6 +4330,9 @@ msgstr "суверенитет"
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Советская Россия признала независимость Эстонии"
 
+msgid "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgstr "Интервальное повторение задаёт каждый вопрос снова именно тогда, когда ты вот-вот его забудешь, и каждый раз, когда ты вспоминаешь, следующая пауза становится длиннее. Lymi по твоей оценке решает, когда вернуть каждый вопрос."
+
 msgid "Spacing"
 msgstr "Интервалы"
 
@@ -4449,12 +4458,6 @@ msgstr "Упрямая стойкость; не сдаваться, когда �
 
 msgid "Studied Estonian in Anki before? Your cards keep their recordings and their schedule, so nothing starts over."
 msgstr "Есть эстонские карточки в Anki? Они сохранят записи и расписание повторений, так что ничего не придётся начинать заново."
-
-msgid "Study a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
-msgstr "Учи колоду вместе с группой, репетитором или другом. Кто-то один добавляет слова после каждого урока и делится ссылкой, а повторяет каждый по своему расписанию."
-
-msgid "Study a deck with your course group, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
-msgstr "Учи колоду вместе с группой на курсах, репетитором или другом. Кто-то один добавляет слова после каждого занятия и делится ссылкой, а каждый повторяет в своём ритме."
 
 msgid "Study for the certification. Keep what it taught you."
 msgstr "Готовься к сертификации. Сохрани то, чему она научила."
@@ -5550,9 +5553,6 @@ msgstr "Какие данные мы собираем и зачем"
 
 msgid "What you can see"
 msgstr "Что ты видишь"
-
-msgid "What you cram the night before fades within days. Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
-msgstr "То, что зазубришь в ночь перед экзаменом, забывается за несколько дней. Интервальное повторение задаёт каждый вопрос снова именно тогда, когда ты вот-вот его забудешь, и каждый раз, когда ты вспоминаешь, следующая пауза становится длиннее. Lymi по твоей оценке решает, когда вернуть каждый вопрос."
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "То, от чего отказываешься, выбирая один вариант вместо следующего лучшего"

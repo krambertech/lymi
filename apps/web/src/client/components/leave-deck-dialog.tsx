@@ -27,7 +27,7 @@ export function LeaveDeckDialog({ open, onOpenChange, deckName, onLeave, pending
           reviews are still there.
         </Trans>
       }
-      dismiss={<Trans>Keep studying</Trans>}
+      dismiss={<Trans>Stay in deck</Trans>}
       confirm={<Trans>Leave deck</Trans>}
       onConfirm={onLeave}
       pending={pending}

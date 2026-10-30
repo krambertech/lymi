@@ -121,7 +121,7 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
   const { t } = useLingui();
   return (
     <View>
-      <SectionTitle>{t`Decks other people study`}</SectionTitle>
+      <SectionTitle>{t`Decks other people review`}</SectionTitle>
       <Plate className="px-4">
         {decks.map((deck, index) => (
           <View
@@ -138,7 +138,7 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
         ))}
       </Plate>
       <Note>
-        {t`Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
+        {t`Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account.`}
       </Note>
       {decks.some((deck) => deck.published) && (
         <Note>{t`Published decks leave Explore, so nobody new can add them.`}</Note>

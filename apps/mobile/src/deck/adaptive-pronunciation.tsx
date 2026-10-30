@@ -86,7 +86,7 @@ export function AdaptivePronunciationNote({ choice }: { choice: Choice }) {
       <Text className="px-1 text-sm text-ink-muted">{i18n._(choice.on ? onText : offText)}</Text>
       {choice.deck.role !== "owner" && (
         <Text className="px-1 text-sm text-ink-muted">
-          {t`Only for you. The owner and others studying this deck choose their own.`}
+          {t`Only for you. The owner and other members choose their own.`}
         </Text>
       )}
       <FieldError>

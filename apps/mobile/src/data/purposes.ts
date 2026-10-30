@@ -15,6 +15,6 @@ export function usePurposes(): { value: DeckPurpose; label: string; detail: stri
       label: t`A subject or exam`,
       detail: t`Terms with short explanations, like for a citizenship test.`,
     },
-    { value: "other", label: t`Something else`, detail: t`Your own material, whatever it is.` },
+    { value: "other", label: t`Something else`, detail: t`Anything else you want to remember.` },
   ];
 }

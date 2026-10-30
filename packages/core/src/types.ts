@@ -1092,7 +1092,7 @@ export type UndoInput = z.infer<typeof UndoInput>;
 /** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
 export const ReminderTime = z
   .string()
-  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose a time on a 15-minute boundary");
+  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose 00, 15, 30 or 45 minutes.");
 export type ReminderTime = z.infer<typeof ReminderTime>;
 
 const PushEndpoint = z
@@ -1117,7 +1117,7 @@ export const TimeZone = z
     } catch {
       return false;
     }
-  }, "Use an IANA timezone such as Europe/Tallinn");
+  }, "Use an IANA timezone, such as Europe/Tallinn.");
 
 /** A visible page reporting its device zone. Moves the review day only while the mode is automatic. */
 export const DeviceTimezoneInput = z.object({ timezone: TimeZone });

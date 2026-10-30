@@ -95,7 +95,7 @@ export function ApiOverview() {
           },
           {
             term: "Removal",
-            def: "Nothing is deleted. Cards, decks and sections are archived and can be restored.",
+            def: "Cards, decks and sections are archived and can be restored. Only deleting a series cannot be undone.",
           },
         ]}
       />

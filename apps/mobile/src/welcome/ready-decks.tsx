@@ -29,7 +29,7 @@ export function ReadyDecks({ decks }: { decks: PublicDeckSummary[] }) {
           {t`Start with a ready-made deck`}
         </Text>
         <Text className="text-base text-ink-secondary">
-          {t`Decks from Lymi. Add one to study it in your language.`}
+          {t`Decks from Lymi. Add one to review it in your language.`}
         </Text>
         <View className="pt-3">
           <Button

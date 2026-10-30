@@ -55,7 +55,7 @@ export function ReturnLane({ term, lang }: Props) {
       <ol
         ref={root}
         className="relative grid gap-3 @3xl:grid-cols-6 @3xl:gap-0"
-        aria-label={t`One card's reviews over seven weeks`}
+        aria-label={t`One card’s reviews over seven weeks`}
       >
         {/* Across on a wide screen: the line runs through the flames, lit as far as the reviews have come. */}
         <span

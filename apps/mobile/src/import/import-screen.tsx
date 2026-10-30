@@ -458,7 +458,7 @@ function Done({
         <Text className="px-1 text-base text-ink-secondary">
           {archived
             ? t`Brings back every card this import added and the decks it made.`
-            : t`Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it.`}
+            : t`Archives every card this import added, and each deck it made that has no other cards. You can restore it.`}
         </Text>
         {archived ? (
           <Button

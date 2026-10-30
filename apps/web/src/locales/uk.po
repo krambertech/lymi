@@ -428,8 +428,8 @@ msgid "{0} is already in {1}"
 msgstr "{0} уже є в {1}"
 
 #. placeholder {0}: isolate(empty.name)
-msgid "{0} is empty. Add the words you want to remember."
-msgstr "Колода «{0}» порожня. Додай слова, які хочеш запам’ятати."
+msgid "{0} is empty. Add what you want to remember."
+msgstr "Колода «{0}» порожня. Додай те, що хочеш запам’ятати."
 
 #. placeholder {0}: isolate(deck.name)
 msgid "{0} is ready. Your first review takes a few minutes."
@@ -480,8 +480,8 @@ msgstr "{after} з {total}"
 msgid "{app} can no longer read or change your decks. Cards it added stay. To give it different access, disconnect and connect it again."
 msgstr "{app} більше не зможе читати чи змінювати твої колоди. Додані ним картки залишаться. Щоб змінити доступ, відключи і підключи його знову."
 
-msgid "{app} reaches Lymi as a remote MCP server and signs in with your Lymi account. You choose what it may do when it signs in."
-msgstr "{app} під’єднується до Lymi як віддалений MCP-сервер і входить через твій акаунт Lymi. Що йому можна робити, ти вибираєш під час входу."
+msgid "{app} connects to Lymi and signs in with your Lymi account. You choose what it may do when it signs in."
+msgstr "{app} під’єднується до Lymi і входить через твій акаунт Lymi. Що йому можна робити, ти вибираєш під час входу."
 
 msgid "{appName} is connected"
 msgstr "Застосунок {appName} підключено"
@@ -759,8 +759,8 @@ msgstr "{others, plural, one {Ще # книжка — мовою, якої ти 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Попередній розділ теж почнеться, щоб розділи йшли по порядку.} few {# попередні розділи теж почнуться, щоб розділи йшли по порядку.} many {# попередніх розділів теж почнуться, щоб розділи йшли по порядку.} other {# попереднього розділу теж почнуться, щоб розділи йшли по порядку.}}"
 
-msgid "{ownerName} invited you to study {deckName}"
-msgstr "{ownerName} запрошує тебе вивчати «{deckName}»"
+msgid "{ownerName} invited you to join {deckName}"
+msgstr "{ownerName} запрошує тебе приєднатися до «{deckName}»"
 
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запам’ятано: {passed}, забуто: {failed}"
@@ -819,8 +819,8 @@ msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
 
 #. <0/> is the name of the person inviting
-msgid "<0/> invited you to study this deck"
-msgstr "<0/> запрошує тебе вивчати цю колоду"
+msgid "<0/> invited you to join this deck"
+msgstr "<0/> запрошує тебе приєднатися до цієї колоди"
 
 #. placeholder {0}: isolate(section.name)
 msgid "<0>{0} is ready.</0> Start it to review its cards."
@@ -919,7 +919,7 @@ msgstr "Співзвучне слово або те, що можна уявит�
 msgid "A subject or exam"
 msgstr "Предмет або іспит"
 
-msgid "A text file of your Pleco flashcards"
+msgid "A text file of your Pleco cards"
 msgstr "Текстовий файл твоїх карток із Pleco"
 
 msgid "A–Z"
@@ -1029,9 +1029,6 @@ msgstr "Додати зображення"
 
 msgid "Add text"
 msgstr "Додати текст"
-
-msgid "Add the words from this lesson to my deck"
-msgstr "Додай слова з цього уроку до моєї колоди"
 
 msgid "Add to"
 msgstr "Додати в"
@@ -1253,13 +1250,13 @@ msgstr "Будь-коли"
 msgid "Anyone can add this deck from its public page."
 msgstr "Будь-хто може додати цю колоду з її публічної сторінки."
 
-msgid "Anyone studying the deck can start a later section early."
-msgstr "Будь-хто, хто вчить колоду, може почати наступний розділ раніше."
+msgid "Anyone in the deck can start a later section early."
+msgstr "Будь-хто з учасників колоди може почати наступний розділ раніше."
 
 msgid "Anyone with the link"
 msgstr "Будь-хто з посиланням"
 
-msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+msgid "Anyone with the link can join and review your cards on their own schedule. They can’t change the cards, and you don’t see their progress."
 msgstr "Будь-хто з посиланням може приєднатися й повторювати твої картки у своєму темпі. Вони не можуть змінювати картки, а ти не бачиш їхнього прогресу."
 
 msgid "Anyone with this link can join and review these cards."
@@ -1270,6 +1267,9 @@ msgstr "будь-які"
 
 msgid "Anything"
 msgstr "Будь-що"
+
+msgid "Anything else you want to remember."
+msgstr "Усе інше, що хочеш запам’ятати."
 
 msgid "API key"
 msgstr "Ключ API"
@@ -1365,8 +1365,8 @@ msgstr "Заархівовано колоду «{deck}»"
 msgid "Archived the section {name} in {deck}"
 msgstr "Заархівовано розділ «{name}» у колоді «{deck}»"
 
-msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
-msgstr "Архівує кожну картку, яку додав цей імпорт, і кожну створену ним колоду, у якій немає інших карток. Нічого не видаляється, і все можна відновити."
+msgid "Archives every card this import added, and each deck it made that has no other cards. You can restore it."
+msgstr "Архівує кожну картку, яку додав цей імпорт, і кожну створену ним колоду, у якій немає інших карток. Усе можна відновити."
 
 msgid "Archiving hides a card or deck without deleting it."
 msgstr "Архівування ховає картку або колоду, не видаляючи її."
@@ -2135,6 +2135,15 @@ msgstr "Створи першу колоду"
 msgid "Create your Lymi account"
 msgstr "Створи акаунт Lymi"
 
+msgid "Created the deck {deck}"
+msgstr "Створено колоду «{deck}»"
+
+msgid "Created the section {name} in {deck}"
+msgstr "Створено розділ «{name}» у колоді «{deck}»"
+
+msgid "Created the series {name}"
+msgstr "Створено серію «{name}»"
+
 msgid "Current picture"
 msgstr "Поточне зображення"
 
@@ -2201,8 +2210,8 @@ msgstr "Колоди"
 msgid "Decks from Anki, Mochi or Noji, with their review history."
 msgstr "Колоди з Anki, Mochi чи Noji разом з історією повторень."
 
-msgid "Decks other people study"
-msgstr "Колоди, які вивчають інші"
+msgid "Decks other people review"
+msgstr "Колоди, які повторюють інші"
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -2353,8 +2362,8 @@ msgstr "Кожен блок — день із повтореннями."
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
 
-msgid "Each person who studies these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
-msgstr "Кожен, хто вивчає ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
+msgid "Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
+msgstr "Кожен, хто повторює ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Кожен розділ відкривається, щойно засвоєно більшість попереднього."
@@ -2462,8 +2471,8 @@ msgstr "Усі розділи відкриті"
 msgid "Every section is open, so any card can come up in review."
 msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
 
-msgid "Everyone studying this deck. You see whether they joined, not their reviews."
-msgstr "Усі, хто вивчає цю колоду. Ти бачиш, чи вони приєдналися, але не їхні повторення."
+msgid "Everyone in this deck. You see whether they joined, not their reviews."
+msgstr "Усі учасники колоди. Ти бачиш, чи вони приєдналися, але не їхні повторення."
 
 msgid "Everything {app} did, in Activity"
 msgstr "Усе, що зробив {app}, в Активності"
@@ -2766,11 +2775,11 @@ msgstr "Як це підключається"
 msgid "how it is asked"
 msgstr "як запитується"
 
-msgid "How it's asked"
+msgid "How it’s asked"
 msgstr "Як запитується"
 
 #. placeholder {0}: names(value.map(modeName))
-msgid "How it's asked: {0}"
+msgid "How it’s asked: {0}"
 msgstr "Як запитується: {0}"
 
 msgid "How it’s going"
@@ -2837,14 +2846,14 @@ msgstr "Імпорт з {app}"
 msgid "Import from Quizlet"
 msgstr "Імпорт з Quizlet"
 
+msgid "Import your cards with their pinyin, definitions and categories. Pleco’s text file has no scores, so every card starts as new, and Pleco is unchanged."
+msgstr "Імпортуй картки разом із піньїнем, визначеннями й категоріями. У текстовому файлі Pleco немає оцінок, тож кожна картка почнеться як нова, а в Pleco нічого не зміниться."
+
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Імпортуй колоди із зображеннями, тегами й історією повторень. Картки збережуть дати повторення, а в {app} нічого не зміниться."
 
 msgid "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
 msgstr "Імпортуй колоди разом з підколодами, зображеннями й прогресом навчання. Картки збережуть дати повторення, а в Noji нічого не зміниться."
-
-msgid "Import your flashcards with their pinyin, definitions and categories. Pleco’s text file has no scores, so every card starts as new, and Pleco is unchanged."
-msgstr "Імпортуй картки разом із піньїнем, визначеннями й категоріями. У текстовому файлі Pleco немає оцінок, тож кожна картка почнеться як нова, а в Pleco нічого не зміниться."
 
 msgid "Important"
 msgstr "Важлива"
@@ -2959,7 +2968,7 @@ msgstr "Він називає себе «{claimed}», але Lymi не може 
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "Він може читати твої картки, а також додавати, редагувати й архівувати їх."
 
-msgid "It can read your decks and cards. It cannot change anything."
+msgid "It can read your decks and cards. It can’t change anything."
 msgstr "Він може читати твої колоди й картки. Нічого змінювати не може."
 
 msgid "It goes at the end. Move cards into it from the list."
@@ -3048,9 +3057,6 @@ msgstr "Залишити учасника"
 
 msgid "Keep sharing"
 msgstr "Не вимикати"
-
-msgid "Keep studying"
-msgstr "Продовжити вчити"
 
 msgid "Keep the description under 300 characters."
 msgstr "Опис має бути коротшим за 300 символів."
@@ -3314,20 +3320,11 @@ msgstr "Його бачиш ти й люди у твоїх спільних ко
 msgid "Lymi starts when you sign in to your Mac, ready for quick add."
 msgstr "Lymi запускається, щойно ви входите на Mac, і готовий до швидкого додавання."
 
-msgid "Lymi stays in the Dock instead, so it is always one click away."
-msgstr "Натомість Lymi лишається в Dock, тож він завжди за один клік."
+msgid "Lymi stays in the Dock instead."
+msgstr "Натомість Lymi лишається в Dock."
 
 msgid "macOS has to allow Lymi first, under Privacy & Security, Accessibility."
 msgstr "Спершу дозвольте Lymi в macOS: «Приватність і безпека», «Доступність»."
-
-msgid "Made the deck {deck}"
-msgstr "Створено колоду «{deck}»"
-
-msgid "Made the section {name} in {deck}"
-msgstr "Створено розділ «{name}» у колоді «{deck}»"
-
-msgid "Made the series {name}"
-msgstr "Створено серію «{name}»"
 
 msgid "Main"
 msgstr "Головна навігація"
@@ -3340,6 +3337,9 @@ msgstr "Спершу створіть колоду в Lymi. Enter відкрив
 
 msgid "Make a key for Yomitan"
 msgstr "Створити ключ для Yomitan"
+
+msgid "Make cards from this lesson in my deck"
+msgstr "Зроби картки з цього уроку в моїй колоді"
 
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
@@ -3749,7 +3749,7 @@ msgstr "У найближчі сім днів повторювати нічог�
 msgid "Nothing due right now"
 msgstr "Зараз нема що повторювати"
 
-msgid "Nothing due today, so your streak is safe."
+msgid "Nothing due today, so your streak carries on."
 msgstr "Сьогодні нічого повторювати, тож дні поспіль не перервуться."
 
 msgid "Nothing due today."
@@ -3766,9 +3766,6 @@ msgstr "Від {app} ще нічого немає. Тут з’явиться т
 
 msgid "Nothing from this app yet. What it adds, edits or archives shows here."
 msgstr "Від цього застосунку ще нічого немає. Тут з’явиться те, що він додає, змінює чи архівує."
-
-msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
-msgstr "Нічого не видаляється. Відновити його можна в меню колоди, у пункті «Архівовані розділи»."
 
 msgid "Nothing left in {scopeName}"
 msgstr "У «{scopeName}» більше нічого"
@@ -3843,8 +3840,8 @@ msgstr "Лише один бік"
 msgid "Only continue if you just chose Sign in in Lymi for Mac."
 msgstr "Продовжуйте, лише якщо ви щойно вибрали «Увійти» в Lymi для Mac."
 
-msgid "Only for you. The owner and others studying this deck choose their own."
-msgstr "Лише для вас. Власник та інші, хто вивчає цю колоду, обирають самі."
+msgid "Only for you. The owner and other members choose their own."
+msgstr "Лише для тебе. Власник та інші учасники обирають самі."
 
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
@@ -3993,8 +3990,8 @@ msgstr "Веде цю колоду й пише її картки"
 msgid "Page {n}"
 msgstr "Сторінка {n}"
 
-msgid "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
-msgstr "Частини цієї колоди, наприклад по одній на урок. Усі, хто її вчить, бачать їх у такому порядку."
+msgid "Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order."
+msgstr "Частини цієї колоди, наприклад по одній на урок. Усі учасники колоди бачать їх у такому порядку."
 
 msgid "Password"
 msgstr "Пароль"
@@ -4044,8 +4041,8 @@ msgstr "Підглянути підказку"
 msgid "People"
 msgstr "Люди"
 
-msgid "People who added it keep studying it, but nobody new can add it."
-msgstr "Хто вже додав колоду, далі її вчить, але нові люди додати її не можуть."
+msgid "People who added it keep reviewing it, but nobody new can add it."
+msgstr "Хто вже додав колоду, далі її повторює, але нові люди додати її не можуть."
 
 msgid "Photo"
 msgstr "Фото"
@@ -4259,8 +4256,8 @@ msgstr "Готовий до імпорту"
 msgid "Ready-made decks"
 msgstr "Готові колоди"
 
-msgid "Ready-made decks from Lymi. Add one to study it in your language."
-msgstr "Готові колоди від Lymi. Додай одну — вивчай її своєю мовою."
+msgid "Ready-made decks from Lymi. Add one to review it in your language."
+msgstr "Готові колоди від Lymi. Додай одну й повторюй її своєю мовою."
 
 msgid "Recall"
 msgstr "Запам’ятовування"
@@ -4903,6 +4900,9 @@ msgstr "Стан"
 msgid "Stay connected"
 msgstr "Залишити підключення"
 
+msgid "Stay in deck"
+msgstr "Залишитися в колоді"
+
 msgid "Stay signed in"
 msgstr "Залишитися в застосунку"
 
@@ -5066,7 +5066,7 @@ msgstr "API"
 msgid "The API"
 msgstr "API"
 
-msgid "The app did not say where to go next. Try again from the app."
+msgid "The app didn’t say where to go next. Try again from the app."
 msgstr "Застосунок не вказав, куди перейти далі. Спробуй ще раз із застосунку."
 
 msgid "The app is connected"
@@ -5162,9 +5162,6 @@ msgstr "Усі знайдені терміни вже є у твоїх коло�
 msgid "The upload stopped partway"
 msgstr "Завантаження зупинилося на півдорозі"
 
-msgid "The words you want to remember, one card each."
-msgstr "Слова, які хочеш запам’ятати, — по картці на кожне."
-
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Посилання із запрошення перестане працювати. Ти можеш запросити знову будь-коли."
 
@@ -5183,8 +5180,8 @@ msgstr "Для цих функцій потрібний текст карток 
 msgid "They already have a pending invitation."
 msgstr "У цієї людини вже є запрошення без відповіді."
 
-msgid "They get an email with a link only they can use. They can study the deck but not change it."
-msgstr "Людина отримає лист із посиланням лише для неї. Вона зможе вивчати колоду, але не змінювати її."
+msgid "They get an email with a link only they can use. They can review the deck but not change it."
+msgstr "Людина отримає лист із посиланням лише для неї. Вона зможе повторювати колоду, але не змінювати її."
 
 msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
 msgstr "Людина втратить доступ до колоди й не зможе повернутися ні за посиланням, ні за запрошенням. Її повторення збережуться."
@@ -5288,7 +5285,7 @@ msgstr "Це не файл .apkg чи .colpkg. Вибери файл, експо
 msgid "This isn’t an .ofc file. Choose the file you exported from Noji."
 msgstr "Це не файл .ofc. Вибери файл, експортований з Noji."
 
-msgid "This join link does not work"
+msgid "This join link doesn’t work"
 msgstr "Це посилання для приєднання не працює"
 
 msgid "This join link is turned off"
@@ -5647,6 +5644,9 @@ msgstr "Про що це"
 msgid "What you learn, in order"
 msgstr "Що вивчаєш, по порядку"
 
+msgid "What you want to remember, one card each."
+msgstr "Те, що хочеш запам’ятати, — по картці на кожне."
+
 msgid "What’s due today?"
 msgstr "Що на черзі сьогодні?"
 
@@ -5725,14 +5725,8 @@ msgstr "У тебе вже є «{otherName}», тож на цих картках
 msgid "You already have a Lymi account"
 msgstr "У тебе вже є акаунт Lymi"
 
-msgid "You are already in this deck."
-msgstr "Ти вже в цій колоді."
-
 msgid "You are here"
 msgstr "Ти тут"
-
-msgid "You are still in the deck."
-msgstr "Ти досі в колоді."
 
 msgid "You can change this later. It applies to every card in the deck."
 msgstr "Це можна змінити пізніше. Налаштування діє для кожної картки в колоді."
@@ -5746,6 +5740,9 @@ msgstr "Цю вкладку можна закрити."
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "Завантажити його можна до {until}. Потім його буде видалено."
 
+msgid "You can restore it from Archived sections in the deck’s menu."
+msgstr "Відновити його можна в меню колоди, у пункті «Архівовані розділи»."
+
 msgid "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait."
 msgstr "На день можна надіслати {CONTENT_REPORT_DAILY_LIMIT} скарг. Якщо це не може чекати, напиши на hello@lymi.app."
 
@@ -5755,8 +5752,14 @@ msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} по�
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
 
+msgid "You can’t add this deck."
+msgstr "Ти не можеш додати цю колоду."
+
 msgid "You can’t choose Easy after peeking at your hint."
 msgstr "Після того як підглянеш підказку, «Легко» вибрати не можна."
+
+msgid "You can’t join this deck through this link."
+msgstr "Через це посилання не можна приєднатися до цієї колоди."
 
 msgid "You can’t undo this."
 msgstr "Цю дію не можна скасувати."
@@ -5764,17 +5767,11 @@ msgstr "Цю дію не можна скасувати."
 msgid "You can’t undo this. Its decks and cards aren’t deleted either way."
 msgstr "Цю дію не можна скасувати. Колоди й картки не видаляються за будь-якого вибору."
 
-msgid "You cannot add this deck."
-msgstr "Ти не можеш додати цю колоду."
-
-msgid "You cannot join this deck through this link."
-msgstr "Через це посилання не можна приєднатися до цієї колоди."
-
 msgid "You don’t need to do anything."
 msgstr "Нічого робити не потрібно."
 
-msgid "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
-msgstr "Ти й далі вивчаєш ці картки за власним розкладом. Ніхто інший не бачить твоїх повторень і прогресу."
+msgid "You keep reviewing these cards on your own schedule. Nobody else sees your reviews or progress."
+msgstr "Ти й далі повторюєш ці картки за власним розкладом. Ніхто інший не бачить твоїх повторень і прогресу."
 
 msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 msgstr "Засвоєно {knownN} з {total, plural, one {# картки} few {# карток} many {# карток} other {# картки}}"
@@ -5784,6 +5781,9 @@ msgstr "Цю людину вилучено з колоди, тож запрос�
 
 msgid "You review on your own schedule, and {ownerName} doesn’t see your progress."
 msgstr "Ти повторюєш у власному ритмі, а {ownerName} не бачить твого прогресу."
+
+msgid "You review the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
+msgstr "Ти повторюєш ті самі картки, що й {ownerName}, у своєму темпі. Твої повторення й прогрес більше ніхто не бачить."
 
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ти входиш через Apple, тож після видалення акаунта прибери Lymi з розділу «Вхід з Apple» у налаштуваннях облікового запису Apple."
@@ -5797,13 +5797,10 @@ msgstr "Ти починаєш із першого розділу. Наступн
 msgid "You start with the first section. When you know most of it, you choose when to start the next."
 msgstr "Ти починаєш із першого розділу. Коли засвоїш більшу його частину, ти вирішуєш, коли почати наступний."
 
-msgid "You study the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
-msgstr "Ти вчиш ті самі картки, що й {ownerName}, у своєму темпі. Твої повторення й прогрес більше ніхто не бачить."
-
-msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
+msgid "You were removed from this deck, so this link can’t add you back. Your reviews are kept."
 msgstr "Тебе прибрали з цієї колоди, тому це посилання не додасть тебе знову. Твої повторення збережено."
 
-msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
+msgid "You were removed from this deck, so you can’t add it again. Your reviews are kept."
 msgstr "Тебе прибрали з цієї колоди, тож додати її знову не вийде. Твої повторення збережено."
 
 msgid "You won’t get any more emails from Lymi."
@@ -5815,11 +5812,17 @@ msgstr "Це написано тобою"
 msgid "You’ll sign in with this from now on."
 msgstr "Відтепер ти входитимеш із ним."
 
+msgid "You’re already in this deck."
+msgstr "Ти вже в цій колоді."
+
 msgid "You’re done for today"
 msgstr "На сьогодні все"
 
 msgid "You’re done for today."
 msgstr "На сьогодні все."
+
+msgid "You’re still in the deck."
+msgstr "Ти досі в колоді."
 
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "Сьогодні вже надіслано кілька кодів. Спробуй завтра."
@@ -5868,9 +5871,6 @@ msgstr "Твоє повідомлення збережено. Спробуй щ�
 
 msgid "Your name"
 msgstr "Твоє ім’я"
-
-msgid "Your own material, whatever it is."
-msgstr "Твої власні матеріали, хай які."
 
 msgid "Your password is set"
 msgstr "Пароль збережено"

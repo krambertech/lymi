@@ -312,7 +312,7 @@ export function ModesChip({
     onChange(same ? null : next);
   };
   const label = !value
-    ? t`How it's asked`
+    ? t`How it’s asked`
     : value.length === 1
       ? modeName(value[0] as ReviewModeKey)
       : t`${plural(value.length, { one: "Asked # way", other: "Asked # ways" })}`;
@@ -328,7 +328,7 @@ export function ModesChip({
               type="button"
               className={fieldChipClassName(!!value)}
               aria-label={
-                value ? t`How it's asked: ${names(value.map(modeName))}` : t`How it's asked`
+                value ? t`How it’s asked: ${names(value.map(modeName))}` : t`How it’s asked`
               }
               aria-invalid={invalid || undefined}
             >
@@ -339,7 +339,7 @@ export function ModesChip({
           }
         />
       </WithTip>
-      <DropdownMenuContent aria-label={t`How it's asked`} className="w-72">
+      <DropdownMenuContent aria-label={t`How it’s asked`} className="w-72">
         <DropdownMenuCheckboxItem
           checked={!value}
           onCheckedChange={(on) => {

@@ -33,7 +33,7 @@ name: Share deck
 - takeScreenshot: 04-link-off
 - openLink: "lymi://join/${DEAD_TOKEN}"
 - extendedWaitUntil:
-    visible: "This join link does not work"
+    visible: "This join link doesn’t work"
     timeout: 20000
 - assertVisible: "Go to Today"
 - takeScreenshot: 05-dead-link

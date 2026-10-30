@@ -66,7 +66,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
         <div>
           <Lockup size={22} />
           <p className="mt-3.5 max-w-[26ch] text-sm text-pretty text-ink-secondary">
-            <Trans>Flashcards that come back right before you'd forget.</Trans>
+            <Trans>Flashcards that come back right before you’d forget.</Trans>
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <a

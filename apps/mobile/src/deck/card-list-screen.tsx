@@ -483,7 +483,7 @@ export function CardListScreen({
           title={t`No cards yet`}
           body={
             owner
-              ? t`Add the words you want to learn, and they show here.`
+              ? t`Add what you want to learn, and it shows here.`
               : t`Cards the owner adds show here.`
           }
           action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}

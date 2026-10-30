@@ -30,7 +30,7 @@ Play the entrance once per device, tracked by `lymi-first-run-lit` in local stor
 
 The phone shows Welcome before Today. It asks what the learner is learning, their language, daily time and preferred starting method. Published-deck choices use `BEGINNER_DECKS`, as on web. Both apps save through `PUT /api/settings/onboarding`, so completion or skipping applies across devices. After sign-in, keep the sign-in screen visible until account state is known, then show Welcome alone when required. Finishing or Skip for now saves `onboarded_at` and opens the selected destination, such as the first review.
 
-Show all three How it works steps lit immediately; sequential lighting caused flashing on phone. Question titles are one size smaller than on web. Use an `lg` primary action at the bottom, glass Back and Skip for now in the header, and full-panel answer choices with checks.
+Show all three How it works steps lit at once, because lighting them in turn flashes on the phone. Question titles are one size smaller than on web. Use an `lg` primary action at the bottom, glass Back and Skip for now in the header, and full-panel answer choices with checks.
 
 Bring your own leads with **Turn your notes into cards**, which makes the learner's first deck from the answers, named for the language or My notes, and opens Smart add on it. Import finishes Welcome and then opens Import over Today ([ADR 0036](../adr/0036-setup-runs-on-the-phone.md)); Claude or ChatGPT opens its setup guide over Today; Type my own cards opens New deck over Today.
 

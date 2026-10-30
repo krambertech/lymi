@@ -110,7 +110,7 @@ export function ExploreView({ data, failed, busy, onRetry, onAdd, adding }: Prop
       title={<Trans>Explore</Trans>}
       lede={
         <p className="mt-2 max-w-[52ch] text-base text-ink-secondary">
-          <Trans>Ready-made decks from Lymi. Add one to study it in your language.</Trans>
+          <Trans>Ready-made decks from Lymi. Add one to review it in your language.</Trans>
         </p>
       }
     >

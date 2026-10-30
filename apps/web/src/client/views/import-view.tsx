@@ -135,8 +135,8 @@ export function ImportStartView({
           </Trans>
         ) : source === "pleco" ? (
           <Trans>
-            Import your flashcards with their pinyin, definitions and categories. Pleco’s text file
-            has no scores, so every card starts as new, and Pleco is unchanged.
+            Import your cards with their pinyin, definitions and categories. Pleco’s text file has
+            no scores, so every card starts as new, and Pleco is unchanged.
           </Trans>
         ) : (
           <Trans>
@@ -1541,7 +1541,7 @@ export function ImportDoneView({
           ) : (
             <Trans>
               Archives every card this import added, and each deck it made that has no other cards.
-              Nothing is deleted, and you can restore it.
+              You can restore it.
             </Trans>
           )}
         </p>

@@ -243,7 +243,7 @@ erDiagram
     text user_id FK
     text direction
     text mode "mode key; null only on rows an older Worker wrote"
-    int rating "1 Again 2 Hard 3 Good 4 Easy"
+    int rating "1 Forgot 2 Hard 3 Good 4 Easy"
     int state "state before review"
     int elapsed_days
     int scheduled_days

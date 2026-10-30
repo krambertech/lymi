@@ -138,7 +138,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
         </Trans>
       );
     case "deck_added":
-      return <Trans>Made the deck {{ deck: isolate(deck) }}</Trans>;
+      return <Trans>Created the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_edited":
       return <Trans>Edited the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_archived":
@@ -146,7 +146,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "deck_restored":
       return <Trans>Restored the deck {{ deck: isolate(deck) }}</Trans>;
     case "series_added":
-      return <Trans>Made the series {{ name: isolate(name) }}</Trans>;
+      return <Trans>Created the series {{ name: isolate(name) }}</Trans>;
     case "series_edited":
       return <Trans>Edited the series {{ name: isolate(name) }}</Trans>;
     case "series_deleted":
@@ -156,7 +156,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "section_added":
       return (
         <Trans>
-          Made the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
+          Created the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_edited":

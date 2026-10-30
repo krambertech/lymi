@@ -300,7 +300,7 @@ function useTodayStatus(today: StreakOut["today"], due: number): string {
     case "exhausted":
       return t`You’re done for today.`;
     case "nothing_due":
-      return t`Nothing due today, so your streak is safe.`;
+      return t`Nothing due today, so your streak carries on.`;
     default: {
       const left = Math.max(today.goal - today.attempts, 0);
       return t`${plural(left, { one: "# review", other: "# reviews" })} to today’s goal`;

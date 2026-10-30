@@ -311,7 +311,7 @@ export function DeckSettingsView({
             <SettingsGroup
               id="sections"
               title={t`Sections`}
-              description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
+              description={t`Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order.`}
             >
               <SectionManager {...sections} />
               {sections.sections.length > 0 && <ProgressionField deck={deck} onSave={onSave} />}
@@ -423,8 +423,8 @@ function DeckAbout({
             </div>
             <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
-                You keep studying these cards on your own schedule. Nobody else sees your reviews or
-                progress.
+                You keep reviewing these cards on your own schedule. Nobody else sees your reviews
+                or progress.
               </Trans>
             </p>
           </>
@@ -445,7 +445,7 @@ function DeckAbout({
             </div>
             <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
-                You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
+                You review the same cards as {{ ownerName: isolate(ownerName) }}, on your own
                 schedule. Nobody else sees your reviews or progress.
               </Trans>
             </p>
@@ -542,7 +542,7 @@ function MembersGroup({
   return (
     <SettingsGroup
       title={t`People`}
-      description={t`Everyone studying this deck. You see whether they joined, not their reviews.`}
+      description={t`Everyone in this deck. You see whether they joined, not their reviews.`}
     >
       {error ? (
         <p className="text-sm" role="alert">
@@ -714,7 +714,7 @@ function AdaptivePronunciationField({
       />
       {deck.role !== "owner" && (
         <p className="text-sm text-ink-muted">
-          <Trans>Only for you. The owner and others studying this deck choose their own.</Trans>
+          <Trans>Only for you. The owner and other members choose their own.</Trans>
         </p>
       )}
     </div>
@@ -759,7 +759,7 @@ function ProgressionField({
         />
       </RadioGroup>
       <p className="text-sm text-ink-muted">
-        <Trans>Anyone studying the deck can start a later section early.</Trans>
+        <Trans>Anyone in the deck can start a later section early.</Trans>
       </p>
     </div>
   );
@@ -815,7 +815,7 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
               variant="bare"
               value="link"
               title={t`Anyone with the link`}
-              description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}
+              description={t`Anyone with the link can join and review your cards on their own schedule. They can’t change the cards, and you don’t see their progress.`}
             />
             {shared && (
               <div className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]">

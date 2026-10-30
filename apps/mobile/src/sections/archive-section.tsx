@@ -74,7 +74,7 @@ export function useArchiveSection(onArchived?: (section: Section) => void) {
     sheet: (
       <Sheet
         title={t`Archive “${{ sectionName: isolate(sectionName) }}”?`}
-        description={t`Nothing is deleted. Restore it from Archived sections.`}
+        description={t`You can restore it from Archived sections.`}
         open={asking !== null}
         onOpenChange={(open) => !open && setAsking(null)}
         onDismiss={() => {

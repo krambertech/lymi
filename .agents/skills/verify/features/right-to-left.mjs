@@ -43,12 +43,15 @@ export default async function drive({ page, base, step, expect }) {
 
   await step("Search the deck in Arabic: the field turns right to left", async () => {
     await page.goto(`${base}/library/${deck.id}`);
-    // A touch screen opens the search from a button in the bar; wait for the page before asking.
+    // A touch screen opens the search from a button in the bar, and that button only appears
+    // once the cards have loaded, after the heading. Wait for whichever control this layout
+    // shows before asking which one it is.
     await expect(page.getByRole("heading", { level: 1, name: /عربي/ })).toBeVisible();
     const opener = page.getByRole("button", { name: "Search this deck" });
-    if (await opener.isVisible()) await opener.click();
     const search = page.getByRole("textbox", { name: "Search this deck" });
-    expect(await search.evaluate((el) => el.matches(":dir(ltr)"))).toBe(true);
+    await expect(opener.or(search)).toBeVisible();
+    if (await opener.isVisible()) await opener.click();
+    await expect.poll(() => search.evaluate((el) => el.matches(":dir(ltr)"))).toBe(true);
     await search.fill("كتاب");
     await expect.poll(() => search.evaluate((el) => el.matches(":dir(rtl)"))).toBe(true);
   });

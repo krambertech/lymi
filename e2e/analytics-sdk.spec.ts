@@ -151,31 +151,45 @@ test("the real browser SDK sends public-site heatmaps and page leaves with route
     Object.defineProperty(navigator, "webdriver", { get: () => false });
     Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
     // The page leave goes out as a beacon, and Playwright's WebKit gives a routed beacon no body.
-    // The page keeps a copy of each beacon's body; the route below still sees where it went.
-    const beacons: Promise<string>[] = [];
+    // The page keeps a copy of each beacon's URL and body; the route below sees where it went.
+    const beacons: Promise<{ url: string; body: string }>[] = [];
     Object.defineProperty(window, "__beacons", { value: beacons });
     const send = navigator.sendBeacon.bind(navigator);
     navigator.sendBeacon = (url, data) => {
-      beacons.push(data instanceof Blob ? data.text() : Promise.resolve(String(data ?? "")));
+      const body = data instanceof Blob ? data.text() : Promise.resolve(String(data ?? ""));
+      const href = new URL(url, location.href).href;
+      beacons.push(body.then((text) => ({ url: href, body: text })));
       return send(url, data);
     };
   });
   const sent: string[] = [];
-  const beaconUrls: string[] = [];
+  // Beacons that reached `/ingest`, with the body the route saw, which is empty in WebKit.
+  const routedBeacons: { url: string; body: string }[] = [];
   await context.route("**/ingest/**", async (route) => {
+    const body = ingested(route.request().postData() ?? "");
     // WebKit names a beacon's resource type "beacon" and Chromium names it "ping".
     if (["beacon", "ping"].includes(route.request().resourceType())) {
-      beaconUrls.push(route.request().url());
+      routedBeacons.push({ url: route.request().url(), body });
     }
-    sent.push(ingested(route.request().postData() ?? ""));
+    sent.push(body);
     await route.fulfill({ status: 200, contentType: "application/json", body: '{"status":1}' });
   });
   const beaconed = async () =>
     (
       await page.evaluate(() =>
-        Promise.all((window as unknown as { __beacons: Promise<string>[] }).__beacons),
+        Promise.all(
+          (window as unknown as { __beacons: Promise<{ url: string; body: string }>[] }).__beacons,
+        ),
       )
-    ).map(ingested);
+    ).map(({ url, body }) => ({ url, body: ingested(body) }));
+  // A beacon carrying the page leave that the `/ingest` route saw: matched by its body where the
+  // route has one, and otherwise by its URL, which the SDK makes unique per request.
+  const pageLeaveAtIngest = async () => {
+    const leaving = [...routedBeacons, ...(await beaconed())]
+      .filter(({ body }) => body.includes("$pageleave"))
+      .map(({ url }) => url);
+    return routedBeacons.some(({ url }) => leaving.includes(url) && url.includes("/ingest"));
+  };
   const direct: string[] = [];
   await context.route("https://*.posthog.com/**", async (route) => {
     direct.push(route.request().url());
@@ -197,9 +211,8 @@ test("the real browser SDK sends public-site heatmaps and page leaves with route
     expect(sent.join(" ")).toContain("$$heatmap");
   }).toPass({ timeout: 20_000 });
   await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
-  await expect.poll(async () => [...sent, ...(await beaconed())].join(" ")).toContain("$pageleave");
-  await expect.poll(() => beaconUrls.length).toBeGreaterThan(0);
-  const payload = [...sent, ...(await beaconed())].join(" ");
+  await expect.poll(pageLeaveAtIngest).toBe(true);
+  const payload = [...sent, ...(await beaconed()).map(({ body }) => body)].join(" ");
   expect(payload).toContain('"$viewport_width"');
   expect(payload).toContain("/explore");
   expect(payload).not.toContain("private-query-token");

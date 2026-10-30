@@ -23,6 +23,7 @@ import { Slider } from "../../components/ui/slider";
 import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
 import { DeviceFrames } from "../device-frame";
+import { Rule } from "../do-dont";
 import { Force } from "../forced-states";
 import { Variants } from "../frame";
 import { DeckCombobox, DeckSelect } from "../specimens";
@@ -275,7 +276,7 @@ export const forms: Group = {
       slug: "textarea",
       name: "Textarea",
       source: "components/ui/textarea.tsx",
-      note: "More than a line: notes, a mnemonic, where you heard it. It grows by dragging, never on its own.",
+      note: "More than a line: notes, a hint, where you heard it. It grows with what you type, up to half the screen, then scrolls.",
       Demo: function TextareaDemo() {
         const [text, setText] = useState("");
         return (
@@ -879,6 +880,7 @@ export const forms: Group = {
       ),
     },
   ],
+  Rules: FormRules,
 };
 
 export const select: Group = {
@@ -1109,3 +1111,34 @@ export const combobox: Group = {
     },
   ],
 };
+
+function FormRules() {
+  return (
+    <>
+      <Rule kind="do" title="Put the label above and the error below.">
+        <Field className="w-full max-w-72">
+          <FieldLabel>Meaning</FieldLabel>
+          <Input defaultValue="" />
+          <FieldError>Add what the term means.</FieldError>
+        </Field>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Use the placeholder as the label."
+        note="It disappears when you type, and some screen readers skip it."
+      >
+        <Input aria-label="Meaning" placeholder="Meaning" className="w-full max-w-72" />
+      </Rule>
+      <Rule
+        kind="do"
+        title="Save settings as soon as they change."
+        note="A switch saves when flipped. A text field saves when you leave it."
+      />
+      <Rule
+        kind="dont"
+        title="Add a Save button to settings."
+        note="Save belongs to a sheet opened to make or change one thing."
+      />
+    </>
+  );
+}

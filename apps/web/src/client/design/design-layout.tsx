@@ -14,6 +14,7 @@ import { DocLink } from "./doc-link";
 import { useForcedStates, useSystemMotion } from "./forced-states";
 import { ROOM_THEMES, usePageTheme } from "./frame";
 import { IconToggle } from "./icon-toggle";
+import { PageSearch, usePageSearch } from "./page-search";
 import { type DocRef, FOUNDATIONS, GROUPS } from "./registry";
 
 const DESIGN_CHROME = designChrome();
@@ -21,6 +22,7 @@ const DESIGN_CHROME = designChrome();
 /** The design system's own frame: a rail like the app's, and one page at a time beside it. */
 export function DesignLayout() {
   const [menu, setMenu] = useState(false);
+  const search = usePageSearch();
   // The page shows the room it is in; picking one stores it, so System is left to Settings.
   const theme = usePageTheme();
   useForcedStates();
@@ -48,14 +50,15 @@ export function DesignLayout() {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-(--z-sticky) flex h-14 items-center gap-2 border-b border-edge bg-canvas px-3 @3xl/shell:hidden">
+        {/* The phone has no rail, so the contents open from here. */}
+        <div className="flex h-14 items-center gap-2 px-3 @3xl/shell:hidden">
           <IconButton label="Contents" onClick={() => setMenu(true)}>
             <Menu />
           </IconButton>
           <Home className="me-auto" />
           <IconToggle label="Theme" value={theme} onChange={setTheme} options={ROOM_THEMES} />
-        </header>
-        <main className="@container mx-auto w-full max-w-[1120px] flex-1 px-5 pt-8 pb-16 @3xl/shell:px-10">
+        </div>
+        <main className="@container mx-auto w-full max-w-[1120px] flex-1 px-5 pt-6 pb-16 @3xl/shell:px-10 @3xl/shell:pt-14">
           <ShellChrome value={DESIGN_CHROME}>
             <StaticNavProvider path="/design">
               <Outlet />
@@ -63,6 +66,8 @@ export function DesignLayout() {
           </ShellChrome>
         </main>
       </div>
+
+      <PageSearch open={search.open} onOpenChange={search.setOpen} />
 
       <Dialog open={menu} onOpenChange={setMenu}>
         <DialogContent>
@@ -79,8 +84,7 @@ export function DesignLayout() {
 function Home({ className }: { className?: string | undefined }) {
   return (
     <Link
-      to="/design/$page"
-      params={{ page: "brand" }}
+      to="/design"
       aria-label="Lymi design system"
       className={clsx("flex h-10 items-center gap-2.5 rounded-sm", className)}
     >
@@ -95,7 +99,10 @@ function Home({ className }: { className?: string | undefined }) {
 }
 
 function Contents({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
-  const sections: { title: string; links: { key: string; name: string; to: DocRef }[] }[] = [
+  const sections: {
+    title: string;
+    links: { key: string; name: string; to: DocRef }[];
+  }[] = [
     {
       title: "Foundations",
       links: FOUNDATIONS.map((f) => ({
@@ -115,9 +122,15 @@ function Contents({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   ];
   return (
     <RailNav aria-label="Design system">
-      {sections.map((section, i) => (
+      <RailRow
+        render={<DocLink to={{ kind: "home" }} onClick={onNavigate} />}
+        className="h-11 md:h-9"
+      >
+        Overview
+      </RailRow>
+      {sections.map((section) => (
         <Fragment key={section.title}>
-          <RailHeading className={i === 0 ? "mt-0" : undefined}>{section.title}</RailHeading>
+          <RailHeading>{section.title}</RailHeading>
           {section.links.map((l) => (
             <RailRow
               key={l.key}

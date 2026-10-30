@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../components/button";
 import { Lantern } from "../components/lantern";
 import { toast } from "../components/ui/toast";
+import { Rule, Rules } from "./do-dont";
 import { DocLink } from "./doc-link";
 import { Doc, Specimen, Sub } from "./frame";
 
@@ -162,6 +163,40 @@ export function Motion() {
           Toggle it in your OS to see this page change. Nothing is gated on the animation: every
           reveal enhances an already visible default.
         </p>
+      </Sub>
+      <Sub title="Do and don’t" note="motion.md has every timing.">
+        <Rules>
+          <Rule
+            kind="do"
+            title="Close faster than you open."
+            note="A dialog opens in 200 ms and closes in 140."
+          />
+          <Rule
+            kind="dont"
+            title="Animate something done with the keyboard."
+            note="It should just happen. Only the flame and a control’s own mark still move."
+          />
+          <Rule
+            kind="do"
+            title="List what animates."
+            note="Write transition-[opacity,translate]. Prefer transform, opacity and colour."
+          />
+          <Rule
+            kind="dont"
+            title="Use transition-all."
+            note="It animates things you didn’t mean to, like layout."
+          />
+          <Rule
+            kind="do"
+            title="Add a reduced-motion version."
+            note="Usually a fade. Use useReduceMotion()."
+          />
+          <Rule
+            kind="dont"
+            title="Animate just to decorate."
+            note="Motion shows that something changed. The flame’s flicker is the one exception."
+          />
+        </Rules>
       </Sub>
     </Doc>
   );

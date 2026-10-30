@@ -16,6 +16,7 @@ import {
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
 } from "./drawer";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Dialog, in the shape of the machine: centred on a desktop, a drawer from the bottom edge
@@ -159,6 +160,7 @@ function DialogContent({
   ...props
 }: ContentProps) {
   const { shape, kind } = useDialogContext("DialogContent");
+  const container = usePortalContainer();
   if (shape === "touch" && kind === "place") {
     return (
       <DrawerContent
@@ -202,7 +204,7 @@ function DialogContent({
   );
   if (placement === "end") {
     return (
-      <DialogPrimitive.Portal data-slot="dialog-portal">
+      <DialogPrimitive.Portal data-slot="dialog-portal" container={container}>
         {backdrop}
         <DialogPrimitive.Popup
           data-slot="dialog-content"
@@ -220,7 +222,7 @@ function DialogContent({
     );
   }
   return (
-    <DialogPrimitive.Portal data-slot="dialog-portal">
+    <DialogPrimitive.Portal data-slot="dialog-portal" container={container}>
       {backdrop}
       <DialogPrimitive.Popup
         data-slot="dialog-content"

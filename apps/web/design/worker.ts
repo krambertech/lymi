@@ -21,9 +21,11 @@ export default {
       response = new Response("User-agent: *\nDisallow: /\n", {
         headers: { "Content-Type": "text/plain" },
       });
-    } else if (url.pathname === "/" || url.pathname === "/design" || url.pathname === "/design/") {
-      response = new Response(null, { status: 302, headers: { Location: "/design/brand" } });
-    } else if (/^\/design\/(?:[^/.]+|components\/[^/.]+|frame\/[^/.]+)\/?$/.test(url.pathname)) {
+    } else if (url.pathname === "/") {
+      response = new Response(null, { status: 302, headers: { Location: "/design" } });
+    } else if (
+      /^\/design(?:\/(?:[^/.]+|components\/[^/.]+|frame\/[^/.]+))?\/?$/.test(url.pathname)
+    ) {
       url.pathname = "/index.html";
       response = await env.ASSETS.fetch(new Request(url, request));
     } else if (url.pathname.startsWith("/assets/")) {

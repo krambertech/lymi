@@ -4,7 +4,7 @@ Onest is the interface family, self-hosted as a variable font declared for weigh
 
 ## The scale
 
-Use the Tailwind size classes below; the role names are what DESIGN.md's frontmatter calls them. Never an arbitrary size such as `text-[15px]`: the scale is set in rem so it follows the reader's default font size, and a px value breaks that. Sizes here are px at the 16 px default.
+Use the Tailwind size classes below; each has a role name for talking about it. Never an arbitrary size such as `text-[15px]`: the scale is set in rem so it follows the reader's default font size, and a px value breaks that. Sizes here are px at the 16 px default.
 
 | Role | Class | Size | Weight | Where |
 | --- | --- | --- | --- | --- |

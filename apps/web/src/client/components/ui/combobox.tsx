@@ -29,6 +29,7 @@ import {
   touchRowClassName,
   useListName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 // shadcn's Combobox in the machine's shape: a panel under the box on a desktop, a drawer on touch. ADR 0017.
 
@@ -279,8 +280,9 @@ function AnchoredContent({
 }: ContentProps) {
   const { open } = useCombobox("ComboboxContent");
   const name = useListName(label, open);
+  const container = usePortalContainer();
   return (
-    <ComboboxPrimitive.Portal>
+    <ComboboxPrimitive.Portal container={container}>
       <ComboboxPrimitive.Positioner
         className="isolate z-(--z-popup) outline-none"
         side={side}

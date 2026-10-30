@@ -100,7 +100,7 @@ Tauri lost. It is lighter, but its plugin ecosystem is smaller, its native side 
 
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in packages/design
 
-Tailwind v4 reads design tokens as CSS variables in OKLCH, defined in `packages/design/tokens.css` and imported by the web's and the site's `styles.css`; DESIGN.md's frontmatter and the phone's hex values are generated from them. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.
+Tailwind v4 reads design tokens as CSS variables in OKLCH, defined in `packages/design/tokens.css` and imported by the web's and the site's `styles.css`; the phone's hex values are generated from them. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.
 
 Alternative considered: hand-built primitives on `<dialog>` and the `popover` attribute with vaul for the drawer. That was the first version. vaul stopped being maintained, and four separate open-and-close implementations disagreed on scroll lock, focus return and which device got which shape.
 
@@ -322,7 +322,7 @@ lymi/
   apps/mobile       Expo React Native phone app
   packages/core     Drizzle schema, Zod types, ts-fsrs scheduling, ids
   packages/client   API client, query options, outboxes and review draw for the web and the phone
-  packages/design   Tokens (tokens.css, source of DESIGN.md's colours), lantern geometry, flame, lights, motion
+  packages/design   Tokens (tokens.css, the one source of every value), lantern geometry, flame, lights, motion
   design/           The identity board
   docs/             This file and the brief
 ```

@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Moon, Rabbit, Sun, Turtle } from "lucide-react";
+import { Hash, Moon, Rabbit, Sun, Turtle } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import {
   createContext,
@@ -12,7 +12,8 @@ import {
 } from "react";
 import { IconButton } from "../components/button";
 import { Segmented } from "../components/segmented";
-import { EditLink } from "./edit-link";
+import { PortalContainer } from "../components/ui/portal-container";
+import { EditLink, GuideLink } from "./edit-link";
 import { useSystemReducedMotion } from "./forced-states";
 import type { IconOption } from "./icon-toggle";
 
@@ -118,6 +119,18 @@ export function Desktop({
 /** The file behind the page being rendered, for its edit link. Set by the page, read by `Doc`. */
 export const DocSource = createContext<string | undefined>(undefined);
 
+/** The design guide that owns a page's rules, under `docs/design/system`. Set by the page, read by `Doc`. */
+export const DocGuide = createContext<string | undefined>(undefined);
+
+/** A section's address, from its title: "Card and grades" is `card-and-grades`. */
+export function slug(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-|-$/g, "");
+}
+
 /** One page of the design system: its title, what it is for, and its parts. */
 export function Doc({
   title,
@@ -127,20 +140,24 @@ export function Doc({
 }: {
   title: string;
   lede?: ReactNode | undefined;
-  /** A link back to the page this one belongs to. */
+  /** The part of the system the page belongs to. */
   crumb?: ReactNode | undefined;
   children: ReactNode;
 }) {
   const source = useContext(DocSource);
+  const guide = useContext(DocGuide);
   return (
     <article>
       <header className="pb-12">
         {crumb && <div className="mb-2 text-sm text-ink-muted">{crumb}</div>}
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-3xl font-medium text-balance">{title}</h1>
-          {source && <EditLink path={source} />}
-        </div>
+        <h1 className="text-3xl font-medium tracking-[-0.02em] text-balance">{title}</h1>
         {lede && <p className="mt-3 max-w-[64ch] text-md text-pretty text-ink-secondary">{lede}</p>}
+        {(guide || source) && (
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+            {guide && <GuideLink path={guide} />}
+            {source && <EditLink path={source} label="Code" />}
+          </div>
+        )}
       </header>
       <div className="grid">{children}</div>
     </article>
@@ -154,6 +171,7 @@ export function Sub({
   source,
   children,
 }: {
+  /** The section's address; a string title gives one of its own. */
   id?: string | undefined;
   title?: ReactNode | undefined;
   note?: ReactNode | undefined;
@@ -162,16 +180,27 @@ export function Sub({
   /** Left out for a rule that needs no picture. */
   children?: ReactNode | undefined;
 }) {
+  const anchor = id ?? (typeof title === "string" ? slug(title) : undefined);
   return (
-    <section
-      id={id}
-      className="grid scroll-mt-20 gap-5 border-t border-edge py-10 first:border-t-0 first:pt-0"
-    >
+    <section id={anchor} className="grid scroll-mt-8 gap-5 pt-14 first:pt-0">
       {(title || note) && (
         <div className="grid gap-1.5">
           {title && (
-            <div className="flex items-center justify-between gap-4">
-              <h2 className="text-lg font-medium">{title}</h2>
+            <div className="group/heading flex items-center justify-between gap-4">
+              <h2 className="flex items-center gap-2 text-lg font-medium">
+                {title}
+                {anchor && (
+                  <a
+                    href={`#${anchor}`}
+                    aria-label={
+                      typeof title === "string" ? `Link to ${title}` : "Link to this section"
+                    }
+                    className="grid size-7 place-items-center rounded-sm text-ink-muted opacity-0 transition-opacity duration-150 hoverable:group-hover/heading:opacity-100 focus-visible:opacity-100 hoverable:hover:text-ink"
+                  >
+                    <Hash aria-hidden="true" className="size-4" />
+                  </a>
+                )}
+              </h2>
               {source && <EditLink path={source} />}
             </div>
           )}
@@ -269,68 +298,83 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
   const systemReduced = useSystemReducedMotion();
   const [pickedReduced, setPickedReduced] = useState<boolean | null>(null);
   const reduced = pickedReduced ?? systemReduced;
+  // Overlays render into this layer, so an opened menu or drawer keeps the canvas's theme and motion.
+  const [layer, setLayer] = useState<HTMLDivElement | null>(null);
   return (
-    <div
-      data-theme={theme}
-      data-motion={reduced ? "reduce" : undefined}
-      className="edge relative overflow-hidden rounded-lg bg-canvas text-ink"
-    >
-      <MotionConfig reducedMotion={reduced ? "always" : "user"}>
-        {/* Reduced motion reaches what renders inside the canvas and its frames; a portal follows the system. */}
-        <div className="absolute end-3 top-3 z-10 flex gap-1">
-          <CanvasSwitch
-            label="Reduce motion"
-            pressed={reduced}
-            onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
-          >
-            {reduced ? <Turtle /> : <Rabbit />}
-          </CanvasSwitch>
-          <CanvasSwitch
-            label="Dark theme"
-            pressed={theme === "dark"}
-            onPressedChange={(dark) => {
-              const next = dark ? "dark" : "light";
-              setPicked(next === page ? null : next);
-            }}
-          >
-            {theme === "dark" ? <Moon /> : <Sun />}
-          </CanvasSwitch>
-        </div>
-        {items.map((v, i) => (
-          <div
-            key={v.label}
-            className={clsx(
-              "grid",
-              i > 0 && "border-t border-edge",
-              !stack && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
-            )}
-          >
-            <div
-              className={clsx(
-                // Annotations are set in mono so a note about a component never reads as part of it.
-                "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
-                stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
-                // The first label shares its corner with the canvas switches.
-                i === 0 && (stack ? "pe-24" : "pe-24 @3xl:pe-5"),
-              )}
-            >
-              <p className="font-semibold text-ink">{v.label}</p>
-              {v.note && (
-                <p className="max-w-[80ch] leading-relaxed text-pretty text-ink-muted">{v.note}</p>
-              )}
+    <>
+      <div
+        data-theme={theme}
+        data-motion={reduced ? "reduce" : undefined}
+        className="edge relative overflow-hidden rounded-lg bg-canvas text-ink"
+      >
+        <PortalContainer.Provider value={layer}>
+          <MotionConfig reducedMotion={reduced ? "always" : "user"}>
+            {/* Reduced motion reaches what renders inside the canvas and its frames, and the layer carries it to overlays. */}
+            <div className="absolute end-3 top-3 z-10 flex gap-1">
+              <CanvasSwitch
+                label="Reduce motion"
+                pressed={reduced}
+                onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
+              >
+                {reduced ? <Turtle /> : <Rabbit />}
+              </CanvasSwitch>
+              <CanvasSwitch
+                label="Dark theme"
+                pressed={theme === "dark"}
+                onPressedChange={(dark) => {
+                  const next = dark ? "dark" : "light";
+                  setPicked(next === page ? null : next);
+                }}
+              >
+                {theme === "dark" ? <Moon /> : <Sun />}
+              </CanvasSwitch>
             </div>
-            <div
-              className={clsx(
-                "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-                !stack && "@3xl:pe-24",
-              )}
-            >
-              {v.render(theme)}
-            </div>
-          </div>
-        ))}
-      </MotionConfig>
-    </div>
+            {items.map((v, i) => (
+              <div
+                key={v.label}
+                className={clsx(
+                  "grid",
+                  i > 0 && "border-t border-edge",
+                  !stack && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
+                )}
+              >
+                <div
+                  className={clsx(
+                    // Annotations are set in mono so a note about a component never reads as part of it.
+                    "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
+                    stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
+                    // The first label shares its corner with the canvas switches.
+                    i === 0 && (stack ? "pe-24" : "pe-24 @3xl:pe-5"),
+                  )}
+                >
+                  <p className="font-semibold text-ink">{v.label}</p>
+                  {v.note && (
+                    <p className="max-w-[80ch] leading-relaxed text-pretty text-ink-muted">
+                      {v.note}
+                    </p>
+                  )}
+                </div>
+                <div
+                  className={clsx(
+                    "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
+                    !stack && "@3xl:pe-24",
+                  )}
+                >
+                  {v.render(theme)}
+                </div>
+              </div>
+            ))}
+          </MotionConfig>
+        </PortalContainer.Provider>
+      </div>
+      {/* Outside the canvas, whose overflow would clip an anchored popup. */}
+      <div
+        ref={setLayer}
+        data-theme={theme}
+        data-motion={reduced ? "reduce" : undefined}
+        className="contents"
+      />
+    </>
   );
 }
 

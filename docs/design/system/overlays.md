@@ -2,6 +2,8 @@
 
 Overlay layout follows the input device: anchored or centred on a desktop, a drawer from the bottom edge on touch. The primitives in `apps/web/src/client/components/ui` hold both shapes behind shadcn's part names, so a call site never asks which machine it is on ([ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md)).
 
+Every primitive but the toast portals through `usePortalContainer()` in `components/ui/portal-container.tsx`. The app leaves it unset, so overlays render into `body`; a `/design` canvas passes a layer carrying its own `data-theme` and `data-motion`, so an opened menu, list or drawer matches the canvas's switches. A new primitive with a portal passes the same container.
+
 ## Which overlay
 
 ```text
@@ -61,7 +63,7 @@ A place is a page that opens over the screen the learner was on: a card, the str
 
 The phone app keeps this rule with iOS's own navigation: a place is pushed from the side, a sheet rises from below, and a review covers the screen ([phone.md](phone.md#how-a-screen-arrives)).
 
-`PlaceBar` in `components/layout/place-bar.tsx` is its first line in every shape and reads the shape from the `Dialog` around it. A view inside a place, such as the daily goal in the streak, puts its own back in the same slot. In a dialog or sheet the bar can carry the view's own title, as the streak and its daily goal do; on the whole screen the bar is only the way back. The rules with pictures are on the design system's Layout page.
+`PlaceBar` in `components/layout/place-bar.tsx` is its first line in every shape and reads the shape from the `Dialog` around it. A view inside a place, such as the daily goal in the streak, puts its own back in the same slot. In a dialog or sheet the bar can carry the view's own title, as the streak and its daily goal do; on the whole screen the bar is only the way back. The rules with pictures are on the design system's Screens and places page.
 
 ## Menus
 

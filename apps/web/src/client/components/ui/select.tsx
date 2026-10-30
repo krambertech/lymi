@@ -23,6 +23,7 @@ import {
   touchRowClassName,
   useListName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Select, in the shape of the machine: a list anchored under its box on a desktop, the
@@ -269,8 +270,9 @@ function AnchoredContent({
   const ref = React.useRef<HTMLDivElement>(null);
   const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: OPTION, dividers: '[data-slot="select-separator"]' });
+  const container = usePortalContainer();
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal container={container}>
       <SelectPrimitive.Positioner
         className="isolate z-(--z-popup) outline-none"
         side={side}

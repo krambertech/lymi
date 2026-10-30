@@ -1,5 +1,6 @@
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { cn } from "cn";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Popover on Base UI, anchored on every device. It has no drawer shape, so it holds a note
@@ -23,8 +24,9 @@ function PopoverContent({
     PopoverPrimitive.Positioner.Props,
     "anchor" | "align" | "alignOffset" | "side" | "sideOffset"
   >) {
+  const container = usePortalContainer();
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={container}>
       <PopoverPrimitive.Positioner
         anchor={anchor}
         align={align}

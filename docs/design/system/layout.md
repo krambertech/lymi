@@ -26,7 +26,7 @@ Use `Screen` in `components/layout/screen.tsx` to render the content column, top
 
 The content column is capped at `--column` (880 px) and centred in the space remaining beside the rail. Keep this reading width on large screens rather than stretching the content.
 
-Spacing is Tailwind's 4 px scale. DESIGN.md's frontmatter names `xs` 4, `sm` 8, `md` 16, `lg` 24, `xl` 32 and `2xl` 48, which are `1`, `2`, `4`, `6`, `8` and `12` in class names (`gap-4`, `p-6`).
+Spacing is Tailwind's 4 px scale: 4, 8, 16, 24, 32 and 48 px are `1`, `2`, `4`, `6`, `8` and `12` in class names (`gap-4`, `p-6`).
 
 The page gutter is 20 px on a phone (`px-5`). Plates in one group sit `gap-3` apart, `gap-4` from `@3xl`, and Insights' figure plates sit `gap-4` at every width because each one is dense. Groups and sections sit `gap-8`.
 

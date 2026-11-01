@@ -65,14 +65,24 @@ test("a learner reviews the started cards chosen from a tag", async ({ page }, t
     await expect(page.getByRole("menuitem", { name: "Review 1 due", exact: true })).toBeVisible();
     await page.getByRole("menuitem", { name: "Review all 2", exact: true }).click();
     await expect(page).toHaveURL(/\/review\?deck=.*cards=/);
-    for (const term of ["la bolletta", "il cassetto"]) {
+    for (const [term, grade] of [
+      ["la bolletta", /^Forgot/],
+      ["il cassetto", /^Good/],
+    ] as const) {
       await expect(page.getByLabel(/ card for /)).toHaveAttribute("aria-label", new RegExp(term));
       await page
         .getByRole("button", { name: "Reveal the card" })
         .click({ position: { x: 24, y: 24 } });
-      await page.getByRole("button", { name: /^Good/ }).click();
+      await page.getByRole("button", { name: grade }).click();
     }
     await expect(page.getByRole("heading", { level: 2, name: "Round done" })).toBeVisible();
+  });
+
+  await test.step("Review forgotten walks the forgotten card, not the whole deck", async () => {
+    await page.getByRole("button", { name: "Review 1 forgotten card" }).click();
+    await expect(page.getByLabel(/ card for /)).toHaveAttribute("aria-label", /la bolletta/);
+    await expect(page).toHaveURL(/\/review\?deck=.*cards=/);
+    await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
   });
 
   await test.step("a list past the limit is trimmed, never widened to the whole deck", async () => {

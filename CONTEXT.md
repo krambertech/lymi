@@ -84,6 +84,8 @@ Lymi is a flashcard app for learning any subject with spaced repetition. Cards c
 
 **Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, Review forgotten at the end of a review, or cards chosen on a deck page with Select cards. Each card comes once, and every grade counts like any review, except that Easy on a card already seen today counts as Good (ADR 0031). _Avoid_: Session, quiz, practice
 
+**Leg**: One part of a review: a draw to its stop or its end, or one round. Continue and Review forgotten each start another, so one review can hold several legs, and a leg's header counts its own cards. _Avoid_: Stretch, session
+
 **Slipping card**: A card whose first grade of the day was Forgot on at least 3 of the last 5 days it was reviewed, before today. It leaves the group once it is remembered, and review offers it a hint when it has none. ADR 0024. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
 
 **Important card**: A card the learner marked as important. On a day with more to review than the goal it is more likely to come up, and its schedule is unchanged. The mark is the learner's own, like a schedule: a member can mark a shared deck's card and nobody else sees it. _Avoid_: Priority, starred, favourite, flagged, pinned

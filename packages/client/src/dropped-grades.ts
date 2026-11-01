@@ -1,5 +1,5 @@
-import type { StoredGrade } from "@lymi/client/grades";
-import type { DrawData } from "@lymi/client/review-draw";
+import type { StoredGrade } from "./grades";
+import type { DrawData } from "./review-draw";
 
 /** How long after a grade was sent a fetched draw must hold it; before that the read may have started first. */
 const SENT_SETTLES = 60_000;

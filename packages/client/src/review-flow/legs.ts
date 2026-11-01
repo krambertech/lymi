@@ -32,8 +32,8 @@ export function daysBefore(streak: StreakDays, date: string): number | undefined
 }
 
 /**
- * Measures review legs as the web does, from the moment a card is presented. Whether it is the
- * learner's first session needs the streak, which may land late or never: until it says no day
+ * Measures review legs from the moment a card is presented. Whether it is the learner's first
+ * session needs the streak, which may land late or never: until it says no day
  * came before, the leg counts as not the first. docs/analytics.md.
  */
 export class ReviewLegs {
@@ -78,7 +78,7 @@ export class ReviewLegs {
     this.date = date;
   }
 
-  leave(): void {
-    this.tracker.abandon("navigation");
+  leave(reason: "navigation" | "pagehide" = "navigation"): void {
+    this.tracker.abandon(reason);
   }
 }

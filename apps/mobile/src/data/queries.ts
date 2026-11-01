@@ -1,4 +1,5 @@
 import { deviceTimezone, type ReviewScope } from "@lymi/client/api";
+import { withoutDropped } from "@lymi/client/dropped-grades";
 import {
   gradeStore,
   type Recorded,
@@ -40,7 +41,6 @@ import {
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
 import { addDays, lastSevenDays } from "../ui/days";
-import { withoutDropped } from "./dropped";
 
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 

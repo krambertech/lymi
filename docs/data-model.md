@@ -44,6 +44,7 @@ erDiagram
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
+  user ||--o| learner_openings : "last opening"
 
   series {
     text id PK
@@ -297,6 +298,10 @@ erDiagram
     text entity_id
     json payload
     int created_at
+  }
+  learner_openings {
+    text user_id PK "FK"
+    int opened_at "web push stops a week after it"
   }
   push_subscriptions {
     text id PK

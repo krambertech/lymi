@@ -1,10 +1,11 @@
 import { decksQuery, settingsQuery } from "@lymi/client/queries";
+import type { ReminderMessage } from "@lymi/core";
 import { backlogOf } from "@lymi/core/analytics";
 import { useQuery } from "@tanstack/react-query";
 import { useGlobalSearchParams, usePathname, useRootNavigationState } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
-import { type EntryOpened, entryOf } from "../entry/links";
+import { type EntryOpened, entryOf, reminderOf } from "../entry/links";
 import { captureEvent, setTelemetryLearner, verifyReleaseException } from "./posthog";
 import { screenPath } from "./screen-path";
 
@@ -13,8 +14,8 @@ const AWAY_MS = 30 * 60_000;
 
 /**
  * Tells PostHog who is signed in and whether their account allows analytics, then counts the
- * openings and screens the web counts as `app_opened` and `$pageview`, and which of iOS's entry
- * points opened a screen as `entry_opened`. docs/analytics.md.
+ * openings and screens the web counts as `app_opened` and `$pageview`, which of iOS's entry
+ * points opened a screen as `entry_opened`, and each reminder answered. docs/analytics.md.
  */
 export function Analytics({ learnerId }: { learnerId: string | null | undefined }) {
   const settings = useQuery({ ...settingsQuery, enabled: !!learnerId });
@@ -68,7 +69,7 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
 
   // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
   // Each screen counts once, so coming back to it from another screen sends nothing.
-  const { from, verify_phone_errors: verifyErrors } = useGlobalSearchParams();
+  const { from, reminder, verify_phone_errors: verifyErrors } = useGlobalSearchParams();
   useEffect(() => {
     if (learnerId && verifyErrors === "source-maps") verifyReleaseException();
   }, [verifyErrors, learnerId]);
@@ -84,6 +85,20 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
   useEffect(() => {
     if (consent === true && entry && captureEvent("entry_opened", entry)) setEntry(undefined);
   }, [consent, entry]);
+  const [answered, setAnswered] = useState<ReminderMessage>();
+  const countedAnswers = useRef(new Set<string>());
+  useEffect(() => {
+    const message = reminderOf(from, reminder);
+    if (!message || !screen || countedAnswers.current.has(screen)) return;
+    countedAnswers.current.add(screen);
+    setAnswered(message);
+  }, [from, reminder, screen]);
+  useEffect(() => {
+    if (!answered || consent !== true) return;
+    if (captureEvent("reminder_opened", { message: answered, client: "phone" })) {
+      setAnswered(undefined);
+    }
+  }, [consent, answered]);
 
   return null;
 }

@@ -16,6 +16,22 @@ The streak counts consecutive learner-local days whose goal was satisfied. A day
 
 Lymi works out rest days each time it reads the history, so they apply to all of it. A miss from before the run began doesn't count, and nothing counts rest days down or warns about them. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
 
+## One reminder a day follows how the day went
+
+Each device with a reminder gets at most one notification a day, at the learner's time, and the message depends on the day. The choice is `reminderFor` in `packages/core/src/reminders.ts`, shared by web push and the phone.
+
+| The day | Message |
+| --- | --- |
+| Not started, cards ready | “10 cards are ready” |
+| Started, short of the goal | “6 cards to today’s goal”, “Finish if you have a moment.” The number is what is left of the goal, or the cards left if fewer. |
+| The morning after a rest day, not started | “Yesterday was a rest day”, “Your streak carried on. 12 cards are ready.” |
+| The day after a first review, not started | “Your next cards are ready”, “10 cards for today.” Only new cards and cards still being learned can be due then, so it never says their words came back. |
+| Goal met, cards ran out, or nothing to review | Silence. |
+
+A started day counts toward the goal even after a rest day, because the learner has already seen Today say so. A streak that ended gets no mention, and nothing warns in advance. After 7 days without opening Lymi, reminders stop until the learner returns: web push counts an opening on any client, and the phone schedules only a week past its own last opening. No notification carries card text, and none states minutes, because Lymi has no reliable measure of a learner's own pace, least of all before their second review.
+
+The phone schedules a week ahead on the device, so it chooses each message when it schedules, reading the days ahead as days the learner stays away, and plans again on launch, after a grade and on returning to the front. A grade made on another device reaches the phone's plan only at its next launch, so until then it can still say what it planned.
+
 ## The day follows the learner's timezone
 
 The learner-local day initially uses the current device timezone without asking during setup. While the timezone remains automatic, the most recently foregrounded device may update it when its timezone changes during travel; a background device cannot overwrite that choice. A timezone chosen explicitly in Settings becomes a manual override and is not changed automatically until the learner returns it to automatic. Timezone changes affect current and future day boundaries without rewriting completed review history.

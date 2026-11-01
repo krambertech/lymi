@@ -4,6 +4,7 @@ import {
   dispatchReviewReminders,
   reminderCopy,
   reminderIsDue,
+  reminderLink,
   reminderMoment,
 } from "./push-delivery";
 
@@ -18,8 +19,10 @@ const candidate = {
   last_sent_local_date: null,
   app_language: null,
   review_timezone: null as string | null,
+  last_opened_at: new Date("2026-09-05T09:00:00.000Z").getTime(),
 };
-const seven = async () => 7;
+const ready = { message: "ready", count: 7 } as const;
+const seven = async () => ({ reminder: ready, due: 7 });
 
 function fakeEnv(row = candidate, claimChanges = 1) {
   const statements: string[] = [];
@@ -72,25 +75,64 @@ describe("review reminder delivery", () => {
 
   it("uses the right reminder plurals in every app language", async () => {
     const titles = {
-      en: ["1 card to review", "2 cards to review", "5 cards to review", "21 cards to review"],
-      uk: [
-        "1 картка для повторення",
-        "2 картки для повторення",
-        "5 карток для повторення",
-        "21 картка для повторення",
-      ],
-      ru: [
-        "1 карточка для повторения",
-        "2 карточки для повторения",
-        "5 карточек для повторения",
-        "21 карточка для повторения",
-      ],
+      en: ["1 card is ready", "2 cards are ready", "5 cards are ready", "21 cards are ready"],
+      uk: ["1 картка готова", "2 картки готові", "5 карток готові", "21 картка готова"],
+      ru: ["1 карточка готова", "2 карточки готовы", "5 карточек готовы", "21 карточка готова"],
     } as const;
     for (const [locale, expected] of Object.entries(titles)) {
-      const actual = await Promise.all([1, 2, 5, 21].map((due) => reminderCopy(due, locale)));
+      const actual = await Promise.all(
+        [1, 2, 5, 21].map((count) => reminderCopy({ message: "ready", count }, locale)),
+      );
       expect(actual.map((copy) => copy.title)).toEqual(expected);
     }
-    expect((await reminderCopy(3, "xx")).body).toBe("Review whenever you have a moment.");
+    expect((await reminderCopy(ready, "xx")).body).toBe("Review whenever you have a moment.");
+  });
+
+  it("writes each kind of day in English", async () => {
+    expect(await reminderCopy({ message: "ready", count: 10 })).toEqual({
+      title: "10 cards are ready",
+      body: "Review whenever you have a moment.",
+    });
+    expect(await reminderCopy({ message: "to_goal", count: 6 })).toEqual({
+      title: "6 cards to today’s goal",
+      body: "Finish if you have a moment.",
+    });
+    expect(await reminderCopy({ message: "after_rest", count: 12 })).toEqual({
+      title: "Yesterday was a rest day",
+      body: "Your streak carried on. 12 cards are ready.",
+    });
+    expect(await reminderCopy({ message: "next_cards", count: 10 })).toEqual({
+      title: "Your next cards are ready",
+      body: "10 cards for today.",
+    });
+  });
+
+  it("keeps a day's words whole in Ukrainian and Russian, one card or twenty-one", async () => {
+    expect(await reminderCopy({ message: "next_cards", count: 1 }, "uk")).toEqual({
+      title: "Наступна картка готова",
+      body: "1 картка на сьогодні.",
+    });
+    expect(await reminderCopy({ message: "next_cards", count: 21 }, "uk")).toEqual({
+      title: "Наступні картки готові",
+      body: "21 картка на сьогодні.",
+    });
+    expect((await reminderCopy({ message: "next_cards", count: 21 }, "ru")).title).toBe(
+      "Следующие карточки готовы",
+    );
+    expect(await reminderCopy({ message: "to_goal", count: 5 }, "ru")).toEqual({
+      title: "До сегодняшней цели: 5 карточек",
+      body: "Закончи, если есть минутка.",
+    });
+    expect(await reminderCopy({ message: "after_rest", count: 2 }, "uk")).toEqual({
+      title: "Учора був день відпочинку",
+      body: "Дні поспіль не перервалися. 2 картки готові.",
+    });
+  });
+
+  it("marks the link with the way in and the message", () => {
+    expect(reminderLink("to_goal", "https://my.lymi.example")).toBe(
+      "https://my.lymi.example/review?lymi_entry=reminder&lymi_reminder=to_goal",
+    );
   });
 
   it("claims the local date and sends one reminder", async () => {
@@ -99,9 +141,9 @@ describe("review reminder delivery", () => {
     const count = vi.fn(seven);
     await expect(
       dispatchReviewReminders(env, new Date("2026-09-06T16:07:00.000Z"), send, count),
-    ).resolves.toEqual({ considered: 1, sent: 1, expired: 0, failed: 0 });
+    ).resolves.toEqual({ considered: 1, sent: 1, quiet: 0, expired: 0, failed: 0 });
     expect(send).toHaveBeenCalledOnce();
-    expect(send).toHaveBeenCalledWith(expect.objectContaining({ id: "push-1" }), 7, env);
+    expect(send).toHaveBeenCalledWith(expect.objectContaining({ id: "push-1" }), ready, env);
     expect(statements.some((sql) => sql.includes("last_sent_local_date = ?"))).toBe(true);
     expect(count).toHaveBeenCalledWith("learner-1", "Europe/Tallinn", expect.any(Date));
   });
@@ -121,7 +163,7 @@ describe("review reminder delivery", () => {
         noCards.env,
         new Date("2026-09-06T16:07:00.000Z"),
         send,
-        async () => 0,
+        async () => ({ reminder: null, due: 0 }),
       ),
     ).toMatchObject({ sent: 0 });
 
@@ -140,6 +182,41 @@ describe("review reminder delivery", () => {
       ),
     ).toMatchObject({ sent: 0 });
     expect(send).not.toHaveBeenCalled();
+  });
+
+  it("stays silent on a day that needs no reminder, and leaves the claim for later", async () => {
+    const { env, statements } = fakeEnv();
+    const send = vi.fn().mockResolvedValue(undefined);
+    await dispatchReviewReminders(env, new Date("2026-09-06T16:07:00.000Z"), send, async () => ({
+      reminder: null,
+      due: 40,
+    }));
+    expect(send).not.toHaveBeenCalled();
+    expect(statements.some((sql) => sql.includes("UPDATE push_subscriptions"))).toBe(false);
+  });
+
+  it("stops a week after the learner last opened Lymi", async () => {
+    const opened = new Date("2026-09-06T16:00:00.000Z").getTime();
+    const { env } = fakeEnv({ ...candidate, last_opened_at: opened });
+    const send = vi.fn().mockResolvedValue(undefined);
+    const count = vi.fn(seven);
+    const weekLater = new Date("2026-09-13T16:07:00.000Z");
+    await expect(dispatchReviewReminders(env, weekLater, send, count)).resolves.toMatchObject({
+      sent: 0,
+      quiet: 1,
+    });
+    expect(count).not.toHaveBeenCalled();
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  it("reminds again once the learner returns", async () => {
+    const { env } = fakeEnv({
+      ...candidate,
+      last_opened_at: new Date("2026-09-13T08:00:00.000Z").getTime(),
+    });
+    await expect(
+      dispatchReviewReminders(env, new Date("2026-09-13T16:07:00.000Z"), vi.fn(), seven),
+    ).resolves.toMatchObject({ sent: 1, quiet: 0 });
   });
 
   it("removes expired endpoints and releases transient failures", async () => {

@@ -162,6 +162,16 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
   const zone = await reviewZone(ctx, reported);
   const settings = await getSettings(ctx);
   const now = new Date();
+  // An integration's call is not the learner opening Lymi.
+  if (ctx.actor === "user") {
+    await ctx.db
+      .insert(schema.learnerOpenings)
+      .values({ userId: ctx.userId, openedAt: now })
+      .onConflictDoUpdate({
+        target: schema.learnerOpenings.userId,
+        set: { openedAt: now },
+      });
+  }
   const date = dateFormatter(zone).format(now);
   const due = await drawableCount(ctx, { now, zone });
   const [existing] = await ctx.db
@@ -356,12 +366,15 @@ function recordStreakChange(ctx: ServiceContext, today: string, zone: string): v
  * attempt or a nothing-due confirmation. Pre-goal reviews have no day row and keep their old
  * meaning, so history from before goals still reads as the streak it was.
  */
-export async function streak(ctx: ServiceContext, opts: { zone?: string | undefined } = {}) {
+export async function streak(
+  ctx: ServiceContext,
+  opts: { zone?: string | undefined; now?: Date | undefined } = {},
+) {
   const zone = await reviewZone(ctx, opts.zone);
   const fmt = dateFormatter(zone);
   const settings = await getSettings(ctx);
   const list = await streakDays(ctx, fmt);
-  const today = fmt.format(new Date());
+  const today = fmt.format(opts.now ?? new Date());
   const todayDay = list.find((d) => d.date === today);
 
   return {

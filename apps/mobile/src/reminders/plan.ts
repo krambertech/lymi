@@ -1,10 +1,16 @@
-import { dayWindow } from "@lymi/core";
+import {
+  dayWindow,
+  QUIET_AFTER_DAYS,
+  type Reminder,
+  reminderFor,
+  type StreakDay,
+} from "@lymi/core";
 import { type AnalyticsProperties, backlogOf } from "@lymi/core/analytics";
 
 // When the daily reminder fires, worked out on the phone so it holds without a connection. #510.
 
-/** Days scheduled ahead, so a learner who stays away still hears from Lymi for a week. */
-export const DAYS_AHEAD = 7;
+/** Days scheduled ahead, so a learner who stays away still hears from Lymi for a week, then not. */
+export const DAYS_AHEAD = QUIET_AFTER_DAYS;
 
 export interface ReminderInput {
   /** The reminder's local time, `HH:MM`, on the phone's own clock. */
@@ -16,14 +22,19 @@ export interface ReminderInput {
   left: number;
   /** Today already counts: the goal is met or nothing was left to review. */
   dayDone: boolean;
+  /** Today's goal. */
+  goal: number;
+  /** The streak's days with today's grades in them, which choose each reminder's message. */
+  days: readonly StreakDay[];
   /** Cards that fall due on each review day, by date; see `forecastFrom`. */
   forecast?: ReadonlyMap<string, number> | undefined;
   /** Until when the learner put today's reminder off, from its In an hour action. */
   snoozedUntil?: Date | undefined;
 }
 
-export interface PlannedReminder {
+export interface PlannedReminder extends Reminder {
   at: Date;
+  /** Cards ready then, which `count` can be fewer than when it names what is left of the goal. */
   due: number;
 }
 
@@ -46,6 +57,8 @@ function addDays(date: string, days: number): string {
  * on is still open. Each reminder counts by that review day, which can differ from the phone's
  * date when the review zone does: what is left today, plus what falls due by then, since a learner
  * who does not open the app reviews none of it. The next launch plans again from the real numbers.
+ * Each message is chosen now, reading the days ahead as days the learner stays away; a grade on the
+ * phone replans them, and one made elsewhere is not known here until the next launch.
  */
 export function planReminders({
   time,
@@ -53,6 +66,8 @@ export function planReminders({
   zone,
   left,
   dayDone,
+  goal,
+  days,
   forecast,
   snoozedUntil,
 }: ReminderInput): PlannedReminder[] {
@@ -67,13 +82,15 @@ export function planReminders({
     if (date === today) {
       if (dayDone || left < 1) continue;
       const at = snoozed ?? candidate;
-      if (at > now) planned.push({ at, due: left });
+      const reminder = reminderFor({ date, days, due: left, goal });
+      if (reminder && at > now) planned.push({ at, due: left, ...reminder });
       continue;
     }
     let due = left;
     // Without a forecast, later days know only what today leaves behind.
     for (let d = addDays(today, 1); d <= date; d = addDays(d, 1)) due += forecast?.get(d) ?? 0;
-    if (due > 0) planned.push({ at: candidate, due });
+    const reminder = reminderFor({ date, days, due, goal });
+    if (reminder) planned.push({ at: candidate, due, ...reminder });
     if (planned.length === DAYS_AHEAD) break;
   }
   return planned;
@@ -100,11 +117,6 @@ export function replans(on: boolean, due: number | undefined): boolean {
 
 const dayNumber = (at: Date) =>
   Math.floor(Date.UTC(at.getFullYear(), at.getMonth(), at.getDate()) / (24 * 60 * 60 * 1000));
-
-/** Picks one of `count` lines by the day, so the wording changes from one day to the next. */
-export function lineFor(at: Date, count: number): number {
-  return dayNumber(at) % count;
-}
 
 export interface PlanReports {
   /** When the last reported plan's next reminder fires, in milliseconds. */

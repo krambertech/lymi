@@ -355,6 +355,14 @@ export const userSettings = sqliteTable("user_settings", {
   ...timestamps,
 });
 
+/** When a learner's own client last opened Lymi. Web push stops a week after it. */
+export const learnerOpenings = sqliteTable("learner_openings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  openedAt: integer("opened_at", { mode: "timestamp_ms" }).notNull(),
+});
+
 export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {
   key: text("key").primaryKey(),
   userId: text("user_id")

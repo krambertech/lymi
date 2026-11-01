@@ -50,6 +50,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Example audio | [example-audio.md](features/example-audio.md) |
 | Example translation | [example-translation.md](features/example-translation.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
+| Daily reminder | [reminders.md](features/reminders.md) |
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |

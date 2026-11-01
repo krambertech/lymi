@@ -7,7 +7,7 @@ Plain and friendly. The interface counts cards, not points, never nags and never
 - "New deck" opens the form; "Create deck" submits it.
 - A question's destructive button names the consequence ("Revoke key") and its safe button names what stays ("Keep key").
 - Screen names (Library, Settings, Activity) and grade names (Forgot, Hard, Good, Easy) keep their capitals inside a sentence.
-- Reminders and other notifications carry no guilt and no urgency.
+- Reminders and other notifications carry no guilt and no urgency. They report what is true today, never warn ahead of a miss, and name the streak only after a rest day has kept it.
 - An empty state names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here".
 - A toast says what just happened; how much of a learner's text it quotes is in [overlays.md](overlays.md#toasts).
 - On card pages and forms, mark fields written by Lymi’s enrichment with the AI badge. Review omits these badges. Text supplied by a connected assistant is recorded as manual, with the app named in Activity.

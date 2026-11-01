@@ -275,6 +275,30 @@ it("ignores an email kind Lymi does not send", async () => {
   expect(replaceState).not.toHaveBeenCalled();
 });
 
+it("counts which reminder message was opened, and drops it from the address", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=to_goal", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const opened = sdk.sent.filter((e) => e.event === "reminder_opened");
+  expect(opened.map((e) => e.properties)).toEqual([
+    expect.objectContaining({ message: "to_goal", client: "web" }),
+  ]);
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review");
+});
+
+it("sends no reminder_opened for a link without a message it knows", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=streak", "");
+  vi.stubGlobal("history", { state: null, replaceState: vi.fn() });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  expect(sdk.sent.filter((e) => e.event === "reminder_opened")).toEqual([]);
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(1);
+});
+
 it("resets identity when another account signs in", async () => {
   await load("https://my.lymi.app/today");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });

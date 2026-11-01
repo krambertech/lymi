@@ -31,7 +31,11 @@ export interface DesktopBridge {
   restartToUpdate?(): void;
   /** Each change in the app's own update, as `MacPreferences.update`. Added in version 3. */
   onUpdate?(listener: (update: MacUpdate) => void): () => void;
+  /** The learner's theme, which the app saves for its windows and menus. Added in version 4. */
+  setTheme?(theme: ThemeChoice): void;
 }
+
+export type ThemeChoice = "light" | "dark" | "system";
 
 /** The providers that refuse an app's window, so the Mac app signs in with them in the browser. */
 export type SignInProvider = "apple" | "google";
@@ -101,6 +105,7 @@ export interface ToApp {
   "prefs:recording": [on: boolean];
   "app:sign-in": [provider: SignInProvider];
   "app:restart-to-update": [];
+  "app:theme": [theme: ThemeChoice];
 }
 export interface AskApp {
   "prefs:get": { args: []; result: MacPreferences | null };

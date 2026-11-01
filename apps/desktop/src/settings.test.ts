@@ -31,6 +31,12 @@ describe("reading saved preferences", () => {
     ).toEqual({ ...DEFAULTS, shortcut: "Command+K", showInMenuBar: false });
   });
 
+  it("keeps a saved theme and follows the system for a damaged or missing one", () => {
+    expect(parsePreferences({ theme: "dark" }).theme).toBe("dark");
+    expect(parsePreferences({ theme: "sepia" }).theme).toBe("system");
+    expect(parsePreferences({}).theme).toBe("system");
+  });
+
   it("drops a shortcut that would break typing, from an older or edited file", () => {
     expect(parsePreferences({ shortcut: "Alt+E" }).shortcut).toBe(DEFAULTS.shortcut);
   });

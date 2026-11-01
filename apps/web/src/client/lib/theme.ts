@@ -1,3 +1,5 @@
+import { desktop } from "./desktop";
+
 export type ThemeChoice = "light" | "dark" | "system";
 
 const KEY = "lymi-theme";
@@ -19,6 +21,7 @@ function resolve(choice: ThemeChoice): "light" | "dark" {
 const CHROME = { light: "#f8f6f4", dark: "#130d09" } as const;
 
 export function applyTheme(choice: ThemeChoice) {
+  desktop()?.setTheme?.(choice);
   const root = document.documentElement;
   const next = resolve(choice);
   // The tags answer the system theme; a chosen theme has to overwrite both.
@@ -62,5 +65,11 @@ export function initTheme() {
   applyTheme(read());
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (read() === "system") applyTheme("system");
+  });
+  // The Mac app's quick-add panel stays loaded while the theme changes in its main window.
+  window.addEventListener("storage", (event) => {
+    if (event.key !== KEY) return;
+    applyTheme(read());
+    window.dispatchEvent(new Event(THEME_CHANGED));
   });
 }

@@ -166,12 +166,16 @@ describe("the daily goal counts attempts", () => {
   });
 
   describe("when another grade lands between reading the state and writing it", () => {
-    /** Lands `rival` just before this context's first grade write reaches the database. */
-    const overtakenBy = (ctx: ServiceContext, rival: () => Promise<unknown>): ServiceContext => {
-      let raced = false;
+    /** Lands `rival` just before this context's grade writes reach the database, `times` over. */
+    const overtakenBy = (
+      ctx: ServiceContext,
+      rival: () => Promise<unknown>,
+      times = 1,
+    ): ServiceContext => {
+      let raced = 0;
       const batch = async (statements: Parameters<Db["batch"]>[0]) => {
-        if (!raced && statements.length > 2) {
-          raced = true;
+        if (raced < times && statements.length > 2) {
+          raced += 1;
           await rival();
         }
         return ctx.db.batch(statements);
@@ -219,6 +223,30 @@ describe("the daily goal counts attempts", () => {
       expect(state?.lastReview?.getTime()).toBe(newer.getTime());
       expect(reviews.map((r) => r.rating)).toEqual([4]);
       expect(audited).toHaveLength(1);
+    });
+
+    it("gives up with a 503 and writes nothing when every try is overtaken", async () => {
+      const { ctx, cards } = await setup(5, ["kaheksandik"]);
+      const [a] = cards;
+      if (!a) throw new Error("no cards");
+
+      let rivals = 0;
+      const everyTry = overtakenBy(
+        ctx,
+        () => {
+          rivals += 1;
+          return grade(ctx, a.id, 3, later(rivals));
+        },
+        Number.POSITIVE_INFINITY,
+      );
+
+      await expect(grade(everyTry, a.id, 4, later(10))).rejects.toMatchObject({
+        code: "unavailable",
+      });
+      expect(rivals).toBe(4);
+      const { reviews, audited } = await history(ctx, a.id);
+      expect(reviews).toHaveLength(4);
+      expect(audited).toHaveLength(4);
     });
 
     it("audits a grade once when its copy and a later grade both land first", async () => {

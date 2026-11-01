@@ -302,6 +302,9 @@ function fadedReadings(
   return readings ? { example_readings: readings, readings_faded: Math.min(faded, readings) } : {};
 }
 
+/** Past this a grade answers 503 and its outbox tries later, so a state that never matches ends. */
+const MAX_OVERTAKEN = 3;
+
 /**
  * Apply one grade. Only the learner grades; integrations never reach this function.
  * Idempotent enough for offline replay: a review older than the state's last review is a no-op,
@@ -318,6 +321,7 @@ export async function gradeCard(
    * lacks, and Jyutping over the term, which a phone before 0.0.7 lacks.
    */
   draws: Draws = { over: true, inPlace: { ru: true, uk: true }, byWord: true, jyutping: true },
+  overtaken = 0,
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;
@@ -480,7 +484,12 @@ export async function gradeCard(
     );
   if (stored === "copy") return duplicate();
   // Overtaken grades start again from the state that won: a later one schedules on top of it.
-  if (stored === "overtaken") return gradeCard(ctx, input, draws);
+  if (stored === "overtaken") {
+    if (overtaken >= MAX_OVERTAKEN) {
+      throw new ServiceError("unavailable", "This card is being graded elsewhere. Try again.");
+    }
+    return gradeCard(ctx, input, draws, overtaken + 1);
+  }
   track(ctx.analytics, {
     name: "review_graded",
     mode: key,

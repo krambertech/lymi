@@ -84,6 +84,18 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("review_graded", { mode: "term_to_meaning", grade: 4 }, "phone"),
     ).toBeNull();
+    // A reminder fires on the phone, so only the phone knows one was planned.
+    const planned = { backlog: "1-20", reminders: 7, days_ahead: 1 };
+    expect(eventProperties("reminder_scheduled", planned, "phone")).toEqual(planned);
+    expect(eventProperties("reminder_scheduled", planned, "browser")).toBeNull();
+    expect(eventProperties("reminder_scheduled", planned, "worker")).toBeNull();
+    expect(
+      eventProperties("entry_opened", { entry: "reminder", place: "review" }, "phone"),
+    ).toEqual({ entry: "reminder", place: "review" });
+    expect(
+      eventProperties("app_opened", { entry: "email", from_email: "deck-invitation" }, "browser"),
+    ).toEqual({ entry: "email", from_email: "deck-invitation" });
+    expect(eventProperties("app_opened", { from_email: "newsletter" }, "browser")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "phone")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
     // A tag's name is the learner's own text, so only how it was added leaves the browser.

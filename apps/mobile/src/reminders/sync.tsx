@@ -10,6 +10,7 @@ import { useMMKVString } from "react-native-mmkv";
 import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
+import { captureEvent } from "../telemetry/posthog";
 import {
   notificationPermission,
   opensReview,
@@ -17,10 +18,17 @@ import {
   schedule,
   snoozedUntil,
 } from "./notifications";
-import { forecastFrom, planReminders, replans } from "./plan";
+import { forecastFrom, type PlanReports, planReminders, replans, reportPlan } from "./plan";
 
 /** The forecast moves with grades and the day; an hour old is close enough for a week ahead. */
 const FORECAST_STALE_MS = 60 * 60 * 1000;
+
+/** A reminder fires on the phone unseen, so a plan iOS accepted is all analytics can know. */
+const planReports: PlanReports = {
+  reported: () => deviceStore.getNumber(DEVICE_KEYS.reminderReported),
+  remember: (at) => deviceStore.set(DEVICE_KEYS.reminderReported, at),
+  send: (report) => captureEvent("reminder_scheduled", report),
+};
 
 /**
  * Plans the week's reminders again whenever what they say could change: the time, a grade, the
@@ -66,20 +74,22 @@ export function ReminderSync() {
     // A review grades every few seconds; the plan only needs where the day settled.
     let live = true;
     const timer = setTimeout(async () => {
-      if (!time) return schedule([]);
+      if (!time) {
+        if (await schedule([])) deviceStore.remove(DEVICE_KEYS.reminderReported);
+        return;
+      }
       // A sign-out while iOS answers unmounts this; its plan would be for the learner who left.
       if ((await notificationPermission()) !== "granted" || !live) return;
-      await schedule(
-        planReminders({
-          time,
-          now: new Date(),
-          zone,
-          left: due ?? 0,
-          dayDone,
-          forecast: forecast ? new Map(JSON.parse(forecast)) : undefined,
-          snoozedUntil: snoozedUntil(),
-        }),
-      );
+      const plan = planReminders({
+        time,
+        now: new Date(),
+        zone,
+        left: due ?? 0,
+        dayDone,
+        forecast: forecast ? new Map(JSON.parse(forecast)) : undefined,
+        snoozedUntil: snoozedUntil(),
+      });
+      if (await schedule(plan)) reportPlan(plan, new Date(), planReports);
     }, 1500);
     return () => {
       live = false;
@@ -104,7 +114,7 @@ export function ReminderSync() {
   useEffect(() => {
     if (!opening || path === "/") return;
     setOpening(false);
-    router.navigate("/review");
+    router.navigate("/review?from=reminder");
   }, [opening, path, router]);
 
   return null;

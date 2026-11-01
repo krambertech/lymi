@@ -78,17 +78,20 @@ export async function askPermission(): Promise<Permission> {
 // own cancel and its scheduling and leave reminders for the learner who left.
 let queue: Promise<unknown> = Promise.resolve();
 let latest = 0;
-function inTurn(task: () => Promise<void>): Promise<void> {
+function inTurn<T>(task: () => Promise<T>): Promise<T> {
   const run = queue.then(task, task);
   queue = run.catch(() => undefined);
   return run;
 }
 
-/** Replaces every scheduled reminder with the plan, unless a newer plan or a sign-out came after it. */
+/**
+ * Replaces every scheduled reminder with the plan, unless a newer plan or a sign-out came after it.
+ * Answers whether the plan landed.
+ */
 export function schedule(plan: readonly PlannedReminder[]) {
   const mine = ++latest;
   return inTurn(async () => {
-    if (mine !== latest) return;
+    if (mine !== latest) return false;
     await Notifications.cancelAllScheduledNotificationsAsync();
     for (const { at, due } of plan) {
       await Notifications.scheduleNotificationAsync({
@@ -96,6 +99,7 @@ export function schedule(plan: readonly PlannedReminder[]) {
         trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
       });
     }
+    return true;
   });
 }
 
@@ -103,6 +107,7 @@ export function schedule(plan: readonly PlannedReminder[]) {
 export function cancelReminders() {
   latest++;
   deviceStore.remove(DEVICE_KEYS.snoozed);
+  deviceStore.remove(DEVICE_KEYS.reminderReported);
   return inTurn(async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
     await Notifications.dismissAllNotificationsAsync();

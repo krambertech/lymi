@@ -11,6 +11,7 @@ describe("entry links", () => {
   it("reads the entry point back from the screen it opened", () => {
     expect(entryOf("/capture", "shortcut")).toEqual({ entry: "shortcut", place: "add" });
     expect(entryOf("/review", "widget")).toEqual({ entry: "widget", place: "review" });
+    expect(entryOf("/review", "reminder")).toEqual({ entry: "reminder", place: "review" });
   });
 
   it("ignores screens and sources it does not know", () => {

@@ -29,7 +29,12 @@ export const REST_DISMISSED_KEY = "rest-dismissed";
  * when In an hour put today's reminder off to, and sign-out clears it.
  */
 export const deviceStore = createMMKV({ id: "lymi-device" });
-export const DEVICE_KEYS = { theme: "theme", reminder: "reminder", snoozed: "snoozed" } as const;
+export const DEVICE_KEYS = {
+  theme: "theme",
+  reminder: "reminder",
+  snoozed: "snoozed",
+  reminderReported: "reminder-reported",
+} as const;
 
 /** What the review has shown once on this phone, such as how many reveals have taught Tap to reveal. */
 export const reviewStore = createMMKV({ id: "lymi-review" });

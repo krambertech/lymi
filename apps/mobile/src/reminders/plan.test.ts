@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { DAYS_AHEAD, forecastFrom, lineFor, planReminders, replans } from "./plan";
+import {
+  DAYS_AHEAD,
+  forecastFrom,
+  lineFor,
+  type PlanReports,
+  planReminders,
+  replans,
+  reportPlan,
+} from "./plan";
 
 // The phone's clock in these cases; Node applies a TZ set at run time.
 process.env.TZ = "Europe/Tallinn";
@@ -115,6 +123,73 @@ describe("planReminders", () => {
       forecast: byDay({ "2026-10-12": 0, "2026-10-13": 5 }),
     });
     expect(plan[0]).toEqual({ at: at("2026-10-12T23:30:00"), due: 5 });
+  });
+});
+
+describe("reportPlan", () => {
+  const now = at("2026-10-12T09:00:00");
+  const plan = [
+    { at: at("2026-10-14T19:00:00"), due: 3 },
+    { at: at("2026-10-15T19:00:00"), due: 30 },
+  ];
+  const nextAt = at("2026-10-14T19:00:00").getTime();
+
+  function log() {
+    let reported: number | undefined;
+    const sent: Parameters<PlanReports["send"]>[0][] = [];
+    const delivery = { works: true };
+    const reports: PlanReports = {
+      reported: () => reported,
+      remember: (value) => {
+        reported = value;
+      },
+      send: (report) => {
+        if (delivery.works) sent.push(report);
+        return delivery.works;
+      },
+    };
+    return { reports, sent, delivery, reported: () => reported };
+  }
+
+  it("says how far off the next reminder is, how many are planned and what it will count", () => {
+    const { reports, sent, reported } = log();
+    reportPlan(plan, now, reports);
+    expect(sent).toEqual([{ backlog: "1-20", reminders: 2, days_ahead: 2 }]);
+    expect(reported()).toBe(nextAt);
+  });
+
+  it("counts a reminder later today as no days ahead", () => {
+    const { reports, sent } = log();
+    reportPlan([{ at: at("2026-10-12T19:00:00"), due: 1 }], now, reports);
+    expect(sent[0]).toMatchObject({ days_ahead: 0 });
+  });
+
+  it("stays quiet until the next reminder moves", () => {
+    const { reports, sent } = log();
+    reportPlan(plan, now, reports);
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
+    reportPlan(plan.slice(1), now, reports);
+    expect(sent).toHaveLength(2);
+  });
+
+  it("tries again with the next plan when the event could not go", () => {
+    const { reports, sent, delivery, reported } = log();
+    delivery.works = false;
+    reportPlan(plan, now, reports);
+    expect(reported()).toBeUndefined();
+    delivery.works = true;
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
+  });
+
+  it("keeps the report through an empty plan, which a stale forecast can make for a moment", () => {
+    const { reports, sent, reported } = log();
+    reportPlan(plan, now, reports);
+    reportPlan([], now, reports);
+    expect(reported()).toBe(nextAt);
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
   });
 });
 

@@ -250,6 +250,31 @@ it("names a reminder as the way in, and opens without a backlog when none is kno
   expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review?deck=italian");
 });
 
+it("names the email a link came from, and drops only that mark", async () => {
+  await load("https://my.lymi.app/today?from=email-deck-invitation&deck=italian", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "email", from_email: "deck-invitation" });
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/today?deck=italian");
+});
+
+it("ignores an email kind Lymi does not send", async () => {
+  await load("https://my.lymi.app/today?from=email-nonsense", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "direct" });
+  expect(opened?.properties).not.toHaveProperty("from_email");
+  expect(replaceState).not.toHaveBeenCalled();
+});
+
 it("resets identity when another account signs in", async () => {
   await load("https://my.lymi.app/today");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });

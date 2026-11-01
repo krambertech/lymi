@@ -17,6 +17,7 @@ export type Settings = {
   aiConsentUpdatedAt?: string | null | undefined;
   /** Null means yes; only false stops session replay. */
   sessionReplay?: boolean | null | undefined;
+  learningEmails?: boolean | null | undefined;
   appLanguage: AppLanguage | null;
   meaningLanguage: string;
   dailyGoal: number;

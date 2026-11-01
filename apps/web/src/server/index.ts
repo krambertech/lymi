@@ -16,6 +16,7 @@ import { purgeExpiredAuthRows } from "./services/auth-retention";
 import { copyFormerDecks } from "./services/deck-copies";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
+import { dispatchLearningEmails } from "./services/learning-email";
 import { voicePublishedDecks } from "./services/published-audio";
 import { pullDueReadwise } from "./services/readwise";
 import { runStressBackfill } from "./services/stress-backfill";
@@ -49,6 +50,12 @@ export default {
       "review-reminders",
       dispatchReviewReminders(env, at).then((result) => {
         if (result.failed > 0) throw new Error(`${result.failed} review reminder sends failed`);
+      }),
+    );
+    run(
+      "learning-emails",
+      dispatchLearningEmails(env, at).then(({ failed }) => {
+        if (failed > 0) throw new Error(`${failed} learning emails failed`);
       }),
     );
     run(

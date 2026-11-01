@@ -505,6 +505,21 @@ msgstr "{cards, plural, one {# card in {0} of {1} decks} other {# cards in {2} o
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 
+msgid "{cards, plural, one {# card is ready across {decks} decks. This is our last email about them.} other {# cards are ready across {decks} decks. This is our last email about them.}}"
+msgstr "{cards, plural, one {# card is ready across {decks} decks. This is our last email about them.} other {# cards are ready across {decks} decks. This is our last email about them.}}"
+
+msgid "{cards, plural, one {# card is ready across {decks} decks.} other {# cards are ready across {decks} decks.}}"
+msgstr "{cards, plural, one {# card is ready across {decks} decks.} other {# cards are ready across {decks} decks.}}"
+
+msgid "{cards, plural, one {# card is ready in {deck}. This is our last email about it.} other {# cards are ready in {deck}. This is our last email about them.}}"
+msgstr "{cards, plural, one {# card is ready in {deck}. This is our last email about it.} other {# cards are ready in {deck}. This is our last email about them.}}"
+
+msgid "{cards, plural, one {# card is ready in {deck}.} other {# cards are ready in {deck}.}}"
+msgstr "{cards, plural, one {# card is ready in {deck}.} other {# cards are ready in {deck}.}}"
+
+msgid "{cards, plural, one {# card to review} other {# cards to review}}"
+msgstr "{cards, plural, one {# card to review} other {# cards to review}}"
+
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# card} other {# cards}}"
 
@@ -512,8 +527,14 @@ msgstr "{cards, plural, one {# card} other {# cards}}"
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
 
+msgid "{cards, plural, one {# new card is ready} other {# new cards are ready}}"
+msgstr "{cards, plural, one {# new card is ready} other {# new cards are ready}}"
+
 msgid "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
 msgstr "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
+
+msgid "{cards, plural, one {This is your first card.} other {This is the first of # cards.}}"
+msgstr "{cards, plural, one {This is your first card.} other {This is the first of # cards.}}"
 
 msgid "{categoryCount, plural, one {Your Pleco category {categories} becomes a tag.} other {Your # Pleco categories become tags: {categories}. A card in several of them comes in once, with each tag.}}"
 msgstr "{categoryCount, plural, one {Your Pleco category {categories} becomes a tag.} other {Your # Pleco categories become tags: {categories}. A card in several of them comes in once, with each tag.}}"
@@ -885,6 +906,9 @@ msgstr "A connected app"
 msgid "a day"
 msgstr "a day"
 
+msgid "A few emails when cards are ready and you’ve been away. They can show a card."
+msgstr "A few emails when cards are ready and you’ve been away. They can show a card."
+
 msgid "a field"
 msgstr "a field"
 
@@ -1059,6 +1083,9 @@ msgstr "Add with email"
 
 msgid "Add with Google"
 msgstr "Add with Google"
+
+msgid "Add your first cards"
+msgstr "Add your first cards"
 
 msgid "Add your notes"
 msgstr "Add your notes"
@@ -2037,6 +2064,9 @@ msgstr "Couldn’t save that. Try again."
 msgid "Couldn’t save the choice. Check your connection and try again."
 msgstr "Couldn’t save the choice. Check your connection and try again."
 
+msgid "Couldn’t save the grade. Check your connection and try again."
+msgstr "Couldn’t save the grade. Check your connection and try again."
+
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -2087,6 +2117,9 @@ msgstr "Couldn’t turn off the join link. Try again."
 
 msgid "Couldn’t turn on the join link. Try again."
 msgstr "Couldn’t turn on the join link. Try again."
+
+msgid "Couldn’t turn them off. Check your connection and try again."
+msgstr "Couldn’t turn them off. Check your connection and try again."
 
 msgid "Couldn’t use that image. Choose a still JPEG, PNG or WebP image."
 msgstr "Couldn’t use that image. Choose a still JPEG, PNG or WebP image."
@@ -2600,6 +2633,10 @@ msgstr "Fill in selected text"
 msgid "Filter"
 msgstr "Filter"
 
+msgctxt "email button"
+msgid "Find a deck"
+msgstr "Find a deck"
+
 msgid "Find a tag"
 msgstr "Find a tag"
 
@@ -2620,6 +2657,10 @@ msgstr "Finish if you have a moment."
 
 msgid "Finish your first review"
 msgstr "Finish your first review"
+
+msgctxt "email button"
+msgid "Flip"
+msgstr "Flip"
 
 msgid "For a test"
 msgstr "For a test"
@@ -2753,6 +2794,9 @@ msgstr "Head back to the app. You can close this tab."
 msgid "Help improve Lymi"
 msgstr "Help improve Lymi"
 
+msgid "Here’s one from {deck}."
+msgstr "Here’s one from {deck}."
+
 msgid "Hide password"
 msgstr "Hide password"
 
@@ -2786,6 +2830,12 @@ msgstr "History"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "history changes"
 msgstr "history changes"
+
+msgid "How a review works"
+msgstr "How a review works"
+
+msgid "How did it go?"
+msgstr "How did it go?"
 
 msgid "How it connects"
 msgstr "How it connects"
@@ -3190,6 +3240,12 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
 
+msgid "Learning emails"
+msgstr "Learning emails"
+
+msgid "Learning emails are off"
+msgstr "Learning emails are off"
+
 msgid "Leave {name}?"
 msgstr "Leave {name}?"
 
@@ -3322,6 +3378,9 @@ msgstr "Lymi is in public beta."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi is writing the first decks. Until then, make your own in Library."
+
+msgid "Lymi may email you when cards are ready. You can turn this off in Settings or from any email."
+msgstr "Lymi may email you when cards are ready. You can turn this off in Settings or from any email."
 
 msgid "Lymi needs your Readwise token again"
 msgstr "Lymi needs your Readwise token again"
@@ -3828,6 +3887,9 @@ msgstr "Off for mobile and web. Existing card text and saved audio stay."
 msgid "Off. We don’t see how you move through Lymi."
 msgstr "Off. We don’t see how you move through Lymi."
 
+msgid "Off. You’ll only get emails about your account."
+msgstr "Off. You’ll only get emails about your account."
+
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
@@ -4082,6 +4144,12 @@ msgstr "Photograph a page, upload a PDF or paste text. Lymi turns it into cards.
 
 msgid "Photos"
 msgstr "Photos"
+
+msgid "Pick a ready deck, or add what you’re learning."
+msgstr "Pick a ready deck, or add what you’re learning."
+
+msgid "Pick up where you left off"
+msgstr "Pick up where you left off"
 
 msgid "Picked up {deck}."
 msgstr "Picked up {deck}."
@@ -4474,6 +4542,10 @@ msgstr "Reveal the card"
 msgid "Review"
 msgstr "Review"
 
+msgctxt "email button"
+msgid "Review"
+msgstr "Review"
+
 msgid "Review {limit} of {due} due"
 msgstr "Review {limit} of {due} due"
 
@@ -4773,8 +4845,14 @@ msgstr "Show password"
 msgid "Show terms"
 msgstr "Show terms"
 
+msgid "Show the answer"
+msgstr "Show the answer"
+
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
+
+msgid "Show the question"
+msgstr "Show the question"
 
 msgid "Sign back in to this account and choose that file, without unzipping it."
 msgstr "Sign back in to this account and choose that file, without unzipping it."
@@ -4884,9 +4962,16 @@ msgstr "Spam or a scam"
 msgid "Spreadsheet"
 msgstr "Spreadsheet"
 
+msgctxt "email button"
+msgid "Start"
+msgstr "Start"
+
 #. placeholder {0}: isolate(section.name)
 msgid "Start {0}"
 msgstr "Start {0}"
+
+msgid "Start {deck}"
+msgstr "Start {deck}"
 
 msgid "Start {nextName}"
 msgstr "Start {nextName}"
@@ -5213,8 +5298,17 @@ msgstr "They lose this deck and can’t rejoin, by link or invitation. Their rev
 msgid "They’re already in this deck."
 msgstr "They’re already in this deck."
 
+msgid "They’re from {decks} decks. Here’s one from {deck}."
+msgstr "They’re from {decks} decks. Here’s one from {deck}."
+
+msgid "They’re from {decks} decks. Try to remember this one from {deck}."
+msgstr "They’re from {decks} decks. Try to remember this one from {deck}."
+
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
+
+msgid "This card has expired"
+msgstr "This card has expired"
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
@@ -5462,17 +5556,32 @@ msgstr "Try again on a steadier connection and keep Lymi open until the upload f
 msgid "Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Try again, or write to <0>hello@lymi.app</0>."
 
+msgid "Try to remember this one from {deck}."
+msgstr "Try to remember this one from {deck}."
+
+msgid "Try to remember this one."
+msgstr "Try to remember this one."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Try to remember, then reveal the answer"
 
 msgid "Try to remember, then tap to reveal"
 msgstr "Try to remember, then tap to reveal"
 
+msgid "Turn off"
+msgstr "Turn off"
+
+msgid "Turn off learning emails?"
+msgstr "Turn off learning emails?"
+
 msgid "Turn off link"
 msgstr "Turn off link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
+
+msgid "Turn off these emails"
+msgstr "Turn off these emails"
 
 msgid "Turn the connector on in a chat."
 msgstr "Turn the connector on in a chat."
@@ -5773,6 +5882,9 @@ msgstr "You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 
+msgid "You can turn them back on in Settings."
+msgstr "You can turn them back on in Settings."
+
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
 
@@ -5794,6 +5906,9 @@ msgstr "You can’t undo this. Its decks and cards aren’t deleted either way."
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
 
+msgid "You get this because you use Lymi."
+msgstr "You get this because you use Lymi."
+
 msgid "You keep reviewing these cards on your own schedule. Nobody else sees your reviews or progress."
 msgstr "You keep reviewing these cards on your own schedule. Nobody else sees your reviews or progress."
 
@@ -5808,6 +5923,9 @@ msgstr "You review on your own schedule, and {ownerName} doesn’t see your prog
 
 msgid "You review the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
 msgstr "You review the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
+
+msgid "You see a card, try to remember it, then flip it and say how it went. Lymi brings it back when it’s time."
+msgstr "You see a card, try to remember it, then flip it and say how it went. Lymi brings it back when it’s time."
 
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
@@ -5836,6 +5954,9 @@ msgstr "You wrote this"
 msgid "You’ll sign in with this from now on."
 msgstr "You’ll sign in with this from now on."
 
+msgid "You’ll still get emails about your account."
+msgstr "You’ll still get emails about your account."
+
 msgid "You’re already in this deck."
 msgstr "You’re already in this deck."
 
@@ -5859,6 +5980,12 @@ msgstr "Your apps"
 
 msgid "Your assistant is connected"
 msgstr "Your assistant is connected"
+
+msgid "Your cards are still here"
+msgstr "Your cards are still here"
+
+msgid "Your cards are still in Lymi."
+msgstr "Your cards are still in Lymi."
 
 msgid "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."
 msgstr "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."

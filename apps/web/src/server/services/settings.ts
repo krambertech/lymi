@@ -32,6 +32,7 @@ export function defaultSettings(userId: string): UserSettings {
     aiConsent: null,
     aiConsentUpdatedAt: null,
     sessionReplay: null,
+    learningEmails: null,
     appLanguage: null,
     meaningLanguage: "en",
     dailyGoal: 50,
@@ -61,16 +62,23 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
   if (patch.sessionReplay !== undefined && ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can change session replay.");
   }
+  if (patch.learningEmails !== undefined && ctx.actor !== "user") {
+    throw new ServiceError("forbidden", "Only the learner can change learning emails.");
+  }
   if (
     patch.appLanguage === undefined &&
     patch.dailyGoal === undefined &&
-    patch.sessionReplay === undefined
+    patch.sessionReplay === undefined &&
+    patch.learningEmails === undefined
   )
     return getSettings(ctx);
   const before = await getSettings(ctx);
   await ensureSettings(ctx);
   const replayChanged =
     patch.sessionReplay !== undefined && patch.sessionReplay !== (before.sessionReplay !== false);
+  const emailsChanged =
+    patch.learningEmails !== undefined &&
+    patch.learningEmails !== (before.learningEmails !== false);
   const update = ctx.db
     .update(schema.userSettings)
     .set({
@@ -83,20 +91,38 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
         dailyGoalChosenAt: new Date(),
       }),
       ...(patch.sessionReplay !== undefined && { sessionReplay: patch.sessionReplay }),
+      ...(patch.learningEmails !== undefined && { learningEmails: patch.learningEmails }),
       updatedAt: new Date(),
     })
     .where(eq(schema.userSettings.userId, ctx.userId));
-  if (replayChanged) {
+  if (replayChanged || emailsChanged) {
     await ctx.db.batch([
-      auditStatement(ctx, {
-        entity: "account",
-        action: "replay.choice",
-        id: ctx.userId,
-        details: { allowed: patch.sessionReplay },
-      }),
       update,
+      ...(replayChanged
+        ? [
+            auditStatement(ctx, {
+              entity: "account",
+              action: "replay.choice",
+              id: ctx.userId,
+              details: { allowed: patch.sessionReplay },
+            }),
+          ]
+        : []),
+      ...(emailsChanged
+        ? [
+            auditStatement(ctx, {
+              entity: "account",
+              action: "email.learning_choice",
+              id: ctx.userId,
+              details: { allowed: patch.learningEmails, via: "settings" },
+            }),
+          ]
+        : []),
     ]);
-    track(ctx.analytics, { name: "session_replay_set", on: patch.sessionReplay === true });
+    if (replayChanged)
+      track(ctx.analytics, { name: "session_replay_set", on: patch.sessionReplay === true });
+    if (emailsChanged && patch.learningEmails === false)
+      track(ctx.analytics, { name: "email_unsubscribed", via: "settings" });
   } else await update;
   if (patch.dailyGoal !== undefined) {
     await applyGoalToToday(ctx, patch.dailyGoal);

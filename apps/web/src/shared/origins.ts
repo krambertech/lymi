@@ -38,6 +38,9 @@ const OPEN_PRODUCT_PATHS = [
   "/emails",
   // The Mac app's own windows, such as its quick-add panel; never somewhere to return after sign-in.
   "/desktop",
+  // A learning email's links, which open signed out and hold a signed token.
+  "/flip",
+  "/unsubscribe",
 ] as const;
 
 const PRODUCT_PATHS = [...PROTECTED_PRODUCT_PATHS, ...OPEN_PRODUCT_PATHS];

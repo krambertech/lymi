@@ -505,6 +505,21 @@ msgstr "{cards, plural, one {# карточка в {0} из {1} колод} few 
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# карточка добавится в повторения.} few {# карточки добавятся в повторения.} many {# карточек добавится в повторения.} other {# карточки добавится в повторения.}}"
 
+msgid "{cards, plural, one {# card is ready across {decks} decks. This is our last email about them.} other {# cards are ready across {decks} decks. This is our last email about them.}}"
+msgstr "{cards, plural, one {# карточка готова в {decks} колодах. Это наше последнее письмо о ней.} few {# карточки готовы в {decks} колодах. Это наше последнее письмо о них.} many {# карточек готовы в {decks} колодах. Это наше последнее письмо о них.} other {# карточки готовы в {decks} колодах. Это наше последнее письмо о них.}}"
+
+msgid "{cards, plural, one {# card is ready across {decks} decks.} other {# cards are ready across {decks} decks.}}"
+msgstr "{cards, plural, one {# карточка готова в {decks} колодах.} few {# карточки готовы в {decks} колодах.} many {# карточек готовы в {decks} колодах.} other {# карточки готовы в {decks} колодах.}}"
+
+msgid "{cards, plural, one {# card is ready in {deck}. This is our last email about it.} other {# cards are ready in {deck}. This is our last email about them.}}"
+msgstr "{cards, plural, one {# карточка готова в колоде «{deck}». Это наше последнее письмо о ней.} few {# карточки готовы в колоде «{deck}». Это наше последнее письмо о них.} many {# карточек готовы в колоде «{deck}». Это наше последнее письмо о них.} other {# карточки готовы в колоде «{deck}». Это наше последнее письмо о них.}}"
+
+msgid "{cards, plural, one {# card is ready in {deck}.} other {# cards are ready in {deck}.}}"
+msgstr "{cards, plural, one {# карточка готова в колоде «{deck}».} few {# карточки готовы в колоде «{deck}».} many {# карточек готовы в колоде «{deck}».} other {# карточки готовы в колоде «{deck}».}}"
+
+msgid "{cards, plural, one {# card to review} other {# cards to review}}"
+msgstr "{cards, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
+
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -512,8 +527,14 @@ msgstr "{cards, plural, one {# карточка} few {# карточки} many {
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} · {0}"
 
+msgid "{cards, plural, one {# new card is ready} other {# new cards are ready}}"
+msgstr "{cards, plural, one {# новая карточка готова} few {# новые карточки готовы} many {# новых карточек готовы} other {# новой карточки готовы}}"
+
 msgid "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
 msgstr "{cards, plural, one {Продолжить с # карточкой} few {Продолжить с # карточками} many {Продолжить с # карточками} other {Продолжить с # карточки}}"
+
+msgid "{cards, plural, one {This is your first card.} other {This is the first of # cards.}}"
+msgstr "{cards, plural, one {Это твоя первая карточка.} few {Это первая из # карточек.} many {Это первая из # карточек.} other {Это первая из # карточки.}}"
 
 msgid "{categoryCount, plural, one {Your Pleco category {categories} becomes a tag.} other {Your # Pleco categories become tags: {categories}. A card in several of them comes in once, with each tag.}}"
 msgstr "{categoryCount, plural, one {Твоя категория Pleco {categories} станет тегом.} few {Твои # категории Pleco станут тегами: {categories}. Карточка из нескольких категорий придёт один раз, со всеми тегами.} many {Твои # категорий Pleco станут тегами: {categories}. Карточка из нескольких категорий придёт один раз, со всеми тегами.} other {Твои # категории Pleco станут тегами: {categories}. Карточка из нескольких категорий придёт один раз, со всеми тегами.}}"
@@ -885,6 +906,9 @@ msgstr "Подключённое приложение"
 msgid "a day"
 msgstr "день"
 
+msgid "A few emails when cards are ready and you’ve been away. They can show a card."
+msgstr "Несколько писем, когда карточки готовы, а тебя давно не было. В них может быть карточка."
+
 msgid "a field"
 msgstr "поле"
 
@@ -1059,6 +1083,9 @@ msgstr "Добавить через почту"
 
 msgid "Add with Google"
 msgstr "Добавить через Google"
+
+msgid "Add your first cards"
+msgstr "Добавь первые карточки"
 
 msgid "Add your notes"
 msgstr "Добавить заметки"
@@ -2037,6 +2064,9 @@ msgstr "Не удалось сохранить. Попробуйте ещё ра
 msgid "Couldn’t save the choice. Check your connection and try again."
 msgstr "Не удалось сохранить выбор. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t save the grade. Check your connection and try again."
+msgstr "Не удалось сохранить оценку. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
 
@@ -2087,6 +2117,9 @@ msgstr "Не удалось выключить ссылку для присое�
 
 msgid "Couldn’t turn on the join link. Try again."
 msgstr "Не удалось включить ссылку для присоединения. Попробуй ещё раз."
+
+msgid "Couldn’t turn them off. Check your connection and try again."
+msgstr "Не удалось их отключить. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t use that image. Choose a still JPEG, PNG or WebP image."
 msgstr "Не удалось использовать это изображение. Выбери неподвижное изображение JPEG, PNG или WebP."
@@ -2600,6 +2633,10 @@ msgstr "Вставлять выделенный текст"
 msgid "Filter"
 msgstr "Фильтр"
 
+msgctxt "email button"
+msgid "Find a deck"
+msgstr "Найти колоду"
+
 msgid "Find a tag"
 msgstr "Найти тег"
 
@@ -2620,6 +2657,10 @@ msgstr "Закончи, если есть минутка."
 
 msgid "Finish your first review"
 msgstr "Заверши первое повторение"
+
+msgctxt "email button"
+msgid "Flip"
+msgstr "Перевернуть"
 
 msgid "For a test"
 msgstr "Для экзамена"
@@ -2753,6 +2794,9 @@ msgstr "Вернись в приложение. Эту вкладку можно
 msgid "Help improve Lymi"
 msgstr "Помогать улучшать Lymi"
 
+msgid "Here’s one from {deck}."
+msgstr "Вот одна из колоды «{deck}»."
+
 msgid "Hide password"
 msgstr "Скрыть пароль"
 
@@ -2786,6 +2830,12 @@ msgstr "История"
 #. Words, separated by spaces, that also find this command in the command menu
 msgid "history changes"
 msgstr "история изменения"
+
+msgid "How a review works"
+msgstr "Как работает повторение"
+
+msgid "How did it go?"
+msgstr "Как прошло?"
 
 msgid "How it connects"
 msgstr "Как это подключается"
@@ -3190,6 +3240,12 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "В изучении"
 
+msgid "Learning emails"
+msgstr "Учебные письма"
+
+msgid "Learning emails are off"
+msgstr "Учебные письма отключены"
+
 msgid "Leave {name}?"
 msgstr "Выйти из {name}?"
 
@@ -3322,6 +3378,9 @@ msgstr "Lymi в открытой бете."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пишет первые колоды. А пока создай свою в Библиотеке."
+
+msgid "Lymi may email you when cards are ready. You can turn this off in Settings or from any email."
+msgstr "Lymi может писать тебе, когда карточки готовы. Это можно отключить в Настройках или из любого письма."
 
 msgid "Lymi needs your Readwise token again"
 msgstr "Lymi снова нужен твой токен Readwise"
@@ -3828,6 +3887,9 @@ msgstr "Выключено в мобильном приложении и веб-
 msgid "Off. We don’t see how you move through Lymi."
 msgstr "Выключено. Мы не видим, как ты пользуешься Lymi."
 
+msgid "Off. You’ll only get emails about your account."
+msgstr "Отключено. Будут приходить только письма об аккаунте."
+
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
@@ -4082,6 +4144,12 @@ msgstr "Сфотографируй страницу, загрузи PDF или �
 
 msgid "Photos"
 msgstr "Фото"
+
+msgid "Pick a ready deck, or add what you’re learning."
+msgstr "Выбери готовую колоду или добавь то, что учишь."
+
+msgid "Pick up where you left off"
+msgstr "Продолжить с того же места"
 
 msgid "Picked up {deck}."
 msgstr "Колода {deck} взята."
@@ -4474,6 +4542,10 @@ msgstr "Открыть карточку"
 msgid "Review"
 msgstr "Повторение"
 
+msgctxt "email button"
+msgid "Review"
+msgstr "Повторить"
+
 msgid "Review {limit} of {due} due"
 msgstr "Повтори {limit} из {due} на сегодня"
 
@@ -4773,8 +4845,14 @@ msgstr "Показать пароль"
 msgid "Show terms"
 msgstr "Показать термины"
 
+msgid "Show the answer"
+msgstr "Показать ответ"
+
 msgid "Show the meaning, then Good"
 msgstr "Показать значение, затем «Хорошо»"
+
+msgid "Show the question"
+msgstr "Показать вопрос"
 
 msgid "Sign back in to this account and choose that file, without unzipping it."
 msgstr "Снова войди в этот аккаунт и выбери этот файл, не распаковывая его."
@@ -4884,9 +4962,16 @@ msgstr "Спам или мошенничество"
 msgid "Spreadsheet"
 msgstr "Таблица"
 
+msgctxt "email button"
+msgid "Start"
+msgstr "Начать"
+
 #. placeholder {0}: isolate(section.name)
 msgid "Start {0}"
 msgstr "Начать {0}"
+
+msgid "Start {deck}"
+msgstr "Начни колоду «{deck}»"
 
 msgid "Start {nextName}"
 msgstr "Начать {nextName}"
@@ -5213,8 +5298,17 @@ msgstr "Человек потеряет доступ к колоде и не с�
 msgid "They’re already in this deck."
 msgstr "Этот человек уже в колоде."
 
+msgid "They’re from {decks} decks. Here’s one from {deck}."
+msgstr "Они из {decks} колод. Вот одна из колоды «{deck}»."
+
+msgid "They’re from {decks} decks. Try to remember this one from {deck}."
+msgstr "Они из {decks} колод. Попробуй вспомнить эту из колоды «{deck}»."
+
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
+
+msgid "This card has expired"
+msgstr "Эта карточка уже недоступна"
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
@@ -5462,17 +5556,32 @@ msgstr "Попробуй ещё раз с более стабильным сое
 msgid "Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
 
+msgid "Try to remember this one from {deck}."
+msgstr "Попробуй вспомнить эту из колоды «{deck}»."
+
+msgid "Try to remember this one."
+msgstr "Попробуй вспомнить эту."
+
 msgid "Try to remember, then reveal the answer"
 msgstr "Попробуй вспомнить, затем открой ответ"
 
 msgid "Try to remember, then tap to reveal"
 msgstr "Попробуй вспомнить, затем нажми на карточку"
 
+msgid "Turn off"
+msgstr "Отключить"
+
+msgid "Turn off learning emails?"
+msgstr "Отключить учебные письма?"
+
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
+
+msgid "Turn off these emails"
+msgstr "Отключить эти письма"
 
 msgid "Turn the connector on in a chat."
 msgstr "Включи коннектор в чате."
@@ -5773,6 +5882,9 @@ msgstr "В день можно отправить {CONTENT_REPORT_DAILY_LIMIT} �
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT} сообщений в день. Попробуй завтра."
 
+msgid "You can turn them back on in Settings."
+msgstr "Их можно снова включить в Настройках."
+
 msgid "You can undo the whole import later from Activity."
 msgstr "Весь импорт можно потом отменить в Активности."
 
@@ -5794,6 +5906,9 @@ msgstr "Это нельзя отменить. Колоды и карточки �
 msgid "You don’t need to do anything."
 msgstr "Ничего делать не нужно."
 
+msgid "You get this because you use Lymi."
+msgstr "Это письмо приходит, потому что ты пользуешься Lymi."
+
 msgid "You keep reviewing these cards on your own schedule. Nobody else sees your reviews or progress."
 msgstr "Ты по-прежнему повторяешь эти карточки по своему расписанию. Никто другой не видит твоих повторений и прогресса."
 
@@ -5808,6 +5923,9 @@ msgstr "Ты повторяешь в своём ритме, а {ownerName} не 
 
 msgid "You review the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
 msgstr "Ты повторяешь те же карточки, что и {ownerName}, но в своём темпе. Твои повторения и прогресс никто больше не видит."
+
+msgid "You see a card, try to remember it, then flip it and say how it went. Lymi brings it back when it’s time."
+msgstr "Ты видишь карточку, вспоминаешь ответ, переворачиваешь её и отмечаешь, как всё прошло. Lymi вернёт её, когда придёт время."
 
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ты входишь через Apple, поэтому после удаления аккаунта убери Lymi из раздела «Вход с Apple» в настройках аккаунта Apple."
@@ -5836,6 +5954,9 @@ msgstr "Это написано тобой"
 msgid "You’ll sign in with this from now on."
 msgstr "Теперь ты будешь входить с ним."
 
+msgid "You’ll still get emails about your account."
+msgstr "Письма об аккаунте будут приходить по-прежнему."
+
 msgid "You’re already in this deck."
 msgstr "Ты уже в этой колоде."
 
@@ -5859,6 +5980,12 @@ msgstr "Твои приложения"
 
 msgid "Your assistant is connected"
 msgstr "Ассистент подключён"
+
+msgid "Your cards are still here"
+msgstr "Твои карточки на месте"
+
+msgid "Your cards are still in Lymi."
+msgstr "Твои карточки всё ещё в Lymi."
 
 msgid "Your cards, reviews and settings are gone. People who studied your decks keep their own copies."
 msgstr "Твои карточки, повторения и настройки удалены. Те, кто изучал твои колоды, сохраняют собственные копии."

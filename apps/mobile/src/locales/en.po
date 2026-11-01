@@ -3040,6 +3040,9 @@ msgstr "Learning"
 msgid "Learning “{typed}”"
 msgstr "Learning “{typed}”"
 
+msgid "Learning emails"
+msgstr "Learning emails"
+
 msgid "Leave {name}?"
 msgstr "Leave {name}?"
 
@@ -3154,6 +3157,9 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi keeps nothing once the account is gone."
 msgstr "Lymi keeps nothing once the account is gone."
+
+msgid "Lymi may email you when cards are ready. You can turn this off in You or from any email."
+msgstr "Lymi may email you when cards are ready. You can turn this off in You or from any email."
 
 msgid "Lymi needs your Readwise token again"
 msgstr "Lymi needs your Readwise token again"

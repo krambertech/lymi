@@ -83,6 +83,7 @@ type AccountAction =
   | "analytics.consent"
   | "ai.consent"
   | "replay.choice"
+  | "email.learning_choice"
   | "analytics.review_start"
   | "rename"
   | "avatar.upload"

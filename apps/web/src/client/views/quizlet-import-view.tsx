@@ -62,7 +62,9 @@ export function QuizletImportView({
   const [setName, setSetName] = useState("");
   const [deck, setDeck] = useState<string>(NEW_DECK);
   const [refused, setRefused] = useState<string | null>(null);
+  const [pressed, setPressed] = useState(false);
   const input = useRef<HTMLInputElement>(null);
+  const paste = useRef<HTMLTextAreaElement>(null);
   const pasteId = useId();
   const tooBig = new Blob([text]).size > MAX_TEXT_IMPORT_BYTES;
 
@@ -104,12 +106,21 @@ export function QuizletImportView({
       return;
     }
     setRefused(null);
+    setPressed(false);
     setText(await file.text());
     setChosen(null);
     if (!setName) setSetName(file.name.replace(/\.[^.]+$/, ""));
   };
 
-  const message = refused ?? error;
+  // Too many cards or too much text already says so above, and pressing cannot help.
+  const blocked = overCap || tooBig;
+  const missing =
+    ready || blocked
+      ? null
+      : parsed
+        ? t`No cards found in this text. Check the separators.`
+        : t`Paste your set’s text or choose a .txt file first.`;
+  const message = refused ?? (pressed ? missing : null) ?? error;
 
   return (
     <ImportShell title={t`Import from Quizlet`} back={back}>
@@ -159,11 +170,13 @@ export function QuizletImportView({
             <Trans>Your set’s text</Trans>
           </FieldLabel>
           <Textarea
+            ref={paste}
             id={pasteId}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
               setRefused(null);
+              setPressed(false);
             }}
             rows={6}
             spellCheck={false}
@@ -343,29 +356,35 @@ export function QuizletImportView({
       )}
 
       <div className="grid gap-2">
-        <Button
-          variant="primary"
-          className="justify-self-start"
-          disabled={!ready}
-          loading={pending}
-          onClick={() =>
-            onContinue({
-              text,
-              separators,
-              deckName: setName.trim() || t`Quizlet import`,
-              deckId: deck === NEW_DECK ? null : deck,
-            })
-          }
-        >
-          {cards > 0 && !overCap
-            ? plural(cards, { one: "Continue with # card", other: "Continue with # cards" })
-            : t`Continue`}
-        </Button>
+        {/* Above the button: below it, the phone's pill can cover the line. */}
         {message && (
           <p className="text-sm" role="alert">
             <InlineError>{message}</InlineError>
           </p>
         )}
+        <Button
+          variant="primary"
+          className="justify-self-start"
+          aria-disabled={blocked}
+          loading={pending}
+          onClick={() => {
+            if (!ready) {
+              setPressed(true);
+              if (!parsed) paste.current?.focus();
+              return;
+            }
+            onContinue({
+              text,
+              separators,
+              deckName: setName.trim() || t`Quizlet import`,
+              deckId: deck === NEW_DECK ? null : deck,
+            });
+          }}
+        >
+          {cards > 0 && !overCap
+            ? plural(cards, { one: "Continue with # card", other: "Continue with # cards" })
+            : t`Continue`}
+        </Button>
       </div>
     </ImportShell>
   );

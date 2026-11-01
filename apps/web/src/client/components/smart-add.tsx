@@ -20,6 +20,7 @@ import { useDesktop } from "../lib/device";
 import { Button, IconButton } from "./button";
 import { Chip } from "./chip";
 import { InfoTip } from "./info-tip";
+import { InlineError } from "./inline-error";
 import { PlaceBar } from "./layout/place-bar";
 import { Notice } from "./notice";
 import { RadioCard } from "./radio-card";
@@ -382,18 +383,32 @@ async function shrink(file: File): Promise<File> {
 }
 
 /** The bar that holds a step's actions, held to the foot of the dialog or the phone's screen. */
-function ActionBar({ children, note }: { children: React.ReactNode; note?: React.ReactNode }) {
+function ActionBar({
+  children,
+  note,
+  error,
+}: {
+  children: React.ReactNode;
+  note?: React.ReactNode;
+  /** A failed press, on its own line so a phone doesn't wrap it into a narrow column. */
+  error?: string | undefined;
+}) {
   const screen = usePlaceShape() === "screen";
   return (
     <div
       className={cn(
-        "z-10 flex shrink-0 items-center gap-3 border-t border-edge bg-plate px-5",
+        "z-10 flex shrink-0 flex-wrap items-center gap-3 border-t border-edge bg-plate px-5",
         // The full-screen place is transformed, so fixed holds the bar to its foot, not the page's.
         screen
           ? "fixed inset-x-0 bottom-0 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]"
           : "py-4",
       )}
     >
+      {error && (
+        <p className="w-full text-sm" role="alert">
+          <InlineError>{error}</InlineError>
+        </p>
+      )}
       <div className="min-w-0 flex-1 text-sm text-ink-muted">{note}</div>
       <div className="flex shrink-0 items-center gap-2">{children}</div>
     </div>
@@ -421,6 +436,7 @@ function InputStep(props: {
   const [over, setOver] = useState(false);
   const [writing, setWriting] = useState(false);
   const [fileError, setFileError] = useState<string>();
+  const limitId = useId();
   const room = MAX_FILES - pages.length;
   const take = useRef<(files: FileList | null) => void>(() => {});
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
@@ -567,7 +583,9 @@ function InputStep(props: {
       {input(cameraRef, "image/*", true)}
       <DialogBody className="grid content-start gap-5">
         {atLimit && daily ? (
-          <LimitNotice daily={daily} />
+          <div id={limitId}>
+            <LimitNotice daily={daily} />
+          </div>
         ) : (
           <p className="text-base text-pretty text-ink-secondary">
             <Trans>
@@ -683,7 +701,12 @@ function InputStep(props: {
           </span>
         }
       >
-        <Button variant="primary" onClick={props.onRead} disabled={empty || atLimit}>
+        <Button
+          variant="primary"
+          onClick={props.onRead}
+          aria-disabled={atLimit}
+          aria-describedby={atLimit ? limitId : undefined}
+        >
           <Trans>Find terms</Trans>
         </Button>
       </ActionBar>
@@ -838,9 +861,11 @@ function QuestionsStep({
 }) {
   const { t } = useLingui();
   const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string>();
   return (
     <>
-      <DialogBody className="grid content-start gap-6">
+      {/* The error makes the fixed bar taller, so the last option still has to clear it. */}
+      <DialogBody className={cn("grid content-start gap-6", error && "pb-14")}>
         {questions.map((question, index) => {
           const own = answers[index] === OWN_ANSWER;
           return (
@@ -877,23 +902,26 @@ function QuestionsStep({
           );
         })}
       </DialogBody>
-      <ActionBar>
+      <ActionBar error={error}>
         <Button variant="ghost" onClick={onBack}>
           <Trans>Back</Trans>
         </Button>
         <Button
           variant="primary"
-          disabled={pending}
+          loading={pending}
           onClick={async () => {
             setPending(true);
+            setError(undefined);
             try {
               await onNext();
+            } catch (failure) {
+              setError(errorMessage(failure));
             } finally {
               setPending(false);
             }
           }}
         >
-          {pending ? <Trans>Checking…</Trans> : <Trans>Show terms</Trans>}
+          <Trans>Show terms</Trans>
         </Button>
       </ActionBar>
     </>
@@ -1035,7 +1063,7 @@ function ListStep({
         </Button>
         <Button
           variant="primary"
-          disabled={pending}
+          loading={pending}
           onClick={async () => {
             if (ticked.size === 0) {
               setError(t`Select at least one term to add.`);

@@ -154,7 +154,7 @@ export function LoginView({
                   variant="secondary"
                   size="lg"
                   loading={pending === "apple"}
-                  disabled={Boolean(pending && pending !== "apple")}
+                  aria-disabled={Boolean(pending && pending !== "apple")}
                   onClick={onApple}
                   className="mt-7 w-full edge-strong font-medium mac:mt-5"
                 >
@@ -165,7 +165,7 @@ export function LoginView({
                   variant="secondary"
                   size="lg"
                   loading={pending === "google"}
-                  disabled={Boolean(pending && pending !== "google")}
+                  aria-disabled={Boolean(pending && pending !== "google")}
                   onClick={onGoogle}
                   // A stronger edge than the usual secondary: this is the way in most learners
                   // take, and the one amber belongs to the form they are filling.
@@ -242,7 +242,7 @@ export function LoginView({
                 variant="primary"
                 size="lg"
                 loading={pending === "form"}
-                disabled={pending === "apple" || pending === "google"}
+                aria-disabled={pending === "apple" || pending === "google"}
                 className="mt-6 w-full mac:mt-5"
               >
                 {mode === "sign-up" ? (

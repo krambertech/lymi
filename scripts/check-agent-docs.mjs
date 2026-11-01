@@ -43,7 +43,6 @@ export const UNMAPPED_ROUTES = {
   "/import/lymi": "no entry yet: the import entries drive Anki and Pleco, whose flow this shares",
   "/import/mochi": "no entry yet: the import entries drive Anki and Pleco, whose flow this shares",
   "/import/noji": "no entry yet: the import entries drive Anki and Pleco, whose flow this shares",
-  "/import/quizlet": "no entry yet: write one with the next change to the Quizlet import",
   "/insights": "no entry yet: write one with the next change to Insights",
   "/join/$token": "no entry yet: deck-invitation.md makes the link; joining needs a second persona",
   "/library/$deckId/settings/tags": "no entry yet: write one with the next change to deck tags",

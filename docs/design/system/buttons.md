@@ -82,7 +82,7 @@ Every button has default, hover, focus, active and disabled, and `loading` where
 - `loading` keeps the button's width, shows a spinner and swallows a second press.
 - `kbd="N"` shows a keyboard hint beside the label, on desktop only.
 
-**Keep incomplete forms submittable so validation can explain what is missing.** A `disabled` submit button is removed from the tab order and prevents that feedback. Forms stay pressable and validate on submit ([forms.md](forms.md)). Use `aria-disabled` when pressing cannot do anything, mid-request or with no handler: it keeps the button focusable and announced while swallowing the press.
+**Keep incomplete forms submittable so validation can explain what is missing.** A `disabled` submit button is removed from the tab order and prevents that feedback. Forms stay pressable and validate on submit ([forms.md](forms.md)). Use `aria-disabled` when pressing cannot do anything, mid-request or with no handler: it keeps the button focusable and announced while swallowing the press. That holds for a menu's trigger too: the menu stays closed. A button works out `aria-disabled` itself while `loading`, so a caller's value cannot announce it as available.
 
 ```tsx
 // Correct

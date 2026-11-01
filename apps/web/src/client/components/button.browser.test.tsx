@@ -2,7 +2,13 @@ import { createRef } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { Button } from "./button";
+import { Button, IconButton } from "./button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 test("render swaps the element for a link that keeps the button's classes, inside and ref", async () => {
   const ref = createRef<HTMLAnchorElement>();
@@ -47,3 +53,60 @@ test("a button forwards its ref and swallows a press while loading", async () =>
   await userEvent.click(button, { force: true });
   expect(onClick).not.toHaveBeenCalled();
 });
+
+test("a caller's aria-disabled cannot announce a busy button as available", async () => {
+  await render(
+    <Button loading aria-disabled={false}>
+      Save
+    </Button>,
+  );
+  const button = page.getByRole("button", { name: "Save" });
+  await expect.element(button).toHaveAttribute("aria-busy", "true");
+  await expect.element(button).toHaveAttribute("aria-disabled", "true");
+});
+
+const frames = async () => {
+  await new Promise(requestAnimationFrame);
+  await new Promise(requestAnimationFrame);
+};
+
+function Menu({ inert, kind }: { inert: boolean; kind: "Button" | "IconButton" }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          kind === "Button" ? (
+            <Button aria-disabled={inert}>Options</Button>
+          ) : (
+            <IconButton label="Options" aria-disabled={inert}>
+              <svg aria-hidden="true" />
+            </IconButton>
+          )
+        }
+      />
+      <DropdownMenuContent aria-label="Member options">
+        <DropdownMenuItem>Remove</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+test.each(["Button", "IconButton"] as const)(
+  "an aria-disabled %s keeps its menu closed under a press",
+  async (kind) => {
+    const screen = await render(<Menu inert kind={kind} />);
+    const trigger = page.getByRole("button", { name: "Options" });
+    await userEvent.click(trigger, { force: true });
+    await frames();
+    await expect.element(page.getByRole("menuitem", { name: "Remove" })).not.toBeInTheDocument();
+
+    (trigger.element() as HTMLElement).focus();
+    await userEvent.keyboard("{ArrowDown}");
+    await frames();
+    await expect.element(page.getByRole("menuitem", { name: "Remove" })).not.toBeInTheDocument();
+
+    await screen.rerender(<Menu inert={false} kind={kind} />);
+    await userEvent.click(trigger);
+    await expect.element(page.getByRole("menuitem", { name: "Remove" })).toBeVisible();
+  },
+);

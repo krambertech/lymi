@@ -54,6 +54,9 @@ const sizes: Record<ButtonSize, string> = {
   xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
 };
 
+/** A menu trigger opens on a press or an arrow key, not only a click, so an inert control drops these too. */
+const noOpen = { onPointerDown: undefined, onMouseDown: undefined, onKeyDown: undefined };
+
 /**
  * A button is never taken away for being unable to run yet. `disabled` drops it out of the
  * tab order and tells a screen reader nothing about why, so a form that greys out its submit
@@ -86,7 +89,6 @@ export function Button({
         type: render ? undefined : "button",
         className: clsx(base, iconSide, variants[variant], sizes[size], className),
         "aria-busy": loading || undefined,
-        "aria-disabled": inert || undefined,
         onClick: (e) => {
           if (inert) {
             e.preventDefault();
@@ -117,7 +119,9 @@ export function Button({
           </>
         ),
       },
-      rest,
+      inert ? { ...rest, ...noOpen } : rest,
+      // Last, so a caller's `aria-disabled={false}` cannot announce a busy button as available.
+      { "aria-disabled": inert || undefined },
     ),
   });
 }
@@ -189,6 +193,7 @@ export function IconButton({
               onClick?.(e);
             }}
             {...rest}
+            {...(inert ? noOpen : undefined)}
           />
         }
       >

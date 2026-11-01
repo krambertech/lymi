@@ -3586,6 +3586,9 @@ msgstr "Пока нет книг на языке, который ты учишь
 msgid "No card of this kind has a term."
 msgstr "Ни у одной карточки этого вида нет термина."
 
+msgid "No cards found in this text. Check the separators."
+msgstr "В этом тексте нет карточек. Проверь разделители."
+
 #. placeholder {0}: isolate(deck.name)
 msgid "No cards in {0} yet"
 msgstr "В колоде {0} ещё нет карточек"
@@ -4022,6 +4025,9 @@ msgstr "Вставь заметки или транскрипт"
 
 msgid "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
 msgstr "Вставь client ID, оставь секрет пустым и выбери <0>None / PKCE only</0>."
+
+msgid "Paste your set’s text or choose a .txt file first."
+msgstr "Сначала вставь текст набора или выбери файл .txt."
 
 msgid "Pasted picture"
 msgstr "Вставленное изображение"

@@ -18,6 +18,8 @@ export interface StoredGrade extends LocalGrade {
   reviewId?: string | undefined;
   /** The FSRS state the server scheduled, once it accepted the grade. */
   stateAfter?: number | undefined;
+  /** A send got no answer, so the server may hold this grade though the device cannot tell. */
+  unanswered?: boolean | undefined;
 }
 
 /** A grade queued before modes existed names a legacy direction instead. */
@@ -140,7 +142,12 @@ async function send(grade: StoredGrade): Promise<Sent> {
     );
     return "sent";
   } catch (err) {
-    if (err instanceof ApiError && err.status === 0) return "offline";
+    if (err instanceof ApiError && err.status === 0) {
+      if (!grade.unanswered) {
+        write(read().map((g) => (same(g, grade) ? { ...g, unanswered: true } : g)));
+      }
+      return "offline";
+    }
     throw err;
   }
 }
@@ -157,9 +164,11 @@ interface Flushed {
 }
 
 async function flushQueued(before?: string): Promise<Flushed> {
-  const result: Flushed = { sent: 0, offline: false, held: new Set(), refused: [] };
+  const settled = await settleUndos();
+  const offline = settled === "offline";
+  const held = offline ? new Set<string>() : settled;
+  const result: Flushed = { sent: 0, offline, held, refused: [] };
   const cutoff = before ? new Date(before).getTime() : Number.POSITIVE_INFINITY;
-  if ((await settleUndos()) === "offline") result.offline = true;
   for (const grade of read().filter(
     (g) => g.sentAt === undefined && !g.undone && new Date(g.reviewedAt).getTime() < cutoff,
   )) {
@@ -212,37 +221,49 @@ export type Undone = "undone" | "pending" | "kept";
 
 /**
  * Tells the server about grades taken back on this device. One never sent is simply dropped; a sent
- * one is undone by its attempt, and one the server will not undo stands again.
+ * one is undone by its attempt, and one the server will not undo stands again. One that got no
+ * answer may be on the server, so it is sent again to learn its attempt and undone like a sent one.
+ * Resolves with the modes still waiting on the server, so a later grade of one stays behind its undo.
  */
-async function settleUndos(): Promise<"offline" | undefined> {
+async function settleUndos(): Promise<"offline" | Set<string>> {
+  const waiting = new Set<string>();
   const forget = (grade: StoredGrade) => write(read().filter((g) => !same(g, grade)));
   const stand = (grade: StoredGrade) =>
     write(read().map((g) => (same(g, grade) ? { ...g, undone: undefined } : g)));
-  for (const grade of read().filter((g) => g.undone)) {
-    if (grade.sentAt === undefined) {
-      forget(grade);
-      continue;
-    }
-    // A grade sent before the outbox kept attempts has nothing to name.
-    if (!grade.reviewId) {
-      stand(grade);
+  for (const undone of read().filter((g) => g.undone)) {
+    if (undone.sentAt === undefined && !undone.unanswered) {
+      forget(undone);
       continue;
     }
     try {
+      if (undone.sentAt === undefined && (await send(undone)) === "offline") return "offline";
+      // Gone means the server answered that a later grade came first, so this one never counted.
+      const grade = read().find((g) => same(g, undone));
+      if (!grade) continue;
+      // A grade sent before the outbox kept attempts has nothing to name.
+      if (!grade.reviewId) {
+        stand(grade);
+        continue;
+      }
       await api.undoReview(grade.reviewId);
       forget(grade);
     } catch (err) {
       if (!(err instanceof ApiError)) throw err;
       if (err.status === 0) return "offline";
       // Refused, such as a later grade of the mode from another device; a lapsed session waits.
-      if (err.status >= 400 && err.status < 500 && err.status !== 401) stand(grade);
+      const refused = err.status >= 400 && err.status < 500 && !waitsToSend(err.status);
+      // Still unsent means the replay was the refusal: the grade never landed, so it is gone.
+      const unsent = read().find((g) => same(g, undone))?.sentAt === undefined;
+      if (refused) (unsent ? forget : stand)(undone);
+      else waiting.add(modeOfGrade(undone));
     }
   }
+  return waiting;
 }
 
 /**
- * Takes a grade back. The draw forgets it at once; a grade still queued never leaves the device,
- * and a sent one is undone on the server now or once the connection returns.
+ * Takes a grade back. The draw forgets it at once; a grade never sent stays on the device, and
+ * any other is undone on the server now or once the connection returns.
  */
 export function undoGrade(grade: LocalGrade): Promise<Undone> {
   write(read().map((g) => (same(g, grade) ? { ...g, undone: true } : g)));

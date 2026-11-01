@@ -151,15 +151,131 @@ describe("recording a grade", () => {
 });
 
 describe("taking a grade back", () => {
-  it("drops a queued grade before it is ever sent", async () => {
-    grade.mockRejectedValueOnce(offline());
-    const queued = g("a");
-    await grades.recordGrade(queued);
-    expect(await grades.undoGrade(queued)).toBe("undone");
-    expect(grades.gradeStore.snapshot()).toEqual([]);
-    expect(await grades.flushOutbox()).toBe(0);
-    expect(grade).toHaveBeenCalledTimes(1);
+  it("drops a queued grade that was never sent", async () => {
+    grade.mockRejectedValue(offline());
+    await grades.recordGrade(g("a"));
+    const behind = g("b");
+    await grades.recordGrade(behind);
+
+    expect(await grades.undoGrade(behind)).toBe("undone");
+    expect(grades.gradeStore.snapshot().map((queued) => queued.cardId)).toEqual(["a"]);
+    expect(grade.mock.calls.map(([sent]) => sent.cardId)).not.toContain("b");
     expect(undoReview).not.toHaveBeenCalled();
+  });
+
+  it("undoes a grade whose send got no answer, once the server names its attempt", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    undoReview.mockResolvedValueOnce({ ok: true });
+    expect(await grades.undoGrade(unanswered)).toBe("undone");
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("waits for the connection to undo a grade whose send got no answer", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockRejectedValueOnce(offline());
+    expect(await grades.undoGrade(unanswered)).toBe("pending");
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ undone: true }]);
+
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    undoReview.mockResolvedValueOnce({ ok: true });
+    expect(await grades.flushOutbox()).toBe(0);
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("keeps a grade with no answer when the replay lands but the undo is refused", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    undoReview.mockRejectedValueOnce(new ApiError(409, "Only the latest grade"));
+    expect(await grades.undoGrade(unanswered)).toBe("kept");
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ reviewId: "rev-1" }]);
+  });
+
+  it("holds a regrade behind an undo the server could not take yet", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const first = g("a");
+    await grades.recordGrade(first);
+
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.undoGrade(first)).toBe("pending");
+
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    const regrade = g("a", 4);
+    expect(await grades.recordGrade(regrade)).toBe("queued");
+    expect(grade).toHaveBeenCalledTimes(1);
+
+    const order: string[] = [];
+    undoReview.mockImplementationOnce(async () => void order.push("undo"));
+    grade.mockImplementationOnce(async () => {
+      order.push("regrade");
+      return accepted("rev-2");
+    });
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(order).toEqual(["undo", "regrade"]);
+  });
+
+  it("holds a regrade behind a replay the server could not take yet", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.undoGrade(unanswered)).toBe("pending");
+
+    grade.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.recordGrade(g("a", 4))).toBe("queued");
+    expect(grade).toHaveBeenCalledTimes(3);
+  });
+
+  it("sends another card's grade past an undo the server could not take yet", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const first = g("a");
+    await grades.recordGrade(first);
+    undoReview.mockRejectedValue(new ApiError(503, "unavailable"));
+    await grades.undoGrade(first);
+
+    grade.mockResolvedValueOnce(accepted("rev-2"));
+    expect(await grades.recordGrade(g("b"))).toBe("sent");
+  });
+
+  it("drops a grade with no answer when the server says a later grade came first", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: null, state: 2 });
+    expect(await grades.undoGrade(unanswered)).toBe("undone");
+    expect(undoReview).not.toHaveBeenCalled();
+  });
+
+  it("drops a grade with no answer that the server refuses on the way to undoing it", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockRejectedValueOnce(new ApiError(404, "gone"));
+    expect(await grades.undoGrade(unanswered)).toBe("undone");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("keeps a grade with no answer for undoing while the session has lapsed", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockRejectedValueOnce(new ApiError(401, "sign in"));
+    expect(await grades.undoGrade(unanswered)).toBe("pending");
   });
 
   it("undoes a sent grade by the attempt the server named", async () => {

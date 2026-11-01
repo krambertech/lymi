@@ -75,7 +75,7 @@ export function HowItWorks() {
   const steps = [
     t`See a card and recall the answer.`,
     t`Say how well you knew it.`,
-    t`Lymi brings it back just before you’d forget it.`,
+    t`Lymi brings it back just as it starts to fade.`,
   ];
   return (
     <Plate className="gap-4 p-5">

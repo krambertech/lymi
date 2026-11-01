@@ -1,8 +1,9 @@
 import { eq } from "@lymi/core/db";
-import { afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { schema } from "../db";
 import { readUnsubscribeLink, signFlipLink, signUnsubscribeLink } from "../email/links";
 import { json, type Session, type TestApp, testApp } from "../test-app";
+import * as audit from "./audit";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -177,6 +178,32 @@ describe("the series", () => {
     expect(latestLocalEmail(session.email)?.kind).toMatch(/^learning-(new|due)$/);
   });
 
+  it("sends day 3 after day 1, because each day claims its own step", async () => {
+    const on = { ...env(), LEARNING_EMAILS_SINCE: "2020-01-01" };
+    const later = tomorrowAtTen();
+    later.setUTCDate(later.getUTCDate() + 2);
+    expect((await dispatchLearningEmails(on, tomorrowAtTen())).sent).toBe(1);
+    expect((await dispatchLearningEmails(on, later)).sent).toBe(1);
+  });
+
+  it("does not resend when the audit fails after delivery", async () => {
+    const on = { ...env(), LEARNING_EMAILS_SINCE: "2020-01-01" };
+    const write = vi.spyOn(audit, "audit").mockRejectedValueOnce(new Error("D1 is busy"));
+    expect((await dispatchLearningEmails(on, tomorrowAtTen())).failed).toBe(0);
+    expect(write).toHaveBeenCalled();
+    write.mockRestore();
+    expect((await dispatchLearningEmails(on, tomorrowAtTen())).sent).toBe(0);
+  });
+
+  it("leaves a deleted account's unsubscribe link harmless", async () => {
+    const token = await signUnsubscribeLink(app.env.BETTER_AUTH_SECRET, {
+      user: "gone",
+      kind: "learning-due",
+    });
+    const response = await app.fetch(`/api/email/unsubscribe/${token}`, { method: "POST" });
+    expect(response.status).toBe(200);
+  });
+
   it("stops after a one-click unsubscribe, and a scanner's GET changes nothing", async () => {
     const on = { ...env(), LEARNING_EMAILS_SINCE: "2020-01-01" };
     const token = await signUnsubscribeLink(app.env.BETTER_AUTH_SECRET, {
@@ -222,6 +249,28 @@ describe("the series", () => {
     const learner = await readFlip(app.env, app.db, token, session.userId);
     expect(learner).toMatchObject({ status: "ok", canGrade: true });
     expect(await app.db.select().from(schema.reviews)).toHaveLength(before.length);
+  });
+
+  it("expires a link to a card in an archived deck", async () => {
+    const [card] = await app.db
+      .select({ deckId: schema.cards.deckId })
+      .from(schema.cards)
+      .where(eq(schema.cards.id, cardId));
+    const deckId = card?.deckId ?? "";
+    const token = await signFlipLink(app.env.BETTER_AUTH_SECRET, {
+      user: session.userId,
+      card: cardId,
+      mode: "meaning_to_term",
+      kind: "learning-due",
+      language: "en",
+      expires: Date.now() + 86_400_000,
+    });
+    await app.db
+      .update(schema.decks)
+      .set({ archivedAt: new Date() })
+      .where(eq(schema.decks.id, deckId));
+    expect((await readFlip(app.env, app.db, token, session.userId)).status).toBe("expired");
+    await app.db.update(schema.decks).set({ archivedAt: null }).where(eq(schema.decks.id, deckId));
   });
 
   it("calls an old link expired and a forged one invalid", async () => {

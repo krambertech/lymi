@@ -16,7 +16,7 @@ import { reminderIsDue } from "../push-delivery";
 import { analyticsContextFor } from "./analytics-context";
 import { auditStatement } from "./audit";
 import { presentCards } from "./card-view";
-import type { ServiceContext } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 import { cardsById } from "./draw";
 import {
   type LearningEmailData,
@@ -24,6 +24,7 @@ import {
   sendTransactionalEmail,
   type TransactionalEmailKind,
 } from "./email";
+import { memberOf } from "./members";
 import { catchUpStates } from "./modes";
 import { reviewQueue } from "./review";
 
@@ -65,8 +66,9 @@ export function learningStep(
     const since = daysBetween(lastReviewOn, today);
     if (since === 7) return { step: "back", anchor: lastReviewOn };
     if (since === 30) return { step: "last", anchor: lastReviewOn };
+    // Both days are the same step, so the day goes in the anchor or the second claim would fail.
     if (facts.reviewDays === 1 && !facts.hasPush && (since === 1 || since === 3))
-      return { step: "next", anchor: lastReviewOn };
+      return { step: "next", anchor: `${lastReviewOn}+${since}` };
     return null;
   }
   const since = daysBetween(createdOn, today);
@@ -132,7 +134,7 @@ export async function learningMessage(
     };
   }
   await catchUpStates(ctx.db, ctx.userId);
-  const { items } = await reviewQueue(ctx, { limit: 200 });
+  const { items, total } = await reviewQueue(ctx, { limit: 200 });
   if (items.length === 0) return null;
   const due = items.filter((item) => !isNew(item));
   const fresh = items.filter(isNew);
@@ -151,7 +153,8 @@ export async function learningMessage(
             : teaching
               ? "learning-new"
               : "learning-due";
-  const counted = step === "back" || step === "last" ? items : pool;
+  const whole = step === "back" || step === "last";
+  const counted = whole ? items : pool;
   const deckId = (shown ?? pool[0] ?? items[0])?.card.deckId;
   const deckName = deckId ? await deckTitle(ctx.db, deckId) : null;
   const side = shown ? sides(shown, meaningLanguage) : null;
@@ -159,7 +162,7 @@ export async function learningMessage(
     kind,
     flip: teaching ? null : shown,
     data: {
-      cards: step === "first" ? await deckSize(ctx.db, deckId) : counted.length,
+      cards: step === "first" ? await deckSize(ctx.db, deckId) : whole ? total : pool.length,
       decks: new Set(counted.map((item) => item.card.deckId)).size,
       deckName,
       card: side ? (teaching ? side : { front: side.front }) : null,
@@ -189,12 +192,15 @@ async function factsOf(db: Db, userId: string, createdOn: string): Promise<Learn
   const [reviews] = await db.all<{ first: string | null; last: string | null; days: number }>(sql`
     SELECT min(d.date) AS first, max(d.date) AS last, count(DISTINCT d.date) AS days
       FROM reviews r JOIN review_days d ON d.id = r.review_day_id
-     WHERE r.user_id = ${userId}`);
+     WHERE r.user_id = ${userId}
+       AND NOT EXISTS (SELECT 1 FROM review_undos u WHERE u.review_id = r.id)`);
   const [cards] = await db.all<{ has: number }>(sql`
     SELECT EXISTS (
       SELECT 1 FROM cards c JOIN decks k ON k.id = c.deck_id
        WHERE k.user_id = ${userId} AND c.archived_at IS NULL AND k.archived_at IS NULL
-    ) OR EXISTS (SELECT 1 FROM deck_members m WHERE m.user_id = ${userId}) AS has`);
+    ) OR EXISTS (
+      SELECT 1 FROM deck_members m WHERE m.user_id = ${userId} AND m.removed_at IS NULL
+    ) AS has`);
   const [push] = await db.all<{ has: number }>(
     sql`SELECT EXISTS (SELECT 1 FROM push_subscriptions WHERE user_id = ${userId}) AS has`,
   );
@@ -306,6 +312,24 @@ export async function dispatchLearningEmails(
     const next = learningStep(facts, moment.localDate);
     if (!next) continue;
 
+    // Claimed before anything else, because the window spans two runs and the second must stop here.
+    const claimed = await db
+      .insert(schema.learningEmails)
+      .values({ userId: row.id, kind: next.step, anchor: next.anchor, sentAt: now })
+      .onConflictDoNothing()
+      .returning({ userId: schema.learningEmails.userId });
+    if (claimed.length === 0) continue;
+    const release = () =>
+      db
+        .delete(schema.learningEmails)
+        .where(
+          and(
+            eq(schema.learningEmails.userId, row.id),
+            eq(schema.learningEmails.kind, next.step),
+            eq(schema.learningEmails.anchor, next.anchor),
+          ),
+        );
+
     const ctx: ServiceContext = {
       db,
       userId: row.id,
@@ -313,26 +337,20 @@ export async function dispatchLearningEmails(
       analytics: analyticsFor(row.id),
     };
     const language = row.appLanguage ?? "en";
-    const composed = await composeLearning(
-      env,
-      ctx,
-      next.step,
-      language,
-      row.meaningLanguage ?? language,
-      now,
-    );
-    if (!composed) continue;
-    if (!(await learningBudgetLeft(env.SESSIONS))) break;
-
-    // The claim comes first, so a run that overlaps this one cannot send the step twice.
-    const claimed = await db
-      .insert(schema.learningEmails)
-      .values({ userId: row.id, kind: next.step, anchor: next.anchor, sentAt: now })
-      .onConflictDoNothing()
-      .returning({ userId: schema.learningEmails.userId });
-    if (claimed.length === 0) continue;
-
     try {
+      const composed = await composeLearning(
+        env,
+        ctx,
+        next.step,
+        language,
+        row.meaningLanguage ?? language,
+        now,
+      );
+      if (!composed) continue;
+      if (!(await learningBudgetLeft(env.SESSIONS))) {
+        await release();
+        break;
+      }
       await sendTransactionalEmail(ctx, env, {
         kind: composed.kind,
         to: row.email,
@@ -344,18 +362,14 @@ export async function dispatchLearningEmails(
         },
       });
       summary.sent += 1;
-    } catch {
-      // Released, so the next run inside the window can try again.
-      await db
-        .delete(schema.learningEmails)
-        .where(
-          and(
-            eq(schema.learningEmails.userId, row.id),
-            eq(schema.learningEmails.kind, next.step),
-            eq(schema.learningEmails.anchor, next.anchor),
-          ),
-        );
-      summary.failed += 1;
+    } catch (error) {
+      // A ServiceError means the provider refused it. Anything later, such as the audit row, came
+      // after delivery, and releasing then would send the email twice.
+      const undelivered = error instanceof ServiceError;
+      if (undelivered) await release();
+      summary.failed += undelivered ? 1 : 0;
+      summary.sent += undelivered ? 0 : 1;
+      console.error(JSON.stringify({ event: "learning_email_failed", undelivered }));
     }
   }
   await Promise.all(reports);
@@ -372,10 +386,12 @@ export async function stopLearningEmails(
   via: "one_click" | "footer" | "bounce" | "complaint",
 ): Promise<void> {
   const [row] = await db
-    .select({ allowed: schema.userSettings.learningEmails })
-    .from(schema.userSettings)
-    .where(eq(schema.userSettings.userId, userId));
-  if (row?.allowed === false) return;
+    .select({ id: schema.user.id, allowed: schema.userSettings.learningEmails })
+    .from(schema.user)
+    .leftJoin(schema.userSettings, eq(schema.userSettings.userId, schema.user.id))
+    .where(eq(schema.user.id, userId));
+  // An email outlives a deleted account, and there is nothing left for its link to turn off.
+  if (!row || row.allowed === false) return;
   const ctx: ServiceContext = { db, userId, actor: "system" };
   await db.insert(schema.userSettings).values({ userId }).onConflictDoNothing();
   await db.batch([
@@ -438,6 +454,13 @@ export async function readFlip(
   const stored = (await cardsById(ctx, [link.card])).get(link.card);
   const [card] = stored ? await presentCards(db, [stored], link.user) : [];
   if (!card || card.archivedAt) return { status: "expired", language: link.language };
+  const [deck] = await db
+    .select({ id: schema.decks.id })
+    .from(schema.decks)
+    .where(
+      and(eq(schema.decks.id, card.deckId), isNull(schema.decks.archivedAt), memberOf(link.user)),
+    );
+  if (!deck) return { status: "expired", language: link.language };
   const issued = new Date(link.expires - FLIP_LINK_DAYS * DAY_MS);
   const [graded] = await db
     .select({ id: schema.reviews.id })
@@ -447,6 +470,7 @@ export async function readFlip(
         eq(schema.reviews.userId, link.user),
         eq(schema.reviews.cardId, link.card),
         gte(schema.reviews.reviewedAt, issued),
+        sql`NOT EXISTS (SELECT 1 FROM review_undos u WHERE u.review_id = ${schema.reviews.id})`,
       ),
     )
     .limit(1);

@@ -91,18 +91,18 @@ function TurningCard({ view }: { view: Shown }) {
         <div className="grid [perspective:1400px]">
           <motion.button
             type="button"
-            aria-label={flipped ? t`Show the question` : t`Show the answer`}
             onClick={() => setFlipped((on) => !on)}
             initial={false}
             animate={reduce ? {} : { rotateY: flipped ? 180 : 0 }}
             transition={TURN}
             className="relative grid min-w-0 cursor-pointer [transform-style:preserve-3d]"
           >
-            <span className={clsx(face, reduce && flipped && "invisible")}>
+            <span aria-hidden={flipped} className={clsx(face, reduce && flipped && "invisible")}>
               {label}
               <span className="block text-3xl font-medium text-ink">{front}</span>
             </span>
             <span
+              aria-hidden={!flipped}
               className={clsx(
                 face,
                 !reduce && "[transform:rotateY(180deg)]",

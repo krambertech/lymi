@@ -316,7 +316,8 @@ function composeLearning(
             );
         return {
           heading: i18n._(msg`Pick up where you left off`),
-          line: it.card ? `${ready} ${i18n._(msg`Try to remember this one.`)}` : ready,
+          line:
+            it.card && !it.card.back ? `${ready} ${i18n._(msg`Try to remember this one.`)}` : ready,
         };
       }
       case "learning-last":

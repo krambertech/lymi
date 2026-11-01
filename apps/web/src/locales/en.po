@@ -4845,14 +4845,8 @@ msgstr "Show password"
 msgid "Show terms"
 msgstr "Show terms"
 
-msgid "Show the answer"
-msgstr "Show the answer"
-
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
-
-msgid "Show the question"
-msgstr "Show the question"
 
 msgid "Sign back in to this account and choose that file, without unzipping it."
 msgstr "Sign back in to this account and choose that file, without unzipping it."

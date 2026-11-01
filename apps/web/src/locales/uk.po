@@ -4845,14 +4845,8 @@ msgstr "Показати пароль"
 msgid "Show terms"
 msgstr "Показати терміни"
 
-msgid "Show the answer"
-msgstr "Показати відповідь"
-
 msgid "Show the meaning, then Good"
 msgstr "Показати значення, потім «Добре»"
-
-msgid "Show the question"
-msgstr "Показати запитання"
 
 msgid "Sign back in to this account and choose that file, without unzipping it."
 msgstr "Знову увійди в цей акаунт і вибери цей файл, не розпаковуючи його."

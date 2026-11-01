@@ -724,6 +724,9 @@ msgstr "AI и произношение"
 msgid "AI assistants"
 msgstr "AI-ассистенты"
 
+msgid "AI turns your notes, lessons and photos into cards. Spaced repetition then shows you only what’s due, so you don’t waste time on what you already know."
+msgstr "AI превращает твои заметки, уроки и фото в карточки. Интервальное повторение показывает только то, что пора повторить, так что ты не тратишь время на то, что уже знаешь."
+
 msgid "Airport"
 msgstr "Аэропорт"
 
@@ -1899,14 +1902,14 @@ msgstr "Карточки по анатомии, фармакологии, мик
 msgid "Flashcards for cloud, security, finance and project management certifications. Turn your study guide into cards with your AI assistant and review a few minutes a day. Free."
 msgstr "Карточки для сертификаций по облачным технологиям, безопасности, финансам и управлению проектами. Преврати учебное пособие в карточки с помощью AI-ассистента и повторяй несколько минут в день. Бесплатно."
 
+msgid "Flashcards for the AI era."
+msgstr "Карточки для эпохи AI."
+
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Карточки для теста на гражданство Германии (Einbürgerungstest), США, Канады, Чехии и Испании, лексики Goethe, HSK, JLPT и TOPIK, а также теории на права. На языке экзамена, с переводом рядом. Бесплатно."
 
 msgid "Flashcards that come back right before you’d forget."
 msgstr "Карточки, которые возвращаются, когда ты вот-вот забудешь."
-
-msgid "Flashcards that stick."
-msgstr "Карточки, которые не забываются."
 
 msgid "Flat"
 msgstr "Квартира"
@@ -3114,9 +3117,6 @@ msgstr "Основная навигация"
 
 msgid "Mainland voice"
 msgstr "Голос материкового Китая"
-
-msgid "Make a card in seconds and review it in Lymi. Spaced repetition brings it back right before you’d forget, until you remember it for good."
-msgstr "Создай карточку за пару секунд и повторяй её в Lymi. Интервальное повторение возвращает её как раз тогда, когда ты вот-вот забудешь, пока не запомнишь навсегда."
 
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Создай колоду для группы и отправь ссылку для присоединения. Каждая карточка, которую ты добавишь после урока, появится у всех, кто присоединился, а расписание повторений у каждого своё."

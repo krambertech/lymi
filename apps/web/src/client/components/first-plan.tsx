@@ -141,12 +141,16 @@ export function rememberFirstReview(cards: readonly FanCard[] | null) {
   } catch {}
 }
 
-/** A reload mid-review: its grades already end `isGuiding`, so only this tab knows it is still the first. */
+/**
+ * A reload mid-review: only this tab knows it is still the first, and it is asked before the
+ * streak, whose kept copy can predate the grade that was saving as the page went.
+ */
 export function firstReviewOpen(streak: StreakSummary): FanCard[] | null {
-  if (streak.reviewedDays > 1 || streak.today.attempts === 0) return null;
+  if (streak.reviewedDays > 1 || (streak.reviewedDays === 1 && streak.today.attempts === 0))
+    return null;
   try {
     const hand: unknown = JSON.parse(sessionStorage.getItem(OPEN_KEY) ?? "null");
-    return Array.isArray(hand) ? (hand as FanCard[]) : null;
+    return Array.isArray(hand) && hand.length > 0 ? (hand as FanCard[]) : null;
   } catch {
     return null;
   }

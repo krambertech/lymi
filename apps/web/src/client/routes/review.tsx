@@ -163,7 +163,7 @@ function Review() {
   const resumedFirst = useRef(false);
   const reviewedCards = useRef<FanCard[]>([]);
   if (sessionFirst.current === null && streak.data && !streak.isFetching) {
-    const hand = isGuiding(streak.data) ? null : firstReviewOpen(streak.data);
+    const hand = firstReviewOpen(streak.data);
     resumedFirst.current = !!hand;
     reviewedCards.current = hand ?? [];
     sessionFirst.current = isGuiding(streak.data) || !!hand;

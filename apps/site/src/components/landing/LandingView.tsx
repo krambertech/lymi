@@ -66,11 +66,11 @@ export function LandingView() {
       page="landing"
       hero={
         <Hero
-          title={<Trans>Flashcards that stick.</Trans>}
+          title={<Trans>Flashcards for the AI era.</Trans>}
           lede={
             <Trans>
-              Make a card in seconds and review it in Lymi. Spaced repetition brings it back right
-              before you’d forget, until you remember it for good.
+              AI turns your notes, lessons and photos into cards. Spaced repetition then shows you
+              only what’s due, so you don’t waste time on what you already know.
             </Trans>
           }
           secondary={{

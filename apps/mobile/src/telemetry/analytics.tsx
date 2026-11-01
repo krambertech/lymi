@@ -86,10 +86,11 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
     if (consent === true && entry && captureEvent("entry_opened", entry)) setEntry(undefined);
   }, [consent, entry]);
   const [answered, setAnswered] = useState<ReminderMessage>();
+  const countedAnswers = useRef(new Set<string>());
   useEffect(() => {
     const message = reminderOf(from, reminder);
-    if (!message || !screen || counted.current.has(screen)) return;
-    counted.current.add(screen);
+    if (!message || !screen || countedAnswers.current.has(screen)) return;
+    countedAnswers.current.add(screen);
     setAnswered(message);
   }, [from, reminder, screen]);
   useEffect(() => {

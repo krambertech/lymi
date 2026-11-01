@@ -16,7 +16,7 @@ const PAIRS: [string, string, string][] = [
   ["Count", "11 due · Lesson 14 and Portuguese", "You have 11 cards to review today! 🔥"],
   [
     "Reminder",
-    "11 cards to review · Review whenever you have a moment.",
+    "11 cards are ready · Review whenever you have a moment.",
     "You haven’t reviewed today. Don’t fall behind!",
   ],
 ];

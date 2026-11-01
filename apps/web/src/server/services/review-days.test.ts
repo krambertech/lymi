@@ -221,6 +221,27 @@ describe("the daily goal counts attempts", () => {
       expect(audited).toHaveLength(1);
     });
 
+    it("audits a grade once when its copy and a later grade both land first", async () => {
+      const { ctx, cards } = await setup(5, ["seitsmendik"]);
+      const [a] = cards;
+      if (!a) throw new Error("no cards");
+
+      const at = later(5);
+      await grade(
+        overtakenBy(ctx, async () => {
+          await grade(ctx, a.id, 3, at);
+          await grade(ctx, a.id, 3, later(6));
+        }),
+        a.id,
+        3,
+        at,
+      );
+
+      const { reviews, audited } = await history(ctx, a.id);
+      expect(reviews).toHaveLength(2);
+      expect(audited).toHaveLength(2);
+    });
+
     it("schedules a newer grade on top of the older one that beat it", async () => {
       const { ctx, cards } = await setup(5, ["kuuendik"]);
       const [a] = cards;

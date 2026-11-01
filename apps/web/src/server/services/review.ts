@@ -401,7 +401,10 @@ export async function gradeCard(
     lastReview: state.lastReview?.getTime() ?? null,
   };
 
-  const landed = eq(schema.reviews.id, reviewId);
+  const landing = and(
+    eq(schema.cardStates.id, state.id),
+    eq(schema.cardStates.lastReview, reviewedAt),
+  ) as SQL;
   const stored = await db
     .batch([
       // Only over the state read above: another grade landing since then moved it.
@@ -449,10 +452,7 @@ export async function gradeCard(
           gradeMs: input.gradeMs ?? null,
         },
         schema.cardStates,
-        and(
-          eq(schema.cardStates.id, state.id),
-          eq(schema.cardStates.lastReview, reviewedAt),
-        ) as SQL,
+        landing,
       ),
       auditStatementWhen(
         ctx,
@@ -467,8 +467,8 @@ export async function gradeCard(
             ...(input.aid ? { aid: gradeAid(input.aid) } : {}),
           },
         },
-        schema.reviews,
-        landed,
+        schema.cardStates,
+        landing,
       ),
     ])
     .then(

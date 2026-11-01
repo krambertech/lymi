@@ -840,9 +840,6 @@ msgstr "{saved, plural, one {Marked # card important} other {Marked # cards impo
 msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 msgstr "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 
-msgid "{term} comes back {when}"
-msgstr "{term} comes back {when}"
-
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
@@ -1825,6 +1822,9 @@ msgstr "Code from the email"
 
 msgid "Come back later, or add new cards."
 msgstr "Come back later, or add new cards."
+
+msgid "comes back {when}"
+msgstr "comes back {when}"
 
 msgid "Comma"
 msgstr "Comma"

@@ -22,7 +22,7 @@ The ready-made decks follow under a heading whose last words are the choice: **E
 
 The account's first review teaches itself once, then ends on a short plan for coming back. `apps/web/src/client/components/first-review.tsx` holds the tips and `first-plan.tsx` the end. The phone follows in its own change.
 
-During the review, a note under the first card says what to try and how to see the answer. The first reveal frosts the card after 1.6 s and points at the grades. After the first grade the card leaves for a line of the days ahead: it travels to the day it comes back, the other answers' days are marked, and **Next card** carries on. A card forgotten in this review says why it is back. **Skip tips** ends all of them.
+During the review, a note under the first card says what to try and how to see the answer. The first reveal frosts the card after 1.6 s and points at the grades. After the first grade the card gives way to a short screen: the word as the headline, “comes back in 2 days” under it, and every grade with its day, the chosen one lit. **Next card** carries on. A card forgotten in this review says why it is back. **Skip tips** ends all of them.
 
 The end is four screens with one lantern at the top that never moves; only the words and choices under it change, and on a phone the way on stays at the foot.
 

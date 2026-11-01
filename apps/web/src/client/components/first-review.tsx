@@ -1,13 +1,15 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { comesBackIn } from "@lymi/client/first-review";
-import { isolate, type Rating } from "@lymi/core";
+import type { Rating } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
 import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
+import type { ComponentProps } from "react";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
 import { GRADES } from "./grade";
+import { TermText } from "./term-text";
 
 // The account's first review teaches itself once: docs/design/onboarding.md "The first review".
 
@@ -149,24 +151,18 @@ export function GradesTip({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-/** Where a day sits along the line, as a share of its width; later today sits just past today. */
-function along(days: number, span: number) {
-  return `${(Math.max(days, 0.55) / span) * 100}%`;
-}
-
 /**
- * After the first grade the card leaves and this takes its place: a line of the days ahead, the
- * card travelling along it to the day it comes back, and where the other answers would have sent
- * it. Once, until Next card.
+ * After the first grade the card leaves and this takes its place: when the card comes back, and
+ * when each of the other answers would have brought it. Once, until Next card.
  */
 export function ComesBack({
-  term,
+  card,
   rating,
   back,
   onNext,
   onSkip,
 }: {
-  term: string;
+  card: ComponentProps<typeof TermText>["card"];
   rating: Rating;
   back: Back;
   onNext: () => void;
@@ -174,11 +170,7 @@ export function ComesBack({
 }) {
   const { i18n } = useLingui();
   const reduce = useReduceMotion();
-  const days = back.days[rating];
   const when = back.words[rating];
-  // Room for every answer's day, and never so short that tomorrow sits at the far end.
-  const span = Math.min(Math.max(...Object.values(back.days), 6) + 1, 30);
-  const others = GRADES.filter((g) => g.rating !== rating);
   const rise = (delay: number) =>
     reduce
       ? { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.2, delay } }
@@ -187,11 +179,12 @@ export function ComesBack({
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.36, ease: EASE_OUT, delay },
         };
-  const LAND = 0.55;
+  const ROWS = 0.22;
+  const CHOSEN = ROWS + GRADES.length * 0.05 + 0.1;
   return (
     <motion.section
       aria-live="polite"
-      className="edge relative mt-4 flex flex-1 flex-col justify-center overflow-hidden rounded-xl bg-plate px-6 py-10 @3xl:max-h-[600px] @3xl:px-10"
+      className="edge relative mt-4 flex flex-1 flex-col justify-center overflow-hidden rounded-xl bg-plate px-6 py-8 @3xl:max-h-[600px] @3xl:px-10"
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.28, ease: EASE_OUT }}
@@ -200,104 +193,66 @@ export function ComesBack({
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-2/3 bg-amber-tint [mask-image:linear-gradient(to_top,black_5%,transparent)]"
       />
-      <motion.h2
-        {...rise(0.1)}
-        className="relative mx-auto max-w-[18ch] text-balance text-center text-3xl font-medium tracking-[-0.02em] text-ink"
-      >
-        <Trans>
-          {{ term: isolate(term) }} comes back {when}
-        </Trans>
+      <motion.h2 {...rise(0.1)} className="relative grid gap-1 text-center">
+        <span className="line-clamp-3 text-balance text-3xl font-medium tracking-[-0.02em] text-ink [overflow-wrap:anywhere]">
+          <TermText card={card} />
+        </span>
+        <span className="text-lg font-normal text-ink-secondary">
+          <Trans>comes back {when}</Trans>
+        </span>
       </motion.h2>
 
-      {/* The days ahead: today at the start, the card's day lit, the other answers' days marked. */}
-      <div aria-hidden="true" className="relative mx-auto mt-10 mb-8 h-20 w-full max-w-md">
-        <motion.span
-          className="absolute inset-x-0 top-[50px] h-px origin-left bg-edge-strong rtl:origin-right"
-          initial={{ scaleX: reduce ? 1 : 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.25 }}
-        />
-        {Array.from({ length: span - 1 }, (_, i) => (
-          <motion.span
-            // biome-ignore lint/suspicious/noArrayIndexKey: one tick per day, in order
-            key={i}
-            className="absolute top-[47px] h-1.5 w-px bg-edge-strong"
-            style={{ insetInlineStart: along(i + 1, span) }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2, delay: 0.3 + i * 0.03 }}
-          />
-        ))}
-        <span className="absolute top-[50px] start-0 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink rtl:translate-x-1/2" />
-        <span className="absolute top-[62px] start-0 -translate-x-1/2 text-xs text-ink-muted rtl:translate-x-1/2">
-          <Trans>Today</Trans>
-        </span>
-        {others.map((g, i) => {
+      <dl className="relative mx-auto mt-6 grid w-full max-w-sm gap-1">
+        {GRADES.map((g, i) => {
           const Icon = g.icon;
+          const on = g.rating === rating;
           return (
-            <motion.span
+            <motion.div
               key={g.rating}
-              className="absolute top-[50px] grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-plate edge rtl:translate-x-1/2"
-              style={{ insetInlineStart: along(back.days[g.rating], span) }}
-              initial={{ opacity: 0, scale: reduce ? 1 : 0.4 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.25, ease: EASE_OUT, delay: 0.25 + LAND + 0.5 + i * 0.07 }}
+              {...rise(ROWS + i * 0.05)}
+              className="relative flex items-center justify-between gap-3 px-3 py-2"
             >
-              <Icon className={clsx("size-3.5", g.iconClass)} strokeWidth={2} />
-            </motion.span>
+              {on && (
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-md bg-amber-soft"
+                  initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT, delay: CHOSEN }}
+                />
+              )}
+              <dt
+                className={clsx(
+                  "relative flex items-center gap-2",
+                  on ? "font-medium text-ink" : "text-ink-secondary",
+                )}
+              >
+                <Icon className={clsx("size-4", g.iconClass)} aria-hidden="true" strokeWidth={2} />
+                {i18n._(g.label)}
+              </dt>
+              <dd
+                className={clsx(
+                  "relative text-end",
+                  on ? "font-medium text-ink" : "text-ink-secondary",
+                )}
+              >
+                {back.words[g.rating]}
+              </dd>
+            </motion.div>
           );
         })}
-        {/* The card itself, setting off from today and landing on its day, on a stem over the line. */}
-        <motion.span
-          className="absolute top-0 grid -translate-x-1/2 justify-items-center rtl:translate-x-1/2"
-          initial={{ insetInlineStart: reduce ? along(days, span) : "0%" }}
-          animate={{ insetInlineStart: along(days, span) }}
-          transition={
-            reduce ? { duration: 0 } : { type: "spring", bounce: 0.3, duration: 0.9, delay: LAND }
-          }
-        >
-          <span className="key-light block h-8 max-w-36 truncate rounded-md bg-amber px-3 text-sm font-medium leading-8 text-amber-ink">
-            {term}
-          </span>
-          <span className="h-3 w-px bg-amber" />
-          <span className="size-3 rounded-full bg-amber ring-4 ring-amber-soft" />
-        </motion.span>
-      </div>
+      </dl>
 
       <motion.p
-        {...rise(0.25 + LAND + 0.4)}
-        className="relative mx-auto max-w-[34ch] text-pretty text-center text-md text-ink-secondary"
+        {...rise(CHOSEN + 0.1)}
+        className="relative mx-auto mt-6 max-w-[34ch] text-pretty text-center text-md text-ink-secondary"
       >
         <Trans>
           Lymi brings each card back just before you’d forget it, and waits longer each time you
           remember.
         </Trans>
       </motion.p>
-      <motion.dl
-        {...rise(0.25 + LAND + 0.6)}
-        className="relative mx-auto mt-5 flex flex-wrap justify-center gap-x-5 gap-y-1 text-sm"
-      >
-        {others.map((g) => {
-          const Icon = g.icon;
-          return (
-            <div key={g.rating} className="flex items-center gap-1.5">
-              <dt className="flex items-center gap-1 text-ink-muted">
-                <Icon
-                  className={clsx("size-3.5", g.iconClass)}
-                  aria-hidden="true"
-                  strokeWidth={2}
-                />
-                {i18n._(g.label)}
-              </dt>
-              <dd className="text-ink-secondary">{back.words[g.rating]}</dd>
-            </div>
-          );
-        })}
-      </motion.dl>
-      <motion.div
-        {...rise(0.25 + LAND + 0.8)}
-        className="relative mt-10 grid justify-items-center gap-3"
-      >
+      <motion.div {...rise(CHOSEN + 0.2)} className="relative mt-8 grid justify-items-center gap-3">
         <Button variant="primary" size="lg" kbd="Space" onClick={onNext}>
           <Trans>Next card</Trans>
         </Button>

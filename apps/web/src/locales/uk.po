@@ -840,9 +840,6 @@ msgstr "{saved, plural, one {# картку позначено важливою}
 msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 msgstr "{saved, plural, one {Знято позначку «важлива» з # картки} few {Знято позначку «важлива» з # карток} many {Знято позначку «важлива» з # карток} other {Знято позначку «важлива» з # картки}}"
 
-msgid "{term} comes back {when}"
-msgstr "{term} повернеться {when}"
-
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -1825,6 +1822,9 @@ msgstr "Код з листа"
 
 msgid "Come back later, or add new cards."
 msgstr "Повернися пізніше або додай нові картки."
+
+msgid "comes back {when}"
+msgstr "повернеться {when}"
 
 msgid "Comma"
 msgstr "Кома"

@@ -836,7 +836,7 @@ function Review() {
   if (gradesTip && tipFor.grades === undefined) setTipFor((t) => ({ ...t, grades: showing }));
   // After the first grade, the card gives way to a screen that says when it comes back.
   const [cameBack, setCameBack] = useState<{
-    term: string;
+    card: FanCard;
     rating: Rating;
     back: NonNullable<typeof comesBack>;
   } | null>(null);
@@ -950,7 +950,7 @@ function Review() {
       if (current && gradeAllowed(rating, aid) && !reviewedCards.current.includes(current.card))
         reviewedCards.current.push(current.card);
       if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
-        setCameBack({ term: current.card.term, rating, back: comesBack });
+        setCameBack({ card: current.card, rating, back: comesBack });
       onGrade(rating, input);
     },
     [gradesTip, comesBack, current, aid, onGrade],

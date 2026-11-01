@@ -617,7 +617,7 @@ describe("enrichCards", () => {
       expect(asked[0]).not.toHaveProperty("model");
     });
 
-    it("leaves every card working when one call fails, so the step's retry asks again", async () => {
+    it("keeps the call that answered and leaves the failed call's cards for the retry", async () => {
       const ctx = await learner(db, "enrich-model-fails", "Kateryna");
       const russian = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
       const italian = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
@@ -629,14 +629,35 @@ describe("enrichCards", () => {
         ],
         queue,
       );
-      const ids = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
+      const [house = "", hello = ""] = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
       const { fake } = provider((request) => request.model === "gpt-6.1-terra");
-      await expect(enrichCards({ ...ctx, actor: "ai" }, ids, fake)).rejects.toThrow("vendor down");
-      for (const id of ids) {
-        const card = await showCard(ctx, id);
-        expect(card.enrichmentStatus).toBe("working");
-        expect(card.meaning).toBeNull();
-      }
+      await expect(enrichCards({ ...ctx, actor: "ai" }, [house, hello], fake)).rejects.toThrow(
+        "vendor down",
+      );
+      expect((await showCard(ctx, hello)).meaning).toBe("meaning of ciao");
+      expect((await showCard(ctx, hello)).enrichmentStatus).toBeNull();
+      expect((await showCard(ctx, house)).meaning).toBeNull();
+      expect((await showCard(ctx, house)).enrichmentStatus).toBe("working");
+
+      const retry = provider();
+      await enrichCards({ ...ctx, actor: "ai" }, [house, hello], retry.fake);
+      expect(retry.asked).toHaveLength(1);
+      expect(inputOf(retry.asked[0]).cards.map((card) => card.term)).toEqual(["дом"]);
+      expect((await showCard(ctx, house)).meaning).toBe("meaning of дом");
+    });
+
+    it("writes nothing when every call fails", async () => {
+      const ctx = await learner(db, "enrich-models-fail", "Kateryna");
+      const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [CardInput.parse({ deckId: deck.id, term: "ciao" })],
+        queue,
+      );
+      const id = outcomes[0]?.status === "added" ? outcomes[0].card.id : "";
+      const { fake } = provider(() => true);
+      await expect(enrichCards({ ...ctx, actor: "ai" }, [id], fake)).rejects.toThrow("vendor down");
+      expect((await showCard(ctx, id)).enrichmentStatus).toBe("working");
     });
   });
 

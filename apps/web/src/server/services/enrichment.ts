@@ -299,8 +299,11 @@ export async function enrichCards(
     addReadings: mayAddReadings(card, decks.get(card.deckId)),
   }));
 
-  let filled = new Map<string, Filled>();
+  const filled = new Map<string, Filled>();
   const briefs: DeckBrief[] = [];
+  // A failed call's cards stay `working`, so the step's retry asks only for them.
+  const retrying = new Set<string>();
+  let failure: { reason: unknown } | undefined;
   const asked = (ask: (typeof asks)[number]) => ask.mayFill.length > 0 || ask.addReadings !== null;
   if (asks.some(asked)) {
     for (const deck of deckRows) {
@@ -325,8 +328,9 @@ export async function enrichCards(
       const model = enrichmentModel(language);
       byModel.set(model, [...(byModel.get(model) ?? []), ask]);
     }
-    const replies = await Promise.all(
-      [...byModel].map(([model, group]) => {
+    const groups = [...byModel];
+    const replies = await Promise.allSettled(
+      groups.map(([model, group]) => {
         const deckIds = new Set(group.map((ask) => ask.card.deckId));
         const input = enrichmentInput(
           meaningLanguage,
@@ -336,7 +340,16 @@ export async function enrichCards(
         return askProvider(provider, input, model);
       }),
     );
-    filled = new Map(replies.flat().map((card) => [card.id, card]));
+    const lost = replies.flatMap((reply) => (reply.status === "rejected" ? [reply] : []));
+    if (lost[0] && lost.length === replies.length) throw lost[0].reason;
+    failure = lost[0];
+    for (const [at, reply] of replies.entries()) {
+      if (reply.status === "fulfilled") {
+        for (const card of reply.value) filled.set(card.id, card);
+      } else {
+        for (const ask of groups[at]?.[1] ?? []) retrying.add(ask.card.id);
+      }
+    }
   }
 
   const now = new Date();
@@ -344,6 +357,7 @@ export async function enrichCards(
   const attempted = new Map<string, EnrichmentWrite>();
   let skipped = 0;
   for (const { card, mayFill: allowed, addReadings } of asks) {
+    if (retrying.has(card.id)) continue;
     const reply = filled.get(card.id);
     const write = reply ? enrichmentWrite(card, reply, allowed, addReadings) : {};
     if (reply) {
@@ -433,6 +447,7 @@ export async function enrichCards(
     has_style: briefs.some((deck) => deck.style),
     ...(rows.length ? { languages: eventLanguages(languages) } : {}),
   });
+  if (failure) throw failure.reason;
   return { enriched: rows.length };
 }
 

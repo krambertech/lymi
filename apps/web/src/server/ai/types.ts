@@ -33,9 +33,14 @@ export type TextRequest = {
   input: string;
   /** JSON Schema the reply must satisfy, named for the vendor's structured-output call. */
   schema: { name: string; schema: Record<string, unknown> };
+  /** The model to ask; left out, the provider's own default. OPENAI_TEXT_MODEL overrides both. */
+  model?: string | undefined;
   /** How hard the model reasons; left out, the provider's own default. */
   effort?: "none" | "low" | "medium" | "high" | undefined;
 };
+
+/** A model and effort a caller picks over the provider's defaults. */
+export type TextModel = Pick<TextRequest, "model" | "effort">;
 
 /** One model call's size and time, for cost; it never carries the prompt or the reply. */
 export type TextCall = {

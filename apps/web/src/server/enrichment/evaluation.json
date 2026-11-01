@@ -933,13 +933,19 @@
           "id": "zh-en-04",
           "term": "行",
           "meaning": "row; line of business",
-          "expect": { "pronunciation": { "oneOf": ["háng"] } }
+          "expect": {
+            "example": { "includes": ["háng"], "excludes": ["xíng"] },
+            "pronunciation": { "oneOf": ["háng"] }
+          }
         },
         {
           "id": "zh-en-05",
           "term": "行",
           "meaning": "to walk; OK",
-          "expect": { "pronunciation": { "oneOf": ["xíng"] } }
+          "expect": {
+            "example": { "includes": ["xíng"], "excludes": ["háng"] },
+            "pronunciation": { "oneOf": ["xíng"] }
+          }
         },
         {
           "id": "zh-en-06",
@@ -950,19 +956,28 @@
           "id": "zh-en-07",
           "term": "行长",
           "meaning": "bank president",
-          "expect": { "pronunciation": { "oneOf": ["hángzhǎng", "háng zhǎng"] } }
+          "expect": {
+            "example": { "includes": ["háng", "zhǎng"] },
+            "pronunciation": { "oneOf": ["hángzhǎng", "háng zhǎng"] }
+          }
         },
         {
           "id": "zh-en-08",
           "term": "长",
           "meaning": "long",
-          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
+          "expect": {
+            "example": { "includes": ["cháng"], "excludes": ["zhǎng"] },
+            "pronunciation": { "oneOf": ["cháng"] }
+          }
         },
         {
           "id": "zh-en-09",
           "term": "长",
           "meaning": "to grow",
-          "expect": { "pronunciation": { "oneOf": ["zhǎng"] } }
+          "expect": {
+            "example": { "includes": ["zhǎng"], "excludes": ["cháng"] },
+            "pronunciation": { "oneOf": ["zhǎng"] }
+          }
         },
         {
           "id": "zh-en-10",
@@ -976,25 +991,37 @@
           "id": "zh-en-11",
           "term": "还",
           "meaning": "still; also",
-          "expect": { "pronunciation": { "oneOf": ["hái"] } }
+          "expect": {
+            "example": { "includes": ["hái"], "excludes": ["huán"] },
+            "pronunciation": { "oneOf": ["hái"] }
+          }
         },
         {
           "id": "zh-en-12",
           "term": "还",
           "meaning": "to give back",
-          "expect": { "pronunciation": { "oneOf": ["huán"] } }
+          "expect": {
+            "example": { "includes": ["huán"], "excludes": ["hái"] },
+            "pronunciation": { "oneOf": ["huán"] }
+          }
         },
         {
           "id": "zh-en-13",
           "term": "东西",
           "meaning": "thing",
-          "expect": { "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] } }
+          "expect": {
+            "example": { "includes": ["xi]"], "excludes": ["xī"] },
+            "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] }
+          }
         },
         {
           "id": "zh-en-14",
           "term": "东西",
           "meaning": "east and west",
-          "expect": { "pronunciation": { "oneOf": ["dōngxī", "dōng xī"] } }
+          "expect": {
+            "example": { "includes": ["xī"] },
+            "pronunciation": { "oneOf": ["dōngxī", "dōng xī"] }
+          }
         },
         {
           "id": "zh-en-15",
@@ -1018,6 +1045,7 @@
           "id": "zh-en-18",
           "term": "一起",
           "expect": {
+            "example": { "includes": ["yī"], "excludes": ["yì"] },
             "meaning": { "includes": ["together"] },
             "pronunciation": { "oneOf": ["yīqǐ", "yī qǐ"] }
           }
@@ -1025,7 +1053,11 @@
         {
           "id": "zh-en-19",
           "term": "不是",
-          "expect": { "meaning": "filled", "pronunciation": { "oneOf": ["bùshì", "bù shì"] } }
+          "expect": {
+            "example": { "includes": ["bù"], "excludes": ["bú"] },
+            "meaning": "filled",
+            "pronunciation": { "oneOf": ["bùshì", "bù shì"] }
+          }
         },
         {
           "id": "zh-en-20",
@@ -1155,7 +1187,10 @@
           "id": "zh-tw-04",
           "term": "長",
           "meaning": "long",
-          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
+          "expect": {
+            "example": { "includes": ["cháng"], "excludes": ["zhǎng"] },
+            "pronunciation": { "oneOf": ["cháng"] }
+          }
         }
       ]
     },

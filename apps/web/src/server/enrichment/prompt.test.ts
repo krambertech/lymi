@@ -25,10 +25,10 @@ function workedExamples(text: string) {
 
 describe("the enrichment prompt", () => {
   it("changes only with a new prompt version", () => {
-    // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
+    // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads or which model reads it, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash: enrichmentPromptHash() }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 19,
-      hash: "5356ffbe11c2d0c6",
+      ENRICHMENT_PROMPT_VERSION: 20,
+      hash: "0dfbf57d3963d1d0",
     });
   });
 

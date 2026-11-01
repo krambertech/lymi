@@ -4,10 +4,10 @@
  *
  *   pnpm --filter @lymi/web eval:enrichment [--cards file.json] [--deck id] [--record] [--save run.json] [--from run.json] [--dry] [--verbose]
  *
- * The key comes from `.dev.vars` and the model from the text-provider helper the Worker uses, so
- * OPENAI_TEXT_MODEL overrides it. `--record` keeps the run in `runs/` beside the one before it,
+ * The key comes from `.dev.vars` and each deck's model from its language, as in the Worker, so
+ * OPENAI_TEXT_MODEL overrides them all. `--record` keeps the run in `runs/` beside the one before it,
  * which recorded-run.test.ts rescores on every CI run; record after any change to what the model
- * reads. `--save` keeps every reply elsewhere so `--from` can rescore without another call. `--dry`
+ * reads or which model reads it. `--save` keeps every reply elsewhere so `--from` can rescore without another call. `--dry`
  * prints the first request and calls nothing. Keep real learners' cards in a file outside the
  * repository and pass it with `--cards`.
  */
@@ -41,23 +41,29 @@ const option = (name: string) => {
 };
 const verbose = args.includes("--verbose");
 
-async function callModel(decks: FixtureDeck[], provider: TextProvider): Promise<Call[]> {
+async function callModel(
+  decks: FixtureDeck[],
+  provider: TextProvider,
+  override: string | undefined,
+): Promise<Call[]> {
   const jobs = decks.flatMap((deck) => requests(deck).map((request) => ({ deck, ...request })));
   const calls: Call[] = [];
   // A few at a time, so a long run is quick without tripping the vendor's rate limit.
   for (const batch of chunked(jobs, 4)) {
     calls.push(
       ...(await Promise.all(
-        batch.map(async ({ deck, input, cases }) => {
+        batch.map(async ({ deck, input, cases, model }) => {
           const reply = readReply(
             await provider.complete({
               instructions: ENRICHMENT_INSTRUCTIONS,
               input,
               schema: REPLY_SCHEMA,
+              ...model,
             }),
           );
           process.stdout.write(".");
-          return { deck: deck.id, input, cases, reply };
+          const asked = override || model?.model || provider.model;
+          return { deck: deck.id, model: asked, input, cases, reply };
         }),
       )),
     );
@@ -130,8 +136,8 @@ async function main() {
     requireKeys(env, ["OPENAI_API_KEY", "AI_GATEWAY_TOKEN"], "run the evaluation");
     const provider = createTextProvider(env);
     if (!provider) throw new Error("Set OPENAI_API_KEY to run the evaluation");
-    console.log(`Model: ${provider.model}`);
-    run = newRun(provider.model, await callModel(decks, provider));
+    console.log(`Default model: ${provider.model}`);
+    run = newRun(provider.model, await callModel(decks, provider, env.OPENAI_TEXT_MODEL));
   }
   const save = option("--save");
   if (save) writeFileSync(save, `${JSON.stringify(run, null, 2)}\n`);

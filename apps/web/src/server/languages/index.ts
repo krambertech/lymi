@@ -3,6 +3,7 @@
  * docs/proposals/supported-languages.md.
  */
 import { examplesCarryReadings, languageSupport, type SupportedTag, stressRules } from "@lymi/core";
+import type { TextModel } from "../ai/types";
 import { cantonese } from "./cantonese";
 import { chinese } from "./chinese";
 import { japanese } from "./japanese";
@@ -36,6 +37,11 @@ export function languagePrompts(tag: string | null | undefined): LanguagePrompts
 /** What a reading printed in a lesson looks like in this language, or undefined when no rule says. */
 export function lessonReading(tag: string | null | undefined): string | undefined {
   return languagePrompts(tag)?.lesson;
+}
+
+/** The model that enriches this language's cards, or undefined for the provider's default. */
+export function enrichmentModel(tag: string | null | undefined): TextModel | undefined {
+  return languagePrompts(tag)?.enrich.model;
 }
 
 /**

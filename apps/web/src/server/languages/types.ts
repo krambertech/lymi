@@ -1,4 +1,5 @@
 import type { EnrichedField, RecordTag } from "@lymi/core";
+import type { TextModel } from "../ai/types";
 
 /**
  * How to write each field of a card in one language, as the enrichment guide says it. A language
@@ -20,8 +21,11 @@ export type LanguageCheck = {
  */
 export interface LanguagePrompts {
   tag: RecordTag;
-  /** Enrichment: the deck's field guide, then one worked example in the system prompt's format. */
-  enrich: { guide: FieldGuide; example: string };
+  /**
+   * Enrichment: the deck's field guide, then one worked example in the system prompt's format, and
+   * the model to write this language's cards when the default leaves out its readings.
+   */
+  enrich: { guide: FieldGuide; example: string; model?: TextModel };
   /** Adding cards from a lesson: what a reading the lesson prints looks like. */
   lesson: string;
   /** Hints: advice for this language's terms, or null when the generic method serves. */

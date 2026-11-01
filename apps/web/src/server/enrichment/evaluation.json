@@ -841,20 +841,20 @@
           "term": "食べる",
           "expect": {
             "meaning": { "oneOf": ["to eat", "eat"] },
-            "pronunciation": { "oneOf": ["たべる"] }
+            "pronunciation": { "oneOf": ["たべる [2]"] }
           }
         },
         {
           "id": "ja-en-02",
           "term": "ありがとう",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
         },
         {
           "id": "ja-en-03",
           "term": "学校",
           "expect": {
             "meaning": { "oneOf": ["school"] },
-            "pronunciation": { "oneOf": ["がっこう"] }
+            "pronunciation": { "oneOf": ["がっこう [0]"] }
           }
         },
         {
@@ -862,7 +862,7 @@
           "term": "毎朝",
           "expect": {
             "meaning": { "oneOf": ["every morning"] },
-            "pronunciation": { "oneOf": ["まいあさ"] },
+            "pronunciation": { "oneOf": ["まいあさ [1]", "まいあさ [0]", "まいあさ [1][0]", "まいあさ [0][1]"] },
             "example": { "includes": ["毎朝[まいあさ]"] }
           }
         }
@@ -880,7 +880,7 @@
           "term": "電車",
           "expect": {
             "meaning": { "oneOf": ["train", "electric train"] },
-            "pronunciation": { "oneOf": ["でんしゃ"] }
+            "pronunciation": { "oneOf": ["でんしゃ [0]", "でんしゃ [1]", "でんしゃ [0][1]", "でんしゃ [1][0]"] }
           }
         },
         {
@@ -888,7 +888,7 @@
           "term": "新しい",
           "expect": {
             "meaning": { "oneOf": ["new"] },
-            "pronunciation": { "oneOf": ["あたらしい"] }
+            "pronunciation": { "oneOf": ["あたらしい [4]"] }
           }
         },
         {
@@ -896,7 +896,7 @@
           "term": "先生",
           "expect": {
             "meaning": { "includes": ["teacher"] },
-            "pronunciation": { "oneOf": ["せんせい"] }
+            "pronunciation": { "oneOf": ["せんせい [3]"] }
           }
         }
       ]
@@ -1685,7 +1685,7 @@
         {
           "id": "vi-en-03",
           "term": "cảm ơn",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
         },
         {
           "id": "vi-en-04",
@@ -1922,7 +1922,7 @@
         {
           "id": "ta-en-02",
           "term": "நன்றி",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
         },
         {
           "id": "ta-en-03",
@@ -2798,7 +2798,7 @@
         {
           "id": "pl-en-16",
           "term": "dziękuję",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
         },
         {
           "id": "pl-en-17",

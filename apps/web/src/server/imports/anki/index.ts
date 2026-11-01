@@ -18,6 +18,7 @@ import {
   isSentencePinyinField,
   noteRecordings,
   parseReadings,
+  pitchIntoReading,
   type Rating,
   type ReviewModeKey,
   readingEngine,
@@ -533,14 +534,21 @@ export const anki: SourceAdapter<AnkiNote> = {
       const fitted = fitFields({
         term: withoutReadings(term) ?? "",
         meaning: withoutReadings(raw.meaning),
-        // Tone numbers stay for `normalizeCardText`, which counts the Readings it converts.
-        pronunciation: raw.pronunciation
-          ? pinyin
-            ? pinyinReading(plainReading(raw.pronunciation), withoutReadings(term) ?? "")
-            : plainReading(raw.pronunciation)
-          : hasFurigana(term)
-            ? furiganaReading(term)
-            : undefined,
+        ...pitchIntoReading(
+          {
+            term: withoutReadings(term) ?? "",
+            // Tone numbers stay for `normalizeCardText`, which counts the Readings it converts.
+            pronunciation: raw.pronunciation
+              ? pinyin
+                ? pinyinReading(plainReading(raw.pronunciation), withoutReadings(term) ?? "")
+                : plainReading(raw.pronunciation)
+              : hasFurigana(term)
+                ? furiganaReading(term)
+                : undefined,
+            notes: raw.notes,
+          },
+          language,
+        ),
         // Kana readings stay in Lymi's notation, and pinyin where examples draw it; others go.
         example:
           raw.example &&
@@ -548,7 +556,6 @@ export const anki: SourceAdapter<AnkiNote> = {
             ? markedExample(raw.example)
             : formatReadings(parseReadings(withoutOtherReadings(raw.example)))),
         exampleTranslation: raw.exampleTranslation,
-        notes: raw.notes,
       });
       if (!fitted.fields.term) return [];
       // A suspended template leaves its mode out unless every template is suspended.

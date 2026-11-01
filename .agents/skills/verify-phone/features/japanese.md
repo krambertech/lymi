@@ -14,6 +14,8 @@ No persona has Japanese cards, so [`japanese.mjs`](japanese.mjs) adds three deck
 
 `01-known-cue-hidden` shows 見る with no reading over it, and `02-known-revealed` shows み over 見. In `03-long-rows` the verb's forms wrap after た over 食べる and end in its ★, and the long term stops at three lines with … and its ★. `04-new-cue-furigana` shows ちょっかく over 直角 before the reveal; `05-new-revealed-example` shows ちょっかく over the example's 直角 and no reading over its 角, whose room stays, and no reading line under the term. `06-deck-row`, `07-card-page` and `09-search` draw ちょっかく over 直角; `07-card-page` and `10-search-peek` leave the example's 角 bare; and `08-edit-reading-field` names the field **Reading**. In the screenshots, 直 has a long left stroke beside its box and 角's middle stroke stops at the lowest bar: the Japanese forms. The check reads the stored card back with its reading and its example's inline readings.
 
+The New card's Reading is stored with its pitch accent, `ちょっかく [0]`: the cue still reads ちょっかく, `05-new-revealed-example` shows the chart under the term and none before the reveal, and `07-card-page` shows the chart in place of the Reading's text.
+
 ## Gotchas
 
 - The Simulator takes the Mac's languages, so the face is only proven when none of them is Japanese; `xcrun simctl spawn <udid> defaults read -g AppleLanguages` lists them.

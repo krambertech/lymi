@@ -6,6 +6,7 @@ import {
   type LymiFileState,
   modesFromDirections,
   parseReadings,
+  pronunciationText,
   type ReviewModeKey,
   readingEngine,
 } from "@lymi/core";
@@ -439,7 +440,7 @@ export class AnkiCollection {
     const fields = [
       ankiField(card.term),
       ankiField(card.meaning),
-      ankiField(card.pronunciation),
+      ankiField(pronunciationText(card)),
       ankiExample(card.example, card.language),
       ankiField(card.notes),
       picture ? `<img src="${ankiField(picture)}">` : "",

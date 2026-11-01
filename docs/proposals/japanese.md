@@ -18,7 +18,8 @@ Kanji carry meaning and are read differently from word to word (日 in 日本, �
 - **Furigana.** Over the term on the cue while the card is New or Learning, gone once it is Known; always over the term in the answer. Over an example's kanji except where the kanji and reading match one of the learner's Known cards.
 - **The AI.** It writes example readings, and adds them to a learner's example only when the text without brackets is unchanged.
 - **Audio.** Spoken from the reading. A recorded clip from an import is the card's audio and is never replaced; generated speech fills only cards without one. An imported sentence clip is the example's recording and plays from the example's control ([#828](https://github.com/krambertech/lymi/issues/828)).
-- **Import.** Pitch accent and the sentence translation each become one notes line; a frequency number is dropped.
+- **Import.** The sentence translation becomes the example's translation; a frequency number is dropped.
+- **Pitch accent.** No new field: the accent follows the reading in the pronunciation, `としょかん [2]`, because a position can say flat, `[0]`, and hold two accents, `[4][3]`, where a downstep mark inside the kana cannot. Review charts it under the term after the reveal, as the prototype on 26 October chose; the word page and the card form show it too. Examples carry no chart. [docs/card-writing.md](../card-writing.md#japanese-cards) has the format.
 - **Left out.** Romaji as a reading aid, extra review modes, kanji cards as a type, handwriting and typed answers.
 
 ## Delivery

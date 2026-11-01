@@ -10,6 +10,8 @@ import {
   type EnrichedField,
   isolate,
   type KnownReadings,
+  pitchPatterns,
+  pronunciationText,
   type ReviewMode,
   readFsrs,
   termShowsPronunciation,
@@ -44,6 +46,7 @@ import { ExampleAudioButton, useExampleAudio } from "../components/example-audio
 import { ExampleLines } from "../components/example-lines";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
+import { PitchChart } from "../components/pitch-chart";
 import { ReviewTimeline } from "../components/review-timeline";
 import { Skeleton } from "../components/skeleton";
 import { TermText } from "../components/term-text";
@@ -482,6 +485,8 @@ export function WordView({
     () => termShowsPronunciation({ ...card, term: forms.word }),
     [card, forms.word],
   );
+  const shownPronunciation = useMemo(() => pronunciationText(card), [card]);
+  const pitched = useMemo(() => pitchPatterns(card).length > 0, [card]);
   const readingOver = useMemo(
     () => drawsTermReading({ ...card, term: forms.word }),
     [card, forms.word],
@@ -632,15 +637,16 @@ export function WordView({
             </IconButton>
           )}
         </h1>
+        <PitchChart card={card} className="text-lg" />
         {card.pronunciation && reading && card.pronunciationSource !== "ai" ? (
           // A reading drawn over the term needs this line only for a screen reader; stress drawn in
           // place is the heading's own text, so it needs none.
-          readingOver && <p className="sr-only">{card.pronunciation}</p>
+          readingOver && <p className="sr-only">{shownPronunciation}</p>
         ) : card.pronunciation ? (
           <p className="flex flex-wrap items-center gap-1.5 text-md text-ink-muted">
             {(!reading || readingOver) && (
-              <span className={reading ? "sr-only" : "[overflow-wrap:anywhere]"}>
-                {card.pronunciation}
+              <span className={reading || pitched ? "sr-only" : "[overflow-wrap:anywhere]"}>
+                {shownPronunciation}
               </span>
             )}
             {card.pronunciationSource === "ai" && (

@@ -22,13 +22,17 @@ import {
   cueShowsPronunciation,
   type Drawn,
   drawKey,
+  drawsTermReading,
   type FieldSource,
   gradeAllowed,
   interval,
   isolate,
   type KnownReadings,
+  markedTerm,
   modeKey,
   type PronunciationDisplay,
+  pitchPatterns,
+  pronunciationText,
   type Rating,
   ROUNDS,
   type Round,
@@ -137,6 +141,7 @@ import { fitType } from "../theme/type";
 import { Chip, StateChip } from "../ui/chip";
 import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
+import { PitchChart } from "../ui/pitch-chart";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
@@ -1370,12 +1375,16 @@ function CardPlate({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  const reading = card.pronunciation;
+  const reading = useMemo(() => pronunciationText(card), [card]);
   // Furigana, pinyin or stress marks on the term: on the cue until the card is Known or the learner hid them, and always on the answer.
   const furigana = useMemo(() => termShowsPronunciation(card), [card]);
   // The learner asked for the pronunciation as its own line under the term, so the term is drawn as written.
+  // A kana term shows its own reading, so only one drawn on it is worth reading out.
+  const drawnOnTerm = drawsTermReading(card) || markedTerm(card) !== null;
   const separate = furigana && deck?.pronunciationDisplay === "separate";
   const termCard = separate ? null : card;
+  // A chart stands where the pronunciation's own line would, and spells the kana itself.
+  const pitched = useMemo(() => pitchPatterns(card).length > 0, [card]);
   const cueFurigana = cueShowsPronunciation({
     revealed,
     known: stateKey(forgotten ? 3 : fsrsState) === "known",
@@ -1425,14 +1434,20 @@ function CardPlate({
   // place, which VoiceOver reads out. A term cue carries it under the cue instead.
   const pronunciationLine = () =>
     card.pronunciation &&
-    (!furigana || separate) &&
-    mode.cue !== "term" && (
-      <Animated.View entering={arrive()}>
-        <Text className="text-md text-ink-muted" lang={card.language}>
-          {card.pronunciation}
-        </Text>
+    mode.cue !== "term" &&
+    (pitched ? (
+      <Animated.View entering={arrive()} className="pt-1">
+        <PitchChart card={card} />
       </Animated.View>
-    );
+    ) : (
+      (!furigana || separate) && (
+        <Animated.View entering={arrive()}>
+          <Text className="text-md text-ink-muted" lang={card.language}>
+            {reading}
+          </Text>
+        </Animated.View>
+      )
+    ));
   const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
 
   return (
@@ -1472,7 +1487,7 @@ function CardPlate({
             ? undefined
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
-              : mode.cue === "term" && furigana && cueFurigana && reading
+              : mode.cue === "term" && drawnOnTerm && cueFurigana && reading
                 ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
                   ? t`Recognition card for ${cue}. Tap to reveal`
@@ -1548,14 +1563,18 @@ function CardPlate({
                     </CardLine>
                   )}
                   {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
-                  {(!furigana || separate) &&
+                  {(!furigana || separate || pitched) &&
                     mode.cue === "term" &&
                     card.pronunciation &&
                     (revealed ? (
                       <Animated.View entering={arrive()} className="pt-1">
-                        <Text className="text-md text-ink-muted" lang={card.language}>
-                          {card.pronunciation}
-                        </Text>
+                        {pitched ? (
+                          <PitchChart card={card} />
+                        ) : (
+                          <Text className="text-md text-ink-muted" lang={card.language}>
+                            {reading}
+                          </Text>
+                        )}
                       </Animated.View>
                     ) : (
                       <View
@@ -1563,9 +1582,13 @@ function CardPlate({
                         accessibilityElementsHidden
                         importantForAccessibility="no-hide-descendants"
                       >
-                        <Text className="text-md text-ink-muted" lang={card.language}>
-                          {card.pronunciation}
-                        </Text>
+                        {pitched ? (
+                          <PitchChart card={card} />
+                        ) : (
+                          <Text className="text-md text-ink-muted" lang={card.language}>
+                            {reading}
+                          </Text>
+                        )}
                       </View>
                     ))}
                   {/* The hint has one place, under the cue; it takes room only as it shows, and the card glides open for it. */}

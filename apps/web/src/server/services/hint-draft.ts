@@ -4,6 +4,7 @@ import {
   headword,
   hintable,
   modesFromDirections,
+  pronunciationText,
   type ReviewModeKey,
 } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne } from "@lymi/core/db";
@@ -193,7 +194,7 @@ export function hintInput(card: HintCard): string {
     term: card.term,
     meaning: card.meaning,
     termLanguage: card.language,
-    ...(card.pronunciation ? { pronunciation: card.pronunciation } : {}),
+    ...(card.pronunciation ? { pronunciation: pronunciationText(card) } : {}),
     asked: card.asked,
     ...(card.deckMeanings?.length ? { deckMeanings: card.deckMeanings } : {}),
     ...(guide ? { guide } : {}),

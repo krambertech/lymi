@@ -4,6 +4,7 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  drawsTermReading,
   EXAMPLE_LENGTH,
   exampleShown,
   hasReadings,
@@ -13,11 +14,11 @@ import {
   markedTerm,
   modeKey,
   modeOf,
+  pitchPatterns,
   pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
   shownLength,
-  termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
@@ -51,6 +52,7 @@ import { FieldChipButton, FieldChipRow } from "./field-chip";
 import { HintIcon } from "./hint-icon";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
+import { PitchChart } from "./pitch-chart";
 import { ExampleText, TermText } from "./term-text";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
@@ -348,7 +350,7 @@ export function CardForm(props: CardFormProps) {
   // Japanese and Chinese call a term's pronunciation its reading, and Russian its stress.
   const named = pronunciationName(language);
   const termCard = { term: term.trim(), language, pronunciation };
-  const termDrawn = termShowsPronunciation(termCard);
+  const termDrawn = drawsTermReading(termCard) || markedTerm(termCard) !== null;
   // A Stress that is not the term with marks added draws nothing, so say so while it is typed.
   const stressMissed =
     named === "stress" &&
@@ -812,11 +814,16 @@ export function CardForm(props: CardFormProps) {
         setPronunciation,
         cardLimits.pronunciation,
         {
-          description: stressMissed && (
-            <FieldDescription>
-              {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
-            </FieldDescription>
-          ),
+          description:
+            pitchPatterns({ language, pronunciation }).length > 0 ? (
+              <PitchChart card={{ language, pronunciation }} className="pt-1 text-md" />
+            ) : (
+              stressMissed && (
+                <FieldDescription>
+                  {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
+                </FieldDescription>
+              )
+            ),
         },
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),

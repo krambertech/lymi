@@ -66,7 +66,7 @@ The policy is `apps/web/src/server/lead-ins/japanese.ts`. After changing its que
 2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
 3. Check that every ambiguous case is still flagged before you accept more flagged clear cases.
 
-The 50 cases in `apps/web/src/server/lead-ins/evaluation.json` score an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
+At commit `b5a3b8003`, the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
 
 ## Add a language
 

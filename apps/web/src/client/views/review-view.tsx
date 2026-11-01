@@ -369,10 +369,25 @@ const CONTEXT_SIZE = ["text-xl", "text-lg", "text-md"];
 interface Fit {
   step: number;
   settled: boolean;
+  /** The smallest step still leaves a word or reading wider than the line. */
+  overlong: boolean;
 }
-const UNMEASURED: Fit = { step: 0, settled: false };
+const UNMEASURED: Fit = { step: 0, settled: false, overlong: false };
 
 const px = (value: string) => Number.parseFloat(value) || 0;
+
+/** Whether the text's longest word, and any reading over it, stays on one line of its box. */
+function wordsFit(text: HTMLElement) {
+  // The breaks that would hide a word too long for the line lift for the measure, before any paint.
+  text.style.overflowWrap = "normal";
+  text.style.hyphens = "manual";
+  const range = document.createRange();
+  range.selectNodeContents(text);
+  const fits = range.getBoundingClientRect().width <= text.getBoundingClientRect().width;
+  text.style.overflowWrap = "";
+  text.style.hyphens = "";
+  return fits;
+}
 
 interface FitElements {
   section: HTMLElement | null;
@@ -386,9 +401,10 @@ interface FitElements {
 }
 
 /**
- * Whether the cue fits the card before reveal, and the cue with its target after. Example and notes
- * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
- * card, whose own height is still animating while the grade strip opens.
+ * Whether the cue fits the card before reveal, and the cue with its target after, in height and in
+ * the width of its longest word. Example and notes never shrink the type; they scroll. Heights come
+ * from the stage the card fills rather than the card, whose own height is still animating while the
+ * grade strip opens.
  *
  * `offerFoot` is the fix's room at the foot after the reveal, `pillFoot` the aid pill's before it,
  * and `aidRoom` what the aid's lines take under the cue whether shown or not.
@@ -430,6 +446,7 @@ function measureFit(els: FitElements, offerFoot: number, pillFoot: number, aidRo
     frontRoom: cardHeight(room) - chrome - pillFoot,
     back: front + px(columnStyle.rowGap) + must,
     backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - offerFoot,
+    words: Array.from(section.querySelectorAll<HTMLElement>("[data-fit-words]")).every(wordsFit),
   };
 }
 
@@ -565,9 +582,11 @@ export function ReviewCard({
       setFit({ ...fit, settled: true });
       return;
     }
-    const fits = m.front <= m.frontRoom && m.back <= m.backRoom;
+    const fits = m.front <= m.frontRoom && m.back <= m.backRoom && m.words;
     setFit(
-      !fits && fit.step < TEXT_STEPS ? { ...fit, step: fit.step + 1 } : { ...fit, settled: true },
+      !fits && fit.step < TEXT_STEPS
+        ? { ...fit, step: fit.step + 1 }
+        : { ...fit, settled: true, overlong: !m.words },
     );
   }, [fit]);
 
@@ -604,6 +623,7 @@ export function ReviewCard({
   }, []);
 
   const step = fit.step;
+  const overlong = fit.overlong && "overlong-text";
   const shownAfter = !!aid && revealed && aid.shown;
   // Taken before the reveal or shown after it, the aid has one place: under the cue, where it stays.
   const aidsOnShow = aid
@@ -730,10 +750,12 @@ export function ReviewCard({
           {mode.target === "term" ? (
             <>
               <motion.p
+                data-fit-words
                 variants={answerLine}
                 className={clsx(
                   "hyphenate font-medium leading-[1.2] text-ink [overflow-wrap:anywhere]",
                   TERM_SIZE[step],
+                  overlong,
                 )}
                 lang={card.language ?? undefined}
                 dir={textDirection(card.language)}
@@ -772,10 +794,12 @@ export function ReviewCard({
               {picture && (
                 <>
                   <motion.p
+                    data-fit-words
                     variants={answerLine}
                     className={clsx(
                       "hyphenate leading-[1.35] text-ink-secondary [overflow-wrap:anywhere]",
                       CONTEXT_SIZE[step],
+                      overlong,
                     )}
                     lang={card.language ?? undefined}
                   >
@@ -940,11 +964,13 @@ export function ReviewCard({
                 ) : (
                   <>
                     <p
+                      data-fit-words
                       lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
                       dir={mode.cue === "term" ? textDirection(card.language) : "auto"}
                       className={clsx(
                         "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-ink [overflow-wrap:anywhere]",
                         CUE_SIZE[step],
+                        overlong,
                       )}
                     >
                       {mode.cue === "term" ? (

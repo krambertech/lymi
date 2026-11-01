@@ -14,7 +14,7 @@ const SIZE = 44;
 
 /**
  * A screen presented as a sheet gets iOS's clear glass, which shows too much through; the sheet
- * colour at 70% frosts it to match the system sheets. Before iOS 26, the sheet colour.
+ * colour at 50% frosts it to match the system sheets. Before iOS 26, the sheet colour.
  */
 export function useFrost() {
   const sheet = usePalette().sheet;

@@ -1,6 +1,6 @@
 import { SNAP_BACK } from "@lymi/design";
 import { type ReactNode, useEffect } from "react";
-import { Platform, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
@@ -12,11 +12,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { haptics } from "../theme/haptics";
 import { spring } from "../theme/motion";
-import { usePalette } from "../theme/palette";
+import { usePalette, useRoom } from "../theme/palette";
 import { Icon } from "./icons";
 
 const SETTLE = spring(SNAP_BACK);
-const android = Platform.OS === "android";
 
 /**
  * Every row is one height, so a dragged row's slot is its offset divided by it; the height grows
@@ -86,6 +85,8 @@ function DragRow({
   render: (handle: ReactNode) => ReactNode;
 }) {
   const p = usePalette();
+  // Black, as the room's ink glows at night; the row fills its plate, so a token's negative spread would hide it.
+  const drop = `0 8px 14px #000000${useRoom() === "dark" ? "80" : "2e"}`;
   const y = useSharedValue(start * row);
   const from = useSharedValue(0);
   const lifted = useSharedValue(false);
@@ -128,29 +129,21 @@ function DragRow({
       y.value = withSpring((positions.value[id] ?? 0) * row, SETTLE);
       runOnJS(onDrop)(positions.value);
     });
-  // Android draws no iOS shadow props, so the lifted row takes the same shadow as a box shadow.
-  const lift = `0 8px 14px ${p.ink}2e`;
   const style = useAnimatedStyle(() => ({
     transform: [{ translateY: y.value }, { scale: withSpring(lifted.value ? 1.03 : 1, SETTLE) }],
     zIndex: lifted.value ? 1 : 0,
-    ...(android
-      ? { boxShadow: lifted.value ? lift : "0 0 0 transparent" }
-      : { shadowOpacity: withSpring(lifted.value ? 0.18 : 0, SETTLE) }),
     borderTopWidth: (positions.value[id] ?? 0) > 0 && !lifted.value ? 1 : 0,
   }));
+  const shadow = useAnimatedStyle(() => ({ opacity: withSpring(lifted.value ? 1 : 0, SETTLE) }));
   return (
     <Animated.View
       className="absolute inset-x-0 top-0 border-edge"
-      style={[
-        {
-          height: row,
-          shadowColor: p.ink,
-          shadowRadius: 14,
-          shadowOffset: { width: 0, height: 8 },
-        },
-        style,
-      ]}
+      style={[{ height: row }, style]}
     >
+      <Animated.View
+        pointerEvents="none"
+        style={[StyleSheet.absoluteFill, { boxShadow: drop }, shadow]}
+      />
       {render(
         <GestureDetector gesture={pan}>
           <View className="h-11 w-11 items-center justify-center">

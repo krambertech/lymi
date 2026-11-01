@@ -5,7 +5,6 @@ import { type Href, useRouter } from "expo-router";
 import { View } from "react-native";
 import { ASSISTANTS } from "../apps/catalog";
 import { AppGlyph } from "../apps/marks";
-import { usePalette } from "../theme/palette";
 import { Button, Plate, Press, Text } from "../ui/primitives";
 
 /** The assistants the offer shows, in the order a learner is likeliest to have one. */
@@ -23,7 +22,6 @@ export function useAssistantOffer() {
  */
 export function AssistantOffer({ onConnect }: { onConnect: () => void }) {
   const { t } = useLingui();
-  const p = usePalette();
   const router = useRouter();
   return (
     <Plate className="gap-3 p-4">
@@ -40,11 +38,8 @@ export function AssistantOffer({ onConnect }: { onConnect: () => void }) {
             style={{ marginStart: i === 0 ? -2 : -6, zIndex: SHOWN.length - i }}
           >
             {/* The plate's own colour around each tile cuts it out of the one it overlaps. */}
-            <View style={{ borderRadius: 13, padding: 2, backgroundColor: p.plate }}>
-              <View
-                className="size-10 items-center justify-center border border-edge bg-plate"
-                style={{ borderRadius: 11 }}
-              >
+            <View className="rounded-md bg-plate p-0.5">
+              <View className="size-10 items-center justify-center rounded-sm border border-edge bg-plate">
                 {a.app && <AppGlyph app={a.app} size={20} />}
               </View>
             </View>

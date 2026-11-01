@@ -49,7 +49,6 @@ import {
   StyleSheet,
   TextInput,
   type TextInputProps,
-  useColorScheme,
   useWindowDimensions,
   View,
   type ViewStyle,
@@ -114,7 +113,7 @@ import { reportHref } from "../sharing/report";
 import { captureEvent } from "../telemetry/posthog";
 import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
-import { usePalette } from "../theme/palette";
+import { usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { Chip, StateChip } from "../ui/chip";
 import { Furigana } from "../ui/furigana";
@@ -970,7 +969,7 @@ function CardPlate({
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
-  const dark = useColorScheme() === "dark";
+  const dark = useRoom() === "dark";
   const reduce = useReduceMotion();
   const nudge = useRevealNudge(onReveal ? `${card.id}:${modeKey(mode)}` : null, revealed);
   const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
@@ -1435,7 +1434,7 @@ function GradeStrip({
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
-  const dark = useColorScheme() === "dark";
+  const dark = useRoom() === "dark";
   const reduce = useReduceMotion();
   const why = t`You can’t choose Easy after peeking at your hint.`;
   const [tip, setTip] = useState(false);

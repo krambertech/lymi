@@ -45,7 +45,7 @@ The phone streak opens as a peek sheet showing the current streak and today’s 
 
 The phone's components are in `apps/mobile/src/ui` under the web's names, and follow [forms.md](forms.md), [buttons.md](buttons.md) and [chips-and-marks.md](chips-and-marks.md). They differ in these ways:
 
-- Every control is 44 pt, so a `md` button is 44 pt tall and `sm` reaches 44 pt through its hit area.
+- Every control is 44 pt, so a `md` button is at least 44 pt tall and `sm` reaches 44 pt through its hit area. Button heights are floors: a label grown by Dynamic Type grows the button, and a long one wraps.
 - `xl` is Today's Review button alone, 64 pt with a 20 pt label as on the web. Buttons that stack at the foot, such as the end of a review and Welcome's Continue, are `lg`, 48 pt, since three at 64 pt outweighed the count above them.
 - `Sheet` uses iOS presentation, supports dragging and sizes to its content. Centre the title and description. `SheetHeading`, `SheetNote` and `SheetError` align 16 pt inside a panel; use their shared insets. Row groups are inset 16 pt from the sheet edge and separated by 12 pt, with full-width dividers and 52 pt rows. Reserve icon or check slots consistently within a group. Use red for removal, a check for selection, a muted chevron for navigation and `value` for a trailing count. Peek sheets expand to full height, where iOS makes the background opaque.
 - `Select` uses sheet rows with optional descriptions and applies a choice after dismissal. For more than fifteen fixed options, use a searchable list: focus search on open, keep the list height fixed, highlight the first match for Return, dismiss the keyboard on drag and let the first tap select a row even with the keyboard open. [Sheets](#sheets) defines the presentation types.

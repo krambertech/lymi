@@ -53,9 +53,12 @@ async function upstream(request: Request): Promise<Response> {
   if (!url.startsWith(`${gateway}/`)) return new Response("Unexpected host", { status: 404 });
   const path = url.slice(gateway.length);
   if (path === "/openai/chat/completions") {
-    return json({
-      choices: [{ message: { content: '{"ok":true,"previousText":null}' }, finish_reason: "stop" }],
-    });
+    const { response_format } = (await request.json()) as {
+      response_format?: { json_schema?: { name?: string } };
+    };
+    const content =
+      response_format?.json_schema?.name === "lead_in" ? '{"previousText":null}' : '{"ok":true}';
+    return json({ choices: [{ message: { content }, finish_reason: "stop" }] });
   }
   if (path === "/openai/audio/speech" || path.startsWith("/elevenlabs/v1/text-to-speech/")) {
     return audio();

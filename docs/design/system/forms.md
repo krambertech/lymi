@@ -25,7 +25,7 @@ Use Select for short lists and Combobox for long searchable lists. `ToggleGroup 
 
 ## The control box
 
-Controls are 44 px tall on narrow screens and 40 px on desktop. Touch inputs, including on tablets, use 16 px text to prevent iOS zoom. Input, Select and Combobox use `controlSize` from `components/ui/input.tsx`; Textarea uses `controlText` and grows with its content. Keep these sizes consistent, including the form’s main field.
+Controls are 44 px tall on narrow screens and 40 px on desktop. Touch inputs, including on tablets, use 16 px text to prevent iOS zoom. Input, Select and Combobox use `controlSize` from `components/ui/input.tsx`; Textarea uses `controlText` and grows with its content. Keep these sizes consistent, including the form’s main field. A bare input in its own frame, such as the command menu’s or a hint’s, keeps the 16 px on touch the same way: `text-[1rem]`, with its smaller size behind `md:hoverable:`.
 
 Size controls by the **viewport**. Sheets render in portals that may have no query container, so container queries are unsuitable for this sizing.
 

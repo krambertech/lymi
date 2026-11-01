@@ -44,6 +44,7 @@ import { cardSearchQuery, cardTermQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";
 import { toggleTheme } from "../lib/theme";
+import { InlineError } from "./inline-error";
 import { Kbd } from "./kbd";
 import { ShortcutsDialog } from "./shortcuts-dialog";
 import {
@@ -336,6 +337,11 @@ export function CommandMenu({
     settled === query &&
     (q.fetchStatus === "paused" || q.isError || (q.isSuccess && !q.isFetching));
   const searched = landed(search) && !search.isPlaceholderData;
+  // Without an answer for this text, an empty list says nothing about the learner's cards.
+  const searchFailed =
+    searchable &&
+    (search.isError || search.fetchStatus === "paused") &&
+    (!search.data || search.isPlaceholderData);
   // Whether the term is already in the target deck, asked of the server exactly as the duplicate rule compares it.
   const termCheck = useQuery({
     ...cardTermQuery(target?.id ?? "", settled),
@@ -544,8 +550,20 @@ export function CommandMenu({
               })}
             </CommandGroup>
           ))}
-          {groups.length === 0 && !addRow && (!searchable || searched) && (
-            <CommandEmpty>{bidi(t`Nothing matches “${isolate(shortQuote(query))}”`)}</CommandEmpty>
+          {searchFailed ? (
+            <CommandEmpty role="alert">
+              <InlineError>
+                {t`Couldn’t search cards. Check your connection and try again.`}
+              </InlineError>
+            </CommandEmpty>
+          ) : (
+            groups.length === 0 &&
+            !addRow &&
+            (!searchable || searched) && (
+              <CommandEmpty>
+                {bidi(t`Nothing matches “${isolate(shortQuote(query))}”`)}
+              </CommandEmpty>
+            )
           )}
         </CommandList>
       </CommandPalette>

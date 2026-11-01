@@ -151,7 +151,7 @@
     transform: translate(var(--x), var(--y)) scale(0.3);
   }
 }
-.seq-skip :is(.seq, .seq-count, .light-on, .light-pool, .ember),
+.seq-skip :is(.seq, .seq-count, .light-on, .light-pool, .ember:not(.ember-again)),
 .room-light[data-skip] {
   animation-delay: 0ms;
   animation-duration: 1ms;

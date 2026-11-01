@@ -66,7 +66,7 @@ import {
 } from "../components/hint-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
-import { embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
+import { Embers, embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
 import { PitchChart } from "../components/pitch-chart";
 import { Progress } from "../components/progress";
 import {
@@ -100,6 +100,8 @@ export interface ReviewHeaderProps {
   animateCount?: boolean | undefined;
   /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
   streak?: StreakSummary | undefined;
+  /** Where the first review's end has got to, in the lantern's place once it has moved. */
+  steps?: ReactNode | undefined;
   /** The review has stopped: the lantern has moved to the end screen and the track steps back. */
   complete?: boolean | undefined;
   /** The cards have not arrived, so there is no count yet: a "0/0" read as an empty review. */
@@ -108,7 +110,7 @@ export interface ReviewHeaderProps {
 }
 
 /** The lantern is one object carried between the header and the end of a review. */
-const LANTERN_LAYOUT = "review-lantern";
+export const LANTERN_LAYOUT = "review-lantern";
 
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
@@ -128,6 +130,7 @@ export function ReviewHeader({
   complete = false,
   loading = false,
   onClose,
+  steps,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
   const reduce = useReduceMotion();
@@ -150,6 +153,7 @@ export function ReviewHeader({
             <Lantern className="size-full" {...lanternFor(streak)} fed={attempts} flicker glow />
           </motion.span>
         )}
+        {complete && steps && <span className="flex h-full items-center ps-[11.5px]">{steps}</span>}
       </span>
       <motion.span
         className="flex min-w-0 flex-1 items-center gap-3"
@@ -307,6 +311,10 @@ export interface ReviewCardProps {
   animateIn?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
   nudge?: boolean | undefined;
+  /** The first review's note under the cue, which the lantern's light falls on, in place of the nudge. */
+  cueTip?: ReactNode | undefined;
+  /** The first review's cover over the whole plate. */
+  cover?: ReactNode | undefined;
   /** Focus the reveal, for a learner who graded the card before this one from the grade buttons. */
   focusOnMount?: boolean | undefined;
   onReveal: () => void;
@@ -454,6 +462,8 @@ export function ReviewCard({
   animateReveal = true,
   animateIn = false,
   nudge = false,
+  cueTip,
+  cover,
   focusOnMount = false,
   onReveal,
   onPlayAudio,
@@ -926,7 +936,20 @@ export function ReviewCard({
               transition={{ layout: cueGlide ? REVEAL_GLIDE : INSTANT }}
               className="relative grid grid-cols-[minmax(0,1fr)] gap-3"
             >
-              <div ref={cueTextRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
+              {/* The lantern's light blooms on the word the first review asks about. */}
+              <AnimatePresence>
+                {cueTip && !revealed && (
+                  <motion.span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-x-8 -top-8 h-32 rounded-full bg-amber-tint blur-2xl"
+                    initial={{ opacity: 0, scale: reduce ? 1 : 0.6 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                    transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.15 }}
+                  />
+                )}
+              </AnimatePresence>
+              <div ref={cueTextRef} className="relative grid grid-cols-[minmax(0,1fr)] gap-3">
                 {mode.cue === "image" ? (
                   card.image ? (
                     // One size before and after reveal, on the start edge like the text under it.
@@ -992,6 +1015,7 @@ export function ReviewCard({
                   </>
                 )}
               </div>
+              <AnimatePresence>{!revealed && cueTip}</AnimatePresence>
               {/* Popped out of the flow as it leaves, so the cue glides back while the lines fade. */}
               <AnimatePresence mode="popLayout" initial={false} custom={aidGone?.animate ?? false}>
                 {aid && aidsOnShow > 0 && (
@@ -1095,12 +1119,15 @@ export function ReviewCard({
             </div>
           )}
           <AnimatePresence>
-            {!revealed && nudge && <TapNudge lifted={!!aid} aided={!!aid && aid.taken > 0} />}
+            {!revealed && nudge && !cueTip && (
+              <TapNudge lifted={!!aid} aided={!!aid && aid.taken > 0} />
+            )}
           </AnimatePresence>
         </div>
         {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
         {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
+      <AnimatePresence>{cover}</AnimatePresence>
       {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
         <div
@@ -1424,6 +1451,22 @@ export interface ReviewCompleteProps {
   addCards?: ReactNode | undefined;
   /** Move focus to the heading, so it is announced and Tab starts at the choices. */
   focusOnMount?: boolean | undefined;
+  /** The heading in place of the usual one, for the account's first review. */
+  title?: ReactNode | undefined;
+  /** The line beside the flame in place of the run. */
+  runNote?: ReactNode | undefined;
+  /** The first review's end: the lantern holds its place at the top and the way on sits at the foot. */
+  pinned?: boolean | undefined;
+  /** In place of everything under the lantern but the ways on. */
+  beat?: ReactNode | undefined;
+  /** In place of the ways on. */
+  foot?: ReactNode | undefined;
+  /** Continue's wording, without its count. */
+  continueLabel?: ReactNode | undefined;
+  /** The way on when there is nothing to continue. */
+  more?: ReactNode | undefined;
+  /** Changing it throws a new burst of embers. */
+  burst?: number | undefined;
 }
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
@@ -1443,6 +1486,14 @@ export function ReviewComplete({
   done,
   addCards,
   focusOnMount = false,
+  title,
+  runNote,
+  pinned = false,
+  beat,
+  foot,
+  continueLabel,
+  more,
+  burst = 0,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
   const reduce = !!useReduceMotion();
@@ -1526,13 +1577,19 @@ export function ReviewComplete({
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
       <div
         ref={room}
-        className="relative m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8"
+        className={clsx(
+          "relative flex w-full max-w-sm flex-col items-center text-center",
+          pinned ? "mx-auto flex-1 pt-2 @3xl:flex-none @3xl:pt-[6dvh]" : "m-auto py-4 @3xl:py-8",
+        )}
       >
         {turned && !skipped && <TurnSpark lantern={lanternPlace} room={room} />}
         {lit && (
           <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
         )}
-        <div ref={lanternPlace} className="mb-1 size-32 @3xl:size-44">
+        <div
+          ref={lanternPlace}
+          className={clsx("mb-1 size-32", pinned ? "@3xl:size-36 short:size-20!" : "@3xl:size-44")}
+        >
           <motion.div
             {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
             transition={LANTERN_FLIGHT}
@@ -1553,143 +1610,179 @@ export function ReviewComplete({
                 glow
               />
             </LanternLight>
+            {burst > 0 && <Embers key={burst} embers={embers} at={120} again />}
           </motion.div>
         </div>
 
-        <h2
-          ref={heading}
-          id={headingId}
-          tabIndex={-1}
-          className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
-          style={at(AT.heading)}
-        >
-          {screen.heading === "goal_reached" ? (
-            <Trans>Daily goal reached</Trans>
-          ) : screen.heading === "day_done" ? (
-            <Trans>You’re done for today</Trans>
-          ) : screen.heading === "scope_done" ? (
-            scopeName ? (
-              <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
-            ) : (
-              <Trans>Nothing left in this deck</Trans>
-            )
-          ) : screen.heading === "nothing_due" ? (
-            <Trans>Nothing due</Trans>
-          ) : screen.heading === "round_done" ? (
-            <Trans>Round done</Trans>
-          ) : (
-            <Trans>Review done</Trans>
-          )}
-        </h2>
-
-        {counted ? (
-          <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
-            <span
-              className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-ink @3xl:text-7xl"
-              style={at(AT.count)}
+        <AnimatePresence mode="wait" initial={false}>
+          {beat ?? (
+            <motion.div
+              key="told"
+              className="flex w-full flex-col items-center"
+              exit={{ opacity: 0, transition: { duration: 0.14 } }}
             >
-              <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
-            </span>
-            <span className="seq text-md text-ink-secondary" style={at(AT.count + 80)}>
-              {/* While the goal is open the count says it, so Continue's count explains itself. */}
-              {!screen.satisfied && goal ? (
-                <Plural value={goal} one="of # review today" other="of # reviews today" />
-              ) : (
-                <Plural value={attempts} one="review today" other="reviews today" />
-              )}
-            </span>
-          </p>
-        ) : (
-          <p
-            className="seq mt-2 max-w-[32ch] text-pretty text-md text-ink-secondary"
-            style={at(AT.count)}
-          >
-            <Trans>Come back later, or add new cards.</Trans>
-          </p>
-        )}
+              <h2
+                ref={heading}
+                id={headingId}
+                tabIndex={-1}
+                className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
+                style={at(AT.heading)}
+              >
+                {title ? (
+                  title
+                ) : screen.heading === "goal_reached" ? (
+                  <Trans>Daily goal reached</Trans>
+                ) : screen.heading === "day_done" ? (
+                  <Trans>You’re done for today</Trans>
+                ) : screen.heading === "scope_done" ? (
+                  scopeName ? (
+                    <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
+                  ) : (
+                    <Trans>Nothing left in this deck</Trans>
+                  )
+                ) : screen.heading === "nothing_due" ? (
+                  <Trans>Nothing due</Trans>
+                ) : screen.heading === "round_done" ? (
+                  <Trans>Round done</Trans>
+                ) : (
+                  <Trans>Review done</Trans>
+                )}
+              </h2>
 
-        {week && days && (
-          <div className="mt-6 grid justify-items-center gap-3 @3xl:mt-8">
-            <SevenLights
-              days={days.attempts}
-              satisfied={days.satisfied}
-              rest={days.rest}
-              goals={days.goals}
-              dates={days.dates}
-              size="lg"
-              sequence={AT.lights}
-              flare={landed && turned}
-            />
-            <p
-              className="seq flex items-center gap-2 text-md text-ink-secondary"
-              style={at(AT.run)}
-            >
-              <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
-                <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
-              </span>
-              {run ? (
-                <>
-                  <span className="inline-flex overflow-hidden font-semibold tabular-nums text-ink">
-                    <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
-                      {run}
-                    </span>
+              {counted ? (
+                <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
+                  <span
+                    className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-ink @3xl:text-7xl"
+                    style={at(AT.count)}
+                  >
+                    <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
                   </span>
-                  <Plural value={run} one="day in a row" other="days in a row" />
-                </>
+                  <span className="seq text-md text-ink-secondary" style={at(AT.count + 80)}>
+                    {/* While the goal is open the count says it, so Continue's count explains itself. */}
+                    {!screen.satisfied && goal ? (
+                      <Plural value={goal} one="of # review today" other="of # reviews today" />
+                    ) : (
+                      <Plural value={attempts} one="review today" other="reviews today" />
+                    )}
+                  </span>
+                </p>
               ) : (
-                <span className="font-medium text-ink">
-                  <StreakStart summary={streak ?? week} />
-                </span>
+                <p
+                  className="seq mt-2 max-w-[32ch] text-pretty text-md text-ink-secondary"
+                  style={at(AT.count)}
+                >
+                  <Trans>Come back later, or add new cards.</Trans>
+                </p>
               )}
-            </p>
-          </div>
-        )}
+
+              {week && days && (
+                <div className="mt-6 grid justify-items-center gap-3 @3xl:mt-8">
+                  <SevenLights
+                    days={days.attempts}
+                    satisfied={days.satisfied}
+                    rest={days.rest}
+                    goals={days.goals}
+                    dates={days.dates}
+                    size="lg"
+                    sequence={AT.lights}
+                    flare={landed && turned}
+                  />
+                  <p
+                    className="seq flex items-center gap-2 text-md text-ink-secondary"
+                    style={at(AT.run)}
+                  >
+                    <span
+                      data-run-flame
+                      className={clsx("flex", ticked && turned && "flame-catch")}
+                    >
+                      <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+                    </span>
+                    {runNote ? (
+                      <span className="font-medium text-ink">{runNote}</span>
+                    ) : run ? (
+                      <>
+                        <span className="inline-flex overflow-hidden font-semibold tabular-nums text-ink">
+                          <span
+                            key={run}
+                            className={clsx("block", ticked && turned && "run-catch")}
+                          >
+                            {run}
+                          </span>
+                        </span>
+                        <Plural value={run} one="day in a row" other="days in a row" />
+                      </>
+                    ) : (
+                      <span className="font-medium text-ink">
+                        <StreakStart summary={streak ?? week} />
+                      </span>
+                    )}
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
         <div
-          className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
+          className={clsx(
+            "grid w-full gap-2.5",
+            pinned
+              ? "mt-auto pt-6 @3xl:mt-0 @3xl:pt-7 [@media(max-height:480px)]:sticky [@media(max-height:480px)]:bottom-3 [@media(max-height:480px)]:z-10 [@media(max-height:480px)]:bg-linear-to-t [@media(max-height:480px)]:from-canvas [@media(max-height:480px)]:from-80%"
+              : "mt-6 @3xl:mt-8",
+            !instant && "pointer-events-none",
+          )}
         >
           {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is always last and primary. */}
-          {ways.map((way, i) => (
-            <Button
-              key={way.key}
-              size="lg"
-              onClick={way.onClick}
-              className="seq w-full"
-              style={at(AT.actions + i * AT.actionStep)}
-            >
-              <StateIcon state="forgot" className="size-4" />
-              {way.label}
-            </Button>
-          ))}
-          <div className="seq grid gap-2" style={at(actionsAt)}>
-            {!counted ? (
-              <>
-                {addCards}
-                {done("primary")}
-              </>
-            ) : (
-              <>
-                {proceed && (
-                  <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
-                    <Trans>Continue</Trans>
-                    {note && (
-                      <span className="font-normal tabular-nums text-ink-muted">
-                        {note.kind === "goal" ? (
-                          <Plural value={note.count} one="# to goal" other="# to goal" />
-                        ) : note.kind === "cards" ? (
-                          <Plural value={note.count} one="# card left" other="# cards left" />
-                        ) : (
-                          <Trans>other decks</Trans>
-                        )}
-                      </span>
-                    )}
-                  </Button>
-                )}
-                {done("primary")}
-              </>
-            )}
-          </div>
+          {foot ? (
+            <div className="seq" style={at(actionsAt)}>
+              {foot}
+            </div>
+          ) : (
+            ways.map((way, i) => (
+              <Button
+                key={way.key}
+                size="lg"
+                onClick={way.onClick}
+                className="seq w-full"
+                style={at(AT.actions + i * AT.actionStep)}
+              >
+                <StateIcon state="forgot" className="size-4" />
+                {way.label}
+              </Button>
+            ))
+          )}
+          {!foot && (
+            <div className="seq grid gap-2" style={at(actionsAt)}>
+              {!counted ? (
+                <>
+                  {addCards}
+                  {done("primary")}
+                </>
+              ) : (
+                <>
+                  {!proceed && more}
+                  {proceed && (
+                    <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
+                      {continueLabel ?? <Trans>Continue</Trans>}
+                      {note && (
+                        <span className="font-normal tabular-nums text-ink-muted">
+                          {note.kind === "goal" ? (
+                            <Plural value={note.count} one="# to goal" other="# to goal" />
+                          ) : note.kind === "cards" ? (
+                            <Plural value={note.count} one="# card left" other="# cards left" />
+                          ) : (
+                            <Trans>other decks</Trans>
+                          )}
+                        </span>
+                      )}
+                    </Button>
+                  )}
+                  {done("primary")}
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

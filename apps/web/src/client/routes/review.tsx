@@ -1,4 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useDailyGoal } from "@lymi/client/daily-goal";
+import { nextCards, reminderChoices } from "@lymi/client/first-review";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { type Offer, streakAsOf, streakWith } from "@lymi/client/review-end";
@@ -25,6 +27,19 @@ import { Button } from "../components/button";
 import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import {
+  type FanCard,
+  type FirstEndLeft,
+  FirstReviewTitle,
+  FirstStreakNote,
+  firstEndParts,
+  firstReviewOpen,
+  firstReviewTeaches,
+  type PlanStep,
+  rememberFirstReview,
+  useReminder,
+} from "../components/first-plan";
+import { ComesBack, CueTip, GradesTip, useComesBack } from "../components/first-review";
 import { GRADES } from "../components/grade";
 import { HintEditor } from "../components/hint-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
@@ -36,9 +51,10 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
+import { isGuiding } from "../lib/first-run";
 import { lastInputWasKey } from "../lib/last-input";
 import { playAlone } from "../lib/now-playing";
-import { sectionsQuery, streakQuery } from "../lib/queries";
+import { insightsQuery, roundsQuery, sectionsQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
@@ -142,6 +158,16 @@ function Review() {
   const { data, state, left, mark, current, until, stopped, position: done, decks } = flow;
   const listed = !!round || !!cards;
   const streak = useQuery(streakQuery);
+  // Settled once, on the streak as this review opened, so its own grades never change the answer.
+  const sessionFirst = useRef<boolean | null>(null);
+  const resumedFirst = useRef(false);
+  const reviewedCards = useRef<FanCard[]>([]);
+  if (sessionFirst.current === null && streak.data && !streak.isFetching) {
+    const hand = isGuiding(streak.data) ? null : firstReviewOpen(streak.data);
+    resumedFirst.current = !!hand;
+    reviewedCards.current = hand ?? [];
+    sessionFirst.current = isGuiding(streak.data) || !!hand;
+  }
   const [revealed, setRevealed] = useState(false);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
@@ -384,6 +410,29 @@ function Review() {
     const key = modeKey(current.mode);
     return state.log.filter((e) => e.cardId === current.card.id && e.mode === key);
   }, [current, state]);
+  const repeat = gradedToday.length > 0;
+
+  // The account's first review teaches itself: each tip once, bound to the card it first showed on.
+  const [tipsOff, setTipsOff] = useState(false);
+  const [tipFor, setTipFor] = useState<{ first?: string; returned?: string; grades?: string }>({});
+  const [teaches] = useState(firstReviewTeaches);
+  const tipsOn =
+    !!current && !!sessionFirst.current && !resumedFirst.current && teaches && !tipsOff;
+  const owns = (key: string | undefined) => key === undefined || key === showing;
+  const firstTip = tipsOn && !revealed && !repeat && done === 0 && owns(tipFor.first);
+  const returnedTip =
+    tipsOn && !revealed && gradedToday.some((e) => e.rating === 1) && owns(tipFor.returned);
+  const comesBack = useComesBack(current?.next, state?.day.end);
+  const gradesTip = tipsOn && revealed && !!comesBack && owns(tipFor.grades);
+  if (firstTip && tipFor.first === undefined) setTipFor((t) => ({ ...t, first: showing }));
+  if (returnedTip && tipFor.returned === undefined) setTipFor((t) => ({ ...t, returned: showing }));
+  if (gradesTip && tipFor.grades === undefined) setTipFor((t) => ({ ...t, grades: showing }));
+  // After the first grade, the card gives way to a screen that says when it comes back.
+  const [cameBack, setCameBack] = useState<{
+    card: FanCard;
+    rating: Rating;
+    back: NonNullable<typeof comesBack>;
+  } | null>(null);
   const takeAid = useCallback(
     (input: "keyboard" | "pointer") => {
       if (revealed || taken >= steps.length) return;
@@ -438,8 +487,30 @@ function Review() {
     [revealed, current, aid, showing, recallTimes, flow.grade, qc, t],
   );
 
+  const grade = useCallback(
+    (rating: Rating, input: "keyboard" | "pointer") => {
+      if (
+        current &&
+        gradeAllowed(rating, aid) &&
+        !reviewedCards.current.some((card) => card.term === current.card.term)
+      )
+        reviewedCards.current.push(current.card);
+      if (sessionFirst.current && teaches) rememberFirstReview(reviewedCards.current);
+      if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
+        setCameBack({ card: current.card, rating, back: comesBack });
+      onGrade(rating, input);
+    },
+    [gradesTip, comesBack, current, aid, onGrade, teaches],
+  );
+
+  // The first review's end while it shows, read by the key handler, which outlives renders.
+  const firstEndKeys = useRef<{ advance?: (() => void) | undefined; close: () => void } | null>(
+    null,
+  );
+
   // Leaving mid-leg ends on the success screen, unless nothing was added since the last one.
   const leave = useCallback(() => {
+    setCameBack(null);
     if (!flow.pause()) void navigate({ to: "/today" });
   }, [flow.pause, navigate]);
 
@@ -449,6 +520,7 @@ function Review() {
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
       if (add.open || writingHint || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
+        firstEndKeys.current?.close();
         leave();
         return;
       }
@@ -456,6 +528,26 @@ function Review() {
       const control = target?.closest(
         "button, a, input, textarea, select, [contenteditable='true']",
       );
+      if (cameBack) {
+        // The grade just pressed keeps focus for as long as the card takes to leave.
+        const own = control && !control.closest("[data-grade-strip]");
+        if (!own && (e.key === " " || e.key === "Enter")) {
+          e.preventDefault();
+          setCameBack(null);
+        }
+        return;
+      }
+      const advance = firstEndKeys.current?.advance;
+      if (
+        advance &&
+        (e.key === " " || e.key === "Enter") &&
+        !control &&
+        !target?.closest("[role='radio']")
+      ) {
+        e.preventDefault();
+        advance();
+        return;
+      }
       // The aid's key also reaches the card's reveal button, where grading from the strip leaves
       // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
       if (current && e.code === AID_KEY.code) {
@@ -483,18 +575,19 @@ function Review() {
           setAnimateReveal(false);
           setFocusGrades(false);
           setRevealed(true);
-        } else onGrade(3, "keyboard");
+        } else grade(3, "keyboard");
       }
       if (g) {
         e.preventDefault();
-        onGrade(g.rating, "keyboard");
+        grade(g.rating, "keyboard");
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [
     revealed,
-    onGrade,
+    grade,
+    cameBack,
     takeAid,
     showAid,
     leave,
@@ -631,6 +724,72 @@ function Review() {
     </Button>
   );
 
+  // Once: after Review more cards, the next end is an ordinary one.
+  const firstEndOver = useRef(false);
+  const firstEnd = !!sessionFirst.current && teaches && !firstEndOver.current && !!end;
+  const [endStep, setEndStep] = useState<PlanStep>("summary");
+  const forecast = useQuery({ ...insightsQuery(30), enabled: firstEnd });
+  const rounds = useQuery({ ...roundsQuery, enabled: firstEnd });
+  const reminder = useReminder(firstEnd);
+  const dailyGoal = useDailyGoal();
+  // Held here, because a finished day's streak keeps the goal it was finished against.
+  const [chosenGoal, setChosenGoal] = useState<number | undefined>(undefined);
+  const goalFailed = dailyGoal.status === "error";
+  const endGoal = (goalFailed ? undefined : chosenGoal) ?? data?.goal ?? 25;
+  const next = nextCards(forecast.data?.forecast, endGoal);
+  const [choices] = useState(() => reminderChoices(new Date()));
+  const [part, setPart] = useState(choices.part);
+  const goalAtEnd = useRef<number | undefined>(undefined);
+  if (firstEnd && data) goalAtEnd.current ??= data.goal;
+  const endLeft = useRef(false);
+  // A card added from the last screen is reviewed like any other, and that end is an ordinary one.
+  if (endLeft.current && !end) firstEndOver.current = true;
+  const leaveFirstEnd = (left: FirstEndLeft) => {
+    const r = reminder.reminder;
+    // The sheet opens over the last screen, which stays until a card brings the review back.
+    if (left !== "add_cards") firstEndOver.current = true;
+    if (endLeft.current) return;
+    endLeft.current = true;
+    rememberFirstReview(null);
+    captureAnalytics("first_review_end_left", {
+      step: endStep,
+      left,
+      goal: endGoal,
+      goal_changed: endGoal !== goalAtEnd.current,
+      reminder:
+        r === "on"
+          ? "on"
+          : r === "denied"
+            ? "blocked"
+            : r === "install" || r === "none"
+              ? "unavailable"
+              : "off",
+      tips_skipped: tipsOff,
+    });
+  };
+  const firstParts = firstEnd
+    ? firstEndParts({
+        step: endStep,
+        onStep: setEndStep,
+        cards: reviewedCards.current,
+        next,
+        fresh: !!next && next.count <= (rounds.data?.new ?? 0),
+        goal: endGoal,
+        goalFailed,
+        onGoal: (n) => {
+          setChosenGoal(n);
+          dailyGoal.change(n);
+        },
+        control: reminder,
+        times: choices.times,
+        part,
+        onPart: setPart,
+      })
+    : null;
+  firstEndKeys.current = firstEnd
+    ? { advance: firstParts?.advance, close: () => leaveFirstEnd("closed") }
+    : null;
+
   return (
     <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
@@ -647,9 +806,13 @@ function Review() {
             : undefined
         }
         streak={streakNow}
-        complete={!!end}
+        complete={!!end && !cameBack}
         loading={!data && !failed}
-        onClose={leave}
+        onClose={() => {
+          if (firstEnd) leaveFirstEnd("closed");
+          leave();
+        }}
+        steps={firstParts?.steps}
       />
 
       {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
@@ -681,7 +844,7 @@ function Review() {
 
       {/* The card steps back as the end arrives, popped out of the flow so the two overlap. */}
       <AnimatePresence mode="popLayout" initial={false}>
-        {end && data && state && (
+        {end && !cameBack && data && state && (
           <motion.div
             key="end"
             className="flex min-h-0 flex-1 flex-col"
@@ -697,7 +860,51 @@ function Review() {
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
               focusOnMount
               onOffer={onOffer}
-              done={doneLink}
+              done={
+                firstEnd
+                  ? (variant) => (
+                      <Button
+                        variant={variant}
+                        size="lg"
+                        className="w-full"
+                        render={<Link to="/today" />}
+                        onClick={() => leaveFirstEnd("done")}
+                      >
+                        <Trans>Done</Trans>
+                      </Button>
+                    )
+                  : doneLink
+              }
+              {...(firstEnd && {
+                pinned: true,
+                title: <FirstReviewTitle stopped={!end.satisfied} />,
+                runNote: (
+                  <FirstStreakNote
+                    left={end.satisfied ? 0 : Math.min(data.goal - state.attempts, left)}
+                  />
+                ),
+                beat: firstParts?.beat,
+                foot: firstParts?.foot,
+                burst: endStep === "bye" ? 1 : 0,
+                continueLabel: <Trans>Review more cards</Trans>,
+                more: (
+                  <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => {
+                      leaveFirstEnd("add_cards");
+                      add.openCard(deck);
+                    }}
+                  >
+                    <Plus data-icon="inline-start" aria-hidden="true" />
+                    <Trans>Add more cards</Trans>
+                  </Button>
+                ),
+                onOffer: (offer: Offer) => {
+                  leaveFirstEnd(offer.kind === "forgotten" ? "forgotten" : "more_cards");
+                  onOffer(offer);
+                },
+              })}
               addCards={
                 <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
@@ -707,7 +914,23 @@ function Review() {
             />
           </motion.div>
         )}
-        {current && (
+        {cameBack && (
+          <motion.div
+            key="came-back"
+            className="flex min-h-0 flex-1 flex-col"
+            exit={{ opacity: 0, transition: { duration: 0.14 } }}
+          >
+            <ComesBack
+              {...cameBack}
+              onNext={() => setCameBack(null)}
+              onSkip={() => {
+                setTipsOff(true);
+                setCameBack(null);
+              }}
+            />
+          </motion.div>
+        )}
+        {current && !cameBack && (
           <motion.div
             key="cards"
             className="relative flex min-h-0 flex-1 flex-col"
@@ -739,6 +962,21 @@ function Review() {
               animateReveal={animateReveal}
               animateIn={animateNextCard}
               nudge={nudge}
+              cueTip={
+                firstTip || returnedTip ? (
+                  <CueTip
+                    key="cue-tip"
+                    kind={firstTip ? "first" : "returned"}
+                    cue={current.mode.cue}
+                    onSkip={() => setTipsOff(true)}
+                  />
+                ) : undefined
+              }
+              cover={
+                gradesTip ? (
+                  <GradesTip key="grades-tip" onSkip={() => setTipsOff(true)} />
+                ) : undefined
+              }
               focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
@@ -818,7 +1056,7 @@ function Review() {
               next={current.next}
               aid={aid}
               lockedNudge={lockedNudge.key === showing ? lockedNudge.presses : 0}
-              onGrade={(rating) => onGrade(rating, "pointer")}
+              onGrade={(rating) => grade(rating, "pointer")}
             />
           </motion.div>
         )}

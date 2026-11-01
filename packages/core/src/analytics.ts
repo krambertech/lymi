@@ -341,6 +341,14 @@ export const analyticsEvents = {
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
+  first_review_end_left: z.object({
+    step: z.enum(["summary", "goal", "remind", "bye"]),
+    left: z.enum(["done", "more_cards", "forgotten", "add_cards", "closed"]),
+    goal: count,
+    goal_changed: z.boolean(),
+    reminder: z.enum(["on", "off", "blocked", "unavailable"]),
+    tips_skipped: z.boolean(),
+  }),
   cards_added: z.object({
     source,
     count,
@@ -688,6 +696,7 @@ export const analyticsProducers = {
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
+  first_review_end_left: ["browser"],
   cards_added: ["worker"],
   card_added: ["worker"],
   welcome_step_viewed: ["browser", "phone"],

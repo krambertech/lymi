@@ -18,6 +18,23 @@ Keep each step’s dimensions stable. Only the current step has a filled panel a
 
 The ready-made decks follow under a heading whose last words are the choice: **Explore ready-made decks about** **anything**, a language, or **tests**, underlined in amber and opening a short list the learner can search by the language's name, with each choice's deck count; **All decks** opens Explore. The list holds the catalogue's languages, most decks first, then **For a test**, with **Anything** for all of them. A language leads with the decks a beginner starts from, where `BEGINNER_DECKS` in `packages/client/src/welcome.ts` names them: Japanese offers Read Japanese Kana, JLPT N5, JLPT N4 and Japanese Essentials first, and one that is not published leaves its place to the shelf's next deck. It starts on the language the learner most likely came for: the deck they arrived with, else the language they gave Welcome, else everything. The decks sit in one row that scrolls sideways, up to twelve, faded at the end while more follow; a new choice slides the row in from its first deck. **Add** puts the deck in Library and opens its first review.
 
+## The first review
+
+The account's first review teaches itself once, then ends on a short plan for coming back. `apps/web/src/client/components/first-review.tsx` holds the tips and `first-plan.tsx` the end. The phone follows in its own change.
+
+During the review, a note under the first card says what to try and how to see the answer. The first reveal frosts the card after 1.6 s and points at the grades. After the first grade the card gives way to a short screen: the word as the headline, “comes back in 2 days” under it, and every grade with its day, the chosen one lit. **Next card** carries on. A card forgotten in this review says why it is back. **Skip tips** ends all of them. A return of 5 to 10 days reads “in about a week”, because a grade’s fuzz moves the real day by a few days from the preview.
+
+The first grade would end the first review for a reload, so the tab remembers it and the hand of terms in `sessionStorage` until the learner leaves its end. A reload keeps the end and drops the tips; closing the tab loses both.
+
+The end is four screens with one lantern at the top that never moves; only the words and choices under it change, and on a phone the way on stays at the foot.
+
+1. **Success.** The usual count and week, headed “You finished your first review”, or “That’s your first review” after closing early. Beside the flame: “You started your streak”, or how many reviews are left to start it.
+2. **Time.** “How much time a day?” offers 3, 8, 15 or 30 minutes with their card counts, and saves on the tap through `useDailyGoal`.
+3. **Reminder.** “When should we remind you?” offers morning, lunch and evening, with the time part of the day the learner is reviewing in replaced by the current time on the quarter. **Remind me at …** brings up the browser's prompt from the press, so its push key is loaded before the screen. The step is skipped where nothing can be asked: already on, already blocked, iPhone Safari outside the Home Screen, or a browser without web push. Blocked at the prompt, the screen says so and **Next** moves on.
+4. **See you.** “See you tomorrow” or a named weekday, and only what is true of that day: new cards for a deck with more to start, returning cards for a small deck. `nextCards` reads the Insights forecast, whose first day holds today's leftovers, so they count toward tomorrow and the goal caps the number. With no known next day it says “See you soon”. A hand of up to three cards from this review, the time and the reminder follow, then the usual ways on: review forgotten, **Review more cards** or **Add more cards**, and **Done**. The lantern throws a second burst of embers.
+
+X leaves from any screen. **Review more cards** returns to ordinary review, and its end is an ordinary end.
+
 ## Getting set up
 
 Today's first visit before any review counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. An account that has already reviewed is not set up from Today, so it keeps its goal and stays out of `kind: "today"`. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where that deck has ticked the first two steps and **Review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.

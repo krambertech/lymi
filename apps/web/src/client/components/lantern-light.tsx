@@ -53,27 +53,44 @@ export function LanternLight({
         </div>
       )}
       {children}
-      {embers.length > 0 && (
-        <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
-          {embers.map((e) => (
-            <i
-              key={e.at}
-              className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-lantern-flame shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--lantern-glow)]"
-              style={
-                {
-                  width: e.size,
-                  height: e.size,
-                  "--x": `${e.x}px`,
-                  "--y": `${e.y}px`,
-                  "--dur": `${e.dur}ms`,
-                  "--at": `${embersAt + e.at}ms`,
-                } as CSSProperties
-              }
-            />
-          ))}
-        </div>
-      )}
+      <Embers embers={embers} at={embersAt} />
     </>
+  );
+}
+
+/** One burst off the flame; `again` plays it after the sequence has been skipped. */
+export function Embers({
+  embers,
+  at,
+  again = false,
+}: {
+  embers: EndEmber[];
+  at: number;
+  again?: boolean;
+}) {
+  if (!embers.length) return null;
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
+      {embers.map((e) => (
+        <i
+          key={e.at}
+          className={clsx(
+            "ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-lantern-flame shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--lantern-glow)]",
+            again && "ember-again",
+          )}
+          style={
+            {
+              width: e.size,
+              height: e.size,
+              "--x": `${e.x}px`,
+              "--y": `${e.y}px`,
+              "--dur": `${e.dur}ms`,
+              "--at": `${at + e.at}ms`,
+            } as CSSProperties
+          }
+        />
+      ))}
+    </div>
   );
 }
 

@@ -8,7 +8,7 @@ Fetch the remote default branch before inspecting or changing code. Use the fres
 
 Keep the change within the requested goal. Fix confirmed defects with the smallest correct change; check review findings against the source and push back with evidence when they are wrong. Report unresolved disagreements rather than treating silence or an exhausted review budget as approval.
 
-Posting in Slack, email, GitHub comments or discussions on the user's behalf requires explicit, separate permission, except repository friction reports and replies to verified agent or bot comments within [the open-PR workflow](.agents/skills/open-pr/SKILL.md#leave-pr-comments). Replies to humans still require permission. Opening a PR does not authorize merging it. The user runs production deployments and migrations: `pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod`. Keep `.dev.vars` and its real secrets git-ignored.
+Posting in Slack, email, GitHub comments or discussions on the user's behalf requires explicit, separate permission, except repository friction reports, verify verdicts and proof on a pull request, and replies to verified agent or bot comments within [the open-PR workflow](.agents/skills/open-pr/SKILL.md#leave-pr-comments). Replies to humans still require permission. Opening a PR does not authorize merging it. The user runs production deployments and migrations: `pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod`. Keep `.dev.vars` and its real secrets git-ignored.
 
 ## Read for the task
 
@@ -54,7 +54,7 @@ Run `pnpm verify:changed` before pushing. It selects the affected tests and wide
 
 For production-affecting changes, also run `pnpm deploy:check` and `pnpm test:e2e:chromium`, or the full `pnpm test:e2e` when WebKit, mobile, PWA, navigation, caching, focus, touch, sheets or dialogs are at risk. Report results separately; Chromium alone is not cross-browser evidence.
 
-Use [the open-pr skill](.agents/skills/open-pr/SKILL.md) when asked to open or update a PR. Stay with required checks and actionable review feedback until it is review-ready or blocked; report missing evidence and the exact blocker. Proof must cover the final diff, including later fixes and conflict resolutions.
+When a change is ready, open or update its PR with [the open-pr skill](.agents/skills/open-pr/SKILL.md) and post its proof there, without asking first. Record a judgement call in the PR rather than waiting for an answer. Stay with required checks and actionable review feedback until it is review-ready or blocked; report missing evidence and the exact blocker. Proof must cover the final diff, including later fixes and conflict resolutions.
 
 Cloudflare Workers Builds deploys after merge and applies pending migrations through `deploy:ci`. Before calling production verified, run `pnpm deploy:health` and compare its active tag with the intended commit.
 

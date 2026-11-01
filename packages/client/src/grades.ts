@@ -8,6 +8,7 @@ import type { LocalGrade } from "./review-draw";
 
 /** Today's grades from this device, queued or sent, so every scope's draw and a reload see them. */
 const KEY = OUTBOX_KEY;
+const LOCK = "lymi-grades";
 
 export interface StoredGrade extends LocalGrade {
   timezone?: string | undefined;
@@ -91,9 +92,17 @@ export function outboxSize(): number {
 }
 
 let chain: Promise<unknown> = Promise.resolve();
-/** One send at a time, so grades reach the server in the order they were made. */
+/**
+ * One send at a time, so grades reach the server in the order they were made, and across tabs where
+ * the browser can lock, so two tabs never send one grade. A flush of writes takes this lock inside
+ * its own, so this has its own name and nothing under it asks for that one.
+ */
 function serial<T>(task: () => Promise<T>): Promise<T> {
-  const run = chain.then(task, task);
+  const locked = () =>
+    typeof navigator !== "undefined" && navigator.locks
+      ? (navigator.locks.request(LOCK, task) as Promise<T>)
+      : task();
+  const run = chain.then(locked, locked);
   chain = run.catch(() => undefined);
   return run;
 }
@@ -118,7 +127,8 @@ type Sent = "sent" | "duplicate" | "offline";
 async function send(grade: StoredGrade): Promise<Sent> {
   try {
     const result = await api.grade(input(grade));
-    if (result.duplicate) {
+    // With no attempt to name, a later grade reached the server first and this one never counted.
+    if (result.duplicate && !result.reviewId) {
       write(read().filter((g) => !same(g, grade)));
       return "duplicate";
     }

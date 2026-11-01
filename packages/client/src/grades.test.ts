@@ -1,5 +1,5 @@
 import type { ReviewMode } from "@lymi/core";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { configureForTest } from "./test/configure";
 
 const store = new Map<string, string>();
@@ -172,6 +172,40 @@ describe("taking a grade back", () => {
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 
+  it("undoes a grade the server stored though its response never arrived", async () => {
+    const lost = g("a");
+    grade.mockRejectedValueOnce(offline());
+    expect(await grades.recordGrade(lost)).toBe("queued");
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ sentAt: expect.any(Number) }]);
+
+    undoReview.mockResolvedValueOnce({ ok: true });
+    expect(await grades.undoGrade(lost)).toBe("undone");
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+  });
+
+  it("keeps a replayed grade the server will not undo", async () => {
+    const lost = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(lost);
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    await grades.flushOutbox();
+
+    undoReview.mockRejectedValueOnce(new ApiError(409, "Only the latest grade"));
+    expect(await grades.undoGrade(lost)).toBe("kept");
+  });
+
+  it("drops a replayed grade that a later grade beat to the server", async () => {
+    const beaten = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(beaten);
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: null, state: 2 });
+    expect(await grades.flushOutbox()).toBe(0);
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
   it("waits for the connection to undo a sent grade, and the draw forgets it meanwhile", async () => {
     grade.mockResolvedValueOnce(accepted("rev-1"));
     const sent = g("a");
@@ -209,6 +243,55 @@ describe("taking a grade back", () => {
     expect(await grades.undoGrade(sent)).toBe("kept");
     expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a", reviewId: "rev-1" }]);
     expect(grades.gradeStore.snapshot()[0]?.undone).toBeUndefined();
+  });
+});
+
+describe("across tabs", () => {
+  /** A queue per lock name, as the browser keeps across a device's tabs. */
+  const browserLocks = () => {
+    const tails = new Map<string, Promise<unknown>>();
+    return {
+      request<T>(name: string, task: () => Promise<T>) {
+        const run = (tails.get(name) ?? Promise.resolve()).then(task, task);
+        tails.set(
+          name,
+          run.catch(() => undefined),
+        );
+        return run;
+      },
+    };
+  };
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("sends nothing while another tab holds the grade lock", async () => {
+    const locks = browserLocks();
+    vi.stubGlobal("navigator", { locks });
+    grade.mockResolvedValue(accepted("rev-1"));
+
+    let otherTabDone = () => {};
+    const otherTab = new Promise<void>((resolve) => {
+      otherTabDone = resolve;
+    });
+    void locks.request("lymi-grades", () => otherTab);
+
+    const recorded = grades.recordGrade(g("a"));
+    await new Promise((resolve) => setTimeout(resolve));
+    expect(grade).not.toHaveBeenCalled();
+
+    otherTabDone();
+    expect(await recorded).toBe("sent");
+    expect(grade).toHaveBeenCalledTimes(1);
+  });
+
+  it("still flushes grades from inside a flush of writes", async () => {
+    const locks = browserLocks();
+    vi.stubGlobal("navigator", { locks });
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(g("a"));
+
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const sent = await locks.request("lymi-writes", () => grades.flushOutbox());
+    expect(sent).toBe(1);
   });
 });
 

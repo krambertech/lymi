@@ -1,5 +1,5 @@
 import { newId } from "@lymi/core";
-import { eq } from "@lymi/core/db";
+import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards } from "./cards";
@@ -126,6 +126,123 @@ describe("the daily goal counts attempts", () => {
     const stored = await db.select().from(schema.reviews).where(eq(schema.reviews.cardId, a.id));
     expect(stored).toHaveLength(1);
     expect((await streak(ctx)).today).toMatchObject({ attempts: 1 });
+  });
+
+  it("names the stored attempt when a grade is replayed, even behind a later grade", async () => {
+    const { ctx, cards } = await setup(5, ["kaks"]);
+    const [a] = cards;
+    if (!a) throw new Error("no cards");
+
+    const at = later(5);
+    const first = await grade(ctx, a.id, 3, at);
+    expect(await grade(ctx, a.id, 3, at)).toMatchObject({
+      duplicate: true,
+      reviewId: first.reviewId,
+      day: { attempts: 1 },
+    });
+
+    await grade(ctx, a.id, 3, later(6));
+    expect(await grade(ctx, a.id, 3, at)).toMatchObject({
+      duplicate: true,
+      reviewId: first.reviewId,
+    });
+  });
+
+  it("names no attempt when the replayed grade was taken back", async () => {
+    const { ctx, cards } = await setup(5, ["kolmas"]);
+    const [a] = cards;
+    if (!a) throw new Error("no cards");
+
+    const at = later(5);
+    const first = await grade(ctx, a.id, 3, at);
+    if (!first.reviewId) throw new Error("no review id");
+    await undoReview(ctx, first.reviewId);
+
+    expect(await grade(ctx, a.id, 3, at)).toMatchObject({
+      duplicate: true,
+      reviewId: null,
+      day: { attempts: 0 },
+    });
+  });
+
+  describe("when another grade lands between reading the state and writing it", () => {
+    /** Lands `rival` just before this context's first grade write reaches the database. */
+    const overtakenBy = (ctx: ServiceContext, rival: () => Promise<unknown>): ServiceContext => {
+      let raced = false;
+      const batch = async (statements: Parameters<Db["batch"]>[0]) => {
+        if (!raced && statements.length > 2) {
+          raced = true;
+          await rival();
+        }
+        return ctx.db.batch(statements);
+      };
+      return {
+        ...ctx,
+        db: new Proxy(ctx.db, {
+          get: (db, key, receiver) => (key === "batch" ? batch : Reflect.get(db, key, receiver)),
+        }),
+      };
+    };
+    const history = async (ctx: ServiceContext, cardId: string) => {
+      const [state] = await db
+        .select()
+        .from(schema.cardStates)
+        .where(
+          and(eq(schema.cardStates.cardId, cardId), eq(schema.cardStates.direction, "recognition")),
+        );
+      const reviews = await db
+        .select()
+        .from(schema.reviews)
+        .where(eq(schema.reviews.cardId, cardId));
+      const audited = await db
+        .select()
+        .from(schema.auditLog)
+        .where(and(eq(schema.auditLog.entity, "review"), eq(schema.auditLog.userId, ctx.userId)));
+      return { state, reviews, audited };
+    };
+
+    it("ignores an older grade, leaving the newer one's schedule and one audit row", async () => {
+      const { ctx, cards } = await setup(5, ["viiendik"]);
+      const [a] = cards;
+      if (!a) throw new Error("no cards");
+
+      const newer = later(6);
+      const outcome = await grade(
+        overtakenBy(ctx, () => grade(ctx, a.id, 4, newer)),
+        a.id,
+        1,
+        later(5),
+      );
+
+      expect(outcome).toMatchObject({ duplicate: true, reviewId: null, day: { attempts: 1 } });
+      const { state, reviews, audited } = await history(ctx, a.id);
+      expect(state?.lastReview?.getTime()).toBe(newer.getTime());
+      expect(reviews.map((r) => r.rating)).toEqual([4]);
+      expect(audited).toHaveLength(1);
+    });
+
+    it("schedules a newer grade on top of the older one that beat it", async () => {
+      const { ctx, cards } = await setup(5, ["kuuendik"]);
+      const [a] = cards;
+      if (!a) throw new Error("no cards");
+
+      const older = later(5);
+      const newer = later(6);
+      const outcome = await grade(
+        overtakenBy(ctx, () => grade(ctx, a.id, 3, older)),
+        a.id,
+        4,
+        newer,
+      );
+
+      expect(outcome).toMatchObject({ duplicate: false, day: { attempts: 2 } });
+      const { state, reviews, audited } = await history(ctx, a.id);
+      expect(state?.lastReview?.getTime()).toBe(newer.getTime());
+      const landed = reviews.find((r) => r.id === outcome.reviewId);
+      expect(JSON.parse(landed?.stateBefore ?? "{}").lastReview).toBe(older.getTime());
+      expect(reviews).toHaveLength(2);
+      expect(audited).toHaveLength(2);
+    });
   });
 
   it("applies a new goal to an open today but never reopens a finished one", async () => {

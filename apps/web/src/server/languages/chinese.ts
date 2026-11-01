@@ -8,6 +8,7 @@ import {
   pinyinTermReading,
   readingTokens,
 } from "@lymi/core/pinyin";
+import { TERRA } from "./terra";
 import type { LanguagePrompts } from "./types";
 
 /** Particles, which dictionaries write unmarked even as a word of their own. */
@@ -79,6 +80,7 @@ export function tonedExample(text: string): boolean {
 export const chinese = {
   tag: "zh",
   enrich: {
+    model: TERRA,
     guide: {
       notes:
         "Never the pinyin, which is the pronunciation. Noun: Measure word: *本*, *一本书*. Usage: a near-synonym learners mix (*二 / 两*, *会 / 能*), or for a word of two or more characters, what each means (Characters: 电 electric, 脑 brain).",

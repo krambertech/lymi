@@ -14,7 +14,7 @@ import {
 import { eventLanguages } from "@lymi/core/analytics";
 import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import type { TextProvider } from "../ai";
+import type { TextModel, TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import {
   cardBrief,
@@ -30,7 +30,7 @@ import {
   readReply,
   type Sample,
 } from "../enrichment/prompt";
-import { addsExampleReadings } from "../languages";
+import { addsExampleReadings, enrichmentModel } from "../languages";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -196,9 +196,18 @@ async function samplesFor(db: Db, deck: DeckRow, exclude: readonly string[]): Pr
 }
 
 /** The model's reply for a run of cards, or an empty list when it answers with nothing usable. */
-async function askProvider(provider: TextProvider, input: string): Promise<Filled[]> {
+async function askProvider(
+  provider: TextProvider,
+  input: string,
+  model: TextModel | undefined,
+): Promise<Filled[]> {
   return readReply(
-    await provider.complete({ instructions: ENRICHMENT_INSTRUCTIONS, input, schema: REPLY_SCHEMA }),
+    await provider.complete({
+      instructions: ENRICHMENT_INSTRUCTIONS,
+      input,
+      schema: REPLY_SCHEMA,
+      ...model,
+    }),
   );
 }
 
@@ -299,14 +308,25 @@ export async function enrichCards(
       );
     }
     const { meaningLanguage } = await getSettings(ctx);
-    const input = enrichmentInput(
-      meaningLanguage,
-      briefs,
-      asks.flatMap((ask) =>
-        asked(ask) ? [cardBrief(ask.card, ask.mayFill, ask.addReadings !== null)] : [],
-      ),
+    // A run can mix languages, and one call has one model.
+    const byModel = new Map<TextModel | undefined, typeof asks>();
+    for (const ask of asks.filter(asked)) {
+      const language = ask.card.language ?? decks.get(ask.card.deckId)?.defaultLanguage;
+      const model = enrichmentModel(language);
+      byModel.set(model, [...(byModel.get(model) ?? []), ask]);
+    }
+    const replies = await Promise.all(
+      [...byModel].map(([model, group]) => {
+        const deckIds = new Set(group.map((ask) => ask.card.deckId));
+        const input = enrichmentInput(
+          meaningLanguage,
+          briefs.filter((brief) => deckIds.has(brief.id)),
+          group.map((ask) => cardBrief(ask.card, ask.mayFill, ask.addReadings !== null)),
+        );
+        return askProvider(provider, input, model);
+      }),
     );
-    filled = new Map((await askProvider(provider, input)).map((card) => [card.id, card]));
+    filled = new Map(replies.flat().map((card) => [card.id, card]));
   }
 
   const now = new Date();

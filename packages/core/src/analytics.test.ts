@@ -191,6 +191,13 @@ describe("analytics privacy contract", () => {
     const cost = textCallCost("gpt-6-luna", { input: 1_000_000, cached: 500_000, output: 200_000 });
     expect(cost?.input).toBeCloseTo(0.055);
     expect(cost?.output).toBeCloseTo(0.1);
+    const terra = textCallCost("gpt-6.1-terra", {
+      input: 1_000_000,
+      cached: 500_000,
+      output: 200_000,
+    });
+    expect(terra?.input).toBeCloseTo(0.525);
+    expect(terra?.output).toBeCloseTo(1);
     expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
     const short = textCallCost("claude-haiku-5-5", { input: 100_000, output: 10_000 });
     expect(short?.input).toBeCloseTo(0.01);

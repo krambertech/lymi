@@ -421,6 +421,103 @@ describe("enrichCards", () => {
     expect(Object.keys(enrichments[0]?.payload as object)).toContain("meaning");
   });
 
+  describe("one model per call", () => {
+    const provider = (fail?: (request: TextRequest) => boolean) => {
+      const asked: TextRequest[] = [];
+      const fake: TextProvider = {
+        provider: "openai",
+        model: "test",
+        complete: async (request) => {
+          asked.push(request);
+          if (fail?.(request)) throw new Error("vendor down");
+          const { cards } = JSON.parse(request.input) as { cards: { id: string; term: string }[] };
+          return { cards: cards.map(({ id, term }) => ({ id, meaning: `meaning of ${term}` })) };
+        },
+      };
+      return { fake, asked };
+    };
+    const inputOf = (request: TextRequest | undefined) =>
+      JSON.parse(request?.input ?? "{}") as { decks: { id: string }[]; cards: { term: string }[] };
+
+    it("splits a run of languages by model, each call with its own cards and decks", async () => {
+      const ctx = await learner(db, "enrich-models", "Kateryna");
+      const chinese = await createDeck(ctx, { name: "中文", defaultLanguage: "zh" });
+      const italian = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: chinese.id, term: "书" }),
+          CardInput.parse({ deckId: italian.id, term: "ciao" }),
+          // The card's own language wins over its deck's.
+          CardInput.parse({ deckId: italian.id, term: "дом", language: "ru" }),
+        ],
+        queue,
+      );
+      const ids = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
+      const { fake, asked } = provider();
+      expect(await enrichCards({ ...ctx, actor: "ai" }, ids, fake)).toEqual({ enriched: 3 });
+
+      expect(asked).toHaveLength(2);
+      const terra = asked.find((request) => request.model === "gpt-6.1-terra");
+      const fallback = asked.find((request) => request.model === undefined);
+      expect(terra?.effort).toBe("medium");
+      expect(inputOf(terra).cards.map((card) => card.term)).toEqual(["书", "дом"]);
+      expect(
+        inputOf(terra)
+          .decks.map((deck) => deck.id)
+          .sort(),
+      ).toEqual([chinese.id, italian.id].sort());
+      expect(fallback?.effort).toBeUndefined();
+      expect(inputOf(fallback).cards.map((card) => card.term)).toEqual(["ciao"]);
+      expect(inputOf(fallback).decks.map((deck) => deck.id)).toEqual([italian.id]);
+      expect((await showCard(ctx, ids[0] as string)).meaning).toBe("meaning of 书");
+      expect((await showCard(ctx, ids[1] as string)).meaning).toBe("meaning of ciao");
+    });
+
+    it("makes one call for a run of one model", async () => {
+      const ctx = await learner(db, "enrich-one-model", "Kateryna");
+      const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: deck.id, term: "ciao" }),
+          CardInput.parse({ deckId: deck.id, term: "grazie" }),
+        ],
+        queue,
+      );
+      const { fake, asked } = provider();
+      await enrichCards(
+        { ...ctx, actor: "ai" },
+        outcomes.map((o) => (o.status === "added" ? o.card.id : "")),
+        fake,
+      );
+      expect(asked).toHaveLength(1);
+      expect(asked[0]).not.toHaveProperty("model");
+    });
+
+    it("leaves every card working when one call fails, so the step's retry asks again", async () => {
+      const ctx = await learner(db, "enrich-model-fails", "Kateryna");
+      const russian = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+      const italian = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: russian.id, term: "дом" }),
+          CardInput.parse({ deckId: italian.id, term: "ciao" }),
+        ],
+        queue,
+      );
+      const ids = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
+      const { fake } = provider((request) => request.model === "gpt-6.1-terra");
+      await expect(enrichCards({ ...ctx, actor: "ai" }, ids, fake)).rejects.toThrow("vendor down");
+      for (const id of ids) {
+        const card = await showCard(ctx, id);
+        expect(card.enrichmentStatus).toBe("working");
+        expect(card.meaning).toBeNull();
+      }
+    });
+  });
+
   it("writes meanings in the learner's meaning language", async () => {
     const ctx = await learner(db, "enrich-2", "Kateryna");
     await updateSettings(ctx, { appLanguage: "uk" });

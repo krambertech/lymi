@@ -182,6 +182,7 @@ type TextPrice = { input: number; cachedInput: number; output: number };
 /** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
 const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  "gpt-6.1-terra": { input: 1, cachedInput: 0.05, output: 5 },
   // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
   "claude-haiku-5-5": {
     input: 0.1,

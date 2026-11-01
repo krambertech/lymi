@@ -31,13 +31,14 @@ export function createOpenAiTextProvider(
   request: Fetch = fetch,
   observe?: TextObserver,
 ): TextProvider {
-  const model = env.OPENAI_TEXT_MODEL || "gpt-6-luna";
-  const call = (input: TextRequest) => completeOnce(env, request, model, input);
+  const fallback = env.OPENAI_TEXT_MODEL || "gpt-6-luna";
   return {
     provider: "openai",
-    model,
+    model: fallback,
     async complete(input: TextRequest) {
-      if (!observe) return (await call(input)).reply;
+      const model = env.OPENAI_TEXT_MODEL || input.model || fallback;
+      const call = () => completeOnce(env, request, model, input);
+      if (!observe) return (await call()).reply;
       const started = Date.now();
       const report = (usage: Usage | undefined, status?: number) => {
         try {
@@ -57,7 +58,7 @@ export function createOpenAiTextProvider(
         }
       };
       try {
-        const { reply, usage } = await call(input);
+        const { reply, usage } = await call();
         report(usage);
         return reply;
       } catch (err) {

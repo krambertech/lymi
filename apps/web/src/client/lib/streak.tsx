@@ -10,7 +10,7 @@ import {
 } from "../components/streak";
 import { api } from "./api";
 import { useScreenName } from "./document-title";
-import { streakQuery } from "./queries";
+import { decksQuery, streakQuery } from "./queries";
 
 /**
  * Opening Lymi is what settles a day: a visible page reports its zone, then asks the server
@@ -54,9 +54,16 @@ export function useStreakOpen() {
   return [streak === true, setOpen] as const;
 }
 
+/** Cards due across every deck, the number Today shows. */
+function useDueToday() {
+  const decks = useQuery(decksQuery);
+  return decks.data?.reduce((n, d) => n + d.due, 0) ?? 0;
+}
+
 /** The streak pill with its data. The views take it as a slot so the design page can pass a static one. */
 export function Streak({ variant, className }: Pick<StreakButtonProps, "variant" | "className">) {
   const streak = useQuery(streakQuery);
+  const due = useDueToday();
   const [, setOpen] = useStreakOpen();
   // A skeleton that never resolves is worse than no pill, e.g. offline with nothing cached.
   if (streak.isError && !streak.data) return null;
@@ -65,6 +72,7 @@ export function Streak({ variant, className }: Pick<StreakButtonProps, "variant"
       variant={variant}
       className={className}
       summary={streak.data}
+      due={due}
       onOpen={() => setOpen(true)}
     />
   );
@@ -73,6 +81,7 @@ export function Streak({ variant, className }: Pick<StreakButtonProps, "variant"
 /** The one streak place in the app, however many pills and cards open it. */
 export function StreakPlace() {
   const streak = useQuery(streakQuery);
+  const due = useDueToday();
   const goal = useDailyGoal();
   const [open, setOpen] = useStreakOpen();
   const { t } = useLingui();
@@ -85,6 +94,7 @@ export function StreakPlace() {
       returnsTo={under ?? t`Back`}
       onOpenChange={setOpen}
       summary={streak.data}
+      due={due}
       onGoalChange={goal.change}
       goalStatus={goal.status}
     />

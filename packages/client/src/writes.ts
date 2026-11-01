@@ -17,6 +17,7 @@ import {
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
 import { waitsToSend } from "./api/request";
+import { online } from "./cache";
 import { clientConfig, type KeyValueStore } from "./config";
 import { flushOutbox as flushGrades } from "./grades";
 import { claimQueued, WRITE_PREFIX } from "./queued";
@@ -508,8 +509,6 @@ function localDuplicate(input: CardInput): { card: Card; deckName: string } | nu
   return null;
 }
 
-const offline = () => typeof navigator !== "undefined" && navigator.onLine === false;
-
 /**
  * The learner's card and deck writes. Each shows at once, and resolves with the server's answer
  * when it lands now, or with `queued` and what the screen already shows when it will land later.
@@ -523,7 +522,7 @@ export const writes = {
   ): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
     const input = storedInput(sent);
     // Offline, the cache is the best word on duplicates until the server has the final one.
-    const duplicate = offline() ? localDuplicate(input) : null;
+    const duplicate = online() ? null : localDuplicate(input);
     if (duplicate) {
       const outcome = {
         status: "skipped" as const,

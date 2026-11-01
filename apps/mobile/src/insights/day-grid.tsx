@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { InsightsOut } from "@lymi/core";
+import { type InsightsOut, keepsRun } from "@lymi/core";
 import { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, View, type ViewStyle } from "react-native";
 import { addDays } from "../streak/calendar";
@@ -236,7 +236,7 @@ function Cell({
   const future = date > today;
   const l = future ? 0 : level(entry, goal);
   // Counted without filling: nothing left to do, or nothing due. The streak keeps those too.
-  const kept = !future && (!!entry?.satisfied || entry?.outcome === "nothing_due") && l < 3;
+  const kept = !future && keepsRun(entry) && l < 3;
   const box: ViewStyle = {
     width: CELL,
     height: CELL,

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { ReviewDayOutcome } from "@lymi/core";
+import { keepsRun, type ReviewDayOutcome } from "@lymi/core";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
@@ -82,8 +82,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
   const atEnd = month >= thisMonth;
   const keeps = (date: string | null | undefined) => {
     if (date && rest?.has(date)) return true;
-    const d = date ? days.get(date) : undefined;
-    return !!d && (d.satisfied || d.outcome === "nothing_due");
+    return !!date && keepsRun(days.get(date));
   };
   const restInMonth = !!rest && [...rest].some((d) => d.startsWith(month));
   const runOrder = run ? [...run].sort() : [];

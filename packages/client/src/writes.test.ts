@@ -147,6 +147,32 @@ describe("submitting a write", () => {
     }
   });
 
+  it("finds a local duplicate offline on a client with no navigator.onLine", async () => {
+    const { onlineManager, QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["decks"], [{ id: "deck", name: "Spanish", defaultLanguage: "es" }]);
+    qc.setQueryData(
+      ["decks", "deck", "cards"],
+      [
+        {
+          card: { id: "c1", deckId: "deck", term: "casa", normalizedTerm: "casa", language: "es" },
+        },
+      ],
+    );
+    w.bindWriteCache(qc);
+    // The phone: no browser connection flag, so Query's connection state is the only signal.
+    vi.stubGlobal("navigator", {});
+    onlineManager.setOnline(false);
+    try {
+      const same = await w.writes.addCard({ deckId: "deck", term: "casa" });
+      expect(same.outcome).toMatchObject({ status: "skipped", existing: { id: "c1" } });
+      expect(calls).toEqual([]);
+    } finally {
+      onlineManager.setOnline(true);
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("queues an offline add whose pronunciation differs from the local card's for the server", async () => {
     const { QueryClient } = await import("@tanstack/react-query");
     const qc = new QueryClient();

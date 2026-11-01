@@ -20,6 +20,7 @@ import {
   canPlayPronunciation,
   countedRating,
   type Drawn,
+  daySatisfied,
   drawKey,
   gradeAllowed,
   isolate,
@@ -288,9 +289,7 @@ function Review() {
     setMark({
       attempts,
       satisfied:
-        attempts >= data.goal ||
-        (today?.date === state.day.date &&
-          (today.outcome === "goal_met" || today.outcome === "exhausted")),
+        attempts >= data.goal || (today?.date === state.day.date && daySatisfied(today.outcome)),
     });
     setLegCards(NO_LEG_CARDS);
     setPaused(false);

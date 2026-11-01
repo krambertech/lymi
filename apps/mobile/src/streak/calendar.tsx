@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { ReviewDayOutcome } from "@lymi/core";
+import { keepsRun, type ReviewDayOutcome } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { useEffect, useState } from "react";
 import { View, type ViewStyle } from "react-native";
@@ -94,8 +94,7 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
   const atEnd = month >= today.slice(0, 7);
   const keeps = (date: string | null | undefined) => {
     if (date && rest.has(date)) return true;
-    const d = date ? days.get(date) : undefined;
-    return !!d && (d.satisfied || d.outcome === "nothing_due");
+    return !!date && keepsRun(days.get(date));
   };
   const restInMonth = [...rest].some((d) => d.startsWith(month));
   const runOrder = [...run].sort();

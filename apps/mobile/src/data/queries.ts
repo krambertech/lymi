@@ -27,7 +27,7 @@ import {
   type LocalGrade,
 } from "@lymi/client/review-draw";
 import { writes } from "@lymi/client/writes";
-import { type CardInput, DEFAULT_DAILY_GOAL, type Round, type StreakOut } from "@lymi/core";
+import { type CardInput, DEFAULT_DAILY_GOAL, daySatisfied, type Round } from "@lymi/core";
 import { lanternFor, streakFlameFor } from "@lymi/design";
 import {
   onlineManager,
@@ -122,9 +122,6 @@ export function useDrawState(
   return { state, grades, setNow };
 }
 
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
-
 /** Today against the goal, as the lantern, the flame and the seven lights read it. */
 export function useDay() {
   const streak = useStreak().data;
@@ -138,7 +135,7 @@ export function useDay() {
   const reviewsToday = data?.today.attempts ?? state?.attempts ?? 0;
   const goal = data?.today.goal ?? data?.goal ?? draw?.goal ?? DEFAULT_DAILY_GOAL;
   // Finishing everything due counts the day, even below the goal.
-  const dayDone = !!data && satisfied(data.today.outcome);
+  const dayDone = !!data && daySatisfied(data.today.outcome);
   const today = state?.day.date ?? data?.today.date;
   const byDate = new Map(data?.days.map((d) => [d.date, d]));
   const rest = new Set(data?.restDays);

@@ -31,10 +31,11 @@ export function daysReviewed(days: number[], n = 7): number {
   return days.slice(-n).filter((c) => c > 0).length;
 }
 
-const nextDay = (date: string) => {
+const shiftDay = (date: string, by: number) => {
   const [y, m, d] = date.split("-").map(Number);
-  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, (d ?? 1) + 1)).toISOString().slice(0, 10);
+  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, (d ?? 1) + by)).toISOString().slice(0, 10);
 };
+const nextDay = (date: string) => shiftDay(date, 1);
 
 const daysBetween = (from: string, to: string) =>
   Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
@@ -50,6 +51,14 @@ export interface StreakDay {
   outcome: ReviewDayOutcome | null;
 }
 
+/** A day that counts for the run: its goal was met, or every eligible review was done below it. */
+export const daySatisfied = (outcome: ReviewDayOutcome | null | undefined) =>
+  outcome === "goal_met" || outcome === "exhausted";
+
+/** A day the run survives: it counted, or a confirmed nothing-due day protected it. */
+export const keepsRun = (day: Pick<StreakDay, "satisfied" | "outcome"> | undefined) =>
+  !!day && (day.satisfied || day.outcome === "nothing_due");
+
 /** A rest day is allowed once the run has gone this many days without one. */
 const REST_EVERY = 7;
 
@@ -63,7 +72,6 @@ const REST_EVERY = 7;
  */
 export function summariseStreak(days: StreakDay[], today: string) {
   const byDate = new Map(days.map((d) => [d.date, d]));
-  const keeps = (d: StreakDay | undefined) => !!d && (d.satisfied || d.outcome === "nothing_due");
   const restDays: string[] = [];
 
   let run = 0;
@@ -72,7 +80,7 @@ export function summariseStreak(days: StreakDay[], today: string) {
   // Today is open until it ends, so the walk stops before it and adds it only once satisfied.
   for (let date = days[0]?.date ?? today; date < today; date = nextDay(date)) {
     const d = byDate.get(date);
-    if (keeps(d)) {
+    if (keepsRun(d)) {
       if (d?.satisfied) run++;
     } else if (run > 0 && (!lastRest || daysBetween(lastRest, date) >= REST_EVERY)) {
       restDays.push(date);
@@ -92,4 +100,20 @@ export function summariseStreak(days: StreakDay[], today: string) {
     reviewedDays: days.filter((d) => d.attempts > 0).length,
     restDays,
   };
+}
+
+/** The days the current run is drawn across, today's included once it counts. */
+export function runDates(
+  days: StreakDay[],
+  restDays: string[],
+  today: { date: string; outcome: ReviewDayOutcome | null },
+): Set<string> {
+  const byDate = new Map(days.map((d) => [d.date, d]));
+  const rest = new Set(restDays);
+  const dates = new Set<string>();
+  let day = daySatisfied(today.outcome) ? today.date : shiftDay(today.date, -1);
+  for (; rest.has(day) || keepsRun(byDate.get(day)); day = shiftDay(day, -1)) {
+    if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
+  }
+  return dates;
 }

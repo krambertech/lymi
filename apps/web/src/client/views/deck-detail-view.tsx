@@ -298,8 +298,8 @@ function DeckPlates({
   section?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
-  const summary = useTodayStatus(streak);
-  // A summary fetched before these cards arrived would say nothing is due beside a count that is not zero.
+  const summary = useTodayStatus(streak, deck.due);
+  // A day confirmed as nothing due shows no goal line here, even once this deck has cards due.
   const status = deck.due > 0 && streak?.today.outcome === "nothing_due" ? "" : summary;
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;

@@ -1,4 +1,4 @@
-import type { StreakOut } from "@lymi/core";
+import { daySatisfied, type StreakOut } from "@lymi/core";
 
 /**
  * How tall the flame stands. 0 is out and 1 is the brand flame. Growth before the goal stops
@@ -48,7 +48,7 @@ export interface LanternDay {
 
 /** Today's progress toward the goal, 0 to 1. A day that met its goal or ran out of cards is full. */
 export function todayProgress(today: LanternDay["today"]): number {
-  if (today.outcome === "goal_met" || today.outcome === "exhausted") return 1;
+  if (daySatisfied(today.outcome)) return 1;
   return today.goal > 0 ? Math.min(today.attempts / today.goal, 1) : 0;
 }
 

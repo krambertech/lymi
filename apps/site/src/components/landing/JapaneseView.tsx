@@ -25,6 +25,7 @@ import {
   VoiceSection,
 } from "./LanguageSections";
 import { pathSteps } from "./language-decks";
+import { PitchSection } from "./PitchSection";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
@@ -85,6 +86,8 @@ export function JapaneseView({ decks, locale }: Props) {
       >
         <KanjiReadings />
       </Wide>
+
+      <PitchSection />
 
       {steps.length > 0 && (
         <StartSection

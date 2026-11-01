@@ -261,6 +261,9 @@ msgstr "<0>Sõber</0> — родич давньоруського «сябр», 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — це фортеця."
 
+msgid "<0>はし</0> can mean chopsticks, a bridge or an edge. Only the pitch tells them apart. Lymi charts it under the word, so you learn how it’s said as well as how it’s read."
+msgstr "<0>はし</0> — це палички для їжі, міст або край. Розрізнити їх можна лише за висотою тону. Lymi показує графік тону під словом, тож ти вчишся і читати слово, і вимовляти його."
+
 msgid "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a different train."
 msgstr "<0>乗る</0> — сісти, <1>換える</1> — замінити: ти сідаєш на інший потяг."
 
@@ -1004,6 +1007,9 @@ msgstr "Навігаційний ланцюжок"
 msgid "breakfast"
 msgstr "сніданок"
 
+msgid "bridge"
+msgstr "міст"
+
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна лише за висотою тону."
 
@@ -1242,6 +1248,9 @@ msgstr "Обери свою землю, щоб побачити колоду з 
 
 msgid "Choosing a deck or detecting a language can send shared text, its page title and deck languages, or an imported deck’s name and sample terms, to OpenAI."
 msgstr "Вибір колоди або визначення мови може передавати надісланий до Lymi текст, назву його сторінки й мови колод або назву імпортованої колоди та приклади термінів до OpenAI."
+
+msgid "chopsticks"
+msgstr "палички для їжі"
 
 msgid "Chopsticks"
 msgstr "Палички для їжі"
@@ -1634,6 +1643,9 @@ msgstr "Економіка · тиждень 3"
 
 msgid "Economics"
 msgstr "Економіка"
+
+msgid "edge"
+msgstr "край"
 
 msgid "Edit card"
 msgstr "Редагувати картку"
@@ -4076,6 +4088,9 @@ msgstr "Так кажуть, щоб звести довгу історію до 
 
 msgid "sale"
 msgstr "продаж"
+
+msgid "Same sound, different word."
+msgstr "Читається так само, а слово інше."
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"

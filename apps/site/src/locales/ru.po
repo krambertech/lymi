@@ -261,6 +261,9 @@ msgstr "<0>Sõber</0> — родственник древнерусского «
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — это крепость."
 
+msgid "<0>はし</0> can mean chopsticks, a bridge or an edge. Only the pitch tells them apart. Lymi charts it under the word, so you learn how it’s said as well as how it’s read."
+msgstr "<0>はし</0> — это палочки для еды, мост или край. Различить их можно только по высоте тона. Lymi показывает график тона под словом, так что ты учишься и читать слово, и произносить его."
+
 msgid "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a different train."
 msgstr "<0>乗る</0> — сесть, <1>換える</1> — заменить: ты садишься на другой поезд."
 
@@ -1004,6 +1007,9 @@ msgstr "Навигационная цепочка"
 msgid "breakfast"
 msgstr "завтрак"
 
+msgid "bridge"
+msgstr "мост"
+
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Мост, 橋, — тоже hashi. Различить их можно только по высоте тона."
 
@@ -1242,6 +1248,9 @@ msgstr "Выбери свою землю, чтобы увидеть колоду
 
 msgid "Choosing a deck or detecting a language can send shared text, its page title and deck languages, or an imported deck’s name and sample terms, to OpenAI."
 msgstr "Выбор колоды или определение языка может передавать отправленный в Lymi текст, заголовок его страницы и языки колод либо название импортированной колоды и примеры терминов в OpenAI."
+
+msgid "chopsticks"
+msgstr "палочки для еды"
 
 msgid "Chopsticks"
 msgstr "Палочки для еды"
@@ -1634,6 +1643,9 @@ msgstr "Экономика · неделя 3"
 
 msgid "Economics"
 msgstr "Экономика"
+
+msgid "edge"
+msgstr "край"
 
 msgid "Edit card"
 msgstr "Редактировать карточку"
@@ -4076,6 +4088,9 @@ msgstr "Так говорят, чтобы свести длинную истор
 
 msgid "sale"
 msgstr "продажа"
+
+msgid "Same sound, different word."
+msgstr "Читается так же, а слово другое."
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизируй с частотой вдвое выше максимальной"

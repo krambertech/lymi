@@ -196,7 +196,7 @@ export function AssistantHero() {
         <p className="mt-6 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           <Trans>
             Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings
-            each one back right before you’d forget.
+            each one back just as it starts to fade.
           </Trans>
         </p>
         <div className="mt-8 flex flex-wrap gap-2">

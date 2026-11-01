@@ -29,7 +29,7 @@ import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
 
 export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
-export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget.`;
+export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade.`;
 
 const SPANISH_ADDED: SampleCard = {
   label: msg`Español · new`,
@@ -251,7 +251,7 @@ export function LanguagesView() {
       heroLede={
         <Trans>
           The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it
-          in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget.
+          in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade.
         </Trans>
       }
       notebooks={[LEARNING_LANGUAGES.find((l) => l.id === "fr") as LearningLanguage]}

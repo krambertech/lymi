@@ -88,9 +88,9 @@ export function ExamsHub({ counts }: Props) {
             title={<Trans>Cramming fades. Spacing lasts.</Trans>}
             body={
               <Trans>
-                Spaced repetition asks each question again just as you’re about to forget it, and
-                every time you remember, the next gap grows. Lymi uses your grade to decide when
-                each question comes back.
+                Spaced repetition asks each question again just as it starts to fade, and every time
+                you remember, the next gap grows. Lymi uses your grade to decide when each question
+                comes back.
               </Trans>
             }
           />
@@ -407,7 +407,7 @@ function DeckNotQuiz() {
       id: "which",
       topic: <Trans>Which questions come up</Trans>,
       quiz: <Trans>All of them, equally often</Trans>,
-      deck: <Trans>The ones you’re about to forget</Trans>,
+      deck: <Trans>The ones starting to fade</Trans>,
     },
     {
       id: "wrong",

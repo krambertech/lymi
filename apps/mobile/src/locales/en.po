@@ -3127,8 +3127,8 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your phone and your app language."
 
-msgid "Lymi brings it back just before you’d forget it."
-msgstr "Lymi brings it back just before you’d forget it."
+msgid "Lymi brings it back just as it starts to fade."
+msgstr "Lymi brings it back just as it starts to fade."
 
 msgid "Lymi can no longer read your saved token. Paste it again below."
 msgstr "Lymi can no longer read your saved token. Paste it again below."

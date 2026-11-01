@@ -413,14 +413,42 @@ describe("deleting an account", () => {
     expect(leftovers.publishedDecks).toBe(1);
     expect(await count("deck_publications", "deck_id", deck.id)).toBe(0);
 
+    // A run that fails before the copy leaves the member in place for the next one.
+    let reads = 0;
+    const failing = new Proxy(db, {
+      get(target, property) {
+        if (property === "select" && ++reads > 1) throw new Error("D1 is unavailable");
+        const value = Reflect.get(target, property);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+    await copyFormerDecks(failing, undefined);
+    expect(await count("deck_members", "user_id", learnerCtx.userId)).toBe(1);
+
     await copyFormerDecks(db, undefined);
     const copy = await raw
       .prepare(
-        "select decks.name as deck, cards.term as term, cards.normalized_term as key, cards.meaning as meaning from decks join cards on cards.deck_id = decks.id where decks.user_id = ?",
+        "select decks.id as id, decks.name as deck, cards.term as term, cards.normalized_term as key, cards.meaning as meaning from decks join cards on cards.deck_id = decks.id where decks.user_id = ?",
       )
       .bind(learnerCtx.userId)
-      .first();
-    expect(copy).toEqual({ deck: "Естонська", term: "Tere!", key: "tere!", meaning: "привіт" });
+      .first<{ id: string }>();
+    expect(copy).toEqual({
+      id: expect.any(String),
+      deck: "Естонська",
+      term: "Tere!",
+      key: "tere!",
+      meaning: "привіт",
+    });
+    const audited = await raw
+      .prepare(
+        "select action, user_id as userId from audit_log where actor = 'system' and entity = 'deck' and entity_id in (?, ?) order by action",
+      )
+      .bind(copy?.id, deck.id)
+      .all();
+    expect(audited.results).toEqual([
+      { action: "create", userId: learnerCtx.userId },
+      { action: "leave", userId: FORMER_OWNER_ID },
+    ]);
   });
 
   it("refuses one of Lymi's own publisher accounts while it is on the list", async () => {

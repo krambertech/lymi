@@ -737,7 +737,7 @@ export async function addressEmailLanguage(
 /**
  * An account email sent from inside Better Auth. A delivery failure must not fail the sign-up,
  * sign-in or reset that asked for it, because the learner can ask for the message again; the
- * failure is already logged with its error class and no recipient.
+ * failure is logged with its error class and no recipient.
  */
 export async function sendAccountEmail(
   ctx: ServiceContext,
@@ -746,8 +746,14 @@ export async function sendAccountEmail(
 ): Promise<void> {
   try {
     await sendTransactionalEmail(ctx, env, input);
-  } catch {
-    console.error(JSON.stringify({ event: "account_email_not_sent", kind: input.kind }));
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "account_email_not_sent",
+        kind: input.kind,
+        error: error instanceof Error ? error.name : "unknown",
+      }),
+    );
   }
 }
 

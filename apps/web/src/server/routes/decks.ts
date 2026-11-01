@@ -28,7 +28,7 @@ import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
 import { clientSupports, EXAMPLE_TRANSLATION_SINCE } from "../phone-clients";
-import { ownerAnalytics } from "../posthog";
+import { ownerAnalytics, reportServerException } from "../posthog";
 import {
   approveEdition,
   archiveDeck,
@@ -395,7 +395,9 @@ decks.put(
           analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },
         { slug: input.slug, limit: PUBLISHED_AUDIO_ON_PUBLISH },
-      ).catch(() => undefined),
+      ).catch((error: unknown) =>
+        reportServerException(c.env, error, { route: "decks/publish-audio", method: "PUT" }),
+      ),
     );
     return c.json(publicationOut(c.env.PRODUCT_URL, publication));
   },

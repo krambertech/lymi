@@ -97,6 +97,8 @@ export function createReadwiseApi(fetcher: typeof fetch = fetch): ReadwiseApi {
   async function get(token: string, path: string): Promise<unknown> {
     const response = await fetcher(`${BASE}${path}`, {
       headers: { Authorization: `Token ${token}`, Accept: "application/json" },
+    }).catch(() => {
+      throw new ReadwiseUnavailable(0);
     });
     if (response.status === 401 || response.status === 403) throw new ReadwiseRefused();
     if (response.status === 429) {

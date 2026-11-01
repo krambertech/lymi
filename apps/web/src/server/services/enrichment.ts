@@ -490,8 +490,7 @@ export async function runState(
  * never start.
  */
 export async function queueEnrichment(
-  db: Db,
-  userId: string,
+  { db, userId, analytics }: ServiceContext,
   cardIds: string[],
   queue: EnrichmentQueue,
   trigger: NonNullable<EnrichRunParams["trigger"]> = "add",
@@ -500,12 +499,30 @@ export async function queueEnrichment(
   try {
     await queue.create({ id, params: { userId, cardIds, trigger } });
     return true;
-  } catch {
+  } catch (error) {
     // The same add sent twice at once can race for the run's name; the one that lost is answered.
     if ((await runState(queue, id)) === "live") return true;
+    console.error(
+      JSON.stringify({
+        event: "enrichment_not_queued",
+        trigger,
+        error: error instanceof Error ? error.name : "unknown",
+      }),
+    );
     // An edit's run was only to translate; a fill under way belongs to another run.
-    if (trigger !== "edit") await failEnrichment(db, userId, cardIds);
-    await failTranslations(db, userId, cardIds);
+    if (trigger !== "edit") {
+      await failEnrichment(db, userId, cardIds);
+      track(analytics, {
+        name: "enrichment_finished",
+        outcome: "failed",
+        count: cardIds.length,
+        trigger,
+      });
+    }
+    const failed = await failTranslations(db, userId, cardIds);
+    if (failed > 0) {
+      track(analytics, { name: "example_translated", outcome: "failed", count: failed, trigger });
+    }
     return false;
   }
 }

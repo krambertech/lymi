@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { readwiseDeps } from "../readwise/deps";
+import { ServiceError } from "../services/context";
 import {
   connectReadwise,
   disconnectReadwise,
@@ -72,7 +73,10 @@ readwise.patch(
     // The setting is saved; a Readwise outage leaves the book for the next pull.
     const connection = await pullReadwiseNow(ctx, readwiseDeps(c.env, ctx.analytics), {
       followed: true,
-    }).catch(() => view);
+    }).catch((error: unknown) => {
+      if (error instanceof ServiceError && error.code === "unavailable") return view;
+      throw error;
+    });
     return c.json({ connection });
   },
 );

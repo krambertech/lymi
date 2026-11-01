@@ -9,6 +9,7 @@ import {
   ReadwiseLimited,
   ReadwiseRefused,
   ReadwiseTokenUnreadable,
+  ReadwiseUnavailable,
 } from "../readwise/api";
 import { termOf } from "../readwise/terms";
 import { openToken, sealToken } from "../readwise/token";
@@ -646,7 +647,8 @@ export async function pullReadwiseNow(
   if (row.status === "active" && (followed || !recent)) {
     try {
       await runPull(ctx, deps, "manual");
-    } catch {
+    } catch (error) {
+      if (!(error instanceof ReadwiseUnavailable)) throw error;
       throw new ServiceError("unavailable", "Readwise didn't answer. Try again in a minute.");
     }
   }

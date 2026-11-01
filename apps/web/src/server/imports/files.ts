@@ -180,10 +180,17 @@ export async function readZipEntry(
   if (entry.size > limit) throw new ImportFileError("too_large", "An entry is too large");
   const out = new Uint8Array(entry.size);
   let filled = 0;
-  for await (const chunk of chunks(await zipEntryStream(file, entry))) {
-    if (filled + chunk.length > out.length) throw damaged("entry");
-    out.set(chunk, filled);
-    filled += chunk.length;
+  const stream = await zipEntryStream(file, entry);
+  try {
+    for await (const chunk of chunks(stream)) {
+      if (filled + chunk.length > out.length) throw damaged("entry");
+      out.set(chunk, filled);
+      filled += chunk.length;
+    }
+  } catch (err) {
+    // DecompressionStream reports corrupt data as a bare TypeError.
+    if (err instanceof TypeError) throw damaged("entry");
+    throw err;
   }
   if (filled !== out.length) throw damaged("entry");
   return out;

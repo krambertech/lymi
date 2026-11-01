@@ -11,7 +11,7 @@ import {
   newId,
   sourceOfFileName,
 } from "@lymi/core";
-import { and, desc, eq, inArray, isNull, lt, or, sql } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNotNull, isNull, lt, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
@@ -604,7 +604,7 @@ export async function finishImport(
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
     ...(runs !== undefined ? { write_runs: runs } : {}),
   });
-  await deleteImportFiles(uploads, row);
+  await releaseImportFiles(ctx.db, uploads, row);
 }
 
 /** Whole seconds from `from` to `to`, within what an event's count holds. */
@@ -639,7 +639,7 @@ export async function failImport(
     outcome: "failed",
   });
   track(analytics, { name: "import_failed", source: row.source, card_count });
-  await deleteImportFiles(uploads, row);
+  await releaseImportFiles(db, uploads, row);
 }
 
 /** The learner's way out before anything is written. */
@@ -665,16 +665,19 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2B
       ),
     auditStatement(ctx, { entity: "import", action: "cancel", id }),
   ]);
-  await deleteImportFiles(uploads, row);
+  await releaseImportFiles(ctx.db, uploads, row);
   return getImport(ctx, id);
 }
 
-/** Deletes the upload, any unfinished multipart upload and the stored note chunks. */
+/**
+ * Deletes the upload, any unfinished multipart upload and the stored note chunks. False when R2
+ * refused, so the caller keeps the key for the sweep.
+ */
 export async function deleteImportFiles(
   uploads: R2Bucket,
   row: Pick<Import, "objectKey" | "uploadId">,
-) {
-  if (!row.objectKey) return;
+): Promise<boolean> {
+  if (!row.objectKey) return true;
   try {
     if (row.uploadId)
       await uploads
@@ -692,16 +695,31 @@ export async function deleteImportFiles(
       cursor = page.truncated ? page.cursor : undefined;
     } while (cursor);
     for (let i = 0; i < keys.length; i += 1000) await uploads.delete(keys.slice(i, i + 1000));
+    return true;
   } catch {
-    // The expiry sweep tries again; the key itself is never logged.
+    // The key itself is never logged.
     console.error("Deleting an import's files failed");
-    return;
+    return false;
   }
 }
 
+/** Deletes an ended import's files and clears its key; a refused delete keeps it for the sweep. */
+async function releaseImportFiles(
+  db: Db,
+  uploads: R2Bucket,
+  row: Pick<Import, "id" | "objectKey" | "uploadId">,
+) {
+  if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
+  await db
+    .update(schema.imports)
+    .set({ objectKey: null, uploadId: null, updatedAt: new Date() })
+    .where(eq(schema.imports.id, row.id));
+}
+
 /**
- * Gives up on imports left waiting, so no upload stays in R2, and fails writes that stalled.
- * Run from the cron trigger, which reports any stalled write.
+ * Gives up on imports left waiting, so no upload stays in R2, fails writes that stalled, and
+ * retries files an ended import could not delete. Run from the cron trigger, which reports any
+ * stalled write.
  */
 export async function expireImports(
   db: Db,
@@ -734,6 +752,17 @@ export async function expireImports(
       analytics,
     );
   }
+  const left = await db
+    .select()
+    .from(schema.imports)
+    .where(
+      and(
+        inArray(schema.imports.status, ["done", "failed", "cancelled"]),
+        isNotNull(schema.imports.objectKey),
+      ),
+    )
+    .limit(50);
+  for (const row of left) await releaseImportFiles(db, uploads, row);
   return { expired: stale.length - stalled, stalled };
 }
 

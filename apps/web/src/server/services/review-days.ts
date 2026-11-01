@@ -1,5 +1,5 @@
 import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
-import { newId, type StreakDay, summariseStreak } from "@lymi/core";
+import { daySatisfied, newId, type StreakDay, summariseStreak } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
@@ -24,8 +24,6 @@ export interface DayProgress {
   goal: number;
   outcome: Outcome;
 }
-
-const satisfies = (outcome: Outcome) => outcome === "goal_met" || outcome === "exhausted";
 
 /**
  * The zone that decides where a day begins. The first zone a client reports becomes the
@@ -197,7 +195,7 @@ export async function applyGoalToToday(ctx: ServiceContext, goal: number) {
     .select()
     .from(schema.reviewDays)
     .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, date)));
-  if (!day || satisfies(day.outcome) || day.goal === goal) return;
+  if (!day || daySatisfied(day.outcome) || day.goal === goal) return;
   await ctx.db
     .update(schema.reviewDays)
     .set({ goal, updatedAt: new Date() })
@@ -441,7 +439,7 @@ export async function streakDays(
       date: row.date,
       attempts: attempts + (d?.attempts ?? 0),
       goal: row.goal,
-      satisfied: satisfies(row.outcome) || !!d?.satisfied,
+      satisfied: daySatisfied(row.outcome) || !!d?.satisfied,
       outcome: row.outcome,
     });
   }

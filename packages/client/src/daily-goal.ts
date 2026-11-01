@@ -1,4 +1,4 @@
-import type { StreakOut } from "@lymi/core";
+import { daySatisfied, type StreakOut } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { api, type Settings } from "./api";
@@ -29,10 +29,7 @@ export function useDailyGoal() {
         s && {
           ...s,
           goal: dailyGoal,
-          today:
-            s.today.outcome === "goal_met" || s.today.outcome === "exhausted"
-              ? s.today
-              : { ...s.today, goal: dailyGoal },
+          today: daySatisfied(s.today.outcome) ? s.today : { ...s.today, goal: dailyGoal },
         },
     );
     qc.setQueryData<Settings>(settingsQuery.queryKey, (s) => s && { ...s, dailyGoal });

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { InsightsOut } from "@lymi/core";
+import { type InsightsOut, keepsRun } from "@lymi/core";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
@@ -316,8 +316,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                     const l = future ? 0 : level(entry, goal);
                     // Counted without filling: nothing left to do, or nothing due at all. The
                     // streak keeps a nothing-due day the same way, so the grid rings it too.
-                    const kept =
-                      !future && (!!entry?.satisfied || entry?.outcome === "nothing_due") && l < 3;
+                    const kept = !future && keepsRun(entry) && l < 3;
                     const say = sentence(date);
                     const id = `${cellId}-${date}`;
                     return (

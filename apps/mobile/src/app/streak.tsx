@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import { shownOutcome } from "@lymi/client/review-day";
-import type { StreakOut } from "@lymi/core";
+import { daySatisfied, runDates, type StreakOut } from "@lymi/core";
 import { useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
@@ -17,9 +17,6 @@ import { Icon, IconButton, Plate, Text } from "../ui/primitives";
 import { Skeleton } from "../ui/skeleton";
 import { useStreakStart } from "../ui/streak-start";
 import { OnGlass } from "../ui/surface";
-
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /**
  * The streak, as a sheet over whatever opened it: the run with one plain line about today, today
@@ -87,25 +84,14 @@ function StreakPanel({
   };
   const { current, today } = summary;
   const start = useStreakStart(summary.longest);
-  const done = satisfied(today.outcome);
+  const done = daySatisfied(today.outcome);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
   // The days of the current run, drawn in from its first one when the streak opens.
-  const run = useMemo(() => {
-    const dates = new Set<string>();
-    const keeps = (date: string) => {
-      const d = byDate.get(date);
-      return rest.has(date) || (!!d && (d.satisfied || d.outcome === "nothing_due"));
-    };
-    for (
-      let day = done ? today.date : addDays(today.date, -1);
-      keeps(day);
-      day = addDays(day, -1)
-    ) {
-      if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
-    }
-    return dates;
-  }, [byDate, rest, done, today.date]);
+  const run = useMemo(
+    () => runDates(summary.days, summary.restDays, today),
+    [summary.days, summary.restDays, today],
+  );
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
   const status =
     today.outcome === "goal_met"

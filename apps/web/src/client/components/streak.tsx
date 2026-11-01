@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { StreakOut } from "@lymi/core";
+import { shownOutcome } from "@lymi/client/review-day";
+import { daySatisfied, runDates, type StreakOut } from "@lymi/core";
 import { streakFlameFor } from "@lymi/design";
 import { clsx } from "clsx";
 import { CalendarCheck, Check, type LucideIcon, Pencil, Trophy } from "lucide-react";
@@ -20,9 +21,6 @@ import { Dialog, DialogContent, usePlaceShape } from "./ui/dialog";
 export type StreakSummary = StreakOut;
 
 export { lastDays, StreakWeek } from "./streak-week";
-
-const satisfied = (outcome: StreakSummary["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /** Yesterday fell short and the run carried on through it: the morning after a rest day. */
 export function restedYesterday(summary: StreakSummary): boolean {
@@ -130,11 +128,11 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
 }
 
 /** One line on where today stands against the streak: what is left, or that the day counts. */
-export function useTodayStatus(summary: StreakSummary | undefined): string {
+export function useTodayStatus(summary: StreakSummary | undefined, due: number): string {
   const { t } = useLingui();
   if (!summary) return "";
   const { today } = summary;
-  switch (today.outcome) {
+  switch (shownOutcome(today.outcome, due)) {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
@@ -167,6 +165,8 @@ function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number;
 
 export interface StreakPanelProps {
   summary: StreakSummary;
+  /** Cards due today, which make a day confirmed as nothing due read as open. */
+  due?: number | undefined;
   onGoalChange?: ((goal: number) => void) | undefined;
   /** "Saved" after a goal change lands, or the error that stopped it. */
   goalStatus?: "saving" | "saved" | "error" | undefined;
@@ -185,6 +185,7 @@ export interface StreakPanelProps {
  */
 export function StreakPanel({
   summary,
+  due = 0,
   onGoalChange,
   goalStatus,
   titleId,
@@ -201,22 +202,14 @@ export function StreakPanel({
   const { current, today } = summary;
   // A dialog or sheet names the view in its bar; a whole screen's bar is only the way back.
   const titleInBar = usePlaceShape() !== "screen";
-  const done = satisfied(today.outcome);
+  const done = daySatisfied(today.outcome);
   const flame = streakFlameFor(summary);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
-  const run = useMemo(() => {
-    const dates = new Set<string>();
-    const keeps = (date: string) => {
-      const d = byDate.get(date);
-      return rest.has(date) || (!!d && (d.satisfied || d.outcome === "nothing_due"));
-    };
-    let day = done ? today.date : addDays(today.date, -1);
-    for (; keeps(day); day = addDays(day, -1)) {
-      if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
-    }
-    return dates;
-  }, [byDate, rest, done, today.date]);
+  const run = useMemo(
+    () => runDates(summary.days, summary.restDays, today),
+    [summary.days, summary.restDays, today],
+  );
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
 
   // Only a change of view moves focus; comparing views, not counting runs, survives StrictMode's double effect.
@@ -269,7 +262,7 @@ export function StreakPanel({
       ? t`Daily goal reached.`
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
-        : today.outcome === "nothing_due"
+        : shownOutcome(today.outcome, due) === "nothing_due"
           ? current > 0
             ? t`Nothing due today, so your streak carries on.`
             : t`Nothing due today.`
@@ -372,6 +365,8 @@ export function StreakPanel({
 
 export interface StreakButtonProps {
   summary: StreakSummary | undefined;
+  /** Cards due today, which make a day confirmed as nothing due read as open. */
+  due?: number | undefined;
   variant: StreakFace;
   className?: string | undefined;
   /** Opens the app's one streak place. Without it the button opens a place of its own, as on the design page. */
@@ -379,12 +374,12 @@ export interface StreakButtonProps {
 }
 
 /** The pill in the chrome, or the card on Today. Every face opens the same place. */
-export function StreakButton({ summary, variant, className, onOpen }: StreakButtonProps) {
+export function StreakButton({ summary, due = 0, variant, className, onOpen }: StreakButtonProps) {
   const { t } = useLingui();
   const [ownOpen, setOwnOpen] = useState(false);
   const rail = variant === "rail";
   const card = variant === "card";
-  const status = useTodayStatus(summary);
+  const status = useTodayStatus(summary, due);
 
   if (!summary) {
     return (
@@ -437,7 +432,9 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
           <PillFace summary={summary} variant={variant} />
         )}
       </button>
-      {!onOpen && <StreakPlace open={ownOpen} onOpenChange={setOwnOpen} summary={summary} />}
+      {!onOpen && (
+        <StreakPlace open={ownOpen} onOpenChange={setOwnOpen} summary={summary} due={due} />
+      )}
     </>
   );
 }

@@ -298,7 +298,7 @@ function DeckPlates({
   section?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
-  const summary = useTodayStatus(streak);
+  const summary = useTodayStatus(streak, deck.due);
   // A summary fetched before these cards arrived would say nothing is due beside a count that is not zero.
   const status = deck.due > 0 && streak?.today.outcome === "nothing_due" ? "" : summary;
   const due = deck.due;

@@ -8,7 +8,7 @@ import {
   isolate,
   type KnownReadings,
   type PronunciationDisplay,
-  pitchPatterns,
+  pitchPattern,
   pronunciationText,
   type Rating,
   type ReviewAid,
@@ -487,7 +487,7 @@ export function ReviewCard({
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
   const pronunciationLine = useMemo(() => pronunciationText(card), [card]);
   // A chart stands where the pronunciation's own line would, and spells the kana itself.
-  const pitched = useMemo(() => pitchPatterns(card).length > 0, [card]);
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
   const cueReading = cueShowsPronunciation({
     revealed,
     known: stateKey(item.fsrsState) === "known",

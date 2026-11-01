@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { normalizeCardText } from "./card-text";
 import { pitchIntoReading } from "./import";
-import { PITCH_DOT, pitchLayout, pitchPatterns, sourcePitch, storedPitch } from "./pitch";
+import { PITCH_DOT, pitchLayout, pitchPattern, sourcePitch, storedPitch } from "./pitch";
 import {
   kanaReading,
   pronunciationText,
@@ -11,50 +11,50 @@ import {
   termShowsPronunciation,
 } from "./reading";
 
-const shape = (pronunciation: string) =>
-  pitchPatterns({ language: "ja", pronunciation }).map((pattern) => ({
-    highs: pattern.morae.map((mora) => (mora.high ? "H" : "L")).join(""),
-    particle: pattern.particleHigh ? "H" : "L",
-  }));
+const shape = (pronunciation: string) => {
+  const pattern = pitchPattern({ language: "ja", pronunciation });
+  return {
+    highs: pattern?.morae.map((mora) => (mora.high ? "H" : "L")).join(""),
+    particle: pattern?.particleHigh ? "H" : "L",
+  };
+};
 
-describe("pitchPatterns", () => {
+describe("pitchPattern", () => {
   it("draws the four accent shapes", () => {
-    expect(shape("ともだち [0]")).toEqual([{ highs: "LHHH", particle: "H" }]);
-    expect(shape("はし [1]")).toEqual([{ highs: "HL", particle: "L" }]);
-    expect(shape("おとこ [3]")).toEqual([{ highs: "LHH", particle: "L" }]);
-    expect(shape("かんがえる [4]")).toEqual([{ highs: "LHHHL", particle: "L" }]);
+    expect(shape("ともだち [0]")).toEqual({ highs: "LHHH", particle: "H" });
+    expect(shape("はし [1]")).toEqual({ highs: "HL", particle: "L" });
+    expect(shape("おとこ [3]")).toEqual({ highs: "LHH", particle: "L" });
+    expect(shape("かんがえる [4]")).toEqual({ highs: "LHHHL", particle: "L" });
   });
 
   it("counts a small kana with its mora and ん, っ and ー as their own", () => {
-    const [pattern] = pitchPatterns({ language: "ja", pronunciation: "としょかん [2]" });
+    const pattern = pitchPattern({ language: "ja", pronunciation: "としょかん [2]" });
     expect(pattern?.morae.map((mora) => mora.text)).toEqual(["と", "しょ", "か", "ん"]);
     expect(pattern?.morae.map((mora) => mora.high)).toEqual([false, true, false, false]);
-    expect(shape("コーヒー [3]")).toEqual([{ highs: "LHHL", particle: "L" }]);
+    expect(shape("コーヒー [3]")).toEqual({ highs: "LHHL", particle: "L" });
   });
 
   it("keeps a flat word and a fall on the last mora apart at the particle", () => {
-    const [flat] = shape("はし [0]");
-    const [last] = shape("はし [2]");
-    expect(flat?.highs).toBe(last?.highs);
-    expect(flat?.particle).not.toBe(last?.particle);
+    const flat = shape("はし [0]");
+    const last = shape("はし [2]");
+    expect(flat.highs).toBe(last.highs);
+    expect(flat.particle).not.toBe(last.particle);
   });
 
-  it("gives each accepted accent its own pattern", () => {
-    expect(
-      pitchPatterns({ language: "ja", pronunciation: "かんがえる [4][3]" }).map((p) => p.position),
-    ).toEqual([4, 3]);
+  it("charts the first of two accepted accents", () => {
+    expect(pitchPattern({ language: "ja", pronunciation: "かんがえる [4][3]" })?.position).toBe(4);
   });
 
   it("charts nothing without an accent, outside Japanese or past a phone's width", () => {
-    expect(pitchPatterns({ language: "ja", pronunciation: "はし" })).toEqual([]);
-    expect(pitchPatterns({ language: "ja", pronunciation: "/haʃi/" })).toEqual([]);
-    expect(pitchPatterns({ language: "es", pronunciation: "はし [1]" })).toEqual([]);
-    expect(pitchPatterns({ language: "ja", pronunciation: "はし [5]" })).toEqual([]);
-    expect(pitchPatterns({ language: "ja", pronunciation: `${"あ".repeat(13)} [1]` })).toEqual([]);
+    expect(pitchPattern({ language: "ja", pronunciation: "はし" })).toBeNull();
+    expect(pitchPattern({ language: "ja", pronunciation: "/haʃi/" })).toBeNull();
+    expect(pitchPattern({ language: "es", pronunciation: "はし [1]" })).toBeNull();
+    expect(pitchPattern({ language: "ja", pronunciation: "はし [5]" })).toBeNull();
+    expect(pitchPattern({ language: "ja", pronunciation: `${"あ".repeat(13)} [1]` })).toBeNull();
   });
 
   it("stops the line at each dot's edge, so a dot stays hollow", () => {
-    const [pattern] = pitchPatterns({ language: "ja", pronunciation: "ともだち [0]" });
+    const pattern = pitchPattern({ language: "ja", pronunciation: "ともだち [0]" });
     const { morae, segments } = pitchLayout(pattern as NonNullable<typeof pattern>);
     const [first] = segments;
     const [from, to] = morae as [(typeof morae)[0], (typeof morae)[0]];
@@ -63,7 +63,7 @@ describe("pitchPatterns", () => {
   });
 
   it("lays a two-kana mora out wider and ends at the tail", () => {
-    const [pattern] = pitchPatterns({ language: "ja", pronunciation: "しゃ [1]" });
+    const pattern = pitchPattern({ language: "ja", pronunciation: "しゃ [1]" });
     const layout = pitchLayout(pattern as NonNullable<typeof pattern>);
     expect(layout.morae[0]?.width).toBeGreaterThan(11);
     expect(layout.segments.at(-1)).toMatchObject({ x2: layout.width, y2: 8 });

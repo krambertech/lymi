@@ -3693,9 +3693,6 @@ msgstr "Options for {sectionName}"
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
-msgid "or"
-msgstr "or"
-
 msgid "Or choose a .txt file"
 msgstr "Or choose a .txt file"
 

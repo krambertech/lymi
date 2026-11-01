@@ -14,7 +14,7 @@ import {
   markedTerm,
   modeKey,
   modeOf,
-  pitchPatterns,
+  pitchPattern,
   pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
@@ -815,7 +815,7 @@ export function CardForm(props: CardFormProps) {
         cardLimits.pronunciation,
         {
           description:
-            pitchPatterns({ language, pronunciation }).length > 0 ? (
+            pitchPattern({ language, pronunciation }) !== null ? (
               <PitchChart card={{ language, pronunciation }} className="pt-1 text-md" />
             ) : (
               stressMissed && (

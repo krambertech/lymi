@@ -3968,9 +3968,6 @@ msgstr "Options for {sectionName}"
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
-msgid "or"
-msgstr "or"
-
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "or"

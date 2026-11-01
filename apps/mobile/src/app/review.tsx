@@ -31,7 +31,7 @@ import {
   markedTerm,
   modeKey,
   type PronunciationDisplay,
-  pitchPatterns,
+  pitchPattern,
   pronunciationText,
   type Rating,
   ROUNDS,
@@ -1384,7 +1384,7 @@ function CardPlate({
   const separate = furigana && deck?.pronunciationDisplay === "separate";
   const termCard = separate ? null : card;
   // A chart stands where the pronunciation's own line would, and spells the kana itself.
-  const pitched = useMemo(() => pitchPatterns(card).length > 0, [card]);
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
   const cueFurigana = cueShowsPronunciation({
     revealed,
     known: stateKey(forgotten ? 3 : fsrsState) === "known",

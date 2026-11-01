@@ -1,6 +1,6 @@
 /**
  * A Japanese word's pitch accent, held in its Reading after the kana as the mora the voice falls
- * after: `としょかん [2]`, `ともだち [0]` for no fall, `かんがえる [4][3]` for two accepted accents.
+ * after: `としょかん [2]`, `ともだち [0]` for no fall, and an import may keep a second accepted accent, `かんがえる [4][3]`, which no chart draws.
  * Nothing else reads it: `kanaReading` gives duplicates, furigana and audio the kana alone.
  * docs/card-writing.md.
  */
@@ -67,24 +67,26 @@ function morae(reading: string): string[] {
   return out;
 }
 
-/** The accents a card's Reading holds, each to chart, or none when it holds none or is too long to chart. */
-export function pitchPatterns(card: {
+/** The accent a card's chart draws, the first its Reading holds, or null when it holds none or is too long to chart. */
+export function pitchPattern(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
-}): PitchPattern[] {
+}): PitchPattern | null {
   const kana = kanaReading(card);
   if (kana === null || !card.pronunciation || readingEngine(card.language) !== "furigana") {
-    return [];
+    return null;
   }
   const shown = morae(kana);
-  if (shown.length > CHART_MORAE) return [];
-  return positionsIn(card.pronunciation.normalize("NFC").trim())
-    .filter((position) => position <= shown.length)
-    .map((position) => ({
-      position,
-      morae: shown.map((text, at) => ({ text, high: isHigh(at, position) })),
-      particleHigh: position === 0,
-    }));
+  if (shown.length > CHART_MORAE) return null;
+  const position = positionsIn(card.pronunciation.normalize("NFC").trim()).find(
+    (at) => at <= shown.length,
+  );
+  if (position === undefined) return null;
+  return {
+    position,
+    morae: shown.map((text, at) => ({ text, high: isHigh(at, position) })),
+    particleHigh: position === 0,
+  };
 }
 
 /** A chart's width in tenths of an em for each mora: きょ takes two kana's room. */

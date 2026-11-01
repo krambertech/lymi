@@ -1,10 +1,10 @@
 import { Trans } from "@lingui/react/macro";
-import { PITCH_DOT, pitchLayout, pitchPatterns } from "@lymi/core";
+import { PITCH_DOT, pitchLayout, pitchPattern } from "@lymi/core";
 import { BookOpen } from "lucide-react";
 
 /** A word's pitch as the product charts it: a dot over each mora, with a tail for a particle after it. */
 function PitchLine({ pronunciation }: { pronunciation: string }) {
-  const [pattern] = pitchPatterns({ language: "ja", pronunciation });
+  const pattern = pitchPattern({ language: "ja", pronunciation });
   if (!pattern) return null;
   const { width, morae, segments } = pitchLayout(pattern);
   return (

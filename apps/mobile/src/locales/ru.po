@@ -3693,9 +3693,6 @@ msgstr "Параметры «{sectionName}»"
 msgid "Options for {seriesName}"
 msgstr "Параметры «{seriesName}»"
 
-msgid "or"
-msgstr "или"
-
 msgid "Or choose a .txt file"
 msgstr "Или выбери файл .txt"
 

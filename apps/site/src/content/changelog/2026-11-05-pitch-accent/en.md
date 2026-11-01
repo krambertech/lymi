@@ -10,8 +10,6 @@ In review, the chart shows with the answer. It also shows when you open a card.
 
 AI adds the pitch accent when it fills in a card’s Reading. You can add it yourself too. Type the number after the reading, like たべる [2]: that’s the sound the voice falls after. Use [0] for a word with no fall.
 
-If a word has two accepted accents, write both, like かんがえる [4][3]. The card shows both charts.
-
 ### Fixes and improvements
 
 - Importing from Anki now keeps a pitch accent field in the card’s Reading, so it shows as a chart. A field Lymi can’t match to the reading stays in the notes.

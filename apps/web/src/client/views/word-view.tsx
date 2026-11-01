@@ -10,7 +10,7 @@ import {
   type EnrichedField,
   isolate,
   type KnownReadings,
-  pitchPatterns,
+  pitchPattern,
   pronunciationText,
   type ReviewMode,
   readFsrs,
@@ -486,7 +486,7 @@ export function WordView({
     [card, forms.word],
   );
   const shownPronunciation = useMemo(() => pronunciationText(card), [card]);
-  const pitched = useMemo(() => pitchPatterns(card).length > 0, [card]);
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
   const readingOver = useMemo(
     () => drawsTermReading({ ...card, term: forms.word }),
     [card, forms.word],

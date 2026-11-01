@@ -1,5 +1,5 @@
-# Pitch accent: no chart on the cue, a chart under the term after the reveal, two charts for two
-# accepted accents, and the chart in place of the Reading's text on the card page.
+# Pitch accent: no chart on the cue, a chart under the term after the reveal, one chart for a
+# Reading with two accents, and the chart in place of the Reading's text on the card page.
 appId: app.lymi
 name: Pitch accent
 ---

@@ -8,7 +8,7 @@ import { writes } from "@lymi/client/writes";
 import {
   type EnrichedField,
   isolate,
-  pitchPatterns,
+  pitchPattern,
   pronunciationText,
   readFsrs,
   termShowsPronunciation,
@@ -266,7 +266,7 @@ export default function CardPage() {
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
-        {pitchPatterns(card).length > 0 ? (
+        {pitchPattern(card) !== null ? (
           <PitchChart card={card} />
         ) : (
           <Text className="text-md text-ink" lang={card.language}>

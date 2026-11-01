@@ -12,7 +12,7 @@ A Japanese Reading's accent, `としょかん [2]`, drawn as a chart under the t
 
 ## End state
 
-`01-cue` shows the term with no chart. `02-revealed` and `03-revealed-second` show the chart under the term, one for the first card and two joined by "or" for the second in either order. `04-card-page` shows the chart in place of the Reading's text. No screen shows `[2]`.
+`01-cue` shows the term with no chart. `02-revealed` and `03-revealed-second` show the chart under the term, with one chart on each card, including 考える, whose Reading holds two accents. `04-card-page` shows the chart in place of the Reading's text. No screen shows `[2]`.
 
 ## Gotchas
 

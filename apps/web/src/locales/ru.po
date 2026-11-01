@@ -3968,9 +3968,6 @@ msgstr "Параметры «{sectionName}»"
 msgid "Options for {seriesName}"
 msgstr "Параметры «{seriesName}»"
 
-msgid "or"
-msgstr "или"
-
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "или"

@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
-import { isolate, PITCH_DOT, type PitchPattern, pitchLayout, pitchPatterns } from "@lymi/core";
-import { Fragment, useMemo } from "react";
+import { isolate, PITCH_DOT, type PitchPattern, pitchLayout, pitchPattern } from "@lymi/core";
+import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import Svg, { Circle, Line } from "react-native-svg";
 import { usePalette } from "../theme/palette";
@@ -20,32 +20,24 @@ export function PitchChart({
 }) {
   const { t } = useLingui();
   const { language, pronunciation } = card;
-  const patterns = useMemo(
-    () => pitchPatterns({ language, pronunciation }),
+  const pattern = useMemo(
+    () => pitchPattern({ language, pronunciation }),
     [language, pronunciation],
   );
-  if (patterns.length === 0) return null;
-  const label = patterns
-    .map(({ position, morae }) => {
-      const reading = isolate(morae.map((mora) => mora.text).join(""));
-      return position === 0
-        ? t`${reading}, flat pitch`
-        : t`${reading}, pitch falls after sound ${position}`;
-    })
-    .join(", ");
+  if (!pattern) return null;
+  const reading = isolate(pattern.morae.map((mora) => mora.text).join(""));
+  const position = pattern.position;
   return (
     <View
       accessible
       accessibilityRole="image"
-      accessibilityLabel={label}
-      className="flex-row flex-wrap items-end gap-x-3 gap-y-1"
+      accessibilityLabel={
+        position === 0
+          ? t`${reading}, flat pitch`
+          : t`${reading}, pitch falls after sound ${position}`
+      }
     >
-      {patterns.map((pattern, at) => (
-        <Fragment key={pattern.position}>
-          {at > 0 && <Text className="pb-0.5 text-sm text-ink-muted">{t`or`}</Text>}
-          <PitchLine pattern={pattern} size={size} language={language} />
-        </Fragment>
-      ))}
+      <PitchLine pattern={pattern} size={size} language={language} />
     </View>
   );
 }

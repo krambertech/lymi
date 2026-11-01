@@ -1,6 +1,6 @@
 ---
 title: The first version of Lymi
-summary: The first version of Lymi, with decks, cards and a daily review that brings each card back right before you’d forget it.
+summary: The first version of Lymi, with decks, cards and a daily review that brings each card back just as it starts to fade.
 figure: review
 ---
 

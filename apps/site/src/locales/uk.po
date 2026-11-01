@@ -631,8 +631,8 @@ msgstr "Додай Lymi до Claude, Grok чи іншого асистента. 
 msgid "Add now"
 msgstr "Додати зараз"
 
-msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
-msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме перед тим, як ти її забудеш."
+msgid "Add one and learn it for free — Lymi brings each card back just as it starts to fade."
+msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме тоді, коли вона починає забуватися."
 
 msgid "Add the 300 questions"
 msgstr "Додати 300 питань"
@@ -712,8 +712,8 @@ msgstr "прикметник"
 msgid "advantage"
 msgstr "перевага"
 
-msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
-msgstr "Після уроку на italki, Preply чи з приватним репетитором надішли чат, нотатки або фото зошита своєму AI-асистенту. Він додасть нові слова в Lymi, а Lymi поверне кожне, перш ніж ти його забудеш. Безкоштовно."
+msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back just as it starts to fade. Free."
+msgstr "Після уроку на italki, Preply чи з приватним репетитором надішли чат, нотатки або фото зошита своєму AI-асистенту. Він додасть нові слова в Lymi, а Lymi поверне кожне саме тоді, коли воно почне забуватися. Безкоштовно."
 
 msgid "After today’s lesson"
 msgstr "Після сьогоднішнього уроку"
@@ -1237,8 +1237,8 @@ msgstr "Обери оцінку, щоб перейти до наступної �
 msgid "Choose a grade to move to the next question."
 msgstr "Вибери оцінку, щоб перейти до наступного питання."
 
-msgid "Choose how many cards a day. Lymi brings each one back right before you’d forget it."
-msgstr "Обери, скільки карток на день. Lymi повертатиме кожну якраз перед тим, як ти її забудеш."
+msgid "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
+msgstr "Обери, скільки карток на день. Lymi повертатиме кожну саме тоді, коли вона почне забуватися."
 
 msgid "Choose your state"
 msgstr "Обрати свою землю"
@@ -1620,8 +1620,8 @@ msgstr "Кожна частина має ще й мінімум: 38 зі 120 з�
 msgid "Each question as New, Learning or Known"
 msgstr "Кожне питання — нове, у вивченні чи засвоєне"
 
-msgid "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
-msgstr "Кожне питання повертається саме перед тим, як ти його забудеш, а ті, у яких помиляєшся, — раніше."
+msgid "Each question comes back just as it starts to fade, and the ones you get wrong come back sooner."
+msgstr "Кожне питання повертається саме тоді, коли воно починає забуватися, а ті, у яких помиляєшся, — раніше."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Кожна держава відтоді сама правила своєю землею: так почався сучасний <0>суверенітет</0>."
@@ -1929,8 +1929,8 @@ msgstr "Картки для епохи AI."
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Картки для тесту на громадянство Німеччини (Einbürgerungstest), США, Канади, Чехії та Іспанії, лексики Goethe, HSK, JLPT і TOPIK, а також теорії на права. Мовою іспиту, з перекладом поруч. Безплатно."
 
-msgid "Flashcards that come back right before you’d forget."
-msgstr "Картки, що повертаються саме тоді, коли ти от-от забудеш."
+msgid "Flashcards that come back just as they start to fade."
+msgstr "Картки, що повертаються саме тоді, коли починають забуватися."
 
 msgid "Flat"
 msgstr "Квартира"
@@ -2660,8 +2660,8 @@ msgstr "Чи є готова колода для моєї сертифікаці
 msgid "Is this *chair* free?"
 msgstr "Цей *стілець* вільний?"
 
-msgid "It comes back just before you’d forget."
-msgstr "Слово повертається саме тоді, коли ти от-от забудеш."
+msgid "It comes back just as it starts to fade."
+msgstr "Слово повертається саме тоді, коли починає забуватися."
 
 msgid "It depends"
 msgstr "Залежить від обставин"
@@ -2681,8 +2681,8 @@ msgstr "Для нього потрібна енергія <0>АТФ</0>."
 msgid "It reads from the reading on your card, so a word that can be read several ways is said the way your card has it."
 msgstr "Він бере читання з твоєї картки, тож слово, яке можна прочитати по-різному, звучить саме так, як у тебе записано."
 
-msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
-msgstr "Lymi планує кожну картку за методом інтервальних повторень і повертає її саме перед тим, як ти її забудеш."
+msgid "It schedules every card with spaced repetition and brings it back just as it starts to fade."
+msgstr "Lymi планує кожну картку за методом інтервальних повторень і повертає її саме тоді, коли вона починає забуватися."
 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
@@ -2797,8 +2797,8 @@ msgstr "Запам’ятай нерви, препарати й цифри."
 msgid "Keep the new words from italki, Preply or a private tutor."
 msgstr "Зберігай нові слова з уроків на italki, Preply чи з репетитором."
 
-msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
-msgstr "Зберігай слова й фрази з уроків, занять із репетитором і книжок. Сфотографуй нотатки, і асистент зробить із них картки, які Lymi поверне, перш ніж ти їх забудеш."
+msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade."
+msgstr "Зберігай слова й фрази з уроків, занять із репетитором і книжок. Сфотографуй нотатки, і асистент зробить із них картки, які Lymi поверне саме тоді, коли вони почнуть забуватися."
 
 msgid "Keep the words from your lessons and your books in one place. Each card marks its stress until you know the word, and a native voice says it."
 msgstr "Тримай слова з уроків і книжок в одному місці. Картка показує наголос, доки ти не знаєш слово, а вимовляє його голос носія мови."
@@ -3040,8 +3040,8 @@ msgstr "Lymi спершу питає, а потім показує відпов�
 msgid "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 msgstr "Lymi питає, що означає фраза, і як сказати її за значенням. Друге знадобиться на касі."
 
-msgid "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
-msgstr "Lymi повертає кожен факт саме перед тим, як ти його забудеш, тож кількох хвилин на день досить, щоб донести його до іспитів і до відділення. Безплатно, і твої колоди з Anki переїдуть разом із тобою."
+msgid "Lymi brings each fact back just as it starts to fade, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+msgstr "Lymi повертає кожен факт саме тоді, коли він починає забуватися, тож кількох хвилин на день досить, щоб донести його до іспитів і до відділення. Безплатно, і твої колоди з Anki переїдуть разом із тобою."
 
 msgid "Lymi changelog"
 msgstr "Що нового в Lymi"
@@ -3088,11 +3088,11 @@ msgstr "У Lymi немає власного курсу. Сфотографуй �
 msgid "Lymi home"
 msgstr "Головна сторінка Lymi"
 
-msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
-msgstr "Lymi — застосунок із флеш-картками та інтервальними повтореннями. Додай слово чи термін, AI впише значення, і картка повернеться перед тим, як ти її забудеш. Безкоштовно."
+msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back just as it starts to fade. Free to use."
+msgstr "Lymi — застосунок із флеш-картками та інтервальними повтореннями. Додай слово чи термін, AI впише значення, і картка повернеться саме тоді, коли почне забуватися. Безкоштовно."
 
-msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
-msgstr "Lymi — застосунок із флеш-картками: він повертає кожну картку саме перед тим, як ти її забудеш. Безкоштовно."
+msgid "Lymi is a flashcard app: it brings each card back just as it starts to fade. Free to use."
+msgstr "Lymi — застосунок із флеш-картками: він повертає кожну картку саме тоді, коли вона починає забуватися. Безкоштовно."
 
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi безкоштовний, а перша картка займе хвилину."
@@ -3499,8 +3499,8 @@ msgstr "Гаразд"
 msgid "Older"
 msgstr "Раніше"
 
-msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
-msgstr "Щойно колода потрапляє у твій Lymi, він повертає кожну картку саме перед тим, як ти її забудеш, — кілька хвилин на день."
+msgid "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
+msgstr "Щойно колода потрапляє у твій Lymi, він повертає кожну картку саме тоді, коли вона починає забуватися, — кілька хвилин на день."
 
 msgid "One card at a time, graded in a tap, even offline. Words you know wait longer, and the ones you miss come back sooner."
 msgstr "Одна картка за раз, оцінка одним дотиком, навіть офлайн. Слова, які ти знаєш, чекають довше, а ті, що забуваєш, повертаються раніше."
@@ -3565,8 +3565,8 @@ msgstr "Відчини вікно, будь ласка."
 msgid "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 msgstr "Відкрий «Сьогодні» на телефоні чи ноутбуці. Lymi планує кожну картку за інтервальним повторенням, тож ти повторюєш менше і пам’ятаєш довше."
 
-msgid "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
-msgstr "Відкрий «Сьогодні» на телефоні чи ноутбуці. Lymi показує кожне слово знову саме перед тим, як ти б його забув, тож наступний урок починається там, де закінчився попередній."
+msgid "Open Today on your phone or laptop. Lymi shows each word again just as it starts to fade, so the next lesson starts where the last one ended."
+msgstr "Відкрий «Сьогодні» на телефоні чи ноутбуці. Lymi показує кожне слово знову саме тоді, коли воно починає забуватися, тож наступний урок починається там, де закінчився попередній."
 
 msgid "Opinion; thought"
 msgstr "Думка"
@@ -4176,8 +4176,8 @@ msgstr "Надішли розділ Claude, ChatGPT, Gemini чи Grok і поп�
 msgid "Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 msgstr "Надішли план уроку в Claude, ChatGPT чи Grok, і асистент додасть картки за тебе. У Lymi також є відкритий API: можна перенести список із таблиці, додавати картки зі своєї навчальної платформи чи показувати на сайті групи, що пора повторити."
 
-msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
-msgstr "Надішли AI-асистенту PDF, фото зошита чи нотатки з ноутбука. Ключові терміни стануть картками в Lymi, і кожна повернеться саме перед тим, як ти її забудеш."
+msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back just as it starts to fade."
+msgstr "Надішли AI-асистенту PDF, фото зошита чи нотатки з ноутбука. Ключові терміни стануть картками в Lymi, і кожна повернеться саме тоді, коли почне забуватися."
 
 msgid "Send a whole lecture at once."
 msgstr "Надішли всю лекцію одразу."
@@ -4185,8 +4185,8 @@ msgstr "Надішли всю лекцію одразу."
 msgid "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
 msgstr "Надішли нотатки з пар, PDF або фото зошита своєму AI-асистенту, і він додасть ключові терміни в Lymi як картки з інтервальним повторенням. Безкоштовно."
 
-msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
-msgstr "Надішли фото нотаток у Claude, ChatGPT, Gemini чи Grok. Картки з’являться в Lymi, і Lymi поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back just as it starts to fade."
+msgstr "Надішли фото нотаток у Claude, ChatGPT, Gemini чи Grok. Картки з’являться в Lymi, і Lymi поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Send it anything."
 msgstr "Надсилай асистентові що завгодно."
@@ -4194,11 +4194,11 @@ msgstr "Надсилай асистентові що завгодно."
 msgid "Send it to your assistant"
 msgstr "Надішли асистенту"
 
-msgid "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
-msgstr "Надішли AI-асистенту чат уроку, транскрипт чи фото зошита. Lymi збереже кожне нове слово і поверне його саме тоді, коли ти вже майже забудеш."
+msgid "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back just as it starts to fade."
+msgstr "Надішли AI-асистенту чат уроку, транскрипт чи фото зошита. Lymi збереже кожне нове слово і поверне його саме тоді, коли воно почне забуватися."
 
-msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
-msgstr "Надішли асистентові фото нотаток. Він додасть картки в Lymi, а Lymi поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back just as it starts to fade."
+msgstr "Надішли асистентові фото нотаток. Він додасть картки в Lymi, а Lymi поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it wrote, so it’s never mistaken for your notes."
 msgstr "Надішли конспект або слайди лекції Claude, ChatGPT, Gemini чи Grok, і асистент додасть картки — кожну з тим, що було на лекції. Коли AI в Lymi доповнює значення, він позначає написане, тож його не сплутати з твоїми нотатками."
@@ -4369,8 +4369,8 @@ msgstr "суверенітет"
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Радянська Росія визнала незалежність Естонії"
 
-msgid "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
-msgstr "Інтервальне повторення ставить кожне питання знову саме тоді, коли ти от-от його забудеш, і щоразу, як ти згадуєш, наступна пауза довшає. Lymi за твоєю оцінкою вирішує, коли повернути кожне питання."
+msgid "Spaced repetition asks each question again just as it starts to fade, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgstr "Інтервальне повторення ставить кожне питання знову саме тоді, коли воно починає забуватися, і щоразу, як ти згадуєш, наступна пауза довшає. Lymi за твоєю оцінкою вирішує, коли повернути кожне питання."
 
 msgid "Spacing"
 msgstr "Інтервали"
@@ -4882,8 +4882,8 @@ msgstr "Старий *замок* на горі."
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "Ту, що відповідає твоєму тесту чи темі. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
 
-msgid "The ones you’re about to forget"
-msgstr "Ті, які ти от-от забудеш"
+msgid "The ones starting to fade"
+msgstr "Ті, які починають забуватися"
 
 msgid "The output depends on the history of the input"
 msgstr "Результат залежить від того, що було на вході раніше"
@@ -4894,7 +4894,7 @@ msgstr "Частина клітини, що вивільняє енергію з
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "Застосунок на телефоні запитує дозвіл, перш ніж надсилати твій власний вміст до AI. У вебзастосунку, через API-ключі й підключені застосунки AI працює, доки вибір для облікового запису не зроблено. Вимкнути AI-сервіси можна в розділі Ти на телефоні або в Налаштуваннях у вебзастосунку. Явне вимкнення зупиняє нову AI-обробку твого вмісту в усьому Lymi, зокрема у фоновому режимі й через підключені застосунки. Збережені текст та аудіо залишаються, а додавати картки вручну й повторювати їх можна й далі. Для аудіо спільних та опублікованих карток діє вибір власника."
 
-msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
+msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade."
 msgstr "Фраза, яку репетитор написав у чаті, слово з роману, яке довелося шукати двічі. Збережи його за кілька секунд, послухай вимову, і Lymi поверне його саме тоді, коли воно почне забуватися."
 
 msgid "The pinyin left is what you haven’t learned yet."
@@ -5373,8 +5373,8 @@ msgstr "Зроби з нотаток картки."
 msgid "Turn your notes into flashcards."
 msgstr "Перетвори свої нотатки на картки."
 
-msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back right before you’d forget it, from the first chapter to exam day and after."
-msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертає кожен термін саме перед тим, як ти його забудеш, — від першого розділу до дня іспиту й після нього."
+msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
+msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертає кожен термін саме тоді, коли він починає забуватися, — від першого розділу до дня іспиту й після нього."
 
 msgid "Turn your tutor lessons into flashcards · Lymi"
 msgstr "Уроки з репетитором у картки · Lymi"

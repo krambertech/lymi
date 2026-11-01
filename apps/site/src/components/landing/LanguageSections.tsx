@@ -104,7 +104,7 @@ interface ReturnProps {
 export function ReturnSection({ lang, term }: ReturnProps) {
   return (
     <Wide
-      title={<Trans>It comes back just before you’d forget.</Trans>}
+      title={<Trans>It comes back just as it starts to fade.</Trans>}
       body={
         <Trans>
           Each time you remember a word, Lymi waits a little longer before showing it again. A few

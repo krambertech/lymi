@@ -279,7 +279,7 @@ export function NotesToFlashcardsView() {
           lede={
             <Trans>
               Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key
-              terms land in Lymi as cards, and each one comes back right before you’d forget it.
+              terms land in Lymi as cards, and each one comes back just as it starts to fade.
             </Trans>
           }
           visual={

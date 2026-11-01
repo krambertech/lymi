@@ -631,8 +631,8 @@ msgstr "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</
 msgid "Add now"
 msgstr "Add now"
 
-msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
-msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+msgid "Add one and learn it for free — Lymi brings each card back just as it starts to fade."
+msgstr "Add one and learn it for free — Lymi brings each card back just as it starts to fade."
 
 msgid "Add the 300 questions"
 msgstr "Add the 300 questions"
@@ -712,8 +712,8 @@ msgstr "adjective"
 msgid "advantage"
 msgstr "advantage"
 
-msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
-msgstr "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
+msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back just as it starts to fade. Free."
+msgstr "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back just as it starts to fade. Free."
 
 msgid "After today’s lesson"
 msgstr "After today’s lesson"
@@ -1237,8 +1237,8 @@ msgstr "Choose a grade to move to the next card."
 msgid "Choose a grade to move to the next question."
 msgstr "Choose a grade to move to the next question."
 
-msgid "Choose how many cards a day. Lymi brings each one back right before you’d forget it."
-msgstr "Choose how many cards a day. Lymi brings each one back right before you’d forget it."
+msgid "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
+msgstr "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
 
 msgid "Choose your state"
 msgstr "Choose your state"
@@ -1620,8 +1620,8 @@ msgstr "Each part also has a minimum: 38 of 120 in language knowledge and readin
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
 
-msgid "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
-msgstr "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
+msgid "Each question comes back just as it starts to fade, and the ones you get wrong come back sooner."
+msgstr "Each question comes back just as it starts to fade, and the ones you get wrong come back sooner."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
@@ -1929,8 +1929,8 @@ msgstr "Flashcards for the AI era."
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 
-msgid "Flashcards that come back right before you’d forget."
-msgstr "Flashcards that come back right before you’d forget."
+msgid "Flashcards that come back just as they start to fade."
+msgstr "Flashcards that come back just as they start to fade."
 
 msgid "Flat"
 msgstr "Flat"
@@ -2660,8 +2660,8 @@ msgstr "Is there a ready-made deck for my certification?"
 msgid "Is this *chair* free?"
 msgstr "Is this *chair* free?"
 
-msgid "It comes back just before you’d forget."
-msgstr "It comes back just before you’d forget."
+msgid "It comes back just as it starts to fade."
+msgstr "It comes back just as it starts to fade."
 
 msgid "It depends"
 msgstr "It depends"
@@ -2681,8 +2681,8 @@ msgstr "It needs energy from <0>ATP</0>."
 msgid "It reads from the reading on your card, so a word that can be read several ways is said the way your card has it."
 msgstr "It reads from the reading on your card, so a word that can be read several ways is said the way your card has it."
 
-msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
-msgstr "It schedules every card with spaced repetition and brings it back right before you’d forget it."
+msgid "It schedules every card with spaced repetition and brings it back just as it starts to fade."
+msgstr "It schedules every card with spaced repetition and brings it back just as it starts to fade."
 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "It splits: in “Ich höre jetzt auf”, auf moves to the end."
@@ -2797,8 +2797,8 @@ msgstr "Keep the nerves, the drugs and the numbers."
 msgid "Keep the new words from italki, Preply or a private tutor."
 msgstr "Keep the new words from italki, Preply or a private tutor."
 
-msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
-msgstr "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
+msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade."
+msgstr "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade."
 
 msgid "Keep the words from your lessons and your books in one place. Each card marks its stress until you know the word, and a native voice says it."
 msgstr "Keep the words from your lessons and your books in one place. Each card marks its stress until you know the word, and a native voice says it."
@@ -3040,8 +3040,8 @@ msgstr "Lymi asks before it shows the answer. Trying to remember something makes
 msgid "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 msgstr "Lymi asks what a phrase means, and how to say it from the meaning. The second is what you need at the till."
 
-msgid "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
-msgstr "Lymi brings each fact back right before you’d forget it, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+msgid "Lymi brings each fact back just as it starts to fade, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
+msgstr "Lymi brings each fact back just as it starts to fade, so a few minutes a day carries it to your exams and onto the ward. Free, and your Anki decks come with you."
 
 msgid "Lymi changelog"
 msgstr "Lymi changelog"
@@ -3088,11 +3088,11 @@ msgstr "Lymi has no course of its own. Snap your notes or paste a transcript, an
 msgid "Lymi home"
 msgstr "Lymi home"
 
-msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
-msgstr "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
+msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back just as it starts to fade. Free to use."
+msgstr "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back just as it starts to fade. Free to use."
 
-msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
-msgstr "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
+msgid "Lymi is a flashcard app: it brings each card back just as it starts to fade. Free to use."
+msgstr "Lymi is a flashcard app: it brings each card back just as it starts to fade. Free to use."
 
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi is free to use, and your first card takes a minute."
@@ -3499,8 +3499,8 @@ msgstr "Okay"
 msgid "Older"
 msgstr "Older"
 
-msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
-msgstr "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
+msgid "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
+msgstr "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
 
 msgid "One card at a time, graded in a tap, even offline. Words you know wait longer, and the ones you miss come back sooner."
 msgstr "One card at a time, graded in a tap, even offline. Words you know wait longer, and the ones you miss come back sooner."
@@ -3565,8 +3565,8 @@ msgstr "Open the window, please."
 msgid "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 msgstr "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 
-msgid "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
-msgstr "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
+msgid "Open Today on your phone or laptop. Lymi shows each word again just as it starts to fade, so the next lesson starts where the last one ended."
+msgstr "Open Today on your phone or laptop. Lymi shows each word again just as it starts to fade, so the next lesson starts where the last one ended."
 
 msgid "Opinion; thought"
 msgstr "Opinion; thought"
@@ -4176,8 +4176,8 @@ msgstr "Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key te
 msgid "Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 msgstr "Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 
-msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
-msgstr "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
+msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back just as it starts to fade."
+msgstr "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back just as it starts to fade."
 
 msgid "Send a whole lecture at once."
 msgstr "Send a whole lecture at once."
@@ -4185,8 +4185,8 @@ msgstr "Send a whole lecture at once."
 msgid "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
 msgstr "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
 
-msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
-msgstr "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
+msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back just as it starts to fade."
+msgstr "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back just as it starts to fade."
 
 msgid "Send it anything."
 msgstr "Send it anything."
@@ -4194,11 +4194,11 @@ msgstr "Send it anything."
 msgid "Send it to your assistant"
 msgstr "Send it to your assistant"
 
-msgid "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
-msgstr "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
+msgid "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back just as it starts to fade."
+msgstr "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back just as it starts to fade."
 
-msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
-msgstr "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
+msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back just as it starts to fade."
+msgstr "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back just as it starts to fade."
 
 msgid "Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it wrote, so it’s never mistaken for your notes."
 msgstr "Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it wrote, so it’s never mistaken for your notes."
@@ -4369,8 +4369,8 @@ msgstr "sovereignty"
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"
 
-msgid "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
-msgstr "Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgid "Spaced repetition asks each question again just as it starts to fade, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgstr "Spaced repetition asks each question again just as it starts to fade, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
 
 msgid "Spacing"
 msgstr "Spacing"
@@ -4882,8 +4882,8 @@ msgstr "The old *castle* on the hill."
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 
-msgid "The ones you’re about to forget"
-msgstr "The ones you’re about to forget"
+msgid "The ones starting to fade"
+msgstr "The ones starting to fade"
 
 msgid "The output depends on the history of the input"
 msgstr "The output depends on the history of the input"
@@ -4894,8 +4894,8 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 
-msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
-msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
+msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade."
+msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade."
 
 msgid "The pinyin left is what you haven’t learned yet."
 msgstr "The pinyin left is what you haven’t learned yet."
@@ -5373,8 +5373,8 @@ msgstr "Turn your notes into cards."
 msgid "Turn your notes into flashcards."
 msgstr "Turn your notes into flashcards."
 
-msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back right before you’d forget it, from the first chapter to exam day and after."
-msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back right before you’d forget it, from the first chapter to exam day and after."
+msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
+msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
 
 msgid "Turn your tutor lessons into flashcards · Lymi"
 msgstr "Turn your tutor lessons into flashcards · Lymi"

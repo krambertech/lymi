@@ -397,7 +397,7 @@ export function DeckHero({
         </div>
         <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted">
           <Trans>
-            Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to
+            Lymi is a flashcard app: it brings each card back just as it starts to fade. Free to
             use.
           </Trans>
         </p>
@@ -449,7 +449,7 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
       title: <Trans>Review a few minutes a day</Trans>,
       body: (
         <Trans>
-          Choose how many cards a day. Lymi brings each one back right before you’d forget it.
+          Choose how many cards a day. Lymi brings each one back just as it starts to fade.
         </Trans>
       ),
     },

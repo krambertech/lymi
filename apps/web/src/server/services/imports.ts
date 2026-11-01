@@ -753,7 +753,11 @@ export async function expireImports(
     );
   }
   const left = await db
-    .select()
+    .select({
+      id: schema.imports.id,
+      objectKey: schema.imports.objectKey,
+      uploadId: schema.imports.uploadId,
+    })
     .from(schema.imports)
     .where(
       and(

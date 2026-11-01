@@ -105,7 +105,10 @@ export function createReadwiseApi(fetcher: typeof fetch = fetch): ReadwiseApi {
       throw new ReadwiseLimited(Number(response.headers.get("Retry-After")) || 60);
     }
     if (!response.ok) throw new ReadwiseUnavailable(response.status);
-    return response.status === 204 ? null : response.json();
+    if (response.status === 204) return null;
+    return response.json().catch(() => {
+      throw new ReadwiseUnavailable(response.status);
+    });
   }
 
   return {

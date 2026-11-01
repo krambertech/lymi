@@ -189,7 +189,7 @@ export async function readZipEntry(
     }
   } catch (err) {
     // DecompressionStream reports corrupt data as a bare TypeError.
-    if (err instanceof TypeError) throw damaged("entry");
+    if (entry.method === 8 && err instanceof TypeError) throw damaged("entry");
     throw err;
   }
   if (filled !== out.length) throw damaged("entry");

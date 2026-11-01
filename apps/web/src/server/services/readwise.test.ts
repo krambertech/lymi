@@ -250,6 +250,11 @@ describe("a pull that fails", () => {
     const unreachable = createReadwiseApi(() => Promise.reject(new TypeError("fetch failed")));
     await expect(unreachable.books("token")).rejects.toBeInstanceOf(ReadwiseUnavailable);
   });
+
+  it("reads an answer it cannot parse as Readwise being down", async () => {
+    const garbled = createReadwiseApi(async () => new Response("<html>", { status: 200 }));
+    await expect(garbled.books("token")).rejects.toBeInstanceOf(ReadwiseUnavailable);
+  });
 });
 
 describe("a book whose language was unknown", () => {

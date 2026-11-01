@@ -122,5 +122,5 @@ export function cacheWarmer(qc: QueryClient) {
 }
 
 // The phone has no `navigator.onLine`, so Query's own connection state stands in for it there.
-const online = () =>
+export const online = () =>
   onlineManager.isOnline() && !(typeof navigator !== "undefined" && navigator.onLine === false);

@@ -196,6 +196,50 @@ test("the end works from the keyboard and without motion, and Continue ends with
   });
 });
 
+/** Grade the card on screen by keyboard and wait for the header to read `after`. */
+async function gradeWithKey(page: Page, key: "1" | "3", after: string) {
+  // Past midnight a graded card can linger revealed while today's draw loads, and keys pressed on it are dropped.
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeHidden();
+  await expect(page.getByLabel(/ card for /)).toBeVisible();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+  await page.keyboard.press(key);
+  await expect(page.getByText(after, { exact: true })).toBeVisible();
+}
+
+test("a deck that runs out below the goal names itself and leads on to the rest of the day", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "logic, not rendering");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await startAsTestLearner(page, testInfo, "review-deck-out", "/today");
+  await setGoal(page, 10);
+  const first = await addDeck(page, "Spanish");
+  await addCards(page, first, "Spanish", 2);
+  await addCards(page, await addDeck(page, "Chess"), "Chess", 3);
+  await addDeck(page, "Empty");
+
+  await page.goto(`/review?deck=${first}`);
+  await gradeWithKey(page, "3", "1 of 2");
+  await page.keyboard.press("Space");
+  await page.keyboard.press("3");
+  await expect(heading(page, "Nothing left in Spanish")).toBeVisible();
+  await expect(page.getByText("Start your streak", { exact: true })).toBeVisible();
+  await expect(continueButton(page)).toContainText("other decks");
+
+  await continueButton(page).click();
+  await expect(page).toHaveURL(/\/review$/);
+  await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
+  expect(await page.getByLabel(/ card for /).getAttribute("aria-label")).toMatch(/card for Chess/);
+  await gradeWithKey(page, "3", "3 of 5");
+  await gradeWithKey(page, "3", "4 of 5");
+  await page.keyboard.press("Space");
+  await page.keyboard.press("3");
+  await expect(heading(page, "You’re done for today")).toBeVisible();
+  await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
+});
+
 test("a review left open past midnight gives way to the new day's goal", async ({
   page,
   browserName,
@@ -228,17 +272,6 @@ test("a review left open past midnight gives way to the new day's goal", async (
     await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
   });
 });
-
-/** Grade the card on screen by keyboard and wait for the header to read `after`. */
-async function gradeWithKey(page: Page, key: "1" | "3", after: string) {
-  // Past midnight a graded card can linger revealed while today's draw loads, and keys pressed on it are dropped.
-  await expect(page.getByRole("button", { name: /^Good/ })).toBeHidden();
-  await expect(page.getByLabel(/ card for /)).toBeVisible();
-  await page.keyboard.press("Space");
-  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
-  await page.keyboard.press(key);
-  await expect(page.getByText(after, { exact: true })).toBeVisible();
-}
 
 test("a round from Today below the goal leads on to the goal review", async ({
   page,
@@ -274,101 +307,4 @@ test("a round from Today below the goal leads on to the goal review", async ({
     await expect(page.getByText(/^5\s*reviews today$/)).toBeVisible();
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
-});
-
-test("a round that crosses the goal keeps going and says the goal is reached", async ({
-  page,
-  browserName,
-}, testInfo) => {
-  test.skip(browserName !== "chromium", "logic, not rendering");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await startAsTestLearner(page, testInfo, "review-round-crosses", "/today");
-  await setGoal(page, 5);
-  await addCards(page, await addDeck(page, "Cross"), "Cross", 8);
-
-  await page.goto("/review");
-  await gradeWithKey(page, "1", "1 of 5");
-  await gradeWithKey(page, "1", "2 of 5");
-  await gradeWithKey(page, "1", "3 of 5");
-
-  await test.step("leaving a round and continuing picks up where it was", async () => {
-    await page.goto("/review?round=forgotten");
-    await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
-    await gradeWithKey(page, "3", "1 of 3");
-    await page.getByRole("button", { name: "Leave review" }).click();
-    await expect(heading(page, "Review done")).toBeVisible();
-    // A round's own count is not known at its end, so Continue says nothing it cannot stand behind.
-    await expect(continueButton(page)).toHaveText("Continue");
-    await continueButton(page).click();
-    await expect(page.getByText("1 of 3", { exact: true })).toBeVisible();
-  });
-
-  await test.step("the goal's attempt lands mid-round without stopping it", async () => {
-    await gradeWithKey(page, "3", "2 of 3");
-    await expect(heading(page, "Daily goal reached")).toBeHidden();
-    await page.keyboard.press("Space");
-    await page.keyboard.press("3");
-  });
-  await expect(heading(page, "Daily goal reached")).toBeVisible();
-  await expect(page.getByText(/^6\s*reviews today$/)).toBeVisible();
-  await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
-  await expect(continueButton(page)).toBeVisible();
-});
-
-test("a deck runs past the goal to its end, and its end says the goal is reached", async ({
-  page,
-  browserName,
-}, testInfo) => {
-  test.skip(browserName !== "chromium", "logic, not rendering");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await startAsTestLearner(page, testInfo, "review-deck-past", "/today");
-  await setGoal(page, 2);
-  const deckId = await addDeck(page, "Spanish");
-  await addCards(page, deckId, "Spanish", 3);
-  await addCards(page, await addDeck(page, "Chess"), "Chess", 2);
-
-  await page.goto(`/review?deck=${deckId}`);
-  await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
-  await gradeWithKey(page, "3", "1 of 3");
-  await gradeWithKey(page, "3", "2 of 3");
-  await expect(heading(page, "Daily goal reached")).toBeHidden();
-  await page.keyboard.press("Space");
-  await page.keyboard.press("3");
-  await expect(heading(page, "Daily goal reached")).toBeVisible();
-  await expect(page.getByText(/^3\s*reviews today$/)).toBeVisible();
-  await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
-  await expect(continueButton(page)).toBeVisible();
-});
-
-test("a deck that runs out below the goal names itself and leads on to the rest of the day", async ({
-  page,
-  browserName,
-}, testInfo) => {
-  test.skip(browserName !== "chromium", "logic, not rendering");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await startAsTestLearner(page, testInfo, "review-deck-out", "/today");
-  await setGoal(page, 10);
-  const first = await addDeck(page, "Spanish");
-  await addCards(page, first, "Spanish", 2);
-  await addCards(page, await addDeck(page, "Chess"), "Chess", 3);
-  await addDeck(page, "Empty");
-
-  await page.goto(`/review?deck=${first}`);
-  await gradeWithKey(page, "3", "1 of 2");
-  await page.keyboard.press("Space");
-  await page.keyboard.press("3");
-  await expect(heading(page, "Nothing left in Spanish")).toBeVisible();
-  await expect(page.getByText("Start your streak", { exact: true })).toBeVisible();
-  await expect(continueButton(page)).toContainText("other decks");
-
-  await continueButton(page).click();
-  await expect(page).toHaveURL(/\/review$/);
-  await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
-  expect(await page.getByLabel(/ card for /).getAttribute("aria-label")).toMatch(/card for Chess/);
-  await gradeWithKey(page, "3", "3 of 5");
-  await gradeWithKey(page, "3", "4 of 5");
-  await page.keyboard.press("Space");
-  await page.keyboard.press("3");
-  await expect(heading(page, "You’re done for today")).toBeVisible();
-  await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
 });

@@ -1,27 +1,15 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
-import { gradeStore } from "@lymi/client/grades";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
-import { drawableLeft } from "@lymi/client/review-day";
-import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
-import {
-  type EndScreen,
-  forgottenRound,
-  legFinish,
-  type Offer,
-  type RoundAsk,
-  reviewEnd,
-  roundWalk,
-} from "@lymi/client/review-end";
+import type { LocalGrade } from "@lymi/client/review-draw";
+import type { EndScreen, Offer } from "@lymi/client/review-end";
+import { cardKey as keyOf, useReviewFlow } from "@lymi/client/review-flow";
 import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
-  countedRating,
   cueShowsPronunciation,
-  type Drawn,
-  drawKey,
   drawsTermReading,
   type FieldSource,
   gradeAllowed,
@@ -89,17 +77,7 @@ import { EndEmbers, LightPool, TurnSpark } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
-import {
-  useDay,
-  useDecks,
-  useDraw,
-  useDrawState,
-  useGrade,
-  useRoundQueue,
-  useSections,
-  useSeriesList,
-  useUndoGrade,
-} from "../data/queries";
+import { useDay, useSections } from "../data/queries";
 import { spokenInterval } from "../i18n/interval";
 import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
@@ -120,6 +98,7 @@ import {
   ShowHintButton,
 } from "../review/hints";
 import { modeLabel } from "../review/modes";
+import { PHONE } from "../review/platform";
 import {
   PronounceButton,
   type Pronunciation,
@@ -133,7 +112,6 @@ import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-
 import { Wick } from "../review/wick";
 import { reportHref } from "../sharing/report";
 import { captureEvent } from "../telemetry/posthog";
-import { useReviewSession } from "../telemetry/review-session";
 import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
@@ -154,34 +132,12 @@ import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
-/** Cards drawn ahead of the one on screen; fewer left than this and the draw is fetched again. */
-const LOOKAHEAD = 3;
-/** Local grades a fetch can fall behind by before the draw data is refreshed. */
-const REFRESH_AFTER = 20;
 // Review is presented over the root, so it hosts its own toasts.
 const REVIEW_TOASTS = "review";
 const ARCHIVED_TOAST = "review-archived";
 
-type Pinned = { cardId: string; mode: string };
 /** A card archived from its menu, offered back for a few seconds. */
-type Gone = { card: Card; key: string; mode: string };
-/** A stretch of review: the draw, which may stop at the goal, or a round's fixed list. ADR 0021. */
-type Leg =
-  | { kind: "draw"; date: string; from: number; until: number | null }
-  | { kind: "list"; date: string; size: number }
-  | { kind: "forgotten"; date: string; items: Drawn[] };
-/** Today's attempts at the last end screen or when the review opened, and whether the day counted then. */
-interface Mark {
-  attempts: number;
-  satisfied: boolean;
-}
-/** A list's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
-interface ListCards {
-  graded: ReadonlySet<string>;
-  returned: ReadonlySet<string>;
-  dropped: ReadonlySet<string>;
-}
-const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+type Gone = { card: Card; mode: string };
 /** The deck a card came from, named first on the card. A review can mix every deck. */
 type CardDeck =
   | {
@@ -199,41 +155,10 @@ const REVEAL_TAP_GUARD_MS = 400;
 interface Graded {
   item: QueueItem;
   grade: LocalGrade;
-  listed: boolean;
   /** The hint as it showed under the cue at the grade, or nothing when it was not showing. */
   hint: Hint | null;
   /** The step exactly as it was drawn at the grade, so the copy left underneath never reflows. */
   shown: Step;
-}
-
-const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
-const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
-const withoutKey = (keys: ReadonlySet<string>, key: string) => {
-  const next = new Set(keys);
-  next.delete(key);
-  return next;
-};
-
-/** What the header counts: today's attempts to the goal's stop, and a list's own otherwise. */
-function legProgress(leg: Leg, attempts: number, cards: ListCards, left: number) {
-  const done = leg.kind === "draw" ? attempts - leg.from : cards.graded.size;
-  const total =
-    leg.kind === "list"
-      ? leg.size - cards.dropped.size
-      : leg.kind === "forgotten"
-        ? leg.items.length - cards.dropped.size
-        : leg.until !== null
-          ? Math.min(leg.until - leg.from, done + left)
-          : done + left;
-  return { done, total };
-}
-
-function leftInList(items: readonly QueueItem[], cards: ListCards): QueueItem[] {
-  const left = items.filter((i) => !cards.graded.has(keyOf(i)) && !cards.dropped.has(keyOf(i)));
-  return [
-    ...left.filter((i) => !cards.returned.has(keyOf(i))),
-    ...left.filter((i) => cards.returned.has(keyOf(i))),
-  ];
 }
 
 export default function Review() {
@@ -275,9 +200,8 @@ export default function Review() {
 }
 
 /**
- * One review. The draw picks each next card on the device from the fetched draw and this device's
- * grades, as the web's does (ADR 0019); a round from Today, or cards chosen on a deck page, walks
- * the server's list in order.
+ * One review. `useReviewFlow` picks each next card on the device from the fetched draw and this
+ * device's grades (ADR 0019), or walks a round's list; this draws it.
  */
 function Run({
   scope: given,
@@ -294,47 +218,16 @@ function Run({
   const router = useRouter();
   const { deck, series, section } = given;
   const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
-  const scoped = !!deck || !!series;
-  const draw = useDraw(scope);
-  const listed = !!round || !!cards;
-  const list = useRoundQueue(round, scope, cards);
-  const { reviewsToday, goal, dayDone } = useDay();
-  const grade = useGrade();
-  const takeBack = useUndoGrade();
+  const flow = useReviewFlow(scope, round, cards, PHONE);
+  const { data, state, leg, mark, current, stopped, progress, paused, added, failed } = flow;
+  const { position: done, decks, scopeName, end: result } = flow;
+  const { reviewsToday, goal } = useDay();
   const known = useKnownReadings();
   const { t } = useLingui();
-  const decksQuery = useDecks();
-  const decks = decksQuery.data;
-  const seriesList = useSeriesList(!!series);
-  const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
-  // Cards archived from this review, gone from it at once rather than when the draw is fetched again.
-  const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
   // Cards edited in this review, shown corrected at once; the review goes on with them.
   const [edits, setEdits] = useState<ReadonlyMap<string, Card>>(() => new Map());
-  // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
-  const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
-  const data = useMemo(() => {
-    const fetched = settled ? draw.data : undefined;
-    if (!fetched || archived.size === 0) return fetched;
-    return { ...fetched, cards: fetched.cards.filter((c) => !archived.has(c.card.id)) };
-  }, [settled, draw.data, archived]);
-  const listData =
-    list.isFetchedAfterMount || list.fetchStatus !== "fetching" ? list.data : undefined;
-  const { state, grades, setNow } = useDrawState(scope, data, LOOKAHEAD);
-  // The card on screen stays put while a refetch lands; only a grade moves it.
-  const [pinned, setPinned] = useState<Pinned | null>(null);
-  const [chosenLeg, setLeg] = useState<Leg | null>(null);
-  const [listCards, setListCards] = useState(NO_LIST_CARDS);
-  const [done, setDone] = useState(0);
-  const [mark, setMark] = useState<Mark | null>(null);
   const [revealed, setRevealed] = useState(false);
-  // Grades this review has recorded that the server has not answered yet.
-  const [sending, setSending] = useState(0);
-  // Each position in the review takes one grade, however fast the taps come.
-  const gradedAt = useRef(-1);
-  // Left partway: the end screen shows over the card still drawn, which Continue goes back to.
-  const [paused, setPaused] = useState(false);
   const [lastGraded, setLastGraded] = useState<Graded | null>(null);
   // A card a swipe brought back arrives revealed, with nothing left to play.
   const [returned, setReturned] = useState(false);
@@ -353,8 +246,6 @@ function Run({
   const [hints, setHints] = useState<ReadonlyMap<string, Hint>>(() => new Map());
   const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
   const revealedAt = useRef(0);
-  // Grades taken back, by when they were made, whose answers from the server no longer apply.
-  const undone = useRef(new Set<string>());
   const started = useRef(false);
 
   // Edit card saves over the review; the review goes on with the corrected card.
@@ -382,50 +273,6 @@ function Run({
     [qc],
   );
 
-  // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
-  const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
-  // The draw stops at the goal only for the whole day below it; deck reviews and rounds run to their end.
-  useEffect(() => {
-    if (leg || !data || !state || (listed && !listData)) return;
-    setListCards(NO_LIST_CARDS);
-    const date = state.day.date;
-    setMark({ attempts: state.attempts, satisfied: state.attempts >= data.goal || dayDone });
-    setLeg(
-      listed && listData
-        ? { kind: "list", date, size: listData.total }
-        : {
-            kind: "draw",
-            date,
-            from: state.attempts,
-            until: !scoped && state.attempts < data.goal ? data.goal : null,
-          },
-    );
-  }, [leg, data, state, listed, listData, scoped, dayDone]);
-
-  const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
-  // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
-  const staleDay = !!data && !!state && data.day.date !== state.day.date && draw.isFetching;
-  const drawn =
-    pinnedItem ??
-    (data && state?.next && !staleDay ? reviewItem(data, state.log, state.next) : null);
-  // A goal lowered on another device meanwhile stops the stretch there instead.
-  const atStop =
-    leg?.kind === "draw" &&
-    leg.until !== null &&
-    !!data &&
-    !!state &&
-    state.attempts >= Math.min(leg.until, data.goal);
-  const listLeft =
-    leg?.kind === "list"
-      ? leftInList(listData?.items ?? [], listCards)
-      : leg?.kind === "forgotten" && data && state
-        ? leftInList(
-            leg.items.flatMap((d) => reviewItem(data, state.log, d) ?? []),
-            listCards,
-          )
-        : [];
-  const current =
-    !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
   const pronounce = usePronunciation(current?.card ?? null, (outcome, { preloaded, waitMs }) =>
     captureEvent("pronunciation_played", { outcome, revealed, preloaded, wait_ms: waitMs }),
@@ -442,8 +289,9 @@ function Run({
 
   const ended = paused || (!!leg && !current);
   // Leaving partway ends on the end screen, as the web does, unless nothing was added since the last one.
-  const added = !!state && !!mark && state.attempts > mark.attempts;
-  const leave = () => (added ? setPaused(true) : onClose());
+  const leave = () => {
+    if (!flow.pause()) onClose();
+  };
   const pull = usePullToEnd({ onEnd: ended || !added ? onClose : leave, away: ended || !added });
   // Android's Back leaves as ✕ does, so a review left partway still ends on its summary.
   useSystemBack(() => {
@@ -456,14 +304,10 @@ function Run({
   const undo = () => {
     const last = lastGraded;
     if (!last) return;
+    const taken = flow.undo();
+    if (!taken) return;
     haptics.tick();
-    undone.current.add(last.grade.reviewedAt);
     setLastGraded(null);
-    if (last.listed) {
-      const key = keyOf(last.item);
-      setListCards((c) => ({ ...c, graded: withoutKey(c.graded, key) }));
-    }
-    setPinned({ cardId: last.item.card.id, mode: modeKey(last.item.mode) });
     setAidState({
       key: `${keyOf(last.item)}:${done - 1}`,
       peeked: last.grade.aid === "hint",
@@ -471,23 +315,13 @@ function Run({
     });
     setReturned(true);
     setRevealed(true);
-    setDone((n) => n - 1);
-    gradedAt.current = -1;
     const term = last.item.card.term;
-    void takeBack(last.grade).then((outcome) => {
-      if (outcome !== "kept") return;
+    void taken.kept.then(({ kept, stepped }) => {
+      if (!kept) return;
       // The server kept the grade, so the review steps forward again unless a new grade came first.
-      undone.current.delete(last.grade.reviewedAt);
-      if (gradedAt.current === -1) {
-        if (last.listed) {
-          const key = keyOf(last.item);
-          setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
-        }
-        setPinned(null);
+      if (stepped) {
         setReturned(false);
         setRevealed(false);
-        setNow(new Date());
-        setDone((n) => n + 1);
         setLastGraded(last);
       }
       Alert.alert(
@@ -497,199 +331,23 @@ function Run({
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
 
-  // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
-  const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
-  useEffect(() => {
-    if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
-  }, [repin, state?.next]);
-
-  // Cards the draw still holds in this scope, the number Today shows.
-  const left = useMemo(
-    () => (data && state ? drawableLeft(data, state, deck) : 0),
-    [data, state, deck],
-  );
-  // An empty draw is confirmed by a fetch begun after the last grade, or taken as it is offline.
-  const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
-  const unreachable = draw.fetchStatus === "paused" || draw.isError;
-  const confirmed = !!data && data.fetchedAt >= lastChange;
-  const exhausted = !!data && !state?.next;
-  const stopped =
-    !!leg &&
-    !!data &&
-    !!state &&
-    !current &&
-    (paused || leg.kind !== "draw" || atStop || exhausted);
-  const ending = paused ? "left" : atStop ? "goal" : "empty";
-  const forgottenItems = useMemo(
-    () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
-    [stopped, data, state, deck],
-  );
-  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
-  const checking =
-    stopped &&
-    !paused &&
-    (left === 0 || (leg?.kind === "draw" && !atStop)) &&
-    !confirmed &&
-    !(unreachable && !draw.isFetching);
-  useEffect(() => {
-    if (checking && !unreachable && !draw.isFetching) void draw.refetch();
-  }, [checking, unreachable, draw.isFetching, draw.refetch]);
-  // The refetch asked for once this leg's page in hand ran out; a new leg forgets it.
-  const [ask, setAsk] = useState<(RoundAsk & { leg: Leg }) | null>(null);
-  // The server sends a round a page at a time, so an emptied page asks for the next one, and the
-  // end waits while it loads. The round is walked once every card in it is graded or dropped, or
-  // when that fetch lands with nothing left for it. Offline or failed, the end shows unwalked.
-  const roundState =
-    leg?.kind === "list"
-      ? roundWalk({
-          size: leg.size,
-          done: listCards.graded.size + listCards.dropped.size,
-          left: current ? 1 : listLeft.length,
-          ask: ask?.leg === leg ? ask : null,
-          fetch: {
-            updatedAt: list.dataUpdatedAt,
-            idle: list.fetchStatus === "idle",
-            failed: list.isError || list.fetchStatus === "paused",
-          },
-        })
-      : null;
-  // A forgotten round holds every card from the start, so it is walked once none is left to show.
-  const walked = roundState
-    ? roundState.walked
-    : leg?.kind === "forgotten" && !current && listLeft.length === 0;
-  const listOwed = !!roundState?.owed && !current;
-  const askRound = !!roundState?.refetch && !current;
-  useEffect(() => {
-    if (!askRound || !leg) return;
-    setAsk({ leg, at: list.dataUpdatedAt, done: listCards.graded.size + listCards.dropped.size });
-    void list.refetch();
-  }, [askRound, leg, list.dataUpdatedAt, listCards, list.refetch]);
-  // The end waits for the last grades to land, so a refusal never takes back an end already shown.
-  const landing = sending > 0 && !unreachable;
-  // A scoped end names its deck, series or section and weighs the decks outside it, so it waits for them.
-  const decksLoading =
-    (scoped && !decksQuery.isFetchedAfterMount && decksQuery.fetchStatus === "fetching") ||
-    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
-    (!!section && !scopeSections.data && scopeSections.fetchStatus === "fetching");
-  const scopeSection = section
-    ? scopeSections.data?.sections.find((s) => s.id === section)
-    : undefined;
-  const scopeName = section
-    ? scopeSection?.name
-    : deck
-      ? decks?.find((d) => d.id === deck)?.name
-      : series
-        ? seriesList.data?.find((s) => s.id === series)?.name
-        : undefined;
-  const result =
-    stopped && !checking && !landing && !listOwed && !decksLoading && mark && data && state
-      ? reviewEnd({
-          stretch: leg?.kind !== "draw" ? "list" : scoped ? "scope" : "day",
-          ending,
-          goal: data.goal,
-          from: mark.attempts,
-          attempts: state.attempts,
-          satisfiedBefore: mark.satisfied,
-          left,
-          confirmed,
-          elsewhere: !scoped
-            ? 0
-            : decks && (!section || scopeSection)
-              ? decks
-                  .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
-                  .reduce((n, d) => n + d.due, 0) +
-                // The rest of a section's deck is its other sections.
-                (section && scopeSection
-                  ? Math.max(0, (decks.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due)
-                  : 0)
-              : null,
-          forgotten: forgottenItems.length,
-        })
-      : null;
-
-  const progress = leg && state ? legProgress(leg, state.attempts, listCards, left) : null;
-  useReviewSession({
-    key: leg && mark ? `${leg.date}:${leg.kind}:${mark.attempts}` : null,
-    date: leg?.date ?? null,
-    scope:
-      leg?.kind === "forgotten"
-        ? "round"
-        : leg?.kind === "list"
-          ? cards
-            ? "chosen"
-            : "round"
-          : section
-            ? "section"
-            : deck
-              ? "deck"
-              : series
-                ? "series"
-                : "day",
-    before: mark?.attempts ?? 0,
-    done: progress?.done ?? 0,
-    count: progress?.total ?? 0,
-    presenting: !!current,
-    stopped,
-    paused,
-    finished: legFinish(
-      result,
-      ending,
-      leg?.kind !== "draw" ? { stretch: "list", walked } : { stretch: "day", confirmed },
-    ),
-  });
-
-  /** Past this end screen: the next one reports what changes from here. */
-  const moveOn = () => {
-    if (!state) return;
-    const satisfied =
-      !!mark?.satisfied || (result !== null && result !== "unchecked" && result.satisfied);
-    setMark({ attempts: state.attempts, satisfied });
-    setPaused(false);
-    setPinned(null);
-    setRevealed(false);
-    setLastGraded(null);
-  };
   const onOffer = (offer: Offer) => {
-    if (!data || !state) return;
-    if (offer.kind === "continue" && offer.to === "resume") {
-      moveOn();
-      return;
-    }
-    // The day's draw is a review without a scope, which starts over from where the day stands.
-    if (offer.kind === "continue" && scoped) {
+    const taken = flow.offer(offer);
+    if (!taken) return;
+    if (taken.to === "day") {
       router.replace("/review");
       return;
     }
-    const date = state.day.date;
-    moveOn();
-    setListCards(NO_LIST_CARDS);
-    if (offer.kind === "forgotten") setLeg({ kind: "forgotten", date, items: forgottenItems });
-    else
-      setLeg({
-        kind: "draw",
-        date,
-        from: state.attempts,
-        until: state.attempts < data.goal ? data.goal : null,
-      });
+    setRevealed(false);
+    setLastGraded(null);
   };
 
   // Undo for a card archived from its menu, offered over the next card or the end screen.
-  const bringBack = ({ card: back, key }: Gone) => {
-    setArchived((s) => {
-      const next = new Set(s);
-      next.delete(back.id);
-      return next;
-    });
-    setListCards((c) => ({ ...c, dropped: withoutKey(c.dropped, key) }));
-  };
-  const undoArchive = async (gone: Gone) => {
-    const { card: back, mode } = gone;
+  const undoArchive = async ({ card: back, mode }: Gone) => {
     haptics.tick();
     try {
       await writes.restoreCard(back.id);
-      bringBack(gone);
-      // It comes back to the top, where it was, rather than wherever the draw would put it.
-      setPinned({ cardId: back.id, mode });
+      flow.restore(back.id, { cardId: back.id, mode });
       setRevealed(false);
     } catch (e) {
       Alert.alert(
@@ -698,17 +356,13 @@ function Run({
       );
     }
   };
-  // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
-  const failed =
-    (!data && draw.isError && !draw.isFetching) ||
-    (listed && !listData && list.isError && !list.isFetching);
   if (failed) {
     return (
       <Cover style={pull.style}>
         <ReviewError
           title={t`Couldn’t load your cards`}
           body={t`Check your connection and try again.`}
-          onRetry={() => void (listed ? list.refetch() : draw.refetch())}
+          onRetry={flow.retry}
           action={t`Back`}
           onAction={onClose}
         />
@@ -738,7 +392,7 @@ function Run({
         <ReviewError
           title={t`Couldn’t check for more cards`}
           body={t`Your grades are saved. Check your connection and try again.`}
-          onRetry={() => void draw.refetch()}
+          onRetry={flow.refetchDraw}
           action={t`Done`}
           onAction={onClose}
         />
@@ -768,12 +422,12 @@ function Run({
       </Cover>
     );
   }
-  if (!current || !data || !state) return null;
+  if (!current || !data || !state || !progress) return null;
   const edited = edits.get(current.card.id);
   const item = edited ? { ...current, card: edited } : current;
   const { card } = item;
 
-  const { done: legDone, total } = legProgress(leg, state.attempts, listCards, left);
+  const { done: legDone, total } = progress;
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
@@ -819,12 +473,9 @@ function Run({
   };
   /** Takes the card out of this review at once; the line that says so offers it back. */
   const archive = async () => {
-    const key = keyOf(current);
-    setArchived((s) => new Set(s).add(card.id));
-    if (leg.kind !== "draw") setListCards((c) => ({ ...c, dropped: withKey(c.dropped, key) }));
-    setPinned(null);
     setRevealed(false);
-    const held: Gone = { card, key, mode: modeKey(current.mode) };
+    flow.archive(card.id);
+    const held: Gone = { card, mode: modeKey(current.mode) };
     toast.add({
       id: ARCHIVED_TOAST,
       scope: REVIEW_TOASTS,
@@ -835,7 +486,7 @@ function Run({
       await writes.archiveCard(card.id);
     } catch (e) {
       toast.close(ARCHIVED_TOAST);
-      bringBack(held);
+      flow.restore(card.id);
       Alert.alert(
         t`Couldn’t archive “${isolate(card.term)}”.`,
         e instanceof Error ? e.message : undefined,
@@ -854,74 +505,32 @@ function Run({
       setLocked((l) => ({ key: showing, presses: l.key === showing ? l.presses + 1 : 1 }));
       return;
     }
-    if (gradedAt.current === done) return;
-    gradedAt.current = done;
-    // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
-    haptics.grade();
     const item = current;
-    const key = keyOf(item);
-    const repeat = state.log.some(
-      (e) => e.cardId === item.card.id && e.mode === modeKey(item.mode),
-    );
-    const runningShort = state.upcoming.length <= LOOKAHEAD;
-    const listed = leg.kind !== "draw";
-    const record: LocalGrade = {
-      cardId: item.card.id,
-      mode: item.mode,
-      rating: countedRating(rating, repeat),
-      reviewedAt: new Date().toISOString(),
-      stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
+    const graded = flow.grade(item, rating, {
       ...(peeked ? { aid: "hint" as const } : {}),
       ...recallTimes(),
       // Counted from the card as it shows, edits made during this review included.
       ...readingsFadedField(qc, edits.get(item.card.id) ?? item.card),
-    };
+    });
+    if (!graded) return;
+    // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
+    haptics.grade();
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();
-    const recorded = grade(record);
-    if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
-    setLastGraded({
-      item,
-      grade: record,
-      listed,
-      hint: hintShown ? hint : null,
-      shown: step,
-    });
+    setLastGraded({ item, grade: graded.record, hint: hintShown ? hint : null, shown: step });
     setReturned(false);
-    setSending((n) => n + 1);
     setRevealed(false);
-    setNow(new Date());
-    setPinned(null);
-    setDone((n) => n + 1);
     if (reviewsToday + 1 === goal) haptics.success();
 
-    void recorded
-      .then((outcome) => {
-        if (outcome === "queued" || undone.current.has(record.reviewedAt)) return;
-        if (outcome === "refused" || outcome === "gone") {
-          const term = item.card.term;
-          if (listed) {
-            setListCards((c) => ({
-              graded: withoutKey(c.graded, key),
-              returned: outcome === "refused" ? withKey(c.returned, key) : c.returned,
-              dropped: outcome === "gone" ? withKey(c.dropped, key) : c.dropped,
-            }));
-          }
-          Alert.alert(
-            outcome === "gone"
-              ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
-              : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
-          );
-        }
-        // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
-        const behind = gradeStore
-          .snapshot()
-          .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
-        if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
-          void qc.invalidateQueries({ queryKey: ["queue"] });
-        }
-      })
-      .finally(() => setSending((n) => n - 1));
+    const term = item.card.term;
+    void graded.answered.then((refused) => {
+      if (!refused) return;
+      Alert.alert(
+        refused === "gone"
+          ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
+          : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
+      );
+    });
   };
 
   const step: Step = {

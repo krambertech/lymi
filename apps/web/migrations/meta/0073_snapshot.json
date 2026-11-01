@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "2beda2c1-d389-4b91-a49e-c20897fadc98",
+  "id": "6ed2af9e-154e-4b17-8d30-72c5cd15bf2a",
   "prevId": "6db4ec1b-c1b8-4279-b683-0cc22560683f",
   "tables": {
     "account_deletions": {
@@ -3326,6 +3326,44 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "learner_openings": {
+      "name": "learner_openings",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "opened_at": {
+          "name": "opened_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "learner_openings_user_id_user_id_fk": {
+          "name": "learner_openings_user_id_user_id_fk",
+          "tableFrom": "learner_openings",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "lesson_reads": {
       "name": "lesson_reads",
       "columns": {
@@ -4986,13 +5024,6 @@
         },
         "review_timezone_updated_at": {
           "name": "review_timezone_updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "last_opened_at": {
-          "name": "last_opened_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,

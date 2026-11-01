@@ -346,8 +346,6 @@ export const userSettings = sqliteTable("user_settings", {
     .default("automatic"),
   /** When a visible page last moved the automatic zone. */
   reviewTimezoneUpdatedAt: integer("review_timezone_updated_at", { mode: "timestamp_ms" }),
-  /** When a learner's own client last opened Lymi. Reminders stop a week after it. */
-  lastOpenedAt: integer("last_opened_at", { mode: "timestamp_ms" }),
   /** When the learner finished or skipped getting set up. Null shows it to an account with nothing in it. */
   onboardedAt: integer("onboarded_at", { mode: "timestamp_ms" }),
   /** What they said they are learning while getting set up. */
@@ -355,6 +353,14 @@ export const userSettings = sqliteTable("user_settings", {
   /** The language they said they are learning: a BCP 47 tag, or the name they typed. */
   learningLanguage: text("learning_language"),
   ...timestamps,
+});
+
+/** When a learner's own client last opened Lymi. Web push stops a week after it. */
+export const learnerOpenings = sqliteTable("learner_openings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  openedAt: integer("opened_at", { mode: "timestamp_ms" }).notNull(),
 });
 
 export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {

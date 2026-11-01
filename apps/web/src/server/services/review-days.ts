@@ -166,11 +166,13 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
   const now = new Date();
   // An integration's call is not the learner opening Lymi.
   if (ctx.actor === "user") {
-    await ensureSettings(ctx);
     await ctx.db
-      .update(schema.userSettings)
-      .set({ lastOpenedAt: now })
-      .where(eq(schema.userSettings.userId, ctx.userId));
+      .insert(schema.learnerOpenings)
+      .values({ userId: ctx.userId, openedAt: now })
+      .onConflictDoUpdate({
+        target: schema.learnerOpenings.userId,
+        set: { openedAt: now },
+      });
   }
   const date = dateFormatter(zone).format(now);
   const due = await drawableCount(ctx, { now, zone });

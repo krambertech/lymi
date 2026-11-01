@@ -31,9 +31,7 @@ export function entryOf(pathname: string, from: unknown): EntryOpened | undefine
 
 /** Where a reminder's tap goes; the link names its message for `reminder_opened`. */
 export function reminderLink(message: ReminderMessage | undefined) {
-  return message
-    ? (`/review?from=reminder&reminder=${message}` as const)
-    : "/review?from=reminder";
+  return message ? (`/review?from=reminder&reminder=${message}` as const) : "/review?from=reminder";
 }
 
 /** The message a reminder's link names, read from the route's params. */

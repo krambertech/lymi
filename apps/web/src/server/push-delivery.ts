@@ -223,9 +223,10 @@ export async function dispatchReviewReminders(
     `SELECT ps.id, ps.user_id, ps.endpoint, ps.p256dh, ps.auth, ps.reminder_time, ps.timezone,
        ps.last_sent_local_date,
        us.app_language, us.review_timezone,
-       COALESCE(us.last_opened_at, ps.created_at) AS last_opened_at
+       COALESCE(lo.opened_at, ps.created_at) AS last_opened_at
        FROM push_subscriptions ps
-       LEFT JOIN user_settings us ON us.user_id = ps.user_id`,
+       LEFT JOIN user_settings us ON us.user_id = ps.user_id
+       LEFT JOIN learner_openings lo ON lo.user_id = ps.user_id`,
   ).all<ReminderCandidate>();
 
   const summary: ReminderDispatchResult = {

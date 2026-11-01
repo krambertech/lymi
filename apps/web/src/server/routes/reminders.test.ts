@@ -1,5 +1,4 @@
 import { DeckOut, QueueOut, type Reminder } from "@lymi/core";
-import { eq } from "@lymi/core/db";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { schema } from "../db";
 import { dispatchReviewReminders } from "../push-delivery";
@@ -112,9 +111,12 @@ describe("the daily reminder", () => {
   it("stops a week after the last opening and starts again on return", async () => {
     const who = await seed(3, []);
     await app.db
-      .update(schema.userSettings)
-      .set({ lastOpenedAt: new Date(Date.now() - 7 * DAY) })
-      .where(eq(schema.userSettings.userId, who.userId));
+      .insert(schema.learnerOpenings)
+      .values({ userId: who.userId, openedAt: new Date(Date.now() - 7 * DAY) })
+      .onConflictDoUpdate({
+        target: schema.learnerOpenings.userId,
+        set: { openedAt: new Date(Date.now() - 7 * DAY) },
+      });
     expect(await dispatch(who)).toEqual([]);
 
     const opened = await app.fetch("/api/review/today", {

@@ -184,7 +184,11 @@ describe("reportPlan", () => {
 
   it("counts a reminder later today as no days ahead", () => {
     const { reports, sent } = log();
-    reportPlan([{ ...plan[0], at: at("2026-10-12T19:00:00"), due: 1 } as PlannedReminder], now, reports);
+    reportPlan(
+      [{ ...plan[0], at: at("2026-10-12T19:00:00"), due: 1 } as PlannedReminder],
+      now,
+      reports,
+    );
     expect(sent[0]).toMatchObject({ days_ahead: 0 });
   });
 

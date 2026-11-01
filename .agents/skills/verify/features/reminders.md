@@ -21,4 +21,4 @@ The notification reads **Yesterday was a rest day** with **Your streak carried o
 - Only Google Chrome reaches a push service; Playwright's bundled Chromium cannot subscribe, and the recipe needs Chrome installed.
 - A push can take a while on a loaded machine, so the recipe waits up to a minute.
 - Dev never sends to PostHog, so `reminder_sent` and `reminder_opened` are proved by unit tests, and `reminder_opened` in production by a live event.
-- To see the week's stop, set `user_settings.last_opened_at` back 8 days with `wrangler d1 execute lymi --local`, before anything reopens the page: the log counts `quiet: 1`, and `POST /api/review/today` starts reminders again.
+- To see the week's stop, set `learner_openings.opened_at` back 8 days with `wrangler d1 execute lymi --local`, before anything reopens the page: the log counts `quiet: 1`, and `POST /api/review/today` starts reminders again.

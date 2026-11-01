@@ -107,7 +107,7 @@ export function ReminderSync() {
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();
-  const [opening, setOpening] = useState<string>();
+  const [opening, setOpening] = useState<ReturnType<typeof reminderLink>>();
   useEffect(() => {
     const open = (response: Notifications.NotificationResponse) => {
       if (!opensReview(response)) return;

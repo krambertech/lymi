@@ -9,7 +9,6 @@ import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider, usePathname } fr
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useState } from "react";
-import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { useSession } from "../auth/client";
@@ -71,7 +70,6 @@ export default function RootLayout() {
 }
 
 function Root() {
-  const dark = useColorScheme() === "dark";
   const p = usePalette();
   const room = useRoom();
   const session = useSession();
@@ -118,7 +116,7 @@ function Root() {
     clearWidgets();
     void cancelReminders();
   }, [signedOut, qc]);
-  const base = dark ? DarkTheme : DefaultTheme;
+  const base = room === "dark" ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {
     ...base,

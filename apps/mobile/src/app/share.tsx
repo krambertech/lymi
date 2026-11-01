@@ -477,7 +477,7 @@ function LinkButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-[14px] bg-glass-plate px-3 py-2"
+      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-md bg-glass-plate px-3 py-2"
     >
       <Icon name={icon} size={18} colour={p.ink} />
       <Text className="text-md font-medium text-ink" numberOfLines={1}>

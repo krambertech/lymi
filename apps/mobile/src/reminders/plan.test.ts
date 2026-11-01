@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { DAYS_AHEAD, forecastFrom, lineFor, planReminders, replans } from "./plan";
+import {
+  DAYS_AHEAD,
+  forecastFrom,
+  lineFor,
+  type PlanReports,
+  planReminders,
+  replans,
+  reportPlan,
+} from "./plan";
 
 // The phone's clock in these cases; Node applies a TZ set at run time.
 process.env.TZ = "Europe/Tallinn";
@@ -115,6 +123,67 @@ describe("planReminders", () => {
       forecast: byDay({ "2026-10-12": 0, "2026-10-13": 5 }),
     });
     expect(plan[0]).toEqual({ at: at("2026-10-12T23:30:00"), due: 5 });
+  });
+});
+
+describe("reportPlan", () => {
+  const now = at("2026-10-12T09:00:00");
+  const plan = [
+    { at: at("2026-10-14T19:00:00"), due: 3 },
+    { at: at("2026-10-15T19:00:00"), due: 30 },
+  ];
+  const nextAt = at("2026-10-14T19:00:00").getTime();
+
+  function log(reported?: number, sends = true) {
+    const sent: Parameters<PlanReports["send"]>[0][] = [];
+    const reports: PlanReports = {
+      reported: () => reported,
+      remember: (value) => {
+        reported = value;
+      },
+      send: (report) => {
+        if (sends) sent.push(report);
+        return sends;
+      },
+    };
+    return { reports, sent, reported: () => reported };
+  }
+
+  it("says how far off the next reminder is, how many are planned and what it will count", () => {
+    const { reports, sent, reported } = log();
+    reportPlan(plan, now, reports);
+    expect(sent).toEqual([{ backlog: "1-20", reminders: 2, days_ahead: 2 }]);
+    expect(reported()).toBe(nextAt);
+  });
+
+  it("counts a reminder later today as no days ahead", () => {
+    const { reports, sent } = log();
+    reportPlan([{ at: at("2026-10-12T19:00:00"), due: 1 }], now, reports);
+    expect(sent[0]).toMatchObject({ days_ahead: 0 });
+  });
+
+  it("stays quiet until the next reminder moves", () => {
+    const { reports, sent } = log();
+    reportPlan(plan, now, reports);
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
+    reportPlan(plan.slice(1), now, reports);
+    expect(sent).toHaveLength(2);
+  });
+
+  it("tries again with the next plan when the event could not go", () => {
+    const { reports, reported } = log(undefined, false);
+    reportPlan(plan, now, reports);
+    expect(reported()).toBeUndefined();
+  });
+
+  it("forgets an empty plan, so the same reminder reports again when it comes back", () => {
+    const { reports, sent, reported } = log(nextAt);
+    reportPlan([], now, reports);
+    expect(reported()).toBeUndefined();
+    expect(sent).toEqual([]);
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
   });
 });
 

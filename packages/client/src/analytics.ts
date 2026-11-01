@@ -6,6 +6,8 @@ import {
   type Attribution,
   analyticsPath,
   type Backlog,
+  EMAIL_ENTRY_KEY,
+  emailEntryOf,
   eventProperties,
   firstTouch,
   INTERNAL_ACCOUNT_IDS,
@@ -97,35 +99,43 @@ function forget(): void {
   opening = undefined;
 }
 
-const fromReminder = (url: string) =>
-  new URL(url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value;
+type ArrivalEntry = Pick<AnalyticsProperties<"app_opened">, "entry" | "from_email">;
+
+function markedEntry(url: string): ArrivalEntry | undefined {
+  const params = new URL(url).searchParams;
+  if (params.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value) return { entry: "reminder" };
+  const kind = emailEntryOf(params);
+  return kind && { entry: "email", from_email: kind };
+}
 
 /**
- * How this page load began: a reminder's link, a link from another site, or neither. The address
- * still carries a reminder's mark after sign-in, which returns to it.
+ * How this page load began: a reminder's or an email's link, a link from another site, or neither.
+ * The address still carries the mark after sign-in, which returns to it.
  */
-function arrivalEntry(): "reminder" | "link" | "direct" {
+function arrivalEntry(): ArrivalEntry {
   try {
-    if ((arrival && fromReminder(arrival.url)) || fromReminder(location.href)) return "reminder";
+    const marked = (arrival && markedEntry(arrival.url)) ?? markedEntry(location.href);
+    if (marked) return marked;
   } catch {
-    return "direct";
+    return { entry: "direct" };
   }
-  return visitFirstTouch("product")?.referrer ? "link" : "direct";
+  return { entry: visitFirstTouch("product")?.referrer ? "link" : "direct" };
 }
 
 function sendOpening(): void {
   if (openingSent || !opening || !learner || identifySent !== learner) return;
-  if (!captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) return;
+  if (!captureAnalytics("app_opened", { ...arrivalEntry(), ...opening })) return;
   openingSent = true;
-  dropReminderMark();
+  dropEntryMark();
 }
 
-/** Once the opening is counted, a reload of the same address is not another reminder. */
-function dropReminderMark(): void {
+/** Once the opening is counted, a reload of the same address is not another arrival by that link. */
+function dropEntryMark(): void {
   try {
     const url = new URL(location.href);
-    if (!fromReminder(url.href)) return;
-    url.searchParams.delete(REMINDER_ENTRY.key);
+    const marked = markedEntry(url.href);
+    if (!marked) return;
+    url.searchParams.delete(marked.entry === "email" ? EMAIL_ENTRY_KEY : REMINDER_ENTRY.key);
     history.replaceState(history.state, "", url);
   } catch {
     /* The mark only costs a duplicate opening on reload. */

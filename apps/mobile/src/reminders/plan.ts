@@ -1,4 +1,5 @@
 import { dayWindow } from "@lymi/core";
+import { type AnalyticsProperties, backlogOf } from "@lymi/core/analytics";
 
 // When the daily reminder fires, worked out on the phone so it holds without a connection. #510.
 
@@ -97,10 +98,36 @@ export function replans(on: boolean, due: number | undefined): boolean {
   return !on || due !== undefined;
 }
 
+const dayNumber = (at: Date) =>
+  Math.floor(Date.UTC(at.getFullYear(), at.getMonth(), at.getDate()) / (24 * 60 * 60 * 1000));
+
 /** Picks one of `count` lines by the day, so the wording changes from one day to the next. */
 export function lineFor(at: Date, count: number): number {
-  const day = Math.floor(
-    Date.UTC(at.getFullYear(), at.getMonth(), at.getDate()) / (24 * 60 * 60 * 1000),
-  );
-  return day % count;
+  return dayNumber(at) % count;
+}
+
+export interface PlanReports {
+  /** When the last reported plan's next reminder fires, in milliseconds. */
+  reported(): number | undefined;
+  remember(at: number | undefined): void;
+  /** Answers whether the event went, since usage waits until the learner's settings are read. */
+  send(report: AnalyticsProperties<"reminder_scheduled">): boolean;
+}
+
+/**
+ * Sends `reminder_scheduled` for a plan iOS accepted. A plan is made on every return to the front
+ * and every settled grade, so only a next reminder that moved since the last report is news, and
+ * one that could not be sent yet goes with the next plan.
+ */
+export function reportPlan(plan: readonly PlannedReminder[], now: Date, reports: PlanReports) {
+  const next = plan[0];
+  if (!next) return reports.remember(undefined);
+  const at = next.at.getTime();
+  if (at === reports.reported()) return;
+  const report = {
+    backlog: backlogOf(next.due),
+    reminders: plan.length,
+    days_ahead: dayNumber(next.at) - dayNumber(now),
+  };
+  if (reports.send(report)) reports.remember(at);
 }

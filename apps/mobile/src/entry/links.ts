@@ -14,6 +14,7 @@ const ENTRIES: readonly string[] = [
   "shortcut",
   "quick_action",
   "widget",
+  "reminder",
 ] satisfies Entry[];
 
 export function entryLink(place: Place, entry: Entry): string {

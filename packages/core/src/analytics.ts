@@ -155,6 +155,16 @@ export function backlogOf(due: number): Backlog {
 }
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+/** Added to an email's link as `from=email-<kind>`, since Lymi tracks no opens or clicks. */
+export const EMAIL_ENTRY_KEY = "from";
+const EMAIL_ENTRY_PREFIX = "email-";
+
+/** The kind of email a link names, ignoring a kind Lymi does not send. */
+export function emailEntryOf(params: URLSearchParams): z.infer<typeof EmailKind> | undefined {
+  const from = params.get(EMAIL_ENTRY_KEY);
+  if (!from?.startsWith(EMAIL_ENTRY_PREFIX)) return;
+  return EmailKind.safeParse(from.slice(EMAIL_ENTRY_PREFIX.length)).data;
+}
 
 type TextPrice = { input: number; cachedInput: number; output: number };
 
@@ -279,7 +289,8 @@ export const analyticsEvents = {
     $viewport_height: z.number().int().min(0).max(20_000),
   }),
   app_opened: z.object({
-    entry: z.enum(["reminder", "link", "direct"]).optional(),
+    entry: z.enum(["reminder", "email", "link", "direct"]).optional(),
+    from_email: EmailKind.optional(),
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
@@ -317,6 +328,12 @@ export const analyticsEvents = {
     ai_written: count,
   }),
   reminder_sent: z.object({ backlog: Backlog }),
+  reminder_scheduled: z.object({
+    backlog: Backlog,
+    reminders: count,
+    /** Calendar days from now to the next reminder, 0 for later today. */
+    days_ahead: z.number().int().min(0).max(30),
+  }),
   email_sent: z.object({ kind: EmailKind, language: z.enum(["en", "uk", "ru"]) }),
   email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
   email_bounced: z.object({ kind: EmailKind.optional() }),
@@ -562,7 +579,7 @@ export const analyticsEvents = {
     count: count.optional(),
   }),
   entry_opened: z.object({
-    entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
+    entry: z.enum(["control", "shortcut", "quick_action", "widget", "reminder"]),
     place: z.enum(["add", "review", "search"]),
   }),
   tag_added: z.object({
@@ -664,6 +681,7 @@ export const analyticsProducers = {
   hint_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  reminder_scheduled: ["phone"],
   command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],

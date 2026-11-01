@@ -5,7 +5,14 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { type EnrichedField, isolate, readFsrs, termShowsPronunciation } from "@lymi/core";
+import {
+  type EnrichedField,
+  isolate,
+  pitchPattern,
+  pronunciationText,
+  readFsrs,
+  termShowsPronunciation,
+} from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -34,6 +41,7 @@ import { EmptyState } from "../../../../ui/empty-state";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
+import { PitchChart } from "../../../../ui/pitch-chart";
 import { Plate, Press, Text } from "../../../../ui/primitives";
 import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
@@ -258,9 +266,13 @@ export default function CardPage() {
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
-        <Text className="text-md text-ink" lang={card.language}>
-          {card.pronunciation}
-        </Text>
+        {pitchPattern(card) !== null ? (
+          <PitchChart card={card} />
+        ) : (
+          <Text className="text-md text-ink" lang={card.language}>
+            {pronunciationText(card)}
+          </Text>
+        )}
       </Field>
     ) : (
       waiting("pronunciation") && (

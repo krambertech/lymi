@@ -1306,8 +1306,8 @@ msgstr "Come on; let’s go"
 msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Comes back a few cards later, then after longer gaps"
 
-msgid "Coming from a deck like Kaishi 1.5k? Word recordings stay on the cards, and pitch accent and sentence translations come along as notes."
-msgstr "Coming from a deck like Kaishi 1.5k? Word recordings stay on the cards, and pitch accent and sentence translations come along as notes."
+msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
+msgstr "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 
 msgid "Confirm it’s you"
 msgstr "Confirm it’s you"
@@ -2973,6 +2973,9 @@ msgstr "Let’s meet again *tomorrow*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
+
+msgid "library"
+msgstr "library"
 
 msgid "Lingering at the table after a meal"
 msgstr "Lingering at the table after a meal"

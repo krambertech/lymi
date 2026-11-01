@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { stripReadings } from "@lymi/core/reading";
+import { pronunciationText, stripReadings } from "@lymi/core/reading";
 import { ExternalLink } from "lucide-react";
 import { productLinks, type ViewCard } from "../../../shared/mcp-app";
 import { Button } from "../../components/button";
@@ -36,7 +36,7 @@ export function CardView({ card }: { card: ViewCard }) {
     },
     {
       label: t`Pronunciation`,
-      text: card.pronunciation,
+      text: pronunciationText(card),
       field: "pronunciation",
       ai: card.pronunciationSource === "ai",
     },

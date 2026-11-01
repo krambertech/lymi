@@ -27,6 +27,7 @@ import {
   readingKey,
   sameExample,
   sameReading,
+  sameSpokenReading,
   speechInputs,
   stripReadings,
   TEXT_MODES,
@@ -1205,9 +1206,12 @@ function editWrite(
     current.audioSource === "recorded"
       ? normalizedTerm !== termKey(language, current.term)
       : pronunciationChanged ||
-        speechInputs(current.language).some(
-          (field) => patch[field] !== undefined && patch[field] !== current[field],
-        );
+        speechInputs(current.language).some((field) => {
+          const sent = patch[field];
+          if (sent === undefined || sent === current[field]) return false;
+          // A chart reads the pitch accent; the voice reads the kana.
+          return field !== "pronunciation" || !sameSpokenReading(current, sent);
+        });
   // An example's recording says its sentence, so only a new sentence drops it. Cleared whatever
   // this read saw, so a clip an import stores meanwhile never outlives the edit. CONTEXT.md, Recording.
   const exampleRecordingStale =

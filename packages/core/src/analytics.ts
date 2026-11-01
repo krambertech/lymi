@@ -451,6 +451,12 @@ export const analyticsEvents = {
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
   }),
+  pitch_accent_filled: z.object({
+    outcome: z.enum(["filled", "empty", "failed"]),
+    count,
+    asked: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+  }),
   example_translated: z.object({
     outcome: z.enum(["translated", "empty", "failed"]),
     count,
@@ -546,6 +552,7 @@ export const analyticsEvents = {
       "pronunciation",
       "example_audio",
       "lead_in",
+      "pitch_accent",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
@@ -708,6 +715,7 @@ export const analyticsProducers = {
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  pitch_accent_filled: ["worker"],
   example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],

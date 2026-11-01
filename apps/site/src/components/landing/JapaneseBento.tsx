@@ -154,8 +154,8 @@ export function JapaneseBento() {
         title={<Trans>Bring your Anki deck</Trans>}
         body={
           <Trans>
-            Coming from a deck like Kaishi 1.5k? Word recordings stay on the cards, and pitch accent
-            and sentence translations come along as notes.
+            Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards,
+            and sentence translations come along too.
           </Trans>
         }
       >

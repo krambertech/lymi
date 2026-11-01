@@ -30,7 +30,7 @@ flowchart TD
 | 時計 とけい, clock | pass | 0.23 | Kana alone; no writer call |
 | コーヒー, coffee | loanword | not asked | Kana alone; no model call |
 
-The scores come from the evaluation run on 19 October 2026.
+The scores come from the evaluation below.
 
 The free rules live in the policy because they depend on the language. A katakana loanword rarely shares its reading with another word, and a reading over 8 kana is a compound or a phrase that carries its own context. The decision model answers one yes-or-no question per card. The writer is told to return no lead-in for sentences, greetings and time words, and its reply must pass the policy's checks: at most 16 characters, Japanese script only, no repeat of the term or its reading, and no generic word such as とても that fits every sense.
 
@@ -66,7 +66,7 @@ The policy is `apps/web/src/server/lead-ins/japanese.ts`. After changing its que
 2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
 3. Check that every ambiguous case is still flagged before you accept more flagged clear cases.
 
-On 19 October 2026 the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
+At commit `b5a3b8003`, the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
 
 ## Add a language
 

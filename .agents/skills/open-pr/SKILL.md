@@ -1,6 +1,6 @@
 ---
 name: open-pr
-description: Open or update a Lymi pull request and supervise it until it is review-ready. Use when the user asks to create or open a PR, push a completed change for review, or handle CI and review feedback on an existing PR.
+description: Open or update a Lymi pull request and supervise it until it is review-ready. Use when a change is ready for review, without waiting to be asked, or to handle CI and review feedback on an existing PR.
 ---
 
 # Open a pull request

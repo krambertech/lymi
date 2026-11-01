@@ -95,14 +95,14 @@ describe("reminderFor", () => {
 
 describe("remindersQuiet", () => {
   const opened = new Date("2026-10-05T09:00:00Z");
-  const after = (ms: number) => new Date(opened.getTime() + ms);
+  const later = (ms: number) => new Date(opened.getTime() + ms);
   const week = QUIET_AFTER_DAYS * 24 * 60 * 60 * 1000;
 
   it("keeps reminding for seven days after the last opening", () => {
-    expect(remindersQuiet(opened, after(week - 1))).toBe(false);
+    expect(remindersQuiet(opened, later(week - 1))).toBe(false);
   });
 
   it("stops at seven days", () => {
-    expect(remindersQuiet(opened, after(week))).toBe(true);
+    expect(remindersQuiet(opened, later(week))).toBe(true);
   });
 });

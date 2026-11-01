@@ -10,8 +10,8 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
   "rzJcULGYA5d4Ah4Ci3xWz7nNjb6ZZChy",
   "Ke5PiWMwvkod6tYTzX5oUWi3gz5haGuI",
 ]);
-export { ReminderMessage };
 export { ANALYTICS_CONSENT_VERSION } from "./types";
+export { ReminderMessage };
 /** Carries the visit's first touch with a sign-up request, since no cookie does. */
 export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
 /** The phone's lists whose rows open a context menu on a long press. */

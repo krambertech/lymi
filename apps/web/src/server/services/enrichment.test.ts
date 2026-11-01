@@ -652,6 +652,28 @@ describe("enrichCards", () => {
     expect((await showCard(ctx, added.card.id)).enrichmentStatus).toBe("failed");
   });
 
+  it("logs a run the queue refused and counts it as failed", async () => {
+    const ctx = await learner(db, "enrich-refused", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const logged = vi.spyOn(console, "error").mockImplementation(() => {});
+    const capture = vi.fn();
+    await addCards(
+      { ...ctx, analytics: { capture, writeDataPoint: vi.fn() } },
+      [CardInput.parse({ deckId: deck.id, term: "sbrigarsi" })],
+      { create: vi.fn().mockRejectedValue(new Error("no workflow here")) },
+    );
+    expect(logged).toHaveBeenCalledWith(
+      JSON.stringify({ event: "enrichment_not_queued", trigger: "add", error: "Error" }),
+    );
+    expect(capture).toHaveBeenCalledWith({
+      name: "enrichment_finished",
+      outcome: "failed",
+      count: 1,
+      trigger: "add",
+    });
+    logged.mockRestore();
+  });
+
   it("queues the run again when an add is replayed after it died between the save and the queue", async () => {
     const ctx = await learner(db, "enrich-6b", "Kateryna");
     const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });

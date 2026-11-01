@@ -9,6 +9,7 @@ import {
   clearLocalEmailOutbox,
   latestLocalEmail,
   renderTransactionalEmail,
+  sendAccountEmail,
   sendOperatorTestEmail,
   sendTransactionalEmail,
 } from "./email";
@@ -346,6 +347,19 @@ describe("transactional email", () => {
       }),
     );
     expect(JSON.stringify(log.mock.calls)).not.toContain("Private provider detail");
+  });
+
+  it("logs why an account email was not sent, and lets the sign-in carry on", async () => {
+    const ctx = await person("Account email");
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const { env } = fakeEnv(
+      "https://my.lymi.app",
+      vi.fn().mockRejectedValue(new Error("Private provider detail")),
+    );
+    await sendAccountEmail(ctx, env, { kind: "test", to: "learner@example.com", language: "en" });
+    expect(log).toHaveBeenLastCalledWith(
+      JSON.stringify({ event: "account_email_not_sent", kind: "test", error: "ServiceError" }),
+    );
   });
 
   it("sends through Resend once its key is set, tagging the kind and leaving the binding alone", async () => {

@@ -460,7 +460,7 @@ export async function addCards(
   if (
     enrichment &&
     enriching.length > 0 &&
-    !(await queueEnrichment(db, userId, enriching, enrichment, "add", runId))
+    !(await queueEnrichment(ctx, enriching, enrichment, "add", runId))
   ) {
     for (const outcome of outcomes) {
       if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
@@ -852,7 +852,7 @@ export async function requestEnrichment(
     .update(schema.cards)
     .set({ ...working, ...reopened })
     .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
-  const queued = await queueEnrichment(db, userId, [id], enrichment, "card");
+  const queued = await queueEnrichment(ctx, [id], enrichment, "card");
   return presentCard(
     db,
     {
@@ -945,7 +945,7 @@ async function queueTranslations(
 ) {
   const ids = writes.filter((write) => write.translate && !failed.has(write.id)).map((w) => w.id);
   if (enrichment && ids.length > 0) {
-    await queueEnrichment(ctx.db, ctx.userId, ids, enrichment, "edit");
+    await queueEnrichment(ctx, ids, enrichment, "edit");
   }
 }
 

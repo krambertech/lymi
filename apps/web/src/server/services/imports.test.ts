@@ -18,7 +18,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDb, type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
 import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
-import { bytesSource } from "../imports/files";
+import { bytesSource, ImportFileError } from "../imports/files";
 import { nextWriteStep, writeImport } from "../imports/write-run";
 import type { AnalyticsEvent } from "./analytics";
 import { analyticsContextFor } from "./analytics-context";
@@ -833,7 +833,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const damaged = {
       adapter: {
         media: async () => async () => {
-          throw new Error("A zstd frame is damaged");
+          throw new ImportFileError("damaged", "A zstd frame is damaged");
         },
       },
     } as unknown as ImportWork<unknown>;
@@ -846,6 +846,29 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     );
     expect(totals.recordings).toEqual({ stored: 0, skipped: 1 });
     expect(await recorded(added.card.id)).toEqual({ key: null, source: null });
+  });
+
+  it("fails the step when storage cannot give a clip back, so its retry can store it", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Unreachable", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term: "犬" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const unreachable = {
+      adapter: {
+        media: async () => async () => {
+          throw new Error("R2 is unavailable");
+        },
+      },
+    } as unknown as ImportWork<unknown>;
+    await expect(
+      attachPictures(
+        ctx,
+        unreachable,
+        bytesSource(new Uint8Array()),
+        [{ cardId: added.card.id, name: "inu.mp3", kind: "recording" }],
+        { audio: env.AUDIO },
+      ),
+    ).rejects.toThrow("R2 is unavailable");
   });
 
   it("gives a card an earlier import brought its recording in place of generated speech", async () => {
@@ -929,7 +952,7 @@ describe("importing an Anki package", () => {
       .select({ objectKey: schema.imports.objectKey })
       .from(schema.imports)
       .where(eq(schema.imports.id, id));
-    expect(await objectsUnder(row[0]?.objectKey as string)).toBe(0);
+    expect(row[0]?.objectKey).toBeNull();
   });
 
   it("gives the same result for the legacy and the current container", async () => {
@@ -1639,6 +1662,46 @@ describe("importing a deck of many pictures", () => {
       .from(schema.cardImages)
       .where(eq(schema.cardImages.userId, ctx.userId));
     expect(image?.description).toBeNull();
+  });
+});
+
+describe("an ended import's files", () => {
+  const keyOf = async (id: string) => {
+    const [row] = await db
+      .select({ objectKey: schema.imports.objectKey })
+      .from(schema.imports)
+      .where(eq(schema.imports.id, id));
+    return row?.objectKey;
+  };
+
+  it("clears the key once they are gone", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    expect(await keyOf(id)).not.toBeNull();
+    await cancelImport(ctx, id, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+  });
+
+  it("stay for the sweep when R2 refuses the delete", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const key = (await keyOf(id)) as string;
+    const refusing = new Proxy(env.IMPORTS, {
+      get(target, property) {
+        if (property === "delete")
+          return async () => Promise.reject(new Error("R2 is unavailable"));
+        const value = Reflect.get(target, property);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+
+    await failImport(db, id, "unrecognized", refusing);
+    expect(await keyOf(id)).toBe(key);
+    expect(await env.IMPORTS.head(key)).not.toBeNull();
+
+    await expireImports(db, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+    expect(await env.IMPORTS.head(key)).toBeNull();
   });
 });
 

@@ -95,7 +95,7 @@ export function QuizletStart() {
     setRefused(null);
   };
   const choose = async () => {
-    const picked = await pickFile().catch(() => null);
+    const picked = await pickFile(setRefused);
     if (!picked) return;
     const problem = refusal("quizlet", picked);
     if (problem) return setRefused(problem);

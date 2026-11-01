@@ -4,7 +4,8 @@ import type { InsightsOut } from "@lymi/core";
 import { useRouter } from "expo-router";
 import type { ReactNode } from "react";
 import { View } from "react-native";
-import { Button, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
+import { EmptyState } from "../ui/empty-state";
+import { Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
 import { Segmented } from "../ui/segmented";
 import { Skeleton } from "../ui/skeleton";
 import { DayGrid } from "./day-grid";
@@ -291,13 +292,10 @@ interface Props {
   data: InsightsOut | undefined;
   period: Period;
   onPeriod: (p: Period) => void;
-  failed: boolean;
   busy: boolean;
-  onRetry: () => void;
 }
 
-export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: Props) {
-  if (failed) return <Failed onRetry={onRetry} busy={busy} />;
+export function InsightsView({ data, period, onPeriod, busy }: Props) {
   if (!data) return <Loading />;
   if (data.consistency.daysAllTime === 0 && data.cards.total === 0) return <NothingYet />;
   return <Loaded data={data} period={period} onPeriod={onPeriod} busy={busy} />;
@@ -356,24 +354,13 @@ function Loading() {
   );
 }
 
-function Failed({ onRetry, busy }: { onRetry: () => void; busy: boolean }) {
-  const { t } = useLingui();
-  return (
-    <Plate className="items-start gap-3 p-5">
-      <Text className="text-md font-medium text-ink">{t`Couldn’t load Insights`}</Text>
-      <Button label={t`Try again`} onPress={onRetry} loading={busy} />
-    </Plate>
-  );
-}
-
 function NothingYet() {
   const { t } = useLingui();
   return (
-    <Plate className="gap-2 p-5">
-      <Text className="text-md font-medium text-ink">{t`Insights start after your first review`}</Text>
-      <Text className="text-base text-ink-muted">
-        {t`Add cards and review them to see your progress here.`}
-      </Text>
-    </Plate>
+    <EmptyState
+      kind="start"
+      title={t`Insights start after your first review`}
+      body={t`Add cards and review them to see your progress here.`}
+    />
   );
 }

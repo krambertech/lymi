@@ -4,6 +4,7 @@ import {
   emptyState,
   formatInterval,
   preview,
+  readFsrs,
   State,
   schedule,
   serializeState,
@@ -75,5 +76,19 @@ describe("fsrs", () => {
     expect(formatInterval(now, new Date(now.getTime() + 60_000))).toBe("1 min");
     expect(formatInterval(now, new Date(now.getTime() + 2 * 86_400_000))).toBe("2 d");
     expect(formatInterval(now, new Date(now.getTime() + 90 * 86_400_000))).toBe("3 mo");
+  });
+});
+
+describe("readFsrs", () => {
+  const fsrs = JSON.stringify(emptyState());
+
+  it("reads a stored state", () => {
+    expect(readFsrs({ fsrs })?.reps).toBe(0);
+  });
+
+  it("returns null when there is no state, or it can't be read", () => {
+    expect(readFsrs(null)).toBeNull();
+    expect(readFsrs({ fsrs: "not json" })).toBeNull();
+    expect(readFsrs({ fsrs: "{}" })).toBeNull();
   });
 });

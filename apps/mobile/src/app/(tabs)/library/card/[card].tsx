@@ -5,7 +5,7 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, type EnrichedField, isolate, termShowsPronunciation } from "@lymi/core";
+import { type EnrichedField, isolate, readFsrs, termShowsPronunciation } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -374,13 +374,7 @@ export default function CardPage() {
     ) : (
       <View>
         {states.map((st, i) => {
-          let reps = 0;
-          let lapses = 0;
-          try {
-            const f = deserializeState(st.fsrs);
-            reps = f.reps;
-            lapses = f.lapses;
-          } catch {}
+          const fsrs = readFsrs(st);
           return (
             <View
               key={st.id}
@@ -394,12 +388,14 @@ export default function CardPage() {
                 <Text className="text-md text-ink">
                   {st.state === 0 ? t`Not started` : when(new Date(st.due))}
                 </Text>
-                <Text className="text-sm text-ink-muted">
-                  {plural(reps, { one: "# review", other: "# reviews" })}
-                  {lapses > 0
-                    ? ` · ${plural(lapses, { one: "forgotten once", other: "forgotten # times" })}`
-                    : ""}
-                </Text>
+                {fsrs && (
+                  <Text className="text-sm text-ink-muted">
+                    {plural(fsrs.reps, { one: "# review", other: "# reviews" })}
+                    {fsrs.lapses > 0
+                      ? ` · ${plural(fsrs.lapses, { one: "forgotten once", other: "forgotten # times" })}`
+                      : ""}
+                  </Text>
+                )}
               </View>
             </View>
           );

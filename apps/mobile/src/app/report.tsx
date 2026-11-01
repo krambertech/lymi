@@ -17,7 +17,8 @@ import { usePalette } from "../theme/palette";
 import { Field, FieldDescription, FieldError, FieldLabel, Textarea } from "../ui/field";
 import { FormHeader } from "../ui/form-header";
 import { KeyboardRoom } from "../ui/keyboard";
-import { Icon, Plate, Text } from "../ui/primitives";
+import { Notice } from "../ui/notice";
+import { Plate, Text } from "../ui/primitives";
 import { Radio } from "../ui/radio";
 import { toast } from "../ui/toast-host";
 
@@ -124,36 +125,25 @@ export default function Report() {
           <FieldDescription>{t`Optional. Anything that helps us understand.`}</FieldDescription>
         </Field>
         {send.isError && (
-          <View
-            className="gap-1 rounded-lg bg-danger-soft px-3.5 py-3"
-            accessibilityLiveRegion="assertive"
-          >
-            <View className="flex-row items-center gap-2">
-              <Icon name="alert" size={16} colour={p.danger} />
-              <Text className="text-base font-medium text-danger">
-                {t`Couldn’t send your report`}
-              </Text>
-            </View>
-            <Text className="text-base text-ink-secondary">
-              {overDailyLimit ? (
-                <Trans>
-                  You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app
-                  if this can’t wait.
-                </Trans>
-              ) : (
-                <Trans>
-                  Try again, or write to{" "}
-                  <Text
-                    className="font-medium underline"
-                    onPress={() => Linking.openURL("mailto:hello@lymi.app")}
-                  >
-                    hello@lymi.app
-                  </Text>
-                  .
-                </Trans>
-              )}
-            </Text>
-          </View>
+          <Notice tone="danger" title={t`Couldn’t send your report`}>
+            {overDailyLimit ? (
+              <Trans>
+                You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if
+                this can’t wait.
+              </Trans>
+            ) : (
+              <Trans>
+                Try again, or write to{" "}
+                <Text
+                  className="font-medium underline"
+                  onPress={() => Linking.openURL("mailto:hello@lymi.app")}
+                >
+                  hello@lymi.app
+                </Text>
+                .
+              </Trans>
+            )}
+          </Notice>
         )}
       </ScrollView>
     </KeyboardRoom>

@@ -145,3 +145,14 @@ export function deserializeState(json: string): FsrsCard {
   card.learning_steps = Math.min(card.learning_steps, LEARNING_STEPS.length - 1);
   return card;
 }
+
+/** The FSRS memory model, or null for a state that has none yet or can't be read. */
+export function readFsrs(state: { fsrs: string } | null): FsrsCard | null {
+  if (!state) return null;
+  try {
+    const card = deserializeState(state.fsrs);
+    return typeof card.stability === "number" ? card : null;
+  } catch {
+    return null;
+  }
+}

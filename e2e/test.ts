@@ -16,7 +16,7 @@ export const test = base.extend({
       const sheet = new CSSStyleSheet();
       sheet.replaceSync(":root { --seq-filter: none; } .dev-skin { display: none; }");
       document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
-      localStorage.setItem("lymi-no-first-review", "1");
+      (window as { lymiNoFirstReview?: boolean }).lymiNoFirstReview = true;
     });
     await use(context);
   },

@@ -130,11 +130,7 @@ function WhatWaits({ next, fresh }: { next: NextCards | undefined; fresh: boolea
 
 /** Off only for browser journeys about review itself, which start on a new account; docs/testing.md. */
 export function firstReviewTeaches() {
-  try {
-    return localStorage.getItem("lymi-no-first-review") === null;
-  } catch {
-    return true;
-  }
+  return !(window as { lymiNoFirstReview?: boolean }).lymiNoFirstReview;
 }
 
 /** The heading of the success screen that opens the first review's end. */

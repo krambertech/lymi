@@ -27,7 +27,9 @@ async function grade(page: Page) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => localStorage.removeItem("lymi-no-first-review"));
+  await page.addInitScript(() => {
+    (window as { lymiNoFirstReview?: boolean }).lymiNoFirstReview = false;
+  });
 });
 
 test("the first review teaches, ends on the plan, and an ordinary end follows", async ({

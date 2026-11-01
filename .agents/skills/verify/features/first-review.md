@@ -17,5 +17,5 @@ The first card shows **Try to remember what this means.** The first grade shows 
 ## Gotchas
 
 - A local server has no push key, so the reminder step is skipped. To see it, stand in for `navigator.serviceWorker`, `Notification` and `/api/push/config` in the browser.
-- The first review's teaching is off in `e2e`, which sets `lymi-no-first-review`.
+- The first review's teaching is off in `e2e`, which sets `window.lymiNoFirstReview`.
 - A headless browser's `Notification.permission` can be `denied`, which also skips the step.

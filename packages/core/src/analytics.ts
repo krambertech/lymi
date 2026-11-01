@@ -168,7 +168,6 @@ const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above
     output: 0.5,
     longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
   },
-  "gemini-2.5-flash-lite": { input: 0.1, cachedInput: 0.01, output: 0.4 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -187,44 +186,17 @@ export function textCallCost(
   };
 }
 const usd = z.number().nonnegative().max(1000);
-type SpeechPrice =
-  | { perCharacter: number }
-  | { inputToken: number; audioToken: number; audioTokensPerSecond: number };
+// USD per million characters; OpenAI is absent because its speech endpoint returns no usage.
+const SPEECH_PRICES: Record<string, number> = { eleven_v4: 80 };
 
-// USD per million characters or tokens; OpenAI is absent because its speech endpoint returns no usage.
-const SPEECH_PRICES: Record<string, SpeechPrice> = {
-  "gemini-3.1-flash-tts-preview": { inputToken: 1, audioToken: 20, audioTokensPerSecond: 25 },
-  "chirp-3-hd": { perCharacter: 30 },
-  eleven_v4: { perCharacter: 80 },
-};
-
-/**
- * A speech call's cost in USD, or nothing for a model without a known price or a call missing the
- * usage its price needs. Audio tokens come from the call, or from the clip's length.
- */
+/** A speech call's cost in USD, or nothing for a model without a known price. */
 export function speechCallCost(
   model: string,
-  usage: {
-    characters: number;
-    inputTokens?: number | undefined;
-    outputTokens?: number | undefined;
-    audioSeconds?: number | undefined;
-  },
+  usage: { characters: number },
 ): { input: number; output: number } | undefined {
   const price = SPEECH_PRICES[model];
-  if (!price) return;
-  if ("perCharacter" in price)
-    return { input: (usage.characters * price.perCharacter) / 1e6, output: 0 };
-  const audioTokens =
-    usage.outputTokens ??
-    (usage.audioSeconds === undefined
-      ? undefined
-      : usage.audioSeconds * price.audioTokensPerSecond);
-  if (audioTokens === undefined) return;
-  return {
-    input: ((usage.inputTokens ?? 0) * price.inputToken) / 1e6,
-    output: (audioTokens * price.audioToken) / 1e6,
-  };
+  if (price === undefined) return;
+  return { input: (usage.characters * price) / 1e6, output: 0 };
 }
 
 /** The scheduler's card state before a grade, by its number in ts-fsrs. */
@@ -541,7 +513,7 @@ export const analyticsEvents = {
       "example_audio",
       "lead_in",
     ]),
-    $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
+    $ai_provider: z.enum(["openai", "anthropic", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     // A speech call priced by characters reports no tokens.
     $ai_input_tokens: tokens.optional(),

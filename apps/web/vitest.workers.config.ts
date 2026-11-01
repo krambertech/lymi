@@ -16,8 +16,6 @@ const gateway = testGateway.AI_GATEWAY_URL;
 const json = (body: unknown) => Response.json(body);
 const audio = () =>
   new Response(new Uint8Array([0xff, 0xf3]), { headers: { "Content-Type": "audio/mpeg" } });
-const gemini = (part: Record<string, unknown>, finishReason?: string) =>
-  json({ candidates: [{ finishReason, content: { parts: [part] } }] });
 const redirect = (location: string) =>
   new Response(null, { status: 302, headers: { Location: location } });
 const picture = () =>
@@ -55,17 +53,12 @@ async function upstream(request: Request): Promise<Response> {
   if (!url.startsWith(`${gateway}/`)) return new Response("Unexpected host", { status: 404 });
   const path = url.slice(gateway.length);
   if (path === "/openai/chat/completions") {
-    return json({ choices: [{ message: { content: '{"ok":true}' }, finish_reason: "stop" }] });
+    return json({
+      choices: [{ message: { content: '{"ok":true,"previousText":null}' }, finish_reason: "stop" }],
+    });
   }
   if (path === "/openai/audio/speech" || path.startsWith("/elevenlabs/v1/text-to-speech/")) {
     return audio();
-  }
-  if (path === "/custom-google-cloud-tts/v1/text:synthesize") return json({ audioContent: "//M=" });
-  if (path.startsWith("/google-ai-studio/v1beta/models/gemini-2.5-flash-lite:")) {
-    return gemini({ text: '{"previousText":null}' }, "STOP");
-  }
-  if (path.startsWith("/google-ai-studio/v1beta/models/")) {
-    return gemini({ inlineData: { mimeType: "audio/l16; rate=24000; channels=1", data: "AAA=" } });
   }
   if (path === "/anthropic/v1/messages") {
     const { stream } = (await request.json()) as { stream?: boolean };

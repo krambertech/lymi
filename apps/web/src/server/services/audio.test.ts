@@ -108,9 +108,6 @@ function provider(
   return {
     provider: name,
     model: {
-      "google-gemini": "gemini-3.1-flash-tts-preview",
-      "google-chirp": "chirp-3-hd",
-      "gemini-api": "gemini-3.1-flash-tts-preview",
       elevenlabs: "eleven_v4",
       openai: "gpt-4o-mini-tts",
     }[name],
@@ -135,7 +132,7 @@ describe("pronunciation audio", () => {
     const audio = await pronunciationAudio(
       context(card({ audioKey: key, audioSource: "recorded" })),
       "card-1",
-      { bucket, providers: () => [provider("google-gemini", speech)] },
+      { bucket, providers: () => [provider("elevenlabs", speech)] },
     );
 
     expect(audio.key).toBe(key);
@@ -166,7 +163,7 @@ describe("pronunciation audio", () => {
         get: (_target, property) => ({ get, put })[property as "get"],
       });
       const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-      const providers = () => [provider("google-chirp", speech)];
+      const providers = () => [provider("elevenlabs", speech)];
       const first = await pronunciationAudio(context(card({ term, audioKey: oldKey })), "card-1", {
         bucket,
         providers,
@@ -175,7 +172,6 @@ describe("pronunciation audio", () => {
       expect(speech).toHaveBeenCalledWith({
         text: spoken,
         language: "et",
-        usage: expect.any(Function),
       });
       expect(first.key).toMatch(/^cards\/card-1\/v2\//);
       expect(first.key).not.toBe(oldKey);
@@ -209,7 +205,6 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "じょうず",
       language: "ja",
-      usage: expect.any(Function),
     });
     const expert = await pronunciationAudio(
       context(card({ ...japanese, pronunciation: "うわて", audioKey: skilled.key })),
@@ -219,7 +214,6 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "うわて",
       language: "ja",
-      usage: expect.any(Function),
     });
     expect(expert.key).not.toBe(skilled.key);
 
@@ -227,7 +221,6 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "上手",
       language: "ja",
-      usage: expect.any(Function),
     });
   });
 
@@ -252,7 +245,6 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "за́мок",
       language: "ru",
-      usage: expect.any(Function),
     });
     const lock = await pronunciationAudio(
       context(card({ ...russian, pronunciation: "замо́к", audioKey: castle.key })),
@@ -262,7 +254,6 @@ describe("pronunciation audio", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "замо́к",
       language: "ru",
-      usage: expect.any(Function),
     });
     expect(lock.key).not.toBe(castle.key);
   });
@@ -289,7 +280,6 @@ describe("pronunciation audio", () => {
       text: "руки́",
       language: "uk",
       previousText: "Українською:",
-      usage: expect.any(Function),
     });
     const plural = await pronunciationAudio(
       context(card({ ...ukrainian, pronunciation: "ру́ки", audioKey: genitive.key })),
@@ -308,12 +298,11 @@ describe("pronunciation audio", () => {
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     await pronunciationAudio(context(card({ pronunciation: "ˈjæːæːr" })), "card-1", {
       bucket,
-      providers: () => [provider("google-chirp", speech)],
+      providers: () => [provider("elevenlabs", speech)],
     }).catch(() => undefined);
     expect(speech).toHaveBeenCalledWith({
       text: "jäääär",
       language: "et",
-      usage: expect.any(Function),
     });
   });
 
@@ -327,7 +316,7 @@ describe("pronunciation audio", () => {
       get: (_target, property) => ({ get, put })[property as "get"],
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const providers = vi.fn(() => [provider("google-chirp", speech)]);
+    const providers = vi.fn(() => [provider("elevenlabs", speech)]);
     const deps = { bucket, providers };
 
     await pronunciationAudio(context(card()), "card-1", deps);
@@ -341,9 +330,9 @@ describe("pronunciation audio", () => {
     expect(providers).toHaveBeenCalledWith("et");
   });
 
-  it("stores Gemini WAV with its format and replaces a remembered Chirp clip", async () => {
+  it("replaces a clip remembered from a retired provider", async () => {
     let stored: R2ObjectBody | null = null;
-    const old = storedAudio("old-chirp.mp3");
+    const old = storedAudio("old-retired.wav");
     const get = vi.fn(async (key: string) => (key === old.key ? old : stored));
     const put = vi.fn(async (key: string, _bytes: unknown, _options: R2PutOptions) => {
       stored = storedAudio(key);
@@ -353,21 +342,17 @@ describe("pronunciation audio", () => {
     });
     const speech = vi.fn(
       async () =>
-        new Response(new Uint8Array([1, 2, 3, 4]), { headers: { "Content-Type": "audio/wav" } }),
+        new Response(new Uint8Array([1, 2, 3, 4]), { headers: { "Content-Type": "audio/mpeg" } }),
     );
-    const preferred: SpeechProvider = {
-      ...provider("gemini-api", speech),
-      extension: "wav",
-      contentType: "audio/wav",
-    };
+    const preferred = provider("elevenlabs", speech);
     const result = await pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
       bucket,
       providers: () => [preferred],
     });
-    expect(result.key).toMatch(/\.wav$/);
+    expect(result.key).toMatch(/\.mp3$/);
     expect(put.mock.calls[0]?.[2]).toMatchObject({
-      httpMetadata: { contentType: "audio/wav" },
-      customMetadata: { provider: "gemini-api", voice: "Kore" },
+      httpMetadata: { contentType: "audio/mpeg" },
+      customMetadata: { provider: "elevenlabs" },
     });
     await pronunciationAudio(context(card({ audioKey: result.key })), "card-1", {
       bucket,
@@ -393,16 +378,16 @@ describe("pronunciation audio", () => {
         status: 401,
       });
     });
-    const chirp = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const native = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     await pronunciationAudio(context(card()), "card-1", {
       bucket,
-      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+      providers: () => [provider("openai", openai), provider("elevenlabs", native)],
     });
 
     expect(openai).toHaveBeenCalledOnce();
-    expect(chirp).toHaveBeenCalledOnce();
+    expect(native).toHaveBeenCalledOnce();
     expect(warn).toHaveBeenCalledWith(
       JSON.stringify({
         event: "pronunciation_provider_failed",
@@ -427,17 +412,17 @@ describe("pronunciation audio", () => {
         })[property as "get"],
     });
     const openai = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+    const native = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
 
     await expect(
       pronunciationAudio(context(card()), "card-1", {
         bucket,
-        providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+        providers: () => [provider("openai", openai), provider("elevenlabs", native)],
       }),
     ).rejects.toThrow("R2 unavailable");
 
     expect(openai).toHaveBeenCalledOnce();
-    expect(chirp).not.toHaveBeenCalled();
+    expect(native).not.toHaveBeenCalled();
   });
 
   it("tries a later provider when an earlier provider returns oversized audio", async () => {
@@ -458,16 +443,16 @@ describe("pronunciation audio", () => {
           headers: { "content-length": "8000001" },
         }),
     );
-    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+    const native = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     await pronunciationAudio(context(card()), "card-1", {
       bucket,
-      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+      providers: () => [provider("openai", openai), provider("elevenlabs", native)],
     });
 
     expect(openai).toHaveBeenCalledOnce();
-    expect(chirp).toHaveBeenCalledOnce();
+    expect(native).toHaveBeenCalledOnce();
     expect(put).toHaveBeenCalledOnce();
     expect(warn).toHaveBeenCalledWith(
       JSON.stringify({
@@ -491,16 +476,16 @@ describe("pronunciation audio", () => {
         })[property as "get"],
     });
     const openai = vi.fn(async () => new Response(new Uint8Array()));
-    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+    const native = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     await pronunciationAudio(context(card()), "card-1", {
       bucket,
-      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+      providers: () => [provider("openai", openai), provider("elevenlabs", native)],
     });
 
     expect(openai).toHaveBeenCalledOnce();
-    expect(chirp).toHaveBeenCalledOnce();
+    expect(native).toHaveBeenCalledOnce();
   });
 
   it("never reaches R2 or a provider for a card without a language", async () => {
@@ -541,7 +526,7 @@ describe("pronunciation audio", () => {
       get: (_target, property) => ({ get, put })[property as "get"],
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const providers = () => [provider("google-gemini", speech)];
+    const providers = () => [provider("elevenlabs", speech)];
 
     const first = await pronunciationAudio(context(card()), "card-1", { bucket, providers });
     get.mockClear();
@@ -565,7 +550,7 @@ describe("pronunciation audio", () => {
         ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const providers = () => [provider("google-gemini", speech)];
+    const providers = () => [provider("elevenlabs", speech)];
 
     await expect(
       pronunciationAudio(context(card()), "card-1", { bucket, providers, storedOnly: true }),
@@ -592,7 +577,7 @@ describe("pronunciation audio", () => {
         ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
-    const providers = () => [provider("google-gemini", speech)];
+    const providers = () => [provider("elevenlabs", speech)];
     vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
 
     await expect(
@@ -619,16 +604,16 @@ describe("pronunciation audio", () => {
           property as "get"
         ],
     });
-    const gemini = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
 
     await expect(
       pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
         bucket,
-        providers: () => [provider("google-gemini", gemini)],
+        providers: () => [provider("elevenlabs", speech)],
         storedOnly: true,
       }),
     ).rejects.toMatchObject({ code: "not_found" });
-    expect(gemini).not.toHaveBeenCalled();
+    expect(speech).not.toHaveBeenCalled();
   });
 
   it("replaces remembered audio from a provider that is no longer preferred", async () => {
@@ -641,14 +626,14 @@ describe("pronunciation audio", () => {
       get: (_target, property) =>
         ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
     });
-    const gemini = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
 
     const audio = await pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
       bucket,
-      providers: () => [provider("google-gemini", gemini)],
+      providers: () => [provider("elevenlabs", speech)],
     });
 
-    expect(gemini).toHaveBeenCalledOnce();
+    expect(speech).toHaveBeenCalledOnce();
     expect(audio.key).not.toBe(old.key);
   });
 
@@ -658,18 +643,18 @@ describe("pronunciation audio", () => {
       get: (_target, property) =>
         ({ get: vi.fn(async (key: string) => (key === old.key ? old : null)) })[property as "get"],
     });
-    const gemini = vi.fn(async () => {
+    const speech = vi.fn(async () => {
       throw new Error("unavailable");
     });
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     const audio = await pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
       bucket,
-      providers: () => [provider("google-gemini", gemini)],
+      providers: () => [provider("elevenlabs", speech)],
     });
 
     expect(audio.key).toBe(old.key);
-    expect(gemini).toHaveBeenCalledOnce();
+    expect(speech).toHaveBeenCalledOnce();
   });
 
   it("plays remembered audio when no provider is configured", async () => {
@@ -701,13 +686,10 @@ describe("pronunciation audio", () => {
     const failing = vi.fn(async () => {
       throw Object.assign(new Error("down"), { status: 503 });
     });
-    const gemini = vi.fn(async (request: SpeechRequest) => {
-      request.usage?.({ inputTokens: 80, outputTokens: 25 });
-      return new Response(new Uint8Array([1, 2, 3]));
-    });
+    const fallback = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     const deps = {
       bucket,
-      providers: () => [provider("elevenlabs", failing), provider("gemini-api", gemini)],
+      providers: () => [provider("elevenlabs", failing), provider("openai", fallback)],
     };
 
     await pronunciationAudio({ ...context(card()), analytics }, "card-1", deps);
@@ -724,13 +706,10 @@ describe("pronunciation audio", () => {
         $ai_http_status: 503,
       }),
       expect.objectContaining({
-        $ai_provider: "google",
-        $ai_model: "gemini-3.1-flash-tts-preview",
-        $ai_input_tokens: 80,
-        $ai_output_tokens: 25,
+        $ai_provider: "openai",
+        $ai_model: "gpt-4o-mini-tts",
         characters: 6,
         $ai_is_error: false,
-        $ai_total_cost_usd: (80 * 1 + 25 * 20) / 1e6,
       }),
     ]);
     expect(capture.mock.calls[0]?.[0]).not.toHaveProperty("$ai_total_cost_usd");
@@ -792,7 +771,7 @@ const ambiguous = decider(0.9);
 function leadIns(score: number | null = 0.9) {
   return {
     writer: {
-      model: "gemini-2.5-flash-lite",
+      model: "gpt-6-luna",
       write: vi.fn(async (_request: LeadInRequest) => ({
         previousText: "川を渡る" as string | null,
         inputTokens: 300,
@@ -858,7 +837,6 @@ describe("Japanese preceding context", () => {
       text: "はし",
       language: "ja",
       previousText: "川を渡る",
-      usage: expect.any(Function),
     });
     voice = "Hinata";
     const changedVoice = await pronunciationAudio(
@@ -895,7 +873,6 @@ describe("Japanese preceding context", () => {
     expect(speech).toHaveBeenCalledWith({
       text: "jäääär",
       language: "et",
-      usage: expect.any(Function),
     });
   });
 
@@ -919,7 +896,6 @@ describe("Japanese preceding context", () => {
     expect(speech).toHaveBeenCalledWith({
       text: "はし",
       language: "ja",
-      usage: expect.any(Function),
     });
   });
 
@@ -1001,12 +977,12 @@ describe("Japanese preceding context", () => {
       .filter((event) => event.$ai_span_name === "lead_in");
     expect(spans).toEqual([
       expect.objectContaining({
-        $ai_provider: "google",
-        $ai_model: "gemini-2.5-flash-lite",
+        $ai_provider: "openai",
+        $ai_model: "gpt-6-luna",
         $ai_input_tokens: 300,
         $ai_output_tokens: 400,
         $ai_is_error: false,
-        $ai_total_cost_usd: (300 * 0.1 + 400 * 0.4) / 1e6,
+        $ai_total_cost_usd: (300 * 0.1 + 400 * 0.5) / 1e6,
       }),
       expect.objectContaining({ $ai_is_error: true, $ai_http_status: 403 }),
     ]);
@@ -1074,7 +1050,7 @@ describe("Japanese preceding context", () => {
     }));
     const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, {
       ...baseline,
-      leadIns: { writer: { model: "gemini-2.5-flash-lite", write: generate }, decide: ambiguous },
+      leadIns: { writer: { model: "gpt-6-luna", write: generate }, decide: ambiguous },
     });
     expect(replay.key).toBe(first.key);
     expect(speech).toHaveBeenCalledOnce();
@@ -1103,7 +1079,6 @@ describe("Japanese preceding context", () => {
     expect(speech).toHaveBeenCalledWith({
       text: "とけい",
       language: "ja",
-      usage: expect.any(Function),
     });
 
     const unsure = leadIns(null);
@@ -1153,13 +1128,12 @@ describe("Japanese preceding context", () => {
     await pronunciationAudio(context(japaneseCard()), "card-1", {
       bucket,
       leadIns: lead,
-      providers: () => [provider("gemini-api", speech)],
+      providers: () => [provider("openai", speech)],
     });
     expect(lead.decide.run).not.toHaveBeenCalled();
     expect(speech).toHaveBeenCalledWith({
       text: "はし",
       language: "ja",
-      usage: expect.any(Function),
     });
   });
 });
@@ -1176,7 +1150,6 @@ describe("Ukrainian context", () => {
     expect(speech).toHaveBeenLastCalledWith({
       text: "паляни́ця",
       language: "uk",
-      usage: expect.any(Function),
     });
 
     const deps = {
@@ -1189,7 +1162,6 @@ describe("Ukrainian context", () => {
       text: "паляни́ця",
       language: "uk",
       previousText: "Українською:",
-      usage: expect.any(Function),
     });
     const replay = await pronunciationAudio(context({ ...row, audioKey: first.key }), row.id, deps);
     expect(replay.key).toBe(first.key);
@@ -1198,7 +1170,6 @@ describe("Ukrainian context", () => {
 });
 
 describe("Polish context", () => {
-  // Polish goes to Gemini first by default, which takes no previous text; this is the ElevenLabs voice ELEVENLABS_SPEECH_VOICES can name.
   it("says «Po polsku:» silently before the term to an ElevenLabs voice, and says the term, not its marked stress", async () => {
     const { bucket } = contextBucket();
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
@@ -1211,7 +1182,6 @@ describe("Polish context", () => {
       text: "muzyka",
       language: "pl",
       previousText: "Po polsku:",
-      usage: expect.any(Function),
     });
   });
 });

@@ -16,7 +16,7 @@ flowchart TD
   Rules -- "no: loanword, sentence,<br/>long reading, no meaning" --> Kana["Kana alone"]
   Rules -- yes --> Clef{"Clef: does another common word<br/>share this reading?"}
   Clef -- "score under 0.4" --> Kana
-  Clef -- "0.4 or above,<br/>or no answer" --> Writer{"Gemini writes a lead-in"}
+  Clef -- "0.4 or above,<br/>or no answer" --> Writer{"Luna writes a lead-in"}
   Writer -- "lead-in passes<br/>policy.accepts()" --> Lead["Kana with previous_text"]
   Writer -- "none needed, refused<br/>or call failed" --> Kana
   Kana --> Done
@@ -46,13 +46,13 @@ When Clef is down or gives no score, the writer decides alone. Missing a homopho
 | Another play while one is deciding | Nothing; that play answers 503 "being prepared" | Once the lease ends, at most 45 seconds |
 | A stored record that no longer parses or passes the checks | Treated as a miss | On the next play |
 
-A refused reply is kept as no lead-in rather than retried, because at temperature 0 the writer returns the same answer. Bump the policy's `version` after loosening its instructions or checks, and every card of that language is decided again on its next play.
+A refused reply is kept as no lead-in rather than retried, because asking again buys much the same answer. Bump the policy's `version` after loosening its instructions or checks, and every card of that language is decided again on its next play.
 
 The decision's identity and the lead-in text are part of the ElevenLabs audio key, so a new lead-in makes a new clip. A term, reading or meaning edit clears the card's generated audio. When every speech provider fails, a Japanese card falls back to its kana-only clip from before lead-ins. A recording an import brought never reaches a model. Stored-only preloads read a stored decision and clip but never buy either. A published Japanese deck keeps its stored kana-only clips: the public route and the hourly job voice only cards without audio, so a card gains its lead-in when its owner plays or edits it.
 
 ## Cost and time on a first play
 
-On a first play the learner can wait for up to three calls in a row: Clef (about 0.5 seconds, 2.5-second deadline), the writer (4-second deadline) and the speech call. The deadlines leave room for speech inside the phone's 12-second wait. Replays read R2 and call nothing. The writer makes one attempt, with no retry, and at most 768 output tokens, including a 512-token reasoning allowance. Clef runs on the Workers AI allowance. [Gemini pricing](https://ai.google.dev/gemini-api/docs/pricing), checked on 18 October 2026, is $0.10 per million input tokens and $0.40 per million output tokens; the pilot cost about $0.20 per 1,000 writer calls, before speech and storage.
+On a first play the learner can wait for up to three calls in a row: Clef (about 0.5 seconds, 2.5-second deadline), the writer (4-second deadline) and the speech call. The deadlines leave room for speech inside the phone's 12-second wait. Replays read R2 and call nothing. The writer makes one attempt, with no retry, at low reasoning effort, and at most 768 output tokens including reasoning. Clef runs on the Workers AI allowance. [OpenAI pricing](https://developers.openai.com/api/docs/pricing), checked on 1 November 2026, is $0.10 per million input tokens and $0.50 per million output tokens for `gpt-6-luna`.
 
 ## Measure it
 
@@ -63,7 +63,7 @@ On a first play the learner can wait for up to three calls in a row: Clef (about
 The policy is `apps/web/src/server/lead-ins/japanese.ts`. After changing its question, threshold, instructions or checks:
 
 1. Bump `version`.
-2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `GEMINI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
+2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
 3. Check that every ambiguous case is still flagged before you accept more flagged clear cases.
 
 On 19 October 2026 the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.

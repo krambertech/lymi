@@ -267,6 +267,9 @@ msgstr "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a dif
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 
+msgid "1 November 2026"
+msgstr "1 November 2026"
+
 msgid "10 min"
 msgstr "10 min"
 
@@ -299,9 +302,6 @@ msgstr "2026 edition"
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
-
-msgid "26 October 2026"
-msgstr "26 October 2026"
 
 msgid "3 of 4 chosen"
 msgstr "3 of 4 chosen"
@@ -3076,8 +3076,8 @@ msgstr "Lymi schedules every card around it."
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
 msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
 
-msgid "Lymi uses OpenAI, Anthropic, Google and Cloudflare Workers AI for AI features, and Google, OpenAI and ElevenLabs for speech. The provider depends on the feature and language. Requests go through Cloudflare AI Gateway with prompt and reply logging and caching disabled. Providers may retain requests under their API terms, including for abuse prevention. We do not add your account name, email address or credentials to AI prompts, but content you provide can itself contain personal information."
-msgstr "Lymi uses OpenAI, Anthropic, Google and Cloudflare Workers AI for AI features, and Google, OpenAI and ElevenLabs for speech. The provider depends on the feature and language. Requests go through Cloudflare AI Gateway with prompt and reply logging and caching disabled. Providers may retain requests under their API terms, including for abuse prevention. We do not add your account name, email address or credentials to AI prompts, but content you provide can itself contain personal information."
+msgid "Lymi uses OpenAI, Anthropic and Cloudflare Workers AI for AI features, and OpenAI and ElevenLabs for speech. The provider depends on the feature and language. Requests go through Cloudflare AI Gateway with prompt and reply logging and caching disabled. Providers may retain requests under their API terms, including for abuse prevention. We do not add your account name, email address or credentials to AI prompts, but content you provide can itself contain personal information."
+msgstr "Lymi uses OpenAI, Anthropic and Cloudflare Workers AI for AI features, and OpenAI and ElevenLabs for speech. The provider depends on the feature and language. Requests go through Cloudflare AI Gateway with prompt and reply logging and caching disabled. Providers may retain requests under their API terms, including for abuse prevention. We do not add your account name, email address or credentials to AI prompts, but content you provide can itself contain personal information."
 
 msgid "Lymi with AI assistants"
 msgstr "Lymi with AI assistants"
@@ -3775,8 +3775,8 @@ msgstr "Pronunciation"
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Pronunciation couldn’t play. Try again."
 
-msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
-msgstr "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
+msgid "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to OpenAI and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
+msgstr "Pronunciation sends the term, its reading or an example sentence and language to a speech provider. Japanese pronunciation may also send the term, reading and meaning to OpenAI and Cloudflare Workers AI to prepare pronunciation context. Generated audio is saved for reuse."
 
 msgid "Providers may process data outside the European Economic Area, including in the United States. Where required, transfers rely on an adequacy decision or contractual safeguards such as the European Commission’s standard contractual clauses. Contact us for information about the safeguards that apply to your data and how to obtain a copy."
 msgstr "Providers may process data outside the European Economic Area, including in the United States. Where required, transfers rely on an adequacy decision or contractual safeguards such as the European Commission’s standard contractual clauses. Contact us for information about the safeguards that apply to your data and how to obtain a copy."

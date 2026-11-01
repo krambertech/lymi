@@ -4,7 +4,7 @@
  * with U+0301, and in the voice's own stress markup — and writes a page where a fluent reader marks
  * the syllable she hears. It calls paid voices, so it is a script and never a test:
  *
- *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,gemini,openai,chirp or a voice name] [--out dir]
+ *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,openai or a voice name] [--out dir]
  *   pnpm --filter @lymi/web eval:stress --summary ~/Downloads/stress-ratings.json [--out dir]
  *   pnpm --filter @lymi/web eval:stress --serve [--port 5243] [--out dir]
  *   pnpm --filter @lymi/web eval:stress --library uk
@@ -26,11 +26,8 @@ import { z } from "zod";
 import { createElevenLabsSpeechProvider } from "../ai/elevenlabs-speech";
 import { evalEnv } from "../ai/eval-env";
 import { providerEndpoint } from "../ai/gateway";
-import { createGeminiApiSpeechProvider } from "../ai/gemini-api-speech";
-import { createGoogleChirpProvider } from "../ai/google-chirp";
-import { createGoogleGeminiProvider } from "../ai/google-gemini";
 import { createOpenAiSpeechProvider } from "../ai/openai-speech";
-import { chirpLocale, geminiLocale, openAiSupportsLanguage } from "../ai/speech";
+import { openAiSupportsLanguage, voiceLocale } from "../ai/speech";
 import { nativeSpeechVoice } from "../ai/speech-voices";
 import type { Fetch, SpeechProvider } from "../ai/types";
 import { STRESS_ITEMS, type StressForm, type StressItem } from "./words";
@@ -42,7 +39,7 @@ type Env = Record<string, string | undefined>;
 type Spoken = { text: string; edit?: (body: Body) => void; note?: string };
 
 interface Voice {
-  key: "elevenlabs" | "gemini" | "openai" | "chirp";
+  key: "elevenlabs" | "openai";
   /** The key it needs, named when it is missing. */
   needs: string;
   ready: boolean;
@@ -101,9 +98,7 @@ const CANDIDATE_VOICES: Record<string, { voice: string; name: string; words?: st
     ].map((voice) => ({ voice, name: voice, words: UK_SAMPLE })),
   ],
 };
-const GEMINI_CANDIDATE = "Charon";
 const OPENAI_CANDIDATE = "cedar";
-// Gemini answers a Ukrainian prompt naming "U+0301" with 400 INVALID_ARGUMENT, so the line doesn't.
 const STRESS_INSTRUCTION =
   "An acute accent after a vowel marks the stressed syllable: stress that syllable and never pronounce the accent itself.";
 
@@ -228,7 +223,7 @@ if (!dry && existsSync(index))
   for (const clip of JSON.parse(readFileSync(index, "utf8")) as Clip[])
     if (!sections.includes(`${clip.language} ${clip.voice}`)) clips.push(clip);
 // Sections follow the chain, Russian first; within one the hash order shuffles the words.
-const CHAIN = ["elevenlabs", "gemini-api", "google-gemini", "openai", "google-chirp"];
+const CHAIN = ["elevenlabs", "openai"];
 const rank = (clip: Clip) =>
   STRESS_ITEMS.findIndex((item) => item.language === clip.language) * CHAIN.length +
   CHAIN.findIndex((provider) => clip.voice.startsWith(`${provider} `));
@@ -358,12 +353,11 @@ function serve(port: number) {
 
 function voices(env: Env, language: string): Voice[] {
   const list: Voice[] = [];
-  const gemini = geminiLocale(language);
-  const chirp = chirpLocale(language);
+  const locale = voiceLocale(language);
   const acutePrompt = "U+0301 plus a prompt line";
   // Mirrors createSpeechProviders in ai/speech.ts, which these must stay in step with.
-  if (gemini) {
-    const native = nativeSpeechVoice(gemini, env.ELEVENLABS_SPEECH_VOICES);
+  if (locale) {
+    const native = nativeSpeechVoice(locale, env.ELEVENLABS_SPEECH_VOICES);
     if (native)
       list.push({
         key: "elevenlabs",
@@ -372,7 +366,7 @@ function voices(env: Env, language: string): Voice[] {
         name: native.name,
         // Eleven v4 reads IPA in double quotes and slashes; earlier models need SSML phoneme tags.
         markup: "IPA in quotes and slashes",
-        create: (request) => createElevenLabsSpeechProvider(env, gemini, native.voice, request),
+        create: (request) => createElevenLabsSpeechProvider(env, locale, native.voice, request),
         markupRequest: (_plain, form) => ({ text: `"/${form.ipa}/"` }),
       });
     for (const candidate of CANDIDATE_VOICES[language] ?? [])
@@ -384,36 +378,9 @@ function voices(env: Env, language: string): Voice[] {
         candidate: true,
         ...(candidate.words ? { words: candidate.words } : {}),
         markup: null,
-        create: (request) => createElevenLabsSpeechProvider(env, gemini, candidate.voice, request),
+        create: (request) => createElevenLabsSpeechProvider(env, locale, candidate.voice, request),
         markupRequest: (plain) => ({ text: plain }),
       });
-    const apiKey = Boolean(env.GEMINI_API_KEY?.trim());
-    const geminiVoice = (voiceEnv: Env, candidate: boolean): Voice => ({
-      key: "gemini",
-      needs: "GEMINI_API_KEY",
-      ready: apiKey || Boolean(env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim()),
-      candidate,
-      markup: candidate ? null : acutePrompt,
-      create: (request) =>
-        apiKey
-          ? createGeminiApiSpeechProvider(voiceEnv, gemini, request)
-          : createGoogleGeminiProvider(voiceEnv, { locale: gemini, request, ...dryToken() }),
-      markupRequest: (_plain, form) => ({
-        text: form.marked,
-        note: STRESS_INSTRUCTION,
-        edit: (body) => {
-          const input = body.input as { prompt?: string } | undefined;
-          if (input?.prompt) input.prompt += ` ${STRESS_INSTRUCTION}`;
-          const part = (body.contents as { parts: { text: string }[] }[] | undefined)?.[0]
-            ?.parts[0];
-          if (part) part.text = part.text.replace("\n\nText: ", ` ${STRESS_INSTRUCTION}\n\nText: `);
-        },
-      }),
-    });
-    list.push(
-      geminiVoice(env, false),
-      geminiVoice({ ...env, GEMINI_SPEECH_VOICE: GEMINI_CANDIDATE }, true),
-    );
   }
   if (openAiSupportsLanguage(language)) {
     const openAiVoice = (voiceEnv: Env, candidate: boolean): Voice => ({
@@ -436,26 +403,6 @@ function voices(env: Env, language: string): Voice[] {
       openAiVoice({ ...env, OPENAI_SPEECH_VOICE: OPENAI_CANDIDATE }, true),
     );
   }
-  if (chirp)
-    list.push({
-      key: "chirp",
-      needs: "GOOGLE_CLOUD_TTS_CREDENTIALS",
-      ready: Boolean(env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim()),
-      // Cloud's custom pronunciations exclude uk-UA (docs.cloud.google.com/text-to-speech/docs/chirp3-hd).
-      markup: chirp === "uk-UA" ? null : "IPA custom pronunciation",
-      create: (request) =>
-        createGoogleChirpProvider(env, { locale: chirp, request, ...dryToken() }),
-      markupRequest: (plain, form) => ({
-        text: plain,
-        edit: (body) => {
-          (body.input as Body).customPronunciations = {
-            pronunciations: [
-              { phrase: plain, phoneticEncoding: "PHONETIC_ENCODING_IPA", pronunciation: form.ipa },
-            ],
-          };
-        },
-      }),
-    });
   return list;
 }
 
@@ -529,10 +476,6 @@ function transport(clip: string, edit?: (body: Body) => void): Fetch {
   };
 }
 
-function dryToken() {
-  return dry ? { accessToken: async () => "dry-run" } : {};
-}
-
 function liveEnv(): Env {
   return evalEnv() as Env;
 }
@@ -543,14 +486,7 @@ function placeholderEnv(): Env {
     ...live,
     AI_GATEWAY_TOKEN: "dry-run",
     ELEVENLABS_API_KEY: "dry-run",
-    GEMINI_API_KEY: "dry-run",
     OPENAI_API_KEY: "dry-run",
-    GOOGLE_CLOUD_TTS_CREDENTIALS: JSON.stringify({
-      type: "service_account",
-      project_id: "dry-run",
-      private_key: "dry-run",
-      client_email: "dry-run@example.com",
-    }),
   };
 }
 

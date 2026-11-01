@@ -2,8 +2,6 @@ import { proxyPostHog } from "@lymi/core/posthog-proxy";
 import { describe, expect, it } from "vitest";
 import { testGateway } from "../test/ai-gateway";
 import { createElevenLabsSpeechProvider } from "./ai/elevenlabs-speech";
-import { createGeminiApiSpeechProvider } from "./ai/gemini-api-speech";
-import { synthesizeGoogleSpeech } from "./ai/google-cloud-tts";
 import { createLeadInWriter } from "./ai/lead-in-writer";
 import { createOpenAiSpeechProvider } from "./ai/openai-speech";
 import { createOpenAiTextProvider } from "./ai/openai-text";
@@ -21,25 +19,6 @@ import { fetchRemoteImage } from "./services/image-import";
 async function pkcs8Pem(key: CryptoKey): Promise<string> {
   const der = new Uint8Array((await crypto.subtle.exportKey("pkcs8", key)) as ArrayBuffer);
   return `-----BEGIN PRIVATE KEY-----\n${btoa(String.fromCharCode(...der))}\n-----END PRIVATE KEY-----\n`;
-}
-
-async function serviceAccount(): Promise<string> {
-  const keys = await crypto.subtle.generateKey(
-    {
-      name: "RSASSA-PKCS1-v1_5",
-      modulusLength: 2048,
-      publicExponent: new Uint8Array([1, 0, 1]),
-      hash: "SHA-256",
-    },
-    true,
-    ["sign", "verify"],
-  );
-  return JSON.stringify({
-    type: "service_account",
-    project_id: "lymi-test",
-    private_key: await pkcs8Pem(keys.privateKey),
-    client_email: "speech@lymi-test.iam.gserviceaccount.com",
-  });
 }
 
 describe("outgoing fetches in the Workers runtime", () => {
@@ -69,25 +48,8 @@ describe("outgoing fetches in the Workers runtime", () => {
     expect(response.headers.get("content-type")).toBe("audio/mpeg");
   });
 
-  it("Google Cloud Text-to-Speech, with its OAuth token exchange", async () => {
-    const response = await synthesizeGoogleSpeech(
-      { ...testGateway, GOOGLE_CLOUD_TTS_CREDENTIALS: await serviceAccount() },
-      { body: { input: { text: "слово" } }, request: fetch },
-    );
-    expect(new Uint8Array(await response.arrayBuffer())).toEqual(new Uint8Array([0xff, 0xf3]));
-  });
-
-  it("Gemini API speech", async () => {
-    const provider = createGeminiApiSpeechProvider(
-      { ...testGateway, GEMINI_API_KEY: "key" },
-      "uk-UA",
-    );
-    const response = await provider.speech({ text: "слово", language: "uk" });
-    expect(response.headers.get("content-type")).toBe("audio/wav");
-  });
-
   it("the lead-in writer", async () => {
-    const writer = createLeadInWriter({ ...testGateway, GEMINI_API_KEY: "key" });
+    const writer = createLeadInWriter({ ...testGateway, OPENAI_API_KEY: "key" });
     const result = await writer?.write({ instructions: "Write.", input: { term: "слово" } });
     expect(result?.previousText).toBeNull();
   });

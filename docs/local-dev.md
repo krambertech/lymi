@@ -21,7 +21,7 @@ If `pnpm db:migrate` fails with "table already exists" or a migration name it ha
 
 ## Keys for model evaluations
 
-The evaluations (`eval:enrichment`, `eval:style`, `eval:lead-ins --write` and `eval:stress`) call vendors through the `lymi` AI Gateway: they read keys from `apps/web/.dev.vars` and the gateway URL from `wrangler.jsonc`, and a missing key stops them with every missing name. `AI_GATEWAY_TOKEN` is an authentication token for the `lymi` gateway, made under AI Gateway in the Cloudflare dashboard; `OPENAI_API_KEY` and `GEMINI_API_KEY` are the vendors' own keys.
+The evaluations (`eval:enrichment`, `eval:style`, `eval:lead-ins --write` and `eval:stress`) call vendors through the `lymi` AI Gateway: they read keys from `apps/web/.dev.vars` and the gateway URL from `wrangler.jsonc`, and a missing key stops them with every missing name. `AI_GATEWAY_TOKEN` is an authentication token for the `lymi` gateway, made under AI Gateway in the Cloudflare dashboard; `OPENAI_API_KEY` is the vendor's own key.
 
 Keep real values in the main checkout's `apps/web/.dev.vars`. `.worktreeinclude` copies that file into each worktree Claude Code creates, and unit tests and `cf-typegen` ignore it, so its keys never change what they see.
 

@@ -37,5 +37,5 @@ export function leadInDependencies(env: Bindings): LeadInDependencies {
     // Without the decision model the writer decides, as it did before there was one.
     decide = undefined;
   }
-  return { writer: createLeadInWriter(env, meteredFetch(env, "gemini_text")), decide };
+  return { writer: createLeadInWriter(env, meteredFetch(env, "openai_text")), decide };
 }

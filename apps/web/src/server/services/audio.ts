@@ -1,7 +1,7 @@
 import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, speechContext, spokenText } from "@lymi/core";
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import type { SpeechProvider, SpeechUsage } from "../ai";
+import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
@@ -137,14 +137,12 @@ async function generatedPronunciation(
 
     let audio: Uint8Array;
     const text = speechText(spokenText(card));
-    let usage: SpeechUsage = {};
     const started = Date.now();
     const report = (error: boolean, status?: number) =>
       trackSpeechCall(ctx.analytics, {
         provider: provider.provider,
         model: provider.model,
         characters: [...text].length,
-        ...usage,
         latencyMs: Date.now() - started,
         error,
         status,
@@ -153,9 +151,6 @@ async function generatedPronunciation(
       const generated = await provider.speech({
         text,
         language,
-        usage: (reported) => {
-          usage = reported;
-        },
         ...(takesLeadIn(provider) && spoken?.previousText
           ? { previousText: spoken.previousText }
           : {}),

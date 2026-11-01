@@ -194,7 +194,6 @@ describe("example audio", () => {
     expect(speech.mock.calls[0]?.[0]).toMatchObject({
       text: "まいあさパンをたべます。",
       language: "ja",
-      kind: "example",
     });
     expect(allowance.spend).toHaveBeenCalledTimes(1);
     expect(clips()).toEqual([

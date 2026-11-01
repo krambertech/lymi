@@ -25,6 +25,14 @@ export const CHANGELOG_FIGURES = [
   "command-menu",
   "japanese-card",
   "pinyin",
+  "filter-fields",
+  "highlight-card",
+  "cantonese-tamil",
+  "example",
+  "mac",
 ] as const;
+
+/** Figures drawn at the tray's own 660 by 412 and running to its edges, rather than standing in it. */
+export const CHANGELOG_SCENES: readonly string[] = ["mac"];
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

@@ -697,6 +697,9 @@ msgstr "Добавлено после урока на этой неделе"
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Готово: карточка в колоде «Шахматы», со значением и примером."
 
+msgid "Added to Spanish"
+msgstr "Добавлено в Spanish"
+
 msgid "Address registration"
 msgstr "Прописка (регистрация)"
 
@@ -1149,6 +1152,9 @@ msgstr "Тест на гражданство Канады"
 msgid "Canadian citizenship test: practice questions on every chapter"
 msgstr "Тест на гражданство Канады: тренировочные вопросы по каждой главе"
 
+msgid "Cantonese"
+msgstr "кантонский"
+
 msgid "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
 msgstr "Дополнение карточек, перевод примеров, подсказки для запоминания и стиль колоды используют поля карточек, подходящие карточки из колоды, её описание и инструкции, а также твои исправления AI-текста. Дополнение может запускаться при добавлении карточек или по твоему запросу; стиль колоды обновляется в фоне. Эти текстовые функции используют OpenAI."
 
@@ -1580,6 +1586,9 @@ msgstr "Экзамены на права"
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Препараты, как они действуют и на что обращать внимание."
+
+msgid "Due"
+msgstr "Когда повторять"
 
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Каждая колода считает свои вопросы как «Новые», «В изучении» и «Выученные», поэтому ещё до даты теста видно, какую часть каталога ты уже знаешь."
@@ -2401,6 +2410,9 @@ msgstr "Каждое *утро* я пью кофе."
 
 msgid "I eat *fruit* every day."
 msgstr "Я ем *фрукты* каждый день."
+
+msgid "I eat bread every morning."
+msgstr "Каждое утро я ем хлеб."
 
 msgid "I forgot to bring my *things*."
 msgstr "Я забыл взять *вещи*."
@@ -3529,6 +3541,9 @@ msgstr "Открыть меню"
 msgid "Open the deck"
 msgstr "Открыть колоду"
 
+msgid "Open the window, please."
+msgstr "Открой окно, пожалуйста."
+
 msgid "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 msgstr "Открой «Сегодня» на телефоне или ноутбуке. Lymi планирует каждую карточку по интервальному повторению, так что ты повторяешь меньше и помнишь дольше."
 
@@ -4080,6 +4095,9 @@ msgstr "Поиск по звучанию"
 msgid "Search decks"
 msgstr "Поиск колод"
 
+msgid "Section"
+msgstr "Раздел"
+
 msgid "Section {position}:"
 msgstr "Раздел {position}:"
 
@@ -4423,6 +4441,12 @@ msgstr "Начни с сегодняшней лекции."
 msgid "Start with your exam’s deck."
 msgstr "Начни с колоды своего экзамена."
 
+msgid "State"
+msgstr "Состояние"
+
+msgid "State: {learning}"
+msgstr "Состояние: {learning}"
+
 msgid "station"
 msgstr "станция"
 
@@ -4533,6 +4557,9 @@ msgstr "Сфотографировать ещё раз"
 
 msgid "Take the *metro* to the airport."
 msgstr "До аэропорта езжай на *метро*."
+
+msgid "Tamil"
+msgstr "тамильский"
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -4680,6 +4707,9 @@ msgstr "Подрумянивание, которое придаёт вкус ж�
 
 msgid "The cards from this page will land here."
 msgstr "Карточки с этой страницы появятся здесь."
+
+msgid "The castle stands on a hill."
+msgstr "Замок стоит на горе."
 
 msgid "The cat is asleep on the *rug*."
 msgstr "Кот спит на *ковре*."
@@ -5667,6 +5697,9 @@ msgstr "*Завтра* будет дождь?"
 
 msgid "Will the AI slip into Russian?"
 msgstr "AI не перейдёт на русский?"
+
+msgid "window"
+msgstr "окно"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."

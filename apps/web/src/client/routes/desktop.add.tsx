@@ -303,7 +303,7 @@ function DesktopAdd() {
           spellCheck={false}
           autoComplete="off"
           dir="auto"
-          className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-ink-faint"
+          className="min-w-0 flex-1 bg-transparent text-xl font-medium outline-none placeholder:font-normal placeholder:text-ink-muted"
         />
         {target && (
           <button

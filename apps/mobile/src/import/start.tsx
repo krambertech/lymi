@@ -68,7 +68,7 @@ export function ImportStart({ source }: { source: FileSource }) {
     onSuccess: (item) => router.replace(`/import/${item.id}` as Href),
   });
   const choose = async () => {
-    const picked = await pickFile().catch(() => null);
+    const picked = await pickFile(setRefused);
     if (!picked) return;
     const problem = refusal(source, picked);
     setRefused(problem);

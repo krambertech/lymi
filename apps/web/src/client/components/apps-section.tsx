@@ -12,6 +12,7 @@ import { connectedAppsQuery, keysQuery, readwiseQuery } from "../lib/queries";
 import { yomitanKey } from "../lib/yomitan";
 import { lastUsed, shortDate } from "./api-keys-section";
 import { AppMark, identifyApp } from "./app-mark";
+import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
 import { ReadwiseMark } from "./readwise-mark";
 import { SettingsGroup } from "./settings-group";
@@ -39,16 +40,18 @@ export function AppsSection() {
   const yomitan = yomitanKey(keys.data);
   const connectedKeys = new Set(consents.map((c) => assistantOf(c)?.key));
   const toAdd = ASSISTANTS.filter((a) => a.key === "custom" || !connectedKeys.has(a.key));
-  const none = consents.length === 0 && !connection && !yomitan;
+  // A failed read says nothing about what is connected, so nothing is offered until it answers.
+  const failed = apps.error ?? readwise.error ?? keys.error;
+  const connected = consents.length > 0 || !!connection || !!yomitan;
   const pages = appPageParams(consents);
 
   return (
     <SettingsGroup id="apps" title={t`Apps`} description={t`Apps that add cards to your decks.`}>
       {loading ? (
         <Skeleton className="h-40 w-full rounded-xl" />
-      ) : none ? (
+      ) : !connected && !failed ? (
         <Empty />
-      ) : (
+      ) : connected ? (
         <ul aria-label={t`Your apps`} className="edge grid rounded-xl bg-plate">
           {consents.map((item) => (
             <AssistantRow key={item.id} item={item} page={pages.get(item.id) ?? item.id} />
@@ -76,18 +79,20 @@ export function AppsSection() {
               </span>
             </Row>
           )}
-          <li className="grid gap-2.5 border-edge border-t px-4 py-3.5">
-            <span className="text-sm text-ink-muted">
-              <Trans>Add an app</Trans>
-            </span>
-            <Chips assistants={toAdd} readwise={!connection} yomitan={!yomitan} />
-          </li>
+          {!failed && (
+            <li className="grid gap-2.5 border-edge border-t px-4 py-3.5">
+              <span className="text-sm text-ink-muted">
+                <Trans>Add an app</Trans>
+              </span>
+              <Chips assistants={toAdd} readwise={!connection} yomitan={!yomitan} />
+            </li>
+          )}
         </ul>
-      )}
+      ) : null}
 
-      {apps.isError && (
-        <p className="text-sm text-danger" role="alert">
-          {errorMessage(apps.error)}
+      {failed && (
+        <p className="text-sm" role="alert">
+          <InlineError>{errorMessage(failed)}</InlineError>
         </p>
       )}
     </SettingsGroup>

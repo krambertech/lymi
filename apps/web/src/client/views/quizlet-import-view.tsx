@@ -181,7 +181,7 @@ export function QuizletImportView({
             rows={6}
             spellCheck={false}
             placeholder={t`der Hund	the dog`}
-            className="min-h-36 font-mono text-sm"
+            className="min-h-36 font-mono"
           />
         </Field>
         <div className="flex flex-wrap items-center gap-2">

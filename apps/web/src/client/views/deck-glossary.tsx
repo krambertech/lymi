@@ -691,7 +691,7 @@ const GlossaryRow = memo(function GlossaryRow({
       <span
         className={clsx(
           "hyphenate col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
-          !card.meaning ? "text-ink-faint" : waiting ? "text-ink-muted" : "text-ink-secondary",
+          !card.meaning || waiting ? "text-ink-muted" : "text-ink-secondary",
         )}
       >
         {card.meaning ?? <Trans>No meaning yet</Trans>}

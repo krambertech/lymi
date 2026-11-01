@@ -2064,6 +2064,9 @@ msgstr "Couldn’t save your name. Try again."
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
 
+msgid "Couldn’t search cards. Check your connection and try again."
+msgstr "Couldn’t search cards. Check your connection and try again."
+
 msgid "Couldn’t send the code. Check your connection and try again."
 msgstr "Couldn’t send the code. Check your connection and try again."
 

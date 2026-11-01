@@ -894,7 +894,7 @@ function QuestionsStep({
                     }}
                     placeholder={t`Something else…`}
                     maxLength={300}
-                    className="min-w-0 flex-1 bg-transparent text-base font-medium text-ink outline-none placeholder:font-normal placeholder:text-ink-muted"
+                    className="min-w-0 flex-1 bg-transparent text-[1rem] font-medium text-ink outline-none placeholder:font-normal placeholder:text-ink-muted md:hoverable:text-base"
                   />
                 </RadioCard>
               </RadioGroup>

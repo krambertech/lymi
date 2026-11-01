@@ -186,7 +186,7 @@ export function HintEditor({ card, onCancel, onSaved }: Props) {
           }}
           autoComplete="off"
           enterKeyHint="done"
-          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-ink outline-none placeholder:text-ink-faint"
+          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-[1rem] leading-snug text-ink outline-none placeholder:text-ink-muted md:hoverable:text-md"
         />
       </label>
       {/* Like a composer: the field's helper at the start, the answer to it at the end. */}

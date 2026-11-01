@@ -25,6 +25,7 @@ import { useLandingSpot } from "../../../splash/landing";
 import { haptics } from "../../../theme/haptics";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
+import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Icon, IconButton, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RestGlyph } from "../../../ui/rest-glyph";
@@ -50,10 +51,7 @@ export default function Today() {
   const day = useDay();
   const rest = useRestDismissal(day.summary?.today.date);
   const total = decks.data?.reduce((n, d) => n + d.total, 0) ?? 0;
-  // Offline with nothing kept yet, the reads wait rather than fail, so waiting counts as failing here.
-  const unloaded = (q: typeof decks | typeof streak) =>
-    !q.data && (q.isError || q.fetchStatus === "paused");
-  const failed = unloaded(decks) || unloaded(streak);
+  const failed = useLoadFailed([decks, streak]);
   const loading = (!decks.data || !streak.data) && !failed;
   const nothingYet = !loading && total === 0;
   const kept = !!useKeptSince(decks);
@@ -72,11 +70,9 @@ export default function Today() {
     return (
       <Screen title={t`Today`} kind="tab">
         <LoadFailed
-          retrying={decks.isFetching || streak.isFetching}
-          onRetry={() => {
-            void decks.refetch();
-            void streak.refetch();
-          }}
+          query={[decks, streak]}
+          failed={t`Couldn’t load Today`}
+          offline={t`Today needs a connection`}
         />
       </Screen>
     );
@@ -563,28 +559,6 @@ function DecksToReview({ decks }: { decks: Deck[] }) {
         {t`Decks to review`}
       </SectionTitle>
       <Plate className="overflow-hidden">{items}</Plate>
-    </View>
-  );
-}
-
-/** The decks or the streak failed to load and nothing is kept, so Today offers to try again. */
-function LoadFailed({ onRetry, retrying }: { onRetry: () => void; retrying: boolean }) {
-  const { t } = useLingui();
-  const p = usePalette();
-  return (
-    <View className="items-center gap-1 py-16">
-      <View className="mb-3 size-11 items-center justify-center rounded-full bg-danger-soft">
-        <Icon name="alert" size={20} colour={p.danger} />
-      </View>
-      <Text className="text-lg font-medium text-ink" accessibilityRole="header">
-        {t`Couldn’t load Today`}
-      </Text>
-      <Text className="text-center text-base text-ink-secondary">
-        {t`Check your connection and try again.`}
-      </Text>
-      <View className="mt-4">
-        <Button label={t`Try again`} variant="primary" loading={retrying} onPress={onRetry} />
-      </View>
     </View>
   );
 }

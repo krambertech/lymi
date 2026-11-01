@@ -456,7 +456,7 @@ function ForecastBars({ forecast }: ForecastBarsProps) {
           <span
             className={clsx(
               "text-center text-2xs tabular-nums",
-              i === 0 ? "font-medium text-ink" : d.count > 0 ? "text-ink-muted" : "text-ink-faint",
+              i === 0 ? "font-medium text-ink" : "text-ink-muted",
             )}
           >
             {i18n.number(d.count)}

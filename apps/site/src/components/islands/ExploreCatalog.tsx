@@ -136,7 +136,7 @@ function Catalog({ locale, decks }: Props) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t`Search decks`}
             aria-label={t`Search decks`}
-            className="h-12 w-full rounded-md border border-edge bg-plate ps-12 pe-4 text-md text-ink transition-colors duration-150 placeholder:text-ink-muted focus:outline-2 focus:-outline-offset-1 focus:outline-ring"
+            className="h-12 w-full rounded-md border border-edge bg-plate ps-12 pe-4 text-[1rem] text-ink transition-colors duration-150 placeholder:text-ink-muted md:hoverable:text-md focus:outline-2 focus:-outline-offset-1 focus:outline-ring"
           />
         </div>
       </div>

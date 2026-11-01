@@ -45,7 +45,7 @@ The phone streak opens as a peek sheet showing the current streak and today’s 
 
 The phone's components are in `apps/mobile/src/ui` under the web's names, and follow [forms.md](forms.md), [buttons.md](buttons.md) and [chips-and-marks.md](chips-and-marks.md). They differ in these ways:
 
-- Every control is 44 pt, so a `md` button is 44 pt tall and `sm` reaches 44 pt through its hit area.
+- Every control is 44 pt, so a `md` button is at least 44 pt tall and `sm` reaches 44 pt through its hit area. Button heights are floors: a label grown by Dynamic Type grows the button, and a long one wraps.
 - `xl` is Today's Review button alone, 64 pt with a 20 pt label as on the web. Buttons that stack at the foot, such as the end of a review and Welcome's Continue, are `lg`, 48 pt, since three at 64 pt outweighed the count above them.
 - `Sheet` uses iOS presentation, supports dragging and sizes to its content. Centre the title and description. `SheetHeading`, `SheetNote` and `SheetError` align 16 pt inside a panel; use their shared insets. Row groups are inset 16 pt from the sheet edge and separated by 12 pt, with full-width dividers and 52 pt rows. Reserve icon or check slots consistently within a group. Use red for removal, a check for selection, a muted chevron for navigation and `value` for a trailing count. Peek sheets expand to full height, where iOS makes the background opaque.
 - `Select` uses sheet rows with optional descriptions and applies a choice after dismissal. For more than fifteen fixed options, use a searchable list: focus search on open, keep the list height fixed, highlight the first match for Return, dismiss the keyboard on drag and let the first tap select a row even with the keyboard open. [Sheets](#sheets) defines the presentation types.
@@ -70,7 +70,7 @@ The native design screen at `lymi://design` shows component states, like `/desig
 
 `EmptyState` in `ui/empty-state.tsx` is every place with nothing to show, following [empty-states.md](empty-states.md)'s rules in one component rather than the web's several. Why the place is empty picks the icon, and where it sits picks the size.
 
-- **Kinds:** `start` for nothing made yet, `noMatch` for a search or filter that matched nothing, `failed` for a read that failed, and `offline` for a place that needs a connection the phone does not have. Only `failed` is red; being offline is no failure.
+- **Kinds:** `start` for nothing made yet, `noMatch` for a search or filter that matched nothing, `failed` for a read that failed, and `offline` for a place that needs a connection the phone does not have. Only `failed` is red; being offline is no failure. `LoadFailed` in `ui/load-failed.tsx` chooses between those two for a read, or for every read a screen needs.
 - **Sizes:** `page` when the whole screen is empty, large and centred in the room the bars leave, with a primary button; `inline` inside a plate already on the screen, which is its surface, with a small secondary button. It never brings a plate of its own.
 - The icon sits in a soft disc, never the lantern, and the title names what is missing: "No decks match “map”", not "Nothing here". Still loading is a skeleton, never an empty state.
 
@@ -109,6 +109,7 @@ The phone keeps the web's rule ([overlays.md](overlays.md)): what can be undone 
 
 - Toasts are 44 pt glass capsules with at least 90% text-colour opacity over blur, preserving 4.5:1 text contrast. Position them 12 pt above the bottommost controls or safe area. `ToastFloor` measures this clearance; screens presented above the root provide `ToastScope` and `ToastHost`. Use one sentence on at most two lines, one optional amber action, usually Undo, and an icon. Display for ten seconds with an action or five without (`ACTION_TIMEOUT`); pause while touched, support downward or sideways dismissal and stack like web toasts. Dark-theme toasts use a light fill. Announce them through `AccessibilityInfo.announceForAccessibility`.
 - A toast follows the learner off the screen the action closed, so archiving a deck lands on Library with its Undo.
+- `Notice` in `ui/notice.tsx` is a message inside a screen, in `neutral`, `good`, `warning` or `danger`. iOS ignores `accessibilityLiveRegion`, so it announces itself; a screen never builds its own notice.
 - Where the screen itself is the answer, it changes in place instead: Explore's Add settles into In Library and Archived keeps a restored row with Undo. A sheet that stays open for more, such as Add a word, hosts its own toasts over its chips, since the app's sit under the sheet.
 - An error is a toast with a red icon, named for what failed ("Couldn’t move “Verbi”."), and its action retries when retrying can help. A field that will not take its value says so under the field. iOS's alert is kept for a question the learner must answer, such as signing out with work not yet sent.
 - A write that queues offline says once that it is saved on this phone, where Saved would show. A row that needs a connection is dimmed with Needs a connection as its detail before it is tapped: the label and icon fade, and the detail keeps its contrast.

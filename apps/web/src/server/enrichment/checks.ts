@@ -1,4 +1,4 @@
-import { ENRICHED_FIELDS, type EnrichedField, stripReadings, withoutPitch } from "@lymi/core";
+import { ENRICHED_FIELDS, type EnrichedField, stripReadings } from "@lymi/core";
 import type { LanguageCheck } from "../languages";
 import type { Filled } from "./prompt";
 
@@ -166,7 +166,7 @@ function style(
     }
   }
   if (field === "pronunciation") {
-    record(field, "no slashes or brackets", !/^[/[]|[/\]]$/.test(withoutPitch(text)), text);
+    record(field, "no slashes or brackets", !/^[/[]|[/\]]$/.test(text), text);
   }
   // Duplicates and search compare composed text, so a decomposed tone or accent mark would not match.
   record(field, "composed (NFC)", text === text.normalize("NFC"), text);

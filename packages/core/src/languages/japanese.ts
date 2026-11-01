@@ -8,11 +8,10 @@ export const japanese = {
   pronunciation: "reading",
   format: {
     name: "Japanese",
-    pronunciation:
-      "The reading in hiragana, even for a term written only in kana, then the word's Tokyo pitch accent in square brackets: [0] when the voice stays up onto a particle after the word, otherwise the number of the mora the voice falls after. When a word has two accepted accents, write the most common.",
-    empty: null,
+    pronunciation: "The reading in hiragana.",
+    empty: "the term is written only in kana",
     never: null,
-    sample: { term: "食べる", pronunciation: "たべる [2]" },
+    sample: { term: "食べる", pronunciation: "たべる" },
     duplicates: "term-and-reading",
   },
   speech: { saysReading: true, leadIn: true },

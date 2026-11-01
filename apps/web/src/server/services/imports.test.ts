@@ -628,7 +628,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
   };
   const noAllowance = { left: async () => 60, spend: async () => undefined };
 
-  it("keeps each term's and example's recording, a pitch line and the translation, and leaves the rest out", async () => {
+  it("keeps each term's and example's recording, a pitch accent and the translation, and leaves the rest out", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "kaishi.apkg", fixture("kaishi.apkg"));
     await inspectImport(ctx, id, env.IMPORTS);
@@ -659,10 +659,12 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     });
 
     const hashi = await card(ctx, "箸");
-    expect(hashi.notes).toBe("Counted with 膳\nはꜜし [1]");
+    expect(hashi.pronunciation).toBe("はし [1]");
+    expect(hashi.notes).toBe("Counted with 膳");
     expect(hashi.exampleTranslation).toBe("I eat with chopsticks.");
     const sakura = await card(ctx, "桜");
-    expect(sakura.notes).toBe("さくら [0]");
+    expect(sakura.pronunciation).toBe("さくら [0]");
+    expect(sakura.notes).toBeNull();
     expect(sakura.exampleTranslation).toBe("The cherry blossoms bloomed.");
     const neko = await card(ctx, "猫");
     expect(neko.notes).toBeNull();

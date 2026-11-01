@@ -92,6 +92,26 @@ export function pitchPattern(card: {
   };
 }
 
+/**
+ * The kana a card's accent could be asked for: its Reading, or a term written only in kana, which
+ * holds none until it has an accent. Null outside Japanese, or once the card has an accent.
+ */
+export function readingWithoutPitch(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string | null {
+  if (readingEngine(card.language) !== "furigana") return null;
+  const sent = card.pronunciation?.normalize("NFC").trim();
+  if (!sent) return isKanaText(card.term.normalize("NFC").trim()) ? card.term.trim() : null;
+  return withoutPitch(sent) === sent ? kanaReading(card) : null;
+}
+
+/** A Reading with its accent, as stored; a position past the last mora leaves it out. */
+export function withPitch(reading: string, position: number): string {
+  return storedPitch(`${reading} [${position}]`);
+}
+
 /** A chart's width in tenths of an em for each mora: きょ takes two kana's room. */
 const moraWidth = (text: string) => (text.length > 1 ? 21 : 11);
 

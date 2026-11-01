@@ -171,6 +171,7 @@ type TextPrice = { input: number; cachedInput: number; output: number };
 /** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
 const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  "gpt-6.1-terra": { input: 1, cachedInput: 0.05, output: 5 },
   // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
   "claude-haiku-5-5": {
     input: 0.1,
@@ -434,6 +435,12 @@ export const analyticsEvents = {
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
   }),
+  pitch_accent_filled: z.object({
+    outcome: z.enum(["filled", "empty", "failed"]),
+    count,
+    asked: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+  }),
   example_translated: z.object({
     outcome: z.enum(["translated", "empty", "failed"]),
     count,
@@ -529,6 +536,7 @@ export const analyticsEvents = {
       "pronunciation",
       "example_audio",
       "lead_in",
+      "pitch_accent",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
@@ -689,6 +697,7 @@ export const analyticsProducers = {
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  pitch_accent_filled: ["worker"],
   example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],

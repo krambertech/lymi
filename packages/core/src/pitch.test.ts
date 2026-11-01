@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { normalizeCardText } from "./card-text";
 import { pitchIntoReading } from "./import";
-import { PITCH_DOT, pitchLayout, pitchPattern, sourcePitch, storedPitch } from "./pitch";
+import {
+  PITCH_DOT,
+  pitchLayout,
+  pitchPattern,
+  readingWithoutPitch,
+  sourcePitch,
+  storedPitch,
+  withPitch,
+} from "./pitch";
 import {
   kanaReading,
   pronunciationText,
@@ -109,6 +117,36 @@ describe("a Reading with a pitch accent", () => {
 
   it("leaves another language's text alone", () => {
     expect(pronunciationText({ language: "en", pronunciation: "tʃeə [1]" })).toBe("tʃeə [1]");
+  });
+});
+
+describe("readingWithoutPitch", () => {
+  it("gives the kana a card could take an accent on", () => {
+    expect(
+      readingWithoutPitch({ term: "図書館", language: "ja", pronunciation: "としょかん" }),
+    ).toBe("としょかん");
+    expect(readingWithoutPitch({ term: "ありがとう", language: "ja" })).toBe("ありがとう");
+    expect(readingWithoutPitch({ term: "コーヒー", language: "ja", pronunciation: null })).toBe(
+      "コーヒー",
+    );
+  });
+
+  it("gives nothing once there is an accent, without a reading, or outside Japanese", () => {
+    expect(
+      readingWithoutPitch({ term: "図書館", language: "ja", pronunciation: "としょかん [2]" }),
+    ).toBeNull();
+    expect(readingWithoutPitch({ term: "図書館", language: "ja" })).toBeNull();
+    expect(
+      readingWithoutPitch({ term: "図書館", language: "ja", pronunciation: "/tosho/" }),
+    ).toBeNull();
+    expect(readingWithoutPitch({ term: "はし", language: "es" })).toBeNull();
+  });
+});
+
+describe("withPitch", () => {
+  it("adds a position the Reading can hold, and no other", () => {
+    expect(withPitch("としょかん", 2)).toBe("としょかん [2]");
+    expect(withPitch("としょかん", 9)).toBe("としょかん");
   });
 });
 

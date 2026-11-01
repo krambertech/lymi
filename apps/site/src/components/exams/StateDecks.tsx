@@ -66,7 +66,7 @@ export function StateDecks({ locale, general, states }: Props) {
                 id={field}
                 value={slug}
                 onChange={(event) => setSlug(event.target.value)}
-                className="h-12 w-full appearance-none rounded-md bg-plate ps-4 pe-10 text-md text-ink edge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="h-12 w-full appearance-none rounded-md bg-plate ps-4 pe-10 text-[1rem] text-ink edge md:hoverable:text-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 <option value="">{t`Choose your state`}</option>
                 {states.map((state) => (

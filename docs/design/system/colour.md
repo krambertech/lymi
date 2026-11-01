@@ -45,7 +45,7 @@ Is it text on a coloured fill?
       ├── A success → text-success
       ├── The term, a title, anything the screen is about → text-ink
       ├── Supporting prose, a secondary label, a ghost button → text-ink-secondary
-      ├── Metadata, a hint, a unit, a timestamp → text-ink-muted
+      ├── Metadata, a hint, a placeholder, a unit, a timestamp → text-ink-muted
       └── Decoration that is not a word (a chevron, a separator dot) → text-ink-faint
 ```
 

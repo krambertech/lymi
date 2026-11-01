@@ -280,7 +280,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
             }}
             placeholder="Search the docs"
             aria-label="Search the docs"
-            className="min-w-0 flex-1 bg-transparent text-base text-ink outline-none placeholder:text-ink-muted"
+            className="min-w-0 flex-1 bg-transparent text-[1rem] text-ink outline-none placeholder:text-ink-muted md:hoverable:text-base"
           />
           <Kbd>Esc</Kbd>
         </div>

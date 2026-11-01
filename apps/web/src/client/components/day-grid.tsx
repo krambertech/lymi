@@ -261,7 +261,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
             the month row, and the table's spacing either side of that row. */}
         <div
           aria-hidden="true"
-          className="grid shrink-0 gap-1 text-2xs text-ink-faint"
+          className="grid shrink-0 gap-1 text-2xs text-ink-muted"
           style={{
             gridTemplateRows: `repeat(7, ${CELL}px)`,
             paddingTop: GAP + GAP + MONTH_ROW + GAP,

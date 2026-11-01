@@ -257,7 +257,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
                       aria-hidden="true"
                       className={clsx(
                         "relative text-sm tabular-nums",
-                        on ? "font-medium text-ink" : future ? "text-ink-faint" : "text-ink-muted",
+                        on ? "font-medium text-ink" : "text-ink-muted",
                         isToday && "font-semibold",
                       )}
                     >

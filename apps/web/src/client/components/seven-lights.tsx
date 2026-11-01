@@ -159,7 +159,7 @@ export function SevenLights({
               className={clsx(
                 "tabular-nums",
                 large ? "text-xs" : "text-2xs",
-                isToday ? "font-medium text-ink-secondary" : "text-ink-faint",
+                isToday ? "font-medium text-ink-secondary" : "text-ink-muted",
               )}
             >
               {day?.[0]}

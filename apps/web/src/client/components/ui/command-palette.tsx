@@ -195,7 +195,7 @@ function CommandInput({ lead, trail, className, ...props }: InputProps) {
         dir="auto"
         className={cn(
           "h-full min-w-0 flex-1 bg-transparent text-ink caret-amber outline-none placeholder:text-ink-muted",
-          skin === "dev" ? "font-mono text-base md:text-sm" : "text-base sm:text-lg",
+          skin === "dev" ? "font-mono text-[1rem] md:hoverable:text-sm" : "text-[1rem] sm:text-lg",
           className,
         )}
         {...props}

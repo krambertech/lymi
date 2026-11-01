@@ -127,10 +127,7 @@ export default function Report() {
         {send.isError && (
           <Notice tone="danger" title={t`Couldn’t send your report`}>
             {overDailyLimit ? (
-              <Trans>
-                You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if
-                this can’t wait.
-              </Trans>
+              t`You can send ${CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait.`
             ) : (
               <Trans>
                 Try again, or write to{" "}

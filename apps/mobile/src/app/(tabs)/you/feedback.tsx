@@ -116,7 +116,7 @@ export default function Feedback() {
         {send.isError && (
           <Notice tone="danger" title={t`Couldn’t send your feedback`}>
             {overDailyLimit ? (
-              <Trans>You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow.</Trans>
+              t`You can send ${FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow.`
             ) : (
               <Trans>
                 Your message is still here. Try again, or write to{" "}

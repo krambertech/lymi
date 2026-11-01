@@ -59,8 +59,8 @@ function Glyph({ app, className }: { app: AppIdentity; className: string }) {
 function Mark({ app }: { app: AppIdentity }) {
   return (
     // The card's plate behind the tile cuts it out of the one it overlaps.
-    <span className="block rounded-[10px] bg-plate p-[1.5px]">
-      <span className="edge grid size-7 place-items-center rounded-[9px] bg-plate text-ink">
+    <span className="block rounded-tile bg-plate p-0.5">
+      <span className="edge grid size-7 place-items-center rounded-sm bg-plate text-ink">
         <Glyph app={app} className="size-[15px]" />
       </span>
     </span>
@@ -91,7 +91,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
                   params={{ app: key }}
                   aria-label={t`Connect ${name}`}
                   style={{ "--i": i } as CSSProperties}
-                  className={clsx("rounded-[10px]", !still && SPREAD)}
+                  className={clsx("rounded-tile", !still && SPREAD)}
                 >
                   <Mark app={app} />
                 </NavLink>

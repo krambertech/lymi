@@ -38,7 +38,7 @@ export function FilterFieldsFigure() {
           <ListFilter className="size-4" />
           <Trans>Filter</Trans>
         </span>
-        <div className="mt-1.5 grid w-full rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+        <div className="mt-1.5 grid w-full rounded-md bg-sheet p-1 edge-drop">
           {fields.map((field) => (
             <span
               key={field.name}
@@ -60,7 +60,7 @@ export function FilterFieldsFigure() {
           <span className="truncate">{t`State: ${learning}`}</span>
           <X className="size-3.5 shrink-0 text-ink-muted" />
         </span>
-        <div className="grid rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+        <div className="grid rounded-md bg-sheet p-1 edge-drop">
           {values.map((value) => (
             <span
               key={value.name}

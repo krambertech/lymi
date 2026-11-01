@@ -19,19 +19,13 @@ export function PracticeChat() {
   const inView = useInView(ref, { amount: 0.35 });
   const { at } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
-  const you = "self-end max-w-[85%] bg-ink px-3.5 py-2 text-md text-canvas";
-  const them = "self-start max-w-[88%] bg-plate-nested px-3.5 py-2 text-md text-ink";
+  const you = "self-end max-w-[85%] rounded-md bg-ink px-3.5 py-2 text-md text-canvas";
+  const them = "self-start max-w-[88%] rounded-md bg-plate-nested px-3.5 py-2 text-md text-ink";
 
   return (
     <div ref={ref} className="mx-auto flex w-full max-w-[460px] flex-col gap-3">
       <div className="flex flex-col gap-3 rounded-2xl bg-plate p-4 edge @2xl:p-5">
-        <motion.p
-          className={you}
-          style={{ borderRadius: 16 }}
-          initial={false}
-          animate={appear(at("ask"))}
-          transition={move}
-        >
+        <motion.p className={you} initial={false} animate={appear(at("ask"))} transition={move}>
           <Trans>Let’s practise. Use the German words from my deck.</Trans>
         </motion.p>
 
@@ -51,7 +45,6 @@ export function PracticeChat() {
         <motion.p
           lang="de"
           className={them}
-          style={{ borderRadius: 16 }}
           initial={false}
           animate={appear(at("question"))}
           transition={move}
@@ -62,7 +55,6 @@ export function PracticeChat() {
         <motion.p
           lang="de"
           className={you}
-          style={{ borderRadius: 16 }}
           initial={false}
           animate={appear(at("answer"))}
           transition={move}
@@ -72,7 +64,6 @@ export function PracticeChat() {
 
         <motion.div
           className={them}
-          style={{ borderRadius: 16 }}
           initial={false}
           animate={appear(at("correction"))}
           transition={move}

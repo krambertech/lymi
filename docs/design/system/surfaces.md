@@ -62,7 +62,7 @@ Use `frost` for controls floating over scrolling text inside a panel, such as a 
 
 ## Edges
 
-`edge` draws a 1 px ring using box-shadow without changing dimensions. `edge-strong` strengthens it on hover, and `edge-inset` draws inside the bounds when content reaches the edge. Use `border-edge` for dividers between rows. Focus adds the neutral 2 px `ring` outline. Forced-colour mode replaces the shadow with a system-colour outline.
+`edge` draws a 1 px ring using box-shadow without changing dimensions. Because it owns `box-shadow`, a `shadow-*` utility beside it has no effect: a panel that needs a drop sets `[--lift:var(--glass-drop)]`, and the site uses `edge-drop`. `edge-strong` strengthens it on hover, and `edge-inset` draws inside the bounds when content reaches the edge. Use `border-edge` for dividers between rows. Focus adds the neutral 2 px `ring` outline. Forced-colour mode replaces the shadow with a system-colour outline.
 
 In dark theme `edge` and `edge-strong` include `--lift`; in light theme they do not. Form fields clear that elevation.
 
@@ -86,13 +86,14 @@ Primary buttons use `key-light`, a subtle highlight without a border ridge or sh
 | --- | --- |
 | `rounded-xs` | 6 px |
 | `rounded-sm` | 10 px |
+| `rounded-tile` | 12 px |
 | `rounded-md` | 14 px |
 | `rounded-lg` | 18 px |
 | `rounded-xl` | 22 px |
 | `rounded-2xl` | 30 px |
 | `rounded-full` | Fully rounded |
 
-Controls use `md`, small buttons `sm`, panels and cards `xl`, grouped rows `md` or `lg`, and chips and round buttons `full`. Arbitrary radii are limited to illustrations. A control inset within a panel uses the panel radius minus the gap: an 8 px inset in a 22 px panel gives a 14 px `rounded-md` control.
+Controls use `md`, small buttons `sm`, panels and cards `xl`, grouped rows `md` or `lg`, and chips and round buttons `full`. An app or source mark uses `tile` at 36 and 44 px, with a 2 px `rounded-md` cut-out where marks overlap, and `sm` inside a `tile` cut-out at 28 px. Arbitrary radii are limited to illustrations. A control inset within a panel uses the panel radius minus the gap: an 8 px inset in a 22 px panel gives a 14 px `rounded-md` control.
 
 ## The glow
 

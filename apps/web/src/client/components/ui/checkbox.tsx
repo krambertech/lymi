@@ -16,7 +16,7 @@ function Checkbox({ className, disabled, ...props }: CheckboxPrimitive.Root.Prop
       data-slot="checkbox"
       disabled={disabled || field?.disabled}
       className={cn(
-        "group/checkbox relative inline-grid size-5 shrink-0 cursor-pointer place-items-center rounded-[6px]",
+        "group/checkbox relative inline-grid size-5 shrink-0 cursor-pointer place-items-center rounded-xs",
         "transition-[scale] duration-150 ease-(--ease-out) active:scale-95 motion-reduce:active:scale-100",
         // Carries the touch target to 44 px without moving anything around it.
         "after:absolute after:-inset-3 after:content-['']",
@@ -64,7 +64,7 @@ function CheckboxBox({ checked, indeterminate }: { checked: boolean; indetermina
     <span
       ref={scope}
       className={cn(
-        "absolute inset-0 grid place-items-center rounded-[6px] text-amber-ink transition-[background-color,box-shadow] duration-150",
+        "absolute inset-0 grid place-items-center rounded-xs text-amber-ink transition-[background-color,box-shadow] duration-150",
         on ? "bg-amber" : "edge-strong bg-plate hoverable:group-hover/checkbox:veil",
         "group-aria-invalid/checkbox:shadow-[0_0_0_1px_var(--danger)]",
       )}

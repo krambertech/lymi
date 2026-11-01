@@ -62,7 +62,7 @@ export function ReviewChosenFigure() {
           </li>
         ))}
       </ul>
-      <div className="absolute end-0 top-[50px] grid w-56 rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute end-0 top-[50px] grid w-56 rounded-md bg-sheet p-1 edge-drop">
         <Item
           icon={<RotateCcw />}
           label={<Plural value={2} one="Review # due" other="Review # due" />}

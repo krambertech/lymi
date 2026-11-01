@@ -60,14 +60,14 @@ export function Segmented<T extends string>({
         className,
       )}
     >
-      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-plate-chosen" />
+      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-sm bg-plate-chosen" />
       {options.map((o) => (
         <ToggleGroupItem<T>
           key={o.value}
           value={o.value}
           disabled={o.disabled}
           className={clsx(
-            "rounded-[11px] px-3",
+            "rounded-sm px-3",
             // The pseudo-element carries the touch target to the track's edge (md) or 8 px past
             // the 28 px pill (sm), clearing the 44 px floor without changing layout.
             "before:absolute before:inset-x-0 before:content-['']",

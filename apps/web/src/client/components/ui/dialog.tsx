@@ -300,7 +300,7 @@ function DialogTitle({ className, children, ...props }: DialogPrimitive.Title.Pr
     // never carries the title off the screen.
     <DrawerTitle
       data-slot="dialog-title"
-      className={cn("sticky top-0 z-10 -mx-4 -mt-2 bg-plate px-4 pt-2 pb-1", className)}
+      className={cn("sticky top-0 z-(--z-sticky) -mx-4 -mt-2 bg-plate px-4 pt-2 pb-1", className)}
       {...props}
     >
       {bidi(children)}

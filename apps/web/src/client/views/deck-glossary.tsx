@@ -399,7 +399,7 @@ function DropGroup({
       ref={setNodeRef}
       aria-label={label}
       className={clsx(
-        "-mx-2 grid rounded-[26px] px-2 pb-2 transition-[background-color] duration-150 ease-out motion-reduce:transition-none",
+        "-mx-1 mb-1 grid rounded-xl px-1 pb-1 transition-[background-color] duration-150 ease-out motion-reduce:transition-none",
         !!active && isOver && "bg-plate-nested",
       )}
     >

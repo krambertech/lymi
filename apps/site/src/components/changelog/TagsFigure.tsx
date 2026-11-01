@@ -25,7 +25,7 @@ export function TagsFigure() {
           <ListFilter className="size-4" />
           <Trans>Filter</Trans>
         </span>
-        <div className="mt-1.5 grid min-w-44 rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+        <div className="mt-1.5 grid min-w-44 rounded-md bg-sheet p-1 edge-drop">
           <span className="px-2.5 py-1.5 text-xs text-ink-muted">
             <Trans>Tags</Trans>
           </span>

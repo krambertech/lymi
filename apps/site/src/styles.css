@@ -148,6 +148,12 @@
     0 0 0 1px var(--edge),
     var(--lift);
 }
+/* An overlay in a picture: its edge and its drop together, because a shadow utility beside edge-strong loses to it. */
+@utility edge-drop {
+  box-shadow:
+    0 0 0 1px var(--edge-strong),
+    var(--glass-drop);
+}
 /* Hover on anything with a fill and a hairline: a veil over its own fill, as in the product. */
 @utility veil {
   background-image: linear-gradient(var(--veil), var(--veil));
@@ -397,7 +403,7 @@
 .deck-spread {
   --cw: 46cqw;
   --step: 50cqw;
-  --lift: 0.55;
+  --spread: 0.55;
   position: relative;
   height: calc(var(--cw) * 1.12 + 56px);
   margin-top: 2.25rem;
@@ -406,7 +412,7 @@
   .deck-spread {
     --cw: 26cqw;
     --step: 30cqw;
-    --lift: 0.8;
+    --spread: 0.8;
     height: calc(var(--cw) * 1.12 + 70px);
     margin-top: 3.25rem;
   }
@@ -415,7 +421,7 @@
   .deck-spread {
     --cw: min(196px, 17cqw);
     --step: min(222px, 19.4cqw);
-    --lift: 1;
+    --spread: 1;
     height: calc(var(--cw) * 1.12 + 84px);
   }
 }
@@ -424,7 +430,8 @@
   top: 8px;
   left: calc(50% - var(--cw) / 2);
   width: var(--cw);
-  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--lift))) rotate(var(--r));
+  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--spread)))
+    rotate(var(--r));
   z-index: calc(10 - var(--a) * 2);
   animation: deck-deal 1100ms var(--ease-out) calc(var(--a) * 90ms + 120ms) both;
 }
@@ -1701,6 +1708,22 @@ html:has(.deck-cards[open]) {
 }
 @media (prefers-reduced-transparency: reduce) {
   .hero-ground::before {
+    display: none;
+  }
+}
+
+/* A language page's light, pooled behind its hand of cards. */
+.language-pool {
+  background: radial-gradient(ellipse 48% 62% at 74% 56%, var(--lantern-pool), transparent 70%);
+}
+/* Stacked, the hand sits under the words, so the light goes with it. */
+@container (max-width: 64rem) {
+  .language-pool {
+    background: radial-gradient(ellipse 90% 30% at 50% 70%, var(--lantern-pool), transparent 70%);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .language-pool {
     display: none;
   }
 }

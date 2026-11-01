@@ -1025,7 +1025,7 @@ function ListStep({
               <li key={term.id}>
                 <Field
                   orientation="horizontal"
-                  className="items-start gap-3 rounded-lg px-2 py-2 transition-colors hoverable:hover:bg-veil"
+                  className="items-start gap-3 rounded-lg px-2 py-2 transition-colors hoverable:hover:veil"
                 >
                   <Checkbox
                     checked={ticked.has(term.id)}

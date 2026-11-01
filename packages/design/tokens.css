@@ -23,7 +23,7 @@
   --sheet: var(--canvas);
   --plate: oklch(1 0 0);
   --plate-nested: oklch(0.955 0.006 80);
-  --plate-hover: oklch(0.94 0.007 80);
+  --plate-hover: oklch(0.92 0.007 80);
   /* A chosen option in a plate-nested track; at night the plate is darker than the track, so it lifts. */
   --plate-chosen: var(--plate);
   /* The current row in the rail, and a row pointed at; at night both stay flat and hover stays under the current row. */
@@ -105,8 +105,8 @@
   --ring: oklch(0.2 0.03 60 / 0.6);
   --scrim: oklch(0.2 0.02 50 / 0.35);
   --shimmer: oklch(1 0 0 / 0.4);
-  /* The toast is the text colour, so its action needs a colour that reads on that. */
-  --toast-action: oklch(0.82 0.15 74);
+  /* The toast is the text colour, so its action is this room's amber moved toward the toast's own contrast. */
+  --toast-action: color-mix(in oklab, var(--amber) 90%, var(--canvas));
 }
 
 [data-theme="dark"] {
@@ -118,7 +118,7 @@
   --sheet: oklch(0.205 0.009 62);
   --plate: oklch(0.24 0.01 64);
   --plate-nested: oklch(0.275 0.011 66);
-  --plate-hover: oklch(0.295 0.011 66);
+  --plate-hover: oklch(0.315 0.011 66);
   --plate-chosen: oklch(0.355 0.013 68);
   --rail-chosen: oklch(0.255 0.01 64);
   --rail-hover: oklch(1 0 0 / 0.04);
@@ -178,7 +178,7 @@
   --ring: oklch(0.95 0.01 85 / 0.7);
   --scrim: oklch(0 0 0 / 0.55);
   --shimmer: oklch(1 0 0 / 0.06);
-  --toast-action: oklch(0.5 0.14 50);
+  --toast-action: color-mix(in oklab, var(--amber) 48%, var(--amber-ink));
 }
 
 @theme inline {
@@ -277,6 +277,8 @@
 
   --radius-xs: 6px;
   --radius-sm: 10px;
+  /* An app or source mark's tile; its 2 px cut-out in the plate behind is rounded-md. */
+  --radius-tile: 12px;
   --radius-md: 14px;
   --radius-lg: 18px;
   --radius-xl: 22px;

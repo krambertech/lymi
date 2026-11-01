@@ -107,14 +107,18 @@ function Empty() {
     <div className="edge grid justify-items-center gap-4 rounded-xl bg-plate px-4 pt-6 pb-5 text-center [background-image:radial-gradient(120%_80%_at_50%_0%,var(--amber-soft),transparent_60%)]">
       <div aria-hidden="true" className="flex">
         {[
-          ...fan.map((app) => <AppMark key={app.name} app={app} className="size-11" />),
-          <ReadwiseMark key="readwise" className="size-11" />,
-          ...(gemini ? [<AppMark key="gemini" app={gemini} className="size-11" />] : []),
-          <YomitanMark key="yomitan" className="size-11" />,
+          ...fan.map((app) => (
+            <AppMark key={app.name} app={app} className="size-11 rounded-tile" />
+          )),
+          <ReadwiseMark key="readwise" className="size-11 rounded-tile" />,
+          ...(gemini
+            ? [<AppMark key="gemini" app={gemini} className="size-11 rounded-tile" />]
+            : []),
+          <YomitanMark key="yomitan" className="size-11 rounded-tile" />,
         ].map((mark, i) => (
           <span
             key={String(i)}
-            className={clsx("-ms-1.5 block rounded-[13px] bg-plate p-0.5 first:ms-0", FAN[i])}
+            className={clsx("-ms-1.5 block rounded-md bg-plate p-0.5 first:ms-0", FAN[i])}
           >
             {mark}
           </span>

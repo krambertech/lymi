@@ -332,11 +332,11 @@ function AssistantMarks({ play, startAt }: { play: boolean; startAt: number }) {
               params={{ app: key }}
               aria-label={t`Connect ${name}`}
               onClick={() => pick("ai_mcp")}
-              className="relative rounded-[13px] transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none"
+              className="relative rounded-md transition-transform duration-200 ease-out hoverable:hover:z-10 hoverable:hover:-translate-y-0.5 motion-reduce:transition-none"
             >
               {/* The card's plate behind the tile cuts it out of the one it overlaps. */}
-              <span className="block rounded-[13px] bg-plate p-0.5">
-                <span className="edge grid size-9 place-items-center rounded-[11px] bg-plate">
+              <span className="block rounded-md bg-plate p-0.5">
+                <span className="edge grid size-9 place-items-center rounded-tile bg-plate">
                   <svg
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -366,8 +366,8 @@ function NotesMarks() {
   return (
     <ul aria-hidden="true" className="-ms-0.5 flex -space-x-1 rtl:space-x-reverse">
       {NOTE_MARKS.map(({ key, Icon }) => (
-        <li key={key} className="block rounded-[13px] bg-plate p-0.5">
-          <span className="edge grid size-9 place-items-center rounded-[11px] bg-plate text-ink">
+        <li key={key} className="block rounded-md bg-plate p-0.5">
+          <span className="edge grid size-9 place-items-center rounded-tile bg-plate text-ink">
             <Icon className="size-[18px]" />
           </span>
         </li>

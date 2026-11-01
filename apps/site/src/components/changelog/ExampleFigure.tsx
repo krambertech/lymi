@@ -56,7 +56,7 @@ export function ExampleFigure() {
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           exit={{ opacity: 0, y: -24, rotate: -4 }}
           transition={{ type: "spring", duration: 0.6, bounce: 0.14 }}
-          className="absolute inset-x-0 top-5 grid gap-2 rounded-xl bg-plate p-6 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]"
+          className="absolute inset-x-0 top-5 grid gap-2 rounded-xl bg-plate p-6 edge-drop"
         >
           <p
             lang={example.lang}

@@ -109,7 +109,7 @@ export function lineFor(at: Date, count: number): number {
 export interface PlanReports {
   /** When the last reported plan's next reminder fires, in milliseconds. */
   reported(): number | undefined;
-  remember(at: number | undefined): void;
+  remember(at: number): void;
   /** Answers whether the event went, since usage waits until the learner's settings are read. */
   send(report: AnalyticsProperties<"reminder_scheduled">): boolean;
 }
@@ -121,7 +121,7 @@ export interface PlanReports {
  */
 export function reportPlan(plan: readonly PlannedReminder[], now: Date, reports: PlanReports) {
   const next = plan[0];
-  if (!next) return reports.remember(undefined);
+  if (!next) return;
   const at = next.at.getTime();
   if (at === reports.reported()) return;
   const report = {

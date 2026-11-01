@@ -134,19 +134,21 @@ describe("reportPlan", () => {
   ];
   const nextAt = at("2026-10-14T19:00:00").getTime();
 
-  function log(reported?: number, sends = true) {
+  function log() {
+    let reported: number | undefined;
     const sent: Parameters<PlanReports["send"]>[0][] = [];
+    const delivery = { works: true };
     const reports: PlanReports = {
       reported: () => reported,
       remember: (value) => {
         reported = value;
       },
       send: (report) => {
-        if (sends) sent.push(report);
-        return sends;
+        if (delivery.works) sent.push(report);
+        return delivery.works;
       },
     };
-    return { reports, sent, reported: () => reported };
+    return { reports, sent, delivery, reported: () => reported };
   }
 
   it("says how far off the next reminder is, how many are planned and what it will count", () => {
@@ -172,16 +174,20 @@ describe("reportPlan", () => {
   });
 
   it("tries again with the next plan when the event could not go", () => {
-    const { reports, reported } = log(undefined, false);
+    const { reports, sent, delivery, reported } = log();
+    delivery.works = false;
     reportPlan(plan, now, reports);
     expect(reported()).toBeUndefined();
+    delivery.works = true;
+    reportPlan(plan, now, reports);
+    expect(sent).toHaveLength(1);
   });
 
-  it("forgets an empty plan, so the same reminder reports again when it comes back", () => {
-    const { reports, sent, reported } = log(nextAt);
+  it("keeps the report through an empty plan, which a stale forecast can make for a moment", () => {
+    const { reports, sent, reported } = log();
+    reportPlan(plan, now, reports);
     reportPlan([], now, reports);
-    expect(reported()).toBeUndefined();
-    expect(sent).toEqual([]);
+    expect(reported()).toBe(nextAt);
     reportPlan(plan, now, reports);
     expect(sent).toHaveLength(1);
   });

@@ -26,10 +26,7 @@ const FORECAST_STALE_MS = 60 * 60 * 1000;
 /** A reminder fires on the phone unseen, so a plan iOS accepted is all analytics can know. */
 const planReports: PlanReports = {
   reported: () => deviceStore.getNumber(DEVICE_KEYS.reminderReported),
-  remember: (at) =>
-    at === undefined
-      ? deviceStore.remove(DEVICE_KEYS.reminderReported)
-      : deviceStore.set(DEVICE_KEYS.reminderReported, at),
+  remember: (at) => deviceStore.set(DEVICE_KEYS.reminderReported, at),
   send: (report) => captureEvent("reminder_scheduled", report),
 };
 
@@ -78,7 +75,7 @@ export function ReminderSync() {
     let live = true;
     const timer = setTimeout(async () => {
       if (!time) {
-        if (await schedule([])) reportPlan([], new Date(), planReports);
+        if (await schedule([])) deviceStore.remove(DEVICE_KEYS.reminderReported);
         return;
       }
       // A sign-out while iOS answers unmounts this; its plan would be for the learner who left.

@@ -175,12 +175,13 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 // Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop. `xl` is
-// Today's one Review button alone; a stack of buttons, such as a review's end, takes `lg`.
+// Today's one Review button alone; a stack of buttons, such as a review's end, takes `lg`. The
+// heights are floors with padding, so a label grown by the reader's text size grows the button.
 const HEIGHT: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 rounded-sm",
-  md: "h-11 px-4 rounded-md",
-  lg: "h-12 px-5 rounded-md",
-  xl: "h-16 px-5 rounded-md",
+  sm: "min-h-8 px-3 py-1.5 rounded-sm",
+  md: "min-h-11 px-4 py-2 rounded-md",
+  lg: "min-h-12 px-5 py-2.5 rounded-md",
+  xl: "min-h-16 px-5 py-4 rounded-md",
 };
 const LABEL: Record<ButtonSize, string> = {
   sm: "text-sm",
@@ -257,10 +258,10 @@ export function Button({
       accessibilityRole="button"
       accessibilityLabel={detail ? `${label}, ${detail}` : undefined}
       accessibilityState={{ busy: loading || busy, disabled }}
-      className={`flex-row items-center justify-center gap-2 ${box} ${HEIGHT[size]} ${disabled ? "opacity-45" : ""}`}
+      className={`shrink flex-row items-center justify-center gap-2 ${box} ${HEIGHT[size]} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}
     >
-      <View className={`flex-row items-center gap-2 ${loading ? "opacity-0" : ""}`}>
+      <View className={`shrink flex-row items-center gap-2 ${loading ? "opacity-0" : ""}`}>
         {lead}
         {icon &&
           (busy ? (
@@ -270,20 +271,22 @@ export function Button({
           ) : (
             <Icon name={icon} colour={ink} size={ICON[size]} />
           ))}
-        <Text className={`${LABEL[size]} font-medium`} style={{ color: ink }}>
-          {label}
-        </Text>
-        {detail && (
-          <Text
-            className={`${LABEL[size]} opacity-70`}
-            style={{
-              color: variant === "secondary" ? p["ink-muted"] : ink,
-              fontVariant: ["tabular-nums"],
-            }}
-          >
-            {detail}
+        <View className="shrink flex-row flex-wrap items-center justify-center gap-x-2">
+          <Text className={`${LABEL[size]} shrink text-center font-medium`} style={{ color: ink }}>
+            {label}
           </Text>
-        )}
+          {detail && (
+            <Text
+              className={`${LABEL[size]} shrink text-center`}
+              style={{
+                color: variant === "secondary" ? p["ink-muted"] : ink,
+                fontVariant: ["tabular-nums"],
+              }}
+            >
+              {detail}
+            </Text>
+          )}
+        </View>
       </View>
       {loading && <ActivityIndicator color={ink} className="absolute" />}
     </Press>

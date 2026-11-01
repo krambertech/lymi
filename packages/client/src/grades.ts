@@ -164,9 +164,11 @@ interface Flushed {
 }
 
 async function flushQueued(before?: string): Promise<Flushed> {
-  const result: Flushed = { sent: 0, offline: false, held: new Set(), refused: [] };
+  const settled = await settleUndos();
+  const offline = settled === "offline";
+  const held = offline ? new Set<string>() : settled;
+  const result: Flushed = { sent: 0, offline, held, refused: [] };
   const cutoff = before ? new Date(before).getTime() : Number.POSITIVE_INFINITY;
-  if ((await settleUndos()) === "offline") result.offline = true;
   for (const grade of read().filter(
     (g) => g.sentAt === undefined && !g.undone && new Date(g.reviewedAt).getTime() < cutoff,
   )) {
@@ -221,8 +223,10 @@ export type Undone = "undone" | "pending" | "kept";
  * Tells the server about grades taken back on this device. One never sent is simply dropped; a sent
  * one is undone by its attempt, and one the server will not undo stands again. One that got no
  * answer may be on the server, so it is sent again to learn its attempt and undone like a sent one.
+ * Resolves with the modes still waiting on the server, so a later grade of one stays behind its undo.
  */
-async function settleUndos(): Promise<"offline" | undefined> {
+async function settleUndos(): Promise<"offline" | Set<string>> {
+  const waiting = new Set<string>();
   const forget = (grade: StoredGrade) => write(read().filter((g) => !same(g, grade)));
   const stand = (grade: StoredGrade) =>
     write(read().map((g) => (same(g, grade) ? { ...g, undone: undefined } : g)));
@@ -251,8 +255,10 @@ async function settleUndos(): Promise<"offline" | undefined> {
       // Still unsent means the replay was the refusal: the grade never landed, so it is gone.
       const unsent = read().find((g) => same(g, undone))?.sentAt === undefined;
       if (refused) (unsent ? forget : stand)(undone);
+      else waiting.add(modeOfGrade(undone));
     }
   }
+  return waiting;
 }
 
 /**

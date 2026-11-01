@@ -202,6 +202,53 @@ describe("taking a grade back", () => {
     expect(grades.gradeStore.snapshot()).toMatchObject([{ reviewId: "rev-1" }]);
   });
 
+  it("holds a regrade behind an undo the server could not take yet", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const first = g("a");
+    await grades.recordGrade(first);
+
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.undoGrade(first)).toBe("pending");
+
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    const regrade = g("a", 4);
+    expect(await grades.recordGrade(regrade)).toBe("queued");
+    expect(grade).toHaveBeenCalledTimes(1);
+
+    const order: string[] = [];
+    undoReview.mockImplementationOnce(async () => void order.push("undo"));
+    grade.mockImplementationOnce(async () => {
+      order.push("regrade");
+      return accepted("rev-2");
+    });
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(order).toEqual(["undo", "regrade"]);
+  });
+
+  it("holds a regrade behind a replay the server could not take yet", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.undoGrade(unanswered)).toBe("pending");
+
+    grade.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    expect(await grades.recordGrade(g("a", 4))).toBe("queued");
+    expect(grade).toHaveBeenCalledTimes(3);
+  });
+
+  it("sends another card's grade past an undo the server could not take yet", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const first = g("a");
+    await grades.recordGrade(first);
+    undoReview.mockRejectedValue(new ApiError(503, "unavailable"));
+    await grades.undoGrade(first);
+
+    grade.mockResolvedValueOnce(accepted("rev-2"));
+    expect(await grades.recordGrade(g("b"))).toBe("sent");
+  });
+
   it("drops a grade with no answer when the server says a later grade came first", async () => {
     const unanswered = g("a");
     grade.mockRejectedValueOnce(offline());

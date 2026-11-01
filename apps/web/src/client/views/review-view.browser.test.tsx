@@ -479,6 +479,7 @@ async function renderCue(
   if (!text) throw new Error("the card drew no cue");
   return {
     size: () => getComputedStyle(text).fontSize,
+    reading: () => text.querySelector("rt"),
     /** How far the term's reading, or the whole cue without one, runs past the end of its box. */
     past: () => {
       const end = text.getBoundingClientRect().right;
@@ -486,6 +487,23 @@ async function renderCue(
       return drawn.getBoundingClientRect().right - end;
     },
   };
+}
+
+/** A reading's text, one entry for each line it draws on. */
+function readingLines(reading: Element | null) {
+  const node = reading?.firstChild;
+  if (!(node instanceof Text)) throw new Error("the term drew no reading");
+  const lines: { top: number; text: string }[] = [];
+  const range = document.createRange();
+  for (let at = 0; at < node.length; at++) {
+    range.setStart(node, at);
+    range.setEnd(node, at + 1);
+    const top = range.getClientRects()[0]?.top ?? 0;
+    const line = lines.at(-1);
+    if (line && Math.abs(line.top - top) < 4) line.text += node.data[at];
+    else lines.push({ top, text: node.data[at] ?? "" });
+  }
+  return lines.map((line) => line.text);
 }
 
 const japanese = { language: "ja", pronunciation: "とうきょうとっきょきょかきょくちょう" };
@@ -518,13 +536,17 @@ test("a reading wider than the line steps the cue down and stays in its box", as
 });
 
 test("a reading too long for the smallest size wraps inside its box", async () => {
-  const { size, past } = await renderCue({
+  const { size, past, reading } = await renderCue({
     term: "東京特許許可局長今日急遽許可却下",
     language: "ja",
     pronunciation: `${japanese.pronunciation}きょうきゅうきょきょかきゃっかとうきょう`,
   });
   await expect.poll(size).toBe("24px");
   expect(past()).toBeLessThanOrEqual(0);
+  // A second line never opens on a small kana, which belongs with the kana before it.
+  const lines = readingLines(reading());
+  expect(lines.length).toBeGreaterThan(1);
+  for (const line of lines) expect(line).not.toMatch(/^[ゃゅょっ]/);
 });
 
 test("a reading that fits stays centred on its text's line beside an overlong cue", async () => {

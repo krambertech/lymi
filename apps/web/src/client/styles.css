@@ -235,8 +235,10 @@
     text-align: center;
     vertical-align: bottom;
   }
+  /* Strict, so a wrapped reading keeps a small kana with the kana before it. */
   & rt {
     display: block;
+    line-break: strict;
     order: -1;
     white-space: normal;
   }

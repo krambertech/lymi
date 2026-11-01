@@ -66,11 +66,9 @@ export function Overview() {
       <div className="grid">
         {SECTIONS.map((section) => (
           <Sub key={section.title} title={section.title}>
-            <ul className="grid grid-cols-2 gap-3 @3xl:grid-cols-4">
+            <ul className="grid auto-rows-[12rem] grid-flow-dense grid-cols-2 gap-3 @3xl:grid-cols-4">
               {section.tiles.map((tile) => (
-                <li key={tile.title} className="grid">
-                  <TileLink tile={tile} />
-                </li>
+                <TileLink key={tile.title} tile={tile} />
               ))}
             </ul>
           </Sub>

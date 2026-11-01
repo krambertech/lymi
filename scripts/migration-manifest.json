@@ -291,6 +291,10 @@
     {
       "name": "0072_lying_ink.sql",
       "sha256": "87a46bec21bb9a46526eb41b8d27ab724a55bc95da7f5b5e21f214b26c277088"
+    },
+    {
+      "name": "0073_nifty_mattie_franklin.sql",
+      "sha256": "445e95cccccb3ffccff832a0171a016326f0a209c5217e5a480ac76f1feff813"
     }
   ]
 }

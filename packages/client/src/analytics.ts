@@ -12,6 +12,8 @@ import {
   firstTouch,
   INTERNAL_ACCOUNT_IDS,
   REMINDER_ENTRY,
+  REMINDER_MESSAGE_KEY,
+  ReminderMessage,
 } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
@@ -122,9 +124,24 @@ function arrivalEntry(): ArrivalEntry {
   return { entry: visitFirstTouch("product")?.referrer ? "link" : "direct" };
 }
 
+/** Which of the day's messages this page load came from; a link from before they had names has none. */
+function arrivalMessage(): ReminderMessage | undefined {
+  try {
+    for (const url of [arrival?.url, location.href]) {
+      if (!url || markedEntry(url)?.entry !== "reminder") continue;
+      return ReminderMessage.safeParse(new URL(url).searchParams.get(REMINDER_MESSAGE_KEY)).data;
+    }
+  } catch {
+    /* No message costs one opening in the per-message count. */
+  }
+  return undefined;
+}
+
 function sendOpening(): void {
   if (openingSent || !opening || !learner || identifySent !== learner) return;
+  const message = arrivalMessage();
   if (!captureAnalytics("app_opened", { ...arrivalEntry(), ...opening })) return;
+  if (message) captureAnalytics("reminder_opened", { message, client: "web" });
   openingSent = true;
   dropEntryMark();
 }
@@ -136,6 +153,7 @@ function dropEntryMark(): void {
     const marked = markedEntry(url.href);
     if (!marked) return;
     url.searchParams.delete(marked.entry === "email" ? EMAIL_ENTRY_KEY : REMINDER_ENTRY.key);
+    url.searchParams.delete(REMINDER_MESSAGE_KEY);
     history.replaceState(history.state, "", url);
   } catch {
     /* The mark only costs a duplicate opening on reload. */

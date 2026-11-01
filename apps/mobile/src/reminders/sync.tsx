@@ -10,8 +10,10 @@ import { useMMKVString } from "react-native-mmkv";
 import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
+import { reminderLink } from "../entry/links";
 import { captureEvent } from "../telemetry/posthog";
 import {
+  messageOf,
   notificationPermission,
   opensReview,
   registerActions,
@@ -38,7 +40,7 @@ export function ReminderSync() {
   const router = useRouter();
   const { i18n } = useLingui();
   const [time] = useMMKVString(DEVICE_KEYS.reminder, deviceStore);
-  const { left, dayDone, summary } = useDay();
+  const { left, dayDone, goal, summary } = useDay();
   const decks = useDecks();
   const kept = !!useKeptSince(decks);
   // The number Today and the widgets show, so the reminder never says another.
@@ -54,6 +56,10 @@ export function ReminderSync() {
   const zone = useDraw().data?.day.zone ?? deviceTimezone();
   const forecastByDay = forecastFrom(insights.data?.forecast, reviewDay);
   const forecast = forecastByDay && JSON.stringify([...forecastByDay]);
+  // What can change a message; the summary is a new object on every read.
+  const progress =
+    summary &&
+    `${summary.today.date}:${summary.today.attempts}:${summary.today.outcome}:${summary.reviewedDays}:${summary.restDays.length}`;
   const [front, setFront] = useState(0);
 
   useEffect(() => {
@@ -68,7 +74,7 @@ export function ReminderSync() {
     void registerActions();
   }, [i18n.locale]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front and the language replan too.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front, the day's progress and the language replan too.
   useEffect(() => {
     if (!replans(!!time, due)) return;
     // A review grades every few seconds; the plan only needs where the day settled.
@@ -86,6 +92,8 @@ export function ReminderSync() {
         zone,
         left: due ?? 0,
         dayDone,
+        goal,
+        days: summary?.days ?? [],
         forecast: forecast ? new Map(JSON.parse(forecast)) : undefined,
         snoozedUntil: snoozedUntil(),
       });
@@ -95,16 +103,16 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
-  }, [time, due, dayDone, forecast, zone, front, i18n.locale]);
+  }, [time, due, dayDone, goal, progress, forecast, zone, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();
-  const [opening, setOpening] = useState(false);
+  const [opening, setOpening] = useState<string>();
   useEffect(() => {
     const open = (response: Notifications.NotificationResponse) => {
       if (!opensReview(response)) return;
       Notifications.clearLastNotificationResponse();
-      setOpening(true);
+      setOpening(reminderLink(messageOf(response)));
     };
     const last = Notifications.getLastNotificationResponse();
     if (last) open(last);
@@ -113,8 +121,8 @@ export function ReminderSync() {
   }, []);
   useEffect(() => {
     if (!opening || path === "/") return;
-    setOpening(false);
-    router.navigate("/review?from=reminder");
+    setOpening(undefined);
+    router.navigate(opening);
   }, [opening, path, router]);
 
   return null;

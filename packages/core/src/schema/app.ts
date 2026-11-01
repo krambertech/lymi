@@ -346,6 +346,8 @@ export const userSettings = sqliteTable("user_settings", {
     .default("automatic"),
   /** When a visible page last moved the automatic zone. */
   reviewTimezoneUpdatedAt: integer("review_timezone_updated_at", { mode: "timestamp_ms" }),
+  /** When a learner's own client last opened Lymi. Reminders stop a week after it. */
+  lastOpenedAt: integer("last_opened_at", { mode: "timestamp_ms" }),
   /** When the learner finished or skipped getting set up. Null shows it to an account with nothing in it. */
   onboardedAt: integer("onboarded_at", { mode: "timestamp_ms" }),
   /** What they said they are learning while getting set up. */

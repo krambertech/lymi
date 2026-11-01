@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
 import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
+import { ReminderMessage } from "./reminders";
 import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -9,6 +10,7 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
   "rzJcULGYA5d4Ah4Ci3xWz7nNjb6ZZChy",
   "Ke5PiWMwvkod6tYTzX5oUWi3gz5haGuI",
 ]);
+export { ReminderMessage };
 export { ANALYTICS_CONSENT_VERSION } from "./types";
 /** Carries the visit's first touch with a sign-up request, since no cookie does. */
 export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
@@ -155,6 +157,8 @@ export function backlogOf(due: number): Backlog {
 }
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+/** Added beside it to name which of the day's messages was opened. */
+export const REMINDER_MESSAGE_KEY = "lymi_reminder";
 /** Added to an email's link as `from=email-<kind>`, since Lymi tracks no opens or clicks. */
 export const EMAIL_ENTRY_KEY = "from";
 const EMAIL_ENTRY_PREFIX = "email-";
@@ -299,7 +303,8 @@ export const analyticsEvents = {
     count,
     ai_written: count,
   }),
-  reminder_sent: z.object({ backlog: Backlog }),
+  reminder_sent: z.object({ backlog: Backlog, message: ReminderMessage }),
+  reminder_opened: z.object({ message: ReminderMessage, client: z.enum(["web", "phone"]) }),
   reminder_scheduled: z.object({
     backlog: Backlog,
     reminders: count,
@@ -654,6 +659,7 @@ export const analyticsProducers = {
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
   reminder_scheduled: ["phone"],
+  reminder_opened: ["browser", "phone"],
   command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],

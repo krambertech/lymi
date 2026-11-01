@@ -39,6 +39,7 @@ export function defaultSettings(userId: string): UserSettings {
     reviewTimezone: null,
     reviewTimezoneMode: "automatic",
     reviewTimezoneUpdatedAt: null,
+    lastOpenedAt: null,
     onboardedAt: null,
     learningKind: null,
     learningLanguage: null,

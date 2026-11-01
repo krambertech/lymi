@@ -491,6 +491,15 @@ msgstr "{count, plural, one {{sectionName}, # карточка} few {{sectionNam
 msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
 msgstr "{count, plural, one {{sectionName}, ещё не открыт, # карточка} few {{sectionName}, ещё не открыт, # карточки} many {{sectionName}, ещё не открыт, # карточек} other {{sectionName}, ещё не открыт, # карточки}}"
 
+msgid "{count, plural, one {# card for today.} other {# cards for today.}}"
+msgstr "{count, plural, one {# карточка на сегодня.} few {# карточки на сегодня.} many {# карточек на сегодня.} other {# карточки на сегодня.}}"
+
+msgid "{count, plural, one {# card is ready} other {# cards are ready}}"
+msgstr "{count, plural, one {# карточка готова} few {# карточки готовы} many {# карточек готовы} other {# карточки готовы}}"
+
+msgid "{count, plural, one {# card to today’s goal} other {# cards to today’s goal}}"
+msgstr "До сегодняшней цели: {count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
+
 msgid "{count, plural, one {# card} other {# cards}}"
 msgstr "{count, plural, one {# карточку} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -514,6 +523,12 @@ msgstr "{count, plural, one {Переместить # карточку в} few {
 
 msgid "{count, plural, one {The card moves into it.} other {The # cards move into it.}}"
 msgstr "{count, plural, one {Карточка переместится в него.} few {# карточки переместятся в него.} many {# карточек переместятся в него.} other {# карточки переместятся в него.}}"
+
+msgid "{count, plural, one {Your next card is ready} other {Your next cards are ready}}"
+msgstr "{count, plural, =1 {Следующая карточка готова} one {Следующие карточки готовы} few {Следующие карточки готовы} many {Следующие карточки готовы} other {Следующие карточки готовы}}"
+
+msgid "{count, plural, one {Your streak carried on. # card is ready.} other {Your streak carried on. # cards are ready.}}"
+msgstr "{count, plural, one {Дни подряд не прервались. # карточка готова.} few {Дни подряд не прервались. # карточки готовы.} many {Дни подряд не прервались. # карточек готовы.} other {Дни подряд не прервались. # карточки готовы.}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
@@ -577,9 +592,6 @@ msgstr "{due, plural, one {# карточка к повторению. Днев�
 
 msgid "{due, plural, one {# card is due.} other {# cards are due.}}"
 msgstr "{due, plural, one {# карточка к повторению.} few {# карточки к повторению.} many {# карточек к повторению.} other {# карточки к повторению.}}"
-
-msgid "{due, plural, one {# card to review} other {# cards to review}}"
-msgstr "{due, plural, one {# карточка для повторения} few {# карточки для повторения} many {# карточек для повторения} other {# карточки для повторения}}"
 
 msgid "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
 msgstr "{due, plural, one {# карточка · {reviewed}/{goal}} few {# карточки · {reviewed}/{goal}} many {# карточек · {reviewed}/{goal}} other {# карточки · {reviewed}/{goal}}}"
@@ -2484,6 +2496,9 @@ msgstr "Найди или создай тег"
 
 msgid "Find terms"
 msgstr "Найти термины"
+
+msgid "Finish if you have a moment."
+msgstr "Закончи, если есть минутка."
 
 msgctxt "language"
 msgid "Finnish"
@@ -4718,9 +4733,6 @@ msgstr "Человек потеряет доступ к колоде и не с�
 
 msgid "They’re already in this deck."
 msgstr "Этот человек уже в колоде."
-
-msgid "They’re ready when you are."
-msgstr "Они ждут, когда тебе будет удобно."
 
 msgid "This card isn’t in this deck"
 msgstr "Этой карточки нет в этой колоде"

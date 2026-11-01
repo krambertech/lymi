@@ -11,6 +11,7 @@ import {
   ipcMain,
   Menu,
   nativeImage,
+  nativeTheme,
   powerMonitor,
   type Session,
   screen,
@@ -20,6 +21,7 @@ import {
   Tray,
 } from "electron";
 import { SCHEME, sessionChange } from "./callback.js";
+import { windowColours } from "./colours.gen.js";
 import { setAppMenu } from "./menu.js";
 import {
   isLoopback,
@@ -31,7 +33,7 @@ import {
 } from "./origin.js";
 import { readPreferences, writePreferences } from "./preferences.js";
 import { canCopySelection, selectedText } from "./selection.js";
-import { DEFAULT_SHORTCUT, type Preferences, usableShortcut } from "./settings.js";
+import { DEFAULT_SHORTCUT, isTheme, type Preferences, usableShortcut } from "./settings.js";
 import { completeSignIn, requestSignIn } from "./sign-in.js";
 import { restartToUpdate, watchForUpdates } from "./updates.js";
 
@@ -97,6 +99,9 @@ function keepToProduct(win: BrowserWindow) {
 
 const webPreferences = () => ({ session: ses, preload, sandbox: true, contextIsolation: true });
 
+/** A window shows this wherever its page has not painted: on a reload, a navigation or a resize. */
+const colours = () => windowColours[nativeTheme.shouldUseDarkColors ? "dark" : "light"];
+
 /**
  * Shows the main window, at `path` when one is asked for; an open window moves without reloading.
  * Signed out, it opens as the sign-in window.
@@ -118,6 +123,7 @@ async function openMain(path?: string) {
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 20, y: 13 },
     show: false,
+    backgroundColor: colours().canvas,
     webPreferences: webPreferences(),
   });
   fitMain(hasSession, false);
@@ -201,6 +207,7 @@ function createPanel() {
     fullscreenable: false,
     skipTaskbar: true,
     show: false,
+    backgroundColor: colours().plate,
     webPreferences: webPreferences(),
   });
   keepToProduct(panel);
@@ -382,6 +389,12 @@ const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
   "app:restart-to-update": () => {
     if (update === "ready") restartToUpdate();
   },
+  "app:theme": (theme) => {
+    if (!isTheme(theme) || theme === prefs.theme) return;
+    prefs = { ...prefs, theme };
+    writePreferences(prefs);
+    nativeTheme.themeSource = theme;
+  },
   // The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
   "prefs:accessibility": () => {
     systemPreferences.isTrustedAccessibilityClient(true);
@@ -505,6 +518,12 @@ async function start() {
   );
   ses.setPermissionCheckHandler((_contents, permission, origin) => allowed(permission, origin));
   prefs = readPreferences();
+  // Also what the page's prefers-color-scheme reads, and the appearance of native menus and dialogs.
+  nativeTheme.themeSource = prefs.theme;
+  nativeTheme.on("updated", () => {
+    main?.setBackgroundColor(colours().canvas);
+    panel?.setBackgroundColor(colours().plate);
+  });
   if (DEV_PERSONA) {
     // Signs the window session in as a seeded persona; the route sets the cookie and redirects.
     const url = productUrl(`/api/dev/sign-in?as=${encodeURIComponent(DEV_PERSONA)}`);

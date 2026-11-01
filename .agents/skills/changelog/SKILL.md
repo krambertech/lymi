@@ -20,7 +20,7 @@ description: Write, catch up or edit Lymi's public changelog at lymi.app/changel
        ├── A new lymi.app page → one line under ### Fixes and improvements
        └── A look or motion tweak (light, glow, sizes, number rolls) → leave it out; it changes nothing the learner does
    ```
-3. **Spread the updates** as [Writing](../../../docs/design/changelog.md#writing) says. A fix line goes with the first update dated on or after its merge.
+3. **Spread the updates** as [Writing](../../../docs/design/changelog.md#writing) says. A fix line goes with any update dated on or after its merge. When catching up, spread fix lines across the updates rather than filling the first one.
 4. **Check the facts.** Before a sentence states a number, a default or a control name, find it in the code: labels in `apps/web/src/locales/en.po`, defaults in `packages/core`. A guess stated as fact is a bug in the changelog.
 5. **Write the English.** Apply every rule under Plain language to every sentence. Done when the self-audit at the end of that section finds nothing.
 6. **Draw the picture.** Every update has one, chosen as [Pictures](../../../docs/design/changelog.md#pictures) orders. A new figure is a component in `apps/site/src/components/changelog`, named in `changelog-figures.ts` and drawn in `ChangelogFigure.tsx`. Load the `impeccable` skill first, and copy the product's own labels and layout.

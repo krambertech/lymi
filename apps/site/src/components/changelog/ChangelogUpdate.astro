@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import type { ChangelogUpdate } from "../../lib/changelog";
+import { CHANGELOG_SCENES } from "../../lib/changelog-figures";
 import type { Locale } from "../../lib/routes";
 import ChangelogFigure from "./ChangelogFigure";
 
@@ -43,7 +44,7 @@ const Heading = href ? "h2" : "h1";
     ) : (
       entry.data.figure && (
         <div class="changelog-figure changelog-frame mt-8 rounded-2xl" data-frame="figure" data-hue={hue}>
-          <div class="changelog-stage">
+          <div class="changelog-stage" data-scene={CHANGELOG_SCENES.includes(entry.data.figure) ? "" : undefined}>
             <div class="changelog-stage-content">
               <ChangelogFigure client:visible figure={entry.data.figure} locale={locale} />
             </div>

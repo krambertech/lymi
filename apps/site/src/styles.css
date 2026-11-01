@@ -1636,6 +1636,12 @@ html:has(.deck-cards[open]) {
   width: 28.75rem;
   translate: -50% -50%;
 }
+.changelog-stage[data-scene] {
+  padding: 0;
+}
+.changelog-stage[data-scene] .changelog-stage-content {
+  width: 41.25rem;
+}
 .changelog-frame img {
   position: absolute;
   max-width: none;

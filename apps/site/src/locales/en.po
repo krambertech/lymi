@@ -697,6 +697,9 @@ msgstr "Added after this week’s lesson"
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Added to Chess, with the meaning and an example."
 
+msgid "Added to Spanish"
+msgstr "Added to Spanish"
+
 msgid "Address registration"
 msgstr "Address registration"
 
@@ -1149,6 +1152,9 @@ msgstr "Canadian citizenship test"
 msgid "Canadian citizenship test: practice questions on every chapter"
 msgstr "Canadian citizenship test: practice questions on every chapter"
 
+msgid "Cantonese"
+msgstr "Cantonese"
+
 msgid "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
 msgstr "Card enrichment, example translations, hints and deck style use card fields, relevant cards from the deck, deck details and instructions, and corrections you make to AI text. Enrichment can run when you add cards or request it; deck style is updated in the background. These text features use OpenAI."
 
@@ -1580,6 +1586,9 @@ msgstr "Driving tests"
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Drugs, how they work and what to watch for."
+
+msgid "Due"
+msgstr "Due"
 
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
@@ -2401,6 +2410,9 @@ msgstr "I drink coffee every *morning*."
 
 msgid "I eat *fruit* every day."
 msgstr "I eat *fruit* every day."
+
+msgid "I eat bread every morning."
+msgstr "I eat bread every morning."
 
 msgid "I forgot to bring my *things*."
 msgstr "I forgot to bring my *things*."
@@ -3529,6 +3541,9 @@ msgstr "Open menu"
 msgid "Open the deck"
 msgstr "Open the deck"
 
+msgid "Open the window, please."
+msgstr "Open the window, please."
+
 msgid "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 msgstr "Open Today on your phone or laptop. Lymi schedules each card with spaced repetition, so you review less and remember longer."
 
@@ -4080,6 +4095,9 @@ msgstr "Search by sound"
 msgid "Search decks"
 msgstr "Search decks"
 
+msgid "Section"
+msgstr "Section"
+
 msgid "Section {position}:"
 msgstr "Section {position}:"
 
@@ -4423,6 +4441,12 @@ msgstr "Start with tonight’s lecture."
 msgid "Start with your exam’s deck."
 msgstr "Start with your exam’s deck."
 
+msgid "State"
+msgstr "State"
+
+msgid "State: {learning}"
+msgstr "State: {learning}"
+
 msgid "station"
 msgstr "station"
 
@@ -4533,6 +4557,9 @@ msgstr "Take it again"
 
 msgid "Take the *metro* to the airport."
 msgstr "Take the *metro* to the airport."
+
+msgid "Tamil"
+msgstr "Tamil"
 
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
@@ -4680,6 +4707,9 @@ msgstr "The browning that gives seared, baked and toasted food its flavour"
 
 msgid "The cards from this page will land here."
 msgstr "The cards from this page will land here."
+
+msgid "The castle stands on a hill."
+msgstr "The castle stands on a hill."
 
 msgid "The cat is asleep on the *rug*."
 msgstr "The cat is asleep on the *rug*."
@@ -5667,6 +5697,9 @@ msgstr "Will it rain *tomorrow*?"
 
 msgid "Will the AI slip into Russian?"
 msgstr "Will the AI slip into Russian?"
+
+msgid "window"
+msgstr "window"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."

@@ -1385,11 +1385,14 @@ function CardPlate({
   const termCard = separate ? null : card;
   // A chart stands where the pronunciation's own line would, and spells the kana itself.
   const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
-  const cueFurigana = cueShowsPronunciation({
-    revealed,
-    known: stateKey(forgotten ? 3 : fsrsState) === "known",
-    display: deck?.pronunciationDisplay,
-  });
+  // The chart spells the reading after the reveal, so the furigana leaves and the term keeps its place.
+  const cueFurigana =
+    !(revealed && pitched) &&
+    cueShowsPronunciation({
+      revealed,
+      known: stateKey(forgotten ? 3 : fsrsState) === "known",
+      display: deck?.pronunciationDisplay,
+    });
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
   const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);
@@ -1636,7 +1639,7 @@ function CardPlate({
                             style={type.answer}
                             grows
                             lang={mode.target === "term" ? card.language : null}
-                            term={mode.target === "term" ? termCard : null}
+                            term={mode.target === "term" && !pitched ? termCard : null}
                             muted={back === noMeaning ? p["ink-muted"] : undefined}
                             after={
                               pronounce && mode.target === "term" ? (
@@ -1755,7 +1758,7 @@ function CardPlate({
                         style={at.answer}
                         grows
                         after={mode.target === "term" ? speaker : undefined}
-                        term={mode.target === "term" ? termCard : null}
+                        term={mode.target === "term" && !pitched ? termCard : null}
                       >
                         {back}
                       </CardLine>

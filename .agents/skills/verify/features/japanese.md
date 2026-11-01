@@ -14,7 +14,7 @@ No persona has Japanese cards, so the recipe makes a deck as `fresh` through `/a
 
 The second add is `skipped`. On the New card's cue じょうず is furigana over 上手 in a `lang="ja"` ruby, no line under it reads じょうず, and the cue's computed font names Hiragino Sans; after the reveal the furigana stays. The stored 下手 card has `pronunciation` へた with `pronunciationSource` `lesson`, and 猫, whose lesson printed no reading, has none. 上手 read うわて is added as a second card and ジョウズ is skipped as the reading じょうず already has. The typed `食[た]べる` is stored as 食べる with `pronunciation` たべる, the batch skips `食[た]べる` as that card and adds 引き出し read ひきだし with `normalized` `term` and `pronunciation`.
 
-Pitch accent: a card added with the Reading `としょꜜかん` stores as `としょかん [2]`, and its term still draws furigana. After the reveal, and never before it, an image named `としょかん, pitch falls after sound 2` stands under the term.
+Pitch accent: a card added with the Reading `としょꜜかん` stores as `としょかん [2]`, and its term still draws furigana. After the reveal, and never before it, an image named `としょかん, pitch falls after sound 2` stands under the term, and the term's furigana has gone with its room kept.
 
 ## Gotchas
 

@@ -188,6 +188,7 @@ test("a Japanese card charts its pitch under the term only after the reveal", as
   await reveal();
   expect(chart()).toHaveLength(1);
   expect(shown("としょかん [2]")).toHaveLength(0);
+  expect(document.querySelector("rt")?.checkVisibility({ visibilityProperty: true })).toBe(false);
 });
 
 test("the chart stands in for a pronunciation line the learner keeps separate", async () => {

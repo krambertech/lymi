@@ -488,18 +488,22 @@ export function ReviewCard({
   const pronunciationLine = useMemo(() => pronunciationText(card), [card]);
   // A chart stands where the pronunciation's own line would, and spells the kana itself.
   const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
-  const cueReading = cueShowsPronunciation({
-    revealed,
-    known: stateKey(item.fsrsState) === "known",
-    display: deck?.pronunciationDisplay,
-  });
-  const term = separate ? (
-    <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
-      {card.term}
-    </span>
-  ) : (
-    <TermText card={card} />
-  );
+  // The chart spells the reading after the reveal, so the furigana leaves and the term keeps its place.
+  const cueReading =
+    !(revealed && pitched) &&
+    cueShowsPronunciation({
+      revealed,
+      known: stateKey(item.fsrsState) === "known",
+      display: deck?.pronunciationDisplay,
+    });
+  const term =
+    separate || pitched ? (
+      <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+        {card.term}
+      </span>
+    ) : (
+      <TermText card={card} />
+    );
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -700,7 +704,8 @@ export function ReviewCard({
           <PitchChart card={card} className="text-lg" />
         </motion.div>
       ) : reading && !separate ? (
-        readingOver && (
+        readingOver &&
+        !pitched && (
           <p className="sr-only" lang={card.language ?? undefined}>
             {pronunciationLine}
           </p>

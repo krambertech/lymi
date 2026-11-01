@@ -3,9 +3,6 @@ import { decisionModel } from "../lessons/keep";
 import { createLessonReader } from "../lessons/reader";
 import { createElevenLabsSpeechProvider } from "./elevenlabs-speech";
 import { AiGatewayError, providerEndpoint } from "./gateway";
-import { createGeminiApiSpeechProvider } from "./gemini-api-speech";
-import { createGoogleChirpProvider } from "./google-chirp";
-import { createGoogleGeminiProvider } from "./google-gemini";
 import { createOpenAiSpeechProvider } from "./openai-speech";
 import { createOpenAiTextProvider } from "./openai-text";
 
@@ -41,7 +38,6 @@ describe("providerEndpoint", () => {
     expect(providerEndpoint(routed, "anthropic").base).toBe(`${GATEWAY}/anthropic/v1`);
     expect(providerEndpoint(routed, "typesafe").base).toBe(`${GATEWAY}/custom-typesafe`);
     expect(providerEndpoint(routed, "elevenlabs").base).toBe(`${GATEWAY}/elevenlabs`);
-    expect(providerEndpoint(routed, "google-ai-studio").base).toBe(`${GATEWAY}/google-ai-studio`);
   });
 
   it.each([{}, { AI_GATEWAY_TOKEN: "gateway-token" }, { AI_GATEWAY_URL: GATEWAY }])(
@@ -64,7 +60,7 @@ describe("providerEndpoint", () => {
 });
 
 describe("clients through the gateway", () => {
-  it("sends OpenAI text, OpenAI speech, ElevenLabs and Gemini through it", async () => {
+  it("sends OpenAI text, OpenAI speech and ElevenLabs through it", async () => {
     const { calls, request } = recorder();
     await createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request)
       .complete({ instructions: "i", input: "x", schema: { name: "s", schema: {} } })
@@ -75,17 +71,11 @@ describe("clients through the gateway", () => {
     await createElevenLabsSpeechProvider({ ELEVENLABS_API_KEY: "k", ...routed }, "et", "v", request)
       .speech({ text: "tere", language: "et" })
       .catch(() => {});
-    await createGeminiApiSpeechProvider({ GEMINI_API_KEY: "k", ...routed }, "et-EE", request)
-      .speech({ text: "tere", language: "et" })
-      .catch(() => {});
     const urls = [...new Set(calls.map((c) => c.url.split("?")[0]))];
     expect(urls).toEqual([
       `${GATEWAY}/openai/chat/completions`,
       `${GATEWAY}/openai/audio/speech`,
       `${GATEWAY}/elevenlabs/v1/text-to-speech/v`,
-      expect.stringMatching(
-        /^https:\/\/gateway\.ai\.cloudflare\.com\/v1\/acct\/lymi\/google-ai-studio\/v1beta\/models\//,
-      ),
     ]);
     for (const call of calls) {
       expect(call.headers["cf-aig-authorization"]).toBe("Bearer gateway-token");
@@ -130,31 +120,6 @@ describe("clients through the gateway", () => {
       }
     },
   );
-
-  it("keeps Google Cloud speech behind its custom gateway provider", async () => {
-    const calls: string[] = [];
-    const credentials = JSON.stringify({
-      type: "service_account",
-      project_id: "lymi",
-      client_email: "test@example.com",
-      private_key: "unused",
-    });
-    const request = async (url: RequestInfo | URL, init?: RequestInit) => {
-      calls.push(String(url));
-      expect(init?.redirect).toBe("manual");
-      expect(new Headers(init?.headers).get("cf-aig-authorization")).toBe("Bearer gateway-token");
-      return Response.json({ audioContent: btoa("audio") });
-    };
-    const env = { ...routed, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials };
-    const dependencies = { locale: "et-EE", accessToken: async () => "oauth-token", request };
-    for (const provider of [
-      createGoogleGeminiProvider(env, dependencies),
-      createGoogleChirpProvider(env, dependencies),
-    ]) {
-      expect(await (await provider.speech({ text: "tere", language: "et" })).text()).toBe("audio");
-    }
-    expect(calls).toEqual(Array(2).fill(`${GATEWAY}/custom-google-cloud-tts/v1/text:synthesize`));
-  });
 
   it("sends lesson reads to the gateway's Anthropic endpoint", async () => {
     const { calls, request } = recorder();

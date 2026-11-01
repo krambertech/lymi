@@ -116,7 +116,7 @@ describe("Japanese generated audio invalidation", () => {
     const deps = {
       bucket,
       leadIns: {
-        writer: { model: "gemini-2.5-flash-lite", write: generate },
+        writer: { model: "gpt-6-luna", write: generate },
         decide: { run: async () => ({ answers: { ambiguous: { noul: 0.9 } } }) },
       },
       providers: () => [
@@ -142,7 +142,6 @@ describe("Japanese generated audio invalidation", () => {
       text: "はし",
       language: "ja",
       previousText: "川を渡る",
-      usage: expect.any(Function),
     });
   });
 });

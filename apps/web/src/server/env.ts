@@ -41,13 +41,9 @@ export interface Bindings
   POSTHOG_PERSONAL_API_KEY?: string;
   POSTHOG_PROJECT_ID?: string;
   /** Full service-account JSON, stored as one encrypted Worker secret. */
-  GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
-  GEMINI_API_KEY?: string;
   ELEVENLABS_API_KEY?: string;
   ELEVENLABS_SPEECH_MODEL?: string;
   ELEVENLABS_SPEECH_VOICES?: string;
-  GEMINI_SPEECH_MODEL?: string;
-  GEMINI_SPEECH_VOICE?: string;
   OPENAI_API_KEY?: string;
   OPENAI_SPEECH_MODEL?: string;
   OPENAI_SPEECH_VOICE?: string;

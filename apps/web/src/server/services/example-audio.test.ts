@@ -155,7 +155,7 @@ describe("example audio", () => {
     const played = await exampleAudio(
       context(card({ exampleRecordingKey: key, language: null })),
       "card-1",
-      { bucket, providers: () => [provider("google-gemini", speech)] },
+      { bucket, providers: () => [provider("elevenlabs", speech)] },
       allowance,
     );
     expect("clip" in played && played.clip.key).toBe(key);
@@ -172,7 +172,7 @@ describe("example audio", () => {
       exampleAudio(
         context(card({ exampleRecordingKey: "cards/card-1/example-recorded/gone.mp3" })),
         "card-1",
-        { bucket, providers: () => [provider("google-gemini", speech)] },
+        { bucket, providers: () => [provider("elevenlabs", speech)] },
         free(),
       ),
     ).rejects.toMatchObject({ code: "unavailable" });
@@ -184,7 +184,7 @@ describe("example audio", () => {
     const speech = vi.fn(async (_request: SpeechRequest) => sound());
     const allowance = free();
     const ctx = context(card());
-    const deps = { bucket, providers: () => [provider("google-gemini", speech)] };
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
 
     const first = await exampleAudio(ctx, "card-1", deps, allowance);
     const again = await exampleAudio(ctx, "card-1", deps, allowance);
@@ -194,7 +194,6 @@ describe("example audio", () => {
     expect(speech.mock.calls[0]?.[0]).toMatchObject({
       text: "まいあさパンをたべます。",
       language: "ja",
-      kind: "example",
     });
     expect(allowance.spend).toHaveBeenCalledTimes(1);
     expect(clips()).toEqual([
@@ -211,7 +210,7 @@ describe("example audio", () => {
     await exampleAudio(
       context(card({ language: "zh", example: "我[wǒ]去[qù]银行[yínháng]。" })),
       "card-1",
-      { bucket, providers: () => [provider("google-gemini", speech)] },
+      { bucket, providers: () => [provider("elevenlabs", speech)] },
       free(),
     );
     expect(speech.mock.calls[0]?.[0].text).toBe("我去银行。");
@@ -220,7 +219,7 @@ describe("example audio", () => {
   it("makes a new clip for a changed example and never serves the old one for it", async () => {
     const { bucket, clips } = memoryBucket();
     const speech = vi.fn(async (_request: SpeechRequest) => sound());
-    const deps = { bucket, providers: () => [provider("google-gemini", speech)] };
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
     await exampleAudio(context(card()), "card-1", deps, free());
     await exampleAudio(context(card({ example: "パンを食[た]べた。" })), "card-1", deps, free());
     expect(speech.mock.calls.map(([request]) => request.text)).toEqual([
@@ -234,7 +233,7 @@ describe("example audio", () => {
     const { bucket } = memoryBucket();
     const speech = vi.fn(async () => sound());
     const allowance = free();
-    const deps = { bucket, providers: () => [provider("google-gemini", speech)], storedOnly: true };
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)], storedOnly: true };
     await expect(exampleAudio(context(card()), "card-1", deps, allowance)).rejects.toMatchObject({
       code: "not_found",
     });
@@ -247,7 +246,7 @@ describe("example audio", () => {
     const speech = vi.fn(async () => sound());
     const allowance = free();
     vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
-    const deps = { bucket, providers: () => [provider("google-gemini", speech)] };
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
     await expect(exampleAudio(context(card()), "card-1", deps, allowance)).rejects.toMatchObject({
       code: "not_found",
     });
@@ -261,7 +260,7 @@ describe("example audio", () => {
     const found = await exampleAudio(
       context(card()),
       "card-1",
-      { bucket, providers: () => [provider("google-gemini", speech)] },
+      { bucket, providers: () => [provider("elevenlabs", speech)] },
       { left: async () => 3600, spend: vi.fn() },
     );
     expect(found).toEqual({ retryAfter: 3600 });
@@ -299,7 +298,7 @@ describe("example audio", () => {
 
   it("is refused for a card with no language, no example or an example too long to say", async () => {
     const { bucket } = memoryBucket();
-    const deps = { bucket, providers: () => [provider("google-gemini", async () => sound())] };
+    const deps = { bucket, providers: () => [provider("elevenlabs", async () => sound())] };
     for (const patch of [
       { language: null },
       { example: null },

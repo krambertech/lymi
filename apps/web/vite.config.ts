@@ -111,8 +111,6 @@ export default defineConfig({
                   OPENAI_API_KEY: "",
                   OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
                   OPENAI_TTS_VOICE: "coral",
-                  GOOGLE_TTS_MODEL: "chirp-3-hd",
-                  GOOGLE_TTS_VOICE: "Kore",
                 },
               },
             }

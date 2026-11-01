@@ -45,5 +45,5 @@ export function leadInDependencies(env: Bindings): LeadInDependencies {
     }
     decide = undefined;
   }
-  return { writer: createLeadInWriter(env, meteredFetch(env, "gemini_text")), decide };
+  return { writer: createLeadInWriter(env, meteredFetch(env, "openai_text")), decide };
 }

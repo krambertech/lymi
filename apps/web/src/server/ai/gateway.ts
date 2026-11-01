@@ -7,8 +7,6 @@ const PROVIDERS = {
   openai: "openai",
   anthropic: "anthropic/v1",
   elevenlabs: "elevenlabs",
-  "google-ai-studio": "google-ai-studio",
-  "google-cloud-tts": "custom-google-cloud-tts",
   typesafe: "custom-typesafe",
 } as const;
 

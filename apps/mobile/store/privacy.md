@@ -12,8 +12,8 @@ Lymi has no ads, no ad SDK, no App Tracking Transparency prompt and no advertisi
 | Cards, decks, sections, tags, hints, reviews, settings | Lymi's server | The product itself, synced between phone and web |
 | Card pictures, profile photo | Lymi's server (R2), re-encoded to WebP without metadata | Shown on the card and to members of a shared deck |
 | Lesson pages, PDFs and text for Smart add | Lymi's server, then Anthropic through Cloudflare AI Gateway | Extracting terms; the material is not kept after the read |
-| A card's term and existing fields, the deck's name, instructions and style | OpenAI, Google Gemini and Workers AI through AI Gateway | Enrichment, hint drafts, Japanese lead-ins, language detection |
-| A card's term, reading or example sentence, with pronunciation context where needed | Google Cloud TTS, Gemini, ElevenLabs or OpenAI speech | Speech; the clip is cached on Lymi's server |
+| A card's term and existing fields, the deck's name, instructions and style | OpenAI and Workers AI through AI Gateway | Enrichment, hint drafts, Japanese lead-ins, language detection |
+| A card's term, reading or example sentence, with pronunciation context where needed | ElevenLabs or OpenAI speech | Speech; the clip is cached on Lymi's server |
 | Import files (Anki, Mochi, Quizlet, Noji, Lymi), including retained card recordings | Lymi's server (R2) | Importing |
 | Feedback notes | Lymi's server, emailed to the operator inbox | Answering the learner |
 | Usage events with the account ID, app version and a country from Cloudflare | PostHog EU through Lymi's server | Product analytics; no card text, prompts, email or name. Opt-out is by email |
@@ -104,8 +104,6 @@ Declare only the audio subtypes retained by the submitted import paths; an impor
 ## Provider terms
 
 Use the service-provider exception only for transfers covered by the provider’s processing terms and the account’s actual settings. Disabling AI Gateway payload logs does not disable upstream retention or model training. Verify those separately before making a no-training promise.
-
-[Google’s Gemini API terms](https://ai.google.dev/gemini-api/terms) restrict API clients directed at or likely to be accessed by under-18s and require Paid Services when serving EEA, Swiss or UK users. This applies to the AI Studio API paths used for Japanese pronunciation context and some speech, not automatically to separate Google Cloud services. Resolve the provider and audience choice before offering those paths to younger learners; do not silently impose an app-wide age limit to cover a provider constraint.
 
 ## AI permission and native builds
 

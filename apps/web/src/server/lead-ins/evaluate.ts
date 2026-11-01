@@ -6,7 +6,7 @@
  *   pnpm --filter @lymi/web eval:lead-ins [--language ja] [--write] [--save run.json]
  *
  * `--write` also asks the writer for every case at or above the threshold; it needs
- * `GEMINI_API_KEY` and the AI Gateway variables in `.dev.vars`.
+ * `OPENAI_API_KEY` and the AI Gateway variables in `.dev.vars`.
  */
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -46,7 +46,7 @@ const { env, dispose } = await getPlatformProxy<{ AI: Ai }>({ configPath: config
 const ai = { run: (model: string, input: unknown) => env.AI.run(model as never, input as never) };
 const keys = evalEnv();
 if (args.includes("--write"))
-  requireKeys(keys, ["GEMINI_API_KEY", "AI_GATEWAY_TOKEN"], "write lead-ins");
+  requireKeys(keys, ["OPENAI_API_KEY", "AI_GATEWAY_TOKEN"], "write lead-ins");
 const writer = args.includes("--write") ? createLeadInWriter(keys) : null;
 const results: unknown[] = [];
 

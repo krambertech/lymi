@@ -186,26 +186,14 @@ describe("analytics privacy contract", () => {
     const long = textCallCost("claude-haiku-5-5", { input: 200_000, output: 10_000 });
     expect(long?.input).toBeCloseTo(0.1);
     expect(long?.output).toBeCloseTo(0.025);
-    expect(speechCallCost("chirp-3-hd", { characters: 1_000 })).toEqual({ input: 0.03, output: 0 });
     expect(speechCallCost("eleven_v4", { characters: 1_000 })?.input).toBeCloseTo(0.08);
-    const gemini = speechCallCost("gemini-3.1-flash-tts-preview", {
-      characters: 6,
-      inputTokens: 100,
-      outputTokens: 50,
-    });
-    expect(gemini?.input).toBeCloseTo(0.0001);
-    expect(gemini?.output).toBeCloseTo(0.001);
-    expect(
-      speechCallCost("gemini-3.1-flash-tts-preview", { characters: 6, audioSeconds: 2 })?.output,
-    ).toBeCloseTo(0.001);
-    expect(speechCallCost("gemini-3.1-flash-tts-preview", { characters: 6 })).toBeUndefined();
     expect(speechCallCost("gpt-4o-mini-tts", { characters: 6 })).toBeUndefined();
     const speech = {
       $ai_trace_id: "0b9d5d8e-4c1f-4d43-9a5b-3f0c2b6f1e11",
       $ai_session_id: null,
       $ai_span_name: "pronunciation",
-      $ai_provider: "google",
-      $ai_model: "chirp-3-hd",
+      $ai_provider: "elevenlabs",
+      $ai_model: "eleven_v4",
       characters: 6,
       $ai_total_cost_usd: 0.00018,
       $ai_latency: 0.4,

@@ -1,21 +1,11 @@
 export type SpeechRequest = {
   previousText?: string | undefined;
-  /** A sentence rather than a word, which a provider that takes a prompt is told. */
-  kind?: "example" | undefined;
   text: string;
   language: string;
-  /** Receives what the vendor bills by, when the provider can tell. */
-  usage?: ((usage: SpeechUsage) => void) | undefined;
-};
-
-export type SpeechUsage = {
-  inputTokens?: number | undefined;
-  outputTokens?: number | undefined;
-  audioSeconds?: number | undefined;
 };
 
 /** One speech call's size and time, for cost; it never carries the text. */
-export type SpeechCall = SpeechUsage & {
+export type SpeechCall = {
   provider: SpeechProvider["provider"];
   model: string;
   characters: number;
@@ -25,13 +15,13 @@ export type SpeechCall = SpeechUsage & {
 };
 
 export interface SpeechProvider {
-  provider: "google-gemini" | "gemini-api" | "google-chirp" | "openai" | "elevenlabs";
+  provider: "openai" | "elevenlabs";
   model: string;
   voice: string;
   /** The exact locale sent upstream. It is part of the cache identity. */
   locale: string;
-  contentType: "audio/mpeg" | "audio/wav";
-  extension: "mp3" | "wav";
+  contentType: "audio/mpeg";
+  extension: "mp3";
   speech(request: SpeechRequest): Promise<Response>;
 }
 
@@ -49,7 +39,7 @@ export type TextRequest = {
 
 /** One model call's size and time, for cost; it never carries the prompt or the reply. */
 export type TextCall = {
-  provider: "openai" | "anthropic" | "google";
+  provider: "openai" | "anthropic";
   model: string;
   inputTokens: number;
   outputTokens: number;

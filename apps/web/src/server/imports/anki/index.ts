@@ -532,7 +532,6 @@ export const anki: SourceAdapter<AnkiNote> = {
     ): ImportedCard[] => {
       const term = raw.term ?? "";
       const fitted = fitFields({
-        term: withoutReadings(term) ?? "",
         meaning: withoutReadings(raw.meaning),
         ...pitchIntoReading(
           {

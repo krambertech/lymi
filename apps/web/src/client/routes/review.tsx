@@ -1,4 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useDailyGoal } from "@lymi/client/daily-goal";
+import { nextCards, reminderChoices } from "@lymi/client/first-review";
 import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
@@ -50,6 +52,17 @@ import { Button } from "../components/button";
 import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import {
+  type FanCard,
+  type FirstEndLeft,
+  FirstReviewTitle,
+  FirstStreakNote,
+  firstEndParts,
+  firstReviewTeaches,
+  type PlanStep,
+  useReminder,
+} from "../components/first-plan";
+import { ComesBack, CueTip, GradesTip, useComesBack } from "../components/first-review";
 import { GRADES } from "../components/grade";
 import { HintEditor } from "../components/hint-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
@@ -66,7 +79,9 @@ import { playAlone } from "../lib/now-playing";
 import {
   decksQuery,
   drawQuery,
+  insightsQuery,
   queueQuery,
+  roundsQuery,
   sectionsQuery,
   seriesQuery,
   streakQuery,
@@ -804,6 +819,27 @@ function Review() {
     return state.log.filter((e) => e.cardId === current.card.id && e.mode === key);
   }, [current, state]);
   const repeat = gradedToday.length > 0;
+
+  // The account's first review teaches itself: each tip once, bound to the card it first showed on.
+  const [tipsOff, setTipsOff] = useState(false);
+  const [tipFor, setTipFor] = useState<{ first?: string; returned?: string; grades?: string }>({});
+  const [teaches] = useState(firstReviewTeaches);
+  const tipsOn = !!current && !!sessionFirst.current && teaches && !tipsOff;
+  const owns = (key: string | undefined) => key === undefined || key === showing;
+  const firstTip = tipsOn && !revealed && !repeat && done === 0 && owns(tipFor.first);
+  const returnedTip =
+    tipsOn && !revealed && gradedToday.some((e) => e.rating === 1) && owns(tipFor.returned);
+  const comesBack = useComesBack(current?.next, state?.day.end);
+  const gradesTip = tipsOn && revealed && !!comesBack && owns(tipFor.grades);
+  if (firstTip && tipFor.first === undefined) setTipFor((t) => ({ ...t, first: showing }));
+  if (returnedTip && tipFor.returned === undefined) setTipFor((t) => ({ ...t, returned: showing }));
+  if (gradesTip && tipFor.grades === undefined) setTipFor((t) => ({ ...t, grades: showing }));
+  // After the first grade, the card gives way to a screen that says when it comes back.
+  const [cameBack, setCameBack] = useState<{
+    term: string;
+    rating: Rating;
+    back: NonNullable<typeof comesBack>;
+  } | null>(null);
   const takeAid = useCallback(
     (input: "keyboard" | "pointer") => {
       if (revealed || taken >= steps.length) return;
@@ -908,8 +944,21 @@ function Review() {
     ],
   );
 
+  const reviewedCards = useRef<FanCard[]>([]);
+  const grade = useCallback(
+    (rating: Rating, input: "keyboard" | "pointer") => {
+      if (current && gradeAllowed(rating, aid) && !reviewedCards.current.includes(current.card))
+        reviewedCards.current.push(current.card);
+      if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
+        setCameBack({ term: current.card.term, rating, back: comesBack });
+      onGrade(rating, input);
+    },
+    [gradesTip, comesBack, current, aid, onGrade],
+  );
+
   // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
   const leave = useCallback(() => {
+    setCameBack(null);
     if (current && mark && attempts !== undefined && attempts > mark.attempts) setPaused(true);
     else void navigate({ to: "/today" });
   }, [current, mark, attempts, navigate]);
@@ -921,6 +970,13 @@ function Review() {
       if (add.open || writingHint || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
         leave();
+        return;
+      }
+      if (cameBack) {
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          setCameBack(null);
+        }
         return;
       }
       const target = e.target as HTMLElement | null;
@@ -954,18 +1010,19 @@ function Review() {
           setAnimateReveal(false);
           setFocusGrades(false);
           setRevealed(true);
-        } else onGrade(3, "keyboard");
+        } else grade(3, "keyboard");
       }
       if (g) {
         e.preventDefault();
-        onGrade(g.rating, "keyboard");
+        grade(g.rating, "keyboard");
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [
     revealed,
-    onGrade,
+    grade,
+    cameBack,
     takeAid,
     showAid,
     leave,
@@ -1120,6 +1177,60 @@ function Review() {
     </Button>
   );
 
+  // Once: after Review more cards, the next end is an ordinary one.
+  const firstEndOver = useRef(false);
+  const firstEnd = !!sessionFirst.current && teaches && !firstEndOver.current && !!end;
+  const [endStep, setEndStep] = useState<PlanStep>("summary");
+  const forecast = useQuery({ ...insightsQuery(30), enabled: firstEnd });
+  const rounds = useQuery({ ...roundsQuery, enabled: firstEnd });
+  const reminder = useReminder();
+  const dailyGoal = useDailyGoal();
+  // Held here, because a finished day's streak keeps the goal it was finished against.
+  const [chosenGoal, setChosenGoal] = useState<number | undefined>(undefined);
+  const endGoal = chosenGoal ?? data?.goal ?? 25;
+  const next = nextCards(forecast.data?.forecast, endGoal);
+  const [choices] = useState(() => reminderChoices(new Date()));
+  const [part, setPart] = useState(choices.part);
+  const goalAtEnd = useRef<number | undefined>(undefined);
+  if (firstEnd && data) goalAtEnd.current ??= data.goal;
+  const leaveFirstEnd = (left: FirstEndLeft) => {
+    const r = reminder.reminder;
+    firstEndOver.current = true;
+    captureAnalytics("first_review_end_left", {
+      step: endStep,
+      left,
+      goal: endGoal,
+      goal_changed: endGoal !== goalAtEnd.current,
+      reminder:
+        r === "on"
+          ? "on"
+          : r === "denied"
+            ? "blocked"
+            : r === "install" || r === "none"
+              ? "unavailable"
+              : "off",
+      tips_skipped: tipsOff,
+    });
+  };
+  const firstParts = firstEnd
+    ? firstEndParts({
+        step: endStep,
+        onStep: setEndStep,
+        cards: reviewedCards.current,
+        next,
+        fresh: !!next && next.count <= (rounds.data?.new ?? 0),
+        goal: endGoal,
+        onGoal: (n) => {
+          setChosenGoal(n);
+          dailyGoal.change(n);
+        },
+        control: reminder,
+        times: choices.times,
+        part,
+        onPart: setPart,
+      })
+    : null;
+
   return (
     <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
@@ -1134,7 +1245,11 @@ function Review() {
         streak={streakNow}
         complete={!!end}
         loading={!data && !failed}
-        onClose={leave}
+        onClose={() => {
+          if (firstEnd) leaveFirstEnd("closed");
+          leave();
+        }}
+        steps={firstParts?.steps}
       />
 
       {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
@@ -1166,7 +1281,7 @@ function Review() {
 
       {/* The card steps back as the end arrives, popped out of the flow so the two overlap. */}
       <AnimatePresence mode="popLayout" initial={false}>
-        {end && data && state && (
+        {end && !cameBack && data && state && (
           <motion.div
             key="end"
             className="flex min-h-0 flex-1 flex-col"
@@ -1182,7 +1297,51 @@ function Review() {
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
               focusOnMount
               onOffer={onOffer}
-              done={doneLink}
+              done={
+                firstEnd
+                  ? (variant) => (
+                      <Button
+                        variant={variant}
+                        size="lg"
+                        className="w-full"
+                        render={<Link to="/today" />}
+                        onClick={() => leaveFirstEnd("done")}
+                      >
+                        <Trans>Done</Trans>
+                      </Button>
+                    )
+                  : doneLink
+              }
+              {...(firstEnd && {
+                pinned: true,
+                title: <FirstReviewTitle stopped={!end.satisfied} />,
+                runNote: (
+                  <FirstStreakNote
+                    left={end.satisfied ? 0 : Math.max(0, data.goal - state.attempts)}
+                  />
+                ),
+                beat: firstParts?.beat,
+                foot: firstParts?.foot,
+                burst: endStep === "bye" ? 1 : 0,
+                continueLabel: <Trans>Review more cards</Trans>,
+                more: (
+                  <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => {
+                      leaveFirstEnd("add_cards");
+                      add.openCard(deck);
+                    }}
+                  >
+                    <Plus data-icon="inline-start" aria-hidden="true" />
+                    <Trans>Add more cards</Trans>
+                  </Button>
+                ),
+                onOffer: (offer: Offer) => {
+                  leaveFirstEnd(offer.kind === "forgotten" ? "forgotten" : "more_cards");
+                  onOffer(offer);
+                },
+              })}
               addCards={
                 <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
@@ -1192,7 +1351,23 @@ function Review() {
             />
           </motion.div>
         )}
-        {current && (
+        {cameBack && (
+          <motion.div
+            key="came-back"
+            className="flex min-h-0 flex-1 flex-col"
+            exit={{ opacity: 0, transition: { duration: 0.14 } }}
+          >
+            <ComesBack
+              {...cameBack}
+              onNext={() => setCameBack(null)}
+              onSkip={() => {
+                setTipsOff(true);
+                setCameBack(null);
+              }}
+            />
+          </motion.div>
+        )}
+        {current && !cameBack && (
           <motion.div
             key="cards"
             className="relative flex min-h-0 flex-1 flex-col"
@@ -1224,6 +1399,21 @@ function Review() {
               animateReveal={animateReveal}
               animateIn={animateNextCard}
               nudge={nudge}
+              cueTip={
+                firstTip || returnedTip ? (
+                  <CueTip
+                    key="cue-tip"
+                    kind={firstTip ? "first" : "returned"}
+                    cue={current.mode.cue}
+                    onSkip={() => setTipsOff(true)}
+                  />
+                ) : undefined
+              }
+              cover={
+                gradesTip ? (
+                  <GradesTip key="grades-tip" onSkip={() => setTipsOff(true)} />
+                ) : undefined
+              }
               focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
@@ -1303,7 +1493,7 @@ function Review() {
               next={current.next}
               aid={aid}
               lockedNudge={lockedNudge.key === showing ? lockedNudge.presses : 0}
-              onGrade={(rating) => onGrade(rating, "pointer")}
+              onGrade={(rating) => grade(rating, "pointer")}
             />
           </motion.div>
         )}

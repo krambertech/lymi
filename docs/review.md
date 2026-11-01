@@ -44,7 +44,7 @@ Cards are drawn with weighted randomness rather than a strict order, so capture 
 
 ## A forgotten card comes back the same day
 
-A forgotten card returns in the same direction a few cards later, then after longer gaps, up to three times a day. After that it waits until tomorrow. Hard on a card still being learned brings it back the same way. A card left in learning from an earlier day returns early in the next review. Once one direction of a card is reviewed, the other waits until tomorrow, because the answer would give it away. A card starts one direction at a time in its deck's order, which begins with production by default.
+A forgotten card returns in the same direction a few cards later, then after longer gaps, up to three times a day. After that it waits until tomorrow. Hard on a card still being learned waits until tomorrow too; only Forgot owes a return today. A card left in learning from an earlier day returns early in the next review. Once one direction of a card is reviewed, the other waits until tomorrow, because the answer would give it away. A card starts one direction at a time in its deck's order, which begins with production by default.
 
 ## A review runs to its end and stops once at the goal
 

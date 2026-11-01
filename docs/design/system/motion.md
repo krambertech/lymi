@@ -109,6 +109,8 @@ Review completion uses a single sequence lasting about three seconds. It confirm
 | 2.26 s | A smaller spark hops from today's light on to the run's flame over 440 ms. |
 | 2.7 s | The run's flame catches, swelling past its full size and back with three sparks off its tip, and the run rolls up by one, amber for a moment before it cools to its ink. |
 
+The first review's end pins this sequence: the lantern lands at the top of the column and holds there through the screens after it, whose content rises out of a blur over 280 ms. The last of them throws a second burst of embers. [Getting started](../onboarding.md#the-first-review) has the screens.
+
 Play the goal-completion spark once per day, when review first satisfies the day. It connects the lantern, today’s indicator and streak count. Particle glow lasts 200 ms, then the particles use flat fills. Shared `END_OF_REVIEW`, `sparkAt` and `lightBurst` in `@lymi/design` define timing and geometry. Wait for the last grade to reach the server and, on exhaustion, for a successful draw check before showing completion. Keep the header stable during that wait. The first tap or key skips to the final state. Continue and Review forgotten return the lantern to the header.
 
 ## Numbers

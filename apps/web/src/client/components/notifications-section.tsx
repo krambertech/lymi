@@ -1,12 +1,18 @@
 import { i18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { PushSubscriptionInput, ReminderTime } from "@lymi/core";
+import type { ReminderTime } from "@lymi/core";
 import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
+import {
+  DEFAULT_TIME,
+  subscriptionInput,
+  supportsPush,
+  timezone,
+  turnOnReminder,
+} from "../lib/push-reminder";
 import { useInstallState } from "../lib/pwa-install";
-import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { InstallDialog } from "./install-dialog";
@@ -14,44 +20,6 @@ import { SettingsGroup } from "./settings-group";
 import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Switch } from "./ui/switch";
-
-const DEFAULT_TIME: ReminderTime = "19:00";
-
-function supportsPush() {
-  return (
-    typeof window !== "undefined" &&
-    "Notification" in window &&
-    "serviceWorker" in navigator &&
-    "PushManager" in window
-  );
-}
-
-function timezone() {
-  return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-}
-
-function publicKeyBytes(value: string) {
-  const padding = "=".repeat((4 - (value.length % 4)) % 4);
-  const base64 = (value + padding).replace(/-/g, "+").replace(/_/g, "/");
-  return Uint8Array.from(atob(base64), (character) => character.charCodeAt(0));
-}
-
-function subscriptionInput(
-  subscription: PushSubscription,
-  reminderTime: ReminderTime,
-): PushSubscriptionInput {
-  const json = subscription.toJSON();
-  if (!json.endpoint || !json.keys?.p256dh || !json.keys.auth) {
-    throw new Error("This browser did not return a complete push subscription");
-  }
-  return {
-    endpoint: json.endpoint,
-    expirationTime: json.expirationTime ?? null,
-    keys: { p256dh: json.keys.p256dh, auth: json.keys.auth },
-    reminderTime,
-    timezone: timezone(),
-  };
-}
 
 /** Resolved when the error happens, so the sentence is in the language active at the time. */
 function messageFor(error: unknown) {
@@ -124,26 +92,15 @@ export function NotificationsSection() {
     }
     setBusy(true);
     try {
-      const prompted = Notification.permission === "default";
-      if (prompted) captureAnalytics("reminder_prompt_shown", {});
-      const permission = await Notification.requestPermission();
-      if (permission !== "granted") {
+      const result = await turnOnReminder(vapidPublicKey, time);
+      if (result !== "on") {
         setError(
-          permission === "denied"
+          result === "denied"
             ? t`Notifications are blocked. Allow them in your browser or device settings, then try again.`
             : t`Reminders stay off until notifications are allowed.`,
         );
         return;
       }
-      if (prompted) captureAnalytics("reminder_prompt_accepted", {});
-      const registration = await navigator.serviceWorker.ready;
-      const subscription =
-        (await registration.pushManager.getSubscription()) ??
-        (await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: publicKeyBytes(vapidPublicKey),
-        }));
-      await api.savePushSubscription(subscriptionInput(subscription, time));
       setEnabled(true);
       setSavedTime(time);
       setNotice(t`Reminder on for this device.`);

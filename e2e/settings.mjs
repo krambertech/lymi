@@ -49,6 +49,8 @@ export const e2eAccounts = [
   "publisher",
   "password-account",
   "password-reset",
+  "first-review",
+  "first-review-early",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

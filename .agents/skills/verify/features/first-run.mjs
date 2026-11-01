@@ -35,6 +35,11 @@ export default async function drive({ page, step, api, expect }) {
       if (await reveal.isVisible()) await reveal.click();
       const good = page.getByRole("button", { name: /^Good/ });
       if (await good.isVisible()) await good.click();
+      // The first review's own steps; docs/design/onboarding.md "The first review".
+      for (const name of [/^Next card/, /^Next$/, /^Not now$/]) {
+        const step = page.getByRole("button", { name });
+        if (await step.isVisible()) await step.click();
+      }
       await page.waitForTimeout(300);
     }
     await expect(done).toBeVisible();

@@ -47,7 +47,7 @@ Fixup commits are fine on an open pull request, because GitHub squashes the bran
 
 Start from [the pull request template](../.github/pull_request_template.md); do not compose a parallel shape from memory. Keep the summary to one short paragraph or at most three bullets and list only checks that ran and their result.
 
-Every rendered UI change keeps the `Screenshots` section with an attached after image at minimum and before-and-after evidence when comparison helps, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](../.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready.
+Every rendered UI change keeps the `Screenshots` section with an attached after image of each affected surface and a before image when the surface already existed, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](../.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready.
 
 Add `Why`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
 

@@ -68,6 +68,8 @@ export function initTheme() {
   });
   // The Mac app's quick-add panel stays loaded while the theme changes in its main window.
   window.addEventListener("storage", (event) => {
-    if (event.key === KEY) applyTheme(read());
+    if (event.key !== KEY) return;
+    applyTheme(read());
+    window.dispatchEvent(new Event(THEME_CHANGED));
   });
 }

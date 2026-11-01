@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from "vitest";
-import { applyTheme, initTheme, setTheme } from "./theme";
+import { applyTheme, initTheme, setTheme, THEME_CHANGED } from "./theme";
 
 const standIn = () => {
   const bridge = { setTheme: vi.fn() };
@@ -29,9 +29,12 @@ test("leaves an older Mac app without the method alone", () => {
 
 test("follows a theme chosen in another window", () => {
   const bridge = standIn();
+  const changed = vi.fn();
+  window.addEventListener(THEME_CHANGED, changed, { once: true });
   initTheme();
   localStorage.setItem("lymi-theme", "dark");
   window.dispatchEvent(new StorageEvent("storage", { key: "lymi-theme" }));
   expect(document.documentElement.dataset.theme).toBe("dark");
   expect(bridge.setTheme).toHaveBeenLastCalledWith("dark");
+  expect(changed).toHaveBeenCalledOnce();
 });

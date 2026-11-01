@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import { openBrowserAsync } from "expo-web-browser";
-import { type ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { type TextInput, View, type ViewStyle } from "react-native";
 import Animated, {
   Easing,
@@ -21,7 +21,8 @@ import { clear, usePalette } from "../theme/palette";
 import { AppleMark } from "../ui/apple-mark";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
-import { Button, Icon, Press, Text } from "../ui/primitives";
+import { Notice } from "../ui/notice";
+import { Button, Press, Text } from "../ui/primitives";
 import { API_URL, localizedSiteUrl } from "./client";
 import { devSignIn, type SignIn, type Step } from "./use-sign-in";
 
@@ -130,7 +131,7 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
           onPress={door.google}
         />
       </Animated.View>
-      {door.errors.social && <Alert>{door.errors.social}</Alert>}
+      {door.errors.social && <Notice tone="danger">{door.errors.social}</Notice>}
       <Animated.View entering={arrive(340)}>
         <Button
           label={t`Sign in with email`}
@@ -192,8 +193,12 @@ export function EmailContent({ door }: { door: SignIn }) {
             : heading.line && i18n._(heading.line)}
         </Text>
       </Animated.View>
-      {door.notice && <NoticeBlock notice={door.notice} />}
-      {door.errors.form && <Alert>{door.errors.form}</Alert>}
+      {door.notice && (
+        <Notice tone="good" icon="email" title={door.notice.title}>
+          {door.notice.body}
+        </Notice>
+      )}
+      {door.errors.form && <Notice tone="danger">{door.errors.form}</Notice>}
       <Animated.View entering={arrive(50)}>
         {step === "code" ? (
           <CodeForm door={door} />
@@ -360,38 +365,5 @@ function CodeForm({ door }: { door: SignIn }) {
         onPress={door.resend}
       />
     </View>
-  );
-}
-
-function NoticeBlock({ notice }: { notice: NonNullable<SignIn["notice"]> }) {
-  const p = usePalette();
-  return (
-    <Animated.View
-      entering={FadeIn.duration(150)}
-      className="flex-row gap-3 rounded-md bg-success-soft p-4"
-      accessibilityLiveRegion="polite"
-    >
-      <Icon name="email" size={20} colour={p.success} />
-      <View className="flex-1 gap-1">
-        <Text className="text-md font-medium text-ink">{notice.title}</Text>
-        <Text className="text-base text-ink-secondary">{notice.body}</Text>
-      </View>
-    </Animated.View>
-  );
-}
-
-function Alert({ children }: { children: ReactNode }) {
-  const p = usePalette();
-  return (
-    <Animated.View
-      entering={FadeIn.duration(150)}
-      className="flex-row items-start gap-2.5 rounded-md bg-danger-soft px-3.5 py-3"
-      accessibilityRole="alert"
-    >
-      <View className="pt-0.5">
-        <Icon name="alert" size={16} colour={p.danger} />
-      </View>
-      <Text className="flex-1 text-base text-ink">{children}</Text>
-    </Animated.View>
   );
 }

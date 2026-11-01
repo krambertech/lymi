@@ -30,11 +30,20 @@ export const SOURCES: { source: ImportSource; detail: MessageDescriptor }[] = [
 /** A file the learner picked: its bytes are read a part at a time while it uploads. */
 export type Picked = { file: File; name: string; size: number };
 
-/** iOS's file picker over every file, since Anki's and Mochi's types are not registered on the phone. */
-export async function pickFile(): Promise<Picked | null> {
-  const picked = await File.pickFileAsync();
-  if (picked.canceled) return null;
-  return { file: picked.result, name: picked.result.name, size: picked.result.size };
+/**
+ * iOS's file picker over every file, since Anki's and Mochi's types are not registered on the phone.
+ * Null is a cancel, or a failure already told through `onRefused`. expo-file-system turns the
+ * picker's own errors into a cancel, so only a picked file that can't be read reaches the catch.
+ */
+export async function pickFile(onRefused: (message: string) => void): Promise<Picked | null> {
+  try {
+    const picked = await File.pickFileAsync();
+    if (picked.canceled) return null;
+    return { file: picked.result, name: picked.result.name, size: picked.result.size };
+  } catch {
+    onRefused(i18n._(msg`Couldn’t open that file. Try again, or choose another one.`));
+    return null;
+  }
 }
 
 /** A picked file as the shared upload reads it: each part's bytes straight from the file. */

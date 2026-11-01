@@ -22,6 +22,7 @@ import { type TrayCard, useCoverColour } from "../explore/tray";
 import { usePalette } from "../theme/palette";
 import { EmptyState } from "../ui/empty-state";
 import type { IconName } from "../ui/icons";
+import { Notice } from "../ui/notice";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
@@ -321,8 +322,12 @@ function LiveLink({
         </Text>
       </View>
       <View className="gap-3 self-stretch">
-        {note && <Note tone={viewer === "member" ? "good" : "neutral"}>{note}</Note>}
-        {error && <Note tone="danger">{error}</Note>}
+        {note && (
+          <Notice quiet tone={viewer === "member" ? "good" : "neutral"}>
+            {note}
+          </Notice>
+        )}
+        {error && <Notice tone="danger">{error}</Notice>}
         {action}
       </View>
     </View>
@@ -355,27 +360,6 @@ function Assurance({ icon, children }: { icon: IconName; children: string }) {
         <Icon name={icon} size={18} colour={p["ink-muted"]} />
       </View>
       <Text className="flex-1 text-base text-ink-secondary">{children}</Text>
-    </View>
-  );
-}
-
-function Note({ tone, children }: { tone: "neutral" | "good" | "danger"; children: string }) {
-  const p = usePalette();
-  const look = {
-    neutral: { box: "bg-plate-nested", icon: "alert" as const, ink: p["ink-secondary"] },
-    good: { box: "bg-success-soft", icon: "check" as const, ink: p.success },
-    danger: { box: "bg-danger-soft", icon: "alert" as const, ink: p.danger },
-  }[tone];
-  return (
-    <View
-      className={`flex-row items-start gap-2.5 rounded-md px-3.5 py-3 ${look.box}`}
-      accessibilityRole={tone === "danger" ? "alert" : undefined}
-      accessibilityLiveRegion="polite"
-    >
-      <View className="pt-0.5">
-        <Icon name={look.icon} size={16} colour={look.ink} />
-      </View>
-      <Text className="flex-1 text-base text-ink">{children}</Text>
     </View>
   );
 }

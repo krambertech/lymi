@@ -6,13 +6,12 @@ import {
   canEnrich,
   canPlayPronunciation,
   type DeckEnrichField,
-  deserializeState,
   drawsTermReading,
   type EnrichedField,
-  type FsrsCard,
   isolate,
   type KnownReadings,
   type ReviewMode,
+  readFsrs,
   termShowsPronunciation,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
@@ -256,17 +255,6 @@ export interface WordProps {
   titleId?: string | undefined;
   /** True while a field is being edited or the Move sheet is open, so the holder does not remount it. */
   onBusyChange?: ((busy: boolean) => void) | undefined;
-}
-
-/** The FSRS memory model, or null for a state that has none yet. */
-function readFsrs(state: CardState | null): FsrsCard | null {
-  if (!state) return null;
-  try {
-    const card = deserializeState(state.fsrs);
-    return typeof card.stability === "number" ? card : null;
-  } catch {
-    return null;
-  }
 }
 
 /** When a mode is back, as the schedule table says it, with the date once it is days away. */

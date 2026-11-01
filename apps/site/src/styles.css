@@ -148,7 +148,7 @@
     0 0 0 1px var(--edge),
     var(--lift);
 }
-/* An overlay in a picture: its edge and its drop together, because a shadow utility beside edge-strong loses to it. */
+/* An overlay's edge and its drop together, because a shadow utility beside edge-strong loses to it. */
 @utility edge-drop {
   box-shadow:
     0 0 0 1px var(--edge-strong),

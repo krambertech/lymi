@@ -64,7 +64,7 @@ function CommandPalette({
             "fixed z-(--z-sheet) flex flex-col overflow-hidden bg-plate text-ink outline-none",
             compact
               ? "inset-0 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
-              : "inset-x-0 top-[12vh] mx-auto max-h-[min(560px,76dvh)] w-[min(620px,calc(100vw-32px))] rounded-xl edge-strong [--lift:var(--glass-drop)]",
+              : "inset-x-0 top-[12vh] mx-auto max-h-[min(560px,76dvh)] w-[min(620px,calc(100vw-32px))] rounded-xl edge-drop",
             skin === "dev" && "dev-skin",
             skin === "dev" && !compact && "rounded-lg",
           )}

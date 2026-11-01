@@ -23,7 +23,8 @@
   --sheet: var(--canvas);
   --plate: oklch(1 0 0);
   --plate-nested: oklch(0.955 0.006 80);
-  --plate-hover: oklch(0.92 0.007 80);
+  /* As far from plate-nested as ink-muted's 4.5:1 on it allows. */
+  --plate-hover: oklch(0.93 0.007 80);
   /* A chosen option in a plate-nested track; at night the plate is darker than the track, so it lifts. */
   --plate-chosen: var(--plate);
   /* The current row in the rail, and a row pointed at; at night both stay flat and hover stays under the current row. */

@@ -318,7 +318,7 @@ function DesktopAdd() {
             aria-expanded={picking}
             aria-controls={picking ? listId : undefined}
             aria-label={t`Deck: ${{ deckName: isolate(deckName) }}`}
-            className="flex min-w-0 max-w-48 shrink-0 items-center gap-1 rounded-xs px-1.5 py-0.5 text-sm text-ink-muted hoverable:hover:bg-plate-hover hoverable:hover:text-ink-secondary focus-visible:outline-2 focus-visible:outline-ring"
+            className="flex min-w-0 max-w-48 shrink-0 items-center gap-1 rounded-xs px-1.5 py-0.5 text-sm text-ink-muted hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-ring"
           >
             <span className="truncate">{deckName}</span>
             <ChevronsUpDown aria-hidden className="size-3.5 shrink-0 opacity-70" />

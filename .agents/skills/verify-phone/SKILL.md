@@ -28,6 +28,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
 | Daily reminder | [reminders.md](features/reminders.md) |
+| Learning emails | [learning-emails.md](features/learning-emails.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Enrich a card | [card-enrich.md](features/card-enrich.md) |

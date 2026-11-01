@@ -38,6 +38,33 @@ export type Block =
   | { type: "fallback"; label: string; url: string }
   | { type: "details"; lines: string[] };
 
+/** One side of a card as an email can draw it: plain text, in its own language and direction. */
+export interface EmailCardSide {
+  text: string;
+  lang?: string | undefined;
+  dir: "ltr" | "rtl" | "auto";
+}
+
+/** A learning email: its line under the heading, and the card its button belongs to. */
+export interface LearningBody {
+  line: string;
+  card?:
+    | {
+        front: EmailCardSide;
+        /** Set when the email teaches a new card, so both sides show. */
+        back?: EmailCardSide | undefined;
+        /** The card's deck, named on it once the email counts more than one deck. */
+        deck?: string | undefined;
+        button: { label: string; url: string };
+      }
+    | undefined;
+  /** The button of an email with no card to show. */
+  button?: { label: string; url: string } | undefined;
+  /** Why the email came, and how to stop it. */
+  why: string;
+  stop: { label: string; url: string };
+}
+
 export interface ComposedEmail {
   subject: string;
   /** The line an inbox shows after the subject. */
@@ -47,6 +74,8 @@ export interface ComposedEmail {
   blocks: Block[];
   /** Why the email came, under the plate. */
   footer: string[];
+  /** Replaces `blocks` in the shape learning emails share. */
+  learning?: LearningBody | undefined;
 }
 
 export interface EmailRenderOptions {
@@ -139,6 +168,7 @@ function darkStyles(hero: Hero | undefined): string {
   .lx-button { background-color: ${dark.amber} !important; color: ${dark["amber-ink"]} !important; }
   .lx-code { background-color: ${dark["plate-nested"]} !important; color: ${dark.ink} !important; }
   .lx-link { color: ${dark["amber-text"]} !important; }
+  .lx-rule { background-color: ${dark["edge-strong"]} !important; }
   .lx-avatar { background-color: ${dark.plate} !important; color: ${dark["amber-text"]} !important; }
   ${hue ? `.lx-hue { background-color: ${hue} !important; }` : ""}
   .lx-light { display: none !important; }
@@ -291,6 +321,167 @@ function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
   );
 }
 
+/** A term sized to fit the card: long ones step down rather than wrap to three lines. */
+const termSize = (text: string) => (text.length > 22 ? "20px" : "26px");
+
+function Side({
+  side,
+  style,
+  className,
+}: {
+  side: EmailCardSide;
+  style: CSSProperties;
+  className: string;
+}) {
+  return (
+    <div lang={side.lang} dir={side.dir} className={className} style={style}>
+      {side.text}
+    </div>
+  );
+}
+
+/** A slice of the loose cards, as wide as the card. A client without images keeps a plain card. */
+function PileSlice({ name, assetOrigin }: { name: string; assetOrigin: string }) {
+  const src = (room: "light" | "dark") =>
+    new URL(`/brand/email/${name}-${room}.png`, assetOrigin).toString();
+  const image = { display: "block", width: "100%", height: "auto" } as const;
+  return (
+    <>
+      <Img src={src("light")} width={408} alt="" className="lx-light" style={image} />
+      <div
+        className="lx-dark"
+        style={
+          { display: "none", maxHeight: 0, overflow: "hidden", msoHide: "all" } as CSSProperties
+        }
+      >
+        <Img src={src("dark")} width={408} alt="" style={image} />
+      </div>
+    </>
+  );
+}
+
+/**
+ * The card on its loose pile, ending in its button. Gmail drops rotation, so the cards behind are
+ * pictures above and below, and the picture above carries the plate's rounded top.
+ */
+function LearningCard({
+  card,
+  assetOrigin,
+}: {
+  card: NonNullable<LearningBody["card"]>;
+  assetOrigin: string;
+}) {
+  return (
+    <>
+      <PileSlice name="pile-top" assetOrigin={assetOrigin} />
+      <Section
+        className="lx-plate"
+        style={{
+          backgroundColor: light.plate,
+          borderRadius: "0 0 20px 20px",
+          border: `1px solid ${light.edge}`,
+          borderTop: 0,
+        }}
+      >
+        <div style={{ padding: "20px 20px 44px", textAlign: "center" }}>
+          {card.deck && (
+            <Text className="lx-muted" style={{ ...s.note, margin: "0 0 18px" }}>
+              {card.deck}
+            </Text>
+          )}
+          <Side
+            side={card.front}
+            className="lx-strong"
+            style={{
+              fontSize: termSize(card.front.text),
+              lineHeight: "1.2",
+              fontWeight: 500,
+              color: light.ink,
+            }}
+          />
+          {card.back && (
+            <>
+              <div
+                className="lx-rule"
+                style={{
+                  height: "1px",
+                  width: "64px",
+                  margin: "18px auto",
+                  backgroundColor: light["edge-strong"],
+                }}
+              />
+              <Side
+                side={card.back}
+                className="lx-text"
+                style={{ fontSize: "17px", lineHeight: "1.4", color: light["ink-secondary"] }}
+              />
+            </>
+          )}
+        </div>
+        <Button
+          href={card.button.url}
+          className="lx-button"
+          style={{ ...s.button, margin: 0, borderRadius: "0 0 19px 19px" }}
+        >
+          {card.button.label}
+        </Button>
+      </Section>
+      <PileSlice name="pile-foot" assetOrigin={assetOrigin} />
+    </>
+  );
+}
+
+/** The message on the canvas, with the card under it as its example. */
+function LearningBodyView({
+  email,
+  body,
+  options,
+}: {
+  email: ComposedEmail;
+  body: LearningBody;
+  options: EmailRenderOptions;
+}) {
+  return (
+    <>
+      <div style={{ padding: "0 8px" }}>
+        <Lockup assetOrigin={options.assetOrigin} />
+        <Text className="lx-strong" style={{ ...s.heading, margin: "0 0 8px" }}>
+          {holdLastWords(email.heading ?? email.subject)}
+        </Text>
+        <Text
+          className="lx-text"
+          style={{ ...s.text, fontSize: "16px", margin: body.card ? "0 0 8px" : "0 0 22px" }}
+        >
+          {body.line}
+        </Text>
+      </div>
+      {body.card && <LearningCard card={body.card} assetOrigin={options.assetOrigin} />}
+      {body.button && (
+        <Button href={body.button.url} className="lx-button" style={s.button}>
+          {body.button.label}
+        </Button>
+      )}
+      <Text className="lx-muted" style={s.footer}>
+        {body.why}
+        <br />
+        <Link href={body.stop.url} className="lx-link" style={s.link}>
+          {body.stop.label}
+        </Link>
+        {" · "}
+        <Link href={options.siteUrl} className="lx-link" style={s.link}>
+          lymi.app
+        </Link>
+      </Text>
+    </>
+  );
+}
+
+/** A wrapped heading of four words or more never leaves one word alone on its last line. */
+function holdLastWords(text: string): string {
+  const at = text.lastIndexOf(" ");
+  return text.split(" ").length < 4 ? text : `${text.slice(0, at)}\u00a0${text.slice(at + 1)}`;
+}
+
 function BlockView({ block }: { block: Block }) {
   switch (block.type) {
     case "text":
@@ -355,38 +546,44 @@ export function EmailTemplate({
       <Preview>{email.preview}</Preview>
       <Body className="lx-body" style={s.body}>
         <Container style={s.container}>
-          {hero?.kind === "deck" && <Lockup assetOrigin={options.assetOrigin} centered />}
-          <Section className="lx-plate" style={s.plate}>
-            {hero?.kind === "lantern" && <LanternHero assetOrigin={options.assetOrigin} />}
-            {hero?.kind === "deck" && <DeckHero hero={hero} />}
-            <Section
-              style={{
-                ...s.inner,
-                ...(hero?.kind === "lantern" ? { paddingTop: "8px", textAlign: "center" } : {}),
-              }}
-            >
-              {!hero && <Lockup assetOrigin={options.assetOrigin} />}
-              {email.heading && (
-                <Text className="lx-strong" style={s.heading}>
-                  {email.heading}
-                </Text>
-              )}
-              {email.blocks.map((block) => (
-                <BlockView key={JSON.stringify(block)} block={block} />
-              ))}
-            </Section>
-          </Section>
-          <Text className="lx-muted" style={s.footer}>
-            {email.footer.map((line) => (
-              <span key={line}>
-                {line}
-                <br />
-              </span>
-            ))}
-            <Link href={options.siteUrl} className="lx-link" style={s.link}>
-              lymi.app
-            </Link>
-          </Text>
+          {email.learning ? (
+            <LearningBodyView email={email} body={email.learning} options={options} />
+          ) : (
+            <>
+              {hero?.kind === "deck" && <Lockup assetOrigin={options.assetOrigin} centered />}
+              <Section className="lx-plate" style={s.plate}>
+                {hero?.kind === "lantern" && <LanternHero assetOrigin={options.assetOrigin} />}
+                {hero?.kind === "deck" && <DeckHero hero={hero} />}
+                <Section
+                  style={{
+                    ...s.inner,
+                    ...(hero?.kind === "lantern" ? { paddingTop: "8px", textAlign: "center" } : {}),
+                  }}
+                >
+                  {!hero && <Lockup assetOrigin={options.assetOrigin} />}
+                  {email.heading && (
+                    <Text className="lx-strong" style={s.heading}>
+                      {email.heading}
+                    </Text>
+                  )}
+                  {email.blocks.map((block) => (
+                    <BlockView key={JSON.stringify(block)} block={block} />
+                  ))}
+                </Section>
+              </Section>
+              <Text className="lx-muted" style={s.footer}>
+                {email.footer.map((line) => (
+                  <span key={line}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+                <Link href={options.siteUrl} className="lx-link" style={s.link}>
+                  lymi.app
+                </Link>
+              </Text>
+            </>
+          )}
         </Container>
       </Body>
     </Html>

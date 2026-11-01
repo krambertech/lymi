@@ -159,6 +159,9 @@ export function PrivacyLink() {
   const arrive = useArrival();
   return (
     <Animated.View entering={arrive(460)} className="items-center">
+      <Text className="px-6 pb-1 text-center text-sm text-ink-muted">
+        {t`Lymi may email you when cards are ready. You can turn this off in You or from any email.`}
+      </Text>
       <Press
         onPress={() => void openBrowserAsync(localizedSiteUrl("/privacy", i18n.locale))}
         haptic={false}

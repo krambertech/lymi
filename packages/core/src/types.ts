@@ -1082,6 +1082,7 @@ export const SettingsPatch = z.object({
   dailyGoal: DailyGoal.optional(),
   /** Whether the web app may record how the learner moves through it. */
   sessionReplay: z.boolean().optional(),
+  learningEmails: z.boolean().optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 

@@ -295,6 +295,10 @@
     {
       "name": "0073_gigantic_alice.sql",
       "sha256": "05d4dda56fbafbba0066488872b9c0685ecaf1fbeec299d26617bee9c382cb8f"
+    },
+    {
+      "name": "0074_normal_sunspot.sql",
+      "sha256": "020042e39e27dc49172bd89c27850315ddaabcebdec9bf3577a57c891014969a"
     }
   ]
 }

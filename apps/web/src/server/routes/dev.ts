@@ -45,6 +45,7 @@ import {
   renderTransactionalEmail,
   sendEmailPreview,
 } from "../services/email";
+import { composeLearning } from "../services/learning-email";
 import { getSettings } from "../services/settings";
 
 /**
@@ -161,8 +162,37 @@ dev.post(
       EMAIL_SAMPLES[kind],
       emailOrigins(c.env),
     );
-    await sendEmailPreview(c.env, message, to);
+    // A learning email sends with its unsubscribe pair, because Gmail weighs it when filing mail.
+    await sendEmailPreview(
+      c.env,
+      message,
+      to,
+      kind.startsWith("learning-")
+        ? {
+            "List-Unsubscribe": "<https://my.lymi.app/api/email/unsubscribe/sample>",
+            "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+          }
+        : undefined,
+    );
     return c.json({ ok: true });
+  },
+);
+
+/** A learning email for a persona, as the cron would send it, so its links can be opened locally. */
+dev.post(
+  "/emails/learning",
+  describe({ hide: true, open: true }),
+  body(
+    z.object({ as: z.string(), step: z.enum(["first", "how", "nodeck", "next", "back", "last"]) }),
+    "learning email",
+  ),
+  async (c) => {
+    const { as, step } = c.req.valid("json");
+    const persona = personas.find((p) => p.id === as);
+    if (!persona) return c.json({ error: "Unknown persona" }, 400);
+    const { userId } = await signInPersona(c.get("auth"), c.get("db"), persona);
+    const ctx = { db: c.get("db"), userId, actor: "system" as const };
+    return c.json(await composeLearning(c.env, ctx, step, "en", "en", new Date()));
   },
 );
 

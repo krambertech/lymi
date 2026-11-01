@@ -59,6 +59,8 @@ export interface Bindings
   AI_GATEWAY_ID?: string;
   /** Email goes through Resend once this is set; until then the Cloudflare binding delivers. */
   RESEND_API_KEY?: string;
+  /** Learning emails stay off until this is set; it is the ISO date of the oldest account they may reach. */
+  LEARNING_EMAILS_SINCE?: string;
   /** The `whsec_` secret Resend signs its delivery webhook with; the webhook refuses everything without it. */
   RESEND_WEBHOOK_SECRET?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */

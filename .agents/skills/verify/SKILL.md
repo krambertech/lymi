@@ -29,6 +29,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
 | Account name | [account-name.md](features/account-name.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
+| Learning email | [learning-email.md](features/learning-email.md) |
 | Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Import from Anki | [import.md](features/import.md) |
 | Import from Pleco | [import-pleco.md](features/import-pleco.md) |

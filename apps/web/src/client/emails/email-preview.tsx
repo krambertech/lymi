@@ -63,6 +63,38 @@ const KINDS: { group: string; kinds: { kind: string; name: string; when: string 
     ],
   },
   {
+    group: "Learning",
+    kinds: [
+      {
+        kind: "learning-first",
+        name: "Never reviewed",
+        when: "Added a deck, day 1, no review yet.",
+      },
+      {
+        kind: "learning-how",
+        name: "How a review works",
+        when: "Added a deck, day 3, still no review.",
+      },
+      { kind: "learning-nodeck", name: "No deck", when: "No cards, day 1." },
+      {
+        kind: "learning-new",
+        name: "Only new cards",
+        when: "Reviewed one day, days 1 and 3, and nothing is due yet.",
+      },
+      {
+        kind: "learning-due",
+        name: "A card is due",
+        when: "Reviewed one day, days 1 and 3, with a card due.",
+      },
+      {
+        kind: "learning-back",
+        name: "Away a week",
+        when: "Day 7 after the last review, when notifications stop.",
+      },
+      { kind: "learning-last", name: "The last one", when: "Day 30 after the last review." },
+    ],
+  },
+  {
     group: "Decks",
     kinds: [
       {

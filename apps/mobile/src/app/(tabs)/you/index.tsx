@@ -20,6 +20,7 @@ import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Avatar } from "../../../you/avatar";
 import { LanguageNote, LanguageRow, useAppLanguage } from "../../../you/language";
+import { LearningEmailsSwitch } from "../../../you/learning-emails";
 import { ProfileSheet, useProfile } from "../../../you/profile";
 import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/reminder";
 
@@ -59,6 +60,7 @@ export default function You() {
         <Rows>
           <ReminderSwitch reminder={reminder} />
           {reminder.time && <TimeRow reminder={reminder} />}
+          <LearningEmailsSwitch />
         </Rows>
         {reminder.blocked && <Blocked />}
       </View>

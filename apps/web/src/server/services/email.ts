@@ -1,6 +1,6 @@
 import type { I18n } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
-import type { ContentReportReason, FeedbackKind } from "@lymi/core";
+import { type ContentReportReason, type FeedbackKind, isolate } from "@lymi/core";
 import type { EMAIL_KINDS } from "@lymi/core/analytics";
 import { trayHue } from "@lymi/core/catalog";
 import { eq, sql } from "@lymi/core/db";
@@ -8,7 +8,7 @@ import { isLoopbackUrl } from "../../shared/origins";
 import type { Db } from "../db";
 import { schema } from "../db";
 import { type HealthEnv, metered } from "../dependency-health";
-import type { Block, ComposedEmail } from "../email/template";
+import type { Block, ComposedEmail, EmailCardSide, LearningBody } from "../email/template";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
 import { track } from "./analytics";
@@ -57,6 +57,21 @@ export interface DeckInvitationEmailData {
   deckId: string;
 }
 
+/** What every learning email needs: what waits, where it goes, and how to stop it. */
+export interface LearningEmailData {
+  /** Cards waiting, or a deck's cards on `learning-first`. */
+  cards: number;
+  /** Decks those cards are in; 0 only on `learning-nodeck`. */
+  decks: number;
+  /** The deck the shown card or the waiting cards are in. */
+  deckName: string | null;
+  /** The card to show: its cue, and its answer when the email teaches it. */
+  card: { front: EmailCardSide; back?: EmailCardSide | undefined } | null;
+  /** Where the button goes. */
+  url: string;
+  unsubscribeUrl: string;
+}
+
 /** What a message needs beyond its kind: an account kind's one link or code, or a learner's note. */
 export interface TransactionalEmailParams {
   url?: string;
@@ -65,6 +80,7 @@ export interface TransactionalEmailParams {
   feedback?: FeedbackEmailData;
   contentReport?: ContentReportEmailData;
   invitation?: DeckInvitationEmailData;
+  learning?: LearningEmailData;
   /** The goodbye to an Apple account whose grant Lymi has not revoked yet. */
   removeApple?: boolean;
 }
@@ -75,6 +91,10 @@ export interface TransactionalEmailInput extends TransactionalEmailParams {
   language: string;
   /** Who a reply goes to, when it is not the address the whole sender answers at. */
   replyTo?: string | undefined;
+  /** The RFC 8058 pair on an email a learner can stop. */
+  headers?: Record<string, string> | undefined;
+  /** Called once the provider or outbox has it, so a later failure cannot read as undelivered. */
+  onDelivered?: (() => void) | undefined;
 }
 
 export interface RenderedEmail {
@@ -133,8 +153,26 @@ function blockText(block: Block): string | null {
   }
 }
 
+/** A learning email in plain text: the same message, with the card's sides on their own lines. */
+function learningText(email: ComposedEmail, body: LearningBody): string {
+  const { card, button } = body;
+  return [
+    email.heading,
+    body.line,
+    card?.deck,
+    card?.front.text,
+    card?.back?.text,
+    card?.button.url ?? button?.url,
+    "Lymi",
+    `${body.why}\n${body.stop.label}: ${body.stop.url}`,
+  ]
+    .filter((part): part is string => Boolean(part))
+    .join("\n\n");
+}
+
 /** The plain-text body: the heading, then each block. */
 function textBody(email: ComposedEmail): string {
+  if (email.learning) return learningText(email, email.learning);
   const { hero } = email;
   const cover =
     hero?.kind === "deck"
@@ -215,6 +253,123 @@ function languageName(tag: string | null | undefined, locale: string): string | 
   }
 }
 
+type LearningKind = Extract<TransactionalEmailKind, `learning-${string}`>;
+
+/** One sentence each, because the email is a nudge: what is ready, and one card from it. */
+function composeLearning(
+  i18n: I18n,
+  kind: LearningKind,
+  it: LearningEmailData | undefined,
+): ComposedEmail {
+  if (!it) throw new Error(`The ${kind} email needs what is waiting`);
+  const { cards, decks } = it;
+  const deck = isolate(it.deckName);
+  const several = decks > 1;
+
+  const parts = (): { heading: string; line: string } => {
+    switch (kind) {
+      case "learning-first":
+        return {
+          heading: i18n._(msg`Start ${deck}`),
+          line: i18n._(
+            msg`${plural(cards, { one: "This is your first card.", other: "This is the first of # cards." })}`,
+          ),
+        };
+      case "learning-how":
+        return {
+          heading: i18n._(msg`How a review works`),
+          line: i18n._(
+            msg`You see a card, try to remember it, then flip it and say how it went. Lymi brings it back when it’s time.`,
+          ),
+        };
+      case "learning-nodeck":
+        return {
+          heading: i18n._(msg`Add your first cards`),
+          line: i18n._(msg`Pick a ready deck, or add what you’re learning.`),
+        };
+      case "learning-new":
+      case "learning-due": {
+        const heading =
+          kind === "learning-new"
+            ? i18n._(
+                msg`${plural(cards, { one: "# new card is ready", other: "# new cards are ready" })}`,
+              )
+            : i18n._(
+                msg`${plural(cards, { one: "# card to review", other: "# cards to review" })}`,
+              );
+        const line = !it.card
+          ? i18n._(msg`Review whenever you have a moment.`)
+          : kind === "learning-new"
+            ? several
+              ? i18n._(msg`They’re from ${decks} decks. Here’s one from ${deck}.`)
+              : i18n._(msg`Here’s one from ${deck}.`)
+            : several
+              ? i18n._(msg`They’re from ${decks} decks. Try to remember this one from ${deck}.`)
+              : i18n._(msg`Try to remember this one from ${deck}.`);
+        return { heading, line };
+      }
+      case "learning-back": {
+        const ready = several
+          ? i18n._(
+              msg`${plural(cards, { one: `# card is ready across ${decks} decks.`, other: `# cards are ready across ${decks} decks.` })}`,
+            )
+          : i18n._(
+              msg`${plural(cards, { one: `# card is ready in ${deck}.`, other: `# cards are ready in ${deck}.` })}`,
+            );
+        return {
+          heading: i18n._(msg`Pick up where you left off`),
+          line:
+            it.card && !it.card.back ? `${ready} ${i18n._(msg`Try to remember this one.`)}` : ready,
+        };
+      }
+      case "learning-last":
+        return {
+          heading: i18n._(msg`Your cards are still here`),
+          line: several
+            ? i18n._(
+                msg`${plural(cards, { one: `# card is ready across ${decks} decks. This is our last email about them.`, other: `# cards are ready across ${decks} decks. This is our last email about them.` })}`,
+              )
+            : i18n._(
+                msg`${plural(cards, { one: `# card is ready in ${deck}. This is our last email about it.`, other: `# cards are ready in ${deck}. This is our last email about them.` })}`,
+              ),
+        };
+    }
+  };
+
+  const { heading, line } = parts();
+  const teaches = it.card?.back !== undefined;
+  const label =
+    kind === "learning-nodeck"
+      ? i18n._(msg({ message: "Find a deck", context: "email button" }))
+      : teaches
+        ? i18n._(msg({ message: "Start", context: "email button" }))
+        : it.card
+          ? i18n._(msg({ message: "Flip", context: "email button" }))
+          : i18n._(msg({ message: "Review", context: "email button" }));
+  const button = { label, url: it.url };
+  return {
+    subject: heading,
+    preview: line,
+    heading,
+    blocks: [],
+    footer: [],
+    learning: {
+      line,
+      ...(it.card
+        ? {
+            card: {
+              ...it.card,
+              ...(several && it.deckName ? { deck: it.deckName } : {}),
+              button,
+            },
+          }
+        : { button }),
+      why: i18n._(msg`You get this because you use Lymi.`),
+      stop: { label: i18n._(msg`Turn off these emails`), url: it.unsubscribeUrl },
+    },
+  };
+}
+
 function compose(
   i18n: I18n,
   kind: TransactionalEmailKind,
@@ -259,6 +414,14 @@ function compose(
   });
 
   switch (kind) {
+    case "learning-first":
+    case "learning-how":
+    case "learning-nodeck":
+    case "learning-new":
+    case "learning-due":
+    case "learning-back":
+    case "learning-last":
+      return composeLearning(i18n, kind, params.learning);
     case "feedback": {
       const it = params.feedback;
       if (!it) throw new Error("The feedback email needs the note it is about");
@@ -554,7 +717,9 @@ function writeLocalEmail(message: RenderedEmail, to: string, replyTo: string): L
  * still let a spread of machines spend the day's allowance on confirmations nobody asked for,
  * and the learner whose reset is then dropped never learns why. Issue 251.
  */
-const DAILY_SEND_LIMIT = 150;
+const DAILY_SEND_LIMIT = 95;
+/** What learning emails may spend of that, so a reset still goes out on the day they run. */
+const DAILY_LEARNING_LIMIT = 60;
 
 /** True while the day still has room, counting this send. A storage failure never blocks one. */
 async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boolean> {
@@ -567,6 +732,20 @@ async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boo
     return true;
   } catch {
     return true;
+  }
+}
+
+/** Learning email is optional, so unlike an account email it waits when storage cannot be read. */
+export async function learningBudgetLeft(sessions: KVNamespace | undefined): Promise<boolean> {
+  if (!sessions) return false;
+  const key = `email:learning:${new Date().toISOString().slice(0, 10)}`;
+  try {
+    const sent = Number((await sessions.get(key)) ?? 0);
+    if (sent >= DAILY_LEARNING_LIMIT) return false;
+    await sessions.put(key, String(sent + 1), { expirationTtl: 60 * 60 * 48 });
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -585,7 +764,13 @@ function originsOf(env: { PRODUCT_URL: string; PUBLIC_SITE_URL?: string }): Emai
   };
 }
 
-async function deliver(env: EmailEnv, message: RenderedEmail, to: string, replyTo: string) {
+async function deliver(
+  env: EmailEnv,
+  message: RenderedEmail,
+  to: string,
+  replyTo: string,
+  headers?: Record<string, string>,
+) {
   if (env.RESEND_API_KEY) {
     const { sendWithResend } = await import("../email/resend");
     await sendWithResend(env.RESEND_API_KEY, {
@@ -596,9 +781,11 @@ async function deliver(env: EmailEnv, message: RenderedEmail, to: string, replyT
       text: message.text,
       html: message.html,
       kind: message.kind,
+      headers,
     });
     return;
   }
+  // Cloudflare's service carries account email only, so this path never sees a learning email.
   await env.EMAIL.send({
     to,
     from: EMAIL_FROM,
@@ -624,6 +811,7 @@ export async function sendTransactionalEmail(
       ...(input.feedback ? { feedback: input.feedback } : {}),
       ...(input.contentReport ? { contentReport: input.contentReport } : {}),
       ...(input.invitation ? { invitation: input.invitation } : {}),
+      ...(input.learning ? { learning: input.learning } : {}),
       ...(input.removeApple ? { removeApple: true } : {}),
     },
     originsOf(env),
@@ -641,7 +829,9 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
     try {
-      await metered(env, "email", () => deliver(env, message, input.to, input.replyTo ?? REPLY_TO));
+      await metered(env, "email", () =>
+        deliver(env, message, input.to, input.replyTo ?? REPLY_TO, input.headers),
+      );
       delivery = "provider";
     } catch (error) {
       const errorClass = providerErrorClass(error);
@@ -652,6 +842,7 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
   }
+  input.onDelivered?.();
   track(ctx.analytics, { name: "email_sent", kind: input.kind, language: message.language });
 
   // A deleted account has no row left to record the goodbye against.
@@ -765,6 +956,7 @@ export async function sendEmailPreview(
   env: Pick<EmailEnv, "RESEND_API_KEY">,
   message: RenderedEmail,
   to: string,
+  headers?: Record<string, string>,
 ): Promise<void> {
   if (!env.RESEND_API_KEY) {
     throw new ServiceError("unavailable", "Add RESEND_API_KEY to .dev.vars to send a preview.");
@@ -778,6 +970,7 @@ export async function sendEmailPreview(
     text: message.text,
     html: message.html,
     kind: message.kind,
+    headers,
   });
 }
 

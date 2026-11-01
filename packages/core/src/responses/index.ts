@@ -9,6 +9,7 @@ export * from "./cards";
 export { ErrorOut, OkOut, UpdateRequiredOut } from "./common";
 export * from "./connected-apps";
 export * from "./decks";
+export * from "./email";
 export * from "./keys";
 export * from "./languages";
 export * from "./lessons";

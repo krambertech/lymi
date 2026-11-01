@@ -91,6 +91,13 @@ export const EMAIL_KINDS = [
   "content-report",
   "delete-account-code",
   "account-deleted",
+  "learning-first",
+  "learning-how",
+  "learning-nodeck",
+  "learning-new",
+  "learning-due",
+  "learning-back",
+  "learning-last",
 ] as const;
 const EmailKind = z.enum(EMAIL_KINDS);
 const slug = z
@@ -315,6 +322,10 @@ export const analyticsEvents = {
   email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
   email_bounced: z.object({ kind: EmailKind.optional() }),
   email_complained: z.object({ kind: EmailKind.optional() }),
+  email_unsubscribed: z.object({
+    kind: EmailKind.optional(),
+    via: z.enum(["one_click", "footer", "settings", "bounce", "complaint"]),
+  }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -673,6 +684,7 @@ export const analyticsProducers = {
   email_failed: ["worker"],
   email_bounced: ["worker"],
   email_complained: ["worker"],
+  email_unsubscribed: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
@@ -786,6 +798,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/flip",
+    "/unsubscribe",
     "/desktop",
     // Phone screens without a web page of their own.
     "/you",

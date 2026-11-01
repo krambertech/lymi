@@ -27,6 +27,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
+| Daily reminder | [reminders.md](features/reminders.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Enrich a card | [card-enrich.md](features/card-enrich.md) |

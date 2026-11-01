@@ -35,7 +35,7 @@ export interface ReminderControl {
 }
 
 /** This device's reminder: whether it can be turned on, whether it is, and turning it on. */
-export function useReminder(): ReminderControl {
+export function useReminder(enabled: boolean): ReminderControl {
   const install = useInstallState();
   const [key, setKey] = useState<string | null>(null);
   const [reminder, setReminder] = useState<Reminder>("loading");
@@ -43,6 +43,7 @@ export function useReminder(): ReminderControl {
   const [turnedOn, setTurnedOn] = useState(false);
 
   useEffect(() => {
+    if (!enabled) return;
     let live = true;
     if (install.isIOS && !install.installed) {
       setReminder("install");
@@ -71,7 +72,7 @@ export function useReminder(): ReminderControl {
     return () => {
       live = false;
     };
-  }, [install.isIOS, install.installed]);
+  }, [enabled, install.isIOS, install.installed]);
 
   const turnOn = async (time: ReminderTime): Promise<Reminder> => {
     if (!key) return reminder;
@@ -163,6 +164,8 @@ export interface FirstEndInput {
   /** The next day's cards are all new ones. */
   fresh: boolean;
   goal: number;
+  /** The last choice did not save, so the tiles are back on the saved goal. */
+  goalFailed: boolean;
   onGoal: (goal: number) => void;
   control: ReminderControl;
   times: Record<DayPart, ReminderTime>;
@@ -391,8 +394,13 @@ export function firstEndParts(input: FirstEndInput): {
           <p className="mt-2 text-pretty text-md text-ink-secondary">
             <Trans>You can change this any time.</Trans>
           </p>
-          <div className="mt-6">
+          <div className="mt-6 grid gap-2.5">
             <GoalChoice goal={goal} onGoal={onGoal} />
+            {input.goalFailed && (
+              <p role="alert" className="text-sm text-ink-muted">
+                <Trans>Couldn’t save that. Check your connection and try again.</Trans>
+              </p>
+            )}
           </div>
         </Rise>
       ),

@@ -50,4 +50,13 @@ describe("reminderChoices", () => {
     expect(reminderChoices(new Date(2026, 10, 1, 9, 5)).times.morning).toBe("09:00");
     expect(reminderChoices(new Date(2026, 10, 1, 13, 0)).part).toBe("lunch");
   });
+
+  it("keeps the usual times overnight", () => {
+    const usual = {
+      part: "evening",
+      times: { morning: "08:00", lunch: "12:30", evening: "19:00" },
+    };
+    expect(reminderChoices(new Date(2026, 10, 1, 1, 10))).toEqual(usual);
+    expect(reminderChoices(new Date(2026, 10, 1, 23, 40))).toEqual(usual);
+  });
 });

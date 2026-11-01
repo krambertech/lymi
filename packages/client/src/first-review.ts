@@ -49,6 +49,9 @@ export function reminderChoices(now: Date): {
   times: Record<DayPart, ReminderTime>;
 } {
   const hour = now.getHours();
+  // Reviewing at night says nothing about a good time to be reminded.
+  if (hour < 6 || hour >= 23)
+    return { part: "evening", times: { morning: "08:00", lunch: "12:30", evening: "19:00" } };
   const part: DayPart = hour < 11 ? "morning" : hour < 16 ? "lunch" : "evening";
   const here = `${pad(hour)}:${pad(Math.floor(now.getMinutes() / 15) * 15)}` as ReminderTime;
   return {

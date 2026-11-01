@@ -2091,6 +2091,9 @@ msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again.
 msgid "Couldn’t save that change. Check your connection and try again."
 msgstr "Couldn’t save that change. Check your connection and try again."
 
+msgid "Couldn’t save that. Check your connection and try again."
+msgstr "Couldn’t save that. Check your connection and try again."
+
 msgid "Couldn’t save that. Try again."
 msgstr "Couldn’t save that. Try again."
 

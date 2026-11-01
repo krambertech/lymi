@@ -972,17 +972,17 @@ function Review() {
         leave();
         return;
       }
+      const target = e.target as HTMLElement | null;
+      const control = target?.closest(
+        "button, a, input, textarea, select, [contenteditable='true']",
+      );
       if (cameBack) {
-        if (e.key === " " || e.key === "Enter") {
+        if (!control && (e.key === " " || e.key === "Enter")) {
           e.preventDefault();
           setCameBack(null);
         }
         return;
       }
-      const target = e.target as HTMLElement | null;
-      const control = target?.closest(
-        "button, a, input, textarea, select, [contenteditable='true']",
-      );
       // The aid's key also reaches the card's reveal button, where grading from the strip leaves
       // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
       if (current && e.code === AID_KEY.code) {
@@ -1183,11 +1183,12 @@ function Review() {
   const [endStep, setEndStep] = useState<PlanStep>("summary");
   const forecast = useQuery({ ...insightsQuery(30), enabled: firstEnd });
   const rounds = useQuery({ ...roundsQuery, enabled: firstEnd });
-  const reminder = useReminder();
+  const reminder = useReminder(firstEnd);
   const dailyGoal = useDailyGoal();
   // Held here, because a finished day's streak keeps the goal it was finished against.
   const [chosenGoal, setChosenGoal] = useState<number | undefined>(undefined);
-  const endGoal = chosenGoal ?? data?.goal ?? 25;
+  const goalFailed = dailyGoal.status === "error";
+  const endGoal = (goalFailed ? undefined : chosenGoal) ?? data?.goal ?? 25;
   const next = nextCards(forecast.data?.forecast, endGoal);
   const [choices] = useState(() => reminderChoices(new Date()));
   const [part, setPart] = useState(choices.part);
@@ -1220,6 +1221,7 @@ function Review() {
         next,
         fresh: !!next && next.count <= (rounds.data?.new ?? 0),
         goal: endGoal,
+        goalFailed,
         onGoal: (n) => {
           setChosenGoal(n);
           dailyGoal.change(n);

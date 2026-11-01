@@ -20,12 +20,14 @@ function Flow({
   answer = "on",
   next = TOMORROW,
   fresh = true,
+  goalFailed = false,
 }: {
   start?: PlanStep;
   push?: Reminder;
   answer?: Reminder;
   next?: NextCards | null;
   fresh?: boolean;
+  goalFailed?: boolean;
 }) {
   const [step, setStep] = useState(start);
   const [reminder, setReminder] = useState(push);
@@ -48,6 +50,7 @@ function Flow({
     next: next ?? undefined,
     fresh,
     goal,
+    goalFailed,
     onGoal: setGoal,
     control,
     times: { morning: "08:00", lunch: "12:30", evening: "19:00" },
@@ -113,6 +116,11 @@ test("a failed save stays on the ask, so it can be tried again", async () => {
     .element(page.getByText("Couldn’t turn the reminder on.", { exact: false }))
     .toBeVisible();
   await expect.element(page.getByRole("button", { name: /Remind me/ })).toBeVisible();
+});
+
+test("a goal that did not save says so", async () => {
+  await render(<Flow goalFailed />);
+  await expect.element(page.getByText("Couldn’t save that.", { exact: false })).toBeVisible();
 });
 
 test("a small deck names the day its cards come back, never tomorrow", async () => {

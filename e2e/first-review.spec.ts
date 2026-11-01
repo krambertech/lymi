@@ -73,8 +73,8 @@ test("closing early still ends on the success screen, and X leaves from it", asy
   await page.goto("/review");
 
   await grade(page);
-  await page.getByRole("button", { name: "Next card" }).click();
-  await page.getByRole("button", { name: "Leave review" }).click();
+  // Enter on a focused control is that control's, not Next card.
+  await page.getByRole("button", { name: "Leave review" }).press("Enter");
   await expect(page.getByRole("heading", { name: "That’s your first review" })).toBeVisible();
   await expect(page.getByText(/more to start your streak/)).toBeVisible();
   await page.getByRole("button", { name: "Leave review" }).click();

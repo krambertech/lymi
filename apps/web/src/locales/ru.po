@@ -2091,6 +2091,9 @@ msgstr "Не удалось сохранить «{failedTerm}». Проверь 
 msgid "Couldn’t save that change. Check your connection and try again."
 msgstr "Не удалось сохранить изменение. Проверь соединение и попробуй снова."
 
+msgid "Couldn’t save that. Check your connection and try again."
+msgstr "Не удалось сохранить. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t save that. Try again."
 msgstr "Не удалось сохранить. Попробуйте ещё раз."
 

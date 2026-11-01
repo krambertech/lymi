@@ -16,7 +16,7 @@ import { reminderIsDue } from "../push-delivery";
 import { analyticsContextFor } from "./analytics-context";
 import { auditStatement } from "./audit";
 import { presentCards } from "./card-view";
-import { type ServiceContext, ServiceError } from "./context";
+import type { ServiceContext } from "./context";
 import { cardsById } from "./draw";
 import {
   type LearningEmailData,
@@ -337,6 +337,7 @@ export async function dispatchLearningEmails(
       analytics: analyticsFor(row.id),
     };
     const language = row.appLanguage ?? "en";
+    let delivered = false;
     try {
       const composed = await composeLearning(
         env,
@@ -360,16 +361,17 @@ export async function dispatchLearningEmails(
           "List-Unsubscribe": `<${composed.stop.oneClick}>`,
           "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
         },
+        onDelivered: () => {
+          delivered = true;
+        },
       });
       summary.sent += 1;
-    } catch (error) {
-      // A ServiceError means the provider refused it. Anything later, such as the audit row, came
-      // after delivery, and releasing then would send the email twice.
-      const undelivered = error instanceof ServiceError;
-      if (undelivered) await release();
-      summary.failed += undelivered ? 1 : 0;
-      summary.sent += undelivered ? 0 : 1;
-      console.error(JSON.stringify({ event: "learning_email_failed", undelivered }));
+    } catch {
+      // Once delivered, the claim stays even if the audit row failed, or the email would send twice.
+      if (!delivered) await release();
+      summary.failed += delivered ? 0 : 1;
+      summary.sent += delivered ? 1 : 0;
+      console.error(JSON.stringify({ event: "learning_email_failed", delivered }));
     }
   }
   await Promise.all(reports);

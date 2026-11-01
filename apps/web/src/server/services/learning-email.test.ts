@@ -14,6 +14,7 @@ import {
   learningStep,
   readFlip,
 } from "./learning-email";
+import * as modes from "./modes";
 import { gradeCard, reviewQueue } from "./review";
 
 const SECRET = "test-secret-at-least-thirty-two-characters";
@@ -193,6 +194,14 @@ describe("the series", () => {
     expect(write).toHaveBeenCalled();
     write.mockRestore();
     expect((await dispatchLearningEmails(on, tomorrowAtTen())).sent).toBe(0);
+  });
+
+  it("retries when composing fails before anything is delivered", async () => {
+    const on = { ...env(), LEARNING_EMAILS_SINCE: "2020-01-01" };
+    const read = vi.spyOn(modes, "catchUpStates").mockRejectedValueOnce(new Error("D1 is busy"));
+    expect(await dispatchLearningEmails(on, tomorrowAtTen())).toMatchObject({ sent: 0, failed: 1 });
+    read.mockRestore();
+    expect((await dispatchLearningEmails(on, tomorrowAtTen())).sent).toBe(1);
   });
 
   it("leaves a deleted account's unsubscribe link harmless", async () => {

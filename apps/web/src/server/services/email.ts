@@ -93,6 +93,8 @@ export interface TransactionalEmailInput extends TransactionalEmailParams {
   replyTo?: string | undefined;
   /** The RFC 8058 pair on an email a learner can stop. */
   headers?: Record<string, string> | undefined;
+  /** Called once the provider or outbox has it, so a later failure cannot read as undelivered. */
+  onDelivered?: (() => void) | undefined;
 }
 
 export interface RenderedEmail {
@@ -840,6 +842,7 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
   }
+  input.onDelivered?.();
   track(ctx.analytics, { name: "email_sent", kind: input.kind, language: message.language });
 
   // A deleted account has no row left to record the goodbye against.

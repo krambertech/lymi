@@ -1991,6 +1991,9 @@ msgstr "Не удалось загрузить людей в этой колод
 msgid "Couldn’t load the picture"
 msgstr "Не удалось загрузить изображение"
 
+msgid "Couldn’t load this card"
+msgstr "Не удалось загрузить карточку"
+
 msgid "Couldn’t load this deck"
 msgstr "Не удалось загрузить эту колоду"
 

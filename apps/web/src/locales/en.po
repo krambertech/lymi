@@ -1991,6 +1991,9 @@ msgstr "Couldn’t load the people in this deck. Try again."
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 
+msgid "Couldn’t load this card"
+msgstr "Couldn’t load this card"
+
 msgid "Couldn’t load this deck"
 msgstr "Couldn’t load this deck"
 

@@ -11,7 +11,7 @@ import { Button } from "../components/button";
 import { GRADES } from "../components/grade";
 import { InlineError } from "../components/inline-error";
 import { ExampleText, TermText } from "../components/term-text";
-import { api } from "../lib/api";
+import { ApiError, api } from "../lib/api";
 import { activate, isAppLanguage, readStoredLanguage } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { flipQuery } from "../lib/queries";
@@ -35,6 +35,31 @@ export function FlipView({ token }: { token: string }) {
 
   if (view.isPending) return <Frame />;
   if (data?.status === "ok") return <TurningCard view={data} />;
+  // A forged link answers 404, which reads as expired; anything else may work on a second try.
+  const unreachable =
+    view.isError && !(view.error instanceof ApiError && view.error.status === 404);
+  if (unreachable) {
+    return (
+      <Frame>
+        <section className="edge min-w-0 rounded-xl bg-plate p-6 text-center @xl:p-10">
+          <h1 className="text-2xl font-medium tracking-[-0.02em] text-ink">
+            <Trans>Couldn’t load this card</Trans>
+          </h1>
+          <p className="mx-auto mt-2 max-w-[38ch] text-md text-ink-secondary">
+            <Trans>Check your connection and try again.</Trans>
+          </p>
+          <Button
+            className="mt-6 w-full"
+            variant="primary"
+            loading={view.isFetching}
+            onClick={() => void view.refetch()}
+          >
+            <Trans>Try again</Trans>
+          </Button>
+        </section>
+      </Frame>
+    );
+  }
   return (
     <Frame>
       <section className="edge min-w-0 rounded-xl bg-plate p-6 text-center @xl:p-10">

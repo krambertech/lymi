@@ -3011,6 +3011,9 @@ msgstr "In <0>Settings → Connectors</0>, choose <1>Create</1> and paste Lymi�
 msgid "In a chat, turn Lymi on under <0>+ → Connectors</0>."
 msgstr "In a chat, turn Lymi on under <0>+ → Connectors</0>."
 
+msgid "in about a week"
+msgstr "in about a week"
+
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 

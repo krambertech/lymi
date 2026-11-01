@@ -349,6 +349,8 @@
   inherits: true;
 }
 @custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+/* A phone browser with its bars showing, or a phone on its side. */
+@custom-variant short (@media (max-height: 680px));
 /* Inside the Mac app's windows, which set `data-shell` before first paint. */
 @custom-variant mac (&:where([data-shell="mac"] *));
 

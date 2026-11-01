@@ -33,8 +33,10 @@ import {
   FirstReviewTitle,
   FirstStreakNote,
   firstEndParts,
+  firstReviewOpen,
   firstReviewTeaches,
   type PlanStep,
+  rememberFirstReview,
   useReminder,
 } from "../components/first-plan";
 import { ComesBack, CueTip, GradesTip, useComesBack } from "../components/first-review";
@@ -158,8 +160,14 @@ function Review() {
   const streak = useQuery(streakQuery);
   // Settled once, on the streak as this review opened, so its own grades never change the answer.
   const sessionFirst = useRef<boolean | null>(null);
-  if (sessionFirst.current === null && streak.data && !streak.isFetching)
-    sessionFirst.current = isGuiding(streak.data);
+  const resumedFirst = useRef(false);
+  const reviewedCards = useRef<FanCard[]>([]);
+  if (sessionFirst.current === null && streak.data && !streak.isFetching) {
+    const hand = isGuiding(streak.data) ? null : firstReviewOpen(streak.data);
+    resumedFirst.current = !!hand;
+    reviewedCards.current = hand ?? [];
+    sessionFirst.current = isGuiding(streak.data) || !!hand;
+  }
   const [revealed, setRevealed] = useState(false);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
@@ -408,7 +416,8 @@ function Review() {
   const [tipsOff, setTipsOff] = useState(false);
   const [tipFor, setTipFor] = useState<{ first?: string; returned?: string; grades?: string }>({});
   const [teaches] = useState(firstReviewTeaches);
-  const tipsOn = !!current && !!sessionFirst.current && teaches && !tipsOff;
+  const tipsOn =
+    !!current && !!sessionFirst.current && !resumedFirst.current && teaches && !tipsOff;
   const owns = (key: string | undefined) => key === undefined || key === showing;
   const firstTip = tipsOn && !revealed && !repeat && done === 0 && owns(tipFor.first);
   const returnedTip =
@@ -478,16 +487,25 @@ function Review() {
     [revealed, current, aid, showing, recallTimes, flow.grade, qc, t],
   );
 
-  const reviewedCards = useRef<FanCard[]>([]);
   const grade = useCallback(
     (rating: Rating, input: "keyboard" | "pointer") => {
-      if (current && gradeAllowed(rating, aid) && !reviewedCards.current.includes(current.card))
+      if (
+        current &&
+        gradeAllowed(rating, aid) &&
+        !reviewedCards.current.some((card) => card.term === current.card.term)
+      )
         reviewedCards.current.push(current.card);
+      if (sessionFirst.current && teaches) rememberFirstReview(reviewedCards.current);
       if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
         setCameBack({ card: current.card, rating, back: comesBack });
       onGrade(rating, input);
     },
-    [gradesTip, comesBack, current, aid, onGrade],
+    [gradesTip, comesBack, current, aid, onGrade, teaches],
+  );
+
+  // The first review's end while it shows, read by the key handler, which outlives renders.
+  const firstEndKeys = useRef<{ advance?: (() => void) | undefined; close: () => void } | null>(
+    null,
   );
 
   // Leaving mid-leg ends on the success screen, unless nothing was added since the last one.
@@ -502,6 +520,7 @@ function Review() {
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
       if (add.open || writingHint || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
+        firstEndKeys.current?.close();
         leave();
         return;
       }
@@ -510,10 +529,23 @@ function Review() {
         "button, a, input, textarea, select, [contenteditable='true']",
       );
       if (cameBack) {
-        if (!control && (e.key === " " || e.key === "Enter")) {
+        // The grade just pressed keeps focus for as long as the card takes to leave.
+        const own = control && !control.closest("[data-grade-strip]");
+        if (!own && (e.key === " " || e.key === "Enter")) {
           e.preventDefault();
           setCameBack(null);
         }
+        return;
+      }
+      const advance = firstEndKeys.current?.advance;
+      if (
+        advance &&
+        (e.key === " " || e.key === "Enter") &&
+        !control &&
+        !target?.closest("[role='radio']")
+      ) {
+        e.preventDefault();
+        advance();
         return;
       }
       // The aid's key also reaches the card's reveal button, where grading from the strip leaves
@@ -709,9 +741,16 @@ function Review() {
   const [part, setPart] = useState(choices.part);
   const goalAtEnd = useRef<number | undefined>(undefined);
   if (firstEnd && data) goalAtEnd.current ??= data.goal;
+  const endLeft = useRef(false);
+  // A card added from the last screen is reviewed like any other, and that end is an ordinary one.
+  if (endLeft.current && !end) firstEndOver.current = true;
   const leaveFirstEnd = (left: FirstEndLeft) => {
     const r = reminder.reminder;
-    firstEndOver.current = true;
+    // The sheet opens over the last screen, which stays until a card brings the review back.
+    if (left !== "add_cards") firstEndOver.current = true;
+    if (endLeft.current) return;
+    endLeft.current = true;
+    rememberFirstReview(null);
     captureAnalytics("first_review_end_left", {
       step: endStep,
       left,
@@ -747,6 +786,9 @@ function Review() {
         onPart: setPart,
       })
     : null;
+  firstEndKeys.current = firstEnd
+    ? { advance: firstParts?.advance, close: () => leaveFirstEnd("closed") }
+    : null;
 
   return (
     <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
@@ -764,7 +806,7 @@ function Review() {
             : undefined
         }
         streak={streakNow}
-        complete={!!end}
+        complete={!!end && !cameBack}
         loading={!data && !failed}
         onClose={() => {
           if (firstEnd) leaveFirstEnd("closed");
@@ -838,7 +880,7 @@ function Review() {
                 title: <FirstReviewTitle stopped={!end.satisfied} />,
                 runNote: (
                   <FirstStreakNote
-                    left={end.satisfied ? 0 : Math.max(0, data.goal - state.attempts)}
+                    left={end.satisfied ? 0 : Math.min(data.goal - state.attempts, left)}
                   />
                 ),
                 beat: firstParts?.beat,

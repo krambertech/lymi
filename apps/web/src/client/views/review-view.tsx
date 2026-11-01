@@ -1588,7 +1588,7 @@ export function ReviewComplete({
         )}
         <div
           ref={lanternPlace}
-          className={clsx("mb-1 size-32", pinned ? "@3xl:size-36" : "@3xl:size-44")}
+          className={clsx("mb-1 size-32", pinned ? "@3xl:size-36 short:size-20!" : "@3xl:size-44")}
         >
           <motion.div
             {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
@@ -1727,7 +1727,9 @@ export function ReviewComplete({
         <div
           className={clsx(
             "grid w-full gap-2.5",
-            pinned ? "mt-auto pt-6 @3xl:mt-0 @3xl:pt-7" : "mt-6 @3xl:mt-8",
+            pinned
+              ? "mt-auto pt-6 @3xl:mt-0 @3xl:pt-7 [@media(max-height:480px)]:sticky [@media(max-height:480px)]:bottom-3 [@media(max-height:480px)]:z-10 [@media(max-height:480px)]:bg-linear-to-t [@media(max-height:480px)]:from-canvas [@media(max-height:480px)]:from-80%"
+              : "mt-6 @3xl:mt-8",
             !instant && "pointer-events-none",
           )}
         >

@@ -7,6 +7,7 @@ import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { firstEndParts, type PlanStep, type Reminder, type ReminderControl } from "./first-plan";
+import { useComesBack } from "./first-review";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -132,4 +133,20 @@ test("a small deck names the day its cards come back, never tomorrow", async () 
 test("with no known next day it promises no day", async () => {
   await render(<Flow start="bye" next={null} fresh={false} />);
   await expect.element(heading("See you soon")).toBeVisible();
+});
+
+function Easy({ days }: { days: number }) {
+  const dayEnd = new Date("2026-11-01T23:00:00Z");
+  const due = new Date(dayEnd.getTime() + (days - 1) * 86_400_000 + 3_600_000).toISOString();
+  const back = useComesBack({ 1: due, 2: due, 3: due, 4: due }, dayEnd);
+  return <p>{back?.words[4]}</p>;
+}
+
+test("a week away is said roughly, because a grade's fuzz moves the real day", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <Easy days={8} />
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText("in about a week")).toBeVisible();
 });

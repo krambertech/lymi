@@ -14,6 +14,7 @@ import { supportsPush, turnOnReminder } from "../lib/push-reminder";
 import { useInstallState } from "../lib/pwa-install";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
+import type { StreakSummary } from "./streak";
 import { TermText } from "./term-text";
 
 export type Reminder =
@@ -129,6 +130,28 @@ function WhatWaits({ next, fresh }: { next: NextCards | undefined; fresh: boolea
   );
 }
 
+const OPEN_KEY = "lymi-first-review";
+
+/** Marks this tab's first review as under way with the cards of its hand, or as over. */
+export function rememberFirstReview(cards: readonly FanCard[] | null) {
+  try {
+    if (!cards) return sessionStorage.removeItem(OPEN_KEY);
+    const hand = cards.slice(0, HAND).map(({ term, language }) => ({ term, language }));
+    sessionStorage.setItem(OPEN_KEY, JSON.stringify(hand));
+  } catch {}
+}
+
+/** A reload mid-review: its grades already end `isGuiding`, so only this tab knows it is still the first. */
+export function firstReviewOpen(streak: StreakSummary): FanCard[] | null {
+  if (streak.reviewedDays > 1 || streak.today.attempts === 0) return null;
+  try {
+    const hand: unknown = JSON.parse(sessionStorage.getItem(OPEN_KEY) ?? "null");
+    return Array.isArray(hand) ? (hand as FanCard[]) : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Off only for browser journeys about review itself, which start on a new account; docs/testing.md. */
 export function firstReviewTeaches() {
   return !(window as { lymiNoFirstReview?: boolean }).lymiNoFirstReview;
@@ -202,7 +225,7 @@ function Rise({
 /** Takes focus as it arrives, so each step is announced and Tab starts at its choices. */
 function StepHeading({ children }: { children: ReactNode }) {
   const heading = useRef<HTMLHeadingElement>(null);
-  useEffect(() => heading.current?.focus({ preventScroll: true }), []);
+  useEffect(() => heading.current?.focus(), []);
   return (
     <h2
       ref={heading}
@@ -316,10 +339,16 @@ function ReminderNote({ reminder }: { reminder: Reminder }) {
 
 export type FanCard = ComponentProps<typeof TermText>["card"];
 
+/** How many cards the last screen deals. */
+const HAND = 3;
+
+/** Past this many characters a term takes the smaller size on a card of the hand. */
+const LONG_TERM = 14;
+
 /** A hand of this review's words, dealt from a stack. */
 function WordFan({ cards }: { cards: readonly FanCard[] }) {
   const reduce = useReduceMotion();
-  const hand = cards.slice(0, 3);
+  const hand = cards.slice(0, HAND);
   const middle = (hand.length - 1) / 2;
   return (
     <div aria-hidden="true" className="relative mx-auto h-44 w-full">
@@ -340,8 +369,14 @@ function WordFan({ cards }: { cards: readonly FanCard[] }) {
             }}
             transition={{ type: "spring", bounce: 0.18, duration: 0.7, delay: 0.2 + i * 0.03 }}
           >
-            <span className="line-clamp-3 break-words text-center text-lg font-medium text-ink">
-              <TermText card={card} />
+            {/* No reading: a card this small has no room over a long term. */}
+            <span
+              className={clsx(
+                "hyphenate line-clamp-3 w-full text-center font-medium text-ink [overflow-wrap:anywhere]",
+                card.term.length > LONG_TERM ? "text-sm" : "text-lg",
+              )}
+            >
+              <TermText card={{ ...card, pronunciation: null }} />
             </span>
           </motion.div>
         );
@@ -355,6 +390,8 @@ export function firstEndParts(input: FirstEndInput): {
   beat?: ReactNode;
   foot?: ReactNode;
   steps: ReactNode;
+  /** Moves on from a step with nothing to decide, for Space and Enter. */
+  advance?: () => void;
 } {
   const { step, onStep, control, next, fresh, goal, onGoal, times, part, onPart } = input;
   const { reminder, busy, turnOn } = control;
@@ -381,11 +418,12 @@ export function firstEndParts(input: FirstEndInput): {
     </Button>
   );
 
-  if (step === "summary") return { foot: nextButton("goal"), steps };
+  if (step === "summary") return { foot: nextButton("goal"), steps, advance: () => onStep("goal") };
 
   if (step === "goal")
     return {
       steps,
+      advance: () => onStep(asks ? "remind" : "bye"),
       beat: (
         <Rise key="goal" className="w-full pt-3">
           <StepHeading>
@@ -467,7 +505,7 @@ export function firstEndParts(input: FirstEndInput): {
           </p>
         )}
         {input.cards.length > 0 && (
-          <div className="mt-5">
+          <div className="mt-5 [@media(max-height:600px)]:hidden">
             <WordFan cards={input.cards} />
           </div>
         )}

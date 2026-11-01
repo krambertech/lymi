@@ -31,6 +31,9 @@ export function useComesBack(
   const relative = new Intl.RelativeTimeFormat(i18n.locale, { numeric: "auto" });
   const say = (days: number) => {
     if (days === 0) return t`later today`;
+    if (days < 5) return relative.format(days, "day");
+    // A grade's own fuzz moves the real day from this preview, by days at this length.
+    if (days <= 10) return t`in about a week`;
     if (days < 21) return relative.format(days, "day");
     if (days < 60) return relative.format(Math.round(days / 7), "week");
     return relative.format(Math.round(days / 30), "month");
@@ -122,6 +125,7 @@ export function GradesTip({ onSkip }: { onSkip: () => void }) {
       <motion.span
         aria-hidden="true"
         className="absolute inset-0 bg-plate/60"
+        style={{ WebkitBackdropFilter: "blur(4px)" }}
         initial={{ backdropFilter: "blur(0px)" }}
         animate={{ backdropFilter: "blur(4px)" }}
         transition={{ duration: 0.6, ease: EASE_OUT, delay: AFTER_ANSWER_S }}
@@ -184,7 +188,7 @@ export function ComesBack({
   return (
     <motion.section
       aria-live="polite"
-      className="edge relative mt-4 flex flex-1 flex-col justify-center overflow-hidden rounded-xl bg-plate px-6 py-8 @3xl:max-h-[600px] @3xl:px-10"
+      className="edge relative mt-4 flex min-h-0 flex-1 flex-col justify-center-safe overflow-x-hidden overflow-y-auto rounded-xl bg-plate px-6 py-8 short:py-5 @3xl:max-h-[600px] @3xl:px-10"
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.28, ease: EASE_OUT }}
@@ -194,7 +198,7 @@ export function ComesBack({
         className="absolute inset-x-0 bottom-0 h-2/3 bg-amber-tint [mask-image:linear-gradient(to_top,black_5%,transparent)]"
       />
       <motion.h2 {...rise(0.1)} className="relative grid gap-1 text-center">
-        <span className="line-clamp-3 text-balance text-3xl font-medium tracking-[-0.02em] text-ink [overflow-wrap:anywhere]">
+        <span className="hyphenate line-clamp-3 text-balance text-3xl font-medium short:line-clamp-2 short:text-2xl tracking-[-0.02em] text-ink [overflow-wrap:anywhere]">
           <TermText card={card} />
         </span>
         <span className="text-lg font-normal text-ink-secondary">
@@ -202,7 +206,7 @@ export function ComesBack({
         </span>
       </motion.h2>
 
-      <dl className="relative mx-auto mt-6 grid w-full max-w-sm gap-1">
+      <dl className="relative mx-auto mt-6 grid w-full max-w-sm gap-1 short:mt-3 short:gap-0">
         {GRADES.map((g, i) => {
           const Icon = g.icon;
           const on = g.rating === rating;
@@ -210,7 +214,7 @@ export function ComesBack({
             <motion.div
               key={g.rating}
               {...rise(ROWS + i * 0.05)}
-              className="relative flex items-center justify-between gap-3 px-3 py-2"
+              className="relative flex items-center justify-between gap-3 px-3 py-2 short:py-1.5"
             >
               {on && (
                 <motion.span
@@ -245,14 +249,17 @@ export function ComesBack({
 
       <motion.p
         {...rise(CHOSEN + 0.1)}
-        className="relative mx-auto mt-6 max-w-[34ch] text-pretty text-center text-md text-ink-secondary"
+        className="relative mx-auto mt-6 max-w-[34ch] text-pretty text-center text-md text-ink-secondary short:mt-3"
       >
         <Trans>
           Lymi brings each card back just before you’d forget it, and waits longer each time you
           remember.
         </Trans>
       </motion.p>
-      <motion.div {...rise(CHOSEN + 0.2)} className="relative mt-8 grid justify-items-center gap-3">
+      <motion.div
+        {...rise(CHOSEN + 0.2)}
+        className="relative mt-8 grid justify-items-center gap-3 short:mt-4 short:gap-2"
+      >
         <Button variant="primary" size="lg" kbd="Space" onClick={onNext}>
           <Trans>Next card</Trans>
         </Button>

@@ -19,3 +19,5 @@ The first card shows **Try to remember what this means.** The first grade shows 
 - A local server has no push key, so the reminder step is skipped. To see it, stand in for `navigator.serviceWorker`, `Notification` and `/api/push/config` in the browser.
 - The first review's teaching is off in `e2e`, which sets `window.lymiNoFirstReview`.
 - A headless browser's `Notification.permission` can be `denied`, which also skips the step.
+- A phone browser shows about 660 px of height, not the screen's 852. Check the end at 393×660 and 375×553, where the foot stays on screen over a smaller lantern.
+- Playwright's WebKit does not paint `backdrop-filter` in screenshots, so check the grades tip's frost in Simulator Safari.

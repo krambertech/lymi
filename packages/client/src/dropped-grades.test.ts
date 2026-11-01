@@ -1,8 +1,8 @@
-import type { StoredGrade } from "@lymi/client/grades";
-import type { DrawData } from "@lymi/client/review-draw";
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it, vi } from "vitest";
-import { withoutDropped } from "./dropped";
+import { withoutDropped } from "./dropped-grades";
+import type { StoredGrade } from "./grades";
+import type { DrawData } from "./review-draw";
 
 const at = "2026-10-14T08:00:00.000Z";
 const sentAt = Date.parse(at) + 1_000;

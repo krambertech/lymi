@@ -1,13 +1,7 @@
-import {
-  legFinish,
-  type RoundAsk,
-  type RoundFetch,
-  reviewEnd,
-  roundWalk,
-} from "@lymi/client/review-end";
 import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 import { beforeEach, describe, expect, it } from "vitest";
-import { daysBefore, type ReviewLeg, ReviewLegs } from "./review-legs";
+import { legFinish, type RoundAsk, type RoundFetch, reviewEnd, roundWalk } from "../review-end";
+import { daysBefore, type ReviewLeg, ReviewLegs } from "./legs";
 
 const DATE = "2026-10-12";
 const NEW_LEARNER = { reviewedDays: 0, today: { date: DATE, attempts: 0 } };

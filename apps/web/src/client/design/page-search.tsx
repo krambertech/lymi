@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCommandList } from "../components/ui/command-palette";
 import { Input } from "../components/ui/input";
-import { appleKeyboard } from "../lib/device";
+import { isFindKey } from "./device-frame";
 import { type DocRef, FOUNDATIONS, GROUPS, groupListing } from "./registry";
 
 type Section = "Start" | "Foundations" | "Components";
@@ -60,20 +60,22 @@ const ROWS: Row[] = [
   ),
 ];
 
+// Specimens hold some overlays open, so only one with focus in it counts as in use.
+const OVERLAY = '[role="menu"], [role="listbox"], [role="dialog"], [role="alertdialog"]';
+
 /** ⌘K, or Ctrl K, finds any page or component and goes there. */
 export function usePageSearch() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.repeat || e.altKey || e.shiftKey) return;
-      if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
-      if (e.code !== "KeyK" && e.key?.toLowerCase() !== "k") return;
+      if (!isFindKey(e)) return;
+      if (!open && document.activeElement?.closest(OVERLAY)) return;
       e.preventDefault();
       setOpen((o) => !o);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [open]);
   return { open, setOpen };
 }
 

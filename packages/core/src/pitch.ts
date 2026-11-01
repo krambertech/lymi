@@ -69,6 +69,7 @@ function morae(reading: string): string[] {
 
 /** The accent a card's chart draws, the first its Reading holds, or null when it holds none or is too long to chart. */
 export function pitchPattern(card: {
+  term?: string | undefined;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): PitchPattern | null {
@@ -76,7 +77,9 @@ export function pitchPattern(card: {
   if (kana === null || !card.pronunciation || readingEngine(card.language) !== "furigana") {
     return null;
   }
-  const shown = morae(kana);
+  // コーヒー read こーひー labels its chart as the card writes it.
+  const term = card.term?.normalize("NFC").trim();
+  const shown = morae(term && foldReading(term) === foldReading(kana) ? term : kana);
   if (shown.length > CHART_MORAE) return null;
   const position = positionsIn(card.pronunciation.normalize("NFC").trim()).find(
     (at) => at <= shown.length,

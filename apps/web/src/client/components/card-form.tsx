@@ -816,7 +816,7 @@ export function CardForm(props: CardFormProps) {
         {
           description:
             pitchPattern({ language, pronunciation }) !== null ? (
-              <PitchChart card={{ language, pronunciation }} className="pt-1 text-md" />
+              <PitchChart card={termCard} className="pt-1 text-md" />
             ) : (
               stressMissed && (
                 <FieldDescription>

@@ -212,6 +212,7 @@ describe("a Reading's pitch accent", () => {
     results: [
       { card: { pronunciation: "かんがえる [4][3]", language: "ja" } },
       { card: { pronunciation: "tʃeə [1]", language: "en" } },
+      { card: { term: "ありがとう", pronunciation: "ありがとう [2]", language: "ja" } },
     ],
   };
   const route = new Hono<AppEnv>()
@@ -228,6 +229,7 @@ describe("a Reading's pitch accent", () => {
       results: [
         { card: { pronunciation: "かんがえる", language: "ja" } },
         { card: { pronunciation: "tʃeə [1]", language: "en" } },
+        { card: { term: "ありがとう", pronunciation: null, language: "ja" } },
       ],
     });
   });

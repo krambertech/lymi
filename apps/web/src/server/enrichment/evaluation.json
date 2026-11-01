@@ -847,7 +847,10 @@
         {
           "id": "ja-en-02",
           "term": "ありがとう",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
+          "expect": {
+            "meaning": { "includes": ["thank"] },
+            "pronunciation": { "oneOf": ["ありがとう [2]"] }
+          }
         },
         {
           "id": "ja-en-03",
@@ -862,7 +865,9 @@
           "term": "毎朝",
           "expect": {
             "meaning": { "oneOf": ["every morning"] },
-            "pronunciation": { "oneOf": ["まいあさ [1]", "まいあさ [0]", "まいあさ [1][0]", "まいあさ [0][1]"] },
+            "pronunciation": {
+              "oneOf": ["まいあさ [1]", "まいあさ [0]", "まいあさ [1][0]", "まいあさ [0][1]"]
+            },
             "example": { "includes": ["毎朝[まいあさ]"] }
           }
         }
@@ -880,7 +885,9 @@
           "term": "電車",
           "expect": {
             "meaning": { "oneOf": ["train", "electric train"] },
-            "pronunciation": { "oneOf": ["でんしゃ [0]", "でんしゃ [1]", "でんしゃ [0][1]", "でんしゃ [1][0]"] }
+            "pronunciation": {
+              "oneOf": ["でんしゃ [0]", "でんしゃ [1]", "でんしゃ [0][1]", "でんしゃ [1][0]"]
+            }
           }
         },
         {
@@ -1685,7 +1692,7 @@
         {
           "id": "vi-en-03",
           "term": "cảm ơn",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
         },
         {
           "id": "vi-en-04",
@@ -1922,7 +1929,7 @@
         {
           "id": "ta-en-02",
           "term": "நன்றி",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
         },
         {
           "id": "ta-en-03",
@@ -2798,7 +2805,7 @@
         {
           "id": "pl-en-16",
           "term": "dziękuję",
-          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": { "oneOf": ["ありがとう [2]"] } }
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
         },
         {
           "id": "pl-en-17",

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 
 interface PitchChartProps {
   card: {
+    term?: string | undefined;
     language?: string | null | undefined;
     pronunciation?: string | null | undefined;
   };
@@ -15,10 +16,10 @@ interface PitchChartProps {
 /** Where a card's voice rises and falls: a joined dot over each mora, with a tail for a particle after the word. */
 export function PitchChart({ card, className }: PitchChartProps) {
   const { t } = useLingui();
-  const { language, pronunciation } = card;
+  const { term, language, pronunciation } = card;
   const pattern = useMemo(
-    () => pitchPattern({ language, pronunciation }),
-    [language, pronunciation],
+    () => pitchPattern({ term, language, pronunciation }),
+    [term, language, pronunciation],
   );
   if (!pattern) return null;
   const reading = isolate(pattern.morae.map((mora) => mora.text).join(""));

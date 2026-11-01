@@ -34,6 +34,15 @@ describe("pitchPattern", () => {
     expect(shape("コーヒー [3]")).toEqual({ highs: "LHHL", particle: "L" });
   });
 
+  it("labels the chart in the term's own kana when the Reading only folds it", () => {
+    const pattern = pitchPattern({
+      term: "コーヒー",
+      language: "ja",
+      pronunciation: "こーひー [3]",
+    });
+    expect(pattern?.morae.map((mora) => mora.text)).toEqual(["コ", "ー", "ヒ", "ー"]);
+  });
+
   it("keeps a flat word and a fall on the last mora apart at the particle", () => {
     const flat = shape("はし [0]");
     const last = shape("はし [2]");

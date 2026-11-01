@@ -1,6 +1,7 @@
 import {
   CLIENT_HEADER,
   compareVersions,
+  drawsTermReading,
   isClientVersion,
   type PhonePlatform,
   parseClientHeader,
@@ -8,6 +9,7 @@ import {
   type ReadingEngine,
   readingEngine,
   stripReadings,
+  termShowsPronunciation,
   UPDATE_REQUIRED,
 } from "@lymi/core";
 import type { Context, MiddlewareHandler } from "hono";
@@ -128,9 +130,16 @@ export function withoutPitchAccent(value: unknown): unknown {
   if (!value || typeof value !== "object") return value;
   const out: Record<string, unknown> = {};
   for (const [key, item] of Object.entries(value)) out[key] = withoutPitchAccent(item);
-  const { pronunciation, language } = out;
+  const { term, pronunciation, language } = out;
   if (typeof pronunciation === "string" && typeof language === "string") {
-    out.pronunciation = pronunciationText({ language, pronunciation });
+    const reading = pronunciationText({ language, pronunciation });
+    // These releases show a Reading that repeats a kana term as a line of its own.
+    const repeats =
+      reading !== pronunciation &&
+      typeof term === "string" &&
+      termShowsPronunciation({ term, language, pronunciation }) &&
+      !drawsTermReading({ term, language, pronunciation });
+    out.pronunciation = repeats ? null : reading;
   }
   return out;
 }

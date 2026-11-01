@@ -12,6 +12,7 @@ export function PitchChart({
   size = 17,
 }: {
   card: {
+    term?: string | undefined;
     language?: string | null | undefined;
     pronunciation?: string | null | undefined;
   };
@@ -19,10 +20,10 @@ export function PitchChart({
   size?: number;
 }) {
   const { t } = useLingui();
-  const { language, pronunciation } = card;
+  const { term, language, pronunciation } = card;
   const pattern = useMemo(
-    () => pitchPattern({ language, pronunciation }),
-    [language, pronunciation],
+    () => pitchPattern({ term, language, pronunciation }),
+    [term, language, pronunciation],
   );
   if (!pattern) return null;
   const reading = isolate(pattern.morae.map((mora) => mora.text).join(""));
@@ -52,9 +53,10 @@ function PitchLine({
   language: string | null | undefined;
 }) {
   const p = usePalette();
-  const { fontScale } = useWindowDimensions();
-  const em = size * fontScale;
+  const { fontScale, width: screen } = useWindowDimensions();
   const { width, morae, segments } = pitchLayout(pattern);
+  // A long word at a large text size shrinks to stay inside the card's 40 pt sides on each edge.
+  const em = Math.min(size * fontScale, (screen - 80) / (width / 10));
   const color = p["ink-secondary"];
   return (
     <View style={{ width: (width / 10) * em, gap: 0.1 * em }}>
@@ -88,8 +90,9 @@ function PitchLine({
             key={mora.start}
             lang={language}
             numberOfLines={1}
+            allowFontScaling={false}
             className="text-center text-ink-secondary"
-            style={{ width: (mora.width / 10) * em, fontSize: size }}
+            style={{ width: (mora.width / 10) * em, fontSize: em }}
           >
             {mora.text}
           </Text>

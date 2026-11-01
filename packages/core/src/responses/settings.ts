@@ -16,6 +16,10 @@ export const SettingsOut = z
       description:
         "Whether the web app may record how the learner moves through it, with their cards, names and typing masked. Null means yes; only false stops it.",
     }),
+    learningEmails: z.boolean().nullable().meta({
+      description:
+        "Whether Lymi may email the learner about the cards waiting for them. Null means yes; only false stops them.",
+    }),
     appLanguage: AppLanguage.nullable().meta({
       ...OPEN,
       description:

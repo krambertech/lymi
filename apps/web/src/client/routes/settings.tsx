@@ -8,6 +8,7 @@ import { AiServicesSection } from "../components/ai-services-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { AppsSection } from "../components/apps-section";
 import { ExportSheet } from "../components/export-sheet";
+import { LearningEmailsChoice } from "../components/learning-emails-choice";
 import { NotificationsSection } from "../components/notifications-section";
 import { ReplayChoice } from "../components/replay-choice";
 import { ThisMacSection } from "../components/this-mac-section";
@@ -84,6 +85,7 @@ function SettingsRoute() {
     >
       <ThisMacSection />
       <NotificationsSection />
+      <LearningEmailsChoice />
       <AiServicesSection />
       <AppsSection />
       <ApiKeysSection />

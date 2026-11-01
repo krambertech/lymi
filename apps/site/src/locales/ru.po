@@ -2934,6 +2934,9 @@ msgstr "{name} в Lymi"
 msgid "Learning data: your cards, decks, lesson material, pictures, recordings, reviews and progress, including preferences and Activity records. We use these to store your content, schedule reviews, sync devices and provide the features you use. Photos you upload are converted to remove embedded metadata. Camera and photo-library access is used only when you choose to add a photo or read lesson pages. Lymi does not record your voice."
 msgstr "Учебные данные: карточки, колоды, материалы уроков, изображения, записи произношения, повторения и прогресс, а также предпочтения и записи Активности. Они нужны, чтобы хранить твой контент, планировать повторения, синхронизировать устройства и предоставлять выбранные функции. Загруженные фото преобразуются, чтобы убрать встроенные метаданные. Камера и фототека используются только когда ты добавляешь фото или читаешь страницы урока. Lymi не записывает твой голос."
 
+msgid "Learning emails: when cards are ready and you’ve been away, we may email you. These emails can include the text of a card and the name of its deck, including decks only you can see, so your email provider can read them. You can turn them off in Settings or from any of these emails."
+msgstr "Учебные письма: когда карточки готовы, а тебя давно не было, мы можем написать тебе. В этих письмах может быть текст карточки и название её колоды, в том числе колоды, которую видишь только ты, поэтому твой почтовый сервис может их прочитать. Эти письма можно отключить в Настройках или из любого такого письма."
+
 msgid "Learning is more fun together."
 msgstr "Вместе учиться веселее."
 

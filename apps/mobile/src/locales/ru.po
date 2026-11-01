@@ -3040,6 +3040,9 @@ msgstr "В изучении"
 msgid "Learning “{typed}”"
 msgstr "Учу «{typed}»"
 
+msgid "Learning emails"
+msgstr "Учебные письма"
+
 msgid "Leave {name}?"
 msgstr "Выйти из {name}?"
 
@@ -3154,6 +3157,9 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 
 msgid "Lymi keeps nothing once the account is gone."
 msgstr "После удаления аккаунта Lymi ничего не хранит."
+
+msgid "Lymi may email you when cards are ready. You can turn this off in You or from any email."
+msgstr "Lymi может писать тебе, когда карточки готовы. Это можно отключить в разделе «Ты» или из любого письма."
 
 msgid "Lymi needs your Readwise token again"
 msgstr "Lymi снова нужен твой токен Readwise"

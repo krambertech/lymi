@@ -65,6 +65,14 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
+          Learning emails: when cards are ready and you’ve been away, we may email you. These emails
+          can include the text of a card and the name of its deck, including decks only you can see,
+          so your email provider can read them. You can turn them off in Settings or from any of
+          these emails.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
           Reminders are optional. Web reminders use your browser’s push service, which receives a
           delivery address and the reminder, including the number of cards due. Phone reminders are
           scheduled on your device.

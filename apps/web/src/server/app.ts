@@ -36,6 +36,7 @@ import { contentReports, moderation } from "./routes/content-reports";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
 import { emailEvents } from "./routes/email-events";
+import { emailLinks } from "./routes/email-links";
 import { explore } from "./routes/explore";
 import { exports as exportRoutes } from "./routes/exports";
 import { feedback } from "./routes/feedback";
@@ -270,6 +271,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 
 // Resend's delivery reports are signed, not sent with a session.
 app.route("/api/email/events", emailEvents);
+
+// An email's links are signed, and open on a phone that has never signed in.
+app.route("/api/email", emailLinks);
 
 // AnkiConnect clients send the key in the body, so this door authenticates itself.
 app.route("/api/anki-connect", ankiConnect);

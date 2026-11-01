@@ -47,6 +47,7 @@ import { cardsApi } from "./cards";
 import { connectedAppsApi } from "./connected-apps";
 import { contentReportsApi } from "./content-reports";
 import { decksApi } from "./decks";
+import { emailApi } from "./email";
 import { exploreApi } from "./explore";
 import { exportsApi } from "./exports";
 import { feedbackApi } from "./feedback";
@@ -81,6 +82,7 @@ export const api = {
   ...reviewApi,
   ...sectionsApi,
   ...seriesApi,
+  ...emailApi,
   ...settingsApi,
   ...sharingApi,
   ...statsApi,

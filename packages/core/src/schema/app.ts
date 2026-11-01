@@ -332,6 +332,8 @@ export const userSettings = sqliteTable("user_settings", {
   aiConsentUpdatedAt: integer("ai_consent_updated_at", { mode: "timestamp_ms" }),
   /** Whether the web app may replay how the learner moves through it. Null means yes; Settings turns it off. */
   sessionReplay: integer("session_replay", { mode: "boolean" }),
+  /** Whether Lymi may send learning emails. Null means yes; Settings or an email's unsubscribe turns it off. */
+  learningEmails: integer("learning_emails", { mode: "boolean" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
@@ -362,6 +364,23 @@ export const learnerOpenings = sqliteTable("learner_openings", {
     .references(() => user.id, { onDelete: "cascade" }),
   openedAt: integer("opened_at", { mode: "timestamp_ms" }).notNull(),
 });
+
+/**
+ * One step of the learning email series, claimed before it sends. `anchor` is the learner-local
+ * day the series counts from, so a learner who returns and lapses again gets the steps again.
+ */
+export const learningEmails = sqliteTable(
+  "learning_emails",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    anchor: text("anchor").notNull(),
+    sentAt: integer("sent_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.kind, t.anchor] })],
+);
 
 export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {
   key: text("key").primaryKey(),

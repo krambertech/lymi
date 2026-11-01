@@ -99,6 +99,7 @@ const SENTENCES: Sentences = {
     "analytics.consent": null,
     "ai.consent": null,
     "replay.choice": null,
+    "email.learning_choice": null,
     "analytics.review_start": null,
     rename: null,
     "avatar.upload": null,

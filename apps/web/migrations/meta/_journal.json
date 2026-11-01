@@ -519,6 +519,13 @@
       "when": 1793531161752,
       "tag": "0073_gigantic_alice",
       "breakpoints": true
+    },
+    {
+      "idx": 74,
+      "version": "6",
+      "when": 1793537198079,
+      "tag": "0074_normal_sunspot",
+      "breakpoints": true
     }
   ]
 }

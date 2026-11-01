@@ -90,6 +90,14 @@ export function LoginView({
     <AuthFrame
       footer={
         <div className="w-full">
+          {mode !== "forgot" && (
+            <p className="mt-2 mb-4 text-center text-sm text-ink-muted">
+              <Trans>
+                Lymi may email you when cards are ready. You can turn this off in Settings or from
+                any email.
+              </Trans>
+            </p>
+          )}
           <AccessNote />
           {children}
         </div>

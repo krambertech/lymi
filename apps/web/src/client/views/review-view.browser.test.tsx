@@ -174,6 +174,34 @@ test("a Chinese card shows its pinyin as its own line once the learner turns ada
   expect(pinyinShown()).toEqual([]);
 });
 
+test("a Japanese card charts its pitch under the term only after the reveal", async () => {
+  const { reveal } = await reviewCue(
+    { term: "図書館", language: "ja", pronunciation: "としょかん [2]" },
+    2,
+  );
+  const chart = () =>
+    page
+      .getByRole("img", { name: "としょかん, pitch falls after sound 2" })
+      .elements()
+      .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
+  expect(chart()).toHaveLength(0);
+  await reveal();
+  expect(chart()).toHaveLength(1);
+  expect(shown("としょかん [2]")).toHaveLength(0);
+  expect(document.querySelector("rt")?.checkVisibility({ visibilityProperty: true })).toBe(false);
+});
+
+test("the chart stands in for a pronunciation line the learner keeps separate", async () => {
+  const { reveal } = await reviewCue(
+    { term: "図書館", language: "ja", pronunciation: "としょかん [2]" },
+    2,
+    "separate",
+  );
+  await reveal();
+  expect(shown("としょかん")).toHaveLength(0);
+  await expect.element(page.getByRole("img", { name: /pitch falls after sound 2/ })).toBeVisible();
+});
+
 test("一点儿 gives 儿 to the erhua syllable before it", async () => {
   await reviewCue({ term: "一点儿", language: "zh", pronunciation: "yì diǎnr" }, 0);
   expect(pinyinShown()).toEqual(["yì", "diǎnr"]);

@@ -218,7 +218,7 @@ App adds enrich by default. API and MCP callers opt in with `enrich: true`. An e
 
 A Cloudflare Workflow processes each add batch in groups of about ten cards. `cards.enrichment_status` is `working`, `failed` or null, and normal card reads expose it to the clients. Failure leaves the added card intact and available for retry. With no OpenAI key, adding still succeeds without queuing enrichment.
 
-OpenAI structured outputs validate model replies against a schema. The default enrichment model is `gpt-6-luna` at `high` reasoning effort, chosen for pronunciation accuracy in evaluations. `OPENAI_TEXT_MODEL` can override it; the override must support the requested effort. Prompts and evaluations live in `apps/web/src/server/enrichment`, with language-specific inputs in `apps/web/src/server/languages`. Recorded runs include replies, model and prompt hash; CI checks the hash and scores the recorded outputs. They do not prove how an unrecorded live model call behaves.
+OpenAI structured outputs validate model replies against a schema. The default enrichment model is `gpt-6-luna` at `high` reasoning effort, chosen for pronunciation accuracy in evaluations. A Japanese pitch accent is a separate call to `gpt-6.1-terra` at `medium`, after a run fills its cards: on 48 common words Luna got 37 to 42 right at every effort and Terra 47 or 48. `OPENAI_TEXT_MODEL` can override it; the override must support the requested effort. Prompts and evaluations live in `apps/web/src/server/enrichment`, with language-specific inputs in `apps/web/src/server/languages`. Recorded runs include replies, model and prompt hash; CI checks the hash and scores the recorded outputs. They do not prove how an unrecorded live model call behaves.
 
 #### Hint drafts
 

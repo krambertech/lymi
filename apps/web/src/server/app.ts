@@ -19,6 +19,7 @@ import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "
 import { requireStrongPassword } from "./password-rules";
 import {
   leaveOutExampleReadings,
+  leaveOutPitchAccent,
   leaveOutTranslationField,
   requireSupportedPhone,
 } from "./phone-clients";
@@ -197,6 +198,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 // A phone release too old for this API is told to update before anything else answers it.
 app.use("/api/*", requireSupportedPhone);
 app.use("/api/*", leaveOutExampleReadings);
+app.use("/api/*", leaveOutPitchAccent);
 app.use("/api/*", leaveOutTranslationField);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.

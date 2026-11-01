@@ -1306,8 +1306,8 @@ msgstr "Давай; ходімо"
 msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Повертається за кілька карток, а потім через довші проміжки"
 
-msgid "Coming from a deck like Kaishi 1.5k? Word recordings stay on the cards, and pitch accent and sentence translations come along as notes."
-msgstr "Вчиш за колодою на кшталт Kaishi 1.5k? Записи слів лишаються на картках, а тональний наголос і переклади речень переходять у нотатки."
+msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
+msgstr "Переходиш із колоди на кшталт Kaishi 1.5k? Записи слів і тональний наголос лишаються на картках, а переклади речень переходять разом із ними."
 
 msgid "Confirm it’s you"
 msgstr "Підтверди, що це ти"
@@ -2973,6 +2973,9 @@ msgstr "Побачимося *завтра*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Попрактикуймося. Використовуй німецькі слова з моєї колоди."
+
+msgid "library"
+msgstr "бібліотека"
 
 msgid "Lingering at the table after a meal"
 msgstr "Засидітися за столом після їжі"

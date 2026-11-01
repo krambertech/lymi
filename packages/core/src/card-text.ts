@@ -7,7 +7,8 @@ import { sameTamilReading } from "./indic";
 import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { toneMarks } from "./pinyin";
-import { foldReading, splitTermReading } from "./reading";
+import { storedPitch } from "./pitch";
+import { foldReading, splitTermReading, withoutPitch } from "./reading";
 import { cyrillicStress, hasStress, readStress, stressKey, stripStress } from "./stress";
 
 /** A field `normalizeCardText` may convert. */
@@ -21,7 +22,7 @@ export type CardText = {
 
 /** Each engine's conversions, such as pinyin's tone numbers to marks; each returns only the fields it changed. */
 const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardText> = {
-  furigana: splitBracketedTerm,
+  furigana: japaneseReading,
   pinyin: markTones,
   jyutping: plainToneNumbers,
   stress: markStress,
@@ -72,14 +73,18 @@ function markTones({ pronunciation }: CardText): CardText {
 
 /**
  * `食[た]べる` sent as the term splits into 食べる and its Reading たべる, unless the card was sent a
- * different pronunciation, which leaves both as written.
+ * different pronunciation, which leaves both as written. A Reading's pitch accent stores as its
+ * position: としょꜜかん → としょかん [2].
  */
-function splitBracketedTerm({ term, pronunciation }: CardText): CardText {
+function japaneseReading({ term, pronunciation }: CardText): CardText {
+  const stored = pronunciation ? { pronunciation: storedPitch(pronunciation) } : {};
   const split = term === undefined ? null : splitTermReading(term);
-  if (!split) return {};
-  const sent = pronunciation?.trim();
+  if (!split) return stored;
+  const sent = stored.pronunciation?.trim();
   if (!sent) return { term: split.term, pronunciation: split.reading };
-  return foldReading(sent) === split.reading ? { term: split.term } : {};
+  return foldReading(withoutPitch(sent)) === split.reading
+    ? { ...stored, term: split.term }
+    : stored;
 }
 
 /**

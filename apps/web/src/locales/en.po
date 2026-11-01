@@ -804,6 +804,12 @@ msgstr "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invit
 msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 
+msgid "{reading}, flat pitch"
+msgstr "{reading}, flat pitch"
+
+msgid "{reading}, pitch falls after sound {position}"
+msgstr "{reading}, pitch falls after sound {position}"
+
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 

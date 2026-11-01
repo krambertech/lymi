@@ -30,6 +30,7 @@ export const CHANGELOG_FIGURES = [
   "cantonese-tamil",
   "example",
   "mac",
+  "pitch-accent",
 ] as const;
 
 /** Figures drawn at the tray's own 660 by 412 and running to its edges, rather than standing in it. */

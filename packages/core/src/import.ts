@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { EXAMPLE_LENGTH, fitsExample } from "./example";
-import { moraCount } from "./reading";
+import { sourcePitch } from "./pitch";
+import { kanaReading, moraCount } from "./reading";
 import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
@@ -465,6 +466,32 @@ export function pitchNotation(html: string): string {
   return items.filter((item) => /[\p{L}\p{N}]/u.test(item)).join(" · ");
 }
 
+/**
+ * A Japanese card's pitch accent line moved out of its notes into its Reading, or the fields as
+ * they were when no line of the notes reads as an accent of this Reading.
+ */
+export function pitchIntoReading<
+  T extends {
+    term?: string | undefined;
+    pronunciation?: string | undefined;
+    notes?: string | undefined;
+  },
+>(fields: T, language: string | null | undefined): T {
+  const reading = kanaReading({ language, pronunciation: fields.pronunciation || fields.term });
+  if (!reading || !fields.notes) return fields;
+  const lines = fields.notes.split("\n");
+  for (const [at, line] of lines.entries()) {
+    const positions = sourcePitch(line, reading);
+    if (!positions) continue;
+    return {
+      ...fields,
+      pronunciation: `${reading} ${positions.map((position) => `[${position}]`).join("")}`,
+      notes: lines.filter((_, i) => i !== at).join("\n") || undefined,
+    };
+  }
+  return fields;
+}
+
 /** A field's text as an import keeps it: pitch accent as its notation, a translation as one line. */
 export function importFieldText(
   name: string,
@@ -651,7 +678,7 @@ function fieldRole(name: string, chinese: boolean): FieldRole | undefined {
 
 /**
  * A field holding the term's pitch accent, such as Kaishi's "Pitch Accent" or Lapis's
- * "PitchPosition", which becomes one line of notes. "Pitch Accent Notes" is ordinary notes.
+ * "PitchPosition", which an import keeps in the Reading or as one line of notes. "Pitch Accent Notes" is ordinary notes.
  */
 export function isPitchField(name: string): boolean {
   const words = fieldWords(name);

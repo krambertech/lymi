@@ -5,6 +5,7 @@ import { useKnownReadings } from "@lymi/client/known-readings";
 import {
   drawsTermReading,
   hasReadings,
+  pronunciationText,
   shownTranslation,
   stripReadings,
   termShowsPronunciation,
@@ -128,7 +129,7 @@ export function CardPeek({
         </Text>
         {card.pronunciation && !reading && (
           <Text className="text-md text-ink-muted" numberOfLines={1}>
-            {card.pronunciation}
+            {pronunciationText(card)}
           </Text>
         )}
         {card.example && (

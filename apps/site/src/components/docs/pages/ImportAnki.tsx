@@ -117,7 +117,7 @@ export function ImportAnki() {
           },
           {
             term: "Pitch accent and translations",
-            def: "A pitch accent field becomes one line of notes, such as はꜜし [1]. A translation of the example sentence becomes the example’s translation. An example longer than 250 characters moves to the notes with its translation.",
+            def: "A pitch accent field that matches the card’s reading goes in the Reading and shows as a chart under the term. Any other pitch accent becomes one line of notes, such as はꜜし [1]. A translation of the example sentence becomes the example’s translation. An example longer than 250 characters moves to the notes with its translation.",
           },
           {
             term: "Review history",

@@ -8,6 +8,8 @@ import {
   isolate,
   type KnownReadings,
   type PronunciationDisplay,
+  pitchPattern,
+  pronunciationText,
   type Rating,
   type ReviewAid,
   shownTranslation,
@@ -65,6 +67,7 @@ import {
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Embers, embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
+import { PitchChart } from "../components/pitch-chart";
 import { Progress } from "../components/progress";
 import {
   type AidStep,
@@ -492,18 +495,25 @@ export function ReviewCard({
   const separate = reading && deck?.pronunciationDisplay === "separate";
   // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
-  const cueReading = cueShowsPronunciation({
-    revealed,
-    known: stateKey(item.fsrsState) === "known",
-    display: deck?.pronunciationDisplay,
-  });
-  const term = separate ? (
-    <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
-      {card.term}
-    </span>
-  ) : (
-    <TermText card={card} />
-  );
+  const pronunciationLine = useMemo(() => pronunciationText(card), [card]);
+  // A chart stands where the pronunciation's own line would, and spells the kana itself.
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
+  // The chart spells the reading after the reveal, so the furigana leaves and the term keeps its place.
+  const cueReading =
+    !(revealed && pitched) &&
+    cueShowsPronunciation({
+      revealed,
+      known: stateKey(item.fsrsState) === "known",
+      display: deck?.pronunciationDisplay,
+    });
+  const term =
+    separate || pitched ? (
+      <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+        {card.term}
+      </span>
+    ) : (
+      <TermText card={card} />
+    );
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -699,10 +709,15 @@ export function ReviewCard({
     // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&
-      (reading && !separate ? (
-        readingOver && (
+      (pitched && mode.cue !== "term" ? (
+        <motion.div variants={answerLine} className="pt-1">
+          <PitchChart card={card} className="text-lg" />
+        </motion.div>
+      ) : reading && !separate ? (
+        readingOver &&
+        !pitched && (
           <p className="sr-only" lang={card.language ?? undefined}>
-            {card.pronunciation}
+            {pronunciationLine}
           </p>
         )
       ) : (
@@ -711,7 +726,7 @@ export function ReviewCard({
           className="text-md text-ink-muted [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          {card.pronunciation}
+          {pronunciationLine}
         </motion.p>
       ));
     return (
@@ -967,23 +982,34 @@ export function ReviewCard({
                       {mode.cue === "term" && audio("z-20")}
                     </p>
                     {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
-                    {mode.cue === "term" && (!reading || separate) && card.pronunciation && (
-                      <p
+                    {mode.cue === "term" && pitched ? (
+                      <div
                         aria-hidden={!revealed || undefined}
-                        className={clsx(
-                          "pt-1 text-md text-ink-muted [overflow-wrap:anywhere]",
-                          revealed ? "enter-fade" : "invisible",
-                        )}
-                        lang={card.language ?? undefined}
+                        className={clsx("pt-1", revealed ? "enter-fade" : "invisible")}
                       >
-                        {card.pronunciation}
-                      </p>
+                        <PitchChart card={card} className="text-lg" />
+                      </div>
+                    ) : (
+                      mode.cue === "term" &&
+                      (!reading || separate) &&
+                      card.pronunciation && (
+                        <p
+                          aria-hidden={!revealed || undefined}
+                          className={clsx(
+                            "pt-1 text-md text-ink-muted [overflow-wrap:anywhere]",
+                            revealed ? "enter-fade" : "invisible",
+                          )}
+                          lang={card.language ?? undefined}
+                        >
+                          {pronunciationLine}
+                        </p>
+                      )
                     )}
                     {/* A drawn reading is hidden from a screen reader, which hears the reading here while
                         it shows on the cue; after the reveal the answer's line says it. */}
                     {mode.cue === "term" && readingOver && cueReading && !revealed && (
                       <p className="sr-only" lang={card.language ?? undefined}>
-                        {card.pronunciation}
+                        {pronunciationLine}
                       </p>
                     )}
                   </>

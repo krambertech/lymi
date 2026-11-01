@@ -34,6 +34,7 @@ import {
   enrichmentQueue,
   enrichmentWrite,
   failEnrichment,
+  fillPitchAccents,
 } from "./enrichment";
 import { join } from "./members";
 import { updateSettings } from "./settings";
@@ -311,6 +312,127 @@ function fakeProvider(reply: unknown): TextProvider & { asked: TextRequest[] } {
     },
   };
 }
+
+describe("fillPitchAccents", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  const stored = async (id: string) =>
+    (await db.select().from(schema.cards).where(eq(schema.cards.id, id)))[0];
+
+  const set = async (id: string, pronunciation: string | null, source: "ai" | "manual" | null) =>
+    db
+      .update(schema.cards)
+      .set({ pronunciation, pronunciationSource: source })
+      .where(eq(schema.cards.id, id));
+
+  const add = async (ctx: ServiceContext, deckId: string, term: string) => {
+    const [outcome] = await addCards(ctx, [CardInput.parse({ deckId, term, enrich: false })]);
+    if (outcome?.status !== "added") throw new Error(`${term} was not added`);
+    return outcome.card.id;
+  };
+
+  it("adds an accent to the AI's Reading and to a kana term, and reads the kana alone", async () => {
+    const ctx = await learner(db, "pitch-fill", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const library = await add(ctx, deck.id, "図書館");
+    const thanks = await add(ctx, deck.id, "ありがとう");
+    await set(library, "としょかん", "ai");
+    const provider = fakeProvider({
+      words: [
+        { id: library, accent: 2 },
+        { id: thanks, accent: 2 },
+      ],
+    });
+
+    expect(await fillPitchAccents(ctx, [library, thanks], provider)).toEqual({ filled: 2 });
+
+    expect(provider.asked[0]?.effort).toBe("medium");
+    expect(await stored(library)).toMatchObject({
+      pronunciation: "としょかん [2]",
+      pronunciationSource: "ai",
+    });
+    expect(await stored(thanks)).toMatchObject({
+      pronunciation: "ありがとう [2]",
+      pronunciationSource: "ai",
+    });
+  });
+
+  it("leaves a learner's Reading, and asks nothing when no card needs it", async () => {
+    const ctx = await learner(db, "pitch-own", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const own = await add(ctx, deck.id, "図書館");
+    await set(own, "としょかん", "manual");
+    const provider = fakeProvider({ words: [] });
+
+    expect(await fillPitchAccents(ctx, [own], provider)).toEqual({ filled: 0 });
+
+    expect(provider.asked).toHaveLength(0);
+    expect((await stored(own))?.pronunciation).toBe("としょかん");
+  });
+
+  it("asks nothing in a deck that does not let the AI fill the Reading", async () => {
+    const ctx = await learner(db, "pitch-off", "Kateryna");
+    const deck = await createDeck(ctx, {
+      name: "日本語",
+      defaultLanguage: "ja",
+      enrichFields: ["meaning"],
+    });
+    const card = await add(ctx, deck.id, "図書館");
+    await set(card, "としょかん", "ai");
+    const provider = fakeProvider({ words: [] });
+
+    expect(await fillPitchAccents(ctx, [card], provider)).toEqual({ filled: 0 });
+    expect(provider.asked).toHaveLength(0);
+  });
+
+  it("skips a word the model could not recall, or an accent past the last mora", async () => {
+    const ctx = await learner(db, "pitch-unknown", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const unknown = await add(ctx, deck.id, "図書館");
+    const past = await add(ctx, deck.id, "猫");
+    await set(unknown, "としょかん", "ai");
+    await set(past, "ねこ", "ai");
+
+    await fillPitchAccents(
+      ctx,
+      [unknown, past],
+      fakeProvider({
+        words: [
+          { id: unknown, accent: null },
+          { id: past, accent: 9 },
+        ],
+      }),
+    );
+
+    expect((await stored(unknown))?.pronunciation).toBe("としょかん");
+    expect((await stored(past))?.pronunciation).toBe("ねこ");
+  });
+
+  it("keeps a Reading the learner changed while the model answered", async () => {
+    const ctx = await learner(db, "pitch-race", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const card = await add(ctx, deck.id, "上手");
+    await set(card, "じょうず", "ai");
+    const provider = fakeProvider({ words: [{ id: card, accent: 3 }] });
+    const complete = provider.complete;
+    provider.complete = async (request) => {
+      await set(card, "うわて", "manual");
+      return complete(request);
+    };
+
+    expect(await fillPitchAccents(ctx, [card], provider)).toEqual({ filled: 0 });
+    expect((await stored(card))?.pronunciation).toBe("うわて");
+  });
+});
 
 describe("enrichCards", () => {
   let db: Db;

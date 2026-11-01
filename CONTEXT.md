@@ -26,6 +26,8 @@ Lymi is a flashcard app for learning any subject with spaced repetition. Cards c
 
 **Reading**: How a term written in a script that does not show its sound is read, such as たべる for 食べる or xuéxí for 学习. It is stored as the card's pronunciation, and the card form calls that field Reading on a Japanese or Chinese card. Every way of drawing a reading follows one rule. In review it sits over the term while the card is New or Learning, and waits for the reveal once it is Known. A learner who turns adaptive pronunciation off sees it only after the reveal, on its own line under the term. In an example it fades over what the learner already knows, and the card's own term in its example follows the same rule. _Avoid_: Romaji, romanization, transcription, furigana field, ruby (in copy)
 
+**Pitch accent**: Where a Japanese word's voice falls, stored after its Reading as the mora it falls after, `としょかん [2]`, or `[0]` for no fall, and drawn as a chart under the term.
+
 **Furigana**: How Lymi draws a Japanese reading: small kana over the kanji, aligned at display so kana the term already shows stay plain. An example carries its readings inline, `毎朝[まいあさ]パンを食[た]べます。`, each one after the kanji it belongs to. A reading fades over a word whose kanji and reading together match a run on one of the learner's Known cards, so 食べます fades for a Known 食べる while 食事 keeps its reading.
 
 **Pinyin**: How Lymi draws a Chinese reading: one syllable with its tone mark over each character, in citation tones as dictionaries write them (不是, bù shì), with an erhua 儿 sharing the syllable before it (一点儿, yīdiǎnr). Tone numbers sent as ni3 hao3 are stored as nǐ hǎo. An example carries pinyin inline after each word, `我[wǒ]去[qù]银行[yínháng]。`, and a syllable fades where its character and syllable match a character on a Known card, because a character keeps its reading across words: a Known 银行 fades 行 háng in 行长 but never 行 xíng in 不行. A Chinese card's script, simplified or traditional, comes from its tag, and Lymi never converts between them.
@@ -83,6 +85,8 @@ Lymi is a flashcard app for learning any subject with spaced repetition. Cards c
 **Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day or a rest day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
 
 **Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, Review forgotten at the end of a review, or cards chosen on a deck page with Select cards. Each card comes once, and every grade counts like any review, except that Easy on a card already seen today counts as Good (ADR 0031). _Avoid_: Session, quiz, practice
+
+**Leg**: One part of a review: a draw to its stop or its end, or one round. Continue and Review forgotten each start another, so one review can hold several legs, and a leg's header counts its own cards. _Avoid_: Stretch, session
 
 **Slipping card**: A card whose first grade of the day was Forgot on at least 3 of the last 5 days it was reviewed, before today. It leaves the group once it is remembered, and review offers it a hint when it has none. ADR 0024. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
 

@@ -47,6 +47,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Smart add | [smart-add.md](features/smart-add.md) |
 | AI consent: the ask before the first AI action, and You → AI services | [ai-consent.md](features/ai-consent.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
+| Pitch accent: the chart under the term after the reveal and on the card page | [pitch-accent.md](features/pitch-accent.md) |
 | Chinese: pinyin over each hanzi in review, simplified and traditional | [chinese.md](features/chinese.md) |
 | Adaptive pronunciation: the deck switch that keeps pronunciation off the cue | [adaptive-pronunciation.md](features/adaptive-pronunciation.md) |
 | Cantonese: Jyutping over each character in review, 𨋢 included, and its example fade | [cantonese.md](features/cantonese.md) |

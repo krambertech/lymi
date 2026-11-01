@@ -8,6 +8,8 @@ import {
   EXAMPLE_JYUTPING_SINCE,
   EXAMPLE_PINYIN_SINCE,
   leaveOutExampleReadings,
+  leaveOutPitchAccent,
+  PITCH_ACCENT_SINCE,
   requireSupportedPhone,
   withoutExampleReadings,
   withoutTranslationField,
@@ -201,5 +203,40 @@ describe("the example's translation among a deck's AI fields", () => {
       ),
     });
     expect(await fields({})).toEqual(["meaning", "example", "exampleTranslation"]);
+  });
+});
+
+describe("a Reading's pitch accent", () => {
+  const cards = {
+    card: { pronunciation: "としょかん [2]", language: "ja" },
+    results: [
+      { card: { pronunciation: "かんがえる [4][3]", language: "ja" } },
+      { card: { pronunciation: "tʃeə [1]", language: "en" } },
+      { card: { term: "ありがとう", pronunciation: "ありがとう [2]", language: "ja" } },
+    ],
+  };
+  const route = new Hono<AppEnv>()
+    .use("/api/*", requireSupportedPhone)
+    .use("/api/*", leaveOutPitchAccent)
+    .get("/api/cards", (c) => c.json(cards));
+  const env = { PHONE_MINIMUM_VERSION_IOS: "0.0.1" } as Bindings;
+  const fetched = (headers: Record<string, string>) =>
+    route.request("/api/cards", { headers }, env);
+
+  it("goes from a Japanese card's Reading for a release that cannot chart it", async () => {
+    expect(await (await fetched(phone("0.0.10"))).json()).toEqual({
+      card: { pronunciation: "としょかん", language: "ja" },
+      results: [
+        { card: { pronunciation: "かんがえる", language: "ja" } },
+        { card: { pronunciation: "tʃeə [1]", language: "en" } },
+        { card: { term: "ありがとう", pronunciation: null, language: "ja" } },
+      ],
+    });
+  });
+
+  it("stays for a release that charts it, and for every caller without the header", async () => {
+    for (const headers of [phone(PITCH_ACCENT_SINCE.ios as string), {}]) {
+      expect(await (await fetched(headers)).json()).toEqual(cards);
+    }
   });
 });

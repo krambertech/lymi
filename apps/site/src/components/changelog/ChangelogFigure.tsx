@@ -23,6 +23,7 @@ import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { JapaneseCardFigure } from "./JapaneseCardFigure";
 import { MacBookFigure } from "./MacFigure";
 import { PinyinFigure } from "./PinyinFigure";
+import { PitchAccentFigure } from "./PitchAccentFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
@@ -62,6 +63,7 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "cantonese-tamil": CantoneseTamilFigure,
   example: ExampleFigure,
   mac: MacBookFigure,
+  "pitch-accent": PitchAccentFigure,
 };
 
 interface Props {

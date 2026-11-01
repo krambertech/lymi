@@ -19,6 +19,7 @@ export * from "./languages";
 export * from "./mcp-clients";
 export * from "./modes";
 export * from "./passwords";
+export * from "./pitch";
 export * from "./reading";
 export * from "./reminders";
 export * from "./responses";

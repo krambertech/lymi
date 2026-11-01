@@ -9,13 +9,23 @@ import {
   missingReadings,
   newId,
   normalizeCardText,
+  readingWithoutPitch,
   unsetFields,
+  withPitch,
 } from "@lymi/core";
 import { eventLanguages } from "@lymi/core/analytics";
 import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
+import {
+  PITCH_EFFORT,
+  PITCH_INSTRUCTIONS,
+  PITCH_PROMPT_VERSION,
+  PITCH_REPLY_SCHEMA,
+  pitchInput,
+  readPitchReply,
+} from "../enrichment/pitch";
 import {
   cardBrief,
   chunked,
@@ -404,6 +414,108 @@ export async function enrichCards(
     ...(rows.length ? { languages: eventLanguages(languages) } : {}),
   });
   return { enriched: rows.length };
+}
+
+/**
+ * Adds a pitch accent to the AI's Readings on Japanese cards a run just filled, in a deck that lets
+ * the AI fill the Reading, and to a term written only in kana, which then gains one. A Reading the
+ * learner, a lesson or an import wrote stays theirs. The model takes seconds, so each write
+ * carries its own test that the Reading is still the one it read. docs/card-writing.md.
+ */
+export async function fillPitchAccents(
+  ctx: ServiceContext,
+  cardIds: readonly string[],
+  provider: TextProvider,
+): Promise<{ filled: number }> {
+  const { db, userId } = ctx;
+  const cards = await selectIn(cardIds, (ids) =>
+    db
+      .select()
+      .from(schema.cards)
+      .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, ids))),
+  );
+  const deckRows = await selectIn([...new Set(cards.map((card) => card.deckId))], (ids) =>
+    db
+      .select({
+        id: schema.decks.id,
+        defaultLanguage: schema.decks.defaultLanguage,
+        purpose: schema.decks.purpose,
+        enrichFields: schema.decks.enrichFields,
+      })
+      .from(schema.decks)
+      .where(inArray(schema.decks.id, ids)),
+  );
+  const decks = new Map(deckRows.map((deck) => [deck.id, deck]));
+  const asks = cards.flatMap((card) => {
+    const deck = decks.get(card.deckId);
+    const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
+    if (!fields.includes("pronunciation")) return [];
+    if (card.pronunciation && card.pronunciationSource !== "ai") return [];
+    const reading = readingWithoutPitch(card);
+    return reading === null ? [] : [{ card, reading }];
+  });
+  if (asks.length === 0) return { filled: 0 };
+  const accents = readPitchReply(
+    await provider.complete({
+      instructions: PITCH_INSTRUCTIONS,
+      input: pitchInput(
+        asks.map(({ card, reading }) => ({ id: card.id, term: card.term, reading })),
+      ),
+      schema: PITCH_REPLY_SCHEMA,
+      effort: PITCH_EFFORT,
+    }),
+  );
+  const now = new Date();
+  const writes = asks.flatMap(({ card, reading }) => {
+    const accent = accents.get(card.id);
+    if (accent === undefined) return [];
+    const pronunciation = withPitch(reading, accent);
+    if (pronunciation === reading) return [];
+    return [
+      db
+        .update(schema.cards)
+        .set({
+          pronunciation,
+          pronunciationSource: "ai",
+          revision: sql`revision + 1`,
+          updatedAt: now,
+        })
+        .where(
+          and(
+            eq(schema.cards.id, card.id),
+            eq(schema.cards.userId, userId),
+            card.pronunciation === null
+              ? isNull(schema.cards.pronunciation)
+              : eq(schema.cards.pronunciation, card.pronunciation),
+          ),
+        )
+        .returning({
+          id: schema.cards.id,
+          deckId: schema.cards.deckId,
+          pronunciation: schema.cards.pronunciation,
+        }),
+    ];
+  });
+  const [firstWrite, ...restWrites] = writes;
+  const landed = firstWrite ? (await db.batch([firstWrite, ...restWrites])).flat() : [];
+  const [firstRow, ...restRows] = landed.map(({ id, deckId, pronunciation }) =>
+    auditStatement(ctx, {
+      entity: "card",
+      action: "enrich",
+      id,
+      deckId,
+      details: { pronunciation },
+    }),
+  );
+  if (firstRow) await db.batch([firstRow, ...restRows]);
+  track(ctx.analytics, {
+    name: "pitch_accent_filled",
+    outcome: landed.length ? "filled" : "empty",
+    count: landed.length,
+    asked: asks.length,
+    prompt_version: PITCH_PROMPT_VERSION,
+  });
+  return { filled: landed.length };
 }
 
 /** A card whose run gives up ends at `failed`, so the screen stops waiting on it. */

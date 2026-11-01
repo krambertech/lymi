@@ -1,8 +1,8 @@
+import { type ReviewLeg, ReviewLegs } from "@lymi/client/review-flow";
 import { randomUUID } from "expo-crypto";
 import { useEffect, useRef } from "react";
 import { useStreak } from "../data/queries";
 import { captureEvent } from "./posthog";
-import { type ReviewLeg, ReviewLegs } from "./review-legs";
 
 export type { ReviewLeg };
 

@@ -3586,6 +3586,9 @@ msgstr "Поки немає книжок мовою, яку ти вивчаєш.
 msgid "No card of this kind has a term."
 msgstr "Жодна картка цього виду не має терміна."
 
+msgid "No cards found in this text. Check the separators."
+msgstr "У цьому тексті немає карток. Перевір роздільники."
+
 #. placeholder {0}: isolate(deck.name)
 msgid "No cards in {0} yet"
 msgstr "У колоді {0} ще немає карток"
@@ -4022,6 +4025,9 @@ msgstr "Встав нотатки або транскрипт"
 
 msgid "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
 msgstr "Встав client ID, залиш секрет порожнім і вибери <0>None / PKCE only</0>."
+
+msgid "Paste your set’s text or choose a .txt file first."
+msgstr "Спершу встав текст набору або вибери файл .txt."
 
 msgid "Pasted picture"
 msgstr "Вставлене зображення"

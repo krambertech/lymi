@@ -191,6 +191,17 @@ describe("taking a grade back", () => {
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 
+  it("keeps a grade with no answer when the replay lands but the undo is refused", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    undoReview.mockRejectedValueOnce(new ApiError(409, "Only the latest grade"));
+    expect(await grades.undoGrade(unanswered)).toBe("kept");
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ reviewId: "rev-1" }]);
+  });
+
   it("drops a grade with no answer when the server says a later grade came first", async () => {
     const unanswered = g("a");
     grade.mockRejectedValueOnce(offline());

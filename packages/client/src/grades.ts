@@ -248,8 +248,9 @@ async function settleUndos(): Promise<"offline" | undefined> {
       if (err.status === 0) return "offline";
       // Refused, such as a later grade of the mode from another device; a lapsed session waits.
       const refused = err.status >= 400 && err.status < 500 && !waitsToSend(err.status);
-      // A replay refused here never landed, so taking it back holds.
-      if (refused) (undone.sentAt === undefined ? forget : stand)(undone);
+      // Still unsent means the replay was the refusal: the grade never landed, so it is gone.
+      const unsent = read().find((g) => same(g, undone))?.sentAt === undefined;
+      if (refused) (unsent ? forget : stand)(undone);
     }
   }
 }

@@ -82,7 +82,7 @@ export function RailHeading({ className, ...rest }: ComponentProps<"div">) {
   return (
     <div
       data-rail-break=""
-      className={clsx(
+      className={cn(
         "relative mx-2.5 mt-7 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-ink-muted",
         className,
       )}

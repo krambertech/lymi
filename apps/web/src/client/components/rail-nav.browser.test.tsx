@@ -23,6 +23,15 @@ async function renderRail() {
   );
 }
 
+test("a heading can drop the label's capitals and tracking for a learner's own name", async () => {
+  const screen = await render(
+    <RailHeading className="normal-case tracking-normal">Italiano A2</RailHeading>,
+  );
+  const style = getComputedStyle(screen.getByText("Italiano A2").element());
+  expect(style.textTransform).toBe("none");
+  expect(style.letterSpacing).toBe("normal");
+});
+
 describe.runIf(desktop)("RailNav hover", () => {
   test("one fill slides between rows in a group", async () => {
     const screen = await renderRail();

@@ -503,7 +503,11 @@ if (!app.requestSingleInstanceLock()) {
   // Opening Lymi again, from Applications, Spotlight or the Dock, shows its window.
   app.on("second-instance", () => void openMain());
   app.on("activate", () => void openMain());
-  app.whenReady().then(start);
+  // Links and windows wait on this, so a failed start must not leave them waiting for good.
+  app
+    .whenReady()
+    .then(start)
+    .finally(() => sessionRead());
   // A menu bar app stays running with no window open.
   app.on("window-all-closed", () => {});
   app.on("will-quit", () => globalShortcut.unregisterAll());

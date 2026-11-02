@@ -150,6 +150,18 @@ test("checks the end of a section with one fetch, ahead of the day's other reads
   stopWatchingDay();
 });
 
+test("still refreshes the counts and ends when the end's draw fails", async () => {
+  vi.spyOn(api, "grade").mockResolvedValue(accepted);
+  const flow = await openReview(drawOf(["a"]));
+  vi.mocked(api.decks).mockClear();
+  vi.mocked(api.draw).mockRejectedValue(new ApiError(500, "down"));
+
+  await gradeShown(flow.current)?.answered;
+
+  await vi.waitFor(() => expect(flow.current.end).toBe("unchecked"));
+  await vi.waitFor(() => expect(api.decks).toHaveBeenCalled());
+});
+
 test("keeps a section's end while the deck's new count lands before the section's", async () => {
   vi.spyOn(api, "grade").mockResolvedValue(accepted);
   const sections = (due: number) => ({

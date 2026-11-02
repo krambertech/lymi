@@ -65,7 +65,7 @@ export function ImportantFigure() {
           </li>
         ))}
       </ul>
-      <div className="absolute end-3 top-[124px] grid w-52 rounded-md bg-sheet p-1 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute end-3 top-[124px] grid w-52 rounded-md bg-sheet p-1 edge-drop">
         <Item icon={<Lightbulb />} label={<Trans>Add hint</Trans>} />
         <Item icon={<SquarePen />} label={<Trans>Edit card</Trans>} />
         <Item icon={<Star />} label={<Trans>Mark important</Trans>} lit />

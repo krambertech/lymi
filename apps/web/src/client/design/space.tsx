@@ -30,6 +30,7 @@ export function Space() {
           {[
             ["xs", 6, "kbd, checkbox"],
             ["sm", 10, "small buttons, nav items, menu items"],
+            ["tile", 12, "overlapping app and source marks"],
             ["md", 14, "buttons, inputs, toast, menus"],
             ["lg", 18, "deck cards, grade buttons"],
             ["xl", 22, "the card, the sheet"],

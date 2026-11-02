@@ -57,10 +57,7 @@ export function LanguageHero({
   return (
     <div className="relative overflow-x-clip">
       {/* The lantern's light, pooled behind the hand. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_62%_at_74%_56%,var(--color-lantern-pool),transparent_70%)]"
-      />
+      <span aria-hidden="true" className="language-pool pointer-events-none absolute inset-0" />
       <div className="relative mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-20 @2xl:px-10 @4xl:pt-20 @5xl:min-h-[660px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,500px)] @5xl:gap-14">
         <div className="min-w-0 max-w-[560px]">
           {kicker}

@@ -118,8 +118,7 @@ function Conversation() {
             </ul>
           </motion.div>
           <motion.p
-            className="bg-ink px-3.5 py-2 text-md text-canvas"
-            style={{ borderRadius: 16 }}
+            className="rounded-md bg-ink px-3.5 py-2 text-md text-canvas"
             initial={false}
             animate={appear(at("ask"))}
             transition={move}

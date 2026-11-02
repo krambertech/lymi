@@ -32,13 +32,13 @@ const TAMIL = [{ text: "தமிழ்", reading: "tamizh" }];
 export function CantoneseTamilFigure() {
   return (
     <div aria-hidden="true" className="relative mx-auto h-64 w-[26rem]">
-      <div className="absolute start-0 top-2 grid h-48 w-56 -rotate-3 content-center gap-4 rounded-xl bg-plate p-5 edge shadow-[0_12px_32px_-16px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute start-0 top-2 grid h-48 w-56 -rotate-3 content-center gap-4 rounded-xl bg-plate p-5 edge-drop">
         <Ruby parts={CANTONESE} lang="yue" />
         <p className="text-lg text-ink-secondary">
           <Trans>Cantonese</Trans>
         </p>
       </div>
-      <div className="absolute end-0 bottom-0 grid h-48 w-56 rotate-2 content-center gap-4 rounded-xl bg-plate p-5 edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]">
+      <div className="absolute end-0 bottom-0 grid h-48 w-56 rotate-2 content-center gap-4 rounded-xl bg-plate p-5 edge-drop">
         <Ruby parts={TAMIL} lang="ta" />
         <p className="text-lg text-ink-secondary">
           <Trans>Tamil</Trans>

@@ -1,3 +1,4 @@
+import { radius } from "@lymi/design";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Pick } from "./MaterialToCards";
@@ -220,7 +221,7 @@ export function HeroLiftOff({
               y: flight.to.y,
               width: flight.to.w,
               height: flight.to.h,
-              borderRadius: 16,
+              borderRadius: radius["2xl"],
               rotate: 0,
             }}
             exit={{ opacity: 0, transition: { duration: 0.22, ease: "easeOut" } }}

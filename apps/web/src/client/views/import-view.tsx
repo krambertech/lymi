@@ -1202,7 +1202,7 @@ function DecksStep({
         >
           {left.size === 0 ? <Trans>Clear all</Trans> : <Trans>Select all</Trans>}
         </Button>
-        <ul className="edge grid rounded-xl bg-plate p-1.5">
+        <ul className="edge grid rounded-xl bg-plate p-2">
           {decks.map((deck) => {
             const known = deck.known ?? 0;
             return (

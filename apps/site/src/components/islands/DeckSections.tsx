@@ -389,7 +389,7 @@ function CardsView({
       className="deck-cards"
     >
       <div className="@container min-h-full">
-        <div className="sticky top-0 z-10 border-b border-edge bg-canvas">
+        <div className="sticky top-0 z-(--z-sticky) border-b border-edge bg-canvas">
           <div className="mx-auto flex h-16 max-w-[1040px] items-center justify-between gap-3 px-5 @2xl:px-10">
             <button
               type="button"
@@ -415,12 +415,12 @@ function CardsView({
           </div>
         </div>
 
-        <div className="mx-auto grid max-w-[1040px] px-5 pb-20 @2xl:px-10 @4xl:grid-cols-[220px_minmax(0,620px)] @4xl:justify-between @4xl:gap-x-16 @4xl:pb-32">
+        <div className="isolate mx-auto grid max-w-[1040px] px-5 pb-20 @2xl:px-10 @4xl:grid-cols-[220px_minmax(0,620px)] @4xl:justify-between @4xl:gap-x-16 @4xl:pb-32">
           {inOrder && (
             <nav
               ref={index}
               aria-label={t`Sections`}
-              className="sticky top-16 z-[5] -mx-5 overflow-x-auto border-b border-edge bg-canvas px-5 py-2.5 [scrollbar-width:none] @2xl:-mx-10 @2xl:px-10 @4xl:mx-0 @4xl:max-h-[calc(100dvh-4rem)] @4xl:self-start @4xl:overflow-x-visible @4xl:overflow-y-auto @4xl:border-0 @4xl:px-0 @4xl:pt-12 @4xl:pb-6"
+              className="sticky top-16 z-10 -mx-5 overflow-x-auto border-b border-edge bg-canvas px-5 py-2.5 [scrollbar-width:none] @2xl:-mx-10 @2xl:px-10 @4xl:mx-0 @4xl:max-h-[calc(100dvh-4rem)] @4xl:self-start @4xl:overflow-x-visible @4xl:overflow-y-auto @4xl:border-0 @4xl:px-0 @4xl:pt-12 @4xl:pb-6"
             >
               <ol className="flex gap-1.5 @4xl:grid @4xl:gap-0">
                 {steps.map((step, i) => (

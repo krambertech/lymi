@@ -12,7 +12,7 @@ export function CommandMenuFigure() {
   return (
     <div
       aria-hidden="true"
-      className="mx-auto max-w-[440px] overflow-hidden rounded-xl bg-sheet edge-strong shadow-[0_12px_32px_-12px_oklch(0.2_0.03_60/0.35)]"
+      className="mx-auto max-w-[440px] overflow-hidden rounded-xl bg-sheet edge-drop"
     >
       <div className="flex h-14 items-center gap-3 border-b border-edge px-4">
         <Search className="size-5 text-ink-muted" />

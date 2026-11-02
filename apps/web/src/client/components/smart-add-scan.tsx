@@ -164,7 +164,7 @@ export function ScanStage({ pages, text, finished, current }: ScanProps) {
         return (
           <motion.div
             key={sheet?.id ?? "text"}
-            className="edge absolute inset-0 rounded-xl bg-plate p-1.5"
+            className="edge absolute inset-0 rounded-xl bg-plate p-1"
             style={{ zIndex: out ? n + 1 : n - depth }}
             initial={false}
             animate={{ ...pose, opacity: depth < POSES.length ? 1 : 0 }}
@@ -183,7 +183,7 @@ export function ScanStage({ pages, text, finished, current }: ScanProps) {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-1.5 overflow-hidden rounded-lg"
+        className="pointer-events-none absolute inset-1 overflow-hidden rounded-lg"
         style={{ zIndex: n + 2 }}
       >
         <AnimatePresence>

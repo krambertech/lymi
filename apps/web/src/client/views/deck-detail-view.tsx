@@ -1171,7 +1171,7 @@ export function DeckDetailView({
               searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
               // Pinned over a strip of the page's own ground, so rows never show beside it.
               selected &&
-                "sticky top-(--inset-top) z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+                "sticky top-(--inset-top) z-(--z-sticky) -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
             {selected ? (

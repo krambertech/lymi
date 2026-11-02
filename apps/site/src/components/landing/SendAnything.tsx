@@ -72,11 +72,7 @@ const SOURCES: Source[] = [
     render: (picked) => (
       <div className="w-[92%] rotate-[1.5deg] rounded-lg bg-plate p-3 edge">
         <p className="text-2xs text-ink-muted">Camille</p>
-        <p
-          lang="fr"
-          className="mt-1.5 bg-plate-nested px-3 py-2 text-sm text-ink"
-          style={{ borderRadius: 12 }}
-        >
+        <p lang="fr" className="mt-1.5 rounded-md bg-plate-nested px-3 py-2 text-sm text-ink">
           On dit «&nbsp;<Pick on={picked}>ça me manque</Pick>&nbsp;», pas «&nbsp;je manque
           ça&nbsp;».
         </p>

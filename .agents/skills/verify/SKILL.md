@@ -37,6 +37,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
 | Import an HSK-shaped Chinese Anki deck | [import-chinese.md](features/import-chinese.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
+| Offline grades | [offline-grades.md](features/offline-grades.md) |
 | Apps in Settings and the assistants' pages | [apps.md](features/apps.md) |
 | Readwise highlights | [readwise.md](features/readwise.md) |
 | Yomitan through AnkiConnect | [yomitan.md](features/yomitan.md) |

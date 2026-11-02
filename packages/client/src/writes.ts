@@ -270,6 +270,8 @@ const settle = (key: string, outcome: { value: Result } | { error: ApiError }) =
 
 export interface Flushed {
   sent: number;
+  /** Of those, writes a `submit` was waiting on, whose caller refreshes what it moved. */
+  waited: number;
   /** Queued grades that landed on the way. */
   graded: number;
   /** Stopped before the end: offline, or signed out. */
@@ -288,7 +290,7 @@ export function claimWrites(userId: string) {
 }
 
 async function flushQueued(): Promise<Flushed> {
-  const result: Flushed = { sent: 0, graded: 0, stopped: false, retryAt: null };
+  const result: Flushed = { sent: 0, waited: 0, graded: 0, stopped: false, retryAt: null };
   if (!claimed) return { ...result, stopped: true };
   const held = new Set<string>();
   const dropped = new Set<string>();
@@ -317,6 +319,7 @@ async function flushQueued(): Promise<Flushed> {
       remove(entry.key);
       settle(entry.key, { value });
       result.sent += 1;
+      if (awaited.has(entry.key)) result.waited += 1;
       if (entry.write.kind === "card.add" && "status" in value && value.status === "skipped") {
         dropped.add(entry.write.input.id);
         if (!awaited.has(entry.key)) {
@@ -367,6 +370,15 @@ function notify(notice: Notice) {
 
 let chain: Promise<unknown> = Promise.resolve();
 let timer: ReturnType<typeof setTimeout> | undefined;
+const flushListeners = new Set<(flushed: Flushed) => void>();
+
+/** Hears every flush, including a retry or a list's read, which no caller waits on to refresh. */
+export function onFlushed(listener: (flushed: Flushed) => void) {
+  flushListeners.add(listener);
+  return () => {
+    flushListeners.delete(listener);
+  };
+}
 
 /** One flush at a time in this tab, and in every tab where the browser can lock across them. */
 function serial<T>(task: () => Promise<T>): Promise<T> {
@@ -389,6 +401,7 @@ export function flushWrites(): Promise<Flushed> {
     if (flushed.retryAt !== null) {
       timer = setTimeout(() => void flushWrites(), Math.max(0, flushed.retryAt - Date.now()));
     }
+    for (const listener of flushListeners) listener(flushed);
     return flushed;
   });
 }

@@ -267,6 +267,27 @@ describe("flushing", () => {
     expect(w.pendingWrites()).toBe(0);
   });
 
+  it("tells who listens when a retry lands, though nobody is waiting on it", async () => {
+    vi.useFakeTimers();
+    answers.push(fail(503));
+    await w.submit(add("a"), "a");
+    const flushes: unknown[] = [];
+    const stop = w.onFlushed((flushed) => flushes.push(flushed));
+
+    flushGrades.mockResolvedValueOnce(2);
+    await vi.advanceTimersByTimeAsync(w.backoff(1));
+    stop();
+    expect(flushes).toEqual([expect.objectContaining({ sent: 1, waited: 0, graded: 2 })]);
+  });
+
+  it("says when a flush only sent the write its caller is waiting on", async () => {
+    const flushes: unknown[] = [];
+    const stop = w.onFlushed((flushed) => flushes.push(flushed));
+    await w.submit(add("a"), "a");
+    stop();
+    expect(flushes).toEqual([expect.objectContaining({ sent: 1, waited: 1, graded: 0 })]);
+  });
+
   it("drops a refused create with everything that needed it, and says so once", async () => {
     const notices: unknown[] = [];
     const stop = w.onNotice((n) => notices.push(n));

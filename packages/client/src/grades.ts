@@ -66,7 +66,8 @@ function write(next: StoredGrade[]) {
   try {
     storage.setItem(KEY, raw);
   } catch {
-    // A full or blocked storage keeps the grades for this page's life.
+    // A full or blocked storage keeps the grades for this page's life, against what it still holds.
+    cache = { raw: stored(), grades: next };
   }
   for (const listener of listeners) listener();
 }

@@ -86,6 +86,19 @@ describe("recording a grade", () => {
     expect(grades.outboxSize()).toBe(0);
   });
 
+  it("remembers a replay landed when the storage is full, so it is not sent again", async () => {
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(g("a"));
+    const full = vi.spyOn(store, "set").mockImplementation(() => {
+      throw new Error("quota");
+    });
+    grade.mockResolvedValueOnce(accepted("rev-a"));
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(await grades.flushOutbox()).toBe(0);
+    full.mockRestore();
+    expect(grade).toHaveBeenCalledTimes(2);
+  });
+
   it("keeps a peek with a queued grade and sends it on replay", async () => {
     grade.mockRejectedValueOnce(offline());
     expect(await grades.recordGrade({ ...g("a"), aid: "hint" })).toBe("queued");

@@ -8,9 +8,11 @@ New web accounts start on Today with a first-run guide that remains until the fi
 
 1. **Create a deck**: done once the learner has a deck of their own, or any deck with cards. An empty deck someone shared does not count, because its member cannot add to it.
 2. **Add cards**: done once a deck has cards. While current it holds **Add a card** and, where Smart add is allowed, **Turn your notes into cards**; the learner's own empty deck is named in its line.
-3. **Finish your first review**: holds **Review**, which opens that deck's review. The guide leaves with the first accepted grade.
+3. **Finish your first review**: shown only as the next step until a deck has cards.
 
 Keep each step’s dimensions stable. Only the current step has a filled panel and action. Completed steps use an amber check and struck-through title; future steps use muted numbers. There is no separate progress bar. Hide the normal Today panels while the guide is active.
+
+Once any deck has cards, the steps and the count give way to one plate that names a deck, because someone who only added a deck never made one or added cards. It names the first deck with cards due, else the first with cards. The lantern's line ends at it, and it holds the deck's name, its card count, who made it for a deck that is not the learner's, and **Start your first review**, which opens that deck's review. The line under the greeting says “Start with 5 cards. It takes a few minutes.” for up to 20 cards due, and “Your first review takes a few minutes.” for more. With nothing due in any deck, the line says “Come back later, or add new cards.” and the button is **Open deck**, because a review would open on Nothing due. The guide leaves with the first accepted grade.
 
 ## Under the guide
 
@@ -37,7 +39,7 @@ X leaves from any screen. **Review more cards** returns to ordinary review, and 
 
 ## Getting set up
 
-Today's first visit before any review counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. An account that has already reviewed is not set up from Today, so it keeps its goal and stays out of `kind: "today"`. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where that deck has ticked the first two steps and **Review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.
+Today's first visit before any review counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. An account that has already reviewed is not set up from Today, so it keeps its goal and stays out of `kind: "today"`. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where the guide names that deck and **Start your first review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.
 
 ## Motion
 

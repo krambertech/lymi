@@ -56,6 +56,10 @@ msgstr "{0, plural, one {# архівна картка прийде в архі�
 msgid "{0, plural, one {# card · {1} known} other {# cards · {2} known}}"
 msgstr "{0, plural, one {# картка · засвоєно {1}} few {# картки · засвоєно {2}} many {# карток · засвоєно {2}} other {# картки · засвоєно {2}}}"
 
+#. placeholder {0}: deck.total
+msgid "{0, plural, one {# card · by {owner}} other {# cards · by {owner}}}"
+msgstr "{0, plural, one {# картка · від {owner}} few {# картки · від {owner}} many {# карток · від {owner}} other {# картки · від {owner}}}"
+
 #. placeholder {0}: preview.pictures
 msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{0, plural, one {# картка переноситься із зображенням.} few {# картки переносяться із зображеннями.} many {# карток переносяться із зображеннями.} other {# картки переносяться із зображеннями.}}"
@@ -443,10 +447,6 @@ msgstr "{0} уже є в {1}"
 msgid "{0} is empty. Add what you want to remember."
 msgstr "Колода «{0}» порожня. Додай те, що хочеш запам’ятати."
 
-#. placeholder {0}: isolate(deck.name)
-msgid "{0} is ready. Your first review takes a few minutes."
-msgstr "Колода «{0}» готова. Перше повторення займе кілька хвилин."
-
 #. placeholder {0}: longWeekday(busiest.date)
 #. placeholder {1}: busiest.count
 msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
@@ -697,6 +697,9 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 
 msgid "{due, plural, one {Review # due} other {Review # due}}"
 msgstr "{due, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
+
+msgid "{due, plural, one {Start with # card. It takes a few minutes.} other {Start with # cards. It takes a few minutes.}}"
+msgstr "{due, plural, one {Почни з # картки. Це займе кілька хвилин.} few {Почни з # карток. Це займе кілька хвилин.} many {Почни з # карток. Це займе кілька хвилин.} other {Почни з # картки. Це займе кілька хвилин.}}"
 
 msgid "{field} becomes"
 msgstr "{field} стає"
@@ -5094,6 +5097,9 @@ msgstr "Почати повторення"
 msgid "Start with a deck"
 msgstr "Почни з колоди"
 
+msgid "Start your first review"
+msgstr "Почати перше повторення"
+
 msgid "Start your streak"
 msgstr "Почни лік днів поспіль"
 
@@ -6134,6 +6140,9 @@ msgstr "Твій код для видалення акаунта Lymi"
 
 msgid "Your deck"
 msgstr "Твоя колода"
+
+msgid "Your first review takes a few minutes."
+msgstr "Перше повторення займе кілька хвилин."
 
 msgid "Your Google photo is back"
 msgstr "Знову показуємо фото з Google"

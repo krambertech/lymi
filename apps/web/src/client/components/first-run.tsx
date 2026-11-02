@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ANALYTICS_READY } from "@lymi/client/analytics";
 import { decksFor } from "@lymi/client/welcome";
 import { isolate } from "@lymi/core";
@@ -45,9 +45,9 @@ const T = { pool: 120, embers: 420, heading: 260, lede: 360, steps: 520, gap: 14
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
 
-/** The first deck with cards: one the learner made, joined or added. */
+/** The deck to start on, made, joined or added: the first with cards due, else the first with cards. */
 export function startedDeck(decks: DeckSummary[] | undefined) {
-  return decks?.find((d) => d.total > 0);
+  return decks?.find((d) => d.due > 0) ?? decks?.find((d) => d.total > 0);
 }
 
 /**
@@ -115,7 +115,7 @@ interface GuideProps {
 /**
  * How Lymi works, as the learner does it: three numbered steps on the bare canvas, dashed like
  * every empty state, lit by the lantern. Each is ticked by the learner's own data, and the current
- * one holds its action.
+ * one holds its action. Once a deck has cards the steps give way to that deck.
  */
 export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd }: GuideProps) {
   const { t } = useLingui();
@@ -128,7 +128,7 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
   // An email sign-up is named for the address, which is no name to greet.
   const fromEmail = !!name && name.toLowerCase() === email?.split("@")[0]?.toLowerCase();
   const first = fromEmail ? undefined : name?.trim().split(/\s+/)[0];
-  const steps: { key: string; title: ReactNode; detail: ReactNode; action?: ReactNode }[] = [
+  const steps: GuideStep[] = [
     {
       key: "deck",
       title: <Trans>Create a deck</Trans>,
@@ -178,15 +178,6 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
       key: "review",
       title: <Trans>Finish your first review</Trans>,
       detail: <Trans>Recall each card, then say how well you knew it.</Trans>,
-      action: deck && (
-        <Button
-          variant="primary"
-          kbd="R"
-          render={<NavLink to="/review" search={{ deck: deck.id }} />}
-        >
-          <Trans>Review</Trans>
-        </Button>
-      ),
     },
   ];
   return (
@@ -220,86 +211,181 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
             >
               {first ? <Trans>Welcome, {first}</Trans> : <Trans>Welcome to Lymi</Trans>}
             </h2>
-            <span
-              className={clsx("shrink-0 text-sm text-ink-muted tabular-nums", play && "seq")}
-              style={play ? at(T.lede) : undefined}
-            >
-              {t`${current} of 3 done`}
-            </span>
+            {!deck && (
+              <span
+                className={clsx("shrink-0 text-sm text-ink-muted tabular-nums", play && "seq")}
+                style={play ? at(T.lede) : undefined}
+              >
+                {t`${current} of 3 done`}
+              </span>
+            )}
           </div>
           <p
             className={clsx("text-md text-ink-secondary text-pretty", play && "seq")}
             style={play ? at(T.lede) : undefined}
           >
-            {current === 2 && deck ? (
-              <Trans>{isolate(deck.name)} is ready. Your first review takes a few minutes.</Trans>
+            {deck ? (
+              <FirstReviewLength due={deck.due} />
             ) : (
               <Trans>Three steps to your first review.</Trans>
             )}
           </p>
         </div>
-        {/* Every step has the same box, so the rhythm holds; only the current one is filled. */}
-        <ol className="col-span-2 grid grid-cols-subgrid gap-y-2">
-          {steps.map((step, i) => {
-            const done = i < current;
-            const here = i === current;
-            const last = i === steps.length - 1;
-            return (
-              <li
-                key={step.key}
-                className={clsx("col-span-2 grid grid-cols-subgrid", play && "seq")}
-                style={play ? at(T.steps + i * T.gap) : undefined}
-                aria-current={here ? "step" : undefined}
-              >
-                <div className="relative flex justify-center pt-2.5">
-                  <span
-                    className={clsx(
-                      "relative z-10 grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
-                      done
-                        ? "bg-amber text-amber-ink"
-                        : here
-                          ? "bg-ink text-canvas"
-                          : "edge bg-plate text-ink-muted",
-                    )}
-                  >
-                    {done ? <Check className="size-4" aria-label={t`Done`} /> : i + 1}
-                  </span>
-                  {!last && (
-                    <span
-                      aria-hidden="true"
-                      className={clsx(
-                        "absolute top-[42px] -bottom-[14px] start-1/2 w-0.5 -translate-x-1/2 rounded-full rtl:translate-x-1/2",
-                        done ? "bg-amber" : "bg-edge",
-                      )}
-                    />
-                  )}
-                </div>
-                <div
-                  className={clsx(
-                    "-ms-3 grid min-w-0 content-start justify-items-start gap-0.5 rounded-lg p-3",
-                    here && "edge bg-plate",
-                  )}
-                >
-                  <span
-                    className={clsx(
-                      "text-md font-medium",
-                      here ? "text-ink" : "text-ink-secondary",
-                      done && "line-through decoration-edge-strong",
-                    )}
-                  >
-                    {step.title}
-                  </span>
-                  <span className="max-w-[52ch] text-sm text-ink-muted text-pretty">
-                    {step.detail}
-                  </span>
-                  {here && step.action && <div className="mt-3">{step.action}</div>}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        {deck ? (
+          <FirstDeck deck={deck} play={play} />
+        ) : (
+          <GuideSteps steps={steps} current={current} play={play} />
+        )}
       </div>
     </section>
+  );
+}
+
+/** The most due cards the guide promises; more would not fit the few minutes it says. */
+const NAMED_FIRST_REVIEW = 20;
+
+function FirstReviewLength({ due }: { due: number }) {
+  if (due < 1) return <Trans>Come back later, or add new cards.</Trans>;
+  if (due > NAMED_FIRST_REVIEW) return <Trans>Your first review takes a few minutes.</Trans>;
+  return (
+    <Plural
+      value={due}
+      one="Start with # card. It takes a few minutes."
+      other="Start with # cards. It takes a few minutes."
+    />
+  );
+}
+
+/**
+ * The step that is left once a deck has cards, which may be a deck the learner only added: naming
+ * it beats ticking off steps they never took. The lantern's line ends at it.
+ */
+function FirstDeck({ deck, play }: { deck: DeckSummary; play: boolean }) {
+  const owner = isolate(deck.owner.name);
+  const style = play ? at(T.steps) : undefined;
+  const seq = play && "seq";
+  return (
+    <>
+      <div aria-hidden="true" className={clsx("relative flex justify-center", seq)} style={style}>
+        <span className="absolute -top-2 h-[calc(50%+0.5rem)] w-0.5 rounded-full bg-amber" />
+        <span className="absolute top-1/2 size-3 -translate-y-1/2 rounded-full bg-amber" />
+      </div>
+      <div
+        className={clsx(
+          "edge -ms-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 rounded-lg bg-plate p-4",
+          seq,
+        )}
+        style={style}
+      >
+        <div className="grid min-w-0 gap-0.5">
+          <h3
+            dir="auto"
+            className="text-lg font-medium leading-tight text-balance [overflow-wrap:anywhere]"
+          >
+            {deck.name}
+          </h3>
+          <p className="text-sm text-ink-muted tabular-nums">
+            {deck.role === "owner" || deck.owner.former ? (
+              <Plural value={deck.total} one="# card" other="# cards" />
+            ) : (
+              <Plural
+                value={deck.total}
+                one={`# card · by ${owner}`}
+                other={`# cards · by ${owner}`}
+              />
+            )}
+          </p>
+        </div>
+        {deck.due > 0 ? (
+          <Button variant="primary" render={<NavLink to="/review" search={{ deck: deck.id }} />}>
+            <Trans>Start your first review</Trans>
+          </Button>
+        ) : (
+          <Button render={<NavLink to="/library/$deckId" params={{ deckId: deck.id }} />}>
+            <Trans>Open deck</Trans>
+          </Button>
+        )}
+      </div>
+    </>
+  );
+}
+
+interface GuideStep {
+  key: string;
+  title: ReactNode;
+  detail: ReactNode;
+  action?: ReactNode;
+}
+
+/** Every step has the same box, so the rhythm holds; only the current one is filled. */
+function GuideSteps({
+  steps,
+  current,
+  play,
+}: {
+  steps: GuideStep[];
+  current: number;
+  play: boolean;
+}) {
+  const { t } = useLingui();
+  return (
+    <ol className="col-span-2 grid grid-cols-subgrid gap-y-2">
+      {steps.map((step, i) => {
+        const done = i < current;
+        const here = i === current;
+        const last = i === steps.length - 1;
+        return (
+          <li
+            key={step.key}
+            className={clsx("col-span-2 grid grid-cols-subgrid", play && "seq")}
+            style={play ? at(T.steps + i * T.gap) : undefined}
+            aria-current={here ? "step" : undefined}
+          >
+            <div className="relative flex justify-center pt-2.5">
+              <span
+                className={clsx(
+                  "relative z-10 grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
+                  done
+                    ? "bg-amber text-amber-ink"
+                    : here
+                      ? "bg-ink text-canvas"
+                      : "edge bg-plate text-ink-muted",
+                )}
+              >
+                {done ? <Check className="size-4" aria-label={t`Done`} /> : i + 1}
+              </span>
+              {!last && (
+                <span
+                  aria-hidden="true"
+                  className={clsx(
+                    "absolute top-[42px] -bottom-[14px] start-1/2 w-0.5 -translate-x-1/2 rounded-full rtl:translate-x-1/2",
+                    done ? "bg-amber" : "bg-edge",
+                  )}
+                />
+              )}
+            </div>
+            <div
+              className={clsx(
+                "-ms-3 grid min-w-0 content-start justify-items-start gap-0.5 rounded-lg p-3",
+                here && "edge bg-plate",
+              )}
+            >
+              <span
+                className={clsx(
+                  "text-md font-medium",
+                  here ? "text-ink" : "text-ink-secondary",
+                  done && "line-through decoration-edge-strong",
+                )}
+              >
+                {step.title}
+              </span>
+              <span className="max-w-[52ch] text-sm text-ink-muted text-pretty">{step.detail}</span>
+              {here && step.action && <div className="mt-3">{step.action}</div>}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -394,7 +480,7 @@ function ImportNames() {
 interface CreateProps {
   /** The learner already has a deck, so this offers to fill it. */
   started: boolean;
-  /** The learner's only deck with cards is one someone shared, so the guide already ticked Create a deck. */
+  /** The learner's only deck with cards is one someone shared, so the guide already shows that deck. */
   joined?: boolean | undefined;
   play: boolean;
   onSmartAdd: (() => void) | undefined;

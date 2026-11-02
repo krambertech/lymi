@@ -20,7 +20,7 @@ export const empty: Group = {
       slug: "first-run-guide",
       name: "Getting started",
       source: "components/first-run.tsx",
-      note: "Today until the first review: three numbered steps on the bare canvas, dashed like every empty state and lit by the lantern, each ticked by the learner's own data; the current step holds its action. Create your first deck and ready-made decks follow it.",
+      note: "Today until the first review: three numbered steps on the bare canvas, dashed like every empty state and lit by the lantern, each ticked by the learner's own data; the current step holds its action. Once a deck has cards, one plate naming it replaces the steps. Create your first deck and ready-made decks follow it.",
       Demo: () => (
         <Variants
           stack

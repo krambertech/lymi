@@ -17,7 +17,7 @@ What is empty?
 
 ## First-run guide
 
-`FirstRunGuide` in `components/first-run.tsx` is Today until the first review: dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps. Each step is done by the learner's own data, never by a dismissal. [onboarding.md](../onboarding.md) owns the steps, what follows them, and the phone's `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`.
+`FirstRunGuide` in `components/first-run.tsx` is Today until the first review: dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps. Each step is done by the learner's own data, never by a dismissal. Once a deck has cards, one plate naming that deck replaces the count and the steps. [onboarding.md](../onboarding.md) owns the steps, what follows them, and the phone's `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`.
 
 ## StartPanel
 

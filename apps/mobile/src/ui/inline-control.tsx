@@ -13,16 +13,7 @@ export const INLINE_ROOM = { paddingVertical: ROOM, marginVertical: -ROOM } as c
  * A 32 pt control inside a line of plain text, after its last word; the `Text` it sits in takes
  * `INLINE_ROOM`. iOS centres it on a reading-size line, and `lift` moves it on a larger one.
  */
-export function InlineControl({
-  lift = 0,
-  start = 12,
-  children,
-}: {
-  lift?: number;
-  /** The room before it; a bare glyph, drawn inside its box's own margin, needs less. */
-  start?: number;
-  children: ReactNode;
-}) {
+export function InlineControl({ lift = 0, children }: { lift?: number; children: ReactNode }) {
   return (
     <>
       {WORD_JOINER}
@@ -30,7 +21,7 @@ export function InlineControl({
         style={{
           // Room for the button's own -8 pt margins, so the text does not clip it.
           paddingVertical: ROOM,
-          paddingStart: start,
+          paddingStart: 12,
           transform: [{ translateY: lift }],
         }}
       >
@@ -41,16 +32,8 @@ export function InlineControl({
 }
 
 /** The same control beside the last run of text drawn with readings, centred on that run's line. */
-export function RunControl({
-  line,
-  start = 12,
-  children,
-}: {
-  line: number;
-  start?: number;
-  children: ReactNode;
-}) {
+export function RunControl({ line, children }: { line: number; children: ReactNode }) {
   return (
-    <View style={{ height: line, justifyContent: "center", paddingStart: start }}>{children}</View>
+    <View style={{ height: line, justifyContent: "center", paddingStart: 12 }}>{children}</View>
   );
 }

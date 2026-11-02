@@ -39,6 +39,7 @@ import { TEXT_END } from "../../../../theme/type";
 import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
+import { ExampleLines } from "../../../../ui/example-lines";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
@@ -47,12 +48,7 @@ import { Plate, Press, Text } from "../../../../ui/primitives";
 import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
-import {
-  EXAMPLE_END_BOX,
-  ExampleText,
-  TermText,
-  useExampleFirstLine,
-} from "../../../../ui/term-text";
+import { TermText } from "../../../../ui/term-text";
 import { toast } from "../../../../ui/toast-host";
 
 const DAY = 86_400_000;
@@ -135,12 +131,6 @@ export default function CardPage() {
   }, [playError]);
   // The example's speaker is on the page, but its tip has no layer to draw on here.
   const exampleError = exampleSound?.error;
-  const exampleMiddle = useExampleFirstLine({
-    text: card?.example ?? "",
-    known,
-    className: "text-md text-ink",
-    lang: card?.language,
-  });
   useEffect(() => {
     if (exampleError) toast.add({ error: true, title: exampleError });
   }, [exampleError]);
@@ -308,8 +298,7 @@ export default function CardPage() {
           exampleAi ? (translationAi ? "exampleAndTranslation" : "example") : "exampleTranslation"
         }
         onPress={edit("example")}
-        end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
-        endMiddle={exampleSound ? exampleMiddle : undefined}
+        corner={exampleSound && <ExampleAudioButton sound={exampleSound} />}
         // A failed run names itself once, under the fields, so its translation does not say it again.
         below={
           owner &&
@@ -329,20 +318,14 @@ export default function CardPage() {
           )
         }
       >
-        <ExampleText
+        <ExampleLines
           text={card.example}
           known={known}
-          className="text-md text-ink"
           lang={card.language}
-          translation={
-            translation ? { text: translation, className: "text-md text-ink-muted" } : null
-          }
+          translation={translation}
+          translating={translating}
+          speakerRoom={!!exampleSound}
         />
-        {translating && !translation && (
-          <View className="h-5 justify-center" accessibilityElementsHidden>
-            <Skeleton width="66%" height={12} />
-          </View>
-        )}
         {owner && translation && card.exampleTranslationStale && (
           <Text className="text-sm text-ink-muted">
             {t`Translated from an earlier example. Edit it to match.`}
@@ -668,8 +651,7 @@ function Field({
   label,
   ai = false,
   field,
-  end,
-  endMiddle,
+  corner,
   below,
   onPress,
   children,
@@ -677,10 +659,8 @@ function Field({
   label: string;
   ai?: boolean;
   field?: ComponentProps<typeof SourceChip>["field"];
-  /** A control at the row's end, such as the example's play. */
-  end?: ReactNode;
-  /** Where `end` centres, down from the top of the value; it centres on the row when left out. */
-  endMiddle?: number | undefined;
+  /** A control over the value's top corner and outside the edit button, such as the example's play. */
+  corner?: ReactNode;
   /** Under the field and apart from its edit button, such as a retry. */
   below?: ReactNode;
   /** Opens the field to edit; left out where the learner may not change it. */
@@ -702,9 +682,7 @@ function Field({
     </View>
   );
   const row = (
-    <View
-      className={`min-h-14 flex-row gap-3 px-5 py-3.5 ${endMiddle === undefined ? "items-center" : "items-start"}`}
-    >
+    <View className="min-h-14 flex-row items-center gap-3 px-5 py-3.5">
       {onPress ? (
         <Press
           onPress={onPress}
@@ -717,18 +695,10 @@ function Field({
       ) : (
         body
       )}
-      {endMiddle === undefined ? (
-        end
-      ) : (
-        // The label, the 4 pt gap under it, then the value's own first line.
-        <View
-          className="justify-center"
-          style={{
-            height: EXAMPLE_END_BOX,
-            marginTop: labelHeight + 4 + endMiddle - EXAMPLE_END_BOX / 2,
-          }}
-        >
-          {end}
+      {corner && (
+        // Past the row's 20 pt inset and 14 pt top, the label and its 4 pt gap, at the block's own corner.
+        <View className="absolute" style={{ end: 26, top: 14 + labelHeight + 4 + 12 }}>
+          {corner}
         </View>
       )}
     </View>

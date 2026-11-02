@@ -701,7 +701,6 @@ export function ReviewCard({
                 exampleSound && <ExampleAudioButton sound={exampleSound} />
               )
             }
-            speakerAfterLastWord
             onPlay={
               measure || !exampleSound
                 ? undefined
@@ -710,7 +709,6 @@ export function ReviewCard({
                     exampleSound.play("sentence");
                   }
             }
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-ink-secondary [overflow-wrap:anywhere]"
           />
         </motion.div>
       )}

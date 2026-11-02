@@ -735,12 +735,13 @@ export function WordView({
             working={waiting("example")}
           >
             {card.example && (
-              <div className="grid gap-1">
+              <div className="grid gap-1.5">
                 <ExampleLines
                   example={card.example}
                   language={card.language}
                   known={knownReadings}
                   translation={translation || null}
+                  translating={translating}
                   // A badge by the label would claim the example; only the translation is the AI's.
                   badge={
                     translationByAi &&
@@ -748,14 +749,8 @@ export function WordView({
                       <SourceChip source="ai" field="exampleTranslation" size="xs" />
                     )
                   }
-                  className="hyphenate whitespace-pre-line text-md leading-relaxed text-ink [overflow-wrap:anywhere]"
                   speaker={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                 />
-                {translating && !translation && (
-                  <div className="flex items-center text-base leading-relaxed" aria-hidden="true">
-                    <Skeleton className="h-3 w-2/3 rounded-sm" />
-                  </div>
-                )}
                 {owner && translation && card.exampleTranslationStale && (
                   <p className="text-sm text-ink-muted">
                     <Trans>Translated from an earlier example. Edit it to match.</Trans>

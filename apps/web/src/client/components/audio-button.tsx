@@ -15,7 +15,7 @@ interface AudioButtonProps {
   className?: string | undefined;
   /** Its names, the term's speaker's when left out. */
   labels?: { play: string; replay: string } | undefined;
-  /** A second speaker on the card, such as the example's, steps back from the term's. */
+  /** A second speaker on the card, such as the example's, steps back from the term's into its block's corner. */
   quiet?: boolean | undefined;
   /** Why it cannot play just now, said in a calm tip that leaves the button as it was. */
   unavailable?: string | null | undefined;
@@ -53,8 +53,8 @@ export function AudioButton({
 
   return (
     <span className="whitespace-nowrap" lang={i18n.locale}>
-      {"\u2060"}
-      <span ref={scope} className={quiet ? ON_LETTERS : ON_LINE}>
+      {!quiet && "\u2060"}
+      <span ref={scope} className={quiet ? "inline-flex" : ON_LINE}>
         <IconButton
           ref={button}
           label={
@@ -68,10 +68,7 @@ export function AudioButton({
           className={clsx(
             quiet
               ? // A bare glyph in muted, a size down, so the term's speaker stays the card's main one.
-                [
-                  "absolute! start-0 top-[calc(-0.35em-12px)]",
-                  !error && "text-ink-muted! hoverable:hover:text-ink!",
-                ]
+                !error && "text-ink-muted! hoverable:hover:text-ink!"
               : // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
                 "[--hit-x:-12px] before:-inset-y-3!",
             className,
@@ -103,24 +100,15 @@ export function AudioButton({
 
 /** Centres a 32 px speaker on its line, after the word it follows. */
 const ON_LINE = "ms-3 inline-flex h-[1lh] items-center align-top";
-/**
- * Hangs a 24 px speaker from the baseline, centred on the letters rather than the line box, so
- * readings drawn over the line never lift it.
- */
-const ON_LETTERS = "relative ms-2 inline-block h-0 w-6 align-baseline";
 
 /** The button's room in a measuring copy, without a second live button. */
 export function AudioPlace({ quiet }: Pick<AudioButtonProps, "quiet">) {
   return (
     <span className="whitespace-nowrap">
-      {"\u2060"}
-      {quiet ? (
-        <span className={ON_LETTERS} />
-      ) : (
-        <span className={ON_LINE}>
-          <span className="size-8" />
-        </span>
-      )}
+      {!quiet && "\u2060"}
+      <span className={quiet ? "inline-flex" : ON_LINE}>
+        <span className={quiet ? "size-6" : "size-8"} />
+      </span>
     </span>
   );
 }

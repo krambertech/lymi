@@ -22,7 +22,6 @@ async function renderSentence() {
           language="it"
           translation="I booked a table for two."
           speaker={<button type="button">Play example</button>}
-          speakerAfterLastWord
           onPlay={onPlay}
         />
       </div>
@@ -52,5 +51,54 @@ describe("the example sentence in review", () => {
     text.dispatchEvent(new MouseEvent("click", { bubbles: true, detail: 1 }));
     expect(onPlay).not.toHaveBeenCalled();
     window.getSelection()?.removeAllRanges();
+  });
+});
+
+describe("the example block's speaker", () => {
+  test("sits level with the sentence's first line", async () => {
+    await render(
+      <I18nProvider i18n={i18n}>
+        <ExampleLines
+          example="Der Hund schläft."
+          language="de"
+          speaker={
+            <button type="button" className="size-6">
+              Play example
+            </button>
+          }
+        />
+      </I18nProvider>,
+    );
+    const middle = (box: DOMRect) => box.top + box.height / 2;
+    const speaker = page.getByRole("button", { name: "Play example" }).element();
+    const sentence = page.getByText("Der Hund schläft.").element();
+    const apart =
+      middle(speaker.getBoundingClientRect()) - middle(sentence.getBoundingClientRect());
+    expect(Math.abs(apart)).toBeLessThan(1);
+  });
+
+  test("a right-to-left sentence keeps clear of the corner in a left-to-right interface", async () => {
+    await render(
+      <I18nProvider i18n={i18n}>
+        <div style={{ width: 280 }}>
+          <ExampleLines
+            example="ذهبت إلى السوق صباح اليوم لشراء الخبز والفاكهة مع صديقتي القديمة من المدرسة."
+            language="ar"
+            speaker={
+              <button type="button" className="size-6">
+                Play example
+              </button>
+            }
+          />
+        </div>
+      </I18nProvider>,
+    );
+    const speaker = page.getByRole("button", { name: "Play example" }).element();
+    const sentence = document.querySelector('p[lang="ar"]') as HTMLElement;
+    const words = document.createRange();
+    words.selectNodeContents(sentence);
+    expect(words.getBoundingClientRect().right).toBeLessThanOrEqual(
+      speaker.getBoundingClientRect().left,
+    );
   });
 });

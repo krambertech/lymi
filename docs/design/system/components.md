@@ -29,6 +29,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 | A group on a settings screen | `SettingsGroup` | `settings-group.tsx` | |
 | A string to copy (an API key) | `CopyField` | `copy-field.tsx` | [type.md](type.md#monospace) |
 | A card term or example, with its language's reading, stress and direction | `TermText`, `ExampleText` | `term-text.tsx` | [type.md](type.md#languages-readings-and-stress) |
+| A card's example as an inset block with its translation and speaker | `ExampleLines` | `example-lines.tsx` | [layout.md](layout.md) |
 | A label | `Chip`, `StateChip`, `SourceChip`, `DueCount`, `Kbd`, `StateIcon` | `chip.tsx` and others | [chips-and-marks.md](chips-and-marks.md) |
 | A notice inside a screen, or a few sentences behind an info button | `Notice` (`neutral`, `warning`), `InfoTip` | `notice.tsx`, `info-tip.tsx` | [colour.md](colour.md#amber-means-act) for the warning |
 | Today before the first review | `FirstRunGuide` (web), `StartGuide` (phone) | `first-run.tsx`; phone: `apps/mobile/src/welcome/start-guide.tsx` | [empty-states.md](empty-states.md#first-run-guide) |

@@ -16,6 +16,9 @@ const lines = (text: string, size: number, width: number, most: number) =>
 /** The padding, the deck line, the rule and the gaps between them, in points. */
 const FRAME = 16 + 20 + 16 + 16 + 1 + 16 + 20;
 
+/** The example block's padding, which stays put as the text grows. */
+const EXAMPLE_INSET = { x: 28, y: 24 };
+
 /** The meaning's `text-xl`, which grows on its own ramp rather than by the reader's scale. */
 const MEANING_SIZE = 22;
 const MEANING_LEADING = 1.3;
@@ -40,9 +43,11 @@ export function peekHeight(card: Card, width: number, scale: number) {
     (card.pronunciation && !shown ? 8 + 23 : 0) +
     (card.example && example
       ? 8 +
-        lines(stripReadings(card.example, card.language), 17 * scale, inner, 2) * example +
+        lines(stripReadings(card.example, card.language), 17 * scale, inner - EXAMPLE_INSET.x, 2) *
+          example +
         // The translation stands on its own line under the example.
         (translation ? 4 + 23 : 0)
       : 0);
-  return Math.min(Math.round(FRAME + meaning + text * scale), 420);
+  const inset = card.example ? EXAMPLE_INSET.y : 0;
+  return Math.min(Math.round(FRAME + meaning + inset + text * scale), 420);
 }

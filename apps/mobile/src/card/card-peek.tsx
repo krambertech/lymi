@@ -7,9 +7,10 @@ import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
 import { StateChip } from "../ui/chip";
+import { ExampleLines } from "../ui/example-lines";
 import { Icon } from "../ui/icons";
 import { LIFT, Text } from "../ui/primitives";
-import { ExampleText, TermText } from "../ui/term-text";
+import { TermText } from "../ui/term-text";
 import { peekHeight } from "./peek-height";
 
 export { peekHeight };
@@ -91,17 +92,13 @@ export function CardPeek({
           </Text>
         )}
         {card.example && (
-          <ExampleText
+          <ExampleLines
             text={card.example}
             known={known}
-            className="text-md text-ink-secondary"
             lines={2}
             lang={card.language}
-            translation={
-              translation
-                ? { text: translation, className: "text-md text-ink-muted", lines: 1 }
-                : null
-            }
+            translation={translation}
+            translationLines={1}
           />
         )}
       </View>

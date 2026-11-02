@@ -116,6 +116,7 @@ import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "..
 import { usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { Chip, StateChip } from "../ui/chip";
+import { ExampleLines } from "../ui/example-lines";
 import { Furigana } from "../ui/furigana";
 import { GRADES } from "../ui/grade";
 import { PitchChart } from "../ui/pitch-chart";
@@ -126,7 +127,7 @@ import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
 import { useStreakStart } from "../ui/streak-start";
 import { useSystemBack } from "../ui/system-back";
-import { ExampleText, TermText } from "../ui/term-text";
+import { TermText } from "../ui/term-text";
 import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
 
 const EASE = curve(EASE_OUT);
@@ -1292,18 +1293,13 @@ function CardPlate({
                       {card.example && (
                         <Animated.View entering={arrive()}>
                           <ExamplePress sound={exampleSound} onLongPress={hold}>
-                            <ExampleText
+                            <ExampleLines
                               text={card.example ?? ""}
                               known={known}
                               plain={separate}
-                              className="text-md text-ink-secondary"
                               lang={card.language}
-                              translation={
-                                translation
-                                  ? { text: translation, className: "text-md text-ink-muted" }
-                                  : null
-                              }
-                              after={exampleSound && <ExampleAudioButton sound={exampleSound} />}
+                              translation={translation}
+                              speaker={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                             />
                           </ExamplePress>
                         </Animated.View>

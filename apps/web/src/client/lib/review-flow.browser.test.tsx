@@ -88,6 +88,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.restoreAllMocks();
 });
 
@@ -142,7 +143,10 @@ test("steps forward again when the server keeps a grade Undo took back", async (
 });
 
 test("fetches the next day's draw when the day ends during a review", async () => {
-  const end = Date.now() + 400;
+  // The test owns the clock, so a slow runner cannot reach the day's end before the first draw.
+  const start = new Date("2026-11-01T12:00:00Z").getTime();
+  const end = start + 60 * 60_000;
+  vi.useFakeTimers({ now: start, toFake: ["Date", "setTimeout", "clearTimeout"] });
   const today = drawOf(["a"], dayOf(end - DAY, end));
   const tomorrow = drawOf(["b"], dayOf(end, end + DAY));
   const draw = vi
@@ -151,10 +155,12 @@ test("fetches the next day's draw when the day ends during a review", async () =
   const { result } = await renderHook(() => useReviewFlow({}, undefined, undefined, PLATFORM), {
     wrapper,
   });
-  await vi.waitFor(() => expect(result.current.leg?.date).toBe(today.day.date));
-  await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date), {
-    timeout: 3000,
-  });
-  await vi.waitFor(() => expect(draw.mock.calls.length).toBeGreaterThan(1));
+  await vi.waitFor(() => expect(result.current.current?.card.id).toBe("a"));
+  expect(result.current.leg?.date).toBe(today.day.date);
+  const calls = draw.mock.calls.length;
+  // Midnight passes with the review still open, and only the day's own timer can notice.
+  await vi.advanceTimersByTimeAsync(end - Date.now() + 100);
+  await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date));
+  expect(draw.mock.calls.length).toBeGreaterThan(calls);
   await vi.waitFor(() => expect(result.current.current?.card.id).toBe("b"));
 });

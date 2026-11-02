@@ -155,7 +155,9 @@ export function Sidebar({
           {groups.series.map(({ series: group, decks: inSeries }) =>
             inSeries.length > 0 ? (
               <Fragment key={group.id}>
-                <RailHeading className="truncate">{group.name}</RailHeading>
+                <RailHeading dir="auto" className="truncate">
+                  {group.name}
+                </RailHeading>
                 {inSeries.map(deckRow)}
               </Fragment>
             ) : null,

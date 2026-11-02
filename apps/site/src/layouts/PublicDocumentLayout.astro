@@ -37,7 +37,7 @@ const labels = {
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={canonicalPath} localizedPage={localizedPage}>
-  <div class="min-h-dvh bg-canvas text-ink">
+  <div class="@container min-h-dvh bg-canvas text-ink">
     <a
       href="#document-content"
       class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-ink edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
@@ -55,7 +55,7 @@ const labels = {
         <p class="mt-5 text-lg text-ink-secondary">{lead}</p>
         <p class="mt-4 text-sm text-ink-muted">{labels.updated} {updated}</p>
       </header>
-      <article class="doc-prose">
+      <article class="doc-prose max-w-[54ch]">
         <slot />
       </article>
     </main>

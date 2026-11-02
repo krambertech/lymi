@@ -507,6 +507,7 @@ if (!app.requestSingleInstanceLock()) {
   app
     .whenReady()
     .then(start)
+    .catch((cause) => console.error("Start failed:", cause))
     .finally(() => sessionRead());
   // A menu bar app stays running with no window open.
   app.on("window-all-closed", () => {});

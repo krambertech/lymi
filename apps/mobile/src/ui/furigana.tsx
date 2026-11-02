@@ -118,6 +118,8 @@ function useRubyMetrics(
   return { drawn, readingSize, slot, line };
 }
 
+const KNOWN_READING = { opacity: 0, width: 0, overflow: "hidden" } as const;
+
 /** A Jyutping tone number's size against its syllable's. */
 const TONE_SCALE = 0.7;
 
@@ -238,7 +240,8 @@ function Ruby({
               // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
               <View key={j} className="shrink items-center">
                 {run.known ? (
-                  <View style={{ opacity: 0 }}>{reading(run.reading)}</View>
+                  // Its height only, so a long reading leaves no gap around a word the learner knows.
+                  <View style={KNOWN_READING}>{reading(run.reading)}</View>
                 ) : fade ? (
                   <Animated.View style={fade}>{reading(run.reading)}</Animated.View>
                 ) : (

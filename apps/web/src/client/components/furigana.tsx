@@ -9,7 +9,7 @@ interface Props {
   hidden?: boolean | undefined;
 }
 
-/** Runs of text with their readings drawn over them, as furigana over kanji; a known run's reading keeps its room unseen. */
+/** Runs of text with their readings drawn over them, as furigana over kanji; a known run's reading keeps its height unseen and no width, so a long one leaves no gap around its word. */
 export function Furigana({ segments, lang, hidden }: Props) {
   return segments.map((segment, index) =>
     segment.reading === undefined ? (
@@ -31,16 +31,22 @@ export function Furigana({ segments, lang, hidden }: Props) {
             (hidden || segment.known) && "invisible opacity-0",
           )}
         >
-          {toneRuns(segment.reading).map((run, at) =>
-            run.tone ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
-              <span key={at} data-tone>
-                {run.text}
-              </span>
-            ) : (
-              run.text
-            ),
-          )}
+          <span
+            className={clsx(
+              segment.known && "inline-block w-0 overflow-hidden whitespace-nowrap align-top",
+            )}
+          >
+            {toneRuns(segment.reading).map((run, at) =>
+              run.tone ? (
+                // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+                <span key={at} data-tone>
+                  {run.text}
+                </span>
+              ) : (
+                run.text
+              ),
+            )}
+          </span>
         </rt>
         <rp>)</rp>
       </ruby>

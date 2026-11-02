@@ -456,6 +456,125 @@ test("a tap where the offer will be, before it has arrived, opens nothing", asyn
   expect(opened).not.toHaveBeenCalled();
 });
 
+/** A card on a phone's width, with the speaker a term's last letters hold on to. */
+async function renderCue(
+  card: Partial<QueueItem["card"]>,
+  mode = queueItem.mode,
+  revealed = false,
+) {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <div className="flex h-[720px] w-[393px] flex-col">
+        <ReviewCard
+          item={{ ...item(card), mode }}
+          revealed={revealed}
+          animateReveal={false}
+          onReveal={noop}
+          onPlayAudio={noop}
+        />
+      </div>
+    </I18nProvider>,
+  );
+  const text = page.getByRole("region").element().querySelector<HTMLElement>("p[data-fit-words]");
+  if (!text) throw new Error("the card drew no cue");
+  return {
+    size: () => getComputedStyle(text).fontSize,
+    reading: () => text.querySelector("rt"),
+    /** How far the term's reading, or the whole cue without one, runs past the end of its box. */
+    past: () => {
+      const end = text.getBoundingClientRect().right;
+      const drawn = text.querySelector("rt") ?? text;
+      return drawn.getBoundingClientRect().right - end;
+    },
+  };
+}
+
+/** A reading's text, one entry for each line it draws on. */
+function readingLines(reading: Element | null) {
+  const node = reading?.firstChild;
+  if (!(node instanceof Text)) throw new Error("the term drew no reading");
+  const lines: { top: number; text: string }[] = [];
+  const range = document.createRange();
+  for (let at = 0; at < node.length; at++) {
+    range.setStart(node, at);
+    range.setEnd(node, at + 1);
+    const top = range.getClientRects()[0]?.top ?? 0;
+    const line = lines.at(-1);
+    if (line && Math.abs(line.top - top) < 4) line.text += node.data[at];
+    else lines.push({ top, text: node.data[at] ?? "" });
+  }
+  return lines.map((line) => line.text);
+}
+
+const japanese = { language: "ja", pronunciation: "とうきょうとっきょきょかきょくちょう" };
+
+test("a word that fits the line keeps the cue's largest size", async () => {
+  const { size } = await renderCue({ term: "Kraftfahrzeug", language: "de" });
+  await expect.poll(size).toBe("38px");
+});
+
+test("a word wider than the line steps the cue down the type scale", async () => {
+  const { size } = await renderCue({
+    term: "Kraftfahrzeughaftpflichtversicherung",
+    language: "de",
+  });
+  await expect.poll(size).toBe("24px");
+});
+
+test("a term too wide for the answer's line sizes the card before its reveal", async () => {
+  const { size } = await renderCue(
+    { term: "Kraftfahrzeughaftpflichtversicherung", language: "de", meaning: "car insurance" },
+    { cue: "meaning", target: "term" },
+  );
+  await expect.poll(size).toBe("24px");
+});
+
+test("a reading wider than the line steps the cue down and stays in its box", async () => {
+  const { size, past } = await renderCue({ ...japanese, term: "東京特許許可局長" });
+  await expect.poll(size).toBe("30px");
+  expect(past()).toBeLessThanOrEqual(0);
+});
+
+test("a reading too long for the smallest size wraps inside its box", async () => {
+  const { size, past, reading } = await renderCue({
+    term: "東京特許許可局長今日急遽許可却下",
+    language: "ja",
+    pronunciation: `${japanese.pronunciation}きょうきゅうきょきょかきゃっかとうきょう`,
+  });
+  await expect.poll(size).toBe("24px");
+  expect(past()).toBeLessThanOrEqual(0);
+  // A second line never opens on a small kana, which belongs with the kana before it.
+  const lines = readingLines(reading());
+  expect(lines.length).toBeGreaterThan(1);
+  for (const line of lines) expect(line).not.toMatch(/^[ゃゅょっ]/);
+});
+
+test("a reading that fits stays centred on its text's line beside an overlong cue", async () => {
+  const { size } = await renderCue(
+    {
+      term: "食べる",
+      language: "ja",
+      pronunciation: "たべる",
+      meaning: "Kraftfahrzeughaftpflichtversicherungsgesellschaft",
+    },
+    { cue: "meaning", target: "term" },
+    true,
+  );
+  await expect.poll(size).toBe("24px");
+  const ruby = page.getByRole("region").element().querySelector("ruby");
+  const [base, kana] = [ruby?.firstChild, ruby?.nextSibling];
+  const reading = ruby?.querySelector("rt");
+  if (!base || !kana || !reading) throw new Error("the term drew no reading");
+  const box = (node: Node) => {
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    return range.getBoundingClientRect();
+  };
+  const middle = (rect: DOMRect) => rect.left + rect.width / 2;
+  expect(Math.abs(box(base).bottom - box(kana).bottom)).toBeLessThan(2);
+  expect(Math.abs(middle(box(base)) - middle(box(reading)))).toBeLessThan(1);
+});
+
 const hinted = item({ hint: "Speed up the brigade", hintSource: "ai", notes: "Reflexive." });
 
 /** A card as review holds it: the aid steps taken live in the page, the card only draws them. */

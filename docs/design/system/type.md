@@ -43,7 +43,7 @@ The scale uses smaller increments for reading sizes, 1–1.5 px from 11 to 17, a
 
 ## Long words
 
-A term or meaning long enough to wrap carries the `hyphenate` utility (`hyphens: auto` with at least three letters each side of the break) and the text's own `lang`, so a German compound breaks at a joint rather than anywhere. A cue or target too long for its review card steps down the scale at most twice before the card scrolls.
+A term or meaning long enough to wrap carries the `hyphenate` utility (`hyphens: auto` with at least three letters each side of the break) and the text's own `lang`, so a German compound breaks at a joint rather than anywhere. A cue or target too long for its review card, or with a word or reading wider than one line, steps down the scale at most twice before the card scrolls. A word or reading still wider than the line at the smallest step takes `overlong-text`: balanced lines, and a reading that wraps over its text.
 
 ## Languages, readings and stress
 

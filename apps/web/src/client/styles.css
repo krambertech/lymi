@@ -223,6 +223,27 @@
   hyphenate-limit-chars: auto 3 3;
 }
 
+/* A word or reading wider than the line at the smallest size it can take. Even lines keep the last
+   from holding one stranded letter, and a reading wraps over its text rather than leave the box. */
+@utility overlong-text {
+  text-wrap: balance;
+  /* The foot, as a grid's own baseline is its first row: the reading, which would drop the text. */
+  & ruby {
+    display: inline-grid;
+    justify-items: center;
+    max-width: 100%;
+    text-align: center;
+    vertical-align: bottom;
+  }
+  /* Strict, so a wrapped reading keeps a small kana with the kana before it. */
+  & rt {
+    display: block;
+    line-break: strict;
+    order: -1;
+    white-space: normal;
+  }
+}
+
 /* One hairline edge, a shadow so it never changes layout; forced colours drop shadows, so there it becomes an outline the system paints. */
 @utility edge {
   box-shadow:

@@ -150,6 +150,60 @@ test("checks the end of a section with one fetch, ahead of the day's other reads
   stopWatchingDay();
 });
 
+test("keeps a section's end while the deck's new count lands before the section's", async () => {
+  vi.spyOn(api, "grade").mockResolvedValue(accepted);
+  const sections = (due: number) => ({
+    sections: [{ id: "s", due } as Section],
+    progress: null,
+  });
+  const deck = (due: number) => [{ id: "a", due }] as Awaited<ReturnType<typeof api.decks>>;
+  vi.mocked(api.decks).mockResolvedValue(deck(2));
+  const listed = vi.spyOn(api, "sections").mockResolvedValue(sections(1));
+  const flow = await openReview(drawOf(["a"]), { deck: "a", section: "s" });
+  await vi.waitFor(() => expect(listed).toHaveBeenCalled());
+  await vi.waitFor(() => expect(flow.current.decks?.[0]?.due).toBe(2));
+
+  let land: (value: ReturnType<typeof sections>) => void = () => undefined;
+  listed.mockImplementation(() => new Promise((resolve) => (land = resolve)));
+  vi.mocked(api.decks).mockResolvedValue(deck(1));
+  await gradeShown(flow.current)?.answered;
+  await vi.waitFor(() => expect(flow.current.end).not.toBeNull());
+  const heading = () => {
+    const { end } = flow.current;
+    return end && end !== "unchecked" ? end.heading : null;
+  };
+  expect(heading()).toBe("scope_done");
+
+  await vi.waitFor(() => expect(flow.current.decks?.[0]?.due).toBe(1));
+  expect(heading()).toBe("scope_done");
+  land(sections(1));
+  await vi.waitFor(() => expect(heading()).toBe("day_done"));
+});
+
+test("holds a section's end until its first counts have settled together", async () => {
+  vi.spyOn(api, "grade").mockResolvedValue(accepted);
+  const sections = { sections: [{ id: "s", due: 0 } as Section], progress: null };
+  let landSections: (value: typeof sections) => void = () => undefined;
+  const listed = vi
+    .spyOn(api, "sections")
+    .mockImplementation(() => new Promise((resolve) => (landSections = resolve)));
+  const flow = await openReview(drawOf(["a"]), { deck: "a", section: "s" });
+  await vi.waitFor(() => expect(listed).toHaveBeenCalled());
+
+  let landDecks: (value: Awaited<ReturnType<typeof api.decks>>) => void = () => undefined;
+  const decks = vi.mocked(api.decks);
+  decks.mockClear();
+  decks.mockImplementation(() => new Promise((resolve) => (landDecks = resolve)));
+  await gradeShown(flow.current)?.answered;
+  await vi.waitFor(() => expect(decks).toHaveBeenCalled());
+
+  landSections(sections);
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  expect(flow.current.end).toBeNull();
+  landDecks([]);
+  await vi.waitFor(() => expect(flow.current.end).not.toBeNull());
+});
+
 test("drops the answer to a grade taken back while its send was pending", async () => {
   let refuse: (err: Error) => void = () => undefined;
   vi.spyOn(api, "grade").mockReturnValue(

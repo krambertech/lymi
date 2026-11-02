@@ -457,7 +457,8 @@ export function flowView(flow: FlowState, inputs: FlowInputs): FlowView {
     forgotten,
     added: !!state && !!mark && state.attempts > mark.attempts,
     steps,
-    owesDrawFetch: checking && !inputs.unreachable && !inputs.drawFetching,
+    // A read begun before the last grade lands can miss what it changed, such as the next section opening.
+    owesDrawFetch: checking && !landing && !inputs.unreachable && !inputs.drawFetching,
     askRound:
       roundState?.refetch && !current && leg
         ? { leg, at: inputs.roundFetch.updatedAt, done: counted }

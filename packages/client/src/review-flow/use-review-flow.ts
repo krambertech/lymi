@@ -143,6 +143,10 @@ export function useReviewFlow(
   const scopeSection = section
     ? scopeSections.data?.sections.find((s) => s.id === section)
     : undefined;
+  // Decks and sections land separately, and a deck's due less a section's holds only within one refresh.
+  const settledCounts = useRef<Pick<FlowInputs, "decks" | "scopeSection"> | null>(null);
+  const countsIdle = !decks.isFetching && !scopeSections.isFetching;
+  if (!section || countsIdle) settledCounts.current = { decks: decks.data, scopeSection };
   const inputs: FlowInputs = {
     scope: stableScope,
     list: cards ? "chosen" : round ? "round" : null,
@@ -158,13 +162,15 @@ export function useReviewFlow(
       failed: list.isError || list.fetchStatus === "paused",
     },
     lastChange: Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime())),
-    decks: decks.data,
-    scopeSection,
+    ...(settledCounts.current ?? { decks: decks.data, scopeSection }),
     // The persisted list can predate this visit, so it waits for this mount's fetch like the draw.
     decksLoading:
       ((!!deck || !!series) && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
       (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
-      (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching"),
+      (!!section &&
+        !scopeSections.isFetchedAfterMount &&
+        scopeSections.fetchStatus === "fetching") ||
+      (!!section && !settledCounts.current && !countsIdle),
     streakSettled,
     daySatisfied: !!today && today.date === state?.day.date && daySatisfied(today.outcome),
   };

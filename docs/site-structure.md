@@ -81,6 +81,7 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | --- | --- |
 | `/docs` | What the docs cover and which way in to choose. |
 | `/docs/getting-started`, `/docs/decks` | For learners: first cards and reviews, organization, sharing, Explore and archive. |
+| `/docs/smart-add` | For learners: turning lesson photos, PDFs and pasted text into cards with Smart add, the question step, the notes on terms, limits, privacy and the errors a learner can fix. |
 | `/docs/import` | Import formats, preview, duplicates, repeated imports and undo. |
 | `/docs/import-from-quizlet` | Quizlet export, pasted or delimited text pairs, separators, limits and preview. |
 | `/docs/import-from-lymi` | Importing a Lymi export, preserved card data and the section and series limitations. |

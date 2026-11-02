@@ -76,7 +76,8 @@ export function ImportOverview() {
       <p>
         For words you look up while reading, connect <a href="/docs/yomitan">Yomitan</a>. For new
         highlights from reading apps, connect <a href="/docs/readwise">Readwise</a>. These
-        connections keep adding cards without exporting a file each time.
+        connections keep adding cards without exporting a file each time. For a lesson’s photos, PDF
+        or notes, use <a href="/docs/smart-add">Smart add</a>.
       </p>
       <NextLinks
         items={[

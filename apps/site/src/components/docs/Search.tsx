@@ -7,7 +7,18 @@ import { type DocPage, PAGES } from "./nav";
 /** Words a reader might type that do not appear in a page's title or blurb. */
 const TERMS: Record<string, string[]> = {
   "/docs": ["help", "guides", "documentation"],
-  "/docs/getting-started": ["first card", "smart add", "pdf", "photo", "daily goal", "AI services"],
+  "/docs/getting-started": ["first card", "daily goal", "AI services"],
+  "/docs/smart-add": [
+    "smart add",
+    "pdf",
+    "photo",
+    "notes",
+    "lesson",
+    "handwriting",
+    "transcript",
+    "tutor",
+    "daily limit",
+  ],
   "/docs/decks": [
     "share",
     "join link",

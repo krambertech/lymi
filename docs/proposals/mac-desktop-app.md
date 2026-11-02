@@ -60,7 +60,7 @@ Google refuses OAuth inside embedded browsers with `disallowed_useragent`, and E
 1. The app opens `/desktop/sign-in` in the default browser with a PKCE challenge and a state. Clicking Google or Apple in the app's window does the same, naming the provider; the window stays on the sign-in form.
 2. Signed out, that page sends the browser straight to the named provider's page, or through the ordinary login when none is named or the provider cannot start; either returns to it.
 3. The learner confirms the account with **Open Lymi for Mac**, so a link alone never signs an app in. The page calls the plugin's `transferUser`, and `ensureElectronRedirect` opens `app.lymi.desktop://auth/callback#token=…`.
-4. The app trades the token and its PKCE verifier at `/api/auth/electron/token`, copies the session cookie that call sets into its window session, comes to the front and moves its window on from the sign-in form.
+4. The app trades the token and its PKCE verifier at `/api/auth/electron/token`, copies the session cookie that call sets into its window session, comes to the front and moves its window on from the sign-in form. A link that fails logs its cause and, unless the learner is already signed in, comes to the front and offers Try Again, which starts a new sign-in in the browser.
 
 The app does this itself in about fifty lines (`apps/desktop/src/sign-in.ts`) rather than through `@better-auth/electron/client`, which keeps its own cookie store for a local renderer that calls through IPC; Lymi's window is the remote product and needs the cookie in its own session. The phone's `lymi://` scheme stays the phone's.
 

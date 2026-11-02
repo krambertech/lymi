@@ -36,9 +36,7 @@ export const drawQuery = (scope: ReviewScope) =>
 /** How many cards each Today round holds. A review invalidates it with the decks. */
 export const roundsQuery = queryOptions({
   queryKey: ["rounds"],
-  queryFn: async () => {
-    await flushOutbox();
-    return api.rounds();
-  },
+  // Through the flush, so grades that land for this read also refresh what they moved.
+  queryFn: () => fresh(["rounds"], api.rounds),
   staleTime: 0,
 });

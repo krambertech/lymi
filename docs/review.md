@@ -36,6 +36,8 @@ The phone schedules a week ahead on the device, so it chooses each message when 
 
 The learner-local day initially uses the current device timezone without asking during setup. While the timezone remains automatic, the most recently foregrounded device may update it when its timezone changes during travel; a background device cannot overwrite that choice. A timezone chosen explicitly in Settings becomes a manual override and is not changed automatically until the learner returns it to automatic. Timezone changes affect current and future day boundaries without rewriting completed review history.
 
+Every open client turns the day at the learner's midnight on any screen, or on returning to the front after it: it refetches the decks, rounds, streak, draw and Insights, the same set an offline grade or write refreshes when it lands (`packages/client/src/sync.ts`). Only a client in front asks the server to settle the new day, because a background tab is not an opening.
+
 ## The next card is recomputed, never stored
 
 Lymi recomputes the next card from the cards, today's reviews, and the date. The same synced state gives the same next card after a reload, offline, on another device, or in another scope. A grade from another device can change the next card, and an offline grade that arrives after a later grade of the same card does not count. The rules are in [ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md).

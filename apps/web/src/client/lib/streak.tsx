@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { useDailyGoal } from "@lymi/client/daily-goal";
+import { type DayPlatform, startDayTurn } from "@lymi/client/sync";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -10,7 +11,7 @@ import {
 } from "../components/streak";
 import { api } from "./api";
 import { useScreenName } from "./document-title";
-import { decksQuery, streakQuery } from "./queries";
+import { decksQuery, drawQuery, streakQuery } from "./queries";
 
 /**
  * Opening Lymi is what settles a day: a visible page reports its zone, then asks the server
@@ -32,6 +33,39 @@ export function useSettleToday(enabled: boolean) {
     document.addEventListener("visibilitychange", settle);
     return () => document.removeEventListener("visibilitychange", settle);
   }, [enabled, qc]);
+}
+
+export const WEB_DAY: DayPlatform = {
+  onForeground(back) {
+    const onVisible = () => {
+      if (document.visibilityState === "visible") back();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  },
+  inFront: () => document.visibilityState === "visible",
+};
+
+/**
+ * The learner's midnight, from the review zone, starts a new day on any screen. A kept draw is
+ * enough to read: one from an earlier day fetches today's as soon as it is seen.
+ */
+export function useDayTurn(enabled: boolean) {
+  const qc = useQueryClient();
+  const { data: end } = useQuery({
+    ...drawQuery({}),
+    enabled,
+    staleTime: Number.POSITIVE_INFINITY,
+    select: (draw) => draw.day.end,
+  });
+  // A disabled query still reads the kept draw, and a page that is no visit must not settle a day.
+  useEffect(
+    () =>
+      !enabled || end === undefined
+        ? undefined
+        : startDayTurn(qc, new Date(end).getTime(), WEB_DAY),
+    [enabled, end, qc],
+  );
 }
 
 /**

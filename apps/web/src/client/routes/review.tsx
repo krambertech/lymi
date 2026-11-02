@@ -58,6 +58,7 @@ import { insightsQuery, roundsQuery, sectionsQuery, streakQuery } from "../lib/q
 import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
+import { WEB_DAY } from "../lib/streak";
 import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { useWordHistory } from "../lib/use-word-history";
@@ -125,13 +126,7 @@ const WEB: ReviewPlatform = {
     if (event.name === "review_session_abandoned") captureAnalytics(event.name, event);
   },
   newId: () => crypto.randomUUID(),
-  onForeground(back) {
-    const onVisible = () => {
-      if (document.visibilityState === "visible") back();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
-  },
+  onForeground: WEB_DAY.onForeground,
   onExit(gone) {
     window.addEventListener("pagehide", gone);
     return () => window.removeEventListener("pagehide", gone);

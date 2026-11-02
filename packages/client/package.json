@@ -11,6 +11,7 @@
     "./queries": "./src/queries/index.ts",
     "./grades": "./src/grades.ts",
     "./writes": "./src/writes.ts",
+    "./sync": "./src/sync.ts",
     "./write-projections": "./src/write-projections.ts",
     "./review-draw": "./src/review-draw.ts",
     "./recall-clock": "./src/recall-clock.ts",

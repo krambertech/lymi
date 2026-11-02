@@ -2,18 +2,17 @@ import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { cacheWarmer } from "@lymi/client/cache";
 import { retireGrades } from "@lymi/client/grades";
-import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
+import { afterFlush, startDayTurn } from "@lymi/client/sync";
+import { claimWrites, flushWrites, onFlushed, onNotice } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import { onlineManager, useQueryClient } from "@tanstack/react-query";
 import { addNetworkStateListener } from "expo-network";
 import { useEffect, useMemo } from "react";
 import { Alert, AppState } from "react-native";
+import { PHONE } from "../review/platform";
 import { claimCache } from "./cache";
 import { followDueCounts } from "./forecast";
 import { useDecks, useDraw, useSeriesList } from "./queries";
-
-/** What a new day or a replayed grade moves, refetched together. */
-const DAY_KEYS = [["decks"], ["rounds"], ["streak"], ["queue"]];
 
 /**
  * Keeps the signed-in learner's device in step with the server, as the web's root does: queued
@@ -27,14 +26,8 @@ export function Sync({ learnerId }: { learnerId: string }) {
   useEffect(() => {
     claimCache(learnerId, qc);
     claimWrites(learnerId);
-    const flush = () => {
-      void flushWrites().then((flushed) => {
-        if (flushed.sent > 0) void qc.invalidateQueries({ queryKey: ["decks"] });
-        if (flushed.sent + flushed.graded > 0) {
-          for (const queryKey of DAY_KEYS) void qc.invalidateQueries({ queryKey });
-        }
-      });
-    };
+    const stopFollowing = onFlushed((flushed) => afterFlush(qc, flushed));
+    const flush = () => void flushWrites();
     // Opening Lymi is what settles a day: the zone first, then whether today is nothing-due or exhausted.
     const settle = () =>
       void api
@@ -53,6 +46,7 @@ export function Sync({ learnerId }: { learnerId: string }) {
       if (state.isConnected) flush();
     });
     return () => {
+      stopFollowing();
       front.remove();
       network.remove();
     };
@@ -123,25 +117,7 @@ export function Sync({ learnerId }: { learnerId: string }) {
 
   // The learner's midnight, from the review zone, starts a new day: due counts, rounds and the streak move on.
   const end = day ? new Date(day.end).getTime() : undefined;
-  useEffect(() => {
-    if (end === undefined) return;
-    const turn = () => {
-      for (const queryKey of DAY_KEYS) void qc.invalidateQueries({ queryKey });
-      void api
-        .checkToday()
-        .then(() => qc.invalidateQueries({ queryKey: ["streak"] }))
-        .catch(() => {});
-    };
-    const timer = setTimeout(turn, Math.min(Math.max(end - Date.now(), 0) + 50, 2_147_483_647));
-    // A timer does not run while the phone sleeps, so coming back after midnight turns the day too.
-    const front = AppState.addEventListener("change", (state) => {
-      if (state === "active" && Date.now() >= end) turn();
-    });
-    return () => {
-      clearTimeout(timer);
-      front.remove();
-    };
-  }, [end, qc]);
+  useEffect(() => (end === undefined ? undefined : startDayTurn(qc, end, PHONE)), [end, qc]);
 
   return null;
 }

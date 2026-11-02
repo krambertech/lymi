@@ -56,6 +56,10 @@ msgstr "{0, plural, one {# archived card arrives archived.} other {# archived ca
 msgid "{0, plural, one {# card · {1} known} other {# cards · {2} known}}"
 msgstr "{0, plural, one {# card · {1} known} other {# cards · {2} known}}"
 
+#. placeholder {0}: deck.total
+msgid "{0, plural, one {# card · by {owner}} other {# cards · by {owner}}}"
+msgstr "{0, plural, one {# card · by {owner}} other {# cards · by {owner}}}"
+
 #. placeholder {0}: preview.pictures
 msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
@@ -443,10 +447,6 @@ msgstr "{0} is already in {1}"
 msgid "{0} is empty. Add what you want to remember."
 msgstr "{0} is empty. Add what you want to remember."
 
-#. placeholder {0}: isolate(deck.name)
-msgid "{0} is ready. Your first review takes a few minutes."
-msgstr "{0} is ready. Your first review takes a few minutes."
-
 #. placeholder {0}: longWeekday(busiest.date)
 #. placeholder {1}: busiest.count
 msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
@@ -697,6 +697,9 @@ msgstr "{due, plural, one {card to review now} other {cards to review now}}"
 
 msgid "{due, plural, one {Review # due} other {Review # due}}"
 msgstr "{due, plural, one {Review # due} other {Review # due}}"
+
+msgid "{due, plural, one {Start with # card. It takes a few minutes.} other {Start with # cards. It takes a few minutes.}}"
+msgstr "{due, plural, one {Start with # card. It takes a few minutes.} other {Start with # cards. It takes a few minutes.}}"
 
 msgid "{field} becomes"
 msgstr "{field} becomes"
@@ -5094,6 +5097,9 @@ msgstr "Start review"
 msgid "Start with a deck"
 msgstr "Start with a deck"
 
+msgid "Start your first review"
+msgstr "Start your first review"
+
 msgid "Start your streak"
 msgstr "Start your streak"
 
@@ -6134,6 +6140,9 @@ msgstr "Your code to delete your Lymi account"
 
 msgid "Your deck"
 msgstr "Your deck"
+
+msgid "Your first review takes a few minutes."
+msgstr "Your first review takes a few minutes."
 
 msgid "Your Google photo is back"
 msgstr "Your Google photo is back"

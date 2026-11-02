@@ -152,7 +152,7 @@ Lymi is a flashcard app for learning any subject with spaced repetition. Cards c
 
 **Explore**: The catalogue of published decks, grouped by taught language and then subject. Visitors use `lymi.app/explore`. Signed-in learners use Explore in the desktop rail, narrow-web learner menu or native phone tab bar. Add puts a deck in Library. The web’s first-run guide also offers it under **Explore ready-made decks about**. Both surfaces share catalogue data; the product includes Library membership. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
-**First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), then ways to create a first deck and ready-made decks. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
+**First-run guide**: Today until the first review: three steps (create a deck, add cards, finish the first review), replaced by the deck once one has cards, then ways to create a first deck and ready-made decks. A new account starts there; its first visit counts as getting set up. In code, `first-run`; the server's word is onboarding. _Avoid_: Tour, wizard, setup flow, checklist
 
 **Welcome**: The phone's screens a new account sees once, before Today: what the learner is learning, a daily goal, and a way to start. The web retired them for the first-run guide, and `/welcome` leads to Today. _Avoid_: Tour, wizard
 

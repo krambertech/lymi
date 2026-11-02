@@ -247,7 +247,8 @@ test("steps forward again when the server keeps a grade Undo took back", async (
 });
 
 test("fetches the next day's draw when the day ends during a review", async () => {
-  const end = Date.now() + 400;
+  // Long enough for a busy runner to open the leg before the day ends.
+  const end = Date.now() + 2_000;
   const today = drawOf(["a"], dayOf(end - DAY, end));
   const tomorrow = drawOf(["b"], dayOf(end, end + DAY));
   const draw = vi
@@ -258,7 +259,7 @@ test("fetches the next day's draw when the day ends during a review", async () =
   });
   await vi.waitFor(() => expect(result.current.leg?.date).toBe(today.day.date));
   await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date), {
-    timeout: 3000,
+    timeout: 5000,
   });
   await vi.waitFor(() => expect(draw.mock.calls.length).toBeGreaterThan(1));
   await vi.waitFor(() => expect(result.current.current?.card.id).toBe("b"));

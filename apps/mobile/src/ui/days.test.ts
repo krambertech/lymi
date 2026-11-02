@@ -1,10 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { addDays, deviceDate, lastSevenDays, weekLetters } from "./days";
+import { addDays, deviceDate, lastSevenDays, monthsFrom, monthWeeks, weekLetters } from "./days";
 
 describe("days", () => {
   it("counts calendar days across a month and a year", () => {
     expect(addDays("2026-10-31", 1)).toBe("2026-11-01");
     expect(addDays("2027-01-01", -1)).toBe("2026-12-31");
+  });
+
+  it("lists every month from the first to the last, across a year", () => {
+    expect(monthsFrom("2026-11", "2027-02")).toEqual(["2026-11", "2026-12", "2027-01", "2027-02"]);
+    expect(monthsFrom("2026-11", "2026-11")).toEqual(["2026-11"]);
+    expect(monthsFrom("2027-01", "2026-11")).toEqual(["2026-11"]);
+  });
+
+  it("lays a month out in Monday-first weeks", () => {
+    const november = monthWeeks("2026-11");
+    expect(november).toHaveLength(6);
+    expect(november[0]).toEqual([null, null, null, null, null, null, "2026-11-01"]);
+    expect(november[5]?.[0]).toBe("2026-11-30");
+    expect(monthWeeks("2027-02")).toHaveLength(4);
+    expect(monthWeeks("2027-02").flat()).not.toContain(null);
   });
 
   it("ends the week on today, oldest first", () => {

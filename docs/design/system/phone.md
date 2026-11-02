@@ -39,7 +39,7 @@ Android uses the same screens, tabs, copy and themes, with Material conventions 
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
 
-The phone streak opens as a peek sheet showing the current streak and today’s progress; expand it to see the month. On web touch layouts it instead opens as a full-screen page ([streak.md](../streak.md)). Before opening the goal sheet, expand the streak sheet to full height so the new sheet can stack over it. Return to peek height when the goal sheet closes. Apply a preset after dismissal, use − and + for a custom value, and explain when a connection is required.
+The phone streak opens as a peek sheet showing the current streak and today’s progress; expand it to see the month, then swipe or use the arrows to page back to the first review’s month. On web touch layouts it instead opens as a full-screen page ([streak.md](../streak.md)). Before opening the goal sheet, expand the streak sheet to full height so the new sheet can stack over it. Return to peek height when the goal sheet closes. Apply a preset after dismissal, use − and + for a custom value, and explain when a connection is required.
 
 ## Components
 

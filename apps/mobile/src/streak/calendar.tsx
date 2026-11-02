@@ -2,17 +2,20 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { keepsRun, type ReviewDayOutcome } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
-import { useEffect, useState } from "react";
-import { View, type ViewStyle } from "react-native";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type FlatList, View, type ViewStyle } from "react-native";
 import Animated, {
+  useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
+import { scheduleOnRN } from "react-native-worklets";
 import { ALWAYS, curve, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
+import { monthsFrom, monthWeeks } from "../ui/days";
 import { IconButton, Text } from "../ui/primitives";
 import { RestGlyph } from "../ui/rest-glyph";
 
@@ -20,12 +23,6 @@ import { RestGlyph } from "../ui/rest-glyph";
 export function addDays(date: string, n: number): string {
   const [y, m, d] = date.split("-").map(Number);
   return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, (d ?? 1) + n)).toISOString().slice(0, 10);
-}
-
-/** A local YYYY-MM moved by whole months. */
-function addMonths(month: string, n: number): string {
-  const [y, m] = month.split("-").map(Number);
-  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1 + n, 1)).toISOString().slice(0, 7);
 }
 
 /** A local date as a Date at noon UTC, so formatting it in UTC can never slip a day. */
@@ -45,8 +42,21 @@ function fills(p: Palette) {
 
 const CELL = 40;
 const BAND = 32;
+/** The longest month in rows, so the pager never resizes under a swipe. */
+const MOST_WEEKS = 6;
+/** The calendar's side inset, inside the pager so a month slides out to the plate's edge. */
+const GUTTER = 12;
 const DRAW_MS = 260;
 const POP_MS = 240;
+
+/** A per-month value read at a position that may fall between two months. */
+function between(values: number[], position: number) {
+  "worklet";
+  const at = Math.min(Math.max(position, 0), values.length - 1);
+  const from = values[Math.floor(at)] ?? 0;
+  const to = values[Math.ceil(at)] ?? 0;
+  return from + (to - from) * (at - Math.floor(at));
+}
 
 type Day = { attempts: number; satisfied: boolean; outcome: ReviewDayOutcome | null };
 
@@ -70,43 +80,64 @@ interface Props {
  */
 export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
   const { t, i18n } = useLingui();
-  const [month, setMonth] = useState(today.slice(0, 7));
+  const reduce = useReduceMotion();
+  const thisMonth = today.slice(0, 7);
+  const months = useMemo(() => monthsFrom(firstMonth, thisMonth), [firstMonth, thisMonth]);
+  const heights = useMemo(() => months.map((m) => monthWeeks(m).length * CELL), [months]);
+  const rests = useMemo(
+    () => months.map((m) => ([...rest].some((d) => d.startsWith(m)) ? 1 : 0)),
+    [months, rest],
+  );
+  const opening = months.length - 1;
+  const [index, setIndex] = useState(opening);
   // Only the month the streak opens on draws its run in; paging shows each month as it is.
   const [drawRun, setDrawRun] = useState(true);
   const [width, setWidth] = useState(0);
+  const pager = useRef<FlatList<string>>(null);
+  const position = useSharedValue(opening);
+  const nearest = useSharedValue(opening);
+  const noteHeight = useSharedValue(0);
+  // Where the arrows are heading while a page slides, so taps in a row add up; -1 at rest.
+  const aim = useSharedValue(-1);
+  const show = useCallback((i: number) => {
+    setDrawRun(false);
+    setIndex(i);
+  }, []);
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      position.value = e.contentOffset.x / width;
+      if (Math.abs(position.value - aim.value) < 0.01) aim.value = -1;
+      const i = Math.min(Math.max(Math.round(position.value), 0), heights.length - 1);
+      if (i === nearest.value) return;
+      nearest.value = i;
+      scheduleOnRN(show, i);
+    },
+    onBeginDrag: () => {
+      aim.value = -1;
+    },
+  });
+  // The plate's height follows the swipe, so months of different lengths never jump.
+  const frame = useAnimatedStyle(() => ({ height: between(heights, position.value) }));
+  const noteFrame = useAnimatedStyle(() => {
+    const shown = between(rests, position.value);
+    return { height: shown * noteHeight.value, opacity: shown };
+  });
   const utc = { timeZone: "UTC" } as const;
-  const first = `${month}-01`;
-  const lead = (asDate(first).getUTCDay() + 6) % 7;
-  const length = new Date(
-    Date.UTC(Number(month.slice(0, 4)), Number(month.slice(5, 7)), 0),
-  ).getUTCDate();
-  const cells: (string | null)[] = [
-    ...Array.from({ length: lead }, () => null),
-    ...Array.from({ length }, (_, n) => addDays(first, n)),
-  ];
-  while (cells.length % 7) cells.push(null);
-  const weeks = Array.from({ length: cells.length / 7 }, (_, w) => cells.slice(w * 7, w * 7 + 7));
+  const month = months[index] ?? thisMonth;
   const weekday = new Intl.DateTimeFormat(i18n.locale, { weekday: "narrow", ...utc });
   const monday = "2026-09-07";
   const heads = Array.from({ length: 7 }, (_, i) => weekday.format(asDate(addDays(monday, i))));
-  const title = i18n.date(asDate(first), { month: "long", year: "numeric", ...utc });
-  const atStart = month <= firstMonth;
-  const atEnd = month >= today.slice(0, 7);
-  const keeps = (date: string | null | undefined) => {
-    if (date && rest.has(date)) return true;
-    return !!date && keepsRun(days.get(date));
-  };
+  const title = i18n.date(asDate(`${month}-01`), { month: "long", year: "numeric", ...utc });
   const restInMonth = [...rest].some((d) => d.startsWith(month));
-  const runOrder = [...run].sort();
   const page = (n: number) => {
-    setDrawRun(false);
-    setMonth(addMonths(month, n));
+    const next = Math.min(Math.max((aim.value < 0 ? nearest.value : aim.value) + n, 0), opening);
+    aim.value = next;
+    pager.current?.scrollToIndex({ index: next, animated: !reduce });
   };
-  const cell = width / 7;
 
   return (
     <View className="gap-2">
-      <View className="flex-row items-center justify-between">
+      <View className="flex-row items-center justify-between px-3">
         <Text
           className="ps-1 text-md font-medium text-ink"
           accessibilityRole="header"
@@ -118,19 +149,19 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
           <IconButton
             icon="back"
             label={t`Previous month`}
-            disabled={atStart}
+            disabled={index <= 0}
             onPress={() => page(-1)}
           />
           <IconButton
             icon="forward"
             label={t`Next month`}
-            disabled={atEnd}
+            disabled={index >= opening}
             onPress={() => page(1)}
           />
         </View>
       </View>
       <View onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
-        <View className="flex-row pb-1.5" importantForAccessibility="no-hide-descendants">
+        <View className="flex-row px-3 pb-1.5" importantForAccessibility="no-hide-descendants">
           {heads.map((h, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a weekday's place is its identity.
             <Text key={i} className="flex-1 text-center text-xs font-medium text-ink-muted">
@@ -138,45 +169,126 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
             </Text>
           ))}
         </View>
-        {width > 0 &&
-          weeks.map((week) => (
-            <View key={week.find(Boolean) ?? "week"} className="flex-row">
-              {week.map((date, i) => {
-                if (!date) {
-                  // biome-ignore lint/suspicious/noArrayIndexKey: an empty slot has only its place.
-                  return <View key={i} style={{ width: cell, height: CELL }} />;
-                }
-                const at = drawRun && run.has(date) ? runOrder.indexOf(date) : -1;
-                return (
-                  <DayCell
-                    key={date}
-                    date={date}
-                    entry={days.get(date)}
-                    today={today}
-                    width={cell}
-                    resting={rest.has(date)}
-                    joinsBefore={keeps(date) && keeps(week[i - 1])}
-                    joinsAfter={keeps(date) && keeps(week[i + 1])}
-                    restBefore={keeps(date) && keeps(week[i - 1]) && rest.has(week[i - 1] ?? "")}
-                    restAfter={keeps(date) && keeps(week[i + 1]) && rest.has(week[i + 1] ?? "")}
-                    delay={at >= 0 ? Math.min(at, 14) * 28 : undefined}
-                  />
-                );
-              })}
+        {width > 0 && (
+          <Animated.View style={[{ overflow: "hidden" }, frame]}>
+            <Animated.FlatList
+              ref={pager}
+              data={months}
+              keyExtractor={(m) => m}
+              horizontal
+              pagingEnabled
+              scrollEnabled={months.length > 1}
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              style={{ height: MOST_WEEKS * CELL }}
+              initialScrollIndex={opening}
+              getItemLayout={(_, i) => ({ length: width, offset: width * i, index: i })}
+              initialNumToRender={1}
+              windowSize={3}
+              onScroll={onScroll}
+              scrollEventThrottle={16}
+              renderItem={({ item, index: i }) => (
+                <MonthPage
+                  month={item}
+                  days={days}
+                  today={today}
+                  run={run}
+                  rest={rest}
+                  width={width}
+                  draw={drawRun && item === thisMonth}
+                  hidden={i !== index}
+                />
+              )}
+            />
+          </Animated.View>
+        )}
+        {rest.size > 0 && (
+          <Animated.View style={[{ overflow: "hidden" }, noteFrame]}>
+            <View
+              className="absolute inset-x-0 top-0 flex-row items-center gap-3 px-3 pt-3"
+              onLayout={(e) => {
+                noteHeight.value = e.nativeEvent.layout.height;
+              }}
+              accessibilityElementsHidden={!restInMonth}
+              importantForAccessibility={restInMonth ? "auto" : "no-hide-descendants"}
+            >
+              <RestGlyph />
+              <Text className="flex-1 text-base text-ink-secondary">
+                {t`A rest day keeps the streak through one missed day a week.`}
+              </Text>
             </View>
-          ))}
+          </Animated.View>
+        )}
       </View>
-      {restInMonth && (
-        <View className="flex-row items-center gap-3 pt-1">
-          <RestGlyph />
-          <Text className="flex-1 text-base text-ink-secondary">
-            {t`A rest day keeps the streak through one missed day a week.`}
-          </Text>
-        </View>
-      )}
     </View>
   );
 }
+
+interface MonthPageProps {
+  month: string;
+  days: Props["days"];
+  today: string;
+  run: Props["run"];
+  rest: Props["rest"];
+  width: number;
+  /** Whether this month's part of the run draws in. */
+  draw: boolean;
+  /** A month beside the shown one, kept out of VoiceOver until it is paged to. */
+  hidden: boolean;
+}
+
+/** One month's weeks. Memoized because the title changes partway through a swipe. */
+const MonthPage = memo(function MonthPage({
+  month,
+  days,
+  today,
+  run,
+  rest,
+  width,
+  draw,
+  hidden,
+}: MonthPageProps) {
+  const cell = (width - GUTTER * 2) / 7;
+  const keeps = (date: string | null | undefined) => {
+    if (date && rest.has(date)) return true;
+    return !!date && keepsRun(days.get(date));
+  };
+  const runOrder = [...run].sort();
+  return (
+    <View
+      style={{ width, paddingHorizontal: GUTTER }}
+      accessibilityElementsHidden={hidden}
+      importantForAccessibility={hidden ? "no-hide-descendants" : "auto"}
+    >
+      {monthWeeks(month).map((week) => (
+        <View key={week.find(Boolean) ?? "week"} className="flex-row">
+          {week.map((date, i) => {
+            if (!date) {
+              // biome-ignore lint/suspicious/noArrayIndexKey: an empty slot has only its place.
+              return <View key={i} style={{ width: cell, height: CELL }} />;
+            }
+            const at = draw && run.has(date) ? runOrder.indexOf(date) : -1;
+            return (
+              <DayCell
+                key={date}
+                date={date}
+                entry={days.get(date)}
+                today={today}
+                width={cell}
+                resting={rest.has(date)}
+                joinsBefore={keeps(date) && keeps(week[i - 1])}
+                joinsAfter={keeps(date) && keeps(week[i + 1])}
+                restBefore={keeps(date) && keeps(week[i - 1]) && rest.has(week[i - 1] ?? "")}
+                restAfter={keeps(date) && keeps(week[i + 1]) && rest.has(week[i + 1] ?? "")}
+                delay={at >= 0 ? Math.min(at, 14) * 28 : undefined}
+              />
+            );
+          })}
+        </View>
+      ))}
+    </View>
+  );
+});
 
 interface DayCellProps {
   date: string;

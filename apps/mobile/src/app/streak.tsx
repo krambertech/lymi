@@ -33,6 +33,8 @@ export default function Streak() {
     <OnGlass>
       <ScrollView
         keyboardShouldPersistTaps="handled"
+        // Without this it takes a tap on the calendar's arrows whenever the month pager is scrolling.
+        disableScrollViewPanResponder
         style={{ backgroundColor: frost }}
         contentContainerClassName="px-5 pt-8 pb-12"
       >
@@ -181,7 +183,7 @@ function StreakPanel({
         onChange={goal.change}
       />
 
-      <Plate className="px-3 pt-2 pb-3">
+      <Plate className="pt-2 pb-3">
         <StreakCalendar
           days={byDate}
           today={today.date}

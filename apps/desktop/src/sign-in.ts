@@ -30,12 +30,14 @@ export async function requestSignIn(productUrl: string, provider?: SignInProvide
 
 /**
  * Trades the code in an `app.lymi.desktop://auth/callback#token=…` link for a session, and copies
- * the cookies it sets into the windows' own session, so they are signed in at once.
+ * the cookies it sets into the windows' own session, so they are signed in at once. Rejects with
+ * what went wrong, in words that carry nothing from the link.
  */
 export async function completeSignIn(link: string, productUrl: string, ses: Session) {
   const callback = parseCallback(link);
-  const verifier = callback && verifiers.get(callback.state);
-  if (!callback || !verifier) return false;
+  if (!callback) throw new Error("the sign-in link could not be read");
+  const verifier = verifiers.get(callback.state);
+  if (!verifier) throw new Error("no sign-in is waiting for this link");
   const { identifier, state } = callback;
   // Node's fetch, as Better Auth's own Electron client does, with no cookie to send.
   const res = await fetch(new URL("/api/auth/electron/token", productUrl), {
@@ -47,10 +49,9 @@ export async function completeSignIn(link: string, productUrl: string, ses: Sess
     },
     body: JSON.stringify({ token: identifier, state, code_verifier: verifier }),
   });
-  if (!res.ok) return false;
+  if (!res.ok) throw new Error(`the token exchange answered ${res.status}`);
   // Kept until the trade succeeds, so "Open Lymi for Mac again" can finish a sign-in that failed.
   verifiers.delete(state);
   for (const header of res.headers.getSetCookie())
     await ses.cookies.set(cookieOf(header, productUrl));
-  return true;
 }

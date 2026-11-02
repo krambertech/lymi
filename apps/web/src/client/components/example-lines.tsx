@@ -76,7 +76,11 @@ export function ExampleLines({
           <Skeleton className="h-3 w-2/3 rounded-sm" />
         </div>
       )}
-      {speaker && <span className="absolute end-1.5 top-1.5 flex">{speaker}</span>}
+      {speaker && (
+        <span className="absolute end-1.5 top-3 flex h-[1lh] items-center text-md leading-relaxed">
+          {speaker}
+        </span>
+      )}
     </div>
   );
 }

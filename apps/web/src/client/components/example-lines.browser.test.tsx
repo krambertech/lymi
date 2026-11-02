@@ -55,6 +55,28 @@ describe("the example sentence in review", () => {
 });
 
 describe("the example block's speaker", () => {
+  test("sits level with the sentence's first line", async () => {
+    await render(
+      <I18nProvider i18n={i18n}>
+        <ExampleLines
+          example="Der Hund schläft."
+          language="de"
+          speaker={
+            <button type="button" className="size-6">
+              Play example
+            </button>
+          }
+        />
+      </I18nProvider>,
+    );
+    const middle = (box: DOMRect) => box.top + box.height / 2;
+    const speaker = page.getByRole("button", { name: "Play example" }).element();
+    const sentence = page.getByText("Der Hund schläft.").element();
+    const apart =
+      middle(speaker.getBoundingClientRect()) - middle(sentence.getBoundingClientRect());
+    expect(Math.abs(apart)).toBeLessThan(1);
+  });
+
   test("a right-to-left sentence keeps clear of the corner in a left-to-right interface", async () => {
     await render(
       <I18nProvider i18n={i18n}>

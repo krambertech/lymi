@@ -10,7 +10,13 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import { type DeckSummary, deviceTimezone, type QueueItem, type ReviewScope } from "../api";
+import {
+  type DeckSummary,
+  deviceTimezone,
+  type QueueItem,
+  type ReviewScope,
+  scopeKey,
+} from "../api";
 import { withoutDropped } from "../dropped-grades";
 import { gradeStore, type Recorded, recordGrade, retireGrades, undoGrade } from "../grades";
 import {
@@ -137,6 +143,10 @@ export function useReviewFlow(
   const scopeSection = section
     ? scopeSections.data?.sections.find((s) => s.id === section)
     : undefined;
+  // Decks and sections land separately, and a deck's due less a section's holds only within one refresh.
+  const settledCounts = useRef<Pick<FlowInputs, "decks" | "scopeSection"> | null>(null);
+  const countsIdle = !decks.isFetching && !scopeSections.isFetching;
+  if (!section || countsIdle) settledCounts.current = { decks: decks.data, scopeSection };
   const inputs: FlowInputs = {
     scope: stableScope,
     list: cards ? "chosen" : round ? "round" : null,
@@ -152,13 +162,15 @@ export function useReviewFlow(
       failed: list.isError || list.fetchStatus === "paused",
     },
     lastChange: Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime())),
-    decks: decks.data,
-    scopeSection,
+    ...(settledCounts.current ?? { decks: decks.data, scopeSection }),
     // The persisted list can predate this visit, so it waits for this mount's fetch like the draw.
     decksLoading:
       ((!!deck || !!series) && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
       (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
-      (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching"),
+      (!!section &&
+        !scopeSections.isFetchedAfterMount &&
+        scopeSections.fetchStatus === "fetching") ||
+      (!!section && !settledCounts.current && !countsIdle),
     streakSettled,
     daySatisfied: !!today && today.date === state?.day.date && daySatisfied(today.outcome),
   };
@@ -241,11 +253,18 @@ export function useReviewFlow(
     };
   }, [platform]);
 
-  const refreshDay = useCallback(() => {
-    for (const queryKey of [["decks"], ["rounds"], ["streak"], ["insights"]]) {
+  const refreshStreak = useCallback(() => {
+    void qc.invalidateQueries({ queryKey: ["streak"] });
+  }, [qc]);
+  const refreshCounts = useCallback(() => {
+    for (const queryKey of [["decks"], ["rounds"], ["insights"]]) {
       void qc.invalidateQueries({ queryKey });
     }
   }, [qc]);
+  const refreshDay = useCallback(() => {
+    refreshStreak();
+    refreshCounts();
+  }, [refreshStreak, refreshCounts]);
 
   // Each position in the review takes one grade, however fast the taps come.
   const gradedAt = useRef(-1);
@@ -261,16 +280,28 @@ export function useReviewFlow(
     dispatch({ type: "graded", last });
     setNow(new Date());
     const answered = recorded.then((outcome: Recorded) => {
-      refreshDay();
-      if (outcome === "queued" || undone.current.has(record.reviewedAt)) return null;
+      if (outcome === "queued" || undone.current.has(record.reviewedAt)) {
+        refreshDay();
+        return null;
+      }
       dispatch({ type: "settled", last, outcome });
       // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
       const behind = gradeStore
         .snapshot()
         .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
-      if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
+      if (outcome !== "sent") {
+        refreshDay();
         void qc.invalidateQueries({ queryKey: ["queue"] });
-      }
+      } else if (behind >= REFRESH_AFTER || runningShort) {
+        // The end waits on this fetch and draws the streak, so the slow counts wait: all of them share one database.
+        refreshStreak();
+        void qc
+          .invalidateQueries(
+            { queryKey: ["queue", scopeKey(stableScope)] },
+            { cancelRefetch: false },
+          )
+          .finally(refreshCounts);
+      } else refreshDay();
       return outcome === "refused" || outcome === "gone" ? outcome : null;
     });
     return { record, answered: answered.finally(() => dispatch({ type: "sent" })) };

@@ -20,6 +20,14 @@ export function sectionPage(deckId: string, sectionId: string, fromSections = fa
   return (fromSections ? `${page}?from=sections` : page) as Href;
 }
 
+/** A card's page; opened from a section's page, it goes back there. */
+export function cardPage(cardId: string, deckId: string, sectionId?: string, fromSections = false) {
+  const page = `/library/card/${cardId}?deck=${deckId}`;
+  if (sectionId === undefined) return page as Href;
+  const section = `&section=${sectionId || NO_SECTION}`;
+  return `${page}${section}${fromSections ? "&from=sections" : ""}` as Href;
+}
+
 /** Every section of a deck, with its progress; the owner edits them there too. */
 export function sectionsPage(deckId: string) {
   return `/library/${deckId}/sections` as Href;

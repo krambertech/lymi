@@ -26,12 +26,13 @@ import { useArchiveCard } from "../../../../card/card-menu";
 import { canEnrich, useEnrichCard } from "../../../../card/enrich";
 import { type EnrichRun, enrichAnnouncement } from "../../../../card/enrich-announcement";
 import { languageName } from "../../../../data/languages";
-import { useDeckCards, useDecks } from "../../../../data/queries";
+import { useDeckCards, useDecks, useSections } from "../../../../data/queries";
 import { useMoveToSection } from "../../../../deck/move-to-section";
 import { CardNotes } from "../../../../review/card-notes";
 import { ExampleAudioButton, useExampleAudio } from "../../../../review/example-audio";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
+import { NO_SECTION, sectionPage } from "../../../../sections/section-line";
 import { reportHref } from "../../../../sharing/report";
 import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../../theme/motion";
 import { usePalette } from "../../../../theme/palette";
@@ -91,8 +92,23 @@ export default function CardPage() {
   const reduce = useReduceMotion();
   const stackDetails = useAccessibilitySizes();
   const router = useRouter();
-  const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
+  const {
+    card: id,
+    deck: deckId,
+    section: sectionParam,
+    from,
+  } = useLocalSearchParams<{ card: string; deck: string; section?: string; from?: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
+  const sectionId = sectionParam === NO_SECTION ? "" : sectionParam;
+  const sections = useSections(sectionId ? deckId : undefined).data?.sections;
+  const sectionName = sections?.find((s) => s.id === sectionId)?.name;
+  const back =
+    sectionId === undefined
+      ? { label: deck?.name ?? t`Deck`, to: `/library/${deckId}` as Href }
+      : {
+          label: sectionId ? (sectionName ?? t`Section`) : t`No section`,
+          to: sectionPage(deckId, sectionId, from === "sections"),
+        };
   const cards = useDeckCards(deckId);
   const known = useKnownReadings();
   const listed = cards.data?.find((r) => r.card.id === id);
@@ -155,7 +171,7 @@ export default function CardPage() {
   }, [status, translationStatus, t]);
   if (!card || !row) {
     return (
-      <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
+      <Screen title="" back={back}>
         {cards.data ? (
           // Archived or moved elsewhere since the list was opened.
           <EmptyState
@@ -475,7 +491,7 @@ export default function CardPage() {
           />
         ) : undefined
       }
-      back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
+      back={back}
       actions={
         <View className="flex-row items-center gap-2.5">
           {/* A set star stands beside ⋯ and unmarks with a tap; unset, it is only in the menu. */}

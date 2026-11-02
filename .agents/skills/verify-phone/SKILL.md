@@ -31,6 +31,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Learning emails | [learning-emails.md](features/learning-emails.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
+| Card peek at any text size | [card-peek.md](features/card-peek.md) |
 | Enrich a card | [card-enrich.md](features/card-enrich.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Deck tags: rename, merge, archive, restore | [deck-tags.md](features/deck-tags.md) |

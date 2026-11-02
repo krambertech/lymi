@@ -1913,6 +1913,9 @@ msgstr "Не удалось переместить {0}."
 msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
 msgstr "Не удалось переместить {count, plural, one {# карточку} few {# карточки} many {# карточек} other {# карточки}}."
 
+msgid "Couldn’t open Files. Try again."
+msgstr "Не удалось открыть Файлы. Попробуй ещё раз."
+
 msgid "Couldn’t open that file. Try again, or choose another one."
 msgstr "Не удалось открыть этот файл. Попробуй ещё раз или выбери другой."
 

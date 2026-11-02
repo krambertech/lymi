@@ -1913,6 +1913,9 @@ msgstr "Couldn’t move {0}."
 msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
 msgstr "Couldn’t move {count, plural, one {# card} other {# cards}}."
 
+msgid "Couldn’t open Files. Try again."
+msgstr "Couldn’t open Files. Try again."
+
 msgid "Couldn’t open that file. Try again, or choose another one."
 msgstr "Couldn’t open that file. Try again, or choose another one."
 

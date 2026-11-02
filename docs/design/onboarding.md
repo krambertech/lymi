@@ -12,7 +12,7 @@ New web accounts start on Today with a first-run guide that remains until the fi
 
 Keep each step’s dimensions stable. Only the current step has a filled panel and action. Completed steps use an amber check and struck-through title; future steps use muted numbers. There is no separate progress bar. Hide the normal Today panels while the guide is active.
 
-Once any deck has cards, the steps and the count give way to one plate that names the deck, because someone who only added a deck never made one or added cards. The lantern's line ends at it, and it holds the deck's name, its card count, who made it for a deck that is not the learner's, and **Start your first review**, which opens that deck's review. The line under the greeting says “Start with 5 cards. It takes a few minutes.” for up to 20 cards due, and “Your first review takes a few minutes.” for more or for none. The guide leaves with the first accepted grade.
+Once any deck has cards, the steps and the count give way to one plate that names a deck, because someone who only added a deck never made one or added cards. It names the first deck with cards due, else the first with cards. The lantern's line ends at it, and it holds the deck's name, its card count, who made it for a deck that is not the learner's, and **Start your first review**, which opens that deck's review. The line under the greeting says “Start with 5 cards. It takes a few minutes.” for up to 20 cards due, and “Your first review takes a few minutes.” for more. With nothing due in any deck, the line says “Come back later, or add new cards.” and the button is **Open deck**, because a review would open on Nothing due. The guide leaves with the first accepted grade.
 
 ## Under the guide
 

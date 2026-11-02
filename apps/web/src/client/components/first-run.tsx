@@ -45,9 +45,9 @@ const T = { pool: 120, embers: 420, heading: 260, lede: 360, steps: 520, gap: 14
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
 
-/** The first deck with cards: one the learner made, joined or added. */
+/** The deck to start on, made, joined or added: the first with cards due, else the first with cards. */
 export function startedDeck(decks: DeckSummary[] | undefined) {
-  return decks?.find((d) => d.total > 0);
+  return decks?.find((d) => d.due > 0) ?? decks?.find((d) => d.total > 0);
 }
 
 /**
@@ -245,9 +245,8 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
 const NAMED_FIRST_REVIEW = 20;
 
 function FirstReviewLength({ due }: { due: number }) {
-  if (due < 1 || due > NAMED_FIRST_REVIEW) {
-    return <Trans>Your first review takes a few minutes.</Trans>;
-  }
+  if (due < 1) return <Trans>Come back later, or add new cards.</Trans>;
+  if (due > NAMED_FIRST_REVIEW) return <Trans>Your first review takes a few minutes.</Trans>;
   return (
     <Plural
       value={due}
@@ -279,7 +278,10 @@ function FirstDeck({ deck, play }: { deck: DeckSummary; play: boolean }) {
         style={style}
       >
         <div className="grid min-w-0 gap-0.5">
-          <h3 dir="auto" className="text-lg font-medium leading-tight text-balance">
+          <h3
+            dir="auto"
+            className="text-lg font-medium leading-tight text-balance [overflow-wrap:anywhere]"
+          >
             {deck.name}
           </h3>
           <p className="text-sm text-ink-muted tabular-nums">
@@ -294,13 +296,15 @@ function FirstDeck({ deck, play }: { deck: DeckSummary; play: boolean }) {
             )}
           </p>
         </div>
-        <Button
-          variant="primary"
-          kbd="R"
-          render={<NavLink to="/review" search={{ deck: deck.id }} />}
-        >
-          <Trans>Start your first review</Trans>
-        </Button>
+        {deck.due > 0 ? (
+          <Button variant="primary" render={<NavLink to="/review" search={{ deck: deck.id }} />}>
+            <Trans>Start your first review</Trans>
+          </Button>
+        ) : (
+          <Button render={<NavLink to="/library/$deckId" params={{ deckId: deck.id }} />}>
+            <Trans>Open deck</Trans>
+          </Button>
+        )}
       </div>
     </>
   );

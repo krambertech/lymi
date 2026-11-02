@@ -1,11 +1,12 @@
 import { resetGradeCache } from "@lymi/client/grades";
 import { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
 import type { GradeOut, StreakOut } from "@lymi/core";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, QueryObserver } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { renderHook } from "vitest-browser-react";
-import { ApiError, api, type Card, type Draw } from "./api";
+import { ApiError, api, type Card, type Draw, type ReviewScope, type Section } from "./api";
+import { drawQuery } from "./queries";
 
 const M = { cue: "meaning", target: "term" } as const;
 const DAY = 86_400_000;
@@ -59,9 +60,9 @@ const wrapper = ({ children }: { children: ReactNode }) => (
   <QueryClientProvider client={qc}>{children}</QueryClientProvider>
 );
 
-async function openReview(draw: Draw) {
+async function openReview(draw: Draw, scope: ReviewScope = {}) {
   vi.spyOn(api, "draw").mockResolvedValue(draw);
-  const { result } = await renderHook(() => useReviewFlow({}, undefined, undefined, PLATFORM), {
+  const { result } = await renderHook(() => useReviewFlow(scope, undefined, undefined, PLATFORM), {
     wrapper,
   });
   await vi.waitFor(() => expect(result.current.current).not.toBeNull());
@@ -107,8 +108,46 @@ test("refreshes what a grade moves once it is answered", async () => {
   const flow = await openReview(drawOf(["a", "b"]));
   const refreshed = vi.spyOn(qc, "invalidateQueries");
   await gradeShown(flow.current)?.answered;
-  const keys = refreshed.mock.calls.map(([filters]) => filters?.queryKey?.[0]);
-  expect(keys).toEqual(expect.arrayContaining(["decks", "rounds", "streak", "insights"]));
+  await vi.waitFor(() => {
+    const keys = refreshed.mock.calls.map(([filters]) => filters?.queryKey?.[0]);
+    expect(keys).toEqual(expect.arrayContaining(["decks", "rounds", "streak", "insights"]));
+  });
+});
+
+test("checks the end of a section with one fetch, ahead of the day's other reads", async () => {
+  vi.spyOn(api, "grade").mockResolvedValue(accepted);
+  vi.spyOn(api, "sections").mockResolvedValue({
+    sections: [{ id: "s", due: 1 } as Section],
+    progress: null,
+  });
+  const stopWatchingDay = new QueryObserver(qc, {
+    ...drawQuery({}),
+    staleTime: Number.POSITIVE_INFINITY,
+  }).subscribe(() => undefined);
+  const scope = { deck: "a", section: "s" };
+  const draw = drawOf(["a"]);
+  const flow = await openReview(draw, scope);
+  await vi.waitFor(() => expect(api.sections).toHaveBeenCalled());
+
+  let land: (draw: Draw) => void = () => undefined;
+  const fetched = vi.mocked(api.draw);
+  fetched.mockClear();
+  fetched.mockImplementation(() => new Promise((resolve) => (land = resolve)));
+  vi.mocked(api.decks).mockClear();
+
+  await gradeShown(flow.current)?.answered;
+  await vi.waitFor(() => expect(fetched).toHaveBeenCalled());
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  expect(fetched).toHaveBeenCalledTimes(1);
+  expect(fetched).toHaveBeenCalledWith(scope);
+  expect(api.decks).not.toHaveBeenCalled();
+  expect(flow.current.end).toBeNull();
+
+  land(draw);
+  await vi.waitFor(() => expect(flow.current.end).not.toBeNull());
+  await vi.waitFor(() => expect(api.decks).toHaveBeenCalled());
+  expect(fetched).toHaveBeenCalledTimes(1);
+  stopWatchingDay();
 });
 
 test("drops the answer to a grade taken back while its send was pending", async () => {

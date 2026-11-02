@@ -94,6 +94,20 @@ name: Section pages
     visible: "(?i)section 1 of 3"
     timeout: 20000
 - takeScreenshot: 09-heading-opens
+# A card opened from a section reached from the deck goes back to the section too.
+- scrollUntilVisible:
+    element: "${FIRST_TERM}.*"
+    centerElement: true
+- tapOn: "${FIRST_TERM}.*"
+- extendedWaitUntil:
+    visible: "At the office"
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn: "At the office"
+- extendedWaitUntil:
+    visible: "Section options"
+    timeout: 20000
 # All sections opens the Sections page, whose stops open a section's page too.
 - openLink: lymi://library/${DECK_ID}
 - extendedWaitUntil:
@@ -117,3 +131,24 @@ name: Section pages
     visible: ".* of 3 known"
     timeout: 20000
 - takeScreenshot: 12-back-to-sections
+# A card opened from a section's page goes back to that section, named, rather than to the deck.
+- tapOn: "Section 1: At the office, .*"
+- extendedWaitUntil:
+    visible: "(?i)section 1 of 3"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "${FIRST_TERM}.*"
+    centerElement: true
+- tapOn: "${FIRST_TERM}.*"
+- extendedWaitUntil:
+    visible: "At the office"
+    timeout: 20000
+- takeScreenshot: 13-card-from-section
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn: "At the office"
+# The page keeps its scroll, so its label may sit under the bar; only a section's page has this menu.
+- extendedWaitUntil:
+    visible: "Section options"
+    timeout: 20000
+- takeScreenshot: 14-back-to-section

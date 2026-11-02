@@ -26,6 +26,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Deck filters | [deck-filters.md](features/deck-filters.md) |
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
+| Streak calendar: swiping and the arrows between months | [streak.md](features/streak.md) |
 | Language | [language.md](features/language.md) |
 | Daily reminder | [reminders.md](features/reminders.md) |
 | Learning emails | [learning-emails.md](features/learning-emails.md) |

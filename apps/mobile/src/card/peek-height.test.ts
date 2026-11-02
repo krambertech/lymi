@@ -6,13 +6,14 @@ vi.mock("react-native", () => ({ I18nManager: { isRTL: false }, Platform: { OS: 
 const { peekHeight } = await import("./peek-height");
 
 const WIDTH = 361;
-const card = (meaning: string) =>
+const card = (meaning: string, patch: Partial<Card> = {}) =>
   ({
     term: "sbrigare",
     meaning,
     example: null,
     pronunciation: null,
     language: "it",
+    ...patch,
   }) as unknown as Card;
 
 /** The peek with an empty meaning: what the text leaves for one line, the shortest it counts. */
@@ -35,5 +36,16 @@ describe("peekHeight", () => {
     const scale = 28 / 17;
     const long = "m".repeat(70);
     expect(peekHeight(card(long), WIDTH, scale)).toBeCloseTo(frame(scale, 44.2) + 3 * 44.2, 0);
+  });
+
+  it("gives a short example's translation a line of its own", () => {
+    const example = { example: "Devo uscire." };
+    const alone = peekHeight(card("to hurry", example), WIDTH, 1);
+    const translated = peekHeight(
+      card("to hurry", { ...example, exampleTranslation: "I must go." }),
+      WIDTH,
+      1,
+    );
+    expect(translated - alone).toBe(4 + 23);
   });
 });

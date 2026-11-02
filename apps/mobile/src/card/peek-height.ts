@@ -33,22 +33,16 @@ export function peekHeight(card: Card, width: number, scale: number) {
   const example = card.example && (hasReadings(card.example, card.language) ? 23 + 12 : 23);
   const translation = shownTranslation(card);
   const meaningSize = fitType(MEANING_SIZE, scale).drawn;
-  const meaning =
-    lines(card.meaning || "", meaningSize, inner, 3) * meaningSize * MEANING_LEADING;
+  const meaning = lines(card.meaning || "", meaningSize, inner, 3) * meaningSize * MEANING_LEADING;
   const text =
     lines(word, 34 * scale, inner, 2) * (drawn ? 41 + 21 : 41) +
     (forms ? 4 + 23 : 0) +
     (card.pronunciation && !shown ? 8 + 23 : 0) +
-    // The translation runs on after the example, so the two wrap as one paragraph.
     (card.example && example
       ? 8 +
-        lines(
-          stripReadings(card.example, card.language) + (translation ? ` (${translation})` : ""),
-          17 * scale,
-          inner,
-          translation ? 3 : 2,
-        ) *
-          example
+        lines(stripReadings(card.example, card.language), 17 * scale, inner, 2) * example +
+        // The translation stands on its own line under the example.
+        (translation ? 4 + 23 : 0)
       : 0);
   return Math.min(Math.round(FRAME + meaning + text * scale), 420);
 }

@@ -148,19 +148,22 @@ export default function CardPage() {
   const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
   // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the run settles.
   const status = card?.enrichmentStatus;
+  const translationStatus = card?.exampleTranslationStatus;
   const filling = status === "working";
+  const working = filling || translationStatus === "working";
+  const failedRun = status === "failed" || translationStatus === "failed";
   const announced = useRef(false);
   useEffect(() => {
-    if (filling) {
+    if (working) {
       announced.current = true;
       AccessibilityInfo.announceForAccessibility(t`Enriching this card`);
     } else if (announced.current) {
       announced.current = false;
       AccessibilityInfo.announceForAccessibility(
-        status === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
+        failedRun ? t`Couldn’t enrich this card.` : t`Enriched this card`,
       );
     }
-  }, [filling, status, t]);
+  }, [working, failedRun, t]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>

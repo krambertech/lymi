@@ -32,12 +32,15 @@ describe("canEnrich", () => {
     const filled = { example: "Devo sbrigare una cosa.", exampleTranslation: null };
     const translating = { ...owner, enrichFields: [...owner.enrichFields, "exampleTranslation"] };
     expect(canEnrich(card(filled), translating as typeof owner)).toBe(true);
-    expect(canEnrich(card({ ...filled, exampleTranslation: " " }), translating as typeof owner)).toBe(
-      true,
-    );
+    expect(
+      canEnrich(card({ ...filled, exampleTranslation: " " }), translating as typeof owner),
+    ).toBe(true);
     expect(canEnrich(card(filled), owner)).toBe(false);
     expect(
-      canEnrich(card({ ...filled, exampleTranslation: "I have to deal with something." }), translating as typeof owner),
+      canEnrich(
+        card({ ...filled, exampleTranslation: "I have to deal with something." }),
+        translating as typeof owner,
+      ),
     ).toBe(false);
   });
 

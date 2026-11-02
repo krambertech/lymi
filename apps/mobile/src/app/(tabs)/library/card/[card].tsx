@@ -24,6 +24,7 @@ import { fieldLabel } from "../../../../capture/card-fields";
 import type { FormField } from "../../../../capture/form";
 import { useArchiveCard } from "../../../../card/card-menu";
 import { canEnrich, useEnrichCard } from "../../../../card/enrich";
+import { type EnrichRun, enrichAnnouncement } from "../../../../card/enrich-announcement";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { useMoveToSection } from "../../../../deck/move-to-section";
@@ -148,19 +149,20 @@ export default function CardPage() {
   const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
   // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the run settles.
   const status = card?.enrichmentStatus;
+  const translationStatus = card?.exampleTranslationStatus;
   const filling = status === "working";
-  const announced = useRef(false);
+  const run = useRef<EnrichRun | null>(null);
   useEffect(() => {
-    if (filling) {
-      announced.current = true;
+    const next = enrichAnnouncement(run.current, status, translationStatus);
+    run.current = next.run;
+    if (next.say === "started") {
       AccessibilityInfo.announceForAccessibility(t`Enriching this card`);
-    } else if (announced.current) {
-      announced.current = false;
+    } else if (next.say) {
       AccessibilityInfo.announceForAccessibility(
-        status === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
+        next.say === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
       );
     }
-  }, [filling, status, t]);
+  }, [status, translationStatus, t]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>

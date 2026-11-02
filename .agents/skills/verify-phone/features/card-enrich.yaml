@@ -3,6 +3,21 @@ appId: app.lymi
 name: Enrich a card
 ---
 - runFlow: _open.yaml
+# A card with only its example's translation missing still offers Enrich.
+- openLink: lymi://library/card/${TRANSLATION_CARD_ID}?deck=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- tapOn: "Card options"
+- extendedWaitUntil:
+    visible: "Edit card"
+    timeout: 10000
+- takeScreenshot: 00-translation-menu
+- assertVisible: "Enrich"
+- tapOn: "Enrich"
+- extendedWaitUntil:
+    visible: "Couldn’t enrich “${TRANSLATION_TERM}”.*"
+    timeout: 20000
 - openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
 - extendedWaitUntil:
     visible: "Details"

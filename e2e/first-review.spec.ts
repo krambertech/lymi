@@ -91,6 +91,15 @@ test("a reload keeps the first review's end, and Space moves through it", async 
   await seedDeck(page, 2);
   await page.goto("/review");
 
+  // The reload lands while the first grade is still saving, so the kept streak predates it.
+  let held = true;
+  await page.route("**/api/review/grade", async (route) => {
+    if (held) {
+      held = false;
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+    await route.continue().catch(() => {});
+  });
   await grade(page);
   await expect(page.getByRole("heading", { name: /comes back/ })).toBeVisible();
   await page.reload();

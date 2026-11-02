@@ -139,10 +139,10 @@ function TurningCard({ view }: { view: Shown }) {
               <i className="my-5 block h-px w-full bg-edge-strong" />
               <span className="block text-3xl font-medium text-ink">{back}</span>
               {card.example && (
-                <span className="mt-5 block text-md text-ink-secondary">
+                <span className="mt-5 block rounded-lg bg-plate-nested px-3.5 py-3 text-md text-ink">
                   <ExampleText text={card.example} lang={card.language ?? undefined} />
                   {card.exampleTranslation && (
-                    <span className="mt-0.5 block text-sm text-ink-muted">
+                    <span className="mt-1 block text-base text-ink-muted">
                       {card.exampleTranslation}
                     </span>
                   )}

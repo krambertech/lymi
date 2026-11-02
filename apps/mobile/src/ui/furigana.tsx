@@ -118,30 +118,6 @@ function useRubyMetrics(
   return { drawn, readingSize, slot, line };
 }
 
-type LineProps = Pick<Props, "segments" | "room" | "className" | "style" | "maxFontSizeMultiplier">;
-
-/** How `Furigana` will draw its text: its drawn size, each line's height, and whether readings sit over it. */
-export function useLineMetrics({
-  segments,
-  room,
-  className,
-  style,
-  maxFontSizeMultiplier,
-}: LineProps) {
-  const { drawn, slot, line } = useRubyMetrics(segments, className, style, maxFontSizeMultiplier);
-  const ruby = !!room || segments.some((segment) => segment.reading !== undefined);
-  return { drawn, slot, line, ruby };
-}
-
-/**
- * How far down from the top of `Furigana` the middle of its first line of text sits, under any
- * readings, so a control beside a wrapping text can centre on that line.
- */
-export function useFirstLineMiddle(props: LineProps) {
-  const { slot, line, ruby } = useLineMetrics(props);
-  return (ruby ? slot : 0) + line / 2;
-}
-
 /** A Jyutping tone number's size against its syllable's. */
 const TONE_SCALE = 0.7;
 

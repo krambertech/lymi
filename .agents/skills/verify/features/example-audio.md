@@ -4,7 +4,7 @@ A language card's example read aloud by generated speech, only when its own play
 
 ## Reach
 
-A deck's card, or review after **Reveal the card**: the speaker after the example's last word, **Play example**.
+A deck's card, or review after **Reveal the card**: the speaker in the corner of the example's block, **Play example**.
 
 ## Drive
 

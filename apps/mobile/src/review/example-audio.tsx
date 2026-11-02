@@ -173,7 +173,7 @@ export const useExampleAudio = player
   : noExample;
 export type ExampleAudio = NonNullable<ReturnType<typeof useAudioExample>>;
 
-/** The example's speaker at its first line's far edge: a bare glyph a step quieter than the term's. */
+/** The example's speaker in its block's corner: a bare glyph a step quieter than the term's. */
 export function ExampleAudioButton({ sound }: { sound: ExampleAudio }) {
   const { t } = useLingui();
   return (

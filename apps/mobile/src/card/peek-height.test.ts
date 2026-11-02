@@ -38,6 +38,15 @@ describe("peekHeight", () => {
     expect(peekHeight(card(long), WIDTH, scale)).toBeCloseTo(frame(scale, 44.2) + 3 * 44.2, 0);
   });
 
+  it("leaves room for the example block's padding at any text size", () => {
+    const example = { example: "Devo uscire." };
+    for (const scale of [1, 2]) {
+      const without = peekHeight(card("to hurry"), WIDTH, scale);
+      const withExample = peekHeight(card("to hurry", example), WIDTH, scale);
+      expect(withExample - without).toBeCloseTo((8 + 23) * scale + 24, 0);
+    }
+  });
+
   it("gives a short example's translation a line of its own", () => {
     const example = { example: "Devo uscire." };
     const alone = peekHeight(card("to hurry", example), WIDTH, 1);

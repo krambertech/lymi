@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type KnownReadings, stripReadings, textDirection } from "@lymi/core";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
+import { Skeleton } from "./skeleton";
 import { ExampleText } from "./term-text";
 
 interface Props {
@@ -11,75 +12,71 @@ interface Props {
   /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
   plain?: boolean | undefined;
   translation?: string | null | undefined;
+  /** Holds the translation's line while it is being written. */
+  translating?: boolean | undefined;
   /** Follows the translation, such as the AI's badge when the AI wrote only the translation. */
   badge?: ReactNode;
-  /** The example's play control: at the block's far edge, level with its first line. */
+  /** The example's play control, in the block's corner. */
   speaker?: ReactNode;
-  /** Puts the speaker after the example's last word instead, as review does. */
-  speakerAfterLastWord?: boolean | undefined;
   /** Plays the example when the sentence itself is clicked. */
   onPlay?: (() => void) | undefined;
-  className?: string | undefined;
 }
 
-/**
- * An example over its translation in `muted`, with its speaker at the far edge or after its last
- * word. Either way the speaker hangs from the baseline it shares with the first or last line, so it
- * centres on the letters whatever readings sit over them.
- */
+const LINE = "hyphenate whitespace-pre-line [overflow-wrap:anywhere]";
+
+/** A card's example as one inset block: the sentence over its translation, the speaker in the corner. */
 export function ExampleLines({
   example,
   language,
   known,
   plain,
   translation,
+  translating,
   badge,
   speaker,
-  speakerAfterLastWord,
   onPlay,
-  className,
 }: Props) {
   const { i18n } = useLingui();
   const lang = language ?? undefined;
-  const inline = speakerAfterLastWord && speaker;
-  const lines = (
-    <div className="grid min-w-0 gap-0.5">
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: the sentence is only a wider pointer target; its speaker is the keyboard's control */}
-      <p
-        lang={lang}
-        dir={textDirection(language)}
-        className={clsx(className, onPlay && "cursor-pointer")}
-        onClick={
-          onPlay &&
-          ((e) => {
-            e.stopPropagation();
-            // A double click selects a word, and a drag selects more; neither is a press.
-            if (e.detail > 1 || window.getSelection()?.toString()) return;
-            onPlay();
-          })
-        }
-      >
-        {plain ? (
-          stripReadings(example, language)
-        ) : (
-          <ExampleText text={example} lang={lang} known={known} />
-        )}
-        {inline}
-      </p>
+  return (
+    <div className="relative grid gap-1 rounded-lg bg-plate-nested px-3.5 py-3">
+      {/* The room is on this box, in the interface's direction, since the corner stays put under a right-to-left sentence. */}
+      <div className={clsx(speaker && "pe-7")}>
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: the sentence is only a wider pointer target; its speaker is the keyboard's control */}
+        <p
+          lang={lang}
+          dir={textDirection(language)}
+          className={clsx(LINE, "text-md leading-relaxed text-ink", onPlay && "cursor-pointer")}
+          onClick={
+            onPlay &&
+            ((e) => {
+              e.stopPropagation();
+              // A double click selects a word, and a drag selects more; neither is a press.
+              if (e.detail > 1 || window.getSelection()?.toString()) return;
+              onPlay();
+            })
+          }
+        >
+          {plain ? (
+            stripReadings(example, language)
+          ) : (
+            <ExampleText text={example} lang={lang} known={known} />
+          )}
+        </p>
+      </div>
       {translation && (
         // In the meaning language, like the meaning, so it takes its language and direction from it.
-        <p lang={i18n.locale} dir="auto" className={className}>
-          <span className="text-ink-muted">{translation}</span>
+        <p lang={i18n.locale} dir="auto" className={clsx(LINE, "text-base text-ink-muted")}>
+          {translation}
           {badge && <span className="ms-1.5 inline-flex align-[0.0625em]">{badge}</span>}
         </p>
       )}
-    </div>
-  );
-  if (!speaker || inline) return lines;
-  return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline">
-      {lines}
-      <span className={className}>{speaker}</span>
+      {translating && !translation && (
+        <div className="flex h-[1lh] items-center text-base" aria-hidden="true">
+          <Skeleton className="h-3 w-2/3 rounded-sm" />
+        </div>
+      )}
+      {speaker && <span className="absolute end-1.5 top-1.5 flex">{speaker}</span>}
     </div>
   );
 }

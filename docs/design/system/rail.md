@@ -33,7 +33,7 @@ A row is `RailRow`, rendered as the router's link: 40 px tall, `text-base` in `i
 
 ## Sections and series
 
-`RailHeading` uses 12 px tracked capitals in `ink-muted`, with 28 px above it. It is a label, not an `h2`, so it does not alter the content screen’s heading outline. A series heading is the learner's own text, so it keeps their capitals and normal spacing, takes `dir="auto"`, and wraps in full rather than truncating. Show Decks only when ungrouped decks exist, and omit series with no decks.
+`RailHeading` uses 12 px tracked capitals in `ink-muted`, with 28 px above it. It is a label, not an `h2`, so it does not alter the content screen’s heading outline. Series headings use the same style as Decks, truncate to one line, and take `dir="auto"` because the name is the learner's own text. Show Decks only when ungrouped decks exist, and omit series with no decks.
 
 Series headings do not navigate or collapse. Keep their deck rows unindented. A series has no dedicated page.
 

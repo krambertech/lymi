@@ -27,7 +27,8 @@ name: Sign in and review
     times: 3
     commands:
       - tapOn: ".*Tap to reveal"
-      - tapOn: "^Good$"
+      # A grade button's accessible name carries its next interval, "Good, next in 4 days".
+      - tapOn: "^Good, next in .*"
 # Ending short of the goal goes straight back to Today.
 - tapOn: "End review"
 - assertVisible: "cards due today"

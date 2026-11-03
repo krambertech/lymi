@@ -6,10 +6,21 @@ name: Sign in and review
 - launchApp:
     clearState: true
     clearKeychain: true
+# The welcome screen blooms in, and a tap during the animation can miss.
+- extendedWaitUntil:
+    visible: "Sign in with email"
+    timeout: 30000
+- waitForAnimationToEnd
 - tapOn: "Sign in with email"
-- tapOn:
-    id: "email"
-- inputText: ${EMAIL}
+# The Simulator keyboard sometimes drops characters, so type again until the field holds the whole address.
+- retry:
+    maxRetries: 3
+    commands:
+      - tapOn:
+          id: "email"
+      - eraseText: 40
+      - inputText: ${EMAIL}
+      - assertVisible: ${EMAIL}
 - tapOn:
     id: "password"
 - inputText: ${PASSWORD}

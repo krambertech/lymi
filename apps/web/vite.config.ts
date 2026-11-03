@@ -114,7 +114,8 @@ export default defineConfig({
                 },
               },
             }
-          : undefined,
+          : // The phone's CI journey runs the dev Worker without a Cloudflare token.
+            { remoteBindings: !process.env.CI },
       ),
     // Uploads hidden source maps for the client and the Worker, then deletes them so none ship.
     !process.env.VITEST &&

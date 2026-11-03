@@ -37,6 +37,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
+          # This job installs no pnpm, so the packageManager field must not turn on pnpm caching.
+          package-manager-cache: false
       - name: Check production against the frozen releases
         run: node scripts/check-phone-contract.mjs https://my.lymi.app/api/openapi.json
 

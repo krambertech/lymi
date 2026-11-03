@@ -43,6 +43,7 @@ export async function env({ api }) {
   }
   return {
     DECK_ID: deck.id,
+    FIRST_TERM: cards[0].term,
     SECOND: SECTIONS[1],
     READY: SECTIONS[2],
     LOCKED: SECTIONS[3],

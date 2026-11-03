@@ -34,6 +34,7 @@ import { ExportSheet } from "../export/export-sheet";
 import { useArchiveSection } from "../sections/archive-section";
 import { useNewSection } from "../sections/name-sheet";
 import {
+  cardPage,
   OpeningLine,
   OpensAfter,
   SectionLine,
@@ -401,6 +402,8 @@ export function CardListScreen({
                       menu={menu}
                       menuShape={menuShape}
                       deckName={deck.name}
+                      sectionId={sectionId}
+                      fromSections={fromSections}
                     />
                   </Slice>
                 ),
@@ -1024,6 +1027,8 @@ const WordRow = memo(function WordRow({
   onToggle,
   menu,
   deckName,
+  sectionId,
+  fromSections,
 }: {
   row: DeckRow;
   first: boolean;
@@ -1035,6 +1040,9 @@ const WordRow = memo(function WordRow({
   /** Changes when what the menu offers does, since `menu` itself stays the same function. */
   menuShape: string;
   deckName: string;
+  /** The section whose page holds this row, which its card goes back to. */
+  sectionId: string | undefined;
+  fromSections: boolean;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -1097,7 +1105,7 @@ const WordRow = memo(function WordRow({
   return (
     <RowMenu
       surface="card_row"
-      href={`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href}
+      href={cardPage(row.card.id, row.card.deckId, sectionId, fromSections)}
       label={label}
       items={menu(row.card)}
       preview={{

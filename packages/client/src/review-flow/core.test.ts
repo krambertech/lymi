@@ -324,6 +324,14 @@ describe("the end screen", () => {
     expect(heading(review.view)).toBe("day_done");
   });
 
+  it("asks for that fetch only once the last grade has landed", () => {
+    const review = new Review(draw(["a"], 5));
+    const graded = review.grade();
+    expect(review.view.owesDrawFetch).toBe(false);
+    review.settle(graded);
+    expect(review.view.owesDrawFetch).toBe(true);
+  });
+
   it("reports unchecked when the empty draw cannot be confirmed offline", () => {
     const review = new Review(draw(["a"], 5), { unreachable: true });
     review.settle(review.grade());

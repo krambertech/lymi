@@ -28,7 +28,8 @@ name: Sign in and review
 # iOS may offer to save the password, and Today stays hidden under the offer until it closes.
 - extendedWaitUntil:
     visible: "Not Now|^Review$"
-    timeout: 30000
+    # The CI Worker's first sign-in can take most of a minute while it warms up.
+    timeout: 90000
 - tapOn:
     text: "Not Now"
     optional: true
@@ -37,11 +38,11 @@ name: Sign in and review
 - repeat:
     times: 3
     commands:
-      # A card's speech asks for AI permission once, over the review.
+      - tapOn: ".*Tap to reveal"
+      # Revealing a card plays its speech, which asks once for AI permission over the review.
       - tapOn:
           text: "^Not now$"
           optional: true
-      - tapOn: ".*Tap to reveal"
       # A grade button's accessible name carries its next interval, "Good, next in 4 days".
       - tapOn: "^Good, next in .*"
 # Ending short of the goal goes straight back to Today.

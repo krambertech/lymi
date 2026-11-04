@@ -8,7 +8,7 @@ Fetch the remote default branch before inspecting or changing code. Use the fres
 
 **Before writing or reviewing code, read [CODING_STANDARDS.md](CODING_STANDARDS.md)**, then the guide for its area: [apps/web/AGENTS.md](apps/web/AGENTS.md) for the web client and backend, [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) for the phone, [apps/desktop/README.md](apps/desktop/README.md) for the Mac app.
 
-Fix confirmed defects with the smallest correct change; check review findings against the source and push back with evidence when they are wrong.
+Fix confirmed defects with the smallest correct change; check review findings against the source and push back with evidence when they are wrong. Report a disagreement that remains; silence or an exhausted review budget is not approval.
 
 Posting in Slack, email, GitHub comments or discussions on the user's behalf requires explicit, separate permission, except repository friction reports, verify verdicts and proof on a pull request, and replies to verified agent or bot comments within [the open-PR workflow](.agents/skills/open-pr/SKILL.md#leave-pr-comments). Opening a PR does not authorize merging it. The user runs production deployments and migrations: `pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod`. Keep `.dev.vars` and its real secrets git-ignored.
 
@@ -18,7 +18,7 @@ Report each recurring repository gotcha in [the friction log](docs/guidance.md#r
 
 | Before you | Read |
 | --- | --- |
-| Change what a feature does or which surface owns it | [PRODUCT.md](PRODUCT.md) and the owning document its feature map names |
+| Change what a feature does or which surface owns it | [PRODUCT.md](PRODUCT.md) and the owning document its feature map names; [docs/review.md](docs/review.md) for review, the daily goal or the streak |
 | Change UI | [DESIGN.md](DESIGN.md) |
 | Choose a library, service or architecture | [docs/stack.md](docs/stack.md) and [the ADRs](docs/adr/README.md) |
 | Branch, commit, merge, or write a PR or review comment | [docs/git-workflow.md](docs/git-workflow.md) |

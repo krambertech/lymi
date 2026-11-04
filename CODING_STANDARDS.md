@@ -1,6 +1,6 @@
 # Coding standards
 
-These rules apply to every app and package; a rule for one app lives in its `AGENTS.md`.
+These rules apply to every app and package; a rule for one app lives in that app's guide.
 
 ## Put code where it is shared
 
@@ -26,7 +26,7 @@ Edit a generated file's source and run its generator; [README.md](README.md#gene
 
 ## Write for D1 and Workers, not Node
 
-D1's `lower()` folds ASCII only. To case-fold in server SQL or a new migration, fold in JavaScript with `toLocaleLowerCase()` and bind the result, or store a normalized column.
+D1's `lower()` folds ASCII only. To match text case-insensitively, compare against the stored folded column (`termKey()` writes `normalized_term` and `tagKey()` writes `normalized_name`, both in `packages/core/src/terms.ts`), or fold in JavaScript with the same function and bind the result.
 
 Workers refuses `redirect: "error"` at runtime, though Node tests pass; reject a redirect with `redirect: "manual"` and a `Location` check.
 

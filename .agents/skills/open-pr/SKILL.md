@@ -9,7 +9,7 @@ Own the requested change through verification, filing and the first automated re
 
 **Review-ready** means the intended diff is isolated, required checks pass and configured blocking automated reviews finish on the current head, the branch has no merge conflicts, required screenshots are attached, and no blocking review finding remains. A product change also needs an independent live verdict under [verify](../verify/SKILL.md#review-a-pull-request); the author's local run does not replace it. Name outstanding human approvals separately. Review-ready does not authorize merging.
 
-[`docs/git-workflow.md`](../../../docs/git-workflow.md) owns branches, commits, titles and PR descriptions. An open-PR request authorizes committing the intended change, pushing its branch, creating or updating the PR, and replying to verified agents under [the comment rules](#leave-pr-comments). It does not authorize replies to humans, unsolicited new comment threads, approving or merging, enabling auto-merge, closing another PR, deploying, or migrating production data.
+[`docs/git-workflow.md`](../../../docs/git-workflow.md) owns branches, commits, titles, PR descriptions and review comments. An open-PR request authorizes committing the intended change, pushing its branch, creating or updating the PR, and replying to verified agents under [the comment rules](#leave-pr-comments). It does not authorize replies to humans, unsolicited new comment threads, approving or merging, enabling auto-merge, closing another PR, deploying, or migrating production data.
 
 ## Resolve the scope
 
@@ -48,7 +48,7 @@ Make at most two automatic replies per finding across pushes and related threads
 
 Automatically resolve only agent-only threads whose findings were fixed and whose required replies are confirmed posted. Leave declined findings open with the reason and evidence for human disposition, and summarize substantive disagreements in the PR's Verification section. A human-authored comment in a thread requires separate permission to resolve that thread, even when its original author was a bot. Automatic reply permission does not authorize dismissing a human review or approving the PR.
 
-For an authorized comment, lead with the defect or conclusion, cite the relevant code, check or reproduction, and give the smallest useful fix or reason for disagreement. Keep one actionable issue per inline comment and shared context in one top-level reply. Distinguish verified facts from judgment; skip filler, repeated status updates and rubber-stamp approvals.
+For an authorized comment, lead with the defect or conclusion, cite the relevant code, check or reproduction, and give the smallest useful fix or reason for disagreement. Shape inline and top-level comments as [the Git workflow](../../../docs/git-workflow.md#comment-on-a-pull-request) says. Distinguish verified facts from judgment; skip filler, repeated status updates and rubber-stamp approvals.
 
 Identify an agent-authored reply as responding on the user's behalf, using the verified model name or harness rather than guessing. Keep that attribution out of PR descriptions and preserve text the user explicitly asked to post verbatim. Check the complete comment, quotes and attachments for private content or secrets; read the posted reply back and record its URL.
 

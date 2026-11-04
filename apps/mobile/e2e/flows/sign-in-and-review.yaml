@@ -45,6 +45,8 @@ name: Sign in and review
           optional: true
       # A grade button's accessible name carries its next interval, "Good, next in 4 days".
       - tapOn: "^Good, next in .*"
-# Ending short of the goal goes straight back to Today.
+# Ending short of the goal shows the day's count, and Done returns to Today.
 - tapOn: "End review"
-- assertVisible: "cards due today"
+- assertVisible: "Review done"
+- tapOn: "^Done$"
+- assertNotVisible: "Review done"

@@ -16,6 +16,11 @@ trap 'rm -f "$jar"' EXIT
 curl -fsS -c "$jar" -X POST "$API_URL/api/dev/sign-in?as=learner&reset=1" >/dev/null
 before="$(curl -fsS -b "$jar" "$API_URL/api/stats/streak" | node -pe 'JSON.parse(require("fs").readFileSync(0)).today.attempts')"
 
+# The dev Worker's first password sign-in can stall for minutes, so the app's own route is warmed first.
+curl -sS -o /dev/null --max-time 300 -X POST "$API_URL/api/auth/sign-in/email" \
+  -H "content-type: application/json" -H "origin: $API_URL" \
+  -d "{\"email\":\"$email\",\"password\":\"$password\"}" || true
+
 maestro --device "$DEVICE" test \
   --format junit --output "${MAESTRO_REPORT:-$root/apps/mobile/e2e/report.xml}" \
   -e EMAIL="$email" -e PASSWORD="$password" \

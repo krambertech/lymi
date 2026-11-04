@@ -48,6 +48,18 @@ export const LANGUAGE_PAGES = {
     title: msg`Learn Polish vocabulary with flashcards · Lymi`,
     blurb: msg`A free flashcard app for Polish. A native voice reads every card, notes mark the words that only look like Ukrainian or Russian ones, and free decks follow the state exams from A1 to B1.`,
   },
+  es: {
+    page: "spanish",
+    label: msg`Spanish`,
+    title: msg`Learn Spanish vocabulary with flashcards · Lymi`,
+    blurb: msg`A free flashcard app for Spanish. A native voice reads every card, every noun keeps its el or la, and free decks go from the top 100 verbs and the most common words to B1.`,
+  },
+  de: {
+    page: "german",
+    label: msg`German`,
+    title: msg`Learn German vocabulary with flashcards · Lymi`,
+    blurb: msg`A free flashcard app for German. Every noun comes with der, die or das, a native voice reads every card, and free decks go from the top 100 verbs and the most common words to B1.`,
+  },
 } as const satisfies Record<SupportedTag, LanguagePageRow> &
   Partial<Record<ConfiguredTag, LanguagePageRow>>;
 

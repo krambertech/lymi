@@ -3,9 +3,11 @@ import type { ComponentType } from "react";
 import type { LanguagePageTag } from "../../lib/language-pages";
 import type { Locale } from "../../lib/routes";
 import { ChineseView } from "../landing/ChineseView";
+import { GermanView } from "../landing/GermanView";
 import { JapaneseView } from "../landing/JapaneseView";
 import { PolishView } from "../landing/PolishView";
 import { RussianView } from "../landing/RussianView";
+import { SpanishView } from "../landing/SpanishView";
 import { UkrainianView } from "../landing/UkrainianView";
 import { Island } from "./Island";
 
@@ -22,6 +24,8 @@ const VIEWS = {
   uk: UkrainianView,
   ru: RussianView,
   pl: PolishView,
+  es: SpanishView,
+  de: GermanView,
 } satisfies Record<LanguagePageTag, ComponentType<ViewProps>>;
 
 interface Props extends ViewProps {

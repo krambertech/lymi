@@ -187,7 +187,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   }
   console.error(found.join("\n"));
   console.error(
-    `\nAGENTS.md, Styling. For a colour that is not Lymi's, such as a brand mark, add "${ALLOW}: <reason>" in a comment on or above the line.`,
+    `\nDESIGN.md, Rules every screen follows. For a colour that is not Lymi's, such as a brand mark, add "${ALLOW}: <reason>" in a comment on or above the line.`,
   );
   process.exit(1);
 }

@@ -1,6 +1,6 @@
 # Write and maintain guidance
 
-This covers the repository's own documents: the root and nested `AGENTS.md`, skills, `docs/`, proposals and ADRs. Source comments follow [the shared conventions](../AGENTS.md#shared-code-and-conventions).
+This covers the repository's own documents: the root and nested `AGENTS.md`, skills, `docs/`, proposals and ADRs. Source comments follow [the coding standards](../CODING_STANDARDS.md#comment-only-what-the-code-cannot-say).
 
 ## Put each fact where it is owned
 

@@ -222,6 +222,7 @@ export function agentDocs(tree) {
     .filter((file) => file.startsWith(`${SKILLS}/`) && file.endsWith(".md"))
     .sort();
   const references = [
+    "CODING_STANDARDS.md",
     "README.md",
     "docs/git-workflow.md",
     "docs/guidance.md",

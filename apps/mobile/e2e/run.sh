@@ -16,6 +16,14 @@ trap 'rm -f "$jar"' EXIT
 curl -fsS -c "$jar" -X POST "$API_URL/api/dev/sign-in?as=learner&reset=1" >/dev/null
 before="$(curl -fsS -b "$jar" "$API_URL/api/stats/streak" | node -pe 'JSON.parse(require("fs").readFileSync(0)).today.attempts')"
 
+# The dev Worker on the CI runner stops answering for minutes after a reset, so wait until a password sign-in works.
+for _ in $(seq 1 30); do
+  curl -fsS -o /dev/null --max-time 20 -X POST "$API_URL/api/auth/sign-in/email" \
+    -H "content-type: application/json" -H "origin: $API_URL" \
+    -d "{\"email\":\"$email\",\"password\":\"$password\"}" && break
+  sleep 10
+done
+
 # Only a yes keeps the AI sheet from covering the grades when a card speaks; a no is asked again.
 curl -fsS --retry 5 --retry-all-errors --retry-delay 10 -b "$jar" -X PUT "$API_URL/api/settings/ai-consent" \
   -H "content-type: application/json" -H "origin: $API_URL" \

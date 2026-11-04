@@ -221,9 +221,13 @@ export function agentDocs(tree) {
   const skills = tree.files
     .filter((file) => file.startsWith(`${SKILLS}/`) && file.endsWith(".md"))
     .sort();
-  const references = ["README.md", "docs/git-workflow.md", "docs/testing.md"].filter((file) =>
-    tree.exists(file),
-  );
+  const references = [
+    "CODING_STANDARDS.md",
+    "README.md",
+    "docs/git-workflow.md",
+    "docs/guidance.md",
+    "docs/testing.md",
+  ].filter((file) => tree.exists(file));
   return { nested, docs: ["AGENTS.md", ...nested, ...skills, ...references] };
 }
 

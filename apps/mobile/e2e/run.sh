@@ -16,10 +16,10 @@ trap 'rm -f "$jar"' EXIT
 curl -fsS -c "$jar" -X POST "$API_URL/api/dev/sign-in?as=learner&reset=1" >/dev/null
 before="$(curl -fsS -b "$jar" "$API_URL/api/stats/streak" | node -pe 'JSON.parse(require("fs").readFileSync(0)).today.attempts')"
 
-# Answering the AI question up front keeps its sheet from covering the grades when a card speaks.
-curl -fsS -b "$jar" -X PUT "$API_URL/api/settings/ai-consent" \
+# Only a yes keeps the AI sheet from covering the grades when a card speaks; a no is asked again.
+curl -fsS --retry 5 --retry-all-errors --retry-delay 10 -b "$jar" -X PUT "$API_URL/api/settings/ai-consent" \
   -H "content-type: application/json" -H "origin: $API_URL" \
-  -d "{\"allowed\":false,\"version\":1,\"updated_at\":$(date +%s000)}" >/dev/null
+  -d "{\"allowed\":true,\"version\":1,\"updated_at\":$(date +%s000)}" >/dev/null
 
 maestro --device "$DEVICE" test \
   --format junit --output "${MAESTRO_REPORT:-$root/apps/mobile/e2e/report.xml}" \

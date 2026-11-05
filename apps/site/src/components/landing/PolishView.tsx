@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
+import { DeckWords } from "./DeckWords";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { POLISH_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
@@ -22,7 +23,6 @@ import {
 } from "./LanguageSections";
 import { LookAlikes } from "./LookAlikes";
 import { addDeckUrl, pathSteps } from "./language-decks";
-import { OfficeDeck } from "./OfficeDeck";
 import { EnrichPolish } from "./PolishAi";
 import { PolishForms } from "./PolishForms";
 import {
@@ -167,7 +167,7 @@ export function PolishView({ decks, locale }: Props) {
             </>
           }
         >
-          <OfficeDeck deck={office} words={OFFICE_WORDS} locale={locale} />
+          <DeckWords deck={office} words={OFFICE_WORDS} locale={locale} lang="pl" folder="polish" />
         </FeatureSection>
       )}
 

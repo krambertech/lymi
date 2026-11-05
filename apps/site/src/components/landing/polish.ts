@@ -4,6 +4,7 @@ import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
+import type { EditionWord } from "./language-decks";
 
 /**
  * The Polish page's words. Terms are Polish and never translated. Meanings are the published
@@ -13,16 +14,7 @@ import type { PathStep, VoiceWord } from "./japanese";
  * voice every Polish card gets.
  */
 
-type Edition = Record<Locale, string>;
-
-export interface PolishWord {
-  /** The clip's name in `/audio/polish/`. */
-  id: string;
-  term: string;
-  meaning: Edition;
-}
-
-const word = (id: string, term: string, en: string, uk: string, ru: string): PolishWord => ({
+const word = (id: string, term: string, en: string, uk: string, ru: string): EditionWord => ({
   id,
   term,
   meaning: { en, uk, ru },
@@ -297,7 +289,7 @@ export const POLISH_FORM_WORDS: PolishFormWord[] = [
 ];
 
 /** Phrases from Polish for Offices and Paperwork, with each edition's meaning. */
-export const OFFICE_WORDS: PolishWord[] = [
+export const OFFICE_WORDS: EditionWord[] = [
   word(
     "dzien-dobry-chcialbym-zlozyc",
     "Dzień dobry, chciałbym złożyć wniosek.",

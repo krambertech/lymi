@@ -2,17 +2,17 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../../lib/routes";
-import { addDeckUrl } from "./language-decks";
-import type { PolishWord } from "./polish";
+import { addDeckUrl, type EditionWord } from "./language-decks";
 
-function usePlayer() {
+function usePlayer(folder: string) {
   const clip = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<string>();
+  useEffect(() => () => clip.current?.pause(), []);
   const play = (id: string) => {
     clip.current?.pause();
-    clip.current = new Audio(`/audio/polish/${id}.mp3`);
+    clip.current = new Audio(`/audio/${folder}/${id}.mp3`);
     setPlaying(id);
     clip.current.onended = () => setPlaying(undefined);
     void clip.current.play().catch(() => setPlaying(undefined));
@@ -22,14 +22,18 @@ function usePlayer() {
 
 interface Props {
   deck: PublicDeckSummary;
-  words: readonly PolishWord[];
+  words: readonly EditionWord[];
   locale: Locale;
+  /** The language of the deck's terms. */
+  lang: string;
+  /** The folder under `/audio/` holding each word's clip, named by its id. */
+  folder: string;
 }
 
-/** The office deck as its page lists it: phrases to say at the window, each in the native voice. */
-export function OfficeDeck({ deck, words, locale }: Props) {
+/** A deck as its page lists it: a few of its words or phrases, each in the native voice. */
+export function DeckWords({ deck, words, locale, lang, folder }: Props) {
   const { t } = useLingui();
-  const { play, playing } = usePlayer();
+  const { play, playing } = usePlayer(folder);
 
   return (
     <div className="mx-auto max-w-[480px] rounded-xl bg-plate p-5 edge @2xl:p-6">
@@ -62,7 +66,7 @@ export function OfficeDeck({ deck, words, locale }: Props) {
               <Volume2 aria-hidden="true" className="size-4" />
             </button>
             <div className="min-w-0 flex-1">
-              <p lang="pl" className="text-md font-medium text-pretty text-ink">
+              <p lang={lang} className="text-md font-medium text-pretty text-ink">
                 {w.term}
               </p>
               <p lang={locale} className="text-sm text-pretty text-ink-muted">

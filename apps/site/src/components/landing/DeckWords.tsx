@@ -2,13 +2,14 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../../lib/routes";
 import { addDeckUrl, type EditionWord } from "./language-decks";
 
 function usePlayer(folder: string) {
   const clip = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<string>();
+  useEffect(() => () => clip.current?.pause(), []);
   const play = (id: string) => {
     clip.current?.pause();
     clip.current = new Audio(`/audio/${folder}/${id}.mp3`);

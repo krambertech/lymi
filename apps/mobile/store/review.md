@@ -33,22 +33,22 @@ App Store Connect, Apps, Lymi, the version being submitted, App Review Informati
 Lymi is a flashcard app for learning from your own material, including course concepts, facts for an exam and vocabulary.
 
 SIGNING IN
-Choose Sign in with email on the first screen, enter the email and password above and sign in. This account needs no code. Sign in with Apple and Google also work with your own accounts.
+Choose Sign in with email on the first screen, enter the email and password above and sign in. This account needs no code. Continue with Apple and Continue with Google also work with your own accounts.
 
 WHAT TO TRY
-Today shows the cards due; start a review there and grade each card. Library holds the decks; open one to see its cards. The + button adds a card: type a term and AI fills in the meaning. Smart add turns a photo of a lesson page into cards.
+Today shows the cards due; start a review there and grade each card. Library holds the decks; open one to see its cards. Use + to add a card by hand, or turn on AI to fill its empty fields. Smart add, from + in Library, extracts terms from photos, PDFs or pasted text; choose which become cards.
 
 ACCOUNT DELETION
 You tab > Delete account. The screen lists what will be erased, then asks for confirmation: an account made with Sign in with Apple confirms with Apple, and an email account confirms with a 6-digit code sent to its address. Please don't delete the demo account; if you do, tell us in App Review messages and we will make it again. To try the whole flow, sign in with Apple and delete that account.
 
 AI SERVICES
-Lymi uses AI services to fill in a card's empty fields, read lesson pages in Smart add and say words aloud. The app asks before it first sends anything to them and sends nothing until the learner allows it. The prompt names what goes to whom: a card's text to OpenAI, Smart add's photos and files to Anthropic, a term to Google, OpenAI or ElevenLabs to be spoken, with Cloudflare in between. The choice can be changed at any time in You > AI services. Without it, adding cards by hand and reviewing work as usual.
+Lymi asks for permission before using AI to process the learner’s own content. The permission screen describes enrichment, Smart add and pronunciation, explains that relevant text and lesson material go to third-party AI services, and links to the localized privacy policy for provider details. Change the account-wide choice in You > AI services. Manual card creation and review work with AI off. Existing text and saved audio remain; audio in shared and published decks follows the owner’s choice.
 
 CONTENT SAFEGUARDS
 [Paste the review note from docs/app-review.md here.]
 
 PERMISSIONS
-Camera and Photos are asked for only when you add a picture to a card or photograph lesson pages. Notifications are asked for only when you turn on the daily reminder. Lymi has no ads and doesn’t track you across other companies’ apps or websites.
+Camera and Photos are asked for only when you add a picture to a card or your profile, or photograph lesson pages. Notifications are asked for only when you turn on the daily reminder. Lymi has no ads and no tracking.
 ```
 
 Check the screen and button names in the notes against the build under review before pasting.

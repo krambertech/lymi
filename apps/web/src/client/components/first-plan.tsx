@@ -12,6 +12,7 @@ import { type ComponentProps, type ReactNode, useEffect, useRef, useState } from
 import { api } from "../lib/api";
 import { supportsPush, turnOnReminder } from "../lib/push-reminder";
 import { useInstallState } from "../lib/pwa-install";
+import { FIRST_REVIEW_KEY as OPEN_KEY } from "../lib/storage-keys";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
 import type { StreakSummary } from "./streak";
@@ -129,8 +130,6 @@ function WhatWaits({ next, fresh }: { next: NextCards | undefined; fresh: boolea
     <Plural value={next.count} one="# card will be ready." other="# cards will be ready." />
   );
 }
-
-const OPEN_KEY = "lymi-first-review";
 
 /** Marks this tab's first review as under way with the cards of its hand, or as over. */
 export function rememberFirstReview(cards: readonly FanCard[] | null) {

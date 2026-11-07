@@ -1,7 +1,8 @@
 import { revealNudgeDelayMs } from "@lymi/client/reveal-nudge";
 import { useEffect, useState } from "react";
 
-const KEY = "lymi-reveals";
+import { REVEALS_KEY as KEY } from "./storage-keys";
+
 /** Reveals after which the learner has shown they know the card is the button. */
 const LEARNED_AFTER = 3;
 

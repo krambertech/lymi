@@ -1,6 +1,15 @@
 import { dropQueued } from "@lymi/client/queued";
 import { clearCardImages } from "./card-images";
 import { clearQueryCache } from "./query-persister";
+import {
+  ASSISTANT_OFFER_KEY,
+  CREATE_MORE_KEY,
+  DEV_PERSONA_KEY,
+  FIRST_REVIEW_KEY,
+  LAST_DECK_KEY,
+  REST_DISMISSED_KEY,
+  REVEALS_KEY,
+} from "./storage-keys";
 
 /**
  * What the client keeps for one learner: in IndexedDB, the query cache that survives reloads and
@@ -11,12 +20,12 @@ import { clearQueryCache } from "./query-persister";
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
 const KEYS = [
-  "lymi-reveals",
-  "lymi-dev-persona",
-  "lymi-last-deck",
-  "lymi-create-more",
-  "lymi-rest-dismissed",
-  "lymi-assistant-offer-dismissed",
+  REVEALS_KEY,
+  DEV_PERSONA_KEY,
+  LAST_DECK_KEY,
+  CREATE_MORE_KEY,
+  REST_DISMISSED_KEY,
+  ASSISTANT_OFFER_KEY,
 ];
 
 /**
@@ -29,7 +38,7 @@ export function clearPersistedLearnerState(opts: { keepQueued?: boolean } = {}):
   } catch {}
   try {
     // components/first-plan.tsx writes it; it would otherwise let the next account resume this one's first review.
-    sessionStorage.removeItem("lymi-first-review");
+    sessionStorage.removeItem(FIRST_REVIEW_KEY);
   } catch {}
   if (!opts.keepQueued) dropQueued();
   void clearQueryCache();

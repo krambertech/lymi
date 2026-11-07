@@ -252,7 +252,7 @@ export function ComesBack({
         className="relative mx-auto mt-6 max-w-[34ch] text-pretty text-center text-md text-ink-secondary short:mt-3"
       >
         <Trans>
-          Lymi brings each card back just before you’d forget it, and waits longer each time you
+          Lymi brings each card back just as it starts to fade, and waits longer each time you
           remember.
         </Trans>
       </motion.p>

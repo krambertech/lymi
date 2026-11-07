@@ -55,7 +55,8 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```bash
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
-pnpm check        # lint, formatting, design, styling, cache, agent-doc and phone-symbol checks
+pnpm check        # lint, formatting, design, styling, regression, cache, agent-doc and phone-symbol checks
+pnpm check:regressions # bug patterns that reached pull requests before: dead shadows, undefined CSS properties, storage keys spelled twice, retired claims
 pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes

@@ -5,13 +5,12 @@ import { ArrowRight, Plug, X } from "lucide-react";
 import { type CSSProperties, useState } from "react";
 import { ASSISTANTS as ALL } from "../lib/assistants";
 import { connectedAppsQuery } from "../lib/queries";
+import { ASSISTANT_OFFER_KEY as KEY } from "../lib/storage-keys";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import type { AppIdentity } from "./app-mark";
 import { IconButton } from "./button";
 import { NavLink } from "./nav-link";
 import { DropdownMenuLinkItem } from "./ui/dropdown-menu";
-
-const KEY = "lymi-assistant-offer-dismissed";
 
 /** The assistants shown, in the order a learner is likeliest to have one; each opens its page in Settings. */
 const ASSISTANTS = ALL.slice(0, 4).flatMap((a) => (a.app ? [{ app: a.app, key: a.key }] : []));

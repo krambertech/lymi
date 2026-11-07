@@ -3402,8 +3402,8 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, браузер і мову застосунку."
 
-msgid "Lymi brings each card back just before you’d forget it, and waits longer each time you remember."
-msgstr "Lymi повертає кожну картку саме тоді, коли вона вже забувається, і чекає довше щоразу, коли пам’ятаєш."
+msgid "Lymi brings each card back just as it starts to fade, and waits longer each time you remember."
+msgstr "Lymi повертає кожну картку саме тоді, коли вона починає забуватися, і чекає довше щоразу, коли пам’ятаєш."
 
 msgid "Lymi can no longer read your saved token. Paste it again below."
 msgstr "Lymi більше не може прочитати збережений токен. Встав його ще раз нижче."

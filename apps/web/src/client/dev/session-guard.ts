@@ -9,8 +9,7 @@
  */
 import { devPersonaCookieName } from "../../shared/cookies";
 import { clearPersistedLearnerState } from "../lib/persisted";
-
-const SEEN_KEY = "lymi-dev-persona";
+import { DEV_PERSONA_KEY as SEEN_KEY } from "../lib/storage-keys";
 
 export function guardPersistedCache(): void {
   const name = devPersonaCookieName(window.location.origin);

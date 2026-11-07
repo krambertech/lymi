@@ -3402,8 +3402,8 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
 
-msgid "Lymi brings each card back just before you’d forget it, and waits longer each time you remember."
-msgstr "Lymi brings each card back just before you’d forget it, and waits longer each time you remember."
+msgid "Lymi brings each card back just as it starts to fade, and waits longer each time you remember."
+msgstr "Lymi brings each card back just as it starts to fade, and waits longer each time you remember."
 
 msgid "Lymi can no longer read your saved token. Paste it again below."
 msgstr "Lymi can no longer read your saved token. Paste it again below."

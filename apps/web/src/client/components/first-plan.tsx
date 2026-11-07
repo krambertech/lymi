@@ -12,6 +12,7 @@ import { type ComponentProps, type ReactNode, useEffect, useRef, useState } from
 import { api } from "../lib/api";
 import { supportsPush, turnOnReminder } from "../lib/push-reminder";
 import { useInstallState } from "../lib/pwa-install";
+import { FIRST_REVIEW_KEY as OPEN_KEY } from "../lib/storage-keys";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
 import type { StreakSummary } from "./streak";
@@ -129,8 +130,6 @@ function WhatWaits({ next, fresh }: { next: NextCards | undefined; fresh: boolea
     <Plural value={next.count} one="# card will be ready." other="# cards will be ready." />
   );
 }
-
-const OPEN_KEY = "lymi-first-review";
 
 /** Marks this tab's first review as under way with the cards of its hand, or as over. */
 export function rememberFirstReview(cards: readonly FanCard[] | null) {
@@ -362,7 +361,7 @@ function WordFan({ cards }: { cards: readonly FanCard[] }) {
           <motion.div
             // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
             key={i}
-            className="edge absolute start-1/2 top-2 grid h-36 w-32 -translate-x-1/2 place-items-center rounded-xl bg-plate px-3 shadow-sm rtl:translate-x-1/2"
+            className="edge absolute start-1/2 top-2 grid h-36 w-32 -translate-x-1/2 place-items-center rounded-xl bg-plate px-3 rtl:translate-x-1/2"
             style={{ zIndex: hand.length - Math.abs(Math.round(from)) }}
             initial={reduce ? false : { x: 0, y: 8, rotate: 0, opacity: 0 }}
             animate={{

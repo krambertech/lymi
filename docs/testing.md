@@ -198,6 +198,10 @@ Committed migrations are immutable production history. `pnpm db:generate` create
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. Before calling production verified, compare its active tag with the intended commit. A successful build page without these active-version checks is not deployment evidence.
 
+## Bugs a pattern can catch
+
+When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
+
 ## Workers-runtime tests
 
 `apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: `redirect: "error"` once passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.

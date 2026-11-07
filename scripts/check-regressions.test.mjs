@@ -83,6 +83,14 @@ test("catches a storage key written out in two files", () => {
   );
 });
 
+test("scans storage-keys.ts even when nothing in it names a storage API", () => {
+  const found = storageKeyProblems([
+    ["lib/storage-keys.ts", 'export const REVEALS_KEY = "lymi-reveals";'],
+    ["lib/reveal-nudge.ts", 'localStorage.getItem("lymi-reveals");'],
+  ]);
+  assert.equal(found.length, 1);
+});
+
 test("ignores a lymi- name in a file that keeps nothing in storage", () => {
   assert.deepEqual(
     storageKeyProblems([

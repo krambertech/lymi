@@ -99,6 +99,8 @@ export function propertyProblems(file, source, defined) {
 }
 
 const STORAGE = /\b(?:localStorage|sessionStorage|createMMKV)\b/;
+/** The module that names the keys touches no storage itself, so it is scanned by its name. */
+const KEY_MODULE = /(?:^|\/)storage-keys\.ts$/;
 
 /**
  * A storage key spelled out in two files drifts: renaming it in one leaves sign-out clearing the
@@ -107,7 +109,7 @@ const STORAGE = /\b(?:localStorage|sessionStorage|createMMKV)\b/;
 export function storageKeyProblems(sources) {
   const files = new Map();
   for (const [file, source] of sources) {
-    if (!STORAGE.test(source)) continue;
+    if (!STORAGE.test(source) && !KEY_MODULE.test(file)) continue;
     for (const m of source.matchAll(/["'`](lymi-[a-z0-9-]+)["'`]/g)) {
       const seen = files.get(m[1]) ?? new Set();
       seen.add(file);

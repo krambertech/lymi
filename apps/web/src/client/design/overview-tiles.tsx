@@ -102,10 +102,7 @@ function PhoneFragment() {
   return (
     <span className="absolute inset-x-0 top-5 -bottom-4 flex justify-center">
       <span
-        className={clsx(
-          "edge grid w-34 content-start gap-2.5 rounded-t-2xl bg-canvas p-3 shadow-sm",
-          rise,
-        )}
+        className={clsx("edge grid w-34 content-start gap-2.5 rounded-t-2xl bg-canvas p-3", rise)}
       >
         <span className="text-lg font-medium text-ink">Today</span>
         <span className="edge grid gap-2 rounded-md bg-plate p-2.5">
@@ -244,7 +241,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
         <span
           key="layout"
           className={clsx(
-            "edge absolute start-6 -end-6 top-6 -bottom-6 flex overflow-hidden rounded-lg bg-canvas shadow-sm",
+            "edge absolute start-6 -end-6 top-6 -bottom-6 flex overflow-hidden rounded-lg bg-canvas",
             rise,
           )}
         >
@@ -277,10 +274,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
         <span key="surfaces" className="absolute inset-0">
           <span className="edge absolute start-4 top-4 h-30 w-36 rounded-lg bg-canvas" />
           <span
-            className={clsx(
-              "edge absolute start-11 top-11 h-30 w-36 rounded-lg bg-plate shadow-sm",
-              rise,
-            )}
+            className={clsx("edge absolute start-11 top-11 h-30 w-36 rounded-lg bg-plate", rise)}
           />
         </span>,
       ),
@@ -325,7 +319,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
           <span className="grid w-full max-w-84 gap-3">
             <span
               className={clsx(
-                "edge grid gap-2 rounded-xl bg-plate px-4 py-5 shadow-sm @xs/pic:px-6 @xs/pic:pb-7",
+                "edge grid gap-2 rounded-xl bg-plate px-4 py-5 @xs/pic:px-6 @xs/pic:pb-7",
                 rise,
               )}
             >
@@ -375,7 +369,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
             Portuguese
             <ChevronDown aria-hidden="true" className="size-4 text-ink-muted" />
           </Control>
-          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1 shadow-sm">
+          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1">
             <Row active>
               Portuguese
               <Check aria-hidden="true" className="ms-auto text-ink" />
@@ -399,7 +393,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
               <span className="ms-px inline-block h-5 w-px bg-ink align-middle" />
             </span>
           </Control>
-          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1 shadow-sm">
+          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1">
             <Row active>
               <span>
                 <span className="font-semibold">Jap</span>anese
@@ -532,7 +526,7 @@ export const SECTIONS: { title: string; tiles: Tile[] }[] = [
         "menu",
         "Menu",
         <span key="menu" className={clsx("absolute inset-x-4 top-4", fadeFoot)}>
-          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1 shadow-sm">
+          <span className="edge grid min-w-0 grid-cols-1 overflow-hidden rounded-md bg-plate p-1">
             <span className="relative grid">
               <span className="absolute inset-x-0 top-0 h-9 rounded-sm bg-plate-hover transition-transform duration-200 ease-out motion-safe:hoverable:group-hover/tile:translate-y-9" />
               <span className="relative">

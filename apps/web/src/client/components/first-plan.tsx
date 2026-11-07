@@ -362,7 +362,7 @@ function WordFan({ cards }: { cards: readonly FanCard[] }) {
           <motion.div
             // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
             key={i}
-            className="edge absolute start-1/2 top-2 grid h-36 w-32 -translate-x-1/2 place-items-center rounded-xl bg-plate px-3 shadow-sm rtl:translate-x-1/2"
+            className="edge absolute start-1/2 top-2 grid h-36 w-32 -translate-x-1/2 place-items-center rounded-xl bg-plate px-3 rtl:translate-x-1/2"
             style={{ zIndex: hand.length - Math.abs(Math.round(from)) }}
             initial={reduce ? false : { x: 0, y: 8, rotate: 0, opacity: 0 }}
             animate={{

@@ -58,12 +58,20 @@ export default {
         if (failed > 0) throw new Error(`${failed} learning emails failed`);
       }),
     );
-    run(
-      "expire-imports",
-      expireImports(createDb(env.DB), env.IMPORTS, at, env.EVENTS).then(({ stalled }) => {
-        if (stalled > 0) throw new Error(`${stalled} stalled imports were failed`);
-      }),
-    );
+    {
+      const db = createDb(env.DB);
+      run(
+        "expire-imports",
+        expireImports(
+          db,
+          env.IMPORTS,
+          at,
+          ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
+        ).then(({ stalled }) => {
+          if (stalled > 0) throw new Error(`${stalled} stalled imports were failed`);
+        }),
+      );
+    }
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run(
       "former-deck-copies",

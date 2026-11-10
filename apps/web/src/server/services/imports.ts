@@ -637,8 +637,9 @@ export async function failImport(
     source: row.source,
     card_count,
     outcome: "failed",
+    failure,
   });
-  track(analytics, { name: "import_failed", source: row.source, card_count });
+  track(analytics, { name: "import_failed", source: row.source, card_count, failure });
   await releaseImportFiles(db, uploads, row);
 }
 
@@ -725,7 +726,7 @@ export async function expireImports(
   db: Db,
   uploads: R2Bucket,
   now = new Date(),
-  analytics?: AnalyticsWriter,
+  analytics?: AnalyticsWriter | ((userId: string) => AnalyticsWriter),
 ) {
   const before = (ms: number) => lt(schema.imports.updatedAt, new Date(now.getTime() - ms));
   const stale = await db
@@ -749,7 +750,7 @@ export async function expireImports(
       row.id,
       row.status === "importing" ? "internal" : "expired",
       uploads,
-      analytics,
+      typeof analytics === "function" ? analytics(row.userId) : analytics,
     );
   }
   const left = await db

@@ -219,23 +219,40 @@ it("keeps a runtime's network or chunk failure message without the address it na
 });
 
 it("keeps D1's own failure class without the SQL or parameters that follow it", () => {
-  const sanitized = exceptionProperties({
-    $exception_list: [
-      "Failed query: select * from cards where term = ?\nparams: private",
-      "D1_ERROR: Network connection lost.",
+  const sanitize = (value: string) =>
+    (
+      exceptionProperties({ $exception_list: [{ type: "Error", value }] }).$exception_list as {
+        value: string;
+      }[]
+    )[0]?.value;
+  const cases: [string, string][] = [
+    ["Failed query: select * from cards where term = ?\nparams: private", "Failed query"],
+    ["D1_ERROR: Network connection lost.", "D1_ERROR: Network connection lost"],
+    [
       "D1_ERROR: D1 DB is overloaded. Too many requests queued.: SQLITE_BUSY private",
+      "D1_ERROR: D1 DB is overloaded. Too many requests queued",
+    ],
+    [
       "Too many API requests by single worker invocation.",
-      "D1_ERROR: no such column: private: SQLITE_ERROR",
-    ].map((value) => ({ type: "Error", value })),
-  }).$exception_list as { value: string }[];
-  expect(sanitized.map((exception) => exception.value)).toEqual([
-    "Unexpected error",
-    "D1_ERROR: Network connection lost",
-    "D1_ERROR: D1 DB is overloaded. Too many requests queued",
-    "Too many API requests by single worker invocation",
-    "Unexpected error",
-  ]);
-  expect(JSON.stringify(sanitized)).not.toContain("private");
+      "Too many API requests by single worker invocation",
+    ],
+    ["D1_ERROR: no such column: private: SQLITE_ERROR", "D1_ERROR"],
+    [
+      "Failed query: select * from cards where term = ?\nparams: private\nD1_ERROR: Network connection lost.",
+      "D1_ERROR: Network connection lost",
+    ],
+    [
+      "Error: D1_ERROR: D1 DB is overloaded. Too many resources consumed within a 10 second window",
+      "D1_ERROR: D1 DB is overloaded. Too many resources consumed within a 10 second window",
+    ],
+    [
+      "D1_ERROR: D1 query result exceeded the maximum response size limit of 50 MB",
+      "D1_ERROR: D1 query result exceeded the maximum response size limit of 50 MB",
+    ],
+    ["D1_EXEC_ERROR: Error in line 1: SELECT private", "D1_EXEC_ERROR"],
+  ];
+  expect(cases.map(([value]) => sanitize(value))).toEqual(cases.map(([, expected]) => expected));
+  expect(JSON.stringify(cases.map(([value]) => sanitize(value)))).not.toContain("private");
 });
 
 it("keeps an OpenAI text failure's class and HTTP status but no other text", () => {

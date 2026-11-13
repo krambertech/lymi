@@ -226,21 +226,21 @@ export function StreakTile({ play }: TileDemoProps) {
   const { i18n, t } = useLingui();
   const at = useBeats({ fill: 250, lit: 1300 }, play);
   const done = at("fill") ? GOAL : 18;
-  const days = at("lit") ? 13 : 12;
+  const days = at("lit") ? 14 : 13;
   return (
     <div className="grid w-full gap-3">
-      <div className="flex items-end gap-2">
+      <div className="flex items-baseline gap-2 whitespace-nowrap">
         <motion.span
           animate={{ scale: at("lit") ? [1, 1.2, 1] : 1 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-1 block shrink-0 origin-bottom"
+          className="block shrink-0 origin-bottom self-end pb-1"
         >
-          <Flame className="h-8 w-auto" />
+          <Flame className="h-7 w-auto" />
         </motion.span>
-        <span className="text-[44px] leading-none font-medium tracking-[-0.04em] text-ink tabular-nums">
+        <span className="text-[40px] leading-none font-medium tracking-[-0.04em] text-ink tabular-nums @max-xl:text-[34px]">
           {i18n.number(days)}
         </span>
-        <span className="mb-1 max-w-[9ch] text-xs leading-tight text-ink-secondary">
+        <span className="text-sm text-ink-secondary @max-xl:text-xs">
           {t`${plural(days, { one: "day in a row", other: "days in a row" })}`}
         </span>
       </div>

@@ -316,6 +316,9 @@ msgstr "<0>乗る</0> — сісти, <1>換える</1> — замінити: т�
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> — міняти, <1>乘</1> — їхати: міняєш лінію, якою їдеш."
 
+msgid "1 already in Biology, skipped"
+msgstr "1 уже є в «Біології», пропущено"
+
 msgid "1 November 2026"
 msgstr "1 листопада 2026 року"
 
@@ -920,9 +923,6 @@ msgstr "Майже! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавіт"
-
-msgid "Already in Biology"
-msgstr "Уже є в «Біології»"
 
 msgid "Already in your deck, so it’s skipped"
 msgstr "Уже є в колоді, тому пропущено"
@@ -1791,9 +1791,6 @@ msgstr "Препарати, як вони діють і на що зважати
 
 msgid "Due"
 msgstr "Коли повторювати"
-
-msgid "Duplicate"
-msgstr "Дублікат"
 
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Кожна колода рахує свої питання як «Нові», «У вивченні» та «Засвоєні», тож ще до дати тесту видно, яку частину каталогу ти вже знаєш."

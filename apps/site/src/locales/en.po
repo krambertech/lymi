@@ -316,6 +316,9 @@ msgstr "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a dif
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 
+msgid "1 already in Biology, skipped"
+msgstr "1 already in Biology, skipped"
+
 msgid "1 November 2026"
 msgstr "1 November 2026"
 
@@ -920,9 +923,6 @@ msgstr "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “d
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
-
-msgid "Already in Biology"
-msgstr "Already in Biology"
 
 msgid "Already in your deck, so it’s skipped"
 msgstr "Already in your deck, so it’s skipped"
@@ -1791,9 +1791,6 @@ msgstr "Drugs, how they work and what to watch for."
 
 msgid "Due"
 msgstr "Due"
-
-msgid "Duplicate"
-msgstr "Duplicate"
 
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."

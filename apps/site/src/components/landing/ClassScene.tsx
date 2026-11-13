@@ -1,7 +1,8 @@
 import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { Check } from "lucide-react";
-import { AnimatePresence, motion, useInView } from "motion/react";
+import { AnimatePresence, motion, useInView, useMotionValue } from "motion/react";
 import { type PointerEvent, useEffect, useRef, useState } from "react";
 import { EASE, useStill } from "./playback";
 
@@ -44,6 +45,9 @@ const PATHS: Record<string, { x: string[]; y: string[]; delay: number }> = {
     delay: 3,
   },
 };
+
+// check-styling: allow, the visitor's cursor keeps its own colour in both themes, as classmates' do
+const YOU_COLOR = "oklch(0.55 0.17 300)";
 
 function Avatar({ id, size }: { id: string; size: number }) {
   return (
@@ -148,7 +152,10 @@ export function ClassScene() {
   const inView = useInView(ref, { amount: 0.4 });
   const still = useStill();
   const [step, setStep] = useState(-1);
-  const [you, setYou] = useState<{ x: number; y: number } | null>(null);
+  // The visitor's pointer, as one more classmate. Its place lives outside React so it never lags.
+  const [here, setHere] = useState(false);
+  const youX = useMotionValue(0);
+  const youY = useMotionValue(0);
 
   useEffect(() => {
     if (!inView || still) return;
@@ -166,30 +173,51 @@ export function ClassScene() {
   const event = step >= 0 && step < EVENTS.length ? EVENTS[step] : undefined;
 
   const follow = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse") return;
+    if (e.pointerType !== "mouse" || still) return;
     const box = e.currentTarget.getBoundingClientRect();
-    setYou({ x: e.clientX - box.left, y: e.clientY - box.top });
+    // Measured from the start edge the arrow is pinned to, so it holds in a right-to-left page.
+    const rtl = getComputedStyle(e.currentTarget).direction === "rtl";
+    youX.set(e.clientX - (rtl ? box.right : box.left));
+    youY.set(e.clientY - box.top);
+    setHere(true);
   };
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
+      onPointerEnter={follow}
       onPointerMove={follow}
-      onPointerLeave={() => setYou(null)}
-      className="relative grid h-full min-h-[280px] w-full place-items-center overflow-hidden px-5"
+      onPointerLeave={() => setHere(false)}
+      // The visitor's own arrow stands in for the system one, which would sit on top of it.
+      className={clsx(
+        "relative grid h-full min-h-[280px] w-full place-items-center overflow-hidden px-5",
+        !still && "hoverable:cursor-none",
+      )}
     >
       {PEOPLE.map((p) => (
         <Cursor key={p.id} who={p} moving={inView && !still} />
       ))}
-      {you && (
-        <div className="pointer-events-none absolute z-20" style={{ left: you.x, top: you.y }}>
-          <Arrow fill="var(--ink)" />
-          <span className="-mt-1 ms-3 block rounded-full bg-ink px-2 py-0.5 text-2xs font-medium text-canvas">
-            <Trans>You</Trans>
-          </span>
-        </div>
-      )}
+      <AnimatePresence>
+        {here && (
+          <motion.div
+            className="pointer-events-none absolute start-0 top-0 z-20"
+            style={{ x: youX, y: youY }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.15, ease: EASE }}
+          >
+            <Arrow fill={YOU_COLOR} />
+            <span
+              style={{ background: YOU_COLOR }}
+              className="-mt-1 ms-3 block w-max rounded-full px-2 py-0.5 text-2xs font-medium text-white shadow-sm"
+            >
+              <Trans>You</Trans>
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="relative w-full max-w-[340px] rounded-xl bg-plate p-3.5 edge">
         <div className="flex items-center justify-between gap-3">

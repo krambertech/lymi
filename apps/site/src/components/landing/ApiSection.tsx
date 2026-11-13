@@ -230,18 +230,8 @@ function Pipeline() {
           {!still &&
             shown &&
             live(INS).map((n, i) => (
-              <g key={`c-${n.id}`} opacity={0}>
-                <rect
-                  x={-8}
-                  y={-10}
-                  width={16}
-                  height={20}
-                  rx={4}
-                  fill="var(--plate)"
-                  stroke="var(--amber)"
-                  strokeWidth={1.25}
-                />
-                <rect x={-4} y={-4} width={8} height={2} rx={1} fill="var(--amber)" />
+              // Cards on their way in are ink; what is due on its way out is amber, like its chips.
+              <circle key={`c-${n.id}`} r={3.5} fill="var(--ink)" opacity={0}>
                 <animateMotion
                   path={inPath(n)}
                   calcMode="spline"
@@ -255,7 +245,7 @@ function Pipeline() {
                   keyTimes="0;0.2;0.86;1"
                   {...motionProps(1.2 + (i * LAP_S) / 3)}
                 />
-              </g>
+              </circle>
             ))}
           {!still &&
             shown &&

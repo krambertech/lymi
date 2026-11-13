@@ -316,6 +316,9 @@ msgstr "<0>乗る</0> — сесть, <1>換える</1> — заменить: т�
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> — менять, <1>乘</1> — ехать: меняешь линию, по которой едешь."
 
+msgid "1 already in Biology, skipped"
+msgstr "1 уже есть в «Биологии», пропущено"
+
 msgid "1 November 2026"
 msgstr "1 ноября 2026 года"
 
@@ -920,9 +923,6 @@ msgstr "Почти! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавит"
-
-msgid "Already in Biology"
-msgstr "Уже есть в «Биологии»"
 
 msgid "Already in your deck, so it’s skipped"
 msgstr "Уже есть в колоде, поэтому пропущено"
@@ -1791,9 +1791,6 @@ msgstr "Препараты, как они действуют и на что об
 
 msgid "Due"
 msgstr "Когда повторять"
-
-msgid "Duplicate"
-msgstr "Дубликат"
 
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Каждая колода считает свои вопросы как «Новые», «В изучении» и «Выученные», поэтому ещё до даты теста видно, какую часть каталога ты уже знаешь."

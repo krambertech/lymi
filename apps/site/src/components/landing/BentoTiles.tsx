@@ -576,7 +576,7 @@ export function OfflineTile({ play }: TileDemoProps) {
   const at = useBeats({ sync: 500 }, play);
   const synced = at("sync");
   return (
-    <span className="flex h-10 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate ps-2.5 pe-3 edge">
+    <span className="flex min-h-10 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate py-2 ps-2.5 pe-3 edge">
       <span className="flex shrink-0 gap-0.5 @max-xl:hidden">
         {[0, 1, 2].map((i) => (
           <motion.span
@@ -591,14 +591,14 @@ export function OfflineTile({ play }: TileDemoProps) {
         {synced ? (
           <>
             <Check className="size-4 shrink-0 text-amber-text" />
-            <span className="truncate">
+            <span className="leading-tight text-pretty">
               <Trans>Synced</Trans>
             </span>
           </>
         ) : (
           <>
             <CloudOff className="size-4 shrink-0 text-ink-muted" />
-            <span className="truncate">
+            <span className="leading-tight text-pretty">
               <Trans>3 reviews saved</Trans>
             </span>
           </>

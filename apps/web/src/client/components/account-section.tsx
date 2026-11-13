@@ -89,7 +89,7 @@ export function AccountGroup({
       {avatar}
       <span
         aria-hidden="true"
-        className="edge absolute -end-0.5 -bottom-0.5 grid size-7 place-items-center rounded-full bg-plate text-text-2 transition-colors duration-150 hoverable:group-hover:veil hoverable:group-hover:text-text group-aria-expanded:veil [&_svg]:size-3.5"
+        className="edge absolute -end-0.5 -bottom-0.5 grid size-7 place-items-center rounded-full bg-plate text-ink-secondary transition-colors duration-150 hoverable:group-hover:veil hoverable:group-hover:text-ink group-aria-expanded:veil [&_svg]:size-3.5"
       >
         <Camera />
       </span>
@@ -120,12 +120,12 @@ export function AccountGroup({
         )}
         <div className="grid min-w-0 gap-0.5">
           {name ? (
-            <span className="truncate text-md font-medium text-text">{name}</span>
+            <span className="truncate text-md font-medium text-ink">{name}</span>
           ) : (
             <Skeleton className="h-5 w-32" />
           )}
           {email ? (
-            <span className="truncate text-sm text-muted">{email}</span>
+            <span className="truncate text-sm text-ink-muted">{email}</span>
           ) : (
             <Skeleton className="h-4 w-48" />
           )}

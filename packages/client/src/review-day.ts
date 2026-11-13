@@ -1,4 +1,4 @@
-import { drawableCount, type StreakOut, summariseStreak } from "@lymi/core";
+import { daySatisfied, drawableCount, type StreakOut, summariseStreak } from "@lymi/core";
 import { type DrawData, type DrawState, drawCards, drawLog } from "./review-draw";
 
 export type DayOutcome = "goal_met" | "exhausted" | "nothing_due";
@@ -20,16 +20,13 @@ export function shownOutcome(
   return outcome === "nothing_due" && due > 0 ? "open" : outcome;
 }
 
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
-
 /**
  * The streak once today's attempts are in, before the refetch that confirms them lands. The run
  * grows by one only when today turns satisfied, so a summary that already counts today is kept.
  */
 export function streakWith(summary: StreakOut, attempts: number, counts: boolean): StreakOut {
   const { today } = summary;
-  const already = satisfied(today.outcome);
+  const already = daySatisfied(today.outcome);
   const now = already || counts;
   const outcome = already
     ? today.outcome

@@ -12,6 +12,7 @@ import { connectedAppsQuery, keysQuery, readwiseQuery } from "../lib/queries";
 import { yomitanKey } from "../lib/yomitan";
 import { lastUsed, shortDate } from "./api-keys-section";
 import { AppMark, identifyApp } from "./app-mark";
+import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
 import { ReadwiseMark } from "./readwise-mark";
 import { SettingsGroup } from "./settings-group";
@@ -21,7 +22,7 @@ import { YomitanMark } from "./yomitan-mark";
 const ROW =
   "group flex min-h-16 items-center gap-3 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil group-first/row:rounded-t-xl group-last/row:rounded-b-xl";
 const CHIP =
-  "edge inline-flex h-9 items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text transition-[background-color] duration-150 hoverable:hover:veil";
+  "edge inline-flex h-9 items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-ink transition-[background-color] duration-150 hoverable:hover:veil";
 
 /**
  * Every app that adds cards: the connected ones as rows, then the rest as chips. Each opens its
@@ -39,16 +40,18 @@ export function AppsSection() {
   const yomitan = yomitanKey(keys.data);
   const connectedKeys = new Set(consents.map((c) => assistantOf(c)?.key));
   const toAdd = ASSISTANTS.filter((a) => a.key === "custom" || !connectedKeys.has(a.key));
-  const none = consents.length === 0 && !connection && !yomitan;
+  // A failed read says nothing about what is connected, so nothing is offered until it answers.
+  const failed = apps.error ?? readwise.error ?? keys.error;
+  const connected = consents.length > 0 || !!connection || !!yomitan;
   const pages = appPageParams(consents);
 
   return (
     <SettingsGroup id="apps" title={t`Apps`} description={t`Apps that add cards to your decks.`}>
       {loading ? (
         <Skeleton className="h-40 w-full rounded-xl" />
-      ) : none ? (
+      ) : !connected && !failed ? (
         <Empty />
-      ) : (
+      ) : connected ? (
         <ul aria-label={t`Your apps`} className="edge grid rounded-xl bg-plate">
           {consents.map((item) => (
             <AssistantRow key={item.id} item={item} page={pages.get(item.id) ?? item.id} />
@@ -68,7 +71,7 @@ export function AppsSection() {
               mark={<YomitanMark className="size-9" />}
               name="Yomitan"
             >
-              <span className="text-sm text-muted tabular-nums">
+              <span className="text-sm text-ink-muted tabular-nums">
                 <Trans>
                   Key made {shortDate(i18n, yomitan.createdAt)} ·{" "}
                   {lastUsed(i18n, yomitan.lastRequest)}
@@ -76,18 +79,20 @@ export function AppsSection() {
               </span>
             </Row>
           )}
-          <li className="grid gap-2.5 border-edge border-t px-4 py-3.5">
-            <span className="text-sm text-muted">
-              <Trans>Add an app</Trans>
-            </span>
-            <Chips assistants={toAdd} readwise={!connection} yomitan={!yomitan} />
-          </li>
+          {!failed && (
+            <li className="grid gap-2.5 border-edge border-t px-4 py-3.5">
+              <span className="text-sm text-ink-muted">
+                <Trans>Add an app</Trans>
+              </span>
+              <Chips assistants={toAdd} readwise={!connection} yomitan={!yomitan} />
+            </li>
+          )}
         </ul>
-      )}
+      ) : null}
 
-      {apps.isError && (
-        <p className="text-sm text-danger" role="alert">
-          {errorMessage(apps.error)}
+      {failed && (
+        <p className="text-sm" role="alert">
+          <InlineError>{errorMessage(failed)}</InlineError>
         </p>
       )}
     </SettingsGroup>
@@ -102,24 +107,28 @@ function Empty() {
     <div className="edge grid justify-items-center gap-4 rounded-xl bg-plate px-4 pt-6 pb-5 text-center [background-image:radial-gradient(120%_80%_at_50%_0%,var(--amber-soft),transparent_60%)]">
       <div aria-hidden="true" className="flex">
         {[
-          ...fan.map((app) => <AppMark key={app.name} app={app} className="size-11" />),
-          <ReadwiseMark key="readwise" className="size-11" />,
-          ...(gemini ? [<AppMark key="gemini" app={gemini} className="size-11" />] : []),
-          <YomitanMark key="yomitan" className="size-11" />,
+          ...fan.map((app) => (
+            <AppMark key={app.name} app={app} className="size-11 rounded-tile" />
+          )),
+          <ReadwiseMark key="readwise" className="size-11 rounded-tile" />,
+          ...(gemini
+            ? [<AppMark key="gemini" app={gemini} className="size-11 rounded-tile" />]
+            : []),
+          <YomitanMark key="yomitan" className="size-11 rounded-tile" />,
         ].map((mark, i) => (
           <span
             key={String(i)}
-            className={clsx("-ms-1.5 block rounded-[13px] bg-plate p-0.5 first:ms-0", FAN[i])}
+            className={clsx("-ms-1.5 block rounded-md bg-plate p-0.5 first:ms-0", FAN[i])}
           >
             {mark}
           </span>
         ))}
       </div>
       <div className="grid max-w-[40ch] gap-1">
-        <p className="text-md font-medium text-text">
+        <p className="text-md font-medium text-ink">
           <Trans>Connect your first app</Trans>
         </p>
-        <p className="text-sm text-muted text-pretty">
+        <p className="text-sm text-ink-muted text-pretty">
           <Trans>
             An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words
             as you read.
@@ -181,7 +190,7 @@ function Chips({
       )}
       <li>
         <Link to="/settings/apps/$app" params={{ app: "custom" }} className={CHIP}>
-          <Plug className="size-4 text-text-2" aria-hidden="true" />
+          <Plug className="size-4 text-ink-secondary" aria-hidden="true" />
           <Trans>Custom MCP</Trans>
         </Link>
       </li>
@@ -237,7 +246,7 @@ function AssistantRow({ item, page }: { item: ConnectedApp; page: string }) {
       mark={<AppMark app={{ ...app, name: listed.title }} className="size-9" />}
       name={listed.title ?? t`An app`}
     >
-      <span className="flex min-w-0 items-center gap-1 text-sm text-muted">
+      <span className="flex min-w-0 items-center gap-1 text-sm text-ink-muted">
         {listed.unverified && (
           <>
             <span
@@ -280,14 +289,14 @@ function ReadwiseStatus({ connection }: { connection: Readwise }) {
   const at = connection.lastPull?.at;
   if (!at) {
     return (
-      <span className="text-sm text-muted">
+      <span className="text-sm text-ink-muted">
         <Trans>Connected. Lymi checks every hour.</Trans>
       </span>
     );
   }
   const when = i18n.date(new Date(at), { hour: "numeric", minute: "2-digit" });
   return (
-    <span className="text-sm text-muted">
+    <span className="text-sm text-ink-muted">
       <Trans>Connected. Last checked at {when}.</Trans>
     </span>
   );

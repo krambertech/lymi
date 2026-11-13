@@ -38,10 +38,10 @@ export function SeriesDemo() {
         aria-label={t`A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked.`}
         className="rounded-2xl bg-plate p-5 edge @2xl:p-6"
       >
-        <p className="text-lg font-medium tracking-[-0.02em] text-text">
+        <p className="text-lg font-medium tracking-[-0.02em] text-ink">
           <Trans>Estonian A1 · Autumn course</Trans>
         </p>
-        <p className="mt-0.5 text-sm text-muted">
+        <p className="mt-0.5 text-sm text-ink-muted">
           <Plural value={SECTIONS.length} one="# section" other="# sections" />
         </p>
 
@@ -55,7 +55,7 @@ export function SeriesDemo() {
                 key={name}
                 className={clsx(
                   "rounded-lg px-3.5 py-3 transition-colors duration-500",
-                  state === "active" || state === "ready" ? "bg-plate-2" : "",
+                  state === "active" || state === "ready" ? "bg-plate-nested" : "",
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -63,10 +63,10 @@ export function SeriesDemo() {
                     aria-hidden="true"
                     className={clsx(
                       "grid size-7 shrink-0 place-items-center rounded-full text-xs tabular-nums transition-colors duration-500",
-                      state === "done" && "bg-good-soft text-good",
-                      state === "active" && "bg-text text-canvas",
+                      state === "done" && "bg-success-soft text-success",
+                      state === "active" && "bg-ink text-canvas",
                       state === "ready" && "bg-amber-soft text-amber-text",
-                      state === "locked" && "text-muted edge-2",
+                      state === "locked" && "text-ink-muted edge-strong",
                     )}
                   >
                     {state === "done" ? (
@@ -81,12 +81,12 @@ export function SeriesDemo() {
                     <p
                       className={clsx(
                         "truncate text-md",
-                        state === "locked" ? "text-muted" : "font-medium text-text",
+                        state === "locked" ? "text-ink-muted" : "font-medium text-ink",
                       )}
                     >
                       {name}
                     </p>
-                    <p className="text-xs text-muted tabular-nums">
+                    <p className="text-xs text-ink-muted tabular-nums">
                       {state === "done" && <Trans>All known</Trans>}
                       {state === "active" && <Trans>{known}% known</Trans>}
                       {state === "ready" && <Trans>Ready to start</Trans>}
@@ -117,7 +117,7 @@ export function SeriesDemo() {
                     </div>
                     <span
                       aria-hidden="true"
-                      className="absolute -top-1 h-3.5 w-px bg-text-2"
+                      className="absolute -top-1 h-3.5 w-px bg-ink-secondary"
                       style={{ insetInlineStart: `${OPENS_AT}%` }}
                     />
                   </div>
@@ -127,8 +127,8 @@ export function SeriesDemo() {
           })}
         </ol>
       </div>
-      <p className="flex items-center gap-2 text-xs text-muted">
-        <span aria-hidden="true" className="h-3 w-px bg-text-2" />
+      <p className="flex items-center gap-2 text-xs text-ink-muted">
+        <span aria-hidden="true" className="h-3 w-px bg-ink-secondary" />
         <Trans>The next section opens at 80% known</Trans>
       </p>
     </div>

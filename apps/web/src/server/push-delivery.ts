@@ -1,5 +1,6 @@
 import { msg, plural } from "@lingui/core/macro";
-import { backlogOf, REMINDER_ENTRY } from "@lymi/core/analytics";
+import { type Reminder, type ReminderMessage, reminderFor, remindersQuiet } from "@lymi/core";
+import { backlogOf, REMINDER_ENTRY, REMINDER_MESSAGE_KEY } from "@lymi/core/analytics";
 import { createDb } from "./db";
 import { outcomeOfStatus, recordCall } from "./dependency-health";
 import type { Bindings } from "./env";
@@ -8,8 +9,9 @@ import { trackProductEvent } from "./posthog";
 import { analyticsContextFor } from "./services/analytics-context";
 import { drawableCount } from "./services/draw";
 import { catchUpStates } from "./services/modes";
+import { streak } from "./services/review-days";
 
-interface ReminderCandidate {
+export interface ReminderCandidate {
   id: string;
   user_id: string;
   endpoint: string;
@@ -20,6 +22,8 @@ interface ReminderCandidate {
   last_sent_local_date: string | null;
   app_language: string | null;
   review_timezone: string | null;
+  /** When the learner last opened Lymi, or when this device opted in before that was recorded. */
+  last_opened_at: number;
 }
 
 interface ReminderMoment {
@@ -30,19 +34,30 @@ interface ReminderMoment {
 export interface ReminderDispatchResult {
   considered: number;
   sent: number;
+  /** Devices left alone because their learner has stayed away for a week. */
+  quiet: number;
   expired: number;
   failed: number;
 }
 
-type SendPush = (candidate: ReminderCandidate, due: number, env: Bindings) => Promise<void>;
-/** Cards the learner can review, by the same rule the queue uses. ADR 0019. */
-type CountDrawable = (userId: string, zone: string, now: Date) => Promise<number>;
+type SendPush = (candidate: ReminderCandidate, reminder: Reminder, env: Bindings) => Promise<void>;
+/** What the learner can review, by the same rule the queue uses (ADR 0019), and how the day went. */
+export type DayOf = (
+  userId: string,
+  zone: string,
+  now: Date,
+) => Promise<{ reminder: Reminder | null; due: number }>;
 
-const countWith =
-  (db: ReturnType<typeof createDb>): CountDrawable =>
+const dayWith =
+  (db: ReturnType<typeof createDb>): DayOf =>
   async (userId, zone, now) => {
     await catchUpStates(db, userId, now);
-    return drawableCount({ db, userId, actor: "system" }, { now, zone });
+    const ctx = { db, userId, actor: "system" } as const;
+    const [due, { today, days, goal }] = await Promise.all([
+      drawableCount(ctx, { now, zone }),
+      streak(ctx, { zone, now }),
+    ]);
+    return { reminder: reminderFor({ date: today.date, days, due, goal }), due };
   };
 
 /** Local date and wall-clock time at an instant, including daylight-saving changes. */
@@ -88,29 +103,68 @@ export function reminderIsDue(
   return moment;
 }
 
-export async function reminderCopy(due: number, locale = "en") {
+export async function reminderCopy({ message, count }: Reminder, locale = "en") {
   const i18n = await serverI18n(locale);
-  return {
-    title: i18n._(
-      msg`${plural(due, {
-        one: "# card to review",
-        other: "# cards to review",
-      })}`,
-    ),
-    body: i18n._(msg`Review whenever you have a moment.`),
-  };
+  switch (message) {
+    case "to_goal":
+      return {
+        title: i18n._(
+          msg`${plural(count, {
+            one: "# card to today’s goal",
+            other: "# cards to today’s goal",
+          })}`,
+        ),
+        body: i18n._(msg`Finish if you have a moment.`),
+      };
+    case "after_rest":
+      return {
+        title: i18n._(msg`Yesterday was a rest day`),
+        body: i18n._(
+          msg`${plural(count, {
+            one: "Your streak carried on. # card is ready.",
+            other: "Your streak carried on. # cards are ready.",
+          })}`,
+        ),
+      };
+    case "next_cards":
+      return {
+        title: i18n._(
+          msg`${plural(count, {
+            one: "Your next card is ready",
+            other: "Your next cards are ready",
+          })}`,
+        ),
+        body: i18n._(
+          msg`${plural(count, { one: "# card for today.", other: "# cards for today." })}`,
+        ),
+      };
+    default:
+      return {
+        title: i18n._(
+          msg`${plural(count, {
+            one: "# card is ready",
+            other: "# cards are ready",
+          })}`,
+        ),
+        body: i18n._(msg`Review whenever you have a moment.`),
+      };
+  }
 }
 
-async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindings) {
+/** The query names the reminder as the way in, for app_opened and reminder_opened, which drop it once counted. */
+export function reminderLink(message: ReminderMessage, productUrl: string): string {
+  const link = new URL("/review", productUrl);
+  link.searchParams.set(REMINDER_ENTRY.key, REMINDER_ENTRY.value);
+  link.searchParams.set(REMINDER_MESSAGE_KEY, message);
+  return link.toString();
+}
+
+async function sendWebPush(candidate: ReminderCandidate, reminder: Reminder, env: Bindings) {
   if (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) {
     throw new Error("VAPID secrets are not configured");
   }
-  const copy = await reminderCopy(due, candidate.app_language ?? "en");
-  // The query names the reminder as the way in, for app_opened, which drops it once counted.
-  const navigate = new URL(
-    `/review?${REMINDER_ENTRY.key}=${REMINDER_ENTRY.value}`,
-    env.PRODUCT_URL,
-  ).toString();
+  const copy = await reminderCopy(reminder, candidate.app_language ?? "en");
+  const navigate = reminderLink(reminder.message, env.PRODUCT_URL);
   const icon = new URL("/icons/icon-192.png", env.PRODUCT_URL).toString();
   const payload = JSON.stringify({
     // Declarative Web Push is a fallback on supporting WebKit versions; the service worker
@@ -145,37 +199,40 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
 }
 
 /**
- * Find each device whose local reminder window is open, count what its learner can review,
- * claim that local date atomically, then send. A retry cannot duplicate successful sends;
- * transient failures release the claim.
+ * Find each device whose local reminder window is open and whose learner has been here this
+ * week, choose the day's message, claim that local date atomically, then send. A retry cannot
+ * duplicate successful sends; transient failures release the claim.
  */
 export async function dispatchReviewReminders(
   env: Bindings,
   now: Date,
   send: SendPush = sendWebPush,
-  count: CountDrawable = countWith(createDb(env.DB)),
+  dayOf: DayOf = dayWith(createDb(env.DB)),
 ): Promise<ReminderDispatchResult> {
   const db = createDb(env.DB);
   const reports: Promise<void>[] = [];
-  // A learner with several devices is counted once per dispatch.
-  const counts = new Map<string, Promise<number>>();
-  const countOnce: CountDrawable = (userId, zone, at) => {
+  // A learner with several devices is read once per dispatch.
+  const reads = new Map<string, ReturnType<DayOf>>();
+  const dayOnce: DayOf = (userId, zone, at) => {
     const key = `${userId}|${zone}`;
-    const pending = counts.get(key) ?? count(userId, zone, at);
-    counts.set(key, pending);
+    const pending = reads.get(key) ?? dayOf(userId, zone, at);
+    reads.set(key, pending);
     return pending;
   };
   const { results } = await env.DB.prepare(
     `SELECT ps.id, ps.user_id, ps.endpoint, ps.p256dh, ps.auth, ps.reminder_time, ps.timezone,
        ps.last_sent_local_date,
-       us.app_language, us.review_timezone
+       us.app_language, us.review_timezone,
+       COALESCE(lo.opened_at, ps.created_at) AS last_opened_at
        FROM push_subscriptions ps
-       LEFT JOIN user_settings us ON us.user_id = ps.user_id`,
+       LEFT JOIN user_settings us ON us.user_id = ps.user_id
+       LEFT JOIN learner_openings lo ON lo.user_id = ps.user_id`,
   ).all<ReminderCandidate>();
 
   const summary: ReminderDispatchResult = {
     considered: results.length,
     sent: 0,
+    quiet: 0,
     expired: 0,
     failed: 0,
   };
@@ -183,13 +240,17 @@ export async function dispatchReviewReminders(
   for (const candidate of results) {
     const moment = reminderIsDue(now, candidate.timezone, candidate.reminder_time);
     if (!moment || candidate.last_sent_local_date === moment.localDate) continue;
+    if (remindersQuiet(new Date(candidate.last_opened_at), now)) {
+      summary.quiet += 1;
+      continue;
+    }
     // The review day follows the review zone; the device zone only says when to remind.
-    const due = await countOnce(
+    const { reminder, due } = await dayOnce(
       candidate.user_id,
       candidate.review_timezone ?? candidate.timezone,
       now,
     );
-    if (due < 1) continue;
+    if (!reminder) continue;
 
     const claim = await env.DB.prepare(
       `UPDATE push_subscriptions
@@ -203,14 +264,14 @@ export async function dispatchReviewReminders(
 
     const started = Date.now();
     try {
-      await send(candidate, due, env);
+      await send(candidate, reminder, env);
       recordCall(env, { dependency: "web_push", outcome: "ok", durationMs: Date.now() - started });
       summary.sent += 1;
       reports.push(
         trackProductEvent(
           env,
           candidate.user_id,
-          { name: "reminder_sent", backlog: backlogOf(due) },
+          { name: "reminder_sent", backlog: backlogOf(due), message: reminder.message },
           undefined,
           analyticsContextFor(db, candidate.user_id),
         ),

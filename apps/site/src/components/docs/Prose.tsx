@@ -28,7 +28,7 @@ function Anchor({ id }: { id: string }) {
         href={`#${id}`}
         aria-label="Link to this section"
         tabIndex={-1}
-        className="doc-plain text-faint hoverable:hover:text-text"
+        className="doc-plain text-ink-faint hoverable:hover:text-ink"
       >
         <Hash className="size-3.5" aria-hidden="true" />
       </a>
@@ -59,7 +59,7 @@ export function H3({ children, id }: { children: ReactNode; id?: string }) {
 
 /** The one sentence under the page title. Larger than body, in full ink. */
 export function Lead({ children }: { children: ReactNode }) {
-  return <p className="mb-8 max-w-[62ch] text-lg text-text-2">{children}</p>;
+  return <p className="mb-8 max-w-[62ch] text-lg text-ink-secondary">{children}</p>;
 }
 
 /**
@@ -80,19 +80,19 @@ export function Note({
     <aside
       className={clsx(
         "my-5 flex gap-3 rounded-md p-3.5 text-base",
-        tone === "careful" ? "bg-danger-soft" : "bg-plate-2",
+        tone === "careful" ? "bg-danger-soft" : "bg-plate-nested",
       )}
     >
       <Icon
         className={clsx(
           "mt-0.5 size-4 shrink-0",
-          tone === "careful" ? "text-danger" : "text-muted",
+          tone === "careful" ? "text-danger" : "text-ink-muted",
         )}
         aria-hidden="true"
       />
       {/* Inline code on the well takes the page's plate, so it still reads as a chip. */}
       <div className="min-w-0 [&>:last-child]:mb-0 [&>p]:mb-2 [&_code]:!bg-plate">
-        {title && <p className="!mb-1 font-medium text-text">{title}</p>}
+        {title && <p className="!mb-1 font-medium text-ink">{title}</p>}
         {children}
       </div>
     </aside>
@@ -109,14 +109,14 @@ export function Steps({ children }: { children: ReactNode }) {
         <li key={i} className="relative grid grid-cols-[26px_1fr] gap-x-3.5">
           <span
             aria-hidden="true"
-            className="z-10 grid size-[26px] place-items-center rounded-full bg-plate-2 text-2xs font-semibold text-text tabular-nums edge"
+            className="z-10 grid size-[26px] place-items-center rounded-full bg-plate-nested text-2xs font-semibold text-ink tabular-nums edge"
           >
             {i + 1}
           </span>
           {i < items.length - 1 && (
             <span
               aria-hidden="true"
-              className="absolute left-[13px] top-[30px] h-[calc(100%+1.1rem)] w-px bg-edge-2"
+              className="absolute start-[13px] top-[30px] h-[calc(100%+1.1rem)] w-px bg-edge-strong"
             />
           )}
           <div className="min-w-0 [&>:first-child]:mt-0 [&>:last-child]:mb-0">{child}</div>
@@ -128,7 +128,7 @@ export function Steps({ children }: { children: ReactNode }) {
 
 /** The heading of one step. Its line is as tall as the number beside it, so the two centre. */
 export function StepTitle({ children }: { children: ReactNode }) {
-  return <p className="!mb-1.5 font-medium leading-[26px] text-text">{children}</p>;
+  return <p className="!mb-1.5 font-medium leading-[26px] text-ink">{children}</p>;
 }
 
 /** Terms and meanings on shared columns, so every meaning starts at the same edge. */
@@ -141,8 +141,8 @@ export function Defs({ items }: { items: { term: ReactNode; def: ReactNode }[] }
           key={i}
           className="grid gap-y-1 border-edge px-3.5 py-3 sm:col-span-2 sm:grid-cols-subgrid sm:gap-x-6 [&:not(:first-child)]:border-t"
         >
-          <dt className="text-base font-medium text-text">{it.term}</dt>
-          <dd className="text-base text-text-2">{it.def}</dd>
+          <dt className="text-base font-medium text-ink">{it.term}</dt>
+          <dd className="text-base text-ink-secondary">{it.def}</dd>
         </div>
       ))}
     </dl>
@@ -157,14 +157,14 @@ export function NextLinks({ items }: { items: { to: DocPath; title: string; blur
         <li key={it.to} className="border-edge [&:not(:first-child)]:border-t">
           <a
             href={it.to}
-            className="doc-plain group flex items-center gap-4 px-4 py-3.5 transition-colors duration-150 hoverable:hover:bg-plate-2"
+            className="doc-plain group flex items-center gap-4 px-4 py-3.5 transition-colors duration-150 hoverable:hover:bg-plate-nested"
           >
             <span className="min-w-0 flex-1">
-              <span className="block font-medium text-text">{it.title}</span>
-              <span className="block text-base text-muted">{it.blurb}</span>
+              <span className="block font-medium text-ink">{it.title}</span>
+              <span className="block text-base text-ink-muted">{it.blurb}</span>
             </span>
             <ArrowRight
-              className="size-4 shrink-0 text-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-text"
+              className="size-4 shrink-0 text-ink-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-ink"
               aria-hidden="true"
             />
           </a>

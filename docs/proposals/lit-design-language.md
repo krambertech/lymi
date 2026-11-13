@@ -6,7 +6,7 @@ decision: Light carries Lymi's character on every surface; the moments are in mo
 
 # Lit design language
 
-Lymi's interface is clean and calm but forgettable. The lantern, its one idea, sits at 44 px, the light room is the warm near-white every new app ships, and a touch never visibly reaches the flame. The apps people remember take one metaphor literally in one place: Flighty's departure board, Things' checkbox, Tide Guide's sky that follows the hour. For Lymi the metaphor is light. What the learner does feeds the flame, and the flame lights the room. This proposal applies to the web app, the phone app and the site together.
+Lymi's interface feels generic and forgettable. Its lantern is only 44 px, the light theme is a conventional warm near-white, and touch interactions do not affect the flame. This proposal makes light more visible in the web app, phone app and site through a larger lantern, responses to learner actions and light that spreads across the screen at the end of a review. Flighty's departure board, Things' checkbox and Tide Guide's changing sky are references for using one visual idea consistently.
 
 ## Decided
 
@@ -19,7 +19,7 @@ Moved into the owning documents on 11 October 2026:
 - **Haptics and one sound.** On the phone; the sound plays only at the goal and one setting turns it off ([phone.md](../design/system/phone.md)).
 - **The tilt highlight.** Today's big lantern, on the phone only.
 
-Declined: an ember that travels from the pressed grade to the lantern, which was too much for something that happens hundreds of times a day; a blue night room, which changes "dark is a warm room"; a cool daylight room, which read as cold.
+Declined: an ember that travels from the pressed grade to the lantern, which added too much motion to an action repeated hundreds of times a day; a blue night room, which changes "dark is a warm room"; a cool daylight room, which read as cold.
 
 ## Open
 

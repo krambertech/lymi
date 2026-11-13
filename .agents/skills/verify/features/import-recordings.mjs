@@ -23,6 +23,17 @@ export default async function drive({ page, step, api, expect }) {
       await expect(looksRight.or(ready)).toBeVisible();
     }
     await expect(ready).toHaveText("Ready to import 3 cards");
+    // Local language detection has no AI key, and pitch accent joins a Reading only on Japanese cards.
+    await page.getByRole("button", { name: "Change languages" }).click();
+    const languages = page.getByRole("dialog", { name: "Languages" });
+    await languages.getByRole("combobox").first().click();
+    await page.keyboard.type("Japanese");
+    await page
+      .getByRole("option", { name: /Japanese/ })
+      .first()
+      .click();
+    await languages.getByRole("button", { name: "Use these languages" }).click();
+    await expect(languages).toBeHidden();
   });
 
   await step("The preview says which recordings come and what is left out", async () => {
@@ -51,7 +62,8 @@ export default async function drive({ page, step, api, expect }) {
     const list = cards.items ?? cards.cards ?? cards;
     const hashi = list.find((c) => (c.card ?? c).term === "箸");
     expect(hashi.card ?? hashi).toMatchObject({
-      notes: "Counted with 膳\nはꜜし [1]",
+      pronunciation: "はし [1]",
+      notes: "Counted with 膳",
       exampleTranslation: "I eat with chopsticks.",
     });
     return { deck: deck.id, notes: list.map((c) => [(c.card ?? c).term, (c.card ?? c).notes]) };

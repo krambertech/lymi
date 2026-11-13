@@ -29,6 +29,7 @@ export type DocPath =
   | "/docs/mcp/grok"
   | "/docs/yomitan"
   | "/docs/getting-started"
+  | "/docs/smart-add"
   | "/docs/decks"
   | "/docs/import"
   | "/docs/import-from-quizlet"
@@ -77,6 +78,13 @@ export const PAGES: DocPage[] = [
     title: "Getting started",
     blurb: "Add your first cards, review what is due and find your way around Lymi.",
     section: "Start",
+  },
+  {
+    to: "/docs/smart-add",
+    nav: "Smart add",
+    title: "Smart add",
+    blurb: "Turn lesson photos, PDFs and notes into cards, and choose which to keep.",
+    section: "Using Lymi",
   },
   {
     to: "/docs/decks",

@@ -140,7 +140,7 @@ export function CertificationsView() {
           lede={
             <Trans>
               Turn your study guide into cards and review a few minutes a day. Lymi brings each term
-              back right before you’d forget it, from the first chapter to exam day and after.
+              back just as it starts to fade, from the first chapter to exam day and after.
             </Trans>
           }
           cards={HAND}

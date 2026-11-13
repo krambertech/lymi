@@ -1,14 +1,36 @@
 import { newId, termKey } from "@lymi/core";
-import { type AnyColumn, and, asc, eq, getTableColumns, is, isNull, SQL, sql } from "@lymi/core/db";
+import {
+  type AnyColumn,
+  and,
+  asc,
+  eq,
+  getTableColumns,
+  is,
+  isNotNull,
+  isNull,
+  SQL,
+  sql,
+} from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { type AnalyticsWriter, track } from "./analytics";
-import { runInBatches } from "./batch";
+import { auditStatementWhen } from "./audit";
 import { stateStatementsForLearner } from "./modes";
 
 /** Members copied per call, so one run stays well inside a Worker's time and D1's batch limits. */
 const MEMBERS_PER_RUN = 25;
 
+/** Localized terms' keys per statement, so each stays well inside D1's limit on one bound value. */
+const KEYS_PER_STATEMENT = 1000;
+
 type Value = SQL | string | number | null;
+
+/** One member of a deck its owner left behind. */
+interface Member {
+  deckId: string;
+  userId: string;
+  ownerId: string;
+  language: string | null;
+}
 
 /**
  * An insert-select that copies `source` rows into `table`: every column comes from the source row
@@ -43,13 +65,13 @@ function copyRows<
  */
 function copyStatements(
   db: Db,
-  deckId: string,
-  userId: string,
-  language: string | null,
+  { deckId, userId, ownerId, language }: Member,
+  localizedKeys: [string, string][],
   now: Date,
   copyId: string,
 ) {
   const at = now.getTime();
+  const landed = eq(schema.decks.id, copyId);
   const member = sql`exists (select 1 from deck_members
     where deck_id = ${deckId} and user_id = ${userId} and removed_at is null)`;
   const newIdOf = (column: AnyColumn) =>
@@ -146,6 +168,7 @@ function copyStatements(
           and local.language = ${language} and local.status = 'approved'
         where cards.deck_id = ${deckId}`,
     ),
+    ...keyStatements(db, userId, localizedKeys),
     // The copy shares each picture's object; deleting an account leaves one another row uses.
     copyRows(
       db,
@@ -171,6 +194,28 @@ function copyStatements(
       .update(schema.sectionStarts)
       .set({ sectionId: newIdOf(schema.sectionStarts.sectionId) })
       .where(and(eq(schema.sectionStarts.userId, userId), copied(schema.sectionStarts.sectionId))),
+    db
+      .update(schema.deckPreferences)
+      .set({ deckId: copyId })
+      .where(
+        and(
+          eq(schema.deckPreferences.deckId, deckId),
+          eq(schema.deckPreferences.userId, userId),
+          member,
+        ),
+      ),
+    auditStatementWhen(
+      { db, userId, actor: "system" },
+      { entity: "deck", action: "create", id: copyId },
+      schema.decks,
+      landed,
+    ),
+    auditStatementWhen(
+      { db, userId: ownerId, actor: "system" },
+      { entity: "deck", action: "leave", id: deckId, memberId: userId },
+      schema.decks,
+      landed,
+    ),
     // Second to last: whether it removed a row says whether this run made the copy.
     db
       .delete(schema.deckMembers)
@@ -178,6 +223,49 @@ function copyStatements(
       .returning({ id: schema.deckMembers.id }),
     db.delete(schema.deckCopyIds).where(eq(schema.deckCopyIds.userId, userId)),
   ] as const;
+}
+
+/** A term taken from an edition has no duplicate key yet; `termKey` needs JavaScript's case folding. */
+function keyStatements(db: Db, userId: string, localizedKeys: [string, string][]) {
+  const statements = [];
+  for (let at = 0; at < localizedKeys.length; at += KEYS_PER_STATEMENT) {
+    const keys = JSON.stringify(
+      Object.fromEntries(localizedKeys.slice(at, at + KEYS_PER_STATEMENT)),
+    );
+    statements.push(
+      db
+        .update(schema.cards)
+        .set({ normalizedTerm: sql`keys.value` })
+        .from(
+          sql`json_each(${keys}) as keys
+            join deck_copy_ids as ids on ids.old_id = keys.key and ids.user_id = ${userId}`,
+        )
+        .where(sql`${schema.cards.id} = ids.new_id`),
+    );
+  }
+  return statements;
+}
+
+/** Each term the member's edition replaces, by original card, with the key its copy needs. */
+async function localizedTermKeys(db: Db, deckId: string, language: string | null) {
+  if (!language) return [];
+  const rows = await db
+    .select({
+      cardId: schema.cards.id,
+      language: schema.cards.language,
+      term: schema.cardLocalizations.term,
+    })
+    .from(schema.cardLocalizations)
+    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardLocalizations.cardId))
+    .where(
+      and(
+        eq(schema.cards.deckId, deckId),
+        eq(schema.cardLocalizations.language, language),
+        eq(schema.cardLocalizations.status, "approved"),
+        isNotNull(schema.cardLocalizations.term),
+      ),
+    );
+  return rows.map((row): [string, string] => [row.cardId, termKey(row.language, row.term ?? "")]);
 }
 
 /**
@@ -194,6 +282,7 @@ export async function copyFormerDecks(
     .select({
       deckId: schema.formerDeckCopies.deckId,
       userId: schema.deckMembers.userId,
+      ownerId: schema.decks.userId,
       language: schema.deckMembers.meaningLanguage,
       cards: sql<number>`(select count(*) from cards where cards.deck_id = ${schema.formerDeckCopies.deckId})`,
     })
@@ -205,22 +294,23 @@ export async function copyFormerDecks(
         isNull(schema.deckMembers.removedAt),
       ),
     )
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.formerDeckCopies.deckId))
     .orderBy(asc(schema.formerDeckCopies.createdAt))
     .limit(MEMBERS_PER_RUN);
   let copied = 0;
   let failed = 0;
   // One member whose copy fails is reported and passed over, so the rest still get theirs.
-  for (const { deckId, userId, language, cards } of members) {
+  for (const member of members) {
     const copyId = newId();
-    const statements = copyStatements(db, deckId, userId, language, now, copyId);
     try {
+      const keys = await localizedTermKeys(db, member.deckId, member.language);
+      const statements = copyStatements(db, member, keys, now, copyId);
       const [first, ...rest] = statements;
       const results = await db.batch([first, ...rest]);
       const left = results[statements.length - 2] as unknown as { id: string }[];
       if (left.length === 0) continue;
-      await keyLocalizedTerms(db, copyId);
       copied++;
-      track(events, { name: "former_deck_copied", cards });
+      track(events, { name: "former_deck_copied", cards: member.cards });
     } catch (error) {
       failed++;
       console.error("Copying a former owner's deck for a member failed", {
@@ -233,21 +323,4 @@ export async function copyFormerDecks(
       where deck_members.deck_id = former_deck_copies.deck_id and deck_members.removed_at is null)`,
   );
   return { copied, failed };
-}
-
-/** A term taken from an edition has no duplicate key yet; `termKey` needs JavaScript's case folding. */
-async function keyLocalizedTerms(db: Db, deckId: string) {
-  const unkeyed = await db
-    .select({ id: schema.cards.id, term: schema.cards.term, language: schema.cards.language })
-    .from(schema.cards)
-    .where(and(eq(schema.cards.deckId, deckId), eq(schema.cards.normalizedTerm, "")));
-  await runInBatches(
-    db,
-    unkeyed.map((card) => [
-      db
-        .update(schema.cards)
-        .set({ normalizedTerm: termKey(card.language, card.term) })
-        .where(eq(schema.cards.id, card.id)),
-    ]),
-  );
 }

@@ -13,10 +13,12 @@ const ERROR_TYPES = new Set([
   "DOMException",
   "DrizzleQueryError",
   "WorkflowError",
+  "OpenAiTextError",
 ]);
 
 // Runtime-written messages that name a network, chunk or invocation-limit failure, kept without the address they name.
-const KNOWN_MESSAGES: [RegExp, string][] = [
+// A pattern without a replacement matches only fixed text, which is kept as it is.
+const KNOWN_MESSAGES: [RegExp, string?][] = [
   [/^Load failed$/, "Load failed"],
   [/^Failed to fetch(?: \([^)]*\))?$/, "Failed to fetch"],
   [
@@ -36,6 +38,13 @@ const KNOWN_MESSAGES: [RegExp, string][] = [
     /^Too many subrequests by single worker invocation/i,
     "Too many subrequests by single worker invocation",
   ],
+  // OpenAiTextError's own messages, which name the failure and HTTP status but no prompt or reply.
+  [/^OpenAI text request failed \(\d{1,3}\)$/],
+  [/^OpenAI could not be reached$/],
+  [/^OpenAI reply was cut off$/],
+  [/^OpenAI returned no text$/],
+  [/^OpenAI returned text that is not JSON$/],
+  [/^OpenAI text is not configured$/],
 ];
 
 // D1's fixed failure messages from developers.cloudflare.com/d1/observability/debug-d1/, kept without any SQL that follows.
@@ -57,10 +66,13 @@ const D1_MESSAGES = [
 function knownMessage(value: unknown): string {
   if (typeof value !== "string") return "Unexpected error";
   return (
-    D1_MESSAGES.find((message) => value.startsWith(message)) ??
-    KNOWN_MESSAGES.find(([pattern]) => pattern.test(value))?.[1] ??
-    "Unexpected error"
+    D1_MESSAGES.find((message) => value.startsWith(message)) ?? known(value) ?? "Unexpected error"
   );
+}
+
+function known(value: string): string | undefined {
+  const match = KNOWN_MESSAGES.find(([pattern]) => pattern.test(value));
+  return match && (match[1] ?? value);
 }
 
 const CHUNK_ID = /^[A-Za-z0-9-]{1,64}$/;

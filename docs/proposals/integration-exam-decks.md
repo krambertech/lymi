@@ -6,7 +6,7 @@ decision: none
 
 # Integration exam decks
 
-A migrant in Europe meets the language through a permit: permanent residence and citizenship each ask for a language level and, in many countries, a test on laws and society. Lymi already publishes several citizenship and language exams on `/exams`, one page per exam from `apps/site/src/lib/exams.ts`, including Germany's Einbürgerungstest, Spain's CCSE, Czechia's tests and the Goethe-Zertifikat. This plan says which decks to publish next for the languages in [long-tail languages](long-tail-languages.md), from which official source and under what terms. It holds no content; Kateryna decides which to build.
+Permanent residence and citizenship requirements can include a language level and a test on laws and society. Lymi already publishes several citizenship and language exams on `/exams`, one page per exam from `apps/site/src/lib/exams.ts`, including Germany's Einbürgerungstest, Spain's CCSE, Czechia's tests and the Goethe-Zertifikat. This plan says which decks to publish next for the languages in [long-tail languages](long-tail-languages.md), from which official source and under what terms. Kateryna has not yet chosen which decks to build.
 
 ## Evidence
 

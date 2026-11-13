@@ -5,6 +5,8 @@ import {
   type Directions,
   deckLimits,
   isolate,
+  type PronunciationDisplay,
+  readingEngine,
   type SectionProgression,
 } from "@lymi/core";
 import { clsx } from "clsx";
@@ -22,6 +24,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { AdaptivePronunciationChoice } from "../components/adaptive-pronunciation-choice";
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
@@ -89,6 +92,9 @@ export interface DeckSettingsProps {
   sharing?: SharingProps | undefined;
   /** How many tags the deck's cards carry, for the owner's way to its Tags page; undefined while loading. */
   tags?: { count: number | undefined } | undefined;
+  /** The learner's own pronunciation choice, owner or member. */
+  onPronunciationDisplay: (value: PronunciationDisplay) => void;
+  pronunciationDisplayError?: boolean | undefined;
 }
 
 export interface MembersProps {
@@ -137,6 +143,8 @@ export function DeckSettingsView({
   sharing,
   members,
   tags,
+  onPronunciationDisplay,
+  pronunciationDisplayError,
 }: DeckSettingsProps) {
   const { t } = useLingui();
   const reading = !!deck && deck.role !== "owner";
@@ -200,7 +208,7 @@ export function DeckSettingsView({
       }
       status={
         reading ? undefined : (
-          <p className="min-h-5 text-sm text-muted" role="status">
+          <p className="min-h-5 text-sm text-ink-muted" role="status">
             {error ? (
               <InlineError>{error}</InlineError>
             ) : saving ? (
@@ -223,7 +231,20 @@ export function DeckSettingsView({
         </div>
       )}
 
-      {deck && reading && <DeckAbout deck={deck} example={example} onLeave={onLeave} />}
+      {deck && reading && (
+        <DeckAbout
+          deck={deck}
+          example={example}
+          onLeave={onLeave}
+          pronunciation={
+            <AdaptivePronunciationField
+              deck={deck}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
+            />
+          }
+        />
+      )}
 
       {deck && !reading && (
         <>
@@ -266,6 +287,11 @@ export function DeckSettingsView({
               description={t`The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language.`}
               descriptionFirst
             />
+            <AdaptivePronunciationField
+              deck={deck}
+              onChange={onPronunciationDisplay}
+              error={pronunciationDisplayError}
+            />
           </SettingsGroup>
 
           <SettingsGroup title={t`Review modes`}>
@@ -285,7 +311,7 @@ export function DeckSettingsView({
             <SettingsGroup
               id="sections"
               title={t`Sections`}
-              description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
+              description={t`Parts of this deck, such as one per lesson. Everyone in the deck sees them in this order.`}
             >
               <SectionManager {...sections} />
               {sections.sections.length > 0 && <ProgressionField deck={deck} onSave={onSave} />}
@@ -301,7 +327,7 @@ export function DeckSettingsView({
               <NavLink
                 to="/library/$deckId/settings/tags"
                 params={{ deckId: deck.id }}
-                className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
+                className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-strong hoverable:hover:veil"
               >
                 <span className="font-medium">
                   {tags.count === undefined ? (
@@ -310,9 +336,9 @@ export function DeckSettingsView({
                     <Plural value={tags.count} _0="No tags yet" one="# tag" other="# tags" />
                   )}
                 </span>
-                <span className="flex items-center gap-1 text-sm text-muted">
+                <span className="flex items-center gap-1 text-sm text-ink-muted">
                   <Trans>Manage</Trans>
-                  <ChevronRight className="size-4 text-faint" aria-hidden="true" />
+                  <ChevronRight className="size-4 text-ink-faint" aria-hidden="true" />
                 </span>
               </NavLink>
             </SettingsGroup>
@@ -351,24 +377,26 @@ export function DeckSettingsView({
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="grid gap-0.5 border-t border-edge py-3 first:border-t-0 first:pt-0 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-4">
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className="text-base text-text">{children}</dd>
+      <dt className="text-sm text-ink-muted">{label}</dt>
+      <dd className="text-base text-ink">{children}</dd>
     </div>
   );
 }
 
 /**
- * What a member sees where the owner has settings. Nothing on this deck is theirs to change, so
- * the screen states the facts and offers the one move they have: leaving.
+ * What a member sees where the owner has settings. The deck is not theirs to change, so the
+ * screen states the facts and offers what is theirs: how they review it, and leaving.
  */
 function DeckAbout({
   deck,
   example,
   onLeave,
+  pronunciation,
 }: {
   deck: DeckSummary;
   example?: DirectionExample | undefined;
   onLeave?: (() => void) | undefined;
+  pronunciation: ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const [reporting, setReporting] = useState(false);
@@ -387,16 +415,16 @@ function DeckAbout({
             <div className="flex items-center gap-2.5">
               <FormerOwnerMark size={32} />
               <div className="grid min-w-0 gap-0.5">
-                <p className="truncate text-base font-medium text-text">{t`Former owner`}</p>
-                <p className="text-sm text-muted">
+                <p className="truncate text-base font-medium text-ink">{t`Former owner`}</p>
+                <p className="text-sm text-ink-muted">
                   <Trans>Left Lymi, so nobody can change this deck</Trans>
                 </p>
               </div>
             </div>
-            <p className="max-w-[60ch] text-sm text-muted">
+            <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
-                You keep studying these cards on your own schedule. Nobody else sees your reviews or
-                progress.
+                You keep reviewing these cards on your own schedule. Nobody else sees your reviews
+                or progress.
               </Trans>
             </p>
           </>
@@ -409,15 +437,15 @@ function DeckAbout({
                 <Avatar name={ownerName} size={32} />
               )}
               <div className="grid min-w-0 gap-0.5">
-                <p className="truncate text-base font-medium text-text">{ownerName}</p>
-                <p className="text-sm text-muted">
+                <p className="truncate text-base font-medium text-ink">{ownerName}</p>
+                <p className="text-sm text-ink-muted">
                   <Trans>Owns this deck and writes its cards</Trans>
                 </p>
               </div>
             </div>
-            <p className="max-w-[60ch] text-sm text-muted">
+            <p className="max-w-[60ch] text-sm text-ink-muted">
               <Trans>
-                You study the same cards as {{ ownerName: isolate(ownerName) }}, on your own
+                You review the same cards as {{ ownerName: isolate(ownerName) }}, on your own
                 schedule. Nobody else sees your reviews or progress.
               </Trans>
             </p>
@@ -434,11 +462,12 @@ function DeckAbout({
           <Fact label={t`Review modes`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
-              {direction && <span className="text-sm text-muted">{direction}</span>}
+              {direction && <span className="text-sm text-ink-muted">{direction}</span>}
             </span>
           </Fact>
           <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
         </dl>
+        {pronunciation}
       </SettingsGroup>
 
       <SettingsGroup
@@ -513,7 +542,7 @@ function MembersGroup({
   return (
     <SettingsGroup
       title={t`People`}
-      description={t`Everyone studying this deck. You see whether they joined, not their reviews.`}
+      description={t`Everyone in this deck. You see whether they joined, not their reviews.`}
     >
       {error ? (
         <p className="text-sm" role="alert">
@@ -529,7 +558,7 @@ function MembersGroup({
           <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
             <Avatar name={owner.name} size={36} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-base font-medium text-text">{owner.name}</p>
+              <p className="truncate text-base font-medium text-ink">{owner.name}</p>
             </div>
             <Chip size="sm">
               <Trans>Owner</Trans>
@@ -582,13 +611,13 @@ function InvitationRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <span
         aria-hidden="true"
-        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint"
+        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-strong text-sm font-medium text-ink-faint"
       >
         {invitation.email.slice(0, 1).toUpperCase()}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{invitation.email}</p>
-        <p className="text-sm text-muted tabular-nums">
+        <p className="truncate text-base font-medium text-ink">{invitation.email}</p>
+        <p className="text-sm text-ink-muted tabular-nums">
           <Trans>invited {invited}</Trans>
         </p>
       </div>
@@ -633,8 +662,8 @@ function MemberRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
       <Avatar name={member.name} size={36} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-text">{member.name}</p>
-        <p className="text-sm text-muted tabular-nums">
+        <p className="truncate text-base font-medium text-ink">{member.name}</p>
+        <p className="text-sm text-ink-muted tabular-nums">
           <Trans>joined {joined}</Trans>
         </p>
       </div>
@@ -663,6 +692,35 @@ function MemberRow({
   );
 }
 
+/** Shown only for a language that draws pronunciation on the term, and only ever the caller's own. */
+function AdaptivePronunciationField({
+  deck,
+  onChange,
+  error,
+}: {
+  deck: DeckSummary;
+  onChange: (value: PronunciationDisplay) => void;
+  error?: boolean | undefined;
+}) {
+  const notation = readingEngine(deck.defaultLanguage);
+  if (!notation) return null;
+  return (
+    <div className="grid gap-2">
+      <AdaptivePronunciationChoice
+        notation={notation}
+        value={deck.pronunciationDisplay ?? "adaptive"}
+        onChange={onChange}
+        error={error}
+      />
+      {deck.role !== "owner" && (
+        <p className="text-sm text-ink-muted">
+          <Trans>Only for you. The owner and other members choose their own.</Trans>
+        </p>
+      )}
+    </div>
+  );
+}
+
 /** How the deck's sections open for everyone studying it, made the moment it is chosen. */
 function ProgressionField({
   deck,
@@ -675,7 +733,7 @@ function ProgressionField({
   const name = useId();
   return (
     <div className="grid gap-2 pt-2">
-      <p className="text-base font-medium text-text" id={`${name}-label`}>
+      <p className="text-base font-medium text-ink" id={`${name}-label`}>
         <Trans>How sections open</Trans>
       </p>
       <RadioGroup<SectionProgression>
@@ -700,8 +758,8 @@ function ProgressionField({
           description={t`Every section is open, so any card can come up in review.`}
         />
       </RadioGroup>
-      <p className="text-sm text-muted">
-        <Trans>Anyone studying the deck can start a later section early.</Trans>
+      <p className="text-sm text-ink-muted">
+        <Trans>Anyone in the deck can start a later section early.</Trans>
       </p>
     </div>
   );
@@ -750,14 +808,14 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
           <div
             className={clsx(
               "rounded-md bg-plate transition-[box-shadow] duration-150",
-              shared ? "edge-2" : "edge",
+              shared ? "edge-strong" : "edge",
             )}
           >
             <RadioCard
               variant="bare"
               value="link"
               title={t`Anyone with the link`}
-              description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}
+              description={t`Anyone with the link can join and review your cards on their own schedule. They can’t change the cards, and you don’t see their progress.`}
             />
             {shared && (
               <div className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]">

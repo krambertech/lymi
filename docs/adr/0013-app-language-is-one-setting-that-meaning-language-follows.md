@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-12
 ---
 
-# App language is one stored setting, and meaning language follows it
+# Meaning language follows app language
 
 `user_settings.app_language` is the language of the interface and of push reminders. It is seeded from the browser on the learner's first sign-in and changed under You. Changing it also writes `meaning_language`, so meanings and examples come out in the language the learner reads the app in. No screen shows meaning language on its own, and nothing else writes it: `meaningLanguage` is read-only in the settings response and is not accepted by `SettingsPatch` or MCP's `update_settings`. `appLanguage` is a closed enum, `en`, `uk` and `ru`, so a patch cannot store a language without a catalog.
 

@@ -114,7 +114,7 @@ export function LightPool({ size, clock, strength, still }: PoolProps) {
             <RadialGradient
               c={vec(r, r)}
               r={r}
-              colors={[p.glow, fade(p.glow, 0.4), fade(p.glow, 0)]}
+              colors={[p["lantern-glow"], fade(p["lantern-glow"], 0.4), fade(p["lantern-glow"], 0)]}
               positions={[0, 0.45, 1]}
             />
           </Circle>
@@ -136,9 +136,9 @@ export function EndEmbers({ size, clock, embers }: EmbersProps) {
   const box = size * (1 + POOL_REACH * 2);
   const ox = box / 2;
   const oy = box / 2 - size / 2 + size * FLAME_AT;
-  const core = p["flame-core"];
+  const core = p["lantern-flame"];
   const amber = p.amber;
-  const glow = p.glow;
+  const glow = p["lantern-glow"];
 
   const picture = useDerivedValue(() =>
     createPicture((canvas) => {
@@ -196,10 +196,10 @@ interface TurnProps {
  */
 export function TurnSpark({ clock, room, lantern, today, run }: TurnProps) {
   const p = usePalette();
-  const core = p["flame-core"];
+  const core = p["lantern-flame"];
   const amber = p.amber;
-  const glow = p.glow;
-  const tones = [p["light-1"], p["light-2"], core];
+  const glow = p["lantern-glow"];
+  const tones = [p["lit-low"], p["lit-high"], core];
 
   const picture = useDerivedValue(() =>
     createPicture((canvas) => {

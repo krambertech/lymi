@@ -13,9 +13,9 @@ Today now leads with what’s due and one Review button, with your streak right 
 
 ## Your daily goal keeps your streak
 
-Choose how many reviews make a good day. Reach that number, or finish everything that’s due, and the day counts toward your streak. Every grade counts, Forgot included. The lantern’s flame grows with each review and is full once you reach your goal.
+Choose how many reviews make a good day. Reach that number, or finish everything that’s due, and the day counts toward your streak. Every grade counts, Forgot included.
 
-When you get there, the review stops on its own screen. Today’s count rolls in and your week fills in a day at a time. From there you can go over the cards you forgot, carry on, or call it a day.
+When you get there, the review stops on its own screen. From there you can go over the cards you forgot, carry on, or call it a day.
 
 ## A second chance in the same review
 

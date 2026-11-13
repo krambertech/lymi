@@ -58,6 +58,9 @@ export type Draw = Omit<DrawOut, "cards"> & {
  */
 const askable = (mode: unknown) => ReviewMode.safeParse(mode).success;
 
+/** As long as a queued write may stall: past it the outbox counts as offline and frees the lock tabs share. */
+export const GRADE_TIMEOUT = 20_000;
+
 export const reviewApi = {
   /** A round from Today, cards chosen in one deck, or the day's order. */
   queue: async (scope?: ReviewScope, round?: Round, cards?: readonly string[]) => {
@@ -89,6 +92,7 @@ export const reviewApi = {
   grade: (body: GradeInput) =>
     request<GradeOut>("/api/review/grade", {
       method: "POST",
+      timeout: GRADE_TIMEOUT,
       body: JSON.stringify({
         ...body,
         reviewedAt: (body.reviewedAt ?? new Date()).toISOString(),
@@ -97,5 +101,9 @@ export const reviewApi = {
     }),
   /** Takes back the latest grade of a card's mode; an older one is 409. */
   undoReview: (reviewId: string) =>
-    request<UndoOut>("/api/review/undo", { method: "POST", body: JSON.stringify({ reviewId }) }),
+    request<UndoOut>("/api/review/undo", {
+      method: "POST",
+      timeout: GRADE_TIMEOUT,
+      body: JSON.stringify({ reviewId }),
+    }),
 };

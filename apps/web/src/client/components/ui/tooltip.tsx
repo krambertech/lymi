@@ -1,6 +1,7 @@
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import { cn } from "cn";
 import * as React from "react";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Tooltip on Base UI: a visual name for a control whose accessible name it repeats, so
@@ -73,8 +74,9 @@ function TooltipContent({
   ...props
 }: TooltipPrimitive.Popup.Props &
   Pick<TooltipPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
+  const container = usePortalContainer();
   return (
-    <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Portal container={container}>
       <TooltipPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -88,7 +90,7 @@ function TooltipContent({
           aria-hidden="true"
           className={cn(
             // Grows out of the side nearest its control: in over 120 ms, out in 80; at once along a row, from focus, or on dismiss.
-            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-text px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-instant:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-ink px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-instant:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
             className,
           )}
           {...props}

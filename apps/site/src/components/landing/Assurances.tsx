@@ -25,8 +25,8 @@ export function Assurances({ label, items }: Props) {
         {items.map(({ id, icon: Icon, title, body }) => (
           <li key={id}>
             <Icon aria-hidden="true" strokeWidth={1.5} className="size-7 text-amber-text" />
-            <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] text-text">{title}</h3>
-            <p className="mt-2 max-w-[34ch] text-base text-pretty text-text-2">{body}</p>
+            <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] text-ink">{title}</h3>
+            <p className="mt-2 max-w-[34ch] text-base text-pretty text-ink-secondary">{body}</p>
           </li>
         ))}
       </ul>

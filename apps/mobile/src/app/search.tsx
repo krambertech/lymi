@@ -110,7 +110,7 @@ export default function Search() {
             <View>
               <SectionTitle
                 end={
-                  <Text className="text-base text-muted">
+                  <Text className="text-base text-ink-muted">
                     {total === null && more
                       ? t`More than ${cards.length}`
                       : plural(total ?? cards.length, { one: "# card", other: "# cards" })}
@@ -144,17 +144,13 @@ export default function Search() {
                           className={`flex-row gap-3 ${reading ? "items-end" : "items-baseline"}`}
                         >
                           <View className="flex-1">
-                            <TermText
-                              card={c}
-                              className="text-md font-medium text-text"
-                              lines={2}
-                            />
+                            <TermText card={c} className="text-md font-medium text-ink" lines={2} />
                           </View>
-                          <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>
+                          <Text className="max-w-[40%] text-sm text-ink-muted" numberOfLines={1}>
                             {c.deckName}
                           </Text>
                         </View>
-                        <Text className="text-base text-text-2" numberOfLines={2}>
+                        <Text className="text-base text-ink-secondary" numberOfLines={2}>
                           {meaning}
                         </Text>
                       </View>
@@ -172,7 +168,7 @@ export default function Search() {
               accessibilityRole="button"
               className="h-11 items-center justify-center self-center px-4"
             >
-              <Text className="text-md font-medium text-text-2">
+              <Text className="text-md font-medium text-ink-secondary">
                 {search.isFetchingNextPage ? t`Loading…` : t`Show more`}
               </Text>
             </Press>

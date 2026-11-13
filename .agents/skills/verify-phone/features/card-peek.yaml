@@ -1,0 +1,17 @@
+# The peek a long press lifts, with a long meaning and an example.
+appId: app.lymi
+name: Card peek
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "${TERM}, .*"
+    centerElement: true
+- longPressOn: "${TERM}, .*"
+- extendedWaitUntil:
+    visible: "Edit card"
+    timeout: 10000
+- takeScreenshot: 01-peek

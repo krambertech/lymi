@@ -23,6 +23,7 @@ import { Slider } from "../../components/ui/slider";
 import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
 import { DeviceFrames } from "../device-frame";
+import { Rule } from "../do-dont";
 import { Force } from "../forced-states";
 import { Variants } from "../frame";
 import { DeckCombobox, DeckSelect } from "../specimens";
@@ -260,7 +261,7 @@ export const forms: Group = {
               render: () => (
                 <div className={`relative ${box}`}>
                   <Search
-                    className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                    className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
                     aria-hidden="true"
                   />
                   <Input placeholder="Search this deck" aria-label="Search" className="ps-9" />
@@ -275,7 +276,7 @@ export const forms: Group = {
       slug: "textarea",
       name: "Textarea",
       source: "components/ui/textarea.tsx",
-      note: "More than a line: notes, a mnemonic, where you heard it. It grows by dragging, never on its own.",
+      note: "More than a line: notes, a hint, where you heard it. It grows with what you type, up to half the screen, then scrolls.",
       Demo: function TextareaDemo() {
         const [text, setText] = useState("");
         return (
@@ -344,7 +345,7 @@ export const forms: Group = {
       slug: "segmented",
       name: "Segmented",
       source: "components/segmented.tsx",
-      note: "Two to four views of the same thing, built on the Toggle Group in components/ui/toggle-group.tsx. A plate-2 track with the chosen plate inside it, the same shape as the phone’s navigation pill. The plate springs to a pointer’s choice and jumps for a key.",
+      note: "Two to four views of the same thing, built on the Toggle Group in components/ui/toggle-group.tsx. A plate-nested track with the chosen plate inside it, the same shape as the phone’s navigation pill. The plate springs to a pointer’s choice and jumps for a key.",
       Demo: function SegmentedDemo() {
         const [seg, setSeg] = useState("recognise");
         return (
@@ -474,7 +475,7 @@ export const forms: Group = {
                 label: "On",
                 render: () => (
                   <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
-                    <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
+                    <FieldLabel className="text-base text-ink">Show AI examples</FieldLabel>
                     <Switch checked={on} onCheckedChange={setOn} />
                   </Field>
                 ),
@@ -485,7 +486,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" className={`${box} gap-4`}>
                     <FieldContent className="gap-0.5">
-                      <FieldLabel className="text-base text-text">
+                      <FieldLabel className="text-base text-ink">
                         Play audio automatically
                       </FieldLabel>
                       <FieldDescription>
@@ -500,7 +501,7 @@ export const forms: Group = {
                 label: "Focus",
                 render: () => (
                   <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
-                    <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
+                    <FieldLabel className="text-base text-ink">Show AI examples</FieldLabel>
                     <Force state="focus">
                       <Switch checked={on} onCheckedChange={setOn} />
                     </Force>
@@ -513,7 +514,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" className={`${box} gap-4`}>
                     <FieldContent className="gap-0.5">
-                      <FieldLabel className="text-base text-text">
+                      <FieldLabel className="text-base text-ink">
                         Share this deck with the class
                       </FieldLabel>
                       <FieldError>Turn this on to send the invite.</FieldError>
@@ -528,7 +529,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" disabled className={`${box} gap-4`}>
                     <FieldContent className="gap-0.5">
-                      <FieldLabel className="text-base text-text">Daily reminder</FieldLabel>
+                      <FieldLabel className="text-base text-ink">Daily reminder</FieldLabel>
                       <FieldDescription>
                         Notifications are blocked. Allow them in your browser settings.
                       </FieldDescription>
@@ -628,7 +629,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" className={box}>
                     <Checkbox checked={off} onCheckedChange={setOff} />
-                    <FieldLabel className="text-base text-text">
+                    <FieldLabel className="text-base text-ink">
                       Also archive its review history
                     </FieldLabel>
                   </Field>
@@ -639,7 +640,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" className={box}>
                     <Checkbox checked={on} onCheckedChange={setOn} />
-                    <FieldLabel className="text-base text-text">Include AI examples</FieldLabel>
+                    <FieldLabel className="text-base text-ink">Include AI examples</FieldLabel>
                   </Field>
                 ),
               },
@@ -650,7 +651,7 @@ export const forms: Group = {
                     <Force state="focus">
                       <Checkbox checked={on} onCheckedChange={setOn} />
                     </Force>
-                    <FieldLabel className="text-base text-text">Include AI examples</FieldLabel>
+                    <FieldLabel className="text-base text-ink">Include AI examples</FieldLabel>
                   </Field>
                 ),
               },
@@ -660,7 +661,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" className={box}>
                     <Checkbox indeterminate />
-                    <FieldLabel className="text-base text-text">All cards in Lesson 14</FieldLabel>
+                    <FieldLabel className="text-base text-ink">All cards in Lesson 14</FieldLabel>
                   </Field>
                 ),
               },
@@ -669,7 +670,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" disabled className={box}>
                     <Checkbox defaultChecked />
-                    <FieldLabel className="text-base text-text">Keep the original audio</FieldLabel>
+                    <FieldLabel className="text-base text-ink">Keep the original audio</FieldLabel>
                   </Field>
                 ),
               },
@@ -680,7 +681,7 @@ export const forms: Group = {
                   <Field orientation="horizontal" className={box}>
                     <Checkbox required checked={agreed} onCheckedChange={setAgreed} />
                     <FieldContent>
-                      <FieldLabel className="text-base text-text">
+                      <FieldLabel className="text-base text-ink">
                         I have the rights to these recordings
                       </FieldLabel>
                       <FieldError>{agreed ? undefined : "Confirm this to upload them."}</FieldError>
@@ -779,7 +780,7 @@ export const forms: Group = {
                       ].map(([value, label]) => (
                         <Field key={value} orientation="horizontal" className="min-h-11">
                           <RadioGroupItem value={value} />
-                          <FieldLabel className="text-base text-text">{label}</FieldLabel>
+                          <FieldLabel className="text-base text-ink">{label}</FieldLabel>
                         </Field>
                       ))}
                     </RadioGroup>
@@ -825,7 +826,7 @@ export const forms: Group = {
                         <Force state="focus">
                           <RadioGroupItem value="due" />
                         </Force>
-                        <FieldLabel className="text-base text-text">When they are due</FieldLabel>
+                        <FieldLabel className="text-base text-ink">When they are due</FieldLabel>
                       </Field>
                     </RadioGroup>
                   </div>
@@ -845,7 +846,7 @@ export const forms: Group = {
                         ].map(([value, label]) => (
                           <Field key={value} orientation="horizontal" className="min-h-11">
                             <RadioGroupItem value={value} />
-                            <FieldLabel className="text-base text-text">{label}</FieldLabel>
+                            <FieldLabel className="text-base text-ink">{label}</FieldLabel>
                           </Field>
                         ))}
                       </RadioGroup>
@@ -879,6 +880,7 @@ export const forms: Group = {
       ),
     },
   ],
+  Rules: FormRules,
 };
 
 export const select: Group = {
@@ -1109,3 +1111,34 @@ export const combobox: Group = {
     },
   ],
 };
+
+function FormRules() {
+  return (
+    <>
+      <Rule kind="do" title="Put the label above and the error below.">
+        <Field className="w-full max-w-72">
+          <FieldLabel>Meaning</FieldLabel>
+          <Input defaultValue="" />
+          <FieldError>Add what the term means.</FieldError>
+        </Field>
+      </Rule>
+      <Rule
+        kind="dont"
+        title="Use the placeholder as the label."
+        note="It disappears when you type, and some screen readers skip it."
+      >
+        <Input aria-label="Meaning" placeholder="Meaning" className="w-full max-w-72" />
+      </Rule>
+      <Rule
+        kind="do"
+        title="Save settings as soon as they change."
+        note="A switch saves when flipped. A text field saves when you leave it."
+      />
+      <Rule
+        kind="dont"
+        title="Add a Save button to settings."
+        note="Save belongs to a sheet opened to make or change one thing."
+      />
+    </>
+  );
+}

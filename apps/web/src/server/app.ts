@@ -19,6 +19,7 @@ import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "
 import { requireStrongPassword } from "./password-rules";
 import {
   leaveOutExampleReadings,
+  leaveOutPitchAccent,
   leaveOutTranslationField,
   requireSupportedPhone,
 } from "./phone-clients";
@@ -36,6 +37,7 @@ import { contentReports, moderation } from "./routes/content-reports";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
 import { emailEvents } from "./routes/email-events";
+import { emailLinks } from "./routes/email-links";
 import { explore } from "./routes/explore";
 import { exports as exportRoutes } from "./routes/exports";
 import { feedback } from "./routes/feedback";
@@ -196,6 +198,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 // A phone release too old for this API is told to update before anything else answers it.
 app.use("/api/*", requireSupportedPhone);
 app.use("/api/*", leaveOutExampleReadings);
+app.use("/api/*", leaveOutPitchAccent);
 app.use("/api/*", leaveOutTranslationField);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
@@ -270,6 +273,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 
 // Resend's delivery reports are signed, not sent with a session.
 app.route("/api/email/events", emailEvents);
+
+// An email's links are signed, and open on a phone that has never signed in.
+app.route("/api/email", emailLinks);
 
 // AnkiConnect clients send the key in the body, so this door authenticates itself.
 app.route("/api/anki-connect", ankiConnect);

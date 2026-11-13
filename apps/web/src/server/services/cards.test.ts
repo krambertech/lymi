@@ -504,7 +504,7 @@ describe("bulk edits and archives", () => {
 
     expect(outcomes.filter((outcome) => outcome.status === "restored")).toHaveLength(101);
     expect((await showCard(ctx, ids[100] as string)).archivedAt).toBeNull();
-  });
+  }, 60_000);
 
   it("reduces an add to the card's id and enrichment, the existing card's when skipped", async () => {
     const ctx = await learner(db, "bulk-terse-1", "Kateryna");

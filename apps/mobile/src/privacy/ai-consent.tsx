@@ -21,11 +21,11 @@ function ServiceLine({ icon, label, line }: { icon: IconName; label: string; lin
   return (
     <View className="flex-row items-start gap-3 py-3 ps-4 pe-3.5" accessible>
       <View className="w-5 items-center pt-0.5">
-        <Icon name={icon} size={20} colour={p["text-2"]} />
+        <Icon name={icon} size={20} colour={p["ink-secondary"]} />
       </View>
       <View className="flex-1 gap-0.5">
-        <Text className="text-md text-text">{label}</Text>
-        <Text className="text-sm text-muted">{line}</Text>
+        <Text className="text-md text-ink">{label}</Text>
+        <Text className="text-sm text-ink-muted">{line}</Text>
       </View>
     </View>
   );
@@ -184,7 +184,7 @@ export function ConsentButtons({
     <View className="gap-1 pt-1">
       <Button label={t`Turn on AI`} variant="primary" size="lg" loading={busy} onPress={onAllow} />
       <Button label={t`Not now`} variant="ghost" size="lg" disabled={busy} onPress={onLater} />
-      <Text className="pt-1 text-center text-sm text-muted">
+      <Text className="pt-1 text-center text-sm text-ink-muted">
         {t`This choice applies on mobile and web. Change it any time in You → AI services.`}
       </Text>
     </View>

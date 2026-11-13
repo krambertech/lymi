@@ -137,20 +137,20 @@ export function FilterTools({
     const Glyph = icon === "filter" ? ListFilter : ArrowUpDown;
     return (
       <View className="min-h-9 flex-row items-center gap-1.5 rounded-full border border-edge bg-plate px-3.5 py-1.5">
-        <Glyph size={15} color={p["text-2"]} strokeWidth={2} />
-        <Text className="text-base font-medium text-text">{label}</Text>
+        <Glyph size={15} color={p["ink-secondary"]} strokeWidth={2} />
+        <Text className="text-base font-medium text-ink">{label}</Text>
       </View>
     );
   };
   // With filters on, Filter is ink, as a chosen chip is, and its count stands in a badge of its own.
   const filterPill = active ? (
-    <View className="min-h-9 flex-row items-center gap-1.5 rounded-full border border-text bg-text py-1.5 ps-3.5 pe-1.5">
+    <View className="min-h-9 flex-row items-center gap-1.5 rounded-full border border-ink bg-ink py-1.5 ps-3.5 pe-1.5">
       <ListFilter size={15} color={p.canvas} strokeWidth={2} />
       <Text className="text-base font-medium" style={{ color: p.canvas }}>
         {t`Filter`}
       </Text>
       <View className="h-6 min-w-6 items-center justify-center rounded-full bg-canvas px-1.5">
-        <Text className="text-sm font-semibold text-text" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-sm font-semibold text-ink" style={{ fontVariant: ["tabular-nums"] }}>
           {i18n.number(active)}
         </Text>
       </View>
@@ -271,8 +271,8 @@ export function FilterTools({
             accessibilityRole="button"
             className="mt-3 min-h-11 flex-row items-center justify-center gap-2 self-center px-4"
           >
-            <Icon name="reset" size={18} colour={p.text} />
-            <Text className="text-md font-medium text-text">{t`Reset filters`}</Text>
+            <Icon name="reset" size={18} colour={p.ink} />
+            <Text className="text-md font-medium text-ink">{t`Reset filters`}</Text>
           </Press>
         )}
       </>
@@ -393,7 +393,7 @@ function Choices({
         {shown.length > 0 ? (
           rows
         ) : (
-          <Text className="px-4 py-3 text-md text-muted">{t`No matches`}</Text>
+          <Text className="px-4 py-3 text-md text-ink-muted">{t`No matches`}</Text>
         )}
       </ScrollView>
     </>

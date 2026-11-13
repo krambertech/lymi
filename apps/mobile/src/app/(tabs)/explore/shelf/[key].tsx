@@ -99,11 +99,11 @@ function ShelfHeader({
   const cardCount = plural(cards, { one: "# card", other: "# cards" });
   return (
     <View className="gap-3 pb-1 pt-10">
-      <Text className="text-5xl font-medium tracking-tight text-text" accessibilityRole="header">
+      <Text className="text-5xl font-medium tracking-tight text-ink" accessibilityRole="header">
         {title}
       </Text>
-      <Text className="text-lg text-text-2">{lede}</Text>
-      <Text className="text-base text-muted">{t`${deckCount} · ${cardCount}`}</Text>
+      <Text className="text-lg text-ink-secondary">{lede}</Text>
+      <Text className="text-base text-ink-muted">{t`${deckCount} · ${cardCount}`}</Text>
     </View>
   );
 }
@@ -120,7 +120,7 @@ function OtherShelves({ shelf, shelves }: { shelf: Shelf; shelves: Shelf[] }) {
   if (others.length === 0) return null;
   return (
     <View className="gap-3 border-t border-edge pt-5">
-      <Text className="px-1 text-sm text-muted" accessibilityRole="header">
+      <Text className="px-1 text-sm text-ink-muted" accessibilityRole="header">
         {languages ? t`More languages` : t`Other subjects`}
       </Text>
       <View className="flex-row flex-wrap gap-2">
@@ -134,10 +134,10 @@ function OtherShelves({ shelf, shelves }: { shelf: Shelf; shelves: Shelf[] }) {
               })
             }
             accessibilityRole="link"
-            className="h-11 flex-row items-center gap-2 rounded-full bg-plate-2 px-4"
+            className="h-11 flex-row items-center gap-2 rounded-full bg-plate-nested px-4"
           >
-            <Text className="text-base font-medium text-text">{label(other)}</Text>
-            <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+            <Text className="text-base font-medium text-ink">{label(other)}</Text>
+            <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
               {other.decks.length}
             </Text>
           </Press>

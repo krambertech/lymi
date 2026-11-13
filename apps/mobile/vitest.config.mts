@@ -8,7 +8,7 @@ export default defineConfig({
       name: "lingui-macros",
       enforce: "pre",
       transform(code, id) {
-        if (!id.endsWith("/i18n/widgets.ts")) return;
+        if (!/\/(i18n\/widgets|i18n\/reminders|import\/sources)\.ts$/.test(id)) return;
         return transformSync(code, {
           filename: id,
           configFile: false,

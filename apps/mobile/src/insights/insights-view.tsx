@@ -4,7 +4,8 @@ import type { InsightsOut } from "@lymi/core";
 import { useRouter } from "expo-router";
 import type { ReactNode } from "react";
 import { View } from "react-native";
-import { Button, Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
+import { EmptyState } from "../ui/empty-state";
+import { Plate, Press, RowArrow, SectionTitle, Text } from "../ui/primitives";
 import { Segmented } from "../ui/segmented";
 import { Skeleton } from "../ui/skeleton";
 import { DayGrid } from "./day-grid";
@@ -158,7 +159,7 @@ function useFigures(data: InsightsOut, period: Period, onPeriod: (p: Period) => 
 
 function Label({ children }: { children: string }) {
   return (
-    <Text className="text-sm font-medium uppercase text-muted" style={{ letterSpacing: 0.8 }}>
+    <Text className="text-sm font-medium uppercase text-ink-muted" style={{ letterSpacing: 0.8 }}>
       {children}
     </Text>
   );
@@ -175,11 +176,11 @@ function Value({
 }) {
   return (
     <Text
-      className={`${size === "lg" ? "text-3xl" : "text-2xl"} font-medium tracking-tight text-text`}
+      className={`${size === "lg" ? "text-3xl" : "text-2xl"} font-medium tracking-tight text-ink`}
     >
       {value}
       {unit && (
-        <Text className={`${size === "lg" ? "text-lg" : "text-base"} font-normal text-muted`}>
+        <Text className={`${size === "lg" ? "text-lg" : "text-base"} font-normal text-ink-muted`}>
           {" "}
           {unit}
         </Text>
@@ -196,7 +197,7 @@ function StatPlate({ f }: { f: Figure }) {
       {f.control}
       <Value value={f.value} unit={f.unit} />
       <View className="min-h-[74px] justify-center">{f.figure}</View>
-      <Text className="text-base text-muted">{f.note}</Text>
+      <Text className="text-base text-ink-muted">{f.note}</Text>
     </Plate>
   );
 }
@@ -222,7 +223,7 @@ function Figures({ figures }: { figures: Figure[] }) {
               </View>
               <View className="flex-1 items-end">{f.small}</View>
             </View>
-            <Text className="text-base text-muted">{f.note}</Text>
+            <Text className="text-base text-ink-muted">{f.note}</Text>
           </View>
         ))}
       </Plate>
@@ -256,7 +257,7 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
   return (
     <View>
       <SectionTitle>{t`Often forgotten`}</SectionTitle>
-      <Text className="-mt-2 px-1 pb-3 text-base text-muted">
+      <Text className="-mt-2 px-1 pb-3 text-base text-ink-muted">
         <Trans>
           Forgotten on {leeches.forgottenDays} of the last{" "}
           <Plural value={leeches.recentDays} one="# day" other="# days" /> seen
@@ -274,10 +275,10 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
               className={`min-h-[52px] flex-row items-center gap-3 ps-4 pe-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
             >
               {/* The term and how often it slipped: the card in its deck holds the rest. */}
-              <Text className="flex-1 text-md text-text" numberOfLines={2}>
+              <Text className="flex-1 text-md text-ink" numberOfLines={2}>
                 {c.term}
               </Text>
-              <Text className="text-md text-muted">{t`${plural(c.lapses, { one: "# forgotten", other: "# forgotten" })}`}</Text>
+              <Text className="text-md text-ink-muted">{t`${plural(c.lapses, { one: "# forgotten", other: "# forgotten" })}`}</Text>
               <RowArrow />
             </View>
           </Press>
@@ -291,13 +292,10 @@ interface Props {
   data: InsightsOut | undefined;
   period: Period;
   onPeriod: (p: Period) => void;
-  failed: boolean;
   busy: boolean;
-  onRetry: () => void;
 }
 
-export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: Props) {
-  if (failed) return <Failed onRetry={onRetry} busy={busy} />;
+export function InsightsView({ data, period, onPeriod, busy }: Props) {
   if (!data) return <Loading />;
   if (data.consistency.daysAllTime === 0 && data.cards.total === 0) return <NothingYet />;
   return <Loaded data={data} period={period} onPeriod={onPeriod} busy={busy} />;
@@ -324,7 +322,7 @@ function Loaded({
       <DayByDay activity={data.activity} />
       <OftenForgotten leeches={data.leeches} />
       {graded > 0 && graded < 30 && (
-        <Text className="px-1 text-base text-muted">
+        <Text className="px-1 text-base text-ink-muted">
           <Plural
             value={graded}
             one="Recall is based on only # review, so it can swing a lot for the first few weeks."
@@ -356,24 +354,13 @@ function Loading() {
   );
 }
 
-function Failed({ onRetry, busy }: { onRetry: () => void; busy: boolean }) {
-  const { t } = useLingui();
-  return (
-    <Plate className="items-start gap-3 p-5">
-      <Text className="text-md font-medium text-text">{t`Couldn’t load Insights`}</Text>
-      <Button label={t`Try again`} onPress={onRetry} loading={busy} />
-    </Plate>
-  );
-}
-
 function NothingYet() {
   const { t } = useLingui();
   return (
-    <Plate className="gap-2 p-5">
-      <Text className="text-md font-medium text-text">{t`Insights start after your first review`}</Text>
-      <Text className="text-base text-muted">
-        {t`Add cards and review them to see your progress here.`}
-      </Text>
-    </Plate>
+    <EmptyState
+      kind="start"
+      title={t`Insights start after your first review`}
+      body={t`Add cards and review them to see your progress here.`}
+    />
   );
 }

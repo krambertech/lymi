@@ -56,7 +56,7 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             "**Duplicates.** Adding a term that already exists in the same language, in any of the learner's decks, ",
             "is skipped and reported, never rejected. Re-running a call is safe.",
             "",
-            "**Removal.** Nothing is deleted. Cards are archived and can be restored.",
+            "**Removal.** Cards, decks and sections are archived and can be restored. Only deleting a series cannot be undone.",
             "",
             `The guides are at ${new URL("/docs", DEFAULT_PUBLIC_SITE_ORIGIN).toString()}.`,
           ].join("\n"),

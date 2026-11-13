@@ -6,10 +6,14 @@ import {
   type Attribution,
   analyticsPath,
   type Backlog,
+  EMAIL_ENTRY_KEY,
+  emailEntryOf,
   eventProperties,
   firstTouch,
   INTERNAL_ACCOUNT_IDS,
   REMINDER_ENTRY,
+  REMINDER_MESSAGE_KEY,
+  ReminderMessage,
 } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
@@ -97,35 +101,59 @@ function forget(): void {
   opening = undefined;
 }
 
-const fromReminder = (url: string) =>
-  new URL(url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value;
+type ArrivalEntry = Pick<AnalyticsProperties<"app_opened">, "entry" | "from_email">;
+
+function markedEntry(url: string): ArrivalEntry | undefined {
+  const params = new URL(url).searchParams;
+  if (params.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value) return { entry: "reminder" };
+  const kind = emailEntryOf(params);
+  return kind && { entry: "email", from_email: kind };
+}
 
 /**
- * How this page load began: a reminder's link, a link from another site, or neither. The address
- * still carries a reminder's mark after sign-in, which returns to it.
+ * How this page load began: a reminder's or an email's link, a link from another site, or neither.
+ * The address still carries the mark after sign-in, which returns to it.
  */
-function arrivalEntry(): "reminder" | "link" | "direct" {
+function arrivalEntry(): ArrivalEntry {
   try {
-    if ((arrival && fromReminder(arrival.url)) || fromReminder(location.href)) return "reminder";
+    const marked = (arrival && markedEntry(arrival.url)) ?? markedEntry(location.href);
+    if (marked) return marked;
   } catch {
-    return "direct";
+    return { entry: "direct" };
   }
-  return visitFirstTouch("product")?.referrer ? "link" : "direct";
+  return { entry: visitFirstTouch("product")?.referrer ? "link" : "direct" };
+}
+
+/** Which of the day's messages this page load came from; a link from before they had names has none. */
+function arrivalMessage(): ReminderMessage | undefined {
+  try {
+    for (const url of [arrival?.url, location.href]) {
+      if (!url || markedEntry(url)?.entry !== "reminder") continue;
+      return ReminderMessage.safeParse(new URL(url).searchParams.get(REMINDER_MESSAGE_KEY)).data;
+    }
+  } catch {
+    /* No message costs one opening in the per-message count. */
+  }
+  return undefined;
 }
 
 function sendOpening(): void {
   if (openingSent || !opening || !learner || identifySent !== learner) return;
-  if (!captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) return;
+  const message = arrivalMessage();
+  if (!captureAnalytics("app_opened", { ...arrivalEntry(), ...opening })) return;
+  if (message) captureAnalytics("reminder_opened", { message, client: "web" });
   openingSent = true;
-  dropReminderMark();
+  dropEntryMark();
 }
 
-/** Once the opening is counted, a reload of the same address is not another reminder. */
-function dropReminderMark(): void {
+/** Once the opening is counted, a reload of the same address is not another arrival by that link. */
+function dropEntryMark(): void {
   try {
     const url = new URL(location.href);
-    if (!fromReminder(url.href)) return;
-    url.searchParams.delete(REMINDER_ENTRY.key);
+    const marked = markedEntry(url.href);
+    if (!marked) return;
+    url.searchParams.delete(marked.entry === "email" ? EMAIL_ENTRY_KEY : REMINDER_ENTRY.key);
+    url.searchParams.delete(REMINDER_MESSAGE_KEY);
     history.replaceState(history.state, "", url);
   } catch {
     /* The mark only costs a duplicate opening on reload. */
@@ -219,8 +247,10 @@ export function initAnalytics(options: {
             ? { $session_id: sessionId }
             : {};
         if (event.event === "$exception") {
+          const exception = exceptionProperties(event.properties);
+          if (GLOBAL_HANDLERS.has(event.properties.caught_by) && !fromLymi(exception)) return null;
           event.properties = {
-            ...exceptionProperties(event.properties),
+            ...exception,
             token: options.token,
             distinct_id:
               surface === "product" && learner && allowed() ? posthog.get_distinct_id() : "browser",
@@ -479,6 +509,30 @@ function sdkEventProperties(
 /** Which handler caught a browser error, so a report without a stack still says where it surfaced. */
 export type CaughtBy = "window" | "rejection" | "router" | "react";
 const CAUGHT_BY = new Set<unknown>(["window", "rejection", "router", "react"] satisfies CaughtBy[]);
+
+const GLOBAL_HANDLERS = new Set<unknown>(["window", "rejection"] satisfies CaughtBy[]);
+const LYMI_ASSET = "https://my.lymi.app/assets/";
+
+/**
+ * Whether an error the page's global handlers caught came from Lymi: a frame in Lymi's own bundle,
+ * or a runtime network or chunk failure message. Extensions and injected scripts throw on the page
+ * too, with neither. A thrown non-error gets a synthetic stack of the reporting code itself.
+ */
+function fromLymi(properties: Record<string, unknown>): boolean {
+  const exceptions = properties.$exception_list as {
+    value: string;
+    mechanism: { synthetic: boolean };
+    stacktrace: { frames: { filename?: string; chunk_id?: string }[] };
+  }[];
+  return exceptions.some(
+    (exception) =>
+      (exception.stacktrace.frames.length === 0 && exception.value !== "Unexpected error") ||
+      (!exception.mechanism.synthetic &&
+        exception.stacktrace.frames.some(
+          (frame) => frame.chunk_id || frame.filename?.startsWith(LYMI_ASSET),
+        )),
+  );
+}
 
 export function reportBrowserException(error: unknown, caughtBy?: CaughtBy): void {
   if (!initialized) return;

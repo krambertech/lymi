@@ -4,7 +4,7 @@ The rules of the daily goal, the streak, the draw and the end of a review. They 
 
 ## The daily goal and the streak are one mechanic
 
-The learner chooses how many recall attempts they want to complete per learner-local day. Reaching that number satisfies the day's streak goal; if at least one review is available but fewer than the goal, completing all available reviews also satisfies it without pulling future cards forward.
+The learner chooses how many recall attempts they want to complete per learner-local day. Reaching that number satisfies the day's streak goal; if fewer reviews are available than the goal, finishing all of them also satisfies it. Lymi does not pull future cards forward.
 
 A new account starts on 25 attempts from its first visit to Today; the phone's Welcome still offers the choice, and skipping it leaves 25. An account from before either keeps 50 until the learner chooses. The same control later lives in the streak modal, with quick choices of 10, 25, 50, and 100 plus a custom whole number from 1 to 200. The saved choice applies on later days; Today and Settings do not introduce separate goal editors.
 
@@ -14,11 +14,29 @@ Every accepted, non-undone grade counts exactly once toward the daily goal, incl
 
 The streak counts consecutive learner-local days whose goal was satisfied. A day that ends without satisfying the goal becomes a rest day when the current run has had no other rest day in the six days before it: the run carries on through it without growing. Any other short day resets the current streak to zero, while the learner's review history remains intact.
 
-Rest is automatic and worked out on every read, so it applies to all history; misses from before the run began don't count, and nothing counts rest days down or warns about them. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
+Lymi works out rest days each time it reads the history, so they apply to all of it. A miss from before the run began doesn't count, and nothing counts rest days down or warns about them. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
+
+## One reminder a day follows how the day went
+
+Each device with a reminder gets at most one notification a day, at the learner's time, and the message depends on the day. The choice is `reminderFor` in `packages/core/src/reminders.ts`, shared by web push and the phone.
+
+| The day | Message |
+| --- | --- |
+| Not started, cards ready | “10 cards are ready” |
+| Started, short of the goal | “6 cards to today’s goal”, “Finish if you have a moment.” The number is what is left of the goal, or the cards left if fewer. |
+| The morning after a rest day, not started | “Yesterday was a rest day”, “Your streak carried on. 12 cards are ready.” |
+| The day after a first review, not started | “Your next cards are ready”, “10 cards for today.” Only new cards and cards still being learned can be due then, so it never says their words came back. |
+| Goal met, cards ran out, or nothing to review | Silence. |
+
+A started day counts toward the goal even after a rest day, because the learner has already seen Today say so. A streak that ended gets no mention, and nothing warns in advance. After 7 days without opening Lymi, reminders stop until the learner returns: web push counts an opening on any client, and the phone schedules only a week past its own last opening. No notification carries card text, and none states minutes, because Lymi has no reliable measure of a learner's own pace, least of all before their second review.
+
+The phone schedules a week ahead on the device, so it chooses each message when it schedules, reading the days ahead as days the learner stays away, and plans again on launch, after a grade and on returning to the front. A grade made on another device reaches the phone's plan only at its next launch, so until then it can still say what it planned.
 
 ## The day follows the learner's timezone
 
 The learner-local day initially uses the current device timezone without asking during setup. While the timezone remains automatic, the most recently foregrounded device may update it when its timezone changes during travel; a background device cannot overwrite that choice. A timezone chosen explicitly in Settings becomes a manual override and is not changed automatically until the learner returns it to automatic. Timezone changes affect current and future day boundaries without rewriting completed review history.
+
+Every open client turns the day at the learner's midnight on any screen, or on returning to the front after it: it refetches the decks, rounds, streak, draw and Insights, the same set an offline grade or write refreshes when it lands (`packages/client/src/sync.ts`). Only a client in front asks the server to settle the new day, because a background tab is not an opening.
 
 ## The next card is recomputed, never stored
 
@@ -28,13 +46,13 @@ Cards are drawn with weighted randomness rather than a strict order, so capture 
 
 ## A forgotten card comes back the same day
 
-A forgotten card returns in the same direction a few cards later, then after longer gaps, up to three times a day. After that it waits until tomorrow. Hard on a card still being learned brings it back the same way. A card left in learning from an earlier day returns early in the next review. Once one direction of a card is reviewed, the other waits until tomorrow, because the answer would give it away. A card starts one direction at a time in its deck's order, which begins with production by default.
+A forgotten card returns in the same direction a few cards later, then after longer gaps, up to three times a day. After that it waits until tomorrow. Hard on a card still being learned waits until tomorrow too; only Forgot owes a return today. A card left in learning from an earlier day returns early in the next review. Once one direction of a card is reviewed, the other waits until tomorrow, because the answer would give it away. A card starts one direction at a time in its deck's order, which begins with production by default.
 
 ## A review runs to its end and stops once at the goal
 
-A review runs until what it was opened for is empty: the whole day from the Review button, one deck, one section of a deck, one series, or a round. Only the day's draw stops, once, at the goal when it began below it, and Continue carries on from there to the end of the day. Crossing the goal in a deck, a section, a series or a round shows in the flame and never stops it. The header counts the goal while the day's draw is heading for it, and the stretch's own cards otherwise. The rules are in [ADR 0021](adr/0021-a-review-runs-to-its-end-and-stops-once-at-the-goal.md).
+A review runs until what it was opened for is empty: the whole day from the Review button, one deck, one section of a deck, one series, or a round. Only the day's draw stops, once, at the goal when it began below it, and Continue carries on from there to the end of the day. Crossing the goal in a deck, a section, a series or a round shows in the flame and never stops it. The header counts the goal while the day's draw is heading for it, and the leg's own cards otherwise. The rules are in [ADR 0021](adr/0021-a-review-runs-to-its-end-and-stops-once-at-the-goal.md).
 
-Every ending is the same success screen, whether the stretch reached the goal, ran out, or the learner pressed X after grading: it shows today's total rolling up from the last screen, embers for what was added, and the streak ticking when the day just turned. On the web, **Done** is always the last and primary action. **Continue** is secondary and, where known, states how many reviews reach the goal or how many cards remain. The phone also keeps Done as its primary completion action. **Nothing left in** a deck leaves the day open while other decks have cards; **You're done for today** means every deck ran out, and the day counts. **Review forgotten** is offered at any end with forgotten cards. Continuing is optional and cannot make a completed streak goal incomplete.
+Every ending is the same completion screen, whether the leg reached the goal, ran out, or the learner pressed X after grading: it shows today's total rolling up from the last screen, embers for what was added, and the streak ticking when the day just turned. On the web, **Done** is always the last and primary action. **Continue** is secondary and, where known, states how many reviews reach the goal or how many cards remain. The phone also keeps Done as its primary completion action. **Nothing left in** a deck leaves the day open while other decks have cards; **You're done for today** means every deck ran out, and the day counts. **Review forgotten** is offered at any end with forgotten cards. Continuing is optional and cannot make a completed streak goal incomplete.
 
 When zero cards are due, the empty state protects but does not increase the streak and offers **Add cards**; adding alone does not count toward the review goal. Running out of cards while offline or after a failed refresh is not evidence that all useful reviews are finished.
 

@@ -43,7 +43,7 @@ export function oklchToHex(l: number, c: number, h: number): string {
     .join("")}`;
 }
 
-// The dark palette's `--muted`, and the pool the deck's hue makes on the dark canvas.
+// The dark palette's `--ink-muted`, and the pool the deck's hue makes on the dark canvas.
 const MUTED = oklchToHex(0.7, 0.022, 70);
 const poolColor = (hue: number) => oklchToHex(0.3, 0.055, HUES[hue % HUES.length] ?? 25);
 

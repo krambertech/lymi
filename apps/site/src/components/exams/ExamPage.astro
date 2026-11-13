@@ -61,7 +61,7 @@ const structuredData = [
 
 <BaseLayout title={title} description={description} canonicalPath={path} alternatePaths={paths}>
   <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <header class="shelf-hero over-tint" data-hue="3">
       <PublicNav client:load locale={locale} current="exams" />
       <ExamHero

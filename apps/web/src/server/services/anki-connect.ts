@@ -3,6 +3,7 @@ import {
   AnkiConnectNote,
   CARD_LIMITS,
   fitsLanguage,
+  pronunciationText,
   type Scope,
   TAG_LIMITS,
   tagKey,
@@ -608,7 +609,7 @@ async function notesInfo({ db, userId }: ServiceContext, ids: number[]) {
     if (!row) return {};
     const values: Record<NoteField, string> = {
       Term: row.card.term,
-      Reading: row.card.pronunciation ?? "",
+      Reading: pronunciationText(row.card) ?? "",
       Meaning: row.card.meaning ?? "",
       Sentence: row.card.example ?? "",
       URL: row.card.source ?? "",

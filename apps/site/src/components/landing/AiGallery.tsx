@@ -49,7 +49,7 @@ export function AiGallery() {
           <SectionTitle>
             <Trans>AI does the busywork. You do the remembering.</Trans>
           </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">
+          <p className="mt-5 text-md text-pretty text-ink-secondary">
             <Trans>
               AI turns your notes into cards and fills in what you leave out, the way you set it up.
               It never changes what you wrote, and everything it adds is marked.

@@ -42,10 +42,10 @@ function colors() {
   const { light, dark } = rooms();
   const names = {
     sheet: (p) => p.sheet,
-    text: (p) => p.text,
-    text2: (p) => p["text-2"],
-    muted: (p) => p.muted,
-    faint: (p) => p.faint,
+    text: (p) => p.ink,
+    text2: (p) => p["ink-secondary"],
+    muted: (p) => p["ink-muted"],
+    faint: (p) => p["ink-faint"],
     edge: (p) => over(p.edge, p.sheet),
     group: (p) => over(p["glass-group"], p.sheet),
     chosen: (p) => over(p["glass-chosen"], p.sheet),
@@ -55,7 +55,7 @@ function colors() {
     amberSoft: (p) => over(p["amber-soft"], p.sheet),
     ai: (p) => p.ai,
     aiSoft: (p) => over(p["ai-soft"], p.sheet),
-    good: (p) => p.good,
+    good: (p) => p.success,
     danger: (p) => p.danger,
   };
   return Object.fromEntries(

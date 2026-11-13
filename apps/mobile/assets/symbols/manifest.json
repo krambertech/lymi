@@ -25,6 +25,7 @@
   "picture": "image.mjs",
   "example": "text-quote.mjs",
   "pronunciation": "volume-2.mjs",
+  "reading": "superscript.mjs",
   "source": "library.mjs",
   "notes": "notebook-pen.mjs",
   "hint": "life-buoy.mjs",

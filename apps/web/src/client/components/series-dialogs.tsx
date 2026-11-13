@@ -135,7 +135,7 @@ export function SeriesForm({
 
       <FieldSet className="grid gap-2">
         <FieldLegend>{t`Decks`}</FieldLegend>
-        <p className="text-sm text-text-2">
+        <p className="text-sm text-ink-secondary">
           {own.length === 0 ? (
             <Trans>No decks of your own yet. Only decks you create can go in a series.</Trans>
           ) : (
@@ -169,7 +169,7 @@ export function SeriesForm({
                       <FieldLabel className="truncate text-base font-normal">
                         {deck.name}
                       </FieldLabel>
-                      <span className="truncate text-sm text-muted">
+                      <span className="truncate text-sm text-ink-muted">
                         {elsewhere && !checked ? (
                           <Trans>Now in {elsewhere}</Trans>
                         ) : (

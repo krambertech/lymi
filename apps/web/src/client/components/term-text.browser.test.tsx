@@ -1,4 +1,4 @@
-import { isolate } from "@lymi/core";
+import { isolate, knownReadings } from "@lymi/core";
 import { afterEach, describe, expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -79,5 +79,25 @@ describe("right-to-left terms", () => {
     expect(input.matches(":dir(ltr)")).toBe(true);
     await userEvent.type(field, "كتاب");
     await expect.poll(() => input.matches(":dir(rtl)")).toBe(true);
+  });
+});
+
+describe("a Known reading in an example", () => {
+  test("keeps its height and leaves no gap around a word whose reading is wider than it", async () => {
+    await render(
+      <p data-testid="line" className="text-md">
+        <ExampleText
+          text="来週[らいしゅう]の予定"
+          lang="ja"
+          known={knownReadings([
+            { term: "来週", pronunciation: "らいしゅう", language: "ja", known: true },
+          ])}
+        />
+      </p>,
+    );
+    const line = container();
+    expect(boxOf(line, "来週").left).toBeCloseTo(line.getBoundingClientRect().left, 0);
+    expect(boxOf(line, "の").left).toBeCloseTo(boxOf(line, "来週").right, 0);
+    expect(line.getBoundingClientRect().height).toBeGreaterThan(boxOf(line, "来週").height);
   });
 });

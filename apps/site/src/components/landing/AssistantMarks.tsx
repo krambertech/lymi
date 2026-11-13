@@ -183,7 +183,7 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
                 href={assistant.guide}
                 aria-label={name}
                 title={name}
-                className="edge grid size-11 place-items-center rounded-full bg-plate text-text transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover"
+                className="edge grid size-11 place-items-center rounded-full bg-plate text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover"
               >
                 <Mark assistant={assistant} />
               </a>
@@ -199,7 +199,7 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
         <li key={assistant.name}>
           <a
             href={assistant.guide}
-            className="edge flex h-11 items-center gap-2.5 rounded-md bg-plate ps-3 pe-3.5 text-sm text-text transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover"
+            className="edge flex h-11 items-center gap-2.5 rounded-md bg-plate ps-3 pe-3.5 text-sm text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover"
           >
             <Mark assistant={assistant} />
             {assistant.label ? i18n._(assistant.label) : assistant.name}
@@ -215,7 +215,7 @@ export function WorksWith({ names }: { names: readonly AssistantName[] }) {
   const label = useId();
   const assistants = names.flatMap((name) => ASSISTANTS.filter((a) => a.name === name));
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-muted">
       <span id={label}>
         <Trans>Works with</Trans>
       </span>
@@ -224,7 +224,7 @@ export function WorksWith({ names }: { names: readonly AssistantName[] }) {
           <li key={assistant.name}>
             <a
               href={assistant.guide}
-              className="inline-flex items-center gap-1.5 rounded-xs text-text-2 hoverable:hover:text-text"
+              className="inline-flex items-center gap-1.5 rounded-xs text-ink-secondary hoverable:hover:text-ink"
             >
               <Mark assistant={assistant} small />
               {assistant.name}

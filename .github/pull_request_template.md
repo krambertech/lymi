@@ -6,7 +6,7 @@
 
 ## Screenshots
 
-<!-- Required for any rendered UI change. Attach an after image at minimum; use before and after when comparison helps. Cover only the materially affected viewport, theme, and state. Remove this section when the diff has no visible UI effect. -->
+<!-- Required for any rendered UI change. Attach an after image of each affected surface, with a before image when the surface already existed. Cover only the materially affected viewport, theme, and state. Remove this section when the diff has no visible UI effect. -->
 
 ## Instrumentation
 

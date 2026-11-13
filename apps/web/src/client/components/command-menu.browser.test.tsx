@@ -1,7 +1,7 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { beforeEach, expect, test, vi } from "vitest";
+import { onlineManager, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
@@ -16,6 +16,7 @@ const { navigate, server } = vi.hoisted(() => ({
   navigate: vi.fn(),
   server: {
     term: vi.fn<(deckId: string, term: string) => Promise<CardHit | null>>(),
+    search: vi.fn<() => Promise<{ cards: CardHit[]; nextCursor: null; total: number }>>(),
   },
 }));
 
@@ -27,7 +28,7 @@ vi.mock("../lib/queries", async () => {
     cardSearchQuery: (query: string) =>
       infiniteQueryOptions({
         queryKey: ["cards", "search", "", query],
-        queryFn: async () => ({ cards: [], nextCursor: null, total: 0 }),
+        queryFn: () => server.search(),
         initialPageParam: undefined as string | undefined,
         getNextPageParam: () => undefined,
       }),
@@ -67,7 +68,46 @@ const field = () => page.getByRole("combobox", { name: "Search cards, decks and 
 beforeEach(() => {
   navigate.mockReset();
   server.term.mockReset();
+  server.search.mockReset();
+  server.search.mockResolvedValue({ cards: [], nextCursor: null, total: 0 });
   localStorage.clear();
+});
+
+afterEach(() => {
+  onlineManager.setOnline(true);
+});
+
+const failedSearch = "Couldn’t search cards. Check your connection and try again.";
+
+test("a failed search says so rather than that nothing matches", async () => {
+  server.search.mockRejectedValue(new Error("boom"));
+  renderMenu(undefined);
+  await userEvent.type(field(), "zz");
+  await expect.element(page.getByText(failedSearch)).toBeVisible();
+  await expect.element(page.getByText(/Nothing matches/)).not.toBeInTheDocument();
+});
+
+test("a search paused offline says so rather than that nothing matches", async () => {
+  onlineManager.setOnline(false);
+  renderMenu(undefined);
+  await userEvent.type(field(), "zz");
+  await expect.element(page.getByText(failedSearch)).toBeVisible();
+  await expect.element(page.getByText(/Nothing matches/)).not.toBeInTheDocument();
+});
+
+test("a failed search still reports itself under the rows that matched", async () => {
+  server.search.mockRejectedValue(new Error("boom"));
+  renderMenu(undefined);
+  await userEvent.type(field(), "spanish");
+  await expect.element(page.getByRole("option", { name: /Spanish/ })).toBeVisible();
+  await expect.element(page.getByText(failedSearch)).toBeVisible();
+});
+
+test("an empty search says nothing matches", async () => {
+  renderMenu(undefined);
+  await userEvent.type(field(), "zz");
+  await expect.element(page.getByText(/Nothing matches/)).toBeVisible();
+  await expect.element(page.getByText(failedSearch)).not.toBeInTheDocument();
 });
 
 test("Enter before the check lands waits, then opens the card the deck already has", async () => {

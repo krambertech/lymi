@@ -8,9 +8,11 @@ New web accounts start on Today with a first-run guide that remains until the fi
 
 1. **Create a deck**: done once the learner has a deck of their own, or any deck with cards. An empty deck someone shared does not count, because its member cannot add to it.
 2. **Add cards**: done once a deck has cards. While current it holds **Add a card** and, where Smart add is allowed, **Turn your notes into cards**; the learner's own empty deck is named in its line.
-3. **Finish your first review**: holds **Review**, which opens that deck's review. The guide leaves with the first accepted grade.
+3. **Finish your first review**: shown only as the next step until a deck has cards.
 
 Keep each step’s dimensions stable. Only the current step has a filled panel and action. Completed steps use an amber check and struck-through title; future steps use muted numbers. There is no separate progress bar. Hide the normal Today panels while the guide is active.
+
+Once any deck has cards, the steps and the count give way to one plate that names a deck, because someone who only added a deck never made one or added cards. It names the first deck with cards due, else the first with cards. The lantern's line ends at it, and it holds the deck's name, its card count, who made it for a deck that is not the learner's, and **Start your first review**, which opens that deck's review. The line under the greeting says “Start with 5 cards. It takes a few minutes.” for up to 20 cards due, and “Your first review takes a few minutes.” for more. With nothing due in any deck, the line says “Come back later, or add new cards.” and the button is **Open deck**, because a review would open on Nothing due. The guide leaves with the first accepted grade.
 
 ## Under the guide
 
@@ -18,9 +20,26 @@ Keep each step’s dimensions stable. Only the current step has a filled panel a
 
 The ready-made decks follow under a heading whose last words are the choice: **Explore ready-made decks about** **anything**, a language, or **tests**, underlined in amber and opening a short list the learner can search by the language's name, with each choice's deck count; **All decks** opens Explore. The list holds the catalogue's languages, most decks first, then **For a test**, with **Anything** for all of them. A language leads with the decks a beginner starts from, where `BEGINNER_DECKS` in `packages/client/src/welcome.ts` names them: Japanese offers Read Japanese Kana, JLPT N5, JLPT N4 and Japanese Essentials first, and one that is not published leaves its place to the shelf's next deck. It starts on the language the learner most likely came for: the deck they arrived with, else the language they gave Welcome, else everything. The decks sit in one row that scrolls sideways, up to twelve, faded at the end while more follow; a new choice slides the row in from its first deck. **Add** puts the deck in Library and opens its first review.
 
+## The first review
+
+The account's first review teaches itself once, then ends on a short plan for coming back. `apps/web/src/client/components/first-review.tsx` holds the tips and `first-plan.tsx` the end. The phone follows in its own change.
+
+During the review, a note under the first card says what to try and how to see the answer. The first reveal frosts the card after 1.6 s and points at the grades. After the first grade the card gives way to a short screen: the word as the headline, “comes back in 2 days” under it, and every grade with its day, the chosen one lit. **Next card** carries on. A card forgotten in this review says why it is back. **Skip tips** ends all of them. A return of 5 to 10 days reads “in about a week”, because a grade’s fuzz moves the real day by a few days from the preview.
+
+The first grade would end the first review for a reload, so the tab remembers it and the hand of terms in `sessionStorage` until the learner leaves its end. A reload keeps the end and drops the tips; closing the tab loses both.
+
+The end is four screens with one lantern at the top that never moves; only the words and choices under it change, and on a phone the way on stays at the foot.
+
+1. **Success.** The usual count and week, headed “You finished your first review”, or “That’s your first review” after closing early. Beside the flame: “You started your streak”, or how many reviews are left to start it.
+2. **Time.** “How much time a day?” offers 3, 8, 15 or 30 minutes with their card counts, and saves on the tap through `useDailyGoal`.
+3. **Reminder.** “When should we remind you?” offers morning, lunch and evening, with the time part of the day the learner is reviewing in replaced by the current time on the quarter. **Remind me at …** brings up the browser's prompt from the press, so its push key is loaded before the screen. The step is skipped where nothing can be asked: already on, already blocked, iPhone Safari outside the Home Screen, or a browser without web push. Blocked at the prompt, the screen says so and **Next** moves on.
+4. **See you.** “See you tomorrow” or a named weekday, and only what is true of that day: new cards for a deck with more to start, returning cards for a small deck. `nextCards` reads the Insights forecast, whose first day holds today's leftovers, so they count toward tomorrow and the goal caps the number. With no known next day it says “See you soon”. A hand of up to three cards from this review, the time and the reminder follow, then the usual ways on: review forgotten, **Review more cards** or **Add more cards**, and **Done**. The lantern throws a second burst of embers.
+
+X leaves from any screen. **Review more cards** returns to ordinary review, and its end is an ordinary end.
+
 ## Getting set up
 
-Today's first visit before any review counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. An account that has already reviewed is not set up from Today, so it keeps its goal and stays out of `kind: "today"`. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where that deck has ticked the first two steps and **Review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.
+Today's first visit before any review counts as getting set up: the browser saves `PUT /api/settings/onboarding` with no answers and `from: "today"`, which stamps `onboarded_at`, starts the goal at 25 unless one was chosen, and stops the phone from asking Welcome's questions. An account that has already reviewed is not set up from Today, so it keeps its goal and stays out of `kind: "today"`. `/welcome` redirects to Today. An account made from a published deck's add page, a join link or an invitation comes back from sign-in to Today (`?continue=1` on the door page), where the guide names that deck and **Start your first review** is the next press. A deck with no cards yet goes to its own page instead, which says it is waiting for cards, as does an account already set up.
 
 ## Motion
 
@@ -30,7 +49,7 @@ Play the entrance once per device, tracked by `lymi-first-run-lit` in local stor
 
 The phone shows Welcome before Today. It asks what the learner is learning, their language, daily time and preferred starting method. Published-deck choices use `BEGINNER_DECKS`, as on web. Both apps save through `PUT /api/settings/onboarding`, so completion or skipping applies across devices. After sign-in, keep the sign-in screen visible until account state is known, then show Welcome alone when required. Finishing or Skip for now saves `onboarded_at` and opens the selected destination, such as the first review.
 
-Show all three How it works steps lit immediately; sequential lighting caused flashing on phone. Question titles are one size smaller than on web. Use an `lg` primary action at the bottom, glass Back and Skip for now in the header, and full-panel answer choices with checks.
+Show all three How it works steps lit at once, because lighting them in turn flashes on the phone. Question titles are one size smaller than on web. Use an `lg` primary action at the bottom, glass Back and Skip for now in the header, and full-panel answer choices with checks.
 
 Bring your own leads with **Turn your notes into cards**, which makes the learner's first deck from the answers, named for the language or My notes, and opens Smart add on it. Import finishes Welcome and then opens Import over Today ([ADR 0036](../adr/0036-setup-runs-on-the-phone.md)); Claude or ChatGPT opens its setup guide over Today; Type my own cards opens New deck over Today.
 

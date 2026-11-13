@@ -30,7 +30,7 @@ interface Ask {
 
 function Chip({ children, lang }: { children: ReactNode; lang?: string }) {
   return (
-    <span lang={lang} className="rounded-full bg-plate-2 px-2 py-0.5 text-2xs text-text">
+    <span lang={lang} className="rounded-full bg-plate-nested px-2 py-0.5 text-2xs text-ink">
       {children}
     </span>
   );
@@ -48,7 +48,7 @@ function useAsks(): Ask[] {
           <span className="grid size-6 place-items-center rounded-md bg-amber-soft text-amber-text">
             <FileText aria-hidden="true" className="size-3.5" />
           </span>
-          <span className="text-xs font-medium text-text">Lecture 6.pdf</span>
+          <span className="text-xs font-medium text-ink">Lecture 6.pdf</span>
         </span>
       ),
       did: <Trans>Added 8 cards to Biology</Trans>,
@@ -179,10 +179,10 @@ function Bubble({
           style={{ "--tray-h": ask.hue } as CSSProperties}
           className="use-case-tile rounded-[20px] rounded-es-md px-3.5 py-2.5 shadow-[0_16px_34px_-22px_oklch(0.3_0.05_280/0.5)]"
         >
-          <p className="text-2xs font-medium text-text-2">{ask.from}</p>
+          <p className="text-2xs font-medium text-ink-secondary">{ask.from}</p>
           <div className="mt-1">
             {ask.attachment}
-            <p className="text-sm text-pretty text-text">{ask.ask}</p>
+            <p className="text-sm text-pretty text-ink">{ask.ask}</p>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@ function Bubble({
         style={still ? { opacity: 1 } : { opacity: reply, y: replyRise }}
         className="ms-10 mt-2 grid w-fit max-w-[244px] gap-2 rounded-xl bg-plate px-3 py-2 shadow-[0_12px_28px_-20px_oklch(0.3_0.04_60/0.55)] edge"
       >
-        <p className="flex items-start gap-1.5 text-xs text-pretty text-text">
+        <p className="flex items-start gap-1.5 text-xs text-pretty text-ink">
           <Lantern className="mt-px size-3.5 shrink-0" />
           <span>{ask.did}</span>
         </p>
@@ -226,7 +226,7 @@ function Heading() {
       <SectionTitle>
         <Trans>Bring your own AI.</Trans>
       </SectionTitle>
-      <p className="mt-5 text-md text-pretty text-text-2">
+      <p className="mt-5 text-md text-pretty text-ink-secondary">
         <Trans>
           Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed
           right from the chat. You still review in Lymi.
@@ -237,7 +237,7 @@ function Heading() {
           {GUIDE_MARKS.map((name) => (
             <span
               key={name}
-              className="-ms-1.5 grid size-8 place-items-center rounded-full bg-plate text-text edge first:ms-0 [&_svg]:size-4"
+              className="-ms-1.5 grid size-8 place-items-center rounded-full bg-plate text-ink edge first:ms-0 [&_svg]:size-4"
             >
               <AssistantMark name={name} />
             </span>

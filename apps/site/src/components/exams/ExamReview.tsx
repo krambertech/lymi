@@ -93,7 +93,7 @@ export function ExamReview({ exams }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-[440px]">
-      <div className="flex items-center justify-between px-1 text-xs tracking-[0.06em] text-muted uppercase">
+      <div className="flex items-center justify-between px-1 text-xs tracking-[0.06em] text-ink-muted uppercase">
         <span>
           <Trans>Try a question</Trans>
         </span>
@@ -122,7 +122,7 @@ export function ExamReview({ exams }: Props) {
             </p>
             <p
               lang={sample.language}
-              className="mt-3 text-xl leading-snug font-medium tracking-[-0.02em] text-pretty text-text"
+              className="mt-3 text-xl leading-snug font-medium tracking-[-0.02em] text-pretty text-ink"
             >
               {sample.question}
             </p>
@@ -137,13 +137,16 @@ export function ExamReview({ exams }: Props) {
                       lang={sample.language}
                       className={clsx(
                         "flex items-center justify-between gap-3 rounded-md px-3 py-2 text-md transition-colors duration-300",
-                        right ? "bg-good-soft text-text" : "bg-plate-2 text-text-2",
+                        right ? "bg-success-soft text-ink" : "bg-plate-nested text-ink-secondary",
                         revealed && !right && "opacity-55",
                       )}
                     >
                       <span>{option}</span>
                       {right && (
-                        <Check aria-label={t`Right answer`} className="size-4 shrink-0 text-good" />
+                        <Check
+                          aria-label={t`Right answer`}
+                          className="size-4 shrink-0 text-success"
+                        />
                       )}
                     </li>
                   );
@@ -162,14 +165,14 @@ export function ExamReview({ exams }: Props) {
                     className="border-t border-edge pt-3"
                   >
                     {!sample.options && (
-                      <p lang={sample.language} className="text-lg font-medium text-text">
+                      <p lang={sample.language} className="text-lg font-medium text-ink">
                         {sample.answer}
                       </p>
                     )}
                     {translated && sample.translation && (
-                      <p className="mt-1 text-md text-pretty text-text-2">
+                      <p className="mt-1 text-md text-pretty text-ink-secondary">
                         {sample.translation.question && <>{i18n._(sample.translation.question)} </>}
-                        <span className="font-medium text-text">
+                        <span className="font-medium text-ink">
                           {i18n._(sample.translation.answer)}
                         </span>
                       </p>
@@ -184,7 +187,7 @@ export function ExamReview({ exams }: Props) {
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.18 }}
                     onClick={() => setRevealedFor(index)}
-                    className="w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
+                    className="w-full rounded-sm border border-edge-strong border-dashed py-2.5 text-sm text-ink-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-ink-secondary"
                   >
                     <Trans>Show the answer</Trans>
                   </motion.button>
@@ -207,8 +210,8 @@ export function ExamReview({ exams }: Props) {
                     className={clsx(
                       "grid h-[72px] min-w-0 content-center justify-items-center gap-1 rounded-lg px-1 text-sm font-medium edge transition-colors duration-150 disabled:cursor-default",
                       answered === n
-                        ? "bg-plate-2 text-text"
-                        : "bg-plate text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+                        ? "bg-plate-nested text-ink"
+                        : "bg-plate text-ink-secondary hoverable:hover:bg-plate-nested hoverable:hover:text-ink",
                     )}
                   >
                     <Icon
@@ -217,7 +220,9 @@ export function ExamReview({ exams }: Props) {
                       className={clsx("size-[18px]", g.tone)}
                     />
                     <span>{g.name}</span>
-                    <span className="text-2xs font-normal text-muted tabular-nums">{g.when}</span>
+                    <span className="text-2xs font-normal text-ink-muted tabular-nums">
+                      {g.when}
+                    </span>
                   </motion.button>
                 );
               })}

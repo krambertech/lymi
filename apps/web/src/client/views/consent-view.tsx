@@ -75,7 +75,7 @@ export function ConsentView({
           <div className="grid justify-items-center gap-2">
             <AppIdentityLine app={app} />
             {!app.recognised && (
-              <p className="max-w-[32ch] text-center text-sm text-muted">
+              <p className="max-w-[32ch] text-center text-sm text-ink-muted">
                 {claimed ? (
                   <Trans>
                     It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above
@@ -97,14 +97,14 @@ export function ConsentView({
           <li className="flex items-start gap-3 py-1">
             <GrantDot on />
             <span className="grid flex-1 gap-0.5">
-              <span className="text-base font-medium text-text">
+              <span className="text-base font-medium text-ink">
                 <Trans>See your decks and cards</Trans>
               </span>
-              <span className="text-sm text-muted">
+              <span className="text-sm text-ink-muted">
                 <Trans>List, search and read them. Every AI app needs this.</Trans>
               </span>
             </span>
-            <span className="mt-1 shrink-0 text-sm text-muted">
+            <span className="mt-1 shrink-0 text-sm text-ink-muted">
               <Trans>Always</Trans>
             </span>
           </li>
@@ -119,7 +119,7 @@ export function ConsentView({
                 <GrantDot on={allowWrite} />
                 <FieldContent className="gap-0.5">
                   {/* Stretched over the row, so a tap on the sentence flips the switch too. */}
-                  <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                  <FieldLabel className="text-base text-ink after:absolute after:inset-0 after:content-['']">
                     <Trans>Add, edit and archive cards</Trans>
                   </FieldLabel>
                   <FieldDescription>
@@ -140,15 +140,15 @@ export function ConsentView({
         </ul>
 
         <div className="mt-4 border-t border-edge pt-4">
-          <p className="text-sm font-medium text-text-2">
+          <p className="text-sm font-medium text-ink-secondary">
             <Trans>Never allowed</Trans>
           </p>
           <ul className="mt-1.5 grid gap-1">
             {never.map((what) => (
-              <li key={what} className="flex items-start gap-2 text-sm text-muted">
+              <li key={what} className="flex items-start gap-2 text-sm text-ink-muted">
                 <span
                   aria-hidden="true"
-                  className="mt-[9px] h-px w-2.5 shrink-0 rounded-full bg-faint"
+                  className="mt-[9px] h-px w-2.5 shrink-0 rounded-full bg-ink-faint"
                 />
                 <span>{what}</span>
               </li>
@@ -185,9 +185,9 @@ export function ConsentView({
           </Button>
         </div>
         {email && (
-          <p className="text-center text-sm text-muted">
+          <p className="text-center text-sm text-ink-muted">
             <Trans>
-              Signed in as <span className="text-text-2">{email}</span>
+              Signed in as <span className="text-ink-secondary">{email}</span>
             </Trans>
           </p>
         )}
@@ -204,7 +204,7 @@ function GrantDot({ on }: { on: boolean }) {
       aria-hidden="true"
       className={clsx(
         "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full transition-colors duration-150",
-        on ? "bg-good-soft text-good" : "edge-2 text-transparent",
+        on ? "bg-success-soft text-success" : "edge-strong text-transparent",
       )}
     >
       <Check className="size-3" strokeWidth={3} />

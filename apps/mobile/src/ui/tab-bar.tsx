@@ -86,10 +86,10 @@ export function TabBar() {
   return (
     <NativeTabs
       labelStyle={{
-        default: { ...label, color: p.muted },
+        default: { ...label, color: p["ink-muted"] },
         selected: { ...label, color: p["amber-text"] },
       }}
-      iconColor={{ default: p.muted, selected: p["amber-mark"] }}
+      iconColor={{ default: p["ink-muted"], selected: p["amber-mark"] }}
       tintColor={p["amber-mark"]}
       minimizeBehavior="onScrollDown"
       // Material's bar, in the web rail's colours rather than the wallpaper's: its pill is the chip
@@ -173,11 +173,11 @@ function MiniPlayer({ deckId, due }: { deckId: string; due: number }) {
           {due}
         </Text>
       </View>
-      <Text className="flex-1 text-base font-medium text-text" numberOfLines={1}>
+      <Text className="flex-1 text-base font-medium text-ink" numberOfLines={1}>
         {plural(due, { one: "card to review", other: "cards to review" })}
       </Text>
       <View className="size-10 items-center justify-center">
-        <Play size={20} color={p.text} fill={p.text} strokeWidth={2} />
+        <Play size={20} color={p.ink} fill={p.ink} strokeWidth={2} />
       </View>
     </Pressable>
   );

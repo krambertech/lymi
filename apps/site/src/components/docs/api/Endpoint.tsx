@@ -24,7 +24,7 @@ export function MethodTag({ method, className }: { method: Method; className?: s
     <span
       className={clsx(
         "inline-flex h-[22px] shrink-0 items-center justify-center rounded-xs px-1.5 font-mono text-2xs font-semibold uppercase tracking-[0.04em]",
-        method === "delete" ? "bg-danger-soft text-danger" : "bg-plate-2 text-text",
+        method === "delete" ? "bg-danger-soft text-danger" : "bg-plate-nested text-ink",
         className,
       )}
     >
@@ -40,7 +40,7 @@ function StatusTag({ code }: { code: string }) {
     <span
       className={clsx(
         "inline-flex h-[22px] shrink-0 items-center rounded-xs px-1.5 font-mono text-2xs font-semibold tabular-nums",
-        ok ? "bg-good-soft text-good" : "bg-danger-soft text-danger",
+        ok ? "bg-success-soft text-success" : "bg-danger-soft text-danger",
       )}
     >
       {code}
@@ -60,7 +60,7 @@ function ResponseExample({ schema }: { schema: Schema }) {
   const { defs } = useReference();
   return (
     <details className="group">
-      <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-xs text-sm text-muted hoverable:hover:text-text [&::-webkit-details-marker]:hidden">
+      <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-xs text-sm text-ink-muted hoverable:hover:text-ink [&::-webkit-details-marker]:hidden">
         <ChevronRight
           className="size-3.5 transition-transform duration-150 group-open:rotate-90"
           aria-hidden="true"
@@ -125,7 +125,9 @@ export function Endpoint({ route }: { route: Route }) {
                 <div key={code} className="grid gap-2">
                   <div className="flex items-center gap-2">
                     <StatusTag code={code} />
-                    <span className="text-base text-text-2">{inline(res.description ?? "")}</span>
+                    <span className="text-base text-ink-secondary">
+                      {inline(res.description ?? "")}
+                    </span>
                   </div>
                   <Fields schema={schema} />
                   {schema && <ResponseExample schema={schema} />}
@@ -142,7 +144,9 @@ export function Endpoint({ route }: { route: Route }) {
             {failures.map(([code, res]) => (
               <li key={code} className="flex items-baseline gap-2.5">
                 <StatusTag code={code} />
-                <span className="text-base text-text-2">{inline(res.description ?? "")}</span>
+                <span className="text-base text-ink-secondary">
+                  {inline(res.description ?? "")}
+                </span>
               </li>
             ))}
           </ul>
@@ -166,11 +170,11 @@ export function Endpoint({ route }: { route: Route }) {
       <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1.5">
         <span className="flex min-w-0 items-center gap-2">
           <MethodTag method={method} />
-          <code className="doc-code-inline !bg-transparent !px-0 break-all !text-[0.8125rem] text-text">
+          <code className="doc-code-inline !bg-transparent !px-0 break-all !text-[0.8125rem] text-ink">
             {path}
           </code>
         </span>
-        <span className="text-sm text-muted">{accessOf(op, method)}</span>
+        <span className="text-sm text-ink-muted">{accessOf(op, method)}</span>
       </div>
       <div className="grid gap-6">
         <Code lang="bash" label="Request" code={curlFor(route, ORIGIN, doc)} className="!my-0" />
@@ -191,7 +195,7 @@ export function EndpointIndex({ routes }: { routes: Route[] }) {
         >
           <a
             href={`#${anchorFor(route)}`}
-            className="doc-plain group col-span-full grid grid-cols-subgrid items-baseline gap-x-3 gap-y-0.5 px-3.5 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-2"
+            className="doc-plain group col-span-full grid grid-cols-subgrid items-baseline gap-x-3 gap-y-0.5 px-3.5 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-nested"
           >
             {/* A hovered row takes the tag's grey, so the tag lifts to the plate to stay readable. */}
             <MethodTag
@@ -201,10 +205,10 @@ export function EndpointIndex({ routes }: { routes: Route[] }) {
                 route.method !== "delete" && "group-hover:bg-plate",
               )}
             />
-            <code className="truncate !bg-transparent !p-0 font-mono !text-[0.8125rem] text-text max-sm:col-start-2 max-sm:row-start-2">
+            <code className="truncate !bg-transparent !p-0 font-mono !text-[0.8125rem] text-ink max-sm:col-start-2 max-sm:row-start-2">
               {route.path}
             </code>
-            <span className="truncate text-base text-text-2 max-sm:col-start-2 max-sm:row-start-1">
+            <span className="truncate text-base text-ink-secondary max-sm:col-start-2 max-sm:row-start-1">
               {route.op.summary}
             </span>
           </a>

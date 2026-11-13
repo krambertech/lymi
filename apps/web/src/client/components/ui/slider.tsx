@@ -43,7 +43,7 @@ function Slider<Value extends number | readonly number[]>({
         >
           <SliderPrimitive.Indicator
             data-slot="slider-range"
-            className="bg-text-2 select-none data-horizontal:h-full data-vertical:w-full"
+            className="bg-ink-secondary select-none data-horizontal:h-full data-vertical:w-full"
           />
         </SliderPrimitive.Track>
         {thumbs.map((_, index) => (
@@ -53,7 +53,7 @@ function Slider<Value extends number | readonly number[]>({
             key={index}
             aria-label={label}
             className={cn(
-              "edge-2 relative block size-5 shrink-0 rounded-full bg-plate select-none transition-[scale] duration-150 ease-(--ease-out)",
+              "edge-strong relative block size-5 shrink-0 rounded-full bg-plate select-none transition-[scale] duration-150 ease-(--ease-out)",
               // A 44 px target around a 20 px thumb.
               "after:absolute after:-inset-3 after:content-['']",
               "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring",

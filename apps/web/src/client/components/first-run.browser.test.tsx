@@ -98,6 +98,7 @@ test("an empty deck someone shared leaves the first step to do", async () => {
 
 test("a deck with cards leads to the first review", async () => {
   const [deck] = decks;
+  if (!deck) throw new Error("mock decks are empty");
   await wrap(
     <FirstRunGuide
       name="Kateryna"
@@ -108,9 +109,101 @@ test("a deck with cards leads to the first review", async () => {
     />,
   );
   await expect.element(page.getByRole("heading", { name: "Welcome, Kateryna" })).toBeVisible();
-  await expect.element(page.getByText(`${deck?.name} is ready.`, { exact: false })).toBeVisible();
-  await expect.element(page.getByRole("link", { name: "Review" })).toBeVisible();
-  await expect.element(page.getByText("2 of 3 done")).toBeInTheDocument();
+  await expect.element(page.getByRole("heading", { name: deck.name })).toBeVisible();
+  await expect
+    .element(page.getByRole("link", { name: "Start your first review", exact: true }))
+    .toBeVisible();
+  // Nothing is ticked off: someone who only added a deck never made one or added cards.
+  await expect.element(page.getByText("2 of 3 done")).not.toBeInTheDocument();
+  await expect.element(page.getByText("Create a deck")).not.toBeInTheDocument();
+});
+
+test("the guide promises a short first review only when it is short", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("mock decks are empty");
+  const guide = (due: number) => (
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">
+        <FirstRunGuide
+          name="Kateryna"
+          decks={[{ ...deck, total: 300, due }]}
+          play={false}
+          onAddCard={undefined}
+          onSmartAdd={undefined}
+        />
+      </StaticNavProvider>
+    </I18nProvider>
+  );
+  const screen = await render(guide(1));
+  await expect.element(page.getByText("Start with 1 card.", { exact: false })).toBeVisible();
+  await screen.rerender(guide(20));
+  await expect.element(page.getByText("Start with 20 cards.", { exact: false })).toBeVisible();
+  await screen.rerender(guide(21));
+  await expect.element(page.getByText("Your first review takes a few minutes.")).toBeVisible();
+});
+
+test("the guide starts on a deck with cards due, not the first in Library", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("mock decks are empty");
+  await wrap(
+    <FirstRunGuide
+      name="Kateryna"
+      decks={[
+        { ...deck, id: "waiting", name: "Waiting", total: 12, due: 0 },
+        { ...deck, id: "ready", name: "Ready", total: 8, due: 3 },
+      ]}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />,
+  );
+  await expect.element(page.getByRole("heading", { name: "Ready" })).toBeVisible();
+  await expect.element(page.getByText("Start with 3 cards.", { exact: false })).toBeVisible();
+});
+
+test("with nothing due anywhere the guide promises no review and opens the deck", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("mock decks are empty");
+  await wrap(
+    <FirstRunGuide
+      name="Kateryna"
+      decks={[{ ...deck, total: 12, due: 0 }]}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />,
+  );
+  await expect.element(page.getByRole("heading", { name: deck.name })).toBeVisible();
+  await expect.element(page.getByText("Come back later, or add new cards.")).toBeVisible();
+  await expect.element(page.getByRole("link", { name: "Open deck" })).toBeVisible();
+  await expect
+    .element(page.getByRole("link", { name: "Start your first review" }))
+    .not.toBeInTheDocument();
+});
+
+test("a shared deck names its owner, and an own or orphaned deck does not", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("mock decks are empty");
+  const guide = (role: "owner" | "learner", former = false) => (
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">
+        <FirstRunGuide
+          name="Kateryna"
+          decks={[{ ...deck, role, total: 15, owner: { ...deck.owner, name: "Mika", former } }]}
+          play={false}
+          onAddCard={undefined}
+          onSmartAdd={undefined}
+        />
+      </StaticNavProvider>
+    </I18nProvider>
+  );
+  const screen = await render(guide("learner"));
+  await expect.element(page.getByText(/^15 cards · by .?Mika.?$/)).toBeVisible();
+  await screen.rerender(guide("owner"));
+  await expect.element(page.getByText("15 cards", { exact: true })).toBeVisible();
+  // A deleted owner's name is empty, so the line must not end on "by".
+  await screen.rerender(guide("learner", true));
+  await expect.element(page.getByText("15 cards", { exact: true })).toBeVisible();
 });
 
 test("the decks start on the language the learner came for, and adding one says so", async () => {
@@ -254,4 +347,37 @@ test("tests hold only test decks, and a search matches names, not hidden values"
   await page.getByPlaceholder("Search languages").fill("al");
   await expect.element(page.getByRole("option", { name: /^Anything/ })).not.toBeInTheDocument();
   await expect.element(page.getByRole("option", { name: /^For a test/ })).not.toBeInTheDocument();
+});
+
+test("the guide leaves the deck finish to the server, and still finishes cards", async () => {
+  const [deck] = decks;
+  if (!deck) throw new Error("no mock deck");
+  vi.mocked(captureAnalytics).mockClear();
+  const guide = (list: typeof decks) => (
+    <FirstRunGuide
+      name="Kateryna"
+      decks={list}
+      play={false}
+      onAddCard={undefined}
+      onSmartAdd={undefined}
+    />
+  );
+  const screen = await wrap(guide([]));
+  await expect.element(page.getByText("0 of 3 done")).toBeInTheDocument();
+  await screen.rerender(
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">{guide([{ ...deck, total: 0, due: 0 }])}</StaticNavProvider>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText("1 of 3 done")).toBeInTheDocument();
+  await screen.rerender(
+    <I18nProvider i18n={i18n}>
+      <StaticNavProvider path="/today">{guide([deck])}</StaticNavProvider>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByRole("link", { name: "Start your first review" })).toBeVisible();
+  const finished = vi
+    .mocked(captureAnalytics)
+    .mock.calls.filter(([name]) => name === "welcome_step_finished");
+  expect(finished).toEqual([["welcome_step_finished", { step_name: "cards", skipped: false }]]);
 });

@@ -112,20 +112,20 @@ function DeckPage({
       <View className="items-center gap-2.5" onLayout={(e) => setBlock(e.nativeEvent.layout.y)}>
         <View className="flex-row items-center gap-2">
           <PublisherMark slug={deck.slug} name={deck.publisher} avatar={deck.publisherAvatar} />
-          <Text className="text-sm text-text-2">
+          <Text className="text-sm text-ink-secondary">
             {sections.length > 0
               ? t`By ${deck.publisher} · ${cards} · ${sectionCount}`
               : t`By ${deck.publisher} · ${cards}`}
           </Text>
         </View>
         <Text
-          className="text-center text-2xl font-medium tracking-tight text-text"
+          className="text-center text-2xl font-medium tracking-tight text-ink"
           accessibilityRole="header"
           onLayout={(e) => setNameEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
         >
           {deck.name}
         </Text>
-        <Text className="text-center text-md text-text-2">{deck.summary}</Text>
+        <Text className="text-center text-md text-ink-secondary">{deck.summary}</Text>
         <DeckTags tags={deck.tags} />
       </View>
       <View className="self-stretch">
@@ -175,7 +175,7 @@ function DeckPage({
     >
       {sections.length > 0 && (
         <View className="gap-3">
-          <Text className="px-1 text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="px-1 text-lg font-medium text-ink" accessibilityRole="header">
             {t`What you learn, in order`}
           </Text>
           <Plate className="overflow-hidden">
@@ -184,19 +184,22 @@ function DeckPage({
                 key={key}
                 className={`min-h-[52px] flex-row items-center gap-3 px-4 py-3 ${at > 0 ? "border-t border-edge" : ""}`}
               >
-                <Text className="w-5 text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                <Text
+                  className="w-5 text-sm text-ink-muted"
+                  style={{ fontVariant: ["tabular-nums"] }}
+                >
                   {at + 1}
                 </Text>
-                <Text className="flex-1 text-md text-text" numberOfLines={1}>
+                <Text className="flex-1 text-md text-ink" numberOfLines={1}>
                   {section.name}
                 </Text>
-                <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
                   {plural(section.cards.length, { one: "# card", other: "# cards" })}
                 </Text>
               </View>
             ))}
           </Plate>
-          <Text className="px-1 text-sm text-muted">
+          <Text className="px-1 text-sm text-ink-muted">
             {deck.sectionProgression === "open"
               ? t`Every section is open, so any card can come up in review.`
               : deck.sectionProgression === "manual"
@@ -207,7 +210,7 @@ function DeckPage({
       )}
 
       <View className="gap-3">
-        <Text className="px-1 text-lg font-medium text-text" accessibilityRole="header">
+        <Text className="px-1 text-lg font-medium text-ink" accessibilityRole="header">
           {t`Every card`}
         </Text>
         <View className="gap-2">
@@ -245,9 +248,9 @@ function DeckTags({ tags }: { tags: string[] }) {
           key={tag}
           className="min-h-7 justify-center rounded-full px-2.5"
           // Ink at a low opacity darkens the ground by day and lightens it at night, keeping its hue.
-          style={{ backgroundColor: `${p.text}12` }}
+          style={{ backgroundColor: `${p.ink}12` }}
         >
-          <Text className="text-sm font-medium text-text-2">{text}</Text>
+          <Text className="text-sm font-medium text-ink-secondary">{text}</Text>
         </View>
       ))}
     </View>
@@ -295,7 +298,7 @@ function BarAdd({
         }}
       >
         {busy ? (
-          <ActivityIndicator color={p.text} />
+          <ActivityIndicator color={p.ink} />
         ) : added ? (
           // Once the deck is in, the bar keeps only the check, so it never crowds the title.
           <Animated.View key="added" entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}>
@@ -307,8 +310,8 @@ function BarAdd({
             entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
             className="flex-row items-center gap-1.5"
           >
-            <Icon name="plus" size={18} colour={p.text} strokeWidth={2.5} />
-            <Text className="text-base font-medium text-text">{t`Add`}</Text>
+            <Icon name="plus" size={18} colour={p.ink} strokeWidth={2.5} />
+            <Text className="text-base font-medium text-ink">{t`Add`}</Text>
           </Animated.View>
         )}
       </GlassSurface>
@@ -330,21 +333,21 @@ function SectionCards({ section }: { section: Data["deck"]["sections"][number] }
         accessibilityState={{ expanded: open }}
         className="min-h-[52px] flex-row items-center gap-3 px-4 py-3"
       >
-        <Text className="flex-1 text-md text-text" numberOfLines={1}>
+        <Text className="flex-1 text-md text-ink" numberOfLines={1}>
           {section.name ?? t`Cards outside a section`}
         </Text>
-        <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
           {plural(section.cards.length, { one: "# card", other: "# cards" })}
         </Text>
         <View style={{ transform: [{ rotate: open ? "180deg" : "0deg" }] }}>
-          <Icon name="down" size={18} colour={p.muted} />
+          <Icon name="down" size={18} colour={p["ink-muted"]} />
         </View>
       </Press>
       {open &&
         keyed(section.cards, (card) => card.term).map(({ item: card, key }) => (
           <View key={key} className="gap-0.5 border-t border-edge px-4 py-2.5">
-            <Text className="text-md text-text">{card.term}</Text>
-            {card.meaning && <Text className="text-base text-text-2">{card.meaning}</Text>}
+            <Text className="text-md text-ink">{card.term}</Text>
+            {card.meaning && <Text className="text-base text-ink-secondary">{card.meaning}</Text>}
           </View>
         ))}
     </Plate>
@@ -358,7 +361,7 @@ function MoreLikeThis({ related }: { related: Data["related"] }) {
   const tile = Math.round((width - 40 - 12) / 2.15);
   return (
     <View className="gap-3">
-      <Text className="px-1 text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="px-1 text-lg font-medium text-ink" accessibilityRole="header">
         {t`More like this`}
       </Text>
       <ScrollView
@@ -402,7 +405,7 @@ function PublisherMark({
     );
   }
   return (
-    <View className="size-5 items-center justify-center rounded-full bg-text">
+    <View className="size-5 items-center justify-center rounded-full bg-ink">
       <Text className="text-2xs font-semibold text-canvas">
         {name.trim().charAt(0).toUpperCase()}
       </Text>

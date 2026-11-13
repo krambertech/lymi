@@ -74,10 +74,10 @@ export function NameSheet({
           returnKeyType="done"
           maxLength={sectionLimits.name ?? undefined}
           placeholder={t`Lesson 15`}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={t`Name`}
-          selectionColor={p.text}
-          className="min-h-11 py-2 font-sans text-text"
+          selectionColor={p.ink}
+          className="min-h-11 py-2 font-sans text-ink"
           style={{ fontSize: 17 }}
           maxFontSizeMultiplier={inputCap(17)}
         />

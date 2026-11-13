@@ -109,13 +109,13 @@ export function SearchField({
     <View
       className={`h-11 flex-row items-center gap-2 rounded-xl px-3.5 ${fill === "group" ? "bg-glass-group" : "bg-glass-plate"}`}
     >
-      <Icon name="search" size={18} colour={p.muted} />
+      <Icon name="search" size={18} colour={p["ink-muted"]} />
       <TextInput
         {...focus}
         value={query}
         onChangeText={onChange}
         placeholder={placeholder ?? t`Search`}
-        placeholderTextColor={p.muted}
+        placeholderTextColor={p["ink-muted"]}
         accessibilityLabel={t`Search ${label}`}
         autoCapitalize="none"
         autoCorrect={false}
@@ -124,8 +124,8 @@ export function SearchField({
         returnKeyType="done"
         submitBehavior={stay ? "submit" : "blurAndSubmit"}
         onSubmitEditing={onSubmit}
-        selectionColor={p.text}
-        className="flex-1 font-sans text-text"
+        selectionColor={p.ink}
+        className="flex-1 font-sans text-ink"
         style={{ fontSize: 17 }}
         maxFontSizeMultiplier={inputCap(17)}
       />
@@ -204,7 +204,7 @@ export function Select<T extends string>({
               {shown.length > 0 ? (
                 rows
               ) : (
-                <Text className="px-4 py-3 text-md text-muted">{t`No matches`}</Text>
+                <Text className="px-4 py-3 text-md text-ink-muted">{t`No matches`}</Text>
               )}
             </ScrollView>
           </>
@@ -229,10 +229,10 @@ export function SelectTrigger({
     <View
       className={`h-11 flex-row items-center gap-2 rounded-md border bg-plate ps-3.5 pe-3 ${invalid ? "border-danger" : "border-edge"}`}
     >
-      <Text className="flex-1 text-md text-text" numberOfLines={1}>
+      <Text className="flex-1 text-md text-ink" numberOfLines={1}>
         {children}
       </Text>
-      <Icon name="down" size={18} colour={p.muted} />
+      <Icon name="down" size={18} colour={p["ink-muted"]} />
     </View>
   );
 }

@@ -1,6 +1,7 @@
 import { MotionConfig } from "motion/react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { StaticNavProvider } from "../components/nav-link";
+import { appleKeyboard } from "../lib/device";
 import { useFinePointer, useForcedStates } from "./forced-states";
 import { SPECIMENS, type SpecimenId } from "./specimens";
 
@@ -26,14 +27,14 @@ export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
   return (
     <div className="grid w-full gap-3">
       {!fine && (
-        <p className="font-mono text-xs text-muted">
+        <p className="font-mono text-xs text-ink-muted">
           This device has no fine pointer, so both frames take the touch shape. Open this page on a
           desktop to see the desktop one.
         </p>
       )}
       <div className="grid w-full items-start gap-4 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,300px)]">
         <figure className="grid min-w-0 gap-2">
-          <figcaption className="font-mono text-xs text-muted">Desktop</figcaption>
+          <figcaption className="font-mono text-xs text-ink-muted">Desktop</figcaption>
           <ScaledFrame
             src={frameSrc(specimen)}
             title={`${name} on a desktop`}
@@ -42,7 +43,7 @@ export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
           />
         </figure>
         <figure className="grid min-w-0 gap-2">
-          <figcaption className="font-mono text-xs text-muted">Touch</figcaption>
+          <figcaption className="font-mono text-xs text-ink-muted">Touch</figcaption>
           <ScaledFrame
             src={frameSrc(specimen)}
             title={`${name} on a touch device`}
@@ -141,17 +142,47 @@ function keepPageStill() {
   Element.prototype.scrollIntoView = () => {};
 }
 
+/** ⌘K, or Ctrl K. */
+export function isFindKey(e: KeyboardEvent) {
+  if (e.repeat || e.altKey || e.shiftKey) return false;
+  if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return false;
+  return e.code === "KeyK" || e.key?.toLowerCase() === "k";
+}
+
+/** A specimen can hold focus from the moment it opens, so the page's search has to hear ⌘K from here. */
+function useFindFromFrame() {
+  useEffect(() => {
+    if (window.parent === window) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (!isFindKey(e)) return;
+      e.preventDefault();
+      window.parent.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: e.code,
+          key: e.key,
+          metaKey: e.metaKey,
+          ctrlKey: e.ctrlKey,
+        }),
+      );
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, []);
+}
+
 /** The inside of a frame: the specimen on the canvas, in the room and motion of the page around it. */
 export function FrameDocument({ specimen }: { specimen: string }) {
   keepPageStill();
+  useFindFromFrame();
   useForcedStates();
   useMirroredAttribute(canvasAround, "data-theme");
   const motion = useMirroredAttribute(motionAround, "data-motion");
   const entry = specimen in SPECIMENS ? SPECIMENS[specimen as SpecimenId] : undefined;
-  if (!entry) return <p className="p-5 text-base text-muted">No specimen named “{specimen}”.</p>;
+  if (!entry)
+    return <p className="p-5 text-base text-ink-muted">No specimen named “{specimen}”.</p>;
   return (
     <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
-      <div className="min-h-dvh bg-canvas p-5 text-text">
+      <div className="min-h-dvh bg-canvas p-5 text-ink">
         <StaticNavProvider path="/design">
           <entry.Scene />
         </StaticNavProvider>

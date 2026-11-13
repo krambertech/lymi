@@ -33,7 +33,7 @@ The apps share product rules, account data and design tokens. Layout and input f
 - **Public site:** product information, published decks, guides and API documentation.
 - **API and MCP:** card and deck management from scripts and assistants under the same permissions as the apps. Integrations cannot grade reviews.
 
-Learning features belong on both web and phone. By default, ship on the web first and track phone delivery in a linked issue after verification. This is a delivery policy, not a claim that every screen already matches. Import, export, API keys and connected apps are available on the phone too. Publishing and publisher reports use an API key ([ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md), [ADR 0036](docs/adr/0036-setup-runs-on-the-phone.md)).
+Learning features belong on both web and phone. By default, ship on the web first and track phone delivery in a linked issue after verification. Some screens still reach the web before the phone. Import, export, API keys and connected apps are available on the phone too. Publishing and publisher reports use an API key ([ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md), [ADR 0036](docs/adr/0036-setup-runs-on-the-phone.md)).
 
 ## Features
 

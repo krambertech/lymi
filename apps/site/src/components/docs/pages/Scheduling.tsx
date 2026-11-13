@@ -63,7 +63,7 @@ function Checklist({ items }: { items: ReactNode[] }) {
         >
           <span
             aria-hidden="true"
-            className="mt-[3px] grid size-5 place-items-center rounded-full bg-plate-2 text-text-2"
+            className="mt-[3px] grid size-5 place-items-center rounded-full bg-plate-nested text-ink-secondary"
           >
             <Check className="size-3" strokeWidth={2.5} />
           </span>
@@ -76,7 +76,7 @@ function Checklist({ items }: { items: ReactNode[] }) {
 
 /** A generated row that is Lymi's own choice reads a step stronger than the rules it beat. */
 function rowClass(ours: boolean) {
-  return clsx(ours && "bg-plate-2 font-medium text-text");
+  return clsx(ours && "bg-plate-nested font-medium text-ink");
 }
 
 function Source({
@@ -94,14 +94,14 @@ function Source({
 }) {
   return (
     <li className="!m-0 border-t border-edge py-5 last:border-b">
-      <p className="!mb-0.5 font-medium text-text">
+      <p className="!mb-0.5 font-medium text-ink">
         <a href={href}>{title}</a>
       </p>
-      <p className="!mb-3 text-sm text-muted">{cite}</p>
+      <p className="!mb-3 text-sm text-ink-muted">{cite}</p>
       <dl className="grid gap-2 sm:grid-cols-[7.5rem_1fr] sm:gap-x-4">
-        <dt className="text-sm font-medium text-text">Supports</dt>
+        <dt className="text-sm font-medium text-ink">Supports</dt>
         <dd className="text-base">{supports}</dd>
-        <dt className="text-sm font-medium text-text">Does not</dt>
+        <dt className="text-sm font-medium text-ink">Does not</dt>
         <dd className="text-base">{against}</dd>
       </dl>
     </li>
@@ -198,7 +198,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <tbody>
             {intervals.ladders.map((l) => (
               <tr key={l.rating}>
-                <Td className="whitespace-nowrap text-text">{GRADE_NAMES[l.rating]}</Td>
+                <Td className="whitespace-nowrap text-ink">{GRADE_NAMES[l.rating]}</Td>
                 {l.steps.map((s, i) => (
                   <Td key={String(i)} align="right" className="whitespace-nowrap">
                     {duration(s.minutes)}
@@ -235,7 +235,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <tbody>
             {learned.map((c) => (
               <tr key={c.interval}>
-                <Td className="whitespace-nowrap text-text">{days(c.interval)}</Td>
+                <Td className="whitespace-nowrap text-ink">{days(c.interval)}</Td>
                 {c.grades.map((g) => (
                   <Td key={g.rating} align="right" className="whitespace-nowrap">
                     {duration(g.minutes)}
@@ -268,7 +268,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           </thead>
           <tbody>
             <tr>
-              <Td className="whitespace-nowrap text-text">Good</Td>
+              <Td className="whitespace-nowrap text-ink">Good</Td>
               {forgetting.forgot.map((_, i) => (
                 <Td key={String(i)} align="right" className="whitespace-nowrap">
                   {forgetting.remembered[i] ? duration(forgetting.remembered[i].minutes) : ""}
@@ -276,7 +276,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
               ))}
             </tr>
             <tr>
-              <Td className="whitespace-nowrap text-text">Forgot</Td>
+              <Td className="whitespace-nowrap text-ink">Forgot</Td>
               {forgetting.forgot.map((s, i) => (
                 <Td key={String(i)} align="right" className="whitespace-nowrap">
                   {duration(s.minutes)}
@@ -493,7 +493,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <tbody>
             {reviewOrder.rows.map((r) => (
               <tr key={r.id} className={rowClass(r.id === "lymi")}>
-                <Td className="text-text">{REVIEW_ORDER_NAMES[r.id as ReviewOrderId]}</Td>
+                <Td className="text-ink">{REVIEW_ORDER_NAMES[r.id as ReviewOrderId]}</Td>
                 <Td align="right">{count(r.introduced)}</Td>
                 <Td align="right">{count(r.remembered)}</Td>
                 <Td align="right">{count(r.late)}</Td>
@@ -535,7 +535,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <tbody>
             {returns.rows.map((r) => (
               <tr key={r.id} className={rowClass(r.id === "lymi")}>
-                <Td className="text-text">{RETURN_RULE_NAMES[r.id as ReturnRuleId]}</Td>
+                <Td className="text-ink">{RETURN_RULE_NAMES[r.id as ReturnRuleId]}</Td>
                 <Td align="right">{r.returnsPerDay}</Td>
                 <Td align="right">{r.lag || "—"}</Td>
                 <Td align="right">{r.thricePerWeek}</Td>
@@ -579,7 +579,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <tbody>
             {newCards.rows.map((r) => (
               <tr key={r.id} className={rowClass(r.id === "lymi")}>
-                <Td className="text-text">{NEW_CARD_NAMES[r.id as NewCardRuleId]}</Td>
+                <Td className="text-ink">{NEW_CARD_NAMES[r.id as NewCardRuleId]}</Td>
                 <Td align="right">{days(r.medianWait)}</Td>
                 <Td align="right">{days(r.p90Wait)}</Td>
                 <Td align="right">

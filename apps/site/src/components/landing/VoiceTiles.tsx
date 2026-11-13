@@ -33,7 +33,7 @@ function Wave({ peaks, played }: { peaks: number[] | null; played: number }) {
           style={{ height: `${Math.max(2 / 34, p) * 100}%` }}
           className={clsx(
             "min-h-0.5 flex-1 rounded-full transition-colors duration-100",
-            i / BARS < played ? "bg-amber" : "bg-edge-2",
+            i / BARS < played ? "bg-amber" : "bg-edge-strong",
           )}
         />
       ))}
@@ -98,12 +98,12 @@ export function VoiceTiles({ words, lang, folder }: Props) {
             type="button"
             onClick={() => play(w.id)}
             aria-label={w.reading ? t`Play ${w.term}, ${w.reading}` : t`Play ${w.term}`}
-            className="grid gap-2.5 rounded-lg bg-plate-2 p-3 text-start @md:p-4 edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-hover"
+            className="grid gap-2.5 rounded-lg bg-plate-nested p-3 text-start @md:p-4 edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-plate-hover"
           >
             {/* The word has the tile's whole width and grows with it, so здра́вствуйте fits a phone. */}
             <span
               lang={lang}
-              className="min-w-0 text-xl leading-tight font-medium text-text @md:text-2xl @4xl:text-3xl"
+              className="min-w-0 text-xl leading-tight font-medium text-ink @md:text-2xl @4xl:text-3xl"
             >
               {w.term}
             </span>
@@ -114,11 +114,11 @@ export function VoiceTiles({ words, lang, folder }: Props) {
             )}
             <Wave peaks={peaks[w.id] ?? null} played={on ? (playing?.at ?? 0) : 0} />
             <span className="flex items-end justify-between gap-2">
-              <span className="text-sm text-muted">{i18n._(w.meaning)}</span>
+              <span className="text-sm text-ink-muted">{i18n._(w.meaning)}</span>
               <span
                 className={clsx(
                   "grid size-8 shrink-0 place-items-center rounded-full transition-colors",
-                  on ? "bg-amber text-amber-ink" : "text-text-2 edge-2",
+                  on ? "bg-amber text-amber-ink" : "text-ink-secondary edge-strong",
                 )}
               >
                 <Volume2 aria-hidden="true" className="size-4" />

@@ -10,9 +10,9 @@ This proposal is implemented. [ADR 0017](../adr/0017-interface-primitives-are-sh
 
 ## Lasting rationale
 
-Lymi should own its warm, calm visual language without maintaining difficult browser mechanics such as focus movement, popup positioning, portals, dismissal, scroll locking, listbox navigation, and mobile drawer gestures.
+Lymi should control its visual design while Base UI handles browser behavior such as focus movement, popup positioning, portals, dismissal, scroll locking, listbox navigation, and mobile drawer gestures.
 
-Generated shadcn components backed by Base UI provide the recognizable starting point under `apps/web/src/client/components/ui`. Lymi preserves their compound anatomy and state attributes, then applies its own tokens and product behavior.
+Generated shadcn components backed by Base UI provide the starting components under `apps/web/src/client/components/ui`. Lymi preserves their compound component structure and state attributes, then applies its own tokens and product behavior.
 
 Interaction-heavy foundations use these primitives. Product controls remain Lymi components composed from them. Buttons, icons, the lantern, the flame, and product visualizations stay custom where they express a product rule rather than generic browser behavior.
 

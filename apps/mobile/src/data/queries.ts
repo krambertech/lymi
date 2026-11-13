@@ -1,11 +1,6 @@
-import { deviceTimezone, type ReviewScope } from "@lymi/client/api";
-import {
-  gradeStore,
-  type Recorded,
-  recordGrade,
-  type Undone,
-  undoGrade,
-} from "@lymi/client/grades";
+import type { ReviewScope } from "@lymi/client/api";
+import { withoutDropped } from "@lymi/client/dropped-grades";
+import { gradeStore } from "@lymi/client/grades";
 import {
   archivedCardPagesQuery,
   archivedDecksQuery,
@@ -13,21 +8,15 @@ import {
   decksQuery,
   drawQuery,
   insightsQuery,
-  queueQuery,
   roundsQuery,
   sectionsQuery,
   seriesQuery,
   streakQuery,
 } from "@lymi/client/queries";
 import { drawableLeft, streakToday } from "@lymi/client/review-day";
-import {
-  type DrawData,
-  type DrawState,
-  drawState,
-  type LocalGrade,
-} from "@lymi/client/review-draw";
+import { type DrawData, type DrawState, drawState } from "@lymi/client/review-draw";
 import { writes } from "@lymi/client/writes";
-import { type CardInput, DEFAULT_DAILY_GOAL, type Round, type StreakOut } from "@lymi/core";
+import { type CardInput, DEFAULT_DAILY_GOAL, daySatisfied } from "@lymi/core";
 import { lanternFor, streakFlameFor } from "@lymi/design";
 import {
   onlineManager,
@@ -40,7 +29,6 @@ import {
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
 import { addDays, lastSevenDays } from "../ui/days";
-import { withoutDropped } from "./dropped";
 
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 
@@ -58,12 +46,6 @@ export const useRounds = () => useQuery(roundsQuery);
 export const useInsights = (period: 30 | 90 | 0) => useQuery(insightsQuery(period));
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
-/** A round from Today, or cards chosen in a deck, is a fixed list the server orders, walked in order. */
-export const useRoundQueue = (
-  round: Round | undefined,
-  scope: ReviewScope,
-  cards?: readonly string[],
-) => useQuery({ ...queueQuery(scope, round, cards), enabled: !!round || !!cards });
 /** The learner's series, to name a series a review is scoped to. */
 export const useSeriesList = (enabled: boolean) => useQuery({ ...seriesQuery, enabled });
 
@@ -114,16 +96,13 @@ export function useDrawState(
 ) {
   const all = useGrades();
   const grades = useMemo(() => withoutDropped(all, data), [all, data]);
-  const [now, setNow] = useNow(data ? new Date(data.day.end) : undefined);
+  const [now] = useNow(data ? new Date(data.day.end) : undefined);
   const state: DrawState | undefined = useMemo(
     () => (data ? drawState(data, grades, now, scope.deck, lookahead) : undefined),
     [data, grades, now, scope.deck, lookahead],
   );
-  return { state, grades, setNow };
+  return { state };
 }
-
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /** Today against the goal, as the lantern, the flame and the seven lights read it. */
 export function useDay() {
@@ -138,7 +117,7 @@ export function useDay() {
   const reviewsToday = data?.today.attempts ?? state?.attempts ?? 0;
   const goal = data?.today.goal ?? data?.goal ?? draw?.goal ?? DEFAULT_DAILY_GOAL;
   // Finishing everything due counts the day, even below the goal.
-  const dayDone = !!data && satisfied(data.today.outcome);
+  const dayDone = !!data && daySatisfied(data.today.outcome);
   const today = state?.day.date ?? data?.today.date;
   const byDate = new Map(data?.days.map((d) => [d.date, d]));
   const rest = new Set(data?.restDays);
@@ -174,33 +153,6 @@ export function useDay() {
     /** The streak flame: out, lit or full exactly when the lantern is. */
     flame: data ? streakFlameFor(data) : ("lit" as const),
   };
-}
-
-/**
- * Keeps a grade on the device at once and sends it after any queued before it, ADR 0023; once it
- * is answered, what a grade moves refreshes: due counts and deck cards, the rounds, the streak.
- */
-export function useGrade() {
-  const qc = useQueryClient();
-  return (grade: LocalGrade): Promise<Recorded> =>
-    recordGrade({ ...grade, timezone: deviceTimezone() }).then((outcome) => {
-      for (const queryKey of [decksQuery.queryKey, roundsQuery.queryKey, streakQuery.queryKey]) {
-        void qc.invalidateQueries({ queryKey: [...queryKey] });
-      }
-      return outcome;
-    });
-}
-
-/** Takes back a grade through the outbox, then refreshes what it had moved. */
-export function useUndoGrade() {
-  const qc = useQueryClient();
-  return (grade: LocalGrade): Promise<Undone> =>
-    undoGrade(grade).then((outcome) => {
-      for (const queryKey of [["queue"], ["decks"], ["rounds"], ["streak"]]) {
-        void qc.invalidateQueries({ queryKey });
-      }
-      return outcome;
-    });
 }
 
 /** Adds through the write outbox, so a card made offline shows at once and lands later. */

@@ -41,14 +41,14 @@ export function FormHeader({ close, title, subtitle, middle, action, style }: Fo
         {middle ?? (
           <>
             <Text
-              className="text-center text-md font-medium text-text"
+              className="text-center text-md font-medium text-ink"
               accessibilityRole="header"
               numberOfLines={1}
             >
               {title}
             </Text>
             {subtitle && (
-              <Text className="text-sm text-muted" numberOfLines={1}>
+              <Text className="text-sm text-ink-muted" numberOfLines={1}>
                 {subtitle}
               </Text>
             )}

@@ -3,9 +3,9 @@ status: accepted
 date: 2026-09-23
 ---
 
-# Offline writes queue on the device and replay in order
+# Offline writes replay in order
 
-A learner's card and deck writes go through a write outbox in `packages/client/src/writes.ts`, next to the grade outbox. Each write is kept on the device before it is sent. It shows in the cached lists at once and replays in the order it was made when the connection returns. The server stays the only source of truth. The client never merges state; it replays intents the server can apply twice without harm.
+A learner's card and deck writes go through a write outbox in `packages/client/src/writes.ts`, next to the grade outbox. Each write is kept on the device before it is sent. It shows in the cached lists at once and replays in the order it was made when the connection returns. The server stays the only source of truth. The client replays writes the server can safely apply more than once, rather than merging state.
 
 ## Context
 
@@ -19,9 +19,11 @@ Reviews already worked offline: the query cache survives reloads, and grades que
 
 **Replay is idempotent without new bookkeeping.** Edits send only the changed fields, so a repeat sets the same values. Archive and restore change nothing when the item is already there. Edits are last-write-wins per field, in the order the server receives them. Enrichment only fills fields that are still empty, so an offline edit is never overwritten by AI text.
 
-**Order and holds.** One flush runs at a time, under a Web Lock across tabs. Writes go oldest first, and before each one the grades made before it are sent, so the server sees one timeline. Offline, a send with no answer after 20 seconds, or a 401 stops the flush and keeps everything; a stalled send is tried again 30 seconds later. A list waits at most 2 seconds on the flush before it fetches anyway. A 408, 429 or 5xx backs off, from 2 seconds doubling to 5 minutes, and holds every later write to the same item, for up to a day; a failure no status explains gets five tries. After that, or on any other refusal, the write is dropped with every later write that needed what it would have created, and the learner is told once. A card add that the server skips as a duplicate is reported the same way.
+**Replay order and retries.** One flush runs at a time, under a Web Lock across tabs. Writes go oldest first, and before each one the grades made before it are sent, so the server sees one timeline. The flush stops and keeps all queued writes when offline, when a send has no response after 20 seconds, or when the server returns 401. A stalled send is tried again 30 seconds later. A list waits at most 2 seconds on the flush before it fetches anyway.
 
-**What the screen shows.** A write updates the cached deck list, archived lists and deck card lists at once. The same lists send what is waiting before they fetch, then lay any write still waiting over the answer, so a refetch never hides it. While online, every deck's cards, sections and draw are fetched once in the background, so a deck opened for the first time offline still works.
+A 408, 429 or 5xx backs off, from 2 seconds doubling to 5 minutes, and holds every later write to the same item, for up to a day; a failure without an explanatory status gets five tries. After that, or on any other refusal, the write is dropped with every later write that needed what it would have created, and the learner is told once. A card add that the server skips as a duplicate is reported the same way.
+
+**What the screen shows.** A write updates the cached deck list, archived lists and deck card lists at once. The same lists send what is waiting before they fetch, then apply any remaining queued writes over the response, so a refetch never hides it. While online, every deck's cards, sections and draw are fetched once in the background, so a deck opened for the first time offline still works.
 
 **Storage.** Each queued write is its own localStorage key, `lymi-writes:<key>`, so tabs adding writes at the same moment never overwrite each other. Each carries a format version; a build keeps a version it does not know unsent rather than dropping it. The query cache, which the deploy buster discards and the background fetch makes large, lives in IndexedDB instead, so it cannot crowd the outboxes out of localStorage. The app asks for persistent storage. Sign-in keeps both outboxes. `lymi-queued-for` records whose they are, and they are dropped only if a different account signs in. Sign-out still asks before discarding anything unsent.
 
@@ -35,7 +37,7 @@ Reviews already worked offline: the query cache survives reloads, and grades que
 
 ## Consequences
 
-- A learner can add, edit and archive cards and decks offline, and nothing they did is lost to a reload, a deploy, a lapsed session or a full disk.
+- A learner can add, edit and archive cards and decks offline, with queued writes preserved through reloads, deploys, lapsed sessions and a full disk.
 - An older offline edit can overwrite a newer edit of the same field made on another device.
 - A card added offline does not appear in that device's review until it has synced, because its states are the server's.
 - A new write kind needs an entry in `writes.ts` (send, and the ids it changes and needs) and in `write-projections.ts` if it shows in a cached list.

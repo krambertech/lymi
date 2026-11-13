@@ -46,7 +46,7 @@ Follow Lymi’s vocabulary and voice: count cards; use sentence case and curly q
 
 ## Check every language
 
-- English is the source message. Localize a whole sentence; `AGENTS.md` has the Lingui macros.
+- English is the source message. Localize a whole sentence; [the coding standards](../../../CODING_STANDARDS.md#localize-whole-sentences) have the Lingui macros.
 - Extract and translate every changed message with [the translate skill](../translate/SKILL.md). Keep placeholders, complete plurals and the same consequences in each language.
 - Read English, Ukrainian and Russian in the running interface at 393 px and 1280 px, including changed error and empty states. Check wrapping, overflow, truncation and competing labels.
 - When a translation does not fit, adjust the layout or simplify the idea without changing the meaning. List uncertain wording for native review.

@@ -63,12 +63,44 @@ const KINDS: { group: string; kinds: { kind: string; name: string; when: string 
     ],
   },
   {
+    group: "Learning",
+    kinds: [
+      {
+        kind: "learning-first",
+        name: "Never reviewed",
+        when: "Added a deck, day 1, no review yet.",
+      },
+      {
+        kind: "learning-how",
+        name: "How a review works",
+        when: "Added a deck, day 3, still no review.",
+      },
+      { kind: "learning-nodeck", name: "No deck", when: "No cards, day 1." },
+      {
+        kind: "learning-new",
+        name: "Only new cards",
+        when: "Reviewed one day, days 1 and 3, and nothing is due yet.",
+      },
+      {
+        kind: "learning-due",
+        name: "A card is due",
+        when: "Reviewed one day, days 1 and 3, with a card due.",
+      },
+      {
+        kind: "learning-back",
+        name: "Away a week",
+        when: "Day 7 after the last review, when notifications stop.",
+      },
+      { kind: "learning-last", name: "The last one", when: "Day 30 after the last review." },
+    ],
+  },
+  {
     group: "Decks",
     kinds: [
       {
         kind: "deck-invitation",
         name: "Deck invitation",
-        when: "A deck's owner invites an email address to study it.",
+        when: "A deck's owner invites an email address to join it.",
       },
     ],
   },
@@ -145,14 +177,14 @@ export function EmailPreview() {
   }, [kind, navigate]);
 
   return (
-    <div className="flex min-h-dvh bg-canvas text-text">
+    <div className="flex min-h-dvh bg-canvas text-ink">
       <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 self-start border-e border-edge bg-rail md:flex md:flex-col">
         <div className="mx-3 mt-8 mb-6 flex h-10 items-center gap-2.5 ps-2.5">
           <AppTile size={28} />
           <span className="flex items-center gap-1.5" aria-hidden="true">
-            <Wordmark size={18} className="text-text" />
-            <i className="size-1 rounded-full bg-faint" />
-            <span className="text-md font-medium tracking-[-0.01em] text-muted">emails</span>
+            <Wordmark size={18} className="text-ink" />
+            <i className="size-1 rounded-full bg-ink-faint" />
+            <span className="text-md font-medium tracking-[-0.01em] text-ink-muted">emails</span>
           </span>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-6">
@@ -174,7 +206,7 @@ export function EmailPreview() {
             ))}
           </RailNav>
         </div>
-        <p className="flex items-center gap-1.5 border-t border-edge px-5 py-4 text-sm text-muted">
+        <p className="flex items-center gap-1.5 border-t border-edge px-5 py-4 text-sm text-ink-muted">
           <Kbd>J</Kbd>
           <Kbd>K</Kbd>
           <span className="ms-1">to move between emails</span>
@@ -244,14 +276,14 @@ export function EmailPreview() {
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-5 pt-8 pb-16 md:px-10">
           <div>
             <h1 className="text-2xl font-medium tracking-[-0.01em]">{about?.name}</h1>
-            <p className="mt-1 text-text-2">{about?.when}</p>
+            <p className="mt-1 text-ink-secondary">{about?.when}</p>
           </div>
 
           {email.data && <Envelope email={email.data} />}
           {email.isError && <p className="text-sm text-danger">{email.error.message}</p>}
 
           {view === "text" ? (
-            <pre className="edge max-w-[720px] whitespace-pre-wrap rounded-lg bg-plate p-6 font-sans text-sm leading-relaxed text-text-2">
+            <pre className="edge max-w-[720px] whitespace-pre-wrap rounded-lg bg-plate p-6 font-sans text-sm leading-relaxed text-ink-secondary">
               {email.data?.text}
             </pre>
           ) : (
@@ -283,13 +315,13 @@ function Envelope({ email }: { email: RenderedEmail }) {
     <div className="edge grid max-w-[720px] gap-4 rounded-lg bg-plate p-5 md:grid-cols-[1fr_auto]">
       <div className="min-w-0">
         <p className="truncate font-medium">{email.subject}</p>
-        <p className="truncate text-sm text-muted">{email.preview}</p>
+        <p className="truncate text-sm text-ink-muted">{email.preview}</p>
       </div>
       <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-sm">
         {rows.map(([label, value]) => (
           <Fragment key={label}>
-            <dt className="text-muted">{label}</dt>
-            <dd className="truncate text-text-2">{value}</dd>
+            <dt className="text-ink-muted">{label}</dt>
+            <dd className="truncate text-ink-secondary">{value}</dd>
           </Fragment>
         ))}
       </dl>
@@ -324,7 +356,7 @@ function EmailFrame({ html, room, width }: { html: string; room: "light" | "dark
 
   return (
     <figure className={clsx("flex flex-col gap-2", width === "phone" && "w-[375px] max-w-full")}>
-      <figcaption className="flex items-center gap-1.5 text-sm text-muted">
+      <figcaption className="flex items-center gap-1.5 text-sm text-ink-muted">
         {room === "light" ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
         {room === "light" ? "Day" : "Night"} · {width === "phone" ? "375 px" : "Desktop"}
       </figcaption>
@@ -364,10 +396,10 @@ function SendToInbox({
 
   return (
     <div className="ms-auto flex items-center gap-2">
-      {send.isSuccess && <span className="text-sm text-good">Sent to {address}</span>}
+      {send.isSuccess && <span className="text-sm text-success">Sent to {address}</span>}
       {send.isError && <span className="text-sm text-danger">{send.error.message}</span>}
       {!canSend && (
-        <span className="hidden text-sm text-muted lg:inline">
+        <span className="hidden text-sm text-ink-muted lg:inline">
           Add RESEND_API_KEY to apps/web/.dev.vars to send
         </span>
       )}

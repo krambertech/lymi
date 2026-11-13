@@ -59,8 +59,8 @@ const GUIDE: Step[] = ["deck", "cards", "review"];
 
 /**
  * The guide's current step is viewed, and a step the learner moves past while it shows is finished.
- * Progress already made when the guide mounts is not replayed as finishing; `review` is finished by
- * the server on the first grade.
+ * Progress already made when the guide mounts is not replayed as finishing; `deck` is finished by
+ * the server on the account's first deck and `review` on the first grade.
  */
 export function useGuideSteps(current: number) {
   const seen = useRef<number | null>(null);
@@ -69,7 +69,9 @@ export function useGuideSteps(current: number) {
     if (previous === current) return;
     if (previous !== null && current > previous) {
       const done = GUIDE[previous];
-      if (done) void captureSoon("welcome_step_finished", { step_name: done, skipped: false });
+      // The server finishes `deck` when the account gets its first deck, wherever that happens.
+      if (done && done !== "deck")
+        void captureSoon("welcome_step_finished", { step_name: done, skipped: false });
     }
     const now = GUIDE[current];
     if (now) void captureSoon("welcome_step_viewed", { step_name: now, skipped: false });

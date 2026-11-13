@@ -30,12 +30,12 @@ export function Sub({
   return (
     <View className="gap-4 border-t border-edge pt-7">
       <View className="gap-1.5">
-        <Text className="text-lg font-medium text-text" accessibilityRole="header">
+        <Text className="text-lg font-medium text-ink" accessibilityRole="header">
           {title}
         </Text>
-        {note && <Text className="text-base text-muted">{note}</Text>}
+        {note && <Text className="text-base text-ink-muted">{note}</Text>}
         {source && (
-          <Text className="text-xs text-muted" style={MONO}>
+          <Text className="text-xs text-ink-muted" style={MONO}>
             {source}
           </Text>
         )}
@@ -77,11 +77,11 @@ export function Variants({ items }: { items: Variant[] }) {
         {items.map((v, i) => (
           <View key={v.label} className={`gap-3 px-4 py-4 ${i > 0 ? "border-t border-edge" : ""}`}>
             <View className={`gap-1 ${i === 0 ? "pe-10" : ""}`}>
-              <Text className="text-xs font-semibold text-text" style={MONO}>
+              <Text className="text-xs font-semibold text-ink" style={MONO}>
                 {v.label}
               </Text>
               {v.note && (
-                <Text className="text-xs text-muted" style={[MONO, { lineHeight: 17 }]}>
+                <Text className="text-xs text-ink-muted" style={[MONO, { lineHeight: 17 }]}>
                   {v.note}
                 </Text>
               )}

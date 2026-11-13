@@ -2,10 +2,14 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
+  cueShowsPronunciation,
   drawsTermReading,
   gradeAllowed,
   isolate,
   type KnownReadings,
+  type PronunciationDisplay,
+  pitchPattern,
+  pronunciationText,
   type Rating,
   type ReviewAid,
   shownTranslation,
@@ -62,7 +66,8 @@ import {
 } from "../components/hint-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
-import { embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
+import { Embers, embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
+import { PitchChart } from "../components/pitch-chart";
 import { Progress } from "../components/progress";
 import {
   type AidStep,
@@ -95,6 +100,8 @@ export interface ReviewHeaderProps {
   animateCount?: boolean | undefined;
   /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
   streak?: StreakSummary | undefined;
+  /** Where the first review's end has got to, in the lantern's place once it has moved. */
+  steps?: ReactNode | undefined;
   /** The review has stopped: the lantern has moved to the end screen and the track steps back. */
   complete?: boolean | undefined;
   /** The cards have not arrived, so there is no count yet: a "0/0" read as an empty review. */
@@ -103,7 +110,7 @@ export interface ReviewHeaderProps {
 }
 
 /** The lantern is one object carried between the header and the end of a review. */
-const LANTERN_LAYOUT = "review-lantern";
+export const LANTERN_LAYOUT = "review-lantern";
 
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
@@ -123,6 +130,7 @@ export function ReviewHeader({
   complete = false,
   loading = false,
   onClose,
+  steps,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
   const reduce = useReduceMotion();
@@ -145,6 +153,7 @@ export function ReviewHeader({
             <Lantern className="size-full" {...lanternFor(streak)} fed={attempts} flicker glow />
           </motion.span>
         )}
+        {complete && steps && <span className="flex h-full items-center ps-[11.5px]">{steps}</span>}
       </span>
       <motion.span
         className="flex min-w-0 flex-1 items-center gap-3"
@@ -162,7 +171,7 @@ export function ReviewHeader({
         {loading ? (
           <Skeleton className="h-4 w-9 shrink-0" />
         ) : (
-          <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
+          <span className="shrink-0 text-sm font-medium tabular-nums text-ink-secondary">
             {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
             <span aria-hidden="true">
               <RollingNumber value={done} animate={animateCount} />/{size}
@@ -199,7 +208,7 @@ function TapNudge({ lifted, aided }: { lifted: boolean; aided: boolean }) {
     <motion.div
       aria-hidden="true"
       className={clsx(
-        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-muted",
+        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-ink-muted",
         // Clear of the aid's pill for the whole card, so it reads as its own line.
         lifted ? "bottom-20" : "bottom-5",
       )}
@@ -211,7 +220,7 @@ function TapNudge({ lifted, aided }: { lifted: boolean; aided: boolean }) {
       <span className="relative grid size-11 place-items-center">
         {!reduce && (
           <motion.span
-            className="absolute inset-0 rounded-full border border-edge-2"
+            className="absolute inset-0 rounded-full border border-edge-strong"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: [0.5, 1.2], opacity: [0.9, 0] }}
             transition={{
@@ -284,7 +293,14 @@ const answerLine: Variants = {
 export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
-  deck?: { name: string; language?: string | null | undefined } | undefined;
+  deck?:
+    | {
+        name: string;
+        language?: string | null | undefined;
+        /** The learner's choice for this deck; absent reads as the default. */
+        pronunciationDisplay?: PronunciationDisplay | undefined;
+      }
+    | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
   /** The learner's Known pairs, whose readings fade in the example. */
@@ -295,6 +311,10 @@ export interface ReviewCardProps {
   animateIn?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
   nudge?: boolean | undefined;
+  /** The first review's note under the cue, which the lantern's light falls on, in place of the nudge. */
+  cueTip?: ReactNode | undefined;
+  /** The first review's cover over the whole plate. */
+  cover?: ReactNode | undefined;
   /** Focus the reveal, for a learner who graded the card before this one from the grade buttons. */
   focusOnMount?: boolean | undefined;
   onReveal: () => void;
@@ -357,10 +377,25 @@ const CONTEXT_SIZE = ["text-xl", "text-lg", "text-md"];
 interface Fit {
   step: number;
   settled: boolean;
+  /** The smallest step still leaves a word or reading wider than the line. */
+  overlong: boolean;
 }
-const UNMEASURED: Fit = { step: 0, settled: false };
+const UNMEASURED: Fit = { step: 0, settled: false, overlong: false };
 
 const px = (value: string) => Number.parseFloat(value) || 0;
+
+/** Whether the text's longest word, and any reading over it, stays on one line of its box. */
+function wordsFit(text: HTMLElement) {
+  // The breaks that would hide a word too long for the line lift for the measure, before any paint.
+  text.style.overflowWrap = "normal";
+  text.style.hyphens = "manual";
+  const range = document.createRange();
+  range.selectNodeContents(text);
+  const fits = range.getBoundingClientRect().width <= text.getBoundingClientRect().width;
+  text.style.overflowWrap = "";
+  text.style.hyphens = "";
+  return fits;
+}
 
 interface FitElements {
   section: HTMLElement | null;
@@ -374,9 +409,10 @@ interface FitElements {
 }
 
 /**
- * Whether the cue fits the card before reveal, and the cue with its target after. Example and notes
- * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
- * card, whose own height is still animating while the grade strip opens.
+ * Whether the cue fits the card before reveal, and the cue with its target after, in height and in
+ * the width of its longest word. Example and notes never shrink the type; they scroll. Heights come
+ * from the stage the card fills rather than the card, whose own height is still animating while the
+ * grade strip opens.
  *
  * `offerFoot` is the fix's room at the foot after the reveal, `pillFoot` the aid pill's before it,
  * and `aidRoom` what the aid's lines take under the cue whether shown or not.
@@ -418,6 +454,7 @@ function measureFit(els: FitElements, offerFoot: number, pillFoot: number, aidRo
     frontRoom: cardHeight(room) - chrome - pillFoot,
     back: front + px(columnStyle.rowGap) + must,
     backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - offerFoot,
+    words: Array.from(section.querySelectorAll<HTMLElement>("[data-fit-words]")).every(wordsFit),
   };
 }
 
@@ -442,6 +479,8 @@ export function ReviewCard({
   animateReveal = true,
   animateIn = false,
   nudge = false,
+  cueTip,
+  cover,
   focusOnMount = false,
   onReveal,
   onPlayAudio,
@@ -467,12 +506,31 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana, pinyin or stress marks on the term: on the cue until the card is Known, and always on the answer.
   const reading = useMemo(() => termShowsPronunciation(card), [card]);
+  // The learner asked for the pronunciation as its own line under the term, so the term is drawn as written.
+  const separate = reading && deck?.pronunciationDisplay === "separate";
   // Marks drawn in place are the term's own text, so only a reading drawn over it needs a line for a screen reader.
   const readingOver = useMemo(() => drawsTermReading(card), [card]);
-  const cueReading = revealed || stateKey(item.fsrsState) !== "known";
-  const term = <TermText card={card} />;
+  const pronunciationLine = useMemo(() => pronunciationText(card), [card]);
+  // A chart stands where the pronunciation's own line would, and spells the kana itself.
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
+  // The chart spells the reading after the reveal, so the furigana leaves and the term keeps its place.
+  const cueReading =
+    !(revealed && pitched) &&
+    cueShowsPronunciation({
+      revealed,
+      known: stateKey(item.fsrsState) === "known",
+      display: deck?.pronunciationDisplay,
+    });
+  const term =
+    separate || pitched ? (
+      <span lang={card.language ?? undefined} dir={textDirection(card.language)}>
+        {card.term}
+      </span>
+    ) : (
+      <TermText card={card} />
+    );
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -534,9 +592,11 @@ export function ReviewCard({
       setFit({ ...fit, settled: true });
       return;
     }
-    const fits = m.front <= m.frontRoom && m.back <= m.backRoom;
+    const fits = m.front <= m.frontRoom && m.back <= m.backRoom && m.words;
     setFit(
-      !fits && fit.step < TEXT_STEPS ? { ...fit, step: fit.step + 1 } : { ...fit, settled: true },
+      !fits && fit.step < TEXT_STEPS
+        ? { ...fit, step: fit.step + 1 }
+        : { ...fit, settled: true, overlong: !m.words },
     );
   }, [fit]);
 
@@ -573,6 +633,7 @@ export function ReviewCard({
   }, []);
 
   const step = fit.step;
+  const overlong = fit.overlong && "overlong-text";
   const shownAfter = !!aid && revealed && aid.shown;
   // Taken before the reveal or shown after it, the aid has one place: under the cue, where it stays.
   const aidsOnShow = aid
@@ -631,6 +692,7 @@ export function ReviewCard({
             example={card.example}
             language={card.language}
             known={knownReadings}
+            plain={separate}
             translation={translation}
             speaker={
               measure ? (
@@ -639,7 +701,6 @@ export function ReviewCard({
                 exampleSound && <ExampleAudioButton sound={exampleSound} />
               )
             }
-            speakerAfterLastWord
             onPlay={
               measure || !exampleSound
                 ? undefined
@@ -648,12 +709,11 @@ export function ReviewCard({
                     exampleSound.play("sentence");
                   }
             }
-            className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           />
         </motion.div>
       )}
       {card.notes && (
-        <motion.div variants={answerLine} className="text-sm text-muted">
+        <motion.div variants={answerLine} className="text-sm text-ink-muted">
           <CardNotes source={card.notes} />
         </motion.div>
       )}
@@ -663,23 +723,28 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
-    // Under the rule: a reading under a term cue reads the term out. Where it is drawn on the
+    // The pronunciation's own line, under the term wherever it stands. Where it is drawn on the
     // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&
-      (reading ? (
-        readingOver && (
+      (pitched && mode.cue !== "term" ? (
+        <motion.div variants={answerLine} className="pt-1">
+          <PitchChart card={card} className="text-lg" />
+        </motion.div>
+      ) : reading && !separate ? (
+        readingOver &&
+        !pitched && (
           <p className="sr-only" lang={card.language ?? undefined}>
-            {card.pronunciation}
+            {pronunciationLine}
           </p>
         )
       ) : (
         <motion.p
           variants={answerLine}
-          className="text-md text-muted [overflow-wrap:anywhere]"
+          className="text-md text-ink-muted [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          {card.pronunciation}
+          {pronunciationLine}
         </motion.p>
       ));
     return (
@@ -693,10 +758,12 @@ export function ReviewCard({
           {mode.target === "term" ? (
             <>
               <motion.p
+                data-fit-words
                 variants={answerLine}
                 className={clsx(
-                  "hyphenate font-medium leading-[1.2] text-text [overflow-wrap:anywhere]",
+                  "hyphenate font-medium leading-[1.2] text-ink [overflow-wrap:anywhere]",
                   TERM_SIZE[step],
+                  overlong,
                 )}
                 lang={card.language ?? undefined}
                 dir={textDirection(card.language)}
@@ -709,7 +776,7 @@ export function ReviewCard({
                 <motion.p
                   variants={answerLine}
                   className={clsx(
-                    "hyphenate whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                    "hyphenate whitespace-pre-line leading-[1.35] text-ink-secondary [overflow-wrap:anywhere]",
                     CONTEXT_SIZE[step],
                   )}
                   dir="auto"
@@ -723,21 +790,24 @@ export function ReviewCard({
               <motion.p
                 variants={answerLine}
                 className={clsx(
-                  "hyphenate whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
+                  "hyphenate whitespace-pre-line leading-[1.3] text-ink [overflow-wrap:anywhere]",
                   picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
                 )}
                 dir="auto"
               >
                 {back}
               </motion.p>
-              {mode.cue === "term" && pronunciation}
+              {/* A line of its own stands under the cue's term, which keeps its room; this is only a drawn reading's screen-reader line. */}
+              {mode.cue === "term" && reading && !separate && pronunciation}
               {picture && (
                 <>
                   <motion.p
+                    data-fit-words
                     variants={answerLine}
                     className={clsx(
-                      "hyphenate leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                      "hyphenate leading-[1.35] text-ink-secondary [overflow-wrap:anywhere]",
                       CONTEXT_SIZE[step],
+                      overlong,
                     )}
                     lang={card.language ?? undefined}
                   >
@@ -798,7 +868,7 @@ export function ReviewCard({
       aria-label={label}
       className={clsx(
         "edge relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl bg-plate",
-        !revealed && "cursor-pointer hoverable:hover:edge-2",
+        !revealed && "cursor-pointer hoverable:hover:edge-strong",
         className,
       )}
     >
@@ -832,7 +902,7 @@ export function ReviewCard({
           <div
             ref={headRef}
             className={clsx(
-              "flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs",
+              "flex items-center justify-between gap-3 text-sm text-ink-muted @3xl:text-xs",
               animateIn && "enter-fade",
             )}
           >
@@ -841,7 +911,7 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span dir="auto" className="min-w-0 truncate font-medium text-text-2">
+                  <span dir="auto" className="min-w-0 truncate font-medium text-ink-secondary">
                     {deck.name}
                   </span>
                 </>
@@ -888,40 +958,88 @@ export function ReviewCard({
               transition={{ layout: cueGlide ? REVEAL_GLIDE : INSTANT }}
               className="relative grid grid-cols-[minmax(0,1fr)] gap-3"
             >
-              <div ref={cueTextRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
+              {/* The lantern's light blooms on the word the first review asks about. */}
+              <AnimatePresence>
+                {cueTip && !revealed && (
+                  <motion.span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-x-8 -top-8 h-32 rounded-full bg-amber-tint blur-2xl"
+                    initial={{ opacity: 0, scale: reduce ? 1 : 0.6 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                    transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.15 }}
+                  />
+                )}
+              </AnimatePresence>
+              <div ref={cueTextRef} className="relative grid grid-cols-[minmax(0,1fr)] gap-3">
                 {mode.cue === "image" ? (
                   card.image ? (
                     // One size before and after reveal, on the start edge like the text under it.
                     <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
                   ) : (
                     // A queue fetched before the picture was archived; the server no longer asks this mode.
-                    <p className="text-xl text-muted">
+                    <p className="text-xl text-ink-muted">
                       <Trans>This card’s picture was removed.</Trans>
                     </p>
                   )
                 ) : (
                   <>
                     <p
+                      data-fit-words
                       lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
                       dir={mode.cue === "term" ? textDirection(card.language) : "auto"}
                       className={clsx(
-                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-ink [overflow-wrap:anywhere]",
                         CUE_SIZE[step],
+                        overlong,
                       )}
                     >
-                      {mode.cue === "term" ? <TermText card={card} hidden={!cueReading} /> : front}
+                      {mode.cue === "term" ? (
+                        separate ? (
+                          term
+                        ) : (
+                          <TermText card={card} hidden={!cueReading} />
+                        )
+                      ) : (
+                        front
+                      )}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
+                    {/* Its room is kept before the reveal, so a peeked hint under it never moves. */}
+                    {mode.cue === "term" && pitched ? (
+                      <div
+                        aria-hidden={!revealed || undefined}
+                        className={clsx("pt-1", revealed ? "enter-fade" : "invisible")}
+                      >
+                        <PitchChart card={card} className="text-lg" />
+                      </div>
+                    ) : (
+                      mode.cue === "term" &&
+                      (!reading || separate) &&
+                      card.pronunciation && (
+                        <p
+                          aria-hidden={!revealed || undefined}
+                          className={clsx(
+                            "pt-1 text-md text-ink-muted [overflow-wrap:anywhere]",
+                            revealed ? "enter-fade" : "invisible",
+                          )}
+                          lang={card.language ?? undefined}
+                        >
+                          {pronunciationLine}
+                        </p>
+                      )
+                    )}
                     {/* A drawn reading is hidden from a screen reader, which hears the reading here while
                         it shows on the cue; after the reveal the answer's line says it. */}
                     {mode.cue === "term" && readingOver && cueReading && !revealed && (
                       <p className="sr-only" lang={card.language ?? undefined}>
-                        {card.pronunciation}
+                        {pronunciationLine}
                       </p>
                     )}
                   </>
                 )}
               </div>
+              <AnimatePresence>{!revealed && cueTip}</AnimatePresence>
               {/* Popped out of the flow as it leaves, so the cue glides back while the lines fade. */}
               <AnimatePresence mode="popLayout" initial={false} custom={aidGone?.animate ?? false}>
                 {aid && aidsOnShow > 0 && (
@@ -1025,12 +1143,15 @@ export function ReviewCard({
             </div>
           )}
           <AnimatePresence>
-            {!revealed && nudge && <TapNudge lifted={!!aid} aided={!!aid && aid.taken > 0} />}
+            {!revealed && nudge && !cueTip && (
+              <TapNudge lifted={!!aid} aided={!!aid && aid.taken > 0} />
+            )}
           </AnimatePresence>
         </div>
         {/* The offer's room, its 44 px over the 8 px inset, so the last line scrolls clear above it. */}
         {offer && revealed && <div aria-hidden="true" className="h-13 shrink-0" />}
       </div>
+      <AnimatePresence>{cover}</AnimatePresence>
       {/* Floating over the scroller's foot, so a long card scrolls on under its frost, and inset so its corners follow the plate's. */}
       {offer && revealed && (
         <div
@@ -1205,7 +1326,7 @@ function LockedGrade({
                 if (e.detail > 0)
                   e.currentTarget.closest("fieldset")?.focus({ preventScroll: true });
               }}
-              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-ink-muted @2xl:text-base"
             />
           }
         >
@@ -1214,7 +1335,7 @@ function LockedGrade({
           </span>
           <span>{label}</span>
           <Lock
-            className="absolute end-2.5 top-2.5 size-3 text-muted"
+            className="absolute end-2.5 top-2.5 size-3 text-ink-muted"
             aria-hidden="true"
             strokeWidth={2}
           />
@@ -1303,9 +1424,9 @@ export function GradeBar({
                       aria-label={schedules ? t`${label}, next in ${schedules}` : undefined}
                       onClick={() => onGrade(g.rating)}
                       className={clsx(
-                        "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
+                        "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-ink-secondary",
                         "transition-[scale,background-color,box-shadow] duration-150 ease-out @2xl:text-base",
-                        "hoverable:hover:edge-2 hoverable:hover:veil hoverable:hover:text-text active:scale-[0.96] motion-reduce:active:scale-100",
+                        "hoverable:hover:edge-strong hoverable:hover:veil hoverable:hover:text-ink active:scale-[0.96] motion-reduce:active:scale-100",
                       )}
                     >
                       <span className={clsx("mx-auto grid size-5 place-items-center", g.iconClass)}>
@@ -1354,6 +1475,22 @@ export interface ReviewCompleteProps {
   addCards?: ReactNode | undefined;
   /** Move focus to the heading, so it is announced and Tab starts at the choices. */
   focusOnMount?: boolean | undefined;
+  /** The heading in place of the usual one, for the account's first review. */
+  title?: ReactNode | undefined;
+  /** The line beside the flame in place of the run. */
+  runNote?: ReactNode | undefined;
+  /** The first review's end: the lantern holds its place at the top and the way on sits at the foot. */
+  pinned?: boolean | undefined;
+  /** In place of everything under the lantern but the ways on. */
+  beat?: ReactNode | undefined;
+  /** In place of the ways on. */
+  foot?: ReactNode | undefined;
+  /** Continue's wording, without its count. */
+  continueLabel?: ReactNode | undefined;
+  /** The way on when there is nothing to continue. */
+  more?: ReactNode | undefined;
+  /** Changing it throws a new burst of embers. */
+  burst?: number | undefined;
 }
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
@@ -1373,6 +1510,14 @@ export function ReviewComplete({
   done,
   addCards,
   focusOnMount = false,
+  title,
+  runNote,
+  pinned = false,
+  beat,
+  foot,
+  continueLabel,
+  more,
+  burst = 0,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
   const reduce = !!useReduceMotion();
@@ -1456,13 +1601,19 @@ export function ReviewComplete({
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
       <div
         ref={room}
-        className="relative m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8"
+        className={clsx(
+          "relative flex w-full max-w-sm flex-col items-center text-center",
+          pinned ? "mx-auto flex-1 pt-2 @3xl:flex-none @3xl:pt-[6dvh]" : "m-auto py-4 @3xl:py-8",
+        )}
       >
         {turned && !skipped && <TurnSpark lantern={lanternPlace} room={room} />}
         {lit && (
           <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
         )}
-        <div ref={lanternPlace} className="mb-1 size-32 @3xl:size-44">
+        <div
+          ref={lanternPlace}
+          className={clsx("mb-1 size-32", pinned ? "@3xl:size-36 short:size-20!" : "@3xl:size-44")}
+        >
           <motion.div
             {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
             transition={LANTERN_FLIGHT}
@@ -1483,137 +1634,179 @@ export function ReviewComplete({
                 glow
               />
             </LanternLight>
+            {burst > 0 && <Embers key={burst} embers={embers} at={120} again />}
           </motion.div>
         </div>
 
-        <h2
-          ref={heading}
-          id={headingId}
-          tabIndex={-1}
-          className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
-          style={at(AT.heading)}
-        >
-          {screen.heading === "goal_reached" ? (
-            <Trans>Daily goal reached</Trans>
-          ) : screen.heading === "day_done" ? (
-            <Trans>You’re done for today</Trans>
-          ) : screen.heading === "scope_done" ? (
-            scopeName ? (
-              <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
-            ) : (
-              <Trans>Nothing left in this deck</Trans>
-            )
-          ) : screen.heading === "nothing_due" ? (
-            <Trans>Nothing due</Trans>
-          ) : screen.heading === "round_done" ? (
-            <Trans>Round done</Trans>
-          ) : (
-            <Trans>Review done</Trans>
-          )}
-        </h2>
-
-        {counted ? (
-          <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
-            <span
-              className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-text @3xl:text-7xl"
-              style={at(AT.count)}
+        <AnimatePresence mode="wait" initial={false}>
+          {beat ?? (
+            <motion.div
+              key="told"
+              className="flex w-full flex-col items-center"
+              exit={{ opacity: 0, transition: { duration: 0.14 } }}
             >
-              <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
-            </span>
-            <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              {/* While the goal is open the count says it, so Continue's count explains itself. */}
-              {!screen.satisfied && goal ? (
-                <Plural value={goal} one="of # review today" other="of # reviews today" />
-              ) : (
-                <Plural value={attempts} one="review today" other="reviews today" />
-              )}
-            </span>
-          </p>
-        ) : (
-          <p className="seq mt-2 max-w-[32ch] text-pretty text-md text-text-2" style={at(AT.count)}>
-            <Trans>Come back later, or add new cards.</Trans>
-          </p>
-        )}
+              <h2
+                ref={heading}
+                id={headingId}
+                tabIndex={-1}
+                className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
+                style={at(AT.heading)}
+              >
+                {title ? (
+                  title
+                ) : screen.heading === "goal_reached" ? (
+                  <Trans>Daily goal reached</Trans>
+                ) : screen.heading === "day_done" ? (
+                  <Trans>You’re done for today</Trans>
+                ) : screen.heading === "scope_done" ? (
+                  scopeName ? (
+                    <Trans>Nothing left in {{ scopeName: isolate(scopeName) }}</Trans>
+                  ) : (
+                    <Trans>Nothing left in this deck</Trans>
+                  )
+                ) : screen.heading === "nothing_due" ? (
+                  <Trans>Nothing due</Trans>
+                ) : screen.heading === "round_done" ? (
+                  <Trans>Round done</Trans>
+                ) : (
+                  <Trans>Review done</Trans>
+                )}
+              </h2>
 
-        {week && days && (
-          <div className="mt-6 grid justify-items-center gap-3 @3xl:mt-8">
-            <SevenLights
-              days={days.attempts}
-              satisfied={days.satisfied}
-              rest={days.rest}
-              goals={days.goals}
-              dates={days.dates}
-              size="lg"
-              sequence={AT.lights}
-              flare={landed && turned}
-            />
-            <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
-              <span data-run-flame className={clsx("flex", ticked && turned && "flame-catch")}>
-                <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
-              </span>
-              {run ? (
-                <>
-                  <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
-                    <span key={run} className={clsx("block", ticked && turned && "run-catch")}>
-                      {run}
-                    </span>
+              {counted ? (
+                <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
+                  <span
+                    className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-ink @3xl:text-7xl"
+                    style={at(AT.count)}
+                  >
+                    <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
                   </span>
-                  <Plural value={run} one="day in a row" other="days in a row" />
-                </>
+                  <span className="seq text-md text-ink-secondary" style={at(AT.count + 80)}>
+                    {/* While the goal is open the count says it, so Continue's count explains itself. */}
+                    {!screen.satisfied && goal ? (
+                      <Plural value={goal} one="of # review today" other="of # reviews today" />
+                    ) : (
+                      <Plural value={attempts} one="review today" other="reviews today" />
+                    )}
+                  </span>
+                </p>
               ) : (
-                <span className="font-medium text-text">
-                  <StreakStart summary={streak ?? week} />
-                </span>
+                <p
+                  className="seq mt-2 max-w-[32ch] text-pretty text-md text-ink-secondary"
+                  style={at(AT.count)}
+                >
+                  <Trans>Come back later, or add new cards.</Trans>
+                </p>
               )}
-            </p>
-          </div>
-        )}
+
+              {week && days && (
+                <div className="mt-6 grid justify-items-center gap-3 @3xl:mt-8">
+                  <SevenLights
+                    days={days.attempts}
+                    satisfied={days.satisfied}
+                    rest={days.rest}
+                    goals={days.goals}
+                    dates={days.dates}
+                    size="lg"
+                    sequence={AT.lights}
+                    flare={landed && turned}
+                  />
+                  <p
+                    className="seq flex items-center gap-2 text-md text-ink-secondary"
+                    style={at(AT.run)}
+                  >
+                    <span
+                      data-run-flame
+                      className={clsx("flex", ticked && turned && "flame-catch")}
+                    >
+                      <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+                    </span>
+                    {runNote ? (
+                      <span className="font-medium text-ink">{runNote}</span>
+                    ) : run ? (
+                      <>
+                        <span className="inline-flex overflow-hidden font-semibold tabular-nums text-ink">
+                          <span
+                            key={run}
+                            className={clsx("block", ticked && turned && "run-catch")}
+                          >
+                            {run}
+                          </span>
+                        </span>
+                        <Plural value={run} one="day in a row" other="days in a row" />
+                      </>
+                    ) : (
+                      <span className="font-medium text-ink">
+                        <StreakStart summary={streak ?? week} />
+                      </span>
+                    )}
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
         <div
-          className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
+          className={clsx(
+            "grid w-full gap-2.5",
+            pinned
+              ? "mt-auto pt-6 @3xl:mt-0 @3xl:pt-7 [@media(max-height:480px)]:sticky [@media(max-height:480px)]:bottom-3 [@media(max-height:480px)]:z-10 [@media(max-height:480px)]:bg-linear-to-t [@media(max-height:480px)]:from-canvas [@media(max-height:480px)]:from-80%"
+              : "mt-6 @3xl:mt-8",
+            !instant && "pointer-events-none",
+          )}
         >
           {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is always last and primary. */}
-          {ways.map((way, i) => (
-            <Button
-              key={way.key}
-              size="lg"
-              onClick={way.onClick}
-              className="seq w-full"
-              style={at(AT.actions + i * AT.actionStep)}
-            >
-              <StateIcon state="forgot" className="size-4" />
-              {way.label}
-            </Button>
-          ))}
-          <div className="seq grid gap-2" style={at(actionsAt)}>
-            {!counted ? (
-              <>
-                {addCards}
-                {done("primary")}
-              </>
-            ) : (
-              <>
-                {proceed && (
-                  <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
-                    <Trans>Continue</Trans>
-                    {note && (
-                      <span className="font-normal tabular-nums text-muted">
-                        {note.kind === "goal" ? (
-                          <Plural value={note.count} one="# to goal" other="# to goal" />
-                        ) : note.kind === "cards" ? (
-                          <Plural value={note.count} one="# card left" other="# cards left" />
-                        ) : (
-                          <Trans>other decks</Trans>
-                        )}
-                      </span>
-                    )}
-                  </Button>
-                )}
-                {done("primary")}
-              </>
-            )}
-          </div>
+          {foot ? (
+            <div className="seq" style={at(actionsAt)}>
+              {foot}
+            </div>
+          ) : (
+            ways.map((way, i) => (
+              <Button
+                key={way.key}
+                size="lg"
+                onClick={way.onClick}
+                className="seq w-full"
+                style={at(AT.actions + i * AT.actionStep)}
+              >
+                <StateIcon state="forgot" className="size-4" />
+                {way.label}
+              </Button>
+            ))
+          )}
+          {!foot && (
+            <div className="seq grid gap-2" style={at(actionsAt)}>
+              {!counted ? (
+                <>
+                  {addCards}
+                  {done("primary")}
+                </>
+              ) : (
+                <>
+                  {!proceed && more}
+                  {proceed && (
+                    <Button size="lg" onClick={() => onOffer?.(proceed)} className="w-full">
+                      {continueLabel ?? <Trans>Continue</Trans>}
+                      {note && (
+                        <span className="font-normal tabular-nums text-ink-muted">
+                          {note.kind === "goal" ? (
+                            <Plural value={note.count} one="# to goal" other="# to goal" />
+                          ) : note.kind === "cards" ? (
+                            <Plural value={note.count} one="# card left" other="# cards left" />
+                          ) : (
+                            <Trans>other decks</Trans>
+                          )}
+                        </span>
+                      )}
+                    </Button>
+                  )}
+                  {done("primary")}
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

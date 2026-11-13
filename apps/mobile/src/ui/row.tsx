@@ -66,7 +66,7 @@ export function RowFace({
   const name = (
     <Text
       className="text-md"
-      style={{ color: destructive ? p.danger : p.text }}
+      style={{ color: destructive ? p.danger : p.ink }}
       accessible={!control}
     >
       {label}
@@ -76,7 +76,7 @@ export function RowFace({
   // lines under it at the accessibility sizes.
   const now = value && (
     <Text
-      className="text-md text-muted"
+      className="text-md text-ink-muted"
       numberOfLines={stacked ? 2 : 1}
       style={[{ fontVariant: ["tabular-nums"] }, !stacked && { flexShrink: 1, maxWidth: "42%" }]}
     >
@@ -85,7 +85,7 @@ export function RowFace({
   );
   return (
     <View className="min-h-[52px] flex-row items-center gap-3 py-3 ps-4 pe-4">
-      <Icon name={icon} size={20} colour={destructive ? p.danger : p["text-2"]} />
+      <Icon name={icon} size={20} colour={destructive ? p.danger : p["ink-secondary"]} />
       {stacked ? (
         <View className="flex-1 gap-0.5">
           {name}
@@ -102,7 +102,7 @@ export function RowFace({
       ) : end === "open" ? (
         <RowArrow />
       ) : end === "web" ? (
-        <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />
+        <Icon name="web" size={18} colour={p["ink-muted"]} strokeWidth={2.25} />
       ) : null}
     </View>
   );

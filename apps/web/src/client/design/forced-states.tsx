@@ -15,7 +15,7 @@ import { type ReactNode, useEffect, useRef, useSyncExternalStore } from "react";
 
 export type ForcedState = "hover" | "focus" | "active";
 
-// A colon escaped with a backslash belongs to a class name such as `hoverable\:hover\:bg-hover`.
+// A colon escaped with a backslash belongs to a class name such as `hoverable\:hover\:bg-plate-hover`.
 const PSEUDO = /(?<!\\):(hover|active|focus-visible|focus)(?![\w-])/g;
 const HAS_PSEUDO = new RegExp(PSEUDO.source);
 const STATE: Record<string, ForcedState> = {
@@ -212,7 +212,7 @@ export function Force({
     <span ref={ref} className="contents">
       {children}
       {state === "hover" && !fine && (
-        <span className="block basis-full font-mono text-xs text-muted">
+        <span className="block basis-full font-mono text-xs text-ink-muted">
           Hover shows only with a pointer that hovers, so on this device it looks like the default.
         </span>
       )}

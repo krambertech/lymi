@@ -1,4 +1,5 @@
 import { type SUPPORTED_LANGUAGES, type SupportedTag, supportedLanguage } from "@lymi/core";
+import { AiGatewayError } from "../ai/gateway";
 import { createLeadInWriter, type LeadInWriter } from "../ai/lead-in-writer";
 import { meteredFetch } from "../dependency-health";
 import type { Bindings } from "../env";
@@ -29,13 +30,20 @@ export interface LeadInDependencies {
   decide: DecisionModel;
 }
 
+let reportedNoGateway = false;
+
 export function leadInDependencies(env: Bindings): LeadInDependencies {
   let decide: DecisionModel;
   try {
     decide = decisionModel(env, "traffic", 2_500);
-  } catch {
-    // Without the decision model the writer decides, as it did before there was one.
+  } catch (error) {
+    if (!(error instanceof AiGatewayError)) throw error;
+    // Speech still works with the writer deciding alone, so this logs once per isolate rather than failing.
+    if (!reportedNoGateway) {
+      reportedNoGateway = true;
+      console.error(JSON.stringify({ event: "lead_in_decisions_off", error: error.name }));
+    }
     decide = undefined;
   }
-  return { writer: createLeadInWriter(env, meteredFetch(env, "gemini_text")), decide };
+  return { writer: createLeadInWriter(env, meteredFetch(env, "openai_text")), decide };
 }

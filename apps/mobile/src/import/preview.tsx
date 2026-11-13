@@ -207,7 +207,7 @@ export function ImportPreviewScreen({
         tail={
           step.type === asked.at(-1) && !showRest && rest.length > 0 ? (
             <View className="gap-1">
-              <Text className="text-base text-text-2">
+              <Text className="text-base text-ink-secondary">
                 {plural(restNotes, {
                   one: "# more note of a less common kind is imported as it is.",
                   other: "# more notes of less common kinds are imported as they are.",
@@ -316,12 +316,12 @@ export function ImportPreviewScreen({
                 className={`min-h-[52px] flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
               >
                 <View className="flex-1 gap-0.5">
-                  <Text className="text-sm text-muted">{answer.title}</Text>
-                  <Text className="text-md text-text" numberOfLines={2}>
+                  <Text className="text-sm text-ink-muted">{answer.title}</Text>
+                  <Text className="text-md text-ink" numberOfLines={2}>
                     {answer.detail}
                   </Text>
                 </View>
-                <Text className="text-md font-medium text-text-2">{t`Change`}</Text>
+                <Text className="text-md font-medium text-ink-secondary">{t`Change`}</Text>
               </View>
             </Press>
           ))}
@@ -492,13 +492,16 @@ function CheckRow({
         {checked ? (
           <Tick />
         ) : (
-          <View className="size-6 rounded-full border-2" style={{ borderColor: p["edge-2"] }} />
+          <View
+            className="size-6 rounded-full border-2"
+            style={{ borderColor: p["edge-strong"] }}
+          />
         )}
         <View className="flex-1 gap-0.5">
-          <Text className="text-md text-text" numberOfLines={2}>
+          <Text className="text-md text-ink" numberOfLines={2}>
             {title}
           </Text>
-          <Text className="text-sm text-muted">{line}</Text>
+          <Text className="text-sm text-ink-muted">{line}</Text>
         </View>
       </View>
     </Press>
@@ -543,17 +546,17 @@ function LanguageRows({
                 className={`min-h-[56px] flex-row items-center gap-3 px-4 py-2.5 ${i > 0 ? "border-t border-edge" : ""}`}
               >
                 <View className="flex-1 gap-0.5">
-                  <Text className="text-md text-text" numberOfLines={2}>
+                  <Text className="text-md text-ink" numberOfLines={2}>
                     {deckName(deck.name)}
                   </Text>
-                  <Text className="text-sm text-muted">
+                  <Text className="text-sm text-ink-muted">
                     {plural(deck.cards, { one: "# card", other: "# cards" })}
                   </Text>
                 </View>
-                <Text className="shrink text-md text-text-2" numberOfLines={1}>
+                <Text className="shrink text-md text-ink-secondary" numberOfLines={1}>
                   {label}
                 </Text>
-                <Icon name="down" size={16} colour={p.muted} />
+                <Icon name="down" size={16} colour={p["ink-muted"]} />
               </View>
             }
           />
@@ -695,10 +698,10 @@ function FieldsStep({
                   className={`min-h-[56px] flex-row items-center gap-3 px-4 py-2.5 ${i > 0 ? "border-t border-edge" : ""}`}
                 >
                   <View className="flex-1 gap-0.5">
-                    <Text className="text-md text-text" numberOfLines={1}>
+                    <Text className="text-md text-ink" numberOfLines={1}>
                       {field}
                     </Text>
-                    <Text className="text-sm text-muted" numberOfLines={1}>
+                    <Text className="text-sm text-ink-muted" numberOfLines={1}>
                       {example[i] ||
                         (source !== "anki"
                           ? t`Empty in the first card`
@@ -706,11 +709,11 @@ function FieldsStep({
                     </Text>
                   </View>
                   <Text
-                    className={`text-md ${role === "skip" ? "text-muted" : "font-medium text-text"}`}
+                    className={`text-md ${role === "skip" ? "text-ink-muted" : "font-medium text-ink"}`}
                   >
                     {i18n._(ROLE_LABELS[role] ?? ROLE_LABELS.skip)}
                   </Text>
-                  <Icon name="down" size={16} colour={p.muted} />
+                  <Icon name="down" size={16} colour={p["ink-muted"]} />
                 </View>
               }
             />
@@ -837,12 +840,12 @@ function ImportLines({
           {duplicatesOpen && (
             <View className="gap-1 ps-7 pt-2">
               {preview.duplicateExamples.map((d) => (
-                <Text key={`${d.term}-${d.deckName}`} className="text-sm text-text-2">
+                <Text key={`${d.term}-${d.deckName}`} className="text-sm text-ink-secondary">
                   {t`${isolate(d.term)} in ${isolate(d.deckName)}`}
                 </Text>
               ))}
               {preview.duplicates > preview.duplicateExamples.length && (
-                <Text className="text-sm text-muted">
+                <Text className="text-sm text-ink-muted">
                   {plural(preview.duplicates - preview.duplicateExamples.length, {
                     one: "and # more",
                     other: "and # more",

@@ -81,6 +81,7 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | --- | --- |
 | `/docs` | What the docs cover and which way in to choose. |
 | `/docs/getting-started`, `/docs/decks` | For learners: first cards and reviews, organization, sharing, Explore and archive. |
+| `/docs/smart-add` | For learners: turning lesson photos, PDFs and pasted text into cards with Smart add, the question step, the notes on terms, limits, privacy and the errors a learner can fix. |
 | `/docs/import` | Import formats, preview, duplicates, repeated imports and undo. |
 | `/docs/import-from-quizlet` | Quizlet export, pasted or delimited text pairs, separators, limits and preview. |
 | `/docs/import-from-lymi` | Importing a Lymi export, preserved card data and the section and series limitations. |
@@ -122,7 +123,7 @@ Use separate Workers Builds projects rooted at the repository. The product proje
 
 The product domain’s Google callback is `https://my.lymi.app/api/auth/callback/google`. Keep authentication on the product origin. Production deploys, domain changes and manual production migrations remain user-owned.
 
-Run the required local gates from [AGENTS.md](../AGENTS.md#before-you-push). After deployment, run both health commands and compare each reported tag with the intended commit. Check affected public pages, sign-in and safe deep links, API and MCP access, PWA startup, offline behavior and reminders as appropriate. A successful build or preview does not prove the custom domain serves that version.
+Run the local gates in [AGENTS.md](../AGENTS.md#before-you-push) and the production-affecting checks in [What runs when](testing.md#what-runs-when). After deployment, run both health commands and compare each reported tag with the intended commit. Check affected public pages, sign-in and safe deep links, API and MCP access, PWA startup, offline behavior and reminders as appropriate. A successful build or preview does not prove the custom domain serves that version.
 
 ## One-time browser recovery
 

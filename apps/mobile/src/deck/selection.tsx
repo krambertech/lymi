@@ -20,8 +20,8 @@ export function SelectBox({ checked }: { checked: boolean }) {
         height: 15,
         borderRadius: 4,
         borderWidth: 1.5,
-        borderColor: checked ? p.text : p["edge-2"],
-        backgroundColor: checked ? p.text : p.plate,
+        borderColor: checked ? p.ink : p["edge-strong"],
+        backgroundColor: checked ? p.ink : p.plate,
       }}
     >
       {checked && <Icon name="check" size={11} colour={p.canvas} strokeWidth={3} />}
@@ -78,7 +78,7 @@ export function SelectionToolbar({
       >
         <IconButton icon="close" size="sm" label={t`Stop selecting`} onPress={onDone} />
         <Text
-          className="flex-1 ps-1 text-base font-medium text-text"
+          className="flex-1 ps-1 text-base font-medium text-ink"
           style={{ fontVariant: ["tabular-nums"] }}
           numberOfLines={1}
         >

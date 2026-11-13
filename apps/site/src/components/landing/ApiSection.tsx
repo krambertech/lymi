@@ -48,7 +48,14 @@ function Pipeline() {
   }, [inView]);
 
   const ins: Node[] = [
-    { id: "hook", icon: Webhook, tint: "bg-plate-2 text-text-2", x: 50, y: 92, ghost: true },
+    {
+      id: "hook",
+      icon: Webhook,
+      tint: "bg-plate-nested text-ink-secondary",
+      x: 50,
+      y: 92,
+      ghost: true,
+    },
     {
       id: "shortcut",
       icon: Zap,
@@ -99,7 +106,14 @@ function Pipeline() {
       y: 112,
       name: <Trans>Your app</Trans>,
     },
-    { id: "phone", icon: Smartphone, tint: "bg-plate-2 text-text-2", x: 960, y: 232, ghost: true },
+    {
+      id: "phone",
+      icon: Smartphone,
+      tint: "bg-plate-nested text-ink-secondary",
+      x: 960,
+      y: 232,
+      ghost: true,
+    },
   ];
 
   const inPath = (n: Node) => {
@@ -118,7 +132,7 @@ function Pipeline() {
       key={key}
       d={d}
       fill="none"
-      stroke="var(--edge-2)"
+      stroke="var(--edge-strong)"
       strokeWidth={1.25}
       strokeDasharray={ghost ? "3 5" : undefined}
       initial={still ? false : { pathLength: 0, opacity: 0 }}
@@ -165,7 +179,7 @@ function Pipeline() {
       <span className={clsx("grid size-12 place-items-center rounded-2xl", n.tint)}>
         <n.icon className="size-5" />
       </span>
-      {n.name && <span className="text-xs whitespace-nowrap text-text-2">{n.name}</span>}
+      {n.name && <span className="text-xs whitespace-nowrap text-ink-secondary">{n.name}</span>}
     </motion.span>
   );
 
@@ -218,7 +232,7 @@ function Pipeline() {
             cy={HUB.y}
             r={HUB.r}
             fill="var(--canvas)"
-            stroke="var(--edge-2)"
+            stroke="var(--edge-strong)"
             strokeWidth={1}
             initial={still ? false : { opacity: 0, scale: 0.8 }}
             animate={shown ? { opacity: 1, scale: 1 } : undefined}
@@ -248,14 +262,14 @@ export function ApiSection() {
     <section data-nav="landing" className="px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div
         data-theme="dark"
-        className="mx-auto max-w-[1040px] overflow-hidden rounded-[24px] bg-sheet p-7 text-text edge @2xl:p-10"
+        className="mx-auto max-w-[1040px] overflow-hidden rounded-[24px] bg-sheet p-7 text-ink edge @2xl:p-10"
       >
         <div className="flex flex-col gap-6 @4xl:flex-row @4xl:items-end @4xl:justify-between">
           <div>
-            <h2 className="max-w-[16ch] text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl">
+            <h2 className="max-w-[16ch] text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl">
               <Trans>Open by design.</Trans>
             </h2>
-            <p className="mt-4 max-w-[46ch] text-md text-pretty text-text-2">
+            <p className="mt-4 max-w-[46ch] text-md text-pretty text-ink-secondary">
               <Trans>
                 Lymi has a public API with keys you can limit. Add cards from a shortcut, a
                 spreadsheet or a script, and show what’s due on your own site or in your own app.

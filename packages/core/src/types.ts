@@ -161,6 +161,20 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
+/** Where review draws the term's pronunciation. Each learner's own, per deck. */
+export const PRONUNCIATION_DISPLAYS = ["adaptive", "separate"] as const;
+export const PronunciationDisplay = z.enum(PRONUNCIATION_DISPLAYS).meta({
+  ...OPEN,
+  id: "PronunciationDisplay",
+  description:
+    "Where review shows the term's furigana, pinyin, Jyutping, reading or stress marks. adaptive, the default: drawn on the term, before the reveal only until the card is Known. separate: never on the term, and on its own line with the answer.",
+});
+export type PronunciationDisplay = z.infer<typeof PronunciationDisplay>;
+
+/** The caller's own choices for one deck, which never change it for anyone else. */
+export const DeckPreferencesInput = z.object({ pronunciationDisplay: PronunciationDisplay });
+export type DeckPreferencesInput = z.infer<typeof DeckPreferencesInput>;
+
 /**
  * An id the caller chose for what it creates, in `newId`'s alphabet. Sending the same create
  * again returns what the first one made instead of making a second, so an offline write replays safely.
@@ -1068,6 +1082,7 @@ export const SettingsPatch = z.object({
   dailyGoal: DailyGoal.optional(),
   /** Whether the web app may record how the learner moves through it. */
   sessionReplay: z.boolean().optional(),
+  learningEmails: z.boolean().optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 
@@ -1078,7 +1093,7 @@ export type UndoInput = z.infer<typeof UndoInput>;
 /** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
 export const ReminderTime = z
   .string()
-  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose a time on a 15-minute boundary");
+  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose 00, 15, 30 or 45 minutes.");
 export type ReminderTime = z.infer<typeof ReminderTime>;
 
 const PushEndpoint = z
@@ -1103,7 +1118,7 @@ export const TimeZone = z
     } catch {
       return false;
     }
-  }, "Use an IANA timezone such as Europe/Tallinn");
+  }, "Use an IANA timezone, such as Europe/Tallinn.");
 
 /** A visible page reporting its device zone. Moves the review day only while the mode is automatic. */
 export const DeviceTimezoneInput = z.object({ timezone: TimeZone });

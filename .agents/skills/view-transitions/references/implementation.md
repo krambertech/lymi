@@ -1,6 +1,6 @@
 # Adding view transitions, in order
 
-Each step depends on the one before it. Step 1 is the one people skip and the one that decides whether the result feels designed or arbitrary.
+Each step depends on the one before it. Step 1 decides which navigations animate, so do not skip it.
 
 ## Step 1 - map the navigations
 
@@ -26,7 +26,7 @@ Copy the complete recipe set from [`css-recipes.md`](css-recipes.md) into the fi
 
 Add `defaultViewTransition` to `createRouter` in [`app-entry.tsx`](../../../../apps/web/src/client/app-entry.tsx), using the types function from `SKILL.md`. Start there rather than with `true` - a bare `true` cross-fades every navigation identically, including revalidations, and it is harder to unpick later than to get right now. Depth comparison covers the common case; where the map from Step 1 disagrees with depth - two screens at the same depth where one is clearly deeper in the model - special-case that pair by pathname inside the function rather than by adding a prop to every link.
 
-Verify each row of the table in the browser after this step, before adding a single shared element. Directional slides are most of the perceived quality, and they are the part that breaks quietly.
+Verify each row of the table in the browser after this step, before adding a single shared element. Directional slides are the most visible part, and they break without an error.
 
 ## Step 4 - persistent elements
 

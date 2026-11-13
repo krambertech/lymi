@@ -18,7 +18,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDb, type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
 import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
-import { bytesSource } from "../imports/files";
+import { bytesSource, ImportFileError } from "../imports/files";
 import { nextWriteStep, writeImport } from "../imports/write-run";
 import type { AnalyticsEvent } from "./analytics";
 import { analyticsContextFor } from "./analytics-context";
@@ -473,6 +473,74 @@ describe("importing a Pleco export", () => {
   });
 });
 
+describe("an import that brings the account's first decks", () => {
+  it("finishes the welcome deck step once, and a later import or deck adds nothing", async () => {
+    const events: AnalyticsEvent[] = [];
+    const work: Promise<void>[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        later: (run: () => Promise<void>) => {
+          work.push(run());
+        },
+      },
+    };
+    const deckFinishes = async () => {
+      await Promise.all(work.splice(0));
+      return events.filter((e) => e.name === "welcome_step_finished");
+    };
+    const finished = [{ name: "welcome_step_finished", step_name: "deck", skipped: false }];
+    await runImport(ctx, "current.apkg");
+    expect(
+      (await db.select().from(schema.decks).where(eq(schema.decks.userId, ctx.userId))).length,
+    ).toBeGreaterThan(1);
+    expect(await deckFinishes()).toEqual(finished);
+    await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    await createDeck(ctx, { name: "Mine" });
+    expect(await deckFinishes()).toEqual(finished);
+  });
+
+  it("finishes the step when the import's smallest deck id was inserted a second after a sibling", async () => {
+    const events: AnalyticsEvent[] = [];
+    const queued: (() => Promise<void>)[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        // Held back, so the decks' stored times can be set as a slow import would leave them.
+        later: (run: () => Promise<void>) => {
+          queued.push(run);
+        },
+      },
+    };
+    await runImport(ctx, "current.apkg");
+    const decks = await db
+      .select({ id: schema.decks.id })
+      .from(schema.decks)
+      .where(eq(schema.decks.userId, ctx.userId))
+      .orderBy(schema.decks.id);
+    expect(decks.length).toBeGreaterThan(1);
+    // `created_at` keeps whole seconds and ids made in one millisecond sort at random, so the
+    // smallest id can land in the next second while its siblings share the one before.
+    const second = 1_798_000_000_000;
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second) })
+      .where(eq(schema.decks.userId, ctx.userId));
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second + 1000) })
+      .where(eq(schema.decks.id, decks[0]?.id ?? ""));
+    await Promise.all(queued.splice(0).map((run) => run()));
+    expect(events.filter((e) => e.name === "welcome_step_finished")).toEqual([
+      { name: "welcome_step_finished", step_name: "deck", skipped: false },
+    ]);
+  });
+});
+
 describe("importing an HSK-shaped Anki deck", () => {
   it("writes Chinese cards with pinyin Readings, notes and recordings, counting converted tones", async () => {
     const events: AnalyticsEvent[] = [];
@@ -560,7 +628,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
   };
   const noAllowance = { left: async () => 60, spend: async () => undefined };
 
-  it("keeps each term's and example's recording, a pitch line and the translation, and leaves the rest out", async () => {
+  it("keeps each term's and example's recording, a pitch accent and the translation, and leaves the rest out", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "kaishi.apkg", fixture("kaishi.apkg"));
     await inspectImport(ctx, id, env.IMPORTS);
@@ -591,10 +659,12 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     });
 
     const hashi = await card(ctx, "箸");
-    expect(hashi.notes).toBe("Counted with 膳\nはꜜし [1]");
+    expect(hashi.pronunciation).toBe("はし [1]");
+    expect(hashi.notes).toBe("Counted with 膳");
     expect(hashi.exampleTranslation).toBe("I eat with chopsticks.");
     const sakura = await card(ctx, "桜");
-    expect(sakura.notes).toBe("さくら [0]");
+    expect(sakura.pronunciation).toBe("さくら [0]");
+    expect(sakura.notes).toBeNull();
     expect(sakura.exampleTranslation).toBe("The cherry blossoms bloomed.");
     const neko = await card(ctx, "猫");
     expect(neko.notes).toBeNull();
@@ -765,7 +835,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const damaged = {
       adapter: {
         media: async () => async () => {
-          throw new Error("A zstd frame is damaged");
+          throw new ImportFileError("damaged", "A zstd frame is damaged");
         },
       },
     } as unknown as ImportWork<unknown>;
@@ -778,6 +848,29 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     );
     expect(totals.recordings).toEqual({ stored: 0, skipped: 1 });
     expect(await recorded(added.card.id)).toEqual({ key: null, source: null });
+  });
+
+  it("fails the step when storage cannot give a clip back, so its retry can store it", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Unreachable", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term: "犬" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const unreachable = {
+      adapter: {
+        media: async () => async () => {
+          throw new Error("R2 is unavailable");
+        },
+      },
+    } as unknown as ImportWork<unknown>;
+    await expect(
+      attachPictures(
+        ctx,
+        unreachable,
+        bytesSource(new Uint8Array()),
+        [{ cardId: added.card.id, name: "inu.mp3", kind: "recording" }],
+        { audio: env.AUDIO },
+      ),
+    ).rejects.toThrow("R2 is unavailable");
   });
 
   it("gives a card an earlier import brought its recording in place of generated speech", async () => {
@@ -861,7 +954,7 @@ describe("importing an Anki package", () => {
       .select({ objectKey: schema.imports.objectKey })
       .from(schema.imports)
       .where(eq(schema.imports.id, id));
-    expect(await objectsUnder(row[0]?.objectKey as string)).toBe(0);
+    expect(row[0]?.objectKey).toBeNull();
   });
 
   it("gives the same result for the legacy and the current container", async () => {
@@ -1571,6 +1664,46 @@ describe("importing a deck of many pictures", () => {
       .from(schema.cardImages)
       .where(eq(schema.cardImages.userId, ctx.userId));
     expect(image?.description).toBeNull();
+  });
+});
+
+describe("an ended import's files", () => {
+  const keyOf = async (id: string) => {
+    const [row] = await db
+      .select({ objectKey: schema.imports.objectKey })
+      .from(schema.imports)
+      .where(eq(schema.imports.id, id));
+    return row?.objectKey;
+  };
+
+  it("clears the key once they are gone", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    expect(await keyOf(id)).not.toBeNull();
+    await cancelImport(ctx, id, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+  });
+
+  it("stay for the sweep when R2 refuses the delete", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const key = (await keyOf(id)) as string;
+    const refusing = new Proxy(env.IMPORTS, {
+      get(target, property) {
+        if (property === "delete")
+          return async () => Promise.reject(new Error("R2 is unavailable"));
+        const value = Reflect.get(target, property);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+
+    await failImport(db, id, "unrecognized", refusing);
+    expect(await keyOf(id)).toBe(key);
+    expect(await env.IMPORTS.head(key)).not.toBeNull();
+
+    await expireImports(db, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+    expect(await env.IMPORTS.head(key)).toBeNull();
   });
 });
 

@@ -29,16 +29,16 @@ export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
     </>
   );
   return (
-    <div className="@container min-h-dvh flex-1 bg-canvas text-text">
+    <div className="@container min-h-dvh flex-1 bg-canvas text-ink">
       <main className="mx-auto flex min-h-dvh w-full flex-col items-center justify-start px-4 pt-[calc(2rem+var(--inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))] @xl:px-8 [@media(min-height:720px)]:pt-[calc(0.5rem+var(--inset-top))] [@media(min-height:720px)]:pb-[calc(0.5rem+env(safe-area-inset-bottom))] [@media(min-height:920px)]:pt-[calc(2rem+var(--inset-top))] [@media(min-height:920px)]:pb-[calc(2rem+env(safe-area-inset-bottom))] mac:px-5 mac:pt-(--inset-top)! mac:pb-5!">
         {/* The Mac's sign-in window has no home to go to, so there the mark is only a mark. */}
         {mac ? (
-          <span className="mx-auto flex w-fit flex-col items-center px-4 text-text">{mark}</span>
+          <span className="mx-auto flex w-fit flex-col items-center px-4 text-ink">{mark}</span>
         ) : (
           <a
             href={homeHref}
             aria-label={t`Lymi home`}
-            className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-text"
+            className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-ink"
           >
             {mark}
           </a>

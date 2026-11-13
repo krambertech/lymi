@@ -65,12 +65,12 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
             </DialogHeader>
             <div className="flex items-center gap-3" role="status">
               <span
-                className="grid size-9 shrink-0 place-items-center rounded-full bg-good-soft text-good"
+                className="grid size-9 shrink-0 place-items-center rounded-full bg-success-soft text-success"
                 aria-hidden="true"
               >
                 <Check className="size-4" />
               </span>
-              <p className="text-base text-text-2 text-pretty">
+              <p className="text-base text-ink-secondary text-pretty">
                 <Trans>We’ll reply by email.</Trans>
               </p>
             </div>
@@ -113,7 +113,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
               }}
             >
               <div className="grid gap-1.5">
-                <span className="text-sm font-medium text-text-2">
+                <span className="text-sm font-medium text-ink-secondary">
                   <Trans>What this is about</Trans>
                 </span>
                 <Segmented<FeedbackKind>
@@ -165,7 +165,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
                 />
                 {invalid.message && <FieldError>{invalid.message}</FieldError>}
               </Field>
-              <p className="text-sm text-muted text-pretty">
+              <p className="text-sm text-ink-muted text-pretty">
                 <Trans>
                   Lymi also gets the screen you are on, the app version, your browser and your app
                   language.
@@ -174,7 +174,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
               {send.isError && (
                 <div
                   role="alert"
-                  className="grid gap-1 rounded-lg bg-danger-soft px-3.5 py-3 text-sm text-text-2"
+                  className="grid gap-1 rounded-lg bg-danger-soft px-3.5 py-3 text-sm text-ink-secondary"
                 >
                   <span className="flex items-center gap-2 font-medium text-danger">
                     <CircleAlert className="size-4 shrink-0" aria-hidden="true" />

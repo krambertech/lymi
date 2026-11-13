@@ -26,14 +26,19 @@ A change is verified when the feature it touches has been driven in the running 
 | Deck filters | [deck-filters.md](features/deck-filters.md) |
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
+| Streak calendar: swiping and the arrows between months | [streak.md](features/streak.md) |
 | Language | [language.md](features/language.md) |
+| Daily reminder | [reminders.md](features/reminders.md) |
+| Learning emails | [learning-emails.md](features/learning-emails.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
+| Card peek at any text size | [card-peek.md](features/card-peek.md) |
 | Enrich a card | [card-enrich.md](features/card-enrich.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Deck tags: rename, merge, archive, restore | [deck-tags.md](features/deck-tags.md) |
+| Section line and section pages | [section-page.md](features/section-page.md) |
+| Deck tools: selection, the current section, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Making and archiving sections | [sections.md](features/sections.md) |
-| Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
 | Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
@@ -44,7 +49,9 @@ A change is verified when the feature it touches has been driven in the running 
 | Smart add | [smart-add.md](features/smart-add.md) |
 | AI consent: the ask before the first AI action, and You → AI services | [ai-consent.md](features/ai-consent.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
+| Pitch accent: the chart under the term after the reveal and on the card page | [pitch-accent.md](features/pitch-accent.md) |
 | Chinese: pinyin over each hanzi in review, simplified and traditional | [chinese.md](features/chinese.md) |
+| Adaptive pronunciation: the deck switch that keeps pronunciation off the cue | [adaptive-pronunciation.md](features/adaptive-pronunciation.md) |
 | Cantonese: Jyutping over each character in review, 𨋢 included, and its example fade | [cantonese.md](features/cantonese.md) |
 | Russian: stress in place on the cue and the field named Stress | [russian.md](features/russian.md) |
 | Ukrainian: stress in place on the cue, і included, and the field named Stress | [ukrainian.md](features/ukrainian.md) |

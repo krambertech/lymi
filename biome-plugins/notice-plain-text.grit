@@ -1,0 +1,9 @@
+// Notice reads out a string body on iOS and leaves rich text for VoiceOver to swipe to, so plain text must stay a string.
+JsxElement() as $notice where {
+  $notice <: r"(?s)^<Notice\b.*",
+  $notice <: contains JsxElement() as $trans where {
+    $trans <: r"(?s)^<Trans>.*",
+    not $trans <: r"(?s)^<Trans>.*<[A-Za-z].*</Trans>$"
+  },
+  register_diagnostic(span=$trans, message="Notice reads its body out on iOS only when it is a string, so this <Trans> is never announced. Text with no link or markup goes in as t`…`; keep <Trans> for a body with a link.")
+}

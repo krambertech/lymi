@@ -6,17 +6,17 @@ decision: "App-only, on the owner's account first; price after measured cost"
 
 # Add cards from a lesson
 
-A learner opens a deck, pastes a lesson or photographs its pages, and gets back a list of the terms worth a card in that deck. Terms already in their decks are greyed out. They drop what they do not want and add the rest as ordinary cards, which enrichment then fills. This is meant to become a paid feature ([payments](premium-subscription-and-payments.md)), so it starts on the owner's account with every run's cost recorded, and the price follows the numbers.
+A learner opens a deck, pastes a lesson or photographs its pages, and gets back a list of the terms worth a card in that deck. Terms already in their decks are greyed out. They drop what they do not want and add the rest as ordinary cards, which enrichment then fills. This is meant to become a paid feature ([payments](premium-subscription-and-payments.md)), so it starts on the owner's account with every run's cost recorded, and pricing will use the measured cost.
 
-It should feel like it already knows the learner. It picks the terms they would have picked, writes in the deck's own format, keeps every line short, and asks only what it cannot work out.
+Extraction should follow the deck's existing cards: which terms to include, how to format them and how much to write. It should ask a question only when the answer would change the list.
 
 This reopens [ADR 0002](../adr/0002-mcp-client-extracts-server-enriches.md), which moved extraction into the MCP client and turned down a prepare endpoint. Extraction through an assistant works, but it is inconsistent: each client reads the deck differently, spends tokens discovering it, and learns about duplicates only after the add.
 
-## Why the app can do it better than an assistant
+## What the app adds to assistant extraction
 
 - **Lymi already holds the deck.** Its terms, sections, languages and the learner's own cards go into the prompt without any tool calls.
 - **Duplicates are caught before they are offered**, with the rule of [ADR 0004](../adr/0004-duplicates-are-skipped-not-rejected.md), not skipped after the add.
-- **Review data says the learner's level.** Which cards are Known and which keep being forgotten is context no outside assistant has.
+- **Review history provides learning context.** Known and often-forgotten cards can help extraction account for what the learner has studied.
 - **One prompt and one schema** give every card the same shape, and a fixed set of real lessons keeps its quality from slipping.
 
 ## Decisions
@@ -24,14 +24,14 @@ This reopens [ADR 0002](../adr/0002-mcp-client-extracts-server-enriches.md), whi
 - **Material is the input, in any mix.** Photos, PDFs, pasted text or a transcript, and `.txt`, `.md`, `.srt` or `.vtt` files, together in one run. A PDF goes to the model as a file, so scanned pages work too. One lesson is up to 10 pages or photos, or 15,000 words; a bigger upload counts as several, and the count shows before reading. Word files, audio recordings, web links, a topic prompt ("20 words for a restaurant") and "grow this deck" reuse the same pipeline later.
 - **It starts from a deck.** "Add from a lesson" sits in the deck's add menu, and the cards land in that deck, and in a section if one is picked.
 - **A pick list comes before any card.** Each term shows a one-line gloss and starts ticked; untick to drop, then add. The list is never saved, so there is no draft or proposal entity, and every card that exists is an ordinary card ([ADR 0001](../adr/0001-integration-cards-are-ordinary-cards.md)).
-- **Questions are rare.** The learner unticks on the list, so a question earns its place only when one answer unticks several terms at once: none for a page's worth of material, at most one for a few pages, two for a long PDF or transcript. The server drops a question whose answers untick fewer than two terms or every term. Each is a step of its own with radio options and a default already chosen, and every step offers "Use defaults for the rest". Underlined words become "Only the words you marked?"; a PDF holding three lessons becomes "A section for each?"; exercise pages become "Include their words?". The answers change the list.
+- **Questions must change the list.** Ask only when one answer can deselect several terms at once: none for a page's worth of material, at most one for a few pages, two for a long PDF or transcript. The server drops a question whose answers untick fewer than two terms or every term. Each is a step of its own with radio options and a default already chosen, and every step offers "Use defaults for the rest". Underlined words become "Only the words you marked?"; a PDF holding three lessons becomes "A section for each?"; exercise pages become "Include their words?". The answers change the list.
 - **Material is read, not kept.** The phone's file input offers the camera, the library and files. The device shrinks each photo before upload, the Worker checks the bytes as it does for pictures, sends them to the model and discards them. The model writes out the page's text first, and every later step works on that text.
-- **App only.** The route accepts a signed-in session, refuses API keys and has no MCP tool, and it stays out of the public API docs. This breaks the rule that REST and MCP expose the same surface, on purpose: an assistant already has a model, and paying Lymi's model to extract for it buys nothing. Assistant extraction improves through tool descriptions and deck context instead.
-- **One entitlement check gates it.** It is on for the owner's account only until a paid plan exists. Each run records its input, cached and output tokens per model.
+- **App only.** The route accepts a signed-in session, refuses API keys and has no MCP tool, and it stays out of the public API docs. This breaks the rule that REST and MCP expose the same surface, on purpose: an assistant already has a model, and that path would duplicate the assistant's extraction work. Assistant extraction improves through tool descriptions and deck context instead.
+- **Access is checked once.** It is on for the owner's account only until a paid plan exists. Each run records its input, cached and output tokens per model.
 
 ## Two kinds of model
 
-A **writer** reads the page and writes text: the transcript, the terms, the glosses, a question's wording. A **decision model** never writes; it answers a fixed question about some input with a probability per option, in tens of milliseconds, for a fraction of a cent per thousand calls. Every judgement in a run that has a closed set of answers goes to a decision model, so the writer's prompt stays small and each judgement gets a number Lymi can put a threshold on.
+A **writer** reads the page and writes text: the transcript, the terms, the glosses, a question's wording. A **decision model** never writes; it answers a fixed question about some input with a probability per option, in tens of milliseconds, for a fraction of a cent per thousand calls. Every judgement in a run that has a closed set of answers goes to a decision model, so the writer's prompt stays small and each decision has a score for thresholding.
 
 ```mermaid
 flowchart TD
@@ -49,7 +49,7 @@ flowchart TD
 
 Low confidence never decides silently. A term the decision model is unsure about starts unticked rather than hidden, and an unsure section is left for the learner to pick.
 
-## The deck remembers
+## A deck brief guides extraction
 
 **The deck brief** is a short note kept on the deck: topic, level, register, how its meanings and examples are written, what the learner skips ("no articles", "Estonian verbs with three principal parts"). It goes into every run in place of most of the raw card list, so runs get cheaper and more consistent as the deck grows.
 
@@ -57,13 +57,13 @@ It learns from what the learner does, never silently:
 
 - After a run, the writer compares the pick list with what was added and edited, and drafts at most one change to the brief.
 - The change is shown as one more question with a default, such as "Keep meanings to one or two words?". Accepting writes it into the brief; skipping leaves the brief alone.
-- The brief is readable and editable in the deck's settings, so nothing steers the AI that the learner cannot see.
+- The brief is readable and editable in the deck's settings, so the learner can inspect and change the instructions extraction uses.
 
 Facts that hold across decks, such as the learner's native language or a level per language, stay out of scope until one deck's brief proves useful. "Deck brief" needs an entry in `CONTEXT.md`.
 
 ## Models
 
-The first bake-off ran on 11 October 2026: five photos of the owner's Estonian textbook (two lessons, printed tables with handwritten margins), scored against the 60 words the owner actually made cards from. One run per setup, so the numbers show direction, not a verdict.
+The first model comparison ran on 11 October 2026: five photos of the owner's Estonian textbook (two lessons, printed tables with handwritten margins), scored against the 60 words the owner actually made cards from. One run per setup, so the results are preliminary.
 
 **Writers.** One multimodal call per lesson reads every photo and returns the pick list. A separate OCR step costs more than the whole call and loses the layout that shows which words the lesson glossed.
 
@@ -74,11 +74,11 @@ The first bake-off ran on 11 October 2026: five photos of the owner's Estonian t
 | GPT-6 Luna, low effort | 56/60 | 53 | 0/4 | $0.0006 | 20 s |
 | Claude Haiku 5.5, medium effort | 57/60 | 55 | 1/4 | $0.0011 | 15 s |
 
-Haiku 5.5 at low effort reads lessons; Luna stays for enrichment, where its stress marks were the reason to pick it. Gemini is out of the comparison by the owner's choice. What the run taught:
+Haiku 5.5 at low effort reads lessons; Luna stays for enrichment, where its stress marks were the reason to pick it. Gemini is out of the comparison by the owner's choice. Findings from the run:
 
-- **The deck brief carries the format.** With eight example cards and no brief, both models skipped every handwritten word and Luna offered 12 phrase cards from request formulas the owner keeps in notes.
+- **The deck brief affects selection.** With eight example cards and no brief, both models skipped every handwritten word and Luna offered 12 phrase cards from request formulas the owner keeps in notes.
 - **A brief written by hand can be wrong.** "Verbs end in the 1st person" made both models rewrite the textbook's 3rd-person forms (algab became algan). "Copy every form exactly as printed" fixed it: Lesson 6 came back 31 of 31 exact on both. The brief has to be learned from the deck's cards and confirmed by the learner.
-- **Handwriting is the weak spot.** The same setup found three margin words in one run and one in the next; nobody read a note written sideways. Every setup needs three runs before a score counts.
+- **Handwriting is the weak spot.** The same setup found three margin words in one run and one in the next; nobody read a note written sideways. Run each setup three times before relying on its score.
 - **The models copy the book's glosses.** The owner rewrote about a third: one meaning instead of three, "(что-то)" and "(само)" to mark verb pairs, a second meaning added. Those edits are the rules the brief should learn, and [the card-writing guide](../card-writing.md) states them for every deck.
 - **Duplicates work as designed.** Every model offered küsima and küsimus, already in an earlier section; the ADR 0004 rule greys them before the learner sees the list.
 
@@ -97,9 +97,9 @@ In the bake-off, Clef-flash judged 74 candidates as worth a card or not: 61 word
 
 Leaning: Clef-flash for keep or skip, with a threshold fitted per deck, because it is the cheapest, takes the photo, and adds no vendor or secret. Jev is the comparison, because it is the only one with independent multilingual evidence. Workers AI's free 10,000 neurons a day cover about 2.9 million Clef-flash input tokens.
 
-The same models fit beyond this feature, each behind its own labelled set:
+A possible later use needs its own labelled evaluation set:
 
-- **Language of a typed term**, over the deck's languages. Script is checked deterministically first, and a low margin between Ukrainian and Russian asks the learner.
+- **Language detection for a typed term**, choosing among the deck's languages. Script is checked deterministically first, and a low margin between Ukrainian and Russian asks the learner.
 
 ## Evals
 
@@ -109,7 +109,7 @@ Write a script in the pattern of the withdrawn diagnosis evaluator (fixtures wit
 
 The lesson set is printed pages, neat and messy handwriting, glare, Cyrillic, Japanese and mixed languages, a page overlapping the deck, and a page with no vocabulary. Generative models "correct" handwriting into text that is not there, so dense accented handwriting matters. Each decision model gets 100 to 200 labelled items per question. Real lessons stay outside the repository, as real cards already do.
 
-In production each run records terms offered, unticked, edited and added by hand right after, with model and prompt version. An unticked or edited term becomes an eval case.
+In production each run records terms offered, deselected, edited and manually added immediately afterward, with model and prompt version. An unticked or edited term becomes an eval case.
 
 ## Delivery
 

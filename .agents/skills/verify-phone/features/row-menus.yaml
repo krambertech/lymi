@@ -55,14 +55,17 @@ name: Long-press menus
     visible: "Archive card"
     timeout: 10000
 - tapOn: "Archive card"
+# The toast names no card since #839, which keeps it at the screen's foot.
 - extendedWaitUntil:
-    visible: "Archived “${ARCHIVE_TERM}”"
+    visible: "Card archived"
     timeout: 10000
 - takeScreenshot: 03-archived
 - tapOn: "Undo"
 - tapOn: "Explore"
-- extendedWaitUntil:
-    visible: "${EXPLORE_DECK}"
+# Explore shelves decks by language, so the deck can sit below the first screen.
+- scrollUntilVisible:
+    element: "${EXPLORE_DECK}"
+    centerElement: true
     timeout: 30000
 - longPressOn: "${EXPLORE_DECK}"
 - extendedWaitUntil:

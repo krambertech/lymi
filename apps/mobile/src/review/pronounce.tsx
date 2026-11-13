@@ -225,7 +225,7 @@ export function useTipLayer() {
         <Animated.View
           entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
           exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
-          className="absolute rounded-lg bg-text px-3 py-2"
+          className="absolute rounded-lg bg-ink px-3 py-2"
           style={tip.place}
         >
           <Text className="text-sm text-canvas">{tip.text}</Text>
@@ -310,7 +310,7 @@ export function SpeakerButton({
           // A quiet speaker is a bare glyph in muted, a size down, so the term's stays the card's main one.
           glyph={(ink, size) => (
             <Speaker
-              ink={quiet && !error ? p.muted : ink}
+              ink={quiet && !error ? p["ink-muted"] : ink}
               size={quiet ? size - 1 : size}
               playing={state === "playing" && !reduce}
             />

@@ -4,15 +4,14 @@
 # tests and launch check show whether an upgrade changed anything the app uses. docs/stack.md.
 version: 2
 updates:
+  # The workspace root holds pnpm-lock.yaml. From /apps/desktop, Dependabot leaves the lockfile behind.
+  # A group would add its name to the title and pass the 72-character limit of the title check.
   - package-ecosystem: npm
-    directory: /apps/desktop
+    directory: /
     schedule:
       interval: monthly
     allow:
       - dependency-name: electron
-    groups:
-      electron:
-        patterns: ["electron"]
     open-pull-requests-limit: 1
     commit-message:
       prefix: "build(desktop)"

@@ -42,7 +42,7 @@ export function SectionProgress({
     <Button
       size="sm"
       variant="ghost"
-      className="-ms-2 px-2 text-text-2"
+      className="-ms-2 px-2 text-ink-secondary"
       onClick={() => onGoTo(current.id)}
       aria-label={t`Go to ${currentName}`}
     >
@@ -102,8 +102,8 @@ export function SectionProgress({
     <div className="grid gap-3 border-t border-edge px-5 pt-3.5 pb-4 @md/plates:ps-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
         <div className="grid min-w-0 flex-1 basis-56 gap-0.5">
-          <p className="text-md font-medium text-balance text-text">{bidi(title)}</p>
-          <p className="text-sm text-text-2">{detail}</p>
+          <p className="text-md font-medium text-balance text-ink">{bidi(title)}</p>
+          <p className="text-sm text-ink-secondary">{detail}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {goTo}
@@ -120,7 +120,7 @@ export function SectionProgress({
         </div>
       </div>
       {showMeter && (
-        <div aria-hidden="true" className="relative h-1.5 rounded-full bg-plate-2">
+        <div aria-hidden="true" className="relative h-1.5 rounded-full bg-plate-nested">
           {/* A full-width fill slides in from the start, so its rounded end keeps its shape. */}
           <div className="absolute inset-0 overflow-hidden rounded-full">
             <div
@@ -129,7 +129,7 @@ export function SectionProgress({
             />
           </div>
           <div
-            className="absolute -top-1 -bottom-1 w-0.5 -translate-x-1/2 rounded-full bg-text-2 rtl:translate-x-1/2"
+            className="absolute -top-1 -bottom-1 w-0.5 -translate-x-1/2 rounded-full bg-ink-secondary rtl:translate-x-1/2"
             style={{ insetInlineStart: `${tick * 100}%` }}
           />
         </div>

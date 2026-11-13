@@ -1,4 +1,10 @@
-import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
+import type {
+  CardInput,
+  CardPatch,
+  DeckInput,
+  DeckPreferencesInput,
+  NewDeckInput,
+} from "@lymi/core";
 import {
   duplicateKey,
   newId,
@@ -11,6 +17,7 @@ import {
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
 import { waitsToSend } from "./api/request";
+import { online } from "./cache";
 import { clientConfig, type KeyValueStore } from "./config";
 import { flushOutbox as flushGrades } from "./grades";
 import { claimQueued, WRITE_PREFIX } from "./queued";
@@ -36,6 +43,7 @@ export type Write =
   | { kind: "card.important"; id: string; important: boolean }
   | { kind: "deck.create"; input: NewDeckInput & { id: string } }
   | { kind: "deck.update"; id: string; patch: DeckPatch }
+  | { kind: "deck.preferences"; id: string; preferences: DeckPreferencesInput }
   | { kind: "deck.archive"; id: string }
   | { kind: "deck.restore"; id: string };
 
@@ -70,6 +78,7 @@ const KINDS = new Set<Write["kind"]>([
   "card.important",
   "deck.create",
   "deck.update",
+  "deck.preferences",
   "deck.archive",
   "deck.restore",
 ]);
@@ -217,6 +226,8 @@ function send(w: Write): Promise<Result> {
       return api.createDeck(w.input);
     case "deck.update":
       return api.updateDeck(w.id, w.patch);
+    case "deck.preferences":
+      return api.setDeckPreferences(w.id, w.preferences);
     case "deck.archive":
       return api.archiveDeck(w.id);
     case "deck.restore":
@@ -259,6 +270,8 @@ const settle = (key: string, outcome: { value: Result } | { error: ApiError }) =
 
 export interface Flushed {
   sent: number;
+  /** Of those, writes a `submit` was waiting on, whose caller refreshes what it moved. */
+  waited: number;
   /** Queued grades that landed on the way. */
   graded: number;
   /** Stopped before the end: offline, or signed out. */
@@ -277,7 +290,7 @@ export function claimWrites(userId: string) {
 }
 
 async function flushQueued(): Promise<Flushed> {
-  const result: Flushed = { sent: 0, graded: 0, stopped: false, retryAt: null };
+  const result: Flushed = { sent: 0, waited: 0, graded: 0, stopped: false, retryAt: null };
   if (!claimed) return { ...result, stopped: true };
   const held = new Set<string>();
   const dropped = new Set<string>();
@@ -306,6 +319,7 @@ async function flushQueued(): Promise<Flushed> {
       remove(entry.key);
       settle(entry.key, { value });
       result.sent += 1;
+      if (awaited.has(entry.key)) result.waited += 1;
       if (entry.write.kind === "card.add" && "status" in value && value.status === "skipped") {
         dropped.add(entry.write.input.id);
         if (!awaited.has(entry.key)) {
@@ -356,6 +370,15 @@ function notify(notice: Notice) {
 
 let chain: Promise<unknown> = Promise.resolve();
 let timer: ReturnType<typeof setTimeout> | undefined;
+const flushListeners = new Set<(flushed: Flushed) => void>();
+
+/** Hears every flush, including a retry or a list's read, which no caller waits on to refresh. */
+export function onFlushed(listener: (flushed: Flushed) => void) {
+  flushListeners.add(listener);
+  return () => {
+    flushListeners.delete(listener);
+  };
+}
 
 /** One flush at a time in this tab, and in every tab where the browser can lock across them. */
 function serial<T>(task: () => Promise<T>): Promise<T> {
@@ -378,6 +401,7 @@ export function flushWrites(): Promise<Flushed> {
     if (flushed.retryAt !== null) {
       timer = setTimeout(() => void flushWrites(), Math.max(0, flushed.retryAt - Date.now()));
     }
+    for (const listener of flushListeners) listener(flushed);
     return flushed;
   });
 }
@@ -498,8 +522,6 @@ function localDuplicate(input: CardInput): { card: Card; deckName: string } | nu
   return null;
 }
 
-const offline = () => typeof navigator !== "undefined" && navigator.onLine === false;
-
 /**
  * The learner's card and deck writes. Each shows at once, and resolves with the server's answer
  * when it lands now, or with `queued` and what the screen already shows when it will land later.
@@ -513,7 +535,7 @@ export const writes = {
   ): Promise<{ outcome: AddCardOutcome; queued: boolean }> {
     const input = storedInput(sent);
     // Offline, the cache is the best word on duplicates until the server has the final one.
-    const duplicate = offline() ? localDuplicate(input) : null;
+    const duplicate = online() ? null : localDuplicate(input);
     if (duplicate) {
       const outcome = {
         status: "skipped" as const,
@@ -546,6 +568,8 @@ export const writes = {
     return { id: w.input.id, queued: written.status === "queued" };
   },
   updateDeck: (id: string, patch: DeckPatch) => queued(make({ kind: "deck.update", id, patch })),
+  setDeckPreferences: (id: string, preferences: DeckPreferencesInput) =>
+    queued(make({ kind: "deck.preferences", id, preferences })),
   archiveCard: (id: string) => queued(make({ kind: "card.archive", id })),
   restoreCard: (id: string) => queued(make({ kind: "card.restore", id })),
   setImportant: (card: Card, important: boolean) =>

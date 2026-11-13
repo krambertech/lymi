@@ -135,7 +135,11 @@ function MoveToList<T extends Item>({
       ))}
       {current !== null && (
         <li className="border-edge not-first:border-t">
-          <button type="button" className={clsx(row, "text-text-2")} onClick={() => onMove(null)}>
+          <button
+            type="button"
+            className={clsx(row, "text-ink-secondary")}
+            onClick={() => onMove(null)}
+          >
             <span className="min-w-0 flex-1">{noneLabel}</span>
           </button>
         </li>
@@ -179,7 +183,7 @@ function MoveToList<T extends Item>({
         ) : (
           <button
             type="button"
-            className={clsx(row, "text-text-2")}
+            className={clsx(row, "text-ink-secondary")}
             onClick={() => setNaming(true)}
           >
             <Plus className="size-[18px]" aria-hidden="true" />

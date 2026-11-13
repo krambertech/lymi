@@ -91,7 +91,7 @@ test("an owner invites somebody by name and only they can come in", async ({
 
     const owner = ((await (await page.request.get("/api/me")).json()) as { name: string }).name;
     const message = await invitationLink(page, invited);
-    expect(message.subject).toContain(`${owner} invited you to study `);
+    expect(message.subject).toContain(`${owner} invited you to join `);
     invitationUrl = message.url;
     // The deck's size is named, and no card of it is.
     const sent = await page.request.post("/api/dev/outbox", { data: { to: invited } });

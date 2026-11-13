@@ -74,7 +74,7 @@ export function AppPage({
             {mark}
             <View className="flex-1 gap-1.5">
               <View className="flex-row flex-wrap items-center gap-2">
-                <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+                <Text className="text-2xl font-medium text-ink" accessibilityRole="header">
                   {name}
                 </Text>
                 {badge && <View className="self-center">{badge}</View>}
@@ -89,7 +89,7 @@ export function AppPage({
             </View>
           </View>
           {status?.detail}
-          <Text className="text-base text-text-2">{does}</Text>
+          <Text className="text-base text-ink-secondary">{does}</Text>
           {action}
         </View>
       }
@@ -102,7 +102,7 @@ export function AppPage({
 /** A line under the header's status, such as when an app connected. */
 export function StatusLine({ children }: { children: ReactNode }) {
   return (
-    <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+    <Text className="text-sm text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
       {children}
     </Text>
   );
@@ -147,13 +147,13 @@ export function AppActivity({
         <Skeleton height={144} />
       ) : entries.length === 0 ? (
         <Plate className="items-center gap-1.5 px-5 py-6">
-          <View className="mb-1 size-12 items-center justify-center rounded-full bg-plate-2">
-            <Icon name="activity" size={22} colour={p["text-2"]} strokeWidth={1.75} />
+          <View className="mb-1 size-12 items-center justify-center rounded-full bg-plate-nested">
+            <Icon name="activity" size={22} colour={p["ink-secondary"]} strokeWidth={1.75} />
           </View>
-          <Text className="text-center text-md font-medium text-text">
+          <Text className="text-center text-md font-medium text-ink">
             {t`Nothing from ${{ app: isolate(name) }} yet`}
           </Text>
-          <Text className="text-center text-base text-text-2">
+          <Text className="text-center text-base text-ink-secondary">
             {t`What it adds, edits or archives shows here.`}
           </Text>
         </Plate>
@@ -173,7 +173,7 @@ export function AppActivity({
               }}
             >
               <View className="min-h-[52px] flex-row items-center gap-3 py-3 ps-4 pe-4">
-                <Text className="flex-1 text-md font-medium text-text">
+                <Text className="flex-1 text-md font-medium text-ink">
                   {t`Everything ${{ app: isolate(name) }} did, in Activity`}
                 </Text>
                 <RowArrow />
@@ -206,14 +206,14 @@ export function AppConnect({
   return (
     <AppSection title={t`How it connects`}>
       <Plate className="gap-4 p-4">
-        <Text className="text-base text-text-2">{intro}</Text>
+        <Text className="text-base text-ink-secondary">{intro}</Text>
         <View className="gap-3">
           {steps.map((step, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: the steps are fixed and never reorder
             <View key={i} className="flex-row gap-3">
-              <View className="size-7 items-center justify-center rounded-full border border-edge bg-plate-2">
+              <View className="size-7 items-center justify-center rounded-full border border-edge bg-plate-nested">
                 <Text
-                  className="text-sm font-semibold text-text"
+                  className="text-sm font-semibold text-ink"
                   style={{ fontVariant: ["tabular-nums"] }}
                 >
                   {String(i + 1)}
@@ -240,12 +240,12 @@ export function AppConnect({
 
 /** A step's sentence, in the step's text style. */
 export function Step({ children }: { children: ReactNode }) {
-  return <Text className="text-base text-text-2">{children}</Text>;
+  return <Text className="text-base text-ink-secondary">{children}</Text>;
 }
 
 /** A name inside a step the learner looks for in the other app, such as a menu. */
 export function B({ children }: { children: ReactNode }) {
-  return <Text className="font-medium text-text">{children}</Text>;
+  return <Text className="font-medium text-ink">{children}</Text>;
 }
 
 /** Text the learner copies into the other app, named for what it is, with Copy beside it. */
@@ -255,11 +255,11 @@ export function CopyField({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
   return (
     <View className="gap-1.5">
-      <Text className="px-1 text-sm font-medium text-text-2">{label}</Text>
-      <View className="min-h-11 flex-row items-center gap-2 rounded-md bg-plate-2 py-1 ps-3 pe-1">
+      <Text className="px-1 text-sm font-medium text-ink-secondary">{label}</Text>
+      <View className="min-h-11 flex-row items-center gap-2 rounded-md bg-plate-nested py-1 ps-3 pe-1">
         <Text
           selectable
-          className="flex-1 text-sm text-text"
+          className="flex-1 text-sm text-ink"
           style={{ fontFamily: "Menlo" }}
           accessibilityLabel={`${label}, ${value}`}
         >
@@ -276,8 +276,10 @@ export function CopyField({ label, value }: { label: string; value: string }) {
             accessibilityLabel={copied ? t`Copied` : t`Copy ${{ label: isolate(label) }}`}
             className="h-9 flex-row items-center gap-1.5 rounded-sm px-2.5"
           >
-            <Icon name={copied ? "check" : "copy"} size={16} colour={p["text-2"]} />
-            <Text className="text-sm font-medium text-text-2">{copied ? t`Copied` : t`Copy`}</Text>
+            <Icon name={copied ? "check" : "copy"} size={16} colour={p["ink-secondary"]} />
+            <Text className="text-sm font-medium text-ink-secondary">
+              {copied ? t`Copied` : t`Copy`}
+            </Text>
           </Press>
         )}
       </View>
@@ -308,7 +310,7 @@ export function AppStop({
   const { t } = useLingui();
   return (
     <AppSection title={t`Stop`}>
-      <Text className="px-1 text-base text-muted">{consequence}</Text>
+      <Text className="px-1 text-base text-ink-muted">{consequence}</Text>
       <Button
         label={label}
         variant="danger"

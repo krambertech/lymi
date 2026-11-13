@@ -87,12 +87,12 @@ export default function Archived() {
       <View key={idOf(item)} className="min-h-14 flex-row items-center gap-3 py-2.5 ps-5 pe-3">
         <View className="flex-1 gap-0.5">
           <Text
-            className={`text-md font-medium ${back ? "text-muted" : "text-text"}`}
+            className={`text-md font-medium ${back ? "text-ink-muted" : "text-ink"}`}
             numberOfLines={1}
           >
             {title}
           </Text>
-          <Text className="text-base text-muted" numberOfLines={1}>
+          <Text className="text-base text-ink-muted" numberOfLines={1}>
             {back ? t`Restored` : line}
           </Text>
         </View>
@@ -102,7 +102,9 @@ export default function Archived() {
           accessibilityLabel={back ? t`Undo restoring ${title}` : t`Restore ${title}`}
           className="h-11 justify-center px-2"
         >
-          <Text className="text-base font-medium text-text-2">{back ? t`Undo` : t`Restore`}</Text>
+          <Text className="text-base font-medium text-ink-secondary">
+            {back ? t`Undo` : t`Restore`}
+          </Text>
         </Press>
       </View>
     );

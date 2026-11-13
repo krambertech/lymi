@@ -16,12 +16,12 @@ export function SignInAppleFigure() {
     <div aria-hidden="true" className="mx-auto grid w-fit justify-items-center gap-8">
       <div className="flex items-center gap-5">
         <AppTile size={112} />
-        <span className="text-4xl font-light text-muted">+</span>
-        <span className="grid size-28 place-items-center rounded-[25px] bg-text text-canvas">
+        <span className="text-4xl font-light text-ink-muted">+</span>
+        <span className="grid size-28 place-items-center rounded-[25px] bg-ink text-canvas">
           <AppleMark className="-mt-2 size-16" />
         </span>
       </div>
-      <span className="flex h-12 items-center justify-center gap-2 rounded-lg bg-text px-6 text-lg font-medium text-canvas">
+      <span className="flex h-12 items-center justify-center gap-2 rounded-lg bg-ink px-6 text-lg font-medium text-canvas">
         <AppleMark className="-mt-0.5 size-5" />
         <Trans>Continue with Apple</Trans>
       </span>

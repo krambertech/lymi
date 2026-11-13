@@ -17,7 +17,7 @@ export function ExamPageLink({ locale, exam, className }: Props) {
   return (
     <a
       href={exam ? examPath(exam, locale) : examsPath(locale)}
-      className={`group inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${className ?? ""}`}
+      className={`group inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${className ?? ""}`}
     >
       {!exam ? (
         <Trans>Exam prep: every test deck and its source</Trans>

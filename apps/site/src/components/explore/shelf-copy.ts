@@ -101,7 +101,7 @@ function commonQuestions(language: boolean): Question[] {
     {
       id: "schedule",
       question: msg`How does Lymi decide when to show a card again?`,
-      answer: msg`It schedules every card with spaced repetition and brings it back right before you’d forget it.`,
+      answer: msg`It schedules every card with spaced repetition and brings it back just as it starts to fade.`,
     },
     {
       id: "phone",
@@ -170,7 +170,7 @@ export function shelfCopy(
             msg`Each deck opens on its own page with every card on it, so you can see what you would learn before you add it.`,
           ),
           i18n._(
-            msg`Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day.`,
+            msg`Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day.`,
           ),
         ],
     questions: [...(written?.questions ?? []), ...commonQuestions(language)],

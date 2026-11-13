@@ -92,9 +92,9 @@ export function ExploreShelfView({ route, data, failed, busy, onRetry, onAdd, ad
       back={back}
       backOnDesktop
       lede={
-        <p className="mt-2 text-base text-text-2 tabular-nums">
+        <p className="mt-2 text-base text-ink-secondary tabular-nums">
           <Plural value={shelf.decks.length} one="# deck" other="# decks" />
-          <span aria-hidden="true" className="px-1.5 text-faint">
+          <span aria-hidden="true" className="px-1.5 text-ink-faint">
             ·
           </span>
           <Plural value={cards} one="# card" other="# cards" />
@@ -117,7 +117,7 @@ export function ExploreShelfView({ route, data, failed, busy, onRetry, onAdd, ad
       </ul>
       {others.length > 0 && (
         <nav aria-labelledby="more-shelves" className="mt-10 border-t border-edge pt-5">
-          <h2 id="more-shelves" className="text-sm text-muted">
+          <h2 id="more-shelves" className="text-sm text-ink-muted">
             {route.kind === "languages" ? (
               <Trans>More languages</Trans>
             ) : (
@@ -130,10 +130,10 @@ export function ExploreShelfView({ route, data, failed, busy, onRetry, onAdd, ad
                 <NavLink
                   to="/explore/$kind/$name"
                   params={{ kind: at.kind, name: at.name }}
-                  className="inline-flex h-9 items-center gap-2 rounded-full bg-plate-2 px-3.5 text-base font-medium whitespace-nowrap text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11 pointer-coarse:px-4"
+                  className="inline-flex h-9 items-center gap-2 rounded-full bg-plate-nested px-3.5 text-base font-medium whitespace-nowrap text-ink transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11 pointer-coarse:px-4"
                 >
                   {shelfLabel(i18n, other)}
-                  <span className="text-sm text-muted tabular-nums">{other.decks.length}</span>
+                  <span className="text-sm text-ink-muted tabular-nums">{other.decks.length}</span>
                 </NavLink>
               </li>
             ))}

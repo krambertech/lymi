@@ -1,3 +1,5 @@
+import { Button } from "../components/button";
+import { Rule, Rules } from "./do-dont";
 import { Doc, Specimen, Sub } from "./frame";
 
 const SCALE: {
@@ -114,8 +116,8 @@ export function Typography() {
               key={s.name}
               className="grid items-baseline gap-2 border-b border-edge px-5 py-4 last:border-b-0 @3xl:grid-cols-[72px_150px_1fr_220px]"
             >
-              <code className="text-xs text-muted">{s.name}</code>
-              <span className="text-xs text-muted tabular-nums">
+              <code className="text-xs text-ink-muted">{s.name}</code>
+              <span className="text-xs text-ink-muted tabular-nums">
                 {s.size} · {s.weight}
               </span>
               <span
@@ -124,7 +126,7 @@ export function Typography() {
               >
                 {s.sample}
               </span>
-              <span className="text-xs text-muted">{s.use}</span>
+              <span className="text-xs text-ink-muted">{s.use}</span>
             </div>
           ))}
         </div>
@@ -147,8 +149,8 @@ export function Typography() {
               <span className="text-3xl font-medium tracking-[-0.03em]" lang={lang}>
                 {word}
               </span>
-              <span className="text-base text-text-2">{meaning}</span>
-              <span className="text-2xs uppercase tracking-[0.06em] text-muted">{lang}</span>
+              <span className="text-base text-ink-secondary">{meaning}</span>
+              <span className="text-2xs uppercase tracking-[0.06em] text-ink-muted">{lang}</span>
             </div>
           ))}
         </Specimen>
@@ -160,20 +162,52 @@ export function Typography() {
       >
         <Specimen className="gap-8">
           <div className="grid gap-1">
-            <span className="text-xs text-muted">tabular-nums</span>
+            <span className="text-xs text-ink-muted">tabular-nums</span>
             <span className="text-2xl tabular-nums">1 / 11 · 6 min · 4 d · 12 d</span>
           </div>
           <div className="grid gap-1">
-            <span className="text-xs text-muted">quotes</span>
+            <span className="text-xs text-ink-muted">quotes</span>
             <span className="text-md">Archived “sbrigarsi”. It’s in there somewhere…</span>
           </div>
           <div className="grid gap-1">
-            <span className="text-xs text-muted">eyebrow</span>
-            <span className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+            <span className="text-xs text-ink-muted">eyebrow</span>
+            <span className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
               Appearance
             </span>
           </div>
         </Specimen>
+      </Sub>
+      <Sub title="Do and don’t" note="type.md has the full scale.">
+        <Rules>
+          <Rule kind="do" title="Use medium (500) for titles.">
+            <span className="text-2xl font-medium tracking-[-0.02em]">Italian with Giulia</span>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Use bold."
+            note="We don’t use 700. 600 is only for counts, keys and the wordmark."
+          >
+            <span className="text-2xl font-bold">Italian with Giulia</span>
+          </Rule>
+          <Rule kind="do" title="Keep uppercase small and grey.">
+            <span className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
+              Lesson 3 · Cards
+            </span>
+          </Rule>
+          <Rule kind="dont" title="Write a heading in capitals.">
+            <span className="text-2xl font-medium uppercase">Lesson 3</span>
+          </Rule>
+          <Rule kind="do" title="Use normal numbers in a label.">
+            <Button>Lezione 12</Button>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Use tabular numbers in a label."
+            note="The tabular 1 is wide and pulls “12” apart. Use them only in columns."
+          >
+            <Button className="tabular-nums">Lezione 12</Button>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

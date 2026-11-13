@@ -63,7 +63,7 @@ export function CardMenu({
             className={
               visible
                 ? // Muted, not faint: a control needs 3:1 against the canvas, which faint misses.
-                  "text-muted hoverable:hover:text-text-2"
+                  "text-ink-muted hoverable:hover:text-ink-secondary"
                 : "sr-only focus-visible:not-sr-only"
             }
           >

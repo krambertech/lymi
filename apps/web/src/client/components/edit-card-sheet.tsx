@@ -109,7 +109,7 @@ export function EditCardSheet({
       <DialogContent
         size="lg"
         finalFocus={finalFocus}
-        className="max-h-[92dvh] [scrollbar-color:var(--edge-2)_transparent] [scrollbar-width:thin]"
+        className="max-h-[92dvh] [scrollbar-color:var(--edge-strong)_transparent] [scrollbar-width:thin]"
       >
         <DialogTitle>{t`Edit card`}</DialogTitle>
         {shown && (

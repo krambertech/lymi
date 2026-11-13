@@ -53,7 +53,7 @@ const footerPaths = Object.fromEntries(
     type="application/ld+json"
     set:html={jsonForScript(faqPage(copy.questions, i18n, { name: copy.title, path }))}
   />
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <header class="shelf-hero over-tint" data-hue={trayHue(route.name)}>
       <PublicNav client:load locale={locale} />
       <ShelfHero locale={locale} shelf={shelf} copy={copy} />

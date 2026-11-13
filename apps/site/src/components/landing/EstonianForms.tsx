@@ -64,7 +64,7 @@ export function EstonianForms() {
   return (
     <div
       ref={stage}
-      className="@container mt-12 rounded-2xl bg-plate-2 px-5 pt-8 pb-7 edge-inset @2xl:px-10 @2xl:pt-12 @4xl:mt-16"
+      className="@container mt-12 rounded-2xl bg-plate-nested px-5 pt-8 pb-7 edge-inset @2xl:px-10 @2xl:pt-12 @4xl:mt-16"
     >
       {/* The cycle is for the eye; a screen reader gets every word and its forms once. */}
       <ul className="sr-only">
@@ -91,10 +91,10 @@ export function EstonianForms() {
               className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 border-edge not-last:border-b not-last:pb-4 @2xl:grid-cols-1 @2xl:justify-items-center @2xl:gap-1 @2xl:text-center @2xl:not-last:border-e @2xl:not-last:border-b-0 @2xl:not-last:pb-0"
             >
               <span className="grid gap-1">
-                <span lang="et" className="text-md font-medium text-text-2">
+                <span lang="et" className="text-md font-medium text-ink-secondary">
                   {slot.asks}
                 </span>
-                <span className="text-sm text-muted">{i18n._(slot.name)}</span>
+                <span className="text-sm text-ink-muted">{i18n._(slot.name)}</span>
               </span>
               <span className="grid h-[calc(var(--h)*1.25)] place-items-center overflow-hidden @2xl:w-full">
                 <AnimatePresence mode="popLayout" initial={false}>
@@ -112,7 +112,7 @@ export function EstonianForms() {
                     transition={{ duration: 0.5, ease: EASE, delay: still ? 0 : 0.08 + i * 0.07 }}
                     className="col-start-1 row-start-1 text-[length:var(--k)] leading-none font-medium tracking-[-0.03em] whitespace-nowrap"
                   >
-                    <span className="text-text">{form.slice(0, shared)}</span>
+                    <span className="text-ink">{form.slice(0, shared)}</span>
                     <span className="text-amber-mark">{form.slice(shared)}</span>
                   </motion.span>
                 </AnimatePresence>
@@ -122,8 +122,8 @@ export function EstonianForms() {
         })}
       </ol>
 
-      <p className="mt-6 text-center text-lg text-text-2">
-        <span lang="et" className="font-medium text-text">
+      <p className="mt-6 text-center text-lg text-ink-secondary">
+        <span lang="et" className="font-medium text-ink">
           {word.term}
         </span>{" "}
         · {i18n._(word.meaning)}
@@ -140,7 +140,7 @@ export function EstonianForms() {
               heldUntil.current = Date.now() + HOLD_MS;
               setAt(i);
             }}
-            className="relative h-9 rounded-full px-3.5 text-md text-muted transition-colors duration-200 hoverable:hover:text-text aria-pressed:text-text"
+            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
           >
             {/* One highlight that slides from word to word rather than blinking between them. */}
             {i === at && (

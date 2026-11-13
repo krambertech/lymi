@@ -6,7 +6,7 @@ decision: none
 
 # Right-to-left
 
-An Arabic or Hebrew learner should see their words written right to left, in a face with room for vowel marks, with English meanings, Latin words and numbers each staying in order. Later, harakat and niqqud should sit on the cue until the word is Known. This is the platform work [supported languages](supported-languages.md) puts before Arabic and Hebrew get records. It covers two cases, kept apart here:
+An Arabic or Hebrew learner should see their words written right to left, in a typeface with enough space for vowel marks, with English meanings, Latin words and numbers each staying in order. Later, harakat and niqqud should sit on the cue until the word is Known. This is the platform work [supported languages](supported-languages.md) puts before Arabic and Hebrew get records. The two cases are:
 
 - **An RTL deck language inside an LTR interface.** Any learner with an Arabic, Hebrew, Persian or Urdu deck needs this now.
 - **An RTL interface locale.** Nobody has asked for it.
@@ -78,7 +78,7 @@ On the phone, `Text` sets iOS `writingDirection` from `textDirection`. React Nat
 
 **Speech.** Vowelled Arabic resolves كتب for the voice. `saysReading` is true for Arabic only if each voice passes Russian's listening test with a fluent listener; Hebrew decides the same way.
 
-**Case 2: the RTL interface.** Deferred until a learner asks. It needs `ar` or `he` in ADR 0013's `appLanguage` enum with a reviewed catalog, `<html dir>` beside `lang`, `supportsRTL` and a reload after `forceRTL` on the phone, and the fixes in Evidence: about fifteen spots, not a refactor.
+**Case 2: the RTL interface.** Deferred until a learner asks. It needs `ar` or `he` in ADR 0013's `appLanguage` enum with a reviewed catalog, `<html dir>` beside `lang`, `supportsRTL` and a reload after `forceRTL` on the phone, and the fixes in Evidence: about fifteen locations identified in this audit.
 
 ## Delivery
 

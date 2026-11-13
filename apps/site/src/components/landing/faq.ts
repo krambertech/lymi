@@ -104,6 +104,64 @@ export const POLISH_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const SPANISH_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say Spanish words aloud?`,
+    answer: msg`Yes. Every card is read by a native Spanish AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "variety",
+    question: msg`Is it the Spanish of Spain or of Latin America?`,
+    answer: msg`The ready-made decks use the Spanish of Spain, such as zumo and coche. When you add a word, AI notes where Latin America says it differently, such as carro.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn Spanish from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made Spanish decks have meanings in Ukrainian and Russian as well as English. Lymi itself is in both languages.`,
+  },
+  {
+    id: "frequency",
+    question: msg`Where should I start?`,
+    answer: msg`With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
+export const GERMAN_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say German words aloud?`,
+    answer: msg`Yes. Every card is read by a native German AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "articles",
+    question: msg`Does every noun come with der, die or das?`,
+    answer: msg`Yes. Every noun in the ready-made German decks comes with its article. When you add a noun yourself, AI writes its plural in the notes, and a strong verb gets its past forms.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn German from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made German decks have meanings in Ukrainian and Russian as well as English. Lymi itself is in both languages.`,
+  },
+  {
+    id: "b1",
+    question: msg`Will it get me to B1?`,
+    answer: msg`The A1, A2 and B1 decks cover the everyday topics each level expects, from home and work to the doctor and paperwork. They are not an official word list, and an exam also tests listening, reading, writing and speaking.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
 export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "script",
@@ -367,6 +425,7 @@ export const TUTOR_LESSONS_QUESTIONS: Question[] = [
     id: "tutor-sites",
     question: msg`Does Lymi connect to italki or Preply?`,
     answer: msg`No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards.`,
+    link: { href: "/docs/smart-add", label: msg`How Smart add works` },
   },
   {
     id: "tutor-share",
@@ -383,7 +442,8 @@ export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
   {
     id: "upload",
     question: msg`Can I upload a PDF to Lymi directly?`,
-    answer: msg`Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day.`,
+    answer: msg`Yes, with Smart add. Add up to 10 files, including up to 3 PDFs, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day.`,
+    link: { href: "/docs/smart-add", label: msg`How Smart add works` },
   },
   {
     id: "material",

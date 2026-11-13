@@ -23,17 +23,17 @@ export function DeckView({ result }: { result: ViewDeckResult }) {
       }
     >
       {total === 0 ? (
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           <Trans>No cards yet.</Trans>
         </p>
       ) : (
         <>
-          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-2">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-secondary">
             <span className="tabular-nums">
               {plural(total, { one: "# card", other: "# cards" })}
             </span>
             {due > 0 && (
-              <span className="font-medium tabular-nums text-text">
+              <span className="font-medium tabular-nums text-ink">
                 {plural(due, { one: "# due now", other: "# due now" })}
               </span>
             )}

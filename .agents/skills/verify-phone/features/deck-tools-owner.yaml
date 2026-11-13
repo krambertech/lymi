@@ -1,4 +1,4 @@
-# A deck with sections, as its owner: Go to, a waiting card's lock, Add card here, and Mark important on a selection.
+# A deck with sections, as its owner: the current section, a waiting card's lock, Add card here, and Mark important on a selection.
 appId: app.lymi
 name: Deck tools, owner
 ---
@@ -7,15 +7,11 @@ name: Deck tools, owner
 - extendedWaitUntil:
     visible: "Search this deck"
     timeout: 20000
-# Sorted otherwise, Go to puts the list back in section order and scrolls to where the learner is.
-- tapOn: "Sort: Section"
-- tapOn: "Recently added"
-- assertVisible: "Sort: Recently added"
-- tapOn: "Go to .*"
+# The section line rings the section the learner is on.
 - extendedWaitUntil:
-    visible: ".*, \\d+ cards, You are here"
+    visible: ".*, You are here"
     timeout: 10000
-- takeScreenshot: 01-go-to
+- takeScreenshot: 01-current-section
 - scrollUntilVisible:
     element: "${WAITING}, a tram, Not in review yet"
     centerElement: true

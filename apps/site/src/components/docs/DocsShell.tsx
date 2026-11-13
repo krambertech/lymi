@@ -30,7 +30,7 @@ function ThemeToggle() {
       type="button"
       aria-label={dark ? "Switch to the light theme" : "Switch to the dark theme"}
       onClick={() => setTheme(dark ? "light" : "dark")}
-      className="grid size-9 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+      className="grid size-9 place-items-center rounded-sm text-ink-secondary transition-[background-color,color,scale] duration-150 active:scale-[0.97] hoverable:hover:bg-plate-nested hoverable:hover:text-ink"
     >
       {dark ? (
         <Moon className="size-[18px]" aria-hidden="true" />
@@ -42,7 +42,7 @@ function ThemeToggle() {
 }
 
 const navItem =
-  "flex h-8 items-center rounded-xs px-2.5 text-base text-text-2 transition-[background-color,color] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge-inset [&.active]:font-medium";
+  "flex h-8 items-center rounded-xs px-2.5 text-base text-ink-secondary transition-[background-color,color] duration-150 hoverable:hover:bg-plate-nested hoverable:hover:text-ink [&.active]:bg-plate [&.active]:text-ink [&.active]:edge-inset [&.active]:font-medium";
 
 const TAB_ICONS = { guides: BookOpen, api: Braces } as const;
 
@@ -52,7 +52,7 @@ function SectionSwitch({ pathname }: { pathname: string }) {
   return (
     <nav
       aria-label="Documentation sections"
-      className="mb-7 grid grid-cols-2 gap-0.5 rounded-sm bg-plate-2 p-0.5"
+      className="mb-7 grid grid-cols-2 gap-0.5 rounded-sm bg-plate-nested p-0.5"
     >
       {TABS.map((t) => {
         const on = t.id === current.id;
@@ -64,7 +64,7 @@ function SectionSwitch({ pathname }: { pathname: string }) {
             aria-current={on ? "true" : undefined}
             className={clsx(
               "flex h-9 items-center justify-center gap-2 rounded-xs text-md font-medium transition-[background-color,color] duration-150",
-              on ? "bg-text text-canvas" : "text-text-2 hoverable:hover:text-text",
+              on ? "bg-ink text-canvas" : "text-ink-secondary hoverable:hover:text-ink",
             )}
           >
             <Icon className="size-4" aria-hidden="true" />
@@ -81,7 +81,7 @@ function SiteNav({ pathname, onNavigate }: { pathname: string; onNavigate?: () =
     <nav aria-label="Documentation" className="grid gap-6">
       {sidebarFor(pathname).map((s) => (
         <div key={s.name} className="grid gap-0.5">
-          <p className="mb-1 px-2.5 text-xs font-medium text-muted">{s.name}</p>
+          <p className="mb-1 px-2.5 text-xs font-medium text-ink-muted">{s.name}</p>
           {s.pages.map((p) => (
             <a
               key={p.to}
@@ -180,7 +180,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
     <div className="min-h-dvh bg-canvas">
       <a
         href="#doc-content"
-        className="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-(--z-tooltip)"
+        className="sr-only rounded-sm bg-plate px-3 py-2 text-base text-ink edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
       >
         Skip to the page
       </a>
@@ -194,7 +194,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
             aria-expanded={menu}
             aria-controls="doc-menu"
             onClick={() => setMenu((v) => !v)}
-            className="-ms-2 grid size-9 place-items-center rounded-sm text-text-2 lg:hidden hoverable:hover:bg-plate-2"
+            className="-ms-2 grid size-9 place-items-center rounded-sm text-ink-secondary lg:hidden hoverable:hover:bg-plate-nested"
           >
             {menu ? (
               <X className="size-[18px]" aria-hidden="true" />
@@ -220,9 +220,9 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
           >
             <AppTile size={26} />
             <span className="flex items-center gap-1.5" aria-hidden="true">
-              <Wordmark size={17} className="text-text" />
-              <i className="size-1 rounded-full bg-faint" />
-              <span className="text-md font-medium tracking-[-0.01em] text-muted">docs</span>
+              <Wordmark size={17} className="text-ink" />
+              <i className="size-1 rounded-full bg-ink-faint" />
+              <span className="text-md font-medium tracking-[-0.01em] text-ink-muted">docs</span>
             </span>
           </a>
 
@@ -232,7 +232,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
             type="button"
             aria-label="Search the docs"
             onClick={() => setSearch(true)}
-            className="flex h-9 items-center gap-2 rounded-sm bg-plate-2 ps-2.5 pe-1.5 text-base text-muted transition-colors duration-150 hoverable:hover:text-text sm:w-56"
+            className="flex h-9 items-center gap-2 rounded-sm bg-plate-nested ps-2.5 pe-1.5 text-base text-ink-muted transition-colors duration-150 hoverable:hover:text-ink sm:w-56"
           >
             <Search className="size-4 shrink-0" aria-hidden="true" />
             <span className="hidden flex-1 text-start sm:block">Search</span>
@@ -245,7 +245,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
 
           <a
             href={openLymiUrl()}
-            className="hidden h-9 items-center rounded-sm px-3 text-base text-text-2 transition-colors duration-150 sm:inline-flex hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+            className="hidden h-9 items-center rounded-sm px-3 text-base text-ink-secondary transition-colors duration-150 sm:inline-flex hoverable:hover:bg-plate-nested hoverable:hover:text-ink"
           >
             Open Lymi
           </a>
@@ -272,8 +272,8 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
             {page && pathname !== "/docs" && (
               <header className="mb-8">
                 {/* On a phone the sidebar is behind a button, so the page says where it sits. */}
-                <p className="mb-2 text-sm font-medium text-muted lg:hidden">{page.section}</p>
-                <h1 className="text-3xl font-medium tracking-[-0.02em] text-text">{page.title}</h1>
+                <p className="mb-2 text-sm font-medium text-ink-muted lg:hidden">{page.section}</p>
+                <h1 className="text-3xl font-medium tracking-[-0.02em] text-ink">{page.title}</h1>
               </header>
             )}
             {children}
@@ -283,15 +283,15 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
                 {prev ? (
                   <a
                     href={prev.to}
-                    className="group flex items-center gap-3 rounded-md p-3 text-start transition-colors duration-150 edge hoverable:hover:bg-plate-2"
+                    className="group flex items-center gap-3 rounded-md p-3 text-start transition-colors duration-150 edge hoverable:hover:bg-plate-nested"
                   >
                     <ArrowLeft
-                      className="size-4 shrink-0 text-faint transition-transform duration-150 group-hover:-translate-x-0.5 group-hover:text-text"
+                      className="size-4 shrink-0 text-ink-faint transition-transform duration-150 group-hover:-translate-x-0.5 group-hover:text-ink"
                       aria-hidden="true"
                     />
                     <span className="min-w-0">
-                      <span className="block text-xs text-muted">Previous</span>
-                      <span className="block truncate text-base text-text">{prev.nav}</span>
+                      <span className="block text-xs text-ink-muted">Previous</span>
+                      <span className="block truncate text-base text-ink">{prev.nav}</span>
                     </span>
                   </a>
                 ) : (
@@ -300,14 +300,14 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
                 {next && (
                   <a
                     href={next.to}
-                    className="group flex items-center justify-end gap-3 rounded-md p-3 text-end transition-colors duration-150 edge sm:col-start-2 hoverable:hover:bg-plate-2"
+                    className="group flex items-center justify-end gap-3 rounded-md p-3 text-end transition-colors duration-150 edge sm:col-start-2 hoverable:hover:bg-plate-nested"
                   >
                     <span className="min-w-0">
-                      <span className="block text-xs text-muted">Next</span>
-                      <span className="block truncate text-base text-text">{next.nav}</span>
+                      <span className="block text-xs text-ink-muted">Next</span>
+                      <span className="block truncate text-base text-ink">{next.nav}</span>
                     </span>
                     <ArrowRight
-                      className="size-4 shrink-0 text-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-text"
+                      className="size-4 shrink-0 text-ink-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-ink"
                       aria-hidden="true"
                     />
                   </a>
@@ -315,15 +315,15 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
               </nav>
             )}
 
-            <footer className="mt-12 border-t border-edge pt-6 text-sm text-muted">
+            <footer className="mt-12 border-t border-edge pt-6 text-sm text-ink-muted">
               <nav aria-label="Policies and support" className="flex flex-wrap gap-5">
-                <a href="/privacy" className="rounded-xs hoverable:hover:text-text">
+                <a href="/privacy" className="rounded-xs hoverable:hover:text-ink">
                   Privacy
                 </a>
-                <a href="/terms" className="rounded-xs hoverable:hover:text-text">
+                <a href="/terms" className="rounded-xs hoverable:hover:text-ink">
                   Terms
                 </a>
-                <a href="/support" className="rounded-xs hoverable:hover:text-text">
+                <a href="/support" className="rounded-xs hoverable:hover:text-ink">
                   Support
                 </a>
               </nav>

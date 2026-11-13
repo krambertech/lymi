@@ -111,8 +111,6 @@ export default defineConfig({
                   OPENAI_API_KEY: "",
                   OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
                   OPENAI_TTS_VOICE: "coral",
-                  GOOGLE_TTS_MODEL: "chirp-3-hd",
-                  GOOGLE_TTS_VOICE: "Kore",
                 },
               },
             }
@@ -139,7 +137,7 @@ export default defineConfig({
         id: "/",
         name: "Lymi",
         short_name: "Lymi",
-        description: "Vocabulary you carry with you.",
+        description: "A flashcard app for learning any subject with spaced repetition.",
         start_url: "/today",
         display: "standalone",
         orientation: "portrait",

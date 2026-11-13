@@ -14,7 +14,7 @@ ChatGPT, Codex, Claude (web, desktop and mobile), Claude Code, VS Code Copilot, 
 
 ## What the assistant shows
 
-One interface bundle, built on the MCP Apps standard, renders wherever the host supports it. Every tool keeps its complete text and structured result, so a host without the interface loses nothing but the view.
+One interface bundle, built on the MCP Apps standard, renders wherever the host supports it. Every tool keeps its complete text and structured result, so hosts without UI support still receive the complete result.
 
 | Result | View |
 | --- | --- |
@@ -53,11 +53,11 @@ ChatGPT adds a side-panel tab beside the conversation, a read-only sidebar home 
 
 ## Done means
 
-- A real session passes in each host, not only a local host harness.
+- A real session passes in each host in addition to local integration checks.
 - Every write from the interface shows in Activity with the connected app's name, and a read-only grant cannot write.
 - Practice leaves no review, grade or streak change behind.
 - No card content reaches logs, analytics or model context the learner did not select.
-- The interface works in both rooms, in English, Ukrainian and Russian, and at phone width in ChatGPT and Claude mobile.
+- The interface works in light and dark themes, in English, Ukrainian and Russian, and at phone width in ChatGPT and Claude mobile.
 
 ## Constraints found in research
 

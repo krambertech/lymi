@@ -3,7 +3,12 @@ import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
-import { type ReadwiseApi, ReadwiseRefused, ReadwiseUnavailable } from "../readwise/api";
+import {
+  createReadwiseApi,
+  type ReadwiseApi,
+  ReadwiseRefused,
+  ReadwiseUnavailable,
+} from "../readwise/api";
 import { createFakeReadwiseApi, DEV_READWISE_TOKEN } from "../readwise/dev-fake";
 import { updateAiConsent } from "./ai-consent";
 import type { AnalyticsEvent } from "./analytics";
@@ -213,6 +218,42 @@ describe("a pull", () => {
 
     const again = await connectReadwise(ctx, rotated, DEV_READWISE_TOKEN);
     expect(again.status).toBe("active");
+  });
+});
+
+describe("a pull that fails", () => {
+  const failingWith = (error: Error): ReadwiseApi => ({
+    ...createFakeReadwiseApi(),
+    exportPage: async () => {
+      throw error;
+    },
+  });
+
+  it("answers unavailable when Readwise is down", async () => {
+    const ctx = await reader("rw-pull-down");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    await expect(
+      pullReadwiseNow(ctx, depsWith(failingWith(new ReadwiseUnavailable(502))), { followed: true }),
+    ).rejects.toMatchObject({ code: "unavailable" });
+  });
+
+  it("does not blame Readwise for a failure of its own", async () => {
+    const ctx = await reader("rw-pull-bug");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    const bug = new RangeError("a bug in the pull");
+    await expect(pullReadwiseNow(ctx, depsWith(failingWith(bug)), { followed: true })).rejects.toBe(
+      bug,
+    );
+  });
+
+  it("reads an unreachable Readwise as down", async () => {
+    const unreachable = createReadwiseApi(() => Promise.reject(new TypeError("fetch failed")));
+    await expect(unreachable.books("token")).rejects.toBeInstanceOf(ReadwiseUnavailable);
+  });
+
+  it("reads an answer it cannot parse as Readwise being down", async () => {
+    const garbled = createReadwiseApi(async () => new Response("<html>", { status: 200 }));
+    await expect(garbled.books("token")).rejects.toBeInstanceOf(ReadwiseUnavailable);
   });
 });
 

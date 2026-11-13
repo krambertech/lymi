@@ -260,7 +260,7 @@ function Connect(props: Props) {
           Open <DocLink href={TOKEN_PAGE}>readwise.io/access_token</DocLink> and sign in.
         </Trans>,
         <Trans key="copy">
-          Choose <span className="font-medium text-text">Get Access Token</span>, then copy it.
+          Choose <span className="font-medium text-ink">Get Access Token</span>, then copy it.
         </Trans>,
         <Trans key="paste">Paste it in Lymi and connect.</Trans>,
       ]}
@@ -301,7 +301,7 @@ function Decks({ connection, decks, onDeck }: Props & { connection: Readwise }) 
   const nameOf = useLanguageName();
   if (connection.languages.length === 0) {
     return (
-      <p className="max-w-[60ch] text-sm text-muted">
+      <p className="max-w-[60ch] text-sm text-ink-muted">
         <Trans>
           None of your decks has a language yet. Give a deck one, and highlights in it can come in.
         </Trans>
@@ -321,7 +321,7 @@ function Decks({ connection, decks, onDeck }: Props & { connection: Readwise }) 
             orientation="horizontal"
             className={`${ROW} flex-wrap items-center gap-x-4 gap-y-2`}
           >
-            <FieldLabel className="min-w-0 flex-1 text-base text-text">
+            <FieldLabel className="min-w-0 flex-1 text-base text-ink">
               <Trans>{{ language: name }} highlights go to</Trans>
             </FieldLabel>
             <div className="w-full sm:w-56">
@@ -356,7 +356,7 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
   return (
     <div className="grid gap-2">
       {yours.length === 0 && unplaced.length === 0 ? (
-        <p className="max-w-[60ch] text-sm text-muted">
+        <p className="max-w-[60ch] text-sm text-ink-muted">
           <Trans>
             No books in a language you’re learning yet. One appears here when you highlight in it.
           </Trans>
@@ -369,7 +369,7 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
               <li key={book.id} className={ROW}>
                 <Field orientation="horizontal" className="gap-4">
                   <FieldContent className="min-w-0 gap-0.5">
-                    <FieldLabel className="truncate text-base text-text">
+                    <FieldLabel className="truncate text-base text-ink">
                       {book.title || t`Untitled`}
                     </FieldLabel>
                     <FieldDescription className="truncate">
@@ -397,7 +397,7 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
             <li key={book.id} className={ROW}>
               <Field orientation="horizontal" className="flex-wrap gap-x-4 gap-y-2">
                 <FieldContent className="min-w-0 flex-1 gap-0.5">
-                  <FieldLabel className="truncate text-base text-text">
+                  <FieldLabel className="truncate text-base text-ink">
                     {book.title || t`Untitled`}
                   </FieldLabel>
                   <FieldDescription>
@@ -425,7 +425,7 @@ function Books({ connection, onFollow, onLanguage }: Props & { connection: Readw
           ))}
         </ul>
       )}
-      <p className="text-sm text-muted">
+      <p className="text-sm text-ink-muted">
         <Trans>New highlights in the books you turn on become cards.</Trans>{" "}
         {others > 0 && (
           <Plural

@@ -74,7 +74,7 @@ export function PinyinFade() {
           return (
             <p
               key={line.zh}
-              className="text-[length:clamp(24px,5.2cqw,56px)] leading-[1.8] font-medium tracking-[0.02em] text-text"
+              className="text-[length:clamp(24px,5.2cqw,56px)] leading-[1.8] font-medium tracking-[0.02em] text-ink"
             >
               {Array.from(line.zh).map((ch, i) => {
                 // biome-ignore lint/suspicious/noArrayIndexKey: characters in a fixed order
@@ -115,7 +115,7 @@ export function PinyinFade() {
                       }}
                       className={clsx(
                         "text-[0.36em] font-normal tracking-normal transition-colors duration-700",
-                        left || stays ? "text-amber-text" : "text-text-2",
+                        left || stays ? "text-amber-text" : "text-ink-secondary",
                       )}
                     >
                       {py}
@@ -128,7 +128,7 @@ export function PinyinFade() {
         })}
       </div>
 
-      <div className="min-h-[1.6em] text-lg text-text-2">
+      <div className="min-h-[1.6em] text-lg text-ink-secondary">
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={step}
@@ -144,7 +144,7 @@ export function PinyinFade() {
       </div>
 
       <div className="grid gap-2.5">
-        <p className="text-sm text-muted">
+        <p className="text-sm text-ink-muted">
           <Trans>Your cards, as you learn them</Trans>
         </p>
         <ul className="flex flex-wrap gap-1.5">
@@ -159,7 +159,7 @@ export function PinyinFade() {
                 transition={{ duration: 0.45, ease: EASE }}
                 className={clsx(
                   "inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-md transition-[background-color,color,box-shadow] duration-500",
-                  known ? "bg-good-soft text-text" : "bg-plate text-muted edge",
+                  known ? "bg-success-soft text-ink" : "bg-plate text-ink-muted edge",
                 )}
               >
                 <Zh>{c.term}</Zh>
@@ -172,7 +172,7 @@ export function PinyinFade() {
                       transition={{ type: "spring", duration: 0.45, bounce: 0.3 }}
                       className="inline-flex"
                     >
-                      <Check aria-hidden="true" className="size-3.5 text-good" strokeWidth={3} />
+                      <Check aria-hidden="true" className="size-3.5 text-success" strokeWidth={3} />
                     </motion.span>
                   )}
                 </AnimatePresence>

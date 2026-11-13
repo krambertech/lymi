@@ -1,8 +1,10 @@
-import { msg, plural } from "@lingui/core/macro";
+import { msg } from "@lingui/core/macro";
+import { type Reminder, ReminderMessage } from "@lymi/core";
 import * as Notifications from "expo-notifications";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { i18n } from "../i18n";
-import { lineFor, type PlannedReminder } from "./plan";
+import { reminderWords } from "../i18n/reminders";
+import type { PlannedReminder } from "./plan";
 
 // The daily reminder as local notifications, which need no push service. phone.md "Outside the app".
 
@@ -11,17 +13,11 @@ const REVIEW_NOW = "review-now";
 const LATER = "in-an-hour";
 const HOUR_MS = 60 * 60 * 1000;
 
-const LINES = [
-  msg`Review whenever you have a moment.`,
-  msg`They’re ready when you are.`,
-  msg`A few minutes keeps them fresh.`,
-] as const;
-
-function content(due: number, at: Date): Notifications.NotificationContentInput {
+function content(reminder: Reminder): Notifications.NotificationContentInput {
   return {
-    title: plural(due, { one: "# card to review", other: "# cards to review" }),
-    body: i18n._(LINES[lineFor(at, LINES.length)] ?? LINES[0]),
+    ...reminderWords(i18n, reminder),
     categoryIdentifier: CATEGORY,
+    data: { message: reminder.message },
     // Ordinary, so Focus and the scheduled summary can hold it. Never time-sensitive.
     interruptionLevel: "active",
     sound: "default",
@@ -82,24 +78,28 @@ export async function askPermission(): Promise<Permission> {
 // own cancel and its scheduling and leave reminders for the learner who left.
 let queue: Promise<unknown> = Promise.resolve();
 let latest = 0;
-function inTurn(task: () => Promise<void>): Promise<void> {
+function inTurn<T>(task: () => Promise<T>): Promise<T> {
   const run = queue.then(task, task);
   queue = run.catch(() => undefined);
   return run;
 }
 
-/** Replaces every scheduled reminder with the plan, unless a newer plan or a sign-out came after it. */
+/**
+ * Replaces every scheduled reminder with the plan, unless a newer plan or a sign-out came after it.
+ * Answers whether the plan landed.
+ */
 export function schedule(plan: readonly PlannedReminder[]) {
   const mine = ++latest;
   return inTurn(async () => {
-    if (mine !== latest) return;
+    if (mine !== latest) return false;
     await Notifications.cancelAllScheduledNotificationsAsync();
-    for (const { at, due } of plan) {
+    for (const { at, message, count } of plan) {
       await Notifications.scheduleNotificationAsync({
-        content: content(due, at),
+        content: content({ message, count }),
         trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
       });
     }
+    return true;
   });
 }
 
@@ -107,6 +107,7 @@ export function schedule(plan: readonly PlannedReminder[]) {
 export function cancelReminders() {
   latest++;
   deviceStore.remove(DEVICE_KEYS.snoozed);
+  deviceStore.remove(DEVICE_KEYS.reminderReported);
   return inTurn(async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
     await Notifications.dismissAllNotificationsAsync();
@@ -125,6 +126,10 @@ const isReminder = (r: Notifications.NotificationResponse) =>
 export const opensReview = (r: Notifications.NotificationResponse) =>
   isReminder(r) && r.actionIdentifier !== LATER;
 
+/** Which message was answered. A reminder scheduled by an earlier release names none. */
+export const messageOf = (r: Notifications.NotificationResponse) =>
+  ReminderMessage.safeParse(r.notification.request.content.data?.message).data;
+
 /**
  * In an hour runs without opening the app, so it is answered from the moment the bundle loads,
  * before any screen: the same reminder again an hour on, kept so the next plan does not move it.
@@ -135,10 +140,10 @@ export function listenForLater() {
     Notifications.clearLastNotificationResponse();
     const at = new Date(Date.now() + HOUR_MS);
     deviceStore.set(DEVICE_KEYS.snoozed, at.getTime());
-    const { title, body } = r.notification.request.content;
+    const { title, body, data } = r.notification.request.content;
     void inTurn(async () => {
       await Notifications.scheduleNotificationAsync({
-        content: { ...content(0, at), title, body },
+        content: { ...content({ message: "ready", count: 0 }), title, body, data },
         trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
       });
     });

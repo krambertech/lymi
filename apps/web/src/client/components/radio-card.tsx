@@ -38,8 +38,8 @@ export function RadioCard({
         "flex cursor-pointer items-start gap-3 rounded-md p-3.5",
         "transition-[box-shadow,background-color,scale] duration-150 ease-(--ease-out) active:scale-[0.99] motion-reduce:active:scale-100",
         "has-[[data-slot=radio-group-item]:focus-visible]:outline-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-offset-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-ring",
-        "hoverable:hover:not-has-data-checked:bg-hover",
-        variant === "card" && "edge bg-plate has-data-checked:edge-2",
+        "hoverable:hover:not-has-data-checked:bg-plate-hover",
+        variant === "card" && "edge bg-plate has-data-checked:edge-strong",
         "has-data-disabled:cursor-not-allowed has-data-disabled:opacity-45 has-data-disabled:active:scale-100",
         className,
       )}
@@ -57,18 +57,18 @@ export function RadioCard({
       {icon && (
         <span
           aria-hidden="true"
-          className="shrink-0 text-text-2 [&_svg]:size-5 [&_svg]:stroke-[1.6]"
+          className="shrink-0 text-ink-secondary [&_svg]:size-5 [&_svg]:stroke-[1.6]"
         >
           {icon}
         </span>
       )}
       {titled && (
         <span className="grid gap-0.5">
-          <span id={`${id}-title`} className="text-base font-medium text-text">
+          <span id={`${id}-title`} className="text-base font-medium text-ink">
             {title}
           </span>
           {description !== undefined && (
-            <span id={`${id}-description`} className="text-sm text-text-2">
+            <span id={`${id}-description`} className="text-sm text-ink-secondary">
               {description}
             </span>
           )}

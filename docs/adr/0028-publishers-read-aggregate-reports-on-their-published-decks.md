@@ -3,7 +3,7 @@ status: accepted
 date: 2026-10-09
 ---
 
-# Publishers read aggregate reports on their published decks
+# Publisher reports show aggregate deck activity
 
 A publisher reads how their published decks perform through `GET /api/reports/decks` and `GET /api/reports/decks/:id`, with the same API key they publish with. A read-only key on the same account reads them too. Reports cover every deck the account owns that has a `deck_publications` row, withdrawn and archived decks included. A deck the caller does not own, or never published, is not found. Reports return counts and never name a learner or return one learner's reviews.
 
@@ -21,7 +21,7 @@ A growth agent working for a publisher needs to know which decks people add, whi
 
 **Definitions are fixed.** Activation follows the new learners added in the period: a first accepted review within 7 days of the add activates a learner. Learners still inside those 7 days with no review are `pending` and stay out of the rate's denominator. A returning learner has accepted reviews on two or more UTC days in the period. Each field's OpenAPI description is its definition.
 
-**Counts are exact.** Lymi does not suppress small counts. The reports already omit identities, publishers are a short list Lymi chooses, and a suppressed figure would make a new deck's first week unreadable. A rate is null when its denominator is 0.
+**Counts are exact.** Lymi does not suppress small counts. The reports already omit identities, publishers are a short list Lymi chooses, and suppressing small counts would hide a new deck's first-week results. A rate is null when its denominator is 0.
 
 **The site Worker counts page views.** Each request for a published deck's page in any locale adds one to `deck_page_views` for that deck, UTC day and locale. A HEAD, a prefetch, and a user agent that names a crawler, link previewer or script are skipped. The figure is requests, not people, and it stores nothing about the visitor. Days before the first counted day report null, never zero.
 

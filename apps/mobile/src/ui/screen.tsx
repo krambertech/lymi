@@ -219,7 +219,7 @@ export function Screen<T = never>({
     own ??
     (wraps ? (
       <Text
-        className="text-3xl font-medium tracking-tight text-text"
+        className="text-3xl font-medium tracking-tight text-ink"
         accessibilityRole="header"
         lang={titleLang}
       >
@@ -336,7 +336,7 @@ export function Screen<T = never>({
       <RefreshControl
         refreshing={refreshing}
         onRefresh={refresh}
-        tintColor={p.muted}
+        tintColor={p["ink-muted"]}
         progressViewOffset={bar}
       />
     ),
@@ -376,7 +376,7 @@ export function Screen<T = never>({
         </Text>
       )}
       {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
-      {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}
+      {description && <Text className="-mt-5 text-base text-ink-secondary">{description}</Text>}
       {children}
     </>
   );
@@ -467,7 +467,7 @@ export function Screen<T = never>({
       >
         <Animated.View style={moving}>
           <Text
-            className="text-3xl font-medium tracking-tight text-text"
+            className="text-3xl font-medium tracking-tight text-ink"
             numberOfLines={1}
             onLayout={(e) => {
               const { width, height } = e.nativeEvent.layout;
@@ -537,9 +537,9 @@ function Back({
     return { opacity: 1 - k, width: width ? width * (1 - k) : undefined };
   });
   const chevron = MATERIAL_BAR ? (
-    <ArrowLeft size={24} color={p.text} strokeWidth={2} />
+    <ArrowLeft size={24} color={p.ink} strokeWidth={2} />
   ) : (
-    <Icon name="back" size={20} colour={p.text} />
+    <Icon name="back" size={20} colour={p.ink} />
   );
   if (MATERIAL_BAR) {
     return (
@@ -580,7 +580,7 @@ function Back({
         )}
         <Animated.View className="-ms-1.5 overflow-hidden" style={name}>
           <Text
-            className="text-md font-medium text-text-2"
+            className="text-md font-medium text-ink-secondary"
             numberOfLines={1}
             style={{ maxWidth: widest }}
             onLayout={(e) => {
@@ -735,7 +735,7 @@ export function BarButton({
         <Icon
           name={icon}
           size={amber ? 20 : 19}
-          colour={fill ?? (amber ? p["amber-ink"] : p.text)}
+          colour={fill ?? (amber ? p["amber-ink"] : p.ink)}
           filled={!!fill}
           strokeWidth={amber ? 2.25 : 2}
         />
@@ -761,7 +761,7 @@ export function BarText({
         tint="room"
         style={{ height: 40, borderRadius: 20, paddingHorizontal: 16, justifyContent: "center" }}
       >
-        <Text className={`text-md text-text ${strong ? "font-semibold" : "font-medium"}`}>
+        <Text className={`text-md text-ink ${strong ? "font-semibold" : "font-medium"}`}>
           {label}
         </Text>
       </GlassSurface>
@@ -804,7 +804,7 @@ export function BarGroup({ items }: { items: BarGroupItem[] }) {
           <Icon
             name={item.icon}
             size={19}
-            colour={item.fill ?? p.text}
+            colour={item.fill ?? p.ink}
             filled={!!item.fill}
             strokeWidth={item.on ? 2.5 : 2}
           />
@@ -829,7 +829,7 @@ function TabActions({ own }: { own?: ReactNode }) {
   const streakInner = (
     <>
       <Flame height={18} state={flame} />
-      <Text className="text-md font-medium text-text" style={{ fontVariant: ["tabular-nums"] }}>
+      <Text className="text-md font-medium text-ink" style={{ fontVariant: ["tabular-nums"] }}>
         {streak}
       </Text>
     </>

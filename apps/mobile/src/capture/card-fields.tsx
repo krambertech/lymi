@@ -224,7 +224,7 @@ export function CardFields({
         maxLength={spec.limit ?? undefined}
         onChangeText={(v) => onChange(f, v)}
         placeholder={placeholder?.[f] ?? i18n._(spec.placeholder)}
-        placeholderTextColor={quiet ? p.faint : p.muted}
+        placeholderTextColor={quiet ? p["ink-faint"] : p["ink-muted"]}
         accessibilityLabel={label}
         autoCorrect={!spec.learned}
         spellCheck={!spec.learned}
@@ -239,13 +239,13 @@ export function CardFields({
             ? undefined
             : () => (submits || !next ? onSubmit() : refs.current[next]?.focus())
         }
-        selectionColor={p.text}
+        selectionColor={p.ink}
         className={
           term
-            ? "min-h-12 py-1.5 font-sans font-medium text-text"
+            ? "min-h-12 py-1.5 font-sans font-medium text-ink"
             : quiet
-              ? "min-h-8 py-1 font-sans text-text-2"
-              : "min-h-9 py-1.5 font-sans text-text"
+              ? "min-h-8 py-1 font-sans text-ink-secondary"
+              : "min-h-9 py-1.5 font-sans text-ink"
         }
         // Fields in the language being learned follow its direction, so an Arabic term starts on the right.
         style={[
@@ -280,7 +280,7 @@ export function CardFields({
               {ai?.(f) && <Icon name="ai" size={12} colour={p.ai} />}
             </View>
             {line(f, i, label)}
-            {below?.[f] && <Text className="text-sm text-muted">{below[f]}</Text>}
+            {below?.[f] && <Text className="text-sm text-ink-muted">{below[f]}</Text>}
             {f === "example" && shown[i + 1] === UNDER_EXAMPLE && (
               // The translation belongs to the example, so it sits indented under its line, behind a hairline.
               <View className="mt-1 ps-3" style={{ borderStartWidth: 2, borderColor: p.edge }}>
@@ -290,7 +290,7 @@ export function CardFields({
                 </View>
                 {line(UNDER_EXAMPLE, i + 1, i18n._(FORM_FIELD[UNDER_EXAMPLE].label))}
                 {below?.[UNDER_EXAMPLE] && (
-                  <Text className="text-sm text-muted">{below[UNDER_EXAMPLE]}</Text>
+                  <Text className="text-sm text-ink-muted">{below[UNDER_EXAMPLE]}</Text>
                 )}
               </View>
             )}

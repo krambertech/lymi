@@ -44,7 +44,7 @@ export function HintTile({ play }: TileDemoProps) {
   const at = useBeats({ press: 500, open: 750, lit: 1150 }, play);
   return (
     <Plate className="w-[188px] px-3 pt-2.5 pb-3 text-center">
-      <p lang="ja" className="text-2xl font-medium text-text">
+      <p lang="ja" className="text-2xl font-medium text-ink">
         休む
       </p>
       <div className="mt-2 grid h-9 place-items-center">
@@ -54,11 +54,11 @@ export function HintTile({ play }: TileDemoProps) {
               key="hint"
               {...swap}
               lang="ja"
-              className="flex items-center gap-1.5 rounded-lg bg-plate-2 px-3 py-1 text-lg text-text"
+              className="flex items-center gap-1.5 rounded-lg bg-plate-nested px-3 py-1 text-lg text-ink"
             >
               {["亻", "木"].map((part, i) => (
                 <span key={part} className="flex items-center gap-1.5">
-                  {i > 0 && <span className="text-xs text-muted">+</span>}
+                  {i > 0 && <span className="text-xs text-ink-muted">+</span>}
                   <span
                     className={clsx(
                       "transition-colors duration-500",
@@ -69,7 +69,7 @@ export function HintTile({ play }: TileDemoProps) {
                   </span>
                 </span>
               ))}
-              <span className="text-xs text-muted">=</span>休
+              <span className="text-xs text-ink-muted">=</span>休
             </motion.p>
           ) : (
             <motion.span
@@ -77,7 +77,7 @@ export function HintTile({ play }: TileDemoProps) {
               exit={{ opacity: 0, scale: 0.94 }}
               transition={SWAP}
               className={clsx(
-                "flex h-7 items-center gap-1.5 rounded-full bg-plate-2 px-3 text-xs text-text transition-transform duration-200",
+                "flex h-7 items-center gap-1.5 rounded-full bg-plate-nested px-3 text-xs text-ink transition-transform duration-200",
                 at("press") && "scale-95",
               )}
             >
@@ -123,7 +123,7 @@ export function ScriptsTile({ play }: TileDemoProps) {
           transition={SETTLE}
           className="grid h-[52px] place-items-center rounded-xl bg-plate edge"
         >
-          <span lang={tile.lang} className="text-lg leading-[1.7] font-medium text-text">
+          <span lang={tile.lang} className="text-lg leading-[1.7] font-medium text-ink">
             {tile.word}
           </span>
         </motion.div>
@@ -168,14 +168,14 @@ export function ModesTile({ play }: TileDemoProps) {
   return (
     <div className="grid justify-items-center gap-2">
       <Plate className="grid w-[156px] justify-items-center px-3 pt-2 pb-2.5">
-        <div className="grid h-11 place-items-center text-lg font-medium text-text">
+        <div className="grid h-11 place-items-center text-lg font-medium text-ink">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={ask.id} {...swap}>
               {face(ask.cue)}
             </motion.span>
           </AnimatePresence>
         </div>
-        <div className="mt-1 grid w-full border-t border-edge pt-1.5 text-center text-xs text-text-2">
+        <div className="mt-1 grid w-full border-t border-edge pt-1.5 text-center text-xs text-ink-secondary">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={ask.id} {...swap}>
               {face(ask.answer)}
@@ -186,7 +186,7 @@ export function ModesTile({ play }: TileDemoProps) {
       <motion.span
         layout
         transition={SETTLE}
-        className="rounded-full bg-text px-2.5 py-0.5 text-2xs font-medium whitespace-nowrap text-canvas"
+        className="rounded-full bg-ink px-2.5 py-0.5 text-2xs font-medium whitespace-nowrap text-canvas"
       >
         {i18n._(ask.label)}
       </motion.span>
@@ -221,7 +221,7 @@ export function StreakTile({ play }: TileDemoProps) {
     <div className="grid min-w-0 gap-5">
       <div>
         <div className="flex items-center justify-between gap-3">
-          <span className="text-sm font-medium whitespace-nowrap text-text">
+          <span className="text-sm font-medium whitespace-nowrap text-ink">
             <Trans>
               {i18n.number(done)} of {i18n.number(GOAL)} today
             </Trans>
@@ -239,14 +239,14 @@ export function StreakTile({ play }: TileDemoProps) {
                     "size-3.5 rounded-full transition-colors duration-500",
                     lit && "bg-amber",
                     state === "rest" && "border-2 border-dashed border-amber",
-                    state === "today" && !lit && "border border-dashed border-text/30",
+                    state === "today" && !lit && "border border-dashed border-ink/30",
                   )}
                 />
               );
             })}
           </span>
         </div>
-        <div className="mt-2 h-3 overflow-hidden rounded-full bg-text/10">
+        <div className="mt-2 h-3 overflow-hidden rounded-full bg-ink/10">
           <motion.div
             className="h-full origin-left rounded-full bg-amber rtl:origin-right"
             initial={false}
@@ -272,13 +272,13 @@ export function StreakTile({ play }: TileDemoProps) {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -52, opacity: 0 }}
                 transition={{ duration: 0.55, ease: EASE }}
-                className="block text-[72px] leading-none font-medium tracking-[-0.045em] text-text"
+                className="block text-[72px] leading-none font-medium tracking-[-0.045em] text-ink"
               >
                 {i18n.number(days)}
               </motion.span>
             </AnimatePresence>
           </span>
-          <span className="mb-2 max-w-[9ch] text-sm leading-tight text-text-2">
+          <span className="mb-2 max-w-[9ch] text-sm leading-tight text-ink-secondary">
             {t`${plural(days, { one: "day in a row", other: "days in a row" })}`}
           </span>
         </div>
@@ -288,9 +288,9 @@ export function StreakTile({ play }: TileDemoProps) {
               initial={{ opacity: 0, scale: 0.6, y: 6 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={SETTLE}
-              className="mb-2 flex shrink-0 items-center gap-1 rounded-full bg-plate px-2.5 py-1 text-xs whitespace-nowrap text-text edge"
+              className="mb-2 flex shrink-0 items-center gap-1 rounded-full bg-plate px-2.5 py-1 text-xs whitespace-nowrap text-ink edge"
             >
-              <Check aria-hidden="true" className="size-3.5 text-good" />
+              <Check aria-hidden="true" className="size-3.5 text-success" />
               <Trans>Goal reached</Trans>
             </motion.span>
           )}
@@ -328,7 +328,7 @@ export function TagsTile({ play }: TileDemoProps) {
             style={lined ? undefined : { position: "absolute", insetInlineStart: s.x, top: s.y }}
             className={clsx(
               "flex h-9 items-center gap-1.5 rounded-full px-3 text-sm whitespace-nowrap shadow-[0_6px_14px_-8px_oklch(0.3_0.03_120/0.5)] transition-colors duration-300",
-              s.id === "exam" && at("pick") ? "bg-text text-canvas" : "bg-plate text-text edge",
+              s.id === "exam" && at("pick") ? "bg-ink text-canvas" : "bg-plate text-ink edge",
             )}
           >
             <Tag aria-hidden="true" className="size-3.5" />
@@ -338,7 +338,7 @@ export function TagsTile({ play }: TileDemoProps) {
       </div>
       <span
         className={clsx(
-          "absolute start-0 bottom-0 text-sm text-text-2 transition-[opacity,translate] duration-500",
+          "absolute start-0 bottom-0 text-sm text-ink-secondary transition-[opacity,translate] duration-500",
           at("pick") ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0",
         )}
       >
@@ -356,10 +356,10 @@ function Key({ down, children }: { down: boolean; children: ReactNode }) {
       animate={{ y: down ? 2 : 0 }}
       transition={{ type: "spring", stiffness: 600, damping: 28 }}
       className={clsx(
-        "grid size-12 place-items-center rounded-xl bg-plate text-xl text-text transition-shadow duration-150",
+        "grid size-12 place-items-center rounded-xl bg-plate text-xl text-ink transition-shadow duration-150",
         down
-          ? "shadow-[inset_0_0_0_1px_var(--edge-2)]"
-          : "shadow-[0_0_0_1px_var(--edge),0_3px_0_var(--edge-2)]",
+          ? "shadow-[inset_0_0_0_1px_var(--edge-strong)]"
+          : "shadow-[0_0_0_1px_var(--edge),0_3px_0_var(--edge-strong)]",
       )}
     >
       {children}
@@ -395,7 +395,7 @@ export function OfflineTile({ play }: TileDemoProps) {
             transition={SETTLE}
           >
             {state === "synced" ? (
-              <Check aria-hidden="true" className="size-4 text-good" />
+              <Check aria-hidden="true" className="size-4 text-success" />
             ) : state === "syncing" ? (
               <RefreshCw aria-hidden="true" className="size-4 animate-spin text-amber-text" />
             ) : (
@@ -404,7 +404,7 @@ export function OfflineTile({ play }: TileDemoProps) {
           </motion.span>
         </AnimatePresence>
       </span>
-      <span className="grid text-sm whitespace-nowrap text-text">
+      <span className="grid text-sm whitespace-nowrap text-ink">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span key={state} {...swap}>
             {state === "synced" ? (
@@ -451,7 +451,7 @@ export function ImportTile({ play }: TileDemoProps) {
           animate={{ y: at(`a${i}` as "a0") && !at("done") ? -5 : 0 }}
           transition={SETTLE}
           className={clsx(
-            "flex h-7 items-center gap-1 rounded-full bg-plate pe-2 text-[11px] font-medium text-text edge",
+            "flex h-7 items-center gap-1 rounded-full bg-plate pe-2 text-[11px] font-medium text-ink edge",
             app.path ? "ps-1.5" : "ps-2",
           )}
         >
@@ -484,7 +484,7 @@ export function ExportTile({ play }: TileDemoProps) {
             transition={SWAP}
           >
             {state === "saved" ? (
-              <Check aria-hidden="true" className="size-4 text-good" />
+              <Check aria-hidden="true" className="size-4 text-success" />
             ) : state === "going" ? (
               <Download aria-hidden="true" className="size-4" />
             ) : (
@@ -493,7 +493,7 @@ export function ExportTile({ play }: TileDemoProps) {
           </motion.span>
         </AnimatePresence>
       </span>
-      <span className="text-sm font-medium text-text">German.apkg</span>
+      <span className="text-sm font-medium text-ink">German.apkg</span>
     </span>
   );
 }
@@ -517,10 +517,10 @@ export function InsightsTile({ play }: TileDemoProps) {
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <p className="text-xs text-text-2">
+        <p className="text-xs text-ink-secondary">
           <Trans>Recall</Trans>
         </p>
-        <p className="mt-1 text-[56px] leading-none font-medium tracking-[-0.04em] text-text">
+        <p className="mt-1 text-[56px] leading-none font-medium tracking-[-0.04em] text-ink">
           {i18n.number(0.87, { style: "percent" })}
         </p>
       </div>
@@ -537,7 +537,7 @@ export function InsightsTile({ play }: TileDemoProps) {
             y1={f * CHART.h}
             y2={f * CHART.h}
             stroke="currentColor"
-            className="text-text/10"
+            className="text-ink/10"
           />
         ))}
         <motion.path
@@ -548,7 +548,7 @@ export function InsightsTile({ play }: TileDemoProps) {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-text/60"
+          className="text-ink/60"
           initial={{ pathLength: draw ? 0 : 1 }}
           animate={{ pathLength: 1 }}
           transition={{ duration: 1.1, ease: EASE }}
@@ -578,14 +578,14 @@ export function SlippingTile({ play }: TileDemoProps) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between gap-3">
-        <p lang="de" className="text-3xl leading-none font-medium tracking-[-0.03em] text-text">
+        <p lang="de" className="text-3xl leading-none font-medium tracking-[-0.03em] text-ink">
           aufhören
         </p>
         <span className="rounded-full bg-amber-soft px-2.5 py-1 text-xs whitespace-nowrap text-amber-text">
           <Trans>Often forgotten</Trans>
         </span>
       </div>
-      <p className="mt-1 text-sm text-text-2">{t`to stop`}</p>
+      <p className="mt-1 text-sm text-ink-secondary">{t`to stop`}</p>
       <div className="mt-3 flex gap-1">
         {HISTORY.map((each, i) => (
           <span
@@ -593,14 +593,14 @@ export function SlippingTile({ play }: TileDemoProps) {
             key={i}
             className={clsx(
               "h-2 flex-1 rounded-full",
-              each === "forgot" ? "bg-text/60" : "bg-text/15",
+              each === "forgot" ? "bg-ink/60" : "bg-ink/15",
             )}
           />
         ))}
         <span
           className={clsx(
             "relative h-2 flex-1 overflow-hidden rounded-full border border-dashed transition-colors duration-300",
-            at("back") ? "border-transparent" : "border-text/25",
+            at("back") ? "border-transparent" : "border-ink/25",
           )}
         >
           <motion.span
@@ -611,7 +611,7 @@ export function SlippingTile({ play }: TileDemoProps) {
           />
         </span>
       </div>
-      <div className="mt-2 grid text-xs text-text-2">
+      <div className="mt-2 grid text-xs text-ink-secondary">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span key={at("back") ? "back" : "history"} {...swap}>
             {at("back") ? (

@@ -42,30 +42,30 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
           <div className="flex flex-col items-center">
             <span
               aria-hidden="true"
-              className="grid size-8 shrink-0 place-items-center rounded-full bg-plate-2 text-xs font-semibold tabular-nums text-text"
+              className="grid size-8 shrink-0 place-items-center rounded-full bg-plate-nested text-xs font-semibold tabular-nums text-ink"
             >
               {i + 1}
             </span>
-            <span aria-hidden="true" className="w-px flex-1 bg-edge-2" />
+            <span aria-hidden="true" className="w-px flex-1 bg-edge-strong" />
           </div>
           <div className="grid gap-2 pb-5 pt-1 sm:grid-cols-[1fr_auto_14rem] sm:items-start sm:gap-3">
-            <p className="!m-0 text-base text-text">{s.ask}</p>
+            <p className="!m-0 text-base text-ink">{s.ask}</p>
             <span
-              className="hidden items-center gap-1.5 pt-0.5 text-xs text-muted sm:flex"
+              className="hidden items-center gap-1.5 pt-0.5 text-xs text-ink-muted sm:flex"
               aria-hidden="true"
             >
               yes
               <ArrowRight className="size-3.5" />
             </span>
-            <p className="!m-0 flex items-center gap-2 self-start rounded-sm bg-plate px-2.5 py-1.5 text-sm font-medium text-text edge">
-              <span className="text-muted">{s.icon}</span>
+            <p className="!m-0 flex items-center gap-2 self-start rounded-sm bg-plate px-2.5 py-1.5 text-sm font-medium text-ink edge">
+              <span className="text-ink-muted">{s.icon}</span>
               <span>
                 <span className="sr-only">If yes: </span>
                 {s.take}
               </span>
             </p>
             {i < steps.length - 1 && (
-              <p className="!m-0 text-xs text-muted" aria-hidden="true">
+              <p className="!m-0 text-xs text-ink-muted" aria-hidden="true">
                 If not, check the next one
               </p>
             )}
@@ -74,9 +74,9 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
       ))}
       <li className="!m-0 grid grid-cols-[2rem_1fr] gap-x-3">
         <span aria-hidden="true" className="grid size-8 place-items-center rounded-full edge">
-          <Moon className="size-4 text-muted" />
+          <Moon className="size-4 text-ink-muted" />
         </span>
-        <p className="!m-0 pt-1.5 text-base text-text">
+        <p className="!m-0 pt-1.5 text-base text-ink">
           Nothing is left. The day is done, and forgotten cards still waiting go to Review
           forgotten.
         </p>

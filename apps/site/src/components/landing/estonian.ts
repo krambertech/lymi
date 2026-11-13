@@ -19,7 +19,6 @@ const card = (
   meaning: MessageDescriptor,
   note: MessageDescriptor,
   state: HandCard["state"],
-  mode?: HandCard["mode"],
 ): HandCard => ({
   id,
   source: "Eesti",
@@ -31,10 +30,9 @@ const card = (
   note,
   state,
   audio: `/audio/estonian/${id}.mp3`,
-  ...(mode ? { mode } : {}),
 });
 
-/** Dealt in this order: words still being learned first, then the Known ones. Half ask from the meaning, as review does. */
+/** Dealt in this order: words still being learned first, then the Known ones. */
 export const ESTONIAN_PAGE_HAND: HandCard[] = [
   card(
     "kallis",
@@ -53,7 +51,6 @@ export const ESTONIAN_PAGE_HAND: HandCard[] = [
     msg`Water`,
     msg`Its forms barely look alike, which is why the card keeps all three.`,
     "learning",
-    "meaning_to_term",
   ),
   card(
     "tulema",
@@ -63,7 +60,6 @@ export const ESTONIAN_PAGE_HAND: HandCard[] = [
     msg`To come`,
     msg`Ma tulen kohe! I’m coming right away!`,
     "new",
-    "meaning_to_term",
   ),
   card(
     "monus",
@@ -100,24 +96,13 @@ export const ESTONIAN_PAGE_HAND: HandCard[] = [
     msg`Friend`,
     msg`The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend.`,
     "known",
-    "meaning_to_term",
   ),
-  card(
-    "oo",
-    "öö",
-    "öö · öö · ööd",
-    noun,
-    msg`Night`,
-    msg`Head ööd! Good night.`,
-    "known",
-    "meaning_to_term",
-  ),
+  card("oo", "öö", "öö · öö · ööd", noun, msg`Night`, msg`Head ööd! Good night.`, "known"),
 ];
 
 /**
  * Sentences that use the front card's word, drawn faintly behind the hand. The marked run, between
  * asterisks, is the word in the form the sentence needs: kallist in “Ma ei osta nii kallist telefoni”.
- * A card that asks from the meaning has none, since they would give its answer away.
  */
 export const ESTONIAN_EXAMPLES: Record<string, Example[]> = {
   kallis: [
@@ -128,6 +113,18 @@ export const ESTONIAN_EXAMPLES: Record<string, Example[]> = {
       meaning: msg`I won’t buy such an *expensive* phone.`,
     },
     { text: "Tallinnas on korterid *kallid*.", meaning: msg`Flats in Tallinn are *expensive*.` },
+  ],
+  vesi: [
+    { text: "*Vesi* on külm.", meaning: msg`The *water* is cold.` },
+    { text: "Klaas *vett*, palun.", meaning: msg`A glass of *water*, please.` },
+    { text: "Joo rohkem *vett*!", meaning: msg`Drink more *water*!` },
+    { text: "Ilma *veeta* ei saa elada.", meaning: msg`You can’t live without *water*.` },
+  ],
+  tulema: [
+    { text: "Kas sa *tuled* täna?", meaning: msg`Are you *coming* today?` },
+    { text: "*Tule* siia!", meaning: msg`*Come* here!` },
+    { text: "Ma ei saa täna *tulla*.", meaning: msg`I can’t *come* today.` },
+    { text: "Ta *tuleb* homme tagasi.", meaning: msg`She’s *coming* back tomorrow.` },
   ],
   monus: [
     { text: "Täna on *mõnus* ilm.", meaning: msg`The weather is *lovely* today.` },
@@ -146,6 +143,18 @@ export const ESTONIAN_EXAMPLES: Record<string, Example[]> = {
     { text: "Suur *aitäh*!", meaning: msg`*Thanks* a lot!` },
     { text: "*Aitäh* abi eest!", meaning: msg`*Thanks* for the help!` },
     { text: "Ei, *aitäh*.", meaning: msg`No, *thanks*.` },
+  ],
+  sober: [
+    { text: "Ta on mu hea *sõber*.", meaning: msg`She’s a good *friend* of mine.` },
+    { text: "Mul on palju *sõpru*.", meaning: msg`I have lots of *friends*.` },
+    { text: "Lähen *sõbraga* kinno.", meaning: msg`I’m going to the cinema with a *friend*.` },
+    { text: "See on mu *sõbra* auto.", meaning: msg`This is my *friend’s* car.` },
+  ],
+  oo: [
+    { text: "*Öö* oli pikk ja külm.", meaning: msg`The *night* was long and cold.` },
+    { text: "Ma magasin terve *öö*.", meaning: msg`I slept the whole *night*.` },
+    { text: "Suvel on *ööd* valged.", meaning: msg`In summer the *nights* stay light.` },
+    { text: "Ta töötab *öösel*.", meaning: msg`She works at *night*.` },
   ],
 };
 

@@ -29,8 +29,9 @@ const iconSide =
 
 const variants: Record<ButtonVariant, string> = {
   primary: "key-light bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-  secondary: "edge-lift bg-plate text-text hoverable:hover:veil",
-  ghost: "bg-transparent text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+  secondary: "edge-lift bg-plate text-ink hoverable:hover:veil",
+  ghost:
+    "bg-transparent text-ink-secondary hoverable:hover:bg-plate-nested hoverable:hover:text-ink",
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
@@ -126,8 +127,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
         "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
         round ? "rounded-full" : "rounded-sm",
         "before:absolute before:-inset-1.5 before:content-['']",
-        variant === "ghost" && "text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
-        variant === "secondary" && "edge-lift bg-plate text-text-2 hoverable:hover:veil",
+        variant === "ghost" &&
+          "text-ink-secondary hoverable:hover:bg-plate-nested hoverable:hover:text-ink",
+        variant === "secondary" && "edge-lift bg-plate text-ink-secondary hoverable:hover:veil",
         variant === "primary" && "key-light bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
         size === "sm" && "size-8 [&_svg]:size-4",
         size === "md" && "size-10 [&_svg]:size-[18px]",

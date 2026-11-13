@@ -1,17 +1,21 @@
 import { useLingui } from "@lingui/react/macro";
 import { onlineManager, type UseQueryResult } from "@tanstack/react-query";
 import { useSyncExternalStore } from "react";
+import { couldNotLoad } from "../data/load-state";
 import { type EmptySize, EmptyState } from "./empty-state";
 
 const isOnline = () => onlineManager.isOnline();
 
+/** One read, or every read a screen needs before it can draw. */
+type Reads = UseQueryResult | readonly UseQueryResult[];
+
 /**
- * Whether a read has nothing to show because it could not run: it failed, or it waits for a
- * connection with nothing kept. Still loading is neither, and keeps its skeleton.
+ * Whether a screen has nothing to show because a read could not run. Still loading is not that,
+ * and keeps its skeleton.
  */
-export function useLoadFailed(query: UseQueryResult): boolean {
+export function useLoadFailed(query: Reads): boolean {
   const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
-  return query.data === undefined && (query.isError || (!online && query.fetchStatus === "paused"));
+  return couldNotLoad([query].flat(), online);
 }
 
 /**
@@ -24,7 +28,7 @@ export function LoadFailed({
   offline,
   size,
 }: {
-  query: UseQueryResult;
+  query: Reads;
   /** What could not load, by name: "Couldn’t load this deck". */
   failed: string;
   /** What needs the connection, by name: "This deck needs a connection". */
@@ -33,10 +37,13 @@ export function LoadFailed({
 }) {
   const { t } = useLingui();
   const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
+  const reads = [query].flat();
   const retry = {
     label: t`Try again`,
-    onPress: () => void query.refetch(),
-    busy: query.isFetching,
+    onPress: () => {
+      for (const read of reads) void read.refetch();
+    },
+    busy: reads.some((read) => read.isFetching),
   };
   return online ? (
     <EmptyState

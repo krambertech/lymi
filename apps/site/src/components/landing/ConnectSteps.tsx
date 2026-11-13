@@ -29,17 +29,17 @@ function CopyAddress() {
 
   return (
     <div className="flex h-12 min-w-0 items-center gap-2 rounded-md bg-plate ps-4 pe-1.5 edge">
-      <code className="min-w-0 flex-1 truncate font-mono text-sm text-text select-all">
+      <code className="min-w-0 flex-1 truncate font-mono text-sm text-ink select-all">
         {MCP_URL}
       </code>
       <button
         type="button"
         onClick={copy}
         aria-label={copied ? t`Copied` : t`Copy the address`}
-        className="grid size-9 shrink-0 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text"
+        className="grid size-9 shrink-0 place-items-center rounded-sm text-ink-secondary transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover hoverable:hover:text-ink"
       >
         {copied ? (
-          <Check aria-hidden="true" className="enter-fade size-4 text-good" />
+          <Check aria-hidden="true" className="enter-fade size-4 text-success" />
         ) : (
           <Copy aria-hidden="true" className="size-4" />
         )}
@@ -65,7 +65,7 @@ function AllowPreview() {
       <span className="grid size-9 shrink-0 place-items-center rounded-sm bg-plate edge">
         <Lantern className="size-6" />
       </span>
-      <span className="min-w-0 flex-1 truncate text-sm text-text">
+      <span className="min-w-0 flex-1 truncate text-sm text-ink">
         <Trans>Let Claude add cards?</Trans>
       </span>
       <span className="flex h-9 items-center rounded-sm bg-amber px-3.5 text-sm font-medium text-amber-ink">
@@ -102,7 +102,7 @@ export function ConnectSteps() {
     <section
       id="connect"
       aria-labelledby="connect-title"
-      className="scroll-mt-8 border-b border-edge bg-plate-2 px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="scroll-mt-8 border-b border-edge bg-plate-nested px-5 py-20 @2xl:px-10 @4xl:py-28"
     >
       <div className="mx-auto max-w-[1040px]">
         <div id="connect-title">
@@ -117,16 +117,16 @@ export function ConnectSteps() {
               key={step.id}
               className="grid min-w-0 gap-3 rounded-2xl bg-plate p-5 edge @3xl:row-span-3 @3xl:grid-rows-subgrid @3xl:gap-0"
             >
-              <h3 className="flex items-center gap-3 text-lg font-medium tracking-[-0.02em] text-text">
+              <h3 className="flex items-center gap-3 text-lg font-medium tracking-[-0.02em] text-ink">
                 <span
                   aria-hidden="true"
-                  className="grid size-7 shrink-0 place-items-center rounded-full bg-plate-2 text-sm text-text-2 tabular-nums"
+                  className="grid size-7 shrink-0 place-items-center rounded-full bg-plate-nested text-sm text-ink-secondary tabular-nums"
                 >
                   {i + 1}
                 </span>
                 {step.title}
               </h3>
-              <p className="text-md text-pretty text-text-2 @3xl:mt-2">{step.body}</p>
+              <p className="text-md text-pretty text-ink-secondary @3xl:mt-2">{step.body}</p>
               <div className="mt-3 [&_a]:size-10 [&_ul]:justify-start [&_ul]:gap-1.5 @3xl:mt-6">
                 {step.after}
               </div>

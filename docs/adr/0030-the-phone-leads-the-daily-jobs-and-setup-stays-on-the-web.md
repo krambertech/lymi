@@ -6,9 +6,9 @@ date: 2026-10-11
 
 The setup jobs have since moved to the phone ([ADR 0036](0036-setup-runs-on-the-phone.md)); the rule that the phone leads the daily jobs stands.
 
-# The phone leads the daily jobs and setup stays on the web
+# The phone leads daily learning; setup stays on the web
 
-Every learning feature reaches both the web app and the phone app, and the phone is built first for the daily jobs: reviewing, glancing at what is due, and catching a word. Five setup jobs stay on the web, and the phone shows each as a row that opens it there: import, export, API keys and connected apps, publishing, and deck reports. This narrows the parity rule in [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which asked for every feature on both apps.
+Every learning feature reaches both the web app and the phone app, and the phone is built first for the daily jobs: reviewing, glancing at what is due, and adding a card. Five setup jobs stay on the web, and the phone shows each as a row that opens it there: import, export, API keys and connected apps, publishing, and deck reports. This narrows the parity rule in [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which asked for every feature on both apps.
 
 ## Context
 
@@ -22,7 +22,7 @@ ADR 0029 made the phone a second set of screens over shared packages, so every s
 
 ## Consequences
 
-- A new learning feature ships on the web first by default, is verified there, and reaches the phone through a linked phone issue. The web deploys continuously while the phone ships as releases, so the web is where a feature settles before it is built twice.
+- A new learning feature ships on the web first by default, is verified there, and reaches the phone through a linked phone issue. The web deploys continuously while the phone ships as releases, so new features can be verified on the web before their phone screens are built.
 - The API stays compatible with installed phone versions, and the phone tolerates fields and kinds it does not know yet, because it regularly runs behind web-first features.
 - A setup job is web-only until learners reach for it on the phone; moving one is a product decision, not a parity bug.
 - The phone's You and Settings show the five jobs as rows that open them on the web.

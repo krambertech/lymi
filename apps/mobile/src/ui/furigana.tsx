@@ -118,29 +118,7 @@ function useRubyMetrics(
   return { drawn, readingSize, slot, line };
 }
 
-type LineProps = Pick<Props, "segments" | "room" | "className" | "style" | "maxFontSizeMultiplier">;
-
-/** How `Furigana` will draw its text: its drawn size, each line's height, and whether readings sit over it. */
-export function useLineMetrics({
-  segments,
-  room,
-  className,
-  style,
-  maxFontSizeMultiplier,
-}: LineProps) {
-  const { drawn, slot, line } = useRubyMetrics(segments, className, style, maxFontSizeMultiplier);
-  const ruby = !!room || segments.some((segment) => segment.reading !== undefined);
-  return { drawn, slot, line, ruby };
-}
-
-/**
- * How far down from the top of `Furigana` the middle of its first line of text sits, under any
- * readings, so a control beside a wrapping text can centre on that line.
- */
-export function useFirstLineMiddle(props: LineProps) {
-  const { slot, line, ruby } = useLineMetrics(props);
-  return (ruby ? slot : 0) + line / 2;
-}
+const KNOWN_READING = { opacity: 0, width: 0, overflow: "hidden" } as const;
 
 /** A Jyutping tone number's size against its syllable's. */
 const TONE_SCALE = 0.7;
@@ -189,7 +167,7 @@ function Ruby({
   );
   const readingText = (run: string, size: number, lineHeight: number, inset = 0) => (
     <Text
-      className="text-text-2"
+      className="text-ink-secondary"
       style={{
         fontSize: size,
         lineHeight,
@@ -262,7 +240,8 @@ function Ruby({
               // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
               <View key={j} className="shrink items-center">
                 {run.known ? (
-                  <View style={{ opacity: 0 }}>{reading(run.reading)}</View>
+                  // Its height only, so a long reading leaves no gap around a word the learner knows.
+                  <View style={KNOWN_READING}>{reading(run.reading)}</View>
                 ) : fade ? (
                   <Animated.View style={fade}>{reading(run.reading)}</Animated.View>
                 ) : (

@@ -18,7 +18,7 @@ import { SignUpSection } from "./SignUpSection";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
-export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
+export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back just as it starts to fade. Free to use.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
@@ -64,11 +64,11 @@ export function LandingView() {
       page="landing"
       hero={
         <Hero
-          title={<Trans>Flashcards that stick.</Trans>}
+          title={<Trans>Flashcards for the AI era.</Trans>}
           lede={
             <Trans>
-              Make a card in seconds and review it in Lymi. Spaced repetition brings it back right
-              before you’d forget, until you remember it for good.
+              AI turns your notes, lessons and photos into cards. Spaced repetition then shows you
+              only what’s due, so you don’t waste time on what you already know.
             </Trans>
           }
           secondary={{
@@ -101,7 +101,7 @@ export function LandingView() {
       <FeatureBento />
       <ApiSection />
       <FreeDecks />
-      <SignUpSection title={<Trans>Make your first card tonight.</Trans>} />
+      <SignUpSection title={<Trans>Start learning</Trans>} />
     </LandingLayout>
   );
 }

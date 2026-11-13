@@ -148,7 +148,7 @@ content-type: application/json`}
             <tr key={e.code}>
               <Td className="font-mono text-sm text-danger">{e.code}</Td>
               <Td>{e.when}</Td>
-              <Td className="text-text-2">{e.fix}</Td>
+              <Td className="text-ink-secondary">{e.fix}</Td>
             </tr>
           ))}
         </tbody>

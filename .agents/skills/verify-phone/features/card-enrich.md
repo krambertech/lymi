@@ -1,6 +1,6 @@
 # Enrich a card
 
-The deck's owner asks the AI to fill a card's empty fields from **Card options** on the card's page, the only place the phone offers it. Without the learner's yes to AI services, Enrich first shows the AI ask; Not now leaves the card alone. The card comes back working: the page shimmers each field the AI will write, VoiceOver hears **Enriching this card**, and the text lands without a reload. A run that fails leaves **Couldn’t enrich this card.** with **Try again** under the fields; a request that fails says **Couldn’t enrich “term”. Check your connection and try again.** in a toast with **Retry**. Enrich shows only while a field the deck lets the AI fill is empty and no run is filling it ([phone.md](../../../../docs/design/system/phone.md), [library-decks-and-cards.md](../../../../docs/design/library-decks-and-cards.md)).
+The deck's owner asks the AI to fill a card's empty fields from **Card options** on the card's page, the only place the phone offers it. Without the learner's yes to AI services, Enrich first shows the AI ask; Not now leaves the card alone. The card comes back working: the page shimmers each field the AI will write, VoiceOver hears **Enriching this card**, for a run that writes only the translation too, and the text lands without a reload. A run that fails leaves **Couldn’t enrich this card.** with **Try again** under the fields; a request that fails says **Couldn’t enrich “term”. Check your connection and try again.** in a toast with **Retry**. Enrich shows only while a field the deck lets the AI fill is empty or the example lacks a translation the deck lets the AI write, and no run is filling either ([phone.md](../../../../docs/design/system/phone.md), [library-decks-and-cards.md](../../../../docs/design/library-decks-and-cards.md)).
 
 ## Reach
 
@@ -8,11 +8,11 @@ The deck's owner asks the AI to fill a card's empty fields from **Card options**
 
 ## Drive
 
-[`card-enrich.yaml`](card-enrich.yaml), as `learner`: the setup clears the example of a card in Lezione 12 and turns AI services on. On its page, open **Card options**, see **Enrich**, take it, and see the request's toast. Then hold the card on its deck's page and see the long-press menu without **Enrich**.
+[`card-enrich.yaml`](card-enrich.yaml), as `learner`: the setup clears the example of a card in Lezione 12, leaves another card missing only its example's translation, and turns AI services on. On the second card's page, open **Card options**, see **Enrich** and take it. On the first card's page, open **Card options**, see **Enrich**, take it, and see the request's toast. Then hold the card on its deck's page and see the long-press menu without **Enrich**.
 
 ## End state
 
-[`card-enrich.mjs`](card-enrich.mjs) reads the card: still in its deck, example still empty, not stuck at `working`. A local Worker has no `OPENAI_API_KEY`, so the request answers 503 and the toast is the expected screen; with a key in `apps/web/.dev.vars` the card goes to `working` and the page shimmers instead.
+[`card-enrich.mjs`](card-enrich.mjs) reads both cards: still in their deck, the example and the translation still empty, the first not stuck at `working`. A local Worker has no `OPENAI_API_KEY`, so the request answers 503 and the toast is the expected screen; with a key in `apps/web/.dev.vars` the card goes to `working` and the page shimmers instead.
 
 ## Gotchas
 

@@ -91,7 +91,7 @@ export function LanguageNote({ language }: { language: Language }) {
       {t`Couldn’t save the language. Check your connection and try again.`}
     </Text>
   ) : (
-    <Text className="px-4 text-sm text-muted">
+    <Text className="px-4 text-sm text-ink-muted">
       {t`App language, and the language AI uses for meanings.`}
     </Text>
   );

@@ -14,10 +14,10 @@ const HOLD_MS = 8000;
 function Glyph({ kanji, reading }: { kanji: string; reading: string }) {
   return (
     <span className="grid justify-items-center">
-      <span className="min-h-[1.3em] text-[length:calc(var(--k)*0.26)] leading-[1.3] tracking-[0.04em] whitespace-nowrap text-text-2">
+      <span className="min-h-[1.3em] text-[length:calc(var(--k)*0.26)] leading-[1.3] tracking-[0.04em] whitespace-nowrap text-ink-secondary">
         {reading || " "}
       </span>
-      <span className="text-[length:var(--k)] leading-[1.05] text-text">{kanji}</span>
+      <span className="text-[length:var(--k)] leading-[1.05] text-ink">{kanji}</span>
     </span>
   );
 }
@@ -72,7 +72,7 @@ export function KanjiReadings() {
   return (
     <div
       ref={stage}
-      className="mt-12 rounded-2xl bg-plate-2 px-3 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
+      className="mt-12 rounded-2xl bg-plate-nested px-3 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
     >
       <p
         lang="ja"
@@ -109,7 +109,7 @@ export function KanjiReadings() {
         </span>
       </p>
 
-      <p className="mt-5 text-center text-lg text-text-2 tabular-nums">
+      <p className="mt-5 text-center text-lg text-ink-secondary tabular-nums">
         <span lang="ja" className="font-medium text-amber-text">
           {word.reading}
         </span>{" "}
@@ -127,7 +127,7 @@ export function KanjiReadings() {
               heldUntil.current = Date.now() + HOLD_MS;
               setAt(i);
             }}
-            className="relative h-9 rounded-full px-3.5 text-md text-muted transition-colors duration-200 hoverable:hover:text-text aria-pressed:text-text"
+            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
           >
             {/* One highlight that slides from word to word rather than blinking between them. */}
             {i === at && (

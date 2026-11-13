@@ -41,7 +41,7 @@ export function SmartAddTitle() {
   const { t } = useLingui();
   return (
     <View className="flex-row items-center gap-2" accessible accessibilityRole="header">
-      <Text className="text-md font-medium text-text">{t`Smart add`}</Text>
+      <Text className="text-md font-medium text-ink">{t`Smart add`}</Text>
       <Chip size="sm">{t`Beta`}</Chip>
     </View>
   );
@@ -87,7 +87,7 @@ export function InputStep({
       {atLimit && daily ? (
         <LimitNotice daily={daily} />
       ) : (
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {t`Add the lesson in any form, or several at once. You choose which terms become cards.`}
         </Text>
       )}
@@ -107,10 +107,10 @@ export function InputStep({
               >
                 <Thumb page={page} />
                 <View className="flex-1">
-                  <Text className="text-md text-text" numberOfLines={1}>
+                  <Text className="text-md text-ink" numberOfLines={1}>
                     {name}
                   </Text>
-                  <Text className="text-sm text-muted">
+                  <Text className="text-sm text-ink-muted">
                     {page.kind === "pdf" ? t`PDF` : t`Photo`}
                   </Text>
                 </View>
@@ -135,10 +135,10 @@ export function InputStep({
                 accessibilityHint={t`Edit the text`}
                 className="flex-1"
               >
-                <Text className="text-md text-text" numberOfLines={1}>
+                <Text className="text-md text-ink" numberOfLines={1}>
                   {text.trim().slice(0, 160)}
                 </Text>
-                <Text className="text-sm text-muted">
+                <Text className="text-sm text-ink-muted">
                   {t`Text · ${plural(words, { one: "# word", other: "# words" })}`}
                 </Text>
               </Press>
@@ -154,7 +154,7 @@ export function InputStep({
       )}
 
       <View className="gap-2">
-        {!empty && <Text className="px-1 text-sm font-medium text-muted">{t`Add more`}</Text>}
+        {!empty && <Text className="px-1 text-sm font-medium text-ink-muted">{t`Add more`}</Text>}
         <Plate className="overflow-hidden">
           {sources.map((source, i) => {
             // Text is never full, and a lesson may still take text with ten pages.
@@ -172,22 +172,25 @@ export function InputStep({
                 accessibilityHint={source.hint}
                 accessibilityState={{ disabled: off }}
                 className={`flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-                style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
               >
                 <View
-                  className={`size-10 items-center justify-center rounded-full bg-plate-2 ${off ? "opacity-45" : ""}`}
+                  className={`size-10 items-center justify-center rounded-full bg-plate-nested ${off ? "opacity-45" : ""}`}
                 >
-                  <Icon name={source.icon} size={20} colour={p.text} />
+                  <Icon name={source.icon} size={20} colour={p.ink} />
                 </View>
                 <View className="flex-1">
-                  <Text className="text-md font-medium" style={{ color: off ? p.muted : p.text }}>
+                  <Text
+                    className="text-md font-medium"
+                    style={{ color: off ? p["ink-muted"] : p.ink }}
+                  >
                     {source.label}
                   </Text>
-                  <Text className="text-sm text-muted">
+                  <Text className="text-sm text-ink-muted">
                     {!online ? t`Needs a connection` : source.hint}
                   </Text>
                 </View>
-                <Icon name="forward" size={18} colour={p.faint} />
+                <Icon name="forward" size={18} colour={p["ink-faint"]} />
               </Pressable>
             );
           })}
@@ -213,7 +216,7 @@ function LimitNotice({ daily }: { daily: Daily }) {
         <Text className="text-md font-medium text-amber-text">
           {t`${plural(limit, { one: "You’ve used today’s # lesson", other: "You’ve used today’s # lessons" })}`}
         </Text>
-        <Text className="text-base text-text-2">
+        <Text className="text-base text-ink-secondary">
           {minutes < 60
             ? t`${plural(minutes, { one: "You can add more lessons in # minute.", other: "You can add more lessons in # minutes." })}`
             : t`${plural(hours, { one: "You can add more lessons in # hour.", other: "You can add more lessons in # hours." })}`}
@@ -238,8 +241,8 @@ function Thumb({ page }: { page: Page }) {
 function Tile({ icon }: { icon: IconName }) {
   const p = usePalette();
   return (
-    <View className="size-10 items-center justify-center rounded-md bg-plate-2">
-      <Icon name={icon} size={20} colour={p["text-2"]} />
+    <View className="size-10 items-center justify-center rounded-md bg-plate-nested">
+      <Icon name={icon} size={20} colour={p["ink-secondary"]} />
     </View>
   );
 }
@@ -266,18 +269,18 @@ export function WritingStep({
         value={text}
         onChangeText={onChange}
         placeholder={t`Paste a transcript, your notes or the lesson’s text`}
-        placeholderTextColor={p.muted}
+        placeholderTextColor={p["ink-muted"]}
         accessibilityLabel={t`Lesson text`}
         // The lesson is in the language being learned, which autocorrect gets wrong.
         autoCorrect={false}
-        selectionColor={p.text}
-        className="rounded-xl border border-edge bg-plate px-4 font-sans text-md text-text"
+        selectionColor={p.ink}
+        className="rounded-xl border border-edge bg-plate px-4 font-sans text-md text-ink"
         // A tall box from the start, since a lesson runs to paragraphs. phone.md "Sheets".
         style={[MULTILINE, { minHeight: 256 }]}
         maxFontSizeMultiplier={inputCap(17)}
       />
       {words > 0 && (
-        <Text className="px-1 text-sm text-muted">
+        <Text className="px-1 text-sm text-ink-muted">
           {t`${plural(words, { one: "# word", other: "# words" })}`}
         </Text>
       )}
@@ -326,7 +329,7 @@ export function ReadingStep({
       <ScanStage pages={pages} text={text} finished={finished} current={current} />
       <View className="w-full items-center">
         <RollingCount value={found} />
-        <Text className="text-sm text-muted">
+        <Text className="text-sm text-ink-muted">
           {t`${plural(found, { one: "term found", other: "terms found" })}`}
         </Text>
       </View>
@@ -334,7 +337,7 @@ export function ReadingStep({
         <Swap id={stage} height={24}>
           <View className="flex-row items-center gap-2">
             <Pulse running={!finished} />
-            <Text className="text-sm text-text-2">{stage}</Text>
+            <Text className="text-sm text-ink-secondary">{stage}</Text>
           </View>
         </Swap>
       </View>
@@ -342,11 +345,11 @@ export function ReadingStep({
       <View className="w-full" accessibilityElementsHidden>
         <Swap id={latest?.id ?? ""} height={32} distance={12}>
           {latest ? (
-            <View className="flex-row items-center gap-2 rounded-full bg-plate-2 px-3 py-1">
-              <Text className="text-sm font-medium text-text" numberOfLines={1}>
+            <View className="flex-row items-center gap-2 rounded-full bg-plate-nested px-3 py-1">
+              <Text className="text-sm font-medium text-ink" numberOfLines={1}>
                 {latest.term}
               </Text>
-              <Text className="shrink text-sm text-muted" numberOfLines={1}>
+              <Text className="shrink text-sm text-ink-muted" numberOfLines={1}>
                 {latest.gloss}
               </Text>
             </View>
@@ -381,7 +384,7 @@ export function QuestionsStep({
         const chosen = answers[index] ?? question.default;
         return (
           <View key={question.id} className="gap-2.5">
-            <Text className="px-1 text-md font-medium text-text">{question.question}</Text>
+            <Text className="px-1 text-md font-medium text-ink">{question.question}</Text>
             <Plate className="overflow-hidden" accessibilityRole="radiogroup">
               {question.options.map((option, i) => (
                 <Pressable
@@ -393,9 +396,9 @@ export function QuestionsStep({
                   accessibilityRole="radio"
                   accessibilityState={{ checked: chosen === i }}
                   className={`flex-row items-center gap-3 px-4 py-3.5 ${i > 0 ? "border-t border-edge" : ""}`}
-                  style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                  style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
                 >
-                  <Text className="flex-1 text-md text-text">{option.label}</Text>
+                  <Text className="flex-1 text-md text-ink">{option.label}</Text>
                   <Radio on={chosen === i} />
                 </Pressable>
               ))}
@@ -409,12 +412,12 @@ export function QuestionsStep({
                     if (chosen !== OWN_ANSWER) onAnswer(index, OWN_ANSWER);
                   }}
                   placeholder={t`Something else…`}
-                  placeholderTextColor={p.muted}
+                  placeholderTextColor={p["ink-muted"]}
                   accessibilityLabel={t`Something else`}
                   maxLength={300}
                   returnKeyType="done"
-                  selectionColor={p.text}
-                  className="min-h-[52px] flex-1 py-3 font-sans text-md text-text"
+                  selectionColor={p.ink}
+                  className="min-h-[52px] flex-1 py-3 font-sans text-md text-ink"
                   maxFontSizeMultiplier={inputCap(17)}
                 />
                 <Radio on={chosen === OWN_ANSWER} />
@@ -460,8 +463,8 @@ export function ListStep({
     return (
       <View className="gap-5">
         <View className="gap-1 px-1">
-          <Text className="text-md font-medium text-text">{t`Nothing new in this lesson`}</Text>
-          <Text className="text-base text-text-2">
+          <Text className="text-md font-medium text-ink">{t`Nothing new in this lesson`}</Text>
+          <Text className="text-base text-ink-secondary">
             {t`Every term worth a card is already in your decks.`}
           </Text>
         </View>
@@ -472,7 +475,7 @@ export function ListStep({
   return (
     <View className="gap-4">
       <View className="flex-row items-center justify-between gap-3 px-1">
-        <Text className="text-sm text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-sm text-ink-secondary" style={{ fontVariant: ["tabular-nums"] }}>
           {t`${ticked.size} of ${fresh.length} chosen`}
         </Text>
         <Press
@@ -481,7 +484,7 @@ export function ListStep({
           className="min-h-11 justify-center"
           hitSlop={{ left: 10, right: 10 }}
         >
-          <Text className="text-sm font-medium text-text-2 underline">
+          <Text className="text-sm font-medium text-ink-secondary underline">
             {all ? t`Clear all` : t`Select all`}
           </Text>
         </Press>
@@ -515,11 +518,11 @@ export function ListStep({
                 accessibilityActions={[{ name: "edit", label: t`Edit term` }]}
                 onAccessibilityAction={(e) => e.nativeEvent.actionName === "edit" && onOpen(term)}
                 className="flex-row items-start gap-3 py-3 ps-4 pe-3.5"
-                style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
               >
                 {/* A rounded square, as the deck page's SelectBox, so several-of reads apart from a radio. */}
                 <View
-                  className={`mt-0.5 size-[22px] items-center justify-center border-2 ${on ? "border-text bg-text" : "border-edge-2"}`}
+                  className={`mt-0.5 size-[22px] items-center justify-center border-2 ${on ? "border-ink bg-ink" : "border-edge-strong"}`}
                   style={{ borderRadius: 6 }}
                 >
                   {on && <Icon name="check" size={14} colour={p.canvas} strokeWidth={3} />}
@@ -527,11 +530,13 @@ export function ListStep({
                 <View className="flex-1 gap-0.5">
                   {/* Edited sits at the term's end, so marking an edit adds no line. */}
                   <View className="flex-row items-baseline gap-2">
-                    <Text className="flex-1 text-md font-medium text-text">{name}</Text>
-                    {edit !== undefined && <Text className="text-sm text-muted">{t`Edited`}</Text>}
+                    <Text className="flex-1 text-md font-medium text-ink">{name}</Text>
+                    {edit !== undefined && (
+                      <Text className="text-sm text-ink-muted">{t`Edited`}</Text>
+                    )}
                   </View>
                   <Text
-                    className={`text-base ${edit?.meaning === null ? "text-muted" : "text-text-2"}`}
+                    className={`text-base ${edit?.meaning === null ? "text-ink-muted" : "text-ink-secondary"}`}
                   >
                     {edit?.meaning === undefined
                       ? term.gloss
@@ -561,7 +566,7 @@ function TermNote({ term }: { term: LessonTerm }) {
       : term.handwritten
         ? t`Handwritten`
         : null;
-  return note ? <Text className="text-sm text-muted">{note}</Text> : null;
+  return note ? <Text className="text-sm text-ink-muted">{note}</Text> : null;
 }
 
 function ExistingList({ terms }: { terms: LessonTerm[] }) {
@@ -569,15 +574,15 @@ function ExistingList({ terms }: { terms: LessonTerm[] }) {
   const p = usePalette();
   return (
     <View className="gap-1 px-1">
-      <Text className="pt-2 pb-1 text-sm text-muted" accessibilityRole="header">
+      <Text className="pt-2 pb-1 text-sm text-ink-muted" accessibilityRole="header">
         {t`Already in your decks`}
       </Text>
       {terms.map((term) => (
         <View key={term.id} className="flex-row items-start gap-3 py-1.5">
-          <Icon name="check" size={16} colour={p.faint} />
+          <Icon name="check" size={16} colour={p["ink-faint"]} />
           <View className="flex-1">
-            <Text className="text-md text-muted">{term.term}</Text>
-            <Text className="text-sm text-muted">{t`In ${isolate(term.existing?.deckName ?? "")}`}</Text>
+            <Text className="text-md text-ink-muted">{term.term}</Text>
+            <Text className="text-sm text-ink-muted">{t`In ${isolate(term.existing?.deckName ?? "")}`}</Text>
           </View>
         </View>
       ))}

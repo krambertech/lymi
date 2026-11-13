@@ -11,9 +11,9 @@
       "src": "01-today.png",
       "theme": "light",
       "caption": {
-        "en": "Review each word right before you'd forget it",
-        "uk": "Повторюй слово якраз перед тим, як забудеш",
-        "ru": "Повторяй слово как раз перед тем, как забудешь"
+        "en": "Review each word just as it starts to fade",
+        "uk": "Повторюй слово, коли воно починає забуватися",
+        "ru": "Повторяй слово, когда оно начинает забываться"
       }
     },
     {

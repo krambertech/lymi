@@ -22,7 +22,7 @@ export function Avatar({ name, src, pending, size = 32, className, style, ...res
       // Beside the learner's name by default, so a screen reader skips it.
       aria-hidden="true"
       className={clsx(
-        "relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-plate-2 font-semibold text-text-2",
+        "relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-plate-nested font-semibold text-ink-secondary",
         !photo && "edge",
         className,
       )}
@@ -51,7 +51,7 @@ export function FormerOwnerMark({ size = 32 }: { size?: number | undefined }) {
   return (
     <span
       aria-hidden="true"
-      className="grid shrink-0 place-items-center rounded-full bg-plate-2 text-muted edge"
+      className="grid shrink-0 place-items-center rounded-full bg-plate-nested text-ink-muted edge"
       style={{ width: size, height: size }}
     >
       <UserX style={{ width: Math.round(size * 0.55), height: Math.round(size * 0.55) }} />

@@ -17,11 +17,11 @@ What is empty?
 
 ## First-run guide
 
-`FirstRunGuide` in `components/first-run.tsx` is Today until the first review: dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps. Each step is done by the learner's own data, never by a dismissal. [onboarding.md](../onboarding.md) owns the steps, what follows them, and the phone's `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`.
+`FirstRunGuide` in `components/first-run.tsx` is Today until the first review: dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps. Each step is done by the learner's own data, never by a dismissal. Once a deck has cards, one plate naming that deck replaces the count and the steps. [onboarding.md](../onboarding.md) owns the steps, what follows them, and the phone's `StartGuide` in `apps/mobile/src/welcome/start-guide.tsx`.
 
 ## StartPanel
 
-`StartPanel` in `components/start-panel.tsx` is used for an empty Library, empty deck or Insights without history. Use a 1.5 px dashed `edge-2` outline directly on the canvas. Include an outline icon in a `plate-2` circle, a `text-lg` title, one `text-2` sentence and a normal-sized primary action. Optional alternatives use `NextSteps` in `StartPanelSection` below a dashed divider. Library uses its navigation icon; a deck uses Layers.
+`StartPanel` in `components/start-panel.tsx` is used for an empty Library, empty deck or Insights without history. Use a 1.5 px dashed `edge-strong` outline directly on the canvas. Include an outline icon in a `plate-nested` circle, a `text-lg` title, one `ink-secondary` sentence and a normal-sized primary action. Optional alternatives use `NextSteps` in `StartPanelSection` below a dashed divider. Library uses its navigation icon; a deck uses Layers.
 
 ```tsx
 // Correct, from deck-detail-view.tsx
@@ -49,8 +49,8 @@ Use the real components for an empty-data layout preview. Insights shows its fou
 
 `EmptySection`, `NoResults` and `ErrorState` live in `components/empty-state.tsx`.
 
-- `EmptySection` is an empty group inside a screen: an icon in a `plate-2` circle, a short title, one line of why, and the action that fills it.
-- `NoResults` replaces the list below its search or filter controls. Use a dashed `edge-2` outline, a search or filter icon in a `plate-2` circle, a title naming the query or filter, recovery text and Clear search or Show all.
+- `EmptySection` is an empty group inside a screen: an icon in a `plate-nested` circle, a short title, one line of why, and the action that fills it.
+- `NoResults` replaces the list below its search or filter controls. Use a dashed `edge-strong` outline, a search or filter icon in a `plate-nested` circle, a title naming the query or filter, recovery text and Clear search or Show all.
 - `ErrorState` represents a failed screen load. Centre an alert icon on `danger-soft`, name the failure, explain recovery and offer Try again. Use the error icon rather than the brand mark.
 
 ```tsx

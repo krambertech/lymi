@@ -9,15 +9,21 @@ import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
 import { ActivityFigure } from "./ActivityFigure";
+import { CantoneseTamilFigure } from "./CantoneseTamilFigure";
 import { CommandMenuFigure } from "./CommandMenuFigure";
 import { DeckAiFigure } from "./DeckAiFigure";
 import { DeleteAccountFigure } from "./DeleteAccountFigure";
+import { ExampleFigure } from "./ExampleFigure";
+import { FilterFieldsFigure } from "./FilterFieldsFigure";
 import { FuriganaFigure } from "./FuriganaFigure";
+import { HighlightCardFigure } from "./HighlightCardFigure";
 import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { JapaneseCardFigure } from "./JapaneseCardFigure";
+import { MacBookFigure } from "./MacFigure";
 import { PinyinFigure } from "./PinyinFigure";
+import { PitchAccentFigure } from "./PitchAccentFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
@@ -52,6 +58,12 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "command-menu": CommandMenuFigure,
   "japanese-card": JapaneseCardFigure,
   pinyin: PinyinFigure,
+  "filter-fields": FilterFieldsFigure,
+  "highlight-card": HighlightCardFigure,
+  "cantonese-tamil": CantoneseTamilFigure,
+  example: ExampleFigure,
+  mac: MacBookFigure,
+  "pitch-accent": PitchAccentFigure,
 };
 
 interface Props {

@@ -128,8 +128,8 @@ function DeckWithSearch() {
       <ul className="edge grid divide-y divide-edge overflow-hidden rounded-lg bg-plate">
         {shown.map((w) => (
           <li key={w.term} className="flex h-12 items-center gap-3 px-4 text-base">
-            <span className="font-medium text-text">{w.term}</span>
-            <span className="truncate text-text-2">{w.meaning}</span>
+            <span className="font-medium text-ink">{w.term}</span>
+            <span className="truncate text-ink-secondary">{w.meaning}</span>
           </li>
         ))}
       </ul>

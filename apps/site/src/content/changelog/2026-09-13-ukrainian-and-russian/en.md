@@ -10,7 +10,6 @@ lymi.app has Ukrainian and Russian pages too, written for the people who read th
 ### Fixes and improvements
 
 - Lymi now says “cards” instead of “words”, since a card can hold a phrase or anything else you want to remember.
-- Revealing an answer feels calmer: the term glides up and the answer settles in under it.
 - A deck opens on what’s due, with its new, learning and known cards counted.
 - Add your own photo in Settings, or keep the one from your Google account.
 - The sidebar highlights only the deck you have open.

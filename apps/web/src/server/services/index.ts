@@ -28,6 +28,7 @@ export * from "./hint-draft";
 export * from "./important";
 export * from "./imports";
 export * from "./invitations";
+export * from "./learning-email";
 export * from "./lessons";
 export * from "./members";
 export * from "./modes";

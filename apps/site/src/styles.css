@@ -77,7 +77,7 @@
   body {
     min-height: 100dvh;
     background: var(--canvas);
-    color: var(--text);
+    color: var(--ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
     line-height: 1.5;
@@ -136,8 +136,8 @@
 @utility edge {
   box-shadow: 0 0 0 1px var(--edge);
 }
-@utility edge-2 {
-  box-shadow: 0 0 0 1px var(--edge-2);
+@utility edge-strong {
+  box-shadow: 0 0 0 1px var(--edge-strong);
 }
 @utility edge-inset {
   box-shadow: inset 0 0 0 1px var(--edge);
@@ -147,6 +147,12 @@
   box-shadow:
     0 0 0 1px var(--edge),
     var(--lift);
+}
+/* An overlay's edge and its drop together, because a shadow utility beside edge-strong loses to it. */
+@utility edge-drop {
+  box-shadow:
+    0 0 0 1px var(--edge-strong),
+    var(--glass-drop);
 }
 /* Hover on anything with a fill and a hairline: a veil over its own fill, as in the product. */
 @utility veil {
@@ -170,7 +176,7 @@
    animated, which is how the halo breathes with the flame. */
 @utility glow {
   & .lantern-light {
-    filter: drop-shadow(0 0 var(--glow-r, 14px) var(--glow));
+    filter: drop-shadow(0 0 var(--glow-r, 14px) var(--lantern-glow));
   }
 }
 @property --glow-r {
@@ -357,7 +363,7 @@
 
 /* Skeleton: holds the shape, shimmers only if motion is welcome. */
 .skeleton {
-  background: var(--plate-2);
+  background: var(--plate-nested);
   border-radius: var(--radius-xs);
   position: relative;
   overflow: hidden;
@@ -397,7 +403,7 @@
 .deck-spread {
   --cw: 46cqw;
   --step: 50cqw;
-  --lift: 0.55;
+  --spread: 0.55;
   position: relative;
   height: calc(var(--cw) * 1.12 + 56px);
   margin-top: 2.25rem;
@@ -406,7 +412,7 @@
   .deck-spread {
     --cw: 26cqw;
     --step: 30cqw;
-    --lift: 0.8;
+    --spread: 0.8;
     height: calc(var(--cw) * 1.12 + 70px);
     margin-top: 3.25rem;
   }
@@ -415,7 +421,7 @@
   .deck-spread {
     --cw: min(196px, 17cqw);
     --step: min(222px, 19.4cqw);
-    --lift: 1;
+    --spread: 1;
     height: calc(var(--cw) * 1.12 + 84px);
   }
 }
@@ -424,7 +430,8 @@
   top: 8px;
   left: calc(50% - var(--cw) / 2);
   width: var(--cw);
-  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--lift))) rotate(var(--r));
+  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--spread)))
+    rotate(var(--r));
   z-index: calc(10 - var(--a) * 2);
   animation: deck-deal 1100ms var(--ease-out) calc(var(--a) * 90ms + 120ms) both;
 }
@@ -466,7 +473,7 @@
 @media (hover: hover) and (pointer: fine) {
   .deck-spread-card:hover .deck-spread-face {
     transform: translateY(-12px) rotate(calc(var(--r) * -1));
-    box-shadow: 0 0 0 1px var(--edge-2);
+    box-shadow: 0 0 0 1px var(--edge-strong);
   }
 }
 .deck-spread-section {
@@ -475,7 +482,7 @@
   line-height: 1.3;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink-muted);
 }
 .deck-spread-term {
   white-space: pre-line;
@@ -490,7 +497,7 @@
   line-height: 1.02;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  color: var(--text);
+  color: var(--ink);
 }
 .deck-spread-meaning {
   white-space: pre-line;
@@ -500,16 +507,16 @@
   overflow: hidden;
   margin-top: auto;
   padding-top: calc(var(--cw) * 0.06);
-  border-top: 1px solid var(--edge-2);
+  border-top: 1px solid var(--edge-strong);
   font-size: max(0.8125rem, calc(var(--cw) * 0.074));
   line-height: 1.3;
-  color: var(--text-2);
+  color: var(--ink-secondary);
 }
 
 /* A term recalled under the rule reads as the answer, a step firmer than a meaning there. */
 .deck-spread-meaning[data-target="term"] {
   font-weight: 500;
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* The closing invitation: the lantern lit over its own pool of light, the page's one glow. The
@@ -535,10 +542,10 @@
      with no blur to repaint while it blooms. */
   background: radial-gradient(
     closest-side,
-    color-mix(in oklab, var(--glow) 88%, transparent),
-    color-mix(in oklab, var(--glow) 52%, transparent) 30%,
-    color-mix(in oklab, var(--glow) 22%, transparent) 55%,
-    color-mix(in oklab, var(--glow) 7%, transparent) 76%,
+    color-mix(in oklab, var(--lantern-glow) 88%, transparent),
+    color-mix(in oklab, var(--lantern-glow) 52%, transparent) 30%,
+    color-mix(in oklab, var(--lantern-glow) 22%, transparent) 55%,
+    color-mix(in oklab, var(--lantern-glow) 7%, transparent) 76%,
     transparent 96%
   );
 }
@@ -602,8 +609,8 @@
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    var(--glow),
-    color-mix(in oklab, var(--glow) 40%, transparent) 45%,
+    var(--lantern-glow),
+    color-mix(in oklab, var(--lantern-glow) 40%, transparent) 45%,
     transparent
   );
   animation:
@@ -635,10 +642,10 @@
   position: absolute;
   translate: -50% -50%;
   border-radius: 50%;
-  background: var(--flame-core);
+  background: var(--lantern-flame);
   box-shadow:
     0 0 4px 1px var(--amber),
-    0 0 10px var(--glow);
+    0 0 10px var(--lantern-glow);
   opacity: 0;
   animation: deck-finale-ember var(--dur) cubic-bezier(0.2, 0.7, 0.3, 1) var(--delay) both;
 }
@@ -687,7 +694,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--canvas);
-  color: var(--text);
+  color: var(--ink);
 }
 .deck-cards::backdrop {
   background: transparent;
@@ -744,7 +751,7 @@ html:has(.deck-cards[open]) {
 .doc-prose {
   font-size: var(--text-md);
   line-height: 1.65;
-  color: var(--text-2);
+  color: var(--ink-secondary);
   text-wrap: pretty;
 }
 .doc-prose > :first-child {
@@ -764,7 +771,7 @@ html:has(.deck-cards[open]) {
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--ink);
 }
 .doc-prose h3 {
   margin-block: 2rem 0.5rem;
@@ -772,13 +779,13 @@ html:has(.deck-cards[open]) {
   font-weight: 500;
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--ink);
 }
 .doc-prose h4 {
   margin-block: 1.5rem 0.25rem;
   font-size: var(--text-md);
   font-weight: 500;
-  color: var(--text);
+  color: var(--ink);
 }
 /* Room for the sticky header when a heading is jumped to. */
 .doc-prose :is(h2, h3, h4) {
@@ -797,16 +804,16 @@ html:has(.deck-cards[open]) {
   margin-block: 0.35rem;
 }
 .doc-prose li::marker {
-  color: var(--faint);
+  color: var(--ink-faint);
 }
 .doc-prose strong {
   font-weight: 500;
-  color: var(--text);
+  color: var(--ink);
 }
 .doc-prose a:not(.doc-plain) {
-  color: var(--text);
+  color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: var(--edge-2);
+  text-decoration-color: var(--edge-strong);
   text-underline-offset: 3px;
   transition: text-decoration-color 150ms var(--ease-out);
 }
@@ -827,7 +834,7 @@ html:has(.deck-cards[open]) {
   padding-top: 2rem;
   border-top: 1px solid var(--edge);
   font-size: var(--text-sm);
-  color: var(--muted);
+  color: var(--ink-muted);
 }
 .changelog-prose h3 ~ ul {
   font-size: var(--text-base);
@@ -838,8 +845,8 @@ html:has(.deck-cards[open]) {
 .doc-code-inline {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  color: var(--text);
-  background: var(--plate-2);
+  color: var(--ink);
+  background: var(--plate-nested);
   border-radius: var(--radius-xs);
   padding: 0.1em 0.35em;
   word-break: break-word;
@@ -851,7 +858,7 @@ html:has(.deck-cards[open]) {
   font-size: 0.8125rem;
   line-height: 1.65;
   tab-size: 2;
-  color: var(--text-2);
+  color: var(--ink-secondary);
 }
 /*
  * Three tones and one weight step, no hue. A JSON key is the thing you scan for, so it is
@@ -859,22 +866,22 @@ html:has(.deck-cards[open]) {
  * Nothing here is `faint`, because every character in a snippet carries meaning.
  */
 .doc-code .t-key {
-  color: var(--text);
+  color: var(--ink);
   font-weight: 500;
 }
 .doc-code .t-str {
-  color: var(--text-2);
+  color: var(--ink-secondary);
 }
 .doc-code .t-cmd {
-  color: var(--text);
+  color: var(--ink);
   font-weight: 600;
 }
 .doc-code .t-comment,
 .doc-code .t-punct {
-  color: var(--muted);
+  color: var(--ink-muted);
 }
 .doc-code .t-num {
-  color: var(--muted);
+  color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -883,7 +890,7 @@ html:has(.deck-cards[open]) {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--edge-2) transparent;
+  scrollbar-color: var(--edge-strong) transparent;
 }
 
 /* A heading's own link, a pointer's shortcut: the heading and the contents list name the section for everyone else. */
@@ -1166,7 +1173,7 @@ html:has(.deck-cards[open]) {
   padding: calc(var(--cw) * 0.08);
   border-radius: var(--radius-xl);
   background: var(--plate);
-  box-shadow: 0 0 0 1px var(--edge-2);
+  box-shadow: 0 0 0 1px var(--edge-strong);
   backface-visibility: hidden;
 }
 .hand-back {
@@ -1258,7 +1265,7 @@ html:has(.deck-cards[open]) {
   width: min(1100px, 150vw);
   height: 620px;
   translate: -50% 0;
-  background: radial-gradient(50% 50% at 50% 50%, var(--glow), transparent 70%);
+  background: radial-gradient(50% 50% at 50% 50%, var(--lantern-glow), transparent 70%);
   opacity: 0.32;
   pointer-events: none;
 }
@@ -1387,12 +1394,12 @@ html:has(.deck-cards[open]) {
    area the two hover surfaces become translucent ink instead, so a hover or a chip darkens
    whatever is actually behind it and works over any hue. */
 .over-tint {
-  --plate-2: color-mix(in oklch, var(--text) 7%, transparent);
-  --hover: color-mix(in oklch, var(--text) 12%, transparent);
+  --plate-nested: color-mix(in oklch, var(--ink) 7%, transparent);
+  --plate-hover: color-mix(in oklch, var(--ink) 12%, transparent);
 }
 [data-theme="dark"] .over-tint {
-  --plate-2: color-mix(in oklch, var(--text) 10%, transparent);
-  --hover: color-mix(in oklch, var(--text) 15%, transparent);
+  --plate-nested: color-mix(in oklch, var(--ink) 10%, transparent);
+  --plate-hover: color-mix(in oklch, var(--ink) 15%, transparent);
 }
 
 /* These heroes isolate their tint, which traps the nav's menu inside them, so while it shows the
@@ -1514,8 +1521,8 @@ html:has(.deck-cards[open]) {
   border: 0;
   border-radius: var(--radius-xl);
   background: var(--plate);
-  color: var(--text);
-  box-shadow: 0 0 0 1px var(--edge-2);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--edge-strong);
 }
 .shelf-list-columns {
   columns: 4;
@@ -1636,6 +1643,12 @@ html:has(.deck-cards[open]) {
   width: 28.75rem;
   translate: -50% -50%;
 }
+.changelog-stage[data-scene] {
+  padding: 0;
+}
+.changelog-stage[data-scene] .changelog-stage-content {
+  width: 41.25rem;
+}
 .changelog-frame img {
   position: absolute;
   max-width: none;
@@ -1687,14 +1700,30 @@ html:has(.deck-cards[open]) {
   inset: -20% -24%;
   background: radial-gradient(
     closest-side,
-    color-mix(in oklab, var(--glow) 55%, transparent),
-    color-mix(in oklab, var(--glow) 22%, transparent) 50%,
+    color-mix(in oklab, var(--lantern-glow) 55%, transparent),
+    color-mix(in oklab, var(--lantern-glow) 22%, transparent) 50%,
     transparent
   );
   pointer-events: none;
 }
 @media (prefers-reduced-transparency: reduce) {
   .hero-ground::before {
+    display: none;
+  }
+}
+
+/* A language page's light, pooled behind its hand of cards. */
+.language-pool {
+  background: radial-gradient(ellipse 48% 62% at 74% 56%, var(--lantern-pool), transparent 70%);
+}
+/* Stacked, the hand sits under the words, so the light goes with it. */
+@container (max-width: 64rem) {
+  .language-pool {
+    background: radial-gradient(ellipse 90% 30% at 50% 70%, var(--lantern-pool), transparent 70%);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .language-pool {
     display: none;
   }
 }

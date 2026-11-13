@@ -13,7 +13,7 @@ export function Th({ className, align, ...p }: ThHTMLAttributes<HTMLTableCellEle
   return (
     <th
       className={clsx(
-        "border-b border-edge px-3 py-2 text-start align-bottom text-xs font-medium text-muted",
+        "border-b border-edge px-3 py-2 text-start align-bottom text-xs font-medium text-ink-muted",
         align === "right" && "text-end",
         className,
       )}

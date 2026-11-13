@@ -61,7 +61,7 @@ export function StressPairs({ pairs, lang }: Props) {
   return (
     <div
       ref={stage}
-      className="mt-12 rounded-2xl bg-plate-2 px-3 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
+      className="mt-12 rounded-2xl bg-plate-nested px-3 pt-10 pb-7 edge-inset @2xl:px-10 @2xl:pt-14 @4xl:mt-16"
     >
       <p className="sr-only">
         {pairs.flatMap((p) => p.forms.map((f) => `${f.marked}: ${i18n._(f.meaning)}`)).join(", ")}
@@ -69,7 +69,7 @@ export function StressPairs({ pairs, lang }: Props) {
       <p
         aria-hidden="true"
         lang={lang}
-        className="grid justify-items-center text-[clamp(64px,13cqw,168px)] leading-[1.15] font-medium tracking-[-0.03em] text-text"
+        className="grid justify-items-center text-[clamp(64px,13cqw,168px)] leading-[1.15] font-medium tracking-[-0.03em] text-ink"
       >
         <AnimatePresence initial={false} mode="popLayout">
           <motion.span
@@ -95,14 +95,14 @@ export function StressPairs({ pairs, lang }: Props) {
             onClick={() => play(i)}
             className={clsx(
               "inline-flex h-10 items-center gap-2 rounded-full px-4 text-md transition-colors duration-200 edge",
-              i === formAt ? "bg-plate text-text" : "text-text-2 hoverable:hover:text-text",
+              i === formAt ? "bg-plate text-ink" : "text-ink-secondary hoverable:hover:text-ink",
             )}
           >
-            <Volume2 aria-hidden="true" className="size-4 text-muted" />
+            <Volume2 aria-hidden="true" className="size-4 text-ink-muted" />
             <span lang={lang} className="font-medium">
               {f.marked}
             </span>
-            <span className="text-text-2">{i18n._(f.meaning)}</span>
+            <span className="text-ink-secondary">{i18n._(f.meaning)}</span>
           </button>
         ))}
       </div>
@@ -119,7 +119,7 @@ export function StressPairs({ pairs, lang }: Props) {
               setPairAt(i);
               setFormAt(0);
             }}
-            className="relative h-9 rounded-full px-3.5 text-md text-muted transition-colors duration-200 hoverable:hover:text-text aria-pressed:text-text"
+            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
           >
             {i === pairAt && (
               <motion.span

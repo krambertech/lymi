@@ -2,6 +2,7 @@ import {
   CardWithStateOut,
   DeckInput,
   DeckOut,
+  DeckPreferencesInput,
   DeckSummaryOut,
   EditionApprovalInput,
   EditionImportInput,
@@ -27,7 +28,7 @@ import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
 import { clientSupports, EXAMPLE_TRANSLATION_SINCE } from "../phone-clients";
-import { ownerAnalytics } from "../posthog";
+import { ownerAnalytics, reportServerException } from "../posthog";
 import {
   approveEdition,
   archiveDeck,
@@ -49,6 +50,7 @@ import {
   publishEdition,
   removeMember,
   restoreDeck,
+  setDeckPreferences,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
@@ -141,6 +143,20 @@ decks.patch(
     }
     return c.json(await updateDeck(ctx, c.req.param("id"), input));
   },
+);
+
+decks.put(
+  "/:id/preferences",
+  describe({
+    tags: ["Decks"],
+    summary: "Set your preferences for a deck",
+    description:
+      "The caller's own choices for a deck they own or study, such as whether the front of a card shows the term's pronunciation. They change the deck for nobody else. Needs the write scope.",
+    ok: { schema: DeckOut, description: "The deck with the caller's preferences" },
+    errors: [400, 404],
+  }),
+  body(DeckPreferencesInput, "preferences"),
+  async (c) => c.json(await setDeckPreferences(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
 decks.post(
@@ -379,7 +395,9 @@ decks.put(
           analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },
         { slug: input.slug, limit: PUBLISHED_AUDIO_ON_PUBLISH },
-      ).catch(() => undefined),
+      ).catch((error: unknown) =>
+        reportServerException(c.env, error, { route: "decks/publish-audio", method: "PUT" }),
+      ),
     );
     return c.json(publicationOut(c.env.PRODUCT_URL, publication));
   },

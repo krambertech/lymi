@@ -44,6 +44,7 @@ erDiagram
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
+  user ||--o| learner_openings : "last opening"
 
   series {
     text id PK
@@ -243,7 +244,7 @@ erDiagram
     text user_id FK
     text direction
     text mode "mode key; null only on rows an older Worker wrote"
-    int rating "1 Again 2 Hard 3 Good 4 Easy"
+    int rating "1 Forgot 2 Hard 3 Good 4 Easy"
     int state "state before review"
     int elapsed_days
     int scheduled_days
@@ -298,6 +299,10 @@ erDiagram
     json payload
     int created_at
   }
+  learner_openings {
+    text user_id PK "FK"
+    int opened_at "web push stops a week after it"
+  }
   push_subscriptions {
     text id PK
     text user_id FK
@@ -341,7 +346,7 @@ The database refuses to delete an account that owns an unarchived deck another a
 
 Deleting an account (`services/account-deletion.ts`) deletes the `user` row and lets it cascade, after a fresh emailed code in `verification` or a fresh Sign in with Apple. It refuses one of Lymi's own publisher accounts on `PUBLISHER_EMAILS` with 409 `publisher`, which the summary reports as `blocked`. Its sign-offs on other accounts' content keep their status and lose the name: `deck_editions.published_by` and each localization's `approved_by` are set to null, since they have no delete rule.
 
-An owned, unarchived deck with an active member first moves, with its cards and their `card_images`, to the `former-owner` user, which migration 0051 seeds and which cannot sign in; its series, instructions, publication, editions and the cards' hint drafts go, every invitation is revoked, and a `former_deck_copies` row queues it. `copyFormerDecks` (`services/deck-copies.ts`), run after the response and by the cron, then gives each member one batch, up to 25 members per call, passing over a member whose batch fails: their states caught up, a new private deck with its sections and cards in the edition the member pinned (`deck_copy_ids` maps old ids to new ones for the length of the batch), `card_images` rows sharing the original objects, and the member's `card_states`, `reviews`, `important_cards` and `section_starts` moved onto the copy, then their membership deleted. Tags, audio and the owner's hint drafts are not copied; speech is made again on play. Every statement waits on the membership, so a repeated run writes nothing. A term taken from an edition gets its `normalized_term` from `termKey` afterwards. The batch reads the decks to keep through a subquery, never a list of ids, so an owner of many studied decks stays within D1's 100 bound parameters. An archived deck, and one nobody else studies, cascades away with the account.
+An owned, unarchived deck with an active member first moves, with its cards and their `card_images`, to the `former-owner` user, which migration 0051 seeds and which cannot sign in; its series, instructions, publication, editions and the cards' hint drafts go, every invitation is revoked, and a `former_deck_copies` row queues it. `copyFormerDecks` (`services/deck-copies.ts`), run after the response and by the cron, then gives each member one batch, up to 25 members per call, passing over a member whose batch fails: their states caught up, a new private deck with its sections and cards in the edition the member pinned (`deck_copy_ids` maps old ids to new ones for the length of the batch), `card_images` rows sharing the original objects, and the member's `card_states`, `reviews`, `important_cards` and `section_starts` moved onto the copy, then their membership deleted. Tags, audio and the owner's hint drafts are not copied; speech is made again on play. Every statement waits on the membership, so a repeated run writes nothing. A term taken from an edition gets its `normalized_term` from `termKey` in the same batch. The batch reads the decks to keep through a subquery, never a list of ids, so an owner of many studied decks stays within D1's 100 bound parameters. An archived deck, and one nobody else studies, cascades away with the account.
 
 Named invitations to the address are deleted, whatever their state, and so are the account's `apikey` rows, which name it in `reference_id` without a foreign key; each owner of a deck the learner studied gets a `leave` audit row, and one `account_deletions` row keeps the user id, the client, how it was confirmed, the account's creation time and counts, and nothing that names the person. All of that is one batch; every session, including the KV copies, ends only after it lands. R2 objects the cascade cannot reach (the photo, card pictures no other account's row shares, each card's current audio clip, import uploads and export files) are deleted after the response, with the PostHog person.
 
@@ -415,7 +420,7 @@ A term's own recording becomes the card's audio: `audio_key` under `cards/<card_
 
 An example's own recording is `example_recording_key` under `cards/<card_id>/example-recorded/`, with a `set_audio` audit row whose details say `kind: example`. The adapter takes the first clip in a field named for both a sentence and audio, such as Kaishi's Sentence Audio, then one in the example field, so choosing a field as the example in Change fields gives it that field's clip; a card left without an example leaves the clip out. It is kept by the same format and size rules as the term's and counted as `exampleRecordings` and `exampleRecordingsSkipped`. An edit drops it only when `sameExample` says the sentence changed, so a reading, stress or spacing fix keeps it, and a re-import gives one to a card without one whose example is missing or is the file's sentence; a cleared example stays cleared. The clip is stored only while the card still says the sentence it was imported with. The example's play control serves it before any generated clip, free of the daily allowance and the owner's AI choice; a missing object is unavailable rather than replaced. Card responses carry `exampleRecorded` instead of the key, so the apps show the example's play control on a card with no language (`canPlayExample`). A deck copy leaves it behind, account deletion deletes it with the card's audio, and a Lymi file carries it as `media/<id>-example.*`, an Anki export as `lymi-<id>-example-recording.*` in an `Example audio` field.
 
-A pitch accent field (`isPitchField`: "Pitch Accent", "PitchPosition") becomes one notes line with the downstep and position, such as `はꜜし [1]`, read from Yomitan's overline and downstep marks; a field of graphs alone is left out and counted as `pitchSkipped`. A field translating the example sentence ("Sentence Meaning", "Sentence-English") becomes the example's translation, on one line. An example longer than 250 characters as shown, or a translation without an example, moves to the end of the notes with its translation rather than being cut. Frequency, rank and sort fields are skipped. Notes from several fields join one per line.
+A pitch accent field (`isPitchField`: "Pitch Accent", "PitchPosition") is read from Yomitan's overline and downstep marks. Where it names the card's Reading, or is a bare position, its positions join the Reading, `はし [1]`; otherwise it stays one notes line, such as `はꜜし [1]`. A field of graphs alone is left out and counted as `pitchSkipped`. A field translating the example sentence ("Sentence Meaning", "Sentence-English") becomes the example's translation, on one line. An example longer than 250 characters as shown, or a translation without an example, moves to the end of the notes with its translation rather than being cut. Frequency, rank and sort fields are skipped. Notes from several fields join one per line.
 
 Archiving an import stamps its own `archived_at` on every card it added that is still active, and on each deck it made that has no active card left; restore clears exactly the rows carrying that moment, so a card the learner archived or a suspended card that arrived archived stays archived.
 
@@ -458,7 +463,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - A section is its deck's owner's to change; a member gets 403 and a stranger 404. A member reads the same sections with their own standing. Starting a section is learner-only, like grading, so a key or MCP token gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
-- A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
+- A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe. A replay of a grade the server already stored is a `duplicate` that names the stored attempt, so a device whose response was lost can still undo it. A device undoing a grade whose send got no answer sends it again first, so the attempt is undone on the server rather than forgotten on the device. A grade only lands on the state it was scheduled from; one overtaken by another grade reads the state again.
 - A card or deck create may carry its own `id`. The same create sent again returns what the first one made, so an offline write replays once; an id another learner holds is a 409. ADR 0023.
 - Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote. A write by an app or a key also keeps that caller's id and its name as it stood, so revoking a key does not erase it from the log.
 - `language` on a new card defaults to the deck's `default_language` when not given.

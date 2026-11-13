@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const KEY = "lymi-rest-dismissed";
+import { REST_DISMISSED_KEY as KEY } from "./storage-keys";
 
 /** The day the rest-day banner was dismissed on, so it stays away until that day ends. */
 export function useRestDismissal(today: string | undefined) {

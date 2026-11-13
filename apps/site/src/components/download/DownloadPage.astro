@@ -35,10 +35,10 @@ const i18n = pageI18n(locale);
   canonicalPath={localizedPath("download", locale)}
   localizedPage="download"
 >
-  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
     <a
       href="#download"
-      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
+      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-ink edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
     >
       {i18n._(DOWNLOAD_SKIP)}
     </a>
@@ -52,22 +52,22 @@ const i18n = pageI18n(locale);
       <div class="hero-ground">
         <img src="/mac/icon.png" width="176" height="176" alt="" class="size-36 @2xl:size-44" />
       </div>
-      <h1 class="mt-6 text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+      <h1 class="mt-6 text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
         {i18n._(DOWNLOAD_HEADING)}
       </h1>
-      <p class="mt-5 max-w-[36ch] text-lg text-pretty text-text-2 @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
+      <p class="mt-5 max-w-[36ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
       <div id="download" class="mt-9 flex flex-col items-center gap-3">
         <a href={macDownloadHref("/download/mac", locale)} class={buttonClass("primary", "lg")}>
           <Download aria-hidden="true" data-icon="inline-start" />
           {i18n._(DOWNLOAD_BUTTON)}
         </a>
-        <p class="text-sm text-muted">
+        <p class="text-sm text-ink-muted">
           {i18n._(DOWNLOAD_REQUIREMENT)}
           <span aria-hidden="true" class="mx-1">·</span>
           <a
             href={macDownloadHref("/download/mac-intel", locale)}
             aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
-            class="rounded-xs text-text-2 underline decoration-edge-2 underline-offset-4 hoverable:hover:text-text hoverable:hover:decoration-current"
+            class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
           >
             {i18n._(DOWNLOAD_INTEL)}
           </a>
@@ -82,13 +82,13 @@ const i18n = pageI18n(locale);
               <li class="flex gap-3">
                 <span
                   aria-hidden="true"
-                  class="grid size-7 shrink-0 place-items-center rounded-full bg-plate-2 text-sm font-medium tabular-nums text-text-2 edge"
+                  class="grid size-7 shrink-0 place-items-center rounded-full bg-plate-nested text-sm font-medium tabular-nums text-ink-secondary edge"
                 >
                   {index + 1}
                 </span>
                 <div>
-                  <h3 class="text-base font-medium text-text">{i18n._(step.title)}</h3>
-                  <p class="mt-1 text-sm text-pretty text-text-2">{i18n._(step.body)}</p>
+                  <h3 class="text-base font-medium text-ink">{i18n._(step.title)}</h3>
+                  <p class="mt-1 text-sm text-pretty text-ink-secondary">{i18n._(step.body)}</p>
                 </div>
               </li>
             ))

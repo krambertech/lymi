@@ -3,7 +3,7 @@ status: accepted
 date: 2026-10-13
 ---
 
-# Share to Lymi is a SwiftUI extension on the app's session, and the server picks the deck
+# Share to Lymi uses SwiftUI with the app's session
 
 Share to Lymi is an iOS share extension written in SwiftUI in `apps/mobile/targets/share`, built by `@bacons/apple-targets`. It adds a card from the selected text without leaving the app it was shared from. The app copies what the extension needs, its session, the learner's own decks and the sheet's strings, into the shared keychain under the app group, and the extension calls the Worker as the app does. This narrows [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which ruled out native Swift for screens.
 
@@ -15,11 +15,11 @@ Issue #509 asked for words shared from Safari, Notes or a transcript to become c
 
 ## Considered options
 
-- **A SwiftUI extension on the app's session, the server choosing the deck:** accepted. It is small, opens at once, and the model chooses among only the learner's own languages, which a single word needs.
+- **A SwiftUI extension on the app's session, the server choosing the deck:** accepted. It is small, opens at once, and the model uses the learner's deck languages to disambiguate a single term.
 - **React Native in the extension (`exportJs`):** rejected for the memory limit and the start-up time of a second JavaScript runtime.
 - **Opening the app with the shared text:** rejected, because the learner leaves what they were reading.
 - **Apple's on-device detection:** rejected, because it cannot name Estonian, the language Lymi's first learner studies.
-- **Always the last deck, or a deck list on every share:** rejected in favour of the choice made for her, which is still a tap to change.
+- **Always the last deck, or a deck list on every share:** rejected in favour of automatic deck choice, which the learner can change with one tap.
 
 ## Consequences
 

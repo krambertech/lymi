@@ -435,7 +435,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
+        className="mt-10 rounded-sm px-2 py-1 text-xs text-ink-faint transition-colors duration-150 hoverable:hover:text-ink-muted"
       >
         Dev sign-in
       </button>
@@ -452,7 +452,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
         void go("in");
       }}
     >
-      <p className="text-xs font-medium text-muted">Dev sign-in (localhost only)</p>
+      <p className="text-xs font-medium text-ink-muted">Dev sign-in (localhost only)</p>
       <Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}

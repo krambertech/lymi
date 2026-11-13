@@ -17,7 +17,8 @@ import { usePalette } from "../theme/palette";
 import { Field, FieldDescription, FieldError, FieldLabel, Textarea } from "../ui/field";
 import { FormHeader } from "../ui/form-header";
 import { KeyboardRoom } from "../ui/keyboard";
-import { Icon, Plate, Text } from "../ui/primitives";
+import { Notice } from "../ui/notice";
+import { Plate, Text } from "../ui/primitives";
 import { Radio } from "../ui/radio";
 import { toast } from "../ui/toast-host";
 
@@ -87,7 +88,7 @@ export default function Report() {
         contentContainerClassName="gap-6 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"
       >
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {t`Tell Lymi what’s wrong with “${isolate(name)}”. We read every report within a day, and the owner isn’t told who sent it.`}
         </Text>
         <View className="gap-2.5">
@@ -108,9 +109,9 @@ export default function Report() {
                   accessibilityState={{ checked: chosen }}
                   accessibilityLabel={o.label}
                   className={`min-h-12 flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-                  style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                  style={({ pressed }) => (pressed ? { backgroundColor: p["plate-hover"] } : null)}
                 >
-                  <Text className="flex-1 text-md text-text">{o.label}</Text>
+                  <Text className="flex-1 text-md text-ink">{o.label}</Text>
                   <Radio on={chosen} />
                 </Pressable>
               );
@@ -124,36 +125,22 @@ export default function Report() {
           <FieldDescription>{t`Optional. Anything that helps us understand.`}</FieldDescription>
         </Field>
         {send.isError && (
-          <View
-            className="gap-1 rounded-lg bg-danger-soft px-3.5 py-3"
-            accessibilityLiveRegion="assertive"
-          >
-            <View className="flex-row items-center gap-2">
-              <Icon name="alert" size={16} colour={p.danger} />
-              <Text className="text-base font-medium text-danger">
-                {t`Couldn’t send your report`}
-              </Text>
-            </View>
-            <Text className="text-base text-text-2">
-              {overDailyLimit ? (
-                <Trans>
-                  You can send {CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app
-                  if this can’t wait.
-                </Trans>
-              ) : (
-                <Trans>
-                  Try again, or write to{" "}
-                  <Text
-                    className="font-medium underline"
-                    onPress={() => Linking.openURL("mailto:hello@lymi.app")}
-                  >
-                    hello@lymi.app
-                  </Text>
-                  .
-                </Trans>
-              )}
-            </Text>
-          </View>
+          <Notice tone="danger" title={t`Couldn’t send your report`}>
+            {overDailyLimit ? (
+              t`You can send ${CONTENT_REPORT_DAILY_LIMIT} reports a day. Write to hello@lymi.app if this can’t wait.`
+            ) : (
+              <Trans>
+                Try again, or write to{" "}
+                <Text
+                  className="font-medium underline"
+                  onPress={() => Linking.openURL("mailto:hello@lymi.app")}
+                >
+                  hello@lymi.app
+                </Text>
+                .
+              </Trans>
+            )}
+          </Notice>
         )}
       </ScrollView>
     </KeyboardRoom>

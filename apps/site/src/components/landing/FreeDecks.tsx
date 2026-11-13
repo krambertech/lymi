@@ -41,7 +41,7 @@ export function FreeDecks() {
           <SectionTitle>
             <Trans>Start with a free deck.</Trans>
           </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">
+          <p className="mt-5 text-md text-pretty text-ink-secondary">
             <Trans>
               Ready-made decks, from first words in a new language to citizenship tests and the
               periodic table. Add one in a tap.

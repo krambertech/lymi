@@ -157,9 +157,7 @@ export function ArchiveSectionDialog({
       onOpenChange={onOpenChange}
       size="md"
       title={({ name: sectionName }) => t`Archive “${{ sectionName: isolate(sectionName) }}”?`}
-      description={
-        <Trans>Nothing is deleted. Restore it from Archived sections in the deck’s menu.</Trans>
-      }
+      description={<Trans>You can restore it from Archived sections in the deck’s menu.</Trans>}
       dismiss={<Trans>Cancel</Trans>}
       confirm={<Trans>Archive section</Trans>}
       defaultValue="keep"
@@ -242,7 +240,7 @@ export function ArchivedSectionsDialog({
             <Skeleton className="h-14 rounded-md" />
           </div>
         ) : sections.length === 0 ? (
-          <p className="text-base text-text-2">
+          <p className="text-base text-ink-secondary">
             <Trans>No archived sections.</Trans>
           </p>
         ) : (
@@ -251,7 +249,7 @@ export function ArchivedSectionsDialog({
               <li key={s.id} className="flex min-h-14 items-center gap-3 rounded-md px-2.5">
                 <span className="grid min-w-0 flex-1">
                   <span className="truncate text-base font-medium">{s.name}</span>
-                  <span className="text-sm text-muted">
+                  <span className="text-sm text-ink-muted">
                     {s.archivedCards > 0 ? (
                       <Plural
                         value={s.archivedCards}
@@ -372,11 +370,11 @@ export function StartEarlyDialog({ target, onOpenChange, onStart }: StartEarlyDi
       onConfirm={onStart}
     >
       {({ opening }) => (
-        <ul className="grid gap-1 text-base text-text-2">
+        <ul className="grid gap-1 text-base text-ink-secondary">
           {opening.map((s) => (
             <li key={s.id} className="flex items-baseline gap-2">
               <span className="min-w-0 flex-1 truncate">{s.name}</span>
-              <span className="text-sm text-muted tabular-nums">
+              <span className="text-sm text-ink-muted tabular-nums">
                 <Plural value={s.total} one="# card" other="# cards" />
               </span>
             </li>

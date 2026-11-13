@@ -62,6 +62,7 @@ const owned = {
   role: "owner" as const,
   owner: { id: "user-1", name: "Kateryna", avatarUrl: null, former: false },
   published: false,
+  pronunciationDisplay: "adaptive" as const,
 };
 
 const deck: Awaited<ReturnType<typeof getDeck>> = {
@@ -294,6 +295,7 @@ describe("Lymi MCP server", () => {
       aiConsent: null,
       aiConsentUpdatedAt: null,
       sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -369,6 +371,7 @@ describe("Lymi MCP server", () => {
       aiConsent: null,
       aiConsentUpdatedAt: null,
       sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -428,6 +431,7 @@ describe("Lymi MCP server", () => {
       aiConsent: null,
       aiConsentUpdatedAt: null,
       sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",

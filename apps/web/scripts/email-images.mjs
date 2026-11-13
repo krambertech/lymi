@@ -33,4 +33,51 @@ for (const room of rooms) {
   );
   await lockup.screenshot({ path: `${root}email/lockup-${room.name}.png`, omitBackground: true });
 }
+// The loose cards behind a learning email's card. Rotation is drawn here because Gmail strips it.
+const WIDTH = 408;
+const HEIGHT = 420;
+const TOP = 40;
+const piles = {
+  light: {
+    plate: "#ffffff",
+    edge: "#2013081a",
+    under: "#20130826",
+    warm: "#fce6c4",
+    plain: "#f2f0ec",
+  },
+  dark: {
+    plate: "#231e1a",
+    edge: "#ffffff12",
+    under: "#ffffff1c",
+    warm: "#4a371f",
+    plain: "#2b2722",
+  },
+};
+for (const [room, pile] of Object.entries(piles)) {
+  const sheet = (left, top, width, height, turn, fill) =>
+    `<div style="position:absolute;left:${left}px;top:${top}px;width:${width}px;height:${height}px;border-radius:18px;background:${fill};border:1px solid ${pile.under};box-sizing:border-box;transform:rotate(${turn}deg)"></div>`;
+  const sheets =
+    sheet(18, TOP - 4, 372, HEIGHT + 8, -3.6, pile.warm) +
+    sheet(20, TOP - 2, 368, HEIGHT + 6, 3, pile.plain);
+  const page = await browser.newPage({
+    deviceScaleFactor: 2,
+    viewport: { width: WIDTH, height: HEIGHT + TOP + 40 },
+  });
+  await page.setContent(
+    `<body style="margin:0;background:transparent;position:relative">${sheets}<div style="position:absolute;left:0;top:${TOP}px;width:${WIDTH}px;height:${HEIGHT}px;border-radius:20px;background:${pile.plate};border:1px solid ${pile.edge};box-sizing:border-box"></div></body>`,
+  );
+  await page.screenshot({
+    path: `${root}email/pile-top-${room}.png`,
+    omitBackground: true,
+    clip: { x: 0, y: 0, width: WIDTH, height: TOP + 22 },
+  });
+  await page.setContent(
+    `<body style="margin:0;background:transparent;position:relative"><div style="position:absolute;left:0;top:${TOP + HEIGHT}px;width:${WIDTH}px;height:40px;overflow:hidden"><div style="position:absolute;left:0;top:-${TOP + HEIGHT}px;width:${WIDTH}px;height:${HEIGHT + TOP + 40}px">${sheets}</div></div></body>`,
+  );
+  await page.screenshot({
+    path: `${root}email/pile-foot-${room}.png`,
+    omitBackground: true,
+    clip: { x: 0, y: TOP + HEIGHT, width: WIDTH, height: 18 },
+  });
+}
 await browser.close();

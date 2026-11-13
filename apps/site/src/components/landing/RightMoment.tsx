@@ -14,7 +14,7 @@ export function RightMoment({ title, body }: Props) {
       <div className="mx-auto max-w-[1040px]">
         <div className="mx-auto max-w-[680px] text-center">
           <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-text-2">{body}</p>
+          <p className="mt-5 text-md text-ink-secondary">{body}</p>
         </div>
         <div className="mt-14">
           <WhyItWorks />

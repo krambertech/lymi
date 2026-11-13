@@ -24,7 +24,7 @@ export function Description({ text, className }: { text: string; className?: str
   const long = text.length > LONG;
   return (
     <div className={className}>
-      <p className={clsx("!mb-0 text-base text-text-2", long && !open && "line-clamp-3")}>
+      <p className={clsx("!mb-0 text-base text-ink-secondary", long && !open && "line-clamp-3")}>
         {inline(text)}
       </p>
       {long && (
@@ -32,7 +32,7 @@ export function Description({ text, className }: { text: string; className?: str
           type="button"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="mt-1 rounded-xs text-sm font-medium text-text hoverable:hover:underline"
+          className="mt-1 rounded-xs text-sm font-medium text-ink hoverable:hover:underline"
         >
           {open ? "Show less" : "Read more"}
         </button>

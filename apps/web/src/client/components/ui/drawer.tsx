@@ -1,6 +1,7 @@
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { cn } from "cn";
 import * as React from "react";
+import { usePortalContainer } from "./portal-container";
 
 type DrawerContextProps = {
   hasSnapPoints: boolean;
@@ -86,7 +87,7 @@ function DrawerSwipeHandle({ className, ...props }: React.ComponentProps<"div">)
       data-slot="drawer-swipe-handle"
       aria-hidden="true"
       className={cn(
-        "relative z-10 flex shrink-0 cursor-grab transition-opacity duration-200 group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 group-data-[swipe-axis=x]/drawer-popup:h-full group-data-[swipe-axis=x]/drawer-popup:w-4 group-data-[swipe-axis=x]/drawer-popup:items-center group-data-[swipe-axis=y]/drawer-popup:h-4 group-data-[swipe-axis=y]/drawer-popup:w-full group-data-[swipe-axis=y]/drawer-popup:justify-center group-data-[swipe-direction=down]/drawer-popup:items-end group-data-[swipe-direction=left]/drawer-popup:order-last group-data-[swipe-direction=left]/drawer-popup:justify-start group-data-[swipe-direction=right]/drawer-popup:justify-end group-data-[swipe-direction=up]/drawer-popup:order-last group-data-[swipe-direction=up]/drawer-popup:items-start after:block after:shrink-0 after:rounded-full after:bg-edge-2 group-data-[swipe-axis=x]/drawer-popup:after:h-9 group-data-[swipe-axis=x]/drawer-popup:after:w-1 group-data-[swipe-axis=y]/drawer-popup:after:h-1 group-data-[swipe-axis=y]/drawer-popup:after:w-9 active:cursor-grabbing",
+        "relative z-10 flex shrink-0 cursor-grab transition-opacity duration-200 group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 group-data-[swipe-axis=x]/drawer-popup:h-full group-data-[swipe-axis=x]/drawer-popup:w-4 group-data-[swipe-axis=x]/drawer-popup:items-center group-data-[swipe-axis=y]/drawer-popup:h-4 group-data-[swipe-axis=y]/drawer-popup:w-full group-data-[swipe-axis=y]/drawer-popup:justify-center group-data-[swipe-direction=down]/drawer-popup:items-end group-data-[swipe-direction=left]/drawer-popup:order-last group-data-[swipe-direction=left]/drawer-popup:justify-start group-data-[swipe-direction=right]/drawer-popup:justify-end group-data-[swipe-direction=up]/drawer-popup:order-last group-data-[swipe-direction=up]/drawer-popup:items-start after:block after:shrink-0 after:rounded-full after:bg-edge-strong group-data-[swipe-axis=x]/drawer-popup:after:h-9 group-data-[swipe-axis=x]/drawer-popup:after:w-1 group-data-[swipe-axis=y]/drawer-popup:after:h-1 group-data-[swipe-axis=y]/drawer-popup:after:w-9 active:cursor-grabbing",
         className,
       )}
       {...props}
@@ -202,9 +203,10 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
   const swipeAxis = swipeDirection === "down" || swipeDirection === "up" ? "y" : "x";
   const [popupEl, setPopupEl] = React.useState<HTMLElement | null>(null);
   useKeyboardInset(popupEl);
+  const container = usePortalContainer();
 
   return (
-    <DrawerPortal data-slot="drawer-portal">
+    <DrawerPortal data-slot="drawer-portal" container={container}>
       {modal === true && <DrawerOverlay data-snap-points={hasSnapPoints ? "" : undefined} />}
       <DrawerPrimitive.Viewport
         data-slot="drawer-viewport"
@@ -218,7 +220,7 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           data-snap-points={hasSnapPoints ? "" : undefined}
           className={cn(
             // Base.
-            "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
+            "group/drawer-popup edge-strong pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-ink transition-[transform,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
             // Keyboard: the software keyboard's height becomes bottom padding, so the foot of the
             // drawer, and any footer pinned to it, sits above the keys; the safe area is under them.
             // Only the closing slides, so a rising keyboard never covers the field Base UI aligns.
@@ -291,7 +293,7 @@ function DrawerTitle({ className, ...props }: DrawerPrimitive.Title.Props) {
   return (
     <DrawerPrimitive.Title
       data-slot="drawer-title"
-      className={cn("text-lg font-medium text-text", className)}
+      className={cn("text-lg font-medium text-ink", className)}
       {...props}
     />
   );
@@ -301,7 +303,7 @@ function DrawerDescription({ className, ...props }: DrawerPrimitive.Description.
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"
-      className={cn("text-base text-text-2", className)}
+      className={cn("text-base text-ink-secondary", className)}
       {...props}
     />
   );

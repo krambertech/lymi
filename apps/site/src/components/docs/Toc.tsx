@@ -80,7 +80,7 @@ export function Toc({ path }: { path: string }) {
 
   return (
     <nav aria-label="On this page" className="text-sm">
-      <p className="mb-2.5 px-2 text-xs font-medium text-muted">On this page</p>
+      <p className="mb-2.5 px-2 text-xs font-medium text-ink-muted">On this page</p>
       <ul className="grid list-none">
         {items.map((h) => (
           <li key={h.id}>
@@ -90,7 +90,7 @@ export function Toc({ path }: { path: string }) {
               className={clsx(
                 "block rounded-xs py-1.5 pr-2 transition-colors duration-150",
                 h.level === 3 ? "pl-5" : "pl-2",
-                active === h.id ? "text-text" : "text-muted hoverable:hover:text-text",
+                active === h.id ? "text-ink" : "text-ink-muted hoverable:hover:text-ink",
               )}
             >
               {h.text}

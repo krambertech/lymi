@@ -435,7 +435,7 @@ function Body({
 
   const faces = compact && !page && !searching && personas.length > 0 && (
     <fieldset aria-label="Become a persona" className="m-0 min-w-0 border-0 px-4 pt-3 pb-1">
-      <p className="pb-2 font-mono text-2xs tracking-wider text-muted uppercase">Become</p>
+      <p className="pb-2 font-mono text-2xs tracking-wider text-ink-muted uppercase">Become</p>
       <div className="grid grid-cols-6 gap-2.5">
         {personas.map((p) => (
           <button
@@ -482,9 +482,9 @@ function Body({
                 key={row.key}
                 {...list.optionProps(i)}
                 aria-disabled={blocked ? true : undefined}
-                className={clsx("gap-3 text-sm", blocked && "text-faint")}
+                className={clsx("gap-3 text-sm", blocked && "text-ink-faint")}
               >
-                <span className="grid size-6 shrink-0 place-items-center text-muted">
+                <span className="grid size-6 shrink-0 place-items-center text-ink-muted">
                   {row.kind === "persona" ? (
                     <PersonaAvatar
                       id={row.persona.id}
@@ -505,7 +505,7 @@ function Body({
                   {row.detail && (
                     <span
                       className={clsx(
-                        "block text-xs leading-snug text-muted",
+                        "block text-xs leading-snug text-ink-muted",
                         !compact && "truncate",
                       )}
                     >
@@ -513,7 +513,7 @@ function Body({
                     </span>
                   )}
                 </span>
-                <span className="shrink-0 text-xs text-muted">
+                <span className="shrink-0 text-xs text-ink-muted">
                   {working
                     ? "Working…"
                     : (blocked ??
@@ -524,9 +524,9 @@ function Body({
                       ) : switching && row.kind === "persona" && switching === row.persona.id ? (
                         "Switching…"
                       ) : row.kind === "command" ? (
-                        <span className="font-mono text-faint">{row.command.id}</span>
+                        <span className="font-mono text-ink-faint">{row.command.id}</span>
                       ) : row.kind === "persona" ? (
-                        <span className="font-mono text-faint">{row.persona.id}</span>
+                        <span className="font-mono text-ink-faint">{row.persona.id}</span>
                       ) : null))}
                 </span>
               </CommandItem>
@@ -574,7 +574,7 @@ function Body({
         lead={
           <span className="flex items-center gap-2">
             {page && !compact && (
-              <span className="rounded-sm bg-plate-2 px-1.5 py-0.5 font-mono text-xs text-text-2">
+              <span className="rounded-sm bg-plate-nested px-1.5 py-0.5 font-mono text-xs text-ink-secondary">
                 {page}
               </span>
             )}
@@ -605,12 +605,12 @@ function Body({
                   <span className="truncate font-medium">
                     {current?.name ?? state.data?.user.email}
                   </span>
-                  <span className="font-mono text-xs text-muted">
+                  <span className="font-mono text-xs text-ink-muted">
                     {current?.id ?? "real account"}
                   </span>
                 </p>
                 {c && (
-                  <p className="font-mono text-xs text-text-2">
+                  <p className="font-mono text-xs text-ink-secondary">
                     {c.cards.toLocaleString("en")} cards · {c.due.toLocaleString("en")} due ·{" "}
                     {c.reviews.toLocaleString("en")} reviews
                   </p>
@@ -618,7 +618,7 @@ function Body({
               </div>
             </>
           ) : (
-            <p className="text-sm text-text-2">
+            <p className="text-sm text-ink-secondary">
               {signedOut ? "Signed out. Pick a persona to sign in as them." : "Loading…"}
             </p>
           )}
@@ -640,14 +640,14 @@ function Body({
           role="status"
           className={clsx(
             "min-w-0 flex-1",
-            status?.tone === "danger" ? "text-danger" : "text-text-2",
+            status?.tone === "danger" ? "text-danger" : "text-ink-secondary",
           )}
         >
           {status?.text ??
             (personasFailed || commands.isError ? "Developer tools are unavailable." : "")}
         </p>
         {!compact && (
-          <p className="flex shrink-0 gap-3 text-muted">
+          <p className="flex shrink-0 gap-3 text-ink-muted">
             <span>
               <Kbd>↵</Kbd> run
             </span>
@@ -663,6 +663,8 @@ function Body({
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="rounded-sm bg-plate-2 px-1 font-mono text-2xs text-text-2">{children}</kbd>
+    <kbd className="rounded-sm bg-plate-nested px-1 font-mono text-2xs text-ink-secondary">
+      {children}
+    </kbd>
   );
 }

@@ -284,7 +284,7 @@ function Connect({
           <Trans>
             Open{" "}
             <Text
-              className="font-medium text-text underline"
+              className="font-medium text-ink underline"
               accessibilityRole="link"
               onPress={() => void openBrowserAsync(TOKEN_PAGE)}
             >
@@ -377,12 +377,12 @@ function ChoiceFace({ value, under = false }: { value: string; under?: boolean }
   return (
     <View className={`flex-row items-center gap-1 ${under ? "pt-1" : "max-w-[55%]"}`}>
       <Text
-        className={`shrink text-md ${under ? "font-medium text-text" : "text-muted"}`}
+        className={`shrink text-md ${under ? "font-medium text-ink" : "text-ink-muted"}`}
         numberOfLines={1}
       >
         {value}
       </Text>
-      <Icon name="down" size={16} colour={p.muted} />
+      <Icon name="down" size={16} colour={p["ink-muted"]} />
     </View>
   );
 }
@@ -407,7 +407,7 @@ function Books({
   return (
     <View className="gap-2">
       {yours.length === 0 && unplaced.length === 0 ? (
-        <Text className="px-1 text-base text-muted">
+        <Text className="px-1 text-base text-ink-muted">
           {t`No books in a language you’re learning yet. One appears here when you highlight in it.`}
         </Text>
       ) : (
@@ -419,10 +419,10 @@ function Books({
             return (
               <SettingRow key={book.id} first={i === 0}>
                 <View className="flex-1 gap-0.5">
-                  <Text className="text-md text-text" numberOfLines={1}>
+                  <Text className="text-md text-ink" numberOfLines={1}>
                     {title}
                   </Text>
-                  <Text className="text-sm text-muted" numberOfLines={1}>
+                  <Text className="text-sm text-ink-muted" numberOfLines={1}>
                     {book.author
                       ? t`${isolate(book.author)} · ${language} · ${count}`
                       : t`${language} · ${count}`}
@@ -446,10 +446,10 @@ function Books({
               trigger={
                 <SettingRow first={yours.length === 0 && i === 0}>
                   <View className="flex-1 gap-1">
-                    <Text className="text-md text-text" numberOfLines={1}>
+                    <Text className="text-md text-ink" numberOfLines={1}>
                       {book.title || t`Untitled`}
                     </Text>
-                    <Text className="text-sm text-muted">
+                    <Text className="text-sm text-ink-muted">
                       {t`Lymi couldn’t tell its language. Choose one to bring in its highlights.`}
                     </Text>
                     <ChoiceFace value={t`Choose a language`} under />
@@ -460,7 +460,7 @@ function Books({
           ))}
         </Plate>
       )}
-      <Text className="px-1 text-sm text-muted">
+      <Text className="px-1 text-sm text-ink-muted">
         {others > 0
           ? `${t`New highlights in the books you turn on become cards.`} ${plural(others, {
               one: "# other book isn’t in a language you’re learning.",
@@ -485,7 +485,7 @@ function Decks({
   const { t } = useLingui();
   if (connection.languages.length === 0) {
     return (
-      <Text className="px-1 text-base text-muted">
+      <Text className="px-1 text-base text-ink-muted">
         {t`None of your decks has a language yet. Give a deck one, and highlights in it can come in.`}
       </Text>
     );
@@ -507,7 +507,7 @@ function Decks({
             onChange={(id) => onDeck(language, id)}
             trigger={
               <SettingRow first={i === 0}>
-                <Text className="flex-1 text-md text-text">
+                <Text className="flex-1 text-md text-ink">
                   {t`${{ language: name }} highlights go to`}
                 </Text>
                 <ChoiceFace value={chosen ?? t`Choose a deck`} />

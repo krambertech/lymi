@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
-import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
+import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
+import { ReminderMessage } from "./reminders";
+import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -10,6 +11,7 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
   "Ke5PiWMwvkod6tYTzX5oUWi3gz5haGuI",
 ]);
 export { ANALYTICS_CONSENT_VERSION } from "./types";
+export { ReminderMessage };
 /** Carries the visit's first touch with a sign-up request, since no cookie does. */
 export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
 /** The phone's lists whose rows open a context menu on a long press. */
@@ -28,6 +30,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "open",
   "review",
   "add_card",
+  "select_cards",
   "play",
   "important",
   "edit",
@@ -37,6 +40,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "start_section",
   "rename_section",
   "reorder_sections",
+  "archive_section",
   "add_to_library",
   "restore",
 ] as const;
@@ -87,6 +91,13 @@ export const EMAIL_KINDS = [
   "content-report",
   "delete-account-code",
   "account-deleted",
+  "learning-first",
+  "learning-how",
+  "learning-nodeck",
+  "learning-new",
+  "learning-due",
+  "learning-back",
+  "learning-last",
 ] as const;
 const EmailKind = z.enum(EMAIL_KINDS);
 const slug = z
@@ -153,12 +164,25 @@ export function backlogOf(due: number): Backlog {
 }
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+/** Added beside it to name which of the day's messages was opened. */
+export const REMINDER_MESSAGE_KEY = "lymi_reminder";
+/** Added to an email's link as `from=email-<kind>`, since Lymi tracks no opens or clicks. */
+export const EMAIL_ENTRY_KEY = "from";
+const EMAIL_ENTRY_PREFIX = "email-";
+
+/** The kind of email a link names, ignoring a kind Lymi does not send. */
+export function emailEntryOf(params: URLSearchParams): z.infer<typeof EmailKind> | undefined {
+  const from = params.get(EMAIL_ENTRY_KEY);
+  if (!from?.startsWith(EMAIL_ENTRY_PREFIX)) return;
+  return EmailKind.safeParse(from.slice(EMAIL_ENTRY_PREFIX.length)).data;
+}
 
 type TextPrice = { input: number; cachedInput: number; output: number };
 
 /** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
 const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  "gpt-6.1-terra": { input: 1, cachedInput: 0.05, output: 5 },
   // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
   "claude-haiku-5-5": {
     input: 0.1,
@@ -166,7 +190,6 @@ const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above
     output: 0.5,
     longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
   },
-  "gemini-2.5-flash-lite": { input: 0.1, cachedInput: 0.01, output: 0.4 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -185,44 +208,17 @@ export function textCallCost(
   };
 }
 const usd = z.number().nonnegative().max(1000);
-type SpeechPrice =
-  | { perCharacter: number }
-  | { inputToken: number; audioToken: number; audioTokensPerSecond: number };
+// USD per million characters; OpenAI is absent because its speech endpoint returns no usage.
+const SPEECH_PRICES: Record<string, number> = { eleven_v4: 80 };
 
-// USD per million characters or tokens; OpenAI is absent because its speech endpoint returns no usage.
-const SPEECH_PRICES: Record<string, SpeechPrice> = {
-  "gemini-3.1-flash-tts-preview": { inputToken: 1, audioToken: 20, audioTokensPerSecond: 25 },
-  "chirp-3-hd": { perCharacter: 30 },
-  eleven_v4: { perCharacter: 80 },
-};
-
-/**
- * A speech call's cost in USD, or nothing for a model without a known price or a call missing the
- * usage its price needs. Audio tokens come from the call, or from the clip's length.
- */
+/** A speech call's cost in USD, or nothing for a model without a known price. */
 export function speechCallCost(
   model: string,
-  usage: {
-    characters: number;
-    inputTokens?: number | undefined;
-    outputTokens?: number | undefined;
-    audioSeconds?: number | undefined;
-  },
+  usage: { characters: number },
 ): { input: number; output: number } | undefined {
   const price = SPEECH_PRICES[model];
-  if (!price) return;
-  if ("perCharacter" in price)
-    return { input: (usage.characters * price.perCharacter) / 1e6, output: 0 };
-  const audioTokens =
-    usage.outputTokens ??
-    (usage.audioSeconds === undefined
-      ? undefined
-      : usage.audioSeconds * price.audioTokensPerSecond);
-  if (audioTokens === undefined) return;
-  return {
-    input: ((usage.inputTokens ?? 0) * price.inputToken) / 1e6,
-    output: (audioTokens * price.audioToken) / 1e6,
-  };
+  if (price === undefined) return;
+  return { input: (usage.characters * price) / 1e6, output: 0 };
 }
 
 /** The scheduler's card state before a grade, by its number in ts-fsrs. */
@@ -277,7 +273,8 @@ export const analyticsEvents = {
     $viewport_height: z.number().int().min(0).max(20_000),
   }),
   app_opened: z.object({
-    entry: z.enum(["reminder", "link", "direct"]).optional(),
+    entry: z.enum(["reminder", "email", "link", "direct"]).optional(),
+    from_email: EmailKind.optional(),
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
@@ -314,11 +311,22 @@ export const analyticsEvents = {
     count,
     ai_written: count,
   }),
-  reminder_sent: z.object({ backlog: Backlog }),
+  reminder_sent: z.object({ backlog: Backlog, message: ReminderMessage }),
+  reminder_opened: z.object({ message: ReminderMessage, client: z.enum(["web", "phone"]) }),
+  reminder_scheduled: z.object({
+    backlog: Backlog,
+    reminders: count,
+    /** Calendar days from now to the next reminder, 0 for later today. */
+    days_ahead: z.number().int().min(0).max(30),
+  }),
   email_sent: z.object({ kind: EmailKind, language: z.enum(["en", "uk", "ru"]) }),
   email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
   email_bounced: z.object({ kind: EmailKind.optional() }),
   email_complained: z.object({ kind: EmailKind.optional() }),
+  email_unsubscribed: z.object({
+    kind: EmailKind.optional(),
+    via: z.enum(["one_click", "footer", "settings", "bounce", "complaint"]),
+  }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -333,6 +341,14 @@ export const analyticsEvents = {
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
+  first_review_end_left: z.object({
+    step: z.enum(["summary", "goal", "remind", "bye"]),
+    left: z.enum(["done", "more_cards", "forgotten", "add_cards", "closed"]),
+    goal: count,
+    goal_changed: z.boolean(),
+    reminder: z.enum(["on", "off", "blocked", "unavailable"]),
+    tips_skipped: z.boolean(),
+  }),
   cards_added: z.object({
     source,
     count,
@@ -443,6 +459,12 @@ export const analyticsEvents = {
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
   }),
+  pitch_accent_filled: z.object({
+    outcome: z.enum(["filled", "empty", "failed"]),
+    count,
+    asked: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+  }),
   example_translated: z.object({
     outcome: z.enum(["translated", "empty", "failed"]),
     count,
@@ -480,6 +502,12 @@ export const analyticsEvents = {
   deck_purpose_set: z.object({
     purpose: z.enum(DECK_PURPOSES),
     created: z.boolean(),
+    channel: z.enum(["app", "api", "mcp"]),
+  }),
+  pronunciation_display_set: z.object({
+    display: z.enum(PRONUNCIATION_DISPLAYS),
+    notation: z.enum(READING_ENGINES),
+    owner: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
   lesson_read_limited: z.object({}),
@@ -532,8 +560,9 @@ export const analyticsEvents = {
       "pronunciation",
       "example_audio",
       "lead_in",
+      "pitch_accent",
     ]),
-    $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
+    $ai_provider: z.enum(["openai", "anthropic", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     // A speech call priced by characters reports no tokens.
     $ai_input_tokens: tokens.optional(),
@@ -554,7 +583,7 @@ export const analyticsEvents = {
     count: count.optional(),
   }),
   entry_opened: z.object({
-    entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
+    entry: z.enum(["control", "shortcut", "quick_action", "widget", "reminder"]),
     place: z.enum(["add", "review", "search"]),
   }),
   tag_added: z.object({
@@ -576,6 +605,8 @@ export const analyticsEvents = {
     how: z.enum(["card", "all"]),
   }),
   section_go_to: z.object({}),
+  section_page_opened: z.object({ from: z.enum(["tile", "heading", "step", "sections"]) }),
+  sections_opened: z.object({ from: z.enum(["deck", "settings"]) }),
   hint_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
     wait_ms: z.number().int().nonnegative().max(60_000),
@@ -654,14 +685,18 @@ export const analyticsProducers = {
   hint_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  reminder_scheduled: ["phone"],
+  reminder_opened: ["browser", "phone"],
   command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],
   email_bounced: ["worker"],
   email_complained: ["worker"],
+  email_unsubscribed: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
+  first_review_end_left: ["browser"],
   cards_added: ["worker"],
   card_added: ["worker"],
   welcome_step_viewed: ["browser", "phone"],
@@ -689,6 +724,7 @@ export const analyticsProducers = {
   section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  pitch_accent_filled: ["worker"],
   example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],
@@ -712,6 +748,8 @@ export const analyticsProducers = {
   app_page_viewed: ["browser", "phone"],
   app_activity_opened: ["browser", "phone"],
   section_go_to: ["phone"],
+  section_page_opened: ["phone"],
+  sections_opened: ["phone"],
   hint_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   example_audio_played: ["browser", "phone"],
@@ -720,6 +758,7 @@ export const analyticsProducers = {
   cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
+  pronunciation_display_set: ["worker"],
   entry_opened: ["phone"],
   account_deleted: ["worker"],
   former_deck_copied: ["worker"],
@@ -768,6 +807,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/flip",
+    "/unsubscribe",
     "/desktop",
     // Phone screens without a web page of their own.
     "/you",

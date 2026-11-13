@@ -147,6 +147,32 @@ describe("submitting a write", () => {
     }
   });
 
+  it("finds a local duplicate offline on a client with no navigator.onLine", async () => {
+    const { onlineManager, QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["decks"], [{ id: "deck", name: "Spanish", defaultLanguage: "es" }]);
+    qc.setQueryData(
+      ["decks", "deck", "cards"],
+      [
+        {
+          card: { id: "c1", deckId: "deck", term: "casa", normalizedTerm: "casa", language: "es" },
+        },
+      ],
+    );
+    w.bindWriteCache(qc);
+    // The phone: no browser connection flag, so Query's connection state is the only signal.
+    vi.stubGlobal("navigator", {});
+    onlineManager.setOnline(false);
+    try {
+      const same = await w.writes.addCard({ deckId: "deck", term: "casa" });
+      expect(same.outcome).toMatchObject({ status: "skipped", existing: { id: "c1" } });
+      expect(calls).toEqual([]);
+    } finally {
+      onlineManager.setOnline(true);
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("queues an offline add whose pronunciation differs from the local card's for the server", async () => {
     const { QueryClient } = await import("@tanstack/react-query");
     const qc = new QueryClient();
@@ -239,6 +265,27 @@ describe("flushing", () => {
     await vi.advanceTimersByTimeAsync(w.backoff(1));
     expect(calls).toEqual(["add b", "add a", "update a"]);
     expect(w.pendingWrites()).toBe(0);
+  });
+
+  it("tells who listens when a retry lands, though nobody is waiting on it", async () => {
+    vi.useFakeTimers();
+    answers.push(fail(503));
+    await w.submit(add("a"), "a");
+    const flushes: unknown[] = [];
+    const stop = w.onFlushed((flushed) => flushes.push(flushed));
+
+    flushGrades.mockResolvedValueOnce(2);
+    await vi.advanceTimersByTimeAsync(w.backoff(1));
+    stop();
+    expect(flushes).toEqual([expect.objectContaining({ sent: 1, waited: 0, graded: 2 })]);
+  });
+
+  it("says when a flush only sent the write its caller is waiting on", async () => {
+    const flushes: unknown[] = [];
+    const stop = w.onFlushed((flushed) => flushes.push(flushed));
+    await w.submit(add("a"), "a");
+    stop();
+    expect(flushes).toEqual([expect.objectContaining({ sent: 1, waited: 1, graded: 0 })]);
   });
 
   it("drops a refused create with everything that needed it, and says so once", async () => {

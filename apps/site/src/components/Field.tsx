@@ -41,10 +41,10 @@ export function Field({ label, hint, error, aside, children, className }: FieldP
     <Ctx.Provider value={{ id, hintId, errorId, invalid: !!error }}>
       <div className={clsx("grid gap-1.5", className)}>
         <div className="flex items-baseline justify-between gap-3">
-          <label htmlFor={id} className="text-sm font-medium text-text-2">
+          <label htmlFor={id} className="text-sm font-medium text-ink-secondary">
             {label}
           </label>
-          {aside && <span className="text-xs text-muted">{aside}</span>}
+          {aside && <span className="text-xs text-ink-muted">{aside}</span>}
         </div>
         {children}
         {error ? (
@@ -53,7 +53,7 @@ export function Field({ label, hint, error, aside, children, className }: FieldP
             <span>{error}</span>
           </p>
         ) : hint ? (
-          <p id={hintId} className="text-sm text-muted">
+          <p id={hintId} className="text-sm text-ink-muted">
             {hint}
           </p>
         ) : null}
@@ -63,9 +63,9 @@ export function Field({ label, hint, error, aside, children, className }: FieldP
 }
 
 export const controlBase =
-  "w-full rounded-md bg-plate text-text edge transition-[box-shadow,background-color] duration-150 " +
-  "placeholder:text-muted hoverable:hover:edge-2 focus-visible:edge-2 " +
-  "disabled:cursor-not-allowed disabled:bg-plate-2 disabled:text-muted " +
+  "w-full rounded-md bg-plate text-ink edge transition-[box-shadow,background-color] duration-150 " +
+  "placeholder:text-ink-muted hoverable:hover:edge-strong focus-visible:edge-strong " +
+  "disabled:cursor-not-allowed disabled:bg-plate-nested disabled:text-ink-muted " +
   "aria-invalid:shadow-[0_0_0_1px_var(--danger)]";
 
 /**
@@ -120,14 +120,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
       <span className="relative block">
         <select
           ref={ref}
-          className={clsx(controlBase, controlSize, "appearance-none pl-3.5 pr-9", className)}
+          className={clsx(controlBase, controlSize, "appearance-none ps-3.5 pe-9", className)}
           {...props}
           {...a11y}
         >
           {children}
         </select>
         <ChevronDown
-          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+          className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
           aria-hidden="true"
         />
       </span>

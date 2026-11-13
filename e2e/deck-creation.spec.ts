@@ -171,6 +171,12 @@ test.describe("deck and card creation", () => {
     await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).press("Escape");
     await expect(dialog).toBeHidden();
+    // The sheet hands focus back to the page heading after it has gone. WebKit can do that a
+    // beat later, and an Add click in that gap opens the menu only for the returning focus to
+    // close it again, so wait for focus to land first.
+    await expect(
+      page.getByRole("heading", { level: 1, name: firstName, exact: true }),
+    ).toBeFocused();
 
     await openNewCard(page);
     dialog = sheet(page, "Add a card");

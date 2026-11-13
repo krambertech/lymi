@@ -7,6 +7,7 @@ export * from "./activity";
 export * from "./cards";
 export * from "./connected-apps";
 export * from "./decks";
+export * from "./email";
 export * from "./explore";
 export * from "./exports";
 export { importPreviewQuery, importQuery, previewState, usePreviewState } from "./imports";

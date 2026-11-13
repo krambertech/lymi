@@ -109,10 +109,10 @@ function Tile({ trigger, hue, title, body, Demo, layout, interactive, className 
       )}
     >
       <div className="min-w-0">
-        <h3 className="text-md leading-tight font-medium tracking-[-0.015em] text-balance text-text">
+        <h3 className="text-md leading-tight font-medium tracking-[-0.015em] text-balance text-ink">
           {title}
         </h3>
-        {body && <p className="mt-1 text-sm text-pretty text-text-2">{body}</p>}
+        {body && <p className="mt-1 text-sm text-pretty text-ink-secondary">{body}</p>}
       </div>
       <div
         aria-hidden={interactive ? undefined : true}
@@ -146,7 +146,7 @@ export function FeatureBento() {
           <SectionTitle>
             <Trans>Small things, done well.</Trans>
           </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">
+          <p className="mt-5 text-md text-pretty text-ink-secondary">
             <Trans>Details you notice after a week of reviews.</Trans>
           </p>
         </div>
@@ -156,10 +156,10 @@ export function FeatureBento() {
             className="use-case-tile col-span-2 flex min-w-0 flex-col overflow-hidden rounded-[20px] p-5 @4xl:col-span-6 @4xl:row-span-2"
           >
             <div>
-              <h3 className="text-xl leading-tight font-medium tracking-[-0.02em] text-text">
+              <h3 className="text-xl leading-tight font-medium tracking-[-0.02em] text-ink">
                 <Trans>Learn the same deck together</Trans>
               </h3>
-              <p className="mt-1 max-w-[42ch] text-sm text-pretty text-text-2">
+              <p className="mt-1 max-w-[42ch] text-sm text-pretty text-ink-secondary">
                 <Trans>
                   Share a deck with your class, your team or a friend. One of you adds the cards,
                   and everyone reviews on their own schedule.

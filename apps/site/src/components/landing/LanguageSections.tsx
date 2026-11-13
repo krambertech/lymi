@@ -57,19 +57,18 @@ export function LanguageHero({
   return (
     <div className="relative overflow-x-clip">
       {/* The lantern's light, pooled behind the hand. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_62%_at_74%_56%,var(--color-pool),transparent_70%)]"
-      />
+      <span aria-hidden="true" className="language-pool pointer-events-none absolute inset-0" />
       <div className="relative mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-20 @2xl:px-10 @4xl:pt-20 @5xl:min-h-[660px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,500px)] @5xl:gap-14">
         <div className="min-w-0 max-w-[560px]">
           {kicker}
           <h1
-            className={`${narrow ? "max-w-[460px]" : "max-w-[480px]"} text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[3.5rem] @4xl:leading-[1.02]`}
+            className={`${narrow ? "max-w-[460px]" : "max-w-[480px]"} text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[3.5rem] @4xl:leading-[1.02]`}
           >
             {title}
           </h1>
-          <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
+          <p className="mt-6 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
+            {lede}
+          </p>
           <div className="mt-8 flex flex-wrap gap-2.5">
             <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
               <Trans>Get started</Trans>
@@ -102,7 +101,7 @@ interface ReturnProps {
 export function ReturnSection({ lang, term }: ReturnProps) {
   return (
     <Wide
-      title={<Trans>It comes back just before you’d forget.</Trans>}
+      title={<Trans>It comes back just as it starts to fade.</Trans>}
       body={
         <Trans>
           Each time you remember a word, Lymi waits a little longer before showing it again. A few
@@ -181,12 +180,12 @@ export function OwnAiSection({ body, attachment, ask, card, added, waiting, api 
         api ? (
           <>
             <AssistantMarksWithMore />
-            <p className="mt-8 text-md text-pretty text-text-2">
+            <p className="mt-8 text-md text-pretty text-ink-secondary">
               <Trans>
                 Building something of your own? Lymi has a full API.{" "}
                 <a
                   href="/docs/api"
-                  className="font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-text"
+                  className="font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-ink"
                 >
                   Read the API docs
                 </a>
@@ -237,7 +236,7 @@ export function TogetherSection({ name, language, cards, body }: TogetherProps) 
       body={
         body ?? (
           <Trans>
-            Study a deck with your class, your tutor or a friend. One of you adds the words after
+            Review a deck with your class, your tutor or a friend. One of you adds the words after
             each lesson and shares a link, and everyone reviews on their own schedule.
           </Trans>
         )

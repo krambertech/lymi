@@ -191,7 +191,7 @@ export function ExportSheet({
     body = (
       <View className="gap-3 px-4 pb-2" accessibilityLiveRegion="polite">
         <Sweep label={t`Writing the file`} />
-        <Text className="text-base text-text-2">
+        <Text className="text-base text-ink-secondary">
           {t`Writing ${isolate(current.fileName)}. You can close this. The file stays in Activity for a day.`}
         </Text>
       </View>
@@ -213,14 +213,14 @@ export function ExportSheet({
             accessible
             accessibilityLabel={`${current.fileName}, ${plural(cards, { one: "# card", other: "# cards" })}`}
           >
-            <View className="size-9 items-center justify-center rounded-full bg-good-soft">
-              <Icon name="check" size={16} colour={p.good} strokeWidth={2.5} />
+            <View className="size-9 items-center justify-center rounded-full bg-success-soft">
+              <Icon name="check" size={16} colour={p.success} strokeWidth={2.5} />
             </View>
             <View className="flex-1 gap-0.5">
-              <Text className="text-md font-medium text-text" numberOfLines={1}>
+              <Text className="text-md font-medium text-ink" numberOfLines={1}>
                 {current.fileName}
               </Text>
-              <Text className="text-sm text-muted">
+              <Text className="text-sm text-ink-muted">
                 {t`${plural(cards, { one: "# card", other: "# cards" })} · ${fileSize(current.byteSize ?? 0)}`}
               </Text>
             </View>

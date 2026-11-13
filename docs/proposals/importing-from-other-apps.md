@@ -6,17 +6,17 @@ decision: "issues [#227](https://github.com/krambertech/lymi/issues/227), [#228]
 
 # Import from Anki and Mochi, and export
 
-A learner brings their Anki or Mochi collection into Lymi by handing over the file their app exports, and takes everything out again in a form Anki and Mochi can read. Cards, decks, tags, pictures and review history survive the move. The first importer also lays the foundation every later source reuses, so adding one is one adapter and one guide, not another pipeline.
+A learner brings their Anki or Mochi collection into Lymi by handing over the file their app exports, and takes everything out again in a form Anki and Mochi can read. Cards, decks, tags, pictures and review history survive the move. Later sources reuse the same import pipeline, adding a source adapter and guide.
 
 ## Decisions
 
-- **The server does the work.** The file goes to R2, a Cloudflare Workflow parses it and writes in chunks, and the app shows progress by polling the import. Big files exceed the request limit, so the app sends them in parts. This delivery constraint is accepted. A Worker still has 128 MB of memory, so the collection's SQLite is held in memory while media streams from the zip; a collection past roughly 80 MB is asked to come back exported per deck.
+- **The server does the work.** The file goes to R2, a Cloudflare Workflow parses it and writes in chunks, and the app shows progress by polling the import. Big files exceed the request limit, so the app sends them in parts. This delivery constraint is accepted. A Worker still has 128 MB of memory, so the collection's SQLite is held in memory while media streams from the zip; a collection larger than roughly 80 MB must be exported and imported one deck at a time.
 - **Accept whatever the app exports.** Anki `.apkg` and `.colpkg` in both container formats, Mochi `.mochi`. The learner picks or drops the file in the app; the API takes the same upload for scripts. Nothing is converted by hand first.
 - **An import is one thing.** It has a row with source, file name, status, counts and warnings, appears in Activity, and archiving it archives every card it added. Each imported card keeps its external id, so a second import of the same file updates instead of duplicating.
 - **One card shape for every source.** A source adapter detects its file, inspects it into a preview, and reads it into the common imported-card shape. One writer maps that shape onto cards, states, reviews and pictures with the duplicate rule of ADR 0004. Mochi, and later spreadsheets or a Lymi zip, add an adapter and nothing below it.
 - **Progress replays.** Each grade in the source's log runs through Lymi's scheduler, so every review row carries Lymi's memory state and there is one scheduler. Imported reviews are `source: import` with no review day: they show in Insights and light past days, and never count toward today's goal. Exported stability and difficulty are used only for a card with state but no log.
 - **Language is chosen per import**, overridable per deck in the preview. Anki has no language; Lymi needs one for duplicates, audio and enrichment.
-- **The preview tells the truth first.** Before anything is written: cards, decks, tags, pictures and reviews coming across; duplicates; what is dropped or shortened. Imported text is labelled `manual`, never `lesson` or `ai`.
+- **The preview shows what will transfer.** Before anything is written: cards, decks, tags, pictures and reviews coming across; duplicates; what is dropped or shortened. Imported text is labelled `manual`, never `lesson` or `ai`.
 - **Export is complete.** A Lymi zip with JSON and media, recordings included, that Lymi itself can import back, and a legacy Anki `.apkg` with scheduling and media that Anki, Mochi, RemNote and Noji read. CSV stays for spreadsheets. Files download only through an authenticated route.
 - **Each source ships with a guide** in the public docs: how to export from that app, what carries over, what does not.
 
@@ -29,7 +29,13 @@ A learner brings their Anki or Mochi collection into Lymi by handing over the fi
 | Mochi | Zip, `data.json` version 2 plus `attachments/` | Markdown `content` split by `---`, `fields`, `manual-tags`, nested decks by `parent-id`, `review-reverse?` | `reviews` of `date`, `due`, `interval`, `remembered?` | Attachments folder |
 | Noji | Zip, `deck_export_data` zstd JSON (older exports: `deck_data.json`) plus `attachments.zip` | Array of decks with `ancestry` parent ids; notes with HTML `fields.front_side` and `back_side` and `note_attachments` | `progresses` of `learning_state`, `next_review_at`, `interval` in minutes, `ease_factor`, `frozen`; no log | Inner zip, named by the attachment URL's file name |
 
-Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is a plain spreadsheet and whose `.ofc` Noji does not document; its shape was read on 13 October 2026 from the open-source [Noji-to-Anki](https://github.com/NickDerWerner/Noji-to-Anki) converter, so how reversed cards and image occlusion appear is unconfirmed until a real export is read. A Noji card with a schedule arrives with its due date and its interval as stability, as an Anki card without FSRS does; a learning card starts new, a cloze in the front's `{{c1::}}` syntax becomes a card per deletion, and a note with no text is counted as image occlusion. RemNote and Language Reactor export `.apkg`, so the Anki importer receives them. Quizlet exports pasted text only, and Memrise, Knowt and Reword export nothing usable; text sources are a later adapter. No JavaScript package reads the current Anki container, so the adapter is built on `sql.js` and `fzstd` with a small protobuf decoder. Sources were read on 15 September 2026 from the Anki source tree, the AnkiDroid database wiki and Mochi's format reference.
+Noji, formerly AnkiPro, is separate from Anki. It exports a plain CSV and an undocumented `.ofc` format. The `.ofc` structure was read on 13 October 2026 from the open-source [Noji-to-Anki](https://github.com/NickDerWerner/Noji-to-Anki) converter, so how reversed cards and image occlusion appear is unconfirmed until a real export is read.
+
+A Noji card with a schedule arrives with its due date and its interval as stability, as an Anki card without FSRS does; a learning card starts new, a cloze in the front's `{{c1::}}` syntax becomes a card per deletion, and a note with no text is counted as image occlusion.
+
+RemNote and Language Reactor export `.apkg`, so the Anki importer receives them. Quizlet exports pasted text only, and Memrise, Knowt and Reword export nothing usable; text sources are a later adapter.
+
+No JavaScript package reads the current Anki container, so the adapter is built on `sql.js` and `fzstd` with a small protobuf decoder. Sources were read on 15 September 2026 from the Anki source tree, the AnkiDroid database wiki and Mochi's format reference.
 
 ## Mapping
 

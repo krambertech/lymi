@@ -21,9 +21,9 @@ export function TimePicker({ label, value, onChange }: TimePickerProps) {
         onPress={() => setOpen(true)}
         accessibilityRole="button"
         accessibilityLabel={`${label}, ${shown}`}
-        className="rounded-lg bg-hover px-3 py-1.5"
+        className="rounded-lg bg-plate-hover px-3 py-1.5"
       >
-        <Text className="text-md text-text" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-md text-ink" style={{ fontVariant: ["tabular-nums"] }}>
           {shown}
         </Text>
       </Press>

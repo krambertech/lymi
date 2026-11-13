@@ -31,13 +31,13 @@ export function StartPanel({
   return (
     <section
       className={clsx(
-        "grid gap-4 rounded-xl border-[1.5px] border-dashed border-edge-2 p-5",
+        "grid gap-4 rounded-xl border-[1.5px] border-dashed border-edge-strong p-5",
         className,
       )}
     >
       {icon && (
         <span
-          className="edge-inset grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5 [&_svg]:stroke-[1.75]"
+          className="edge-inset grid size-11 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-5 [&_svg]:stroke-[1.75]"
           aria-hidden="true"
         >
           {icon}
@@ -47,7 +47,7 @@ export function StartPanel({
         {lead}
         <div className="grid min-w-0 gap-0.5">
           <h2 className="text-lg font-medium leading-snug text-balance">{title}</h2>
-          {body && <p className="text-base text-text-2 text-pretty">{body}</p>}
+          {body && <p className="text-base text-ink-secondary text-pretty">{body}</p>}
         </div>
       </div>
       {action}
@@ -62,5 +62,5 @@ interface StartPanelSectionProps {
 
 /** A section of a start panel, under a dashed rule. */
 export function StartPanelSection({ children }: StartPanelSectionProps) {
-  return <div className="border-t border-dashed border-edge-2 pt-3">{children}</div>;
+  return <div className="border-t border-dashed border-edge-strong pt-3">{children}</div>;
 }

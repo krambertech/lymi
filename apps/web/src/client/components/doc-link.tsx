@@ -5,7 +5,7 @@ export function DocLink({ href, children }: { href: string; children: ReactNode 
   return (
     <a
       href={href}
-      className="text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+      className="text-ink underline decoration-edge-strong underline-offset-2 hoverable:hover:decoration-current"
     >
       {children}
     </a>

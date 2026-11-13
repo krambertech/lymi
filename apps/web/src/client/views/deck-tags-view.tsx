@@ -85,7 +85,7 @@ export function DeckTagsView({
         <div className="grid gap-8">
           <div className="relative">
             <Search
-              className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+              className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
               aria-hidden="true"
             />
             <Input
@@ -131,7 +131,7 @@ export function DeckTagsView({
                 </TagRow>
               ))}
               {shown.length === 0 && (
-                <li className="px-4 py-3.5 text-base text-muted">
+                <li className="px-4 py-3.5 text-base text-ink-muted">
                   <Trans>No tag matches “{{ query: isolate(query) }}”.</Trans>
                 </li>
               )}
@@ -185,13 +185,13 @@ function TagRow({
       <span
         className={
           muted
-            ? "min-w-0 flex-1 truncate text-base text-text-2"
+            ? "min-w-0 flex-1 truncate text-base text-ink-secondary"
             : "min-w-0 flex-1 truncate text-base font-medium"
         }
       >
         {tag.name}
       </span>
-      <span className="shrink-0 text-sm text-muted tabular-nums">
+      <span className="shrink-0 text-sm text-ink-muted tabular-nums">
         <Plural value={tag.cards} one="# card" other="# cards" />
       </span>
       {children}

@@ -70,7 +70,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the cue alone.
 2. On reveal the cue glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the reveal-divider animation. On the phone it draws in `edge-2` from the start, with no amber.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-strong` over the next 700 ms. This is the reveal-divider animation. On the phone it draws in `edge-strong` from the start, with no amber.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 
@@ -108,6 +108,8 @@ Review completion uses a single sequence lasting about three seconds. It confirm
 | 2.1 s | The spark lands: today's light fills from where the day stood, flares with the lantern's glow, swells to 1.08 and throws ten flecks that tumble and fall away. |
 | 2.26 s | A smaller spark hops from today's light on to the run's flame over 440 ms. |
 | 2.7 s | The run's flame catches, swelling past its full size and back with three sparks off its tip, and the run rolls up by one, amber for a moment before it cools to its ink. |
+
+The first review's end pins this sequence: the lantern lands at the top of the column and holds there through the screens after it, whose content rises out of a blur over 280 ms. The last of them throws a second burst of embers. [Getting started](../onboarding.md#the-first-review) has the screens.
 
 Play the goal-completion spark once per day, when review first satisfies the day. It connects the lantern, today’s indicator and streak count. Particle glow lasts 200 ms, then the particles use flat fills. Shared `END_OF_REVIEW`, `sparkAt` and `lightBurst` in `@lymi/design` define timing and geometry. Wait for the last grade to reach the server and, on exhaustion, for a successful draw check before showing completion. Keep the header stable during that wait. The first tap or key skips to the final state. Continue and Review forgotten return the lantern to the header.
 

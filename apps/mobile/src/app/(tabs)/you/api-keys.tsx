@@ -112,7 +112,7 @@ export default function ApiKeys() {
         </Plate>
       )}
 
-      <Text className="-mt-4 px-1 text-base text-muted">
+      <Text className="-mt-4 px-1 text-base text-ink-muted">
         {t`Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews.`}
       </Text>
 
@@ -171,12 +171,12 @@ function KeyRow({
     >
       <View className="flex-1 gap-1">
         <View className="flex-row flex-wrap items-center gap-2">
-          <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+          <Text className="shrink text-md font-medium text-ink" numberOfLines={1}>
             {name}
           </Text>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </View>
-        <Text className="text-sm text-muted" numberOfLines={2}>
+        <Text className="text-sm text-ink-muted" numberOfLines={2}>
           {item.start ? `${item.start}… · ` : ""}
           {t`${used} · created ${created}`}
         </Text>
@@ -210,17 +210,17 @@ function FreshKey({
   return (
     <Plate className="gap-3 p-4">
       <View className="flex-row items-start gap-3">
-        <View className="size-9 items-center justify-center rounded-full bg-good-soft">
-          <Icon name="keys" size={18} colour={p.good} />
+        <View className="size-9 items-center justify-center rounded-full bg-success-soft">
+          <Icon name="keys" size={18} colour={p.success} />
         </View>
-        <Text className="flex-1 text-base text-text" accessibilityLiveRegion="polite">
+        <Text className="flex-1 text-base text-ink" accessibilityLiveRegion="polite">
           {t`${{ name: isolate(name) }} is ready. Copy it now. You won’t see it again.`}
         </Text>
       </View>
-      <View className="rounded-md bg-plate-2 px-3 py-2.5">
+      <View className="rounded-md bg-plate-nested px-3 py-2.5">
         <Text
           selectable
-          className="text-sm text-text"
+          className="text-sm text-ink"
           style={{ fontFamily: "Menlo" }}
           accessibilityLabel={t`API key for ${name}`}
         >

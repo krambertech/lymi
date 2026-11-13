@@ -2,7 +2,7 @@ import { z } from "zod";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch } from "./types";
 
-export const LEAD_IN_MODEL = "gemini-2.5-flash-lite";
+export const LEAD_IN_MODEL = "gpt-6-luna";
 
 export interface LeadInUsage {
   inputTokens: number;
@@ -33,71 +33,68 @@ export class LeadInError extends Error {
 }
 
 const Usage = z.object({
-  usageMetadata: z
+  usage: z
     .object({
-      promptTokenCount: z.number().optional(),
-      candidatesTokenCount: z.number().optional(),
-      thoughtsTokenCount: z.number().optional(),
+      prompt_tokens: z.number().optional(),
+      completion_tokens: z.number().optional(),
+      completion_tokens_details: z.object({ reasoning_tokens: z.number().optional() }).optional(),
     })
     .optional(),
 });
 const Payload = z.object({
-  candidates: z
+  choices: z
     .array(
       z.object({
-        finishReason: z.literal("STOP"),
-        content: z.object({
-          parts: z.array(
-            z.object({ text: z.string().optional(), thought: z.boolean().optional() }),
-          ),
-        }),
+        finish_reason: z.literal("stop"),
+        message: z.object({ content: z.string() }),
       }),
     )
     .min(1),
 });
 const Reply = z.object({ previousText: z.string().nullable() });
 const NO_USAGE = { inputTokens: 0, outputTokens: 0, reasoningTokens: 0 };
+const REPLY_SCHEMA = {
+  type: "object",
+  properties: { previousText: { type: ["string", "null"] } },
+  required: ["previousText"],
+  additionalProperties: false,
+};
 
-/** One Gemini call that writes the words said before a term, never after it. */
+/** One OpenAI call that writes the words said before a term, never after it. */
 export function createLeadInWriter(
-  env: AiGatewayBindings & { GEMINI_API_KEY?: string | undefined },
+  env: AiGatewayBindings & { OPENAI_API_KEY?: string | undefined },
   request: Fetch = fetch,
 ): LeadInWriter | null {
-  const key = env.GEMINI_API_KEY?.trim();
+  const key = env.OPENAI_API_KEY?.trim();
   if (!key) return null;
   return {
     model: LEAD_IN_MODEL,
     async write({ instructions, input }) {
-      const endpoint = providerEndpoint(env, "google-ai-studio");
-      const response = await request(
-        `${endpoint.base}/v1beta/models/${LEAD_IN_MODEL}:generateContent`,
-        {
-          method: "POST",
-          redirect: "manual",
-          headers: {
-            "x-goog-api-key": key,
-            "Content-Type": "application/json",
-            ...endpoint.headers,
-          },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: instructions }] },
-            contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-            generationConfig: {
-              responseMimeType: "application/json",
-              responseSchema: {
-                type: "OBJECT",
-                properties: { previousText: { type: "STRING", nullable: true } },
-                required: ["previousText"],
-              },
-              temperature: 0,
-              maxOutputTokens: 768,
-              thinkingConfig: { thinkingBudget: 512 },
-            },
-          }),
-          // With the decision, leaves the speech call room inside the phone's 12-second wait.
-          signal: AbortSignal.timeout(4_000),
+      const endpoint = providerEndpoint(env, "openai");
+      const response = await request(`${endpoint.base}/chat/completions`, {
+        method: "POST",
+        redirect: "manual",
+        headers: {
+          Authorization: `Bearer ${key}`,
+          "Content-Type": "application/json",
+          ...endpoint.headers,
         },
-      );
+        body: JSON.stringify({
+          model: LEAD_IN_MODEL,
+          reasoning_effort: "low",
+          max_completion_tokens: 768,
+          messages: [
+            { role: "system", content: instructions },
+            { role: "user", content: JSON.stringify(input) },
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: { name: "lead_in", strict: true, schema: REPLY_SCHEMA },
+          },
+        }),
+        // With the decision, leaves the speech call room inside the phone's 12-second wait.
+        signal: AbortSignal.timeout(4_000),
+      });
       const status = response.status;
       if (!response.ok || !response.body) {
         await response.body?.cancel();
@@ -132,21 +129,15 @@ export function createLeadInWriter(
       } catch {
         throw new LeadInError("failed", { ...NO_USAGE, status });
       }
-      const metadata = Usage.safeParse(body).data?.usageMetadata;
-      const thoughts = metadata?.thoughtsTokenCount ?? 0;
+      const metered = Usage.safeParse(body).data?.usage;
       const usage: LeadInUsage = {
-        inputTokens: metadata?.promptTokenCount ?? 0,
-        // Gemini bills thinking as output.
-        outputTokens: (metadata?.candidatesTokenCount ?? 0) + thoughts,
-        reasoningTokens: thoughts,
+        inputTokens: metered?.prompt_tokens ?? 0,
+        outputTokens: metered?.completion_tokens ?? 0,
+        reasoningTokens: metered?.completion_tokens_details?.reasoning_tokens ?? 0,
         status,
       };
       try {
-        const payload = Payload.parse(body);
-        const text = payload.candidates[0]?.content.parts
-          .filter((p) => !p.thought)
-          .map((p) => p.text ?? "")
-          .join("");
+        const text = Payload.parse(body).choices[0]?.message.content;
         return { previousText: Reply.parse(JSON.parse(text ?? "")).previousText, ...usage };
       } catch {
         throw new LeadInError("refused", usage);

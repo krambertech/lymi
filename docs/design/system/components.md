@@ -6,7 +6,7 @@ Look here before building anything: if a component below does the job, use it, a
 
 `components/ui` holds shadcn components on Base UI, one file per primitive, added with `pnpm dlx shadcn@latest add <name>` from `apps/web`. The file is ours once added.
 
-- Keep its export names, parts, data attributes and `render` composition; rewrite its classes to Lymi's tokens. Never add shadcn's colour variables: `muted` already names a text colour here, and two vocabularies would drift.
+- Keep its export names, parts, data attributes and `render` composition; rewrite its classes to Lymi's tokens. Never add shadcn's colour variables: `ink-muted` already names a text colour here, and two vocabularies would drift.
 - The state variants generated classes use, such as `data-open:` and `data-horizontal:`, are copied from `shadcn/tailwind.css` into `styles.css`, because without them those classes match nothing and fail silently. Each matches Base UI's presence attributes, such as an empty `data-selected`, as well as Radix-style values.
 - `pnpm dlx shadcn@latest add <name> --diff` shows what changed upstream, and an update is merged by hand.
 - A primitive that changes shape by device keeps both shapes in its own file, behind shadcn's part names, and tests every part in both.
@@ -29,6 +29,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 | A group on a settings screen | `SettingsGroup` | `settings-group.tsx` | |
 | A string to copy (an API key) | `CopyField` | `copy-field.tsx` | [type.md](type.md#monospace) |
 | A card term or example, with its language's reading, stress and direction | `TermText`, `ExampleText` | `term-text.tsx` | [type.md](type.md#languages-readings-and-stress) |
+| A card's example as an inset block with its translation and speaker | `ExampleLines` | `example-lines.tsx` | [layout.md](layout.md) |
 | A label | `Chip`, `StateChip`, `SourceChip`, `DueCount`, `Kbd`, `StateIcon` | `chip.tsx` and others | [chips-and-marks.md](chips-and-marks.md) |
 | A notice inside a screen, or a few sentences behind an info button | `Notice` (`neutral`, `warning`), `InfoTip` | `notice.tsx`, `info-tip.tsx` | [colour.md](colour.md#amber-means-act) for the warning |
 | Today before the first review | `FirstRunGuide` (web), `StartGuide` (phone) | `first-run.tsx`; phone: `apps/mobile/src/welcome/start-guide.tsx` | [empty-states.md](empty-states.md#first-run-guide) |

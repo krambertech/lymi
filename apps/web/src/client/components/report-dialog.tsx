@@ -119,7 +119,7 @@ function ReportForm({
           {reasons.map((option) => (
             <Field key={option.value} orientation="horizontal" className="min-h-11">
               <RadioGroupItem value={option.value} />
-              <FieldLabel className="text-base text-text">{option.label}</FieldLabel>
+              <FieldLabel className="text-base text-ink">{option.label}</FieldLabel>
             </Field>
           ))}
         </RadioGroup>
@@ -142,7 +142,7 @@ function ReportForm({
       {send.isError && (
         <div
           role="alert"
-          className="grid gap-1 rounded-lg bg-danger-soft px-3.5 py-3 text-sm text-text-2"
+          className="grid gap-1 rounded-lg bg-danger-soft px-3.5 py-3 text-sm text-ink-secondary"
         >
           <span className="flex items-center gap-2 font-medium text-danger">
             <CircleAlert className="size-4 shrink-0" aria-hidden="true" />

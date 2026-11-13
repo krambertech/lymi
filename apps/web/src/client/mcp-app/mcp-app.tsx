@@ -88,7 +88,7 @@ function applyHostContext(context: { theme?: "light" | "dark" | undefined }) {
 }
 
 function Message({ children }: { children: ReactNode }) {
-  return <p className="p-4 text-sm text-text-2">{children}</p>;
+  return <p className="p-4 text-sm text-ink-secondary">{children}</p>;
 }
 
 function Loading() {

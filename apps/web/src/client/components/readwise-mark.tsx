@@ -22,7 +22,7 @@ export function ReadwiseMark({
     <span
       aria-hidden="true"
       className={clsx(
-        "grid shrink-0 place-items-center text-text",
+        "grid shrink-0 place-items-center text-ink",
         !bare && "edge rounded-lg bg-plate",
         className,
       )}

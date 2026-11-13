@@ -2,9 +2,9 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { FilterContext } from "@lymi/client/deck-filters";
 import {
   activeFilterCount,
-  chosenReview,
   type DeckFilters,
   type DeckRow,
+  type DeckScope,
   type DeckSort,
   deckCsv,
   deckCsvName,
@@ -14,6 +14,7 @@ import {
   liveFilters,
   noFilters,
   rowState,
+  scopedFilters,
 } from "@lymi/client/deck-list";
 import { CHOSEN_LIMIT, type ContentReportTarget, isolate, type KnownReadings } from "@lymi/core";
 import { clsx } from "clsx";
@@ -85,9 +86,12 @@ import {
 import { Input } from "../components/ui/input";
 import type { DeckSummary, Section, Sections } from "../lib/api";
 import { captureAnalytics } from "../lib/telemetry";
+import { useCardSelection } from "../lib/use-card-selection";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { type WordHistory, WordView } from "./word-view";
 
+/** Stable, so a section's list tools do not redraw on every render. */
+const NO_SECTIONS: Section[] = [];
 /** The narrowest list that still keeps meanings beside words; narrower than it and a card, the card is a sheet. */
 const LIST_PX = 640;
 const CARD_PX = 400;
@@ -145,6 +149,8 @@ export interface DeckDetailProps {
   retryPending?: boolean | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
+  /** A section's id narrows the list to that section; without one it shows the whole deck. */
+  scope?: Pick<DeckScope, "sectionId"> | undefined;
 }
 
 /** What the owner does to the deck and its cards; the route holds the sheets and dialogs. */
@@ -172,7 +178,7 @@ export interface DeckMemberActions {
 }
 
 /** What the owner does to sections from the deck page; the route holds the dialogs. */
-export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> {
+export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards" | "several"> {
   onCreate: () => void;
   onPickSection: (cardIds: string[]) => void;
   onMoveCards: (cardIds: string[], section: Section | null) => void;
@@ -292,8 +298,8 @@ function DeckPlates({
   section?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
-  const summary = useTodayStatus(streak);
-  // A summary fetched before these cards arrived would say nothing is due beside a count that is not zero.
+  const summary = useTodayStatus(streak, deck.due);
+  // A day confirmed as nothing due shows no goal line here, even once this deck has cards due.
   const status = deck.due > 0 && streak?.today.outcome === "nothing_due" ? "" : summary;
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
@@ -311,13 +317,13 @@ function DeckPlates({
               {i18n.number(due)}
             </p>
             <div className="grid min-w-0 flex-1 gap-0.5">
-              <p className="text-md text-text">
+              <p className="text-md text-ink">
                 <Plural value={due} one="card to review now" other="cards to review now" />
               </p>
               {next ? (
-                <p className="text-sm text-muted">{t`Next card due ${next}.`}</p>
+                <p className="text-sm text-ink-muted">{t`Next card due ${next}.`}</p>
               ) : (
-                status && <p className="text-sm text-muted">{status}</p>
+                status && <p className="text-sm text-ink-muted">{status}</p>
               )}
             </div>
             {due > 0 ? (
@@ -343,7 +349,7 @@ function DeckPlates({
         {/* A narrow plate cannot fit four counts in the hundreds, so the total takes its own row there. */}
         <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 @md/plates:grid-cols-4">
           <div className="col-span-3 grid justify-items-center gap-0.5 border-b border-edge px-2 pb-3 @md/plates:col-span-1 @md/plates:border-b-0 @md/plates:pb-0">
-            <dt className="order-last text-sm text-muted">
+            <dt className="order-last text-sm text-ink-muted">
               <Trans context="cards in this deck">Total</Trans>
             </dt>
             <dd className="text-xl font-semibold proportional-nums">{i18n.number(total)}</dd>
@@ -356,13 +362,13 @@ function DeckPlates({
                 key !== "new" && "border-s",
               )}
             >
-              <dt className="order-last text-sm text-muted">
+              <dt className="order-last text-sm text-ink-muted">
                 {i18n._(stateMarks[key].groupLabel)}
               </dt>
               <dd
                 className={clsx(
                   "flex items-center gap-1.5 text-xl font-semibold proportional-nums",
-                  counts[key] === 0 && "text-muted",
+                  counts[key] === 0 && "text-ink-muted",
                 )}
               >
                 <StateIcon state={key} className="size-[18px]" />
@@ -442,7 +448,7 @@ function ListTools({
         {/* Desktop keeps search beside the tools, where "/" lands; the phone has it up top. */}
         <div className="relative ms-auto hidden w-56 min-w-0 @3xl/shell:block">
           <Search
-            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
             aria-hidden="true"
           />
           <Input
@@ -513,7 +519,7 @@ function SelectionToolbar({
   return (
     <section
       aria-label={t`Selected cards`}
-      className="@container/tools edge-2 flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
+      className="@container/tools edge-strong flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
     >
       <IconButton size="sm" label={t`Stop selecting`} onClick={onDone}>
         <X />
@@ -652,6 +658,7 @@ export function DeckDetailView({
   cardBeside,
   connectUrl,
   connected,
+  scope = {},
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
   const st = useStaticNav();
@@ -675,14 +682,15 @@ export function DeckDetailView({
   }, [cards, sections]);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   // A deck with sections opens on them; one without has nothing to group that way.
+  const sectionId = scope.sectionId;
+  const scoped = sectionId !== undefined;
+  // A section's list is one section, so it has no Section sort.
   const sort: DeckSort =
     chosenSort === "section" || chosenSort === null
-      ? sections.length > 0
+      ? sections.length > 0 && !scoped
         ? "section"
         : "added"
       : chosenSort;
-  const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
-  const anchor = useRef<string | null>(null);
   const [localOpen, setLocalOpen] = useState<string | null>(null);
   const openId = openCardId === undefined ? localOpen : openCardId;
   // Read through a ref, so the rows' `onOpen` stays the same function across the route's renders.
@@ -721,86 +729,57 @@ export function DeckDetailView({
   // The list's clock, refreshed with the cards rather than every render, so headings hold still.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the cards are the reason to look again
   const now = useMemo(() => Date.now(), [cards]);
+  // A section's filters count only its own cards, and offer no Section filter.
   const filterCtx = useMemo<FilterContext>(
-    () => ({ rows: cards ?? [], sections, now, query: q }),
-    [cards, sections, now, q],
+    () =>
+      scoped
+        ? {
+            rows: filterRows(
+              cards ?? [],
+              scopedFilters(noFilters, { sectionId }),
+              "",
+              now,
+              sections,
+            ),
+            sections: NO_SECTIONS,
+            now,
+            query: q,
+          }
+        : { rows: cards ?? [], sections, now, query: q },
+    [cards, scoped, sectionId, sections, now, q],
   );
   const shown = useMemo(
-    () => (cards ? filterRows(cards, filters, q, now, sections) : undefined),
-    [cards, filters, q, now, sections],
+    () =>
+      cards
+        ? filterRows(cards, scopedFilters(filters, { sectionId }), q, now, sections)
+        : undefined,
+    [cards, filters, sectionId, q, now, sections],
   );
   const everything = q.trim() === "" && activeFilterCount(filters) === 0;
   // The owner sees every section, empty ones too, so there is always somewhere to drop a card.
-  const arranging = !!owner && sort === "section" && everything;
+  const arranging = !!owner && !scoped && sort === "section" && everything;
   const groups = useMemo(
     () => (shown ? groupRows(shown, sort, now, i18n.locale, sections, arranging) : []),
     [shown, sort, now, i18n.locale, sections, arranging],
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
-  const orderedRef = useRef(ordered);
-  orderedRef.current = ordered;
-  // A chosen card the list stops showing, such as one unmarked under the Important filter, leaves the selection.
-  useEffect(() => {
-    if (!shown) return;
-    setSelected((prev) => {
-      if (!prev) return prev;
-      const here = new Set(ordered.map((r) => r.card.id));
-      const kept = [...prev].filter((id) => here.has(id));
-      return kept.length === prev.size ? prev : new Set(kept);
-    });
-  }, [shown, ordered]);
+  const {
+    selected,
+    start: startSelecting,
+    toggle: toggleSelected,
+    all: selectAll,
+    clear: clearSelection,
+    stop: stopSelecting,
+    unmarked,
+    reviewable,
+  } = useCardSelection(cards, shown && ordered);
 
-  // Stable, so the memoised rows keep their props while one card's checkbox changes.
-  const toggleSelected = useCallback((id: string, range: boolean) => {
-    setSelected((prev) => {
-      const rows = orderedRef.current;
-      const next = new Set(prev ?? []);
-      const from = anchor.current ? rows.findIndex((r) => r.card.id === anchor.current) : -1;
-      const to = rows.findIndex((r) => r.card.id === id);
-      if (range && from >= 0 && to >= 0) {
-        const on = !next.has(id);
-        for (const row of rows.slice(Math.min(from, to), Math.max(from, to) + 1)) {
-          if (on) next.add(row.card.id);
-          else next.delete(row.card.id);
-        }
-      } else if (next.has(id)) next.delete(id);
-      else next.add(id);
-      anchor.current = id;
-      return next;
-    });
-  }, []);
-  // Mark important marks them all unless every chosen card already has the mark.
-  const unmarked = !!selected && !!cards?.some((r) => selected.has(r.card.id) && !r.card.important);
-  // What Review takes from the selection: started cards not reviewed today, as the server counts them.
-  const reviewable = useMemo(
-    () => (selected && cards ? chosenReview(cards, selected, Date.now()) : []),
-    [selected, cards],
-  );
-  const stopSelecting = useCallback(() => {
-    setSelected(null);
-    anchor.current = null;
-  }, []);
-
-  // Escape leaves selection, unless something above the list has it.
-  useEffect(() => {
-    if (!selected) return;
-    const onKey = (e: KeyboardEvent) => {
-      // A menu or dialog open over the list takes this Escape for itself; a toast is a dialog too, but never does.
-      const overlay = document.querySelector(
-        "[role='menu'], [role='dialog']:not([data-slot='toast'])",
-      );
-      if (e.key === "Escape" && !e.defaultPrevented && !overlay) stopSelecting();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selected, stopSelecting]);
-
-  const goToSection = (sectionId: string) => {
+  const goToSection = (id: string) => {
     if (chosenSort !== null && chosenSort !== "section") setSort("section");
     setFilters(noFilters);
     setQ("");
     requestAnimationFrame(() => {
-      const heading = document.getElementById(sectionAnchor(sectionId));
+      const heading = document.getElementById(sectionAnchor(id));
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       heading?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       heading?.focus({ preventScroll: true });
@@ -962,10 +941,7 @@ export function DeckDetailView({
           </>
         )}
         {/* A member selects too, to review chosen cards; changing them stays the owner's. */}
-        <DropdownMenuItem
-          onClick={() => setSelected(new Set())}
-          disabled={!cards?.length || !!selected}
-        >
+        <DropdownMenuItem onClick={startSelecting} disabled={!cards?.length || !!selected}>
           <SquareCheck />
           <Trans>Select cards</Trans>
         </DropdownMenuItem>
@@ -1080,7 +1056,7 @@ export function DeckDetailView({
             <ScreenBar>
               <div className="relative min-w-0 flex-1">
                 <Search
-                  className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                  className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
                   aria-hidden="true"
                 />
                 <Input
@@ -1195,7 +1171,7 @@ export function DeckDetailView({
               searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
               // Pinned over a strip of the page's own ground, so rows never show beside it.
               selected &&
-                "sticky top-(--inset-top) z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+                "sticky top-(--inset-top) z-(--z-sticky) -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
             {selected ? (
@@ -1204,8 +1180,8 @@ export function DeckDetailView({
                 total={ordered.length}
                 reviewable={reviewable.length}
                 due={reviewable.filter((r) => r.due).length}
-                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
-                onClear={() => setSelected(new Set())}
+                onAll={selectAll}
+                onClear={clearSelection}
                 onReview={
                   onReviewCards &&
                   ((kind) =>
@@ -1238,7 +1214,8 @@ export function DeckDetailView({
               />
             ) : (
               <ListTools
-                sections={sections}
+                // A section's list has no Section filter or sort to offer.
+                sections={scoped ? NO_SECTIONS : sections}
                 filters={filters}
                 setFilters={setFilters}
                 filterCtx={filterCtx}
@@ -1271,7 +1248,13 @@ export function DeckDetailView({
               progress={progress}
               onStart={onStartSection}
               onReview={onReviewSection}
-              editing={owner && { ...owner.sections, onDropCards: owner.sections.onMoveCards }}
+              editing={
+                owner && {
+                  ...owner.sections,
+                  several: sections.length > 1,
+                  onDropCards: owner.sections.onMoveCards,
+                }
+              }
               movable={arranging && !st}
               selection={selected ? { ids: selected, onToggle: toggleSelected } : undefined}
             />

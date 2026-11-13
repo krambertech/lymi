@@ -99,7 +99,7 @@ function Steps({ current }: { current: number }) {
         bottom: -nextDrop + 4,
         width: 2,
         borderRadius: 1,
-        backgroundColor: lit ? p.amber : p["plate-2"],
+        backgroundColor: lit ? p.amber : p["plate-nested"],
       }}
     />
   );
@@ -111,10 +111,10 @@ function Steps({ current }: { current: number }) {
           <Lantern size={LANTERN} />
         </View>
         <View className="flex-1 gap-0.5">
-          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+          <Text className="text-2xl font-medium text-ink" accessibilityRole="header">
             {t`Getting started`}
           </Text>
-          <Text className="text-base text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-base text-ink-secondary" style={{ fontVariant: ["tabular-nums"] }}>
             {t`${current} of 3 done`}
           </Text>
         </View>
@@ -131,15 +131,15 @@ function Steps({ current }: { current: number }) {
             <View className="flex-1">
               {state === "current" ? (
                 <Plate className="gap-2 p-4">
-                  <Text className="text-md font-medium text-text" accessibilityRole="header">
+                  <Text className="text-md font-medium text-ink" accessibilityRole="header">
                     {s.title}
                   </Text>
-                  <Text className="text-base text-text-2">{s.line}</Text>
+                  <Text className="text-base text-ink-secondary">{s.line}</Text>
                   <Button label={s.action} variant="primary" size="lg" onPress={s.onPress} />
                 </Plate>
               ) : (
                 <Text
-                  className={`text-base ${state === "done" ? "text-muted" : "text-text-2"}`}
+                  className={`text-base ${state === "done" ? "text-ink-muted" : "text-ink-secondary"}`}
                   style={[
                     { paddingTop: (NUMBER - LINE) / 2 },
                     state === "done" && { textDecorationLine: "line-through" },
@@ -168,15 +168,15 @@ function SharedReady({ deck }: { deck: GuideDeck }) {
           <Lantern size={LANTERN} />
         </View>
         <View className="flex-1 gap-0.5">
-          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+          <Text className="text-2xl font-medium text-ink" accessibilityRole="header">
             {t`Your deck is ready`}
           </Text>
-          <Text className="text-base text-text-2">{t`Insights fill in from your first review.`}</Text>
+          <Text className="text-base text-ink-secondary">{t`Insights fill in from your first review.`}</Text>
         </View>
       </View>
       <Plate className="gap-2 p-4">
-        <Text className="text-md font-medium text-text">{deck.name}</Text>
-        <Text className="text-base text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-md font-medium text-ink">{deck.name}</Text>
+        <Text className="text-base text-ink-secondary" style={{ fontVariant: ["tabular-nums"] }}>
           {plural(deck.total, { one: "# card", other: "# cards" })}
         </Text>
         <Button
@@ -198,7 +198,7 @@ function StepNumber({ n, state }: { n: number; state: "done" | "current" | "late
   if (state === "done") {
     return (
       <View
-        className="items-center justify-center rounded-full bg-good"
+        className="items-center justify-center rounded-full bg-success"
         style={{ width: NUMBER, height: NUMBER }}
       >
         <Icon name="check" size={16} colour={p.canvas} strokeWidth={3} />
@@ -212,11 +212,11 @@ function StepNumber({ n, state }: { n: number; state: "done" | "current" | "late
         width: NUMBER,
         height: NUMBER,
         borderWidth: 1.5,
-        borderColor: state === "current" ? p.text : p.edge,
+        borderColor: state === "current" ? p.ink : p.edge,
       }}
     >
       <Text
-        className={`text-sm font-semibold ${state === "current" ? "text-text" : "text-muted"}`}
+        className={`text-sm font-semibold ${state === "current" ? "text-ink" : "text-ink-muted"}`}
         style={{ fontVariant: ["tabular-nums"] }}
       >
         {n}
@@ -235,7 +235,7 @@ export function BringYourOwn() {
   const offer = useAssistantOffer();
   return (
     <View className="gap-3">
-      <Text className="px-1 pt-2 text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="px-1 pt-2 text-lg font-medium text-ink" accessibilityRole="header">
         {t`Bring what you have`}
       </Text>
       {offer && <AssistantOffer onConnect={() => trackGuide("ai_mcp")} />}

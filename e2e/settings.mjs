@@ -49,6 +49,12 @@ export const e2eAccounts = [
   "publisher",
   "password-account",
   "password-reset",
+  "first-review",
+  "first-review-early",
+  "first-review-reload",
+  "first-review-short",
+  "sync-replay",
+  "sync-turn",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

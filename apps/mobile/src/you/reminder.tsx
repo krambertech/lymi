@@ -100,7 +100,7 @@ export function Blocked() {
   const { t } = useLingui();
   return (
     <View className="gap-3 px-4">
-      <Text className="text-base text-text-2">
+      <Text className="text-base text-ink-secondary">
         {t`Notifications are off for Lymi. Turn them on in Settings to get the reminder.`}
       </Text>
       <View className="flex-row">

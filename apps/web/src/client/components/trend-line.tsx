@@ -145,7 +145,7 @@ export function TrendLine({
               x2={W - PAD_R}
               y1={y(target)}
               y2={y(target)}
-              stroke="var(--edge-2)"
+              stroke="var(--edge-strong)"
               strokeWidth="1"
               strokeDasharray="3 3"
               vectorEffect="non-scaling-stroke"
@@ -155,7 +155,7 @@ export function TrendLine({
             <path
               d={curve(xy)}
               fill="none"
-              stroke="var(--text)"
+              stroke="var(--ink)"
               strokeOpacity="0.55"
               strokeWidth="1.75"
               strokeLinecap="round"
@@ -169,7 +169,7 @@ export function TrendLine({
         {xy.slice(0, -1).map((p, i) => (
           <span
             key={points[i]?.at}
-            className="pointer-events-none absolute size-[4px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-text/45"
+            className="pointer-events-none absolute size-[4px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink/45"
             style={{ left: `${(p.x / W) * 100}%`, top: `${(p.y / H) * 100}%` }}
             aria-hidden="true"
           />
@@ -186,7 +186,7 @@ export function TrendLine({
             every width, and `muted` rather than `faint` because it is a value to read. */}
         {targetShown && targetLabel && (
           <span
-            className="pointer-events-none absolute start-0 -translate-y-1/2 text-2xs text-muted tabular-nums"
+            className="pointer-events-none absolute start-0 -translate-y-1/2 text-2xs text-ink-muted tabular-nums"
             style={{ top: `${(y(target) / H) * 100}%` }}
             aria-hidden="true"
           >
@@ -199,7 +199,7 @@ export function TrendLine({
           reference rule whenever the last bucket is under target, and below it lands on
           this row. The row keeps its height with no points so the ghost's plot matches. */}
       <div
-        className="flex justify-between text-2xs text-muted"
+        className="flex justify-between text-2xs text-ink-muted"
         style={{ height: ENDS_H, marginInlineStart: `${(GUTTER / W) * 100}%` }}
         aria-hidden="true"
       >
@@ -207,7 +207,7 @@ export function TrendLine({
         {lastValue !== undefined && points.length > 1 && (
           <span>
             {points.at(-1)?.short}{" "}
-            <b className="font-medium text-text tabular-nums">
+            <b className="font-medium text-ink tabular-nums">
               {i18n.number(lastValue, { style: "percent" })}
             </b>
           </span>

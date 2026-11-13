@@ -6,7 +6,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy covers Lymi’s website, apps, API and connected assistants.`;
-export const PRIVACY_UPDATED = msg`26 October 2026`;
+export const PRIVACY_UPDATED = msg`1 November 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -65,6 +65,14 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
+          Learning emails: when cards are ready and you’ve been away, we may email you. These emails
+          can include the text of a card and the name of its deck, including decks only you can see,
+          so your email provider can read them. You can turn them off in Settings or from any of
+          these emails.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
           Reminders are optional. Web reminders use your browser’s push service, which receives a
           delivery address and the reminder, including the number of cards due. Phone reminders are
           scheduled on your device.
@@ -94,12 +102,12 @@ function PrivacyPolicyContent() {
       </h2>
       <p>
         <Trans>
-          Lymi uses OpenAI, Anthropic, Google and Cloudflare Workers AI for AI features, and Google,
-          OpenAI and ElevenLabs for speech. The provider depends on the feature and language.
-          Requests go through Cloudflare AI Gateway with prompt and reply logging and caching
-          disabled. Providers may retain requests under their API terms, including for abuse
-          prevention. We do not add your account name, email address or credentials to AI prompts,
-          but content you provide can itself contain personal information.
+          Lymi uses OpenAI, Anthropic and Cloudflare Workers AI for AI features, and OpenAI and
+          ElevenLabs for speech. The provider depends on the feature and language. Requests go
+          through Cloudflare AI Gateway with prompt and reply logging and caching disabled.
+          Providers may retain requests under their API terms, including for abuse prevention. We do
+          not add your account name, email address or credentials to AI prompts, but content you
+          provide can itself contain personal information.
         </Trans>
       </p>
       <ul>
@@ -129,7 +137,7 @@ function PrivacyPolicyContent() {
           <Trans>
             Pronunciation sends the term, its reading or an example sentence and language to a
             speech provider. Japanese pronunciation may also send the term, reading and meaning to
-            Google and Cloudflare Workers AI to prepare pronunciation context. Generated audio is
+            OpenAI and Cloudflare Workers AI to prepare pronunciation context. Generated audio is
             saved for reuse.
           </Trans>
         </li>

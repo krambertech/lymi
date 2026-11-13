@@ -1,6 +1,6 @@
 import { canSpeakExample, LanguageTag, SPOKEN_EXAMPLE_MAX, spokenExample } from "@lymi/core";
 import type { Card } from "@lymi/core/schema";
-import type { SpeechProvider, SpeechUsage } from "../ai";
+import type { SpeechProvider } from "../ai";
 import type { ExampleAllowance } from "../example-audio-rate-limit";
 import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
@@ -78,7 +78,6 @@ async function voiced(
   let lastFailure: unknown;
   for (const provider of providers) {
     const key = await exampleKey(card, text, provider);
-    let usage: SpeechUsage = {};
     const started = Date.now();
     const report = (error: boolean, status?: number) =>
       trackSpeechCall(
@@ -87,7 +86,6 @@ async function voiced(
           provider: provider.provider,
           model: provider.model,
           characters: [...text].length,
-          ...usage,
           latencyMs: Date.now() - started,
           error,
           status,
@@ -99,10 +97,6 @@ async function voiced(
       const generated = await provider.speech({
         text,
         language,
-        kind: "example",
-        usage: (reported) => {
-          usage = reported;
-        },
       });
       audio = await boundedAudio(generated);
       report(false);

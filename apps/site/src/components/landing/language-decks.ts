@@ -1,5 +1,14 @@
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import type { Locale } from "../../lib/routes";
 import { addUrl } from "../deck/DeckView";
+
+/** A word from a published deck, with its meaning in each edition and its clip named by `id`. */
+export interface EditionWord {
+  /** The clip's name in the page's `/audio/` folder. */
+  id: string;
+  term: string;
+  meaning: Record<Locale, string>;
+}
 
 /** The edition a deck row was read in, which rides along so the learner gets the same meanings. */
 export const editionOf = (deck: PublicDeckSummary) =>

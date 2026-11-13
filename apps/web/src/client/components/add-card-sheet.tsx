@@ -143,7 +143,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
       <Dialog open={open} onOpenChange={(next) => (next ? onOpenChange(true) : close(true))}>
         <DialogContent
           size="lg"
-          className="max-h-[92dvh] [scrollbar-color:var(--edge-2)_transparent] [scrollbar-width:thin]"
+          className="max-h-[92dvh] [scrollbar-color:var(--edge-strong)_transparent] [scrollbar-width:thin]"
         >
           <DialogTitle>{t`Add a card`}</DialogTitle>
           <CardForm

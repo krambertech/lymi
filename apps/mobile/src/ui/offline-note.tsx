@@ -25,8 +25,8 @@ export function OfflineNote({ query }: { query: UseQueryResult }) {
     : i18n.date(since, { day: "numeric", month: "long" });
   return (
     <View className="flex-row items-center gap-2" accessibilityRole="text">
-      <Icon name="offline" size={16} colour={p.muted} />
-      <Text className="flex-1 text-base text-muted">
+      <Icon name="offline" size={16} colour={p["ink-muted"]} />
+      <Text className="flex-1 text-base text-ink-muted">
         {t`You’re offline. Showing your cards as of ${when}.`}
       </Text>
     </View>

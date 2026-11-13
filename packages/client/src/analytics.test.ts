@@ -179,10 +179,41 @@ it("tags an error with its route pattern and the release that threw it", async (
 it("names the handler that caught an error and drops any other label", async () => {
   await load("https://my.lymi.app/review");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-  analytics.reportBrowserException(new TypeError("private"), "rejection");
-  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "rejection" });
+  analytics.reportBrowserException(new TypeError("private"), "router");
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "router" });
   sdk.captureException(new TypeError("private"), { caught_by: "private label" });
   expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("caught_by");
+});
+
+const thrown = (frames: Record<string, unknown>[], value = "private", synthetic = false) => ({
+  $exception_list: [
+    { type: "TypeError", value, mechanism: { synthetic }, stacktrace: { type: "raw", frames } },
+  ],
+});
+const extensionFrame = { filename: "chrome-extension://abcdef/inpage.js", function: "send" };
+const lymiFrame = { filename: "https://my.lymi.app/assets/index-abcd.js", function: "save" };
+
+it("drops what an extension throws on the page but keeps Lymi's own errors", async () => {
+  await load("https://my.lymi.app/review");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  const sent = () => sdk.sent.filter((event) => event.event === "$exception").length;
+  const before = sent();
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "window" });
+  sdk.capture("$exception", {
+    ...thrown([extensionFrame], "Failed to fetch"),
+    caught_by: "rejection",
+  });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "rejection" });
+  // A rejected non-error's stack is the reporting code's own, even though it is Lymi's bundle.
+  sdk.capture("$exception", { ...thrown([lymiFrame], "private", true), caught_by: "rejection" });
+  expect(sent()).toBe(before);
+
+  sdk.capture("$exception", { ...thrown([extensionFrame, lymiFrame]), caught_by: "window" });
+  sdk.capture("$exception", { ...thrown([{ chunk_id: "chunk-1" }]), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([], "Load failed"), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "react" });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "router" });
+  expect(sent()).toBe(before + 5);
 });
 
 it("counts a signed-out visitor anonymously and joins them to the account they create", async () => {
@@ -217,6 +248,55 @@ it("names a reminder as the way in, and opens without a backlog when none is kno
   expect(opened?.properties).toMatchObject({ entry: "reminder" });
   expect(opened?.properties).not.toHaveProperty("backlog");
   expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review?deck=italian");
+});
+
+it("names the email a link came from, and drops only that mark", async () => {
+  await load("https://my.lymi.app/today?from=email-deck-invitation&deck=italian", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "email", from_email: "deck-invitation" });
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/today?deck=italian");
+});
+
+it("ignores an email kind Lymi does not send", async () => {
+  await load("https://my.lymi.app/today?from=email-nonsense", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "direct" });
+  expect(opened?.properties).not.toHaveProperty("from_email");
+  expect(replaceState).not.toHaveBeenCalled();
+});
+
+it("counts which reminder message was opened, and drops it from the address", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=to_goal", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const opened = sdk.sent.filter((e) => e.event === "reminder_opened");
+  expect(opened.map((e) => e.properties)).toEqual([
+    expect.objectContaining({ message: "to_goal", client: "web" }),
+  ]);
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review");
+});
+
+it("sends no reminder_opened for a link without a message it knows", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=streak", "");
+  vi.stubGlobal("history", { state: null, replaceState: vi.fn() });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  expect(sdk.sent.filter((e) => e.event === "reminder_opened")).toEqual([]);
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(1);
 });
 
 it("resets identity when another account signs in", async () => {

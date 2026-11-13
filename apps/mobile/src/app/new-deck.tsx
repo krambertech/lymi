@@ -157,14 +157,14 @@ export default function NewDeck() {
               if (error) setError(null);
             }}
             placeholder={t`Lesson 15`}
-            placeholderTextColor={p.muted}
+            placeholderTextColor={p["ink-muted"]}
             accessibilityLabel={t`Name`}
             accessibilityHint={error ?? undefined}
             // Return lowers the keyboard, so the choices under the name are all in view.
             returnKeyType="next"
             submitBehavior="blurAndSubmit"
-            selectionColor={p.text}
-            className="min-h-12 py-1.5 font-sans font-medium text-text"
+            selectionColor={p.ink}
+            className="min-h-12 py-1.5 font-sans font-medium text-ink"
             style={{ fontSize: 28, letterSpacing: -0.56 }}
             maxFontSizeMultiplier={inputCap(28)}
           />
@@ -194,14 +194,16 @@ export default function NewDeck() {
                     accessibilityLabel={o.label}
                     accessibilityHint={o.detail}
                     className="flex-row items-start gap-3 px-4 py-3.5"
-                    style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                    style={({ pressed }) =>
+                      pressed ? { backgroundColor: p["plate-hover"] } : null
+                    }
                   >
                     <View className="pt-0.5">
-                      <Icon name={purposeIcon[o.value]} size={20} colour={p["text-2"]} />
+                      <Icon name={purposeIcon[o.value]} size={20} colour={p["ink-secondary"]} />
                     </View>
                     <View className="flex-1 gap-0.5">
-                      <Text className="text-md font-medium text-text">{o.label}</Text>
-                      <Text className="text-base text-text-2">{o.detail}</Text>
+                      <Text className="text-md font-medium text-ink">{o.label}</Text>
+                      <Text className="text-base text-ink-secondary">{o.detail}</Text>
                     </View>
                     <Radio on={chosen} className="mt-0.5" />
                   </Pressable>
@@ -209,10 +211,10 @@ export default function NewDeck() {
                   {chosen &&
                     o.value === "language" &&
                     languageSelect(
-                      <View className="mx-4 mb-3.5 ms-12 flex-row items-center gap-3 rounded-lg bg-plate-2 py-3 ps-3.5 pe-2.5">
-                        <Text className="flex-1 text-md text-text">{t`Language`}</Text>
+                      <View className="mx-4 mb-3.5 ms-12 flex-row items-center gap-3 rounded-lg bg-plate-nested py-3 ps-3.5 pe-2.5">
+                        <Text className="flex-1 text-md text-ink">{t`Language`}</Text>
                         <Text
-                          className={`text-md ${language ? "text-text-2" : "font-medium text-amber-text"}`}
+                          className={`text-md ${language ? "text-ink-secondary" : "font-medium text-amber-text"}`}
                           numberOfLines={1}
                         >
                           {language ? languageName(language) : t`Choose`}

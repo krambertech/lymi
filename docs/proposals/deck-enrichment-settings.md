@@ -10,7 +10,7 @@ Every card added in the app gets meaning, example, pronunciation and language fi
 
 Deck settings gain an owner-only **AI enrichment** group: checkboxes for Meaning, Example, Notes and Pronunciation, with Meaning and Example on by default, and an optional **Instructions for AI** box of up to 1000 characters that says what the deck is about and how to write its cards. Members never see the instructions.
 
-A checked field is one the AI may fill, not one it must. For each card it decides which of them are worth filling, following the deck's own pattern: a deck that keeps examples inside its notes gets no separate example, and a card with nothing worth noting gets no notes. The language is always filled, because audio needs it. This covers the learner's adds in the app and integration adds sent with `enrich: true`.
+Checking a field allows the AI to fill it when relevant. For each card it decides which of them are worth filling, following the deck's own pattern: a deck that keeps examples inside its notes gets no separate example, and a card with nothing worth noting gets no notes. The language is always filled, because audio needs it. This covers the learner's adds in the app and integration adds sent with `enrich: true`.
 
 Enrich on one card still fills every empty field, because it is an explicit ask.
 
@@ -32,14 +32,14 @@ The prompt also carries conventions for the deck's language, such as Estonian wo
 
 - Meaning: the gloss a bilingual dictionary gives first, one to four words, not a definition. A second sense follows a semicolon only when the term really has two, never more than three. A sentence gets its natural translation. A term in the meaning language itself, or a concept, gets the shortest accurate explanation. A term listing forms separated by ` · ` is one word.
 - Example: one everyday sentence under twelve words in the term's language.
-- Notes: only what helps recall and use: irregular forms, the grammar a sentence turns on, a word it is easily confused with. In the notes Markdown subset, a few short lines, shaped like the deck's own notes. Empty when there is nothing of that kind.
+- Notes: only what helps recall and use: irregular forms, grammar needed to understand a sentence, a word it is easily confused with. In the notes Markdown subset, a few short lines, shaped like the deck's own notes. Empty when there is nothing of that kind.
 - Pronunciation: IPA with stress, without slashes, for Latin, Cyrillic and Greek scripts; the usual reading aid otherwise.
 
 Without samples from the deck, the defaults decide relevance: a meaning always, an example for a word or short phrase but not for a full sentence, and notes only when one of the cases above applies.
 
 ## Deck context
 
-Each model call receives the deck's name, description, language and instructions, and up to five recent cards from the same deck whose text the learner or a lesson wrote, as samples. A sample shows every enrichable field, empty ones marked empty, so the model sees which fields the deck fills as well as their form. Notes in a sample are cut to a bounded length. Precedence is instructions, then samples, then the default rules. Instructions never change the reply's shape or the language a meaning is written in. This needs no extra model call and stores nothing that can go stale.
+Each model call receives the deck's name, description, language and instructions, and up to five recent cards from the same deck whose text the learner or a lesson wrote, as samples. A sample shows every enrichable field, empty ones marked empty, so the model sees which fields the deck fills as well as their form. Notes in a sample are cut to a bounded length. Precedence is instructions, then samples, then the default rules. Instructions never change the response format or the language a meaning is written in. This needs no extra model call and stores nothing that can go stale.
 
 ## Data and API
 
@@ -53,7 +53,7 @@ Each model call receives the deck's name, description, language and instructions
 ## Instrumentation
 
 - `deck_enrichment_changed` (worker): `meaning`, `example`, `notes`, `pronunciation`, `has_instructions`, on a saved change only. Answers whether learners change the fields or write instructions.
-- `enrichment_finished` gains optional `trigger` (`add` or `card`), `has_instructions`, `samples`, and `skipped`, the allowed fields the AI chose not to fill. Answers whether deck context changes what lands.
+- `enrichment_finished` gains optional `trigger` (`add` or `card`), `has_instructions`, `samples`, and `skipped`, the allowed fields the AI chose not to fill. Answers whether deck context changes which fields are filled.
 
 ## Delivery
 

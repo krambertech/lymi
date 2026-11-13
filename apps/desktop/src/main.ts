@@ -11,6 +11,7 @@ import {
   ipcMain,
   Menu,
   nativeImage,
+  nativeTheme,
   powerMonitor,
   type Session,
   screen,
@@ -20,6 +21,8 @@ import {
   Tray,
 } from "electron";
 import { SCHEME, sessionChange } from "./callback.js";
+import { windowColours } from "./colours.gen.js";
+import { handBack } from "./hand-back.js";
 import { setAppMenu } from "./menu.js";
 import {
   isLoopback,
@@ -31,7 +34,7 @@ import {
 } from "./origin.js";
 import { readPreferences, writePreferences } from "./preferences.js";
 import { canCopySelection, selectedText } from "./selection.js";
-import { DEFAULT_SHORTCUT, type Preferences, usableShortcut } from "./settings.js";
+import { DEFAULT_SHORTCUT, isTheme, type Preferences, usableShortcut } from "./settings.js";
 import { completeSignIn, requestSignIn } from "./sign-in.js";
 import { restartToUpdate, watchForUpdates } from "./updates.js";
 
@@ -97,6 +100,9 @@ function keepToProduct(win: BrowserWindow) {
 
 const webPreferences = () => ({ session: ses, preload, sandbox: true, contextIsolation: true });
 
+/** A window shows this wherever its page has not painted: on a reload, a navigation or a resize. */
+const colours = () => windowColours[nativeTheme.shouldUseDarkColors ? "dark" : "light"];
+
 /**
  * Shows the main window, at `path` when one is asked for; an open window moves without reloading.
  * Signed out, it opens as the sign-in window.
@@ -118,6 +124,7 @@ async function openMain(path?: string) {
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 20, y: 13 },
     show: false,
+    backgroundColor: colours().canvas,
     webPreferences: webPreferences(),
   });
   fitMain(hasSession, false);
@@ -201,6 +208,7 @@ function createPanel() {
     fullscreenable: false,
     skipTaskbar: true,
     show: false,
+    backgroundColor: colours().plate,
     webPreferences: webPreferences(),
   });
   keepToProduct(panel);
@@ -382,6 +390,12 @@ const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
   "app:restart-to-update": () => {
     if (update === "ready") restartToUpdate();
   },
+  "app:theme": (theme) => {
+    if (!isTheme(theme) || theme === prefs.theme) return;
+    prefs = { ...prefs, theme };
+    writePreferences(prefs);
+    nativeTheme.themeSource = theme;
+  },
   // The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
   "prefs:accessibility": () => {
     systemPreferences.isTrustedAccessibilityClient(true);
@@ -435,12 +449,35 @@ function toPage<C extends keyof ToPage>(win: BrowserWindow | null, channel: C, v
   if (win && !win.isDestroyed()) win.webContents.send(channel, value);
 }
 
+/** A freestanding question, because Lymi may have no window open behind it. */
+async function askToRetrySignIn() {
+  // The browser is in front, and in the menu bar alone Lymi has nothing to raise.
+  app.focus({ steal: true });
+  const { response } = await dialog.showMessageBox({
+    message: "Couldn’t sign in to Lymi",
+    detail: "The link from your browser didn’t work. Try again to start a new sign-in there.",
+    buttons: ["Try Again", "Not Now"],
+    defaultId: 0,
+    cancelId: 1,
+    icon: join(assets, "icon.png"),
+  });
+  return response === 0;
+}
+
+const finishSignIn = handBack({
+  complete: (link) => completeSignIn(link, PRODUCT_URL, ses),
+  signedIn: () => hasSession,
+  askToRetry: askToRetrySignIn,
+  // The browser that handed the link back is signed in, so no provider needs naming again.
+  retry: () => requestSignIn(PRODUCT_URL),
+  report: (cause) => console.error("Sign-in failed:", cause),
+});
+
 /** The browser's hand-back after sign-in; the windows share the session it lands in. */
 async function onLink(link: string) {
-  await app.whenReady();
-  const done = await completeSignIn(link, PRODUCT_URL, ses).catch(() => false);
-  if (DEV) console.log(`signed in ${done}`);
-  if (!done) return;
+  // A link can be what launched Lymi, and an existing session decides whether a failure matters.
+  await sessionKnown;
+  if (!(await finishSignIn(link))) return;
   // The browser is in front; Lymi comes forward with the learner signed in.
   sessionChanged(true);
   await openMain();
@@ -466,7 +503,12 @@ if (!app.requestSingleInstanceLock()) {
   // Opening Lymi again, from Applications, Spotlight or the Dock, shows its window.
   app.on("second-instance", () => void openMain());
   app.on("activate", () => void openMain());
-  app.whenReady().then(start);
+  // Links and windows wait on this, so a failed start must not leave them waiting for good.
+  app
+    .whenReady()
+    .then(start)
+    .catch((cause) => console.error("Start failed:", cause))
+    .finally(() => sessionRead());
   // A menu bar app stays running with no window open.
   app.on("window-all-closed", () => {});
   app.on("will-quit", () => globalShortcut.unregisterAll());
@@ -505,6 +547,12 @@ async function start() {
   );
   ses.setPermissionCheckHandler((_contents, permission, origin) => allowed(permission, origin));
   prefs = readPreferences();
+  // Also what the page's prefers-color-scheme reads, and the appearance of native menus and dialogs.
+  nativeTheme.themeSource = prefs.theme;
+  nativeTheme.on("updated", () => {
+    main?.setBackgroundColor(colours().canvas);
+    panel?.setBackgroundColor(colours().plate);
+  });
   if (DEV_PERSONA) {
     // Signs the window session in as a seeded persona; the route sets the cookie and redirects.
     const url = productUrl(`/api/dev/sign-in?as=${encodeURIComponent(DEV_PERSONA)}`);

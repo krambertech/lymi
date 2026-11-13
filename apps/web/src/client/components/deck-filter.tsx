@@ -143,7 +143,7 @@ function OnCount({ count }: { count: number }) {
   return (
     <span
       aria-hidden="true"
-      className="grid h-[18px] min-w-[18px] shrink-0 place-items-center rounded-full bg-text px-1 text-2xs font-medium text-canvas tabular-nums"
+      className="grid h-[18px] min-w-[18px] shrink-0 place-items-center rounded-full bg-ink px-1 text-2xs font-medium text-canvas tabular-nums"
     >
       {i18n.number(count)}
     </span>
@@ -156,7 +156,7 @@ function ValueLabel({ name, count }: { name: string; count: number }) {
   return (
     <>
       <span className="min-w-0 flex-1 truncate">{bidi(name)}</span>
-      <span className="ms-auto ps-3 text-sm text-muted tabular-nums">{i18n.number(count)}</span>
+      <span className="ms-auto ps-3 text-sm text-ink-muted tabular-nums">{i18n.number(count)}</span>
     </>
   );
 }
@@ -342,10 +342,10 @@ export function FilterMenu({
               closeOnClick={false}
               onClick={(e) => back(e.detail === 0)}
               aria-label={t`Back to all filters, ${{ field: fieldName[chosen.field.key] }}`}
-              className="text-text-2"
+              className="text-ink-secondary"
             >
               <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
-              <span className="min-w-0 truncate font-medium text-text">
+              <span className="min-w-0 truncate font-medium text-ink">
                 {fieldName[chosen.field.key]}
               </span>
             </DropdownMenuItem>
@@ -372,7 +372,7 @@ export function FilterMenu({
                   <DropdownMenuCheckboxItem
                     key={field.key}
                     data-field={field.key}
-                    icon={<Icon className="text-text-2" aria-hidden="true" />}
+                    icon={<Icon className="text-ink-secondary" aria-hidden="true" />}
                     checked={values.length > 0}
                     aria-label={valueRowLabel(fieldName[field.key], flagged)}
                     onCheckedChange={(next) => {
@@ -397,10 +397,10 @@ export function FilterMenu({
                   closeOnClick={false}
                   onClick={(e) => pick(field.key, e.detail === 0)}
                 >
-                  <Icon className="text-text-2" aria-hidden="true" />
+                  <Icon className="text-ink-secondary" aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate">{fieldName[field.key]}</span>
                   {values.length > 0 && <OnCount count={values.length} />}
-                  <ChevronRight className="text-muted rtl:-scale-x-100" aria-hidden="true" />
+                  <ChevronRight className="text-ink-muted rtl:-scale-x-100" aria-hidden="true" />
                 </DropdownMenuItem>
               );
             })}
@@ -412,7 +412,7 @@ export function FilterMenu({
 }
 
 const chipPart =
-  "relative flex items-center transition-colors duration-150 ease-out hoverable:hover:bg-hover hoverable:hover:text-text focus-visible:z-10 focus-visible:outline-offset-[-2px]";
+  "relative flex items-center transition-colors duration-150 ease-out hoverable:hover:bg-plate-hover hoverable:hover:text-ink focus-visible:z-10 focus-visible:outline-offset-[-2px]";
 
 /** One field that is on: its label opens its values again, and ✕ takes the field off. */
 function ConditionChip({
@@ -444,7 +444,7 @@ function ConditionChip({
       onClick={() => setFilters(field.set(filters, []))}
       aria-label={t`Remove filter: ${{ label: unisolate(chipLabel(field, values)) }}`}
       // The hit area reaches 40 px tall, as far as the 8 px gap to the next row allows.
-      className={`${chipPart} w-8 shrink-0 justify-center rounded-e-full text-muted before:absolute before:-inset-y-1 before:inset-x-0 before:content-['']`}
+      className={`${chipPart} w-8 shrink-0 justify-center rounded-e-full text-ink-muted before:absolute before:-inset-y-1 before:inset-x-0 before:content-['']`}
     >
       <X className="size-3.5" aria-hidden="true" />
     </button>
@@ -452,7 +452,7 @@ function ConditionChip({
   // A flag has nothing more to choose, so its chip only comes off.
   if (field.pick === "flag") {
     return (
-      <span className="inline-flex h-8 max-w-full items-stretch rounded-full bg-plate-2 text-sm font-medium text-text">
+      <span className="inline-flex h-8 max-w-full items-stretch rounded-full bg-plate-nested text-sm font-medium text-ink">
         <span className="flex items-center gap-1.5 ps-3 pe-1">
           <Star className="size-3.5 fill-current text-amber-mark" aria-hidden="true" />
           {name}
@@ -462,20 +462,20 @@ function ConditionChip({
     );
   }
   return (
-    <span className="inline-flex h-8 max-w-full items-stretch rounded-full bg-plate-2 text-sm">
+    <span className="inline-flex h-8 max-w-full items-stretch rounded-full bg-plate-nested text-sm">
       <DropdownMenu open={open} onOpenChange={onOpenChange}>
         <DropdownMenuTrigger
           render={
             <button
               type="button"
-              className={`${chipPart} min-w-0 gap-1.5 rounded-s-full ps-3 pe-1.5 text-text-2 before:absolute before:-inset-y-1 before:inset-x-0 before:content-['']`}
+              className={`${chipPart} min-w-0 gap-1.5 rounded-s-full ps-3 pe-1.5 text-ink-secondary before:absolute before:-inset-y-1 before:inset-x-0 before:content-['']`}
             >
-              <Icon className="size-3.5 shrink-0 text-muted" aria-hidden="true" />
+              <Icon className="size-3.5 shrink-0 text-ink-muted" aria-hidden="true" />
               <span className="min-w-0 truncate">
                 {values.length > 0 ? (
                   <Trans>
                     {{ field: name }}:{" "}
-                    <span className="font-medium text-text">
+                    <span className="font-medium text-ink">
                       {ph({ values: isolate(unisolate(chosen)) })}
                     </span>
                   </Trans>
@@ -550,7 +550,7 @@ export function FilterChips({
           type="button"
           onClick={() => setFilters(noFilters)}
           // A pill like the chips it clears, with no fill until pointed at.
-          className="relative h-8 rounded-full px-3 text-sm font-medium text-text-2 transition-colors duration-150 ease-out before:absolute before:-inset-y-1 before:inset-x-0 before:content-[''] active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text motion-reduce:active:scale-100"
+          className="relative h-8 rounded-full px-3 text-sm font-medium text-ink-secondary transition-colors duration-150 ease-out before:absolute before:-inset-y-1 before:inset-x-0 before:content-[''] active:scale-[0.97] hoverable:hover:bg-plate-hover hoverable:hover:text-ink motion-reduce:active:scale-100"
         >
           <Trans>Clear filters</Trans>
         </button>

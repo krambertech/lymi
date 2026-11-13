@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { InsightsOut } from "@lymi/core";
+import { type InsightsOut, keepsRun } from "@lymi/core";
 import { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, View, type ViewStyle } from "react-native";
 import { addDays } from "../streak/calendar";
@@ -31,7 +31,7 @@ function level(day: Day | undefined, current: number): 0 | 1 | 2 | 3 {
 }
 
 function fill(p: Palette, l: 1 | 2 | 3) {
-  return l === 3 ? p.amber : p[`light-${l}`];
+  return l === 3 ? p.amber : l === 2 ? p["lit-high"] : p["lit-low"];
 }
 
 function monthStartIn(weekStart: string): string | null {
@@ -159,7 +159,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
               className="items-end justify-center"
               style={{ height: CELL }}
             >
-              <Text className="text-2xs text-faint">
+              <Text className="text-2xs text-ink-faint">
                 {weekdayNarrow.format(asDate(addDays(A_MONDAY, i)))}
               </Text>
             </View>
@@ -183,7 +183,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
               {groups.map((g) => (
                 <View key={g.col} style={{ width: g.span * (CELL + GAP) }}>
                   <Text
-                    className={`text-2xs ${g.month === today.slice(0, 7) ? "font-medium text-text-2" : "text-muted"}`}
+                    className={`text-2xs ${g.month === today.slice(0, 7) ? "font-medium text-ink-secondary" : "text-ink-muted"}`}
                     numberOfLines={1}
                   >
                     {g.month ? monthName.format(asDate(`${g.month}-01`)) : ""}
@@ -203,13 +203,13 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
                 height: CELL + 6,
                 borderWidth: 1,
                 borderRadius: 10,
-                borderColor: p["text-2"],
+                borderColor: p["ink-secondary"],
               }}
             />
           </View>
         </ScrollView>
       </View>
-      <Text className="text-base text-text-2" accessibilityLiveRegion="polite">
+      <Text className="text-base text-ink-secondary" accessibilityLiveRegion="polite">
         {sentence(chosen)}
       </Text>
     </View>
@@ -236,7 +236,7 @@ function Cell({
   const future = date > today;
   const l = future ? 0 : level(entry, goal);
   // Counted without filling: nothing left to do, or nothing due. The streak keeps those too.
-  const kept = !future && (!!entry?.satisfied || entry?.outcome === "nothing_due") && l < 3;
+  const kept = !future && keepsRun(entry) && l < 3;
   const box: ViewStyle = {
     width: CELL,
     height: CELL,
@@ -244,10 +244,10 @@ function Cell({
     borderTopRightRadius: 6,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    backgroundColor: future ? "transparent" : l === 0 ? p["plate-2"] : fill(p, l),
+    backgroundColor: future ? "transparent" : l === 0 ? p["plate-nested"] : fill(p, l),
     borderWidth: kept ? 1.5 : 1,
     borderStyle: future ? "dashed" : "solid",
-    borderColor: kept ? p.amber : future ? p["edge-2"] : l === 0 ? p.edge : "transparent",
+    borderColor: kept ? p.amber : future ? p["edge-strong"] : l === 0 ? p.edge : "transparent",
   };
   return (
     <Pressable

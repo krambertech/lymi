@@ -48,7 +48,7 @@ export default function SeriesOrder() {
         style={{ maxHeight: height - insets.top - 120 }}
         contentContainerClassName="gap-3 px-5 pt-3 pb-10"
       >
-        <Text className="text-base text-text-2">
+        <Text className="text-base text-ink-secondary">
           {online
             ? t`Drag a series by its handle. Library shows them in this order.`
             : t`Changing series needs a connection.`}
@@ -74,10 +74,10 @@ export default function SeriesOrder() {
                   }
                 >
                   <View className="flex-1">
-                    <Text className="text-md text-text" numberOfLines={2}>
+                    <Text className="text-md text-ink" numberOfLines={2}>
                       {s.name}
                     </Text>
-                    <Text className="text-sm text-muted">
+                    <Text className="text-sm text-ink-muted">
                       {plural(s.deckIds.length, { one: "# deck", other: "# decks" })}
                     </Text>
                   </View>

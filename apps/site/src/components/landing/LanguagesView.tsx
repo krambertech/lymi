@@ -29,7 +29,7 @@ import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
 
 export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
-export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget.`;
+export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade.`;
 
 const SPANISH_ADDED: SampleCard = {
   label: msg`Español · new`,
@@ -68,7 +68,7 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
               <Trans>Turn your notes into cards.</Trans>
             </SectionTitle>
           </div>
-          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-text-2">
+          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-ink-secondary">
             <Trans>
               Take a photo of your notebook or the whiteboard and send it to your assistant. It
               reads the handwriting, adds the new words to your deck and leaves out the ones you
@@ -127,8 +127,8 @@ function HandSection({
     clsx(
       "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
       active
-        ? "bg-text font-medium text-canvas"
-        : "bg-plate text-text-2 edge hoverable:hover:bg-hover hoverable:hover:text-text",
+        ? "bg-ink font-medium text-canvas"
+        : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
     );
 
   return (
@@ -251,7 +251,7 @@ export function LanguagesView() {
       heroLede={
         <Trans>
           The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it
-          in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget.
+          in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade.
         </Trans>
       }
       notebooks={[LEARNING_LANGUAGES.find((l) => l.id === "fr") as LearningLanguage]}

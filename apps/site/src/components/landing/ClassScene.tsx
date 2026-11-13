@@ -184,8 +184,8 @@ export function ClassScene() {
       ))}
       {you && (
         <div className="pointer-events-none absolute z-20" style={{ left: you.x, top: you.y }}>
-          <Arrow fill="var(--text)" />
-          <span className="-mt-1 ms-3 block rounded-full bg-text px-2 py-0.5 text-2xs font-medium text-canvas">
+          <Arrow fill="var(--ink)" />
+          <span className="-mt-1 ms-3 block rounded-full bg-ink px-2 py-0.5 text-2xs font-medium text-canvas">
             <Trans>You</Trans>
           </span>
         </div>
@@ -194,10 +194,10 @@ export function ClassScene() {
       <div className="relative w-full max-w-[340px] rounded-xl bg-plate p-3.5 edge">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="truncate text-md font-medium tracking-[-0.02em] text-text">
+            <p className="truncate text-md font-medium tracking-[-0.02em] text-ink">
               {i18n._(DECK)}
             </p>
-            <p className="text-xs text-muted">
+            <p className="text-xs text-ink-muted">
               <Plural value={cards} one="# card" other="# cards" /> ·{" "}
               <Plural value={LEARNERS} one="# learner" other="# learners" />
             </p>
@@ -214,11 +214,13 @@ export function ClassScene() {
           {WEEKS.map((week, i) => {
             const who = done[i] ?? [];
             return (
-              <li key={week.id} className="grid gap-1 rounded-md bg-plate-2 px-1.5 py-1.5">
-                <span className="text-2xs whitespace-nowrap text-text-2">{i18n._(week)}</span>
+              <li key={week.id} className="grid gap-1 rounded-md bg-plate-nested px-1.5 py-1.5">
+                <span className="text-2xs whitespace-nowrap text-ink-secondary">
+                  {i18n._(week)}
+                </span>
                 <span className="flex h-4 items-center">
                   {who.length === 0 ? (
-                    <span className="h-1 w-4 rounded-full bg-edge-2" />
+                    <span className="h-1 w-4 rounded-full bg-edge-strong" />
                   ) : (
                     who.map((id) => (
                       <motion.span
@@ -246,7 +248,7 @@ export function ClassScene() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.3, ease: EASE }}
-              className="absolute -top-4 start-1/2 flex w-max max-w-[calc(100%-1rem)] -translate-x-1/2 items-center gap-1.5 rounded-full bg-text py-1 ps-1 pe-3 text-xs text-canvas shadow-lg rtl:translate-x-1/2"
+              className="absolute -top-4 start-1/2 flex w-max max-w-[calc(100%-1rem)] -translate-x-1/2 items-center gap-1.5 rounded-full bg-ink py-1 ps-1 pe-3 text-xs text-canvas shadow-lg rtl:translate-x-1/2"
             >
               <img
                 src={`/avatars/${event.who}.svg`}
@@ -259,7 +261,7 @@ export function ClassScene() {
                 <EventLine index={step} />
               </span>
               {event.finished !== undefined && (
-                <Check aria-hidden="true" className="size-3.5 text-good" />
+                <Check aria-hidden="true" className="size-3.5 text-success" />
               )}
             </motion.p>
           )}

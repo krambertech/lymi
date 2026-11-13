@@ -2,6 +2,8 @@
 
 An Electron shell around the product: its window loads `my.lymi.app`, and it adds a lantern in the menu bar with the due count and a quick-add panel on ⌃⌥L. The panel is the product's `/desktop/add` page, drawn as Lymi's plate in an opaque window that macOS rounds and shadows. The shape and what comes next are in [the proposal](../../docs/proposals/mac-desktop-app.md).
 
+Windows and native menus follow the learner's theme. The page reports it over the bridge, the app saves it in `preferences.json` and sets `nativeTheme.themeSource`, and each window fills with the theme's `canvas` or `plate` wherever its page has not painted. Those colours are in `src/colours.gen.ts`, generated from the tokens, because the packaged app carries no workspace package.
+
 Sign-in goes through the system browser: the proposal's Sign-in section has the flow. Each merge that changes this folder releases the app; see Releases below.
 
 ## Run it against local dev

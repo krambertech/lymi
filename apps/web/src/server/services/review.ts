@@ -33,11 +33,11 @@ import {
   textDirection,
 } from "@lymi/core";
 import { CARD_STATES } from "@lymi/core/analytics";
-import { and, eq, gte, ne } from "@lymi/core/db";
+import { and, eq, gte, isNull, ne, type SQL } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
 import { recordFirstReview } from "./analytics-review";
-import { audit } from "./audit";
+import { auditStatementWhen, insertWhen } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
@@ -302,9 +302,13 @@ function fadedReadings(
   return readings ? { example_readings: readings, readings_faded: Math.min(faded, readings) } : {};
 }
 
+/** Past this a grade answers 503 and its outbox tries later, so a state that never matches ends. */
+const MAX_OVERTAKEN = 3;
+
 /**
  * Apply one grade. Only the learner grades; integrations never reach this function.
- * Idempotent enough for offline replay: a review older than the state's last review is a no-op.
+ * Idempotent enough for offline replay: a review older than the state's last review is a no-op,
+ * and a replay of a stored grade names that attempt.
  * Every accepted grade is one attempt toward the learner-local day it happened on, fixed now.
  */
 export async function gradeCard(
@@ -317,6 +321,7 @@ export async function gradeCard(
    * lacks, and Jyutping over the term, which a phone before 0.0.7 lacks.
    */
   draws: Draws = { over: true, inPlace: { ru: true, uk: true }, byWord: true, jyutping: true },
+  overtaken = 0,
 ) {
   const { db, userId } = ctx;
   const { cardId } = input;
@@ -360,7 +365,14 @@ export async function gradeCard(
   const repeat = !!state.lastReview && dateFormatter(zone).format(state.lastReview) === date;
   const rating = countedRating(input.rating, repeat);
 
+  // Named by the grade itself, so a replay finds the attempt it already stored.
+  const reviewId = await gradeReviewId(state.id, reviewedAt);
   const duplicate = async () => {
+    const [attempt] = await db
+      .select({ id: schema.reviews.id, undone: schema.reviewUndos.reviewId })
+      .from(schema.reviews)
+      .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
+      .where(eq(schema.reviews.id, reviewId));
     const [existing] = await db
       .select()
       .from(schema.reviewDays)
@@ -373,7 +385,8 @@ export async function gradeCard(
       duplicate: true as const,
       due: state.due.toISOString(),
       state: state.state,
-      reviewId: null,
+      // A response lost on the way still lets the device undo the attempt it stored.
+      reviewId: attempt && !attempt.undone ? attempt.id : null,
       day,
     };
   };
@@ -385,8 +398,6 @@ export async function gradeCard(
 
   const result = schedule(deserializeState(state.fsrs), rating, reviewedAt);
   const reviewDay = await openDay(ctx, date, zone, settings.dailyGoal);
-  // Named by the grade itself, so a copy that raced past the check above collides and rolls back.
-  const reviewId = await gradeReviewId(state.id, reviewedAt);
   const before: StateBefore = {
     fsrs: state.fsrs,
     due: state.due.getTime(),
@@ -394,8 +405,13 @@ export async function gradeCard(
     lastReview: state.lastReview?.getTime() ?? null,
   };
 
+  const landing = and(
+    eq(schema.cardStates.id, state.id),
+    eq(schema.cardStates.lastReview, reviewedAt),
+  ) as SQL;
   const stored = await db
     .batch([
+      // Only over the state read above: another grade landing since then moved it.
       db
         .update(schema.cardStates)
         .set({
@@ -405,37 +421,75 @@ export async function gradeCard(
           lastReview: reviewedAt,
           updatedAt: new Date(),
         })
-        .where(eq(schema.cardStates.id, state.id)),
-      db.insert(schema.reviews).values({
-        id: reviewId,
-        userId,
-        cardId,
-        cardStateId: state.id,
-        direction,
-        mode: key,
-        rating,
-        state: result.log.state,
-        elapsedDays: result.log.elapsedDays,
-        scheduledDays: result.log.scheduledDays,
-        stabilityAfter: result.card.stability,
-        difficultyAfter: result.card.difficulty,
-        reviewedAt,
-        source: "web",
-        reviewDayId: reviewDay.id,
-        stateBefore: JSON.stringify(before),
-        aid: gradeAid(input.aid) ?? null,
-        recallMs: input.recallMs ?? null,
-        gradeMs: input.gradeMs ?? null,
-      }),
+        .where(
+          and(
+            eq(schema.cardStates.id, state.id),
+            state.lastReview
+              ? eq(schema.cardStates.lastReview, state.lastReview)
+              : isNull(schema.cardStates.lastReview),
+          ),
+        )
+        .returning({ id: schema.cardStates.id }),
+      // A copy of this grade that raced past the check above collides here and rolls back.
+      insertWhen(
+        db,
+        schema.reviews,
+        {
+          id: reviewId,
+          userId,
+          cardId,
+          cardStateId: state.id,
+          direction,
+          mode: key,
+          rating,
+          state: result.log.state,
+          elapsedDays: result.log.elapsedDays,
+          scheduledDays: result.log.scheduledDays,
+          stabilityAfter: result.card.stability,
+          difficultyAfter: result.card.difficulty,
+          reviewedAt: reviewedAt.getTime(),
+          source: "web",
+          reviewDayId: reviewDay.id,
+          stateBefore: JSON.stringify(before),
+          aid: gradeAid(input.aid) ?? null,
+          recallMs: input.recallMs ?? null,
+          gradeMs: input.gradeMs ?? null,
+        },
+        schema.cardStates,
+        landing,
+      ),
+      auditStatementWhen(
+        ctx,
+        {
+          entity: "review",
+          action: "grade",
+          id: cardId,
+          details: {
+            rating,
+            direction,
+            mode: key,
+            ...(input.aid ? { aid: gradeAid(input.aid) } : {}),
+          },
+        },
+        schema.cardStates,
+        landing,
+      ),
     ])
     .then(
-      () => true,
+      ([moved]) => (moved.length > 0 ? ("stored" as const) : ("overtaken" as const)),
       (err: unknown) => {
-        if (isUniqueViolation(err)) return false;
+        if (isUniqueViolation(err)) return "copy" as const;
         throw err;
       },
     );
-  if (!stored) return duplicate();
+  if (stored === "copy") return duplicate();
+  // Overtaken grades start again from the state that won: a later one schedules on top of it.
+  if (stored === "overtaken") {
+    if (overtaken >= MAX_OVERTAKEN) {
+      throw new ServiceError("unavailable", "This card is being graded elsewhere. Try again.");
+    }
+    return gradeCard(ctx, input, draws, overtaken + 1);
+  }
   track(ctx.analytics, {
     name: "review_graded",
     mode: key,
@@ -452,12 +506,6 @@ export async function gradeCard(
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
   if (state.state === 0 || result.card.state === 2) await advance();
-  await audit(ctx, {
-    entity: "review",
-    action: "grade",
-    id: cardId,
-    details: { rating, direction, mode: key, ...(input.aid ? { aid: gradeAid(input.aid) } : {}) },
-  });
 
   return {
     ok: true as const,

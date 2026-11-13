@@ -4,7 +4,7 @@ The deck's owner makes a section from **Deck options** › **New section**, or f
 
 ## Reach
 
-The learner's own deck: **Deck options** for New section and Select cards; `lymi://library/sections?id=<deck>` for the Sections page, where a section's row swipes open on Rename and Archive.
+The learner's own deck: **Deck options** for New section and Select cards; `lymi://library/<deck>/sections` for the Sections page, where a section's row swipes open on Rename and Archive.
 
 ## Drive
 

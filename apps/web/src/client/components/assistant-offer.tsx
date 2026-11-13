@@ -5,13 +5,12 @@ import { ArrowRight, Plug, X } from "lucide-react";
 import { type CSSProperties, useState } from "react";
 import { ASSISTANTS as ALL } from "../lib/assistants";
 import { connectedAppsQuery } from "../lib/queries";
+import { ASSISTANT_OFFER_KEY as KEY } from "../lib/storage-keys";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import type { AppIdentity } from "./app-mark";
 import { IconButton } from "./button";
 import { NavLink } from "./nav-link";
 import { DropdownMenuLinkItem } from "./ui/dropdown-menu";
-
-const KEY = "lymi-assistant-offer-dismissed";
 
 /** The assistants shown, in the order a learner is likeliest to have one; each opens its page in Settings. */
 const ASSISTANTS = ALL.slice(0, 4).flatMap((a) => (a.app ? [{ app: a.app, key: a.key }] : []));
@@ -59,8 +58,8 @@ function Glyph({ app, className }: { app: AppIdentity; className: string }) {
 function Mark({ app }: { app: AppIdentity }) {
   return (
     // The card's plate behind the tile cuts it out of the one it overlaps.
-    <span className="block rounded-[10px] bg-plate p-[1.5px]">
-      <span className="edge grid size-7 place-items-center rounded-[9px] bg-plate text-text">
+    <span className="block rounded-tile bg-plate p-0.5">
+      <span className="edge grid size-7 place-items-center rounded-sm bg-plate text-ink">
         <Glyph app={app} className="size-[15px]" />
       </span>
     </span>
@@ -91,7 +90,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
                   params={{ app: key }}
                   aria-label={t`Connect ${name}`}
                   style={{ "--i": i } as CSSProperties}
-                  className={clsx("rounded-[10px]", !still && SPREAD)}
+                  className={clsx("rounded-tile", !still && SPREAD)}
                 >
                   <Mark app={app} />
                 </NavLink>
@@ -107,18 +106,18 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
         </span>
       </div>
       <NavLink to="/settings" hash="apps" className="mt-2.5 block rounded-xs">
-        <span id="assistant-offer-title" className="text-sm font-medium text-text">
+        <span id="assistant-offer-title" className="text-sm font-medium text-ink">
           <Trans>Connect your AI assistant</Trans>
           <ArrowRight
             aria-hidden="true"
             className={clsx(
-              "ms-1 inline-block size-3.5 align-[-2px] text-muted rtl:-scale-x-100",
+              "ms-1 inline-block size-3.5 align-[-2px] text-ink-muted rtl:-scale-x-100",
               !still &&
-                "transition-[translate,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] hoverable:group-hover/offer:translate-x-0.5 hoverable:group-hover/offer:text-text rtl:hoverable:group-hover/offer:-translate-x-0.5",
+                "transition-[translate,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] hoverable:group-hover/offer:translate-x-0.5 hoverable:group-hover/offer:text-ink rtl:hoverable:group-hover/offer:-translate-x-0.5",
             )}
           />
         </span>
-        <span className="mt-0.5 block text-sm text-muted text-pretty">
+        <span className="mt-0.5 block text-sm text-ink-muted text-pretty">
           <Trans>Ask Claude or ChatGPT to create cards and decks for you.</Trans>
         </span>
       </NavLink>

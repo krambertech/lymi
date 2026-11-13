@@ -1,18 +1,16 @@
-import { useLingui } from "@lingui/react/macro";
 import {
   drawsReadings,
   exampleSegments,
   type KnownReadings,
   markedTerm,
   markKnownReadings,
+  stripReadings,
   termReading,
 } from "@lymi/core";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { textStart } from "../theme/type";
-import { Furigana, useFirstLineMiddle, useLineMetrics } from "./furigana";
-import { INLINE_ROOM, InlineControl, RunControl } from "./inline-control";
-import { Text } from "./primitives";
+import { Furigana } from "./furigana";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
@@ -58,67 +56,31 @@ export function TermText({
 }
 
 /**
- * An example over its translation, with its inline readings drawn in its language's notation:
- * furigana, or pinyin and Jyutping for Chinese and Cantonese. `after` follows the last word and
- * centres on that line's letters, under any readings, as the term's speaker does.
+ * An example, with its inline readings drawn in its language's notation: furigana, or pinyin and
+ * Jyutping for Chinese and Cantonese.
  */
 export function ExampleText({
   text,
   known,
-  translation,
-  after,
+  plain,
   ...props
 }: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
-  /** The example's translation, on its own line under it in its own classes. */
-  translation?: { text: string; className: string; lines?: number } | null | undefined;
-  /** A 32 pt control after the example's last word, such as its speaker in review. */
-  after?: ReactNode;
+  /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
+  plain?: boolean | undefined;
 }) {
-  const { i18n } = useLingui();
   const { lang } = props;
-  const segments = useExampleSegments(text, known, lang);
-  const { line, ruby } = useLineMetrics({ segments, ...props });
+  const drawn = useExampleSegments(text, known, lang);
+  const written = useMemo(() => [{ text: stripReadings(text, lang) }], [text, lang]);
   return (
-    <View className="gap-1">
-      <Furigana
-        segments={segments}
-        {...props}
-        style={[
-          StyleSheet.flatten(props.style),
-          textStart(lang),
-          after && !ruby ? INLINE_ROOM : null,
-        ]}
-        after={
-          !after ? undefined : ruby ? (
-            <RunControl line={line} start={QUIET_START}>
-              {after}
-            </RunControl>
-          ) : (
-            // An example is reading size, where iOS already centres the button on the line.
-            <InlineControl start={QUIET_START}>{after}</InlineControl>
-          )
-        }
-      />
-      {translation && (
-        <Text
-          className={translation.className}
-          lang={i18n.locale}
-          numberOfLines={translation.lines}
-        >
-          {translation.text}
-        </Text>
-      )}
-    </View>
+    <Furigana
+      segments={plain ? written : drawn}
+      {...props}
+      style={[StyleSheet.flatten(props.style), textStart(lang)]}
+    />
   );
 }
-
-/** The room before the example's speaker, whose bare glyph already sits inside its 32 pt box. */
-const QUIET_START = 4;
-
-/** The speaker's drawn height, whose box the card page centres on the example's first line. */
-export const EXAMPLE_END_BOX = 32;
 
 function useExampleSegments(
   text: string,
@@ -129,20 +91,4 @@ function useExampleSegments(
     () => markKnownReadings(exampleSegments(text, lang), known, lang),
     [text, known, lang],
   );
-}
-
-/**
- * Where the middle of an example's first line sits from the top of `ExampleText`, for a control
- * beside it that `ExampleText` does not hold, such as the card page's speaker outside its edit button.
- */
-export function useExampleFirstLine({
-  text,
-  known,
-  ...props
-}: Pick<
-  ComponentProps<typeof ExampleText>,
-  "text" | "known" | "lang" | "className" | "style" | "maxFontSizeMultiplier"
->) {
-  const segments = useExampleSegments(text, known, props.lang);
-  return useFirstLineMiddle({ segments, ...props });
 }

@@ -237,3 +237,23 @@ it("keeps D1's own failure class without the SQL or parameters that follow it", 
   ]);
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });
+
+it("keeps an OpenAI text failure's class and HTTP status but no other text", () => {
+  const sanitize = (value: string) =>
+    exceptionProperties({ $exception_list: [{ type: "OpenAiTextError", value }] })
+      .$exception_list as { type: string; value: string }[];
+  for (const message of [
+    "OpenAI text request failed (403)",
+    "OpenAI could not be reached",
+    "OpenAI reply was cut off",
+    "OpenAI returned no text",
+    "OpenAI returned text that is not JSON",
+  ]) {
+    expect(sanitize(message)).toMatchObject([{ type: "OpenAiTextError", value: message }]);
+  }
+  for (const message of ["OpenAI text request failed (403): private card", "private prompt"]) {
+    expect(sanitize(message)).toMatchObject([
+      { type: "OpenAiTextError", value: "Unexpected error" },
+    ]);
+  }
+});

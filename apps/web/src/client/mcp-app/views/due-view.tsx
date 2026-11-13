@@ -26,14 +26,14 @@ export function DueView({ result }: { result: ViewDueResult }) {
         <ul aria-label={t`Due by deck`} className="flex flex-col divide-y divide-edge">
           {decks.map((deck) => (
             <li key={deck.id} className="flex items-center justify-between gap-3 py-2.5">
-              <span className="min-w-0 truncate text-text">{deck.name}</span>
+              <span className="min-w-0 truncate text-ink">{deck.name}</span>
               <DueCount count={deck.due} />
             </li>
           ))}
         </ul>
       )}
       {(result.rounds.forgotten > 0 || result.rounds.slipping > 0) && (
-        <p className="text-sm text-text-2">
+        <p className="text-sm text-ink-secondary">
           {result.rounds.forgotten > 0 &&
             plural(result.rounds.forgotten, {
               one: "# forgotten today.",

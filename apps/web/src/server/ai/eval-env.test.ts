@@ -25,6 +25,6 @@ describe("requireKeys", () => {
   });
 
   it("passes when every key holds a value", () => {
-    expect(() => requireKeys({ GEMINI_API_KEY: "key" }, ["GEMINI_API_KEY"], "write")).not.toThrow();
+    expect(() => requireKeys({ OPENAI_API_KEY: "key" }, ["OPENAI_API_KEY"], "write")).not.toThrow();
   });
 });

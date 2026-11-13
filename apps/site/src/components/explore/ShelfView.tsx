@@ -41,29 +41,31 @@ function ShelfHeroContent({
   return (
     <div className="mx-auto max-w-[1120px] px-5 pt-8 pb-2 @2xl:px-10 @4xl:pt-12">
       <nav aria-label={t`Breadcrumb`}>
-        <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
+        <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-muted">
           <li>
             <a
               href={explorePath(locale)}
-              className="rounded-xs font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
+              className="rounded-xs font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
             >
               <Trans>Explore</Trans>
             </a>
           </li>
           <li aria-hidden="true">
-            <ChevronRight className="size-3.5 text-faint rtl:-scale-x-100" />
+            <ChevronRight className="size-3.5 text-ink-faint rtl:-scale-x-100" />
           </li>
           <li aria-current="page">{shelfLabel(i18n, shelf)}</li>
         </ol>
       </nav>
-      <h1 className="mt-5 max-w-[18ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-text @4xl:text-[4rem]">
+      <h1 className="mt-5 max-w-[18ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-ink @4xl:text-[4rem]">
         {copy.title}
       </h1>
-      <p className="mt-4 max-w-[52ch] text-lg text-pretty text-text-2 @2xl:text-xl">{copy.lede}</p>
+      <p className="mt-4 max-w-[52ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
+        {copy.lede}
+      </p>
       {isExamShelf(shelfRoute(shelf)) && <ExamPageLink locale={locale} className="mt-4" />}
-      <p className="mt-3 text-sm text-muted tabular-nums">
+      <p className="mt-3 text-sm text-ink-muted tabular-nums">
         <Plural value={shelf.decks.length} one="# deck" other="# decks" />
-        <span aria-hidden="true" className="px-1.5 text-faint">
+        <span aria-hidden="true" className="px-1.5 text-ink-faint">
           ·
         </span>
         <Plural value={cards} one="# card" other="# cards" />
@@ -115,11 +117,11 @@ export function ShelfAbout({
         <div className="mx-auto max-w-[1040px]">
           <h2
             id="about-title"
-            className="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl"
+            className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
           >
             {heading}
           </h2>
-          <div className="mt-5 grid max-w-[62ch] gap-3 text-md text-pretty text-text-2">
+          <div className="mt-5 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
             {copy.about.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -151,30 +153,30 @@ function ShelfMoreLinks({
 }: LocaleProps & { others: { shelf: Shelf; route: ShelfRoute }[]; languages: boolean }) {
   const { i18n, t } = useLingui();
   const chip =
-    "inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
+    "inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap px-4 text-md font-medium text-ink transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
   return (
     <nav aria-labelledby="more-shelves" className="border-b border-edge px-5 py-12 @2xl:px-10">
       <div className="mx-auto max-w-[1040px]">
         {others.length > 0 && (
-          <h2 id="more-shelves" className="text-sm text-muted">
+          <h2 id="more-shelves" className="text-sm text-ink-muted">
             {languages ? <Trans>More languages</Trans> : <Trans>Other subjects</Trans>}
           </h2>
         )}
         <ul className={`flex flex-wrap gap-2 ${others.length > 0 ? "mt-3" : ""}`}>
           {others.map(({ shelf, route }) => (
             <li key={shelf.key}>
-              <a href={shelfPath(route, locale)} className={`${chip} bg-plate-2`}>
+              <a href={shelfPath(route, locale)} className={`${chip} bg-plate-nested`}>
                 {shelfLabel(i18n, shelf)}
-                <span className="text-sm text-muted tabular-nums">{shelf.decks.length}</span>
+                <span className="text-sm text-ink-muted tabular-nums">{shelf.decks.length}</span>
               </a>
             </li>
           ))}
           <li>
             <a
               href={explorePath(locale)}
-              className={`${chip} shadow-[inset_0_0_0_1px_var(--edge-2)]`}
+              className={`${chip} shadow-[inset_0_0_0_1px_var(--edge-strong)]`}
             >
-              <List aria-hidden="true" className="size-4 text-muted" />
+              <List aria-hidden="true" className="size-4 text-ink-muted" />
               <Trans>All of Explore</Trans>
             </a>
           </li>

@@ -25,13 +25,13 @@ export function Question({ title, lede }: { title: string; lede?: string | undef
   return (
     <View className="gap-2">
       <Text
-        className="text-2xl font-medium text-text"
+        className="text-2xl font-medium text-ink"
         style={{ letterSpacing: -0.4 }}
         accessibilityRole="header"
       >
         {title}
       </Text>
-      {lede && <Text className="text-md text-text-2">{lede}</Text>}
+      {lede && <Text className="text-md text-ink-secondary">{lede}</Text>}
     </View>
   );
 }
@@ -58,7 +58,7 @@ export function StepActions({
 
 /** A muted line under a step's actions. */
 export function StepNote({ children }: { children: string }) {
-  return <Text className="px-1 text-center text-sm text-muted">{children}</Text>;
+  return <Text className="px-1 text-center text-sm text-ink-muted">{children}</Text>;
 }
 
 /** What the import keeps or leaves: a check for kept, a minus for left out. Never colour alone. */
@@ -70,10 +70,10 @@ export function Line({ tone, children }: { tone: "good" | "skip"; children: Reac
         <Icon
           name={tone === "good" ? "known" : "remove"}
           size={18}
-          colour={tone === "good" ? p.good : p.muted}
+          colour={tone === "good" ? p.success : p["ink-muted"]}
         />
       </View>
-      <Text className="flex-1 text-base text-text-2">{children}</Text>
+      <Text className="flex-1 text-base text-ink-secondary">{children}</Text>
     </View>
   );
 }
@@ -95,16 +95,16 @@ export function Figures({ figures }: { figures: { label: string; value: number |
           }
         >
           {figure.value === undefined ? (
-            <View className="h-8 w-12 rounded-sm bg-plate-2" />
+            <View className="h-8 w-12 rounded-sm bg-plate-nested" />
           ) : (
             <Text
-              className="text-2xl font-medium text-text"
+              className="text-2xl font-medium text-ink"
               style={{ fontVariant: ["tabular-nums"] }}
             >
               {i18n.number(figure.value)}
             </Text>
           )}
-          <Text className="text-sm text-muted">{figure.label}</Text>
+          <Text className="text-sm text-ink-muted">{figure.label}</Text>
         </View>
       ))}
     </Plate>
@@ -132,13 +132,13 @@ export function Sweep({ label }: { label: string }) {
     <View
       accessibilityRole="progressbar"
       accessibilityLabel={label}
-      className="h-2 w-full overflow-hidden rounded-full bg-plate-2"
+      className="h-2 w-full overflow-hidden rounded-full bg-plate-nested"
     >
       {reduce ? (
-        <View className="h-full w-full rounded-full bg-text-2 opacity-40" />
+        <View className="h-full w-full rounded-full bg-ink-secondary opacity-40" />
       ) : (
         <Animated.View
-          className="h-full rounded-full bg-text-2"
+          className="h-full rounded-full bg-ink-secondary"
           style={[{ position: "absolute", width: "33.4%" }, style]}
         />
       )}
@@ -163,14 +163,14 @@ export function SampleCard({
   const p = usePalette();
   if (!sample) {
     return (
-      <View className="min-h-40 items-center justify-center gap-3 rounded-lg bg-plate-2 p-5">
+      <View className="min-h-40 items-center justify-center gap-3 rounded-lg bg-plate-nested p-5">
         {!loading && error ? (
           <>
             <FieldError>{error}</FieldError>
             {onRetry && <Button label={t`Try again`} size="sm" onPress={onRetry} />}
           </>
         ) : (
-          <Text className="text-center text-base text-muted">
+          <Text className="text-center text-base text-ink-muted">
             {loading ? t`Getting a card ready…` : t`No card of this kind has a term.`}
           </Text>
         )}
@@ -184,21 +184,21 @@ export function SampleCard({
   ];
   return (
     <View className={`gap-3 ${loading ? "opacity-60" : ""}`}>
-      <Text className="text-3xl font-medium text-text" style={{ letterSpacing: -0.8 }}>
+      <Text className="text-3xl font-medium text-ink" style={{ letterSpacing: -0.8 }}>
         {sample.term}
       </Text>
       <View className="h-px bg-edge" />
       <View className="flex-row items-start gap-3">
-        <Text className={`flex-1 text-xl ${sample.meaning ? "text-text" : "text-muted"}`}>
+        <Text className={`flex-1 text-xl ${sample.meaning ? "text-ink" : "text-ink-muted"}`}>
           {sample.meaning ?? t`No meaning`}
         </Text>
         {sample.picture && (
           <View
-            className="size-14 items-center justify-center rounded-md bg-plate-2"
+            className="size-14 items-center justify-center rounded-md bg-plate-nested"
             accessible
             accessibilityLabel={t`Has a picture`}
           >
-            <Icon name="picture" size={20} colour={p.muted} />
+            <Icon name="picture" size={20} colour={p["ink-muted"]} />
           </View>
         )}
       </View>
@@ -207,8 +207,8 @@ export function SampleCard({
           {rows.map(([label, value]) =>
             value ? (
               <View key={label} className="gap-0.5">
-                <Text className="text-sm text-muted">{label}</Text>
-                <Text className="text-base text-text-2" numberOfLines={3}>
+                <Text className="text-sm text-ink-muted">{label}</Text>
+                <Text className="text-base text-ink-secondary" numberOfLines={3}>
                   {value}
                 </Text>
               </View>
@@ -217,7 +217,7 @@ export function SampleCard({
         </View>
       )}
       {sample.modes.length > 1 && (
-        <Text className="text-sm text-muted">
+        <Text className="text-sm text-ink-muted">
           {t`Asked both ways: from the term, and from the meaning.`}
         </Text>
       )}

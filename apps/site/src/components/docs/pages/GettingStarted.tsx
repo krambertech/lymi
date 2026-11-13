@@ -56,7 +56,7 @@ export function GettingStarted() {
       <p>
         For several cards at once, open <strong>Smart add</strong> and paste text or choose a PDF or
         photo. Check the cards it finds and choose which to add. Smart add needs AI services enabled
-        in Settings.
+        in Settings. See <a href="/docs/smart-add">Smart add</a> for the steps and limits.
       </p>
       <H2>Review from Today</H2>
       <p>

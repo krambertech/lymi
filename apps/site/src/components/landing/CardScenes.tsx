@@ -75,12 +75,12 @@ function Field({ label, children, on }: { label: ReactNode; children: ReactNode;
   return (
     <div className="rounded-lg bg-plate px-3 py-2 edge">
       <div className="flex items-center justify-between gap-3">
-        <span className="text-xs text-muted">{label}</span>
+        <span className="text-xs text-ink-muted">{label}</span>
         {on && <AiChip />}
       </div>
       <div
         className={clsx(
-          "mt-0.5 min-h-5 text-sm text-pretty text-text transition-[opacity,filter] duration-500",
+          "mt-0.5 min-h-5 text-sm text-pretty text-ink transition-[opacity,filter] duration-500",
           on ? "opacity-100" : "opacity-0 blur-[4px]",
         )}
       >
@@ -97,13 +97,13 @@ export function WordScene({ play }: SceneProps) {
     .join("");
   return (
     <div className="grid w-full max-w-[340px] gap-1.5">
-      <div className="rounded-lg bg-plate px-3 py-2 edge-2">
-        <span className="text-xs text-muted">
+      <div className="rounded-lg bg-plate px-3 py-2 edge-strong">
+        <span className="text-xs text-ink-muted">
           <Trans>Term</Trans>
         </span>
         <p
           lang="de"
-          className="mt-0.5 flex h-7 items-center text-xl font-medium tracking-[-0.025em] text-text"
+          className="mt-0.5 flex h-7 items-center text-xl font-medium tracking-[-0.025em] text-ink"
         >
           {typed}
           {!at("meaning") && <Caret />}
@@ -171,7 +171,7 @@ function NotesPage({ lit }: { lit: (i: number) => boolean }) {
         />
       ))}
       <div className="w-[212px] rounded-sm bg-plate px-4 pt-3 pb-4 shadow-[0_14px_30px_-12px_oklch(0.3_0.03_60/0.35)] edge">
-        <p className="flex justify-between text-xs text-muted">
+        <p className="flex justify-between text-xs text-ink-muted">
           <span>
             <Trans>Biology · week 6</Trans>
           </span>
@@ -181,7 +181,7 @@ function NotesPage({ lit }: { lit: (i: number) => boolean }) {
           {NOTES.map((note, i) => (
             <li
               key={note.term}
-              className="flex h-7 items-end pb-0.5 text-[13px] whitespace-nowrap text-text-2"
+              className="flex h-7 items-end pb-0.5 text-[13px] whitespace-nowrap text-ink-secondary"
             >
               <Pick on={lit(i)}>{note.line}</Pick>
             </li>
@@ -205,22 +205,22 @@ export function LessonScene({ play }: SceneProps) {
           <Appear key={note.term} on={at(`c${i}` as keyof typeof LESSON_BEATS)}>
             {note.meaning ? (
               <div className="flex items-start gap-2.5 rounded-lg bg-plate px-3 py-2 edge">
-                <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-good" />
+                <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-text">{note.term}</p>
-                  <p className="truncate text-xs text-text-2">{i18n._(note.meaning)}</p>
+                  <p className="text-sm font-medium text-ink">{note.term}</p>
+                  <p className="truncate text-xs text-ink-secondary">{i18n._(note.meaning)}</p>
                 </div>
               </div>
             ) : (
               <div className="flex items-start gap-2.5 rounded-lg bg-plate/60 px-3 py-2 edge">
-                <Copy aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted" />
+                <Copy aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-ink-muted" />
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-muted">{note.term}</p>
-                  <p className="truncate text-xs text-muted">
+                  <p className="text-sm font-medium text-ink-muted">{note.term}</p>
+                  <p className="truncate text-xs text-ink-muted">
                     <Trans>Already in Biology</Trans>
                   </p>
                 </div>
-                <span className="shrink-0 rounded-full bg-plate-2 px-2 py-0.5 text-2xs font-medium text-text-2">
+                <span className="shrink-0 rounded-full bg-plate-nested px-2 py-0.5 text-2xs font-medium text-ink-secondary">
                   <Trans>Duplicate</Trans>
                 </span>
               </div>

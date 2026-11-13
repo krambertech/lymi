@@ -9,7 +9,7 @@ import { TermText } from "../ui/term-text";
 
 /** How many sizes the cue and the target have. */
 const STEPS = 3;
-/** The word at 38 (DESIGN.md word-phone), then 3xl and 2xl. */
+/** The word at 38 (the phone's word step in type.md), then 3xl and 2xl. */
 const CUE = [38, 34, 28];
 /** A term as the answer: 2xl, xl, lg, medium. */
 const TERM = [28, 22, 20];
@@ -96,7 +96,7 @@ export function CardLine({
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
   const plain = (text: string) => (
     <Text
-      className="text-text"
+      className="text-ink"
       style={[style, textStart(lang), after ? INLINE_ROOM : null, muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       lang={lang}
@@ -116,7 +116,7 @@ export function CardLine({
       plain={plain}
       hidden={hidden}
       lang={lang}
-      className="text-text"
+      className="text-ink"
       style={[style, textStart(lang), muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       after={after ? <RunControl line={line}>{after}</RunControl> : undefined}

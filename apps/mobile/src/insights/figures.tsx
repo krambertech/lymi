@@ -10,7 +10,7 @@ import { Text } from "../ui/primitives";
 import { StateIcon, stateMarks } from "../ui/state-mark";
 
 // The web's Insights figures, drawn for touch. insights.md: every figure is ink at graded opacity
-// over a plate-2 well; a lit day, today's bar and Recall's last point are the only amber.
+// over a plate-nested well; a lit day, today's bar and Recall's last point are the only amber.
 
 /** A local date as a Date at noon UTC, so formatting it in UTC can never slip a day. */
 export const asDate = (date: string) => new Date(`${date}T12:00:00Z`);
@@ -112,7 +112,7 @@ export function TrendLine({
               x2={w - PAD_END}
               y1={ty}
               y2={ty}
-              stroke={p["edge-2"]}
+              stroke={p["edge-strong"]}
               strokeWidth={1}
               strokeDasharray="3 3"
             />
@@ -120,28 +120,31 @@ export function TrendLine({
               <Path
                 d={curve(xy)}
                 fill="none"
-                stroke={ink(p.text, 0.55)}
+                stroke={ink(p.ink, 0.55)}
                 strokeWidth={1.75}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             )}
             {xy.slice(0, -1).map((pt, i) => (
-              <Circle key={points[i]?.at} cx={pt.x} cy={pt.y} r={2} fill={ink(p.text, 0.45)} />
+              <Circle key={points[i]?.at} cx={pt.x} cy={pt.y} r={2} fill={ink(p.ink, 0.45)} />
             ))}
             {last && <Circle cx={last.x} cy={last.y} r={3.5} fill={p.amber} />}
           </Svg>
         )}
-        <Text className="absolute start-0 text-2xs text-muted" style={[TABULAR, { top: ty - 8 }]}>
+        <Text
+          className="absolute start-0 text-2xs text-ink-muted"
+          style={[TABULAR, { top: ty - 8 }]}
+        >
           {targetLabel}
         </Text>
       </View>
       <View className="h-4 flex-row justify-between" style={{ marginStart: GUTTER }}>
-        <Text className="text-2xs text-muted">{points[0]?.short}</Text>
+        <Text className="text-2xs text-ink-muted">{points[0]?.short}</Text>
         {lastValue !== undefined && points.length > 1 && (
-          <Text className="text-2xs text-muted">
+          <Text className="text-2xs text-ink-muted">
             {points.at(-1)?.short}{" "}
-            <Text className="text-2xs font-medium text-text" style={TABULAR}>
+            <Text className="text-2xs font-medium text-ink" style={TABULAR}>
               {i18n.number(lastValue, { style: "percent" })}
             </Text>
           </Text>
@@ -160,7 +163,7 @@ export function RecallTally({ passed, failed }: { passed: number; failed: number
   const p = usePalette();
   const graded = passed + failed;
   if (graded === 0) return null;
-  const tone = (ok: boolean) => ink(p.text, ok ? 0.5 : 0.85);
+  const tone = (ok: boolean) => ink(p.ink, ok ? 0.5 : 0.85);
   const marks =
     graded > COUNTABLE
       ? [
@@ -232,7 +235,7 @@ export function RunStrip({
               borderTopRightRadius: 4,
               borderBottomLeftRadius: 5,
               borderBottomRightRadius: 5,
-              backgroundColor: r.lit ? p.amber : p["plate-2"],
+              backgroundColor: r.lit ? p.amber : p["plate-nested"],
               borderWidth: r.lit ? 0 : 1,
               borderColor: p.edge,
               experimental_backgroundImage: r.lit
@@ -257,11 +260,11 @@ export function CardStates({ cards }: { cards: InsightsOut["cards"] }) {
         <View key={k} className="flex-row items-center gap-3">
           <View className="w-[108px] flex-row items-center gap-1.5">
             <StateIcon state={k} size={16} />
-            <Text className="text-sm text-text-2" numberOfLines={1}>
+            <Text className="text-sm text-ink-secondary" numberOfLines={1}>
               {i18n._(stateMarks[k].groupLabel)}
             </Text>
           </View>
-          <View className="h-2 flex-1 overflow-hidden rounded-full bg-plate-2">
+          <View className="h-2 flex-1 overflow-hidden rounded-full bg-plate-nested">
             <View
               className="h-full rounded-full"
               style={{
@@ -270,7 +273,7 @@ export function CardStates({ cards }: { cards: InsightsOut["cards"] }) {
               }}
             />
           </View>
-          <Text className="w-10 text-sm font-medium text-text" style={[TABULAR, TEXT_END]}>
+          <Text className="w-10 text-sm font-medium text-ink" style={[TABULAR, TEXT_END]}>
             {i18n.number(cards[k])}
           </Text>
         </View>
@@ -290,7 +293,7 @@ export function CardShares({
   const p = usePalette();
   return (
     <View
-      className="w-full flex-row overflow-hidden rounded-full bg-plate-2"
+      className="w-full flex-row overflow-hidden rounded-full bg-plate-nested"
       style={{ height, gap: 2 }}
     >
       {(["known", "learning", "new"] as const)
@@ -336,7 +339,7 @@ export function ForecastBars({
         <View key={d.date} className="flex-1 gap-1">
           {!compact && (
             <Text
-              className={`text-center text-2xs ${i === 0 ? "font-medium text-text" : d.count > 0 ? "text-muted" : "text-faint"}`}
+              className={`text-center text-2xs ${i === 0 ? "font-medium text-ink" : d.count > 0 ? "text-ink-muted" : "text-ink-faint"}`}
               style={TABULAR}
             >
               {i18n.number(d.count)}
@@ -348,13 +351,13 @@ export function ForecastBars({
                 height: d.count > 0 ? `${Math.max(6, (d.count / max) * 100)}%` : 0,
                 borderTopLeftRadius: compact ? 2 : 4,
                 borderTopRightRadius: compact ? 2 : 4,
-                backgroundColor: i === 0 ? p.amber : ink(p.text, 0.35),
+                backgroundColor: i === 0 ? p.amber : ink(p.ink, 0.35),
               }}
             />
           </View>
           {!compact && (
             <Text
-              className={`text-center text-2xs ${i === 0 ? "font-medium text-text" : "text-muted"}`}
+              className={`text-center text-2xs ${i === 0 ? "font-medium text-ink" : "text-ink-muted"}`}
               numberOfLines={1}
             >
               {i === 0 ? name(d.date, i) : weekday(d.date).slice(0, 2)}

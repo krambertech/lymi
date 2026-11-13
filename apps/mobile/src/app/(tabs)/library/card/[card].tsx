@@ -5,7 +5,14 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, type EnrichedField, isolate, termShowsPronunciation } from "@lymi/core";
+import {
+  type EnrichedField,
+  isolate,
+  pitchPattern,
+  pronunciationText,
+  readFsrs,
+  termShowsPronunciation,
+} from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -17,13 +24,15 @@ import { fieldLabel } from "../../../../capture/card-fields";
 import type { FormField } from "../../../../capture/form";
 import { useArchiveCard } from "../../../../card/card-menu";
 import { canEnrich, useEnrichCard } from "../../../../card/enrich";
+import { type EnrichRun, enrichAnnouncement } from "../../../../card/enrich-announcement";
 import { languageName } from "../../../../data/languages";
-import { useDeckCards, useDecks } from "../../../../data/queries";
+import { useDeckCards, useDecks, useSections } from "../../../../data/queries";
 import { useMoveToSection } from "../../../../deck/move-to-section";
 import { CardNotes } from "../../../../review/card-notes";
 import { ExampleAudioButton, useExampleAudio } from "../../../../review/example-audio";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
+import { NO_SECTION, sectionPage } from "../../../../sections/section-line";
 import { reportHref } from "../../../../sharing/report";
 import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../../theme/motion";
 import { usePalette } from "../../../../theme/palette";
@@ -31,19 +40,16 @@ import { TEXT_END } from "../../../../theme/type";
 import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
+import { ExampleLines } from "../../../../ui/example-lines";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
+import { PitchChart } from "../../../../ui/pitch-chart";
 import { Plate, Press, Text } from "../../../../ui/primitives";
 import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
-import {
-  EXAMPLE_END_BOX,
-  ExampleText,
-  TermText,
-  useExampleFirstLine,
-} from "../../../../ui/term-text";
+import { TermText } from "../../../../ui/term-text";
 import { toast } from "../../../../ui/toast-host";
 
 const DAY = 86_400_000;
@@ -86,8 +92,23 @@ export default function CardPage() {
   const reduce = useReduceMotion();
   const stackDetails = useAccessibilitySizes();
   const router = useRouter();
-  const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
+  const {
+    card: id,
+    deck: deckId,
+    section: sectionParam,
+    from,
+  } = useLocalSearchParams<{ card: string; deck: string; section?: string; from?: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
+  const sectionId = sectionParam === NO_SECTION ? "" : sectionParam;
+  const sections = useSections(sectionId ? deckId : undefined).data?.sections;
+  const sectionName = sections?.find((s) => s.id === sectionId)?.name;
+  const back =
+    sectionId === undefined
+      ? { label: deck?.name ?? t`Deck`, to: `/library/${deckId}` as Href }
+      : {
+          label: sectionId ? (sectionName ?? t`Section`) : t`No section`,
+          to: sectionPage(deckId, sectionId, from === "sections"),
+        };
   const cards = useDeckCards(deckId);
   const known = useKnownReadings();
   const listed = cards.data?.find((r) => r.card.id === id);
@@ -126,12 +147,6 @@ export default function CardPage() {
   }, [playError]);
   // The example's speaker is on the page, but its tip has no layer to draw on here.
   const exampleError = exampleSound?.error;
-  const exampleMiddle = useExampleFirstLine({
-    text: card?.example ?? "",
-    known,
-    className: "text-md text-text",
-    lang: card?.language,
-  });
   useEffect(() => {
     if (exampleError) toast.add({ error: true, title: exampleError });
   }, [exampleError]);
@@ -140,22 +155,23 @@ export default function CardPage() {
   const reading = useMemo(() => !!card && termShowsPronunciation(card), [card]);
   // A shimmer says nothing out loud, so the page says it: once when the AI starts, once when the run settles.
   const status = card?.enrichmentStatus;
+  const translationStatus = card?.exampleTranslationStatus;
   const filling = status === "working";
-  const announced = useRef(false);
+  const run = useRef<EnrichRun | null>(null);
   useEffect(() => {
-    if (filling) {
-      announced.current = true;
+    const next = enrichAnnouncement(run.current, status, translationStatus);
+    run.current = next.run;
+    if (next.say === "started") {
       AccessibilityInfo.announceForAccessibility(t`Enriching this card`);
-    } else if (announced.current) {
-      announced.current = false;
+    } else if (next.say) {
       AccessibilityInfo.announceForAccessibility(
-        status === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
+        next.say === "failed" ? t`Couldn’t enrich this card.` : t`Enriched this card`,
       );
     }
-  }, [filling, status, t]);
+  }, [status, translationStatus, t]);
   if (!card || !row) {
     return (
-      <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
+      <Screen title="" back={back}>
         {cards.data ? (
           // Archived or moved elsewhere since the list was opened.
           <EmptyState
@@ -232,7 +248,7 @@ export default function CardPage() {
       return {
         key: `e-${e.id}`,
         at: new Date(e.at),
-        mark: <Icon name={icon} size={15} colour={p["text-2"]} />,
+        mark: <Icon name={icon} size={15} colour={p["ink-secondary"]} />,
         title: i18n._(text),
         // An actor a newer Worker added goes unnamed rather than raw. ADR 0032.
         line: ACTOR[e.actor] ? i18n._(ACTOR[e.actor] as MessageDescriptor) : "",
@@ -258,9 +274,13 @@ export default function CardPage() {
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
-        <Text className="text-md text-text" lang={card.language}>
-          {card.pronunciation}
-        </Text>
+        {pitchPattern(card) !== null ? (
+          <PitchChart card={card} />
+        ) : (
+          <Text className="text-md text-ink" lang={card.language}>
+            {pronunciationText(card)}
+          </Text>
+        )}
       </Field>
     ) : (
       waiting("pronunciation") && (
@@ -279,7 +299,7 @@ export default function CardPage() {
       {waiting("meaning") ? (
         <Working />
       ) : (
-        <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
+        <Text className={`text-md ${card.meaning ? "text-ink" : "text-ink-muted"}`}>
           {card.meaning || t`No meaning yet`}
         </Text>
       )}
@@ -294,41 +314,36 @@ export default function CardPage() {
           exampleAi ? (translationAi ? "exampleAndTranslation" : "example") : "exampleTranslation"
         }
         onPress={edit("example")}
-        end={exampleSound && <ExampleAudioButton sound={exampleSound} />}
-        endMiddle={exampleSound ? exampleMiddle : undefined}
+        corner={exampleSound && <ExampleAudioButton sound={exampleSound} />}
         // A failed run names itself once, under the fields, so its translation does not say it again.
         below={
           owner &&
           card.exampleTranslationStatus === "failed" &&
           card.enrichmentStatus !== "failed" && (
             <View className="flex-row flex-wrap items-center gap-x-2">
-              <Text className="text-sm text-muted">{t`Couldn’t translate the example.`}</Text>
+              <Text className="text-sm text-ink-muted">{t`Couldn’t translate the example.`}</Text>
               <Press
                 // Enrich on the card writes the translation that failed; the card comes back working.
                 onPress={() => void enrich(card)}
                 accessibilityRole="button"
                 className="min-h-11 justify-center"
               >
-                <Text className="text-sm font-medium text-text-2 underline">{t`Try again`}</Text>
+                <Text className="text-sm font-medium text-ink-secondary underline">{t`Try again`}</Text>
               </Press>
             </View>
           )
         }
       >
-        <ExampleText
+        <ExampleLines
           text={card.example}
           known={known}
-          className="text-md text-text"
           lang={card.language}
-          translation={translation ? { text: translation, className: "text-md text-muted" } : null}
+          translation={translation}
+          translating={translating}
+          speakerRoom={!!exampleSound}
         />
-        {translating && !translation && (
-          <View className="h-5 justify-center" accessibilityElementsHidden>
-            <Skeleton width="66%" height={12} />
-          </View>
-        )}
         {owner && translation && card.exampleTranslationStale && (
-          <Text className="text-sm text-muted">
+          <Text className="text-sm text-ink-muted">
             {t`Translated from an earlier example. Edit it to match.`}
           </Text>
         )}
@@ -342,7 +357,7 @@ export default function CardPage() {
     ),
     card.notes ? (
       <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"} onPress={edit("notes")}>
-        <CardNotes source={card.notes} className="text-md text-text" />
+        <CardNotes source={card.notes} className="text-md text-ink" />
       </Field>
     ) : (
       waiting("notes") && (
@@ -359,45 +374,41 @@ export default function CardPage() {
         field="hint"
         onPress={edit("hint")}
       >
-        <Text className="text-md text-text">{card.hint}</Text>
+        <Text className="text-md text-ink">{card.hint}</Text>
       </Field>
     ),
   ].filter(Boolean);
 
   const schedule =
     states.filter((s) => s.state !== 0).length === 0 ? (
-      <Text className="px-5 py-4 text-base text-text-2">
+      <Text className="px-5 py-4 text-base text-ink-secondary">
         {t`Not reviewed yet. It comes up in your next review.`}
       </Text>
     ) : (
       <View>
         {states.map((st, i) => {
-          let reps = 0;
-          let lapses = 0;
-          try {
-            const f = deserializeState(st.fsrs);
-            reps = f.reps;
-            lapses = f.lapses;
-          } catch {}
+          const fsrs = readFsrs(st);
           return (
             <View
               key={st.id}
               className={`flex-row items-start gap-3 px-5 py-3.5 ${i > 0 ? "border-t border-edge" : ""}`}
             >
               <View className="flex-1 gap-1.5">
-                <Text className="text-md font-medium text-text">{i18n._(modeLabel(st.mode))}</Text>
+                <Text className="text-md font-medium text-ink">{i18n._(modeLabel(st.mode))}</Text>
                 <StateChip state={st.state} size="sm" />
               </View>
               <View className="items-end gap-0.5">
-                <Text className="text-md text-text">
+                <Text className="text-md text-ink">
                   {st.state === 0 ? t`Not started` : when(new Date(st.due))}
                 </Text>
-                <Text className="text-sm text-muted">
-                  {plural(reps, { one: "# review", other: "# reviews" })}
-                  {lapses > 0
-                    ? ` · ${plural(lapses, { one: "forgotten once", other: "forgotten # times" })}`
-                    : ""}
-                </Text>
+                {fsrs && (
+                  <Text className="text-sm text-ink-muted">
+                    {plural(fsrs.reps, { one: "# review", other: "# reviews" })}
+                    {fsrs.lapses > 0
+                      ? ` · ${plural(fsrs.lapses, { one: "forgotten once", other: "forgotten # times" })}`
+                      : ""}
+                  </Text>
+                )}
               </View>
             </View>
           );
@@ -414,12 +425,12 @@ export default function CardPage() {
         >
           <View className="w-5 items-center pt-0.5">{item.mark}</View>
           <View className="flex-1 gap-0.5">
-            <Text className={`text-md text-text ${item.strong ? "font-medium" : ""}`}>
+            <Text className={`text-md text-ink ${item.strong ? "font-medium" : ""}`}>
               {item.title}
             </Text>
-            <Text className="text-sm text-muted">{item.line}</Text>
+            <Text className="text-sm text-ink-muted">{item.line}</Text>
           </View>
-          <Text className="text-sm text-muted">{dayLabel(item.at)}</Text>
+          <Text className="text-sm text-ink-muted">{dayLabel(item.at)}</Text>
         </View>
       ))}
       {/* The history is read on its own, so offline it can be missing for a card that has one. */}
@@ -446,7 +457,7 @@ export default function CardPage() {
           accessibilityRole="button"
           className="border-t border-edge px-5 py-3"
         >
-          <Text className="text-base font-medium text-text-2">
+          <Text className="text-base font-medium text-ink-secondary">
             {plural(items.length - HISTORY_ROWS, {
               one: "Show # older entry",
               other: "Show # older entries",
@@ -459,7 +470,7 @@ export default function CardPage() {
 
   const block = (title: string, body: ReactNode) => (
     <View>
-      <Text className="px-1 pb-2.5 text-lg font-medium text-text" accessibilityRole="header">
+      <Text className="px-1 pb-2.5 text-lg font-medium text-ink" accessibilityRole="header">
         {title}
       </Text>
       <Plate className="overflow-hidden">{body}</Plate>
@@ -475,12 +486,12 @@ export default function CardPage() {
         reading ? (
           <TermText
             card={card}
-            className="text-3xl font-medium tracking-tight text-text"
+            className="text-3xl font-medium tracking-tight text-ink"
             accessibilityRole="header"
           />
         ) : undefined
       }
-      back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
+      back={back}
       actions={
         <View className="flex-row items-center gap-2.5">
           {/* A set star stands beside ⋯ and unmarks with a tap; unset, it is only in the menu. */}
@@ -592,13 +603,13 @@ export default function CardPage() {
       {/* One quiet line, only here: a field that says "No meaning yet" is already saying enough. */}
       {owner && card.enrichmentStatus === "failed" && (
         <View className="-mt-2 flex-row flex-wrap items-center gap-x-2 px-1">
-          <Text className="text-sm text-muted">{t`Couldn’t enrich this card.`}</Text>
+          <Text className="text-sm text-ink-muted">{t`Couldn’t enrich this card.`}</Text>
           <Press
             onPress={() => void enrich(card)}
             accessibilityRole="button"
             className="min-h-11 justify-center"
           >
-            <Text className="text-sm font-medium text-text-2 underline">{t`Try again`}</Text>
+            <Text className="text-sm font-medium text-ink-secondary underline">{t`Try again`}</Text>
           </Press>
         </View>
       )}
@@ -609,11 +620,11 @@ export default function CardPage() {
           const row = `min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`;
           const body = (
             <>
-              <Text className="text-md text-text-2">{d.label}</Text>
+              <Text className="text-md text-ink-secondary">{d.label}</Text>
               <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
                 {typeof d.value === "string" ? (
                   <Text
-                    className="text-md text-text"
+                    className="text-md text-ink"
                     numberOfLines={2}
                     style={stackDetails ? undefined : TEXT_END}
                   >
@@ -656,8 +667,7 @@ function Field({
   label,
   ai = false,
   field,
-  end,
-  endMiddle,
+  corner,
   below,
   onPress,
   children,
@@ -665,10 +675,8 @@ function Field({
   label: string;
   ai?: boolean;
   field?: ComponentProps<typeof SourceChip>["field"];
-  /** A control at the row's end, such as the example's play. */
-  end?: ReactNode;
-  /** Where `end` centres, down from the top of the value; it centres on the row when left out. */
-  endMiddle?: number | undefined;
+  /** A control over the value's top corner and outside the edit button, such as the example's play. */
+  corner?: ReactNode;
   /** Under the field and apart from its edit button, such as a retry. */
   below?: ReactNode;
   /** Opens the field to edit; left out where the learner may not change it. */
@@ -683,16 +691,14 @@ function Field({
         className="flex-row items-center gap-2"
         onLayout={(e) => setLabelHeight(e.nativeEvent.layout.height)}
       >
-        <Text className="text-sm font-medium text-muted">{label}</Text>
+        <Text className="text-sm font-medium text-ink-muted">{label}</Text>
         {ai && <SourceChip source="ai" field={field} badge={field !== "exampleTranslation"} />}
       </View>
       {children}
     </View>
   );
   const row = (
-    <View
-      className={`min-h-14 flex-row gap-3 px-5 py-3.5 ${endMiddle === undefined ? "items-center" : "items-start"}`}
-    >
+    <View className="min-h-14 flex-row items-center gap-3 px-5 py-3.5">
       {onPress ? (
         <Press
           onPress={onPress}
@@ -705,18 +711,10 @@ function Field({
       ) : (
         body
       )}
-      {endMiddle === undefined ? (
-        end
-      ) : (
-        // The label, the 4 pt gap under it, then the value's own first line.
-        <View
-          className="justify-center"
-          style={{
-            height: EXAMPLE_END_BOX,
-            marginTop: labelHeight + 4 + endMiddle - EXAMPLE_END_BOX / 2,
-          }}
-        >
-          {end}
+      {corner && (
+        // Past the row's 20 pt inset and 14 pt top, the label and its 4 pt gap, at the block's own corner.
+        <View className="absolute" style={{ end: 26, top: 14 + labelHeight + 4 + 12 }}>
+          {corner}
         </View>
       )}
     </View>
@@ -759,12 +757,12 @@ function Picture({
         source={{ uri: apiUrl(image.url), headers }}
         accessibilityLabel={image.description ?? undefined}
         resizeMode="contain"
-        className="rounded-lg bg-plate-2"
+        className="rounded-lg bg-plate-nested"
         style={{ height: 140, aspectRatio: image.width / Math.max(1, image.height) }}
       />
       {image.description && (
         <Text
-          className="text-sm text-muted"
+          className="text-sm text-ink-muted"
           style={{ maxWidth: (140 * image.width) / Math.max(1, image.height) }}
         >
           {image.description}

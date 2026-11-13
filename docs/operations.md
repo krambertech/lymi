@@ -4,13 +4,13 @@ Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Cont
 
 ## What watches production
 
-The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English, or in Estonian for ElevenLabs, which has no native English voice. It asks the lead-in writer for one Japanese word's lead-in every hour too, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
+The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English, or in Estonian for ElevenLabs, which has no native English voice. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
 
 Every real call to an outside service records its outcome too: `meteredFetch` and `metered` in `apps/web/src/server/dependency-health.ts`, covering AI text, the lesson reader, Workers AI, speech, email and web push. Both write to the `lymi_health` Analytics Engine dataset, which holds no account, card or request content.
 
 | Field | Holds |
 | --- | --- |
-| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `gemini_text`, `gemini_speech`, `google_speech`, `openai_speech`, `email`, `web_push` |
+| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `openai_speech`, `email`, `web_push` |
 | `blob1` | `call` for one attempt, `check` for the canary's verdict |
 | `blob2` | `ok`, `gone`, `limited`, `rejected`, `failed`, `timeout` or `unreachable` |
 | `blob3` | HTTP status class, or `none` |
@@ -49,7 +49,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'check'
 SELECT count() AS "value" FROM "events"."analyticsEngine"."lymi_health"
 WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND "blob4" = 'traffic'
   AND "blob2" IN ('rejected', 'failed', 'timeout', 'unreachable')
-  AND "index1" NOT IN ('elevenlabs', 'gemini_text', 'gemini_speech', 'google_speech', 'openai_speech')
+  AND "index1" NOT IN ('elevenlabs', 'openai_speech')
 ```
 
 ## First steps for any alert
@@ -66,7 +66,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND
 
 ## A production check is failing
 
-The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage: 17 October 2026 was a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
+The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage, such as a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
 
 ## Production checks stopped
 
@@ -74,7 +74,7 @@ The canary has not reported for 45 minutes, so the cron, the Worker or Analytics
 
 ## Outside calls are failing for learners
 
-Real requests are failing against a dependency, which the breakdown above names. If the canary is passing, the failure is specific to some input, such as one file type in imports. Speech and the Japanese lead-in (`gemini_text`) are left out because each failed attempt falls through to the next provider or to kana-only speech; a learner sees a speech failure only when every provider fails, which [Server errors](#server-errors) catches as a 503 from `/api/audio/:cardId`.
+Real requests are failing against a dependency, which the breakdown above names. If the canary is passing, the failure is specific to some input, such as one file type in imports. Speech is left out because each failed attempt falls through to the next provider; a learner sees a speech failure only when every provider fails, which [Server errors](#server-errors) catches as a 503 from `/api/audio/:cardId`.
 
 ## Server errors
 

@@ -132,7 +132,7 @@ function Chips({ items, centred = false }: { items: Addable[]; centred?: boolean
           className="min-h-11 flex-row items-center gap-2 rounded-full border border-edge bg-plate py-2 ps-3 pe-4"
         >
           {item.glyph}
-          <Text className="text-base font-medium text-text">{item.name}</Text>
+          <Text className="text-base font-medium text-ink">{item.name}</Text>
         </Press>
       ))}
     </View>
@@ -204,10 +204,10 @@ function Empty() {
       >
         <Fan size={52} ring={p.canvas} />
         <View className="items-center gap-1 px-2">
-          <Text className="text-center text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="text-center text-lg font-medium text-ink" accessibilityRole="header">
             {t`Connect your first app`}
           </Text>
-          <Text className="text-center text-base text-text-2">
+          <Text className="text-center text-base text-ink-secondary">
             {t`An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read.`}
           </Text>
         </View>
@@ -242,7 +242,7 @@ function Row({
         {mark}
         <View className="flex-1 gap-0.5">
           <View className="flex-row items-center gap-2">
-            <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+            <Text className="shrink text-md font-medium text-ink" numberOfLines={1}>
               {name}
             </Text>
             {badge && <View className="self-center">{badge}</View>}
@@ -269,7 +269,7 @@ function AssistantRow({ item, page, first }: { item: ConnectedApp; page: string;
       first={first}
     >
       {/* A long host gives up its middle, so the domain that identifies it stays. */}
-      <Text className="text-sm text-muted" numberOfLines={1} ellipsizeMode="middle">
+      <Text className="text-sm text-ink-muted" numberOfLines={1} ellipsizeMode="middle">
         {listed.host ? `${listed.host} · ` : ""}
         {t`connected ${connected}`}
       </Text>
@@ -295,7 +295,7 @@ function ReadwiseStatus({ connection }: { connection: Readwise }) {
   const at = connection.lastPull?.at;
   const when = at && i18n.date(new Date(at), { hour: "numeric", minute: "2-digit" });
   return (
-    <Text className="text-sm text-muted" numberOfLines={2}>
+    <Text className="text-sm text-ink-muted" numberOfLines={2}>
       {when ? t`Connected. Last checked at ${when}.` : t`Connected. Lymi checks every hour.`}
     </Text>
   );
@@ -307,7 +307,7 @@ function YomitanStatus({ apiKey }: { apiKey: ApiKeySummary }) {
   const used = lastUsed(i18n, apiKey.lastRequest);
   return (
     <Text
-      className="text-sm text-muted"
+      className="text-sm text-ink-muted"
       numberOfLines={1}
       style={{ fontVariant: ["tabular-nums"] }}
     >

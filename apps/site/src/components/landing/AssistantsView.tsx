@@ -17,7 +17,7 @@ import { SendAnything } from "./SendAnything";
 import { SignUpSection } from "./SignUpSection";
 
 export const ASSISTANTS_TITLE = msg`Make cards with Claude, ChatGPT, Gemini or Grok · Lymi`;
-export const ASSISTANTS_BLURB = msg`Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget.`;
+export const ASSISTANTS_BLURB = msg`Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back just as it starts to fade.`;
 
 /** The hero's cards, back for a review. */
 const GERMAN_REVIEW: SampleCard[] = [

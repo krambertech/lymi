@@ -124,7 +124,7 @@ export interface McpPrincipal {
 /** How many of a deck's newest cards `get_deck` names; `search_cards` pages through the rest. */
 export const DECK_PREVIEW_LIMIT = 15;
 
-const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and tend cards; the learner reviews them in the app, and you never grade a review.
+const INSTRUCTIONS = `Lymi is a flashcard app. It keeps one learner's decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and edit cards; the learner reviews them in the app, and you never grade a review.
 
 Start with list_decks. It names the decks, their languages and the language meanings are written in. Its languages map says how each deck language writes a card's pronunciation and example; write those fields in that format.
 
@@ -140,7 +140,7 @@ A series is an optional, ordered group of the learner's own decks that they revi
 
 A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, page through the deck's cards with search_cards and its deckId, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
 
-Archive is the only removal, and restore undoes it. Nothing is deleted.`;
+Archive is the only removal for cards, decks and sections, and restore undoes it. Only delete_series deletes anything, and it cannot be undone.`;
 
 /**
  * A fresh server per request. Stateless: tools read and write through the same service

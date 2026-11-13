@@ -90,9 +90,9 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
     return (
       <div className="grid gap-3" role="status">
         <div className="h-2 overflow-hidden rounded-full bg-edge">
-          <i className="block h-full w-1/3 animate-[import-sweep_1.4s_ease-in-out_infinite] rounded-full bg-text-2 motion-reduce:w-full motion-reduce:animate-none motion-reduce:opacity-40" />
+          <i className="block h-full w-1/3 animate-[import-sweep_1.4s_ease-in-out_infinite] rounded-full bg-ink-secondary motion-reduce:w-full motion-reduce:animate-none motion-reduce:opacity-40" />
         </div>
-        <p className="text-base text-text-2 text-pretty">
+        <p className="text-base text-ink-secondary text-pretty">
           <Trans>
             Writing {{ fileName: isolate(fileName) }}. You can close this. The file stays in
             Activity for a day.
@@ -108,20 +108,20 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
       <div className="grid gap-4">
         <div className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3">
           <span
-            className="grid size-9 shrink-0 place-items-center rounded-full bg-good-soft text-good"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-success-soft text-success"
             aria-hidden="true"
           >
             <Check className="size-4" />
           </span>
           <span className="grid min-w-0 gap-0.5">
             <span className="truncate text-md font-medium">{fileName}</span>
-            <span className="text-sm text-muted tabular-nums">
+            <span className="text-sm text-ink-muted tabular-nums">
               {t`${plural(cards, { one: "# card", other: "# cards" })} · ${fileSize(item.byteSize ?? 0, i18n.locale)}`}
             </span>
           </span>
         </div>
         {until && (
-          <p className="text-sm text-text-2">
+          <p className="text-sm text-ink-secondary">
             <Trans>You can download it until {until}. Then it’s deleted.</Trans>
           </p>
         )}
@@ -130,7 +130,7 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
   }
   return (
     <div className="grid gap-3" role="alert">
-      <p className="text-base text-text">
+      <p className="text-base text-ink">
         {item.status === "expired" ? (
           <Trans>This file expired after a day. Export again to get a new one.</Trans>
         ) : item.failure === "too_large" ? (

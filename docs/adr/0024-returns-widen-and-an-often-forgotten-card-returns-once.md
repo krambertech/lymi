@@ -4,7 +4,7 @@ date: 2026-09-26
 superseded_by: 0031
 ---
 
-# Returns widen, and an often-forgotten card returns once
+# Often-forgotten cards return once in the daily draw
 
 Forgot, or Hard while learning or relearning, brings a mode back after 5, then 10, then 20 other attempts, ±1. A card that is often forgotten comes back once, after 10 attempts ±1, then waits until tomorrow. A return is never drawn straight after the card just graded, so when that card is all that is left, the day's draw ends. This replaces the Returns rule in [ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md); the rest of that decision holds.
 

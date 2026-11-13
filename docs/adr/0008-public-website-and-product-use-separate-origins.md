@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-06
 ---
 
-# The public website and product use separate origins
+# Website and product use separate origins
 
 Lymi will establish two permanent public origins before more learners, installed PWAs and integrations make a migration expensive. `https://lymi.app` is the public website and documentation. `https://my.lymi.app` is the product, authentication, product API, MCP server and OAuth discovery. Both origins initially remain on the existing Cloudflare Worker; separating the website into another application and deployment is a later decision.
 

@@ -85,10 +85,10 @@ export function RevealNudge({ lifted = false }: { lifted?: boolean }) {
     >
       <Animated.View style={hand}>
         <View className="size-11 items-center justify-center">
-          <Icon name="pointer" size={24} colour={p.muted} strokeWidth={1.5} />
+          <Icon name="pointer" size={24} colour={p["ink-muted"]} strokeWidth={1.5} />
         </View>
       </Animated.View>
-      <Text className="text-center text-sm font-medium text-muted">
+      <Text className="text-center text-sm font-medium text-ink-muted">
         {t`Recall the answer, then tap the card`}
       </Text>
     </Animated.View>

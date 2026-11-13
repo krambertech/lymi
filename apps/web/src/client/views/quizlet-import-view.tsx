@@ -62,7 +62,9 @@ export function QuizletImportView({
   const [setName, setSetName] = useState("");
   const [deck, setDeck] = useState<string>(NEW_DECK);
   const [refused, setRefused] = useState<string | null>(null);
+  const [pressed, setPressed] = useState(false);
   const input = useRef<HTMLInputElement>(null);
+  const paste = useRef<HTMLTextAreaElement>(null);
   const pasteId = useId();
   const tooBig = new Blob([text]).size > MAX_TEXT_IMPORT_BYTES;
 
@@ -104,16 +106,25 @@ export function QuizletImportView({
       return;
     }
     setRefused(null);
+    setPressed(false);
     setText(await file.text());
     setChosen(null);
     if (!setName) setSetName(file.name.replace(/\.[^.]+$/, ""));
   };
 
-  const message = refused ?? error;
+  // Too many cards or too much text already says so above, and pressing cannot help.
+  const blocked = overCap || tooBig;
+  const missing =
+    ready || blocked
+      ? null
+      : parsed
+        ? t`No cards found in this text. Check the separators.`
+        : t`Paste your set’s text or choose a .txt file first.`;
+  const message = refused ?? (pressed ? missing : null) ?? error;
 
   return (
     <ImportShell title={t`Import from Quizlet`} back={back}>
-      <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
+      <p className="-mt-4 max-w-[60ch] text-md text-ink-secondary text-pretty">
         <Trans>
           Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and
           progress don’t, so every card starts as new.
@@ -124,27 +135,26 @@ export function QuizletImportView({
         <h2 id="quizlet-steps" className="text-md font-medium">
           <Trans>Copying from Quizlet</Trans>
         </h2>
-        <ol className="grid gap-3 text-base text-text-2">
+        <ol className="grid gap-3 text-base text-ink-secondary">
           {[
             <Trans key="open">
               On quizlet.com, open your set, open its{" "}
-              <strong className="font-medium text-text">…</strong> menu and choose{" "}
-              <strong className="font-medium text-text">Export</strong>.
+              <strong className="font-medium text-ink">…</strong> menu and choose{" "}
+              <strong className="font-medium text-ink">Export</strong>.
             </Trans>,
             <Trans key="seps">
-              Keep <strong className="font-medium text-text">Tab</strong> and{" "}
-              <strong className="font-medium text-text">New line</strong>. If a card has line
-              breaks, set a custom row separator such as ##.
+              Keep <strong className="font-medium text-ink">Tab</strong> and{" "}
+              <strong className="font-medium text-ink">New line</strong>. If a card has line breaks,
+              set a custom row separator such as ##.
             </Trans>,
             <Trans key="copy">
-              Press <strong className="font-medium text-text">Copy text</strong>, then paste it
-              here.
+              Press <strong className="font-medium text-ink">Copy text</strong>, then paste it here.
             </Trans>,
           ].map((node, i) => (
             <li key={node.key} className="grid grid-cols-[26px_1fr] gap-3">
               <span
                 aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+                className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
               >
                 {i + 1}
               </span>
@@ -160,16 +170,18 @@ export function QuizletImportView({
             <Trans>Your set’s text</Trans>
           </FieldLabel>
           <Textarea
+            ref={paste}
             id={pasteId}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
               setRefused(null);
+              setPressed(false);
             }}
             rows={6}
             spellCheck={false}
             placeholder={t`der Hund	the dog`}
-            className="min-h-36 font-mono text-sm"
+            className="min-h-36 font-mono"
           />
         </Field>
         <div className="flex flex-wrap items-center gap-2">
@@ -232,7 +244,7 @@ export function QuizletImportView({
             {cards > 0 && (
               <div className="edge overflow-hidden rounded-xl bg-plate">
                 <table className="w-full table-fixed text-start text-base">
-                  <thead className="text-sm text-muted">
+                  <thead className="text-sm text-ink-muted">
                     <tr>
                       <th scope="col" className="px-4 py-2 font-medium">
                         <Trans>Term</Trans>
@@ -251,7 +263,7 @@ export function QuizletImportView({
                         </td>
                         <td
                           dir="auto"
-                          className="px-4 py-2 break-words whitespace-pre-wrap text-text-2"
+                          className="px-4 py-2 break-words whitespace-pre-wrap text-ink-secondary"
                         >
                           {card.definition}
                         </td>
@@ -261,7 +273,7 @@ export function QuizletImportView({
                 </table>
               </div>
             )}
-            <ul className="grid gap-1 text-sm text-text-2">
+            <ul className="grid gap-1 text-sm text-ink-secondary">
               {cards > PREVIEW_ROWS && (
                 <li>
                   {plural(cards - PREVIEW_ROWS, {
@@ -344,29 +356,35 @@ export function QuizletImportView({
       )}
 
       <div className="grid gap-2">
-        <Button
-          variant="primary"
-          className="justify-self-start"
-          disabled={!ready}
-          loading={pending}
-          onClick={() =>
-            onContinue({
-              text,
-              separators,
-              deckName: setName.trim() || t`Quizlet import`,
-              deckId: deck === NEW_DECK ? null : deck,
-            })
-          }
-        >
-          {cards > 0 && !overCap
-            ? plural(cards, { one: "Continue with # card", other: "Continue with # cards" })
-            : t`Continue`}
-        </Button>
+        {/* Above the button: below it, the phone's pill can cover the line. */}
         {message && (
           <p className="text-sm" role="alert">
             <InlineError>{message}</InlineError>
           </p>
         )}
+        <Button
+          variant="primary"
+          className="justify-self-start"
+          aria-disabled={blocked}
+          loading={pending}
+          onClick={() => {
+            if (!ready) {
+              setPressed(true);
+              if (!parsed) paste.current?.focus();
+              return;
+            }
+            onContinue({
+              text,
+              separators,
+              deckName: setName.trim() || t`Quizlet import`,
+              deckId: deck === NEW_DECK ? null : deck,
+            });
+          }}
+        >
+          {cards > 0 && !overCap
+            ? plural(cards, { one: "Continue with # card", other: "Continue with # cards" })
+            : t`Continue`}
+        </Button>
       </div>
     </ImportShell>
   );

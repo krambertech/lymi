@@ -35,7 +35,9 @@ import type { Import } from "@lymi/core/schema";
 import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
+import { ImportFileError } from "../imports/files";
 import { track } from "./analytics";
+import { recordFirstDeck } from "./analytics-deck";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import { type CardImageStorage, storeImportedImage } from "./card-images";
@@ -607,6 +609,7 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       (result, index) => index % 2 === 0 && result.meta.changes === 1,
     ).length;
   }
+  if (created > 0) recordFirstDeck(ctx, { imported: work.row.id });
   await batchStatements(db, [
     // A run handed over meets this import's own cards as existing, so the first count stands.
     sql`update imports set media_total = max(media_total, ${media}), updated_at = ${Date.now()}
@@ -1012,8 +1015,12 @@ export async function attachPictures<Note>(
   const attach = async (picture: PendingPicture) => {
     if (picture.kind !== undefined) {
       const { audio } = storage;
-      // A damaged clip is left out like an unplayable one; a storage failure still retries.
-      const load = () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null);
+      // A damaged clip is left out like an unplayable one; a storage failure fails the step, which retries.
+      const load = () =>
+        read(picture.name, MAX_RECORDING_BYTES).catch((error: unknown) => {
+          if (error instanceof ImportFileError) return null;
+          throw error;
+        });
       const outcome = !audio
         ? "skipped"
         : picture.kind === "recording"

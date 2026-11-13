@@ -30,10 +30,10 @@ export function FieldChipFace({
   const p = usePalette();
   const glass = useOnGlass();
   const lit = tone === "ai" && on;
-  const ink: keyof Palette = lit ? "ai" : "text-2";
+  const ink: keyof Palette = lit ? "ai" : "ink-secondary";
   const box = lit
     ? "bg-ai-soft border-transparent"
-    : `${glass ? "bg-glass-plate" : "bg-plate-2"} border-edge`;
+    : `${glass ? "bg-glass-plate" : "bg-plate-nested"} border-edge`;
   return (
     <View
       className={`min-h-9 max-w-56 flex-row items-center gap-1.5 rounded-full border ps-3 pe-3.5 ${box}`}
@@ -46,7 +46,7 @@ export function FieldChipFace({
           accessibilityIgnoresInvertColors
         />
       ) : (
-        <Icon name={icon} size={16} colour={lit ? p[ink] : p.muted} />
+        <Icon name={icon} size={16} colour={lit ? p[ink] : p["ink-muted"]} />
       )}
       <Text
         className="shrink text-sm font-medium"
@@ -56,7 +56,7 @@ export function FieldChipFace({
       >
         {children}
       </Text>
-      {opens && <Icon name="down" size={14} colour={p.muted} />}
+      {opens && <Icon name="down" size={14} colour={p["ink-muted"]} />}
     </View>
   );
 }

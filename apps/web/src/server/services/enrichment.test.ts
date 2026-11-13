@@ -34,6 +34,7 @@ import {
   enrichmentQueue,
   enrichmentWrite,
   failEnrichment,
+  fillPitchAccents,
 } from "./enrichment";
 import { join } from "./members";
 import { updateSettings } from "./settings";
@@ -312,6 +313,127 @@ function fakeProvider(reply: unknown): TextProvider & { asked: TextRequest[] } {
   };
 }
 
+describe("fillPitchAccents", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  const stored = async (id: string) =>
+    (await db.select().from(schema.cards).where(eq(schema.cards.id, id)))[0];
+
+  const set = async (id: string, pronunciation: string | null, source: "ai" | "manual" | null) =>
+    db
+      .update(schema.cards)
+      .set({ pronunciation, pronunciationSource: source })
+      .where(eq(schema.cards.id, id));
+
+  const add = async (ctx: ServiceContext, deckId: string, term: string) => {
+    const [outcome] = await addCards(ctx, [CardInput.parse({ deckId, term, enrich: false })]);
+    if (outcome?.status !== "added") throw new Error(`${term} was not added`);
+    return outcome.card.id;
+  };
+
+  it("adds an accent to the AI's Reading and to a kana term, and reads the kana alone", async () => {
+    const ctx = await learner(db, "pitch-fill", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const library = await add(ctx, deck.id, "図書館");
+    const thanks = await add(ctx, deck.id, "ありがとう");
+    await set(library, "としょかん", "ai");
+    const provider = fakeProvider({
+      words: [
+        { id: library, accent: 2 },
+        { id: thanks, accent: 2 },
+      ],
+    });
+
+    expect(await fillPitchAccents(ctx, [library, thanks], provider)).toEqual({ filled: 2 });
+
+    expect(provider.asked[0]?.effort).toBe("medium");
+    expect(await stored(library)).toMatchObject({
+      pronunciation: "としょかん [2]",
+      pronunciationSource: "ai",
+    });
+    expect(await stored(thanks)).toMatchObject({
+      pronunciation: "ありがとう [2]",
+      pronunciationSource: "ai",
+    });
+  });
+
+  it("leaves a learner's Reading, and asks nothing when no card needs it", async () => {
+    const ctx = await learner(db, "pitch-own", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const own = await add(ctx, deck.id, "図書館");
+    await set(own, "としょかん", "manual");
+    const provider = fakeProvider({ words: [] });
+
+    expect(await fillPitchAccents(ctx, [own], provider)).toEqual({ filled: 0 });
+
+    expect(provider.asked).toHaveLength(0);
+    expect((await stored(own))?.pronunciation).toBe("としょかん");
+  });
+
+  it("asks nothing in a deck that does not let the AI fill the Reading", async () => {
+    const ctx = await learner(db, "pitch-off", "Kateryna");
+    const deck = await createDeck(ctx, {
+      name: "日本語",
+      defaultLanguage: "ja",
+      enrichFields: ["meaning"],
+    });
+    const card = await add(ctx, deck.id, "図書館");
+    await set(card, "としょかん", "ai");
+    const provider = fakeProvider({ words: [] });
+
+    expect(await fillPitchAccents(ctx, [card], provider)).toEqual({ filled: 0 });
+    expect(provider.asked).toHaveLength(0);
+  });
+
+  it("skips a word the model could not recall, or an accent past the last mora", async () => {
+    const ctx = await learner(db, "pitch-unknown", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const unknown = await add(ctx, deck.id, "図書館");
+    const past = await add(ctx, deck.id, "猫");
+    await set(unknown, "としょかん", "ai");
+    await set(past, "ねこ", "ai");
+
+    await fillPitchAccents(
+      ctx,
+      [unknown, past],
+      fakeProvider({
+        words: [
+          { id: unknown, accent: null },
+          { id: past, accent: 9 },
+        ],
+      }),
+    );
+
+    expect((await stored(unknown))?.pronunciation).toBe("としょかん");
+    expect((await stored(past))?.pronunciation).toBe("ねこ");
+  });
+
+  it("keeps a Reading the learner changed while the model answered", async () => {
+    const ctx = await learner(db, "pitch-race", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const card = await add(ctx, deck.id, "上手");
+    await set(card, "じょうず", "ai");
+    const provider = fakeProvider({ words: [{ id: card, accent: 3 }] });
+    const complete = provider.complete;
+    provider.complete = async (request) => {
+      await set(card, "うわて", "manual");
+      return complete(request);
+    };
+
+    expect(await fillPitchAccents(ctx, [card], provider)).toEqual({ filled: 0 });
+    expect((await stored(card))?.pronunciation).toBe("うわて");
+  });
+});
+
 describe("enrichCards", () => {
   let db: Db;
   let dispose: () => Promise<void>;
@@ -419,6 +541,124 @@ describe("enrichCards", () => {
     const enrichments = history.events.filter((e) => e.actor === "ai" && e.action === "enrich");
     expect(enrichments).toHaveLength(1);
     expect(Object.keys(enrichments[0]?.payload as object)).toContain("meaning");
+  });
+
+  describe("one model per call", () => {
+    const provider = (fail?: (request: TextRequest) => boolean) => {
+      const asked: TextRequest[] = [];
+      const fake: TextProvider = {
+        provider: "openai",
+        model: "test",
+        complete: async (request) => {
+          asked.push(request);
+          if (fail?.(request)) throw new Error("vendor down");
+          const { cards } = JSON.parse(request.input) as { cards: { id: string; term: string }[] };
+          return { cards: cards.map(({ id, term }) => ({ id, meaning: `meaning of ${term}` })) };
+        },
+      };
+      return { fake, asked };
+    };
+    const inputOf = (request: TextRequest | undefined) =>
+      JSON.parse(request?.input ?? "{}") as { decks: { id: string }[]; cards: { term: string }[] };
+
+    it("splits a run of languages by model, each call with its own cards and decks", async () => {
+      const ctx = await learner(db, "enrich-models", "Kateryna");
+      const chinese = await createDeck(ctx, { name: "中文", defaultLanguage: "zh" });
+      const italian = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: chinese.id, term: "书" }),
+          CardInput.parse({ deckId: italian.id, term: "ciao" }),
+          // The card's own language wins over its deck's.
+          CardInput.parse({ deckId: italian.id, term: "дом", language: "ru" }),
+        ],
+        queue,
+      );
+      const ids = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
+      const { fake, asked } = provider();
+      expect(await enrichCards({ ...ctx, actor: "ai" }, ids, fake)).toEqual({ enriched: 3 });
+
+      expect(asked).toHaveLength(2);
+      const terra = asked.find((request) => request.model === "gpt-6.1-terra");
+      const fallback = asked.find((request) => request.model === undefined);
+      expect(terra?.effort).toBe("medium");
+      expect(inputOf(terra).cards.map((card) => card.term)).toEqual(["书", "дом"]);
+      expect(
+        inputOf(terra)
+          .decks.map((deck) => deck.id)
+          .sort(),
+      ).toEqual([chinese.id, italian.id].sort());
+      expect(fallback?.effort).toBeUndefined();
+      expect(inputOf(fallback).cards.map((card) => card.term)).toEqual(["ciao"]);
+      expect(inputOf(fallback).decks.map((deck) => deck.id)).toEqual([italian.id]);
+      expect((await showCard(ctx, ids[0] as string)).meaning).toBe("meaning of 书");
+      expect((await showCard(ctx, ids[1] as string)).meaning).toBe("meaning of ciao");
+    });
+
+    it("makes one call for a run of one model", async () => {
+      const ctx = await learner(db, "enrich-one-model", "Kateryna");
+      const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: deck.id, term: "ciao" }),
+          CardInput.parse({ deckId: deck.id, term: "grazie" }),
+        ],
+        queue,
+      );
+      const { fake, asked } = provider();
+      await enrichCards(
+        { ...ctx, actor: "ai" },
+        outcomes.map((o) => (o.status === "added" ? o.card.id : "")),
+        fake,
+      );
+      expect(asked).toHaveLength(1);
+      expect(asked[0]).not.toHaveProperty("model");
+    });
+
+    it("keeps the call that answered and leaves the failed call's cards for the retry", async () => {
+      const ctx = await learner(db, "enrich-model-fails", "Kateryna");
+      const russian = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+      const italian = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [
+          CardInput.parse({ deckId: russian.id, term: "дом" }),
+          CardInput.parse({ deckId: italian.id, term: "ciao" }),
+        ],
+        queue,
+      );
+      const [house = "", hello = ""] = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
+      const { fake } = provider((request) => request.model === "gpt-6.1-terra");
+      await expect(enrichCards({ ...ctx, actor: "ai" }, [house, hello], fake)).rejects.toThrow(
+        "vendor down",
+      );
+      expect((await showCard(ctx, hello)).meaning).toBe("meaning of ciao");
+      expect((await showCard(ctx, hello)).enrichmentStatus).toBeNull();
+      expect((await showCard(ctx, house)).meaning).toBeNull();
+      expect((await showCard(ctx, house)).enrichmentStatus).toBe("working");
+
+      const retry = provider();
+      await enrichCards({ ...ctx, actor: "ai" }, [house, hello], retry.fake);
+      expect(retry.asked).toHaveLength(1);
+      expect(inputOf(retry.asked[0]).cards.map((card) => card.term)).toEqual(["дом"]);
+      expect((await showCard(ctx, house)).meaning).toBe("meaning of дом");
+    });
+
+    it("writes nothing when every call fails", async () => {
+      const ctx = await learner(db, "enrich-models-fail", "Kateryna");
+      const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+      const outcomes = await addCards(
+        ctx,
+        [CardInput.parse({ deckId: deck.id, term: "ciao" })],
+        queue,
+      );
+      const id = outcomes[0]?.status === "added" ? outcomes[0].card.id : "";
+      const { fake } = provider(() => true);
+      await expect(enrichCards({ ...ctx, actor: "ai" }, [id], fake)).rejects.toThrow("vendor down");
+      expect((await showCard(ctx, id)).enrichmentStatus).toBe("working");
+    });
   });
 
   it("writes meanings in the learner's meaning language", async () => {
@@ -650,6 +890,28 @@ describe("enrichCards", () => {
     if (added?.status !== "added") throw new Error("not added");
     expect(added.card.enrichmentStatus).toBe("failed");
     expect((await showCard(ctx, added.card.id)).enrichmentStatus).toBe("failed");
+  });
+
+  it("logs a run the queue refused and counts it as failed", async () => {
+    const ctx = await learner(db, "enrich-refused", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const logged = vi.spyOn(console, "error").mockImplementation(() => {});
+    const capture = vi.fn();
+    await addCards(
+      { ...ctx, analytics: { capture, writeDataPoint: vi.fn() } },
+      [CardInput.parse({ deckId: deck.id, term: "sbrigarsi" })],
+      { create: vi.fn().mockRejectedValue(new Error("no workflow here")) },
+    );
+    expect(logged).toHaveBeenCalledWith(
+      JSON.stringify({ event: "enrichment_not_queued", trigger: "add", error: "Error" }),
+    );
+    expect(capture).toHaveBeenCalledWith({
+      name: "enrichment_finished",
+      outcome: "failed",
+      count: 1,
+      trigger: "add",
+    });
+    logged.mockRestore();
   });
 
   it("queues the run again when an add is replayed after it died between the save and the queue", async () => {

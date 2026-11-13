@@ -222,6 +222,8 @@ function onDecks(decks: DeckSummary[], w: Write, lookup: Lookup): DeckSummary[] 
       return decks.some((d) => d.id === w.input.id) ? decks : [...decks, localDeck(w, lookup)];
     case "deck.update":
       return decks.map((d) => (d.id === w.id ? patchDeck(d, w.patch) : d));
+    case "deck.preferences":
+      return decks.map((d) => (d.id === w.id ? { ...d, ...w.preferences } : d));
     case "deck.archive":
       return decks.filter((d) => d.id !== w.id);
     case "deck.restore": {

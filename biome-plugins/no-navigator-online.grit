@@ -1,0 +1,3 @@
+`navigator.onLine` as $read where {
+  register_diagnostic(span=$read, message="React Native has no navigator.onLine, so on the phone this reads undefined and an offline branch never runs. Use online() from @lymi/client/cache, which reads Query's connection state there.")
+}

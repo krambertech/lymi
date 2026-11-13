@@ -64,6 +64,7 @@ export const englishOnlyPaths: readonly string[] = [
   "/support",
   "/docs",
   "/docs/getting-started",
+  "/docs/smart-add",
   "/docs/decks",
   "/docs/import",
   "/docs/import-from-quizlet",

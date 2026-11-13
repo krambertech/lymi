@@ -62,7 +62,7 @@ function Join() {
       const invited = refusalDetail(err, "invitedEmail");
       return invited
         ? t`This invitation was sent to ${invited}. Sign in with that address to join.`
-        : t`You cannot join this deck through this link.`;
+        : t`You can’t join this deck through this link.`;
     }
     return t`Couldn’t join the deck. Check your connection and try again.`;
   };
@@ -127,7 +127,7 @@ function Join() {
           <button
             type="button"
             onClick={() => hold.mutate("dev")}
-            className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
+            className="mt-10 rounded-sm px-2 py-1 text-xs text-ink-faint transition-colors duration-150 hoverable:hover:text-ink-muted"
           >
             Dev sign-in
           </button>

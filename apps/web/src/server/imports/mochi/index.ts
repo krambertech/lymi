@@ -10,6 +10,7 @@ import {
   isPitchField,
   namedFieldRole,
   noteRecordings,
+  pitchIntoReading,
   type ReviewModeKey,
 } from "@lymi/core";
 import type { SourceAdapter, SourceDeck, SourceNoteType, SourceSummary } from "../adapter";
@@ -398,11 +399,16 @@ export const mochi: SourceAdapter<MochiNote> = {
     );
     const reading = furigana(raw.term ?? "");
     const fitted = fitFields({
-      term: reading?.base ?? raw.term ?? "",
       meaning: raw.meaning && (furigana(raw.meaning)?.base ?? raw.meaning),
-      pronunciation: raw.pronunciation || reading?.reading,
+      ...pitchIntoReading(
+        {
+          term: reading?.base ?? raw.term ?? "",
+          pronunciation: raw.pronunciation || reading?.reading,
+          notes: raw.notes,
+        },
+        choices.languages[note.deck],
+      ),
       example: raw.example && inlineReadings(raw.example),
-      notes: raw.notes,
     });
     if (!fitted.fields.term) return [];
     const tags = importTags(note.tags);

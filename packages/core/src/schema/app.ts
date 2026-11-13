@@ -19,6 +19,7 @@ import {
   type EditionCardField,
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
+  PRONUNCIATION_DISPLAYS,
   PUBLICATION_CATEGORIES,
   type PublicationTag,
   REVIEW_AIDS,
@@ -331,6 +332,8 @@ export const userSettings = sqliteTable("user_settings", {
   aiConsentUpdatedAt: integer("ai_consent_updated_at", { mode: "timestamp_ms" }),
   /** Whether the web app may replay how the learner moves through it. Null means yes; Settings turns it off. */
   sessionReplay: integer("session_replay", { mode: "boolean" }),
+  /** Whether Lymi may send learning emails. Null means yes; Settings or an email's unsubscribe turns it off. */
+  learningEmails: integer("learning_emails", { mode: "boolean" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
@@ -353,6 +356,31 @@ export const userSettings = sqliteTable("user_settings", {
   learningLanguage: text("learning_language"),
   ...timestamps,
 });
+
+/** When a learner's own client last opened Lymi. Web push stops a week after it. */
+export const learnerOpenings = sqliteTable("learner_openings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  openedAt: integer("opened_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+/**
+ * One step of the learning email series, claimed before it sends. `anchor` is the learner-local
+ * day the series counts from, so a learner who returns and lapses again gets the steps again.
+ */
+export const learningEmails = sqliteTable(
+  "learning_emails",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    anchor: text("anchor").notNull(),
+    sentAt: integer("sent_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.kind, t.anchor] })],
+);
 
 export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {
   key: text("key").primaryKey(),
@@ -719,6 +747,27 @@ export const importantCards = sqliteTable(
   (t) => [
     uniqueIndex("important_cards_card_user_idx").on(t.cardId, t.userId),
     index("important_cards_user_idx").on(t.userId),
+  ],
+);
+
+/** One learner's own choices for a deck, owner or member. No row means every default. */
+export const deckPreferences = sqliteTable(
+  "deck_preferences",
+  {
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    pronunciationDisplay: text("pronunciation_display", { enum: PRONUNCIATION_DISPLAYS })
+      .notNull()
+      .default("adaptive"),
+    ...timestamps,
+  },
+  (t) => [
+    primaryKey({ columns: [t.deckId, t.userId] }),
+    index("deck_preferences_user_idx").on(t.userId),
   ],
 );
 

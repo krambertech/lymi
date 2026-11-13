@@ -32,7 +32,7 @@ function Segments<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="flex rounded-full bg-plate-2 p-1 edge-inset">
+    <div className="flex rounded-full bg-plate-nested p-1 edge-inset">
       {options.map(([id, label]) => (
         <button
           key={id}
@@ -42,8 +42,8 @@ function Segments<T extends string>({
           className={clsx(
             "h-8 flex-1 rounded-full text-xs transition-colors",
             value === id
-              ? "bg-plate font-medium text-text edge"
-              : "text-text-2 hoverable:hover:text-text",
+              ? "bg-plate font-medium text-ink edge"
+              : "text-ink-secondary hoverable:hover:text-ink",
           )}
         >
           {label}
@@ -73,13 +73,13 @@ export function LeadDemo({ play }: DemoProps) {
   const card = (term: string, lang: string, meaning: ReactNode, note: ReactNode) => (
     <div className="rounded-xl bg-plate px-4 py-3 edge">
       <div className="flex items-center justify-between gap-3">
-        <p lang={lang} className="text-lg font-medium tracking-[-0.02em] text-text">
+        <p lang={lang} className="text-lg font-medium tracking-[-0.02em] text-ink">
           {term}
         </p>
         <AiChip />
       </div>
-      <p className="mt-1 text-sm text-text-2">{meaning}</p>
-      <p className="mt-1 text-xs text-muted">{note}</p>
+      <p className="mt-1 text-sm text-ink-secondary">{meaning}</p>
+      <p className="mt-1 text-xs text-ink-muted">{note}</p>
     </div>
   );
 
@@ -107,11 +107,11 @@ export function LeadDemo({ play }: DemoProps) {
         >
           {mode === "told" ? (
             <>
-              <div className="rounded-xl bg-plate-2 px-4 py-3 edge-inset">
-                <p className="text-xs text-muted">
+              <div className="rounded-xl bg-plate-nested px-4 py-3 edge-inset">
+                <p className="text-xs text-ink-muted">
                   <Trans>Instructions</Trans>
                 </p>
-                <p className="mt-1 text-sm text-text">
+                <p className="mt-1 text-sm text-ink">
                   <Trans>Mexican Spanish, informal examples, and the plural in the notes.</Trans>
                 </p>
               </div>
@@ -124,14 +124,14 @@ export function LeadDemo({ play }: DemoProps) {
             </>
           ) : (
             <>
-              <div className="rounded-xl bg-plate-2 px-4 py-3 edge-inset">
-                <p className="text-xs text-muted">
+              <div className="rounded-xl bg-plate-nested px-4 py-3 edge-inset">
+                <p className="text-xs text-ink-muted">
                   <Trans>Cards you wrote</Trans>
                 </p>
-                <p lang="de" className="mt-1 text-sm text-text">
+                <p lang="de" className="mt-1 text-sm text-ink">
                   der Bahnhof · die Bahnhöfe
                 </p>
-                <p lang="de" className="text-sm text-text">
+                <p lang="de" className="text-sm text-ink">
                   die Stadt · die Städte
                 </p>
               </div>
@@ -253,7 +253,7 @@ export function VoiceDemo({ play, compact, sweep }: VoiceProps) {
             onClick={() => start(c.id, c.clip)}
             aria-label={t`Hear ${c.term}`}
             className={clsx(
-              "flex items-center rounded-xl bg-plate text-start edge transition-[background-color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-hover",
+              "flex items-center rounded-xl bg-plate text-start edge transition-[background-color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate-hover",
               compact ? "h-10 gap-2 ps-1.5 pe-3" : "h-14 gap-3 ps-2 pe-4",
             )}
           >
@@ -261,7 +261,7 @@ export function VoiceDemo({ play, compact, sweep }: VoiceProps) {
               className={clsx(
                 "grid shrink-0 place-items-center rounded-full transition-colors",
                 compact ? "size-7" : "size-10",
-                on ? "bg-amber text-amber-ink" : "bg-plate-2 text-text",
+                on ? "bg-amber text-amber-ink" : "bg-plate-nested text-ink",
               )}
             >
               <Volume2 aria-hidden="true" className={compact ? "size-3.5" : "size-4"} />
@@ -269,7 +269,7 @@ export function VoiceDemo({ play, compact, sweep }: VoiceProps) {
             <span
               lang={c.lang}
               className={clsx(
-                "shrink-0 truncate font-medium text-text",
+                "shrink-0 truncate font-medium text-ink",
                 compact ? "w-[78px] text-sm" : "w-[104px] text-lg",
               )}
             >
@@ -286,7 +286,7 @@ export function VoiceDemo({ play, compact, sweep }: VoiceProps) {
                   style={{ height: `${p * 100}%` }}
                   className={clsx(
                     "flex-1 rounded-full",
-                    on && i / BARS < (playing?.at ?? 0) ? "bg-amber" : "bg-edge-2",
+                    on && i / BARS < (playing?.at ?? 0) ? "bg-amber" : "bg-edge-strong",
                   )}
                 />
               ))}
@@ -343,7 +343,7 @@ export function FeatureStage({ items }: { items: StageItem[] }) {
             data-paused={!inView || undefined}
             onAnimationEnd={() => setIndex((i) => (i + 1) % items.length)}
             style={{ animationDuration: `${DWELL_MS}ms` }}
-            className="landing-dwell absolute inset-x-0 bottom-0 h-0.5 bg-text/20 ltr:origin-left rtl:origin-right"
+            className="landing-dwell absolute inset-x-0 bottom-0 h-0.5 bg-ink/20 ltr:origin-left rtl:origin-right"
           />
         )}
       </div>
@@ -362,23 +362,23 @@ export function FeatureStage({ items }: { items: StageItem[] }) {
                 }}
                 className={clsx(
                   "grid min-h-11 w-full grid-cols-[auto_minmax(0,1fr)] gap-x-3 rounded-xl px-3 py-2.5 text-start transition-colors duration-200",
-                  on ? "bg-plate edge" : "hoverable:hover:bg-hover",
+                  on ? "bg-plate edge" : "hoverable:hover:bg-plate-hover",
                 )}
               >
                 <span
                   className={clsx(
                     "grid size-8 place-items-center rounded-md transition-colors",
-                    on ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-text-2",
+                    on ? "bg-amber-soft text-amber-text" : "bg-plate-nested text-ink-secondary",
                   )}
                 >
                   <each.icon aria-hidden="true" className="size-4" />
                 </span>
                 <span className="self-center">
-                  <span className="block text-md font-medium text-text">{i18n._(each.title)}</span>
+                  <span className="block text-md font-medium text-ink">{i18n._(each.title)}</span>
                   <span
                     className={clsx(
                       "block text-sm text-pretty",
-                      on ? "text-text-2" : "hidden text-muted @4xl:block",
+                      on ? "text-ink-secondary" : "hidden text-ink-muted @4xl:block",
                     )}
                   >
                     {i18n._(each.body)}

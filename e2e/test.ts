@@ -9,13 +9,14 @@ import {
 
 export * from "@playwright/test";
 
-/** Playwright's test, without the end-of-review blur, which stalls WebKit without a GPU, or the developer tools. docs/testing.md. */
+/** Playwright's test, without the end-of-review blur, which stalls WebKit without a GPU, the developer tools, or the first review's teaching. docs/testing.md. */
 export const test = base.extend({
   context: async ({ context }, use) => {
     await context.addInitScript(() => {
       const sheet = new CSSStyleSheet();
       sheet.replaceSync(":root { --seq-filter: none; } .dev-skin { display: none; }");
       document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+      (window as { lymiNoFirstReview?: boolean }).lymiNoFirstReview = true;
     });
     await use(context);
   },

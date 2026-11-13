@@ -9,6 +9,8 @@ interface Props extends Omit<ComponentProps<"a">, "href" | "target"> {
 /** A typed router link to any page of the design system. */
 export function DocLink({ to, ...anchor }: Props) {
   switch (to.kind) {
+    case "home":
+      return <Link to="/design" activeOptions={{ exact: true }} {...anchor} />;
     case "page":
       return <Link to="/design/$page" params={{ page: to.page }} {...anchor} />;
     case "group":

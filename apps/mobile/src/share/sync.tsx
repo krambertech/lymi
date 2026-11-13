@@ -56,7 +56,7 @@ function useShareStrings(): Record<string, string> {
     noText: t`Select a word or phrase, then share it to Lymi.`,
     unreachable: t`Lymi can’t be reached. Check your connection and try again.`,
     update: t`Update Lymi to add words from other apps.`,
-    failed: t`That didn’t work. Try again.`,
+    failed: t`Couldn’t add the card. Try again.`,
   };
 }
 

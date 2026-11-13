@@ -2369,6 +2369,9 @@ msgctxt "language"
 msgid "Estonian"
 msgstr "Естонська"
 
+msgid "Evening"
+msgstr "Увечері"
+
 msgid "Every card"
 msgstr "Усі картки"
 
@@ -3124,6 +3127,9 @@ msgstr "Найбільше днів поспіль"
 msgid "Looks right"
 msgstr "Виглядає правильно"
 
+msgid "Lunch"
+msgstr "В обід"
+
 msgid "Lymi"
 msgstr "Lymi"
 
@@ -3283,6 +3289,9 @@ msgstr "Схожі колоди"
 msgid "More than {0}"
 msgstr "Понад {0}"
 
+msgid "Morning"
+msgstr "Вранці"
+
 msgid "Move “{term}” to"
 msgstr "Перемістити «{term}» до"
 
@@ -3399,6 +3408,10 @@ msgstr "Уперше в Lymi?"
 
 msgid "Next"
 msgstr "Наступний"
+
+msgctxt "moving on"
+msgid "Next"
+msgstr "Далі"
 
 msgid "Next card due {next}."
 msgstr "Наступне повторення {next}."
@@ -3629,6 +3642,9 @@ msgstr "За один імпорт можна додати до {MAX_TEXT_IMPORT
 
 msgid "One import takes up to 5,000 cards. Split the set and import it in parts."
 msgstr "За один імпорт можна додати до 5000 карток. Розділи набір та імпортуй його частинами."
+
+msgid "One reminder, only on days with cards."
+msgstr "Одне нагадування, лише в дні з картками."
 
 msgid "One side only"
 msgstr "Лише один бік"
@@ -3987,8 +4003,14 @@ msgstr "Картка на розпізнавання для {cue}, читаєт�
 msgid "Recognition card for {cue}. Tap to reveal"
 msgstr "Картка на розпізнавання для {cue}. Торкнися, щоб відкрити"
 
+msgid "Remind me at {time}"
+msgstr "Нагадати о {time}"
+
 msgid "Remind me to review"
 msgstr "Нагадувати про повторення"
+
+msgid "Reminder time"
+msgstr "Час нагадування"
 
 msgid "Remove {name}"
 msgstr "Прибрати {name}"
@@ -5195,6 +5217,9 @@ msgstr "Коли повернеться"
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "Коли більшість розділу засвоєно, наступний готовий, і ти вирішуєш, коли його почати."
 
+msgid "When should we remind you?"
+msgstr "Коли тобі нагадати?"
+
 msgid "When started"
 msgstr "Коли почнеш"
 
@@ -5381,6 +5406,9 @@ msgstr "Своя"
 
 msgid "Your own goal"
 msgstr "Своя мета"
+
+msgid "Your phone will ask to allow notifications."
+msgstr "Телефон попросить дозволити сповіщення."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."

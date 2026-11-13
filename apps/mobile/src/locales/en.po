@@ -2369,6 +2369,9 @@ msgctxt "language"
 msgid "Estonian"
 msgstr "Estonian"
 
+msgid "Evening"
+msgstr "Evening"
+
 msgid "Every card"
 msgstr "Every card"
 
@@ -3124,6 +3127,9 @@ msgstr "Longest streak"
 msgid "Looks right"
 msgstr "Looks right"
 
+msgid "Lunch"
+msgstr "Lunch"
+
 msgid "Lymi"
 msgstr "Lymi"
 
@@ -3283,6 +3289,9 @@ msgstr "More like this"
 msgid "More than {0}"
 msgstr "More than {0}"
 
+msgid "Morning"
+msgstr "Morning"
+
 msgid "Move “{term}” to"
 msgstr "Move “{term}” to"
 
@@ -3397,6 +3406,10 @@ msgstr "New series"
 msgid "New to Lymi?"
 msgstr "New to Lymi?"
 
+msgid "Next"
+msgstr "Next"
+
+msgctxt "moving on"
 msgid "Next"
 msgstr "Next"
 
@@ -3629,6 +3642,9 @@ msgstr "One import takes up to {MAX_TEXT_IMPORT_CARDS} cards. Split the set and 
 
 msgid "One import takes up to 5,000 cards. Split the set and import it in parts."
 msgstr "One import takes up to 5,000 cards. Split the set and import it in parts."
+
+msgid "One reminder, only on days with cards."
+msgstr "One reminder, only on days with cards."
 
 msgid "One side only"
 msgstr "One side only"
@@ -3987,8 +4003,14 @@ msgstr "Recognition card for {cue}, read {reading}. Tap to reveal"
 msgid "Recognition card for {cue}. Tap to reveal"
 msgstr "Recognition card for {cue}. Tap to reveal"
 
+msgid "Remind me at {time}"
+msgstr "Remind me at {time}"
+
 msgid "Remind me to review"
 msgstr "Remind me to review"
+
+msgid "Reminder time"
+msgstr "Reminder time"
 
 msgid "Remove {name}"
 msgstr "Remove {name}"
@@ -5195,6 +5217,9 @@ msgstr "When it’s back"
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
 
+msgid "When should we remind you?"
+msgstr "When should we remind you?"
+
 msgid "When started"
 msgstr "When started"
 
@@ -5381,6 +5406,9 @@ msgstr "Your own"
 
 msgid "Your own goal"
 msgstr "Your own goal"
+
+msgid "Your phone will ask to allow notifications."
+msgstr "Your phone will ask to allow notifications."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."

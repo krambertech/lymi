@@ -4,6 +4,7 @@ import * as Notifications from "expo-notifications";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { i18n } from "../i18n";
 import { reminderWords } from "../i18n/reminders";
+import { captureEvent } from "../telemetry/posthog";
 import type { PlannedReminder } from "./plan";
 
 // The daily reminder as local notifications, which need no push service. phone.md "Outside the app".
@@ -67,11 +68,14 @@ export async function notificationPermission(): Promise<Permission> {
 export async function askPermission(): Promise<Permission> {
   const current = await notificationPermission();
   if (current !== "undetermined") return current;
-  return permissionOf(
+  captureEvent("reminder_prompt_shown", {});
+  const answer = permissionOf(
     await Notifications.requestPermissionsAsync({
       ios: { allowAlert: true, allowSound: true, allowBadge: false },
     }),
   );
+  if (answer === "granted") captureEvent("reminder_prompt_accepted", {});
+  return answer;
 }
 
 // Each change waits for the one before it, so a sign-out's cancel can never land between a plan's

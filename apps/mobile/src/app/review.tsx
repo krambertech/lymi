@@ -106,6 +106,7 @@ import {
   useTipLayer,
 } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
+import { ReminderQuestion, ReminderWays, useReminderAsk } from "../review/reminder-ask";
 import { countReveal, RevealNudge, useRevealNudge } from "../review/reveal-nudge";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
@@ -1673,7 +1674,25 @@ function Completion({
   const way$ = [useRise(clock, AT.actions)];
   const done$ = useRise(clock, actionsAt);
 
-  const done = <Button label={t`Done`} variant="primary" size="lg" onPress={onClose} />;
+  // A review with grades may end on the reminder question: Done becomes Next and leads to it.
+  const ask = useReminderAsk();
+  const asks = ask.able && counted;
+  const [asking, setAsking] = useState(false);
+  // Where the lantern sits on the summary, held so the question arrives under it without moving it.
+  const lanternTop = useRef(0);
+  const done = asks ? (
+    <Button
+      label={t({ message: "Next", context: "moving on" })}
+      variant="primary"
+      size="lg"
+      onPress={() => {
+        ask.shown();
+        setAsking(true);
+      }}
+    />
+  ) : (
+    <Button label={t`Done`} variant="primary" size="lg" onPress={onClose} />
+  );
 
   return (
     <Animated.View
@@ -1694,141 +1713,161 @@ function Completion({
         }}
         showsVerticalScrollIndicator={false}
       >
-        <View className="flex-1 items-center justify-center gap-6 px-6">
-          <Flight clock={clock} still={reduce} place={lanternPlace}>
-            <LightPool
-              size={END_LANTERN}
-              clock={clock}
-              strength={to > from ? 1 : 0.5}
-              still={reduce}
-            />
-            <Lantern size={END_LANTERN} progress={progress} out={out} fed={fed} />
-            <EndEmbers size={END_LANTERN} clock={clock} embers={embers} />
-          </Flight>
-          <View className="items-center gap-2">
-            <Animated.View style={heading$}>
-              {/* A long deck name stops at three lines, so the count and Done stay in view. */}
-              <Text
-                className="text-center text-2xl font-medium text-ink"
-                accessibilityRole="header"
-                numberOfLines={3}
-              >
-                {heading}
-              </Text>
-            </Animated.View>
-            {counted ? (
-              <View
-                accessible
-                accessibilityLabel={
-                  screen.satisfied
-                    ? t`${plural(to, { one: "# review today", other: "# reviews today" })}`
-                    : t`${plural(goal, { one: `${to} of # review today`, other: `${to} of # reviews today` })}`
-                }
-                className="items-center"
-              >
-                <Animated.View style={count$}>
-                  <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
-                </Animated.View>
-                <Animated.View style={label$}>
-                  <Text className="text-md text-ink-muted">
-                    {/* While the goal is open the count says it, so Continue's count explains itself. */}
-                    {screen.satisfied
-                      ? t`${plural(to, { one: "review today", other: "reviews today" })}`
-                      : t`${plural(goal, { one: "of # review today", other: "of # reviews today" })}`}
-                  </Text>
-                </Animated.View>
-              </View>
-            ) : (
-              <Animated.View style={count$}>
-                <Text className="text-center text-md text-ink-secondary">
-                  {t`Come back later, or add new cards.`}
-                </Text>
-              </Animated.View>
-            )}
-          </View>
-          <View className="w-full max-w-[300px] items-center gap-3">
-            <Animated.View style={lights$} className="w-full">
-              <SevenLights
-                // Finished early, the lights take their final heights at once rather than replaying.
-                key={settled ? "settled" : "playing"}
-                dates={lights.dates}
-                days={lights.days}
-                satisfied={lights.satisfied}
-                rest={lights.rest}
-                goals={lights.goals}
-                goal={goal}
-                sequence={settled ? undefined : AT.lights}
-                turn={turned && !settled ? { at: AT.land, from } : undefined}
-                todayRef={todayLight}
+        <View
+          className="flex-1 items-center justify-center px-6"
+          style={asking ? styles.fromTop : undefined}
+        >
+          <View
+            className="w-full items-center gap-6"
+            style={asking ? { marginTop: lanternTop.current } : undefined}
+            onLayout={(e) => {
+              if (!asking) lanternTop.current = e.nativeEvent.layout.y;
+            }}
+          >
+            <Flight clock={clock} still={reduce} place={lanternPlace}>
+              <LightPool
+                size={END_LANTERN}
+                clock={clock}
+                strength={to > from ? 1 : 0.5}
+                still={reduce}
               />
-            </Animated.View>
-            <Animated.View style={run$} className="flex-row items-center gap-2">
-              <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
-                <Flame height={20} state={ticked ? flame : "lit"} />
-              </Animated.View>
-              {streak > 0 ? (
-                <>
-                  {/* The new run rolls up warm, then cools to its ink. */}
-                  <Animated.View key={streak} style={ticked ? tick$ : undefined}>
-                    <Text className="text-md font-semibold text-ink" style={styles.figures}>
-                      {streak}
+              <Lantern size={END_LANTERN} progress={progress} out={out} fed={fed} />
+              <EndEmbers size={END_LANTERN} clock={clock} embers={embers} />
+            </Flight>
+            {asking && <ReminderQuestion ask={ask} />}
+            {!asking && (
+              <>
+                <View className="items-center gap-2">
+                  <Animated.View style={heading$}>
+                    {/* A long deck name stops at three lines, so the count and Done stay in view. */}
+                    <Text
+                      className="text-center text-2xl font-medium text-ink"
+                      accessibilityRole="header"
+                      numberOfLines={3}
+                    >
+                      {heading}
                     </Text>
-                    {ticked && (
-                      <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
-                        <Text
-                          className="text-md font-semibold text-amber-text"
-                          style={styles.figures}
-                        >
-                          {streak}
+                  </Animated.View>
+                  {counted ? (
+                    <View
+                      accessible
+                      accessibilityLabel={
+                        screen.satisfied
+                          ? t`${plural(to, { one: "# review today", other: "# reviews today" })}`
+                          : t`${plural(goal, { one: `${to} of # review today`, other: `${to} of # reviews today` })}`
+                      }
+                      className="items-center"
+                    >
+                      <Animated.View style={count$}>
+                        <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+                      </Animated.View>
+                      <Animated.View style={label$}>
+                        <Text className="text-md text-ink-muted">
+                          {/* While the goal is open the count says it, so Continue's count explains itself. */}
+                          {screen.satisfied
+                            ? t`${plural(to, { one: "review today", other: "reviews today" })}`
+                            : t`${plural(goal, { one: "of # review today", other: "of # reviews today" })}`}
                         </Text>
                       </Animated.View>
+                    </View>
+                  ) : (
+                    <Animated.View style={count$}>
+                      <Text className="text-center text-md text-ink-secondary">
+                        {t`Come back later, or add new cards.`}
+                      </Text>
+                    </Animated.View>
+                  )}
+                </View>
+                <View className="w-full max-w-[300px] items-center gap-3">
+                  <Animated.View style={lights$} className="w-full">
+                    <SevenLights
+                      // Finished early, the lights take their final heights at once rather than replaying.
+                      key={settled ? "settled" : "playing"}
+                      dates={lights.dates}
+                      days={lights.days}
+                      satisfied={lights.satisfied}
+                      rest={lights.rest}
+                      goals={lights.goals}
+                      goal={goal}
+                      sequence={settled ? undefined : AT.lights}
+                      turn={turned && !settled ? { at: AT.land, from } : undefined}
+                      todayRef={todayLight}
+                    />
+                  </Animated.View>
+                  <Animated.View style={run$} className="flex-row items-center gap-2">
+                    <Animated.View ref={runFlame} style={[styles.catch, catch$]}>
+                      <Flame height={20} state={ticked ? flame : "lit"} />
+                    </Animated.View>
+                    {streak > 0 ? (
+                      <>
+                        {/* The new run rolls up warm, then cools to its ink. */}
+                        <Animated.View key={streak} style={ticked ? tick$ : undefined}>
+                          <Text className="text-md font-semibold text-ink" style={styles.figures}>
+                            {streak}
+                          </Text>
+                          {ticked && (
+                            <Animated.View style={[StyleSheet.absoluteFill, warm$]}>
+                              <Text
+                                className="text-md font-semibold text-amber-text"
+                                style={styles.figures}
+                              >
+                                {streak}
+                              </Text>
+                            </Animated.View>
+                          )}
+                        </Animated.View>
+                        <Text className="text-md text-ink-secondary">
+                          {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
+                        </Text>
+                      </>
+                    ) : (
+                      <Text className="text-md font-medium text-ink">{start}</Text>
                     )}
                   </Animated.View>
-                  <Text className="text-md text-ink-secondary">
-                    {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
-                  </Text>
-                </>
-              ) : (
-                <Text className="text-md font-medium text-ink">{start}</Text>
-              )}
-            </Animated.View>
+                </View>
+              </>
+            )}
           </View>
         </View>
         {/* One shape for every way on, the count said in words; Done is always last and primary. */}
         <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
-          {ways.map(
-            (way, i) =>
-              way.kind === "forgotten" && (
-                <Animated.View key={way.kind} style={way$[i]}>
-                  <Button
-                    label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
-                    lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
-                    size="lg"
-                    onPress={() => onOffer(way)}
-                  />
-                </Animated.View>
-              ),
-          )}
-          <Animated.View style={done$} className="gap-3">
-            {!counted ? (
-              <>
-                <Button label={t`Add cards`} size="lg" onPress={onAddCards} />
-                {done}
-              </>
-            ) : (
-              <>
-                {proceed && (
-                  <Button
-                    label={t`Continue`}
-                    detail={holds}
-                    size="lg"
-                    onPress={() => onOffer(proceed)}
-                  />
-                )}
-                {done}
-              </>
+          {asking && <ReminderWays ask={ask} onDone={onClose} />}
+          {!asking &&
+            ways.map(
+              (way, i) =>
+                way.kind === "forgotten" && (
+                  <Animated.View key={way.kind} style={way$[i]}>
+                    <Button
+                      label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
+                      lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
+                      size="lg"
+                      onPress={() => onOffer(way)}
+                    />
+                  </Animated.View>
+                ),
             )}
-          </Animated.View>
+          {!asking && (
+            <Animated.View style={done$} className="gap-3">
+              {!counted ? (
+                <>
+                  <Button label={t`Add cards`} size="lg" onPress={onAddCards} />
+                  {done}
+                </>
+              ) : (
+                <>
+                  {proceed && (
+                    <Button
+                      label={t`Continue`}
+                      detail={holds}
+                      size="lg"
+                      onPress={() => onOffer(proceed)}
+                    />
+                  )}
+                  {done}
+                </>
+              )}
+            </Animated.View>
+          )}
         </ToastFloor>
       </ScrollView>
       {turned && !sparked && (
@@ -1959,6 +1998,7 @@ const RUN_CATCH_MS = 1400;
 
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
+  fromTop: { justifyContent: "flex-start" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
   catch: { transformOrigin: "50% 100%" },

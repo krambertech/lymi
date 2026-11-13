@@ -34,6 +34,7 @@ export const DEVICE_KEYS = {
   reminder: "reminder",
   snoozed: "snoozed",
   reminderReported: "reminder-reported",
+  reminderAsked: "reminder-asked",
 } as const;
 
 /** What the review has shown once on this phone, such as how many reveals have taught Tap to reveal. */

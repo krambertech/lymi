@@ -53,6 +53,13 @@ export function useReminder() {
       store(on ? FIRST_TIME : undefined);
       if (on) setPermission(await askPermission());
     },
+    /** Turns it on at a time the learner chose; it stays off when iOS refuses. */
+    turnOnAt: async (at: string) => {
+      const answer = await askPermission();
+      setPermission(answer);
+      if (answer === "granted") store(at);
+      return answer;
+    },
   };
 }
 

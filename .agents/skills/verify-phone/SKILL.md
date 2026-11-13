@@ -29,6 +29,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Streak calendar: swiping and the arrows between months | [streak.md](features/streak.md) |
 | Language | [language.md](features/language.md) |
 | Daily reminder | [reminders.md](features/reminders.md) |
+| Reminder question at a review's end | [reminder-ask.md](features/reminder-ask.md) |
 | Learning emails | [learning-emails.md](features/learning-emails.md) |
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |

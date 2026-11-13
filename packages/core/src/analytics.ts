@@ -400,6 +400,11 @@ export const analyticsEvents = {
   session_replay_set: z.object({ on: z.boolean() }),
   reminder_prompt_shown: z.object({}),
   reminder_prompt_accepted: z.object({}),
+  reminder_ask_left: z.object({
+    answer: z.enum(["remind", "not_now", "closed"]),
+    part: z.enum(["morning", "lunch", "evening"]),
+    reminder: z.enum(["on", "off"]),
+  }),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
   site_link_followed: z.object({
@@ -711,8 +716,9 @@ export const analyticsProducers = {
   export_started: ["worker"],
   daily_goal_set: ["worker"],
   session_replay_set: ["worker"],
-  reminder_prompt_shown: ["browser"],
-  reminder_prompt_accepted: ["browser"],
+  reminder_prompt_shown: ["browser", "phone"],
+  reminder_prompt_accepted: ["browser", "phone"],
+  reminder_ask_left: ["phone"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
   site_link_followed: ["browser"],

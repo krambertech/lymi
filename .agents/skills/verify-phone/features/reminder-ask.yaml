@@ -1,0 +1,58 @@
+# Reminder question: a review ends on Next, the question picks a time, iOS asks, and the reminder is on.
+appId: app.lymi
+name: Reminder question
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- tapOn: "^Good.*"
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "Review done"
+    timeout: 20000
+- assertVisible: "^Next$"
+- assertNotVisible: "^Done$"
+- takeScreenshot: 01-end-with-next
+- tapOn: "^Next$"
+- assertVisible: "When should we remind you.*"
+- assertVisible: "One reminder, only on days with cards."
+- takeScreenshot: 02-question
+- tapOn: "Morning, 08:00"
+- assertVisible: "Remind me at 08:00"
+- takeScreenshot: 03-morning-chosen
+- tapOn: "Remind me at 08:00"
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 8000
+- takeScreenshot: 04-ios-asks
+- tapOn: "Allow"
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 10000
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Remind me to review"
+- assertVisible: "Time"
+- takeScreenshot: 05-reminder-on
+# Asked once: the next review ends on Done.
+- tapOn: "Today"
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,80%"
+- tapOn: "^Good.*"
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "Review done"
+    timeout: 20000
+- assertVisible: "^Done$"
+- assertNotVisible: "^Next$"
+- takeScreenshot: 06-next-review-ends-on-done
+- tapOn: "^Done$"

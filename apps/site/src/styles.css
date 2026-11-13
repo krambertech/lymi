@@ -1778,6 +1778,60 @@ html:has(.deck-cards[open]) {
 .landing-stage:focus-within .landing-dwell {
   animation-play-state: paused;
 }
+/* The moment AI writes a field: one violet band crosses it, then the badge settles. */
+.ai-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.ai-sweep[data-on="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 25%, var(--ai-soft) 50%, transparent 75%);
+  transform: translateX(-100%);
+  animation: ai-sweep 400ms var(--ease-out) forwards;
+}
+[dir="rtl"] .ai-sweep[data-on="true"]::after {
+  animation-name: ai-sweep-rtl;
+  transform: translateX(100%);
+}
+@keyframes ai-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes ai-sweep-rtl {
+  to {
+    transform: translateX(-100%);
+  }
+}
+.ai-badge-in {
+  animation: ai-badge-in 320ms var(--ease-out) both;
+}
+.ai-badge-in svg {
+  animation: ai-spark 400ms var(--ease-out) both;
+}
+@keyframes ai-badge-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@keyframes ai-spark {
+  from {
+    transform: scale(0.4) rotate(-45deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-sweep[data-on="true"]::after {
+    display: none;
+  }
+  .ai-badge-in,
+  .ai-badge-in svg {
+    animation: none;
+  }
+}
 /* The ring the API diagram's lantern sends out, as if each request lit it. */
 .landing-ring {
   transform-box: fill-box;

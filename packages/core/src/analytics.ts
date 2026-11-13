@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
+import { ImportFailure } from "./import";
 import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
 import { ReminderMessage } from "./reminders";
 import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
@@ -387,8 +388,10 @@ export const analyticsEvents = {
     write_runs: count.optional(),
     /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
     readings_converted: count.optional(),
+    /** Why the import failed, when outcome is failed. */
+    failure: ImportFailure.optional(),
   }),
-  import_failed: z.object({ source, card_count: count }),
+  import_failed: z.object({ source, card_count: count, failure: ImportFailure.optional() }),
   export_started: z.object({
     format: z.enum(["lymi", "anki"]),
     scope: z.enum(["deck", "library"]),

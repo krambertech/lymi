@@ -349,3 +349,37 @@ describe("analytics privacy contract", () => {
     ).toEqual({ pathname: "/", utm_medium: "social" });
   });
 });
+
+describe("import failure properties", () => {
+  it("keeps a known failure reason on a failed import and drops an unknown one", () => {
+    const finished = {
+      source: "anki",
+      card_count: 0,
+      adapter: "anki",
+      outcome: "failed",
+      failure: "expired",
+    };
+    expect(eventProperties("import_finished", finished, "worker")).toEqual(finished);
+    expect(
+      eventProperties(
+        "import_failed",
+        { source: "anki", card_count: 2, failure: "internal" },
+        "worker",
+      ),
+    ).toEqual({
+      source: "anki",
+      card_count: 2,
+      failure: "internal",
+    });
+    expect(
+      eventProperties("import_finished", { ...finished, failure: "timeout" }, "worker"),
+    ).toBeNull();
+    expect(
+      eventProperties(
+        "import_finished",
+        { source: "anki", card_count: 3, adapter: "anki", outcome: "done" },
+        "worker",
+      ),
+    ).toEqual({ source: "anki", card_count: 3, adapter: "anki", outcome: "done" });
+  });
+});

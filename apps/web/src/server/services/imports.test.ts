@@ -1814,6 +1814,100 @@ describe("a stalled write", () => {
   });
 });
 
+describe("failed import analytics", () => {
+  it("sends the cron's expired reason to the waiting import's owner", async () => {
+    const ctx = await fresh();
+    const events: { userId: string; event: AnalyticsEvent }[] = [];
+    const waiting = await startImport(ctx, { fileName: "later.apkg", byteSize: 100 }, env.IMPORTS);
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(Date.now() - 4 * DAY) })
+      .where(eq(schema.imports.id, waiting.id));
+    await expireImports(db, env.IMPORTS, new Date(), (userId) => ({
+      capture: (e: AnalyticsEvent) => events.push({ userId, event: e }),
+      writeDataPoint: () => {},
+    }));
+    expect(await getImport(ctx, waiting.id)).toMatchObject({
+      status: "failed",
+      failure: "expired",
+    });
+    const mine = events.filter((item) => item.userId === ctx.userId).map((item) => item.event);
+    expect(mine).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        source: "anki",
+        adapter: "anki",
+        outcome: "failed",
+        failure: "expired",
+      }),
+    );
+    expect(mine).toContainEqual(
+      expect.objectContaining({ name: "import_failed", source: "anki", failure: "expired" }),
+    );
+  });
+
+  it("sends internal when the cron fails a stalled write", async () => {
+    const ctx = await fresh();
+    const events: AnalyticsEvent[] = [];
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const now = Date.now();
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(now - IMPORT_STALL_MS - 60_000) })
+      .where(eq(schema.imports.id, id));
+    await expireImports(db, env.IMPORTS, new Date(now), {
+      capture: (e: AnalyticsEvent) => {
+        if (e.name === "import_finished" || e.name === "import_failed") events.push(e);
+      },
+      writeDataPoint: () => {},
+    });
+    expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "internal" });
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "internal",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "internal" }),
+    );
+  });
+
+  it("sends the workflow's failure reason on both events", async () => {
+    const ctx = await fresh();
+    const events: AnalyticsEvent[] = [];
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const failure = await failRun(
+      db,
+      id,
+      new Error("damaged"),
+      env.IMPORTS,
+      new CallBudget(),
+      {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+      },
+      async () => {},
+    );
+    expect(failure).toBe("damaged");
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "damaged",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "damaged" }),
+    );
+  });
+});
+
 describe("a write that runs out of calls", () => {
   it("stops before the cap, marks the import failed and reports it at once", async () => {
     const events: AnalyticsEvent[] = [];
@@ -1862,7 +1956,16 @@ describe("a write that runs out of calls", () => {
       status: "failed",
       failure: "internal",
     });
-    expect(events.map((e) => e.name)).toContain("import_failed");
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "internal",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "internal" }),
+    );
     expect(reported).toEqual([stopped]);
     // Recording the failure stayed inside the cap.
     expect(budget.used).toBeLessThanOrEqual(budget.limit);

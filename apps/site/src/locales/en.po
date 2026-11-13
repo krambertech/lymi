@@ -191,6 +191,9 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
 
+msgid "{wait, plural, one {# day} other {# days}}"
+msgstr "{wait, plural, one {# day} other {# days}}"
+
 msgid "*Bread* and butter."
 msgstr "*Bread* and butter."
 

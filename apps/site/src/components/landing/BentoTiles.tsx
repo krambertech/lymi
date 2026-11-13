@@ -2,9 +2,19 @@ import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
-import { Check, Download, FileArchive, LifeBuoy, RefreshCw, Tag, WifiOff } from "lucide-react";
+import {
+  Check,
+  CloudOff,
+  FileArchive,
+  FileSpreadsheet,
+  FileText,
+  LifeBuoy,
+  type LucideIcon,
+  Tag,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
+import { Lantern } from "../Lantern";
 import { FLAME_PARTS } from "../lantern-geometry";
 import { Furigana } from "./Furigana";
 import { EASE, usePlayback, useStill } from "./playback";
@@ -194,7 +204,7 @@ export function ModesTile({ play }: TileDemoProps) {
   );
 }
 
-/* Your goal, your streak: the run as one big number, today's day lighting up. */
+/* Goal and streak, for a narrow tile: today's goal filling, then the run counting up. */
 
 function Flame({ className }: { className?: string }) {
   const { left, top, right, bottom } = FLAME_BOUNDS;
@@ -218,35 +228,43 @@ export function StreakTile({ play }: TileDemoProps) {
   const done = at("fill") ? GOAL : 18;
   const days = at("lit") ? 13 : 12;
   return (
-    <div className="grid min-w-0 gap-5">
+    <div className="grid w-full gap-3">
+      <div className="flex items-end gap-2">
+        <motion.span
+          animate={{ scale: at("lit") ? [1, 1.2, 1] : 1 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mb-1 block shrink-0 origin-bottom"
+        >
+          <Flame className="h-8 w-auto" />
+        </motion.span>
+        <span className="text-[44px] leading-none font-medium tracking-[-0.04em] text-ink tabular-nums">
+          {i18n.number(days)}
+        </span>
+        <span className="mb-1 max-w-[9ch] text-xs leading-tight text-ink-secondary">
+          {t`${plural(days, { one: "day in a row", other: "days in a row" })}`}
+        </span>
+      </div>
+      <div className="flex justify-between">
+        {WEEK.map((state, i) => {
+          const lit = state === "kept" || (state === "today" && at("lit"));
+          return (
+            <motion.span
+              // biome-ignore lint/suspicious/noArrayIndexKey: a fixed week
+              key={i}
+              animate={{ scale: state === "today" && at("lit") ? [1, 1.35, 1] : 1 }}
+              transition={{ duration: 0.5, ease: EASE }}
+              className={clsx(
+                "size-4 rounded-full transition-colors duration-500",
+                lit && "bg-amber",
+                state === "rest" && "border-2 border-dashed border-amber",
+                state === "today" && !lit && "border border-dashed border-ink/30",
+              )}
+            />
+          );
+        })}
+      </div>
       <div>
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-sm font-medium whitespace-nowrap text-ink">
-            <Trans>
-              {i18n.number(done)} of {i18n.number(GOAL)} today
-            </Trans>
-          </span>
-          <span className="flex gap-1">
-            {WEEK.map((state, i) => {
-              const lit = state === "kept" || (state === "today" && at("lit"));
-              return (
-                <motion.span
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a fixed week
-                  key={i}
-                  animate={{ scale: state === "today" && at("lit") ? [1, 1.4, 1] : 1 }}
-                  transition={{ duration: 0.5, ease: EASE }}
-                  className={clsx(
-                    "size-3.5 rounded-full transition-colors duration-500",
-                    lit && "bg-amber",
-                    state === "rest" && "border-2 border-dashed border-amber",
-                    state === "today" && !lit && "border border-dashed border-ink/30",
-                  )}
-                />
-              );
-            })}
-          </span>
-        </div>
-        <div className="mt-2 h-3 overflow-hidden rounded-full bg-ink/10">
+        <div className="h-2.5 overflow-hidden rounded-full bg-ink/10">
           <motion.div
             className="h-full origin-left rounded-full bg-amber rtl:origin-right"
             initial={false}
@@ -254,174 +272,173 @@ export function StreakTile({ play }: TileDemoProps) {
             transition={{ duration: 0.9, ease: EASE }}
           />
         </div>
-      </div>
-      <div className="flex items-end justify-between gap-3">
-        <div className="flex min-w-0 items-end gap-2.5">
-          <motion.span
-            animate={{ scale: at("lit") ? [1, 1.2, 1] : 1 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="mb-2 block shrink-0 origin-bottom"
+        <p className="mt-1.5 flex items-center justify-between gap-2 text-xs text-ink-secondary">
+          <span className="whitespace-nowrap tabular-nums">
+            <Trans>
+              {i18n.number(done)} of {i18n.number(GOAL)} today
+            </Trans>
+          </span>
+          <span
+            className={clsx(
+              "flex items-center gap-1 whitespace-nowrap text-ink transition-opacity duration-300",
+              at("lit") ? "opacity-100" : "opacity-0",
+            )}
           >
-            <Flame className="h-11 w-auto" />
-          </motion.span>
-          <span className="relative h-[72px] shrink-0 overflow-hidden">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
-                key={days}
-                initial={{ y: 52, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -52, opacity: 0 }}
-                transition={{ duration: 0.55, ease: EASE }}
-                className="block text-[72px] leading-none font-medium tracking-[-0.045em] text-ink"
-              >
-                {i18n.number(days)}
-              </motion.span>
-            </AnimatePresence>
+            <Check className="size-3.5 text-success" />
+            <Trans>Goal reached</Trans>
           </span>
-          <span className="mb-2 max-w-[9ch] text-sm leading-tight text-ink-secondary">
-            {t`${plural(days, { one: "day in a row", other: "days in a row" })}`}
-          </span>
-        </div>
-        <AnimatePresence initial={false}>
-          {at("lit") && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0.6, y: 6 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={SETTLE}
-              className="mb-2 flex shrink-0 items-center gap-1 rounded-full bg-plate px-2.5 py-1 text-xs whitespace-nowrap text-ink edge"
-            >
-              <Check aria-hidden="true" className="size-3.5 text-success" />
-              <Trans>Goal reached</Trans>
-            </motion.span>
-          )}
-        </AnimatePresence>
+        </p>
       </div>
     </div>
   );
 }
 
-/* Tags: loose stickers that line up into a filter, one picked. */
+/* Tags: cards from different decks, and the filter that pulls one tag's cards together. */
 
-const STICKERS = [
-  { id: "verbs", tag: msg`verbs`, x: "4%", y: "8%", r: -6 },
-  { id: "exam", tag: msg`exam`, x: "38%", y: "0%", r: 4 },
-  { id: "travel", tag: msg`travel`, x: "68%", y: "14%", r: -3 },
-  { id: "food", tag: msg`food`, x: "16%", y: "56%", r: 5 },
-  { id: "week", tag: msg`week 3`, x: "52%", y: "52%", r: -5 },
+const TAGGED = [
+  { id: "a", term: "aufhören", lang: "de", deck: "German", tags: ["exam", "verbs"] },
+  { id: "b", term: "la factura", lang: "es", deck: "Spanish", tags: ["work"] },
+  { id: "c", term: "die Prüfung", lang: "de", deck: "German B1", tags: ["exam"] },
 ];
 
-export function TagsTile({ play }: TileDemoProps) {
-  const { i18n } = useLingui();
-  const still = useStill();
-  const at = useBeats({ line: 150, pick: 800 }, play);
-  const lined = at("line");
+function TagChip({ on, children }: { on?: boolean; children: ReactNode }) {
   return (
-    <div className="relative h-[104px]">
-      <div className={clsx(lined ? "flex flex-wrap gap-1.5" : "contents")}>
-        {STICKERS.map((s) => (
-          <motion.span
-            key={s.id}
-            layout={!still}
-            initial={false}
-            animate={{ rotate: lined ? 0 : s.r }}
-            transition={SETTLE}
-            style={lined ? undefined : { position: "absolute", insetInlineStart: s.x, top: s.y }}
-            className={clsx(
-              "flex h-9 items-center gap-1.5 rounded-full px-3 text-sm whitespace-nowrap shadow-[0_6px_14px_-8px_oklch(0.3_0.03_120/0.5)] transition-colors duration-300",
-              s.id === "exam" && at("pick") ? "bg-ink text-canvas" : "bg-plate text-ink edge",
-            )}
-          >
-            <Tag aria-hidden="true" className="size-3.5" />
-            {i18n._(s.tag)}
-          </motion.span>
-        ))}
-      </div>
-      <span
-        className={clsx(
-          "absolute start-0 bottom-0 text-sm text-ink-secondary transition-[opacity,translate] duration-500",
-          at("pick") ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0",
-        )}
-      >
-        <Trans>18 cards tagged exam, from 3 decks</Trans>
-      </span>
+    <span
+      className={clsx(
+        "flex h-6 items-center gap-1 rounded-full px-2 text-xs whitespace-nowrap transition-colors duration-300",
+        on ? "bg-ink text-canvas" : "bg-plate-nested text-ink-secondary",
+      )}
+    >
+      <Tag className="size-3" />
+      {children}
+    </span>
+  );
+}
+
+export function TagsTile({ play }: TileDemoProps) {
+  const at = useBeats({ pick: 250 }, play);
+  const picked = at("pick");
+  return (
+    <div className="@container w-full rounded-xl bg-plate edge">
+      <ul className="divide-y divide-edge">
+        {TAGGED.map((card) => {
+          const out = picked && !card.tags.includes("exam");
+          return (
+            <li
+              key={card.id}
+              className={clsx(
+                "flex h-10 items-center justify-between gap-2 px-3 transition-opacity duration-300",
+                out && "opacity-35",
+              )}
+            >
+              <span className="min-w-0">
+                <span lang={card.lang} className="block truncate text-sm font-medium text-ink">
+                  {card.term}
+                </span>
+              </span>
+              <span className="flex shrink-0 gap-1">
+                {card.tags.map((tag, i) => (
+                  <span key={tag} className={clsx(i > 0 && "@max-[230px]:hidden")}>
+                    <TagChip on={picked && tag === "exam"}>{tag}</TagChip>
+                  </span>
+                ))}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="flex h-10 items-center justify-between gap-2 border-t border-edge ps-3 pe-2 text-xs text-ink-secondary">
+        <span className="truncate">
+          <Trans>18 cards in 3 decks</Trans>
+        </span>
+        <span
+          className={clsx(
+            "flex h-6 shrink-0 items-center rounded-md px-2 font-medium transition-colors duration-300",
+            picked ? "bg-amber text-amber-ink" : "bg-plate-nested text-ink",
+          )}
+        >
+          <Trans>Review</Trans>
+        </span>
+      </p>
     </div>
   );
 }
 
-/* Keyboard first: three keys, pressed in turn. */
+/* Insights: the day grid, a column a week, each day shaded by how much of its goal was done. */
 
-function Key({ down, children }: { down: boolean; children: ReactNode }) {
+const WEEKS_SHOWN = 20;
+/** Levels 0 to 3 for each day, steadier towards today; 4 marks a rest day. Fixed, so it never jumps. */
+const DAYS: number[][] = Array.from({ length: WEEKS_SHOWN }, (_, w) =>
+  Array.from({ length: 7 }, (_, d) => {
+    const n = Math.abs(Math.sin((w + 1) * 12.9898 + (d + 1) * 78.233) * 43758.5453) % 1;
+    const steady = 0.3 + (w / WEEKS_SHOWN) * 0.62;
+    if (n > steady) return w > 9 && (w + d) % 5 === 0 ? 4 : 0;
+    return n < steady * 0.45 ? 3 : n < steady * 0.8 ? 2 : 1;
+  }),
+);
+/** Today is Thursday of the last week; the days after it have not happened. */
+const TODAY = 3;
+
+export function InsightsTile({ play }: TileDemoProps) {
+  const still = useStill();
+  const [drawn, setDrawn] = useState(false);
+  useEffect(() => {
+    if (play) setDrawn(true);
+  }, [play]);
+  const shown = drawn || still;
   return (
-    <motion.kbd
-      animate={{ y: down ? 2 : 0 }}
-      transition={{ type: "spring", stiffness: 600, damping: 28 }}
-      className={clsx(
-        "grid size-12 place-items-center rounded-xl bg-plate text-xl text-ink transition-shadow duration-150",
-        down
-          ? "shadow-[inset_0_0_0_1px_var(--edge-strong)]"
-          : "shadow-[0_0_0_1px_var(--edge),0_3px_0_var(--edge-strong)]",
-      )}
-    >
-      {children}
-    </motion.kbd>
+    <div className="w-full max-w-[420px] rounded-xl bg-plate p-3 edge">
+      <div
+        style={{ gridTemplateColumns: `repeat(${WEEKS_SHOWN}, minmax(0, 1fr))` }}
+        className="grid gap-[3px]"
+      >
+        {DAYS.map((week, w) => {
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed grid
+            <div key={w} className="grid gap-[3px]">
+              {week.map((level, d) => {
+                const last = w === WEEKS_SHOWN - 1;
+                const future = last && d > TODAY;
+                const today = last && d === TODAY;
+                return (
+                  <span
+                    // biome-ignore lint/suspicious/noArrayIndexKey: a fixed grid
+                    key={d}
+                    style={{ transitionDelay: shown && !still ? `${w * 30 + d * 8}ms` : "0ms" }}
+                    className={clsx(
+                      "aspect-square rounded-[3px] transition-[opacity,scale] duration-500",
+                      shown ? "scale-100 opacity-100" : "scale-75 opacity-30",
+                      future && "border border-dashed border-ink/25",
+                      !future && !today && level === 0 && "bg-ink/8",
+                      !future && !today && level === 1 && "bg-amber/35",
+                      !future && !today && level === 2 && "bg-amber/65",
+                      !future && (level === 3 || today) && "bg-amber",
+                      !future && !today && level === 4 && "border-[1.5px] border-amber",
+                      today && "shadow-[0_0_0_1.5px_var(--plate),0_0_0_3px_var(--ink)]",
+                    )}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-2.5 flex items-center justify-between gap-2 text-xs text-ink-secondary">
+        <span className="truncate">
+          <Trans>Day by day</Trans>
+        </span>
+        <span className="flex shrink-0 items-center gap-1">
+          <span className="size-2.5 rounded-[3px] bg-ink/8" />
+          <span className="size-2.5 rounded-[3px] bg-amber/35" />
+          <span className="size-2.5 rounded-[3px] bg-amber/65" />
+          <span className="size-2.5 rounded-[3px] bg-amber" />
+        </span>
+      </p>
+    </div>
   );
 }
 
-export function KeysTile({ play }: TileDemoProps) {
-  const at = useBeats({ k0: 150, k1: 320, k2: 490, up: 950 }, play);
-  return (
-    <span className="flex gap-1.5">
-      <Key down={at("k0") && !at("up")}>⌃</Key>
-      <Key down={at("k1") && !at("up")}>⌥</Key>
-      <Key down={at("k2") && !at("up")}>L</Key>
-    </span>
-  );
-}
-
-/* Works offline: reviews wait with the signal off, then sync. */
-
-export function OfflineTile({ play }: TileDemoProps) {
-  const at = useBeats({ online: 150, synced: 1000 }, play);
-  const state = at("synced") ? "synced" : at("online") ? "syncing" : "waiting";
-  return (
-    <span className="flex h-12 w-fit items-center gap-2.5 rounded-xl bg-plate py-2 ps-2 pe-3.5 edge">
-      <span className="grid size-8 place-items-center overflow-hidden rounded-lg bg-amber-soft">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={state}
-            initial={{ scale: 0.5, opacity: 0, rotate: -30 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            transition={SETTLE}
-          >
-            {state === "synced" ? (
-              <Check aria-hidden="true" className="size-4 text-success" />
-            ) : state === "syncing" ? (
-              <RefreshCw aria-hidden="true" className="size-4 animate-spin text-amber-text" />
-            ) : (
-              <WifiOff aria-hidden="true" className="size-4 text-amber-text" />
-            )}
-          </motion.span>
-        </AnimatePresence>
-      </span>
-      <span className="grid text-sm whitespace-nowrap text-ink">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span key={state} {...swap}>
-            {state === "synced" ? (
-              <Trans>All synced</Trans>
-            ) : state === "syncing" ? (
-              <Trans>Syncing…</Trans>
-            ) : (
-              <Trans>6 reviews to sync</Trans>
-            )}
-          </motion.span>
-        </AnimatePresence>
-      </span>
-    </span>
-  );
-}
-
-/* Bring your decks: the apps Lymi imports from. Anki and Quizlet marks are from Simple Icons (CC0). */
+/* Bring your decks: the apps Lymi imports from, and the deck they land in. Marks from Simple Icons (CC0). */
 
 const APPS: { name: string; path?: string; color?: string }[] = [
   {
@@ -440,188 +457,178 @@ const APPS: { name: string; path?: string; color?: string }[] = [
   { name: "Noji" },
   { name: "Pleco" },
 ];
+const IMPORT_FROM = 1240;
 
 export function ImportTile({ play }: TileDemoProps) {
-  const at = useBeats({ a0: 60, a1: 160, a2: 260, a3: 360, a4: 460, done: 900 }, play);
+  const { i18n } = useLingui();
+  const at = useBeats({ a0: 80, a1: 200, a2: 320, a3: 440, a4: 560, in: 900 }, play);
   return (
-    <ul className="flex flex-wrap gap-1">
-      {APPS.map((app, i) => (
-        <motion.li
-          key={app.name}
-          animate={{ y: at(`a${i}` as "a0") && !at("done") ? -5 : 0 }}
-          transition={SETTLE}
-          className={clsx(
-            "flex h-7 items-center gap-1 rounded-full bg-plate pe-2 text-[11px] font-medium text-ink edge",
-            app.path ? "ps-1.5" : "ps-2",
-          )}
+    <div className="grid w-full max-w-[380px] gap-2.5">
+      <ul className="grid grid-cols-5 gap-1">
+        {APPS.map((app, i) => (
+          <motion.li
+            key={app.name}
+            animate={{ y: at(`a${i}` as "a0") && !at("in") ? -4 : 0 }}
+            transition={SETTLE}
+            className="grid min-w-0 justify-items-center gap-1"
+          >
+            <span className="grid aspect-square w-full max-w-11 place-items-center rounded-xl bg-plate text-md font-medium text-ink edge">
+              {app.path ? (
+                <svg viewBox="0 0 24 24" className="size-5" fill={app.color}>
+                  <path d={app.path} />
+                </svg>
+              ) : (
+                app.name.charAt(0)
+              )}
+            </span>
+            <span className="max-w-full truncate text-xs text-ink-secondary">{app.name}</span>
+          </motion.li>
+        ))}
+      </ul>
+      <div className="flex h-11 items-center gap-2.5 rounded-xl bg-plate ps-2.5 pe-3 edge">
+        <Lantern className="size-5 shrink-0" />
+        <span className="min-w-0 flex-1 truncate text-xs text-ink">
+          <Trans>{i18n.number(IMPORT_FROM)} cards, history kept</Trans>
+        </span>
+        <motion.span
+          animate={{ scale: at("in") ? [1, 1.3, 1] : 1 }}
+          transition={{ duration: 0.45, ease: EASE }}
+          className="grid size-5 shrink-0 place-items-center rounded-full bg-success-soft"
         >
-          {app.path && (
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5" fill={app.color}>
-              <path d={app.path} />
-            </svg>
-          )}
-          {app.name}
-        </motion.li>
-      ))}
-    </ul>
+          <Check className="size-3.5 text-success" />
+        </motion.span>
+      </div>
+    </div>
   );
 }
 
-/* Your data is yours: a deck saved as a file. */
+/* The compact row: keys, the phone's shortcut, offline reviews and export, one small picture each. */
 
-export function ExportTile({ play }: TileDemoProps) {
-  const at = useBeats({ going: 100, saved: 800 }, play);
-  const state = at("saved") ? "saved" : at("going") ? "going" : "file";
+function Cap({ down, wide, children }: { down: boolean; wide?: boolean; children: ReactNode }) {
   return (
-    <span className="flex h-12 items-center gap-2 rounded-xl bg-plate py-2 ps-2 pe-3 edge">
-      <span className="grid size-8 place-items-center overflow-hidden rounded-lg bg-amber-soft text-amber-text">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={state}
-            initial={{ y: -12, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 12, opacity: 0 }}
-            transition={SWAP}
-          >
-            {state === "saved" ? (
-              <Check aria-hidden="true" className="size-4 text-success" />
-            ) : state === "going" ? (
-              <Download aria-hidden="true" className="size-4" />
-            ) : (
-              <FileArchive aria-hidden="true" className="size-4" />
-            )}
-          </motion.span>
-        </AnimatePresence>
+    <motion.kbd
+      animate={{ y: down ? 2 : 0 }}
+      transition={{ type: "spring", stiffness: 600, damping: 28 }}
+      className={clsx(
+        "grid h-7 shrink-0 place-items-center rounded-md bg-plate font-sans text-xs font-semibold text-ink tabular-nums transition-shadow duration-150",
+        wide ? "px-2" : "w-6",
+        down
+          ? "shadow-[inset_0_0_0_1px_var(--edge-strong)]"
+          : "shadow-[0_0_0_1px_var(--edge),0_2px_0_var(--edge-strong)]",
+      )}
+    >
+      {children}
+    </motion.kbd>
+  );
+}
+
+/** The keys a review runs on: the command menu, show the answer, then a grade. */
+export function KeysTile({ play }: TileDemoProps) {
+  const at = useBeats({ menu: 120, space: 420, grade: 760, up: 1150 }, play);
+  const down = (beat: "menu" | "space" | "grade") => at(beat) && !at("up");
+  return (
+    <span className="flex flex-wrap items-center gap-x-2 gap-y-1.5 pb-0.5">
+      <Cap wide down={down("menu")}>
+        ⌘K
+      </Cap>
+      <Cap wide down={down("space")}>
+        Space
+      </Cap>
+      <span className="flex gap-1">
+        {["1", "2", "3", "4"].map((key) => (
+          <Cap key={key} down={key === "3" && down("grade")}>
+            {key}
+          </Cap>
+        ))}
       </span>
-      <span className="text-sm font-medium text-ink">German.apkg</span>
     </span>
   );
 }
 
-/* Insights: recall as one number, with the line that got it there. */
-
-const RECALL = [62, 66, 64, 71, 74, 72, 78, 81, 80, 84, 87];
-const CHART = { w: 168, h: 64, min: 55, max: 92 };
-
-export function InsightsTile({ play }: TileDemoProps) {
-  const { i18n } = useLingui();
-  const still = useStill();
-  const points = RECALL.map((v, i) => [
-    (i / (RECALL.length - 1)) * CHART.w,
-    CHART.h - ((v - CHART.min) / (CHART.max - CHART.min)) * CHART.h,
-  ]);
-  const d = points.map(([x, y], i) => `${i ? "L" : "M"} ${x} ${y}`).join(" ");
-  const [ex, ey] = points[points.length - 1] as [number, number];
-  // At rest the line is whole; its turn draws it again from the start.
-  const draw = play && !still;
+/** The Mac app's quick add: its three keys go down, and the card is saved. */
+export function QuickAddTile({ play }: TileDemoProps) {
+  const at = useBeats({ press: 150, done: 700, up: 1000 }, play);
+  const down = at("press") && !at("up");
   return (
-    <div className="flex items-end justify-between gap-4">
-      <div>
-        <p className="text-xs text-ink-secondary">
-          <Trans>Recall</Trans>
-        </p>
-        <p className="mt-1 text-[56px] leading-none font-medium tracking-[-0.04em] text-ink">
-          {i18n.number(0.87, { style: "percent" })}
-        </p>
-      </div>
-      <svg
-        viewBox={`-4 -6 ${CHART.w + 8} ${CHART.h + 12}`}
-        aria-hidden="true"
-        className="mb-1 h-[76px] w-auto overflow-visible"
-      >
-        {[0, 0.5, 1].map((f) => (
-          <line
-            key={f}
-            x1={0}
-            x2={CHART.w}
-            y1={f * CHART.h}
-            y2={f * CHART.h}
-            stroke="currentColor"
-            className="text-ink/10"
-          />
+    <span className="flex w-full flex-wrap items-center gap-x-2 gap-y-1.5 pb-0.5">
+      <span className="flex gap-1">
+        {["⌃", "⌥", "L"].map((key) => (
+          <Cap key={key} down={down}>
+            {key}
+          </Cap>
         ))}
-        <motion.path
-          key={draw ? "draw" : "rest"}
-          d={d}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-ink/60"
-          initial={{ pathLength: draw ? 0 : 1 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.1, ease: EASE }}
-        />
-        <motion.circle
-          key={draw ? "dot-draw" : "dot-rest"}
-          cx={ex}
-          cy={ey}
-          r={4.5}
-          className="fill-amber"
-          initial={{ opacity: draw ? 0 : 1, scale: draw ? 0.3 : 1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...SETTLE, delay: draw ? 1 : 0 }}
-        />
-      </svg>
-    </div>
+      </span>
+      <span
+        className={clsx(
+          "flex h-6 items-center gap-1 rounded-full bg-amber-soft px-2 text-xs font-medium text-amber-text transition-opacity duration-200 motion-reduce:transition-none",
+          at("done") ? "opacity-100" : "opacity-0",
+        )}
+      >
+        <Check className="size-3.5" />
+        <Trans>Added</Trans>
+      </span>
+    </span>
   );
 }
 
-/* Help with the ones that slip: the word, with the days it was forgotten, and today's return. */
-
-const HISTORY = ["forgot", "knew", "forgot", "forgot", "knew"] as const;
-
-export function SlippingTile({ play }: TileDemoProps) {
-  const { t } = useLingui();
-  const at = useBeats({ back: 300 }, play);
+/** Reviews graded with no signal wait on the device, then sync. */
+export function OfflineTile({ play }: TileDemoProps) {
+  const at = useBeats({ sync: 500 }, play);
+  const synced = at("sync");
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between gap-3">
-        <p lang="de" className="text-3xl leading-none font-medium tracking-[-0.03em] text-ink">
-          aufhören
-        </p>
-        <span className="rounded-full bg-amber-soft px-2.5 py-1 text-xs whitespace-nowrap text-amber-text">
-          <Trans>Often forgotten</Trans>
-        </span>
-      </div>
-      <p className="mt-1 text-sm text-ink-secondary">{t`to stop`}</p>
-      <div className="mt-3 flex gap-1">
-        {HISTORY.map((each, i) => (
-          <span
-            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed history
+    <span className="flex h-10 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate ps-2.5 pe-3 edge">
+      <span className="flex shrink-0 gap-0.5 @max-xl:hidden">
+        {[0, 1, 2].map((i) => (
+          <motion.span
             key={i}
-            className={clsx(
-              "h-2 flex-1 rounded-full",
-              each === "forgot" ? "bg-ink/60" : "bg-ink/15",
-            )}
+            animate={{ opacity: synced ? 0.35 : 1, y: synced ? -2 : 0 }}
+            transition={{ ...SETTLE, delay: synced ? i * 0.06 : 0 }}
+            className="h-4 w-3 rounded-[3px] bg-plate-nested edge"
           />
         ))}
-        <span
-          className={clsx(
-            "relative h-2 flex-1 overflow-hidden rounded-full border border-dashed transition-colors duration-300",
-            at("back") ? "border-transparent" : "border-ink/25",
-          )}
+      </span>
+      <span className="flex min-w-0 flex-1 items-center gap-1.5 text-sm text-ink">
+        {synced ? (
+          <>
+            <Check className="size-4 shrink-0 text-amber-text" />
+            <span className="truncate">
+              <Trans>Synced</Trans>
+            </span>
+          </>
+        ) : (
+          <>
+            <CloudOff className="size-4 shrink-0 text-ink-muted" />
+            <span className="truncate">
+              <Trans>3 reviews saved</Trans>
+            </span>
+          </>
+        )}
+      </span>
+    </span>
+  );
+}
+
+/** The three files a deck can leave as, by their real extensions. */
+export function ExportTile({ play }: TileDemoProps) {
+  const at = useBeats({ f0: 100, f1: 240, f2: 380, rest: 850 }, play);
+  const files: { id: "f0" | "f1" | "f2"; icon: LucideIcon; file: string }[] = [
+    { id: "f0", icon: FileArchive, file: ".apkg" },
+    { id: "f1", icon: FileText, file: ".zip" },
+    { id: "f2", icon: FileSpreadsheet, file: ".csv" },
+  ];
+  return (
+    <span className="flex flex-wrap gap-1.5">
+      {files.map((f) => (
+        <motion.span
+          key={f.id}
+          animate={{ y: at(f.id) && !at("rest") ? 3 : 0 }}
+          transition={SETTLE}
+          className="flex h-8 items-center gap-1.5 rounded-lg bg-plate ps-1.5 pe-2.5 text-xs font-medium text-ink edge"
         >
-          <motion.span
-            className="absolute inset-0 origin-left rounded-full bg-amber rtl:origin-right"
-            initial={false}
-            animate={{ scaleX: at("back") ? 1 : 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-          />
-        </span>
-      </div>
-      <div className="mt-2 grid text-xs text-ink-secondary">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span key={at("back") ? "back" : "history"} {...swap}>
-            {at("back") ? (
-              <Trans>Back in today’s Often forgotten round</Trans>
-            ) : (
-              <Trans>Forgot on 3 of the last 5 days</Trans>
-            )}
-          </motion.span>
-        </AnimatePresence>
-      </div>
-    </div>
+          <f.icon className="size-4 text-amber-text" />
+          {f.file}
+        </motion.span>
+      ))}
+    </span>
   );
 }

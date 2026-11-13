@@ -19,20 +19,18 @@ import {
   KeysTile,
   ModesTile,
   OfflineTile,
+  QuickAddTile,
   ScriptsTile,
-  SlippingTile,
   StreakTile,
   TagsTile,
   type TileDemoProps,
 } from "./BentoTiles";
 import { ClassScene } from "./ClassScene";
 import { SectionTitle } from "./FeatureSection";
-import { VoiceDemo } from "./FeatureStage";
 
 /**
- * When a tile's demo plays. "view": once, the first time most of it is on screen, for the few that
- * tell a story. "hover": while it is pointed at or focused, replaying each time and settling back
- * after; on a screen with no hover it plays once in view instead.
+ * When a tile's demo plays. "view": once, the first time most of it is on screen. "hover": while it
+ * is pointed at or focused, settling back after; with no hover it plays once in view instead.
  */
 type Trigger = "view" | "hover";
 
@@ -88,14 +86,12 @@ interface TileProps {
   title: ReactNode;
   body?: ReactNode;
   Demo: ComponentType<TileDemoProps>;
-  /** "stack" sets the demo under the words; "row" beside them, for a short tile. */
-  layout: "stack" | "row" | "centre";
-  /** The demo has controls of its own; every other demo is a picture, hidden from screen readers. */
-  interactive?: boolean;
+  /** "fill": the demo takes the tile's width at its foot. "centre": it sits in the middle of what is left. */
+  layout: "fill" | "centre";
   className?: string;
 }
 
-function Tile({ trigger, hue, title, body, Demo, layout, interactive, className }: TileProps) {
+function Tile({ trigger, hue, title, body, Demo, layout, className }: TileProps) {
   const { ref, play, round } = useTrigger(trigger);
   return (
     <li
@@ -103,8 +99,6 @@ function Tile({ trigger, hue, title, body, Demo, layout, interactive, className 
       style={{ "--tray-h": hue } as CSSProperties}
       className={clsx(
         "use-case-tile flex min-w-0 flex-col gap-4 overflow-hidden rounded-[20px] p-5",
-        layout === "stack" && "justify-between",
-        layout === "row" && "@xl:flex-row @xl:items-center @xl:justify-between",
         className,
       )}
     >
@@ -115,11 +109,10 @@ function Tile({ trigger, hue, title, body, Demo, layout, interactive, className 
         {body && <p className="mt-1 text-sm text-pretty text-ink-secondary">{body}</p>}
       </div>
       <div
-        aria-hidden={interactive ? undefined : true}
+        aria-hidden="true"
         className={clsx(
-          layout === "stack" && "w-full",
-          layout === "row" && "shrink-0 self-start @max-xl:[zoom:0.72] @xl:self-auto",
-          layout === "centre" && "flex flex-1 items-center justify-center @max-xl:[zoom:0.85]",
+          "flex min-w-0 flex-1",
+          layout === "fill" ? "flex-col justify-end" : "items-center justify-center",
         )}
       >
         <Demo key={trigger === "hover" ? round : 0} play={play} />
@@ -128,17 +121,36 @@ function Tile({ trigger, hue, title, body, Demo, layout, interactive, className 
   );
 }
 
-function Voice({ play }: TileDemoProps) {
-  return <VoiceDemo play={play} compact sweep />;
+interface CompactProps {
+  hue: number;
+  title: ReactNode;
+  body: ReactNode;
+  Demo: ComponentType<TileDemoProps>;
 }
 
-/**
- * The details, Apple-recap style: sharing big, the review details beside it, then the everyday
- * tools in mixed sizes. Each tile leads with one visual; a few play as they come into view, and the
- * rest wait to be pointed at.
- */
-export function FeatureBento() {
-  const { i18n } = useLingui();
+/** A short tile: title, one line, one picture at its foot. Still until pointed at. */
+function CompactTile({ hue, title, body, Demo }: CompactProps) {
+  const { ref, play, round } = useTrigger("hover");
+  return (
+    <li
+      ref={ref}
+      style={{ "--tray-h": hue } as CSSProperties}
+      className="use-case-tile col-span-1 flex min-w-0 flex-col justify-between gap-4 overflow-hidden rounded-[20px] p-4 @xl:p-5 @4xl:col-span-3"
+    >
+      <div className="min-w-0">
+        <h3 className="text-md leading-tight font-medium tracking-[-0.015em] text-balance text-ink">
+          {title}
+        </h3>
+        <p className="mt-1 text-sm text-pretty text-ink-secondary">{body}</p>
+      </div>
+      <div aria-hidden="true" className="flex min-h-9 min-w-0 items-end">
+        <Demo key={round} play={play} />
+      </div>
+    </li>
+  );
+}
+
+function Frame({ children }: { children: ReactNode }) {
   return (
     <section data-nav="landing" className="px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div className="mx-auto max-w-[1040px]">
@@ -150,140 +162,150 @@ export function FeatureBento() {
             <Trans>Details you notice after a week of reviews.</Trans>
           </p>
         </div>
-        <ul className="mt-10 grid grid-cols-2 gap-3 @4xl:mt-12 @4xl:grid-cols-12 @4xl:grid-rows-[224px_224px_112px_112px_112px_112px]">
-          <li
-            style={{ "--tray-h": 150 } as CSSProperties}
-            className="use-case-tile col-span-2 flex min-w-0 flex-col overflow-hidden rounded-[20px] p-5 @4xl:col-span-6 @4xl:row-span-2"
-          >
-            <div>
-              <h3 className="text-xl leading-tight font-medium tracking-[-0.02em] text-ink">
-                <Trans>Learn the same deck together</Trans>
-              </h3>
-              <p className="mt-1 max-w-[42ch] text-sm text-pretty text-ink-secondary">
-                <Trans>
-                  Share a deck with your class, your team or a friend. One of you adds the cards,
-                  and everyone reviews on their own schedule.
-                </Trans>
-              </p>
-              <ArrowLink href={localizedPath("teachers", i18n.locale)} className="mt-3">
-                <Trans>Lymi for teachers</Trans>
-              </ArrowLink>
-            </div>
-            <div className="-mx-5 -mb-5 flex-1">
-              <ClassScene />
-            </div>
-          </li>
-          <Tile
-            trigger="view"
-            hue={25}
-            layout="centre"
-            title={<Trans>Hints</Trans>}
-            body={<Trans>A way in, never the answer.</Trans>}
-            Demo={HintTile}
-            className="col-span-2 @xl:col-span-1 @4xl:col-span-3"
-          />
-          <Tile
-            trigger="hover"
-            hue={280}
-            layout="centre"
-            title={<Trans>Native AI voice</Trans>}
-            body={<Trans>Every card, read aloud.</Trans>}
-            Demo={Voice}
-            interactive
-            className="col-span-2 @xl:col-span-1 @4xl:col-span-3"
-          />
-          <Tile
-            trigger="hover"
-            hue={235}
-            layout="centre"
-            title={<Trans>Every script</Trans>}
-            body={<Trans>Furigana, pinyin, stress marks.</Trans>}
-            Demo={ScriptsTile}
-            className="col-span-2 @xl:col-span-1 @4xl:col-span-3"
-          />
-          <Tile
-            trigger="hover"
-            hue={350}
-            layout="centre"
-            title={<Trans>Four ways to ask</Trans>}
-            body={<Trans>Words, meanings or a picture.</Trans>}
-            Demo={ModesTile}
-            className="col-span-2 @xl:col-span-1 @4xl:col-span-3"
-          />
-
-          <Tile
-            trigger="view"
-            hue={25}
-            layout="stack"
-            title={<Trans>Your goal, your streak</Trans>}
-            body={<Trans>Pick a daily goal. A rest day keeps the run going.</Trans>}
-            Demo={StreakTile}
-            className="col-span-2 @4xl:col-span-4 @4xl:row-span-2"
-          />
-          <Tile
-            trigger="hover"
-            hue={110}
-            layout="stack"
-            title={<Trans>Tags</Trans>}
-            body={<Trans>Label cards across decks, then review just those.</Trans>}
-            Demo={TagsTile}
-            className="col-span-2 @4xl:col-span-4 @4xl:row-span-2"
-          />
-          <Tile
-            trigger="hover"
-            hue={195}
-            layout="row"
-            title={<Trans>Keyboard first</Trans>}
-            body={<Trans>Add from any app on your Mac.</Trans>}
-            Demo={KeysTile}
-            className="col-span-2 @4xl:col-span-4"
-          />
-          <Tile
-            trigger="hover"
-            hue={280}
-            layout="stack"
-            title={<Trans>Works offline</Trans>}
-            Demo={OfflineTile}
-            className="col-span-2 @4xl:col-span-4"
-          />
-
-          <Tile
-            trigger="hover"
-            hue={235}
-            layout="stack"
-            title={<Trans>Bring your decks</Trans>}
-            Demo={ImportTile}
-            className="col-span-2 @4xl:col-span-4"
-          />
-          <Tile
-            trigger="hover"
-            hue={110}
-            layout="row"
-            title={<Trans>Your data is yours</Trans>}
-            body={<Trans>Export any deck.</Trans>}
-            Demo={ExportTile}
-            className="col-span-2 @4xl:col-span-4 @4xl:row-start-6"
-          />
-          <Tile
-            trigger="view"
-            hue={150}
-            layout="stack"
-            title={<Trans>Insights</Trans>}
-            body={<Trans>See what you remember, and how steady you’ve been.</Trans>}
-            Demo={InsightsTile}
-            className="col-span-2 @4xl:col-span-4 @4xl:col-start-5 @4xl:row-span-2 @4xl:row-start-5"
-          />
-          <Tile
-            trigger="hover"
-            hue={350}
-            layout="stack"
-            title={<Trans>Help with the ones that slip</Trans>}
-            body={<Trans>Cards you keep forgetting get a round of their own.</Trans>}
-            Demo={SlippingTile}
-            className="col-span-2 @4xl:col-span-4 @4xl:col-start-9 @4xl:row-span-2 @4xl:row-start-5"
-          />
-        </ul>
+        {children}
       </div>
     </section>
+  );
+}
+
+function SharingCopy({ className }: { className?: string }) {
+  const { i18n } = useLingui();
+  return (
+    <div className={className}>
+      <h3 className="text-xl leading-tight font-medium tracking-[-0.02em] text-ink">
+        <Trans>Learn the same deck together</Trans>
+      </h3>
+      <p className="mt-1 max-w-[42ch] text-sm text-pretty text-ink-secondary">
+        <Trans>
+          Share a deck with your class, your team or a friend. One of you adds the cards, and
+          everyone reviews on their own schedule.
+        </Trans>
+      </p>
+      <ArrowLink href={localizedPath("teachers", i18n.locale)} className="mt-3">
+        <Trans>Lymi for teachers</Trans>
+      </ArrowLink>
+    </div>
+  );
+}
+
+/** A quarter of the row wide; on a phone two share a row, their pictures drawn smaller to fit. */
+const SMALL =
+  "col-span-1 @max-xl:gap-3 @max-xl:p-3.5 @max-xl:[&>div:last-child]:[zoom:0.8] @4xl:col-span-3";
+
+/** Shared by both options: hints, scripts, modes and the goal, each a quarter of the row. */
+function ReviewTiles({ hues }: { hues: [number, number, number, number] }) {
+  return (
+    <>
+      <Tile
+        trigger="view"
+        hue={hues[0]}
+        layout="centre"
+        title={<Trans>Hints</Trans>}
+        body={<Trans>A way in, never the answer.</Trans>}
+        Demo={HintTile}
+        className={SMALL}
+      />
+      <Tile
+        trigger="hover"
+        hue={hues[1]}
+        layout="centre"
+        title={<Trans>Every script</Trans>}
+        body={<Trans>Furigana, pinyin, stress marks.</Trans>}
+        Demo={ScriptsTile}
+        className={SMALL}
+      />
+      <Tile
+        trigger="hover"
+        hue={hues[2]}
+        layout="centre"
+        title={<Trans>Four ways to ask</Trans>}
+        body={<Trans>Words, meanings or a picture.</Trans>}
+        Demo={ModesTile}
+        className={SMALL}
+      />
+      <Tile
+        trigger="view"
+        hue={hues[3]}
+        layout="fill"
+        title={<Trans>Your goal, your streak</Trans>}
+        Demo={StreakTile}
+        className={SMALL}
+      />
+    </>
+  );
+}
+
+/**
+ * Eight tiles and a compact row: sharing beside the four review details, then tags, Insights and
+ * import, then keyboard, quick add, offline and export as four short tiles.
+ */
+export function FeatureBento() {
+  const wide = "col-span-2 @xl:col-span-1 @4xl:col-span-4";
+  return (
+    <Frame>
+      <ul className="mt-10 grid grid-cols-2 gap-3 @4xl:mt-12 @4xl:grid-cols-12 @4xl:grid-rows-[232px_232px_auto_auto]">
+        <li
+          style={{ "--tray-h": 150 } as CSSProperties}
+          className="use-case-tile col-span-2 flex min-w-0 flex-col overflow-hidden rounded-[20px] p-5 @4xl:col-span-6 @4xl:row-span-2"
+        >
+          <SharingCopy />
+          <div className="-mx-5 -mb-5 flex-1">
+            <ClassScene />
+          </div>
+        </li>
+        <ReviewTiles hues={[350, 235, 280, 25]} />
+        <Tile
+          trigger="hover"
+          hue={235}
+          layout="fill"
+          title={<Trans>Tags</Trans>}
+          body={<Trans>Label cards across decks, then review just those.</Trans>}
+          Demo={TagsTile}
+          className={wide}
+        />
+        <Tile
+          trigger="view"
+          hue={110}
+          layout="fill"
+          title={<Trans>Insights</Trans>}
+          body={<Trans>See what you remember, and how steady you’ve been.</Trans>}
+          Demo={InsightsTile}
+          className={wide}
+        />
+        <Tile
+          trigger="hover"
+          hue={150}
+          layout="fill"
+          title={<Trans>Bring your decks</Trans>}
+          body={<Trans>Cards and review history come with you.</Trans>}
+          Demo={ImportTile}
+          className="col-span-2 @4xl:col-span-4"
+        />
+        <CompactTile
+          hue={280}
+          title={<Trans>Keyboard first</Trans>}
+          body={<Trans>Show the answer and grade it without the mouse.</Trans>}
+          Demo={KeysTile}
+        />
+        <CompactTile
+          hue={25}
+          title={<Trans>Add from any app</Trans>}
+          body={<Trans>Press ⌃⌥L on your Mac and the card is saved.</Trans>}
+          Demo={QuickAddTile}
+        />
+        <CompactTile
+          hue={235}
+          title={<Trans>Works offline</Trans>}
+          body={<Trans>Review with no signal. It syncs when you’re back.</Trans>}
+          Demo={OfflineTile}
+        />
+        <CompactTile
+          hue={350}
+          title={<Trans>Your data is yours</Trans>}
+          body={<Trans>Export any deck, any time.</Trans>}
+          Demo={ExportTile}
+        />
+      </ul>
+    </Frame>
   );
 }

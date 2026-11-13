@@ -172,7 +172,7 @@ function Bubble({
       )}
     >
       <div className="flex items-end gap-2">
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate shadow-[0_6px_14px_-8px_oklch(0.3_0.04_280/0.5)] edge [&_svg]:size-4">
+        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
           <AssistantMark name={ask.from} />
         </span>
         <div
@@ -188,7 +188,7 @@ function Bubble({
       </div>
       <motion.div
         style={still ? { opacity: 1 } : { opacity: reply, y: replyRise }}
-        className="ms-10 mt-2 grid w-fit max-w-[244px] gap-2 rounded-xl bg-plate px-3 py-2 shadow-[0_12px_28px_-20px_oklch(0.3_0.04_60/0.55)] edge"
+        className="ms-10 mt-2 grid w-fit max-w-[244px] gap-2 rounded-xl bg-plate px-3 py-2 edge-drop"
       >
         <p className="flex items-start gap-1.5 text-xs text-pretty text-ink">
           <Lantern className="mt-px size-3.5 shrink-0" />

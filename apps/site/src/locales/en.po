@@ -73,6 +73,14 @@ msgstr "{0, plural, one {Review all #} other {Review all #}}"
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Your deck} other {Your decks}}"
 
+#. placeholder {0}: i18n.number(IMPORT_FROM)
+msgid "{0} cards, history kept"
+msgstr "{0} cards, history kept"
+
+#. placeholder {0}: n.due
+msgid "{0} due"
+msgstr "{0} due"
+
 #. placeholder {0}: i18n.number(done)
 #. placeholder {1}: i18n.number(GOAL)
 msgid "{0} of {1} today"
@@ -278,6 +286,9 @@ msgstr "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgid "<0>Mari</0> finished Week 3"
 msgstr "<0>Mari</0> finished Week 3"
 
+msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
+msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 
@@ -320,8 +331,8 @@ msgstr "135–145 mmol/L in adults"
 msgid "17."
 msgstr "17."
 
-msgid "18 cards tagged exam, from 3 decks"
-msgstr "18 cards tagged exam, from 3 decks"
+msgid "18 cards in 3 decks"
+msgstr "18 cards in 3 decks"
 
 msgid "180 points. 80 to pass N5, 90 to pass N4."
 msgstr "180 points. 80 to pass N5, 90 to pass N4."
@@ -350,6 +361,9 @@ msgstr "25 questions, 15 to pass. 300 to learn."
 msgid "3 of 4 chosen"
 msgstr "3 of 4 chosen"
 
+msgid "3 reviews saved"
+msgstr "3 reviews saved"
+
 msgid "3.5–5.0 mmol/L in adults"
 msgstr "3.5–5.0 mmol/L in adults"
 
@@ -370,9 +384,6 @@ msgstr "40 and 60 questions. 120 of 200 points to pass."
 
 msgid "500 feet in either direction"
 msgstr "500 feet in either direction"
-
-msgid "6 reviews to sync"
-msgstr "6 reviews to sync"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% in reading, writing and listening, and 60% in speaking."
@@ -645,6 +656,9 @@ msgstr "Add {title}"
 msgid "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
 msgstr "Add a card from any app with ⌃⌥L, and keep Lymi a click away in the menu bar."
 
+msgid "Add a hint to the kanji I got wrong this week."
+msgstr "Add a hint to the kanji I got wrong this week."
+
 msgid "Add a photo, PDF or transcript, and tick the words you want."
 msgstr "Add a photo, PDF or transcript, and tick the words you want."
 
@@ -684,8 +698,8 @@ msgstr "Add cards yourself"
 msgid "Add deck"
 msgstr "Add deck"
 
-msgid "Add from any app on your Mac."
-msgstr "Add from any app on your Mac."
+msgid "Add from any app"
+msgstr "Add from any app"
 
 msgid "Add hint"
 msgstr "Add hint"
@@ -722,6 +736,9 @@ msgstr "Add to Lymi"
 
 msgid "Added"
 msgstr "Added"
+
+msgid "Added 1 card, with an example and a hint"
+msgstr "Added 1 card, with an example and a hint"
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
@@ -773,6 +790,9 @@ msgstr "Added 9 cards to Spanish. I skipped <0>la cuenta</0>, which you already 
 
 msgid "Added after this week’s lesson"
 msgstr "Added after this week’s lesson"
+
+msgid "Added hints to 6 cards in Japanese"
+msgstr "Added hints to 6 cards in Japanese"
 
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Added to Chess, with the meaning and an example."
@@ -881,9 +901,6 @@ msgstr "All shelves"
 
 msgid "All Spanish decks"
 msgstr "All Spanish decks"
-
-msgid "All synced"
-msgstr "All synced"
 
 msgid "All Ukrainian decks"
 msgstr "All Ukrainian decks"
@@ -1006,6 +1023,9 @@ msgstr "Are these the official questions?"
 msgid "Are you *coming* today?"
 msgstr "Are you *coming* today?"
 
+msgid "Article and plural, the way you write them"
+msgstr "Article and plural, the way you write them"
+
 msgid "Arts"
 msgstr "Arts"
 
@@ -1062,9 +1082,6 @@ msgstr "Back in 4 days."
 
 msgid "Back in 9 days."
 msgstr "Back in 9 days."
-
-msgid "Back in today’s Often forgotten round"
-msgstr "Back in today’s Often forgotten round"
 
 msgid "Back to {name}"
 msgstr "Back to {name}"
@@ -1298,6 +1315,12 @@ msgstr "Card enrichment, example translations, hints and deck style use card fie
 msgid "Cards"
 msgstr "Cards"
 
+msgid "cards added"
+msgstr "cards added"
+
+msgid "Cards and review history come with you."
+msgstr "Cards and review history come with you."
+
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
@@ -1309,9 +1332,6 @@ msgstr "Cards keep the due dates they had in {app}."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
-
-msgid "Cards you keep forgetting get a round of their own."
-msgstr "Cards you keep forgetting get a round of their own."
 
 msgid "Cards you wrote"
 msgstr "Cards you wrote"
@@ -1589,6 +1609,9 @@ msgstr "DAY 0"
 
 msgid "DAY 30"
 msgstr "DAY 30"
+
+msgid "Day by day"
+msgstr "Day by day"
 
 msgid "days in a row"
 msgstr "days in a row"
@@ -1931,9 +1954,6 @@ msgstr "Every card is read aloud by a native Japanese AI voice. It follows the r
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 
-msgid "Every card, read aloud."
-msgstr "Every card, read aloud."
-
 msgid "Every day"
 msgstr "Every day"
 
@@ -2006,9 +2026,6 @@ msgstr "Everything prepped and to hand before you start"
 msgid "Everything the test can ask."
 msgstr "Everything the test can ask."
 
-msgid "exam"
-msgstr "exam"
-
 msgid "Exam prep"
 msgstr "Exam prep"
 
@@ -2054,8 +2071,8 @@ msgstr "Explore decks"
 msgid "Explore ready-made decks."
 msgstr "Explore ready-made decks."
 
-msgid "Export any deck."
-msgstr "Export any deck."
+msgid "Export any deck, any time."
+msgstr "Export any deck, any time."
 
 msgid "Exported your library"
 msgstr "Exported your library"
@@ -2160,9 +2177,6 @@ msgstr "Flour"
 msgid "Follow with RSS"
 msgstr "Follow with RSS"
 
-msgid "food"
-msgstr "food"
-
 msgid "Food and drink"
 msgstr "Food and drink"
 
@@ -2215,9 +2229,6 @@ msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with 
 
 msgid "Forgot"
 msgstr "Forgot"
-
-msgid "Forgot on 3 of the last 5 days"
-msgstr "Forgot on 3 of the last 5 days"
 
 msgid "Format from 11 April 2026"
 msgstr "Format from 11 April 2026"
@@ -2501,9 +2512,6 @@ msgstr "Hello (formal)"
 
 msgid "Hello!"
 msgstr "Hello!"
-
-msgid "Help with the ones that slip"
-msgstr "Help with the ones that slip"
 
 msgid "Here are my notes from today’s pharmacology lecture. Add the drugs."
 msgstr "Here are my notes from today’s pharmacology lecture. Add the drugs."
@@ -3568,9 +3576,6 @@ msgstr "Metro station"
 msgid "Metro; subway"
 msgstr "Metro; subway"
 
-msgid "Mexican Spanish, informal examples, and the plural in the notes."
-msgstr "Mexican Spanish, informal examples, and the plural in the notes."
-
 msgid "Microbiology"
 msgstr "Microbiology"
 
@@ -4045,9 +4050,6 @@ msgstr "Physics"
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 
-msgid "Pick a daily goal. A rest day keeps the run going."
-msgstr "Pick a daily goal. A rest day keeps the run going."
-
 msgid "Pick your assistant for its steps."
 msgstr "Pick your assistant for its steps."
 
@@ -4098,9 +4100,6 @@ msgstr "Please; here you go"
 
 msgid "Please; here you go; you’re welcome"
 msgstr "Please; here you go; you’re welcome"
-
-msgid "Plural: las chambas"
-msgstr "Plural: las chambas"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
@@ -4173,6 +4172,9 @@ msgstr "Pregnant"
 
 msgid "Present, “I”"
 msgstr "Present, “I”"
+
+msgid "Press ⌃⌥L on your Mac and the card is saved."
+msgstr "Press ⌃⌥L on your Mac and the card is saved."
 
 msgid "price elasticity"
 msgstr "price elasticity"
@@ -4413,6 +4415,9 @@ msgstr "Reveal the meaning, then grade the recall."
 msgid "Revenue or cost recorded when it is earned or incurred, not when cash moves"
 msgstr "Revenue or cost recorded when it is earned or incurred, not when cash moves"
 
+msgid "Review"
+msgstr "Review"
+
 msgid "Review a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
 msgstr "Review a deck with your class, your tutor or a friend. One of you adds the words after each lesson and shares a link, and everyone reviews on their own schedule."
 
@@ -4425,9 +4430,6 @@ msgstr "Review a few minutes a day"
 msgid "Review a few minutes a day."
 msgstr "Review a few minutes a day."
 
-msgid "Review in Lymi"
-msgstr "Review in Lymi"
-
 msgid "Review less, remember longer."
 msgstr "Review less, remember longer."
 
@@ -4436,6 +4438,9 @@ msgstr "Review on your phone or your computer, for free, even without a connecti
 
 msgid "Review schedule"
 msgstr "Review schedule"
+
+msgid "Review with no signal. It syncs when you’re back."
+msgstr "Review with no signal. It syncs when you’re back."
 
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"
@@ -4502,6 +4507,9 @@ msgstr "Same sound, different word."
 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
+
+msgid "Save “Feierabend” to my German deck."
+msgstr "Save “Feierabend” to my German deck."
 
 msgid "Say it"
 msgstr "Say it"
@@ -4685,6 +4693,9 @@ msgstr "Show hint"
 
 msgid "Show the answer"
 msgstr "Show the answer"
+
+msgid "Show the answer and grade it without the mouse."
+msgstr "Show the answer and grade it without the mouse."
 
 msgid "Show the answer, then grade how well you knew it."
 msgstr "Show the answer, then grade how well you knew it."
@@ -4999,14 +5010,20 @@ msgstr "Support and email: we keep the information you send us so we can respond
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
-msgid "Syncing…"
-msgstr "Syncing…"
+msgid "Synced"
+msgstr "Synced"
 
 msgid "table"
 msgstr "table"
 
+msgid "Tag everything that’s on Friday’s anatomy exam."
+msgstr "Tag everything that’s on Friday’s anatomy exam."
+
 msgid "Tag: {verb}"
 msgstr "Tag: {verb}"
+
+msgid "Tagged 31 cards “exam”"
+msgstr "Tagged 31 cards “exam”"
 
 msgid "Tags"
 msgstr "Tags"
@@ -5512,9 +5529,6 @@ msgstr "There is nothing published yet."
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
 
-msgid "These three keep slipping"
-msgstr "These three keep slipping"
-
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 
@@ -5586,6 +5600,9 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "This policy covers Lymi’s website, apps, API and connected assistants."
+
+msgid "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
+msgstr "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
@@ -5751,9 +5768,6 @@ msgstr "To sign"
 
 msgid "To sleep; to go to bed"
 msgstr "To sleep; to go to bed"
-
-msgid "to stop"
-msgstr "to stop"
 
 msgid "To stop"
 msgstr "To stop"
@@ -5998,9 +6012,6 @@ msgstr "Usually"
 msgid "verb"
 msgstr "verb"
 
-msgid "verbs"
-msgstr "verbs"
-
 msgid "Version of 5 January 2026"
 msgstr "Version of 5 January 2026"
 
@@ -6081,9 +6092,6 @@ msgstr "Week 1"
 
 msgid "Week 2"
 msgstr "Week 2"
-
-msgid "week 3"
-msgstr "week 3"
 
 msgid "Week 3"
 msgstr "Week 3"
@@ -6174,6 +6182,9 @@ msgstr "What time is the next *train*?"
 
 msgid "What we collect and why"
 msgstr "What we collect and why"
+
+msgid "What you asked for, on every card"
+msgstr "What you asked for, on every card"
 
 msgid "What you can see"
 msgstr "What you can see"
@@ -6567,9 +6578,6 @@ msgstr "Your goal, your streak"
 
 msgid "Your own app"
 msgstr "Your own app"
-
-msgid "Your own cards"
-msgstr "Your own cards"
 
 msgid "Your rights and choices"
 msgstr "Your rights and choices"

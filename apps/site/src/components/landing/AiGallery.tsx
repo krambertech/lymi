@@ -181,7 +181,7 @@ export function AiGallery() {
                     )}
                   >
                     <span className="overflow-hidden">
-                      <span className="block max-w-[40ch] pt-1.5 pb-1 text-sm text-pretty text-ink-secondary">
+                      <span className="block max-w-[40ch] pt-1.5 pb-1 text-sm text-pretty text-ink-secondary @max-4xl:min-h-[5.5rem]">
                         {i18n._(each.body)}
                       </span>
                     </span>

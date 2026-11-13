@@ -95,7 +95,7 @@ function Cursor({ who, moving }: { who: Person; moving: boolean }) {
       <Arrow fill={color} />
       <span
         style={{ background: color }}
-        className="-mt-1 ms-3 flex items-center gap-1 rounded-full py-0.5 ps-0.5 pe-2 text-2xs font-medium text-white shadow-sm"
+        className="-mt-1 ms-3 flex items-center gap-1 rounded-full py-0.5 ps-0.5 pe-2 text-xs font-medium text-white shadow-sm"
       >
         <img
           src={`/avatars/${who.id}.svg`}
@@ -191,7 +191,7 @@ export function ClassScene() {
       onPointerLeave={() => setHere(false)}
       // The visitor's own arrow stands in for the system one, which would sit on top of it.
       className={clsx(
-        "relative grid h-full min-h-[280px] w-full place-items-center overflow-hidden px-5",
+        "relative isolate grid h-full min-h-[280px] w-full place-items-center overflow-hidden px-5",
         !still && "hoverable:cursor-none",
       )}
     >
@@ -211,7 +211,7 @@ export function ClassScene() {
             <Arrow fill={YOU_COLOR} />
             <span
               style={{ background: YOU_COLOR }}
-              className="-mt-1 ms-3 block w-max rounded-full px-2 py-0.5 text-2xs font-medium text-white shadow-sm"
+              className="-mt-1 ms-3 block w-max rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm"
             >
               <Trans>You</Trans>
             </span>
@@ -243,9 +243,7 @@ export function ClassScene() {
             const who = done[i] ?? [];
             return (
               <li key={week.id} className="grid gap-1 rounded-md bg-plate-nested px-1.5 py-1.5">
-                <span className="text-2xs whitespace-nowrap text-ink-secondary">
-                  {i18n._(week)}
-                </span>
+                <span className="text-xs whitespace-nowrap text-ink-secondary">{i18n._(week)}</span>
                 <span className="flex h-4 items-center">
                   {who.length === 0 ? (
                     <span className="h-1 w-4 rounded-full bg-edge-strong" />

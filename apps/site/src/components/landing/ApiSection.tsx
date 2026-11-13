@@ -185,14 +185,21 @@ function Pipeline() {
     >
       <span
         className={clsx(
-          "flex h-11 items-center gap-2 rounded-xl bg-plate text-sm whitespace-nowrap text-ink edge",
+          "flex h-11 items-center gap-2 rounded-xl bg-plate whitespace-nowrap text-ink edge",
+          // Between a phone and a full plate the drawing is shown at 78%, so its words are set larger.
+          tall ? "text-sm" : "text-md @4xl:text-sm",
           n.name ? "ps-3 pe-3.5" : "w-11 justify-center text-ink-secondary",
         )}
       >
         <n.icon className="size-4 shrink-0 text-ink-secondary" />
         {n.name}
         {n.due && (
-          <span className="rounded-full bg-amber-soft px-2 py-0.5 text-xs font-medium text-amber-text">
+          <span
+            className={clsx(
+              "rounded-full bg-amber-soft px-2 py-0.5 font-medium text-amber-text",
+              tall ? "text-xs" : "text-md @4xl:text-xs",
+            )}
+          >
             <Trans>{n.due} due</Trans>
           </span>
         )}
@@ -302,7 +309,8 @@ function Pipeline() {
         </motion.span>
         <motion.p
           className={clsx(
-            "absolute text-sm whitespace-nowrap text-ink-secondary",
+            "absolute whitespace-nowrap text-ink-secondary",
+            tall ? "text-sm" : "text-md @4xl:text-sm",
             tall ? "-translate-y-1/2 text-start" : "-translate-x-1/2 text-center",
           )}
           style={
@@ -329,7 +337,7 @@ function Pipeline() {
 /** The public API on a night plate: the claim and its two links, then the pipeline it opens. */
 export function ApiSection() {
   return (
-    <section data-nav="landing" className="px-5 py-12 @2xl:px-10 @4xl:py-16">
+    <section data-nav="landing" className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div
         data-theme="dark"
         className="mx-auto max-w-[1040px] overflow-hidden rounded-[24px] bg-sheet p-7 text-ink edge @2xl:p-10"
@@ -347,10 +355,13 @@ export function ApiSection() {
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-2">
-            <a href="/docs/quickstart" className={buttonClass("secondary")}>
+            <a
+              href="/docs/quickstart"
+              className={buttonClass("secondary", "md", "@max-xl:min-h-11")}
+            >
               <Trans>Quickstart</Trans>
             </a>
-            <a href="/docs/api" className={buttonClass("ghost")}>
+            <a href="/docs/api" className={buttonClass("ghost", "md", "@max-xl:min-h-11")}>
               <Trans>API reference</Trans>
             </a>
           </div>

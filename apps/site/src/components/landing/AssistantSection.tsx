@@ -212,7 +212,10 @@ export function AssistantSection() {
 
   useEffect(() => {
     if (still || !inView || held) return;
-    const timer = window.setInterval(() => setHead((h) => h + 1), EVERY_MS);
+    // A hidden tab keeps its timers; without this the stream would run on with nobody watching.
+    const timer = window.setInterval(() => {
+      if (!document.hidden) setHead((h) => h + 1);
+    }, EVERY_MS);
     return () => window.clearInterval(timer);
   }, [still, inView, held]);
 
@@ -221,7 +224,10 @@ export function AssistantSection() {
   const rows = Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
   return (
-    <section data-nav="landing" className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-14">
+    <section
+      data-nav="landing"
+      className="overflow-x-clip border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+    >
       <div className="mx-auto grid max-w-[480px] items-center gap-10 @4xl:max-w-[1040px] @4xl:grid-cols-[minmax(0,440px)_minmax(0,1fr)] @4xl:gap-16">
         <Heading />
         <div

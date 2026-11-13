@@ -103,7 +103,7 @@ export function UseCases({ title, items }: Props) {
   return (
     <section
       aria-labelledby="use-cases-title"
-      className="border-t border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
     >
       <div className="mx-auto max-w-[1040px]">
         <h2

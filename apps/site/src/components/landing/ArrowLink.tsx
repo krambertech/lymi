@@ -16,7 +16,8 @@ export function ArrowLink({ href, children, size = "sm", className }: Props) {
       href={href}
       className={clsx(
         className,
-        "inline-flex items-center gap-1.5 rounded-xs",
+        // The words stay small; the pseudo-element gives a thumb 44px to land on.
+        "relative inline-flex items-center gap-1.5 rounded-xs before:absolute before:inset-x-0 before:-inset-y-3",
         size === "sm" ? "text-sm" : "text-md",
         "font-medium text-ink-secondary hoverable:hover:text-ink",
       )}

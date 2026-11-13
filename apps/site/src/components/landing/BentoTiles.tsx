@@ -53,7 +53,7 @@ function Plate({ children, className }: { children: ReactNode; className?: strin
 export function HintTile({ play }: TileDemoProps) {
   const at = useBeats({ press: 500, open: 750, lit: 1150 }, play);
   return (
-    <Plate className="w-[188px] px-3 pt-2.5 pb-3 text-center">
+    <Plate className="w-full max-w-[188px] px-3 pt-2.5 pb-3 text-center">
       <p lang="ja" className="text-2xl font-medium text-ink">
         休む
       </p>
@@ -125,7 +125,7 @@ export function ScriptsTile({ play }: TileDemoProps) {
   const at = useBeats({ s0: 100, s1: 450, s2: 800, s3: 1150, s4: 1600 }, play);
   const lit = at("s4") ? -1 : at("s3") ? 3 : at("s2") ? 2 : at("s1") ? 1 : at("s0") ? 0 : -1;
   return (
-    <div className="grid w-[204px] grid-cols-2 gap-1.5">
+    <div className="grid w-full max-w-[204px] grid-cols-2 gap-1.5">
       {SCRIPTS.map((tile, i) => (
         <motion.div
           key={tile.lang}
@@ -133,7 +133,10 @@ export function ScriptsTile({ play }: TileDemoProps) {
           transition={SETTLE}
           className="grid h-[52px] place-items-center rounded-xl bg-plate edge"
         >
-          <span lang={tile.lang} className="text-lg leading-[1.7] font-medium text-ink">
+          <span
+            lang={tile.lang}
+            className="text-lg leading-[1.7] font-medium text-ink @max-xl:text-sm"
+          >
             {tile.word}
           </span>
         </motion.div>
@@ -176,8 +179,8 @@ export function ModesTile({ play }: TileDemoProps) {
       t`apple`
     );
   return (
-    <div className="grid justify-items-center gap-2">
-      <Plate className="grid w-[156px] justify-items-center px-3 pt-2 pb-2.5">
+    <div className="grid w-full justify-items-center gap-2">
+      <Plate className="grid w-full max-w-[156px] justify-items-center px-3 pt-2 pb-2.5">
         <div className="grid h-11 place-items-center text-lg font-medium text-ink">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={ask.id} {...swap}>
@@ -196,7 +199,7 @@ export function ModesTile({ play }: TileDemoProps) {
       <motion.span
         layout
         transition={SETTLE}
-        className="rounded-full bg-ink px-2.5 py-0.5 text-2xs font-medium whitespace-nowrap text-canvas"
+        className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-medium whitespace-nowrap text-canvas"
       >
         {i18n._(ask.label)}
       </motion.span>

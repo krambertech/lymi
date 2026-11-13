@@ -152,7 +152,7 @@ function CompactTile({ hue, title, body, Demo }: CompactProps) {
 
 function Frame({ children }: { children: ReactNode }) {
   return (
-    <section data-nav="landing" className="px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section data-nav="landing" className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div className="mx-auto max-w-[1040px]">
         <div className="max-w-[620px]">
           <SectionTitle>
@@ -188,9 +188,11 @@ function SharingCopy({ className }: { className?: string }) {
   );
 }
 
-/** A quarter of the row wide; on a phone two share a row, their pictures drawn smaller to fit. */
-const SMALL =
-  "col-span-1 @max-xl:gap-3 @max-xl:p-3.5 @max-xl:[&>div:last-child]:[zoom:0.8] @4xl:col-span-3";
+/** A quarter of the row wide; on a phone two share a row and their pictures take its width. */
+const SMALL = "col-span-1 @max-xl:gap-3 @max-xl:p-3.5 @4xl:col-span-3";
+/** On a phone, a tile whose picture needs more width takes the row: words beside the picture. */
+const ACROSS =
+  "col-span-2 @max-xl:flex-row @max-xl:items-center @max-xl:[&>div:first-child]:flex-1 @max-xl:[&>div:last-child]:w-[172px] @max-xl:[&>div:last-child]:flex-none @xl:col-span-1 @4xl:col-span-3";
 
 /** Shared by both options: hints, scripts, modes and the goal, each a quarter of the row. */
 function ReviewTiles({ hues }: { hues: [number, number, number, number] }) {
@@ -221,7 +223,7 @@ function ReviewTiles({ hues }: { hues: [number, number, number, number] }) {
         title={<Trans>Four ways to ask</Trans>}
         body={<Trans>Words, meanings or a picture.</Trans>}
         Demo={ModesTile}
-        className={SMALL}
+        className={ACROSS}
       />
       <Tile
         trigger="view"
@@ -229,7 +231,7 @@ function ReviewTiles({ hues }: { hues: [number, number, number, number] }) {
         layout="fill"
         title={<Trans>Your goal, your streak</Trans>}
         Demo={StreakTile}
-        className={SMALL}
+        className={ACROSS}
       />
     </>
   );

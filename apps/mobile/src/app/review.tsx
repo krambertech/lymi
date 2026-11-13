@@ -1677,6 +1677,8 @@ function Completion({
   // A review with grades may end on the reminder question: Done becomes Next and leads to it.
   const ask = useReminderAsk();
   const asks = ask.able && counted;
+  // Whether it asks is read from iOS; until then the last button waits unseen rather than change its word.
+  const undecided = counted && ask.able === undefined;
   const [asking, setAsking] = useState(false);
   // Where the lantern sits on the summary, held so the question arrives under it without moving it.
   const lanternTop = useRef(0);
@@ -1847,7 +1849,11 @@ function Completion({
                 ),
             )}
           {!asking && (
-            <Animated.View style={done$} className="gap-3">
+            <Animated.View
+              style={[done$, undecided && styles.unseen]}
+              pointerEvents={undecided ? "none" : "auto"}
+              className="gap-3"
+            >
               {!counted ? (
                 <>
                   <Button label={t`Add cards`} size="lg" onPress={onAddCards} />
@@ -1999,6 +2005,7 @@ const RUN_CATCH_MS = 1400;
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   fromTop: { justifyContent: "flex-start" },
+  unseen: { opacity: 0 },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
   catch: { transformOrigin: "50% 100%" },

@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type DayPart, reminderChoices } from "@lymi/client/first-review";
 import { type LucideIcon, Moon, Sun, Sunrise } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { AccessibilityInfo, findNodeHandle, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { notificationPermission } from "../reminders/notifications";
@@ -23,7 +23,11 @@ type Answer = "remind" | "not_now";
  */
 export function useReminderAsk() {
   const reminder = useReminder();
-  const [able, setAble] = useState(false);
+  const settled = () =>
+    !!deviceStore.getString(DEVICE_KEYS.reminder) ||
+    !!deviceStore.getBoolean(DEVICE_KEYS.reminderAsked);
+  // Unknown until iOS answers, so the end never shows Done and then swaps it for Next.
+  const [able, setAble] = useState<boolean | undefined>(() => (settled() ? false : undefined));
   const [choices] = useState(() => reminderChoices(new Date()));
   const [part, setPart] = useState<DayPart>(choices.part);
   const [busy, setBusy] = useState(false);
@@ -31,19 +35,16 @@ export function useReminderAsk() {
   const open = useRef<DayPart | null>(null);
 
   useEffect(() => {
-    if (
-      deviceStore.getString(DEVICE_KEYS.reminder) ||
-      deviceStore.getBoolean(DEVICE_KEYS.reminderAsked)
-    )
-      return;
+    if (able !== undefined) return;
     let live = true;
-    void notificationPermission().then((permission) => {
-      if (live) setAble(permission === "undetermined");
-    });
+    void notificationPermission().then(
+      (permission) => live && setAble(permission === "undetermined"),
+      () => live && setAble(false),
+    );
     return () => {
       live = false;
     };
-  }, []);
+  }, [able]);
 
   useEffect(
     () => () => {
@@ -94,6 +95,12 @@ export function ReminderQuestion({ ask }: { ask: ReminderAsk }) {
   const { t } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();
+  // Next, which held VoiceOver's focus, has gone, so the question takes it.
+  const heading = useRef<View>(null);
+  useEffect(() => {
+    const node = findNodeHandle(heading.current);
+    if (node) AccessibilityInfo.setAccessibilityFocus(node);
+  }, []);
   // Drawn from Lucide here, not the icon set: a new entry there is a new native symbol, which an
   // over-the-air update cannot carry.
   const parts: { part: DayPart; label: string; icon: LucideIcon }[] = [
@@ -104,9 +111,11 @@ export function ReminderQuestion({ ask }: { ask: ReminderAsk }) {
   return (
     <Animated.View entering={reduce ? undefined : FadeIn.duration(280)} className="w-full gap-6">
       <View className="items-center gap-2">
-        <Text className="text-center text-2xl font-medium text-ink" accessibilityRole="header">
-          {t`When should we remind you?`}
-        </Text>
+        <View ref={heading} accessible accessibilityRole="header">
+          <Text className="text-center text-2xl font-medium text-ink">
+            {t`When should we remind you?`}
+          </Text>
+        </View>
         <Text className="text-center text-md text-ink-secondary">
           {t`One reminder, only on days with cards.`}
         </Text>

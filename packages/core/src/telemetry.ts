@@ -59,15 +59,33 @@ const D1_MESSAGES = [
   "D1 DB reset because its code was updated",
   "D1 DB is overloaded. Requests queued for too long",
   "D1 DB is overloaded. Too many requests queued",
+  "D1 DB is overloaded. Too many resources consumed within a 10 second window",
   "D1 DB's isolate exceeded its memory limit and was reset",
   "D1 DB exceeded its CPU time limit and was reset",
+  "No SQL statements detected",
+  "Your account has exceeded D1's maximum account storage limit, please contact Cloudflare to raise your limit",
+  "Exceeded maximum DB size",
+  "Your account has exceeded D1's free tier daily row read limit",
+  "Your account has exceeded D1's free tier daily row write limit",
+  "D1 query result exceeded the maximum response size limit of 50 MB",
 ].map((message) => `D1_ERROR: ${message}`);
+
+// Prefixes D1 puts on every failure, kept on their own when the rest may be SQL.
+const D1_PREFIXES = ["D1_ERROR", "D1_EXEC_ERROR", "D1_TYPE_ERROR", "D1_COLUMN_NOTFOUND"] as const;
 
 function knownMessage(value: unknown): string {
   if (typeof value !== "string") return "Unexpected error";
   return (
-    D1_MESSAGES.find((message) => value.startsWith(message)) ?? known(value) ?? "Unexpected error"
+    d1Message(value) ??
+    known(value) ??
+    (value.startsWith("Failed query:") ? "Failed query" : "Unexpected error")
   );
+}
+
+function d1Message(value: string): string | undefined {
+  const known = D1_MESSAGES.find((message) => value.includes(message));
+  if (known) return known;
+  return D1_PREFIXES.find((prefix) => value === prefix || value.includes(`${prefix}:`));
 }
 
 function known(value: string): string | undefined {

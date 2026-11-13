@@ -2,17 +2,10 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
-import { CircleCheck, CircleDashed, createLucideIcon } from "lucide-react";
 import { useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, useMemo, useRef } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import { FLAME_PARTS } from "../lantern-geometry";
 import { usePlayback, useStill } from "./playback";
-
-/** Lucide's `contrast` with its half filled, as the app marks a card it is still teaching. */
-const CircleHalf = createLucideIcon("circle-half", [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "circle" }],
-  ["path", { d: "M12 18a6 6 0 0 0 0-12v12z", fill: "currentColor", key: "half" }],
-]);
 
 /** Six reviews of one card: the gap grows each time it's remembered. */
 const STOPS = [
@@ -24,25 +17,54 @@ const STOPS = [
   { day: 50, state: "known" },
 ] as const;
 
-const KEYS = ["s0", "s1", "s2", "s3", "s4", "s5"] as const;
-
 /** How long the line takes to reach each stop, in ms: a longer wait draws for longer. */
-const DRAW = [0, 450, 550, 750, 1100, 1600];
-/** When each stop's line starts drawing; the stop itself lights as its line arrives. */
-const BEATS = Object.fromEntries(
-  KEYS.map((key, i) => [key, 200 + DRAW.slice(1, i).reduce((sum, ms) => sum + ms, i ? 300 : 0)]),
-) as Record<(typeof KEYS)[number], number>;
+const DRAW = [0, 220, 260, 340, 460, 620];
+/** A stop's parts arrive one after another inside this long, in ms. */
+const SETTLE = 220;
+
+type Beat = `stop${number}` | `line${number}`;
+/**
+ * The order of arrival: a stop with all its parts, then the line to the next one, then that stop.
+ * The whole lane takes about 3.2 s.
+ */
+const BEATS = (() => {
+  const beats: Record<Beat, number> = {};
+  let now = 150;
+  STOPS.forEach((_, i) => {
+    if (i) {
+      beats[`line${i}`] = now;
+      now += Math.round((DRAW[i] ?? 0) * 0.9);
+    }
+    beats[`stop${i}`] = now;
+    now += SETTLE;
+  });
+  return beats;
+})();
 
 /** Days waited before a stop; 0 for the first. */
 const waitBefore = (i: number) => (i ? (STOPS[i]?.day ?? 0) - (STOPS[i - 1]?.day ?? 0) : 0);
 /** Down a phone, the room above a stop: enough for the wait's label, then 3.3px for each day more. */
 const roomAbove = (i: number) => (i ? 24 + Math.round((waitBefore(i) - 1) * 3.3) : 0);
 
-const STATE_ICON = {
-  new: { Icon: CircleDashed, tint: "text-state-new" },
-  learning: { Icon: CircleHalf, tint: "text-state-learning" },
-  known: { Icon: CircleCheck, tint: "text-state-known" },
-};
+/**
+ * Whether the lane waits, unlit, to play as it scrolls in. Only a lane that hydrates wholly off
+ * screen waits; the prerendered page, a lane already in view and reduced motion all show it
+ * finished, so nothing depends on the sequence running.
+ */
+function useWaiting(root: { current: Element | null }, still: boolean) {
+  const [waiting, setWaiting] = useState(false);
+  useEffect(() => {
+    const lane = root.current;
+    if (!lane || still) return;
+    const first = new IntersectionObserver(([entry]) => {
+      if (entry && !entry.isIntersecting) setWaiting(true);
+      first.disconnect();
+    });
+    first.observe(lane);
+    return () => first.disconnect();
+  }, [root, still]);
+  return waiting && !still;
+}
 
 /** The streak's flame, lit at each review. */
 function FlameMark({ className, style }: { className: string; style?: CSSProperties }) {
@@ -75,10 +97,19 @@ export function ReturnLane({ term, lang }: Props) {
   const root = useRef<HTMLOListElement>(null);
   const still = useStill();
   const inView = useInView(root, { amount: 0.4 });
-  const beats = useMemo(() => BEATS, []);
-  const { at } = usePlayback(beats, inView, still);
+  const waiting = useWaiting(root, still);
+  const { at } = usePlayback(BEATS, inView, still);
+  const reached = (beat: Beat) => !waiting || at(beat);
   const label = (day: number) => (day === 0 ? t`Today` : t`Day ${day}`);
   const stateName = { new: t`New`, learning: t`Learning`, known: t`Known` };
+  // A part of a stop: it rises in place, each a beat after the one before.
+  const part = (on: boolean, order: number) => ({
+    style: { transitionDelay: on && waiting ? `${order * 60}ms` : "0ms" },
+    className: clsx(
+      "transition-[opacity,translate,scale] duration-300 ease-out motion-reduce:transition-none",
+      !on && "opacity-0",
+    ),
+  });
 
   return (
     <div className="mt-12 @4xl:mt-16">
@@ -90,12 +121,13 @@ export function ReturnLane({ term, lang }: Props) {
         aria-label={t`One card’s reviews over seven weeks`}
       >
         {STOPS.map((stop, i) => {
-          const on = at(KEYS[i] as (typeof KEYS)[number]);
+          const on = reached(`stop${i}`);
+          const drawn = reached(`line${i}`);
           const wait = waitBefore(i);
           const draw = DRAW[i] ?? 0;
-          // The stop lights as its line arrives, not as the line sets off.
-          const arrive = { transitionDelay: on && !still ? `${Math.round(draw * 0.8)}ms` : "0ms" };
-          const { Icon, tint } = STATE_ICON[stop.state];
+          const card = part(on, 0);
+          const flame = part(on, 1);
+          const words = part(on, 2);
           return (
             <li
               key={stop.day}
@@ -115,18 +147,32 @@ export function ReturnLane({ term, lang }: Props) {
                   {/* The line from the flame before to this one, stopping short of both. */}
                   <span
                     aria-hidden="true"
-                    className="absolute start-[11px] -top-[14px] bottom-[46px] w-0.5 overflow-hidden rounded-full bg-edge-strong @3xl:start-[calc(var(--stop)/-2+21px)] @3xl:end-[calc(var(--stop)/2+21px)] @3xl:top-[125px] @3xl:bottom-auto @3xl:h-0.5 @3xl:w-auto"
+                    className={clsx(
+                      "absolute start-[11px] -top-[14px] bottom-[46px] w-0.5 overflow-hidden rounded-full bg-edge-strong @3xl:start-[calc(var(--stop)/-2+21px)] @3xl:end-[calc(var(--stop)/2+21px)] @3xl:top-[125px] @3xl:bottom-auto @3xl:h-0.5 @3xl:w-auto transition-opacity duration-200 ease-out motion-reduce:transition-none",
+                      // The track shows with its line, so no grey stretch waits ahead of the sequence.
+                      !drawn && "opacity-0",
+                    )}
                   >
                     <span
-                      style={{ transitionDuration: still ? "0ms" : `${draw}ms` }}
+                      style={{ transitionDuration: waiting ? `${draw}ms` : "0ms" }}
                       className={clsx(
                         "absolute inset-0 origin-top bg-amber transition-[scale] ease-linear motion-reduce:transition-none @3xl:ltr:origin-left @3xl:rtl:origin-right",
-                        !on && "scale-y-0 @3xl:scale-x-0 @3xl:scale-y-100",
+                        !drawn && "scale-y-0 @3xl:scale-x-0 @3xl:scale-y-100",
                       )}
                     />
                   </span>
-                  {/* The wait, named: beside the line on a phone, on it across. */}
-                  <span className="absolute start-10 top-0 flex h-[var(--room)] items-center text-xs text-ink-muted @3xl:start-[calc(var(--stop)/-2)] @3xl:end-[calc(var(--stop)/2)] @3xl:top-[126px] @3xl:h-0 @3xl:justify-center">
+                  {/* The wait, named as the line reaches its middle: tied to the line by a tick on a
+                      phone, set on the line across. */}
+                  <span
+                    style={{
+                      transitionDelay: drawn && waiting ? `${Math.round(draw / 2)}ms` : "0ms",
+                    }}
+                    className={clsx(
+                      "absolute start-[17px] top-0 flex h-[var(--room)] items-center gap-1.5 text-xs text-ink-muted transition-opacity duration-200 ease-out motion-reduce:transition-none @3xl:start-[calc(var(--stop)/-2)] @3xl:end-[calc(var(--stop)/2)] @3xl:top-[126px] @3xl:h-0 @3xl:justify-center",
+                      !drawn && "opacity-0",
+                    )}
+                  >
+                    <span aria-hidden="true" className="h-px w-2.5 bg-edge-strong @3xl:hidden" />
                     <span className="whitespace-nowrap @3xl:bg-canvas @3xl:px-1.5">
                       {t`${plural(wait, { one: "# day", other: "# days" })}`}
                     </span>
@@ -137,35 +183,29 @@ export function ReturnLane({ term, lang }: Props) {
                 {/* The tile grows with its word: a fixed width cut off неділя and молоко. */}
                 <span
                   lang={lang}
-                  style={arrive}
+                  style={card.style}
                   className={clsx(
-                    "order-2 grid h-[60px] min-w-[68px] place-items-center rounded-md bg-plate px-2.5 text-xl leading-[1.6] font-medium whitespace-nowrap text-ink edge-strong transition-[opacity,translate] duration-500 motion-reduce:transition-none @3xl:order-1 @3xl:h-[104px] @3xl:min-w-[92px] @3xl:px-3 @3xl:text-[22px] @5xl:text-[26px]",
-                    !on && "opacity-35 @3xl:translate-y-1.5",
+                    "order-2 grid h-[60px] min-w-[68px] place-items-center rounded-md bg-plate px-2.5 text-xl leading-[1.6] font-medium whitespace-nowrap text-ink edge-strong @3xl:order-1 @3xl:h-[104px] @3xl:min-w-[92px] @3xl:px-3 @3xl:text-[22px] @5xl:text-[26px]",
+                    card.className,
+                    !on && "translate-y-1.5",
                   )}
                 >
                   {term(stop.state === "known")}
                 </span>
                 <span className="order-1 grid h-[60px] place-items-center @3xl:order-2 @3xl:h-auto">
                   <FlameMark
-                    style={arrive}
-                    className={clsx(
-                      "h-6 w-[18px] transition-[opacity,scale] duration-500 motion-reduce:transition-none",
-                      !on && "scale-80 opacity-20",
-                    )}
+                    style={flame.style}
+                    className={clsx("h-6 w-[18px]", flame.className, !on && "scale-80")}
                   />
                 </span>
-                <span className="order-3 grid @3xl:justify-items-center">
+                <span
+                  style={words.style}
+                  className={clsx("order-3 grid @3xl:justify-items-center", words.className)}
+                >
                   <span className="text-md font-medium whitespace-nowrap text-ink">
                     {label(stop.day)}
                   </span>
-                  <span className="flex items-center gap-1 text-sm text-ink-muted">
-                    <Icon
-                      aria-hidden="true"
-                      strokeWidth={2.25}
-                      className={clsx("size-3.5 shrink-0", tint)}
-                    />
-                    {stateName[stop.state]}
-                  </span>
+                  <span className="text-sm text-ink-muted">{stateName[stop.state]}</span>
                 </span>
               </div>
             </li>

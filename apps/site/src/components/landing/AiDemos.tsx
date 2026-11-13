@@ -158,7 +158,7 @@ export function LessonDemo({ play }: DemoProps) {
             className={clsx("absolute size-5 border-amber", corner)}
           />
         ))}
-        <div className="w-[212px] rounded-sm bg-plate px-4 pt-3 pb-4 shadow-[0_14px_30px_-12px_oklch(0.3_0.03_60/0.35)] edge">
+        <div className="w-[212px] rounded-sm bg-plate px-4 pt-3 pb-4 edge-drop">
           <p className="flex justify-between text-xs text-ink-muted">
             <span>
               <Trans>Biology · week 6</Trans>

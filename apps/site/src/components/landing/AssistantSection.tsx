@@ -149,7 +149,7 @@ function Heading() {
 
 function Avatar({ name }: { name: AssistantName }) {
   return (
-    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-plate text-ink shadow-[0_6px_14px_-8px_oklch(0.3_0.04_280/0.5)] edge [&_svg]:size-[18px]">
+    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-plate text-ink edge-drop [&_svg]:size-[18px]">
       <AssistantMark name={name} />
     </span>
   );
@@ -182,7 +182,7 @@ function Reply({ ask: item, mirrored }: { ask: Ask; mirrored?: boolean }) {
   return (
     <p
       className={clsx(
-        "mt-2 flex w-fit items-start gap-2 rounded-xl bg-plate px-3 py-2 text-sm text-pretty text-ink shadow-[0_12px_28px_-20px_oklch(0.3_0.04_60/0.55)] edge",
+        "mt-2 flex w-fit items-start gap-2 rounded-xl bg-plate px-3 py-2 text-sm text-pretty text-ink edge-drop",
         mirrored ? "ms-auto me-[46px]" : "ms-[46px]",
       )}
     >

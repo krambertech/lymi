@@ -109,6 +109,9 @@ msgstr "{cards, plural, one {картка} few {картки} many {карток
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Приєднався # учень} few {Приєдналися # учні} many {Приєдналося # учнів} other {Приєдналося # учня}}"
 
+msgid "{count, plural, one {# day} other {# days}}"
+msgstr "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
+
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{language}: {count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}, мова перекладу: {meaningLanguage}."
 
@@ -132,6 +135,10 @@ msgstr "{decks, plural, one {колода} few {колоди} many {колод} 
 
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
+
+#. placeholder {0}: days(wait)
+msgid "{from} to {to}: {0}"
+msgstr "{from} – {to}: {0}"
 
 msgid "{known}% known"
 msgstr "Засвоєно {known}%"
@@ -188,11 +195,11 @@ msgstr "{title} · {decks, plural, one {# безкоштовна колода} f
 msgid "{title} · Lymi"
 msgstr "{title} · Lymi"
 
+msgid "{total} reviews in {span} days"
+msgstr "{total} повторень за {span} днів"
+
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
-
-msgid "{wait, plural, one {# day} other {# days}}"
-msgstr "{wait, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
 
 msgid "*Bread* and butter."
 msgstr "*Хліб* з маслом."
@@ -3734,6 +3741,10 @@ msgstr "Наступна картка"
 msgid "Next card: <0>{0}</0>"
 msgstr "Наступна картка: <0>{0}</0>"
 
+#. placeholder {0}: days(next)
+msgid "Next review in {0}"
+msgstr "Наступне повторення через {0}"
+
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
 
@@ -5492,6 +5503,9 @@ msgstr "Вікінги"
 
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "Лексика перших двох рівнів HSK — з класичних списків слів і програми 2025 року, з перекладом біля кожного слова."
+
+msgid "The wait before each review"
+msgstr "Скільки минає перед кожним повторенням"
 
 msgid "The weather is *lovely* today."
 msgstr "Сьогодні *чудова* погода."

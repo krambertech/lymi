@@ -109,6 +109,9 @@ msgstr "{cards, plural, one {card} other {cards}}"
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 
+msgid "{count, plural, one {# day} other {# days}}"
+msgstr "{count, plural, one {# day} other {# days}}"
+
 msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 msgstr "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
 
@@ -132,6 +135,10 @@ msgstr "{decks, plural, one {deck} other {decks}}"
 
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# deck} other {# decks}}"
+
+#. placeholder {0}: days(wait)
+msgid "{from} to {to}: {0}"
+msgstr "{from} to {to}: {0}"
 
 msgid "{known}% known"
 msgstr "{known}% known"
@@ -188,11 +195,11 @@ msgstr "{title} · {decks, plural, one {# free deck} other {# free decks}}"
 msgid "{title} · Lymi"
 msgstr "{title} · Lymi"
 
+msgid "{total} reviews in {span} days"
+msgstr "{total} reviews in {span} days"
+
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
-
-msgid "{wait, plural, one {# day} other {# days}}"
-msgstr "{wait, plural, one {# day} other {# days}}"
 
 msgid "*Bread* and butter."
 msgstr "*Bread* and butter."
@@ -3734,6 +3741,10 @@ msgstr "Next card"
 msgid "Next card: <0>{0}</0>"
 msgstr "Next card: <0>{0}</0>"
 
+#. placeholder {0}: days(next)
+msgid "Next review in {0}"
+msgstr "Next review in {0}"
+
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"
 
@@ -5492,6 +5503,9 @@ msgstr "The Vikings"
 
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
+
+msgid "The wait before each review"
+msgstr "The wait before each review"
 
 msgid "The weather is *lovely* today."
 msgstr "The weather is *lovely* today."

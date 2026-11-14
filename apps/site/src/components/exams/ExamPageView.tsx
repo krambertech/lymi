@@ -363,7 +363,7 @@ function ExamPlanContent({ several }: { several: boolean }) {
   const steps = [
     {
       id: "add",
-      title: several ? <Trans>Add both decks</Trans> : <Trans>Add the deck</Trans>,
+      title: several ? <Trans>Add the decks</Trans> : <Trans>Add the deck</Trans>,
       body: several ? (
         <Trans>Lymi mixes their questions into one daily review.</Trans>
       ) : (

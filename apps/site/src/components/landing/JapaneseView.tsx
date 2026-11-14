@@ -124,9 +124,9 @@ export function JapaneseView({ decks, locale }: Props) {
       <EnrichSection
         body={
           <Trans>
-            Add a word from today’s lesson and AI fills in the reading, the meaning, an example and
-            a hint to help you remember it. It only fills what you left empty, and marks what it
-            wrote.
+            Add a word from today’s lesson and AI fills in the reading, the meaning and an example.
+            It only fills what you left empty, and marks what it wrote. Press Draft and it suggests
+            a hint to help you remember the word.
           </Trans>
         }
       >

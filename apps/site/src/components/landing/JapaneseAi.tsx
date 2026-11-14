@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { Sparkle } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
 import { appear, EASE, usePlayback, useStill } from "./playback";
@@ -45,13 +46,53 @@ export function Field({
   );
 }
 
+/**
+ * The hint field as the card form shows it: enrichment leaves it empty, and Draft asks the AI
+ * for one. `pressed` shows the press, `drafted` swaps the button for the hint and its AI mark.
+ */
+export function HintField({
+  pressed,
+  drafted,
+  children,
+}: {
+  pressed: boolean;
+  drafted: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <Field label={<Trans>Hint</Trans>} wrote={drafted}>
+      <span className="grid min-h-[1.5em] items-center">
+        <span
+          aria-hidden={drafted}
+          className={clsx(
+            "col-start-1 row-start-1 inline-flex h-7 items-center gap-1.5 justify-self-start rounded-md px-2.5 text-xs font-medium text-ink edge transition-[opacity,transform,background-color] duration-200",
+            pressed ? "scale-95 bg-plate-hover" : "bg-plate",
+            drafted && "invisible opacity-0",
+          )}
+        >
+          <Sparkle className="size-3.5 text-ai" aria-hidden="true" />
+          <Trans>Draft</Trans>
+        </span>
+        <motion.span
+          initial={false}
+          animate={appear(drafted)}
+          className="col-start-1 row-start-1 text-md text-ink"
+        >
+          {children}
+        </motion.span>
+      </span>
+    </Field>
+  );
+}
+
 const ENRICH_BEATS = {
   typed: 1000,
   reading: 1700,
   meaning: 2400,
   example: 3100,
-  hint: 3800,
-  known: 5200,
+  draft: 4000,
+  hint: 4500,
+  known: 5500,
 };
 
 /** A word typed after a lesson; the AI fills each empty field, then the words already known lose their readings. */
@@ -127,18 +168,12 @@ export function EnrichJapanese() {
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
-        <motion.span
-          initial={false}
-          animate={appear(at("hint"))}
-          className="min-h-[1.5em] text-md text-ink"
-        >
-          <Trans>
-            <span lang="ja">乗る</span> to get on, plus <span lang="ja">換える</span> to swap: you
-            get on a different train.
-          </Trans>
-        </motion.span>
-      </Field>
+      <HintField pressed={at("draft")} drafted={at("hint")}>
+        <Trans>
+          <span lang="ja">乗る</span> to get on, plus <span lang="ja">換える</span> to swap: you get
+          on a different train.
+        </Trans>
+      </HintField>
     </div>
   );
 }

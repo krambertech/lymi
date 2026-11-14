@@ -132,6 +132,14 @@ describe("authorizeMcpClaims", () => {
     expect(result).toMatchObject({ ctx: { userId: "user-1", actor: "mcp" }, scope: "write" });
   });
 
+  it("labels the token's client for analytics, as other when it is not a known assistant", async () => {
+    await consent(["read", "write", "offline_access"]);
+
+    const result = await authorizeMcpClaims(claims, { db, env });
+
+    expect(result).toMatchObject({ assistant: "other" });
+  });
+
   it("narrows to read when the consent no longer grants write", async () => {
     await consent(["read", "offline_access"]);
 

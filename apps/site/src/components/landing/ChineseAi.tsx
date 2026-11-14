@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { FileText, Tag } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
-import { Field } from "./JapaneseAi";
+import { Field, HintField } from "./JapaneseAi";
 import { Pinyin } from "./Pinyin";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
@@ -15,7 +15,7 @@ const Zh = ({ children, className }: { children: ReactNode; className?: string }
   </span>
 );
 
-const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, hint: 3200 };
+const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, draft: 3300, hint: 3800 };
 
 /** A word typed after a lesson; AI fills each empty field and marks it, and known characters lose their pinyin. */
 export function EnrichChinese() {
@@ -67,17 +67,11 @@ export function EnrichChinese() {
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
-        <motion.span
-          initial={false}
-          animate={appear(at("hint"))}
-          className="min-h-[1.5em] text-md text-ink"
-        >
-          <Trans>
-            <Zh>换</Zh> to swap, <Zh>乘</Zh> to ride: you swap the line you ride.
-          </Trans>
-        </motion.span>
-      </Field>
+      <HintField pressed={at("draft")} drafted={at("hint")}>
+        <Trans>
+          <Zh>换</Zh> to swap, <Zh>乘</Zh> to ride: you swap the line you ride.
+        </Trans>
+      </HintField>
     </div>
   );
 }

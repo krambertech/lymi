@@ -95,18 +95,23 @@ interface ReturnProps {
   lang: string;
   /** The card's face at one review, told whether the card is Known by then. */
   term: (known: boolean) => ReactNode;
+  /** A page that isn't about words says it in its own terms. */
+  title?: ReactNode;
+  body?: ReactNode;
 }
 
 /** One card coming back later each time it is remembered. */
-export function ReturnSection({ lang, term }: ReturnProps) {
+export function ReturnSection({ lang, term, title, body }: ReturnProps) {
   return (
     <Wide
-      title={<Trans>It comes back just as it starts to fade.</Trans>}
+      title={title ?? <Trans>It comes back just as it starts to fade.</Trans>}
       body={
-        <Trans>
-          Each time you remember a word, Lymi waits a little longer before showing it again. A few
-          minutes a day is enough, and the words you learned months ago stay with you.
-        </Trans>
+        body ?? (
+          <Trans>
+            Each time you remember a word, Lymi waits a little longer before showing it again. A few
+            minutes a day is enough, and the words you learned months ago stay with you.
+          </Trans>
+        )
       }
     >
       <ReturnLane lang={lang} term={term} />

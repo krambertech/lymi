@@ -39,7 +39,7 @@ export function SignUpSection({ title, note }: Props) {
   }, []);
 
   return (
-    <section id="sign-up" className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20">
+    <section id="sign-up" className="scroll-mt-8 px-5 pt-4 pb-16 @2xl:px-10 @4xl:pt-6 @4xl:pb-20">
       <div
         ref={plate}
         data-lit={lit || undefined}

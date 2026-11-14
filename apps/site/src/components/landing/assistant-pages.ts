@@ -140,7 +140,7 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     hue: 235,
     guide: "/docs/mcp/gemini",
     title: msg`Gemini flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
+    blurb: msg`Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
     linkLabel: msg`Lymi with Gemini`,
     questions: [
       {
@@ -156,7 +156,7 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
       {
         id: "anki",
         question: msg`Can I move Gemini’s flashcards to Anki?`,
-        answer: msg`You don’t need to. Ask a connected Gemini to save them to Lymi, which schedules every review. If you already have Anki decks, Lymi imports them.`,
+        answer: msg`You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them.`,
       },
       {
         id: "privacy",

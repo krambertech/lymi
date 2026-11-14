@@ -547,6 +547,9 @@ msgstr "Язык"
 msgid "A language class"
 msgstr "Языковая группа"
 
+msgid "A lecture PDF in the folder goes to Gemini with “Make flashcards from this lecture.” It uses Lymi and adds four cards to a Chemistry deck: isomer, chiral, enantiomer and nucleophile."
+msgstr "PDF лекции из этой папки отправляется в Gemini с просьбой «Сделай карточки по этой лекции». Gemini использует Lymi и добавляет четыре карточки в колоду «Химия»: isomer, chiral, enantiomer и nucleophile."
+
 msgid "A lesson transcript"
 msgstr "Расшифровка урока"
 
@@ -663,9 +666,6 @@ msgstr "Перевод рядом с каждым вопросом"
 
 msgid "A way in, never the answer."
 msgstr "Зацепка, а не ответ."
-
-msgid "A YouTube lecture on organic chemistry goes to Gemini with “Make flashcards from this lecture.” It uses Lymi and adds four cards to a Chemistry deck: isomer, chiral, enantiomer and nucleophile."
-msgstr "Лекция по органической химии с YouTube отправляется в Gemini с просьбой «Сделай карточки по этой лекции». Gemini использует Lymi и добавляет четыре карточки в колоду «Химия»: isomer, chiral, enantiomer и nucleophile."
 
 msgid "a, as in “father”"
 msgstr "а, как в слове «мама»"
@@ -838,14 +838,8 @@ msgstr "Добавил 18 карточек в Security+, к каждой — о�
 msgid "Added 20 cards to NCLEX pharmacology"
 msgstr "Добавил 20 карточек в колоду «Фармакология NCLEX»"
 
-msgid "Added 20 cards to SAT words"
-msgstr "Добавил 20 карточек в колоду «Слова SAT»"
-
 msgid "Added 26 cards to Pharmacology"
 msgstr "Добавил 26 карточек в колоду «Фармакология»"
-
-msgid "Added 4 cards to Chemistry"
-msgstr "Добавил 4 карточки в колоду «Химия»"
 
 msgid "Added 4 cards to your Biology deck."
 msgstr "Добавил 4 карточки в твою колоду «Биология»."
@@ -904,6 +898,9 @@ msgstr "Добавил 8 карточек в колоду «Испанский»
 msgid "Added 9 cards to Biology and skipped 3 you had"
 msgstr "Добавил 9 карточек в колоду «Биология», 3 уже были, их пропустил"
 
+msgid "Added 9 cards to Chemistry"
+msgstr "Добавил 9 карточек в колоду «Химия»"
+
 msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 msgstr "Добавил 9 карточек в польский. <0>sklep</0> пропустил — эта карточка у тебя уже есть."
 
@@ -939,9 +936,6 @@ msgstr "преимущество"
 
 msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back just as it starts to fade. Free."
 msgstr "После урока на italki, Preply или с частным репетитором отправь чат, заметки или фото тетради своему AI-ассистенту. Он добавит новые слова в Lymi, а Lymi вернёт каждое как раз тогда, когда оно начнёт забываться. Бесплатно."
-
-msgid "After a quiz"
-msgstr "После теста"
 
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"
@@ -1184,8 +1178,8 @@ msgstr "Попроси Claude сделать флеш-карточки из дл
 msgid "Ask for cards"
 msgstr "Попроси карточки"
 
-msgid "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
-msgstr "Попроси Gemini сделать флеш-карточки из заметок, документа или видеолекции. Они попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
+msgid "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Попроси Gemini сделать флеш-карточки из заметок, PDF или веб-страницы. Они попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
 
 msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Попроси Grok сделать флеш-карточки из поста, статьи или слов, отработанных в разговоре. Они попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
@@ -1261,6 +1255,9 @@ msgstr "Перед экзаменом"
 
 msgid "Before the test"
 msgstr "Перед тестом"
+
+msgid "Before you start work"
+msgstr "Перед началом работы"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Началась в 1618 году с <0>Пражской дефенестрации</0>."
@@ -1750,8 +1747,8 @@ msgstr "Подключи Claude, ChatGPT, Gemini или Grok к Lymi один р
 msgid "Connect Gemini in three steps."
 msgstr "Подключи Gemini за три шага."
 
-msgid "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back just as it starts to fade. Free."
-msgstr "Подключи Gemini к Lymi и превращай заметки, документы и лекции во флеш-карточки. Lymi вернёт каждую карточку как раз тогда, когда она начнёт забываться. Бесплатно."
+msgid "Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Подключи Gemini к Lymi и превращай заметки, PDF и веб-страницы во флеш-карточки. Lymi вернёт каждую карточку как раз тогда, когда она начнёт забываться. Бесплатно."
 
 msgid "Connect Grok in three steps."
 msgstr "Подключи Grok за три шага."
@@ -2592,17 +2589,20 @@ msgstr "Холодильник"
 msgid "Friend"
 msgstr "Друг"
 
-msgid "From a lecture video"
-msgstr "Из видеолекции"
-
 msgid "From a long PDF"
 msgstr "Из длинного PDF"
+
+msgid "From a PDF in the folder"
+msgstr "Из PDF в папке"
 
 msgid "From a photo of your notes"
 msgstr "Из фото заметок"
 
 msgid "From a post or a thread"
 msgstr "Из поста или треда"
+
+msgid "From a web page"
+msgstr "С веб-страницы"
 
 msgid "From a whole course"
 msgstr "Из целого курса"
@@ -3297,6 +3297,9 @@ msgstr "В итоге"
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
 
+msgid "In this folder"
+msgstr "В этой папке"
+
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Повреждается у локтя; слабый хват и онемение мизинца"
 
@@ -3923,17 +3926,17 @@ msgstr "Сделай карточки по терминам из этой ста
 msgid "Make cards from my biology notes, one per term."
 msgstr "Сделай карточки из моего конспекта по биологии, по одной на каждый термин."
 
+msgid "Make cards from the key terms in lecture-4.pdf."
+msgstr "Сделай карточки из ключевых терминов в lecture-4.pdf."
+
 msgid "Make cards from the key terms in this chapter."
 msgstr "Сделай карточки по ключевым терминам этой главы."
-
-msgid "Make cards from the lecture I just watched."
-msgstr "Сделай карточки по только что просмотренной лекции."
 
 msgid "Make cards from the new terms in this PDF."
 msgstr "Сделай карточки из новых терминов в этом PDF."
 
-msgid "Make cards from the questions I got wrong."
-msgstr "Сделай карточки из вопросов, где у меня были ошибки."
+msgid "Make cards from the terms on this page."
+msgstr "Сделай карточки из терминов на этой странице."
 
 msgid "Make cards from this page. Skip the ones I already have."
 msgstr "Сделай карточки по этой странице. Те, что у меня уже есть, пропусти."
@@ -4454,9 +4457,6 @@ msgstr "Или добавь вручную:"
 
 msgid "Or build your own."
 msgstr "Или сделай что-то своё."
-
-msgid "Organic chemistry, lecture 3"
-msgstr "Органическая химия, лекция 3"
 
 msgid "Organisms, stains and what they cause."
 msgstr "Возбудители, окраски и что они вызывают."
@@ -5080,9 +5080,6 @@ msgstr "Сохрани «Feierabend» в мою колоду немецкого.
 
 msgid "Save the new Spanish words from our chat."
 msgstr "Сохрани новые испанские слова из нашего разговора."
-
-msgid "Save these flashcards to Lymi."
-msgstr "Сохрани эти карточки в Lymi."
 
 msgid "Say it"
 msgstr "Произношение"
@@ -6345,9 +6342,6 @@ msgstr "Подниматься"
 msgid "To have fun"
 msgstr "Развлекаться"
 
-msgid "To keep Gemini’s flashcards"
-msgstr "Чтобы сохранить карточки из Gemini"
-
 msgid "To like"
 msgstr "Нравиться"
 
@@ -6849,6 +6843,9 @@ msgstr "То, что нужно знать для занятия или экза
 msgid "What you send"
 msgstr "Что ты отправляешь"
 
+msgid "What’s due in Lymi today?"
+msgstr "Что сегодня нужно повторить в Lymi?"
+
 msgid "What’s due tonight?"
 msgstr "Что на сегодняшний вечер?"
 
@@ -7209,8 +7206,8 @@ msgstr "Ты можешь редактировать контент и наст�
 msgid "You can’t live without *water*."
 msgstr "Без *воды* не прожить."
 
-msgid "You don’t need to. Ask a connected Gemini to save them to Lymi, which schedules every review. If you already have Anki decks, Lymi imports them."
-msgstr "Не нужно. Попроси подключённый Gemini сохранить их в Lymi, а Lymi спланирует каждое повторение. Если у тебя уже есть колоды Anki, Lymi их импортирует."
+msgid "You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them."
+msgstr "Не нужно. Передай карточки в Gemini CLI с подключённым Lymi, и он добавит их в колоду, где Lymi спланирует каждое повторение. Если у тебя уже есть колоды Anki, Lymi их импортирует."
 
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "Ты знаешь <0>{term}</0>. Его пиньинь исчезает из примеров на всех твоих карточках."
@@ -7286,9 +7283,6 @@ msgstr "Твой сайт"
 
 msgid "Your words, not a course."
 msgstr "Твои слова, а не чужой курс."
-
-msgid "YouTube · 52 min"
-msgstr "YouTube · 52 мин"
 
 msgid "Русский · new"
 msgstr "Русский · новая"

@@ -3,17 +3,10 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import {
-  type CSSProperties,
-  type FocusEvent,
-  type PointerEvent,
-  type ReactNode,
-  useRef,
-  useState,
-} from "react";
+import { type CSSProperties, type ReactNode, useRef, useState } from "react";
 import { type DemoProps, LeadDemo, LessonDemo, VoiceDemo, WordDemo } from "./AiDemos";
 import { SectionTitle } from "./FeatureSection";
-import { EASE, useStill } from "./playback";
+import { EASE, useHold, useStill } from "./playback";
 
 interface StageItem {
   id: string;
@@ -83,35 +76,6 @@ function Shell({ children }: { children: ReactNode }) {
       </div>
     </section>
   );
-}
-
-/**
- * Whether the visitor is holding the stage: pointing at the tray or the list, or tabbing through
- * them. Only a pointer that moves counts, so a page scrolled under a resting cursor keeps playing.
- */
-function useHold() {
-  const [pointer, setPointer] = useState(false);
-  const [keys, setKeys] = useState(false);
-  const last = useRef<{ x: number; y: number } | null>(null);
-  return {
-    held: pointer || keys,
-    handlers: {
-      onPointerMove: (e: PointerEvent<HTMLElement>) => {
-        if (e.pointerType !== "mouse") return;
-        const moved = !last.current || last.current.x !== e.clientX || last.current.y !== e.clientY;
-        last.current = { x: e.clientX, y: e.clientY };
-        if (moved) setPointer(true);
-      },
-      onPointerLeave: () => {
-        last.current = null;
-        setPointer(false);
-      },
-      onFocus: (e: FocusEvent<HTMLElement>) => setKeys(e.target.matches(":focus-visible")),
-      onBlur: (e: FocusEvent<HTMLElement>) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setKeys(false);
-      },
-    },
-  };
 }
 
 /** One item at a time: it moves on by itself until the visitor picks one. */

@@ -1,5 +1,5 @@
 import { useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { type FocusEvent, type PointerEvent, useEffect, useRef, useState } from "react";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -52,4 +52,33 @@ export function useStill(): boolean {
   const [still, setStill] = useState(false);
   useEffect(() => setStill(Boolean(reduce)), [reduce]);
   return still;
+}
+
+/**
+ * Whether the visitor is holding the stage: pointing at the tray or the list, or tabbing through
+ * them. Only a pointer that moves counts, so a page scrolled under a resting cursor keeps playing.
+ */
+export function useHold() {
+  const [pointer, setPointer] = useState(false);
+  const [keys, setKeys] = useState(false);
+  const last = useRef<{ x: number; y: number } | null>(null);
+  return {
+    held: pointer || keys,
+    handlers: {
+      onPointerMove: (e: PointerEvent<HTMLElement>) => {
+        if (e.pointerType !== "mouse") return;
+        const moved = !last.current || last.current.x !== e.clientX || last.current.y !== e.clientY;
+        last.current = { x: e.clientX, y: e.clientY };
+        if (moved) setPointer(true);
+      },
+      onPointerLeave: () => {
+        last.current = null;
+        setPointer(false);
+      },
+      onFocus: (e: FocusEvent<HTMLElement>) => setKeys(e.target.matches(":focus-visible")),
+      onBlur: (e: FocusEvent<HTMLElement>) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setKeys(false);
+      },
+    },
+  };
 }

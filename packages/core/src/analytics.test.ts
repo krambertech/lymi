@@ -78,6 +78,13 @@ describe("analytics privacy contract", () => {
       eventProperties("site_link_followed", { place: "landing", target: "/docs/api" }, "browser"),
     ).toEqual({ place: "landing", target: "/docs/api" });
     expect(
+      eventProperties(
+        "site_link_followed",
+        { place: "assistant_pages", target: "/ai-assistants/claude" },
+        "browser",
+      ),
+    ).toEqual({ place: "assistant_pages", target: "/ai-assistants/claude" });
+    expect(
       eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
     ).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.

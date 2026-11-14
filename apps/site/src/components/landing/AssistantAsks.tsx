@@ -1,16 +1,9 @@
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import {
-  type CSSProperties,
-  type FocusEvent,
-  type PointerEvent,
-  type ReactNode,
-  useRef,
-  useState,
-} from "react";
+import { type CSSProperties, type ReactNode, useRef, useState } from "react";
 import { Lantern } from "../Lantern";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
-import { EASE, useStill } from "./playback";
+import { EASE, useHold, useStill } from "./playback";
 
 export interface Ask {
   id: string;
@@ -29,35 +22,6 @@ interface Props {
 
 /** How long each exchange stays: it plays in about 1.6 s, then there's time to read it. */
 const DWELL_MS = 4600;
-
-/**
- * Whether the visitor is holding the stage: a moving pointer over it, or keyboard focus in it. A page
- * scrolled under a resting cursor keeps playing.
- */
-function useHold() {
-  const [pointer, setPointer] = useState(false);
-  const [keys, setKeys] = useState(false);
-  const last = useRef<{ x: number; y: number } | null>(null);
-  return {
-    held: pointer || keys,
-    handlers: {
-      onPointerMove: (e: PointerEvent<HTMLElement>) => {
-        if (e.pointerType !== "mouse") return;
-        const moved = !last.current || last.current.x !== e.clientX || last.current.y !== e.clientY;
-        last.current = { x: e.clientX, y: e.clientY };
-        if (moved) setPointer(true);
-      },
-      onPointerLeave: () => {
-        last.current = null;
-        setPointer(false);
-      },
-      onFocus: (e: FocusEvent<HTMLElement>) => setKeys(e.target.matches(":focus-visible")),
-      onBlur: (e: FocusEvent<HTMLElement>) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setKeys(false);
-      },
-    },
-  };
-}
 
 /** One exchange on the tray: the request, the assistant using Lymi, and what Lymi did. */
 function Exchange({
@@ -153,7 +117,7 @@ export function AssistantAsks({ assistant, hue, asks }: Props) {
                       data-paused={paused || undefined}
                       onAnimationEnd={() => setIndex((n) => (n + 1) % asks.length)}
                       style={{ animationDuration: `${DWELL_MS}ms` }}
-                      className="assistant-dwell absolute inset-0 rounded-full bg-ink ltr:origin-left rtl:origin-right"
+                      className="landing-dwell absolute inset-0 rounded-full bg-ink ltr:origin-left rtl:origin-right"
                     />
                   ) : (
                     <span className="absolute inset-0 rounded-full bg-ink" />

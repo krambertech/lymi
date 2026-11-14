@@ -2,7 +2,7 @@ import "@fontsource/caveat/500.css";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { FileText, Link2, Play } from "lucide-react";
+import { FileText, Link2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { PRODUCT_ORIGIN, signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
@@ -127,7 +127,7 @@ function useContent(key: AssistantKey): Content {
   const biology = msg`Biology`;
   const pharmacology = msg`Pharmacology`;
   const chemistry = msg`Chemistry`;
-  const spanish = msg`Español`;
+  const spanish = msg`Spanish`;
 
   switch (key) {
     case "chatgpt":
@@ -392,16 +392,16 @@ function useContent(key: AssistantKey): Content {
         headline: <Trans>Gemini flashcards that stick.</Trans>,
         lead: (
           <Trans>
-            Ask Gemini for flashcards from your notes, a document or a lecture video. They land in
-            Lymi, and spaced repetition brings each one back just as it starts to fade.
+            Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and
+            spaced repetition brings each one back just as it starts to fade.
           </Trans>
         ),
         demo: {
           attachment: (
             <Attached
-              icon={<Play aria-hidden="true" />}
-              name={t`Organic chemistry, lecture 3`}
-              hint={<Trans>YouTube · 52 min</Trans>}
+              icon={<FileText aria-hidden="true" />}
+              name="lecture-3.pdf"
+              hint={<Trans>In this folder</Trans>}
             />
           ),
           ask: <Trans>Make flashcards from this lecture.</Trans>,
@@ -421,14 +421,14 @@ function useContent(key: AssistantKey): Content {
             },
           ],
           lang: "en",
-          label: t`A YouTube lecture on organic chemistry goes to Gemini with “Make flashcards from this lecture.” It uses Lymi and adds four cards to a Chemistry deck: isomer, chiral, enantiomer and nucleophile.`,
+          label: t`A lecture PDF in the folder goes to Gemini with “Make flashcards from this lecture.” It uses Lymi and adds four cards to a Chemistry deck: isomer, chiral, enantiomer and nucleophile.`,
         },
         asksTitle: <Trans>Things to ask Gemini.</Trans>,
         asks: [
           {
-            id: "lecture",
-            use: <Trans>From a lecture video</Trans>,
-            ask: <Trans>Make cards from the lecture I just watched.</Trans>,
+            id: "pdf",
+            use: <Trans>From a PDF in the folder</Trans>,
+            ask: <Trans>Make cards from the key terms in lecture-4.pdf.</Trans>,
             did: <Trans>Added 12 cards to Chemistry</Trans>,
           },
           {
@@ -438,16 +438,16 @@ function useContent(key: AssistantKey): Content {
             did: <Trans>Added 15 cards to Biology</Trans>,
           },
           {
-            id: "keep",
-            use: <Trans>To keep Gemini’s flashcards</Trans>,
-            ask: <Trans>Save these flashcards to Lymi.</Trans>,
-            did: <Trans>Added 20 cards to SAT words</Trans>,
+            id: "web",
+            use: <Trans>From a web page</Trans>,
+            ask: <Trans>Make cards from the terms on this page.</Trans>,
+            did: <Trans>Added 9 cards to Chemistry</Trans>,
           },
           {
-            id: "quiz",
-            use: <Trans>After a quiz</Trans>,
-            ask: <Trans>Make cards from the questions I got wrong.</Trans>,
-            did: <Trans>Added 4 cards to Chemistry</Trans>,
+            id: "due",
+            use: <Trans>Before you start work</Trans>,
+            ask: <Trans>What’s due in Lymi today?</Trans>,
+            did: <Trans>18 cards due, about six minutes</Trans>,
           },
           {
             id: "plan",

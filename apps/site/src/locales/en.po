@@ -2300,6 +2300,9 @@ msgstr "Free Spanish decks with a native voice on every card, with meanings in E
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 
+msgid "Free, no payment details needed"
+msgstr "Free, no payment details needed"
+
 msgid "French"
 msgstr "French"
 
@@ -3498,6 +3501,9 @@ msgstr "Make cards from the new terms in this PDF."
 
 msgid "Make cards from this."
 msgstr "Make cards from this."
+
+msgid "Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you. Free to use."
+msgstr "Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you. Free to use."
 
 msgid "Make cards with"
 msgstr "Make cards with"
@@ -5937,9 +5943,6 @@ msgstr "Turn your notes into cards."
 
 msgid "Turn your notes into flashcards."
 msgstr "Turn your notes into flashcards."
-
-msgid "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
-msgstr "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
 
 msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
 msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."

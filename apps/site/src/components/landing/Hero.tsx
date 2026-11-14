@@ -22,10 +22,22 @@ interface Props {
   secondary?: { href: string; label: ReactNode } | undefined;
   /** A small line under the actions. */
   after?: ReactNode;
+  /** A pill above the title, shown to everyone, beside the origin badge when one shows. */
+  badge?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual, secondary, after }: Props) {
+export function Hero({
+  title,
+  lede,
+  cards,
+  layout,
+  behind,
+  visual,
+  secondary,
+  after,
+  badge,
+}: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -38,7 +50,15 @@ export function Hero({ title, lede, cards, layout, behind, visual, secondary, af
       )}
     >
       <div className="min-w-0 max-w-[540px]">
-        <OriginBadge />
+        {badge ? (
+          // The origin badge brings its own bottom margin; in the row the row owns it.
+          <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
+            <OriginBadge />
+            {badge}
+          </div>
+        ) : (
+          <OriginBadge />
+        )}
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {title}
         </h1>

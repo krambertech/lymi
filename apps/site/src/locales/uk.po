@@ -2300,6 +2300,9 @@ msgstr "Безкоштовні іспанські колоди з голосом
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Безкоштовні колоди з української з голосом на кожній картці. Додай будь-яку одним дотиком. Скоро буде більше."
 
+msgid "Free, no payment details needed"
+msgstr "Безкоштовно, без платіжних даних"
+
 msgid "French"
 msgstr "Французька"
 
@@ -3498,6 +3501,9 @@ msgstr "Зроби картки з нових термінів у цьому PDF
 
 msgid "Make cards from this."
 msgstr "Зроби з цього картки."
+
+msgid "Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you. Free to use."
+msgstr "Створюй картки з нотаток, уроків і фото за допомогою AI. Запам’ятовуй вивчене завдяки повторенням, що підлаштовуються під тебе. Безкоштовно."
 
 msgid "Make cards with"
 msgstr "Створюй картки з"
@@ -5937,9 +5943,6 @@ msgstr "Зроби з нотаток картки."
 
 msgid "Turn your notes into flashcards."
 msgstr "Перетвори свої нотатки на картки."
-
-msgid "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
-msgstr "Перетворюй нотатки, уроки й фото на картки за допомогою AI. Lymi розподіляє повторення в міру того, як ти вчишся, тож ти витрачаєш більше часу на складне й менше — на те, що дається легко."
 
 msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
 msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертає кожен термін саме тоді, коли він починає забуватися, — від першого розділу до дня іспиту й після нього."

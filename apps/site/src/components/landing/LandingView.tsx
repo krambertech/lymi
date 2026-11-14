@@ -9,6 +9,7 @@ import { AssistantSection } from "./AssistantSection";
 import { USE_CASE_CARDS } from "./cards";
 import { FeatureBento } from "./FeatureBento";
 import { Wide } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { FreeDecks } from "./FreeDecks";
 import { Furigana } from "./Furigana";
 import { Hero } from "./Hero";
@@ -64,11 +65,12 @@ export function LandingView() {
       page="landing"
       hero={
         <Hero
+          badge={<FreeBadge />}
           title={<Trans>Flashcards for the AI era.</Trans>}
           lede={
             <Trans>
-              Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews
-              as you learn, so you spend more time on what’s hard and less on what comes easily.
+              Make cards from your notes, lessons and photos with AI. Remember what you learn with
+              reviews that adapt to you. Free to use.
             </Trans>
           }
           secondary={{

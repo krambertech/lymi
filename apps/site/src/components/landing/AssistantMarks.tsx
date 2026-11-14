@@ -221,7 +221,7 @@ export function WorksWith({ names }: { names: readonly AssistantName[] }) {
       </span>
       <ul aria-labelledby={label} className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {assistants.map((assistant) => (
-          <li key={assistant.name}>
+          <li key={assistant.name} className="flex">
             <a
               href={assistant.guide}
               className="inline-flex items-center gap-1.5 rounded-xs text-ink-secondary hoverable:hover:text-ink"

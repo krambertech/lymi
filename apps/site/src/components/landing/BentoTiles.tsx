@@ -569,20 +569,21 @@ export function OfflineTile({ play }: TileDemoProps) {
   const at = useBeats({ sync: 500 }, play);
   const synced = at("sync");
   return (
-    <span className="flex min-h-12 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate py-2 ps-2 pe-3 edge">
+    // In a narrow tile the words need the room, so the round icon steps aside; they say the same.
+    <span className="@container flex min-h-12 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate py-2 ps-3 pe-3 edge @[11rem]:ps-2">
       <span
         className={clsx(
-          "grid size-8 shrink-0 place-items-center rounded-full transition-colors duration-200",
+          "hidden size-8 shrink-0 place-items-center rounded-full transition-colors duration-200 @[11rem]:grid",
           synced ? "bg-success-soft text-success" : "bg-plate-nested text-ink-secondary",
         )}
       >
         {synced ? <Check className="size-4" /> : <WifiOff className="size-4" />}
       </span>
       <span className="grid min-w-0 leading-tight">
-        <span className="truncate text-sm font-medium text-ink">
+        <span className="text-sm font-medium text-ink">
           {synced ? <Trans>Back online</Trans> : <Trans>No signal</Trans>}
         </span>
-        <span className="truncate text-xs text-ink-secondary">
+        <span className="text-xs text-ink-secondary">
           {synced ? <Trans>3 reviews synced</Trans> : <Trans>3 reviews saved</Trans>}
         </span>
       </span>

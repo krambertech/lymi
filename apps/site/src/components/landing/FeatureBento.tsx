@@ -152,7 +152,7 @@ function CompactTile({ hue, title, body, Demo }: CompactProps) {
 
 function Frame({ children }: { children: ReactNode }) {
   return (
-    <section data-nav="landing" className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section data-nav="landing" className="px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div className="mx-auto max-w-[1040px]">
         <div className="max-w-[620px]">
           <SectionTitle>

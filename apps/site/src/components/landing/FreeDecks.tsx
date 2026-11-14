@@ -35,7 +35,7 @@ export function FreeDecks() {
   const hues = trayHues(decks ?? []);
 
   return (
-    <section data-nav="landing" className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section data-nav="landing" className="px-5 py-20 @2xl:px-10 @4xl:py-28">
       <div className="mx-auto flex max-w-[1040px] flex-wrap items-end justify-between gap-6">
         <div className="max-w-[620px]">
           <SectionTitle>

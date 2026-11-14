@@ -27,10 +27,7 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
   return (
     <section
       id={id}
-      className={clsx(
-        "scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20",
-        tinted && "bg-plate",
-      )}
+      className={clsx("scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20", tinted && "bg-plate")}
     >
       <div
         className={clsx(

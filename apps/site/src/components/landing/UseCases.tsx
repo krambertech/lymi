@@ -101,10 +101,7 @@ function CardStack({ card, shape }: { card: SampleCard; shape: Shape }) {
 /** What people keep in Lymi as a bento of trays, each with a real card and, where one exists, a page of its own. */
 export function UseCases({ title, items }: Props) {
   return (
-    <section
-      aria-labelledby="use-cases-title"
-      className="px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
+    <section aria-labelledby="use-cases-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="use-cases-title"

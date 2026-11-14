@@ -261,10 +261,7 @@ export function AssistantSection() {
   const rows = Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
   return (
-    <section
-      data-nav="landing"
-      className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
+    <section data-nav="landing" className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto grid max-w-[480px] items-center gap-10 @4xl:max-w-[1040px] @4xl:grid-cols-[minmax(0,440px)_minmax(0,1fr)] @4xl:gap-16">
         <Heading />
         <div

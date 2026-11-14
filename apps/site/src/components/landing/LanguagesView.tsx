@@ -57,10 +57,7 @@ interface PageProps {
 /** The notes photographed into cards, with the assistants that can do the reading. */
 function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
-    <section
-      aria-labelledby="notes-title"
-      className="px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
+    <section aria-labelledby="notes-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <div className="mx-auto max-w-[640px] text-center">
           <div id="notes-title">

@@ -1405,6 +1405,30 @@ describe("Lymi MCP server", () => {
     expect(schema).not.toContain("definitions");
   });
 
+  it("names the assistant on every tool call it records", async () => {
+    const captured: unknown[] = [];
+    const server = buildMcpServer({
+      ctx: {
+        db: {} as Db,
+        userId: "user-1",
+        actor: "mcp",
+        analytics: { writeDataPoint: () => {}, capture: (event) => captured.push(event) },
+      },
+      scope: "read",
+      resourceMetadataUrl: "https://my.lymi.app/.well-known/oauth-protected-resource/mcp",
+      assistant: "chatgpt",
+    });
+    const [clientSide, serverSide] = InMemoryTransport.createLinkedPair();
+    const client = new Client({ name: "test", version: "0.0.0" });
+    await Promise.all([server.connect(serverSide), client.connect(clientSide)]);
+
+    await client.callTool({ name: "list_decks", arguments: {} });
+
+    expect(captured).toContainEqual(
+      expect.objectContaining({ name: "mcp_tool", tool: "list_decks", assistant: "chatgpt" }),
+    );
+  });
+
   it("rejects a batch the schema does not allow before any service runs", async () => {
     const client = await connect("write");
 

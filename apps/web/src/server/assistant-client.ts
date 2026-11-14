@@ -23,7 +23,12 @@ export function assistantClientOf(
   clientId: string | null | undefined,
   publicSiteUrl: string | undefined,
 ): AssistantClient {
-  const site = publicSiteUrl ?? DEFAULT_PUBLIC_SITE_ORIGIN;
-  const app = identifyApp(clientId ?? undefined, null, (path) => new URL(path, site).toString());
-  return (app.recognised && app.name && BY_NAME[app.name]) || "other";
+  const site = publicSiteUrl || DEFAULT_PUBLIC_SITE_ORIGIN;
+  try {
+    const app = identifyApp(clientId ?? undefined, null, (path) => new URL(path, site).toString());
+    return (app.recognised && app.name && BY_NAME[app.name]) || "other";
+  } catch {
+    // A malformed site URL must not fail the MCP request this label rides on.
+    return "other";
+  }
 }

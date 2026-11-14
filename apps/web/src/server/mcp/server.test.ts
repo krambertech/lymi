@@ -1425,7 +1425,7 @@ describe("Lymi MCP server", () => {
     await client.callTool({ name: "list_decks", arguments: {} });
 
     expect(captured).toContainEqual(
-      expect.objectContaining({ name: "mcp_tool", tool: "list_decks", client: "chatgpt" }),
+      expect.objectContaining({ name: "mcp_tool", tool: "list_decks", assistant: "chatgpt" }),
     );
   });
 

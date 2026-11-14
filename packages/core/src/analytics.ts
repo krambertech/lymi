@@ -468,10 +468,10 @@ export const analyticsEvents = {
     tool: z.string().regex(/^[a-z_]{1,80}$/),
     outcome: z.enum(["success", "error"]),
     duration_ms: z.number().nonnegative().max(3_600_000),
-    client: assistant.optional(),
+    assistant: assistant.optional(),
   }),
-  app_connected: z.object({ client: assistant, write: z.boolean() }),
-  app_connect_failed: z.object({ client: assistant, reason: z.enum(["declined", "error"]) }),
+  app_connected: z.object({ assistant, write: z.boolean() }),
+  app_connect_failed: z.object({ assistant, reason: z.enum(["declined", "error"]) }),
   enrichment_finished: z.object({
     outcome: z.enum(["enriched", "empty", "failed"]),
     count,

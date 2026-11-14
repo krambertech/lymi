@@ -443,16 +443,21 @@ export function createAuth(
     hooks: {
       after: createAuthMiddleware(async (ctx) => {
         if (ctx.path !== "/oauth2/consent") return;
-        const event = consentEvent(ctx.body, ctx.context.returned, env.PUBLIC_SITE_URL);
-        const userId = event && (await getSessionFromCtx(ctx))?.user.id;
-        if (!event || !userId) return;
-        await trackProductEvent(
-          env,
-          userId,
-          event,
-          waitUntil,
-          analyticsContextFor(db, userId, headersOf(ctx)),
-        );
+        // The consent is already saved; analytics must never turn the answer into a 500.
+        try {
+          const event = consentEvent(ctx.body, ctx.context.returned, env.PUBLIC_SITE_URL);
+          const userId = event && (await getSessionFromCtx(ctx))?.user.id;
+          if (!event || !userId) return;
+          await trackProductEvent(
+            env,
+            userId,
+            event,
+            waitUntil,
+            analyticsContextFor(db, userId, headersOf(ctx)),
+          );
+        } catch {
+          console.error("Consent analytics failed");
+        }
       }),
     },
     advanced: {

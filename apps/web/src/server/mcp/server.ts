@@ -1125,7 +1125,7 @@ async function runTool(
       tool,
       outcome,
       duration_ms: Math.min(3_600_000, Math.max(0, performance.now() - started)),
-      ...(principal.assistant && { client: principal.assistant }),
+      ...(principal.assistant && { assistant: principal.assistant }),
     });
   }
 }

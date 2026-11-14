@@ -115,7 +115,7 @@ describe("the consent screen's answer", () => {
     expect(tracked).toHaveBeenCalledTimes(1);
     expect(tracked.mock.calls[0]?.[2]).toEqual({
       name: "app_connected",
-      client: "other",
+      assistant: "other",
       write: true,
     });
   });
@@ -126,7 +126,7 @@ describe("the consent screen's answer", () => {
     expect(tracked).toHaveBeenCalledTimes(1);
     expect(tracked.mock.calls[0]?.[2]).toEqual({
       name: "app_connect_failed",
-      client: "other",
+      assistant: "other",
       reason: "declined",
     });
   });

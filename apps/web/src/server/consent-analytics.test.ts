@@ -18,7 +18,7 @@ describe("consentEvent", () => {
   it("records a grant with the assistant and whether it may write", () => {
     expect(consentEvent({ accept: true, oauth_query: oauthQuery }, granted, SITE)).toEqual({
       name: "app_connected",
-      client: "chatgpt",
+      assistant: "chatgpt",
       write: true,
     });
   });
@@ -35,7 +35,7 @@ describe("consentEvent", () => {
     const refused = { redirect: true, url: "https://chatgpt.com/cb?error=access_denied" };
     expect(consentEvent({ accept: false, oauth_query: oauthQuery }, refused, SITE)).toEqual({
       name: "app_connect_failed",
-      client: "chatgpt",
+      assistant: "chatgpt",
       reason: "declined",
     });
   });
@@ -44,7 +44,7 @@ describe("consentEvent", () => {
     const error = new APIError("BAD_REQUEST", { error: "invalid_request" });
     expect(consentEvent({ accept: true, oauth_query: oauthQuery }, error, SITE)).toEqual({
       name: "app_connect_failed",
-      client: "chatgpt",
+      assistant: "chatgpt",
       reason: "error",
     });
   });
@@ -57,7 +57,7 @@ describe("consentEvent", () => {
   it("labels a client it does not recognise as other", () => {
     const query = new URLSearchParams({ client_id: "https://agent.example/c.json" }).toString();
     expect(consentEvent({ accept: false, oauth_query: query }, {}, SITE)).toMatchObject({
-      client: "other",
+      assistant: "other",
     });
   });
 });

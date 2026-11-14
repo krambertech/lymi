@@ -2,8 +2,8 @@ import { isAPIError } from "better-auth/api";
 import { type AssistantClient, assistantClientOf } from "./assistant-client";
 
 export type ConsentEvent =
-  | { name: "app_connected"; client: AssistantClient; write: boolean }
-  | { name: "app_connect_failed"; client: AssistantClient; reason: "declined" | "error" };
+  | { name: "app_connected"; assistant: AssistantClient; write: boolean }
+  | { name: "app_connect_failed"; assistant: AssistantClient; reason: "declined" | "error" };
 
 /**
  * What a learner's answer on the consent screen did, read after Better Auth's `/oauth2/consent`
@@ -19,12 +19,12 @@ export function consentEvent(
   const query = new URLSearchParams(
     typeof fields.oauth_query === "string" ? fields.oauth_query : "",
   );
-  const client = assistantClientOf(query.get("client_id"), publicSiteUrl);
-  if (isAPIError(returned)) return { name: "app_connect_failed", client, reason: "error" };
-  if (fields.accept !== true) return { name: "app_connect_failed", client, reason: "declined" };
+  const assistant = assistantClientOf(query.get("client_id"), publicSiteUrl);
+  if (isAPIError(returned)) return { name: "app_connect_failed", assistant, reason: "error" };
+  if (fields.accept !== true) return { name: "app_connect_failed", assistant, reason: "declined" };
   if (!issuedCode(returned)) return null;
   const scope = typeof fields.scope === "string" ? fields.scope : (query.get("scope") ?? "");
-  return { name: "app_connected", client, write: scope.split(" ").includes("write") };
+  return { name: "app_connected", assistant, write: scope.split(" ").includes("write") };
 }
 
 /** A grant ends in a redirect back to the client that carries an authorization code. */

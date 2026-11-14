@@ -219,7 +219,11 @@
     animation: halo 2.6s ease-in-out infinite;
   }
   /* The wick catching, for unlit to lit. */
+  /* It grows up from the wick: without its own box the group scaled from the drawing's corner, and
+     the flame slid into the lantern from the side. */
   .lantern-catch .lantern-light {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
     animation: catch 620ms var(--ease-out) both;
   }
   /* Carried: the body swings from the bail's pivot and the bail counters it. */
@@ -1756,4 +1760,190 @@ html:has(.deck-cards[open]) {
 .kanji-zh {
   font-family: "Kanji Chinese Forms", "PingFang SC", "Noto Sans SC", sans-serif;
   font-weight: 500;
+}
+
+/* The bar under a playing item on the homepage's stage; it runs out, and the next item comes up. */
+.landing-dwell {
+  animation-name: landing-dwell;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes landing-dwell {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+/* A stage holds still only while the visitor is pointing at it or tabbing through it. */
+.landing-dwell[data-paused] {
+  animation-play-state: paused;
+}
+/* The moment AI writes a field. Its badge arrives first, so you know who is writing; then one wide,
+   soft light drifts across the field just ahead of the words as they write themselves in. It fades in
+   and out on its way, so it never starts or stops on an edge. Only the light moves: the field keeps
+   its own colour, whatever tray it sits on. Transform and opacity only. */
+.ai-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ai-sweep[data-on="true"]::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 90%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--ai) 5%, transparent) 25%,
+    color-mix(in oklch, var(--ai) 13%, transparent) 50%,
+    color-mix(in oklch, var(--ai) 5%, transparent) 75%,
+    transparent
+  );
+  opacity: 0;
+  translate: -100% 0;
+  animation: ai-shimmer 1500ms cubic-bezier(0.45, 0, 0.3, 1) 60ms forwards;
+  will-change: translate, opacity;
+}
+@keyframes ai-shimmer {
+  0% {
+    opacity: 0;
+    translate: -100% 0;
+  }
+  25%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 125% 0;
+  }
+}
+[dir="rtl"] .ai-sweep[data-on="true"]::after {
+  translate: 100% 0;
+  animation-name: ai-shimmer-rtl;
+}
+@keyframes ai-shimmer-rtl {
+  0% {
+    opacity: 0;
+    translate: 100% 0;
+  }
+  25%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: -125% 0;
+  }
+}
+/* The words write in left to right under a soft edge, not all at once. */
+.ai-words {
+  mask-image: linear-gradient(90deg, #000 42%, transparent 58%);
+  mask-size: 260% 100%;
+  mask-repeat: no-repeat;
+  mask-position: 0 0;
+}
+.ai-words[data-on="false"] {
+  opacity: 0;
+  mask-position: 100% 0;
+}
+.ai-words[data-on="true"] {
+  animation: ai-write 1000ms cubic-bezier(0.25, 0.8, 0.35, 1) 220ms both;
+}
+@keyframes ai-write {
+  from {
+    mask-position: 100% 0;
+  }
+  to {
+    mask-position: 0 0;
+  }
+}
+[dir="rtl"] .ai-words {
+  mask-image: linear-gradient(270deg, #000 42%, transparent 58%);
+}
+[dir="rtl"] .ai-words[data-on="false"] {
+  mask-position: 0 0;
+}
+[dir="rtl"] .ai-words[data-on="true"] {
+  animation-name: ai-write-rtl;
+}
+@keyframes ai-write-rtl {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 100% 0;
+  }
+}
+.ai-badge-in {
+  animation: ai-badge-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ai-badge-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+/* The badge's sparkle turns a little as it lands. */
+.ai-badge-in svg {
+  animation: ai-spark 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ai-spark {
+  from {
+    transform: rotate(-90deg) scale(0.6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-sweep[data-on="true"]::after {
+    display: none;
+  }
+  .ai-words[data-on="true"],
+  .ai-badge-in,
+  .ai-badge-in svg {
+    animation: none;
+  }
+  .ai-words {
+    mask-image: none;
+  }
+}
+/* The review lane's phone card fades to each new review instead of snapping. */
+.lane-swap {
+  animation: lane-swap 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes lane-swap {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lane-swap {
+    animation: none;
+  }
+}
+/* The ring the API diagram's lantern sends out, as if each request lit it. */
+.landing-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: landing-ring 2.6s var(--ease-out) infinite;
+}
+@keyframes landing-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-ring {
+    animation: none;
+  }
 }

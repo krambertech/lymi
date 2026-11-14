@@ -120,6 +120,8 @@ export function Lockup({
       style={style}
       role="img"
       aria-label={title}
+      // The page marks a flickering lantern `data-offscreen` before React hydrates it.
+      suppressHydrationWarning
     >
       <g
         className={clsx("lantern-body text-lantern-metal", glow && "glow")}

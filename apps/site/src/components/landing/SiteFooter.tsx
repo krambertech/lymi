@@ -61,7 +61,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
   const { i18n } = useLingui();
 
   return (
-    <footer data-nav="footer" className="border-t border-edge px-5 pt-12 pb-10 @2xl:px-10">
+    <footer data-nav="footer" className="px-5 pt-12 pb-10 @2xl:px-10 @4xl:pt-16">
       <div className="mx-auto grid max-w-[1040px] gap-10 @4xl:grid-cols-[13rem_1fr] @4xl:gap-12">
         <div>
           <Lockup size={22} />
@@ -155,7 +155,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
           </Group>
         </div>
       </div>
-      <div className="mx-auto mt-12 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-edge pt-5 text-xs text-ink-muted">
+      <div className="mx-auto mt-14 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 text-xs text-ink-muted">
         <p className="flex flex-wrap gap-x-4 gap-y-1">
           {/* Pages prerender where the clock reads 1970, so the year comes from the build. */}
           <span>© {import.meta.env.BUILD_DAY?.slice(0, 4)} Lymi</span>

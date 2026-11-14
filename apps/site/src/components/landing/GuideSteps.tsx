@@ -27,7 +27,7 @@ export function GuideSteps({ id, title, lede, steps, note, withoutAssistant }: P
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto grid max-w-[1040px] gap-x-20 gap-y-12 @4xl:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] @4xl:grid-rows-[auto_1fr]">
         <div>

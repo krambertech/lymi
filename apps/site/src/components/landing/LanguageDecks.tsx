@@ -23,7 +23,7 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
   const hues = trayHues(decks);
 
   return (
-    <section aria-labelledby="decks-title" className="border-b border-edge py-20 @4xl:py-28">
+    <section aria-labelledby="decks-title" className="py-16 @4xl:py-20">
       <div className="mx-auto flex max-w-[1040px] flex-wrap items-end justify-between gap-6 px-5 @2xl:px-10">
         <div className="max-w-[560px]">
           <div id="decks-title">

@@ -102,7 +102,7 @@ export function ConnectSteps() {
     <section
       id="connect"
       aria-labelledby="connect-title"
-      className="scroll-mt-8 border-b border-edge bg-plate-nested px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="scroll-mt-8 bg-plate-nested px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto max-w-[1040px]">
         <div id="connect-title">

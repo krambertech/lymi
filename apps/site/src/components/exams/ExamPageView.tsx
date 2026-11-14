@@ -248,10 +248,7 @@ export function ExamFacts({ locale, exam }: ExamProps) {
 function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode }) {
   const { i18n } = useLingui();
   return (
-    <section
-      aria-labelledby="format-title"
-      className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
+    <section aria-labelledby="format-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="format-title"
@@ -395,10 +392,7 @@ function ExamPlanContent({ several }: { several: boolean }) {
     },
   ];
   return (
-    <section
-      aria-labelledby="plan-title"
-      className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
+    <section aria-labelledby="plan-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <h2
           id="plan-title"

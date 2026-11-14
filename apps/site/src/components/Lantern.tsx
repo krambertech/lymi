@@ -56,7 +56,8 @@ export function Lantern({
   const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
 
   return (
-    <svg viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
+    // The page marks a flickering lantern `data-offscreen` before React hydrates it.
+    <svg viewBox="0 0 120 120" className={cls} style={style} suppressHydrationWarning {...a11y}>
       {title && <title>{title}</title>}
       <g className="lantern-body">{LANTERN_PARTS(lit)}</g>
     </svg>

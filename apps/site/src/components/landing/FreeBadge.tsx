@@ -1,21 +1,79 @@
 import { Trans } from "@lingui/react/macro";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
+import { GIFT_SEEN } from "../../lib/free-gift";
 
-const SEEN = "lymi-free-gift";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-// Little sparks that fly off the box as the lid lifts: where each one ends up, in icon units.
+/** "drop" lowers the lid onto the box on the first visit; "open" lifts it on hover. */
+type Play = { kind: "still" | "drop" | "open"; round: number };
+
+// Where the lid lands, in seconds after the drop starts.
+const LANDS = 0.38 + 0.5 * 0.7;
+
+// Sparks thrown up as the lid lifts, and puffs pushed out sideways as it lands, in icon units.
 const SPARKS = [
   { x: -6, y: -5, delay: 0.16 },
   { x: 0, y: -8, delay: 0.1 },
   { x: 6, y: -5, delay: 0.2 },
 ] as const;
+const PUFFS = [
+  { cx: 4, x: -3 },
+  { cx: 20, x: 3 },
+] as const;
 
-/** A present whose lid hops and whose bow flutters, once per visit and again on hover. */
-function Gift({ round }: { round: number }) {
-  const play = round > 0;
-  const timing = (delay = 0) => ({ duration: 0.9, delay, ease: EASE });
+function Bow({ play }: { play: Play }) {
+  const flutter =
+    play.kind === "open"
+      ? { delay: 0.08, keys: [0, 22, -8, 0] }
+      : play.kind === "drop"
+        ? { delay: LANDS - 0.05, keys: [0, 16, -5, 0] }
+        : null;
+  const loop = (side: -1 | 1) => ({
+    style: { transformBox: "fill-box" as const, originX: side < 0 ? 1 : 0, originY: 1 },
+    animate: flutter
+      ? { rotate: flutter.keys.map((k) => k * side), scale: [1, 1.15, 1, 1] }
+      : undefined,
+    transition: { duration: 0.8, delay: flutter?.delay ?? 0, ease: EASE },
+  });
+  return (
+    <>
+      <path d="M11.3 8.3 9.9 10.4" />
+      <path d="M12.7 8.3 14.1 10.4" />
+      <motion.path
+        key={`left-${play.kind}-${play.round}`}
+        d="M12 7.3C10.4 4.6 7.9 3.1 6.8 4.2C5.7 5.3 7.3 7.4 12 7.3Z"
+        fill="currentColor"
+        fillOpacity={0.35}
+        {...loop(-1)}
+      />
+      <motion.path
+        key={`right-${play.kind}-${play.round}`}
+        d="M12 7.3C13.6 4.6 16.1 3.1 17.2 4.2C18.3 5.3 16.7 7.4 12 7.3Z"
+        fill="currentColor"
+        fillOpacity={0.35}
+        {...loop(1)}
+      />
+      <rect x="10.8" y="6.2" width="2.4" height="2.3" rx="0.9" fill="currentColor" />
+    </>
+  );
+}
+
+/** A present that takes its lid on the first visit, and lifts it when you point at it. */
+function Gift({ play }: { play: Play }) {
+  const lid =
+    play.kind === "drop"
+      ? {
+          initial: { y: -9, opacity: 0, rotate: -10 },
+          animate: { y: [-9, 0.7, 0], opacity: [0, 1, 1], rotate: [-10, 2, 0] },
+          transition: { duration: 0.5, delay: 0.38, times: [0, 0.7, 1], ease: EASE },
+        }
+      : play.kind === "open"
+        ? {
+            animate: { y: [0, -4.5, 0.6, 0], rotate: [0, -9, 2, 0] },
+            transition: { duration: 0.9, times: [0, 0.35, 0.75, 1], ease: EASE },
+          }
+        : {};
   return (
     <svg
       viewBox="0 0 24 24"
@@ -23,47 +81,64 @@ function Gift({ round }: { round: number }) {
       className="size-[18px] shrink-0 overflow-visible text-amber-mark"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.8}
+      strokeWidth={1.7}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <rect x="4.5" y="11" width="15" height="10" rx="1.5" fill="currentColor" fillOpacity={0.14} />
-      <path d="M12 11v10" />
+      {/* The box gives a little as the lid lands on it. */}
       <motion.g
-        key={`lid-${round}`}
+        key={`box-${play.kind}-${play.round}`}
         style={{ transformBox: "fill-box", originX: 0.5, originY: 1 }}
-        animate={play ? { y: [0, -4.5, 0.6, 0], rotate: [0, -9, 2, 0] } : undefined}
-        transition={{ ...timing(), times: [0, 0.35, 0.75, 1] }}
+        animate={play.kind === "drop" ? { scaleY: [1, 0.9, 1], scaleX: [1, 1.04, 1] } : undefined}
+        transition={{ duration: 0.28, delay: LANDS - 0.04, ease: EASE }}
+      >
+        <rect
+          x="4.5"
+          y="11"
+          width="15"
+          height="9.5"
+          rx="1.5"
+          fill="currentColor"
+          fillOpacity={0.14}
+        />
+        <path d="M12 11v9.5" />
+      </motion.g>
+      <motion.g
+        key={`lid-${play.kind}-${play.round}`}
+        className="in-data-[gift=new]:opacity-0"
+        style={{ transformBox: "fill-box", originX: 0.5, originY: 1 }}
+        {...lid}
       >
         <rect x="3" y="7.5" width="18" height="3.5" rx="1" fill="currentColor" fillOpacity={0.24} />
         <path d="M12 7.5V11" />
-        <motion.path
-          d="M12 7.5C10.4 4.4 7.2 4.4 7.6 6.2C7.9 7.4 10.4 7.5 12 7.5Z"
-          fill="currentColor"
-          style={{ transformBox: "fill-box", originX: 1, originY: 1 }}
-          animate={play ? { rotate: [0, -22, 8, 0], scale: [1, 1.18, 1] } : undefined}
-          transition={timing(0.08)}
-        />
-        <motion.path
-          d="M12 7.5C13.6 4.4 16.8 4.4 16.4 6.2C16.1 7.4 13.6 7.5 12 7.5Z"
-          fill="currentColor"
-          style={{ transformBox: "fill-box", originX: 0, originY: 1 }}
-          animate={play ? { rotate: [0, 22, -8, 0], scale: [1, 1.18, 1] } : undefined}
-          transition={timing(0.08)}
-        />
+        <Bow play={play} />
       </motion.g>
-      {play &&
+      {play.kind === "open" &&
         SPARKS.map((spark) => (
           <motion.circle
-            key={`${round}-${spark.x}`}
+            key={`${play.round}-${spark.x}`}
             cx="12"
-            cy="6"
+            cy="5"
             r="1"
             fill="currentColor"
             stroke="none"
             initial={{ opacity: 0, x: 0, y: 0, scale: 0.4 }}
             animate={{ opacity: [0, 1, 0], x: spark.x, y: spark.y, scale: [0.4, 1, 0.6] }}
             transition={{ duration: 0.7, delay: spark.delay, ease: EASE }}
+          />
+        ))}
+      {play.kind === "drop" &&
+        PUFFS.map((puff) => (
+          <motion.circle
+            key={puff.cx}
+            cx={puff.cx}
+            cy="10.5"
+            r="0.9"
+            fill="currentColor"
+            stroke="none"
+            initial={{ opacity: 0, x: 0, scale: 0.5 }}
+            animate={{ opacity: [0, 0.9, 0], x: puff.x, scale: [0.5, 1, 0.7] }}
+            transition={{ duration: 0.45, delay: LANDS - 0.03, ease: EASE }}
           />
         ))}
     </svg>
@@ -73,29 +148,32 @@ function Gift({ round }: { round: number }) {
 /** Says up front that Lymi is free, before the origin badge when one shows. */
 export function FreeBadge() {
   const reduce = useReducedMotion();
-  const [round, setRound] = useState(0);
+  const [play, setPlay] = useState<Play>({ kind: "still", round: 0 });
 
-  // The present opens once per visit, a beat after the page settles.
+  // BaseLayout marks a first visit before paint, hiding the lid; here it drops into place.
   useEffect(() => {
-    if (reduce) return;
+    if (document.documentElement.dataset.gift !== "new") return;
     try {
-      if (sessionStorage.getItem(SEEN)) return;
-      sessionStorage.setItem(SEEN, "1");
+      sessionStorage.setItem(GIFT_SEEN, "1");
     } catch {
-      // Storage can be blocked; the present still opens, just again on the next page.
+      // Storage can be blocked; the lid then drops again on the next page.
     }
-    const timer = setTimeout(() => setRound(1), 700);
-    return () => clearTimeout(timer);
-  }, [reduce]);
+    setPlay({ kind: "drop", round: 1 });
+  }, []);
+
+  // The dropping lid now holds itself hidden, so the page's mark can go.
+  useEffect(() => {
+    if (play.kind === "drop") delete document.documentElement.dataset.gift;
+  }, [play.kind]);
 
   return (
     <p
       className="edge flex h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-ink"
       onPointerEnter={() => {
-        if (!reduce) setRound((r) => r + 1);
+        if (!reduce) setPlay((p) => ({ kind: "open", round: p.round + 1 }));
       }}
     >
-      <Gift round={round} />
+      <Gift play={play} />
       <Trans>Free to use</Trans>
     </p>
   );

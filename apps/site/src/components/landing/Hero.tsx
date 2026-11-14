@@ -53,8 +53,8 @@ export function Hero({
         {badge ? (
           // The origin badge brings its own bottom margin; in the row the row owns it.
           <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
-            <OriginBadge />
             {badge}
+            <OriginBadge />
           </div>
         ) : (
           <OriginBadge />

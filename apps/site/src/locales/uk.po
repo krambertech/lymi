@@ -2297,11 +2297,11 @@ msgstr "Безкоштовні колоди з російської з голо�
 msgid "Free Spanish decks with a native voice on every card, with meanings in English, Ukrainian or Russian. Add one in a tap."
 msgstr "Безкоштовні іспанські колоди з голосом носія на кожній картці й значеннями українською, англійською чи російською. Додай колоду одним дотиком."
 
+msgid "Free to use"
+msgstr "Безкоштовно"
+
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Безкоштовні колоди з української з голосом на кожній картці. Додай будь-яку одним дотиком. Скоро буде більше."
-
-msgid "Free, no payment details needed"
-msgstr "Безкоштовно, без платіжних даних"
 
 msgid "French"
 msgstr "Французька"

@@ -2297,11 +2297,11 @@ msgstr "Free Russian decks with a voice on every card. Add one in a tap. More ar
 msgid "Free Spanish decks with a native voice on every card, with meanings in English, Ukrainian or Russian. Add one in a tap."
 msgstr "Free Spanish decks with a native voice on every card, with meanings in English, Ukrainian or Russian. Add one in a tap."
 
+msgid "Free to use"
+msgstr "Free to use"
+
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
-
-msgid "Free, no payment details needed"
-msgstr "Free, no payment details needed"
 
 msgid "French"
 msgstr "French"

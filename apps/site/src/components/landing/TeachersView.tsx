@@ -7,9 +7,9 @@ import { FeatureSection } from "./FeatureSection";
 import { TEACHERS_QUESTIONS } from "./faq";
 import { JoinLinkDemo } from "./JoinLinkDemo";
 import { LandingLayout } from "./LandingLayout";
+import { ReturnSection } from "./LanguageSections";
 import { LibraryDemo } from "./LibraryDemo";
 import { Questions } from "./Questions";
-import { RightMoment } from "./RightMoment";
 import { SeriesDemo } from "./SeriesDemo";
 import { SignUpSection } from "./SignUpSection";
 import { type UseCase, UseCases } from "./UseCases";
@@ -95,12 +95,15 @@ export function TeachersView() {
         <JoinLinkDemo />
       </FeatureSection>
 
-      <RightMoment
+      <ReturnSection
+        lang="et"
+        term={() => "kohtuma"}
         title={<Trans>Repetition that works.</Trans>}
         body={
           <Trans>
-            Memory fades. Recalling something at the right time strengthens it and lets the next gap
-            grow. Lymi uses each learner’s grades to decide when every card comes back.
+            Each time a learner remembers a card, Lymi waits a little longer before showing it
+            again. Every learner’s grades set their own schedule, so the class keeps what you
+            taught.
           </Trans>
         }
       />
@@ -111,9 +114,9 @@ export function TeachersView() {
         title={<Trans>Fill decks from the tools you already use.</Trans>}
         body={
           <Trans>
-            Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also
-            has a public API, so you can bring in a list from a spreadsheet, add cards from your
-            course platform, or show what’s due on your class site.
+            Send a lesson plan to Claude, ChatGPT, Gemini or Grok and it adds the cards for you.
+            Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards
+            from your course platform, or show what’s due on your class site.
           </Trans>
         }
         after={
@@ -131,11 +134,11 @@ export function TeachersView() {
       </FeatureSection>
 
       <FeatureSection
-        title={<Trans>Start with a ready-made course.</Trans>}
+        title={<Trans>Start with a ready-made deck.</Trans>}
         body={
           <Trans>
-            Pick a course from the deck library, add it to your class and adapt it as you go. Share
-            your own when it’s ready.
+            Pick a free deck from the library and send your class its link. Each learner adds it in
+            one tap and keeps their own schedule.
           </Trans>
         }
       >
@@ -144,15 +147,7 @@ export function TeachersView() {
 
       <Questions title={<Trans>Questions from teachers.</Trans>} items={TEACHERS_QUESTIONS} />
 
-      <SignUpSection
-        title={<Trans>Bring Lymi to your next class.</Trans>}
-        note={
-          <Trans>
-            Sections and the deck library are rolling out during the beta. We’ll tell you when your
-            account has them.
-          </Trans>
-        }
-      />
+      <SignUpSection title={<Trans>Bring Lymi to your next class.</Trans>} />
     </LandingLayout>
   );
 }

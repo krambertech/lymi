@@ -46,7 +46,7 @@ export const LANGUAGE_PAGES = {
     page: "polish",
     label: msg`Polish`,
     title: msg`Learn Polish vocabulary with flashcards · Lymi`,
-    blurb: msg`A free flashcard app for Polish. A native voice reads every card, notes mark the words that only look like Ukrainian or Russian ones, and free decks follow the state exams from A1 to B1.`,
+    blurb: msg`A free flashcard app for Polish. A native voice reads every card, notes keep each word’s forms and verb pairs, and free decks follow the state exams from A1 to B1.`,
   },
   es: {
     page: "spanish",

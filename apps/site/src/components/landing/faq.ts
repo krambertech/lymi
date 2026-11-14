@@ -186,7 +186,7 @@ export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind.`,
+    answer: msg`Yes. Cards keep their pinyin, their schedule and their recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -278,7 +278,7 @@ export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind.`,
+    answer: msg`Yes. Cards keep their readings, pitch accent, schedule and recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -394,7 +394,6 @@ export const MEDICINE_QUESTIONS: Question[] = [
   },
   AI_MARKED,
   OFFLINE,
-  ...COMMON,
 ];
 
 export const CERTIFICATIONS_QUESTIONS: Question[] = [
@@ -410,13 +409,12 @@ export const CERTIFICATIONS_QUESTIONS: Question[] = [
   },
   AI_MARKED,
   OFFLINE,
-  ...COMMON,
 ];
 
-const VIA_ASSISTANT_PLANS: Question = {
+const WHICH_ASSISTANTS: Question = {
   id: "which-assistant",
   question: msg`Which assistants can add cards?`,
-  answer: msg`Claude, Claude Code, Codex, Gemini CLI, Cursor and Grok can add cards. ChatGPT connects in developer mode, and OpenAI lets it add cards only on Business, Enterprise and Education plans.`,
+  answer: msg`Claude, Claude Code, ChatGPT, Codex, Gemini, Cursor and Grok can add cards. Other apps that support MCP can connect too.`,
   link: { href: "/docs/mcp", label: msg`Connecting an assistant` },
 };
 
@@ -432,10 +430,8 @@ export const TUTOR_LESSONS_QUESTIONS: Question[] = [
     question: msg`Can my tutor add cards for me?`,
     answer: msg`Yes. Your tutor can make a deck and send you its join link. Every card they add after a lesson reaches you, and you keep your own schedule.`,
   },
-  VIA_ASSISTANT_PLANS,
+  WHICH_ASSISTANTS,
   AI_MARKED,
-  OFFLINE,
-  ...COMMON,
 ];
 
 export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
@@ -450,8 +446,6 @@ export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
     question: msg`Who can see the cards I make?`,
     answer: msg`Only you, unless you share the deck. Cards made from your notes stay in your account.`,
   },
-  VIA_ASSISTANT_PLANS,
+  WHICH_ASSISTANTS,
   AI_MARKED,
-  OFFLINE,
-  ...COMMON,
 ];

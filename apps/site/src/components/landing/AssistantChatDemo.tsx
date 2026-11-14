@@ -73,9 +73,15 @@ export function AssistantChatDemo({
       </div>
 
       <div className="flex items-start gap-2.5">
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
+        {/* The assistant arrives with its turn, not before the learner has asked anything. */}
+        <motion.span
+          className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
+          initial={false}
+          animate={appear(at("calling"))}
+          transition={move}
+        >
           <AssistantMark name={assistant} />
-        </span>
+        </motion.span>
         <div className="flex min-w-0 flex-col items-start gap-2 pt-0.5">
           <motion.p
             className="flex h-8 items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-sm text-ink-secondary edge"

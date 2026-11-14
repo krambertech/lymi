@@ -1175,20 +1175,20 @@ msgstr "As amended on 19 February 2026"
 msgid "As amended on 30 January 2026"
 msgstr "As amended on 30 January 2026"
 
-msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
+msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 
-msgid "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
+msgid "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 
 msgid "Ask for cards"
 msgstr "Ask for cards"
 
-msgid "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
+msgid "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 
-msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
+msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 
 msgid "Ask what to review."
 msgstr "Ask what to review."
@@ -1717,8 +1717,8 @@ msgstr "Connect an assistant"
 msgid "Connect ChatGPT in three steps."
 msgstr "Connect ChatGPT in three steps."
 
-msgid "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
+msgid "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
 
 msgid "Connect ChatGPT, Claude or another assistant. Send it a photo of today’s notes and it adds the new words, or ask how many cards are waiting tonight."
 msgstr "Connect ChatGPT, Claude or another assistant. Send it a photo of today’s notes and it adds the new words, or ask how many cards are waiting tonight."
@@ -1732,8 +1732,8 @@ msgstr "Connect ChatGPT, Claude or another assistant. Send it today’s notes an
 msgid "Connect Claude in three steps."
 msgstr "Connect Claude in three steps."
 
-msgid "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
+msgid "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
 
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s notes and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s notes and it adds the new words, or ask what’s waiting for you tonight."
@@ -1750,14 +1750,14 @@ msgstr "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a trans
 msgid "Connect Gemini in three steps."
 msgstr "Connect Gemini in three steps."
 
-msgid "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back right before you’d forget it. Free."
+msgid "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back just as it starts to fade. Free."
 
 msgid "Connect Grok in three steps."
 msgstr "Connect Grok in three steps."
 
-msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back right before you’d forget it. Free."
+msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
 
 msgid "Connect in three steps."
 msgstr "Connect in three steps."
@@ -2792,8 +2792,8 @@ msgstr "Grok flashcards with spaced repetition · Lymi"
 msgid "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 
-msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back right before you’d forget it."
+msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
 
 msgid "habeas corpus"
 msgstr "habeas corpus"
@@ -7122,11 +7122,11 @@ msgstr "Yes. Cards keep their readings, their schedule and their word recordings
 msgid "Yes. Cards keep their schedule and their word recordings."
 msgstr "Yes. Cards keep their schedule and their word recordings."
 
-msgid "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back right before you’d forget it."
+msgid "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back just as it starts to fade."
 
-msgid "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
+msgid "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
 
 msgid "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
 msgstr "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
@@ -7149,8 +7149,8 @@ msgstr "Yes. Every noun in the ready-made German decks comes with its article. W
 msgid "Yes. Export them from Pleco as a text file and import it. Categories become tags, the other script becomes a note, and tone numbers become marks."
 msgstr "Yes. Export them from Pleco as a text file and import it. Categories become tags, the other script becomes a note, and tone numbers become marks."
 
-msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
+msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
 
 msgid "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."
 msgstr "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."

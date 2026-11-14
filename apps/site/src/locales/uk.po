@@ -1175,20 +1175,20 @@ msgstr "Зі змінами від 19 лютого 2026 року"
 msgid "As amended on 30 January 2026"
 msgstr "Зі змінами від 30 січня 2026 року"
 
-msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Попроси ChatGPT зробити флешкартки з фото нотаток, сторінки підручника чи щойно завершеного чату. Вони потраплять у Lymi, а інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Попроси ChatGPT зробити флешкартки з фото нотаток, сторінки підручника чи щойно завершеного чату. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
-msgid "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Попроси Claude зробити флешкартки з великого PDF, лекції чи цілого проєкту. Вони потраплять у Lymi, а інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Попроси Claude зробити флешкартки з великого PDF, лекції чи цілого проєкту. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Ask for cards"
 msgstr "Попроси картки"
 
-msgid "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Попроси Gemini зробити флешкартки з нотаток, документа чи відеолекції. Вони потраплять у Lymi, а інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Ask Gemini for flashcards from your notes, a document or a lecture video. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Попроси Gemini зробити флешкартки з нотаток, документа чи відеолекції. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
-msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back right before you’d forget it."
-msgstr "Попроси Grok зробити флешкартки з допису, статті чи слів із твоєї практики. Вони потраплять у Lymi, а інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Попроси Grok зробити флешкартки з допису, статті чи слів із твоєї практики. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Ask what to review."
 msgstr "Запитай, що повторити."
@@ -1717,8 +1717,8 @@ msgstr "Підключити асистента"
 msgid "Connect ChatGPT in three steps."
 msgstr "Підключи ChatGPT за три кроки."
 
-msgid "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Підключи ChatGPT до Lymi й перетворюй фото нотаток, сторінки підручників і чати на флешкартки. Lymi повертає кожну картку якраз перед тим, як ти її забудеш. Безкоштовно."
+msgid "Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Підключи ChatGPT до Lymi й перетворюй фото нотаток, сторінки підручників і чати на флешкартки. Lymi повертає кожну картку саме тоді, коли вона починає забуватися. Безкоштовно."
 
 msgid "Connect ChatGPT, Claude or another assistant. Send it a photo of today’s notes and it adds the new words, or ask how many cards are waiting tonight."
 msgstr "Підключи ChatGPT, Claude чи іншого асистента. Надішли йому фото сьогоднішніх нотаток, і він додасть нові слова. Або спитай, скільки карток чекає на тебе ввечері."
@@ -1732,8 +1732,8 @@ msgstr "Підключи ChatGPT, Claude чи іншого асистента. �
 msgid "Connect Claude in three steps."
 msgstr "Підключи Claude за три кроки."
 
-msgid "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Підключи Claude до Lymi й перетворюй PDF, конспекти лекцій і чати на флешкартки. Lymi повертає кожну картку якраз перед тим, як ти її забудеш. Безкоштовно."
+msgid "Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Підключи Claude до Lymi й перетворюй PDF, конспекти лекцій і чати на флешкартки. Lymi повертає кожну картку саме тоді, коли вона починає забуватися. Безкоштовно."
 
 msgid "Connect Claude, ChatGPT or another assistant once. Send it a photo of today’s notes and it adds the new words, or ask what’s waiting for you tonight."
 msgstr "Під’єднай Claude, ChatGPT чи іншого асистента один раз. Надішли йому фото сьогоднішнього конспекту, і він додасть нові слова. Або спитай, що чекає на тебе ввечері."
@@ -1750,14 +1750,14 @@ msgstr "Підключи Claude, ChatGPT, Gemini або Grok до Lymi один 
 msgid "Connect Gemini in three steps."
 msgstr "Підключи Gemini за три кроки."
 
-msgid "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Підключи Gemini до Lymi й перетворюй нотатки, документи й лекції на флешкартки. Lymi повертає кожну картку якраз перед тим, як ти її забудеш. Безкоштовно."
+msgid "Connect Gemini to Lymi and turn notes, documents and lectures into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Підключи Gemini до Lymi й перетворюй нотатки, документи й лекції на флешкартки. Lymi повертає кожну картку саме тоді, коли вона починає забуватися. Безкоштовно."
 
 msgid "Connect Grok in three steps."
 msgstr "Підключи Grok за три кроки."
 
-msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back right before you’d forget it. Free."
-msgstr "Підключи Grok до Lymi й перетворюй дописи, статті й нотатки на флешкартки. Lymi повертає кожну картку якраз перед тим, як ти її забудеш. Безкоштовно."
+msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgstr "Підключи Grok до Lymi й перетворюй дописи, статті й нотатки на флешкартки. Lymi повертає кожну картку саме тоді, коли вона починає забуватися. Безкоштовно."
 
 msgid "Connect in three steps."
 msgstr "Підключи за три кроки."
@@ -2792,8 +2792,8 @@ msgstr "Флешкартки з Grok та інтервальне повторе�
 msgid "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "У Grok немає власних флешкарток і нічого, що повертало б слово згодом. Це робить Lymi: кожна картка повертається саме тоді, коли починає забуватися, і щоразу, як ти її згадуєш, пауза довшає."
 
-msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Grok напише флешкартки в чаті, але режиму флешкарток у нього немає, як і нічого, що повертало б картку згодом. Підключи Lymi, і Grok додаватиме картки у твої колоди, де інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Grok напише флешкартки в чаті, але режиму флешкарток у нього немає, як і нічого, що повертало б картку згодом. Підключи Lymi, і Grok додаватиме картки у твої колоди, де інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "habeas corpus"
 msgstr "habeas corpus"
@@ -7122,11 +7122,11 @@ msgstr "Так. Картки зберігають читання, розклад
 msgid "Yes. Cards keep their schedule and their word recordings."
 msgstr "Так. Картки зберігають свій розклад і записи слів."
 
-msgid "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Так. ChatGPT робить флешкартки, які можна перевертати, перемішувати й позначати як вивчені. Але він не вирішує, коли ти знову побачиш кожну картку. Підключи Lymi, і картки потраплять у твої колоди, де інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Так. ChatGPT робить флешкартки, які можна перевертати, перемішувати й позначати як вивчені. Але він не вирішує, коли ти знову побачиш кожну картку. Підключи Lymi, і картки потраплять у твої колоди, де інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
-msgid "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Так. Claude пише добрі флешкартки й навіть може зібрати вікторину в артефакті. Але в нього немає колоди, яка повертала б картки за розкладом, тож вони так і лишаються в тому чаті. Підключи Lymi, і Claude додаватиме їх у твої колоди, де інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Так. Claude пише добрі флешкартки й навіть може зібрати вікторину в артефакті. Але в нього немає колоди, яка повертала б картки за розкладом, тож вони так і лишаються в тому чаті. Підключи Lymi, і Claude додаватиме їх у твої колоди, де інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it."
 msgstr "Так. Кожну картку озвучує AI-голос носія естонської. Натисни «відтворити» на будь-якій картці, щоб почути."
@@ -7149,8 +7149,8 @@ msgstr "Так. Кожен іменник у готових німецьких �
 msgid "Yes. Export them from Pleco as a text file and import it. Categories become tags, the other script becomes a note, and tone numbers become marks."
 msgstr "Так. Експортуй їх із Pleco текстовим файлом та імпортуй його. Категорії стануть тегами, інший варіант запису — нотаткою, а цифри тонів — знаками."
 
-msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back right before you’d forget it."
-msgstr "Так. Gemini робить флешкартки й тести, а Gemini Notebook робить їх із твоїх джерел. Але за розкладом вони не повертаються. Підключи Lymi, і Gemini додаватиме їх у твої колоди, де інтервальне повторення поверне кожну якраз перед тим, як ти її забудеш."
+msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Так. Gemini робить флешкартки й тести, а Gemini Notebook робить їх із твоїх джерел. Але за розкладом вони не повертаються. Підключи Lymi, і Gemini додаватиме їх у твої колоди, де інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
 msgid "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."
 msgstr "Так. Grok може читати твої колоди, тож здатен вести розмову на словах, які ти вчиш, і зберігати як картки нові слова, яких навчить."

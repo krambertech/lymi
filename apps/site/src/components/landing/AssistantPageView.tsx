@@ -136,8 +136,8 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you
-            just had. They land in Lymi, and spaced repetition brings each one back right before
-            you’d forget it.
+            just had. They land in Lymi, and spaced repetition brings each one back just as it
+            starts to fade.
           </Trans>
         ),
         demo: {
@@ -254,7 +254,7 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in
-            Lymi, and spaced repetition brings each one back right before you’d forget it.
+            Lymi, and spaced repetition brings each one back just as it starts to fade.
           </Trans>
         ),
         demo: {
@@ -393,7 +393,7 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask Gemini for flashcards from your notes, a document or a lecture video. They land in
-            Lymi, and spaced repetition brings each one back right before you’d forget it.
+            Lymi, and spaced repetition brings each one back just as it starts to fade.
           </Trans>
         ),
         demo: {
@@ -522,7 +522,7 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask Grok for flashcards from a post, an article or the words you practised. They land in
-            Lymi, and spaced repetition brings each one back right before you’d forget it.
+            Lymi, and spaced repetition brings each one back just as it starts to fade.
           </Trans>
         ),
         demo: {

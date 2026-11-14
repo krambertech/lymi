@@ -10,6 +10,7 @@ import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { ASSISTANTS_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
+import { OtherAssistants } from "./OtherAssistants";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
@@ -65,6 +66,8 @@ export function AssistantsView() {
   return (
     <LandingLayout page="assistants" hero={<AssistantHero />}>
       <SendAnything />
+
+      <OtherAssistants title={<Trans>Pick your assistant.</Trans>} />
 
       <FeatureSection
         demoFirst

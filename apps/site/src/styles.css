@@ -1342,6 +1342,25 @@ html:has(.deck-cards[open]) {
   background: oklch(0.34 0.065 var(--tray-h, 235));
 }
 
+/* The bar under the playing request on an assistant's page; it runs out, and the next one comes up. */
+.assistant-dwell {
+  animation-name: assistant-dwell;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes assistant-dwell {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+/* It holds still only while the visitor is pointing at the stage or tabbing through it. */
+.assistant-dwell[data-paused] {
+  animation-play-state: paused;
+}
+
 /* A shelf's colour beside its name in the Explore menu: its tray's hue, strong enough to tell apart. */
 .shelf-swatch {
   flex: none;

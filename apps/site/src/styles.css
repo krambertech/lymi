@@ -1780,22 +1780,65 @@ html:has(.deck-cards[open]) {
 .landing-dwell[data-paused] {
   animation-play-state: paused;
 }
-/* The moment AI writes a field. Its badge arrives first, so you know who is writing; the field warms
-   to a faint violet while the words write themselves in from the start of the line, and the warmth
-   fades back once they are down. */
-.ai-sweep[data-on="true"] {
-  animation: ai-warm 2200ms cubic-bezier(0.33, 1, 0.68, 1) both;
+/* The moment AI writes a field. Its badge arrives first, so you know who is writing; then one wide,
+   soft light drifts across the field just ahead of the words as they write themselves in. It fades in
+   and out on its way, so it never starts or stops on an edge. Only the light moves: the field keeps
+   its own colour, whatever tray it sits on. Transform and opacity only. */
+.ai-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-@keyframes ai-warm {
+.ai-sweep[data-on="true"]::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 90%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--ai) 5%, transparent) 25%,
+    color-mix(in oklch, var(--ai) 13%, transparent) 50%,
+    color-mix(in oklch, var(--ai) 5%, transparent) 75%,
+    transparent
+  );
+  opacity: 0;
+  translate: -100% 0;
+  animation: ai-shimmer 1500ms cubic-bezier(0.45, 0, 0.3, 1) 60ms forwards;
+  will-change: translate, opacity;
+}
+@keyframes ai-shimmer {
   0% {
-    background-color: var(--plate);
+    opacity: 0;
+    translate: -100% 0;
   }
-  18%,
-  45% {
-    background-color: color-mix(in oklch, var(--ai) 7%, var(--plate));
+  25%,
+  65% {
+    opacity: 1;
   }
   100% {
-    background-color: var(--plate);
+    opacity: 0;
+    translate: 125% 0;
+  }
+}
+[dir="rtl"] .ai-sweep[data-on="true"]::after {
+  translate: 100% 0;
+  animation-name: ai-shimmer-rtl;
+}
+@keyframes ai-shimmer-rtl {
+  0% {
+    opacity: 0;
+    translate: 100% 0;
+  }
+  25%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: -125% 0;
   }
 }
 /* The words write in left to right under a soft edge, not all at once. */
@@ -1856,7 +1899,9 @@ html:has(.deck-cards[open]) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ai-sweep[data-on="true"],
+  .ai-sweep[data-on="true"]::after {
+    display: none;
+  }
   .ai-words[data-on="true"],
   .ai-badge-in,
   .ai-badge-in svg {

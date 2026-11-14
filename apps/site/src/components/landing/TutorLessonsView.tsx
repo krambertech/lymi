@@ -4,7 +4,6 @@ import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
-import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
@@ -423,8 +422,6 @@ export function TutorLessonsView() {
       >
         <ReviewDemo cards={REVIEW} />
       </FeatureSection>
-
-      <ConnectSteps />
 
       <Questions
         title={<Trans>Questions before you start.</Trans>}

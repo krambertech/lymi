@@ -9,38 +9,17 @@ import { Lantern } from "../Lantern";
 interface LibraryDeck {
   id: string;
   title: MessageDescriptor;
-  by: MessageDescriptor;
-  firstParty?: boolean;
-  sections: number;
   cards: number;
 }
 
+/** Real decks on Explore's Estonian shelf; Lymi publishes every deck there. */
 const DECKS: LibraryDeck[] = [
-  {
-    id: "first-steps",
-    title: msg`Estonian A1: first steps`,
-    by: msg`Made by Lymi`,
-    firstParty: true,
-    sections: 6,
-    cards: 180,
-  },
-  {
-    id: "work",
-    title: msg`Estonian for work`,
-    by: msg`Kadri Tamm, tutor`,
-    sections: 8,
-    cards: 260,
-  },
-  {
-    id: "citizenship",
-    title: msg`Words for the citizenship exam`,
-    by: msg`Anna Kask, language school`,
-    sections: 5,
-    cards: 140,
-  },
+  { id: "everyday", title: msg`Everyday Estonian`, cards: 99 },
+  { id: "verbs", title: msg`Estonian Top 100 Verbs`, cards: 100 },
+  { id: "words", title: msg`Estonian Top 1000 Words`, cards: 1000 },
 ];
 
-/** Decks other teachers published, each ready to add to a class as it is. */
+/** Ready-made decks from the library, each added as it is. */
 export function LibraryDemo() {
   const { t, i18n } = useLingui();
   const [added, setAdded] = useState<string[]>([]);
@@ -63,13 +42,12 @@ export function LibraryDemo() {
             >
               <div className="min-w-0 flex-1">
                 <p className="truncate text-md font-medium text-ink">{title}</p>
-                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-ink-muted">
-                  {deck.firstParty && <Lantern className="size-3.5 shrink-0" />}
-                  <span className="min-w-0 truncate">{i18n._(deck.by)}</span>
-                </p>
-                <p className="mt-1 text-xs text-ink-muted tabular-nums">
-                  <Plural value={deck.sections} one="# section" other="# sections" /> ·{" "}
-                  <Plural value={deck.cards} one="# card" other="# cards" />
+                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-ink-muted tabular-nums">
+                  <Lantern className="size-3.5 shrink-0" />
+                  <span className="min-w-0 truncate">
+                    <Trans>Made by Lymi</Trans> ·{" "}
+                    <Plural value={deck.cards} one="# card" other="# cards" />
+                  </span>
                 </p>
               </div>
               <button

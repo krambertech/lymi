@@ -9,8 +9,8 @@ import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { ImportDemo } from "./ImportDemo";
 import { LandingLayout } from "./LandingLayout";
+import { ReturnSection } from "./LanguageSections";
 import { Questions } from "./Questions";
-import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
 import { type UseCase, UseCases } from "./UseCases";
 
@@ -186,12 +186,15 @@ export function MedicineView() {
         />
       </FeatureSection>
 
-      <RightMoment
+      <ReturnSection
+        lang="en"
+        term={() => "metformin"}
         title={<Trans>Review less, remember longer.</Trans>}
         body={
           <Trans>
-            Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes
-            back soon.
+            Each time you remember a card, Lymi waits a little longer before showing it again.
+            Forget it, and it comes back soon. The drugs you learned in first year are still there
+            for the ward.
           </Trans>
         }
       />

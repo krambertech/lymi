@@ -15,6 +15,7 @@ import { LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
 import { LandingLayout } from "./LandingLayout";
+import { ReturnSection } from "./LanguageSections";
 import {
   type LanguageCard,
   LEARNING_LANGUAGES,
@@ -23,7 +24,6 @@ import {
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
 import { Questions } from "./Questions";
-import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
@@ -176,15 +176,7 @@ function LanguagePage(props: PageProps) {
 
       <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />
 
-      <RightMoment
-        title={<Trans>The right moment matters.</Trans>}
-        body={
-          <Trans>
-            Memory fades. Recalling something at the right time strengthens it and lets the next gap
-            grow. Lymi uses each grade to decide when the card returns.
-          </Trans>
-        }
-      />
+      <ReturnSection lang="es" term={() => "la sobremesa"} />
 
       <FeatureSection
         demoFirst

@@ -67,8 +67,8 @@ export function LandingView() {
           title={<Trans>Flashcards for the AI era.</Trans>}
           lede={
             <Trans>
-              AI turns your notes, lessons and photos into cards. Spaced repetition then shows you
-              only what’s due, so you don’t waste time on what you already know.
+              Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews
+              as you learn, so you spend more time on what’s hard and less on what comes easily.
             </Trans>
           }
           secondary={{

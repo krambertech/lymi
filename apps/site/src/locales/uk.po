@@ -852,9 +852,6 @@ msgstr "AI працює по-твоєму"
 msgid "AI turns your notes into cards and fills in what you leave out, the way you set it up. It never changes what you wrote, and everything it adds is marked."
 msgstr "AI перетворює твої нотатки на картки й доповнює решту так, як ти налаштуєш. Написаного тобою він не змінює, а все додане позначає."
 
-msgid "AI turns your notes, lessons and photos into cards. Spaced repetition then shows you only what’s due, so you don’t waste time on what you already know."
-msgstr "AI перетворює твої нотатки, уроки й фото на картки. Інтервальне повторення показує лише те, що пора повторити, тож ти не гаєш час на те, що вже знаєш."
-
 msgid "Airport"
 msgstr "Аеропорт"
 
@@ -5940,6 +5937,9 @@ msgstr "Зроби з нотаток картки."
 
 msgid "Turn your notes into flashcards."
 msgstr "Перетвори свої нотатки на картки."
+
+msgid "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
+msgstr "Перетворюй нотатки, уроки й фото на картки за допомогою AI. Lymi розподіляє повторення в міру того, як ти вчишся, тож ти витрачаєш більше часу на складне й менше — на те, що дається легко."
 
 msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
 msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертає кожен термін саме тоді, коли він починає забуватися, — від першого розділу до дня іспиту й після нього."

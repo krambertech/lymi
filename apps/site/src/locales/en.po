@@ -852,9 +852,6 @@ msgstr "AI follows your lead"
 msgid "AI turns your notes into cards and fills in what you leave out, the way you set it up. It never changes what you wrote, and everything it adds is marked."
 msgstr "AI turns your notes into cards and fills in what you leave out, the way you set it up. It never changes what you wrote, and everything it adds is marked."
 
-msgid "AI turns your notes, lessons and photos into cards. Spaced repetition then shows you only what’s due, so you don’t waste time on what you already know."
-msgstr "AI turns your notes, lessons and photos into cards. Spaced repetition then shows you only what’s due, so you don’t waste time on what you already know."
-
 msgid "Airport"
 msgstr "Airport"
 
@@ -5940,6 +5937,9 @@ msgstr "Turn your notes into cards."
 
 msgid "Turn your notes into flashcards."
 msgstr "Turn your notes into flashcards."
+
+msgid "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
+msgstr "Turn your notes, lessons and photos into cards with AI. Lymi spaces out your reviews as you learn, so you spend more time on what’s hard and less on what comes easily."
 
 msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."
 msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back just as it starts to fade, from the first chapter to exam day and after."

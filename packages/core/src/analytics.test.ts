@@ -252,7 +252,9 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/tutor-lessons", "public")).toBe("/tutor-lessons");
     expect(analyticsPath("/notes-to-flashcards", "public")).toBe("/notes-to-flashcards");
     expect(analyticsPath("/ai-assistants/chatgpt", "public")).toBe("/ai-assistants/chatgpt");
-    expect(analyticsPath("/uk/ai-assistants/grok-bot", "public")).toBe("/uk/ai-assistants/grok-bot");
+    expect(analyticsPath("/uk/ai-assistants/grok-bot", "public")).toBe(
+      "/uk/ai-assistants/grok-bot",
+    );
     expect(analyticsPath("/ru/exams/einbuergerungstest", "public")).toBe(
       "/ru/exams/einbuergerungstest",
     );

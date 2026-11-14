@@ -176,7 +176,7 @@ function LanguagePage(props: PageProps) {
 
       <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />
 
-      <ReturnSection lang="es" term={() => "la sobremesa"} />
+      <ReturnSection lang="es" term={() => "ojalá"} />
 
       <FeatureSection
         demoFirst

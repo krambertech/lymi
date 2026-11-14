@@ -97,7 +97,7 @@ export function TeachersView() {
 
       <ReturnSection
         lang="et"
-        term={() => "kohtuma"}
+        term={() => "tere"}
         title={<Trans>Repetition that works.</Trans>}
         body={
           <Trans>

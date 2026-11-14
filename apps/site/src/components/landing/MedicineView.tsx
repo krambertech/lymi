@@ -188,7 +188,7 @@ export function MedicineView() {
 
       <ReturnSection
         lang="en"
-        term={() => "metformin"}
+        term={() => "aorta"}
         title={<Trans>Review less, remember longer.</Trans>}
         body={
           <Trans>

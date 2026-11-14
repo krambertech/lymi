@@ -1,10 +1,11 @@
 // Voices the homepage's "Native AI voice" demo the way the product voices a card: its native
 // ElevenLabs voice for the language, and OpenAI only where Lymi has no native voice.
-// Run: pnpm --filter @lymi/web exec tsx ../site/scripts/voice-audio.mjs
-// Requires ELEVENLABS_API_KEY, OPENAI_API_KEY, AI_GATEWAY_URL and AI_GATEWAY_TOKEN.
+// Run from apps/web: pnpm exec tsx --env-file=.dev.vars ../site/scripts/voice-audio.mjs
+// Reads AI_GATEWAY_URL from wrangler.jsonc; .dev.vars needs ELEVENLABS_API_KEY and AI_GATEWAY_TOKEN.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { evalEnv } from "../../web/src/server/ai/eval-env.ts";
 import { createSpeechProviders } from "../../web/src/server/ai/speech.ts";
 
 /** Keep in step with CLIPS in src/components/landing/AiDemos.tsx. */
@@ -21,8 +22,10 @@ const manifestPath = join(outDir, "manifest.json");
 mkdirSync(outDir, { recursive: true });
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : {};
 
+const env = evalEnv();
+
 for (const clip of CLIPS) {
-  const [provider] = createSpeechProviders(process.env, clip.language);
+  const [provider] = createSpeechProviders(env, clip.language);
   if (!provider) throw new Error(`No speech provider for ${clip.language}; check the keys.`);
   if (provider.provider !== "elevenlabs") {
     throw new Error(`${clip.term} would not use a native voice (${provider.provider}).`);

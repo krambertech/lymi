@@ -400,10 +400,10 @@ export function LeadDemo({ play }: DemoProps) {
 /* Native AI voice: real clips, each drawing its own waveform. */
 
 const CLIPS = [
-  { id: "de", lang: "de", term: "Feierabend", clip: "/audio/hand/feierabend.mp3" },
-  { id: "ja", lang: "ja", term: "木漏れ日", clip: "/audio/hand/komorebi.mp3" },
-  { id: "pt", lang: "pt-PT", term: "saudade", clip: "/audio/hand/saudade.mp3" },
-  { id: "ko", lang: "ko", term: "눈치", clip: "/audio/hand/nunchi.mp3" },
+  { id: "de", lang: "de", term: "Feierabend", clip: "/audio/voice/feierabend.mp3" },
+  { id: "ja", lang: "ja", term: "木漏れ日", clip: "/audio/voice/komorebi.mp3" },
+  { id: "pt", lang: "pt-BR", term: "saudade", clip: "/audio/voice/saudade.mp3" },
+  { id: "ko", lang: "ko", term: "눈치", clip: "/audio/voice/nunchi.mp3" },
 ];
 const BARS = 28;
 

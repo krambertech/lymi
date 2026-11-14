@@ -377,6 +377,9 @@ msgstr "3 of 4 chosen"
 msgid "3 reviews saved"
 msgstr "3 reviews saved"
 
+msgid "3 reviews synced"
+msgstr "3 reviews synced"
+
 msgid "3.5–5.0 mmol/L in adults"
 msgstr "3.5–5.0 mmol/L in adults"
 
@@ -1092,6 +1095,9 @@ msgstr "Back in 4 days."
 
 msgid "Back in 9 days."
 msgstr "Back in 9 days."
+
+msgid "Back online"
+msgstr "Back online"
 
 msgid "Back to {name}"
 msgstr "Back to {name}"
@@ -3775,6 +3781,9 @@ msgstr "No pinyin over <0>我们在这里</0>: you know those characters."
 msgid "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgstr "No reading over <0>次</0> and <1>駅</1>: you already know them."
 
+msgid "No signal"
+msgstr "No signal"
+
 msgid "No, *thank you*."
 msgstr "No, *thank you*."
 
@@ -5020,9 +5029,6 @@ msgstr "Support and email: we keep the information you send us so we can respond
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
-
-msgid "Synced"
-msgstr "Synced"
 
 msgid "table"
 msgstr "table"

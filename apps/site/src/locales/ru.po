@@ -377,6 +377,9 @@ msgstr "Выбрано 3 из 4"
 msgid "3 reviews saved"
 msgstr "3 повторения сохранены"
 
+msgid "3 reviews synced"
+msgstr "3 повторения синхронизированы"
+
 msgid "3.5–5.0 mmol/L in adults"
 msgstr "3,5–5,0 ммоль/л у взрослых"
 
@@ -1092,6 +1095,9 @@ msgstr "Вернётся через 4 дня."
 
 msgid "Back in 9 days."
 msgstr "Вернётся через 9 дней."
+
+msgid "Back online"
+msgstr "Снова в сети"
 
 msgid "Back to {name}"
 msgstr "Назад к {name}"
@@ -3775,6 +3781,9 @@ msgstr "Над <0>我们在这里</0> пиньиня нет: эти иерогл
 msgid "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgstr "Над <0>次</0> и <1>駅</1> чтения нет: ты их уже знаешь."
 
+msgid "No signal"
+msgstr "Нет связи"
+
 msgid "No, *thank you*."
 msgstr "Нет, *спасибо*."
 
@@ -5020,9 +5029,6 @@ msgstr "Поддержка и почта: мы храним присланную
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
-
-msgid "Synced"
-msgstr "Синхронизировано"
 
 msgid "table"
 msgstr "стол"

@@ -4,13 +4,13 @@ import { FLAME_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
 import {
   Check,
-  CloudOff,
   FileArchive,
   FileSpreadsheet,
   FileText,
   LifeBuoy,
   type LucideIcon,
   Tag,
+  WifiOff,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useState } from "react";
@@ -441,24 +441,14 @@ export function InsightsTile({ play }: TileDemoProps) {
   );
 }
 
-/* Bring your decks: the apps Lymi imports from, and the deck they land in. Marks from Simple Icons (CC0). */
+/* Bring your decks: the apps Lymi imports from, by their App Store icons, and the deck they land in. */
 
-const APPS: { name: string; path?: string; color?: string }[] = [
-  {
-    name: "Anki",
-    // check-styling: allow, Anki's own brand colour
-    color: "#80C2EE",
-    path: "m15.845 22.627-.169.131-.182.091c-.109.042-.23.069-.362.079-.27.021-.611-.036-.989-.16-.686-.223-1.537-.67-2.256-.973-.343-.145-.633-.281-.829-.254-.197.027-.44.236-.73.467-.611.486-1.311 1.145-1.91 1.546-.331.22-.644.368-.91.42-.13.026-.255.032-.37.021l-.201-.038-.196-.082-.177-.119-.143-.145a1.3 1.3 0 0 1-.187-.32c-.104-.25-.154-.593-.154-.99.001-.721.164-1.669.23-2.447.031-.37.07-.687-.016-.866-.087-.178-.359-.345-.67-.55-.65-.431-1.494-.893-2.06-1.34-.312-.246-.548-.498-.681-.735a1.3 1.3 0 0 1-.134-.345l-.025-.202.016-.213.059-.205.094-.18c.064-.097.145-.191.246-.277.207-.175.517-.33.895-.452.685-.222 1.637-.361 2.397-.539.362-.084.676-.145.819-.281.144-.138.217-.45.316-.808.209-.752.387-1.696.638-2.373.138-.373.305-.676.489-.874.091-.098.187-.176.286-.235l.185-.086.207-.051.214-.006.2.033c.113.03.226.079.339.148.231.143.473.389.706.711.424.584.85 1.446 1.253 2.114.192.318.347.598.522.692.174.094.494.068.865.052.78-.034 1.734-.157 2.455-.128.397.017.736.081.983.195.12.055.223.123.31.201l.14.148.112.181.072.201.03.202c.007.115-.005.238-.036.368-.063.263-.223.57-.457.891-.425.583-1.113 1.254-1.623 1.845-.244.281-.463.514-.498.71-.035.194.089.49.219.838.273.731.684 1.601.879 2.295.108.382.151.725.119.995-.015.131-.049.252-.095.358l-.098.179zm-1.54-18.929c-.018-.057-.07-.226-.122-.346-.17-.387-.418-.846-.544-1.216-.166-.483-.099-.88.102-1.096.201-.214.592-.308 1.086-.177.377.1.851.316 1.249.458.125.044.297.084.354.096.047-.032.193-.134.291-.221.316-.282.675-.659.988-.894.408-.305.807-.366 1.074-.241.266.124.476.468.504.977.021.391-.037.909-.049 1.331-.004.132.011.309.017.366.046.035.187.142.301.209.365.213.835.438 1.155.662.417.294.597.655.56.947-.035.293-.296.599-.773.782-.365.141-.875.246-1.28.364-.126.037-.29.106-.343.129-.019.056-.077.223-.105.351-.091.413-.159.93-.274 1.304-.151.487-.438.77-.727.826s-.661-.098-.983-.494c-.246-.303-.504-.756-.742-1.105-.074-.11-.19-.243-.229-.287-.058-.001-.235-.004-.366.009-.421.042-.933.135-1.324.141-.51.008-.867-.177-1.011-.435-.142-.257-.11-.659.167-1.088.212-.328.563-.713.822-1.047.08-.104.171-.256.202-.305",
-  },
-  {
-    name: "Quizlet",
-    // check-styling: allow, Quizlet's own brand colour
-    color: "#4255FF",
-    path: "M12.779.025a11.789 11.789 0 0 0-5.338.896A11.829 11.829 0 0 0 3.058 4.11 11.928 11.928 0 0 0 .427 14.363a11.92 11.92 0 0 0 2.3 4.921 11.842 11.842 0 0 0 4.24 3.378 11.783 11.783 0 0 0 10.533-.226.327.327 0 0 1 .331.018 9.136 9.136 0 0 0 5.197 1.545.332.332 0 0 0 .332-.332v-4.038a.334.334 0 0 0-.276-.331 4.732 4.732 0 0 1-1.106-.319.329.329 0 0 1-.191-.352.33.33 0 0 1 .05-.133 11.943 11.943 0 0 0 .772-11.871 11.87 11.87 0 0 0-4.042-4.628A11.793 11.793 0 0 0 12.765.018l.013.007h.001ZM4.843 11.898a7.24 7.24 0 0 1 1.205-4.005 7.18 7.18 0 0 1 3.215-2.657 7.133 7.133 0 0 1 7.815 1.558 7.239 7.239 0 0 1 1.555 7.854 7.202 7.202 0 0 1-2.643 3.234 7.147 7.147 0 0 1-9.049-.896 7.228 7.228 0 0 1-2.103-5.089l.005.001Z",
-  },
-  { name: "Mochi" },
-  { name: "Noji" },
-  { name: "Pleco" },
+const APPS = [
+  { name: "Anki", icon: "/apps/anki.png" },
+  { name: "Quizlet", icon: "/apps/quizlet.png" },
+  { name: "Mochi", icon: "/apps/mochi.png" },
+  { name: "Noji", icon: "/apps/noji.png" },
+  { name: "Pleco", icon: "/apps/pleco.png" },
 ];
 const IMPORT_FROM = 1240;
 
@@ -475,15 +465,15 @@ export function ImportTile({ play }: TileDemoProps) {
             transition={SETTLE}
             className="grid min-w-0 justify-items-center gap-1"
           >
-            <span className="grid aspect-square w-full max-w-11 place-items-center rounded-xl bg-plate text-md font-medium text-ink edge">
-              {app.path ? (
-                <svg viewBox="0 0 24 24" className="size-5" fill={app.color}>
-                  <path d={app.path} />
-                </svg>
-              ) : (
-                app.name.charAt(0)
-              )}
-            </span>
+            <img
+              src={app.icon}
+              alt=""
+              width={44}
+              height={44}
+              loading="lazy"
+              decoding="async"
+              className="aspect-square w-full max-w-11 rounded-[22.5%] edge"
+            />
             <span className="max-w-full truncate text-xs text-ink-secondary">{app.name}</span>
           </motion.li>
         ))}
@@ -579,33 +569,22 @@ export function OfflineTile({ play }: TileDemoProps) {
   const at = useBeats({ sync: 500 }, play);
   const synced = at("sync");
   return (
-    <span className="flex min-h-10 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate py-2 ps-2.5 pe-3 edge">
-      <span className="flex shrink-0 gap-0.5 @max-xl:hidden">
-        {[0, 1, 2].map((i) => (
-          <motion.span
-            key={i}
-            animate={{ opacity: synced ? 0.35 : 1, y: synced ? -2 : 0 }}
-            transition={{ ...SETTLE, delay: synced ? i * 0.06 : 0 }}
-            className="h-4 w-3 rounded-[3px] bg-plate-nested edge"
-          />
-        ))}
-      </span>
-      <span className="flex min-w-0 flex-1 items-center gap-1.5 text-sm text-ink">
-        {synced ? (
-          <>
-            <Check className="size-4 shrink-0 text-amber-text" />
-            <span className="leading-tight text-pretty">
-              <Trans>Synced</Trans>
-            </span>
-          </>
-        ) : (
-          <>
-            <CloudOff className="size-4 shrink-0 text-ink-muted" />
-            <span className="leading-tight text-pretty">
-              <Trans>3 reviews saved</Trans>
-            </span>
-          </>
+    <span className="flex min-h-12 w-full min-w-0 items-center gap-2.5 rounded-xl bg-plate py-2 ps-2 pe-3 edge">
+      <span
+        className={clsx(
+          "grid size-8 shrink-0 place-items-center rounded-full transition-colors duration-200",
+          synced ? "bg-success-soft text-success" : "bg-plate-nested text-ink-secondary",
         )}
+      >
+        {synced ? <Check className="size-4" /> : <WifiOff className="size-4" />}
+      </span>
+      <span className="grid min-w-0 leading-tight">
+        <span className="truncate text-sm font-medium text-ink">
+          {synced ? <Trans>Back online</Trans> : <Trans>No signal</Trans>}
+        </span>
+        <span className="truncate text-xs text-ink-secondary">
+          {synced ? <Trans>3 reviews synced</Trans> : <Trans>3 reviews saved</Trans>}
+        </span>
       </span>
     </span>
   );

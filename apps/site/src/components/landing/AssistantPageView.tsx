@@ -132,7 +132,7 @@ function useContent(key: AssistantKey): Content {
   switch (key) {
     case "chatgpt":
       return {
-        headline: <Trans>ChatGPT flashcards that stick.</Trans>,
+        headline: <Trans>Create and practise flashcards with ChatGPT.</Trans>,
         lead: (
           <Trans>
             Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you
@@ -250,7 +250,7 @@ function useContent(key: AssistantKey): Content {
 
     case "claude":
       return {
-        headline: <Trans>Claude flashcards that stick.</Trans>,
+        headline: <Trans>Create and practise flashcards with Claude.</Trans>,
         lead: (
           <Trans>
             Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in
@@ -389,7 +389,7 @@ function useContent(key: AssistantKey): Content {
 
     case "gemini":
       return {
-        headline: <Trans>Gemini flashcards that stick.</Trans>,
+        headline: <Trans>Create and practise flashcards with Gemini.</Trans>,
         lead: (
           <Trans>
             Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and
@@ -518,11 +518,12 @@ function useContent(key: AssistantKey): Content {
 
     case "grok":
       return {
-        headline: <Trans>Grok flashcards that stick.</Trans>,
+        headline: <Trans>Create and practise flashcards with Grok Bot.</Trans>,
         lead: (
           <Trans>
-            Ask Grok for flashcards from a post, an article or the words you practised. They land in
-            Lymi, and spaced repetition brings each one back just as it starts to fade.
+            Tag Grok Bot on a post, hand it an article, or let it work through your notes while
+            you’re away. The cards land in Lymi, and spaced repetition brings each one back just as
+            it starts to fade.
           </Trans>
         ),
         demo: {
@@ -538,33 +539,33 @@ function useContent(key: AssistantKey): Content {
             { label: spanish, term: "la vivienda", meaning: msg`Housing` },
           ],
           lang: "es",
-          label: t`A Spanish post from X goes to Grok with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda.`,
+          label: t`A Spanish post from X goes to Grok Bot with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda.`,
         },
-        asksTitle: <Trans>Things to ask Grok.</Trans>,
+        asksTitle: <Trans>Things to ask Grok Bot.</Trans>,
         asks: [
           {
             id: "post",
-            use: <Trans>From a post or a thread</Trans>,
+            use: <Trans>From a post on X</Trans>,
             ask: <Trans>Turn this thread into cards.</Trans>,
             did: <Trans>Added 8 cards to Economics</Trans>,
+          },
+          {
+            id: "routine",
+            use: <Trans>Every morning</Trans>,
+            ask: <Trans>Every day at 8, tell me what’s due in Lymi.</Trans>,
+            did: <Trans>Today: 12 cards due, about five minutes</Trans>,
+          },
+          {
+            id: "folder",
+            use: <Trans>While you’re away</Trans>,
+            ask: <Trans>Go through my lecture notes and make cards from each file.</Trans>,
+            did: <Trans>Made Biology: 48 cards in 6 sections</Trans>,
           },
           {
             id: "talk",
             use: <Trans>After you practise</Trans>,
             ask: <Trans>Save the new Spanish words from our chat.</Trans>,
             did: <Trans>Added 6 cards to Spanish</Trans>,
-          },
-          {
-            id: "news",
-            use: <Trans>From the news</Trans>,
-            ask: <Trans>Make cards for the terms in this article.</Trans>,
-            did: <Trans>Added 5 cards to Climate</Trans>,
-          },
-          {
-            id: "quiz",
-            use: <Trans>For a quick quiz</Trans>,
-            ask: <Trans>Quiz me on my Japanese deck.</Trans>,
-            did: <Trans>Ten questions from your due cards</Trans>,
           },
           {
             id: "forget",
@@ -577,17 +578,17 @@ function useContent(key: AssistantKey): Content {
             ),
           },
           {
-            id: "due",
-            use: <Trans>On the way home</Trans>,
-            ask: <Trans>What should I review on the train?</Trans>,
-            did: <Trans>12 cards due, about five minutes</Trans>,
+            id: "team",
+            use: <Trans>For your team</Trans>,
+            ask: <Trans>Add the terms from today’s onboarding thread to our glossary deck.</Trans>,
+            did: <Trans>Added 12 cards to Team glossary</Trans>,
           },
         ],
         gap: {
-          title: <Trans>Grok explains it. Lymi makes it stick.</Trans>,
+          title: <Trans>Grok Bot does the work. Lymi makes it stick.</Trans>,
           body: (
             <Trans>
-              Grok has no flashcards of its own and nothing that brings a word back later. Lymi
+              Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi
               does: each card returns as it starts to fade, and the gap grows every time you
               remember it.
             </Trans>
@@ -596,11 +597,11 @@ function useContent(key: AssistantKey): Content {
           lang: "es",
         },
         connect: {
-          title: <Trans>Connect Grok in three steps.</Trans>,
+          title: <Trans>Connect Grok Bot in three steps.</Trans>,
           note: (
             <Trans>
-              xAI decides which Grok plans can add custom connectors. On a business account, an
-              admin may need to turn it on first.
+              Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Using Grok
+              on grok.com instead? The same address works under Connectors.
             </Trans>
           ),
           steps: [
@@ -609,8 +610,8 @@ function useContent(key: AssistantKey): Content {
               title: <Trans>Add a custom connector</Trans>,
               body: (
                 <Trans>
-                  Open grok.com/connectors, press New Connector, choose Custom and paste this
-                  address.
+                  In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it
+                  Lymi, pick Remote HTTPS and paste this address.
                 </Trans>
               ),
               after: <CopyAddress />,
@@ -620,21 +621,21 @@ function useContent(key: AssistantKey): Content {
               title: <Trans>Give it Lymi’s client ID</Trans>,
               body: (
                 <Trans>
-                  Grok asks for OAuth details. Paste the client ID from the setup guide, leave the
-                  secret empty and choose PKCE only.
+                  Paste the client ID from the setup guide as the OAuth Client ID, then choose Add
+                  plugin.
                 </Trans>
               ),
             },
             {
               id: "allow",
               title: <Trans>Say yes in Lymi</Trans>,
-              body: <Trans>Press Save & Connect, sign in to Lymi and allow it.</Trans>,
-              after: <Allow name="Grok" />,
+              body: <Trans>Choose Authenticate, sign in to Lymi and allow it.</Trans>,
+              after: <Allow name="Grok Bot" />,
             },
           ],
         },
-        faqTitle: <Trans>Questions about Grok and Lymi.</Trans>,
-        signUp: <Trans>Keep what you learn with Grok.</Trans>,
+        faqTitle: <Trans>Questions about Grok Bot and Lymi.</Trans>,
+        signUp: <Trans>Keep what you learn with Grok Bot.</Trans>,
       };
   }
 }

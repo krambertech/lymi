@@ -14,7 +14,7 @@ export const localizedPages = {
   estonian: "/languages/estonian",
   ...languagePages,
   assistants: "/ai-assistants",
-  grokAssistant: "/ai-assistants/grok",
+  grokAssistant: "/ai-assistants/grok-bot",
   claudeAssistant: "/ai-assistants/claude",
   chatgptAssistant: "/ai-assistants/chatgpt",
   geminiAssistant: "/ai-assistants/gemini",

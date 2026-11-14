@@ -41,7 +41,7 @@ export function llmsTxt(): string {
     `- [Explore](${SITE}/explore): published decks anyone can add, each with its own page.`,
     `- [Language learning](${SITE}/languages): keeping words from lessons, tutors and reading.`,
     `- [AI assistants](${SITE}/ai-assistants): connecting Claude, ChatGPT, Gemini, Cursor or Grok so they write cards.`,
-    `- [Lymi with Grok](${SITE}/ai-assistants/grok): making flashcards in Grok from posts, articles and practice, and connecting it as a custom connector.`,
+    `- [Lymi with Grok Bot](${SITE}/ai-assistants/grok-bot): making flashcards with Grok Bot from posts on X and articles, reviewing on a routine, and connecting it as a custom connector.`,
     `- [Lymi with Claude](${SITE}/ai-assistants/claude): making flashcards in Claude from PDFs, Projects and code, with Lymi's views in the chat, and connecting it on any plan.`,
     `- [Lymi with ChatGPT](${SITE}/ai-assistants/chatgpt): making flashcards in ChatGPT from photos of notes and chats, with Lymi in the sidebar, and connecting it as a custom MCP server.`,
     `- [Lymi with Gemini](${SITE}/ai-assistants/gemini): making flashcards in Gemini from notes and lectures, and connecting it in Gemini CLI or the Gemini app.`,

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { AtSign, Check } from "lucide-react";
+import { AtSign, Check, Repeat } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type CSSProperties, type ReactNode, type Ref, useRef } from "react";
 import { Lantern } from "../Lantern";
@@ -252,70 +252,71 @@ function GeminiCli({ hue }: { hue: number }) {
   );
 }
 
-const TALK_BEATS = { ask: 200, read: 900, question: 1800, answer: 3000, fix: 4200 };
+const ROUTINE_BEATS = { routine: 200, ran: 1200, due: 2000, quiz: 3000 };
 
-/** A word from the learner's deck, marked the way the cards mark AI text. */
-function DeckWord({ children }: { children: ReactNode }) {
-  return <mark className="rounded-xs bg-amber-soft px-0.5 text-inherit">{children}</mark>;
-}
-
-/** Grok: a Spanish conversation built on the learner's own deck. */
-function GrokPractice({ hue }: { hue: number }) {
+/** Grok Bot: a morning routine that checks Lymi and starts a quiz on what's due. */
+function GrokRoutine({ hue }: { hue: number }) {
   const { t } = useLingui();
-  const { ref, at, move } = useBeats(TALK_BEATS);
-  const you =
-    "max-w-[85%] self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-canvas";
+  const { ref, at, move } = useBeats(ROUTINE_BEATS);
   return (
     <Tray
       hue={hue}
       innerRef={ref}
-      label={t`Asked to practise with the Spanish deck, Grok reads it and asks about rent and housing using the learner’s words. The learner answers “el alquiler suba mucho” and Grok corrects it to “sube”.`}
+      label={t`A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”.`}
     >
-      <motion.p className={you} initial={false} animate={appear(at("ask"))} transition={move}>
-        <Trans>Let’s practise. Use the words from my Spanish deck.</Trans>
-      </motion.p>
+      <motion.div
+        className="flex items-center gap-3 rounded-2xl bg-plate p-3 edge-drop"
+        initial={false}
+        animate={appear(at("routine"))}
+        transition={move}
+      >
+        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-plate-nested text-ink-secondary">
+          <Repeat aria-hidden="true" className="size-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-medium text-ink">
+            <Trans>Every day at 8:00</Trans>
+          </span>
+          <span className="block truncate text-sm text-ink-secondary">
+            <Trans>Check what’s due in Lymi and quiz me</Trans>
+          </span>
+        </span>
+        <span aria-hidden="true" className="h-6 w-10 shrink-0 rounded-full bg-success p-0.5">
+          <span className="block size-5 translate-x-4 rounded-full bg-plate rtl:-translate-x-4" />
+        </span>
+      </motion.div>
       <motion.p
         className="flex h-8 w-fit items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-sm text-ink-secondary edge"
         initial={false}
-        animate={appear(at("read"))}
+        animate={appear(at("ran"))}
         transition={move}
       >
         <span className="grid size-6 place-items-center rounded-full bg-plate-nested">
           <Lantern className="size-4" />
         </span>
-        <Trans>Read your Spanish deck</Trans>
+        <Trans>Today, 8:00 · checked Lymi</Trans>
       </motion.p>
       <motion.div
         className="flex items-start gap-2.5"
         initial={false}
-        animate={appear(at("question"))}
+        animate={appear(at("due"))}
         transition={move}
       >
-        <Avatar name="Grok" />
-        <p lang="es" className="pt-1 text-md text-pretty text-ink">
-          ¿Qué pasa con el <DeckWord>alquiler</DeckWord> y la <DeckWord>vivienda</DeckWord> en tu
-          ciudad?
+        <Avatar name="Grok Bot" />
+        <p className="pt-1 text-md text-pretty text-ink">
+          <Trans>12 Spanish cards are due, about five minutes. Quick warm-up first?</Trans>
         </p>
       </motion.div>
-      <motion.p
-        lang="es"
-        className={you}
-        initial={false}
-        animate={appear(at("answer"))}
-        transition={move}
-      >
-        El alquiler suba mucho cada año.
-      </motion.p>
       <motion.div
         className="flex items-start gap-2.5"
         initial={false}
-        animate={appear(at("fix"))}
+        animate={appear(at("quiz"))}
         transition={move}
       >
-        <Avatar name="Grok" />
+        <Avatar name="Grok Bot" />
         <p className="pt-1 text-md text-pretty text-ink">
           <Trans>
-            Almost: el alquiler <b lang="es">sube</b>. <i lang="es">Suba</i> is the subjunctive.
+            How do you say <i>the strike</i>?
           </Trans>
         </p>
       </motion.div>
@@ -381,15 +382,16 @@ export function AssistantSignature({ assistant }: { assistant: AssistantKey }) {
         <FeatureSection
           demoFirst
           tinted
-          title={<Trans>Practise with your own words.</Trans>}
+          title={<Trans>Your review, on a routine.</Trans>}
           body={
             <Trans>
-              Grok can read your decks. Ask for a conversation built on the words you’re learning,
-              and it corrects you as you go. Save the new ones as cards when you’re done.
+              Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells
+              you what’s due and warms you up on the words that keep slipping. Its cloud computer
+              keeps running when your laptop is closed.
             </Trans>
           }
         >
-          <GrokPractice hue={hue} />
+          <GrokRoutine hue={hue} />
         </FeatureSection>
       );
   }

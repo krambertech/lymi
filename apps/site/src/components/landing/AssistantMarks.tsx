@@ -23,6 +23,7 @@ export type AssistantName =
   | "Codex"
   | "Gemini"
   | "Grok"
+  | "Grok Bot"
   | "Cursor"
   | "Other apps";
 
@@ -167,7 +168,9 @@ function Mark({ assistant, small }: { assistant: Assistant; small?: boolean | un
 
 /** One assistant's mark on its own, by name. */
 export function AssistantMark({ name }: { name: AssistantName }) {
-  const assistant = ASSISTANTS.find((a) => a.name === name);
+  // Grok Bot is xAI's app for Bots; it carries Grok's mark.
+  const mark = name === "Grok Bot" ? "Grok" : name;
+  const assistant = ASSISTANTS.find((a) => a.name === mark);
   return assistant ? <Mark assistant={assistant} /> : null;
 }
 

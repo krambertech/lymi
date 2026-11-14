@@ -1,10 +1,12 @@
-import { GROK_CLIENT_PATH } from "@lymi/core";
+import { CURSOR_CLIENT_PATH, GROK_CLIENT_PATH } from "@lymi/core";
 import { publicSiteUrl } from "../../../lib/origins";
 import { Code } from "../Code";
 import { ORIGIN } from "../origin";
 import { H2, Lead, NextLinks, Steps, StepTitle } from "../Prose";
 
 const CLIENT_ID = publicSiteUrl(GROK_CLIENT_PATH);
+/** Grok Bot signs in through Cursor's connector service, so it uses the client ID Lymi publishes for Cursor. */
+const BOT_CLIENT_ID = publicSiteUrl(CURSOR_CLIENT_PATH);
 
 export function McpGrok() {
   return (
@@ -51,6 +53,37 @@ export function McpGrok() {
         </div>
       </Steps>
 
+      <H2>Grok Bot</H2>
+      <p>
+        Grok Bot is xAI’s app for Bots that work in the background. It adds Lymi as a custom
+        connector in its desktop app, and every Bot you run can then use it.
+      </p>
+      <Steps>
+        <div>
+          <StepTitle>Add the connector</StepTitle>
+          <p>
+            In the Grok Bot app, open <strong>Connect apps</strong> and choose{" "}
+            <strong>Add a custom connector</strong> at the bottom. Name it Lymi, pick{" "}
+            <strong>Remote HTTPS</strong> and paste the server URL above.
+          </p>
+        </div>
+        <div>
+          <StepTitle>Give it Lymi’s client ID</StepTitle>
+          <p>
+            Paste this as the OAuth <strong>Client ID</strong> and leave the secret empty. Grok Bot
+            signs in through Cursor’s connector service, so it uses the ID Lymi publishes for
+            Cursor. Then choose <strong>Add plugin</strong>.
+          </p>
+          <Code lang="text" label="Client ID" code={BOT_CLIENT_ID} />
+        </div>
+        <div>
+          <StepTitle>Sign in</StepTitle>
+          <p>
+            Choose <strong>Authenticate</strong>. Your browser opens on Lymi. Sign in and approve
+            the connection.
+          </p>
+        </div>
+      </Steps>
       <H2>When it does not connect</H2>
       <ul>
         <li>

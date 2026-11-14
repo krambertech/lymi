@@ -347,6 +347,9 @@ msgstr "10 мин"
 msgid "12 cards due, about five minutes"
 msgstr "12 карточек к повторению, примерно пять минут"
 
+msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
+msgstr "К повторению 12 карточек по испанскому, примерно пять минут. Сначала короткая разминка?"
+
 msgid "135–145 mmol/L in adults"
 msgstr "135–145 ммоль/л у взрослых"
 
@@ -533,6 +536,9 @@ msgstr "Полная карточка за секунды"
 msgid "A glass of *water*, please."
 msgstr "Стакан *воды*, пожалуйста."
 
+msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
+msgstr "Рутина Grok Bot запускается каждый день в 8:00: проверь, что пора повторить в Lymi, и погоняй меня. Этим утром он нашёл 12 карточек по испанскому, примерно на пять минут, и спросил, как будет «забастовка»."
+
 msgid "A hobby"
 msgstr "Хобби"
 
@@ -633,8 +639,8 @@ msgstr "Круглый хлеб"
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
 
-msgid "A Spanish post from X goes to Grok with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
-msgstr "Пост на испанском из X отправляется в Grok с просьбой «Сделай из этого поста карточки по испанскому». Grok использует Lymi и добавляет четыре карточки в колоду по испанскому: el alquiler, subir, la huelga и la vivienda."
+msgid "A Spanish post from X goes to Grok Bot with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
+msgstr "Пост на испанском из X отправляется в Grok Bot с просьбой «Сделай из этого поста карточки по испанскому». Он использует Lymi и добавляет четыре карточки в колоду по испанскому: el alquiler, subir, la huelga и la vivienda."
 
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "Стандарт, позволяющий войти один раз и передать эту личность другим сервисам"
@@ -804,6 +810,9 @@ msgstr "Добавь термины из README.md в мою колоду по K
 msgid "Add the terms from this README to my Kubernetes deck."
 msgstr "Добавь термины из этого README в мою колоду по Kubernetes."
 
+msgid "Add the terms from today’s onboarding thread to our glossary deck."
+msgstr "Добавь термины из сегодняшнего треда про онбординг в нашу колоду-глоссарий."
+
 msgid "Add to Lymi"
 msgstr "Добавить в Lymi"
 
@@ -821,6 +830,9 @@ msgstr "Добавил 11 карточек в колоду «Kubernetes»."
 
 msgid "Added 12 cards to Chemistry"
 msgstr "Добавил 12 карточек в колоду «Химия»"
+
+msgid "Added 12 cards to Team glossary"
+msgstr "Добавил 12 карточек в колоду «Глоссарий команды»"
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Добавил 14 карточек в «Биологию» с определениями со слайдов. Пропустил «диффузию», она у тебя уже есть."
@@ -854,9 +866,6 @@ msgstr "Добавил 4 карточки в твою колоду «Фарма�
 
 msgid "Added 4 cards to your Spanish deck."
 msgstr "Добавил 4 карточки в твою колоду по испанскому."
-
-msgid "Added 5 cards to Climate"
-msgstr "Добавил 5 карточек в колоду «Климат»"
 
 msgid "Added 6 cards to Estonian A2"
 msgstr "Добавлено 6 карточек в Estonian A2"
@@ -1038,9 +1047,6 @@ msgstr "Разрешить"
 msgid "almost there"
 msgstr "почти приехали"
 
-msgid "Almost: el alquiler <0>sube</0>. <1>Suba</1> is the subjunctive."
-msgstr "Почти: el alquiler <0>sube</0>. <1>Suba</1> — это сослагательное наклонение."
-
 msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 msgstr "Почти! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: после «dann» глагол стоит на втором месте."
 
@@ -1101,9 +1107,6 @@ msgstr "Любой ход ухудшает твою позицию"
 
 msgid "Any plan or workspace that can add a custom MCP server in ChatGPT. OpenAI decides which ones can, and Lymi’s setup guide links its current list."
 msgstr "Любой тариф или рабочее пространство, где в ChatGPT можно добавить свой MCP-сервер. Какие именно, решает OpenAI, а в инструкции по настройке Lymi есть ссылка на актуальный список."
-
-msgid "Any plan that can add a custom connector at grok.com/connectors. xAI decides which plans can. On a business account, an admin may need to turn the connector on first."
-msgstr "Любой тариф, на котором можно добавить свой коннектор на grok.com/connectors. Какие это тарифы, решает xAI. В бизнес-аккаунте коннектор, возможно, сначала должен включить администратор."
 
 msgid "Anyone with the link can join this deck."
 msgstr "Присоединиться к колоде может любой, у кого есть ссылка."
@@ -1177,9 +1180,6 @@ msgstr "Попроси карточки"
 msgid "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Попроси Gemini сделать флеш-карточки из заметок, PDF или веб-страницы. Они попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
 
-msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
-msgstr "Попроси Grok сделать флеш-карточки из поста, статьи или слов, отработанных в разговоре. Они попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
-
 msgid "Ask what to review."
 msgstr "Спроси, что повторить."
 
@@ -1188,9 +1188,6 @@ msgstr "Вопросы в обе стороны"
 
 msgid "Asked how the Anatomy deck is doing, Claude shows a Lymi view: 212 cards, 31 due today, 140 known, 41 learning and 31 new."
 msgstr "На вопрос, как дела у колоды «Анатомия», Claude показывает окно Lymi: 212 карточек, 31 к повторению сегодня, 140 выучено, 41 в изучении и 31 новая."
-
-msgid "Asked to practise with the Spanish deck, Grok reads it and asks about rent and housing using the learner’s words. The learner answers “el alquiler suba mucho” and Grok corrects it to “sube”."
-msgstr "В ответ на просьбу попрактиковаться с колодой по испанскому Grok читает её и спрашивает об аренде и жилье словами ученика. Ученик отвечает «el alquiler suba mucho», и Grok исправляет на «sube»."
 
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "На вопрос «Хочешь выиграть в лотерею?» — «Magari!»"
@@ -1402,8 +1399,11 @@ msgstr "Умеет ли Claude делать флеш-карточки?"
 msgid "Can Gemini make flashcards?"
 msgstr "Умеет ли Gemini делать флеш-карточки?"
 
-msgid "Can Grok make flashcards?"
-msgstr "Умеет ли Grok делать флеш-карточки?"
+msgid "Can Grok Bot make flashcards?"
+msgstr "Умеет ли Grok Bot делать флеш-карточки?"
+
+msgid "Can Grok Bot quiz me every day?"
+msgstr "Может ли Grok Bot гонять меня каждый день?"
 
 msgid "Can I bring my Anki deck?"
 msgstr "Можно перенести мою колоду из Anki?"
@@ -1419,9 +1419,6 @@ msgstr "Можно мне кофе?"
 
 msgid "Can I have your *phone* number?"
 msgstr "Дашь свой номер *телефона*?"
-
-msgid "Can I learn a language with Grok and Lymi?"
-msgstr "Можно ли учить язык с Grok и Lymi?"
 
 msgid "Can I learn Estonian from Russian or Ukrainian?"
 msgstr "Можно ли учить эстонский с русского или украинского?"
@@ -1551,9 +1548,6 @@ msgstr "Что нового"
 msgid "Changelog · Lymi"
 msgstr "Что нового в Lymi"
 
-msgid "ChatGPT flashcards that stick."
-msgstr "Флеш-карточки из ChatGPT, которые не забываются."
-
 msgid "ChatGPT flashcards with spaced repetition · Lymi"
 msgstr "Флеш-карточки из ChatGPT с интервальным повторением · Lymi"
 
@@ -1565,6 +1559,9 @@ msgstr "Свои карточки ChatGPT умеет переворачиват�
 
 msgid "Check the cards in Lymi"
 msgstr "Проверь карточки в Lymi"
+
+msgid "Check what’s due in Lymi and quiz me"
+msgstr "Проверь, что пора повторить в Lymi, и погоняй меня"
 
 msgid "Checked {checked}"
 msgstr "Проверено {checked}"
@@ -1592,6 +1589,9 @@ msgstr "Выбери оценку, чтобы перейти к следующе
 
 msgid "Choose a grade to move to the next question."
 msgstr "Выбери оценку, чтобы перейти к следующему вопросу."
+
+msgid "Choose Authenticate, sign in to Lymi and allow it."
+msgstr "Выбери Authenticate, войди в Lymi и разреши доступ."
 
 msgid "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
 msgstr "Выбери, сколько карточек в день. Lymi будет возвращать каждую как раз тогда, когда она начнёт забываться."
@@ -1643,9 +1643,6 @@ msgstr "Claude · из твоих заметок с урока"
 
 msgid "Claude can quiz you today, but it has no deck that remembers you next week. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "Claude может проверить тебя сегодня, но у него нет колоды, которая вспомнит о тебе через неделю. А у Lymi есть: каждая карточка возвращается, когда начинает забываться, и интервал растёт каждый раз, когда ты её вспоминаешь."
-
-msgid "Claude flashcards that stick."
-msgstr "Флеш-карточки из Claude, которые не забываются."
 
 msgid "Claude flashcards with spaced repetition · Lymi"
 msgstr "Флеш-карточки из Claude с интервальным повторением · Lymi"
@@ -1746,11 +1743,11 @@ msgstr "Подключи Gemini за три шага."
 msgid "Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free."
 msgstr "Подключи Gemini к Lymi и превращай заметки, PDF и веб-страницы во флеш-карточки. Lymi вернёт каждую карточку как раз тогда, когда она начнёт забываться. Бесплатно."
 
-msgid "Connect Grok in three steps."
-msgstr "Подключи Grok за три шага."
+msgid "Connect Grok Bot in three steps."
+msgstr "Подключи Grok Bot за три шага."
 
-msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
-msgstr "Подключи Grok к Lymi и превращай посты, статьи и заметки во флеш-карточки. Lymi вернёт каждую карточку как раз тогда, когда она начнёт забываться. Бесплатно."
+msgid "Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade."
+msgstr "Подключи Grok Bot к Lymi и превращай посты из X, статьи и заметки во флеш-карточки, даже по расписанию. Lymi вернёт каждую карточку как раз тогда, когда она начнёт забываться."
 
 msgid "Connect in three steps."
 msgstr "Подключи за три шага."
@@ -1819,6 +1816,18 @@ msgstr "Уютный и душевный; в хорошей компании"
 
 msgid "Cramming fades. Spacing lasts."
 msgstr "Зазубренное забывается. Повторённое с паузами остаётся."
+
+msgid "Create and practise flashcards with ChatGPT."
+msgstr "Создавай и повторяй флеш-карточки с ChatGPT."
+
+msgid "Create and practise flashcards with Claude."
+msgstr "Создавай и повторяй флеш-карточки с Claude."
+
+msgid "Create and practise flashcards with Gemini."
+msgstr "Создавай и повторяй флеш-карточки с Gemini."
+
+msgid "Create and practise flashcards with Grok Bot."
+msgstr "Создавай и повторяй флеш-карточки с Grok Bot."
 
 msgid "Czech"
 msgstr "Чешский"
@@ -2222,6 +2231,12 @@ msgstr "Каждая карточка произносит своё слово �
 msgid "Every day"
 msgstr "Каждый день"
 
+msgid "Every day at 8, tell me what’s due in Lymi."
+msgstr "Каждый день в 8 говори мне, что пора повторить в Lymi."
+
+msgid "Every day at 8:00"
+msgstr "Каждый день в 8:00"
+
 msgid "Every detail in a story should earn its place."
 msgstr "В сюжете не должно быть лишних деталей."
 
@@ -2230,6 +2245,9 @@ msgstr "Все языки"
 
 msgid "Every letter counts"
 msgstr "Каждая буква важна"
+
+msgid "Every morning"
+msgstr "Каждое утро"
 
 msgid "Every morning I read a book on the *train*."
 msgstr "Каждое утро я читаю книгу в *поезде*."
@@ -2461,9 +2479,6 @@ msgstr "Так говорят кассиру, строителю или друг
 msgid "For a hard card"
 msgstr "Для трудной карточки"
 
-msgid "For a quick quiz"
-msgstr "Для быстрой проверки"
-
 msgid "For a test"
 msgstr "Для экзамена"
 
@@ -2509,6 +2524,9 @@ msgstr "Для тестов на гражданство Германии, США
 
 msgid "For the ones that slip"
 msgstr "Для того, что забывается"
+
+msgid "For your team"
+msgstr "Для команды"
 
 msgid "Forgot"
 msgstr "Не помню"
@@ -2606,8 +2624,8 @@ msgstr "Из PDF в папке"
 msgid "From a photo of your notes"
 msgstr "Из фото заметок"
 
-msgid "From a post or a thread"
-msgstr "Из поста или треда"
+msgid "From a post on X"
+msgstr "Из поста в X"
 
 msgid "From a web page"
 msgstr "С веб-страницы"
@@ -2627,9 +2645,6 @@ msgstr "С сегодняшнего дня до даты теста"
 msgid "From the chat you just had"
 msgstr "Из только что прошедшего разговора"
 
-msgid "From the news"
-msgstr "Из новостей"
-
 msgid "From your notes"
 msgstr "Из твоих заметок"
 
@@ -2644,9 +2659,6 @@ msgstr "Фуригана, пиньинь, ударения."
 
 msgid "Future, “I”"
 msgstr "Будущее время, «я»"
-
-msgid "Gemini flashcards that stick."
-msgstr "Флеш-карточки из Gemini, которые не забываются."
 
 msgid "Gemini flashcards with spaced repetition · Lymi"
 msgstr "Флеш-карточки из Gemini с интервальным повторением · Lymi"
@@ -2732,6 +2744,9 @@ msgstr "Охотно"
 msgid "Go home"
 msgstr "На главную"
 
+msgid "Go through my lecture notes and make cards from each file."
+msgstr "Пройдись по моим конспектам лекций и сделай карточки из каждого файла."
+
 msgid "Goal reached"
 msgstr "Цель достигнута"
 
@@ -2782,26 +2797,26 @@ msgstr "Грамматика"
 msgid "Greetings"
 msgstr "Приветствия"
 
-msgid "Grok asks for OAuth details. Paste the client ID from the setup guide, leave the secret empty and choose PKCE only."
-msgstr "Grok попросит данные OAuth. Вставь client ID из инструкции по настройке, секрет оставь пустым и выбери только PKCE."
+msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
+msgstr "Grok Bot может проверять Lymi по расписанию. Сделай это рутиной, и каждое утро он будет говорить, что пора повторить, и разминать тебя на словах, которые постоянно вылетают из головы. Его облачный компьютер работает, даже когда ноутбук закрыт."
 
-msgid "Grok can read your decks. Ask for a conversation built on the words you’re learning, and it corrects you as you go. Save the new ones as cards when you’re done."
-msgstr "Grok может читать твои колоды. Попроси его поговорить с тобой на словах, которые ты учишь, и он будет поправлять тебя по ходу. А в конце сохрани новые слова как карточки."
+msgid "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Grok Bot умеет писать флеш-карточки, но у него нет своей колоды и ничего, что вернуло бы карточку позже. Подключи Lymi, и Grok Bot будет добавлять карточки в твои колоды, где интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
 
-msgid "Grok explains it. Lymi makes it stick."
-msgstr "Grok объясняет. Lymi помогает запомнить."
+msgid "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Lymi is free on any of them."
+msgstr "Grok Bot входит в X Premium, Super и Ultra, а также в платные планы Cursor. Lymi бесплатен с любым из них."
 
-msgid "Grok flashcards that stick."
-msgstr "Флеш-карточки из Grok, которые не забываются."
+msgid "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Using Grok on grok.com instead? The same address works under Connectors."
+msgstr "Grok Bot входит в X Premium, Super и Ultra, а также в платные планы Cursor. Пользуешься Grok на grok.com? Тот же адрес работает в разделе Connectors."
 
-msgid "Grok flashcards with spaced repetition · Lymi"
-msgstr "Флеш-карточки из Grok с интервальным повторением · Lymi"
+msgid "Grok Bot does the work. Lymi makes it stick."
+msgstr "Grok Bot делает работу. Lymi помогает запомнить."
 
-msgid "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
-msgstr "У Grok нет своих флеш-карточек и ничего, что вернуло бы слово позже. А у Lymi есть: каждая карточка возвращается, когда начинает забываться, и интервал растёт каждый раз, когда ты её вспоминаешь."
+msgid "Grok Bot flashcards with spaced repetition · Lymi"
+msgstr "Флеш-карточки из Grok Bot с интервальным повторением · Lymi"
 
-msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
-msgstr "Grok напишет флеш-карточки прямо в чате, но у него нет режима карточек и ничего, что вернуло бы карточку позже. Подключи Lymi, и Grok будет добавлять карточки в твои колоды, где интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
+msgid "Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
+msgstr "У Grok Bot нет своих флеш-карточек и ничего, что вернуло бы слово позже. А у Lymi есть: каждая карточка возвращается, когда начинает забываться, и интервал растёт каждый раз, когда ты её вспоминаешь."
 
 msgid "habeas corpus"
 msgstr "habeas corpus"
@@ -2921,6 +2936,9 @@ msgstr "Жильё"
 
 msgid "How do you *read* this kanji?"
 msgstr "Как *читается* этот иероглиф?"
+
+msgid "How do you say <0>the strike</0>?"
+msgstr "Как будет <0>забастовка</0>?"
 
 msgid "How do you say it?"
 msgstr "Как это сказать?"
@@ -3302,6 +3320,9 @@ msgstr "Летом *ночи* светлые."
 msgid "In the end"
 msgstr "В итоге"
 
+msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
+msgstr "В приложении Grok Bot открой Connect apps и выбери Add a custom connector. Назови его Lymi, выбери Remote HTTPS и вставь этот адрес."
+
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
 
@@ -3325,6 +3346,9 @@ msgstr "Mac с Intel? Скачать версию для Intel"
 
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC не публикует свои вопросы. Это тренировочные вопросы по каждой главе официального пособия."
+
+msgid "Is Grok Bot the same as Grok?"
+msgstr "Grok Bot и Grok — это одно и то же?"
 
 msgid "Is it for schools?"
 msgstr "Это для школ?"
@@ -3559,8 +3583,8 @@ msgstr "Запоминай то, что узнаёшь с Claude."
 msgid "Keep what you learn with Gemini."
 msgstr "Запоминай то, что узнаёшь с Gemini."
 
-msgid "Keep what you learn with Grok."
-msgstr "Запоминай то, что узнаёшь с Grok."
+msgid "Keep what you learn with Grok Bot."
+msgstr "Запоминай то, что узнаёшь с Grok Bot."
 
 msgid "Key"
 msgstr "Ключ"
@@ -3721,9 +3745,6 @@ msgstr "Увидимся *завтра*."
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Давай попрактикуемся. Используй немецкие слова из моей колоды."
 
-msgid "Let’s practise. Use the words from my Spanish deck."
-msgstr "Давай попрактикуемся. Используй слова из моей колоды по испанскому."
-
 msgid "library"
 msgstr "библиотека"
 
@@ -3868,8 +3889,8 @@ msgstr "Lymi с Claude"
 msgid "Lymi with Gemini"
 msgstr "Lymi с Gemini"
 
-msgid "Lymi with Grok"
-msgstr "Lymi с Grok"
+msgid "Lymi with Grok Bot"
+msgstr "Lymi с Grok Bot"
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi подходит для всего, что хочешь запомнить."
@@ -3894,6 +3915,9 @@ msgstr "macOS 13 или новее"
 
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Создана колода <0>Lisboa a dois</0>: 42 карточки в 5 разделах"
+
+msgid "Made Biology: 48 cards in 6 sections"
+msgstr "Создал колоду «Биология»: 48 карточек в 6 разделах"
 
 msgid "Made by Lymi"
 msgstr "От Lymi"
@@ -3924,9 +3948,6 @@ msgstr "Сделай карточки для 20 препаратов из мое
 
 msgid "Make cards for the Rust ownership rules we hit today."
 msgstr "Сделай карточки по правилам владения в Rust, на которые мы сегодня наткнулись."
-
-msgid "Make cards for the terms in this article."
-msgstr "Сделай карточки по терминам из этой статьи."
 
 msgid "Make cards from my biology notes, one per term."
 msgstr "Сделай карточки из моего конспекта по биологии, по одной на каждый термин."
@@ -4264,6 +4285,9 @@ msgstr "Нет. ChatGPT добавляет карточки прямо в Lymi, 
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "Нет. Повторения каждого ученика видит только сам ученик. Lymi — место для практики, а не для оценок."
 
+msgid "No. Grok Bot is xAI’s app for Bots that work in the background, on your computer, your phone and X. Grok on grok.com connects to Lymi too, under Connectors."
+msgstr "Нет. Grok Bot — это приложение xAI для ботов, которые работают в фоне: на компьютере, в телефоне и в X. Grok на grok.com тоже подключается к Lymi, в разделе Connectors."
+
 msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
 msgstr "Нет. Lymi не читает твои уроки ни на одном сайте с репетиторами. Ты копируешь чат или заметки либо делаешь фото. Потом Умное добавление или твой ассистент превращает их в карточки."
 
@@ -4361,9 +4385,6 @@ msgstr "Ладно"
 msgid "Older"
 msgstr "Раньше"
 
-msgid "On the way home"
-msgstr "По дороге домой"
-
 msgid "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
 msgstr "Как только колода попадает в твой Lymi, он возвращает каждую карточку как раз тогда, когда она начинает забываться, — несколько минут в день."
 
@@ -4420,9 +4441,6 @@ msgstr "Только ты, если не поделишься колодой. К
 
 msgid "Open by design."
 msgstr "Открытый по замыслу."
-
-msgid "Open grok.com/connectors, press New Connector, choose Custom and paste this address."
-msgstr "Открой grok.com/connectors, нажми New Connector, выбери Custom и вставь этот адрес."
 
 msgid "Open Lymi"
 msgstr "Открыть Lymi"
@@ -4498,6 +4516,9 @@ msgstr "Партитив"
 
 msgid "parts: reading, writing, listening and speaking"
 msgstr "части: чтение, письмо, аудирование и говорение"
+
+msgid "Paste the client ID from the setup guide as the OAuth Client ID, then choose Add plugin."
+msgstr "Вставь client ID из инструкции в поле OAuth Client ID, затем выбери Add plugin."
 
 msgid "Paste the text or attach the photo and ask: “Add the new words to my Spanish deck in Lymi.” Say which deck, or ask it to make one."
 msgstr "Вставь текст или прикрепи фото и попроси: «Добавь новые слова в мою колоду „Испанский“ в Lymi». Назови колоду или попроси создать новую."
@@ -4700,9 +4721,6 @@ msgstr "Нажми + в поле сообщения, выбери Connectors и 
 msgid "Press ⌃⌥L on your Mac and the card is saved."
 msgstr "Нажми ⌃⌥L на Mac, и карточка сохранена."
 
-msgid "Press Save & Connect, sign in to Lymi and allow it."
-msgstr "Нажми Save & Connect, войди в Lymi и разреши доступ."
-
 msgid "price elasticity"
 msgstr "эластичность спроса"
 
@@ -4770,8 +4788,8 @@ msgstr "Вопросы о Claude и Lymi."
 msgid "Questions about Gemini and Lymi."
 msgstr "Вопросы о Gemini и Lymi."
 
-msgid "Questions about Grok and Lymi."
-msgstr "Вопросы о Grok и Lymi."
+msgid "Questions about Grok Bot and Lymi."
+msgstr "Вопросы о Grok Bot и Lymi."
 
 msgid "questions an officer asks aloud"
 msgstr "вопросов, которые офицер задаёт устно"
@@ -4839,9 +4857,6 @@ msgstr "Хорошее нунчи — уловить настроение, по�
 msgid "Quickstart"
 msgstr "Быстрый старт"
 
-msgid "Quiz me on my Japanese deck."
-msgstr "Погоняй меня по колоде японского."
-
 msgid "Quiz me on the cases I keep forgetting."
 msgstr "Погоняй меня по судебным делам, которые я всё время забываю."
 
@@ -4865,9 +4880,6 @@ msgstr "Прочитай значение и сначала вспомни те�
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
-
-msgid "Read your Spanish deck"
-msgstr "Прочитана колода по испанскому"
 
 msgid "Reading"
 msgstr "Чтение"
@@ -5591,6 +5603,9 @@ msgstr "Пометь всё из главы 4 тегом «экзамен»."
 msgid "Tag everything that’s on Friday’s anatomy exam."
 msgstr "Отметь тегом всё, что будет на экзамене по анатомии в пятницу."
 
+msgid "Tag Grok Bot on a post, hand it an article, or let it work through your notes while you’re away. The cards land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Отметь Grok Bot под постом, дай ему статью или поручи пройтись по твоим заметкам, пока тебя нет. Карточки попадут в Lymi, а интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
+
 msgid "Tag: {verb}"
 msgstr "Тег: {verb}"
 
@@ -6134,8 +6149,8 @@ msgstr "О чём попросить Claude."
 msgid "Things to ask Gemini."
 msgstr "О чём попросить Gemini."
 
-msgid "Things to ask Grok."
-msgstr "О чём попросить Grok."
+msgid "Things to ask Grok Bot."
+msgstr "О чём попросить Grok Bot."
 
 msgid "This *apple* is very sweet."
 msgstr "Это *яблоко* очень сладкое."
@@ -6406,6 +6421,12 @@ msgstr "Работать"
 
 msgid "Today"
 msgstr "Сегодня"
+
+msgid "Today, 8:00 · checked Lymi"
+msgstr "Сегодня, 8:00 · проверил Lymi"
+
+msgid "Today: 12 cards due, about five minutes"
+msgstr "Сегодня: 12 карточек к повторению, примерно пять минут"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сегодняшняя страница из моего учебника. Добавь новые слова в мою японскую колоду."
@@ -6791,9 +6812,6 @@ msgstr "А если он ошибётся?"
 msgid "What it’s for"
 msgstr "Для чего она"
 
-msgid "What should I review on the train?"
-msgstr "Что мне повторить в поезде?"
-
 msgid "What should I review tonight?"
 msgstr "Что мне повторить сегодня вечером?"
 
@@ -6896,9 +6914,6 @@ msgstr "На каких тарифах ChatGPT можно подключить L
 msgid "Which deck should I add?"
 msgstr "Какую колоду добавить?"
 
-msgid "Which Grok plans can connect Lymi?"
-msgstr "На каких тарифах Grok можно подключить Lymi?"
-
 msgid "Which language are the translations in?"
 msgstr "На каком языке перевод?"
 
@@ -6917,6 +6932,9 @@ msgstr "Какая пара краёв находится в Восточной 
 msgid "Which part of an IP address names the network"
 msgstr "Какая часть IP-адреса обозначает сеть"
 
+msgid "Which plans include Grok Bot?"
+msgstr "В какие планы входит Grok Bot?"
+
 msgid "Which questions come up"
 msgstr "Какие вопросы попадаются"
 
@@ -6928,6 +6946,9 @@ msgstr "О каких словах спросить Марту в пятницу
 
 msgid "While you code"
 msgstr "Пока пишешь код"
+
+msgid "While you’re away"
+msgstr "Пока тебя нет"
 
 msgid "Who can see the cards I make?"
 msgstr "Кто видит карточки, которые я создаю?"
@@ -7049,9 +7070,6 @@ msgstr "Письмо"
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Записывается иероглифами «дерево», «просачиваться» и «солнце»."
 
-msgid "xAI decides which Grok plans can add custom connectors. On a business account, an admin may need to turn it on first."
-msgstr "Какие тарифы Grok могут добавлять свои коннекторы, решает xAI. В бизнес-аккаунте его, возможно, сначала должен включить администратор."
-
 msgid "Yes"
 msgstr "Да"
 
@@ -7136,11 +7154,11 @@ msgstr "Да. Экспортируй их из Pleco текстовым файл
 msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
 msgstr "Да. Gemini делает флеш-карточки и тесты, а Gemini Notebook — по твоим источникам. Но по расписанию они не возвращаются. Подключи Lymi, и Gemini добавит их в твои колоды, где интервальное повторение вернёт каждую как раз тогда, когда она начнёт забываться."
 
-msgid "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."
-msgstr "Да. Grok может читать твои колоды, поэтому сможет вести разговор на словах, которые ты учишь, а новые слова, которым он тебя научит, сохранит как карточки."
-
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Да. Lymi работает в браузере на телефоне и компьютере, его можно добавить на главный экран. Карточки и прогресс на обоих одинаковые."
+
+msgid "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
+msgstr "Да. Сделай это рутиной: Grok Bot по расписанию проверяет, что пора повторить в Lymi, и гоняет тебя по этому. А повторяешь ты всё равно в Lymi, который следит за расписанием."
 
 msgid "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
 msgstr "Да. Открой Lymi один раз, пока есть интернет, а дальше можно повторять без связи. Ответы отправятся, как только ты снова будешь онлайн."
@@ -7255,6 +7273,9 @@ msgstr "Твоя цель и дни подряд"
 
 msgid "Your own app"
 msgstr "Своё приложение"
+
+msgid "Your review, on a routine."
+msgstr "Повторение по расписанию."
 
 msgid "Your rights and choices"
 msgstr "Твои права и выбор"

@@ -347,6 +347,9 @@ msgstr "10 min"
 msgid "12 cards due, about five minutes"
 msgstr "12 cards due, about five minutes"
 
+msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
+msgstr "12 Spanish cards are due, about five minutes. Quick warm-up first?"
+
 msgid "135–145 mmol/L in adults"
 msgstr "135–145 mmol/L in adults"
 
@@ -533,6 +536,9 @@ msgstr "A full card in seconds"
 msgid "A glass of *water*, please."
 msgstr "A glass of *water*, please."
 
+msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
+msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
+
 msgid "A hobby"
 msgstr "A hobby"
 
@@ -633,8 +639,8 @@ msgstr "A round loaf of bread"
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
 
-msgid "A Spanish post from X goes to Grok with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
-msgstr "A Spanish post from X goes to Grok with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
+msgid "A Spanish post from X goes to Grok Bot with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
+msgstr "A Spanish post from X goes to Grok Bot with “Make Spanish flashcards from this post.” It uses Lymi and adds four cards to a Spanish deck: el alquiler, subir, la huelga and la vivienda."
 
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "A standard for signing in once and passing that identity to other services"
@@ -804,6 +810,9 @@ msgstr "Add the terms from README.md to my Kubernetes deck."
 msgid "Add the terms from this README to my Kubernetes deck."
 msgstr "Add the terms from this README to my Kubernetes deck."
 
+msgid "Add the terms from today’s onboarding thread to our glossary deck."
+msgstr "Add the terms from today’s onboarding thread to our glossary deck."
+
 msgid "Add to Lymi"
 msgstr "Add to Lymi"
 
@@ -821,6 +830,9 @@ msgstr "Added 11 cards to Kubernetes."
 
 msgid "Added 12 cards to Chemistry"
 msgstr "Added 12 cards to Chemistry"
+
+msgid "Added 12 cards to Team glossary"
+msgstr "Added 12 cards to Team glossary"
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
@@ -854,9 +866,6 @@ msgstr "Added 4 cards to your Pharmacology deck."
 
 msgid "Added 4 cards to your Spanish deck."
 msgstr "Added 4 cards to your Spanish deck."
-
-msgid "Added 5 cards to Climate"
-msgstr "Added 5 cards to Climate"
 
 msgid "Added 6 cards to Estonian A2"
 msgstr "Added 6 cards to Estonian A2"
@@ -1038,9 +1047,6 @@ msgstr "Allow"
 msgid "almost there"
 msgstr "almost there"
 
-msgid "Almost: el alquiler <0>sube</0>. <1>Suba</1> is the subjunctive."
-msgstr "Almost: el alquiler <0>sube</0>. <1>Suba</1> is the subjunctive."
-
 msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 msgstr "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 
@@ -1101,9 +1107,6 @@ msgstr "Any move you make makes your position worse"
 
 msgid "Any plan or workspace that can add a custom MCP server in ChatGPT. OpenAI decides which ones can, and Lymi’s setup guide links its current list."
 msgstr "Any plan or workspace that can add a custom MCP server in ChatGPT. OpenAI decides which ones can, and Lymi’s setup guide links its current list."
-
-msgid "Any plan that can add a custom connector at grok.com/connectors. xAI decides which plans can. On a business account, an admin may need to turn the connector on first."
-msgstr "Any plan that can add a custom connector at grok.com/connectors. xAI decides which plans can. On a business account, an admin may need to turn the connector on first."
 
 msgid "Anyone with the link can join this deck."
 msgstr "Anyone with the link can join this deck."
@@ -1177,9 +1180,6 @@ msgstr "Ask for cards"
 msgid "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 
-msgid "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
-msgstr "Ask Grok for flashcards from a post, an article or the words you practised. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
-
 msgid "Ask what to review."
 msgstr "Ask what to review."
 
@@ -1188,9 +1188,6 @@ msgstr "Asked both ways"
 
 msgid "Asked how the Anatomy deck is doing, Claude shows a Lymi view: 212 cards, 31 due today, 140 known, 41 learning and 31 new."
 msgstr "Asked how the Anatomy deck is doing, Claude shows a Lymi view: 212 cards, 31 due today, 140 known, 41 learning and 31 new."
-
-msgid "Asked to practise with the Spanish deck, Grok reads it and asks about rent and housing using the learner’s words. The learner answers “el alquiler suba mucho” and Grok corrects it to “sube”."
-msgstr "Asked to practise with the Spanish deck, Grok reads it and asks about rent and housing using the learner’s words. The learner answers “el alquiler suba mucho” and Grok corrects it to “sube”."
 
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "Asked whether you’d like to win the lottery: “Magari!”"
@@ -1402,8 +1399,11 @@ msgstr "Can Claude make flashcards?"
 msgid "Can Gemini make flashcards?"
 msgstr "Can Gemini make flashcards?"
 
-msgid "Can Grok make flashcards?"
-msgstr "Can Grok make flashcards?"
+msgid "Can Grok Bot make flashcards?"
+msgstr "Can Grok Bot make flashcards?"
+
+msgid "Can Grok Bot quiz me every day?"
+msgstr "Can Grok Bot quiz me every day?"
 
 msgid "Can I bring my Anki deck?"
 msgstr "Can I bring my Anki deck?"
@@ -1419,9 +1419,6 @@ msgstr "Can I get a coffee?"
 
 msgid "Can I have your *phone* number?"
 msgstr "Can I have your *phone* number?"
-
-msgid "Can I learn a language with Grok and Lymi?"
-msgstr "Can I learn a language with Grok and Lymi?"
 
 msgid "Can I learn Estonian from Russian or Ukrainian?"
 msgstr "Can I learn Estonian from Russian or Ukrainian?"
@@ -1551,9 +1548,6 @@ msgstr "Changelog"
 msgid "Changelog · Lymi"
 msgstr "Changelog · Lymi"
 
-msgid "ChatGPT flashcards that stick."
-msgstr "ChatGPT flashcards that stick."
-
 msgid "ChatGPT flashcards with spaced repetition · Lymi"
 msgstr "ChatGPT flashcards with spaced repetition · Lymi"
 
@@ -1565,6 +1559,9 @@ msgstr "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of
 
 msgid "Check the cards in Lymi"
 msgstr "Check the cards in Lymi"
+
+msgid "Check what’s due in Lymi and quiz me"
+msgstr "Check what’s due in Lymi and quiz me"
 
 msgid "Checked {checked}"
 msgstr "Checked {checked}"
@@ -1592,6 +1589,9 @@ msgstr "Choose a grade to move to the next card."
 
 msgid "Choose a grade to move to the next question."
 msgstr "Choose a grade to move to the next question."
+
+msgid "Choose Authenticate, sign in to Lymi and allow it."
+msgstr "Choose Authenticate, sign in to Lymi and allow it."
 
 msgid "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
 msgstr "Choose how many cards a day. Lymi brings each one back just as it starts to fade."
@@ -1643,9 +1643,6 @@ msgstr "Claude · from your lesson notes"
 
 msgid "Claude can quiz you today, but it has no deck that remembers you next week. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "Claude can quiz you today, but it has no deck that remembers you next week. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
-
-msgid "Claude flashcards that stick."
-msgstr "Claude flashcards that stick."
 
 msgid "Claude flashcards with spaced repetition · Lymi"
 msgstr "Claude flashcards with spaced repetition · Lymi"
@@ -1746,11 +1743,11 @@ msgstr "Connect Gemini in three steps."
 msgid "Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free."
 msgstr "Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free."
 
-msgid "Connect Grok in three steps."
-msgstr "Connect Grok in three steps."
+msgid "Connect Grok Bot in three steps."
+msgstr "Connect Grok Bot in three steps."
 
-msgid "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
-msgstr "Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free."
+msgid "Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade."
+msgstr "Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade."
 
 msgid "Connect in three steps."
 msgstr "Connect in three steps."
@@ -1819,6 +1816,18 @@ msgstr "Cosy and convivial; good company"
 
 msgid "Cramming fades. Spacing lasts."
 msgstr "Cramming fades. Spacing lasts."
+
+msgid "Create and practise flashcards with ChatGPT."
+msgstr "Create and practise flashcards with ChatGPT."
+
+msgid "Create and practise flashcards with Claude."
+msgstr "Create and practise flashcards with Claude."
+
+msgid "Create and practise flashcards with Gemini."
+msgstr "Create and practise flashcards with Gemini."
+
+msgid "Create and practise flashcards with Grok Bot."
+msgstr "Create and practise flashcards with Grok Bot."
 
 msgid "Czech"
 msgstr "Czech"
@@ -2222,6 +2231,12 @@ msgstr "Every card says its word aloud, in its own language. The back keeps the 
 msgid "Every day"
 msgstr "Every day"
 
+msgid "Every day at 8, tell me what’s due in Lymi."
+msgstr "Every day at 8, tell me what’s due in Lymi."
+
+msgid "Every day at 8:00"
+msgstr "Every day at 8:00"
+
 msgid "Every detail in a story should earn its place."
 msgstr "Every detail in a story should earn its place."
 
@@ -2230,6 +2245,9 @@ msgstr "Every language"
 
 msgid "Every letter counts"
 msgstr "Every letter counts"
+
+msgid "Every morning"
+msgstr "Every morning"
 
 msgid "Every morning I read a book on the *train*."
 msgstr "Every morning I read a book on the *train*."
@@ -2461,9 +2479,6 @@ msgstr "For a cashier, a builder, or a friend who is studying."
 msgid "For a hard card"
 msgstr "For a hard card"
 
-msgid "For a quick quiz"
-msgstr "For a quick quiz"
-
 msgid "For a test"
 msgstr "For a test"
 
@@ -2509,6 +2524,9 @@ msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with 
 
 msgid "For the ones that slip"
 msgstr "For the ones that slip"
+
+msgid "For your team"
+msgstr "For your team"
 
 msgid "Forgot"
 msgstr "Forgot"
@@ -2606,8 +2624,8 @@ msgstr "From a PDF in the folder"
 msgid "From a photo of your notes"
 msgstr "From a photo of your notes"
 
-msgid "From a post or a thread"
-msgstr "From a post or a thread"
+msgid "From a post on X"
+msgstr "From a post on X"
 
 msgid "From a web page"
 msgstr "From a web page"
@@ -2627,9 +2645,6 @@ msgstr "From now until your test date"
 msgid "From the chat you just had"
 msgstr "From the chat you just had"
 
-msgid "From the news"
-msgstr "From the news"
-
 msgid "From your notes"
 msgstr "From your notes"
 
@@ -2644,9 +2659,6 @@ msgstr "Furigana, pinyin, stress marks."
 
 msgid "Future, “I”"
 msgstr "Future, “I”"
-
-msgid "Gemini flashcards that stick."
-msgstr "Gemini flashcards that stick."
 
 msgid "Gemini flashcards with spaced repetition · Lymi"
 msgstr "Gemini flashcards with spaced repetition · Lymi"
@@ -2732,6 +2744,9 @@ msgstr "Gladly"
 msgid "Go home"
 msgstr "Go home"
 
+msgid "Go through my lecture notes and make cards from each file."
+msgstr "Go through my lecture notes and make cards from each file."
+
 msgid "Goal reached"
 msgstr "Goal reached"
 
@@ -2782,26 +2797,26 @@ msgstr "Grammar"
 msgid "Greetings"
 msgstr "Greetings"
 
-msgid "Grok asks for OAuth details. Paste the client ID from the setup guide, leave the secret empty and choose PKCE only."
-msgstr "Grok asks for OAuth details. Paste the client ID from the setup guide, leave the secret empty and choose PKCE only."
+msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
+msgstr "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 
-msgid "Grok can read your decks. Ask for a conversation built on the words you’re learning, and it corrects you as you go. Save the new ones as cards when you’re done."
-msgstr "Grok can read your decks. Ask for a conversation built on the words you’re learning, and it corrects you as you go. Save the new ones as cards when you’re done."
+msgid "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgstr "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
 
-msgid "Grok explains it. Lymi makes it stick."
-msgstr "Grok explains it. Lymi makes it stick."
+msgid "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Lymi is free on any of them."
+msgstr "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Lymi is free on any of them."
 
-msgid "Grok flashcards that stick."
-msgstr "Grok flashcards that stick."
+msgid "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Using Grok on grok.com instead? The same address works under Connectors."
+msgstr "Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Using Grok on grok.com instead? The same address works under Connectors."
 
-msgid "Grok flashcards with spaced repetition · Lymi"
-msgstr "Grok flashcards with spaced repetition · Lymi"
+msgid "Grok Bot does the work. Lymi makes it stick."
+msgstr "Grok Bot does the work. Lymi makes it stick."
 
-msgid "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
-msgstr "Grok has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
+msgid "Grok Bot flashcards with spaced repetition · Lymi"
+msgstr "Grok Bot flashcards with spaced repetition · Lymi"
 
-msgid "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
-msgstr "Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
+msgid "Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
+msgstr "Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 
 msgid "habeas corpus"
 msgstr "habeas corpus"
@@ -2921,6 +2936,9 @@ msgstr "Housing"
 
 msgid "How do you *read* this kanji?"
 msgstr "How do you *read* this kanji?"
+
+msgid "How do you say <0>the strike</0>?"
+msgstr "How do you say <0>the strike</0>?"
 
 msgid "How do you say it?"
 msgstr "How do you say it?"
@@ -3302,6 +3320,9 @@ msgstr "In summer the *nights* stay light."
 msgid "In the end"
 msgstr "In the end"
 
+msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
+msgstr "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
+
 msgid "In the order you learn them, one section at a time."
 msgstr "In the order you learn them, one section at a time."
 
@@ -3325,6 +3346,9 @@ msgstr "Intel Mac? Download for Intel"
 
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
+
+msgid "Is Grok Bot the same as Grok?"
+msgstr "Is Grok Bot the same as Grok?"
 
 msgid "Is it for schools?"
 msgstr "Is it for schools?"
@@ -3559,8 +3583,8 @@ msgstr "Keep what you learn with Claude."
 msgid "Keep what you learn with Gemini."
 msgstr "Keep what you learn with Gemini."
 
-msgid "Keep what you learn with Grok."
-msgstr "Keep what you learn with Grok."
+msgid "Keep what you learn with Grok Bot."
+msgstr "Keep what you learn with Grok Bot."
 
 msgid "Key"
 msgstr "Key"
@@ -3721,9 +3745,6 @@ msgstr "Let’s meet again *tomorrow*."
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
 
-msgid "Let’s practise. Use the words from my Spanish deck."
-msgstr "Let’s practise. Use the words from my Spanish deck."
-
 msgid "library"
 msgstr "library"
 
@@ -3868,8 +3889,8 @@ msgstr "Lymi with Claude"
 msgid "Lymi with Gemini"
 msgstr "Lymi with Gemini"
 
-msgid "Lymi with Grok"
-msgstr "Lymi with Grok"
+msgid "Lymi with Grok Bot"
+msgstr "Lymi with Grok Bot"
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi works for anything you want to remember."
@@ -3894,6 +3915,9 @@ msgstr "macOS 13 or later"
 
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
+
+msgid "Made Biology: 48 cards in 6 sections"
+msgstr "Made Biology: 48 cards in 6 sections"
 
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
@@ -3924,9 +3948,6 @@ msgstr "Make cards for the 20 drugs on my NCLEX list, with their class."
 
 msgid "Make cards for the Rust ownership rules we hit today."
 msgstr "Make cards for the Rust ownership rules we hit today."
-
-msgid "Make cards for the terms in this article."
-msgstr "Make cards for the terms in this article."
 
 msgid "Make cards from my biology notes, one per term."
 msgstr "Make cards from my biology notes, one per term."
@@ -4264,6 +4285,9 @@ msgstr "No. ChatGPT adds the cards straight to Lymi, which schedules every revie
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 
+msgid "No. Grok Bot is xAI’s app for Bots that work in the background, on your computer, your phone and X. Grok on grok.com connects to Lymi too, under Connectors."
+msgstr "No. Grok Bot is xAI’s app for Bots that work in the background, on your computer, your phone and X. Grok on grok.com connects to Lymi too, under Connectors."
+
 msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
 msgstr "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
 
@@ -4361,9 +4385,6 @@ msgstr "Okay"
 msgid "Older"
 msgstr "Older"
 
-msgid "On the way home"
-msgstr "On the way home"
-
 msgid "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
 msgstr "Once a deck is in your Lymi, it brings each card back just as it starts to fade, a few minutes a day."
 
@@ -4420,9 +4441,6 @@ msgstr "Only you, unless you share the deck. Cards made from your study material
 
 msgid "Open by design."
 msgstr "Open by design."
-
-msgid "Open grok.com/connectors, press New Connector, choose Custom and paste this address."
-msgstr "Open grok.com/connectors, press New Connector, choose Custom and paste this address."
 
 msgid "Open Lymi"
 msgstr "Open Lymi"
@@ -4498,6 +4516,9 @@ msgstr "Partitive"
 
 msgid "parts: reading, writing, listening and speaking"
 msgstr "parts: reading, writing, listening and speaking"
+
+msgid "Paste the client ID from the setup guide as the OAuth Client ID, then choose Add plugin."
+msgstr "Paste the client ID from the setup guide as the OAuth Client ID, then choose Add plugin."
 
 msgid "Paste the text or attach the photo and ask: “Add the new words to my Spanish deck in Lymi.” Say which deck, or ask it to make one."
 msgstr "Paste the text or attach the photo and ask: “Add the new words to my Spanish deck in Lymi.” Say which deck, or ask it to make one."
@@ -4700,9 +4721,6 @@ msgstr "Press + in the message box, choose Connectors and switch Lymi on. In Cla
 msgid "Press ⌃⌥L on your Mac and the card is saved."
 msgstr "Press ⌃⌥L on your Mac and the card is saved."
 
-msgid "Press Save & Connect, sign in to Lymi and allow it."
-msgstr "Press Save & Connect, sign in to Lymi and allow it."
-
 msgid "price elasticity"
 msgstr "price elasticity"
 
@@ -4770,8 +4788,8 @@ msgstr "Questions about Claude and Lymi."
 msgid "Questions about Gemini and Lymi."
 msgstr "Questions about Gemini and Lymi."
 
-msgid "Questions about Grok and Lymi."
-msgstr "Questions about Grok and Lymi."
+msgid "Questions about Grok Bot and Lymi."
+msgstr "Questions about Grok Bot and Lymi."
 
 msgid "questions an officer asks aloud"
 msgstr "questions an officer asks aloud"
@@ -4839,9 +4857,6 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 msgid "Quickstart"
 msgstr "Quickstart"
 
-msgid "Quiz me on my Japanese deck."
-msgstr "Quiz me on my Japanese deck."
-
 msgid "Quiz me on the cases I keep forgetting."
 msgstr "Quiz me on the cases I keep forgetting."
 
@@ -4865,9 +4880,6 @@ msgstr "Read the meaning, then try to recall the term before you look. Try it on
 
 msgid "Read your German deck"
 msgstr "Read your German deck"
-
-msgid "Read your Spanish deck"
-msgstr "Read your Spanish deck"
 
 msgid "Reading"
 msgstr "Reading"
@@ -5591,6 +5603,9 @@ msgstr "Tag everything from chapter 4 “exam”."
 msgid "Tag everything that’s on Friday’s anatomy exam."
 msgstr "Tag everything that’s on Friday’s anatomy exam."
 
+msgid "Tag Grok Bot on a post, hand it an article, or let it work through your notes while you’re away. The cards land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+msgstr "Tag Grok Bot on a post, hand it an article, or let it work through your notes while you’re away. The cards land in Lymi, and spaced repetition brings each one back just as it starts to fade."
+
 msgid "Tag: {verb}"
 msgstr "Tag: {verb}"
 
@@ -6134,8 +6149,8 @@ msgstr "Things to ask Claude."
 msgid "Things to ask Gemini."
 msgstr "Things to ask Gemini."
 
-msgid "Things to ask Grok."
-msgstr "Things to ask Grok."
+msgid "Things to ask Grok Bot."
+msgstr "Things to ask Grok Bot."
 
 msgid "This *apple* is very sweet."
 msgstr "This *apple* is very sweet."
@@ -6406,6 +6421,12 @@ msgstr "To work"
 
 msgid "Today"
 msgstr "Today"
+
+msgid "Today, 8:00 · checked Lymi"
+msgstr "Today, 8:00 · checked Lymi"
+
+msgid "Today: 12 cards due, about five minutes"
+msgstr "Today: 12 cards due, about five minutes"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Today’s page from my textbook. Add the new words to my Japanese deck."
@@ -6791,9 +6812,6 @@ msgstr "What if it gets something wrong?"
 msgid "What it’s for"
 msgstr "What it’s for"
 
-msgid "What should I review on the train?"
-msgstr "What should I review on the train?"
-
 msgid "What should I review tonight?"
 msgstr "What should I review tonight?"
 
@@ -6896,9 +6914,6 @@ msgstr "Which ChatGPT plans can connect Lymi?"
 msgid "Which deck should I add?"
 msgstr "Which deck should I add?"
 
-msgid "Which Grok plans can connect Lymi?"
-msgstr "Which Grok plans can connect Lymi?"
-
 msgid "Which language are the translations in?"
 msgstr "Which language are the translations in?"
 
@@ -6917,6 +6932,9 @@ msgstr "Which pair of regions is in East Bohemia?"
 msgid "Which part of an IP address names the network"
 msgstr "Which part of an IP address names the network"
 
+msgid "Which plans include Grok Bot?"
+msgstr "Which plans include Grok Bot?"
+
 msgid "Which questions come up"
 msgstr "Which questions come up"
 
@@ -6928,6 +6946,9 @@ msgstr "Which words should I ask Marta about on Friday?"
 
 msgid "While you code"
 msgstr "While you code"
+
+msgid "While you’re away"
+msgstr "While you’re away"
 
 msgid "Who can see the cards I make?"
 msgstr "Who can see the cards I make?"
@@ -7049,9 +7070,6 @@ msgstr "Writing"
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Written with the characters for tree, leak and sun."
 
-msgid "xAI decides which Grok plans can add custom connectors. On a business account, an admin may need to turn it on first."
-msgstr "xAI decides which Grok plans can add custom connectors. On a business account, an admin may need to turn it on first."
-
 msgid "Yes"
 msgstr "Yes"
 
@@ -7136,11 +7154,11 @@ msgstr "Yes. Export them from Pleco as a text file and import it. Categories bec
 msgid "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
 msgstr "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade."
 
-msgid "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."
-msgstr "Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards."
-
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
+
+msgid "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
+msgstr "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
 
 msgid "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
 msgstr "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
@@ -7255,6 +7273,9 @@ msgstr "Your goal, your streak"
 
 msgid "Your own app"
 msgstr "Your own app"
+
+msgid "Your review, on a routine."
+msgstr "Your review, on a routine."
 
 msgid "Your rights and choices"
 msgstr "Your rights and choices"

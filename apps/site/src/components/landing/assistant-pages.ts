@@ -28,27 +28,32 @@ export interface AssistantPage {
 export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
   grok: {
     page: "grokAssistant",
-    name: "Grok",
+    name: "Grok Bot",
     hue: 280,
-    guide: "/docs/mcp/grok",
-    title: msg`Grok flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect Grok to Lymi and turn posts, articles and notes into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
-    linkLabel: msg`Lymi with Grok`,
+    guide: "/docs/mcp/grok#grok-bot",
+    title: msg`Grok Bot flashcards with spaced repetition · Lymi`,
+    blurb: msg`Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade.`,
+    linkLabel: msg`Lymi with Grok Bot`,
     questions: [
       {
         id: "can",
-        question: msg`Can Grok make flashcards?`,
-        answer: msg`Grok will write flashcards in the chat, but it has no flashcard mode and nothing that brings a card back later. Connect Lymi and Grok adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade.`,
+        question: msg`Can Grok Bot make flashcards?`,
+        answer: msg`Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade.`,
       },
       {
-        id: "language",
-        question: msg`Can I learn a language with Grok and Lymi?`,
-        answer: msg`Yes. Grok can read your decks, so it can hold a conversation built on the words you’re learning and save the new ones it teaches you as cards.`,
+        id: "routine",
+        question: msg`Can Grok Bot quiz me every day?`,
+        answer: msg`Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule.`,
+      },
+      {
+        id: "same",
+        question: msg`Is Grok Bot the same as Grok?`,
+        answer: msg`No. Grok Bot is xAI’s app for Bots that work in the background, on your computer, your phone and X. Grok on grok.com connects to Lymi too, under Connectors.`,
       },
       {
         id: "plans",
-        question: msg`Which Grok plans can connect Lymi?`,
-        answer: msg`Any plan that can add a custom connector at grok.com/connectors. xAI decides which plans can. On a business account, an admin may need to turn the connector on first.`,
+        question: msg`Which plans include Grok Bot?`,
+        answer: msg`Grok Bot comes with X Premium, Super and Ultra, and with paid Cursor plans. Lymi is free on any of them.`,
       },
       {
         id: "privacy",

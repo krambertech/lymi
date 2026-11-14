@@ -1849,6 +1849,21 @@ html:has(.deck-cards[open]) {
     animation: none;
   }
 }
+/* The review lane's phone card fades to each new review instead of snapping. */
+.lane-swap {
+  animation: lane-swap 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes lane-swap {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lane-swap {
+    animation: none;
+  }
+}
 /* The ring the API diagram's lantern sends out, as if each request lit it. */
 .landing-ring {
   transform-box: fill-box;

@@ -5,7 +5,6 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
-import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
@@ -16,7 +15,6 @@ import { LandingLayout } from "./LandingLayout";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
-import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
 
 export const NOTES_TO_FLASHCARDS_TITLE = msg`Turn notes and PDFs into flashcards · Lymi`;
@@ -449,18 +447,6 @@ export function NotesToFlashcardsView() {
       >
         <ReviewDemo cards={review} />
       </FeatureSection>
-
-      <RightMoment
-        title={<Trans>Review less, remember longer.</Trans>}
-        body={
-          <Trans>
-            Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes
-            back soon.
-          </Trans>
-        }
-      />
-
-      <ConnectSteps />
 
       <Questions
         title={<Trans>Questions before you start.</Trans>}

@@ -127,8 +127,9 @@ export function ChineseView({ decks, locale }: Props) {
       <EnrichSection
         body={
           <Trans>
-            Add a word from today’s lesson. AI fills in the pinyin, an example and a hint to help
-            you remember it. It fills only what you left empty and marks what it wrote.
+            Add a word from today’s lesson. AI fills in the pinyin and an example. It fills only
+            what you left empty and marks what it wrote. Press Draft and it suggests a hint to help
+            you remember the word.
           </Trans>
         }
       >

@@ -10,7 +10,6 @@ import type { HandCard } from "./hand-cards";
 import { LandingLayout } from "./LandingLayout";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
-import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
 import { type UseCase, UseCases } from "./UseCases";
 
@@ -195,16 +194,6 @@ export function CertificationsView() {
       >
         <ReviewDemo cards={REVIEW} />
       </FeatureSection>
-
-      <RightMoment
-        title={<Trans>Review less, remember longer.</Trans>}
-        body={
-          <Trans>
-            Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes
-            back soon.
-          </Trans>
-        }
-      />
 
       <Questions
         title={<Trans>Questions before you start.</Trans>}

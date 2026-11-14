@@ -3,10 +3,10 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { motion, useInView } from "motion/react";
 import { useMemo, useRef } from "react";
-import { Field } from "./JapaneseAi";
+import { Field, HintField } from "./JapaneseAi";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
-const BEATS = { typed: 1000, meaning: 1700, forms: 2400, example: 3100, hint: 3800 };
+const BEATS = { typed: 1000, meaning: 1700, forms: 2400, example: 3100, draft: 4000, hint: 4500 };
 
 /** A word typed after a lesson; the AI fills each empty field, starting with its three forms. */
 export function EnrichEstonian() {
@@ -52,17 +52,11 @@ export function EnrichEstonian() {
           Ma lähen <span className="text-amber-text">sõbraga</span> kinno.
         </motion.span>
       </Field>
-      <Field label={<Trans>Hint</Trans>} wrote={at("hint")}>
-        <motion.span
-          initial={false}
-          animate={appear(at("hint"))}
-          className="min-h-[1.5em] text-md text-ink"
-        >
-          <Trans>
-            <span lang="et">Sõber</span> sounds like “sober”: the friend who gets you home.
-          </Trans>
-        </motion.span>
-      </Field>
+      <HintField pressed={at("draft")} drafted={at("hint")}>
+        <Trans>
+          <span lang="et">Sõber</span> sounds like “sober”: the friend who gets you home.
+        </Trans>
+      </HintField>
     </div>
   );
 }

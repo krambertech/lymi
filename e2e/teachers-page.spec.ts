@@ -3,7 +3,7 @@ import { expect, test, waitForIslands } from "./test";
 
 const publicSite = e2eSiteUrl;
 
-test("a teacher can reach the teachers page, try the join link and see what is rolling out", async ({
+test("a teacher can reach the teachers page, try the join link and find ready-made decks", async ({
   page,
   request,
 }) => {
@@ -26,10 +26,12 @@ test("a teacher can reach the teachers page, try the join link and see what is r
     await expect(page.getByText("The link is off. Nobody new can join.")).toBeVisible();
   });
 
-  await test.step("the join section says which features are still rolling out", async () => {
+  await test.step("the ready-made decks are Lymi's own, with no beta note left", async () => {
     await expect(
-      page.getByText(/Sections and the deck library are rolling out during the beta/),
+      page.getByRole("heading", { name: "Start with a ready-made deck." }),
     ).toBeVisible();
+    await expect(page.getByText("Everyday Estonian")).toBeVisible();
+    await expect(page.getByText(/rolling out during the beta/)).toHaveCount(0);
   });
 
   await test.step("every edition is in the sitemap", async () => {

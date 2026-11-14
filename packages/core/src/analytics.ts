@@ -48,6 +48,20 @@ export const CONTEXT_MENU_ACTIONS = [
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
 /** What a review leg was opened for. */
+/** The assistant an MCP call or grant came from, by its recognised client; any other client is `other`. */
+export const ASSISTANT_CLIENTS = [
+  "chatgpt",
+  "claude",
+  "codex",
+  "cursor",
+  "gemini",
+  "gemini_cli",
+  "grok",
+  "zed",
+  "other",
+] as const;
+const assistant = z.enum(ASSISTANT_CLIENTS);
+
 export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
@@ -454,7 +468,10 @@ export const analyticsEvents = {
     tool: z.string().regex(/^[a-z_]{1,80}$/),
     outcome: z.enum(["success", "error"]),
     duration_ms: z.number().nonnegative().max(3_600_000),
+    client: assistant.optional(),
   }),
+  app_connected: z.object({ client: assistant, write: z.boolean() }),
+  app_connect_failed: z.object({ client: assistant, reason: z.enum(["declined", "error"]) }),
   enrichment_finished: z.object({
     outcome: z.enum(["enriched", "empty", "failed"]),
     count,
@@ -732,6 +749,8 @@ export const analyticsProducers = {
   content_report_resolved: ["worker"],
   section_opened: ["worker"],
   mcp_tool: ["worker"],
+  app_connected: ["worker"],
+  app_connect_failed: ["worker"],
   enrichment_finished: ["worker"],
   pitch_accent_filled: ["worker"],
   example_translated: ["worker"],

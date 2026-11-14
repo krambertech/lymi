@@ -9,13 +9,14 @@ import { FIRST_TOUCH_HEADER, parseFirstTouch } from "@lymi/core/analytics";
 import { and, eq, sql } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { getOAuthState } from "better-auth/api";
+import { createAuthMiddleware, getOAuthState, getSessionFromCtx } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
 import { appleIdTokenVerifier } from "./apple-id-token";
 import { appleClientSecret, appleKeyOf } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
+import { consentEvent } from "./consent-analytics";
 import type { Db } from "./db";
 import { schema } from "./db";
 import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
@@ -438,6 +439,21 @@ export function createAuth(
           },
         },
       },
+    },
+    hooks: {
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.path !== "/oauth2/consent") return;
+        const event = consentEvent(ctx.body, ctx.context.returned, env.PUBLIC_SITE_URL);
+        const userId = event && (await getSessionFromCtx(ctx))?.user.id;
+        if (!event || !userId) return;
+        await trackProductEvent(
+          env,
+          userId,
+          event,
+          waitUntil,
+          analyticsContextFor(db, userId, headersOf(ctx)),
+        );
+      }),
     },
     advanced: {
       cookiePrefix: cookiePrefix(env.PRODUCT_URL),

@@ -42,6 +42,7 @@ import {
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import type { McpView, ViewCard, ViewDeckResult, ViewDueResult } from "../../shared/mcp-app";
+import type { AssistantClient } from "../assistant-client";
 import {
   addCards,
   archiveCard,
@@ -119,6 +120,8 @@ export interface McpPrincipal {
   /** The learner's app language, which the views are written in. English when unknown. */
   appLanguage?: AppLanguage | undefined;
   reportError?: ((error: unknown, tool: string) => Promise<void>) | undefined;
+  /** Which recognised assistant holds the token, for analytics only. */
+  assistant?: AssistantClient | undefined;
 }
 
 /** How many of a deck's newest cards `get_deck` names; `search_cards` pages through the rest. */
@@ -1122,6 +1125,7 @@ async function runTool(
       tool,
       outcome,
       duration_ms: Math.min(3_600_000, Math.max(0, performance.now() - started)),
+      ...(principal.assistant && { client: principal.assistant }),
     });
   }
 }

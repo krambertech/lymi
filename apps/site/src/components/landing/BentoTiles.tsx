@@ -457,24 +457,24 @@ export function ImportTile({ play }: TileDemoProps) {
   const at = useBeats({ a0: 80, a1: 200, a2: 320, a3: 440, a4: 560, in: 900 }, play);
   return (
     <div className="grid w-full max-w-[380px] gap-2.5">
-      <ul className="grid grid-cols-5 gap-1">
+      <ul className="flex flex-wrap gap-1.5">
         {APPS.map((app, i) => (
           <motion.li
             key={app.name}
-            animate={{ y: at(`a${i}` as "a0") && !at("in") ? -4 : 0 }}
+            animate={{ y: at(`a${i}` as "a0") && !at("in") ? -3 : 0 }}
             transition={SETTLE}
-            className="grid min-w-0 justify-items-center gap-1"
+            className="flex h-8 items-center gap-1.5 rounded-full bg-plate ps-1 pe-2.5 edge"
           >
             <img
               src={app.icon}
               alt=""
-              width={44}
-              height={44}
+              width={24}
+              height={24}
               loading="lazy"
               decoding="async"
-              className="aspect-square w-full max-w-11 rounded-[22.5%] edge"
+              className="size-6 rounded-full"
             />
-            <span className="max-w-full truncate text-xs text-ink-secondary">{app.name}</span>
+            <span className="text-sm text-ink">{app.name}</span>
           </motion.li>
         ))}
       </ul>

@@ -48,7 +48,7 @@ function typed(word: string, at: (beat: string) => boolean) {
     .join("");
 }
 
-/** A field AI fills: the band crosses it, the text clears, and the badge lands by the label. */
+/** A field AI fills: its badge lands by the label, then the words write themselves in. */
 function AiField({ label, children, on }: { label: ReactNode; children: ReactNode; on: boolean }) {
   return (
     <div data-on={on} className="ai-sweep rounded-lg bg-plate px-3 py-2 edge">
@@ -68,9 +68,9 @@ function AiField({ label, children, on }: { label: ReactNode; children: ReactNod
 const WORD = "Feierabend";
 const WORD_BEATS: Record<string, number> = {
   ...typing(WORD, 250),
-  meaning: 1400,
-  example: 1900,
-  hint: 2400,
+  meaning: 1500,
+  example: 2500,
+  hint: 3500,
 };
 
 export function WordDemo({ play }: DemoProps) {

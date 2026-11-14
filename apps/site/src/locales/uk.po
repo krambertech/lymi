@@ -4070,6 +4070,9 @@ msgstr "Фізика"
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Обери курс у бібліотеці колод, додай його своїй групі й доповнюй по ходу. А свій поширюй, коли він буде готовий."
 
+msgid "Pick how much to review a day. A rest day keeps the streak going."
+msgstr "Обери, скільки повторювати щодня. День відпочинку не перериває дні поспіль."
+
 msgid "Pick your assistant for its steps."
 msgstr "Обери свого асистента, щоб побачити інструкцію."
 

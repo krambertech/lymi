@@ -4070,6 +4070,9 @@ msgstr "Physics"
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 
+msgid "Pick how much to review a day. A rest day keeps the streak going."
+msgstr "Pick how much to review a day. A rest day keeps the streak going."
+
 msgid "Pick your assistant for its steps."
 msgstr "Pick your assistant for its steps."
 

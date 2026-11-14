@@ -230,6 +230,7 @@ function ReviewTiles({ hues }: { hues: [number, number, number, number] }) {
         hue={hues[3]}
         layout="fill"
         title={<Trans>Your goal, your streak</Trans>}
+        body={<Trans>Pick how much to review a day. A rest day keeps the streak going.</Trans>}
         Demo={StreakTile}
         className={ACROSS}
       />

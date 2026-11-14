@@ -37,7 +37,7 @@ const ITEMS: StageItem[] = [
   },
   {
     id: "fill",
-    dwell: 4800,
+    dwell: 6400,
     title: msg`A full card in seconds`,
     body: msg`Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked.`,
     hue: 25,
@@ -118,8 +118,8 @@ function useHold() {
 function useStage() {
   const still = useStill();
   const root = useRef<HTMLDivElement>(null);
-  // A quarter on screen is enough to play; the stage is taller than half a phone screen.
-  const inView = useInView(root, { amount: 0.25 });
+  // It waits until most of the stage is on screen, so the first demo starts where you can see it.
+  const inView = useInView(root, { amount: 0.6 });
   const hold = useHold();
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState(false);

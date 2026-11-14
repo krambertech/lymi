@@ -1,0 +1,11 @@
+---
+import AssistantPage from "../../components/islands/AssistantPage";
+import { ASSISTANT_PAGES } from "../../components/landing/assistant-pages";
+import MarketingLayout from "../../layouts/MarketingLayout.astro";
+
+const { page, title, blurb, questions } = ASSISTANT_PAGES.claude;
+---
+
+<MarketingLayout page={page} title={title} blurb={blurb} questions={questions}>
+  <AssistantPage client:load locale={Astro.currentLocale} assistant="claude" />
+</MarketingLayout>

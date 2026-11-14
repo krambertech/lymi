@@ -201,7 +201,7 @@ function useContent(key: AssistantKey): Content {
               gap grows every time you remember it.
             </Trans>
           ),
-          term: "Chlorophyll",
+          term: "Stomata",
           lang: "en",
         },
         connect: {
@@ -339,7 +339,7 @@ function useContent(key: AssistantKey): Content {
               each card returns as it starts to fade, and the gap grows every time you remember it.
             </Trans>
           ),
-          term: "Bioavailability",
+          term: "Agonist",
           lang: "en",
         },
         connect: {
@@ -471,7 +471,7 @@ function useContent(key: AssistantKey): Content {
               time you remember it.
             </Trans>
           ),
-          term: "Enantiomer",
+          term: "Isomer",
           lang: "en",
         },
         connect: {
@@ -592,7 +592,7 @@ function useContent(key: AssistantKey): Content {
               remember it.
             </Trans>
           ),
-          term: "la vivienda",
+          term: "subir",
           lang: "es",
         },
         connect: {

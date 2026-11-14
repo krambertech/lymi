@@ -18,7 +18,7 @@ export function OtherAssistants({ title, current }: Props) {
   const others = ASSISTANT_KEYS.filter((key) => key !== current);
 
   return (
-    <section className="border-b border-edge px-5 py-16 @2xl:px-10">
+    <section className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <h2 className="text-2xl font-medium tracking-[-0.025em] text-ink">{title}</h2>
         <ul

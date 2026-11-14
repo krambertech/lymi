@@ -3502,8 +3502,8 @@ msgstr "Сделай карточки из новых терминов в это
 msgid "Make cards from this."
 msgstr "Сделай из этого карточки."
 
-msgid "Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you. Free to use."
-msgstr "Создавай карточки из заметок, уроков и фото с помощью AI. Запоминай выученное благодаря повторениям, которые подстраиваются под тебя. Бесплатно."
+msgid "Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you."
+msgstr "Создавай карточки из заметок, уроков и фото с помощью AI. Запоминай выученное благодаря повторениям, которые подстраиваются под тебя."
 
 msgid "Make cards with"
 msgstr "Создавай карточки с"

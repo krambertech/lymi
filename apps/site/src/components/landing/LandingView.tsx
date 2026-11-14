@@ -70,7 +70,7 @@ export function LandingView() {
           lede={
             <Trans>
               Make cards from your notes, lessons and photos with AI. Remember what you learn with
-              reviews that adapt to you. Free to use.
+              reviews that adapt to you.
             </Trans>
           }
           secondary={{

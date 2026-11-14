@@ -3,7 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Copy, Sparkle, Volume2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Pick } from "./MaterialToCards";
 import { EASE, usePlayback, useStill } from "./playback";
 
@@ -56,12 +56,7 @@ function AiField({ label, children, on }: { label: ReactNode; children: ReactNod
         <span className="text-xs text-ink-muted">{label}</span>
         {on && <AiBadge arriving />}
       </div>
-      <div
-        className={clsx(
-          "mt-0.5 min-h-5 text-sm text-pretty text-ink transition-[opacity,filter] duration-300 motion-reduce:transition-none",
-          on ? "opacity-100" : "opacity-0 blur-[4px]",
-        )}
-      >
+      <div data-on={on} className="ai-words mt-0.5 min-h-5 text-sm text-pretty text-ink">
         {children}
       </div>
     </div>
@@ -210,8 +205,8 @@ export function LessonDemo({ play }: DemoProps) {
               <AnimatePresence key={card.term} initial={false}>
                 {at(`c${i}`) && (
                   <motion.div
-                    initial={still ? false : { opacity: 0, y: 10, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={still ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.45, ease: EASE }}
                     data-on="true"
                     className="ai-sweep flex items-start gap-2.5 rounded-lg bg-plate px-3 py-2 edge"
@@ -324,13 +319,15 @@ const leadBeats = (word: string): Record<string, number> => ({
   meaning: 2300,
   extra: 2700,
 });
-/** A variant plays, rests, then the other takes its place. */
-const LEAD_MS = 5600;
+/** A variant plays, rests, then the other takes its place; longer than the stage's dwell, so the
+ * stage moves on before a swap and the next visit shows the other variant. */
+const LEAD_MS = 7000;
 /** Each visit to the item starts on the other variant, since the stage moves on before one swaps. */
 let leadVisits = 0;
 
 function LeadRun({ lead, play }: { lead: Lead; play: boolean }) {
-  const { at } = usePlayback(leadBeats(lead.typed), play, useStill());
+  const beats = useMemo(() => leadBeats(lead.typed), [lead.typed]);
+  const { at } = usePlayback(beats, play, useStill());
   const done = at("term");
   return (
     <div className="grid gap-2">
@@ -352,14 +349,7 @@ function LeadRun({ lead, play }: { lead: Lead; play: boolean }) {
           ["meaning", lead.meaning, "text-ink-secondary"] as const,
           ["extra", lead.extra, "text-ink-muted"] as const,
         ].map(([beat, line, tone]) => (
-          <p
-            key={beat}
-            className={clsx(
-              "mt-1 min-h-5 text-sm transition-[opacity,filter] duration-300 motion-reduce:transition-none",
-              tone,
-              at(beat) ? "opacity-100" : "opacity-0 blur-[4px]",
-            )}
-          >
+          <p key={beat} data-on={at(beat)} className={clsx("ai-words mt-1 min-h-5 text-sm", tone)}>
             {line}
           </p>
         ))}

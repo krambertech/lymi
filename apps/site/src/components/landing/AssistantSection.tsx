@@ -2,7 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { FileText } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type PointerEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { localizedPath } from "../../lib/routes";
 import { Lantern } from "../Lantern";
 import { ArrowLink } from "./ArrowLink";
@@ -163,7 +170,7 @@ function AskBubble({ ask: item, mirrored }: { ask: Ask; mirrored?: boolean }) {
       <div
         style={{ "--tray-h": item.hue } as CSSProperties}
         className={clsx(
-          "use-case-tile rounded-[20px] px-4 py-3 shadow-[0_16px_34px_-22px_oklch(0.3_0.05_280/0.5)]",
+          "use-case-tile rounded-[20px] px-4 py-3 shadow-[var(--glass-drop)]",
           mirrored ? "rounded-ee-md" : "rounded-es-md",
         )}
       >
@@ -193,10 +200,36 @@ function Reply({ ask: item, mirrored }: { ask: Ask; mirrored?: boolean }) {
 }
 
 const EVERY_MS = 2600;
+/** The first new request arrives this soon after the stream comes into view. */
+const FIRST_MS = 300;
 /** Pairs kept mounted; the oldest have already risen out through the fade. */
 const KEPT = 5;
 /** How long the pairs already there take to rise clear before the new one shows. */
 const ARRIVE_S = 0.45;
+
+/**
+ * Whether a visitor is reading the stream: the mouse really moved over it, or a control in it has
+ * focus. Content scrolling under a still pointer fires pointerenter too, so entering alone doesn't
+ * count, and any scroll lets go.
+ */
+function useReading() {
+  const [reading, setReading] = useState(false);
+  useEffect(() => {
+    if (!reading) return;
+    const letGo = () => setReading(false);
+    window.addEventListener("scroll", letGo, { passive: true });
+    return () => window.removeEventListener("scroll", letGo);
+  }, [reading]);
+  return {
+    reading,
+    handlers: {
+      onPointerMove: (e: PointerEvent) => {
+        if (e.pointerType === "mouse" && (e.movementX || e.movementY)) setReading(true);
+      },
+      onPointerLeave: () => setReading(false),
+    },
+  };
+}
 
 /**
  * The claim on the start side; on the end side, requests to different assistants keep arriving at
@@ -208,16 +241,20 @@ export function AssistantSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.3 });
   const [head, setHead] = useState(2);
-  const [held, setHeld] = useState(false);
+  const { reading, handlers } = useReading();
 
   useEffect(() => {
-    if (still || !inView || held) return;
-    // A hidden tab keeps its timers; without this the stream would run on with nobody watching.
-    const timer = window.setInterval(() => {
+    if (still || !inView || reading) return;
+    // A hidden tab keeps its timers; without the check the stream would run on with nobody watching.
+    const next = () => {
       if (!document.hidden) setHead((h) => h + 1);
-    }, EVERY_MS);
-    return () => window.clearInterval(timer);
-  }, [still, inView, held]);
+    };
+    let timer = window.setTimeout(function tick() {
+      next();
+      timer = window.setTimeout(tick, EVERY_MS);
+    }, FIRST_MS);
+    return () => window.clearTimeout(timer);
+  }, [still, inView, reading]);
 
   const from = still ? 0 : Math.max(0, head - KEPT + 1);
   const to = still ? 2 : head;
@@ -233,9 +270,10 @@ export function AssistantSection() {
         <div
           ref={ref}
           aria-hidden="true"
-          onPointerEnter={(e) => e.pointerType === "mouse" && setHeld(true)}
-          onPointerLeave={() => setHeld(false)}
-          className="flex h-[360px] flex-col justify-end gap-5 overflow-hidden pb-4 [mask-image:linear-gradient(to_bottom,transparent,black_32%,black_94%,transparent)] @4xl:h-[340px] @4xl:w-full @4xl:max-w-[440px] @4xl:justify-self-end"
+          {...handlers}
+          // Inline padding gives the shadows room inside the clip; the negative margin keeps the
+          // bubbles on the column's edges.
+          className="-mx-4 flex h-[360px] flex-col justify-end gap-5 overflow-hidden px-4 pb-4 [mask-image:linear-gradient(to_bottom,transparent,black_32%,black_94%,transparent)] @4xl:h-[340px] @4xl:w-full @4xl:max-w-[440px] @4xl:justify-self-end"
         >
           <AnimatePresence initial={false} mode="popLayout">
             {rows.map((n) => {

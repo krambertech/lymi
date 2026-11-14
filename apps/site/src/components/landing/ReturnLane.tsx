@@ -145,7 +145,12 @@ export function ReturnLane({ term, lang }: Props) {
    * A transition that starts at a point on the timeline. None at rest, and none while the lane hides
    * itself to wait, or the later parts would fade out one by one on their delays first.
    */
-  const timed = (at: number, ms: number, ease = ARRIVE, properties = "opacity, translate, scale") =>
+  const timed = (
+    at: number,
+    ms: number,
+    ease = ARRIVE,
+    properties = "opacity, translate, scale",
+  ) =>
     waiting && play
       ? {
           transitionProperty: properties,

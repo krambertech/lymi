@@ -263,7 +263,7 @@ export function AssistantSection() {
   return (
     <section
       data-nav="landing"
-      className="overflow-x-clip border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto grid max-w-[480px] items-center gap-10 @4xl:max-w-[1040px] @4xl:grid-cols-[minmax(0,440px)_minmax(0,1fr)] @4xl:gap-16">
         <Heading />

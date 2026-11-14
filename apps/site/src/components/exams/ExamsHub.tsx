@@ -423,7 +423,7 @@ function DeckNotQuiz() {
     },
   ];
   return (
-    <section className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <SectionTitle>
           <Trans>A deck, not a quiz.</Trans>

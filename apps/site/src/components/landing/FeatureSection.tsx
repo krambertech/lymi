@@ -28,7 +28,7 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
     <section
       id={id}
       className={clsx(
-        "scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28",
+        "scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20",
         tinted && "bg-plate",
       )}
     >
@@ -66,7 +66,7 @@ export function Wide({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section id={id} className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <div className="max-w-[640px]">
           <SectionTitle>{title}</SectionTitle>

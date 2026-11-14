@@ -59,7 +59,7 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
     <section
       aria-labelledby="notes-title"
-      className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+      className="px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto max-w-[1040px]">
         <div className="mx-auto max-w-[640px] text-center">

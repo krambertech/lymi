@@ -250,7 +250,7 @@ function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode
   return (
     <section
       aria-labelledby="format-title"
-      className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
+      className="px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto max-w-[1040px]">
         <h2
@@ -397,7 +397,7 @@ function ExamPlanContent({ several }: { several: boolean }) {
   return (
     <section
       aria-labelledby="plan-title"
-      className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
+      className="px-5 py-16 @2xl:px-10 @4xl:py-20"
     >
       <div className="mx-auto max-w-[1040px]">
         <h2

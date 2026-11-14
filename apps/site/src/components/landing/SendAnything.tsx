@@ -142,7 +142,7 @@ export function SendAnything() {
   const { at } = usePlayback(BEATS, inView, still);
 
   return (
-    <section aria-labelledby="send-title" className="border-y border-edge py-20 @4xl:py-28">
+    <section aria-labelledby="send-title" className="py-16 @4xl:py-20">
       <div className="mx-auto max-w-[1120px] px-5 @2xl:px-10">
         <div id="send-title">
           <SectionTitle>

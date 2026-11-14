@@ -112,7 +112,7 @@ export function ShelfAbout({
     <Localized locale={locale}>
       <section
         aria-labelledby="about-title"
-        className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
+        className="px-5 py-16 @2xl:px-10 @4xl:py-20"
       >
         <div className="mx-auto max-w-[1040px]">
           <h2
